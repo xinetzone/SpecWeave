@@ -14,7 +14,7 @@
 #       （默认 /workspace/dist，宿主可见的 bind 挂载目录）
 #
 # 双 ABI 事实（rootless 基底 2026-09-14 实证）：
-#   /opt/conda            = Python 3.14 cp314 GIL enabled（Nuitka 4.1.3 兼容）
+#   /opt/conda            = Python 3.14 cp314 GIL enabled（Nuitka 4.2.1 打包）
 #   /opt/conda/envs/main  = Python 3.14 cp314t free-threading（Nuitka 不兼容）
 # 故本脚本固定以 /opt/conda/bin/python 为编译解释器；clang/LLVM/cmake 工具链
 # 位于 main env（PATH 第二段，CC/CXX/LLVM_CONFIG 绝对指向）。
@@ -114,6 +114,9 @@ fi
 # ── Nuitka 选项 ─────────────────────────────────────────────────────────
 NUITKA_JOBS="${NUITKA_JOBS:-8}"
 NUITKA_PLUGINS="${NUITKA_PLUGINS:-dill-compat}"
+# 模式旗标必须写 --mode=module，禁用遗留别名 --module：4.x 里 --module 只置
+# module_mode，而「module-mode 专属选项」告警的判据是 compilation_mode（仅
+# --mode= 才赋值），故 --module 配 --no-pyi-file 会误报 "has no effect"。
 NOFOLLOW_IMPORTS="${NOFOLLOW_IMPORTS:-torch,torchvision,onnx2pytorch}"
 TVM_COMPILE_FLAGS="${TVM_COMPILE_FLAGS:-}"
 # Nuitka 辅助工具（ccache/depends 等）的下载确认旗标：离线时置空（不带引号展开 →
@@ -142,7 +145,14 @@ log_kv "cmake" "$(cmake --version | head -1) at $(command -v cmake)"
 log_kv "ninja" "$(ninja --version) at $(command -v ninja)"
 log_kv "clang" "$($CC --version | head -1)"
 log_kv "LLVM" "$($LLVM_CONFIG --version) @ $LLVM_LIB_DIR"
-"$BASE_PYTHON" -m nuitka --version | head -2
+# 版本行禁止用 head/sed -q 截断管道：消费者提前退出会让 Python 侧 flush 抛
+# BrokenPipeError（"Exception ignored while flushing sys.stdout"）污染终端，
+# 且被截断的行失去 log_kv 排版。awk 读完整个输入再在 END 块格式化，两处问题
+# 一次消解。只取首行版本与 "Commercial:" 行——4.2+ 的第 2 行是
+# "Update status: ... (cached, N seconds old)."（联网/时间相关，非确定性），
+# 塞进日志行即为噪声。
+log_kv "nuitka" "$("$BASE_PYTHON" -m nuitka --version 2>/dev/null \
+    | awk 'NR==1{v=$0} /^Commercial:/{c=$0} END{printf "%s%s", v, (c ? " (" c ")" : "")}')"
 
 if [ "$XMNN_OFFLINE" = "1" ]; then
     log_info "offline mode: pip 镜像配置跳过 / Nuitka 下载旗标已禁用（NUITKA_DL_FLAG 置空）"
@@ -183,7 +193,7 @@ ast_inject "$TVM_PKG/__init__.py" tvm >/dev/null
 set +e
 PYTHONPATH="$TVM_PYTHON:${PYTHONPATH:-}" \
 "$BASE_PYTHON" -m nuitka \
-    --module \
+    --mode=module \
     --include-package=tvm \
     --enable-plugin="${NUITKA_PLUGINS}" \
     --nofollow-import-to=vta \
@@ -222,7 +232,7 @@ log_step "Nuitka-compiling vta & xmnn packages (parallel)"
     fi
     PYTHONPATH="$VTA_PYTHON:$TVM_ROOT/python:${PYTHONPATH:-}" \
     "$BASE_PYTHON" -m nuitka \
-        --module \
+        --mode=module \
         --include-package=vta \
         --enable-plugin="${NUITKA_PLUGINS}" \
         --nofollow-import-to=tvm \
@@ -247,7 +257,7 @@ log_step "Nuitka-compiling vta & xmnn packages (parallel)"
     fi
     PYTHONPATH="$XMN_ROOT:$TVM_ROOT/vta/python:$TVM_ROOT/python:${PYTHONPATH:-}" \
     "$BASE_PYTHON" -m nuitka \
-        --module \
+        --mode=module \
         --include-package=xmnn \
         --enable-plugin="${NUITKA_PLUGINS}" \
         --nofollow-import-to=tvm \

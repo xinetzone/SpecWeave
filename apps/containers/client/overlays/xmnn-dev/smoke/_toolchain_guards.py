@@ -8,7 +8,10 @@
      时 pin python=*=*cp314t，若被求解互换此处立即失败）；
   2. main env 工具链：llvm-config 22.1.x、clang、cmake>=3.18、ninja、
      ccache、patchelf、gdb 均可执行；
-  3. base env 打包栈：nuitka==4.1.3、scikit-build-core、build、invoke；
+  3. base env 打包栈：nuitka==4.2.1、scikit-build-core、build、invoke；
+     并断言运行解释器版本在 Nuitka 的 getSupportedPythonVersions() 内——
+     Nuitka 对未列入版本的 python 会打 "only experimentally supported"
+     警告，该警告是升级 python 后最易遗漏的构建期噪声；
   4. /opt/xmnn-builder 打包资产齐全；
   5. LLVM 依赖库 7 个 glob 在 llvm-config --libdir 全部可命中并打印实际
      SONAME（SONAME 漂移的构建期硬拦截，对应 CMakeLists 的 glob 收集）；
@@ -105,7 +108,20 @@ print("\n== 3. base env 打包栈 ==")
 # Nuitka 不在包对象上暴露 __version__，以 `python -m nuitka --version` 为准
 rc, out = run_version(sys.executable, "-m", "nuitka", "--version")
 nuitka_ver = out.splitlines()[0] if out else ""
-check("nuitka 4.1.3", rc == 0 and "4.1.3" in nuitka_ver, nuitka_ver[:80])
+check("nuitka 4.2.1", rc == 0 and "4.2.1" in nuitka_ver, nuitka_ver[:80])
+
+# 运行解释器必须落在 Nuitka 的支持列表内，否则每次打包都会打
+# "The Python version '3.x' is only experimentally supported" 警告。
+# 4.1.3 止于 3.13，升到 3.14 解释器后该警告即出现，故在此硬拦截。
+try:
+    from nuitka.PythonVersions import getSupportedPythonVersions
+
+    running = "%d.%d" % sys.version_info[:2]
+    supported = getSupportedPythonVersions()
+    check(f"运行解释器 {running} 在 Nuitka 支持列表内", running in supported,
+          "supported: " + ", ".join(supported))
+except Exception as exc:  # noqa: BLE001
+    check("读取 Nuitka 支持的 python 版本列表", False, str(exc))
 
 # scikit-build-core 1.x 顶层包名为 scikit_build_core（0.x 时代为 skbuild）
 for mod, label in (
@@ -207,5 +223,5 @@ if failures:
     print(f"[FAIL] {len(failures)} 项守卫未通过：{failures}")
     sys.exit(1)
 print("[OK] xmnn-dev toolchain guards all passed "
-      "(dual ABI + LLVM 22.1 toolchain + nuitka 4.1.3 + builder assets + SONAME "
+      "(dual ABI + LLVM 22.1 toolchain + nuitka 4.2.1 + builder assets + SONAME "
       "+ offline self-sufficiency)")
