@@ -105,7 +105,6 @@ apps/<group>/<app-name>/
 |------|------|
 | [cow-demo](samples/cow-demo/README.md) | 零拷贝 COW 读写分离模式 C++ 示例框架 |
 | [short-video-site](samples/short-video-site/README.md) | ReelVibe 短视频网站（AI 全流程开发 Demo） |
-| [jieban-site](samples/jieban-site/README.md) | 结伴站点——Sphinx + MyST 内容层（首页＋社群公约，新宣纸纸感主题） |
 | [serial-camera-controller](samples/serial-camera-controller/README.md) | 串口控制 USB 摄像头抓图/录像（CH340+OpenCV+pyserial） |
 | [samples-retrospective](samples/samples-retrospective/README.md) | samples 区复盘与经验沉淀 |
 | zleap-workspace-first-prototype | 工作区首个原型（多模型路由，暂缺 README） |

@@ -65,3 +65,6 @@
 [submodule "vendor/netease-youdao/ScholarClaw"]
 	path = vendor/netease-youdao/ScholarClaw
 	url = git@github.com:netease-youdao/ScholarClaw.git
+[submodule "projects/daoapps.github.io"]
+	path = projects/daoapps.github.io
+	url = git@github.com:daoApps/daoApps.github.io.git

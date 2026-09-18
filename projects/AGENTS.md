@@ -30,6 +30,7 @@ projects/AGENTS.md 与 projects/.agents/ 由 SpecWeave 主权区维护，直接�
 |--------|---------------|------|
 | xuanspace | [projects/xuanspace/AGENTS.md](xuanspace/AGENTS.md) | 玄境（Xuanspace）Python 3.14.6+ monorepo 项目管理工具 |
 | awesome-okf-xs | [projects/awesome-okf-xs/AGENTS.md](awesome-okf-xs/AGENTS.md) | 玄境项目 OKF（开源知识格式）文档库 |
+| daoapps.github.io | [projects/daoapps.github.io/AGENTS.md](daoapps.github.io/AGENTS.md) | 道用（daoApps）组织站点——全站 Sphinx 源码，含组织主页与结伴子站，由 GitHub Actions 构建发布到 GitHub Pages |
 
 ### 嵌套优先级
 
@@ -37,7 +38,8 @@ projects/AGENTS.md 与 projects/.agents/ 由 SpecWeave 主权区维护，直接�
 SpecWeave 根 AGENTS.md
   └─ projects/AGENTS.md（本文件，projects 区域入口）
        ├─ projects/xuanspace/AGENTS.md（xuanspace 子项目入口）
-       └─ projects/awesome-okf-xs/AGENTS.md（awesome-okf-xs 子项目入口）
+       ├─ projects/awesome-okf-xs/AGENTS.md（awesome-okf-xs 子项目入口）
+       └─ projects/daoapps.github.io/AGENTS.md（daoapps.github.io 子项目入口）
 ```
 
 进入任意子目录后，优先读取**离当前工作目录最近**的 AGENTS.md。若子项目规则与本文件冲突，以子项目为准（子项目覆盖父层）。
@@ -115,6 +117,17 @@ projects 区域内各子项目可被 SpecWeave 跨边界调用的资产清单。
 | 文档元数据规范 | [awesome-okf-xs/.agents/rules/frontmatter.md](awesome-okf-xs/.agents/rules/frontmatter.md) | YAML/TOML 内容-元数据二分法 |
 | 知识包库（最高可信度知识库） | [awesome-okf-xs/doc/bundles/index.md](awesome-okf-xs/doc/bundles/index.md) | OKF 知识包总索引（10 技术域/28 分组/248 包），SpecWeave 项目概念、术语、技术事实的最高可信源与冲突裁决依据，只读引用 |
 
+### daoapps.github.io 子项目
+
+| 资产 | 路径 | 说明 |
+|------|------|------|
+| 子项目规范入口 | [daoapps.github.io/AGENTS.md](daoapps.github.io/AGENTS.md) | 任务路由表、组织主页纪律、结伴内容纪律、构建期守卫、样式纪律 |
+| 站点配置 | [daoapps.github.io/doc/conf.py](daoapps.github.io/doc/conf.py) | Sphinx 唯一配置入口：引文版本守卫 + 按页页脚分层注入 |
+| 组织主页 | [daoapps.github.io/doc/index.md](daoapps.github.io/doc/index.md) | 道用组织主页（14 应用五分类），`/` 路由 |
+| 结伴子站 | [daoapps.github.io/doc/jieban/index.md](daoapps.github.io/doc/jieban/index.md) | 结伴站首页，`/jieban/` 路由；四频道与社群公约见同目录 |
+| 契约测试 | [daoapps.github.io/tests/test_site_contract.py](daoapps.github.io/tests/test_site_contract.py) | 22 项站点契约（结构、配色、引文版本、内容纪律、页脚分层） |
+| 发布流水线 | [daoapps.github.io/.github/workflows/pages.yml](daoapps.github.io/.github/workflows/pages.yml) | 质量门 → Sphinx 构建 → GitHub Pages 部署 |
+
 ## 边界声明
 
 | 资产 | 归属 | SpecWeave 可修改 | 说明 |
@@ -128,6 +141,9 @@ projects 区域内各子项目可被 SpecWeave 跨边界调用的资产清单。
 | projects/awesome-okf-xs/ | awesome-okf-xs 子项目 | ❌ 否 | 通过 gitlink 追踪，修改需走子项目开发流程 |
 | projects/awesome-okf-xs/AGENTS.md | awesome-okf-xs 子项目 | ❌ 否 | 子项目自治入口 |
 | projects/awesome-okf-xs/.agents/ | awesome-okf-xs 子项目 | ❌ 否 | 子项目规范体系 |
+| projects/daoapps.github.io/ | daoapps.github.io 子项目 | ❌ 否 | 通过 gitlink 追踪，修改需走子项目开发流程 |
+| projects/daoapps.github.io/AGENTS.md | daoapps.github.io 子项目 | ❌ 否 | 子项目自治入口 |
+| projects/daoapps.github.io/doc/ | daoapps.github.io 子项目 | ❌ 否 | 站点 Sphinx 源码（组织主页 + 结伴子站） |
 
 ## 跨子项目调用规范
 

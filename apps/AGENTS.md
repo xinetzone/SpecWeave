@@ -60,7 +60,6 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | samples/ | short-video-site | —（遵循根规范） | ❌ 无 | ReelVibe 短视频网站（AI全流程开发Demo） |
 | samples/ | zleap-workspace-first-prototype | —（遵循根规范） | ❌ 无 | 工作区首个原型（多模型路由） |
 | samples/ | serial-camera-controller | —（遵循根规范） | ❌ 无 | 串口控制USB摄像头抓图/录像（CH340+OpenCV+pyserial，双协议三线程架构） |
-| samples/ | jieban-site | —（遵循根规范） | ❌ 无 | 结伴站点——Sphinx + MyST 内容层（首页＋社群公约，新宣纸纸感主题，构建期引文版本守卫） |
 | 根级 | shared | —（遵循根规范） | ❌ 无 | 跨应用共享资源目录 |
 | 根级 | tests | —（遵循根规范） | ❌ 无 | 测试用例目录 |
 
