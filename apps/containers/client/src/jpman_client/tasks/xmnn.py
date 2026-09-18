@@ -14,10 +14,13 @@ models 源码（默认锚定仓库根 external/chaos），容器内 LLVM 22 + Nu
   - 本栈工具链/打包解释器为 BASE_PYTHON=/opt/conda/bin/python（见 compose/
     Containerfile），build-tvm/wheel 经 bash 脚本在栈内执行。
 
-提供 8 个命令：
-  invoke xmnn.build / up / down / ps / logs / smoke
+提供 10 个命令：
+  invoke xmnn.build / up / down / ps / logs / smoke / save / load
   invoke xmnn.build-tvm   栈内编译 TVM C++ 原生库（libtvm.so，长任务）
   invoke xmnn.wheel       栈内 Nuitka 打包 xmnn whl（长任务，产物落 workspace/dist）
+  （save/load = 导出/导入镜像归档，无网机器的离线交付通道）
+离线模式（``invoke xmnn.up --offline`` 或 root .env ``XMNN_OFFLINE=1``）：不构建镜像（构建期 apt/mamba/pip
+需联网），只以本地已 load 的镜像 ``up --no-build``，并向栈内 exec 注入 ``XMNN_OFFLINE=1`` 禁容器内联网兜底。
 
 平台姿态（内核统一）：Windows 原生优先透明桥接 WSL，不可桥接再门禁；POSIX
 缺 podman-compose 提示装 ``pip install -e ".[compose]"``。
@@ -35,6 +38,7 @@ from .overlay_core import (
     ensure_runtime_ready,
     gates,
     make_stack_tasks,
+    offline_exec_env,
     require_running,
     run_compose,
 )
@@ -86,18 +90,16 @@ XMNN_SPEC = StackSpec(
     ),
     bridge_env_keys=(
         "XMNN_IMAGE_TAG", "XMNN_CONTAINER_NAME", "XMNN_WORKSPACE",
-        "XMNN_SSH_PORT", "XMNN_JUPYTER_PORT",
+        "XMNN_SSH_PORT", "XMNN_JUPYTER_PORT", "XMNN_OFFLINE",
         "NPU_TVM_PATH", "NPUUSERTOOLS_PATH", "MODELS_PATH",
     ),
+    supports_offline=True,
 )
 
 TASKS = make_stack_tasks(XMNN_SPEC)
-build = TASKS["build"]
-up = TASKS["up"]
-down = TASKS["down"]
-ps = TASKS["ps"]
-logs = TASKS["logs"]
-smoke = TASKS["smoke"]
+build, up, down, ps, logs, smoke, save, load = (
+    TASKS[k] for k in ("build", "up", "down", "ps", "logs", "smoke", "save", "load")
+)
 
 
 # ---------------------------------------------------------------------------
@@ -135,7 +137,8 @@ def wheel(
     if tvm_flags:
         extra += ["-e", f"TVM_COMPILE_FLAGS={tvm_flags}"]
     run_compose(
-        c, XMNN_SPEC, "exec", *extra, "-T", XMNN_SPEC.service,
+        c, XMNN_SPEC, "exec", *extra, *offline_exec_env(XMNN_SPEC),
+        "-T", XMNN_SPEC.service,
         "bash", f"{BUILDER_SCRIPTS}/build-wheel.sh", pty=True,
     )
     print("[xmnn] ✅ wheel 打包流程结束；产物目录：容器 /workspace/dist（宿主 workspace/dist）")
@@ -151,6 +154,6 @@ def build_tvm(c: Context) -> None:
     require_running(c, XMNN_SPEC)
     print("[xmnn] 首次全量编译耗时较长（ccache 命中后增量很快）；Ctrl+C 不影响容器。")
     run_compose(
-        c, XMNN_SPEC, "exec", "-T", XMNN_SPEC.service,
+        c, XMNN_SPEC, "exec", *offline_exec_env(XMNN_SPEC), "-T", XMNN_SPEC.service,
         "bash", f"{BUILDER_SCRIPTS}/build-tvm.sh", pty=True,
     )

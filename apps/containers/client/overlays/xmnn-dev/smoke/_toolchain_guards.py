@@ -11,17 +11,24 @@
   3. base env 打包栈：nuitka==4.1.3、scikit-build-core、build、invoke；
   4. /opt/xmnn-builder 打包资产齐全；
   5. LLVM 依赖库 7 个 glob 在 llvm-config --libdir 全部可命中并打印实际
-     SONAME（SONAME 漂移的构建期硬拦截，对应 CMakeLists 的 glob 收集）。
+     SONAME（SONAME 漂移的构建期硬拦截，对应 CMakeLists 的 glob 收集）；
+  6. devuser 可读性（Containerfile 以 su 复跑间接保证）；
+  7. 离线完备性（阶段一契约）：无网侧不能再补装任何依赖，故编译/打包前端
+     与 pyproject [project].dependencies 声明的运行时依赖必须全部已在镜像内。
+     守卫自身不联网、不装包（否则守卫成为新的离线缺口）。
 
 任何断言失败即以非零退出（构建期 RUN 失败、run --rm 冒烟失败）。
 """
 
 import glob
+import importlib.metadata as md
 import os
+import re
 import shutil
 import subprocess
 import sys
 import sysconfig
+import tomllib
 from pathlib import Path
 
 MAIN_PREFIX = Path("/opt/conda/envs/main")
@@ -153,9 +160,52 @@ if os.path.isdir(libdir):
 print("\n== 6. devuser 可读性（由 Containerfile 以 su 复跑整个脚本间接保证）==")
 print("  本脚本路径 /opt/xmnn-dev-smoke/_toolchain_guards.py，chmod a+rX 烤入")
 
+print("\n== 7. 离线完备性（阶段一契约：镜像自足，无网侧不得再补依赖）==")
+# 判定基准：显式构造 build-tvm.sh / build-wheel.sh 实际建立的两段 PATH
+# （main env 工具链 + base env），不依赖调用者继承的 PATH——本脚本要在
+# root 与 devuser 两身份下给出同一结论（su 不带 - 会继承 root 的 PATH）。
+probe_path = f"/opt/conda/bin:/opt/conda/envs/main/bin:{os.environ.get('PATH', '')}"
+
+# 7a. 编译/打包前端：无网侧既无 apt 也无 pip，缺一项即意味着阶段二不可完成
+for tool in ("gcc", "g++", "ccache", "cmake", "ninja", "make", "patchelf", "readelf"):
+    resolved = shutil.which(tool, path=probe_path)
+    check(f"离线必备 {tool}", resolved is not None,
+          resolved or "NOT FOUND（无网侧无法补装，须回有网侧重建镜像）")
+
+# 7b. 运行时依赖：单一事实源 = builder/pyproject.toml [project].dependencies
+#     （不在此重复维护清单）；以发行版元数据判定「已装」，避免 dist→import
+#     名映射（Pillow→PIL 等）引入第二份映射表。
+declared: list[str] = []
+try:
+    _meta = tomllib.loads((BUILDER_DIR / "pyproject.toml").read_text(encoding="utf-8"))
+    declared = list(_meta["project"]["dependencies"])
+    check("读取 pyproject [project].dependencies", bool(declared), f"{len(declared)} 条")
+except Exception as exc:  # noqa: BLE001
+    check("读取 pyproject [project].dependencies", False, str(exc))
+
+missing_deps: list[str] = []
+for spec in declared:
+    dist = re.split(r"[<>=!~\[; ]", spec.strip(), maxsplit=1)[0]
+    try:
+        md.version(dist)
+    except md.PackageNotFoundError:
+        missing_deps.append(dist)
+check(f"pyproject 声明的 {len(declared)} 个运行时依赖全部已装",
+      bool(declared) and not missing_deps,
+      f"缺失：{', '.join(missing_deps)}" if missing_deps else "numpy/scipy 等齐备")
+
+# 7c. 打包工具链（与 §3 的 import 断言互补：这里锁「发行版元数据已登记」，
+#     覆盖 pip 不可见但 import 可用的构建后端边界）
+for dist in ("nuitka", "scikit-build-core", "build", "wheel", "invoke", "ipykernel"):
+    try:
+        check(f"离线必备打包工具 {dist}", True, md.version(dist))
+    except md.PackageNotFoundError:
+        check(f"离线必备打包工具 {dist}", False, "未安装（无网侧 pip 无法补装）")
+
 print("")
 if failures:
     print(f"[FAIL] {len(failures)} 项守卫未通过：{failures}")
     sys.exit(1)
 print("[OK] xmnn-dev toolchain guards all passed "
-      "(dual ABI + LLVM 22.1 toolchain + nuitka 4.1.3 + builder assets + SONAME)")
+      "(dual ABI + LLVM 22.1 toolchain + nuitka 4.1.3 + builder assets + SONAME "
+      "+ offline self-sufficiency)")

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""把 xmnn wheel 的打包工具链与 19 个核心运行时依赖装入 base env（cp314 GIL）。
+"""把 xmnn wheel 的打包工具链与 pyproject 声明的全部运行时依赖装入 base env（cp314 GIL）。
 
 单一事实源：运行时依赖直接读 /opt/xmnn-builder/pyproject.toml 的
 [project].dependencies，禁止在 Containerfile 重复维护一份清单。

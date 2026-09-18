@@ -107,7 +107,7 @@ Write-Host "PowerShell version: $($PSVersionTable.PSVersion)" -ForegroundColor G
 Write-Host "Console encoding: $([Console]::OutputEncoding.WebName)" -ForegroundColor Gray
 Write-Host ""
 
-$totalSteps = 21
+$totalSteps = 22
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 Write-Host "[1/$totalSteps] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)..." -ForegroundColor Yellow
@@ -362,6 +362,16 @@ else {
     Write-Host "  WARN: spec near-name duplication found (historical debt, C-5 blocks new additions only)" -ForegroundColor Yellow
     Write-Host $dupCheck -ForegroundColor DarkYellow
 }
+Write-Host ""
+
+# 22. Check git tree object order (对象规范序：非规范序 tree 会被远端 fsck 整包拒绝)
+Write-Host "[22/$totalSteps] Check git tree object order (treeNotSorted gateway)..." -ForegroundColor Yellow
+python "$root\.agents\scripts\check-tree-order.py"
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "ERROR: non-canonical tree object found (remote fsck rejects the push with treeNotSorted)" -ForegroundColor Red
+    exit 1
+}
+Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
 Write-Host "========================================" -ForegroundColor Cyan

@@ -23,6 +23,10 @@ import sys
 from pathlib import Path
 
 
+# 仓库分发的钩子（.githooks/ 下同名文件）
+HOOK_NAMES = ["pre-commit", "pre-push"]
+
+
 def run_git(*args: str, check: bool = False) -> subprocess.CompletedProcess:
     return subprocess.run(
         ["git", *args], capture_output=True, text=True, check=check,
@@ -73,15 +77,17 @@ def setup_repo_hooks(project_root: Path, force: bool = False) -> bool:
     print("✅ 已配置当前仓库使用 .githooks 目录")
     print(f"   git config core.hooksPath .githooks")
 
-    pre_commit = githooks_dir / "pre-commit"
-    if pre_commit.exists():
+    for hook_name in HOOK_NAMES:
+        hook_file = githooks_dir / hook_name
+        if not hook_file.exists():
+            continue
         try:
-            pre_commit.chmod(
-                pre_commit.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
+            hook_file.chmod(
+                hook_file.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
             )
         except OSError:
             pass
-        print("✅ pre-commit 钩子已就绪")
+        print(f"✅ {hook_name} 钩子已就绪")
 
     print()
     print("💡 现在 git commit 时将自动从 .githooks/ 加载钩子")
@@ -98,7 +104,7 @@ def setup_global_template(project_root: Path, force: bool = False) -> bool:
     scripts_hooks_dir = project_root / ".agents" / "scripts" / "hooks"
 
     installed = 0
-    for hook_name in ["pre-commit"]:
+    for hook_name in HOOK_NAMES:
         src = githooks_dir / hook_name
         if not src.exists():
             src = scripts_hooks_dir / hook_name

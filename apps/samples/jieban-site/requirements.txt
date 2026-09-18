@@ -1,0 +1,12 @@
+# 结伴站点（jieban-site）构建依赖
+# 用法：pip install -r requirements.txt
+#
+# 主题说明：本机环境未安装 furo，改用 sphinx-book-theme
+# （阅读优先、暖灰纸感易定制，更契合「新宣纸」调性）。
+
+sphinx>=8.2
+myst-parser>=5.1
+sphinx-book-theme>=1.1
+sphinx-copybutton>=0.5
+sphinx-design>=0.6
+sphinxcontrib-mermaid>=1.0

@@ -39,7 +39,7 @@ echo -e "${GRAY}LC_ALL: $LC_ALL${NC}"
 echo -e "${GRAY}PYTHONIOENCODING: $PYTHONIOENCODING${NC}"
 echo ""
 
-TOTAL=20
+TOTAL=21
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 echo -e "${YELLOW}[1/$TOTAL] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)...${NC}"
@@ -220,6 +220,16 @@ if python3 "$ROOT/.agents/scripts/check-spec-duplication.py" --json > /dev/null 
     echo -e "  ${GREEN}PASS (no new near-name conflicts)${NC}"
 else
     echo -e "  ${YELLOW}WARN: spec near-name duplication found (historical debt, C-5 blocks new additions only)${NC}"
+fi
+echo ""
+
+# 21. Check git tree object order (对象规范序：非规范序 tree 会被远端 fsck 整包拒绝)
+echo -e "${YELLOW}[21/$TOTAL] Check git tree object order (treeNotSorted gateway)...${NC}"
+if python3 "$ROOT/.agents/scripts/check-tree-order.py"; then
+    echo -e "  ${GREEN}PASS${NC}"
+else
+    echo -e "  ${RED}ERROR: non-canonical tree object found (remote fsck rejects the push with treeNotSorted)${NC}"
+    exit 1
 fi
 echo ""
 

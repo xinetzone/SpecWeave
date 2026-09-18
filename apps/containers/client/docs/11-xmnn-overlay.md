@@ -34,6 +34,17 @@ invoke xmnn.down                       # 停止清理（ccache 卷默认保留�
   指向 WSL 原生克隆。
 - **Windows 原生自动桥接**：同 quant.*（默认桥接 `podman-machine-default`；
   `COMPOSE_WSL_DISTRO` 可指其他发行版，`none` 关闭并回退门禁）。
+- **两个过程：镜像构建（有网） → 离线开发（无网）**：过程一在有网侧
+  `invoke xmnn.build` + `invoke xmnn.save`（导出 tar.gz + manifest/SHA256 归档）
+  ——镜像自足性由**构建期离线完备性守卫**（`smoke/_toolchain_guards.py` §7）实测
+  断言（编译/打包前端可解析 + pyproject 声明的全部运行时依赖已装），缺口
+  在有网侧 fail-fast；过程二在无网侧 `invoke xmnn.load --path <归档>` 导入 →
+  `invoke xmnn.up --offline`（等价 `.env` 里 `XMNN_OFFLINE=1`）→ `build-tvm` /
+  `wheel` / `verify-wheel.sh` 全部离线可用（脚本内已无联网点）。离线是
+  **全链路**语义：不构建（追加 `--no-build`）、镜像缺失 fail-fast 给中文指引、
+  容器内打包禁网硬失败（numpy/scipy 不再 pip 兜底、Nuitka 不自动下载）；无网侧
+  **不补装依赖**，缺项一律回过程一。无网**从零构建镜像**仍不支持（构建期
+  apt/mamba/pip 均需联网）。
 - **对 external/chaos/ai 零依赖**：打包脚本与元数据自包含于叠加层；
   外部源码树只读挂载，打包中的临时 AST 注入会无条件还原。
 

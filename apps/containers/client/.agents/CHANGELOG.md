@@ -6,6 +6,44 @@
 
 ## [Unreleased]
 
+### 2026-09-17 · `fix:` 清扫运行时依赖计数的陈旧文案（19 → 动态表述）
+
+**背景**：真机构建期 §7 守卫实测 `[project].dependencies` 为 **20 条**，而仓库内 8 处文案仍写「19 个」；`install-build-deps.py` 实为动态读取该清单、并无 19 的硬编码逻辑，故该数字纯属陈旧漂移（清单增补依赖时无人同步散文）。8 处统一改为「pyproject 声明的全部运行时依赖」，Containerfile Layer 3 注释显式注明"数量随清单变化，勿在此硬编码"。
+
+**C 同步**：预防措施 `[prevent: no-hardcoded-dep-counts]`——易漂移的计数不进散文，改由单一事实源表达（`builder/pyproject.toml` 为唯一清单 + §7 守卫构建期实测并打印实际条数）。
+
+### 2026-09-17 · `refactor:` xmnn-dev 固化为两个过程——镜像构建（有网）/ 离线开发（无网）+ 构建期离线完备性守卫
+
+**关联七概念场景**：场景3「重构优化」（I→F→V→A→C，session sc-20260917-xmnn-dev-two-phase，commit 26eaa00ca）。
+
+**I 洞察（四元组）**：**现象**——离线能力散落在 CLI 开关上，镜像是否真的自足没有任何构建期证据（`build-wheel.sh` 已读 `XMNN_OFFLINE`，`build-tvm.sh` 却完全无离线语义）；**根因**——镜像构建期（有网）与容器内开发期（本该无网）从未被显式建模为两个过程，于是「过程二需要的东西是否已在过程一固化」这一问题从未被追问、也未落到任何断言，离线是按脚本零散补的而非契约驱动的；**影响**——缺口只在无网机器上暴露，而那里**没有补救手段**（apt/pip 均需网），故障点与修复点跨机器分离，是排障成本最高的一类；**建议**——把两阶段写成契约，并把「镜像自足」变成构建期可执行的断言。
+
+**F 第一性原理（三条公理）**：**A1** 离线承诺的等价物是**镜像自足性**——过程二一切"首次运行才补齐"的路径都使承诺失效；**A2** 断言必须能在无网侧执行（守卫自身不联网、不装包），否则守卫成为新的离线缺口；**A3** 两个过程之间只有单向传递（镜像归档 + 使用者自备源码树）→ **所有校验必须前移到有网侧**。
+
+**V 对抗审查（四视角）**：① **魔鬼**（攻击核心断言"镜像真的自足吗"）——逐行核查过程二三个脚本后确认 `build-tvm.sh`（invoke config/cmake/ninja/gcc）、`build-wheel.sh`（`python -m build --no-isolation` + Nuitka 旗标置空）、`verify-wheel.sh`（bundled ensurepip + 本地 whl `--no-deps` + 不升级 pip）均无对外请求，故自足性缺口**不在脚本层而在"无断言"层**，守卫即为该断言；② **新人**——"缺依赖该在哪补"答案唯一化为"回过程一"，消除无网侧手工 pip 的歧义（W-I14 同步说明依赖缺失是过程一缺陷）；③ **老板**——改动零命令面变化（仍 10 任务），仅脚本 + 守卫 + 文档；④ **未来**——把「两阶段 + 单向传递」写成不变量而非一次性排查经验，新增过程二脚本时按 §10 检查联网点。
+
+**实现（A 原子化）**：① 守卫扩展 `smoke/_toolchain_guards.py` **§7「离线完备性」**——断言 gcc/g++/ccache/cmake/ninja/make/patchelf/readelf 在**显式构造**的 `/opt/conda/bin:/opt/conda/envs/main/bin:$PATH` 上可解析、`pyproject [project].dependencies` 声明的全部运行时依赖已装（**单一事实源**，用发行版元数据判定以避开 dist→import 名映射）、打包工具链已装；随构建期 root/devuser 双身份执行自动获得双覆盖，**不新增第二个守卫入口**。② `build-tvm.sh` 补离线语义：脚本头声明"全本地、无对外请求"，3rdparty 子模块缺失时按 `XMNN_OFFLINE` 给出"须在联网侧检出后随源码携带"的指引。③ `verify-wheel.sh` 头注声明无联网点。④ Containerfile Layer 5 注释与 BUILD COMPLETE 横幅标示 `offline: phase-2 全离线`。⑤ 文档：overlay README 新增「两个过程」章节（原「离线模式」更名并改写为过程一/过程二）+ 路径一命令块按过程分组 + 排障行标注子模块属过程一预备；`docs/11` 与 W-I14 同步；规则 §10 新增三条契约（两阶段 / 守卫实测 / 阶段二无联网点证据）、§8 说明守卫不另设入口；AGENTS C12 与路由表、P0 清单同步。
+
+**验收点**：`pytest tests -q` 无回归（本次为容器内脚本 + 守卫 + 文档改动，Python 编排侧零变化）；守卫 `py_compile` 通过；check-links 无新增断链；镜像重建后 Layer 5 应打印 §7 全 `[OK]`（离线自足即过程一的验收条件，真机 `xmnn.build` 待跑）。
+
+**C 同步**：预防措施 `[prevent: phase1-self-sufficiency-guard]`——把"离线能不能用"从运行期问题转为构建期断言，缺口结构性前移到有网侧；规则固化于 [rules/xmnn-overlay.md](rules/xmnn-overlay.md) §10 三条与 P0 清单 C12。
+
+### 2026-09-17 · `feat:` xmnn.\* 离线模式——镜像归档 save/load + `XMNN_OFFLINE` 全链路禁网
+
+**关联七概念场景**：场景5「创新突破」（F→V→I→C，session sc-20260917-xmnn-dev-offline，commit 8dfd99578）。
+
+**背景与缺口四层**：① 栈侧无任何离线语义——无网机器上 `xmnn.up` 会静默尝试联网并留下难懂的构建报错；② 无 xmnn 自己的镜像归档出口/入口（离线机器拿不到镜像）；③ 容器内打包存在隐藏联网假设——numpy/scipy 走 pip 兜底、Nuitka 三处 `--assume-yes-for-downloads`、`build-wheel.sh` 无条件改写 pip 镜像；④ 从零构建镜像需 apt/mamba/pip 三段联网，**明确不在范围内**（越界承诺会误导使用者）。
+
+**F 第一性原理（四条公理）**：A1 离线 = 栈侧动作不发起对外网络请求；A2 制品必须可由外部载体携带并校验；A3 离线判定须单一事实源且必须透传进容器；A4 离线失败必须 fail-fast + 中文可执行指引，不做静默降级。
+
+**V 对抗审查（两处关键修正）**：**V-1**——WSL 桥接只透传 `bridge_env_keys` 中的环境变量、**不转发 CLI 参数**，若 `--offline` 不先固化为 `os.environ[XMNN_OFFLINE]`，桥接后即丢失（故 `resolve_offline()` 必须在 `gates()` 之前调用并回写，且 `bridge_env_keys` 必须含该键）；**V-2**——podman-compose 源码（`podman_compose.py` L4098 `if not args.no_build:`）表明 **`up` 默认对含 build 段的服务执行构建**，仅 `--skip-build` 不足以禁网，离线必须同时追加 `--no-build`。
+
+**实现（I 落地）**：① 内核 `overlay_core.py` 新增 `StackSpec.supports_offline` / `offline_env_key` 声明、`resolve_offline()`（三态复用 `_resolve_bool`，显式开 > 显式关 > `.env` > 默认）、`offline_exec_env()`、`compose_up_tail()`、`_require_local_image()`；`build_image` 首行 fail-fast；`make_stack_tasks` 对 `supports_offline` 栈条件注入 `save`/`load`（仅该栈表面变化，其余栈黄金快照零改动）。② `xmnn.py` 声明升级为 10 任务（+`save`/`load`，`bridge_env_keys` 加 `XMNN_OFFLINE`），`wheel`/`build-tvm` 经 `offline_exec_env()` 单点注入。③ `build-wheel.sh` 读同一开关：numpy/scipy 缺失 `exit 2` 不再 pip 兜底、`$NUITKA_DL_FLAG`（空值 unquoted 展开整体消失）替换三处 Nuitka 下载旗标、pip 镜像 `case` 整体跳过、缺系统 gcc 前置断言 `exit 2`。④ `save_image` 的 client 专属文案参数化为 `not_found_hint`/`restore_hint` 供栈侧复用。⑤ 不触碰 compose `environment` 段与 `stack spec` 其余字段，保住 `test_compose_merge.py` 黄金快照。
+
+**验收点（测试锁行为）**：`tests/test_overlay_core.py` 新增 10 例（声明范围仅 xmnn / 环境回写 V-1 / `.env` 回退与同开同关冲突 / `--no-build` V-2 / `exec -e` 门控 / `build` 首行 fail-fast 且 `runner.commands == []` / 缺镜像 Exit / `up` 任务体参数存活至 argv / `save`·`load` 仅离线栈生成），`test_tasks_surface.py` 黄金清单同步；`apps/containers/client` 下 `pytest tests -q` → **147 passed, 1 skipped**；`bash -n build-wheel.sh` exit 0。
+
+**C 同步**：预防措施 `[prevent: offline-hard-fail]`——离线路径一律"硬失败 + 中文指引"，禁止静默降级为联网重试（无网环境下静默联网只会把真实原因埋在超时里）；规则固化于 [rules/xmnn-overlay.md](rules/xmnn-overlay.md) §10 与 P0 清单 C12，人类文档见 [../overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md) §两个过程（该章节 2026-09-17 由「离线模式」更名而来），`.env.example`（client 与 overlay 两处键集合）同步登记。
+
 ### 2026-09-17 · `fix:` load 时 Podman 未启动被误报"镜像版本不符"——双脚本新增守护可达性预检与 load 退出码检查
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260917-load-daemon-down，未提交，commit hash 待补）。

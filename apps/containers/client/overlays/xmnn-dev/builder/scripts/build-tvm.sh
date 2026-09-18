@@ -13,6 +13,11 @@
 #   3. 正则置 USE_EXAMPLE_TARGET_HOOKS=ON（xmnn 打包的必需目标钩子）；
 #   4. invoke make（Ninja + ccache，产出 build/libtvm.so）。
 #
+# 离线（阶段二）：本脚本全部步骤（invoke config / cmake / ninja / gcc）只用
+#   镜像内工具链，无任何对外网络请求——镜像自足性由构建期「离线完备性守卫」
+#   （smoke/_toolchain_guards.py §7）保证。唯一外部前提是源码树自带的
+#   3rdparty 子模块，须在联网侧检出后随源码携带。
+#
 # 幂等：已有 build/ 时增量编译。强制全量：优先在宿主 PowerShell 执行
 #   Remove-Item -Recurse -Force <NPU_TVM_PATH>\build
 # （9p/drvfs 下跨环境残留的属主 65534 旧文件在容器内 root 也删不掉/
@@ -55,6 +60,11 @@ if [ ! -d "$TVM_ROOT/3rdparty/dmlc-core" ] || [ -z "$(ls -A "$TVM_ROOT/3rdparty/
     log_error "npu_tvm git 子模块未检出（至少需要 dmlc-core）。请在宿主源码树执行："
     echo "    cd $TVM_ROOT && git submodule update --init --recursive"
     echo "  （仅 dmlc-core 亦可：git submodule update --init 3rdparty/dmlc-core）"
+    # 源码子模块属「阶段一预备」范畴：本脚本只用镜像内工具链编译，本身不联网，
+    # 但补齐子模块需要联网——无网侧补不了，必须随源码一起在联网侧准备好。
+    if [ "${XMNN_OFFLINE:-0}" = "1" ]; then
+        log_error "离线模式：源码子模块须在联网侧检出后随源码一起携带，无网侧无法补齐"
+    fi
     exit 2
 fi
 log_kv "TVM_ROOT" "$TVM_ROOT"

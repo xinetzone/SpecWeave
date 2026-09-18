@@ -84,7 +84,8 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
 
 # ------------------------------------------------------------
 # Layer 3：COPY 打包资产（含 pyproject）后，往 base env 装 Nuitka 打包栈与
-# 19 个运行时依赖。显式 /opt/conda/bin/python：PATH 顶端是 main（cp314t），
+# pyproject 声明的全部运行时依赖（数量随该清单变化，勿在此硬编码）。显式
+# /opt/conda/bin/python：PATH 顶端是 main（cp314t），
 # 裸 pip/python 会装错解释器。PIP_MIRROR 与 onnx 叠加层同构三段。
 # ------------------------------------------------------------
 COPY builder/ /opt/xmnn-builder/
@@ -113,8 +114,10 @@ COPY scripts/ /opt/xmnn-scripts/
 RUN chmod -R a+rX /opt/xmnn-dev-smoke /opt/xmnn-scripts
 
 # ------------------------------------------------------------
-# Layer 5：注册 xmnn-dev 内核（root/devuser 双可见）+ 构建期工具链守卫
-#   （root 与 devuser 两身份各跑一次，对齐 onnx 叠加层 devuser 访问验证）。
+# Layer 5：注册 xmnn-dev 内核（root/devuser 双可见）+ 构建期工具链/离线完备性
+#   守卫（root 与 devuser 两身份各跑一次，对齐 onnx 叠加层 devuser 访问验证）。
+#   §7 离线完备性把「阶段二（无网侧）所需的一切」在构建期实测断言：
+#   编译/打包前端 + pyproject [project].dependencies 声明的运行时依赖。
 # ------------------------------------------------------------
 RUN /bin/bash -lc 'set -euo pipefail ; \
     bash /opt/xmnn-scripts/register-kernel.sh ; \
@@ -129,4 +132,5 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
     echo "# toolchain : LLVM/Clang 22.1.8 (main env) + Nuitka 4.1.3 (base cp314 GIL)" ; \
     echo "# sources   : /workspace/npu_tvm + /workspace/npuusertools (runtime bind)" ; \
     echo "# packaging : inv xmnn.build-tvm -> inv xmnn.wheel -> verify-wheel.sh" ; \
+    echo "# offline   : phase-2 全离线（编译/打包依赖已烤入，由 §7 守卫断言）" ; \
     echo "########################################################################"'

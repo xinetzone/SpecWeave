@@ -36,15 +36,19 @@ from typing import Optional
 from invoke import Context, task
 from invoke.exceptions import Exit
 
-from .manage import _load_env_overrides, _project_root
+from .client_core import load_image, save_image
+from .manage import _load_env_overrides, _project_root, _resolve_bool
 from .utils import (
     check_runtime_ready,
+    default_build_cache_dir,
     detect_runtime,
     ensure_workspace_checkpoint_writable,
     ensure_wsl_rootless_runtime,
+    find_latest_image_tar,
     run_cmd,
     run_in_wsl_bridge,
     to_posix_path,
+    validate_manifest_integrity,
 )
 
 # podman-compose 给栈资源打的项目标签（知识包 05：标签即数据库；SDK/CLI 接缝）
@@ -155,6 +159,9 @@ class StackSpec:
     # —— 长任务未运行提示（默认自动生成；monetize 指向 --skip-build） ——
     not_running_hint: str = ""
 
+    # —— 离线模式（声明后工厂额外生成 save/load 任务，up 暴露 --offline） ——
+    supports_offline: bool = False
+
     # 便捷衍生键
     @property
     def workspace_env(self) -> str:
@@ -171,6 +178,10 @@ class StackSpec:
     @property
     def jupyter_port_env(self) -> str:
         return f"{self.env_prefix}_JUPYTER_PORT"
+
+    @property
+    def offline_env_key(self) -> str:
+        return f"{self.env_prefix}_OFFLINE"
 
     @property
     def stack_not_running_hint(self) -> str:
@@ -314,6 +325,57 @@ def image_tag(spec: StackSpec, env: dict) -> str:
 
 def _env_port(spec: StackSpec, env: dict, key: str, default: str) -> str:
     return str(os.environ.get(key) or env.get(key) or default)
+
+
+# ---------------------------------------------------------------------------
+# 离线模式（仅 supports_offline 栈）
+# ---------------------------------------------------------------------------
+
+
+def resolve_offline(
+    spec: StackSpec, on_val: bool, off_val: bool, env: Optional[dict] = None
+) -> bool:
+    """三态解析离线开关：``--offline`` > ``--no-offline`` > ``{PREFIX}_OFFLINE`` > 默认关。
+
+    非离线栈恒 False（不消费 ``{PREFIX}_OFFLINE``）。env 未显式传入时先经
+    ``_load_env_overrides`` 把 root .env 同步进 ``os.environ``（幂等，与
+    ``prepare_env`` 同一优先级：shell export > .env > 默认）。
+
+    **显式旗标必须写回环境**：WSL 桥接（``run_in_wsl_bridge``）只透传环境变量、
+    不转发 CLI 参数，旗标若不在 ``gate_platform`` 之前固化到
+    ``os.environ[offline_env_key]``，桥接后即丢失（V 对抗审查 V-1）。
+    """
+    if not spec.supports_offline:
+        return False
+    key = spec.offline_env_key
+    if env is None:
+        _load_env_overrides(_project_root())
+        env = os.environ
+    offline = _resolve_bool(on_val, off_val, env, key, False, "offline")
+    if on_val or off_val:
+        os.environ[key] = "1" if offline else "0"
+    return offline
+
+
+def offline_exec_env(spec: StackSpec) -> list[str]:
+    """栈内 exec 长任务的离线环境注入：``-e {PREFIX}_OFFLINE=1``；非离线时空。
+
+    经 exec 的 ``-e`` 逐次注入而非进 compose ``environment`` 段：离线是调用期
+    开关，不应污染 compose.yaml 的确定性渲染（保留 test_compose_merge 黄金快照）。
+    """
+    if not spec.supports_offline or not resolve_offline(spec, False, False):
+        return []
+    return ["-e", f"{spec.offline_env_key}=1"]
+
+
+def compose_up_tail(*, offline: bool = False) -> list[str]:
+    """``up`` 的 compose 尾参：离线追加 ``--no-build``。
+
+    podman-compose 的 ``up`` 默认对含 build 段的服务执行构建
+    （vendor ``podman_compose.py`` L4098 ``if not args.no_build:``）；仅靠跳过
+    本层 ``build_image`` 不足以保证禁网（V 对抗审查 V-2）。
+    """
+    return ["up", "-d", "--no-build"] if offline else ["up", "-d"]
 
 
 # ---------------------------------------------------------------------------
@@ -684,6 +746,18 @@ def require_running(c: Context, spec: StackSpec) -> None:
 # ---------------------------------------------------------------------------
 
 
+def _require_local_image(c: Context, spec: StackSpec, img_tag: str, *, action: str) -> None:
+    """离线前置：镜像必须已在本地，缺失即 fail-fast + 中文可执行指引。"""
+    runtime = detect_runtime()
+    r = run_cmd(c, f"{runtime} image exists {img_tag}", hide=True, warn=True, echo=False)
+    if r is not None and getattr(r, "ok", False):
+        return
+    print(f"[{spec.namespace}] ⚠ 离线模式下本地缺少镜像 {img_tag}，无法{action}：")
+    print(f"[{spec.namespace}]   联网机器导出归档: invoke {spec.namespace}.save")
+    print(f"[{spec.namespace}]   本机导入归档:     invoke {spec.namespace}.load --path <归档.tar.gz>")
+    raise Exit(1)
+
+
 def build_image(
     c: Context,
     spec: StackSpec,
@@ -693,8 +767,23 @@ def build_image(
     pip_mirror: str,
     conda_mirror: Optional[str] = None,
     no_cache: bool = False,
+    offline: Optional[bool] = None,
 ) -> str:
-    """podman build 薄封装（不引入 compose build 黑盒）；返回最终镜像标签。"""
+    """podman build 薄封装（不引入 compose build 黑盒）；返回最终镜像标签。
+
+    离线模式（``offline=None`` 时按 ``{PREFIX}_OFFLINE`` 解析）下**首行即拒绝**：
+    构建期 apt/mamba/pip 均需联网，无网机器无法完成，错误前置优于构建中途报错。
+    """
+    if offline is None:
+        offline = resolve_offline(spec, False, False)
+    if offline:
+        print(f"[{spec.namespace}] ⚠ 离线模式（{spec.offline_env_key}=1）禁止构建镜像：")
+        print("        构建期 apt/mamba/pip 均需联网，无网机器无法完成。")
+        print(f"[{spec.namespace}]   联网机器: invoke {spec.namespace}.build && invoke {spec.namespace}.save")
+        print(f"[{spec.namespace}]   本机导入: invoke {spec.namespace}.load --path <归档.tar.gz>")
+        print(f"[{spec.namespace}]   或仅用本地镜像启动: invoke {spec.namespace}.up --offline")
+        raise Exit(1)
+
     env = prepare_env(spec)
     runtime = detect_runtime()
     img_tag = tag or image_tag(spec, env)
@@ -738,8 +827,21 @@ def build_image(
     return img_tag
 
 
-def up_stack(c: Context, spec: StackSpec, *, gpu: bool = False, skip_build: bool = False) -> None:
-    """渲染并启动栈（默认随带构建；up 前过 up_preflight 三道自愈）。"""
+def up_stack(
+    c: Context,
+    spec: StackSpec,
+    *,
+    gpu: bool = False,
+    skip_build: bool = False,
+    offline: bool = False,
+) -> None:
+    """渲染并启动栈（默认随带构建；up 前过 up_preflight 三道自愈）。
+
+    离线模式：强制跳过本层构建 + 本地镜像存在性预检 + compose ``up --no-build``
+    （podman-compose 默认对含 build 段的服务执行构建，必须显式关闭）。
+    """
+    if offline:
+        skip_build = True
     if not skip_build:
         # up 内联构建只按默认参数执行（mirror/tag/base 自定义走显式 build 两步路径）
         build_image(
@@ -752,8 +854,10 @@ def up_stack(c: Context, spec: StackSpec, *, gpu: bool = False, skip_build: bool
             no_cache=False,
         )
     env = dict(os.environ)
+    if offline:
+        _require_local_image(c, spec, image_tag(spec, env), action="启动栈")
     up_preflight(c, spec, env=env)
-    run_compose(c, spec, "up", "-d", gpu=gpu)
+    run_compose(c, spec, *compose_up_tail(offline=offline), gpu=gpu)
     ssh = _env_port(spec, env, spec.ssh_port_env, spec.ssh_default)
     jupyter = _env_port(spec, env, spec.jupyter_port_env, spec.jupyter_default)
     print(f"[{spec.namespace}] ✅ 栈已启动：")
@@ -865,7 +969,10 @@ def _build_help(spec: StackSpec) -> dict:
 
 
 def make_stack_tasks(spec: StackSpec) -> dict:
-    """生成六任务骨架 {build,up,down,ps,logs,smoke}（invoke.Task 对象）。
+    """生成任务骨架 {build,up,down,ps,logs,smoke}（invoke.Task 对象）。
+
+    ``supports_offline=True`` 的栈额外生成 {save,load} 两个镜像归档任务，并给
+    ``up`` 追加 ``--offline``/``--no-offline`` 一对三态开关。
 
     长任务（build-tvm/wheel/build-native）不在本工厂：由各栈模块用内核
     helper（gates/ensure_runtime_ready/require_running/run_compose）单独构造。
@@ -922,6 +1029,12 @@ def make_stack_tasks(spec: StackSpec) -> dict:
 
     # —— up ——
     up_help = {"skip-build": "跳过启动前的镜像构建（默认每次 up 随带构建跟随层更新）"}
+    if spec.supports_offline:
+        up_help = {
+            "offline": "离线模式：禁止构建（强制跳过）并 up --no-build，仅用本地已导入镜像",
+            "no-offline": f"显式关闭 .env 的 {spec.offline_env_key}（覆盖离线默认）",
+            **up_help,
+        }
     if spec.gpu_override:
         up_help = {
             "gpu": "叠加 compose.gpu.yaml（透传 /dev/dri；默认隔离不透传 GPU）",
@@ -936,6 +1049,23 @@ def make_stack_tasks(spec: StackSpec) -> dict:
             ensure_runtime_ready(s)
             prepare_env(s)
             up_stack(c, s, gpu=gpu, skip_build=skip_build)
+
+    elif spec.supports_offline:
+
+        @task(help=up_help, **deco)
+        def up(
+            c: Context,
+            skip_build: bool = False,
+            offline: bool = False,
+            no_offline: bool = False,
+        ) -> None:
+            # 离线开关必须**先于 gates** 固化进 os.environ（WSL 桥接只透传环境
+            # 变量、不转发 CLI 参数，晚于桥接则旗标丢失）
+            is_offline = resolve_offline(s, offline, no_offline)
+            gates(s)
+            ensure_runtime_ready(s)
+            prepare_env(s)
+            up_stack(c, s, skip_build=skip_build, offline=is_offline)
 
     else:
 
@@ -994,7 +1124,7 @@ def make_stack_tasks(spec: StackSpec) -> dict:
 
     smoke.__doc__ = spec.docs.smoke
 
-    return {
+    tasks = {
         "build": build,
         "up": up,
         "down": down,
@@ -1002,3 +1132,67 @@ def make_stack_tasks(spec: StackSpec) -> dict:
         "logs": logs,
         "smoke": smoke,
     }
+
+    # —— save / load（仅 supports_offline 栈：离线镜像归档出口/入口） ——
+    if spec.supports_offline:
+        cache_help = (
+            "归档缓存目录，默认 .env 的 IMAGE_CACHE_DIR / 当前执行目录下的 .image-cache"
+        )
+
+        @task(
+            help={
+                "tag": f"要导出的镜像 tag，默认 {spec.default_image_tag}（或 root .env {spec.image_tag_env}）",
+                "cache-dir": cache_help,
+            },
+            **deco,
+        )
+        def save(c: Context, tag: str | None = None, cache_dir: str | None = None) -> None:
+            """导出本栈镜像为离线归档（tar.gz + manifest/SHA256，供无网机器 load）。"""
+            gates(s)
+            ensure_runtime_ready(s)
+            env = _load_env_overrides(_project_root())
+            target = tag or image_tag(s, env)
+            cache_path = Path(cache_dir) if cache_dir else default_build_cache_dir()
+            print(f"[{s.namespace}] 导出镜像归档: {target}")
+            ok = save_image(
+                c,
+                target,
+                cache_path,
+                not_found_hint=f"先构建: invoke {s.namespace}.build",
+                restore_hint=(
+                    f"invoke {s.namespace}.load --path <归档.tar.gz>   或   "
+                    f"invoke {s.namespace}.up --offline"
+                ),
+            )
+            if not ok:
+                raise Exit(1, "镜像归档导出失败")
+
+        @task(help={"path": "归档 tar.gz 路径；未指定则取缓存目录中最新的归档", "cache-dir": cache_help}, **deco)
+        def load(c: Context, path: str | None = None, cache_dir: str | None = None) -> None:
+            """从离线归档导入本栈镜像（manifest 完整性校验，缺网可用）。"""
+            gates(s)
+            ensure_runtime_ready(s)
+            _load_env_overrides(_project_root())
+            cache_path = Path(cache_dir) if cache_dir else default_build_cache_dir()
+            if path:
+                tar_path = Path(path).resolve()
+            else:
+                tar_path = find_latest_image_tar(cache_path)
+                if tar_path is None:
+                    print(f"[{s.namespace}] ⚠ 缓存目录中未找到归档: {cache_path}")
+                    print(f"[{s.namespace}]   请在联网机器执行: invoke {s.namespace}.save")
+                    raise Exit(1)
+                print(f"[{s.namespace}] 自动选择最新归档: {tar_path}")
+            integrity_err = validate_manifest_integrity(cache_path, tar_path)
+            if integrity_err:
+                print(f"[{s.namespace}]  {integrity_err}")
+                raise Exit(1, "归档校验失败，请重新 save 后再 load。")
+            result = load_image(c, tar_path)
+            if not result.loaded:
+                raise Exit(1, result.message)
+            print(f"[{s.namespace}] ✅ 镜像已导入；无网机器可直接: invoke {s.namespace}.up --offline")
+
+        tasks["save"] = save
+        tasks["load"] = load
+
+    return tasks

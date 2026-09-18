@@ -6,6 +6,9 @@
 # wheel 以 --no-deps --force-reinstall 装入 venv，结束即删除——base env 的源码
 # 调试链路（PYTHONPATH=/workspace/...）零污染。
 #
+# 离线（阶段二）：本脚本无任何对外网络请求——venv 用 bundled ensurepip 创建、
+# wheel 从本地路径以 --no-deps 安装、不升级 pip、不做依赖解析。
+#
 # 用法：
 #   bash verify-wheel.sh [wheel 路径]
 #   默认取 $DIST_DIR（/workspace/dist）下最新的 xmnn-*.whl

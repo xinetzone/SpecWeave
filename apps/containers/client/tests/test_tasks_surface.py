@@ -27,7 +27,7 @@ def _params(task: Task) -> list[str]:
 
 def test_namespace_task_sets():
     assert set(_col("quant").tasks) == set(SIX)
-    assert set(_col("xmnn").tasks) == {*SIX, "build-tvm", "wheel"}
+    assert set(_col("xmnn").tasks) == {*SIX, "build-tvm", "wheel", "save", "load"}
     assert set(_col("monetize").tasks) == {*SIX, "build-native", "wheel"}
     assert set(_col("xmnnrt").tasks) == {*SIX, "pack"}
 
@@ -71,9 +71,12 @@ def test_signatures_golden():
     ]
     # up/smoke：仅 quant 暴露 gpu
     assert _params(q.tasks["up"]) == ["gpu", "skip_build"]
-    assert _params(x.tasks["up"]) == ["skip_build"]
+    assert _params(x.tasks["up"]) == ["skip_build", "offline", "no_offline"]
     assert _params(m.tasks["up"]) == ["skip_build"]
     assert _params(_col("xmnnrt").tasks["up"]) == ["skip_build"]
+    # xmnn 离线镜像归档（仅 supports_offline 栈生成）
+    assert _params(x.tasks["save"]) == ["tag", "cache_dir"]
+    assert _params(x.tasks["load"]) == ["path", "cache_dir"]
     # pack：客户离线交付包打包（仅 --version）
     assert _params(_col("xmnnrt").tasks["pack"]) == ["version"]
     assert _params(q.tasks["smoke"]) == ["gpu"]
@@ -99,6 +102,8 @@ def test_auto_shortflags_quant_on_others_off():
         assert _col("monetize").tasks[name].auto_shortflags is False
         assert _col("xmnnrt").tasks[name].auto_shortflags is False
     assert _col("xmnnrt").tasks["pack"].auto_shortflags is False
+    assert _col("xmnn").tasks["save"].auto_shortflags is False
+    assert _col("xmnn").tasks["load"].auto_shortflags is False
     assert _col("xmnn").tasks["wheel"].auto_shortflags is False
     assert _col("monetize").tasks["wheel"].auto_shortflags is False
 

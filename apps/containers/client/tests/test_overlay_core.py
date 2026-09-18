@@ -131,6 +131,7 @@ def harness(monkeypatch, tmp_path):
     for spec in ALL_SPECS:
         for key in (spec.workspace_env, spec.image_tag_env, spec.ssh_port_env, spec.jupyter_port_env):
             monkeypatch.delenv(key, raising=False)
+        monkeypatch.delenv(spec.offline_env_key, raising=False)
         for m in spec.source_mounts:
             monkeypatch.delenv(m.env, raising=False)
 
@@ -474,10 +475,13 @@ def _param_names(task: Task) -> list[str]:
     return [p for p in inspect.signature(task.body).parameters if p != "c"]
 
 
-def test_factory_six_tasks_and_docs(harness):
+def test_factory_tasks_and_docs(harness):
     for spec in ALL_SPECS:
         tasks = oc.make_stack_tasks(spec)
-        assert set(tasks) == {"build", "up", "down", "ps", "logs", "smoke"}
+        expected = {"build", "up", "down", "ps", "logs", "smoke"}
+        if spec.supports_offline:
+            expected |= {"save", "load"}
+        assert set(tasks) == expected
         assert all(isinstance(t, Task) for t in tasks.values())
         assert tasks["build"].__doc__ == spec.docs.build
         assert tasks["up"].__doc__ == spec.docs.up
@@ -498,7 +502,7 @@ def test_factory_build_signature_conda_variant(harness):
 def test_factory_up_smoke_gpu_params_quant_only(harness):
     q, x, m = (oc.make_stack_tasks(s) for s in (_QUANT, _XMNN, _MONETIZE))
     assert _param_names(q["up"]) == ["gpu", "skip_build"]
-    assert _param_names(x["up"]) == ["skip_build"]
+    assert _param_names(x["up"]) == ["skip_build", "offline", "no_offline"]
     assert _param_names(m["up"]) == ["skip_build"]
     assert _param_names(q["smoke"]) == ["gpu"]
     assert _param_names(x["smoke"]) == []
@@ -606,3 +610,88 @@ def test_smoke_running_monetize_two_scripts(harness):
     exec_cmds = [c for c in harness.runner.commands if " exec " in c]
     assert "_toolchain_guards.py" in exec_cmds[0]
     assert "smoke_native.py" in exec_cmds[1]
+
+
+# ---------------------------------------------------------------------------
+# 离线模式（仅 xmnn 声明 supports_offline；V-1 桥接透传 / V-2 compose --no-build）
+# ---------------------------------------------------------------------------
+
+
+def test_offline_declared_only_for_xmnn():
+    assert _XMNN.supports_offline is True
+    assert _QUANT.supports_offline is False and _MONETIZE.supports_offline is False
+    assert _XMNN.offline_env_key == "XMNN_OFFLINE"
+    assert "XMNN_OFFLINE" in _XMNN.bridge_env_keys
+
+
+def test_resolve_offline_flag_written_back_to_env(harness, monkeypatch):
+    """V-1：显式旗标必须在 gates（WSL 桥接）之前固化进 os.environ。"""
+    monkeypatch.setenv("XMNN_OFFLINE", "0")
+    assert oc.resolve_offline(_XMNN, True, False) is True
+    assert os.environ["XMNN_OFFLINE"] == "1"
+    assert oc.resolve_offline(_XMNN, False, True) is False
+    assert os.environ["XMNN_OFFLINE"] == "0"
+
+
+def test_resolve_offline_env_fallback_conflict_and_non_offline_stack(harness, monkeypatch):
+    monkeypatch.setenv("XMNN_OFFLINE", "yes")
+    assert oc.resolve_offline(_XMNN, False, False) is True
+    monkeypatch.setenv("QUANT_OFFLINE", "1")
+    assert oc.resolve_offline(_QUANT, False, False) is False
+    with pytest.raises(Exit):
+        oc.resolve_offline(_XMNN, True, True)
+
+
+def test_compose_up_tail_adds_no_build_offline():
+    """V-2：podman-compose up 默认构建，禁网必须显式 --no-build。"""
+    assert oc.compose_up_tail(offline=False) == ["up", "-d"]
+    assert oc.compose_up_tail(offline=True) == ["up", "-d", "--no-build"]
+
+
+def test_offline_exec_env_gated_by_declaration_and_env(harness, monkeypatch):
+    monkeypatch.delenv("XMNN_OFFLINE", raising=False)
+    assert oc.offline_exec_env(_XMNN) == []
+    monkeypatch.setenv("XMNN_OFFLINE", "1")
+    assert oc.offline_exec_env(_XMNN) == ["-e", "XMNN_OFFLINE=1"]
+    assert oc.offline_exec_env(_QUANT) == []
+
+
+def test_build_image_offline_fails_fast_before_any_command(harness, monkeypatch):
+    monkeypatch.setenv("XMNN_OFFLINE", "1")
+    with pytest.raises(Exit) as ei:
+        oc.build_image(
+            None, _XMNN, tag=None,
+            base_image=_XMNN.default_base_image, pip_mirror="official",
+        )
+    assert ei.value.code == 1
+    assert harness.runner.commands == []  # 未发生任何 podman 调用
+
+
+def test_up_offline_forces_skip_build_and_compose_no_build(harness):
+    oc.up_stack(None, _XMNN, offline=True)
+    cmds = harness.runner.commands
+    assert not any(" build " in c for c in cmds)
+    assert any("up -d --no-build" in c for c in cmds)
+
+
+def test_up_offline_missing_image_exits(harness):
+    harness.runner.image_exists = False
+    with pytest.raises(Exit) as ei:
+        oc.up_stack(None, _XMNN, offline=True)
+    assert ei.value.code == 1
+
+
+def test_up_task_body_offline_flag_survives_to_argv(harness, monkeypatch):
+    monkeypatch.setenv("XMNN_OFFLINE", "0")
+    tasks = oc.make_stack_tasks(_XMNN)
+    tasks["up"].body(None, skip_build=False, offline=True, no_offline=False)
+    assert os.environ["XMNN_OFFLINE"] == "1"
+    assert any("up -d --no-build" in c for c in harness.runner.commands)
+
+
+def test_save_load_tasks_only_for_offline_stack(harness):
+    assert "save" not in oc.make_stack_tasks(_QUANT)
+    assert "load" not in oc.make_stack_tasks(_MONETIZE)
+    x = oc.make_stack_tasks(_XMNN)
+    assert _param_names(x["save"]) == ["tag", "cache_dir"]
+    assert _param_names(x["load"]) == ["path", "cache_dir"]

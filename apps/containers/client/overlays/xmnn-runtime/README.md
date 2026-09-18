@@ -12,7 +12,7 @@
   `/opt/conda`；main env（cp314t）继续跑 Jupyter 服务，不动
 - **制品契约**：`xmnn-1.2.1.dev0-cp314-cp314-linux_x86_64.whl`
   自包含 `_libs/`（libtvm.so + libLLVM 22，RPATH `$ORIGIN`）、
-  `xmnn_bootstrap.pth`、autolibs/tools_cpp/fonts 数据目录与 19 个依赖声明
+  `xmnn_bootstrap.pth`、autolibs/tools_cpp/fonts 数据目录与全部运行时依赖声明
 - **服务**：SSH（宿主 **2225**→22）+ JupyterLab（**8893**→8888），
   supervisord 托管，沿用基底 entrypoint
 - **不包含**：LLVM/Clang、Nuitka、gcc/g++、gdb、ccache；npu_tvm/
