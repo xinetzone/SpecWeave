@@ -134,6 +134,10 @@ def harness(monkeypatch, tmp_path):
         monkeypatch.delenv(spec.offline_env_key, raising=False)
         for m in spec.source_mounts:
             monkeypatch.delenv(m.env, raising=False)
+    # C15：build-arg 单一事实源键（无前缀，与 compose 段插值键同键）也必须清空，
+    # 否则宿主 export 的 PIP_MIRROR/BASE_IMAGE 会让黄金 argv 断言随环境漂移
+    for key in ("PIP_MIRROR", "CONDA_MIRROR", "BASE_IMAGE"):
+        monkeypatch.delenv(key, raising=False)
 
     runner = FakeRunner()
     monkeypatch.setattr(oc, "run_cmd", runner)
@@ -569,7 +573,76 @@ def test_up_skip_build_reconcile_and_up_argv(harness):
     oc.up_stack(None, _QUANT, gpu=False, skip_build=True)
     cmds = harness.runner.commands
     assert not any(" build " in c for c in cmds)
-    assert any(c.endswith("up -d") or " up -d" in c for c in cmds)
+    assert any("up -d --no-build" in c for c in cmds)
+
+
+# ---------------------------------------------------------------------------
+# C16：构建执行者唯一（内核为镜像存在性负责 → compose 段恒 --no-build）
+# ---------------------------------------------------------------------------
+
+
+def test_up_inline_build_runs_exactly_once(harness):
+    """默认 up：内联构建一次，compose 段被 --no-build 抑制（此前会构建两次）。"""
+    oc.up_stack(None, _QUANT)
+    assert len([c for c in harness.runner.commands if " build " in c]) == 1
+    assert any("up -d --no-build" in c for c in harness.runner.commands)
+
+
+def test_up_skip_build_without_local_image_exits_with_guidance(harness, capsys):
+    """--skip-build 不再由 compose 段兜底构建：镜像缺失必须 fail-fast 且可执行。"""
+    harness.runner.image_exists = False
+    with pytest.raises(Exit) as ei:
+        oc.up_stack(None, _QUANT, skip_build=True)
+    assert ei.value.code == 1
+    out = capsys.readouterr().out
+    assert "--skip-build 置位但本地缺少镜像" in out
+    assert "invoke quant.build" in out
+    assert not any("up -d" in c for c in harness.runner.commands)  # 未起容器
+
+
+# ---------------------------------------------------------------------------
+# C15：build-arg 单一事实源（.env 无前缀键贯通 build / up 内联构建 / compose 段）
+# ---------------------------------------------------------------------------
+
+
+def test_up_inline_build_reads_env_build_args(harness, monkeypatch):
+    """up 内联构建的 build-arg 必须读 .env 无前缀键，而非硬编码 official。"""
+    monkeypatch.setenv("PIP_MIRROR", "tuna")
+    monkeypatch.setenv("CONDA_MIRROR", "aliyun")
+    monkeypatch.setenv("BASE_IMAGE", "localhost/base:env")
+    oc.up_stack(None, _XMNN, gpu=False)
+    build_cmd = [c for c in harness.runner.commands if " build " in c][0]
+    assert "--build-arg PIP_MIRROR=tuna" in build_cmd
+    assert "--build-arg CONDA_MIRROR=aliyun" in build_cmd
+    assert "--build-arg BASE_IMAGE=localhost/base:env" in build_cmd
+
+
+def test_build_task_defaults_follow_env(harness, monkeypatch):
+    """显式 build 不传旗标时同样跟随 .env——三处同键才可能命中同一层缓存。"""
+    monkeypatch.setenv("PIP_MIRROR", "tuna")
+    tasks = oc.make_stack_tasks(_QUANT)
+    tasks["build"].body(None)
+    build_cmd = [c for c in harness.runner.commands if " build " in c][0]
+    assert "--build-arg PIP_MIRROR=tuna" in build_cmd
+    assert f"--build-arg BASE_IMAGE={_QUANT.default_base_image}" in build_cmd
+
+
+def test_build_args_fall_back_to_defaults_without_env(harness):
+    """未设 .env 键时回退 spec 默认（回归保护：旧行为零变化）。"""
+    args = oc.resolve_build_args(_XMNN, {})
+    assert args == {
+        "base_image": _XMNN.default_base_image,
+        "pip_mirror": "official",
+        "conda_mirror": "official",
+    }
+    assert "conda_mirror" not in oc.resolve_build_args(_QUANT, {})
+
+
+def test_build_args_cli_flag_beats_env(harness, monkeypatch):
+    """CLI 旗标优先级高于 .env（单次覆盖），但 compose 段看不到旗标。"""
+    monkeypatch.setenv("PIP_MIRROR", "tuna")
+    args = oc.resolve_build_args(_QUANT, {}, pip_mirror="aliyun")
+    assert args["pip_mirror"] == "aliyun"
 
 
 def test_down_task_volumes_flag(harness):
@@ -642,10 +715,9 @@ def test_resolve_offline_env_fallback_conflict_and_non_offline_stack(harness, mo
         oc.resolve_offline(_XMNN, True, True)
 
 
-def test_compose_up_tail_adds_no_build_offline():
-    """V-2：podman-compose up 默认构建，禁网必须显式 --no-build。"""
-    assert oc.compose_up_tail(offline=False) == ["up", "-d"]
-    assert oc.compose_up_tail(offline=True) == ["up", "-d", "--no-build"]
+def test_compose_up_tail_always_no_build():
+    """C16 取代 V-2 的 offline 分叉：--no-build 对非离线 up 同样必须成立。"""
+    assert oc.compose_up_tail() == ["up", "-d", "--no-build"]
 
 
 def test_offline_exec_env_gated_by_declaration_and_env(harness, monkeypatch):
@@ -674,11 +746,12 @@ def test_up_offline_forces_skip_build_and_compose_no_build(harness):
     assert any("up -d --no-build" in c for c in cmds)
 
 
-def test_up_offline_missing_image_exits(harness):
+def test_up_offline_missing_image_exits(harness, capsys):
     harness.runner.image_exists = False
     with pytest.raises(Exit) as ei:
         oc.up_stack(None, _XMNN, offline=True)
     assert ei.value.code == 1
+    assert "离线模式下本地缺少镜像" in capsys.readouterr().out
 
 
 def test_up_task_body_offline_flag_survives_to_argv(harness, monkeypatch):

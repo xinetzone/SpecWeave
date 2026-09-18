@@ -115,16 +115,16 @@ def _ensure_wheel_staged(explicit: Optional[str]) -> Path:
 @task(
     help={
         "tag": "产出镜像标签，默认 localhost/xmnn-runtime:latest（或 .env XMNNRT_IMAGE_TAG）",
-        "base-image": "基底镜像，默认 localhost/jupyter-podman-rootless:latest（须与构建器同基底）",
-        "pip-mirror": "构建期 pip 镜像源：official|aliyun|tuna（默认 official）",
+        "base-image": "基底镜像；默认 .env BASE_IMAGE，缺省 localhost/jupyter-podman-rootless:latest（须与构建器同基底）",
+        "pip-mirror": "构建期 pip 镜像源：official|aliyun|tuna；默认 .env PIP_MIRROR，缺省 official",
         "wheel": "显式指定 whl 路径；默认取 workspace/dist 最新 xmnn-*.whl（已暂存同名则复用）",
         "no-cache": "等价 podman build --no-cache（强制全量重建）",
     },
     auto_shortflags=False,
 )
 def build(c: Context, tag: str | None = None,
-          base_image: str = XMNNRT_SPEC.default_base_image,
-          pip_mirror: str = "official", wheel: str | None = None,
+          base_image: str | None = None,
+          pip_mirror: str | None = None, wheel: str | None = None,
           no_cache: bool = False) -> None:
     """暂存 wheel 后构建 xmnn-runtime 运行时镜像（构建期 10 项硬验证）。"""
     gates(XMNNRT_SPEC)
@@ -134,7 +134,9 @@ def build(c: Context, tag: str | None = None,
                 pip_mirror=pip_mirror, no_cache=no_cache)
 
 @task(
-    help={"skip-build": "跳过镜像构建（默认随带构建；构建前自动暂存 workspace/dist 最新 whl）"},
+    help={"skip-build": "跳过镜像构建，直接用本地已有镜像（缺失即 fail-fast 并给出指引；"
+                        "compose 段不兜底构建，up 恒 --no-build）。默认随带构建：构建前自动暂存 "
+                        "workspace/dist 最新 whl，内联构建读 .env PIP_MIRROR/BASE_IMAGE，与 compose 段同键"},
     auto_shortflags=False,
 )
 def up(c: Context, skip_build: bool = False) -> None:

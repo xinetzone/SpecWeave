@@ -76,7 +76,8 @@ MONETIZE_SPEC = StackSpec(
         "MONETIZE_IMAGE_TAG", "MONETIZE_CONTAINER_NAME", "MONETIZE_WORKSPACE",
         "MONETIZE_SSH_PORT", "MONETIZE_JUPYTER_PORT", "MONETIZE_SRC_PATH",
     ),
-    not_running_hint="monetize 栈未运行，请先：invoke monetize.up --skip-build",
+    not_running_hint="monetize 栈未运行，请先：invoke monetize.up"
+    "（默认随带构建；本地已有镜像可加 --skip-build）",
 )
 
 TASKS = make_stack_tasks(MONETIZE_SPEC)

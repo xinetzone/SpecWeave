@@ -327,6 +327,45 @@ def _env_port(spec: StackSpec, env: dict, key: str, default: str) -> str:
     return str(os.environ.get(key) or env.get(key) or default)
 
 
+def resolve_build_args(
+    spec: StackSpec,
+    env: dict,
+    *,
+    base_image: Optional[str] = None,
+    pip_mirror: Optional[str] = None,
+    conda_mirror: Optional[str] = None,
+) -> dict:
+    """解析构建期 build-arg（单一事实源，C15）。
+
+    键为**无前缀**的 compose 插值键（``BASE_IMAGE`` / ``PIP_MIRROR`` /
+    ``CONDA_MIRROR``），与 ``overlays/*/compose.yaml`` 的 ``${KEY:-默认}`` 逐一
+    对应：``build``、``up`` 内联构建、compose 内部 build 段三处必须拿到同一值，
+    否则某一处 build-arg 变化就会让构建层缓存整体失效（表现为"白重建"）。
+
+    优先级：显式参数（CLI 旗标）> shell export > .env > 默认值；compose 段不
+    可见 CLI 旗标，故**跨三处一致必须写 .env**，CLI 旗标只覆盖单次调用。
+    """
+    args = {
+        "base_image": str(
+            base_image
+            or os.environ.get("BASE_IMAGE")
+            or env.get("BASE_IMAGE")
+            or spec.default_base_image
+        ),
+        "pip_mirror": str(
+            pip_mirror or os.environ.get("PIP_MIRROR") or env.get("PIP_MIRROR") or "official"
+        ),
+    }
+    if spec.conda_mirror:
+        args["conda_mirror"] = str(
+            conda_mirror
+            or os.environ.get("CONDA_MIRROR")
+            or env.get("CONDA_MIRROR")
+            or "official"
+        )
+    return args
+
+
 # ---------------------------------------------------------------------------
 # 离线模式（仅 supports_offline 栈）
 # ---------------------------------------------------------------------------
@@ -368,14 +407,19 @@ def offline_exec_env(spec: StackSpec) -> list[str]:
     return ["-e", f"{spec.offline_env_key}=1"]
 
 
-def compose_up_tail(*, offline: bool = False) -> list[str]:
-    """``up`` 的 compose 尾参：离线追加 ``--no-build``。
+def compose_up_tail() -> list[str]:
+    """``up`` 的 compose 尾参**恒含** ``--no-build``：构建执行者唯一（C16）。
 
     podman-compose 的 ``up`` 默认对含 build 段的服务执行构建
-    （vendor ``podman_compose.py`` L4098 ``if not args.no_build:``）；仅靠跳过
-    本层 ``build_image`` 不足以保证禁网（V 对抗审查 V-2）。
+    （vendor ``podman_compose.py`` L4098 ``if not args.no_build:``）。若不关闭，
+    一次 ``invoke x.up`` 会构建两次——内核 ``build_image`` 与 compose build 段，
+    二者是「两个执行者解释同一意图」，且 compose 段看不到 CLI 旗标、时点在
+    内核之后（离线场景更直接破网，V 对抗审查 V-2）。
+
+    故：**镜像存在性由内核负责，compose 只负责起容器**。compose.yaml 的
+    ``build`` 段仅服务**裸 podman-compose** 路径，invoke 路径不再消费它。
     """
-    return ["up", "-d", "--no-build"] if offline else ["up", "-d"]
+    return ["up", "-d", "--no-build"]
 
 
 # ---------------------------------------------------------------------------
@@ -746,15 +790,31 @@ def require_running(c: Context, spec: StackSpec) -> None:
 # ---------------------------------------------------------------------------
 
 
-def _require_local_image(c: Context, spec: StackSpec, img_tag: str, *, action: str) -> None:
-    """离线前置：镜像必须已在本地，缺失即 fail-fast + 中文可执行指引。"""
+def _require_local_image(
+    c: Context, spec: StackSpec, img_tag: str, *, action: str, offline: bool
+) -> None:
+    """跳过构建时的前置：镜像必须已在本地，缺失即 fail-fast + 中文可执行指引。
+
+    两条路径共用（C16）——① ``--offline``：只能用已导入镜像（断网，不能构建）；
+    ② 非离线 ``--skip-build``：用户声明不做任何构建。二者此刻都**没有第二个
+    执行者兜底**（``up`` 恒 ``--no-build``），故必须在此拦下并给出可执行出口。
+    """
     runtime = detect_runtime()
     r = run_cmd(c, f"{runtime} image exists {img_tag}", hide=True, warn=True, echo=False)
     if r is not None and getattr(r, "ok", False):
         return
-    print(f"[{spec.namespace}] ⚠ 离线模式下本地缺少镜像 {img_tag}，无法{action}：")
-    print(f"[{spec.namespace}]   联网机器导出归档: invoke {spec.namespace}.save")
-    print(f"[{spec.namespace}]   本机导入归档:     invoke {spec.namespace}.load --path <归档.tar.gz>")
+    if offline:
+        print(f"[{spec.namespace}] ⚠ 离线模式下本地缺少镜像 {img_tag}，无法{action}：")
+        print(f"[{spec.namespace}]   联网机器导出归档: invoke {spec.namespace}.save")
+        print(f"[{spec.namespace}]   本机导入归档:     invoke {spec.namespace}.load --path <归档.tar.gz>")
+    else:
+        print(f"[{spec.namespace}] ⚠ --skip-build 置位但本地缺少镜像 {img_tag}，无法{action}：")
+        print(f"[{spec.namespace}]   compose 段不会兜底构建（up 恒 --no-build）；二选一：")
+        print(f"[{spec.namespace}]   随带构建启动:   invoke {spec.namespace}.up")
+        print(
+            f"[{spec.namespace}]   显式构建后启动: invoke {spec.namespace}.build"
+            f" && invoke {spec.namespace}.up --skip-build"
+        )
     raise Exit(1)
 
 
@@ -763,13 +823,17 @@ def build_image(
     spec: StackSpec,
     *,
     tag: Optional[str],
-    base_image: str,
-    pip_mirror: str,
+    base_image: Optional[str] = None,
+    pip_mirror: Optional[str] = None,
     conda_mirror: Optional[str] = None,
     no_cache: bool = False,
     offline: Optional[bool] = None,
 ) -> str:
     """podman build 薄封装（不引入 compose build 黑盒）；返回最终镜像标签。
+
+    三个 build-arg 传 ``None`` 时经 ``resolve_build_args`` 解析：读与 compose.yaml
+    ``${KEY:-默认}`` 相同的无前缀 .env 键（C15），保证本层构建与 compose 内部
+    build 段拿到同一组值，避免互相失效层缓存。
 
     离线模式（``offline=None`` 时按 ``{PREFIX}_OFFLINE`` 解析）下**首行即拒绝**：
     构建期 apt/mamba/pip 均需联网，无网机器无法完成，错误前置优于构建中途报错。
@@ -785,6 +849,10 @@ def build_image(
         raise Exit(1)
 
     env = prepare_env(spec)
+    args = resolve_build_args(
+        spec, env, base_image=base_image, pip_mirror=pip_mirror, conda_mirror=conda_mirror
+    )
+    base_image = args["base_image"]
     runtime = detect_runtime()
     img_tag = tag or image_tag(spec, env)
     overlay = overlay_dir(spec)
@@ -810,10 +878,12 @@ def build_image(
         "build",
         f"-f {shlex.quote(str(containerfile))}",
         f"--build-arg BASE_IMAGE={shlex.quote(base_image)}",
-        f"--build-arg PIP_MIRROR={shlex.quote(pip_mirror)}",
+        f"--build-arg PIP_MIRROR={shlex.quote(args['pip_mirror'])}",
     ]
     if spec.conda_mirror:
-        parts.append(f"--build-arg CONDA_MIRROR={shlex.quote(conda_mirror or 'official')}")
+        parts.append(
+            f"--build-arg CONDA_MIRROR={shlex.quote(args.get('conda_mirror') or 'official')}"
+        )
     parts.append(f"-t {shlex.quote(img_tag)}")
     if no_cache:
         parts.append("--no-cache")
@@ -837,27 +907,27 @@ def up_stack(
 ) -> None:
     """渲染并启动栈（默认随带构建；up 前过 up_preflight 三道自愈）。
 
-    离线模式：强制跳过本层构建 + 本地镜像存在性预检 + compose ``up --no-build``
-    （podman-compose 默认对含 build 段的服务执行构建，必须显式关闭）。
+    构建执行者唯一（C16）：镜像存在性由内核负责，compose 恒 ``up -d --no-build``。
+    默认路径内联 ``build_image`` 后即起容器（全程一次构建）；``--skip-build`` 与
+    离线路径不做任何构建，故先做本地镜像存在性预检（缺失 fail-fast + 中文指引），
+    不再让 compose 的 build 段兜底。
+
+    内联构建与显式 ``build`` 共用 ``resolve_build_args``（C15）：读 .env 的
+    ``PIP_MIRROR`` / ``CONDA_MIRROR`` / ``BASE_IMAGE``——与 compose 段插值键同键。
+
+    离线模式：强制跳过构建 + 本地镜像存在性预检 + compose ``up --no-build``。
     """
     if offline:
         skip_build = True
     if not skip_build:
-        # up 内联构建只按默认参数执行（mirror/tag/base 自定义走显式 build 两步路径）
-        build_image(
-            c,
-            spec,
-            tag=None,
-            base_image=spec.default_base_image,
-            pip_mirror="official",
-            conda_mirror="official" if spec.conda_mirror else None,
-            no_cache=False,
-        )
+        build_image(c, spec, tag=None, no_cache=False)
     env = dict(os.environ)
-    if offline:
-        _require_local_image(c, spec, image_tag(spec, env), action="启动栈")
+    if skip_build:
+        _require_local_image(
+            c, spec, image_tag(spec, env), action="启动栈", offline=offline
+        )
     up_preflight(c, spec, env=env)
-    run_compose(c, spec, *compose_up_tail(offline=offline), gpu=gpu)
+    run_compose(c, spec, *compose_up_tail(), gpu=gpu)
     ssh = _env_port(spec, env, spec.ssh_port_env, spec.ssh_default)
     jupyter = _env_port(spec, env, spec.jupyter_port_env, spec.jupyter_default)
     print(f"[{spec.namespace}] ✅ 栈已启动：")
@@ -957,13 +1027,14 @@ def smoke_stack(c: Context, spec: StackSpec, *, gpu: bool = False) -> None:
 def _build_help(spec: StackSpec) -> dict:
     help_ = {
         "tag": f"产出镜像标签，默认 {spec.default_image_tag}（或 root .env {spec.image_tag_env}）",
-        "base-image": "基底镜像（Containerfile ARG BASE_IMAGE），默认 %s" % spec.default_base_image,
-        "pip-mirror": "构建期 pip 镜像源：official|aliyun|tuna（默认 official）",
+        "base-image": "基底镜像（Containerfile ARG BASE_IMAGE）；默认 .env BASE_IMAGE，缺省 %s"
+        % spec.default_base_image,
+        "pip-mirror": "构建期 pip 镜像源：official|aliyun|tuna；默认 .env PIP_MIRROR，缺省 official",
         "no-cache": "等价 podman build --no-cache（强制全量重建）",
     }
     if spec.conda_mirror:
         help_["conda-mirror"] = (
-            "构建期 conda 镜像源：official|aliyun|tuna（.env 经 up 的 compose 内联 build 生效）"
+            "构建期 conda 镜像源：official|aliyun|tuna；默认 .env CONDA_MIRROR，缺省 official"
         )
     return help_
 
@@ -987,9 +1058,9 @@ def make_stack_tasks(spec: StackSpec) -> dict:
         def build(
             c: Context,
             tag: str | None = None,
-            base_image: str = spec.default_base_image,
-            pip_mirror: str = "official",
-            conda_mirror: str = "official",
+            base_image: str | None = None,
+            pip_mirror: str | None = None,
+            conda_mirror: str | None = None,
             no_cache: bool = False,
         ) -> None:
             gates(s)
@@ -1010,8 +1081,8 @@ def make_stack_tasks(spec: StackSpec) -> dict:
         def build(
             c: Context,
             tag: str | None = None,
-            base_image: str = spec.default_base_image,
-            pip_mirror: str = "official",
+            base_image: str | None = None,
+            pip_mirror: str | None = None,
             no_cache: bool = False,
         ) -> None:
             gates(s)
@@ -1028,10 +1099,14 @@ def make_stack_tasks(spec: StackSpec) -> dict:
     build.__doc__ = spec.docs.build
 
     # —— up ——
-    up_help = {"skip-build": "跳过启动前的镜像构建（默认每次 up 随带构建跟随层更新）"}
+    up_help = {
+        "skip-build": "跳过启动前的镜像构建，直接用本地已有镜像（缺失即 fail-fast "
+        "并给出指引；compose 段不兜底构建，up 恒 --no-build）。默认随带构建，"
+        "内联构建读 .env PIP_MIRROR/CONDA_MIRROR/BASE_IMAGE，与 compose 段同键"
+    }
     if spec.supports_offline:
         up_help = {
-            "offline": "离线模式：禁止构建（强制跳过）并 up --no-build，仅用本地已导入镜像",
+            "offline": "离线模式：禁止构建（强制跳过）并只用本地已导入镜像",
             "no-offline": f"显式关闭 .env 的 {spec.offline_env_key}（覆盖离线默认）",
             **up_help,
         }
