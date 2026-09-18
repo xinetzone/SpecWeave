@@ -49,6 +49,18 @@ source: "README.md#4-命令速查"
 > compose 的 build 段兜底）。`overlays/*/compose.yaml` 的 `build:` 段自此仅服务
 > **裸 `podman-compose`** 路径。
 
+> **`up` 输出收敛（C17，2026-09-18）**：`invoke x.up` 起容器走
+> `overlay_core.run_compose_up()`——先捕获 podman-compose 的 stdout/stderr，再按**白名单**
+> 过滤 podman 原生回显，最后打印编排层中文提示。被过滤的只有三类良性行：① 整行恰为
+> 64 位十六进制对象 ID；② 整行与容器名 / `pod_<project>` / `<project>_default` 全等；
+> ③ rootless netns 的 `failed to move the rootless netns pasta process to the systemd
+> user.slice: dbus: couldn't determine address of session bus`（宿主无 systemd 用户会话总线
+> 时的良性提示，容器照常创建）。命中时打印一行 `ℹ 已过滤 N 行 podman 原生回显噪声`。
+>
+> **失败路径零过滤**：非零退出码下 stdout/stderr **全量原样回放**后再 Exit（退出码透传），
+> 不会因过滤吞掉真实错误。仅 `up` 走该路径；`down` / `ps` / `logs` / `exec` 与
+> `build` / `build-tvm` / `wheel` 等长任务保持逐字实时透传。
+
 ## SSH known_hosts 自动维护
 
 每次执行 `invoke run` 时，启动流程会自动扫描并清理 `~/.ssh/known_hosts` 中与当前 `SSH_PORT`（默认 2222）匹配的 `[localhost]:PORT` / `[127.0.0.1]:PORT` 过期条目，然后尝试用 `ssh-keyscan` 写入最新 key。JPMan 容器重建后 host key 必然变更，此逻辑消除了手动干预需求。

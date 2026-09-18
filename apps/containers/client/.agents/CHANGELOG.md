@@ -6,6 +6,26 @@
 
 ## [Unreleased]
 
+### 2026-09-18 · `fix:` `up` 输出收敛——过滤 podman 原生回显噪声（C17）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260918-terminal-echo）。
+
+**R 事实**：用户实测 `invoke xmnn.up --offline`（Windows 原生 → WSL 桥接）一屏被 4 行 podman 原生行冲散：① `2096d7b4…`、② `d3f33bf7…`（两行裸 64 位对象 ID）、③ `xmnn-dev`（裸容器名）、④ `ERROR[0001] failed to move the rootless netns pasta process to the systemd user.slice: dbus: couldn't determine address of session bus`。scratch 项目真机复现：`up` stdout = N×64-hex + 容器名，stderr = podman 原生错误；`down` stdout = 容器名×2 + pod ID + `_default` 网络名。
+
+**I 洞察（四元组）**：**现象**——编排层中文提示被 podman 原生回显切碎，`ERROR` 一行尤其像真故障；**根因**——vendor `podman_compose.py` L1907 在无 `log_formatter` 时以 `close_fds=False` 执行 `asyncio.create_subprocess_exec`，podman 子进程**继承 stdio** 直通终端，而仓库侧 `run_compose()` 是裸转发、无过滤层；且 podman-compose **无全局静默旗标**（`-q/--quiet` 语义恰为「只显示容器 ID」，反而更多 ID）；**影响**——用户无法区分「良性回显」与「真实错误」（第 ④ 行是宿主无 systemd 用户会话总线时的良性提示，容器照常创建）；**建议**——在 `podman-compose` 进程边界捕获输出并按白名单过滤。
+
+**F 第一性原理**：① 噪声的**生产者**是 podman，`podman-compose` 只是透明管道——要收敛只能在**唯一可控边界**（子进程 fd）拦，靠 podman-compose 自身开关无解；② 过滤必须是**白名单**而非黑名单：终端可信度优先，无法确证良性的行一律保留（黑名单漏掉一种噪声只是难看，白名单误杀一条真错误则是信任事故）；③ 失败路径的信息完整性**高于**美观——非零退出码时必须零过滤。
+
+**V 对抗审查（四视角）**：① **魔鬼代言人**——"过滤会不会吞掉真错误"：白名单三式均为**整行全等/全匹配**，且失败路径零过滤 + 退出码透传（`Exit(code=rc)`），单测含 4 条反例（netavark 真错误、含项目名的上下文行、非 64 位 hex、dbus 换理由）；② **新人**——"`-q` 不是更省事"：`-q` 语义相反，已实证否决；③ **老板**——零命令面变化、零 compose 变化，仅 `up_stack()` 一行调用改道 + 内核新增纯函数；④ **未来**——"podman 升级后新增良性回显怎么办"：判据集中在 `is_benign_compose_noise()` 单点，新增一类只需加一行正则 + 一例反例断言。
+
+**实现（A 原子化）**：`overlay_core.py` 新增 `_COMPOSE_ECHO_ID_RE`、`_PASTA_DBUS_NOISE_RE`、`compose_echo_names()`、`is_benign_compose_noise()`、`run_compose_up()`；`up_stack()` 起容器由 `run_compose()` 改走 `run_compose_up()`。白名单三式：① 整行恰为 64 位十六进制；② 整行与 `compose_echo_names(spec)`（容器名 / `pod_<project>` / `<project>_default`）全等；③ pasta-user.slice-dbus 行。命中时打印 `ℹ 已过滤 N 行 podman 原生回显噪声`。
+
+**验收点**：① `pytest tests -q --ignore=tests/test_ast_inject.py` **166 passed / 1 skipped**（较 C16 基线净增 4 例：`test_is_benign_compose_noise_whitelist_only`（含 4 反例）、`test_run_compose_up_filters_echo_noise`、`test_run_compose_up_failure_prints_raw_and_exits`（零过滤 + `Exit.code == 125`）、`test_up_stack_captures_compose_up_output`（断言 `hide=True, echo=False, pty=False`））；② 真机经 WSL 桥接实测：`invoke xmnn.up --offline`（幂等路径）过滤 **1 行**、`invoke quant.up --skip-build`（真实新建路径）过滤 **3 行**，栈可用，随后 `invoke quant.down` 清理完毕。
+
+> **范围（已知未覆盖）**：仅 `up` 应用过滤；`down`/`ps`/`logs`/`exec` 保持原生输出——实测 `invoke quant.down` 仍有同类 3 行噪声（`onnx-quantized`×2 + 1 行裸 hex），如需收敛另行提案。用户截图顶部 `WSL 桥接命令失败（exit=1），详见上方输出` 位于提示符**之上**，判定为**上一命令遗留**，本轮未改。
+
+**C 同步**：代码 + 测试提交 `fix(client)`（`overlay_core.py` + `test_overlay_core.py`，预防措施 `[prevent: podman-raw-echo-noise]`）；文档提交 `docs(client)`（[rules/invoke-tasks.md](rules/invoke-tasks.md) §5 C17 + §6 测试现状、`docs/02-invoke-reference.md` C17 契约段、`AGENTS.md` P0 清单与变更日志、本文件）。
+
 ### 2026-09-18 · `fix:` 终端三项噪声 + Nuitka 升 4.2.1（I→F→V→C，session sc-20260918-terminal）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C）。
