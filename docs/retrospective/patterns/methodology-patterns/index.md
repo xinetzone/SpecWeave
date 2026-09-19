@@ -35,6 +35,7 @@
 | pattern-summary-over-transcription | [摘要替代转录](summary-over-transcription.md) | L2-validated | 2 | 0 | 扫描版版权书籍（纯图像或图像+噪声OCR混合型）转教程/知识包时：route 决策前置、多模态通读、深度摘要+原创改写替代逐字转录。案例1《管道的故事》、案例2《魔力》（混合型PDF+练习册体裁） |
 | pattern-compliance-contracting | [合规契约化](compliance-contracting.md) | L2-validated | 2 | 0 | 版权引用/数据脱敏等合规红线需经他人审查时：态度式约束翻译为可度量契约（数字/正则/清单+计数口径），三段式声明、按契约打勾；含"作者主张—客观事实"分层第二契约轴。案例1《管道的故事》、案例2《魔力》 |
 | bp-doc-automation-pipeline | [文档自动化生成与验证流水线模式](concepts/doc-automation-pipeline.md)（简称：文档流水线模式） | L1-draft | 1 | 0 | 文档规模扩大后（经验阈值约 500 条目，非测量值），以统一元数据规范+自动化脚本（模板生成/链接验证/索引生成）+质量门禁构成生成-验证流水线，突破人工维护索引的规模瓶颈；含多生产者契约漂移等 5 条反模式。案例：SpecWeave 智能文档系统 1288 条目 |
+| net-value-four-questions | [净时薪四问](governance-strategy/net-value-four-questions.md) | L1-draft | 1 | 0 | 在多个外部机会/平台之间做取舍（副业平台、外包供应商、SaaS 工具、开源依赖），且决策依据主要来自对方宣传口径或当期数据时：先用"净时薪—无补贴模型—替代成本—提现闭环—合规三查"五步做三缺口收敛（计量/时点/退出），再进入加权比较。案例：2026 中国副业平台全面调研（73 条事实） |
 
 ## 成熟度等级说明
 

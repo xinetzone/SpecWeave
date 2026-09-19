@@ -1,0 +1,23 @@
+id = "net-value-four-questions"
+title = "净时薪四问"
+domain = "methodology"
+layer = "governance"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20260919-cn-sidehustle-platforms)——2026中国副业平台全面调研（73条事实）"
+source_report = "playground/reports/sidehustle-platforms-20260919/analysis-report.md"
+date = "2026-09-19"
+version = "1.0"
+maturity_note = "单案例（副业平台筛选）；跨域迁移示例（SaaS选型/外包供应商/开源依赖）为同构推演、尚未实测，待第二个独立案例验证升级L2"
+
+[bindings]
+related_patterns = [
+  "best-practice-hidden-cost",
+  "agent-platform-selection-scorecard",
+  "tech-selection-three-checks",
+  "nonlinear-correction-cost",
+]
