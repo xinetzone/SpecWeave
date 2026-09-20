@@ -6,6 +6,50 @@
 
 ## [Unreleased]
 
+### 2026-09-20 · `fix:` 工作区 9p 无主文件致 Jupyter 保存报 Permission denied（排障 W-I19）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session
+`sc-20260920-workspace-perm`）。
+
+**I 洞察（现象采集）**：xmnn-dev 栈 JupyterLab（localhost:8890）打开工作区既有
+`main.ipynb` 时工具栏显示 `notebook is read-only`，保存弹
+`File Save Error for main.ipynb — Permission denied: main.ipynb`；而**同目录新建**
+的 `Untitled.ipynb` 保存正常。决定性判据来自容器内 `ls -lan /workspace`：
+`main.ipynb` 属主为 **`65534 65534`**（nobody），正常文件为 `0 0`；宿主侧
+对应 **`100999:100999`**。
+
+**F 第一性原理**：写权限 = 属主 uid × 模式 × 写者在其 user namespace 内的能力。
+实测 `/proc/1/uid_map` 为 `0→1000`、`1..65536→524288..589823`（`/etc/subuid`
+基线 524288），宿主 100999 **不在任何映射区间** → 容器内呈现 nobody；容器 root
+仅对**已映射** uid 持有 `CAP_DAC_OVERRIDE`，对未映射 uid 连 `chown` 都报
+`Operation not permitted`（实测）。故该文件在容器内**无解**。100999 = 100000+999
+与 subuid 基线 100000 的运行时自洽——这批文件由**另一 UID 映射上下文**（Docker /
+其他 WSL podman 实例）写入；工作区根 0777 使新建文件取挂载默认属主 1000，故
+**只有旧文件卡死**，极易误判为「Jupyter 权限配置错 / entrypoint 有问题」。
+
+**V 对抗审查**：① 魔鬼代言人——「容器内 `chmod 666` 就行」：**否决**，实测
+`chown` EPERM，chmod 同理（同需 CAP_FOWNER）；② 新人——「宿主侧 `chown`/`chmod`
+最直接」：**否决并实测证伪**——`/mnt/d` 是 9p/drvfs 且挂载项**无 `metadata`**，
+`sudo chmod 600 f` 返回 0 而 `ls` 权限位不变、`sudo chown 1000:1000 f` 后属主仍
+100999，「改属性」这条路在本机无效；③ 老板——「只修这一个文件够吗」：**采纳**
+为验收项，递归扫描工作区（剪除三个源码 bind）得 3 处同类
+（`main.ipynb` / `.ipynb_checkpoints/main-checkpoint.ipynb` / `.Trash-1000`），
+一并处理；④ 未来——「怎么防再犯」：**采纳**，写入规则条款 + 速查表 W-I19。
+
+**A 原子化实现**：宿主侧**换 inode**——`cp` 备份 → `rm` 原文件（父目录 0777，
+删除只看目录写位）→ `cp` 回原路径，新 inode 取挂载默认属主 1000:1000；空垃圾
+目录 `.Trash-1000` 直接 `rm -rf`（Jupyter 按需重建）。**无代码改动**：容器内路径
+与「改权限位」路径均经实测排除，自愈代码无处落脚。
+
+**验收点**：① 容器内 `test -w /workspace/main.ipynb` 通过；② 真机
+`podman exec xmnn-dev cp` 覆盖写回原文件成功；③ notebook 内容完好（JSON 可解析、
+3 cells、983 字节与修复前一致）；④ 容器内属主由 `65534 65534` 变为 `0 0`。
+
+**C 同步**：[docs/04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md)
+新增 **W-I19**（含 `65534` 判据、换 inode 三步、chmod/chown 空操作陷阱）、
+[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §4 新增「工作区 9p 无主文件契约」。
+提交 `docs(client)` = （待回填）。
+
 ### 2026-09-20 · `fix:` 基段声明 `logging: k8s-file`，恢复 `podman logs` 可读（C24 前置）
 
 **关联七概念场景**：场景2「问题解决」（F→V→C，session `sc-20260920-up-credentials`，

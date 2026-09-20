@@ -117,6 +117,19 @@
   `utils.ensure_workspace_checkpoint_writable()`（quant 栈同族接线；
   幂等 0777、只改权限位不改属主、只作用该单一目录不递归、不触碰三个源码
   bind）；禁止把该职责退回镜像/entrypoint 层（薄叠加不覆盖基底）。
+- **工作区 9p 无主文件契约（2026-09-20 实证，排障 W-I19）**：宿主工作区若被
+  **另一 UID 映射上下文**写过（subuid 基线 ≠ 本机 524288 的运行时，如 Docker /
+  其他 WSL podman 实例），旧文件在宿主侧落成 **100999** 之类**未映射 UID**，
+  容器内呈现 `65534:65534`（nobody）——当前容器 root 对其读写皆 EPERM、
+  `chown` 报 `Operation not permitted`，Jupyter 保存 notebook 即
+  `Permission denied` 且工具栏显示 `notebook is read-only`（**新建**文件不受
+  影响：工作区根 0777，新文件取挂载默认属主 1000:1000）。**容器内无解，必须
+  宿主侧换 inode**：`cp` 备份 → `rm` 原文件（父目录 0777，删除只看目录写位）
+  → `cp` 回原路径；`.Trash-<uid>` 等旧垃圾目录直接 `rm -rf`。**红线：`chmod`/
+  `chown` 在 9p/drvfs 无 `metadata` 挂载项下是空操作**（rc=0 但属性不变，本机
+  实测），禁止把「宿主侧 chmod/chown 修权限」写进任何排障指引或自愈代码；
+  判别唯一入口是容器内 `ls -lan /workspace` 出现 `65534`。**纪律**：同一宿主
+  工作区固定单一运行时，勿在 Docker / 其他 WSL podman 实例 / 本栈之间交替写入。
 - **up 三道 preflight 自愈契约（2026-09-15 实证，三栈共用
   `overlay_core.up_preflight`，顺序不可调换）**：
   ① **残留容器**——`podman ps -a -q --filter label=<project> --filter
