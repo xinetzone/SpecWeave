@@ -105,6 +105,18 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
     rm -f /opt/xmnn-builder/scripts/install-torch.sh'
 
 # ------------------------------------------------------------
+# Layer 2.6：CUDA 编译器工具链（nvcc）——随 cu130 形态提供（2026-09-20，C25）
+#   - 由 TORCH_FLAVOR 驱动（""/cpu 形态零 CUDA 编译器，镜像与改造前等价）；
+#     pin 13.4.92 与「三包同轨」的依据、农场布局与包装器纪律见脚本头注。
+#   - **独立成层**：改本脚本不触碰 Layer 2.5（torch ~2GB wheel 层缓存不失效）。
+# ------------------------------------------------------------
+COPY builder/scripts/install-cuda-toolkit.sh /opt/xmnn-builder/scripts/install-cuda-toolkit.sh
+RUN /bin/bash -lc 'set -euo pipefail ; \
+    chmod +x /opt/xmnn-builder/scripts/install-cuda-toolkit.sh ; \
+    /opt/xmnn-builder/scripts/install-cuda-toolkit.sh ; \
+    rm -f /opt/xmnn-builder/scripts/install-cuda-toolkit.sh'
+
+# ------------------------------------------------------------
 # Layer 3：COPY 打包资产（含 pyproject）后，往 base env 装 Nuitka 打包栈与
 # pyproject 声明的全部运行时依赖（数量随该清单变化，勿在此硬编码）。显式
 # /opt/conda/bin/python：PATH 顶端是 main（cp314t），
@@ -155,5 +167,16 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
     echo "# sources   : /workspace/npu_tvm + /workspace/npuusertools (runtime bind)" ; \
     echo "# packaging : inv xmnn.build-tvm -> inv xmnn.wheel -> verify-wheel.sh" ; \
     echo "# torch     : flavor=$(cat /opt/xmnn-torch-flavor)（空=未装；cpu|cu130 见 LABEL）" ; \
+    echo "# cuda-nvcc : $(cat /opt/xmnn-cuda-nvcc-version 2>/dev/null || echo 未装)（cu130 形态随包；/usr/local/bin/nvcc）" ; \
     echo "# offline   : phase-2 全离线（编译/打包依赖已烤入，由 §7 守卫断言）" ; \
     echo "########################################################################"'
+
+# ------------------------------------------------------------
+# 镜像级 ENV：CUDA_HOME 约定路径（C25）
+#   - 农场仅 cu130 形态实体存在；空/cpu 形态该 ENV 指向不存在目录（无副作用，
+#     不改变体积/设备面/离线契约）；
+#   - torch.utils.cpp_extension 等生态工具依赖该约定：无它则 `which nvcc` 推出
+#     /usr/local（wrapper 所在目录）而非农场根，头文件解析错误；
+#   - 置文件末尾以免使既有层缓存失效（ENV 之前的所有层保持命中）。
+# ------------------------------------------------------------
+ENV CUDA_HOME=/usr/local/cuda
