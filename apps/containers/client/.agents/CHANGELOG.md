@@ -62,7 +62,7 @@ W-I16 补第二轮实测（「库能加载≠设备可见」+ 三条 bind + `cuI
 「改 flavor 须重建镜像+重建容器」、
 [rules/xmnn-overlay.md](rules/xmnn-overlay.md) §11.1「禁止引入 `build --gpu`」
 + §11.1.2 两轮矩阵 + §11.4 测试锁。
-提交 `fix(client)` = （待回填）。
+提交 `fix(client)` = `ee49d2857`、`docs(client)` = `f9c99832b`。
 
 ### 2026-09-20 · `fix:` 工作区 9p 无主文件致 Jupyter 保存报 Permission denied（排障 W-I19）
 
