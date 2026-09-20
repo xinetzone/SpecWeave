@@ -53,7 +53,7 @@ machine 重建即丢失，且影响同机其他项目。③ 老板——「日�
 
 **C 同步**：代码+测试提交 `fix(client)` = `c7c50bf1a`
 （`overlays/_shared/base-rootless.yaml` / `tests/test_compose_merge.py`）；
-文档提交 `docs(client)` = （待回填）（
+文档提交 `docs(client)` = `582cef178`（
 [rules/xmnn-overlay.md](rules/xmnn-overlay.md) §6 C24 前置条件、
 [rules/quant-overlay.md](rules/quant-overlay.md) §3 基段字段清单、
 [docs/11-xmnn-overlay.md](../docs/11-xmnn-overlay.md) 凭证段、
