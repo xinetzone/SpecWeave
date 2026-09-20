@@ -43,7 +43,7 @@ entrypoint 对未挂载卷的 WARN 回退路径）。
 [rules/xmnnrt-overlay.md](rules/xmnnrt-overlay.md) §7 三处卷段落；
 [docs/10](../docs/10-quant-overlay.md)、[docs/12](../docs/12-monetize-overlay.md)、
 [docs/13](../docs/13-xmnn-runtime-overlay.md) 各增「SSH host key 持久化」条目。
-提交 `fix(client)` = （待回填）。
+提交 `fix(client)` = `d2ff3a8af`、`docs(client)` = `62444134c`。
 
 ### 2026-09-20 · `fix:` 补挂 `xmnn-ssh-host-keys` 命名卷（SSH 主机指纹跨重建稳定）
 
