@@ -6,6 +6,64 @@
 
 ## [Unreleased]
 
+### 2026-09-20 · `fix:` WSL2 GPU 透传补齐两条宿主依赖（`libdxcore.so` + `/usr/lib/wsl/drivers`）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→A→C，session
+`sc-20260920-torch-missing`）。起点是用户截图「notebook 内 `import torch` 报
+`ModuleNotFoundError`」，收尾时连带查出 GPU 透传的深层缺陷。
+
+**I 洞察（现象采集）**：`inv xmnn.build --torch cu130` + `inv xmnn.up --gpu`
+成功后，容器内 `torch 2.14.0+cu130` 可导入，但 **`torch.cuda.is_available()` 恒
+False**；分层探测（`.temp/probe_cuda.py`）定位到 `cuInit()` 返 **100**
+(`CUDA_ERROR_NO_DEVICE`)，而宿主 WSL 侧 `nvidia-smi` 完全正常（RTX 5050 Laptop /
+驱动 581.57 / CUDA 13.0）。另：`import torch` 报错本身**不是**缺陷——GPU 与
+torch 默认全关（C18），当时镜像 LABEL `torch-flavor=""`、marker 0 字节，
+证据四处自洽。
+
+**F 第一性原理**：`/dev/dxg` 只是**半虚拟化通道**，CUDA 实现由 WSL 宿主提供；
+用例把「库能否加载」当作「设备是否可见」的判据——该假设被实测证伪：只挂
+`libcuda.so.1` 时 `CDLL` 成功而 `cuInit()`=100。逐项差分后**最小充分条件是三条
+bind 齐备**：① `libcuda.so.1`（缺则 CDLL 失败）、② `libdxcore.so`（DXCore 桥接
+库）、③ `/usr/lib/wsl/drivers`（Windows 驱动库目录，libcuda 初始化时扫描）。
+**第一轮实测只验到 ① 这一层**，故曾把「单文件挂载」误写成充分条件。
+
+**V 对抗审查**：① 魔鬼代言人——「`--privileged` 或 `--cap-add SYS_ADMIN` / 
+`seccomp=unconfined` 就行」：**实测否决**（前两者均 100；`--privileged` 有效但
+非必要，本形态坚持零特权）；② 新人——「挂整目录 `/usr/lib/wsl/lib` + 设
+`LD_LIBRARY_PATH` 最省事」：**否决**——目录未进容器内 ld 搜索路径（实测
+`libdxcore.so: FAIL`），而设 `LD_LIBRARY_PATH` 会整体冲掉栈自带的 TVM 库路径；
+③ 老板——「宿主驱动是不是坏了」：**排除**——宿主 `nvidia-smi` 正常，
+`/dev/dxg` 存在，故障面锁定在容器侧挂载；④ 未来——「怎么防再犯」：**采纳**——
+门禁改三条校验 + 测试锁 target 全集 + 规则写「库能加载≠设备可见」。
+
+**A 原子化实现**：① `overlays/{xmnn-dev,onnx-quantized}/compose.gpu.wsl.yaml`
+三条只读 bind（单文件 `libcuda.so.1`、单文件 `libdxcore.so`、目录
+`/usr/lib/wsl/drivers`，均 `create_host_path: false`）；② `overlay_core`：
+`WSL_CUDA_LIB` 单常量 → `WSL_GPU_PATHS` 三元组，`resolve_gpu_device` 预检改为
+遍历缺项并**逐条点名**；③ 测试：`test_compose_merge.py` 断言三条 bind 的
+target→source 全集，`test_overlay_core.py` 改为「缺任一路径均 fail-fast」。
+
+**验收点**：① 单测 `pytest tests/test_compose_merge.py tests/test_overlay_core.py
+tests/test_tasks_surface.py -q` → **142 passed / 1 skipped**（1 例
+`test_vs_real_rec_merge_probes` 为 WSL 侧既有失败：真实 `rec_merge` 与模拟器对
+`depends_on` list↔dict 归一化的分歧，与本次改动无关）；② **真机验收
+（决定性）**：重建容器后容器内 `torch 2.14.0+cu130`、`cuda available: True`、
+`device count: 1`、`device name: NVIDIA GeForce RTX 5050 Laptop GPU`、
+`capability (12, 0)`、512³ matmul 结果正确，且 `LD_LIBRARY_PATH` 为空（TVM 路径
+未污染）；③ 容器重建判据正反互证（凭证由 `3wSqlBZOahRHkemi` 变为
+`6vTTNsVPLoBt9bXv`）。
+
+**C 同步**：[docs/04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md)
+W-I16 补第二轮实测（「库能加载≠设备可见」+ 三条 bind + `cuInit` 判据）、
+[docs/11-xmnn-overlay.md](../docs/11-xmnn-overlay.md) 明确**两维度正交**
+（GPU=运行期 `up --gpu`／torch=构建期 `build --torch`，故无 `build --gpu`；
+`inv xmnn.up --gpu --offline` 实测可用）、
+[overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md) 同步三条 bind 与
+「改 flavor 须重建镜像+重建容器」、
+[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §11.1「禁止引入 `build --gpu`」
++ §11.1.2 两轮矩阵 + §11.4 测试锁。
+提交 `fix(client)` = （待回填）。
+
 ### 2026-09-20 · `fix:` 工作区 9p 无主文件致 Jupyter 保存报 Permission denied（排障 W-I19）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session

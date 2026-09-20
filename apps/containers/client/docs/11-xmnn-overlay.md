@@ -67,13 +67,19 @@ invoke xmnn.down                       # 停止清理（ccache/Jupyter 登录态
   apt/mamba/pip 均需联网）。
 - **对 external/chaos/ai 零依赖**：打包脚本与元数据自包含于叠加层；
   外部源码树只读挂载，打包中的临时 AST 注入会无条件还原。
-- **GPU 与 torch 可选能力（C18·C19·C20，默认全关）**：① GPU —— 仅 `invoke xmnn.up --gpu`
-  才追加 GPU 覆盖文件，设备由 `GPU_DEVICE` 决定（`/` 开头=宿主机设备路径，否则=CDI
+- **GPU 与 torch 可选能力（C18·C19·C20，默认全关）**：两者**分属两个正交维度**——
+  **运行期维度（设备透传）只由 `up --gpu` 决定，构建期维度（torch 形态）只由
+  `build --torch` 决定**，因此**没有也不该有 `build --gpu`**：透传只改 compose
+  文件集（`--device` + 只读库 bind），**不动镜像内容**，构建期没有 GPU 相关对象可改
+  （镜像内唯一与 GPU 相关的差异是 torch 形态，已由 `--torch` 承担）。
+  ① **GPU（运行期）** —— 仅 `invoke xmnn.up --gpu` 才追加 GPU 覆盖文件，设备由
+  `GPU_DEVICE` 决定（`/` 开头=宿主机设备路径，否则=CDI
   引用如 `nvidia.com/gpu=all`，与根 `invoke run --gpu` 同键同语义）；**未设/空时自动
   探测** `/dev/dri → /dev/dxg`（C19，不再是「回退 `/dev/dri`」——WSL2 无 `/dev/dri`，
   缺省直接透传会 `stat` 失败 exit 125）；探测/校验在 **podman 宿主侧**执行，失败
   fail-fast 给中文指引。WSL2 形态自动改用 `compose.gpu.wsl.yaml`（`/dev/dxg` +
-  单文件挂载 `libcuda.so.1` 到标准搜索路径，**不设 `LD_LIBRARY_PATH`**）。② torch —— 仅
+  三条只读 bind：单文件 `libcuda.so.1`、单文件 `libdxcore.so` 与
+  `/usr/lib/wsl/drivers` 目录，**不设 `LD_LIBRARY_PATH`**）。② **torch（构建期）** —— 仅
   `invoke xmnn.build --torch cpu|cu130`（或 `.env TORCH_FLAVOR=`）才在 base env
   `/opt/conda` 装 `torch==2.14.0`（白名单取值，索引 `download.pytorch.org/whl/<flavor>`；
   cu130 是当前唯一与 CPU 侧同 pin 的 CUDA 索引）；形态落 `/opt/xmnn-torch-flavor`，
@@ -81,6 +87,13 @@ invoke xmnn.down                       # 停止清理（ccache/Jupyter 登录态
   但 **形态会写进归档名**（C20）：`save` 读镜像 LABEL 命名
   `...-torch-<形态>-<id>-<时间戳>.tar.gz`，`load` 按 `.env TORCH_FLAVOR` 挑归档并在
   形态不符时 Exit(1)——同一 tag 的 cpu / cu130 归档由此可辨识，避免无网侧静默导入错形态。
+  ③ **两维度可自由组合：`invoke xmnn.up --gpu --offline` 可用**（2026-09-20 实测）——
+  `--offline` 只禁构建（强制跳过构建 + 本地镜像存在性预检），与 GPU 解析**零耦合**
+  （设备探测是纯宿主侧 `test -e`，离线不需任何网络）；`up` 的形参面本就是能力并集
+  （详见 [.agents/rules/xmnn-overlay.md](../.agents/rules/xmnn-overlay.md) §11.3）。
+  离线侧完整序列：无网机 `invoke xmnn.load --path <归档>` →
+  `invoke xmnn.up --gpu --offline`；CUDA 版 torch 属**镜像内容**，只能在有网侧
+  `build --torch cu130 && save` 备好，离线侧不补装。
   详细用法见 [overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md#gpu-与-torch-可选能力默认全关c18c19c20)，
   WSL2 实测矩阵与排障见 [04-troubleshooting-guide.md](04-troubleshooting-guide.md) W-I16。
 

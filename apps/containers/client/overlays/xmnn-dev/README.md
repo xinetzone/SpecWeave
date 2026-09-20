@@ -265,23 +265,41 @@ GPU_DEVICE=nvidia.com/gpu=all invoke xmnn.up --gpu    # NVIDIA CDI（.env 写同
 | 探测命中 | 形态 | 叠加文件 | 额外声明 |
 |---|---|---|---|
 | `/dev/dri`（Intel/AMD、NVIDIA 直通设备） | `generic` | [`compose.gpu.yaml`](compose.gpu.yaml) | `--device ${GPU_DEVICE:-/dev/dri}` |
-| `/dev/dxg`（WSL2 GPU 半虚拟化） | `wsl` | [`compose.gpu.wsl.yaml`](compose.gpu.wsl.yaml) | `--device /dev/dxg` + 单文件 ro 挂载宿主 `/usr/lib/wsl/lib/libcuda.so.1` → `/usr/lib/libcuda.so.1` |
+| `/dev/dxg`（WSL2 GPU 半虚拟化） | `wsl` | [`compose.gpu.wsl.yaml`](compose.gpu.wsl.yaml) | `--device /dev/dxg` + 三条 ro 挂载：宿主 `/usr/lib/wsl/lib/libcuda.so.1` → `/usr/lib/libcuda.so.1`、`libdxcore.so` → `/usr/lib/libdxcore.so`、目录 `/usr/lib/wsl/drivers` → 同路径 |
 
-> **WSL2 为什么要额外挂 libcuda**（2026-09-20 实测）：WSL2 发行版里没有
+> **WSL2 为什么要额外挂库与驱动目录**（2026-09-20 两轮实测）：WSL2 发行版里没有
 > `/dev/dri`（只有 `/dev/dxg`），且 `/dev/dxg` 只是半虚拟化通道，libcuda 由
-> WSL 宿主提供。仅 `--device /dev/dxg`、仅设 `LD_LIBRARY_PATH`、挂整目录
-> `/usr/lib/wsl/lib` 三种做法都**不能**让容器内 `CDLL("libcuda.so.1")` 成功；
-> 唯一最小组合是 `--device /dev/dxg` + 单文件挂载到 `/usr/lib`（基底默认库
-> 搜索目录）。取舍：**刻意不设 `LD_LIBRARY_PATH`**——`environment` 是 mapping
-> 替换语义，覆盖会冲掉本栈已声明的 TVM 库路径。
+> WSL 宿主提供。第一轮判据是 `CDLL("libcuda.so.1")` 能否加载，只测出「挂单文件
+> `libcuda.so.1` 即可」；装 cu130 torch 复核时才发现 **「库能加载」≠「设备可见」**
+> ——只挂 libcuda 时 `cuInit()` 返 `100`(CUDA_ERROR_NO_DEVICE)、
+> `torch.cuda.is_available()` 恒 `False`。逐项差分后最小充分条件是**三条 bind
+> 齐备**：`libcuda.so.1`（缺则 CDLL 直接失败）+ `libdxcore.so`（DXCore 桥接库）
+> + `/usr/lib/wsl/drivers`（Windows 驱动库目录，libcuda 初始化时扫描）。仅
+> `--device /dev/dxg`、仅设 `LD_LIBRARY_PATH`、挂整目录 `/usr/lib/wsl/lib`
+> 都**不**能让 CUDA 可用；`--cap-add SYS_ADMIN`、`seccomp=unconfined` 无效，
+> `--privileged` 有效但**非必要**（本形态零特权）。取舍：**刻意不设
+> `LD_LIBRARY_PATH`**——`environment` 是 mapping 替换语义，覆盖会冲掉本栈已声明的
+> TVM 库路径；三条挂载点都在基底默认搜索路径上，无需改环境变量。
 
 设备真的不存在时（如宿主未装驱动）`--gpu` 会 **fail-fast** 并打印中文指引，
 而不是把 `Error: stat /dev/dri: no such file or directory`（exit 125）抛给 podman。
 
 裸 compose 等价：`podman-compose -f compose.yaml -f compose.gpu.yaml up -d`
 （WSL2 换成 `-f compose.gpu.wsl.yaml`；两者互斥，**不要同时加载**——devices 会重复）。
-容器内验证：`podman-compose exec xmnn ls /dev/dri /dev/dxg` 或
-`podman-compose exec xmnn /opt/conda/bin/python -c "import ctypes; ctypes.CDLL('libcuda.so.1')"`。
+容器内验证**要看设备枚举而非只看库能否加载**（只验 `CDLL` 会把 NO_DEVICE 误判为成功）：
+
+```bash
+podman-compose exec xmnn /opt/conda/bin/python -c \
+  "import ctypes; l=ctypes.CDLL('libcuda.so.1'); n=ctypes.c_int(0); \
+   print('cuInit=', l.cuInit(0), 'count=', (l.cuDeviceGetCount(ctypes.byref(n)), n.value)[1])"
+# cuInit= 0 count= 1 才算通（100 = CUDA_ERROR_NO_DEVICE，仍是驱动库/目录缺失）
+```
+
+**GPU 归运行期维度，故没有 `build --gpu`**：透传只改 compose 文件集（`--device`
++ 三条只读 bind），**不动镜像内容**，构建期没有 GPU 相关对象可改——镜像里唯一与
+GPU 相关的差异是 torch 形态，已由 `build --torch` 承担（见下节）。两个维度可自由
+组合，`invoke xmnn.up --gpu --offline` **实测可用**（离线只禁构建，与设备探测零耦合；
+见 [docs/11 离线契约](../../docs/11-xmnn-overlay.md)）。
 
 ### torch 形态：`invoke xmnn.build --torch cpu|cu130`
 
@@ -291,9 +309,19 @@ GPU_DEVICE=nvidia.com/gpu=all invoke xmnn.up --gpu    # NVIDIA CDI（.env 写同
 
 ```bash
 invoke xmnn.build --torch cu130    # 装 CUDA 版 torch（构建期守卫 §8 断言形态）
-invoke xmnn.up --skip-build --gpu  # 起栈并透传 GPU
+invoke xmnn.down && invoke xmnn.up --skip-build --gpu   # 重建容器并透传 GPU
 podman-compose exec xmnn python -c "import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available())"
 ```
+
+> **改 flavor 后必须「重建镜像 + 重建容器」两步**：`up` 恒 `up -d --no-build`，
+> 且 podman-compose 的配置哈希**不含镜像 digest**——只跑 `up` 会让容器继续绑在旧
+> 镜像上，静默不生效（追问「装了 torch 但 `import torch` 仍报 ModuleNotFoundError」
+> 多半卡在这里）。判据：`up` 横幅的凭证（entrypoint 首启 `pwgen` 生成）逐字未变即
+> 说明容器**没有**被重建。
+>
+> **离线侧组合**（两阶段）：有网机 `invoke xmnn.build --torch cu130 && invoke xmnn.save`
+> → 无网机 `invoke xmnn.load --path <归档>` → `invoke xmnn.up --gpu --offline`。
+> CUDA 版 torch 属**镜像内容**，离线侧不补装（`--offline` 只禁构建，与 GPU 透传正交）。
 
 - **换 flavor 必须重建**：flavor **不参与镜像 tag**（沿用 `XMNN_IMAGE_TAG`），
   改 `.env` 后要 `invoke xmnn.build` 而非指望 `up` 增量刷新。

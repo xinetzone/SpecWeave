@@ -376,6 +376,14 @@
   ③ **未设/空 → 自动探测**（不再是「默认 `/dev/dri`」，见下条）。
 - `GPU_DEVICE` 已列入 `bridge_env_keys`——WSL 桥接只透传环境变量、不转发
   CLI 参数，遗漏会导致桥接后回退自动探测。
+- **GPU 是运行期维度，禁止引入 `build --gpu`**（2026-09-20 定调）：透传只改
+  compose 文件集（`--device` + 只读库 bind），**不改镜像内容**，构建期没有
+  GPU 相关对象可操作；镜像内唯一与 GPU 相关的差异是 torch 形态，已由
+  §11.2 `build --torch` 承担。两维度正交，故 `up --gpu` 与 `--offline`
+  可自由组合——**`invoke xmnn.up --gpu --offline` 必须可用**（离线只禁构建：
+  `offline → skip_build` + 本地镜像存在性预检，与设备探测零耦合；2026-09-20
+  真机实测通过，容器零重建）。任何把 GPU 判定挪进构建期、或让离线分支拒绝
+  `--gpu` 的改动都属回归。
 
 #### 11.1.1 运行期可用性门禁与自动探测（C19，2026-09-20）
 
@@ -396,9 +404,13 @@
   已生成；③ 未设/空 → 按 `GPU_DEVICE_FORMS`（`/dev/dri` → `/dev/dxg`）
   **顺序探测**，取首个存在者并**回写 `os.environ`**（`GPU_DEVICE`），
   使 compose 插值与提示文案同源。
-- `wsl` 形态额外校验 `/usr/lib/wsl/lib/libcuda.so.1` 存在（驱动库在
-  `podman-machine-default` 内可见，实测见 11.1.2）；探测全失败时 **fail-fast
-  + 中文指引**，不再把非法路径丢给 podman 报 exit 125。
+- `wsl` 形态额外校验 :data:`WSL_GPU_PATHS` **三条**路径
+  （`/usr/lib/wsl/lib/libcuda.so.1` + `/usr/lib/wsl/lib/libdxcore.so` +
+  `/usr/lib/wsl/drivers`）是否齐备，缺**任一**条即 fail-fast 并**逐条点名**缺失
+  路径（驱动库在 `podman-machine-default` 内可见，实测见 11.1.2）；探测全失败时
+  **fail-fast + 中文指引**，不再把非法路径丢给 podman 报 exit 125。
+  **禁止退化为只校验 libcuda**：缺 `libdxcore.so` / `drivers` 时容器内
+  `CDLL` 成功但 `cuInit()` 返 100，属于「门禁放行 + 运行时不可用」的假通过。
 - **设备探测必须经 run_cmd 在 podman 宿主侧执行**（`test -e`），禁止在本机
   做 `Path.exists()`——Windows 原生编排时本机文件系统与 WSL 发行版不是同一
   视图（与 C-I3 的「不做本机存在性判断」同源）。
@@ -415,23 +427,37 @@
   形态切换（generic↔wsl）对 `--gpu` 创建的栈**仍须**判分歧（compose 确会
   recreate），不得退化成前缀/子集匹配。
 
-#### 11.1.2 WSL2 形态的驱动库挂载（实测矩阵，2026-09-20）
+#### 11.1.2 WSL2 形态的驱动库挂载（两轮实测矩阵，2026-09-20）
 
-`podman-machine-default`（WSL2 后端）内实测四组对照，**只有第三组可用**：
+`podman-machine-default`（WSL2 后端）内一次性容器实测，**分两轮**——第一轮判据
+是「库能否加载」（`CDLL("libcuda.so.1")`），第二轮装 cu130 torch 复核时改用
+「设备是否可见」（`cuInit()` / `torch.cuda.is_available()`）：
 
-| 配置 | `CDLL("libcuda.so.1")` |
-|---|---|
-| 无任何设备/库 | 失败（库不存在） |
-| 仅 `--device /dev/dxg` | 失败（缺 `libcuda.so.1`） |
-| **`--device /dev/dxg` + 单文件挂载 `/usr/lib/wsl/lib/libcuda.so.1:/usr/lib/libcuda.so.1:ro`** | **成功** |
-| 挂整目录 `/usr/lib/wsl/lib` 或仅设 `LD_LIBRARY_PATH` | 失败 |
+| 轮次 | 配置 | 结果 |
+|---|---|---|
+| 1 | 无任何设备/库 | 失败（库不存在） |
+| 1 | 仅 `--device /dev/dxg` | 失败（缺 `libcuda.so.1`） |
+| 1 | 仅设 `LD_LIBRARY_PATH=/usr/lib/wsl/lib` | 失败（容器内无该文件） |
+| 1 | 挂整目录 `/usr/lib/wsl/lib:ro`（不设 `LD_LIBRARY_PATH`） | 失败（该目录未进容器内 ld 搜索路径） |
+| 1 | `--device /dev/dxg` + **单文件挂载 libcuda** `/usr/lib/wsl/lib/libcuda.so.1:/usr/lib/libcuda.so.1:ro` | CDLL 成功 |
+| 2 | 同上（仍缺 ②③） | **`cuInit()`=100 `CUDA_ERROR_NO_DEVICE`**、`torch.cuda.is_available()`=False |
+| 2 | 上 + `--cap-add SYS_ADMIN` / `seccomp=unconfined` | 100（无效） |
+| 2 | 上 + 单文件 `libdxcore.so`（仍缺 drivers 目录） | 100（仍 NO_DEVICE） |
+| 2 | **`--device /dev/dxg` + 三条只读 bind（单文件 `libcuda.so.1` + 单文件 `libdxcore.so` + 目录 `/usr/lib/wsl/drivers`）** | **`cuInit()`=0、`cuDeviceGetCount()`=1、`torch.cuda.is_available()`=True** |
+| 2 | `--privileged` + 挂整个 `/usr/lib/wsl` | 0 成功（**有效但非必要**） |
 
-- 结论：`compose.gpu.wsl.yaml` = `devices: [/dev/dxg]` + 单文件 bind
-  `read_only: true`（`bind.create_host_path: false`）。
+- 结论：`compose.gpu.wsl.yaml` = `devices: [/dev/dxg]` + **三条** bind
+  `read_only: true`（`bind.create_host_path: false`）——三条**同为最小充分条件**，
+  缺任一即 CUDA 不可用（缺 ① 是 CDLL 层失败，缺 ②③ 是 NO_DEVICE 层失败）。
+  内核 :data:`WSL_GPU_PATHS` 与测试断言必须与三条一致，**不得只留 libcuda**。
+- **`/dev/dxg` 只是半虚拟化通道**：设备节点本身不提供 CUDA 实现，libcuda 由
+  WSL 宿主提供；「CDLL 成功」只证明库被找到，**不证明设备被枚举**——两轮判据
+  的差异正是本形态最容易踩的假阳性（第一轮结论曾据此把单文件挂载写成充分条件）。
 - **刻意不设 `LD_LIBRARY_PATH`**：该 compose 字段是 **mapping 替换**语义，
   一旦设 `/usr/lib/wsl/lib` 会冲掉栈原有的 TVM 库路径
-  （`.../npu_tvm/build:.../vta:.../main/lib`）——挂到标准搜索路径
-  `/usr/lib/` 即无需改环境变量（实测容器内 `printenv LD_LIBRARY_PATH` 未被污染）。
+  （`.../npu_tvm/build:.../vta:.../main/lib`）——三条 bind 的挂载点均落在
+  基底默认搜索路径（`/usr/lib`、`/usr/lib/wsl/drivers`）上，无需改环境变量
+  （实测容器内 `printenv LD_LIBRARY_PATH` 未被污染）。
 
 ### 11.2 torch 形态（`build --torch` / `TORCH_FLAVOR`）
 
@@ -468,12 +494,16 @@ xmnn 同时声明两能力后，互斥写法会让 `--offline`/`--no-offline` �
 ### 11.4 测试锁行为（C19 / C23）
 
 CUDA 设备解析在 `tests/test_overlay_core.py` 有 9 个用例（覆盖文件 form 分派
-与回退、`/dev/dri` 自动探测、`/dev/dxg` 自动探测 + libcuda 缺失、无设备
-fail-fast、显式路径缺失 fail-fast、CDI 未生成 fail-fast、wsl form 贯通到
-compose argv、quant 同路径、**不开 `--gpu` 绝不探测设备**）；渲染侧在
-`tests/test_compose_merge.py` 断言 `compose.gpu.wsl.yaml` 的
-`devices: [/dev/dxg]` 与 libcuda 单文件 bind，以及 quant 的
-`${GPU_DEVICE}` 双形态插值。改动 GPU 解析路径必须同步这两组断言。
+与回退、`/dev/dri` 自动探测、`/dev/dxg` 自动探测 + **三条宿主路径缺任一均
+fail-fast**、无设备 fail-fast、显式路径缺失 fail-fast、CDI 未生成 fail-fast、
+wsl form 贯通到 compose argv、quant 同路径、**不开 `--gpu` 绝不探测设备**）；
+渲染侧在 `tests/test_compose_merge.py` 断言 `compose.gpu.wsl.yaml` 的
+`devices: [/dev/dxg]` 与 **三条 bind（target 全集 + source 映射 + 逐条
+`read_only`/`create_host_path: false`）**，以及 quant 的
+`${GPU_DEVICE}` 双形态插值。改动 GPU 解析路径必须同步这两组断言；
+`WSL_GPU_PATHS` 增删条目时，`compose.gpu.wsl.yaml`（两栈）、这两组断言与
+本规则 §11.1.1/§11.1.2 必须同批更新，**禁止只改常量不改覆盖层**
+（缺项会让门禁放行一个 `cuInit()=100` 的形态）。
 
 C23 另加 6 例锁住「文件集同源 + 判据不对称性」：`compose_config_files_label`
 的逗号约定（单文件 / `--gpu` 双文件）、**同源锁**（三组 `(gpu, form)` 下
