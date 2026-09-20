@@ -5,9 +5,10 @@
 # 与 compose.gpu.yaml **互斥**——两个同加载会让 devices 列表出现重复项，内核只选其一。
 #
 # 形态实测矩阵与最小充分条件见姊妹文件 ../../xmnn-dev/compose.gpu.wsl.yaml 文件头
-# （2026-09-20 单机实测）：--device /dev/dxg + 单文件挂载 libcuda.so.1 是 WSL2 下
-# 让容器内 CDLL("libcuda.so.1") 成功的最小组合；**刻意不设 LD_LIBRARY_PATH**
-# （environment 为 mapping 替换语义，覆盖会冲掉栈已有库路径）。
+# （2026-09-20 两轮单机实测）：`--device /dev/dxg` + 三条只读 bind（libcuda.so.1、
+# libdxcore.so 单文件 + /usr/lib/wsl/drivers 目录）是 WSL2 下让容器内
+# cuInit() 返回 0、torch.cuda.is_available() 为 True 的最小组合。**刻意不设
+# LD_LIBRARY_PATH**（environment 为 mapping 替换语义，覆盖会冲掉栈已有库路径）。
 #
 # 用法：
 #   invoke quant.up --gpu
@@ -21,6 +22,20 @@ services:
       - type: bind
         source: /usr/lib/wsl/lib/libcuda.so.1
         target: /usr/lib/libcuda.so.1
+        read_only: true
+        bind:
+          create_host_path: false
+      # DXCore 桥接库（缺它 libcuda 加载成功但 cuInit=100 NO_DEVICE）
+      - type: bind
+        source: /usr/lib/wsl/lib/libdxcore.so
+        target: /usr/lib/libdxcore.so
+        read_only: true
+        bind:
+          create_host_path: false
+      # Windows 驱动库目录（libcuda 初始化时扫描）
+      - type: bind
+        source: /usr/lib/wsl/drivers
+        target: /usr/lib/wsl/drivers
         read_only: true
         bind:
           create_host_path: false

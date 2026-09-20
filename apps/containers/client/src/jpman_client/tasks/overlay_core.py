@@ -82,11 +82,19 @@ GPU_DEVICE_FORMS: tuple[tuple[str, str], ...] = (
     ("/dev/dxg", "wsl"),
 )
 
-# WSL2 GPU 半虚拟化：``/dev/dxg`` 只是半虚拟化通道，libcuda 由 WSL 宿主提供，
-# 容器内**必须**挂载该单文件才能 ``CDLL("libcuda.so.1")``（2026-09-20 实测：
-# 仅挂 /dev/dxg 或仅设 LD_LIBRARY_PATH 均失败；挂整目录 + LD_LIBRARY_PATH 会
-# 冲掉栈自带的 TVM 库路径，故用单文件挂载，见 compose.gpu.wsl.yaml 文件头）。
-WSL_CUDA_LIB = "/usr/lib/wsl/lib/libcuda.so.1"
+# WSL2 GPU 半虚拟化：``/dev/dxg`` 只是半虚拟化通道，libcuda 由 WSL 宿主提供。
+# 下列三条路径**同为最小充分条件**（2026-09-20 两轮实测）：
+#   ① libcuda.so.1 —— 缺则容器内 ``CDLL("libcuda.so.1")`` 直接失败；
+#   ② libdxcore.so —— 缺则 CDLL 成功但 ``cuInit()`` 返 100(CUDA_ERROR_NO_DEVICE)；
+#   ③ /usr/lib/wsl/drivers —— Windows 驱动库目录，缺则同样 cuInit 100。
+# **「库能加载」≠「设备可见」**：②③ 是第二轮（装 cu130 torch 复核设备枚举）
+# 才暴露的——首轮只验到 ① 的 CDLL 层面，故一度把「单文件挂载」当成充分条件。
+# 挂载形态见 compose.gpu.wsl.yaml 文件头（零特权；--privileged 有效但非必要）。
+WSL_GPU_PATHS: tuple[str, ...] = (
+    "/usr/lib/wsl/lib/libcuda.so.1",
+    "/usr/lib/wsl/lib/libdxcore.so",
+    "/usr/lib/wsl/drivers",
+)
 
 
 # ---------------------------------------------------------------------------
@@ -1220,8 +1228,9 @@ def resolve_gpu_device(c: Context, spec: StackSpec, env: dict) -> tuple[str, str
       - 空：按形态表探测（``/dev/dri`` 优先于 ``/dev/dxg``，保留 Intel/AMD 与
         NVIDIA 直通设备的既有行为），全无则 fail-fast。
 
-    wsl 形态额外校验 :data:`WSL_CUDA_LIB`：``/dev/dxg`` 只是半虚拟化通道，
-    缺 libcuda 时 CUDA 不可用，同样前置报错而非让 bind 挂载裸报错。
+    wsl 形态额外校验 :data:`WSL_GPU_PATHS`（libcuda + libdxcore + drivers 目录）：
+    ``/dev/dxg`` 只是半虚拟化通道，三条路径缺任一都会让容器内 CUDA 不可用
+    （缺 ②③ 时表现为 CDLL 成功但设备枚举失败），故同样前置报错而非让 bind 裸报错。
     """
     key = spec.gpu_device_env or "GPU_DEVICE"
     token = str(os.environ.get(key) or env.get(key) or "")
@@ -1260,12 +1269,16 @@ def resolve_gpu_device(c: Context, spec: StackSpec, env: dict) -> tuple[str, str
             print(f"[{spec.namespace}]   或显式指定: {key}=<设备路径或 CDI 引用>")
             raise Exit(1)
 
-    if form == "wsl" and not _runtime_path_exists(c, WSL_CUDA_LIB):
-        print(f"[{spec.namespace}] ⚠ 检测到 {token}（WSL2 GPU），但宿主缺少 {WSL_CUDA_LIB}：")
-        print("[%s]   该库由 WSL 宿主提供；请确认 Windows 侧 NVIDIA 驱动已安装"
-              % spec.namespace)
-        print(f"[{spec.namespace}]   或强制通用形态（不挂 libcuda）: {key}=/dev/dri")
-        raise Exit(1)
+    if form == "wsl":
+        missing = [p for p in WSL_GPU_PATHS if not _runtime_path_exists(c, p)]
+        if missing:
+            print(f"[{spec.namespace}] ⚠ 检测到 {token}（WSL2 GPU），但宿主缺少以下路径：")
+            for path in missing:
+                print(f"[{spec.namespace}]     - {path}")
+            print("[%s]   以上由 WSL 宿主提供；请确认 Windows 侧 NVIDIA 驱动已安装"
+                  % spec.namespace)
+            print(f"[{spec.namespace}]   或强制通用形态（不挂 libcuda）: {key}=/dev/dri")
+            raise Exit(1)
 
     os.environ[key] = token
     return token, form

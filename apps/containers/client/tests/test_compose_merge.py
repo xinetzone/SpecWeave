@@ -338,29 +338,37 @@ def test_quant_gpu_device_double_form_interpolation():
 
 
 @pytest.mark.parametrize("stack", ["xmnn", "quant"])
-def test_wsl_gpu_override_passes_dxg_and_mounts_libcuda(stack):
-    """WSL2 形态（C19）：/dev/dxg + 单文件挂 libcuda.so.1，且**不动**栈自带环境。
+def test_wsl_gpu_override_passes_dxg_and_mounts_wsl_libs(stack):
+    """WSL2 形态（C19）：/dev/dxg + 三条只读 bind，且**不动**栈自带环境。
+
+    三条 bind（libcuda.so.1 单文件 + libdxcore.so 单文件 + /usr/lib/wsl/drivers
+    目录）同为最小充分条件（2026-09-20 两轮实测）：只挂 libcuda 时容器内
+    ``CDLL("libcuda.so.1")`` 成功，但 ``cuInit()`` 返 100(CUDA_ERROR_NO_DEVICE)
+    ——**「库能加载」≠「设备可见」**，故断言锁定 target 全集而非单条。
 
     关键约束：environment 为 mapping 替换语义——若在此文件里写
     ``LD_LIBRARY_PATH=/usr/lib/wsl/lib`` 会整体冲掉 compose.yaml 已声明的 TVM
-    库路径。故本形态靠把 libcuda 挂进基底默认搜索目录 /usr/lib 来实现，
+    库路径。故本形态靠把库挂进基底默认搜索目录 /usr/lib 来实现，
     环境变量**零改动**（2026-09-20 实测结论）。
     """
     plain = render_stack(stack)
     wsl = render_stack(stack, gpu=True, gpu_file="compose.gpu.wsl.yaml")
     assert wsl["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dxg"]
     assert wsl["environment"] == plain["environment"]
-    # 追加一条 bind：宿主 libcuda → 容器 /usr/lib（glibc 默认搜索目录，无需 LD_LIBRARY_PATH）
-    extra = [
-        v
+    # 长语法 dict bind 不参与 rec_merge 去重（同 target 会重复），故按 target 建映射
+    binds = {
+        v["target"]: v
         for v in wsl["volumes"]
-        if isinstance(v, dict) and v.get("target") == "/usr/lib/libcuda.so.1"
-    ]
-    assert len(extra) == 1
-    mount = extra[0]
-    assert mount["source"] == "/usr/lib/wsl/lib/libcuda.so.1"
-    assert mount["read_only"] is True
-    assert mount["bind"]["create_host_path"] is False  # 缺失即报错，不误建空文件
+        if isinstance(v, dict) and str(v.get("target", "")).startswith("/usr/lib/")
+    }
+    assert {t: v["source"] for t, v in binds.items()} == {
+        "/usr/lib/libcuda.so.1": "/usr/lib/wsl/lib/libcuda.so.1",
+        "/usr/lib/libdxcore.so": "/usr/lib/wsl/lib/libdxcore.so",
+        "/usr/lib/wsl/drivers": "/usr/lib/wsl/drivers",
+    }
+    for mount in binds.values():
+        assert mount["read_only"] is True
+        assert mount["bind"]["create_host_path"] is False  # 缺失即报错，不误建空文件
 
 
 def test_xmnn_gpu_override_is_opt_in_and_single_device():

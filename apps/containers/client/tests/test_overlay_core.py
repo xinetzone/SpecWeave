@@ -348,17 +348,33 @@ def test_resolve_gpu_device_autoprobes_dri(harness, monkeypatch):
     assert os.environ["GPU_DEVICE"] == "/dev/dri"
 
 
-def test_resolve_gpu_device_autoprobes_wsl_requires_libcuda(harness, monkeypatch):
-    """WSL2 主场景：只有 /dev/dxg + 宿主 libcuda → wsl 形态（本次故障的修复点）。"""
-    harness.runner.paths = {"/dev/dxg", oc.WSL_CUDA_LIB}
+def test_resolve_gpu_device_autoprobes_wsl_requires_all_gpu_paths(
+    harness, monkeypatch, capsys
+):
+    """WSL2 主场景：只有 /dev/dxg + 三条宿主路径**齐备** → wsl 形态（本次故障的修复点）。
+
+    缺**任一**条都必须 fail-fast（2026-09-20 两轮实测）：
+      - 缺 libcuda.so.1：容器内 ``CDLL("libcuda.so.1")`` 直接失败；
+      - 缺 libdxcore.so 或 /usr/lib/wsl/drivers：libcuda **能**加载，但 ``cuInit()``
+        返 100(CUDA_ERROR_NO_DEVICE)、``torch.cuda.is_available()`` 恒 False。
+    三类缺失容器内表现不同却同为「CUDA 不可用」，故统一在宿主侧前置拦截，
+    不让 compose 的 bind 在 create 阶段裸报错（create_host_path: false 会直接失败）。
+    """
+    harness.runner.paths = {"/dev/dxg", *oc.WSL_GPU_PATHS}
     token, form = oc.resolve_gpu_device(None, _XMNN, {})
     assert (token, form) == ("/dev/dxg", "wsl")
     assert os.environ["GPU_DEVICE"] == "/dev/dxg"
-    # 缺 libcuda：CUDA 在容器内不可能可用，必须 fail-fast 而非让 bind 裸报错
-    harness.runner.paths = {"/dev/dxg"}
-    with pytest.raises(Exit) as ei:
-        oc.resolve_gpu_device(None, _XMNN, {})
-    assert ei.value.code == 1
+    for missing in oc.WSL_GPU_PATHS:
+        # 逐条 drop，且清掉成功调用回写的 env，逼走自动探测分支
+        monkeypatch.delenv("GPU_DEVICE", raising=False)
+        harness.runner.paths = {
+            "/dev/dxg",
+            *(p for p in oc.WSL_GPU_PATHS if p != missing),
+        }
+        with pytest.raises(Exit) as ei:
+            oc.resolve_gpu_device(None, _XMNN, {})
+        assert ei.value.code == 1
+        assert missing in capsys.readouterr().out  # 指引点名缺失路径
 
 
 def test_resolve_gpu_device_no_device_fails_fast(harness, capsys):
@@ -397,7 +413,7 @@ def test_up_gpu_wsl_form_flows_to_compose_argv(harness, monkeypatch, capsys):
     """端到端：up --gpu 在 WSL2 设备形态下自动改用 compose.gpu.wsl.yaml。"""
     d = harness.root / "overlays" / "xmnn-dev"
     (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
-    harness.runner.paths = {"/dev/dxg", oc.WSL_CUDA_LIB}
+    harness.runner.paths = {"/dev/dxg", *oc.WSL_GPU_PATHS}
     oc.up_stack(None, _XMNN, gpu=True, skip_build=True)
     up_cmd = [c for c in harness.runner.commands if "up -d --no-build" in c][0]
     assert str(d / "compose.gpu.wsl.yaml") in up_cmd
@@ -408,7 +424,7 @@ def test_up_gpu_wsl_form_for_quant_same_kernel_path(harness):
     """quant 同修：与 xmnn 共用同一解析内核，形态分派不重复实现。"""
     d = harness.root / "overlays" / "onnx-quantized"
     (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
-    harness.runner.paths = {"/dev/dxg", oc.WSL_CUDA_LIB}
+    harness.runner.paths = {"/dev/dxg", *oc.WSL_GPU_PATHS}
     oc.up_stack(None, _QUANT, gpu=True, skip_build=True)
     up_cmd = [c for c in harness.runner.commands if "up -d --no-build" in c][0]
     assert str(d / "compose.gpu.wsl.yaml") in up_cmd
@@ -423,7 +439,7 @@ def test_up_gpu_on_gpu_created_stack_is_idempotent(harness, capsys):
     """
     d = harness.root / "overlays" / "xmnn-dev"
     (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
-    harness.runner.paths = {"/dev/dxg", oc.WSL_CUDA_LIB}
+    harness.runner.paths = {"/dev/dxg", *oc.WSL_GPU_PATHS}
     harness.runner.running = True
     harness.runner.ss_output = "\n".join(_SS_LINES[:3])
     harness.runner.config_files = f"{d / 'compose.yaml'},{d / 'compose.gpu.wsl.yaml'}"
