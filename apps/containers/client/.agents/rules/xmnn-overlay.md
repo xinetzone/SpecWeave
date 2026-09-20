@@ -493,6 +493,9 @@
 - torch 属**可选依赖**，不写入 `builder/pyproject.toml`，故 §7 离线完备性
   守卫不受影响（空形态下镜像仍离线自足）；但 **cu130 形态的 CUDA 运行时
   依赖由 wheel 自带**，离线侧不额外补装。
+- **cu130 形态同时提供 CUDA 编译器工具链（nvcc）**——「cu130 = CUDA 13 开发
+  环境」的完整语义；安装脚本、三包同轨 pin、农场/wrapper 纪律与实测依据见
+  §11.6（C25）。
 
 ### 11.3 内核形参面 = 能力并集
 
@@ -560,4 +563,70 @@ form 切换 → 必须 down），以及端到端 `up_stack(gpu=True)` 在 gpu �
   `find_latest_image_tar` 形态过滤/无匹配/跳过软链、`save_image` 命名与
   manifest（有形态 / 无形态零回归）、`_image_torch_flavor` 降级；
   `tests/test_overlay_core.py` 另有 5 例锁 `load` 选档与拦截语义。
+
+### 11.6 CUDA 编译器工具链随 cu130 形态提供（C25，2026-09-20）
+
+**背景（现场）**：`TORCH_FLAVOR=cu130` 真机上 `torch.cuda.is_available()` 为
+True，但容器内 `nvcc -V` 报 `not found`。根因两层：① torch cu130 的依赖闭包
+只含 CUDA **运行时/库**（`nvidia-cuda-runtime`/`nvrtc`/`cublas`… 以及
+`Requires:` 为空的 `cuda-toolkit` **元包**），**不含编译器** `nvidia-cuda-nvcc`；
+② 既有验收全在运行期层（`cuInit()` / `torch.cuda.is_available()` / `CDLL`），
+§8 守卫只断言 torch 形状，**没有任何断言覆盖编译器层**——「运行时冒充工具链」
+被静默放行。
+
+- **归属裁决**：nvcc **并入 `TORCH_FLAVOR=cu130` 形态**（语义 = 「CUDA 13 开发
+  环境」），**不新增独立构建开关**——独立开关会引入第三个「同 tag 不同内容」的
+  形态维度，而复用 C20 归档身份需改动 save/load 命名契约，收益不抵复杂度。
+  默认形态（`""`/`cpu`）**零 CUDA 编译器**，C18「默认全关 = 默认隔离」不变。
+  旧 cu130 归档不含 nvcc（同一形态的版本演进，非 C20 类别的「互斥能力串档」），
+  需要者须回有网侧重建并重新 `save`。
+- **安装脚本** `builder/scripts/install-cuda-toolkit.sh`（**Layer 2.6，独立成层**
+  ——改本层不触碰 Layer 2.5 的 ~2GB torch 层缓存），由 `TORCH_FLAVOR` 白名单
+  路由（`""`/`cpu` 跳过、`cu130` 安装、非法值 Exit 1）；pip 索引走 `PIP_MIRROR`
+  三档映射（C15 同键）。
+- **三包必须同轨**：`nvidia-cuda-nvcc` + `nvidia-cuda-crt` + `nvidia-nvvm` 同一
+  pin（当前 `13.4.92`）。混版实测症状：cicc（nvvm 13.4）产 PTX `.version 9.4`、
+  ptxas（nvcc 13.0）只认 9.0 → `ptxas fatal: Unsupported .version 9.4`。
+- **为何 pin 13.4.92 而非与 torch 运行时同轨的 13.0.x**：基座 Ubuntu 26.04 /
+  glibc 2.43 下 CUDA 13.0 的 `crt/math_functions.h` 与 glibc `mathcalls.h` 的
+  `rsqrt` noexcept 规格冲突（`-std=c++14/17/20` 三档均复现），13.4.92 实测通过
+  ——编译器线高于运行时线是**基座约束**；torch 的 CUDA 运行时仍由 cu130 wheel
+  自带，不受影响。
+- **`/usr/local/cuda` 农场 + wrapper 纪律（禁裸软链）**：pip 布局在
+  `site-packages/nvidia/cu13/{bin,nvvm}`，**无 lib64、无 `libcudart.so` 短名**，
+  且 nvcc **以 argv[0] 所在目录定位自身根**（`bin/..//include`）：
+  ① 裸软链 `/usr/local/bin/nvcc → 真身` 是**假通过**——`_HERE_` 落
+  `/usr/local/bin`，报 `cuda_runtime.h: No such file`（实测），**禁止**；
+  ② 农场 `/usr/local/cuda/{bin,include,lib64,nvvm}` 软链 pip 实体，并为
+  `cu13/lib/lib*.so.<ver>` 补短名（缺短名时 `-lcudart` 报
+  `cannot find -lcudart`，实测）；
+  ③ PATH 上的 `/usr/local/bin/nvcc` 是**唯一入口**（包装器 exec 农场全路径）。
+  运行期 pip 升级单个 CUDA 组件会丢短名软链 → **禁止**，须回有网侧重打镜像
+  （与 §10 无网侧不得补装同源）。
+- **CUDA_HOME**：Containerfile 末尾 `ENV CUDA_HOME=/usr/local/cuda`（置文件末尾
+  以免使既有层缓存失效）；无它则 `which nvcc` 推出 `/usr/local`（wrapper 所在
+  目录）而非农场根，torch 扩展编译头文件解析错误。
+- **动态链接器登记（`/etc/ld.so.conf.d/10-xmnn-cuda.conf` + `ldconfig`）**：
+  真实 toolkit 安装器同款做法。缺这一步时**编译/链接都过、运行期才炸**——
+  `libcudart.so.13: cannot open shared object file`（链接期有 nvcc 默认 `-L`，
+  运行期 ld.so 不认识 `/usr/local/cuda/lib64`；2026-09-20 真机实测）。替代
+  方案是让用户设 `LD_LIBRARY_PATH`，与本栈 C19 纪律（禁以 env 覆盖库路径）
+  冲突，故必须在镜像层解决。
+- **构建期守卫**：`smoke/_toolchain_guards.py` §9 四查——① 标记
+  `/opt/xmnn-cuda-nvcc-version` 与 `nvcc --version` 实测版本一致；② 农场布局
+  齐备（`bin/nvcc`、`include/cuda_runtime.h`、`lib64/libcudart.so`、
+  `nvvm/libdevice`）；③ `ldconfig -p` 已登记 `libcudart`（产物可运行）；
+  ④ **真编译 + 真链接**最小 `.cu`（`-c` 与 `-lcudart` 双段，**不运行**——构建
+  期无 GPU 设备属预期边界）。非 cu130 形态反向断言 nvcc 与标记双双缺席。
+  「nvcc 存在」不是充分条件——头文件冲突、三包错版与链接器登记缺失都只在
+  编译/运行期暴露。
+- **默认 `-arch` 边界（2026-09-20 实测）**：nvcc 缺省 arch（sm_75）产物在新架构
+  GPU（本机 RTX 5050 Laptop = cc 12.0/sm_120）上**能编能链、启动期报**
+  `the provided PTX was compiled with an unsupported toolchain`（PTX JIT 被驱动
+  拒绝）；`-arch=native` / `-arch=sm_120` 后运行通过。**镜像刻意不预设 arch**：
+  `-arch=native` 需编译期可见设备（构建期无 GPU），预设还会把产物绑死构建机。
+  文档层（README/排障）必须给 `-arch=native` 指引，镜像层不得注入默认值。
+- **边界**：`nvidia-smi` 属运行期 WSL 形态（宿主 `/usr/lib/wsl/lib/nvidia-smi`
+  还需 `libnvidia-ml` 等依赖），**不在本条款范围**；容器内编译产物能否运行仍
+  取决于 `up --gpu` 的设备透传（C19）。
 

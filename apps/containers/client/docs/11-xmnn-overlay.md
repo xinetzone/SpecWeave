@@ -73,7 +73,7 @@ invoke xmnn.down                       # 停止清理（ccache / Jupyter 登录�
   apt/mamba/pip 均需联网）。
 - **对 external/chaos/ai 零依赖**：打包脚本与元数据自包含于叠加层；
   外部源码树只读挂载，打包中的临时 AST 注入会无条件还原。
-- **GPU 与 torch 可选能力（C18·C19·C20，默认全关）**：两者**分属两个正交维度**——
+- **GPU 与 torch 可选能力（C18·C19·C20·C25，默认全关）**：两者**分属两个正交维度**——
   **运行期维度（设备透传）只由 `up --gpu` 决定，构建期维度（torch 形态）只由
   `build --torch` 决定**，因此**没有也不该有 `build --gpu`**：透传只改 compose
   文件集（`--device` + 只读库 bind），**不动镜像内容**，构建期没有 GPU 相关对象可改
@@ -89,7 +89,15 @@ invoke xmnn.down                       # 停止清理（ccache / Jupyter 登录�
   `invoke xmnn.build --torch cpu|cu130`（或 `.env TORCH_FLAVOR=`）才在 base env
   `/opt/conda` 装 `torch==2.14.0`（白名单取值，索引 `download.pytorch.org/whl/<flavor>`；
   cu130 是当前唯一与 CPU 侧同 pin 的 CUDA 索引）；形态落 `/opt/xmnn-torch-flavor`，
-  构建期守卫 §8 断言「声明 vs 实物」。flavor **不参与镜像 tag**，改后须重建镜像；
+  构建期守卫 §8 断言「声明 vs 实物」。**cu130 形态同时提供 CUDA 编译器工具链
+  nvcc（C25，2026-09-20 起）**：容器内 `nvcc -V` 可用（命令 `/usr/local/bin/nvcc`
+  包装器 → `/usr/local/cuda` 农场，`CUDA_HOME=/usr/local/cuda`），可编译 + 链接
+  `.cu`（`-lcudart` 可用）；编译器 pin **13.4.92**（基座 Ubuntu 26.04 / glibc 2.43
+  与 CUDA 13.0 的 crt 头规格冲突，13.0 系实测编不过），**`""`/`cpu` 形态零 CUDA
+  编译器**；构建期守卫 §9 以「真编译 + 真链接最小 `.cu`」实测（不做假通过）。
+  注意 `nvidia-smi` **不在**容器内（属运行期 WSL 形态，另案）。细节见
+  [.agents/rules/xmnn-overlay.md](../.agents/rules/xmnn-overlay.md) §11.6。
+  flavor **不参与镜像 tag**，改后须重建镜像；
   但 **形态会写进归档名**（C20）：`save` 读镜像 LABEL 命名
   `...-torch-<形态>-<id>-<时间戳>.tar.gz`，`load` 按 `.env TORCH_FLAVOR` 挑归档并在
   形态不符时 Exit(1)——同一 tag 的 cpu / cu130 归档由此可辨识，避免无网侧静默导入错形态。

@@ -79,7 +79,7 @@ source: "AGENTS.md#嵌套路由关系"
 
 | 人类文档章节 | 对应 AI 规则文件 | 同步锚点（修改时必须一一核对） |
 |------------|----------------|------------------------------|
-| [docs/03 Windows 11 × WSL2 支持](../docs/03-windows-wsl.md) | [windows-wsl.md](rules/windows-wsl.md) | 三落地路径、四级优先级、四策略值、A/B 维度分离（Windows 原生坑 W-I1~W-I4 + 容器内坑 C-I1~C-I5 速查表见 [docs/04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md)） |
+| [docs/03 Windows 11 × WSL2 支持](../docs/03-windows-wsl.md) | [windows-wsl.md](rules/windows-wsl.md) | 三落地路径、四级优先级、四策略值、A/B 维度分离（速查表 W-I1~W-I19 + C-I1~C-I7 见 [docs/04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md)） |
 | [docs/06 内置纪律 rootless 三必需](../docs/06-run-discipline.md) | [invoke-tasks.md](rules/invoke-tasks.md) §3 + AGENTS §约束速览 C3 | 三必需参数值、禁止 --privileged |
 | [docs/07 .env 完整清单](../docs/07-environment-variables.md) | [sdk-connection.md](rules/sdk-connection.md) §3 | 容器级 9 项 + SDK 级 4 项变量名、默认值、优先级顺序 |
 | [docs/05 作为 SDK 使用](../docs/05-sdk-usage.md) | [invoke-tasks.md](rules/invoke-tasks.md) §4 | load_image / run_container / stop_container 三个 API 签名与 ContainerConfig 字段 |

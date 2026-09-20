@@ -6,6 +6,85 @@
 
 ## [Unreleased]
 
+### 2026-09-20 · `fix:` cu130 形态补齐 CUDA 编译器工具链——容器内 `nvcc` 从 not found 到可编译（C25）
+
+**关联七概念场景**：场景2「问题解决」——现场症状驱动：JupyterLab 内
+`!nvcc -V` 报 `nvcc: not found`，而同环境下 `torch.cuda.is_available()`
+为 True（「GPU 可用但编不了 CUDA」的半形态）。
+
+**I 事实**（真机 + 五轮一次性容器探针）：
+① 容器内 `pip list` 有 `torch 2.14.0+cu130`、`cuda-toolkit 13.0.3.0`
+（**元包，`Requires:` 为空**，仅由 torch 拉入）与 nvidia-* 运行期组件；
+`site-packages/nvidia/cu13/` 只有 `{include,lib}`、**无 `bin`** → 无 nvcc；
+② `nvidia-cuda-nvcc` 在 PyPI 有 13.0.48–13.4.92；**单独 pin 13.0.88** 安装时
+`nvidia-nvvm`/`nvidia-cuda-crt` 被解析到 13.4.92 → **ptxas 与 cicc 错轨**，
+编译报 `ptxas fatal: Unsupported .version 9.4; current version is '9.0'`；
+③ 三包同 pin 13.0.88 后仍在**头文件层**失败：基座 Ubuntu 26.04 / glibc 2.43 的
+`mathcalls.h` 与 CUDA 13.0 `crt/math_functions.h` 的 `rsqrt` noexcept 规格冲突
+（`-std=c++14/17/20` 三档均复现）；**13.4.92 编译通过**；
+④ 布局/调用三连：裸软链 `/usr/local/bin/nvcc → 真身` 报
+`cuda_runtime.h: No such file`（nvcc 以 argv[0] 目录定位自身根）；`-lcudart`
+报 `cannot find -lcudart`（pip 布局无短名，nvcc 默认只搜 lib64）；农场
+`/usr/local/cuda/{bin,include,lib64,nvvm}` + 短名软链 + wrapper exec 全路径后
+`nvcc -V`/编译/链接全通过；`CUDA_HOME=/usr/local/cuda` 被
+`torch.utils.cpp_extension` 正确识别（`bin/nvcc`、`include/cuda_runtime.h`、
+`lib64/libcudart.so` 三查为真）。
+⑤ 真机运行期补刀（首轮镜像重建后）：`nvcc` 编译 + `-lcudart` 链接都成功，但
+**运行**时 `libcudart.so.13: cannot open shared object file`——链接期有 nvcc
+默认 `-L`、运行期 ld.so 不认识 `/usr/local/cuda/lib64`；真实 toolkit 安装器
+靠 `/etc/ld.so.conf.d/*.conf` + `ldconfig` 解决（本修复初版遗漏，已补齐）。
+
+**F 根因**：**能力声明粒度不足 + 验收判据错层**——cu130 形态只覆盖「CUDA
+运行时（跑）」，编译器层（编）既无声明也无断言：依赖闭包（torch → 运行期
+nvidia-* + 空元包）天然不含 `nvidia-cuda-nvcc`，而既有验收
+（`cuInit()`/`torch.cuda.is_available()`/`CDLL`）与守卫 §8（torch 形状）
+全部锚在运行期层 →「运行时冒充工具链」被静默放行。
+
+**A 行动**：归属裁决——**并入 cu130 形态**（语义 = 「CUDA 13 开发环境」），
+不新增独立构建开关（独立开关会引入第三个「同 tag 不同内容」的形态维度，
+复刻 C20 归档盲区需改动 save/load 契约，收益不抵复杂度）。新增
+`builder/scripts/install-cuda-toolkit.sh`（**Layer 2.6，独立成层**保住 torch
+~2GB 层缓存；`""`/`cpu` 跳过 = C18 默认隔离不变；三包同轨 pin `13.4.92`；
+`PIP_MIRROR` 三档索引；农场 + 短名 + wrapper + 标记
+`/opt/xmnn-cuda-nvcc-version`）；Containerfile 末尾
+`ENV CUDA_HOME=/usr/local/cuda`（置末尾以免使既有层缓存失效）。
+
+**V 对抗审查**（四视角命中，采纳 ≥2 条已落盘）：
+① 魔鬼代言人「并入 cu130 是形态语义漂移，且旧 cu130 归档与新归档将**同名不同
+内容**」→ **采纳**：不新增归档身份维度（复刻 C20 盲区的前提是互斥能力，此处属
+同一形态的版本演进），但在 C25/docs 明示「旧 cu130 归档不含 nvcc，需要者重建后
+重新 `save`」；② 未来视角「pin 13.4 与 torch 13.0 不同轨会被后人误当笔误改回
+13.0」→ **采纳**：脚本头注 + 规则 §11.6 + docs/11 三处写明「编译器线高于运行时
+线是基座约束（glibc 2.43 与 CUDA 13.0 crt 头冲突，`-std` 三档无解）」并保留失败
+证据摘要；③ 完整性攻击者「`nvcc --version` 能跑 ≠ 能编」→ **采纳**：守卫 §9 以
+**真编译 + 真链接**最小 `.cu` 为判据（两个只在编译期暴露的失败模式：头规格冲突、
+`ptxas`/`cicc` 错版）；④ 边界攻击者「运行期 pip 升级单包会静默丢短名软链」→
+**采纳**：C25 ⑤ 明令禁止，须回有网侧重打镜像；⑤ 新人视角「用户不知道 nvcc 随
+cu130 而来、也不知道 13.4 与 13.0 的关系」→ **采纳**：`.env`/`.env.example`/
+README/docs 三处对齐；⑥ 老板视角「构建时间与镜像 +约 200MB」→ 接受（相对 10GB
+镜像 <2%，且只在 opt-in 的 cu130 形态）；⑦ 未采纳：独立构建开关 + 归档身份扩展
+（成本高于收益，见 F 阶段裁决）。
+
+**验收**：`_toolchain_guards.py` 新增 **§9** 四查——① 标记版本 ==
+`nvcc --version` 实测；② 农场布局齐备；③ `ldconfig -p` 已登记 `libcudart`
+（产物「开箱即跑」的必要条件）；④ **真编译 + 真链接**最小 `.cu`
+（`-c` 与 `-lcudart` 双段，**不运行**——构建期无 GPU 属预期边界），非 cu130
+形态反向断言 nvcc 与标记双双缺席。**真机复核（2026-09-20 实测）**：镜像重建 →
+`invoke xmnn.down && invoke xmnn.up --gpu --skip-build` → 容器内 `nvcc -V`
+= 13.4.92、`CUDA_HOME=/usr/local/cuda`；`nvcc probe.cu -o probe -lcudart && ./probe`
+→ 缺省 arch 报 `unsupported toolchain`（sm_75 产物 vs 本机 **RTX 5050 Laptop
+cc 12.0**），`-arch=native` 后 `result=42` **全链路通过**（编译→链接→GPU 运行）；
+devuser 身份 `nvcc -V` 通过（内核用户面同源）；`invoke xmnn.smoke` 全绿
+（守卫 §9 + 源码挂载 + `tvm.build('llvm')`）；`torch.cuda.is_available()=True`。
+构建期守卫已把「标记==实测 / 农场 / ldconfig / 真编译真链接」四查固化；
+Jupyter `!nvcc -V` 与 exec 同 PATH（`/usr/local/bin` 在镜像默认 PATH）。
+
+**C 同步**：[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §11.2·§11.6（新增）、
+[AGENTS.md](../AGENTS.md) C18 ② 与新增 **C25**、
+[docs/11](../docs/11-xmnn-overlay.md)、[docs/04](../docs/04-troubleshooting-guide.md)
+新增 **C-I7**、[overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)、
+[.env.example](../.env.example)。提交 `fix(client)` = `<待回填>`。
+
 ### 2026-09-20 · `fix:` 三内部栈补齐 SSH host key 命名卷（quant / monetize / xmnnrt）
 
 **关联七概念场景**：场景2「问题解决」的闭环延伸——承接同日 xmnn-dev 栈
