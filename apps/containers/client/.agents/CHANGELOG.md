@@ -48,7 +48,7 @@
 **C 同步**：[docs/04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md)
 新增 **W-I19**（含 `65534` 判据、换 inode 三步、chmod/chown 空操作陷阱）、
 [rules/xmnn-overlay.md](rules/xmnn-overlay.md) §4 新增「工作区 9p 无主文件契约」。
-提交 `docs(client)` = （待回填）。
+提交 `docs(client)` = `ada8cf4de`。
 
 ### 2026-09-20 · `fix:` 基段声明 `logging: k8s-file`，恢复 `podman logs` 可读（C24 前置）
 
