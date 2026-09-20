@@ -6,6 +6,77 @@
 
 ## [Unreleased]
 
+### 2026-09-20 · `feat:` 离线归档携带 torch 形态身份——`xmnn.save`/`load` 不再静默串档（C20）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session `sc-20260920-xmnn-save-flavor`）。
+
+**I 洞察（四元组）**：**现象**——用户问「`inv xmnn.save` 如何支持 GPU」，核对后发现
+GPU 与归档是**两个正交层面**：设备透传是运行期 compose 叠加（与归档无关），而 torch
+形态是镜像内容；**根因**——C18 的「flavor 不参与镜像 tag」与既有「`load` 按 mtime 取
+最新归档」两条各自正确的规则叠加出盲区：cpu 与 cu130 两份镜像 **tag 完全相同**
+（`localhost/xmnn-dev:latest`），归档名也不带形态时，两者同族同名、共用同一个
+`-latest` 软链；**影响**——无网侧 `load` 会**静默导入错形态**，直到容器内
+`torch.cuda` 为空（甚至 `import torch` 失败）才暴露，而排查时镜像 tag 与归档名
+**双双都看不出区别**；**建议**——镜像的形态身份必须在**归档层可辨识**，且
+`save`/`load` 两端都要用它（写得出、也读得回）。
+
+**F 第一性原理**：① 归档是「离线机的镜像来源」，其**身份必须自足**——形态是镜像的
+一等属性（已烘进 LABEL `org.specweave.torch-flavor` 与 `/opt/xmnn-torch-flavor`），
+归档名若丢弃它，等于让传输层丢字段；② 该属性的**单一事实源是镜像 LABEL**，
+不是 `.env TORCH_FLAVOR`（后者只是"打算构建成什么"，镜像才回答"实际是什么"）；
+③ 命名与解析必须是**严格互逆的一对**，且解析必须**不可歧义**——镜像 tag 自带
+`-latest` 段，形态段若不加以区分就会被反向解析抢走；④ 演进不能**追溯性地废掉**
+历史产物，旧归档必须仍可用。
+
+**V 对抗审查（四视角）**：① **魔鬼代言人**——"形态直接加进镜像 tag 不就完了"：
+**否决**，一举推翻 C18 已冻结的「一 tag 一形态」契约，且会让 `XMNN_IMAGE_TAG`
+这个用户可见键分裂成两份配置；改动面远大于收益；② **新人**——"归档名用
+`-<形态>-` 就够，不用加 `-torch-` 中缀"：**实测否决**——`...-xmnn-dev-latest-<id>-<ts>.tar.gz`
+会被正则**左最早**匹配成 `flavor=latest`（与 tag 的 `-latest` 段互相冒充），
+中缀是消除歧义的最小手段；③ **老板**——"改 `load` 报错就行，不必改命名"：否决，
+拒绝导入但不告诉用户"该导哪个"等于把问题推回去，形态进命名后才可能按形态**自动选档**；
+④ **未来**——"manifest 已经有字段了，用 manifest 判形态更规范"：**否决**——
+`validate_manifest_integrity` 按 `## ` 分段，而 `_append_manifest` 写单 `#` 表头，
+实际只有一个块、字段会被后一段覆盖，**只有最后一次 save 的产物能通过校验**；
+故形态判定必须落在**归档名**（稳定、逐文件独立），manifest 的 `TORCH_FLAVOR=`
+仅作冗余记账字段。
+
+**A 原子化实现**：① `client_core.py` —— 新增 `TORCH_FLAVOR_LABEL` 与
+`_image_torch_flavor(info)`（无该 LABEL 恒返回空串，非 torch 栈零影响）；
+`save_image` **签名不变**，复用已有的 `image_inspect_info()` 调用顺带取 LABEL，
+归档名升为 `<safe_name>[-torch-<形态>]-<shortid12>-<ts>.<ext>`（**无形态时不加段**，
+与历史产物逐字一致）；`_append_manifest` 增加 `TORCH_FLAVOR=` 记账字段。
+② `utils.py` —— 新增 `archive_flavor(filename)` 与模块级 `_ARCHIVE_FLAVOR_RE`
+（与 `save_image` 的命名**严格互逆**）；`find_latest_image_tar(dir, flavor=None)`
+增加形态过滤（`None`=不过滤，保持历史语义）。③ `overlay_core.py` —— `load` 的
+形态感知**仅当 `spec.torch_flavor` 为真**时生效：未给 `--path` 且期望形态非空 →
+按形态过滤选档（无档 Exit(1)）；`--path` 形态与期望不符 → **Exit(1) 且校验先于导入**；
+旧归档未标注形态 → 打印提示但**不拦截**；期望形态解析序与 `torch_build_args` 一致
+（`os.environ` > `.env` > `""`）；`load` 的 help 文案同步。
+
+**验收点**：① 新增 `tests/test_image_archive.py`（14 例，daemon-free）：`archive_flavor`
+四态（含"`-latest` 不得冒充形态"）、`find_latest_image_tar` 形态过滤/空串/无匹配/
+跳过软链/目录缺失、`save_image` 归档名与 manifest（有形态 / 无形态零回归）、
+`_image_torch_flavor` 五路降级；② `tests/test_overlay_core.py` 新增 5 例锁 `load`
+语义（按形态选档、无匹配 Exit、显式路径不符 Exit 且未导入、旧归档提示不拦截、
+期望为空保持取最新）；③ `pytest tests/test_image_archive.py tests/test_overlay_core.py -q`
+→ **95 passed / 2 skipped**；④ 全量 `pytest tests -q`（py314）→ **212 passed /
+2 skipped**，另有 8 例 `test_ast_inject.py` 失败属**既有环境差异**（该模块需
+WSL2/Linux 的 bash 与 `os.geteuid`，Windows 原生必然失败，非本次回归）。
+
+> **范围（已知未覆盖）**：形态只进**归档名**与 manifest 记账字段，**不进镜像 tag**
+> （C18 契约不变）；`load` 不校验归档内镜像实物的 LABEL（形态以归档名为准，
+> 不做二次开箱核对）；`xmnnrt` 栈无 `supports_offline`，故无 `save`/`load`
+> 形态路径（其 `.env` 中的 `XMNNRT_IMAGE_TAG=localhost/xmnn-runtime:gpu` 亦无
+> 构建路径产出，属另一议题）。
+
+**C 同步**：代码 + 测试提交 `feat(client)` = `88e1a9f35`（`client_core.py`/`utils.py`/
+`overlay_core.py`/`tests/test_image_archive.py`/`tests/test_overlay_core.py`，5 文件）；
+文档提交 `docs(client)` = `<文档提交hash>`（[rules/xmnn-overlay.md](rules/xmnn-overlay.md)
+§10/§11.2/§11.5、[rules/invoke-tasks.md](rules/invoke-tasks.md) C20 与测试节、
+`overlays/xmnn-dev/README.md`、`docs/11-xmnn-overlay.md`、本文件）；本条 hash 回填为
+第三条 `docs(client)` 提交。
+
 ### 2026-09-20 · `fix:` WSL 桥接探测吞掉 stderr——门禁给出「看似健康」的死胡同指引（W-I17）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session `sc-20260920-wsl-probe-stderr`）。

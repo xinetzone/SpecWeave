@@ -58,7 +58,7 @@ invoke xmnn.down                       # 停止清理（ccache 卷默认保留�
   apt/mamba/pip 均需联网）。
 - **对 external/chaos/ai 零依赖**：打包脚本与元数据自包含于叠加层；
   外部源码树只读挂载，打包中的临时 AST 注入会无条件还原。
-- **GPU 与 torch 可选能力（C18·C19，默认全关）**：① GPU —— 仅 `invoke xmnn.up --gpu`
+- **GPU 与 torch 可选能力（C18·C19·C20，默认全关）**：① GPU —— 仅 `invoke xmnn.up --gpu`
   才追加 GPU 覆盖文件，设备由 `GPU_DEVICE` 决定（`/` 开头=宿主机设备路径，否则=CDI
   引用如 `nvidia.com/gpu=all`，与根 `invoke run --gpu` 同键同语义）；**未设/空时自动
   探测** `/dev/dri → /dev/dxg`（C19，不再是「回退 `/dev/dri`」——WSL2 无 `/dev/dri`，
@@ -68,8 +68,11 @@ invoke xmnn.down                       # 停止清理（ccache 卷默认保留�
   `invoke xmnn.build --torch cpu|cu130`（或 `.env TORCH_FLAVOR=`）才在 base env
   `/opt/conda` 装 `torch==2.14.0`（白名单取值，索引 `download.pytorch.org/whl/<flavor>`；
   cu130 是当前唯一与 CPU 侧同 pin 的 CUDA 索引）；形态落 `/opt/xmnn-torch-flavor`，
-  构建期守卫 §8 断言「声明 vs 实物」。flavor **不参与镜像 tag**，改后须重建镜像。
-  详细用法见 [overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md#gpu-与-torch-可选能力默认全关c18)，
+  构建期守卫 §8 断言「声明 vs 实物」。flavor **不参与镜像 tag**，改后须重建镜像；
+  但 **形态会写进归档名**（C20）：`save` 读镜像 LABEL 命名
+  `...-torch-<形态>-<id>-<时间戳>.tar.gz`，`load` 按 `.env TORCH_FLAVOR` 挑归档并在
+  形态不符时 Exit(1)——同一 tag 的 cpu / cu130 归档由此可辨识，避免无网侧静默导入错形态。
+  详细用法见 [overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md#gpu-与-torch-可选能力默认全关c18c19c20)，
   WSL2 实测矩阵与排障见 [04-troubleshooting-guide.md](04-troubleshooting-guide.md) W-I16。
 
 ## 启动后连接：Jupyter 与 SSH

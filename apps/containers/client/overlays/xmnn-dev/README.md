@@ -225,7 +225,7 @@ podman-compose -p xmnn-dev exec xmnn \
 设计原则是**硬失败 + 可执行中文指引**，不做静默降级——离线环境里"悄悄联网然后
 超时"比直接报错难排查得多。
 
-## GPU 与 torch 可选能力（默认全关，C18）
+## GPU 与 torch 可选能力（默认全关，C18·C19·C20）
 
 两项能力都**默认关闭**：不开时镜像体积、设备透传面与离线契约与改造前一致。
 
@@ -290,6 +290,28 @@ podman-compose exec xmnn python -c "import torch; print(torch.__version__, torch
 - torch 属可选依赖，**不进** `builder/pyproject.toml`，离线完备性守卫不受影响；
   空形态镜像仍离线自足。
 
+### 归档可辨识：形态进归档名（C20）
+
+cpu 与 cu130 两份镜像 **tag 相同**（`localhost/xmnn-dev:latest`），形态只在镜像内
+LABEL 里。若归档名不携带形态，两者同族同名、共用同一个 `-latest` 软链，无网侧
+`load` 会**静默导入错形态**（直到容器内 `torch.cuda` 为空才暴露）。故 `save`
+会把 LABEL 形态写进归档名：
+
+```bash
+invoke xmnn.save    # → .image-cache/localhost-xmnn-dev-latest-torch-cu130-<id12>-<时间戳>.tar.gz
+invoke xmnn.load    # 按 .env TORCH_FLAVOR 形态挑归档；形态不符直接 Exit(1)
+```
+
+| 场景 | `load` 行为 |
+|---|---|
+| 未给 `--path`，`.env TORCH_FLAVOR=cu130` | 只在标注 `-torch-cu130-` 的归档里取最新；无匹配则 Exit(1) |
+| 未给 `--path`，`TORCH_FLAVOR` 为空 | 不过滤，取最新（历史语义），但仍打印归档形态供核对 |
+| `--path` 点名归档，形态与 `TORCH_FLAVOR` 不符 | **Exit(1)**（校验先于导入），提示改 `.env` 或换归档 |
+| `--path` 点是 C20 之前的旧归档（无形态标注） | 打印提示但**不拦截** |
+
+缺形态时归档名**不带** `-torch-` 段（与历史产物逐字一致）；形态段必须带
+`-torch-` 标记，否则会与镜像 tag 自带的 `-latest` 段互相冒充。
+
 ## 参数表（compose 插值 / .env 键）
 
 | 键 | 默认值 | 用途 |
@@ -306,7 +328,7 @@ podman-compose exec xmnn python -c "import torch; print(torch.__version__, torch
 | `OMP_NUM_THREADS` / `NUITKA_JOBS` | `4` / `8` | 线程与 Nuitka 并发 |
 | `PIP_MIRROR` / `CONDA_MIRROR` | `official` | 构建期镜像源（official/aliyun/tuna）。**无前缀构建参数单一事实源（C15）**：`invoke xmnn.build`、`xmnn.up` 的 compose 内联 build、裸 `podman-compose build` 三处同键读取；`--pip-mirror/--conda-mirror` 旗标只覆盖单次 `build` |
 | `BASE_IMAGE`（build args + invoke 同键） | `localhost/jupyter-podman-rootless:latest` | 基底镜像覆盖（同样被 `xmnn.build`/`xmnn.up` 读取，C15） |
-| `TORCH_FLAVOR` | 空（不装） | torch 形态白名单 `空`/`cpu`/`cu130`（C15 无前缀键，compose build args + invoke 同键）。`invoke xmnn.build --torch cu130` 只覆盖单次构建；改 `.env` 后需重建镜像。flavor 不参与镜像 tag |
+| `TORCH_FLAVOR` | 空（不装） | torch 形态白名单 `空`/`cpu`/`cu130`（C15 无前缀键，compose build args + invoke 同键）。`invoke xmnn.build --torch cu130` 只覆盖单次构建；改 `.env` 后需重建镜像。flavor 不参与镜像 tag，但**进归档名**（C20）并决定 `xmnn.load` 选哪个归档 |
 | `GPU_DEVICE` | 未设 | GPU 设备双形态：`/` 开头=宿主机设备路径，否则=CDI 引用；**未设时自动探测 `/dev/dri → /dev/dxg`**（C19）。**仅 `up --gpu` 时生效**（默认零透传） |
 | `XMNN_OFFLINE` | `0`（关） | 离线总开关（**非 compose 插值键**，由 invoke 读取并经 `-e` 透传进容器）：开启后 `up` 强制跳过构建（`--no-build` 恒真，非离线亦然，C16）、`build` 直接 Exit(1)、容器内打包禁网兜底；等价 `invoke xmnn.up --offline`，关闭用 `--no-offline` |
 

@@ -299,6 +299,7 @@
   软链 + manifest/SHA256 校验（`default_build_cache_dir` /
   `find_latest_image_tar` / `validate_manifest_integrity`），不新造归档
   格式；`load` 必须先校验 manifest 再导入（拷贝损坏在 load 步暴露）。
+  归档名另携带 **torch 形态**中缀（`-torch-<形态>-`），见 §11.5（C20）。
 - **容器内打包禁网 = 硬失败而非降级**：`build-wheel.sh` 读同一
   `XMNN_OFFLINE`，三处行为——① numpy/scipy 导入失败时不再 pip 兜底而是
   `exit 2`；② Nuitka 的 `--assume-yes-for-downloads` 改由 `$NUITKA_DL_FLAG`
@@ -309,7 +310,7 @@
   且 `runner.commands == []` / 缺镜像 Exit / `up` 任务体参数存活 /
   `save`·`load` 仅离线栈生成），改动离线路径必须同步这组断言。
 
-## 11. 可选能力 opt-in（GPU / torch，2026-09-20 / C18·C19）
+## 11. 可选能力 opt-in（GPU / torch，2026-09-20 / C18·C19·C20）
 
 **总原则**：两项能力**默认全关**，不开时镜像体积、设备面与离线契约与改造前
 逐字等价（`up` 不加载 GPU 覆盖文件、`TORCH_FLAVOR` 为空不装 torch）。
@@ -392,6 +393,7 @@
   文件即判失败（Layer 2.5 未执行）。
 - **flavor 不参与镜像 tag**（沿用 `XMNN_IMAGE_TAG`，一 tag 一形态）；
   换 flavor 后必须 `invoke xmnn.build` 重建，不能靠 `up` 增量刷新。
+  由此产生的「同 tag 双形态归档不可辨识」盲区由 §11.5（C20）在归档层补齐。
 - torch 属**可选依赖**，不写入 `builder/pyproject.toml`，故 §7 离线完备性
   守卫不受影响（空形态下镜像仍离线自足）；但 **cu130 形态的 CUDA 运行时
   依赖由 wheel 自带**，离线侧不额外补装。
@@ -413,4 +415,41 @@ compose argv、quant 同路径、**不开 `--gpu` 绝不探测设备**）；渲�
 `tests/test_compose_merge.py` 断言 `compose.gpu.wsl.yaml` 的
 `devices: [/dev/dxg]` 与 libcuda 单文件 bind，以及 quant 的
 `${GPU_DEVICE}` 双形态插值。改动 GPU 解析路径必须同步这两组断言。
+
+### 11.5 归档的 torch 形态身份（C20，2026-09-20）
+
+**问题**：§11.2「flavor 不参与镜像 tag」+ §10「`load` 按 mtime 取最新归档」
+两条正确规则叠加出一个盲区——cpu 与 cu130 两份镜像 **tag 相同**
+（`localhost/xmnn-dev:latest`），若归档名也不带形态，则两者同族同名、共用
+同一个 `-latest` 软链，离线机 `load` 会**静默导入错形态**，直到容器内
+`torch.cuda` 为空才暴露。
+
+- 形态的唯一事实源是镜像内 **LABEL `org.specweave.torch-flavor`**
+  （构建期 build-arg 烘入，与 `/opt/xmnn-torch-flavor` 标记文件并列）。
+  `save_image` 复用已有的 `image_inspect_info` 调用顺带取 LABEL，
+  **签名不变**（不新增参数）。
+- 归档名：`<safe_name>[-torch-<形态>]-<short_id12>-<YYYYMMDD-HHMMSS>.<ext>`，
+  `-latest` 软链同 stem。**无形态时不加段**，命名与历史产物逐字一致。
+- **形态段必须带 `-torch-` 标记中缀**：镜像 tag 自带 `-latest` 段，无标记的
+  `-<形态>-` 会被反向正则左最早匹配成 `flavor=latest`（`...-xmnn-dev-latest-<shortid>-<ts>.tar.gz`）。
+  `client_core.save_image` 的命名与 `utils.archive_flavor` 的解析**严格互逆**，
+  改动其一必须同步另一处。
+- `find_latest_image_tar(search_dir, flavor=None)`：`None` 不过滤（历史语义、
+  零回归）、空串只取未标注形态、`"cu130"` 只取该形态；无匹配返回 `None`。
+- `load` 的形态感知**仅当 `spec.torch_flavor` 为真**时生效（其余栈零影响）：
+  ① 未给 `--path` + 期望形态非空 → 按形态过滤选档；② 过滤后无档 → `Exit(1)`
+  （提示当前 `TORCH_FLAVOR`）；③ `--path` 点名的归档形态与期望不符 → `Exit(1)`
+  （**校验先于导入**）；④ 归档未标注形态（C20 之前的旧产物）→ 打印提示但
+  **不拦截**（不能因命名演进拒绝历史归档）。
+- 期望形态解析序与 `torch_build_args` 一致：`os.environ["TORCH_FLAVOR"]` >
+  `.env TORCH_FLAVOR` > `""`。
+- manifest 段的 `TORCH_FLAVOR=<形态>` 是**冗余记账字段**（供人工核对），
+  **不是 load 的判定依据**——`validate_manifest_integrity` 按 `## ` 分段解析，
+  而 `_append_manifest` 写单 `#` 表头，实际只有一个块、字段会被后一段覆盖，
+  只有最后一次 save 的产物能通过校验；故形态判定必须以**归档名**为准。
+- **测试锁行为**：`tests/test_image_archive.py`（新增，13 例）覆盖
+  `archive_flavor` 四态（含 `-latest` 不得冒充形态）、
+  `find_latest_image_tar` 形态过滤/无匹配/跳过软链、`save_image` 命名与
+  manifest（有形态 / 无形态零回归）、`_image_torch_flavor` 降级；
+  `tests/test_overlay_core.py` 另有 5 例锁 `load` 选档与拦截语义。
 
