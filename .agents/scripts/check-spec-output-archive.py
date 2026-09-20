@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
 """Spec目录产出物归档检查：检测spec目录中是否存在未归档的产出物文件。
 
-spec目录应仅包含过程性文件（spec.md/tasks.md/checklist.md），
-分析报告、原文、任务产出等最终产物应归档到 docs/retrospective/reports/ 下。
+spec目录应仅包含过程性文件（规划三件套 spec.md/tasks.md/review.md，以及工作流
+声明的过程件 facts.md/insights.md），分析报告、原文、任务产出等最终产物应归档到
+docs/retrospective/ 下（大文件走 archives/spec-working-notes/，专题报告走
+reports/ 对应目录）。
+
+过程件白名单的权威依据：
+- 规划三件套 spec.md/tasks.md/review.md —— TRAE-spec-mode 为 Spec Mode 产物
+  规范的唯一权威（checklist.md 为已废止的历史命名，仅作存量兼容保留，
+  不视为违规，也不应在新增 spec 中使用）；
+- facts.md —— blog-article-to-okf-wiki 等工作流声明的「spec facts.md」F 编号事实登记；
+- insights.md —— source-code-to-okf-wiki 等工作流声明的「洞察写入 <spec-dir>/insights.md」。
 
 扫描 `.trae/specs/` 下所有spec目录，检测：
   1. spec目录中是否存在产出物文件（analysis-report.md、article-content.md、task*-*.md等）
@@ -38,7 +47,10 @@ SPECS_ROOT = ".trae/specs"
 SPEC_ALLOWED_FILES = {
     "spec.md",
     "tasks.md",
-    "checklist.md",
+    "review.md",  # Spec Mode 规划三件套（以 TRAE-spec-mode 为唯一权威）
+    "facts.md",  # 事实登记过程件（blog-article-to-okf-wiki 等工作流声明）
+    "insights.md",  # 洞察过程件（source-code-to-okf-wiki 等工作流声明）
+    "checklist.md",  # 历史命名：标准已废止，仅兼容存量，不视为违规
     "README.md",
     ".gitkeep",
 }
@@ -218,7 +230,7 @@ def main() -> None:
             print(f"    2. 使用 git mv 将产出物移至归档目录")
             print(f"    3. 创建归档README.md（含frontmatter、核心指标、文件索引）")
             print(f"    4. 更新主题README.md中的交付物链接指向归档目录")
-            print(f"    5. 验证spec目录仅保留spec.md/tasks.md/checklist.md")
+            print(f"    5. 验证spec目录仅保留 spec.md/tasks.md/review.md（及 facts.md/insights.md 过程件）")
             print()
         if in_progress_with_output:
             print(f"  注：{len(in_progress_with_output)}个进行中的spec包含产出物文件，")
