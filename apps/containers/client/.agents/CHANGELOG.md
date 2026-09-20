@@ -72,7 +72,7 @@ WSL2/Linux 的 bash 与 `os.geteuid`，Windows 原生必然失败，非本次回
 
 **C 同步**：代码 + 测试提交 `feat(client)` = `88e1a9f35`（`client_core.py`/`utils.py`/
 `overlay_core.py`/`tests/test_image_archive.py`/`tests/test_overlay_core.py`，5 文件）；
-文档提交 `docs(client)` = `<文档提交hash>`（[rules/xmnn-overlay.md](rules/xmnn-overlay.md)
+文档提交 `docs(client)` = `2ee7a2dd4`（[rules/xmnn-overlay.md](rules/xmnn-overlay.md)
 §10/§11.2/§11.5、[rules/invoke-tasks.md](rules/invoke-tasks.md) C20 与测试节、
 `overlays/xmnn-dev/README.md`、`docs/11-xmnn-overlay.md`、本文件）；本条 hash 回填为
 第三条 `docs(client)` 提交。
