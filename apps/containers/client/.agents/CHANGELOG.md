@@ -81,13 +81,13 @@ quant 同内核路径、**不开 `--gpu` 绝不探测设备**）与渲染断言 
 > `/dev/dxg` 之外的 WSL 变体（如自定义发行版）未逐一实测，按 `GPU_DEVICE_FORMS`
 > 顺序探测即可覆盖常见形态。
 
-**C 同步**：代码 + 测试提交 `fix(client)`（`overlay_core.py`/`quant.py`/两个
-`compose.gpu.wsl.yaml`/quant `compose.gpu.yaml`/两个测试文件，预防措施
-`[prevent: opt-in-device-runtime-preflight]`）；文档提交 `docs(client)`
-（[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §11.1.1·§11.1.2·§11.4、
+**C 同步**：代码 + 测试提交 `fix(client)` = `34c2bbf83`（`overlay_core.py`/`quant.py`/
+两个 `compose.gpu.wsl.yaml`/quant `compose.gpu.yaml`/两个测试文件，7 文件，
+预防措施 `[prevent: opt-in-device-runtime-preflight]`）；文档提交 `docs(client)`
+= `a946496c1`（13 文件：[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §11.1.1·§11.1.2·§11.4、
 [rules/quant-overlay.md](rules/quant-overlay.md) §3·§4、`docs/04-troubleshooting-guide.md`
-W-I16、`docs/03`/`docs/README.md` 速查表范围、两个 overlay README、`AGENTS.md`
-P0 清单 C19 与变更日志、本文件）。
+W-I16、`docs/03`/`docs/README.md`/`docs/11` 速查表与说明、两个 overlay README 与
+`.env.example`、`AGENTS.md` P0 清单 C19 与变更日志、本文件）。
 
 ### 2026-09-20 · `feat:` xmnn-dev 支持 GPU 可选透传与 torch 可选安装（C18）
 
