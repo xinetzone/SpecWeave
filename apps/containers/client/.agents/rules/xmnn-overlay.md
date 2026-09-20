@@ -622,10 +622,14 @@ True，但容器内 `nvcc -V` 报 `not found`。根因两层：① torch cu130 �
   编译/运行期暴露。
 - **默认 `-arch` 边界（2026-09-20 实测）**：nvcc 缺省 arch（sm_75）产物在新架构
   GPU（本机 RTX 5050 Laptop = cc 12.0/sm_120）上**能编能链、启动期报**
-  `the provided PTX was compiled with an unsupported toolchain`（PTX JIT 被驱动
-  拒绝）；`-arch=native` / `-arch=sm_120` 后运行通过。**镜像刻意不预设 arch**：
-  `-arch=native` 需编译期可见设备（构建期无 GPU），预设还会把产物绑死构建机。
-  文档层（README/排障）必须给 `-arch=native` 指引，镜像层不得注入默认值。
+  `the provided PTX was compiled with an unsupported toolchain`——根因是 nvcc 13.4
+  产出的 PTX 版本高于宿主驱动线（本机 WSL 驱动 580.102 ≈ CUDA 13.0 代）所支持的
+  版本，属**工具链/驱动版本差**而非镜像缺陷；`-arch=native` 与 `-arch=sm_120`
+  两条路径均真机实测通过（`result=42`；device 枚举/拷贝/同步本已正常，失败只在
+  JIT 发射一跳）。**镜像刻意不预设 arch**：`-arch=native` 需编译期可见设备
+  （构建期无 GPU），预设还会把产物绑死构建机。文档层（README/排障）必须给
+  `-arch=native` 指引，镜像层不得注入默认值；torch 扩展编译走 torch 自身 arch
+  检测（`TORCH_CUDA_ARCH_LIST`）不受影响。
 - **边界**：`nvidia-smi` 属运行期 WSL 形态（宿主 `/usr/lib/wsl/lib/nvidia-smi`
   还需 `libnvidia-ml` 等依赖），**不在本条款范围**；容器内编译产物能否运行仍
   取决于 `up --gpu` 的设备透传（C19）。
