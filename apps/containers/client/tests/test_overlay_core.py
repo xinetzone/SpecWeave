@@ -255,7 +255,7 @@ def test_gpu_override_file_form_dispatch_and_fallback(harness):
 
 
 # ---------------------------------------------------------------------------
-# C22：跨平面判据的期望文件集必须与真正下发的 --file 同源
+# C23：跨平面判据的期望文件集必须与真正下发的 --file 同源
 # ---------------------------------------------------------------------------
 
 
@@ -271,7 +271,7 @@ def test_compose_config_files_label_matches_compose_convention(harness):
 def test_argv_files_and_preflight_label_share_one_source(harness):
     """同源锁：argv 的 --file 集合与预检期望串必须逐字一致。
 
-    这是 C22 的结构性回归门——将来再加覆盖文件（offline/形态若干）时，
+    这是 C23 的结构性回归门——将来再加覆盖文件（offline/形态若干）时，
     只要两者仍由 compose_files() 推导，判据就不会重新变成假阳性。
     """
     d = harness.root / "overlays" / "xmnn-dev"
@@ -359,7 +359,7 @@ def test_up_gpu_wsl_form_for_quant_same_kernel_path(harness):
 
 
 def test_up_gpu_on_gpu_created_stack_is_idempotent(harness, capsys):
-    """端到端（C22 的用户可见断言）：连续 `up --gpu` 不得再拆栈重建。
+    """端到端（C23 的用户可见断言）：连续 `up --gpu` 不得再拆栈重建。
 
     修复前 up_preflight 的期望值写死 compose.yaml，而运行容器标签是两文件，
     故每次 --gpu 都被判「另一控制平面创建」→ 优雅 down + recreate（销毁容器内
@@ -605,7 +605,7 @@ def test_up_preflight_same_plane_running_is_noop(harness):
     assert not any(" down" in c or c.startswith("kill") for c in harness.runner.commands)
 
 
-# ---- C22：--gpu 的期望文件集（修复「每次 --gpu 都被判成另一控制平面」） ----
+# ---- C23：--gpu 的期望文件集（修复「每次 --gpu 都被判成另一控制平面」） ----
 
 def _gpu_plane_label(harness, subdir: str, *names: str) -> str:
     d = harness.root / "overlays" / subdir

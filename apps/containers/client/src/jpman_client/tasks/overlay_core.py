@@ -947,7 +947,7 @@ def up_preflight(
     3. 无活体项目容器时回收孤儿进程：rootlessport（持端口，必收）与
        stale conmon（已删容器遗留，不持端口但跨平面循环会累积）。
 
-    跨平面判据的期望值必须由 :func:`compose_config_files_label` 推出（C22）：
+    跨平面判据的期望值必须由 :func:`compose_config_files_label` 推出（C23）：
     ``gpu``/``gpu_form`` 决定本次真正下发的文件集，写死单文件会让 ``up --gpu``
     每次误判为「另一控制平面创建」而强制重建。**但仍保持精确同集比较**——
     ``up``（无 ``--gpu``）对 ``--gpu`` 创建的栈判分歧是**正确**行为（compose
@@ -1229,7 +1229,7 @@ def up_stack(
 ) -> None:
     """渲染并启动栈（默认随带构建；up 前过 up_preflight 三道自愈）。
 
-    GPU 解析**先于** up_preflight（C19 + C22）：预检的跨平面判据需要 gpu_form
+    GPU 解析**先于** up_preflight（C19 + C23）：预检的跨平面判据需要 gpu_form
     才能推出本次下发的文件集，且 GPU 不可用应在任何 down 之前 fail-fast。
 
     构建执行者唯一（C16）：镜像存在性由内核负责，compose 恒 ``up -d --no-build``。
@@ -1261,7 +1261,7 @@ def up_stack(
     # GPU 透传：设备令牌与形态在此解析（含运行期可用性预检），解析结果回写
     # os.environ 后由 compose 插值消费——终端提示与容器实收设备同源（C19）。
     # **必须在 up_preflight 之前**（顺序即语义）：① 跨平面判据的期望文件集依赖
-    # gpu_form（C22）；② GPU 不可用时 fail-fast 于任何 down 之前——否则先把用户
+    # gpu_form（C23）；② GPU 不可用时 fail-fast 于任何 down 之前——否则先把用户
     # 正在用的栈拆掉再报错，破坏面被无谓放大。
     gpu_token, gpu_form = ("", "generic")
     if gpu:
