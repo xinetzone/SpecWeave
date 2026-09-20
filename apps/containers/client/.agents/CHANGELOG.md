@@ -58,16 +58,18 @@ recreate；**精确同集**比较是唯一同时满足两侧的判据，前缀/�
 约定、**同源锁**（三组 `(gpu, form)` 下 `compose_argv` 的 `--file` 拼接必须逐字等于 label
 输出）、`up_preflight` 的三种平面关系（gpu 平面同集 → 零 down；非 gpu 平面对 gpu 栈 →
 必须 down；form 切换 → 必须 down）、端到端 `up_stack(gpu=True)` 在 gpu 栈上幂等；
-② `pytest tests/test_overlay_core.py -q` → **90 passed / 1 skipped**；③ 真机
-`inv xmnn.up --gpu --skip-build` 输出**无**「另一控制平面」警告、**无** down 行，直接
-`podman-compose … --file compose.yaml --file compose.gpu.wsl.yaml up -d --no-build`，
-且事后 `podman inspect --format '{{.State.StartedAt}}' xmnn-dev` 与执行前一致（证明**未重建**）。
+② `pytest tests/test_overlay_core.py -q` → **90 passed / 1 skipped**；③ 真机**连续两次**
+`inv xmnn.up --gpu --skip-build`（均 exit 0）日志逐字同构：**无**「另一控制平面」警告、
+**无** down 行，直接 `podman-compose … --file compose.yaml --file compose.gpu.wsl.yaml
+up -d --no-build`，随后「Jupyter 已就绪（127.0.0.1 → HTTP 302）」——两次均**立即可达**，
+反证容器未被重建；容器 `Id` / `Created` / `StartedAt` 在两次执行前后**完全一致**
+（`17fb88c9f317…` / `2026-09-20 10:17:51.771660461 +0800 CST` /
+`10:17:52.990802892 +0800 CST`）→ **零重建，幂等坐实**。
 
-> **范围（已知未覆盖）**：修复依据为**静态推演 + 单测 + 单次真机幂等验证**，未做「连续
-> 两次 `--gpu`」的重复实证（单次已足以证伪"每次必重建"）；`down` 路径仍只下发
-> `compose.yaml`（podman-compose down 按项目标签工作，实测有效，本次未改）；`up` 的
-> `--gpu` 旗标本身不写入 `.env`，故「平面」判据的比较对象是**文件集原文**而非旗标历史——
-> 若某栈**确实**由裸 compose 用不同文件集创建，判分歧行为按设计保留。
+> **范围（已知未覆盖）**：修复依据为**静态推演 + 单测 + 真机连续两次幂等实证**；`down`
+> 路径仍只下发 `compose.yaml`（podman-compose down 按项目标签工作，实测有效，本次未改）；
+> `up` 的 `--gpu` 旗标本身不写入 `.env`，故「平面」判据的比较对象是**文件集原文**而非
+> 旗标历史——若某栈**确实**由裸 compose 用不同文件集创建，判分歧行为按设计保留。
 
 **C 同步**：代码 + 测试提交 `fix(client)` = `6b1fb287d`（`src/jpman_client/tasks/overlay_core.py`/
 `tests/test_overlay_core.py`）；文档提交 `docs(client)` = `73ede8f84`（
