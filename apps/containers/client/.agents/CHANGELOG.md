@@ -6,6 +6,66 @@
 
 ## [Unreleased]
 
+### 2026-09-20 · `feat:` xmnn-dev 支持 GPU 可选透传与 torch 可选安装（C18）
+
+**关联七概念场景**：场景5「创新突破」（R→F→V→I→C，session sc-20260920-xmnn-dev-gpu-torch）。
+
+**R 事实**：改造前 `overlays/xmnn-dev` 无 `compose.gpu.yaml`、`XMNN_SPEC` 无 `gpu_override`，
+镜像内既无 torch 也无 CUDA 运行时；`overlay_core.make_stack_tasks()` 的 `up`/`smoke`
+是 `if spec.gpu_override / elif spec.supports_offline / else` **互斥分支**。
+用户诉求（原话）：「支持 gpu 作为可选，且支持 torch-gpu」。
+
+**F 第一性原理**：① 用户要的是**两种可选能力**而非两个默认行为——"可选"的判据是
+**不开时与改造前逐字等价**（零设备透传、零 torch、离线契约不变），故开关必须是
+opt-in 且默认关；② GPU 与 torch 是**正交维度**（前者是运行期设备透传，后者是构建期
+依赖形态），不得互相耦合（如"装了 cu130 就自动开 GPU"）；③ podman-compose 的
+`devices` 是**原样透传**的字符串列表（vendor `podman_compose.py` L1382-L1383 不做冒号
+拆分），故"同时支持设备路径与 CDI 引用"只能靠**单条插值**承载两种形态，写成并列两条
+必有一条非法；④ 构建期网络请求的目标（`download.pytorch.org/whl/<flavor>`）**不得由
+用户输入任意拼接**，故 flavor 必须是白名单而非自由文本。
+
+**V 对抗审查（四视角）**：① **魔鬼代言人**——"最优突破方向应否是独立 GPU 栈而非
+xmnn 加开关"：否决，理由是新增栈需复制 12 件套且违背「默认隔离」承诺，而 GPU 与
+torch 都是**既有栈的能力扩展**（对齐 quant 已实证的 `compose.gpu.yaml` 模式）；
+② **新人**——"为什么 `devices` 不写成两条（`/dev/dri` + CDI）"：vendor 源码实证
+devices 列表项原样下传为 `--device <item>`，两条并列时 CDI 形态必然 `stat` 失败；
+③ **老板**——torch 装 base env（cp314 GIL）而非 main env：依 C13 双 ABI 不可互换 +
+xmnn-runtime 既有先例，main env 是 free-threading，装 CUDA torch 会破坏 ABI 契约；
+④ **未来**——"kernel 的互斥分支会怎样"：**已实证为真风险**——xmnn 同时声明
+`gpu_override` 与 `supports_offline` 后，互斥分支让 `--offline`/`--no-offline`
+被 gpu 分支吃掉，静默破坏 §10 离线契约。**采纳的修正**：① 内核重构为
+**能力并集四路正交** + 公共 `_up_impl`（离线旗标固化必须先于 `gates()` 保留在
+`_up_impl` 内）；② torch 层插在 mamba 工具链层之后、`COPY builder` 之前，
+使 ~2GB wheel 层不被 builder 变更失效；③ 用单一脚本 + 早期单文件 COPY 承载安装逻辑，
+规避「RUN 行不写内层引号 `python -c`」的既有约定。
+
+**I 洞察落地（设计裁决，均已用户确认）**：① torch 形态 = 构建期可选默认不装
+（`TORCH_FLAVOR` / `--torch`，白名单 `""|cpu|cu130`）；② GPU 形态 = 复用 `GPU_DEVICE`
+双形态（`/` 开头=设备路径，否则=CDI 引用），与根 `invoke run --gpu` 同键同语义；
+③ flavor **不参与镜像 tag**（沿用 `XMNN_IMAGE_TAG`，一 tag 一形态）。
+
+**A 原子化实现**：内核 `overlay_core.py`（`TORCH_FLAVORS` 白名单 + `StackSpec` 三新字段
+`gpu_device_env`/`torch_flavor` + `resolve_build_args(torch=)` + `build_image` 透传 +
+`up_stack` 双形态提示 + `make_stack_tasks` 能力并集四路正交）、栈声明 `tasks/xmnn.py`
+（`gpu_override`/`gpu_device_env`/`torch_flavor` + bridge_env_keys 加 `TORCH_FLAVOR`/`GPU_DEVICE`）、
+`overlays/xmnn-dev/compose.gpu.yaml`（新建，单条 `${GPU_DEVICE:-/dev/dri}`）、
+`compose.yaml`（`TORCH_FLAVOR` build-arg）、`Containerfile.xmnn-dev`（Layer 2.5 + LABEL +
+横幅）、`builder/scripts/install-torch.sh`（新建）、`smoke/_toolchain_guards.py`（§8 声明 vs 实物）。
+
+**验收点**：① `pytest tests -q --ignore=tests/test_ast_inject.py` **170 passed / 1 skipped**
+（较 C17 基线净增 4 例：`test_build_args_torch_flavor_whitelist`、
+`test_build_task_argv_xmnn_torch_flavor_flows`、`test_xmnn_gpu_override_is_opt_in_and_single_device`、
+`test_xmnn_gpu_device_double_form_interpolation`；另有 4 例黄金清单/签名同步改写）；
+② 渲染断言锁定「默认零透传 + `--gpu` 追加单条设备 + `GPU_DEVICE` 三种取值」；
+③ 白名单非法值（`cu129`）解析期 `Exit(1)`。
+
+> **范围（已知未覆盖）**：镜像未重建，torch 安装与 CUDA 可用性未做容器内端到端实测
+> （`install-torch.sh` 的索引可达性与 wheel 体积需在有网侧 `inv xmnn.build --torch cu130`
+> 时验证；构建期守卫 §8 会在那时给出「声明 vs 实物」结论）。GPU 路径未做真机透传实测
+> （需宿主具备 `/dev/dri` 或 CDI 配置）。
+
+**C 同步**：**未提交，commit hash 待补**（代码侧 `feat(client)` + 文档侧 `docs(client)`）。
+
 ### 2026-09-18 · `fix:` `up` 输出收敛——过滤 podman 原生回显噪声（C17）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260918-terminal-echo）。

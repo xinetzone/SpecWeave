@@ -22,9 +22,9 @@ invoke xmnn.down                       # 停止清理（ccache 卷默认保留�
 ```
 
 - **构建参数单一事实源（C15）**：`invoke xmnn.build` 与 `up` 的内联构建都读 `.env`
-  的 `PIP_MIRROR` / `CONDA_MIRROR` / `BASE_IMAGE`（无前缀，与 compose 段
-  `${KEY:-默认}` 同键）——三处同值才共享层缓存。换镜像源请写 `.env` 而非
-  `--pip-mirror`（CLI 旗标对 `up`/compose 不可见），见
+  的 `PIP_MIRROR` / `CONDA_MIRROR` / `BASE_IMAGE` / `TORCH_FLAVOR`（无前缀，与
+  compose 段 `${KEY:-默认}` 同键）——三处同值才共享层缓存。换镜像源请写 `.env`
+  而非 `--pip-mirror`（CLI 旗标对 `up`/compose 不可见），见
   [02-invoke-reference.md](02-invoke-reference.md#参数契约)。
 
 - **构建执行者唯一（C16）**：`xmnn.up` 恒 `up -d --no-build`，镜像只由内核构建。
@@ -58,6 +58,15 @@ invoke xmnn.down                       # 停止清理（ccache 卷默认保留�
   apt/mamba/pip 均需联网）。
 - **对 external/chaos/ai 零依赖**：打包脚本与元数据自包含于叠加层；
   外部源码树只读挂载，打包中的临时 AST 注入会无条件还原。
+- **GPU 与 torch 可选能力（C18，默认全关）**：① GPU —— 仅 `invoke xmnn.up --gpu`
+  才追加 `-f compose.gpu.yaml`，设备由 `GPU_DEVICE` 双形态决定（`/` 开头=宿主机
+  设备路径，否则=CDI 引用如 `nvidia.com/gpu=all`；未设回退 `/dev/dri`，与根
+  `invoke run --gpu` 同键同语义）；默认零设备透传。② torch —— 仅
+  `invoke xmnn.build --torch cpu|cu130`（或 `.env TORCH_FLAVOR=`）才在 base env
+  `/opt/conda` 装 `torch==2.14.0`（白名单取值，索引 `download.pytorch.org/whl/<flavor>`；
+  cu130 是当前唯一与 CPU 侧同 pin 的 CUDA 索引）；形态落 `/opt/xmnn-torch-flavor`，
+  构建期守卫 §8 断言「声明 vs 实物」。flavor **不参与镜像 tag**，改后须重建镜像。
+  详细用法见 [overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md#gpu-与-torch-可选能力默认全关c18)。
 
 ## 启动后连接：Jupyter 与 SSH
 

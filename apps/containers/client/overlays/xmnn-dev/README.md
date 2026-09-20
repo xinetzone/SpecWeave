@@ -61,12 +61,14 @@
 # ── 过程一：镜像环境构建（有网侧，一次性）─────────────────────────────
 invoke xmnn.build                         # 构建工具链镜像（构建期自动跑双 ABI/SONAME/离线完备性守卫）
                                          #   --pip-mirror/--conda-mirror tuna|aliyun 可加速
+                                         #   --torch cpu|cu130 额外装 torch（默认不装，见「GPU 与 torch 可选能力」）
 invoke xmnn.save                         # 导出镜像归档（tar.gz + manifest/SHA256）→ 携带到无网机器
 
 # ── 过程二：启动开发环境并开发（有网/无网通用）────────────────────────
 invoke xmnn.load --path <归档.tar.gz>    # 从归档导入镜像（完整性校验后导入，导入幂等）
 invoke xmnn.up --offline                 # 离线启动：不构建、不起网络请求（参见「两个过程」）
 invoke xmnn.up                           # 有网侧常规启动（默认随带构建；--skip-build 直接用本地镜像）
+invoke xmnn.up --gpu                     # 【可选】透传 GPU 设备（默认零透传，见「GPU 与 torch 可选能力」）
 invoke xmnn.ps                           # 服务状态
 invoke xmnn.smoke                        # 工具链守卫 + 源码挂载检查（libtvm 缺席时跳过算例段）
 
@@ -223,6 +225,50 @@ podman-compose -p xmnn-dev exec xmnn \
 设计原则是**硬失败 + 可执行中文指引**，不做静默降级——离线环境里"悄悄联网然后
 超时"比直接报错难排查得多。
 
+## GPU 与 torch 可选能力（默认全关，C18）
+
+两项能力都**默认关闭**：不开时镜像体积、设备透传面与离线契约与改造前一致。
+
+### GPU 透传：`invoke xmnn.up --gpu`
+
+默认**零设备透传**（只继承基底的 `/dev/fuse`）。加 `--gpu` 才叠加
+`compose.gpu.yaml`，设备由 `GPU_DEVICE` 决定（与根 `invoke run --gpu` 同键同语义）：
+
+| `GPU_DEVICE` 取值 | 效果 |
+|---|---|
+| 未设 / 空 | `/dev/dri`（Intel/AMD Mesa 渲染节点） |
+| 以 `/` 开头 | 该宿主机设备路径，如 `/dev/dri/renderD128` |
+| 其他 | CDI 引用，如 `nvidia.com/gpu=all`（宿主先 `nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`） |
+
+```bash
+invoke xmnn.up --gpu                                  # 默认 /dev/dri
+GPU_DEVICE=nvidia.com/gpu=all invoke xmnn.up --gpu    # NVIDIA CDI（.env 写同键亦可）
+```
+
+裸 compose 等价：`podman-compose -f compose.yaml -f compose.gpu.yaml up -d`。
+容器内验证：`podman-compose exec xmnn ls /dev/dri` 或 `nvidia-smi`。
+
+### torch 形态：`invoke xmnn.build --torch cpu|cu130`
+
+默认镜像**不含 torch**。仅当 `--torch`（或 `.env` 写 `TORCH_FLAVOR=`）时才装
+`torch==2.14.0`：`cpu` 走 CPU 索引，`cu130` 走 CUDA 13.0 索引
+（`download.pytorch.org/whl/<flavor>`，装进 base env `/opt/conda`）。
+
+```bash
+invoke xmnn.build --torch cu130    # 装 CUDA 版 torch（构建期守卫 §8 断言形态）
+invoke xmnn.up --skip-build --gpu  # 起栈并透传 GPU
+podman-compose exec xmnn python -c "import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available())"
+```
+
+- **换 flavor 必须重建**：flavor **不参与镜像 tag**（沿用 `XMNN_IMAGE_TAG`），
+  改 `.env` 后要 `invoke xmnn.build` 而非指望 `up` 增量刷新。
+- **跨三处一致要写 `.env`**（C15）：`--torch` 旗标只覆盖单次 `build`，
+  `up` 内联构建与裸 compose 读的是 `.env TORCH_FLAVOR`。
+- **cu130 是当前唯一与 CPU 侧同 pin 的 CUDA 索引**（实测 cu129→2.13.0、
+  cu128→2.11.0），换索引会引入版本漂移。
+- torch 属可选依赖，**不进** `builder/pyproject.toml`，离线完备性守卫不受影响；
+  空形态镜像仍离线自足。
+
 ## 参数表（compose 插值 / .env 键）
 
 | 键 | 默认值 | 用途 |
@@ -239,6 +285,8 @@ podman-compose -p xmnn-dev exec xmnn \
 | `OMP_NUM_THREADS` / `NUITKA_JOBS` | `4` / `8` | 线程与 Nuitka 并发 |
 | `PIP_MIRROR` / `CONDA_MIRROR` | `official` | 构建期镜像源（official/aliyun/tuna）。**无前缀构建参数单一事实源（C15）**：`invoke xmnn.build`、`xmnn.up` 的 compose 内联 build、裸 `podman-compose build` 三处同键读取；`--pip-mirror/--conda-mirror` 旗标只覆盖单次 `build` |
 | `BASE_IMAGE`（build args + invoke 同键） | `localhost/jupyter-podman-rootless:latest` | 基底镜像覆盖（同样被 `xmnn.build`/`xmnn.up` 读取，C15） |
+| `TORCH_FLAVOR` | 空（不装） | torch 形态白名单 `空`/`cpu`/`cu130`（C15 无前缀键，compose build args + invoke 同键）。`invoke xmnn.build --torch cu130` 只覆盖单次构建；改 `.env` 后需重建镜像。flavor 不参与镜像 tag |
+| `GPU_DEVICE` | 未设（`--gpu` 时为 `/dev/dri`） | GPU 设备双形态：`/` 开头=宿主机设备路径，否则=CDI 引用。**仅 `up --gpu` 时生效**（默认零透传） |
 | `XMNN_OFFLINE` | `0`（关） | 离线总开关（**非 compose 插值键**，由 invoke 读取并经 `-e` 透传进容器）：开启后 `up` 强制跳过构建（`--no-build` 恒真，非离线亦然，C16）、`build` 直接 Exit(1)、容器内打包禁网兜底；等价 `invoke xmnn.up --offline`，关闭用 `--no-offline` |
 
 ## 与相关栈/目录的关系

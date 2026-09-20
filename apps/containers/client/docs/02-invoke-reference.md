@@ -31,16 +31,20 @@ source: "README.md#4-命令速查"
 
 配置合并优先级：`命令行参数 > .env 环境变量 > ContainerConfig 默认值`。
 
-> **构建参数单一事实源（C15，2026-09-18）**：四个工作负载栈的构建 build-arg 只认三个
-> **无前缀** `.env` 键——`PIP_MIRROR` / `CONDA_MIRROR` / `BASE_IMAGE`，它们同时就是
+> **构建参数单一事实源（C15，2026-09-18）**：四个工作负载栈的构建 build-arg 只认四个
+> **无前缀** `.env` 键——`PIP_MIRROR` / `CONDA_MIRROR` / `BASE_IMAGE` / `TORCH_FLAVOR`，它们同时就是
 > `overlays/*/compose.yaml` 里 `${KEY:-默认}` 的插值键。`invoke x.build`、`invoke x.up`
 > 的内联构建、compose 内部 build 段三处必须拿到同一组值：任何一处 build-arg 不同，
 > 都会让构建层缓存整体失效（表现为"改了镜像源后每次 up 都全量白重建"）。
 >
-> 因此**换镜像源/节点请写 `.env`**；`--pip-mirror` / `--base-image` / `--conda-mirror`
-> 等 CLI 旗标只覆盖**单次 `build` 调用**，`up` 内联构建与 compose 段看不到旗标，混用
+> 因此**换镜像源/节点请写 `.env`**；`--pip-mirror` / `--base-image` / `--conda-mirror` /
+> `--torch` 等 CLI 旗标只覆盖**单次 `build` 调用**，`up` 内联构建与 compose 段看不到旗标，混用
 > 必然不一致。推荐两步路径：写好 `.env` → `invoke x.build` → `invoke x.up --skip-build`。
 > 权限顺序为 `CLI 旗标 > shell export > .env > 默认值`。
+>
+> `TORCH_FLAVOR` 取值受**白名单**约束（空 / `cpu` / `cu130`），非法值在解析期 Exit 1——
+> 该值直接拼进 `download.pytorch.org/whl/<flavor>` 索引 URL，构建期网络请求目标不得由
+> 用户输入任意拼接（C18）。仅 `xmnn.build` 暴露 `--torch`。
 
 > **构建执行者唯一（C16，2026-09-18）**：`invoke x.up` 恒以
 > `podman-compose up -d --no-build` 起容器——**镜像存在性只由内核 `build_image()` 负责**。

@@ -308,3 +308,56 @@
   （声明范围 / 环境回写 / `--no-build` / `exec -e` / `build` 首行 fail-fast
   且 `runner.commands == []` / 缺镜像 Exit / `up` 任务体参数存活 /
   `save`·`load` 仅离线栈生成），改动离线路径必须同步这组断言。
+
+## 11. 可选能力 opt-in（GPU / torch，2026-09-20 / C18）
+
+**总原则**：两项能力**默认全关**，不开时镜像体积、设备面与离线契约与改造前
+逐字等价（`up` 不加载 `compose.gpu.yaml`、`TORCH_FLAVOR` 为空不装 torch）。
+
+### 11.1 GPU 透传（`up --gpu`）
+
+- 形态与 quant 栈一致：仅当 `--gpu` 时追加 `-f compose.gpu.yaml`（list 追加
+  语义只写**新增**设备，不重复 `/dev/fuse`，见 [quant-overlay.md](quant-overlay.md) §4.1）。
+- **设备项只写一条** `${GPU_DEVICE:-/dev/dri}` 单 token 插值，**禁止**写成
+  `a:b` 并列两条：podman-compose 1.6.0 把 devices 列表项**原样**下传为
+  `--device <item>`（vendor `podman_compose.py` L1382-L1383，不做冒号拆分），
+  两条并列时 CDI 形态必有一条非法。
+- `GPU_DEVICE` 双形态（与根 `invoke run --gpu` 同键同语义）：
+  ① 未设/空 → `/dev/dri`；② `/` 开头 → 宿主机设备路径；
+  ③ 其他 → CDI 引用（如 `nvidia.com/gpu=all`，宿主先
+  `nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`）。
+  裸设备路径 `--device /dev/dri` 与显式 `:/dev/dri` 映射等价。
+- `GPU_DEVICE` 已列入 `bridge_env_keys`——WSL 桥接只透传环境变量、不转发
+  CLI 参数，遗漏会导致桥接后回退默认值。
+
+### 11.2 torch 形态（`build --torch` / `TORCH_FLAVOR`）
+
+- 取值是**白名单** `("", "cpu", "cu130")`（`overlay_core.TORCH_FLAVORS`），
+  解析期非法值 `Exit(1)`：该值直接拼进 `download.pytorch.org/whl/<flavor>`
+  索引 URL，构建期网络请求目标**不得由用户输入任意拼接**。
+- 键遵循 C15：**无前缀** `.env` 键 `TORCH_FLAVOR`，与 `compose.yaml`
+  `build.args` 的 `${TORCH_FLAVOR:-}` 同键；CLI `--torch` 只覆盖单次
+  `build`（`up` 内联构建与 compose 段看不到旗标，跨三处一致必须写 `.env`）。
+- 安装脚本 `builder/scripts/install-torch.sh`（Layer 2.5，位于 mamba 工具链
+  层之后、`COPY builder` 之前）装 **base env `/opt/conda`**（cp314 GIL），
+  依据 C13 双 ABI 不可互换；pin `torch==2.14.0`（`TORCH_VERSION`）。
+  **cu130 是 2026-09-20 实测唯一与 CPU 侧同 pin 的 CUDA 索引**
+  （cu129→2.13.0、cu128→2.11.0 会引入版本漂移，勿改用）。
+- 形态落 `/opt/xmnn-torch-flavor`（空/cpu/cu130），由构建期守卫
+  `_toolchain_guards.py` §8 断言「声明 vs 实物」：空→torch 必须缺席、
+  cpu→已装且 `torch.version.cuda is None`、cu130→已装且非空。脚本缺失标记
+  文件即判失败（Layer 2.5 未执行）。
+- **flavor 不参与镜像 tag**（沿用 `XMNN_IMAGE_TAG`，一 tag 一形态）；
+  换 flavor 后必须 `invoke xmnn.build` 重建，不能靠 `up` 增量刷新。
+- torch 属**可选依赖**，不写入 `builder/pyproject.toml`，故 §7 离线完备性
+  守卫不受影响（空形态下镜像仍离线自足）；但 **cu130 形态的 CUDA 运行时
+  依赖由 wheel 自带**，离线侧不额外补装。
+
+### 11.3 内核形参面 = 能力并集
+
+`make_stack_tasks()` 的 `up`/`smoke` 形参按**能力并集**生成（`gpu_override`、
+`supports_offline` 四路正交 + 公共 `_up_impl`），**禁止 if/elif 互斥分支**：
+xmnn 同时声明两能力后，互斥写法会让 `--offline`/`--no-offline` 被 gpu 分支
+吃掉，静默破坏 §10 离线契约。`up_help` 的 GPU 提示文本按 `gpu_device_env`
+动态生成（有该字段时提示实际设备值，无则提示硬编码 `/dev/dri`）。
+
