@@ -51,7 +51,7 @@ GOLDEN = {
         "container_name": "onnx-quantized",
         "dockerfile": "Containerfile.quantized",
         "ports": ["2222:22", "8888:8888"],
-        "volume_targets": ["/workspace"],
+        "volume_targets": ["/workspace", "/var/lib/jpman/ssh-host-keys"],
         "env": {
             "USER_PASSWORD", "JUPYTER_TOKEN", "SSH_PUBLIC_KEY", "GRANT_SUDO",
             "OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS",
@@ -83,7 +83,10 @@ GOLDEN = {
         "container_name": "agent-monetize-dev",
         "dockerfile": "Containerfile.agent-monetize",
         "ports": ["2224:22", "8892:8888"],
-        "volume_targets": ["/workspace", "/workspace/agent-monetize"],
+        "volume_targets": [
+            "/workspace", "/workspace/agent-monetize",
+            "/var/lib/jpman/ssh-host-keys",
+        ],
         "env": {
             "USER_PASSWORD", "JUPYTER_TOKEN", "SSH_PUBLIC_KEY", "GRANT_SUDO",
             "PYTHONPATH", "LD_LIBRARY_PATH",
@@ -96,8 +99,8 @@ GOLDEN = {
         "container_name": "xmnn-runtime",
         "dockerfile": "Containerfile.xmnn-runtime",
         "ports": ["2225:22", "8893:8888"],
-        # wheel 消费栈：仅 workspace bind，不挂源码；无命名卷
-        "volume_targets": ["/workspace"],
+        # wheel 消费栈：仅 workspace bind，不挂源码；命名卷 = SSH host key 持久化
+        "volume_targets": ["/workspace", "/var/lib/jpman/ssh-host-keys"],
         # 无栈专属 environment（wheel 自包含，不注入 PYTHONPATH/
         # TVM_LIBRARY_PATH/LD_LIBRARY_PATH）；只有基段继承的凭证四变量
         "env": {

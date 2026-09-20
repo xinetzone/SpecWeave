@@ -59,7 +59,7 @@ XMNN_SPEC = StackSpec(
         logs="跟踪 xmnn-dev 栈服务日志（Ctrl+C 退出，不影响容器运行）。",
         smoke="运行 xmnn-dev 冒烟：工具链守卫（始终）+ 源码挂载检查（栈运行时）。",
     ),
-    down_volumes_help="同时删除 xmnn-ccache 与 xmnn-jupyter 命名卷（默认保留：Nuitka 编译缓存 + Jupyter 登录态）",
+    down_volumes_help="同时删除 xmnn-ccache / xmnn-jupyter / xmnn-ssh-host-keys 命名卷（默认保留：Nuitka 编译缓存 + Jupyter 登录态 + SSH 主机指纹）",
     ssh_default="2223",
     jupyter_default="8890",
     jupyter_banner_note="（内核：Python 3.14 (xmnn dev)）",

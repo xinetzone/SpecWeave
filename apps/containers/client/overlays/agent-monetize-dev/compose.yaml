@@ -47,6 +47,11 @@ services:
         target: /workspace/agent-monetize
         bind:
           create_host_path: true
+      # SSH host key 命名卷：挂上后基底 entrypoint 以 `mountpoint -q` 切到持久
+      # 模式（key 存卷内、sshd_config 的 HostKey 指向该目录），down/up 重建容器
+      # 不再轮换主机指纹，客户端 known_hosts 无需反复 ssh-keygen -R 清理；
+      # 未挂载则回退容器层生成并打 WARN（重建即轮换）。down 默认保留。
+      - monetize-ssh-host-keys:/var/lib/jpman/ssh-host-keys
     environment:
       # 凭证四变量（USER_PASSWORD/JUPYTER_TOKEN/SSH_PUBLIC_KEY/GRANT_SUDO）
       # 与 rootless 三必需由 rootless-base 继承，勿在此重复声明。
@@ -57,3 +62,6 @@ services:
       LD_LIBRARY_PATH: /opt/conda/lib/python3.14/site-packages/tvm_ffi/lib
     labels:
       org.specweave.component: "monetize"
+
+volumes:
+  monetize-ssh-host-keys: {}

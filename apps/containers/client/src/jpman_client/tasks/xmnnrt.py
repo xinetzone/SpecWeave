@@ -38,7 +38,7 @@ XMNNRT_SPEC = StackSpec(
         logs="跟踪 xmnn-runtime 栈服务日志（Ctrl+C 退出，不影响容器运行）。",
         smoke="运行 xmnn-runtime 守卫：已装 wheel 与内置 torch CPU 的干净环境 10 项验证。",
     ),
-    down_volumes_help="保留兼容签名（本栈无命名卷，参数为空操作）",
+    down_volumes_help="同时删除 xmnnrt-ssh-host-keys 命名卷（默认保留：SSH 主机指纹跨重建稳定）",
     ssh_default="2225", jupyter_default="8893",
     jupyter_banner_note="（内核：Python 3.14 (xmnn runtime)）",
     build_done_label="xmnn-runtime 运行时镜像",
