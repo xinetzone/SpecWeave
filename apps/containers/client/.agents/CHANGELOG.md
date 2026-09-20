@@ -69,8 +69,8 @@ recreate；**精确同集**比较是唯一同时满足两侧的判据，前缀/�
 > `--gpu` 旗标本身不写入 `.env`，故「平面」判据的比较对象是**文件集原文**而非旗标历史——
 > 若某栈**确实**由裸 compose 用不同文件集创建，判分歧行为按设计保留。
 
-**C 同步**：代码 + 测试提交 `fix(client)` = （待回填）（`src/jpman_client/tasks/overlay_core.py`/
-`tests/test_overlay_core.py`）；文档提交 `docs(client)` = （待回填）（
+**C 同步**：代码 + 测试提交 `fix(client)` = `6b1fb287d`（`src/jpman_client/tasks/overlay_core.py`/
+`tests/test_overlay_core.py`）；文档提交 `docs(client)` = `73ede8f84`（
 [rules/invoke-tasks.md](rules/invoke-tasks.md) C23、
 [rules/xmnn-overlay.md](rules/xmnn-overlay.md) §4/§11.1.1/§11.4、
 [docs/04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md) W-I10、本文件）；
