@@ -59,19 +59,19 @@ def test_docstrings_golden():
 
 def test_signatures_golden():
     q, x, m = _col("quant"), _col("xmnn"), _col("monetize")
-    # build 参数集（xmnn 多 conda_mirror）
+    # build 参数集（xmnn 多 conda_mirror 与 torch）
     assert _params(q.tasks["build"]) == ["tag", "base_image", "pip_mirror", "no_cache"]
     assert _params(x.tasks["build"]) == [
-        "tag", "base_image", "pip_mirror", "conda_mirror", "no_cache",
+        "tag", "base_image", "pip_mirror", "conda_mirror", "torch", "no_cache",
     ]
     assert _params(m.tasks["build"]) == ["tag", "base_image", "pip_mirror", "no_cache"]
     # xmnnrt build 多 --wheel 暂存参数（whl 显式指定）
     assert _params(_col("xmnnrt").tasks["build"]) == [
         "tag", "base_image", "pip_mirror", "wheel", "no_cache",
     ]
-    # up/smoke：仅 quant 暴露 gpu
+    # up/smoke：形参面 = 能力并集——quant/xmnn 有 gpu，xmnn 另有 offline 三态
     assert _params(q.tasks["up"]) == ["gpu", "skip_build"]
-    assert _params(x.tasks["up"]) == ["skip_build", "offline", "no_offline"]
+    assert _params(x.tasks["up"]) == ["gpu", "skip_build", "offline", "no_offline"]
     assert _params(m.tasks["up"]) == ["skip_build"]
     assert _params(_col("xmnnrt").tasks["up"]) == ["skip_build"]
     # xmnn 离线镜像归档（仅 supports_offline 栈生成）
@@ -80,7 +80,7 @@ def test_signatures_golden():
     # pack：客户离线交付包打包（仅 --version）
     assert _params(_col("xmnnrt").tasks["pack"]) == ["version"]
     assert _params(q.tasks["smoke"]) == ["gpu"]
-    assert _params(x.tasks["smoke"]) == []
+    assert _params(x.tasks["smoke"]) == ["gpu"]
     assert _params(m.tasks["smoke"]) == []
     assert _params(_col("xmnnrt").tasks["smoke"]) == []
     # 其余四任务

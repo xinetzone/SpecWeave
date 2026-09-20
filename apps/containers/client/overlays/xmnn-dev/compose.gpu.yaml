@@ -1,0 +1,26 @@
+---
+# xmnn-dev GPU opt-in 覆盖层（默认隔离：不 -f 本文件时 GPU 不透传）
+#
+# 深合并语义依据：知识包 concepts/06-config-pipeline.md——
+# 多文件 list 字段为「追加」合并，故此处只需写【新增】设备，
+# 不重复 /dev/fuse（devices 无去重，重复会导致映射两次）。
+#
+# 用法：
+#   invoke xmnn.up --gpu
+#   podman-compose -f compose.yaml -f compose.gpu.yaml up -d
+#
+# 设备形态由 GPU_DEVICE 单键双形态决定（与根 `invoke run --gpu` 同一分派语义）：
+#   ① 未设置 / `/` 开头 → 宿主机设备路径，缺省 /dev/dri（Intel/AMD Mesa 渲染节点）；
+#   ② 非 `/` 开头     → CDI 引用，如 GPU_DEVICE=nvidia.com/gpu=all
+#      （daemon 宿主先 `nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`）。
+#
+# 为什么写成单个插值项而不是两条并列 devices：podman-compose 1.6.0 把
+# devices 列表项**原样**下传为 `--device <item>`（vendor podman_compose.py
+# L1382-L1383，不做冒号拆分），故 CDI 引用与设备路径可共用同一行；
+# 两条并列则必然有一条非法（CDI 引用不是宿主机字符设备），互斥形态
+# 无法用"注释切换"以外的方式表达。
+
+services:
+  xmnn:
+    devices:
+      - ${GPU_DEVICE:-/dev/dri}

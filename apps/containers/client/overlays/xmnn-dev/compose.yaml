@@ -38,6 +38,9 @@ services:
         BASE_IMAGE: ${BASE_IMAGE:-localhost/jupyter-podman-rootless:latest}
         PIP_MIRROR: ${PIP_MIRROR:-official}
         CONDA_MIRROR: ${CONDA_MIRROR:-official}
+        # torch 形态（C18）：空=不装（默认）；cpu|cu130=经 download.pytorch.org
+        # 对应索引装 torch 2.14.0。键与 invoke 侧 resolve_build_args 同键（C15）。
+        TORCH_FLAVOR: ${TORCH_FLAVOR:-}
     ports:
       - "${XMNN_SSH_PORT:-2223}:22"
       - "${XMNN_JUPYTER_PORT:-8890}:8888"

@@ -1,32 +1,29 @@
 """xmnn-dev 开发/打包叠加栈的 podman-compose 编排任务（opt-in 命名空间）。
 
-声明式栈：唯一事实源 ``XMNN_SPEC``；六任务由
-overlay_core.make_stack_tasks 工厂生成，栈内 exec 长任务（build-tvm/wheel）
-用内核 helper 在本模块薄封装（形态 B）。
+声明式栈：唯一事实源 ``XMNN_SPEC``；六任务由 overlay_core.make_stack_tasks
+工厂生成，栈内 exec 长任务（build-tvm/wheel）用内核 helper 薄封装（形态 B）。
+驱动 ``overlays/xmnn-dev``：运行时 bind 挂载 npu_tvm / npuusertools / models
+源码（锚定仓库根 external/chaos），容器内 LLVM 22 + Nuitka 4.2.1 工具链。
 
-驱动 ``overlays/xmnn-dev`` 叠加栈：运行时 bind 挂载 npu_tvm / npuusertools /
-models 源码（默认锚定仓库根 external/chaos），容器内 LLVM 22 + Nuitka 4.2.1
-工具链，支持源码调试与 xmnn wheel 打包。
+双 cp314 ABI 契约（C13，禁止互换）：base env /opt/conda = cp314 GIL（工具链
+守卫/内核/打包解释器 BASE_PYTHON）；main env /opt/conda/envs/main = cp314t
+free-threading（量化/运行时）。build-tvm/wheel 经 bash 脚本在栈内执行。
 
-双 cp314 ABI 契约（C13，禁止互换）：
-  - base env /opt/conda = cp314 GIL：工具链守卫、内核、apache-tvm-ffi 类依赖；
-  - main env /opt/conda/envs/main = cp314t（free-threaded）：量化/运行时；
-  - 本栈工具链/打包解释器为 BASE_PYTHON=/opt/conda/bin/python（见 compose/
-    Containerfile），build-tvm/wheel 经 bash 脚本在栈内执行。
+10 个命令：build / up / down / ps / logs / smoke / save / load，加长任务
+build-tvm（栈内编译 TVM C++ 原生库）与 wheel（Nuitka 打包 xmnn whl，产物落
+workspace/dist）；save/load = 镜像归档导出/导入（无网机器交付通道）。
 
-提供 10 个命令：
-  invoke xmnn.build / up / down / ps / logs / smoke / save / load
-  invoke xmnn.build-tvm   栈内编译 TVM C++ 原生库（libtvm.so，长任务）
-  invoke xmnn.wheel       栈内 Nuitka 打包 xmnn whl（长任务，产物落 workspace/dist）
-  （save/load = 导出/导入镜像归档，无网机器的离线交付通道）
-离线模式（``invoke xmnn.up --offline`` 或 root .env ``XMNN_OFFLINE=1``）：不构建镜像（构建期 apt/mamba/pip
-需联网），只以本地已 load 的镜像 ``up --no-build``，并向栈内 exec 注入 ``XMNN_OFFLINE=1`` 禁容器内联网兜底。
+三组可选能力（默认全关 = 默认隔离，C18）：
+  - GPU：``up --gpu`` 叠加 ``compose.gpu.yaml``，设备经 ``GPU_DEVICE`` 双形态
+    插值（``/`` 开头=设备路径，缺省 ``/dev/dri``；否则=CDI 引用）；
+  - torch：``build --torch cpu|cu130``（或 .env ``TORCH_FLAVOR``）才在 base env
+    装对应 wheel，形态落 /opt/xmnn-torch-flavor 供构建期守卫 §8 断言；
+  - 离线：``up --offline``（或 .env ``XMNN_OFFLINE=1``）不构建镜像，只以本地
+    已 load 镜像 ``up --no-build``，并注入 ``XMNN_OFFLINE=1`` 禁容器内联网。
 
 平台姿态（内核统一）：Windows 原生优先透明桥接 WSL，不可桥接再门禁；POSIX
-缺 podman-compose 提示装 ``pip install -e ".[compose]"``。
-
-环境变量优先级：shell 显式 export > root client .env（load_dotenv
-override=False）> compose.yaml 内 ${VAR:-default}。
+缺 podman-compose 提示装 ``pip install -e ".[compose]"``。环境变量优先级：
+shell export > root client .env（override=False）> compose.yaml 内 ${VAR:-default}。
 """
 from invoke import Context, task
 
@@ -71,8 +68,10 @@ XMNN_SPEC = StackSpec(
         "[xmnn]   冒烟: invoke xmnn.smoke",
         "[xmnn]   编译 TVM: invoke xmnn.build-tvm    打包 wheel: invoke xmnn.wheel",
     ),
-    gpu_override=False,
+    gpu_override=True,
+    gpu_device_env="GPU_DEVICE",
     conda_mirror=True,
+    torch_flavor=True,
     auto_shortflags=False,
     source_mounts=(
         SourceMount("NPU_TVM_PATH", "external/chaos/npu_tvm", "npu_tvm 源码树（含 python/tvm）"),
@@ -92,6 +91,7 @@ XMNN_SPEC = StackSpec(
         "XMNN_IMAGE_TAG", "XMNN_CONTAINER_NAME", "XMNN_WORKSPACE",
         "XMNN_SSH_PORT", "XMNN_JUPYTER_PORT", "XMNN_OFFLINE",
         "NPU_TVM_PATH", "NPUUSERTOOLS_PATH", "MODELS_PATH",
+        "TORCH_FLAVOR", "GPU_DEVICE",
     ),
     supports_offline=True,
 )

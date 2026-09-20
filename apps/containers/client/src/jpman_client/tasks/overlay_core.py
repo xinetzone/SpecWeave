@@ -64,6 +64,11 @@ _SS_HOLDER_RE = re.compile(r'users:\(\("(?P<comm>[^"]+)",pid=(?P<pid>\d+)')
 _CONMON_CID_RE = re.compile(r"(?:\s|^)-c\s+(?P<cid>[0-9a-f]{64})\b")
 _CONMON_NAME_RE = re.compile(r"(?:\s|^)-n\s+(?P<name>\S+)")
 
+# TORCH_FLAVOR 白名单（C18）：""=不装 torch；cpu=CPU wheel；cu130=CUDA 13.0 wheel。
+# 取值直接作为 download.pytorch.org/whl/<flavor> 索引路径，故必须是**白名单**而非
+# 自由文本（构建期网络请求目标不可由用户输入任意拼接）。
+TORCH_FLAVORS: tuple[str, ...] = ("", "cpu", "cu130")
+
 
 # ---------------------------------------------------------------------------
 # 声明式规格
@@ -147,8 +152,10 @@ class StackSpec:
     up_footer: tuple[str, ...] = ()  # 空=自动单行；xmnn 用三行（含编译/打包提示）
 
     # —— compose 文件/构建参数差异 ——
-    gpu_override: bool = False  # 存在 compose.gpu.yaml 且 up/smoke 暴露 --gpu（quant）
+    gpu_override: bool = False  # 存在 compose.gpu.yaml 且 up/smoke 暴露 --gpu（quant/xmnn）
+    gpu_device_env: str = ""  # GPU 设备插值键（空=单形态硬编码 /dev/dri；xmnn 用 GPU_DEVICE 双形态）
     conda_mirror: bool = False  # build 暴露 --conda-mirror / CONDA_MIRROR（xmnn）
+    torch_flavor: bool = False  # build 暴露 --torch / TORCH_FLAVOR（xmnn；空|cpu|cu130）
     auto_shortflags: bool = False  # invoke 自动短选项（quant 历史为默认开启）
 
     # —— 挂载/冒烟/桥接 ——
@@ -334,16 +341,22 @@ def resolve_build_args(
     base_image: Optional[str] = None,
     pip_mirror: Optional[str] = None,
     conda_mirror: Optional[str] = None,
+    torch: Optional[str] = None,
 ) -> dict:
     """解析构建期 build-arg（单一事实源，C15）。
 
     键为**无前缀**的 compose 插值键（``BASE_IMAGE`` / ``PIP_MIRROR`` /
-    ``CONDA_MIRROR``），与 ``overlays/*/compose.yaml`` 的 ``${KEY:-默认}`` 逐一
-    对应：``build``、``up`` 内联构建、compose 内部 build 段三处必须拿到同一值，
-    否则某一处 build-arg 变化就会让构建层缓存整体失效（表现为"白重建"）。
+    ``CONDA_MIRROR`` / ``TORCH_FLAVOR``），与 ``overlays/*/compose.yaml`` 的
+    ``${KEY:-默认}`` 逐一对应：``build``、``up`` 内联构建、compose 内部 build
+    段三处必须拿到同一值，否则某一处 build-arg 变化就会让构建层缓存整体失效
+    （表现为"白重建"）。
 
     优先级：显式参数（CLI 旗标）> shell export > .env > 默认值；compose 段不
     可见 CLI 旗标，故**跨三处一致必须写 .env**，CLI 旗标只覆盖单次调用。
+
+    ``torch_flavor``：仅声明 ``torch_flavor=True`` 的栈解析（键 ``TORCH_FLAVOR``），
+    取值白名单 ``""``（不装）/``cpu``/``cu130``——非白名单在**解析期**即拒绝，
+    避免把错误值带到 podman build 才炸（构建一次代价极高）。
     """
     args = {
         "base_image": str(
@@ -363,6 +376,18 @@ def resolve_build_args(
             or env.get("CONDA_MIRROR")
             or "official"
         )
+    if spec.torch_flavor:
+        flavor = str(
+            torch or os.environ.get("TORCH_FLAVOR") or env.get("TORCH_FLAVOR") or ""
+        ).strip()
+        if flavor not in TORCH_FLAVORS:
+            raise Exit(
+                1,
+                f"TORCH_FLAVOR={flavor!r} 非法；可选值："
+                + " | ".join(repr(v) for v in TORCH_FLAVORS)
+                + "（'' 表示不装 torch）",
+            )
+        args["torch_flavor"] = flavor
     return args
 
 
@@ -913,12 +938,13 @@ def build_image(
     base_image: Optional[str] = None,
     pip_mirror: Optional[str] = None,
     conda_mirror: Optional[str] = None,
+    torch: Optional[str] = None,
     no_cache: bool = False,
     offline: Optional[bool] = None,
 ) -> str:
     """podman build 薄封装（不引入 compose build 黑盒）；返回最终镜像标签。
 
-    三个 build-arg 传 ``None`` 时经 ``resolve_build_args`` 解析：读与 compose.yaml
+    四个 build-arg 传 ``None`` 时经 ``resolve_build_args`` 解析：读与 compose.yaml
     ``${KEY:-默认}`` 相同的无前缀 .env 键（C15），保证本层构建与 compose 内部
     build 段拿到同一组值，避免互相失效层缓存。
 
@@ -937,7 +963,12 @@ def build_image(
 
     env = prepare_env(spec)
     args = resolve_build_args(
-        spec, env, base_image=base_image, pip_mirror=pip_mirror, conda_mirror=conda_mirror
+        spec,
+        env,
+        base_image=base_image,
+        pip_mirror=pip_mirror,
+        conda_mirror=conda_mirror,
+        torch=torch,
     )
     base_image = args["base_image"]
     runtime = detect_runtime()
@@ -970,6 +1001,10 @@ def build_image(
     if spec.conda_mirror:
         parts.append(
             f"--build-arg CONDA_MIRROR={shlex.quote(args.get('conda_mirror') or 'official')}"
+        )
+    if spec.torch_flavor:
+        parts.append(
+            f"--build-arg TORCH_FLAVOR={shlex.quote(args.get('torch_flavor') or '')}"
         )
     parts.append(f"-t {shlex.quote(img_tag)}")
     if no_cache:
@@ -1026,7 +1061,12 @@ def up_stack(
         jupyter_line = f"{jupyter_line}{spec.jupyter_banner_note}"
     print(jupyter_line)
     if gpu and spec.gpu_override:
-        print("        GPU     /dev/dri 已透传（compose.gpu.yaml）")
+        # 设备形态：gpu_device_env 非空=双形态（环境变量插值，/ 开头为设备路径，
+        # 否则为 CDI 引用）；空=单形态硬编码 /dev/dri（quant 历史行为）。
+        dev = "/dev/dri"
+        if spec.gpu_device_env:
+            dev = os.environ.get(spec.gpu_device_env) or env.get(spec.gpu_device_env) or "/dev/dri"
+        print(f"        GPU     {dev} 已透传（compose.gpu.yaml）")
     if spec.up_footer:
         for line in spec.up_footer:
             print(line)
@@ -1125,6 +1165,11 @@ def _build_help(spec: StackSpec) -> dict:
         help_["conda-mirror"] = (
             "构建期 conda 镜像源：official|aliyun|tuna；默认 .env CONDA_MIRROR，缺省 official"
         )
+    if spec.torch_flavor:
+        help_["torch"] = (
+            "torch 形态：''（不装，默认）|cpu|cu130；默认 .env TORCH_FLAVOR。"
+            "cpu/cu130 经 download.pytorch.org/whl/<形态> 索引安装 torch 2.14.0"
+        )
     return help_
 
 
@@ -1140,8 +1185,54 @@ def make_stack_tasks(spec: StackSpec) -> dict:
     s = spec  # 闭包绑定
     deco = {"auto_shortflags": spec.auto_shortflags}
 
-    # —— build（conda_mirror 栈多一个 --conda-mirror 参数，签名须逐字保持） ——
-    if spec.conda_mirror:
+    # —— build（conda_mirror / torch_flavor 栈各追加一个参数，签名须逐字保持） ——
+    # 形参面 = 已启用构建能力的并集：能力开关只增不减形参，不互相"吃掉"。
+    def _build_impl(
+        c: Context,
+        *,
+        tag: str | None,
+        base_image: str | None,
+        pip_mirror: str | None,
+        conda_mirror: str | None,
+        torch: str | None,
+        no_cache: bool,
+    ) -> None:
+        gates(s)
+        ensure_runtime_ready(s)
+        build_image(
+            c,
+            s,
+            tag=tag,
+            base_image=base_image,
+            pip_mirror=pip_mirror,
+            conda_mirror=conda_mirror,
+            torch=torch,
+            no_cache=no_cache,
+        )
+
+    if spec.conda_mirror and spec.torch_flavor:
+
+        @task(help=_build_help(spec), **deco)
+        def build(
+            c: Context,
+            tag: str | None = None,
+            base_image: str | None = None,
+            pip_mirror: str | None = None,
+            conda_mirror: str | None = None,
+            torch: str | None = None,
+            no_cache: bool = False,
+        ) -> None:
+            _build_impl(
+                c,
+                tag=tag,
+                base_image=base_image,
+                pip_mirror=pip_mirror,
+                conda_mirror=conda_mirror,
+                torch=torch,
+                no_cache=no_cache,
+            )
+
+    elif spec.conda_mirror:
 
         @task(help=_build_help(spec), **deco)
         def build(
@@ -1152,15 +1243,13 @@ def make_stack_tasks(spec: StackSpec) -> dict:
             conda_mirror: str | None = None,
             no_cache: bool = False,
         ) -> None:
-            gates(s)
-            ensure_runtime_ready(s)
-            build_image(
+            _build_impl(
                 c,
-                s,
                 tag=tag,
                 base_image=base_image,
                 pip_mirror=pip_mirror,
                 conda_mirror=conda_mirror,
+                torch=None,
                 no_cache=no_cache,
             )
 
@@ -1174,14 +1263,13 @@ def make_stack_tasks(spec: StackSpec) -> dict:
             pip_mirror: str | None = None,
             no_cache: bool = False,
         ) -> None:
-            gates(s)
-            ensure_runtime_ready(s)
-            build_image(
+            _build_impl(
                 c,
-                s,
                 tag=tag,
                 base_image=base_image,
                 pip_mirror=pip_mirror,
+                conda_mirror=None,
+                torch=None,
                 no_cache=no_cache,
             )
 
@@ -1200,19 +1288,53 @@ def make_stack_tasks(spec: StackSpec) -> dict:
             **up_help,
         }
     if spec.gpu_override:
+        dev_hint = (
+            f"{spec.gpu_device_env} 双形态（/ 开头=设备路径；否则=CDI 引用，"
+            "如 nvidia.com/gpu=all；缺省 /dev/dri）"
+            if spec.gpu_device_env
+            else "/dev/dri"
+        )
         up_help = {
-            "gpu": "叠加 compose.gpu.yaml（透传 /dev/dri；默认隔离不透传 GPU）",
+            "gpu": f"叠加 compose.gpu.yaml（透传 {dev_hint}；默认隔离不透传 GPU）",
             **up_help,
         }
 
-    if spec.gpu_override:
+    # —— up（形参面 = gpu_override ∪ supports_offline，两个能力正交组合） ——
+    # 历史写法是 gpu/offline/else 三路互斥，导致 xmnn 一旦同时声明两个能力，
+    # --offline 会被 gpu 分支吃掉。改为"能力并集决定形参面"，公共实现下沉。
+    def _up_impl(
+        c: Context,
+        *,
+        gpu: bool,
+        skip_build: bool,
+        offline: bool,
+        no_offline: bool,
+    ) -> None:
+        # 离线开关必须**先于 gates** 固化进 os.environ（WSL 桥接只透传环境
+        # 变量、不转发 CLI 参数，晚于桥接则旗标丢失）
+        is_offline = resolve_offline(s, offline, no_offline) if s.supports_offline else False
+        gates(s)
+        ensure_runtime_ready(s)
+        prepare_env(s)
+        up_stack(c, s, gpu=gpu, skip_build=skip_build, offline=is_offline)
+
+    if spec.gpu_override and spec.supports_offline:
+
+        @task(help=up_help, **deco)
+        def up(
+            c: Context,
+            gpu: bool = False,
+            skip_build: bool = False,
+            offline: bool = False,
+            no_offline: bool = False,
+        ) -> None:
+            _up_impl(c, gpu=gpu, skip_build=skip_build, offline=offline, no_offline=no_offline)
+
+    elif spec.gpu_override:
 
         @task(help=up_help, **deco)
         def up(c: Context, gpu: bool = False, skip_build: bool = False) -> None:
-            gates(s)
-            ensure_runtime_ready(s)
-            prepare_env(s)
-            up_stack(c, s, gpu=gpu, skip_build=skip_build)
+            _up_impl(c, gpu=gpu, skip_build=skip_build, offline=False, no_offline=False)
 
     elif spec.supports_offline:
 
@@ -1223,22 +1345,13 @@ def make_stack_tasks(spec: StackSpec) -> dict:
             offline: bool = False,
             no_offline: bool = False,
         ) -> None:
-            # 离线开关必须**先于 gates** 固化进 os.environ（WSL 桥接只透传环境
-            # 变量、不转发 CLI 参数，晚于桥接则旗标丢失）
-            is_offline = resolve_offline(s, offline, no_offline)
-            gates(s)
-            ensure_runtime_ready(s)
-            prepare_env(s)
-            up_stack(c, s, skip_build=skip_build, offline=is_offline)
+            _up_impl(c, gpu=False, skip_build=skip_build, offline=offline, no_offline=no_offline)
 
     else:
 
         @task(help=up_help, **deco)
         def up(c: Context, skip_build: bool = False) -> None:
-            gates(s)
-            ensure_runtime_ready(s)
-            prepare_env(s)
-            up_stack(c, s, skip_build=skip_build)
+            _up_impl(c, gpu=False, skip_build=skip_build, offline=False, no_offline=False)
 
     up.__doc__ = spec.docs.up
 

@@ -20,10 +20,12 @@
 # /workspace；构建期零接触宿主源码，构建上下文 = 本目录。
 #
 # 产出：localhost/xmnn-dev:latest
-# 构建：invoke xmnn.build [--pip-mirror tuna --conda-mirror tuna]
+# 构建：invoke xmnn.build [--pip-mirror tuna --conda-mirror tuna] [--torch cpu|cu130]
 #   或：podman build -f Containerfile.xmnn-dev \
 #         --build-arg PIP_MIRROR=tuna --build-arg CONDA_MIRROR=tuna \
+#         --build-arg TORCH_FLAVOR=cu130 \
 #         -t localhost/xmnn-dev:latest .
+#   TORCH_FLAVOR 默认空 = 不装 torch（镜像零 torch，体积与离线契约不变）。
 # ------------------------------------------------------------
 
 ARG BASE_IMAGE=localhost/jupyter-podman-rootless:latest
@@ -32,12 +34,16 @@ FROM ${BASE_IMAGE}
 ARG BASE_IMAGE
 ARG PIP_MIRROR=official
 ARG CONDA_MIRROR=official
+ARG TORCH_FLAVOR=
+ARG TORCH_VERSION=2.14.0
 
 LABEL org.specweave.component="xmnn-dev" \
       org.specweave.layer="xmnn-dev-toolchain" \
       org.specweave.python-abis="base:cp314-gil,main:cp314t" \
       org.specweave.llvm="22.1.8" \
       org.specweave.nuitka="4.2.1" \
+      org.specweave.torch-flavor="${TORCH_FLAVOR}" \
+      org.specweave.torch="${TORCH_VERSION}" \
       org.specweave.base-image="${BASE_IMAGE}"
 
 # ------------------------------------------------------------
@@ -81,6 +87,22 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
     /opt/conda/bin/mamba clean -afy ; \
     /opt/conda/envs/main/bin/llvm-config --version ; \
     /opt/conda/envs/main/bin/clang --version | head -1'
+
+# ------------------------------------------------------------
+# Layer 2.5：可选 torch 安装（TORCH_FLAVOR 驱动，默认不装，C18）
+#   - 位置刻意在 Layer 2 之后、Layer 3（COPY builder + pip 依赖）之前：本层
+#     输入只有 ARG 与该单一脚本文件，独立成层；重打 builder 源码不触碰本层，
+#     增量复用不失效（否则 ~2GB wheel 会随 builder 变更反复重下）。
+#   - 形态默认 ""（不装）→ 本层只写 marker，零体积贡献；cpu/cu130 经
+#     download.pytorch.org 对应索引装 torch 2.14.0，形态写入
+#     /opt/xmnn-torch-flavor 供构建期守卫 §8 断言（守卫读不到 LABEL）。
+#   - 逻辑在脚本文件内（不在 RUN 行写内层引号 python -c，buildah 二次分词教训）。
+# ------------------------------------------------------------
+COPY builder/scripts/install-torch.sh /opt/xmnn-builder/scripts/install-torch.sh
+RUN /bin/bash -lc 'set -euo pipefail ; \
+    chmod +x /opt/xmnn-builder/scripts/install-torch.sh ; \
+    /opt/xmnn-builder/scripts/install-torch.sh ; \
+    rm -f /opt/xmnn-builder/scripts/install-torch.sh'
 
 # ------------------------------------------------------------
 # Layer 3：COPY 打包资产（含 pyproject）后，往 base env 装 Nuitka 打包栈与
@@ -132,5 +154,6 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
     echo "# toolchain : LLVM/Clang 22.1.8 (main env) + Nuitka 4.2.1 (base cp314 GIL)" ; \
     echo "# sources   : /workspace/npu_tvm + /workspace/npuusertools (runtime bind)" ; \
     echo "# packaging : inv xmnn.build-tvm -> inv xmnn.wheel -> verify-wheel.sh" ; \
+    echo "# torch     : flavor=$(cat /opt/xmnn-torch-flavor)（空=未装；cpu|cu130 见 LABEL）" ; \
     echo "# offline   : phase-2 全离线（编译/打包依赖已烤入，由 §7 守卫断言）" ; \
     echo "########################################################################"'

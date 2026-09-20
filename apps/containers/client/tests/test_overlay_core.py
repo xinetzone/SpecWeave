@@ -17,6 +17,7 @@ from jpman_client.tasks import monetize as monetize_mod
 from jpman_client.tasks import overlay_core as oc
 from jpman_client.tasks import quant as quant_mod
 from jpman_client.tasks import xmnn as xmnn_mod
+from jpman_client.tasks import xmnnrt as xmnnrt_mod
 
 _QUANT = quant_mod.QUANT_SPEC
 _XMNN = xmnn_mod.XMNN_SPEC
@@ -167,7 +168,7 @@ def test_compose_argv_common_tails(spec, harness):
     )[-5:] == ["exec", "-T", spec.service, "/bin/python", "/opt/x.py"]
 
 
-def test_compose_argv_gpu_only_quant(harness):
+def test_compose_argv_gpu_override_stacks(harness):
     d = harness.root / "overlays" / "onnx-quantized"
     argv = oc.compose_argv(_QUANT, "up", "-d", gpu=True)
     assert argv == [
@@ -176,8 +177,17 @@ def test_compose_argv_gpu_only_quant(harness):
         "--file", str(d / "compose.gpu.yaml"),
         "up", "-d",
     ]
+    # xmnn 自 2026-09-20 起同样声明 gpu_override（GPU opt-in，C18）
+    xd = harness.root / "overlays" / "xmnn-dev"
+    xargv = oc.compose_argv(_XMNN, "up", "-d", gpu=True)
+    assert xargv == [
+        "podman-compose", "--project-name", "xmnn-dev",
+        "--file", str(xd / "compose.yaml"),
+        "--file", str(xd / "compose.gpu.yaml"),
+        "up", "-d",
+    ]
     # 非 GPU 栈不允许 gpu=True（工厂也不会暴露 --gpu）
-    for spec in (_XMNN, _MONETIZE):
+    for spec in (_MONETIZE, xmnnrt_mod.XMNNRT_SPEC):
         with pytest.raises(RuntimeError, match="gpu_override"):
             oc.compose_argv(spec, "up", "-d", gpu=True)
 
@@ -498,18 +508,23 @@ def test_factory_build_signature_conda_variant(harness):
     m = oc.make_stack_tasks(_MONETIZE)
     assert _param_names(q["build"]) == ["tag", "base_image", "pip_mirror", "no_cache"]
     assert _param_names(x["build"]) == [
-        "tag", "base_image", "pip_mirror", "conda_mirror", "no_cache",
+        "tag", "base_image", "pip_mirror", "conda_mirror", "torch", "no_cache",
     ]
     assert _param_names(m["build"]) == ["tag", "base_image", "pip_mirror", "no_cache"]
 
 
-def test_factory_up_smoke_gpu_params_quant_only(harness):
+def test_factory_up_smoke_params_are_capability_union(harness):
+    """up/smoke 形参面 = 已声明能力的并集（gpu_override ∪ supports_offline）。
+
+    xmnn 自 2026-09-20 起同时声明两者，故 gpu 与 offline 必须**并存**——
+    历史的三路互斥写法会让 --offline 被 gpu 分支吃掉（C18）。
+    """
     q, x, m = (oc.make_stack_tasks(s) for s in (_QUANT, _XMNN, _MONETIZE))
     assert _param_names(q["up"]) == ["gpu", "skip_build"]
-    assert _param_names(x["up"]) == ["skip_build", "offline", "no_offline"]
+    assert _param_names(x["up"]) == ["gpu", "skip_build", "offline", "no_offline"]
     assert _param_names(m["up"]) == ["skip_build"]
     assert _param_names(q["smoke"]) == ["gpu"]
-    assert _param_names(x["smoke"]) == []
+    assert _param_names(x["smoke"]) == ["gpu"]
     assert _param_names(m["smoke"]) == []
     assert _param_names(q["down"]) == ["volumes"]
     assert _param_names(x["logs"]) == ["tail"]
@@ -558,6 +573,20 @@ def test_build_task_argv_xmnn_includes_conda(harness):
     build_cmd = [c for c in harness.runner.commands if " build " in c][0]
     assert "--build-arg CONDA_MIRROR=tuna" in build_cmd
     assert "-t localhost/xmnn-dev:latest" in build_cmd
+    # C15：三处同键——TORCH_FLAVOR 与 compose.yaml build.args 的 ${TORCH_FLAVOR:-} 同键
+    assert "--build-arg TORCH_FLAVOR=" in build_cmd
+
+
+def test_build_task_argv_xmnn_torch_flavor_flows(harness):
+    """--torch cu130 必须落到 podman build 的 --build-arg（C15 三处一致）。"""
+    tasks = oc.make_stack_tasks(_XMNN)
+    tasks["build"].body(
+        None, tag="localhost/xmnn-dev:cuda", base_image=_XMNN.default_base_image,
+        pip_mirror="official", conda_mirror="official", torch="cu130", no_cache=False,
+    )
+    build_cmd = [c for c in harness.runner.commands if " build " in c][0]
+    assert "--build-arg TORCH_FLAVOR=cu130" in build_cmd
+    assert "-t localhost/xmnn-dev:cuda" in build_cmd
 
 
 def test_build_missing_base_image_exits(harness):
@@ -627,15 +656,30 @@ def test_build_task_defaults_follow_env(harness, monkeypatch):
     assert f"--build-arg BASE_IMAGE={_QUANT.default_base_image}" in build_cmd
 
 
-def test_build_args_fall_back_to_defaults_without_env(harness):
+def test_build_args_fall_back_to_defaults_without_env(harness, monkeypatch):
     """未设 .env 键时回退 spec 默认（回归保护：旧行为零变化）。"""
+    monkeypatch.delenv("TORCH_FLAVOR", raising=False)
     args = oc.resolve_build_args(_XMNN, {})
     assert args == {
         "base_image": _XMNN.default_base_image,
         "pip_mirror": "official",
         "conda_mirror": "official",
+        "torch_flavor": "",
     }
     assert "conda_mirror" not in oc.resolve_build_args(_QUANT, {})
+    assert "torch_flavor" not in oc.resolve_build_args(_QUANT, {})
+
+
+def test_build_args_torch_flavor_whitelist(harness, monkeypatch):
+    """TORCH_FLAVOR 白名单在解析期拦截（构建一次代价极高，错误必须前置）。"""
+    monkeypatch.delenv("TORCH_FLAVOR", raising=False)
+    for flavor in ("", "cpu", "cu130"):
+        assert oc.resolve_build_args(_XMNN, {}, torch=flavor)["torch_flavor"] == flavor
+    assert oc.resolve_build_args(_XMNN, {}, torch="")["torch_flavor"] == ""
+    monkeypatch.setenv("TORCH_FLAVOR", "cu129")
+    with pytest.raises(Exit):
+        oc.resolve_build_args(_XMNN, {})
+    assert oc.resolve_build_args(_XMNN, {}, torch="cpu")["torch_flavor"] == "cpu"
 
 
 def test_build_args_cli_flag_beats_env(harness, monkeypatch):

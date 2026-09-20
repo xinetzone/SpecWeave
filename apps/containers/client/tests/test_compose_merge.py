@@ -306,6 +306,33 @@ def test_quant_gpu_override_appends_dri_without_duplicating_fuse():
     assert gpu["ports"] == plain["ports"]
 
 
+def test_xmnn_gpu_override_is_opt_in_and_single_device():
+    """xmnn 的 GPU opt-in（C18）与 quant 同构，但设备项是单条插值（双形态）。"""
+    plain = render_stack("xmnn")
+    assert plain["devices"] == ["/dev/fuse:/dev/fuse"]
+    gpu = render_stack("xmnn", gpu=True)
+    # 单 token 形态：裸设备路径（`--device /dev/dri` 等价于 :/dev/dri 显式映射），
+    # 不可写成 /dev/dri:/dev/dri —— CDI 引用形态会因此变成非法串
+    assert gpu["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dri"]
+    assert gpu["environment"] == plain["environment"]
+    assert gpu["ports"] == plain["ports"]
+
+
+def test_xmnn_gpu_device_double_form_interpolation():
+    """GPU_DEVICE 双形态：`/` 开头=宿主机设备路径；否则=CDI 引用（与 invoke run --gpu 同语义）。
+
+    关键：override 内**只有一条** devices 项——podman-compose 1.6.0 把列表项原样
+    下传为 `--device <item>`（vendor L1382-L1383，不做冒号拆分），两条并列必有一条非法。
+    """
+    cdi = render_stack("xmnn", env={"GPU_DEVICE": "nvidia.com/gpu=all"}, gpu=True)
+    assert cdi["devices"] == ["/dev/fuse:/dev/fuse", "nvidia.com/gpu=all"]
+    path = render_stack("xmnn", env={"GPU_DEVICE": "/dev/dri/renderD128"}, gpu=True)
+    assert path["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dri/renderD128"]
+    # 空串回退默认（与 _interpolate 的 `${NAME:-default}` 语义一致）
+    empty = render_stack("xmnn", env={"GPU_DEVICE": ""}, gpu=True)
+    assert empty["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dri"]
+
+
 def test_env_override_flows_through_interpolation():
     svc = render_stack("xmnn", env={
         "XMNN_IMAGE_TAG": "registry.example/x:9", "XMNN_SSH_PORT": "2300",
