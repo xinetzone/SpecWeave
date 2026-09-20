@@ -367,18 +367,63 @@ _BRIDGE_COMMON_ENV_KEYS = (
 )
 
 
+def _wsl_stderr_last_line(raw: bytes) -> str:
+    """取 wsl.exe stderr 的末条非空行做单行摘要。
+
+    wsl.exe 自身诊断（``WSL (...) ERROR: ...``）以 UTF-16LE+BOM 写出，被捕获
+    命令的输出则是 UTF-8；按前 64 字节是否含 NUL 判编码。
+    """
+    if not raw:
+        return ""
+    encoding = "utf-16-le" if b"\x00" in raw[:64] else "utf-8"
+    text = raw.decode(encoding, errors="ignore").replace("\x00", "")
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+    return lines[-1] if lines else ""
+
+
 @functools.lru_cache(maxsize=4)
-def _wsl_distro_available(distro: str) -> bool:
-    """探测 WSL 发行版是否可启动（10-15s 超时，结果缓存）。"""
+def _wsl_probe(distro: str) -> tuple[bool, str]:
+    """探测 WSL 发行版是否可启动（15s 超时，结果缓存）。
+
+    返回 ``(可用, 失败原因)``。失败原因**不可吞**：发行版「存在但 VM 层不可用」
+    （2026-09-20 实证：状态 Running 下 ``execvpe(/bin/true) failed: I/O error``，
+    wsl.exe 退出码 11）与「发行版不存在」的处置完全不同——吞掉 stderr 只会让
+    上层门禁给出 ``wsl -l -v`` 这类**看似健康**的指引，把用户送进死胡同。
+    """
     try:
         cp = subprocess.run(
             ["wsl.exe", "-d", distro, "--", "true"],
             capture_output=True,
             timeout=15,
         )
-        return cp.returncode == 0
-    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
-        return False
+    except subprocess.TimeoutExpired:
+        return False, f"wsl.exe -d {distro} 探测超时（15s）"
+    except (FileNotFoundError, OSError) as exc:
+        return False, f"无法执行 wsl.exe：{exc}"
+    if cp.returncode == 0:
+        return True, ""
+    reason = _wsl_stderr_last_line(getattr(cp, "stderr", b"") or b"")
+    return False, reason or f"wsl.exe -d {distro} 返回 {cp.returncode}"
+
+
+def _wsl_distro_available(distro: str) -> bool:
+    """发行版可启动判定（``_wsl_probe`` 的布尔投影，保留既有打桩点）。"""
+    return _wsl_probe(distro)[0]
+
+
+def wsl_bridge_diagnosis() -> str:
+    """桥接不可用的**真实原因**摘要，供门禁提示原样打印。
+
+    非 Windows 或桥接可用返回空串；``COMPOSE_WSL_DISTRO=none`` 是用户显式
+    关闭（非故障），单独说明。命中 ``_wsl_probe`` 的进程内缓存，无重复探测。
+    """
+    if platform.system() != "Windows":
+        return ""
+    raw = os.environ.get(COMPOSE_WSL_DISTRO_ENV, "").strip()
+    if raw.lower() == "none":
+        return f"{COMPOSE_WSL_DISTRO_ENV}=none（显式关闭桥接）"
+    ok, reason = _wsl_probe(raw or _DEFAULT_COMPOSE_DISTRO)
+    return "" if ok else reason
 
 
 def _wsl_bridge_distro() -> Optional[str]:

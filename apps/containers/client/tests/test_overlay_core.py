@@ -393,8 +393,12 @@ def test_gate_platform_windows_bridge_passes_stack_keys(harness, monkeypatch):
 
 
 def test_gate_platform_windows_no_bridge_message(harness, monkeypatch, capsys):
+    """门禁必须原样带出探测原因 + wsl --shutdown 逃生指引（见下条回归）。"""
     monkeypatch.setattr(oc, "platform", SimpleNamespace(system=lambda: "Windows"))
     monkeypatch.setattr(oc, "run_in_wsl_bridge", lambda *a, **k: None)
+    monkeypatch.setattr(
+        oc, "wsl_bridge_diagnosis", lambda: "execvpe(/bin/true) failed: I/O error"
+    )
     with pytest.raises(Exit) as ei:
         oc.gate_platform(_MONETIZE)
     assert ei.value.code == 1
@@ -402,6 +406,20 @@ def test_gate_platform_windows_no_bridge_message(harness, monkeypatch, capsys):
     assert "[monetize]" in out
     assert "invoke monetize.up" in out
     assert "COMPOSE_WSL_DISTRO" in out
+    assert "execvpe(/bin/true) failed: I/O error" in out
+    assert "wsl --shutdown" in out
+
+
+def test_gate_platform_windows_no_bridge_without_diagnosis(harness, monkeypatch, capsys):
+    """探测无原因（非 Windows/已关闭）时不打印诊断块，避免噪音。"""
+    monkeypatch.setattr(oc, "platform", SimpleNamespace(system=lambda: "Windows"))
+    monkeypatch.setattr(oc, "run_in_wsl_bridge", lambda *a, **k: None)
+    monkeypatch.setattr(oc, "wsl_bridge_diagnosis", lambda: "")
+    with pytest.raises(Exit):
+        oc.gate_platform(_MONETIZE)
+    out = capsys.readouterr().out
+    assert "桥接探测失败" not in out
+    assert "wsl --shutdown" not in out
 
 
 def test_gate_compose_binary_missing(harness, monkeypatch, capsys):

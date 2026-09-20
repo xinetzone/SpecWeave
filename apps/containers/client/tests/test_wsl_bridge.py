@@ -77,6 +77,106 @@ def test_bridge_failure_propagates_exit_code(monkeypatch):
 
 
 # ---------------------------------------------------------------------------
+# _wsl_probe / wsl_bridge_diagnosis
+# 回归来源（2026-09-20，session sc-20260920-wsl-probe-stderr）：发行版状态
+# Running 但 VM 层 execvpe(/bin/true) I/O error（wsl.exe exit 11），探测把
+# stderr 吞掉后门禁只能提示 `wsl -l -v`——一个**看似健康**的死胡同。
+# ---------------------------------------------------------------------------
+
+
+def _probe_run(returncode: int, stderr: bytes):
+    def fake_run(argv, **kwargs):
+        return SimpleNamespace(returncode=returncode, stderr=stderr)
+
+    return fake_run
+
+
+def test_probe_surfaces_wsl_stderr_reason(monkeypatch):
+    """探测失败必须带出 wsl.exe 的 stderr（UTF-16LE 诊断）原文。"""
+    utils._wsl_probe.cache_clear()
+    msg = "<3>WSL (176308 - Relay) ERROR: CreateProcessCommon:813: "
+    msg += "execvpe(/bin/true) failed: I/O error"
+    stderr = ("\ufeff" + msg + "\r\n").encode("utf-16-le")
+    monkeypatch.setattr(subprocess, "run", _probe_run(11, stderr))
+    ok, reason = utils._wsl_probe("probe-stderr-distro")
+    assert ok is False
+    assert "execvpe(/bin/true) failed: I/O error" in reason
+
+
+def test_probe_utf8_stderr_fallback(monkeypatch):
+    """stderr 无 NUL 时按 UTF-8 解（发行版不存在等宿主侧报错）。"""
+    utils._wsl_probe.cache_clear()
+    monkeypatch.setattr(subprocess, "run", _probe_run(1, b"no such distro\r\n"))
+    ok, reason = utils._wsl_probe("probe-utf8-distro")
+    assert ok is False
+    assert reason == "no such distro"
+
+
+def test_probe_without_stderr_falls_back_to_returncode(monkeypatch):
+    utils._wsl_probe.cache_clear()
+    monkeypatch.setattr(subprocess, "run", _probe_run(11, b""))
+    ok, reason = utils._wsl_probe("probe-silent-distro")
+    assert ok is False
+    assert "11" in reason
+
+
+def test_probe_wsl_missing_does_not_raise(monkeypatch):
+    """无 wsl.exe（裸 Linux CI）必须返回原因而非抛 FileNotFoundError。"""
+    utils._wsl_probe.cache_clear()
+
+    def raise_fnf(argv, **kwargs):
+        raise FileNotFoundError("wsl.exe")
+
+    monkeypatch.setattr(subprocess, "run", raise_fnf)
+    ok, reason = utils._wsl_probe("probe-missing-exe")
+    assert ok is False
+    assert "wsl.exe" in reason
+
+
+def test_distro_available_is_bool_projection_and_cached(monkeypatch):
+    """_wsl_distro_available 是布尔投影，且探测结果进程内缓存（只跑一次）。"""
+    utils._wsl_probe.cache_clear()
+    calls = []
+
+    def fake_run(argv, **kwargs):
+        calls.append(argv)
+        return SimpleNamespace(returncode=0, stderr=b"")
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    assert utils._wsl_distro_available("probe-cached-distro") is True
+    assert utils._wsl_distro_available("probe-cached-distro") is True
+    assert len(calls) == 1
+
+
+def test_bridge_diagnosis_none_sentinel(monkeypatch):
+    """COMPOSE_WSL_DISTRO=none 是显式关闭而非故障，但仍须说明。"""
+    monkeypatch.setattr(utils.platform, "system", lambda: "Windows")
+    monkeypatch.setenv(utils.COMPOSE_WSL_DISTRO_ENV, "none")
+    assert "none" in utils.wsl_bridge_diagnosis()
+
+
+def test_bridge_diagnosis_non_windows_empty(monkeypatch):
+    monkeypatch.setattr(utils.platform, "system", lambda: "Linux")
+    assert utils.wsl_bridge_diagnosis() == ""
+
+
+def test_bridge_diagnosis_empty_when_bridge_ok(monkeypatch):
+    monkeypatch.setattr(utils.platform, "system", lambda: "Windows")
+    monkeypatch.delenv(utils.COMPOSE_WSL_DISTRO_ENV, raising=False)
+    utils._wsl_probe.cache_clear()
+    monkeypatch.setattr(subprocess, "run", _probe_run(0, b""))
+    assert utils.wsl_bridge_diagnosis() == ""
+
+
+def test_bridge_diagnosis_returns_probe_reason(monkeypatch):
+    monkeypatch.setattr(utils.platform, "system", lambda: "Windows")
+    monkeypatch.delenv(utils.COMPOSE_WSL_DISTRO_ENV, raising=False)
+    utils._wsl_probe.cache_clear()
+    monkeypatch.setattr(subprocess, "run", _probe_run(11, b"boom\r\n"))
+    assert utils.wsl_bridge_diagnosis() == "boom"
+
+
+# ---------------------------------------------------------------------------
 # ensure_wsl_rootless_runtime
 # ---------------------------------------------------------------------------
 

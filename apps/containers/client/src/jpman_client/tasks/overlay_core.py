@@ -49,6 +49,7 @@ from .utils import (
     run_in_wsl_bridge,
     to_posix_path,
     validate_manifest_integrity,
+    wsl_bridge_diagnosis,
 )
 
 # podman-compose 给栈资源打的项目标签（知识包 05：标签即数据库；SDK/CLI 接缝）
@@ -241,7 +242,14 @@ def gate_platform(spec: StackSpec) -> None:
     client_posix = to_posix_path(_project_root())
     print(f"[{spec.namespace}] ⚠ Windows 原生 CPython 不支持 podman-compose 编排路径（其短语法")
     print("        挂载/路径解析在 Windows 原生存在已知缺陷），且未能自动桥接至")
-    print("        WSL 发行版。请检查：")
+    print("        WSL 发行版。")
+    diagnosis = wsl_bridge_diagnosis()
+    if diagnosis:
+        # 只给 wsl -l -v 会把「Running 但 VM 层不可用」送进死胡同，先给实测原因
+        print(f"        桥接探测失败：{diagnosis}")
+        print("        若 wsl -l -v 显示该发行版 Running 而探测仍失败，先重置 WSL 虚拟机：")
+        print("          wsl --shutdown     # 关闭全部发行版进程，随后重跑本命令")
+    print("        请检查：")
     print("          · WSL 发行版可启动（wsl --list --verbose），或设置")
     print("            COMPOSE_WSL_DISTRO=<发行版> 指定桥接目标（none=关闭桥接）")
     print("          · 发行版内已安装 client 与 compose 依赖：")
