@@ -145,6 +145,11 @@ def harness(monkeypatch, tmp_path):
     monkeypatch.setattr(oc, "run_in_wsl_bridge", lambda *a, **k: None)
     monkeypatch.setattr(oc, "ensure_wsl_rootless_runtime", lambda: None)
     monkeypatch.setattr(oc.time, "sleep", lambda *_a, **_k: None)
+    # C21：就绪探测打桩为「立即就绪」，避免单测真的去轮询宿主端口（最长 120s）。
+    # 探测语义本身（含 TCP 假阳性守卫）由 test_up_readiness.py 用回环 socket 锁。
+    monkeypatch.setattr(
+        oc, "wait_http_ready", lambda port, **kw: (True, f"127.0.0.1:{port} → HTTP 302")
+    )
     # 清掉三栈 env，避免宿主环境污染
     for spec in ALL_SPECS:
         for key in (spec.workspace_env, spec.image_tag_env, spec.ssh_port_env, spec.jupyter_port_env):
@@ -1033,6 +1038,41 @@ def test_load_without_torch_flavor_keeps_latest_semantics(load_env, capsys):
     load_env.run("")
     assert load_env.loaded == [newer]
     assert "归档 torch 形态: cpu" in capsys.readouterr().out
+
+
+# ---------------------------------------------------------------------------
+# C21：up 的服务就绪等待（容器 Up ≠ 服务可访问）
+# ---------------------------------------------------------------------------
+
+
+def test_up_waits_for_jupyter_on_host_port(harness, monkeypatch, capsys):
+    """就绪探测必须落在**宿主 Jupyter 端口**上，且带进度反馈通道。"""
+    seen: dict = {}
+
+    def fake(port, **kwargs):
+        seen["port"] = port
+        seen["progress"] = kwargs.get("on_progress")
+        return True, f"127.0.0.1:{port} → HTTP 302"
+
+    monkeypatch.setattr(oc, "wait_http_ready", fake)
+    oc.up_stack(None, _XMNN, skip_build=True)
+    assert seen["port"] == 8890
+    assert callable(seen["progress"])
+    out = capsys.readouterr().out
+    assert "栈已启动" in out
+    assert "Jupyter 已就绪（127.0.0.1:8890 → HTTP 302）" in out
+
+
+def test_up_ready_timeout_warns_without_failing(harness, monkeypatch, capsys):
+    """超时**不判失败**：容器确实 Up，只给指引（否则一次慢启动就中断部署）。"""
+    monkeypatch.setattr(
+        oc, "wait_http_ready", lambda port, **kw: (False, "RemoteDisconnected（120s 无 HTTP 应答）")
+    )
+    oc.up_stack(None, _XMNN, skip_build=True)  # 不抛 Exit
+    out = capsys.readouterr().out
+    assert "⚠ Jupyter 未在 120s 内应答" in out
+    assert f"invoke {_XMNN.namespace}.logs" in out
+    assert "Jupyter localhost:8890" in out  # URL 仍给出，供用户稍后刷新
 
 
 # ---------------------------------------------------------------------------

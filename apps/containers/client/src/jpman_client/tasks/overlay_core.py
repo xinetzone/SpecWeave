@@ -39,6 +39,7 @@ from invoke.exceptions import Exit
 from .client_core import load_image, save_image
 from .manage import _load_env_overrides, _project_root, _resolve_bool
 from .utils import (
+    UP_READY_TIMEOUT_S,
     archive_flavor,
     check_runtime_ready,
     default_build_cache_dir,
@@ -50,6 +51,7 @@ from .utils import (
     run_in_wsl_bridge,
     to_posix_path,
     validate_manifest_integrity,
+    wait_http_ready,
     wsl_bridge_diagnosis,
 )
 
@@ -1189,6 +1191,11 @@ def up_stack(
     离线模式：强制跳过构建 + 本地镜像存在性预检 + compose ``up --no-build``。
 
     起容器经 ``run_compose_up``（C17）：过滤 podman 原生回显噪声，失败时零过滤。
+
+    起容器后按**应用层应答**等待 Jupyter 就绪（C21）：``up -d`` 返回只代表容器在
+    跑，而宿主端口在容器起来的瞬间就被 rootlessport 转发并 accept，后端 listen
+    前的窗口期内连接被接受后立即关闭（浏览器报 ``ERR_EMPTY_RESPONSE``）；故就绪
+    判据不得用裸 TCP connect（假阳性），超时也只给指引、不判失败。
     """
     if offline:
         skip_build = True
@@ -1208,12 +1215,30 @@ def up_stack(
     run_compose_up(c, spec, *compose_up_tail(), gpu=gpu, gpu_form=gpu_form)
     ssh = _env_port(spec, env, spec.ssh_port_env, spec.ssh_default)
     jupyter = _env_port(spec, env, spec.jupyter_port_env, spec.jupyter_default)
+    # 就绪等待（C21）：`up -d` 返回只代表**容器**在跑，不代表**服务**可访问。
+    # rootlessport 在容器起来的瞬间就 accept 宿主端口，而容器内 jupyter 需数十秒
+    # （xmnn 实测 66 秒）才 listen，窗口期内连接被接受后立即关闭且零字节返回，
+    # 浏览器报 ERR_EMPTY_RESPONSE——用户被「✅ 栈已启动」与「端口可连」双重误导。
+    # 故按**应用层应答**判定就绪（TCP connect 在本场景假阳性），超时不判失败。
+    ready, detail = wait_http_ready(
+        int(jupyter),
+        on_progress=lambda waited: print(
+            f"[{spec.namespace}] ⏳ 等待 Jupyter 就绪 … 已 {waited:.0f}s"
+            f"（首次启动约需 60–90s）"
+        ),
+    )
     print(f"[{spec.namespace}] ✅ 栈已启动：")
     print(f"        SSH     localhost:{ssh}")
     jupyter_line = f"        Jupyter localhost:{jupyter}"
     if spec.jupyter_banner_note:
         jupyter_line = f"{jupyter_line}{spec.jupyter_banner_note}"
     print(jupyter_line)
+    if ready:
+        print(f"[{spec.namespace}]        Jupyter 已就绪（{detail}）")
+    else:
+        print(f"[{spec.namespace}] ⚠ Jupyter 未在 {UP_READY_TIMEOUT_S:.0f}s 内应答（{detail}）")
+        print(f"[{spec.namespace}]   容器已在运行，服务可能仍在首次启动；稍后刷新浏览器即可")
+        print(f"[{spec.namespace}]   仍在等待则查日志: invoke {spec.namespace}.logs")
     if gpu and spec.gpu_override:
         print(f"        GPU     {gpu_token} 已透传（{gpu_override_file(spec, gpu_form).name}）")
     if spec.up_footer:

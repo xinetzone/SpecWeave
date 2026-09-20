@@ -18,6 +18,7 @@ Windows WSL 支持说明（对齐 podman-py OKF v0.2 §8 Windows 三路径）：
     ``wsl_distro_name`` 负责（与挂载路径解耦，不要混淆）。
 """
 import functools
+import http.client
 import os
 import platform
 import re
@@ -893,3 +894,65 @@ def refresh_host_keys(cfg: ContainerConfig) -> None:
         _time.sleep(1)
 
     print("[Run] ⚠ 未能从 sshd 获取 host key（keyscan 与服务器 KEX 不兼容或 sshd 异常），首次 SSH 连接请输入 yes 接受新 host key")
+
+
+# ── 服务就绪探测（C21）────────────────────────────────────────────────────────
+# 「容器 Up」≠「服务可访问」：rootless 端口转发器（rootlessport）在容器起来的
+# **瞬间**就 accept 宿主端口上的连接，而容器内 supervisord → entrypoint →
+# jupyter-lab 真正 listen 需要数十秒（xmnn 实测 66 秒）。窗口期内连接被接受后
+# **立即关闭且零字节返回**，浏览器报 `ERR_EMPTY_RESPONSE`（而非更易理解的
+# `ECONNREFUSED`），用户被「✅ 栈已启动」文案与「端口可连」双重误导。
+#
+# 故就绪判据**必须是应用层应答**：本场景下裸 TCP connect 会**假阳性**（转发器
+# 先于后端 accept）。注意与 :func:`refresh_host_keys` 的 sshd 探测区分——那里探
+# 的是同 netns 内真实监听者，connect 成功即等价就绪，语义不同，不可互相套用。
+UP_READY_TIMEOUT_S = 120.0
+UP_READY_POLL_S = 1.5
+UP_READY_PROGRESS_S = 10.0
+UP_READY_PATH = "/lab"
+
+
+def wait_http_ready(
+    port: int,
+    *,
+    path: str = UP_READY_PATH,
+    timeout: float = UP_READY_TIMEOUT_S,
+    on_progress=None,
+) -> tuple[bool, str]:
+    """轮询宿主 ``port`` 直到拿到**任意 HTTP 应答**，返回 ``(是否就绪, 说明)``。
+
+    任一地址回出状态码（2xx/3xx/4xx 皆算）即视为就绪——Jupyter 未带 token 时
+    回 302，属正常应答；只有「连不上」与「连上却零字节」两种情形不算。
+
+    探测地址显式覆盖 ``127.0.0.1`` 与 ``::1``（与 :func:`refresh_host_keys`
+    同因：``localhost`` 可能优先解析到未监听的 ``::1``，而转发只绑 IPv4）。
+
+    超时**不抛异常、不判失败**：容器确实已 Up，只是服务仍在首次启动；调用方
+    应打印可执行指引而非中断（对齐 `up_preflight` 的「自愈优先、指引兜底」）。
+    ``on_progress`` 为可选的进度回调（收到已等待秒数），用于长窗口期给出反馈。
+    """
+    import time as _time
+
+    started = _time.monotonic()
+    deadline = started + timeout
+    next_progress = started + UP_READY_PROGRESS_S
+    last = "无应答"
+    while True:
+        for addr in ("127.0.0.1", "::1"):
+            conn = http.client.HTTPConnection(addr, int(port), timeout=2.0)
+            try:
+                conn.request("GET", path)
+                resp = conn.getresponse()
+                return True, f"{addr} → HTTP {resp.status}"
+            except (OSError, http.client.HTTPException) as exc:
+                last = f"{type(exc).__name__} @ {addr}:{port}"
+            finally:
+                conn.close()
+        now = _time.monotonic()
+        # 先报进度再判超时：窗口期最后一段也要有反馈（否则用户只看到「卡住」）
+        if on_progress is not None and now >= next_progress:
+            on_progress(now - started)
+            next_progress = now + UP_READY_PROGRESS_S
+        if now >= deadline:
+            return False, f"{last}（{now - started:.0f}s 无 HTTP 应答）"
+        _time.sleep(UP_READY_POLL_S)
