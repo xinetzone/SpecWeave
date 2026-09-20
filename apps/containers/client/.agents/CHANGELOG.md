@@ -6,6 +6,45 @@
 
 ## [Unreleased]
 
+### 2026-09-20 · `fix:` 三内部栈补齐 SSH host key 命名卷（quant / monetize / xmnnrt）
+
+**关联七概念场景**：场景2「问题解决」的闭环延伸——承接同日 xmnn-dev 栈
+`xmnn-ssh-host-keys` 条目（本文件上一条），补齐**其余三个内部栈**的同款缺口。
+
+**I 事实**：`podman inspect` 与三栈 compose 核对确认 quant / monetize / xmnnrt
+均**无任何命名卷**（volumes 仅 bind），三者同源于 `jupyter-podman-rootless`
+基底 → 其 SSH host key 同样住容器层、`down/up` 重建即轮换指纹（基底
+entrypoint 对未挂载卷的 WARN 回退路径）。
+
+**F 第一性原理（命名规则）**：既有命名卷前缀 = **invoke 命名空间前缀**
+（`xmnn-ccache` 对应 `xmnn.*`），故三栈按同一规则取
+`quant-` / `monetize-` / `xmnnrt-ssh-host-keys`。**xmnnrt 内部栈刻意与客户
+交付栈 `release/compose.yaml` 的 `xmnn-ssh-host-keys` 不同名**——两者项目名
+同为 `xmnn-runtime`，若同名则会共享同一实际卷（`xmnn-runtime_xmnn-...`），
+一方 `down --volumes` 会牵连另一方；内部栈与交付包属不同生命周期，应隔离。
+
+**A 行动**：三栈 compose.yaml 各增服务段命名卷 + 顶层 `volumes:` 声明；
+`xmnn.py` 的 `down_volumes_help` 补第三个卷名；`xmnnrt.py` 的
+`down_volumes_help` 由「本栈无命名卷，参数为空操作」改为实际语义（**该文案
+已随本改动失真**，属必须同步项）。
+
+**验收**：`test_compose_merge.py` 三栈黄金快照 `volume_targets` 增列
+`/var/lib/jpman/ssh-host-keys` → WSL 内五个测试文件
+（compose_merge/overlay_core/tasks_surface/xmnnrt_stage/release_bundle）
+**194 passed / 7 skipped**（1 例 `test_vs_real_rec_merge_probes` 为已知既有
+失败）；三栈真实 `podman-compose config` 渲染逐一核对：卷声明与服务挂载
+逐字正确（`quant-` / `monetize-` / `xmnnrt-ssh-host-keys` → `/var/lib/jpman/ssh-host-keys`）。
+真机重建验证未做（三个栈中两个正在运行，避免中断）；机制与 xmnn-dev 同源
+（同一基底 entrypoint + 同款挂载），且 `xmnn-runtime/release` 栈早已用同
+机制交付验证。
+
+**C 同步**：[rules/quant-overlay.md](rules/quant-overlay.md) §3、
+[rules/monetize-overlay.md](rules/monetize-overlay.md) §3、
+[rules/xmnnrt-overlay.md](rules/xmnnrt-overlay.md) §7 三处卷段落；
+[docs/10](../docs/10-quant-overlay.md)、[docs/12](../docs/12-monetize-overlay.md)、
+[docs/13](../docs/13-xmnn-runtime-overlay.md) 各增「SSH host key 持久化」条目。
+提交 `fix(client)` = （待回填）。
+
 ### 2026-09-20 · `fix:` 补挂 `xmnn-ssh-host-keys` 命名卷（SSH 主机指纹跨重建稳定）
 
 **关联七概念场景**：场景2「问题解决」（I→F→C 轻量链）。起点是用户请求

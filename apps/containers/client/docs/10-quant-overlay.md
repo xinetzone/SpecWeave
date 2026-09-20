@@ -46,6 +46,10 @@ invoke quant.down                    # 停止并清理
   ports/volumes/栈 env/组件 label）。**行为变更（2026-09-15）**：quant 栈
   compose.yaml 此前未声明 network_mode，现随基文件统一获得 `bridge`
   （依据 2026-09-14 aardvark-dns user scope bus 同机实证）。
+- **SSH host key 持久化（2026-09-20）**：命名卷 `quant-ssh-host-keys` 挂
+  `/var/lib/jpman/ssh-host-keys`，`down/up` 重建容器**不再轮换主机指纹**
+  （客户端 `known_hosts` 免清理）；仅 `down --volumes` 清除（删后指纹轮换
+  属预期）。未挂载时基底 entrypoint 回退「容器层生成 + 重建即轮换」并打 WARN。
 - **配置**：`QUANT_IMAGE_TAG` / `QUANT_SSH_PORT` / `QUANT_JUPYTER_PORT` /
   `QUANT_WORKSPACE` / `USER_PASSWORD` / `JUPYTER_TOKEN` 等写入本目录 `.env`
   即可（模板见 `.env.example` 与 [overlays/onnx-quantized/.env.example](../overlays/onnx-quantized/.env.example)）。

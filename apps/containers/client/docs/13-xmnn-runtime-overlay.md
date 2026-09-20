@@ -50,5 +50,10 @@ invoke xmnnrt.down
 - compose 公共段同样 extends
   [../_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml)；
   Windows 原生自动桥接同三栈。
+- **SSH host key 持久化（2026-09-20）**：命名卷 `xmnnrt-ssh-host-keys` 挂
+  `/var/lib/jpman/ssh-host-keys`，`down/up` 重建容器**不再轮换主机指纹**；
+  仅 `down --volumes` 清除。卷名与客户交付栈（`release/compose.yaml` 的
+  `xmnn-ssh-host-keys`）刻意不同——内部栈与交付包属不同生命周期，避免
+  同机共享卷导致清理互相牵连。
 - 完整说明：[overlays/xmnn-runtime/README.md](../overlays/xmnn-runtime/README.md)；
   AI 硬约束 [.agents/rules/xmnnrt-overlay.md](../.agents/rules/xmnnrt-overlay.md)。

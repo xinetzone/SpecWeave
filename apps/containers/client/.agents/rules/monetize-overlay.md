@@ -47,7 +47,11 @@ utils 只内置 `_BRIDGE_COMMON_ENV_KEYS` 通用键集。
 `../_shared/base-rootless.yaml`**，栈 compose.yaml 以
 `extends: {file: ../_shared/base-rootless.yaml, service: rootless-base}`
 继承，**栈文件禁止重复声明**，只保留栈专属 image/build/ports/两个
-bind volumes/栈 env（PYTHONPATH/LD_LIBRARY_PATH）/`labels.component`；
+bind volumes/`monetize-ssh-host-keys` 命名卷/栈 env（PYTHONPATH/
+LD_LIBRARY_PATH）/`labels.component`（命名卷 2026-09-20 起：挂
+`/var/lib/jpman/ssh-host-keys` 持久化 SSH host key，`down/up` 重建容器不
+轮换主机指纹；entrypoint 以 `mountpoint -q` 分流持久/容器层两模式，
+down 默认保留、`--volumes` 删除）；
 严禁 privileged。extends 合并语义（rec_merge / L2844-L2849 路径解析 /
 volumes 长短语法差异）见
 [quant-overlay.md](quant-overlay.md) §4.1。探测用

@@ -126,5 +126,10 @@
   bridge/labels/restart；栈文件**无 environment 段**（凭证全继承，
   无栈专属变量），黄金测试 test_compose_merge.py GOLDEN["xmnnrt"]
   锁定 env 集 = 凭证四变量。
-- volumes 仅 workspace 一个长语法 bind（+create_host_path）；无命名
-  卷、无源码 bind；端口固定 2225/8893（与三栈错开）。
+- volumes = workspace 一个长语法 bind（+create_host_path）+ 命名卷
+  `xmnnrt-ssh-host-keys` 挂 `/var/lib/jpman/ssh-host-keys`（2026-09-20 起：
+  host key 持久化，`down/up` 重建容器不轮换主机指纹；entrypoint 以
+  `mountpoint -q` 分流持久/容器层两模式）。**卷名前缀 `xmnnrt-` 与客户交付栈
+  `release/compose.yaml` 的 `xmnn-ssh-host-keys` 刻意不同**——内部栈与交付包
+  属不同生命周期，避免同机共享卷导致一方 `down --volumes` 牵连另一方。
+  无源码 bind；端口固定 2225/8893（与三栈错开）。
