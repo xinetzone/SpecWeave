@@ -172,6 +172,25 @@ def harness(monkeypatch, tmp_path):
 
 
 # ---------------------------------------------------------------------------
+# up 横幅：Jupyter 免登录直达 URL（C22）
+# ---------------------------------------------------------------------------
+
+
+def test_jupyter_direct_url_with_token():
+    url = oc.jupyter_direct_url("8890", "abc123")
+    assert url == "http://localhost:8890/lab?token=abc123"
+
+
+def test_jupyter_direct_url_strips_whitespace():
+    assert oc.jupyter_direct_url("8893", "  t  ") == "http://localhost:8893/lab?token=t"
+
+
+@pytest.mark.parametrize("empty", ["", "   ", None])
+def test_jupyter_direct_url_without_token_returns_empty(empty):
+    assert oc.jupyter_direct_url("8890", empty) == ""
+
+
+# ---------------------------------------------------------------------------
 # compose_argv 黄金快照
 # ---------------------------------------------------------------------------
 

@@ -360,6 +360,16 @@ def _env_port(spec: StackSpec, env: dict, key: str, default: str) -> str:
     return str(os.environ.get(key) or env.get(key) or default)
 
 
+def jupyter_direct_url(port: str, token: str) -> str:
+    """构造 up 横幅用的 JupyterLab 免登录直达 URL。
+
+    token 为空（未配置 JUPYTER_TOKEN）时返回空串，调用方不打印该行——
+    与 jupyter Server 自身日志输出 token URL 同语义，仅本机开发便利。
+    """
+    token = (token or "").strip()
+    return f"http://localhost:{port}/lab?token={token}" if token else ""
+
+
 def resolve_build_args(
     spec: StackSpec,
     env: dict,
@@ -1233,6 +1243,9 @@ def up_stack(
     if spec.jupyter_banner_note:
         jupyter_line = f"{jupyter_line}{spec.jupyter_banner_note}"
     print(jupyter_line)
+    direct_url = jupyter_direct_url(jupyter, env.get("JUPYTER_TOKEN", ""))
+    if direct_url:
+        print(f"        直达    {direct_url}（免登录，token 勿外传）")
     if ready:
         print(f"[{spec.namespace}]        Jupyter 已就绪（{detail}）")
     else:

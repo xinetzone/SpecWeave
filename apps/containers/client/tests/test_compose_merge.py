@@ -67,6 +67,7 @@ GOLDEN = {
         "volume_targets": [
             "/workspace", "/workspace/npu_tvm", "/workspace/npuusertools",
             "/workspace/models", "/root/.ccache",
+            "/home/devuser/.local/share/jupyter",
         ],
         "env": {
             "USER_PASSWORD", "JUPYTER_TOKEN", "SSH_PUBLIC_KEY", "GRANT_SUDO",

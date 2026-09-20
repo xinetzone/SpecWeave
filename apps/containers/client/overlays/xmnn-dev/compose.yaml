@@ -71,6 +71,12 @@ services:
       # ccache 命名卷持久化（Nuitka C 编译缓存）；down 默认保留，--volumes 删除。
       # named volume 短语法安全（不触发短语法 bind 的 os.makedirs 问题）。
       - xmnn-ccache:/root/.ccache
+      # jupyter 登录态命名卷（cookie_secret/notebook_secret）：不持久化时密钥随
+      # 容器临时层轮换，down/up 重建后浏览器旧标签页的 Terminal/notebook REST
+      # 全部被踢回登录（点击 Terminal 请求在浏览器侧即被中止，服务端零日志）。
+      # 镜像内该目录属主 1000:1000 mode 700，新卷首次 copy-up 属主保持，devuser 可写。
+      # down 默认保留；down --volumes 与 xmnn-ccache 一并删除。
+      - xmnn-jupyter:/home/devuser/.local/share/jupyter
     environment:
       # 凭证四变量（USER_PASSWORD/JUPYTER_TOKEN/SSH_PUBLIC_KEY/GRANT_SUDO）
       # 与 rootless 三必需由 rootless-base 继承，勿在此重复声明。
@@ -90,3 +96,4 @@ services:
 
 volumes:
   xmnn-ccache: {}
+  xmnn-jupyter: {}
