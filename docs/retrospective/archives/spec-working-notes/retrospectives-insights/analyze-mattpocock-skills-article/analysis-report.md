@@ -355,16 +355,16 @@ mattpocock/skills 与 SpecWeave 在底层方法论上高度同构，但抽象层
 
 | mattpocock 命令 | SpecWeave 对应规范 | 对照分析 |
 |----------------|-------------------|---------|
-| `/grill-with-docs` | [前置文档强制读取协议](../../../../.agents/protocols/pre-document-reading.md) | **同构**：两者都强制"澄清/读取后再动手"。差异：mattpocock 通过反向提问**生成** CONTEXT.md/ADR；SpecWeave 强制**读取**已有规范文档（8阶段×角色必读矩阵）。mattpocock 是"生成式澄清"，SpecWeave 是"消费式澄清"，互补而非替代。 |
+| `/grill-with-docs` | [前置文档强制读取协议](../../../../../../.agents/protocols/pre-document-reading.md) | **同构**：两者都强制"澄清/读取后再动手"。差异：mattpocock 通过反向提问**生成** CONTEXT.md/ADR；SpecWeave 强制**读取**已有规范文档（8阶段×角色必读矩阵）。mattpocock 是"生成式澄清"，SpecWeave 是"消费式澄清"，互补而非替代。 |
 | `/to-prd` | SpecWeave 的 spec 驱动开发（`.trae/specs/`） | **同向**：两者都把需求结构化为可追踪的文档。SpecWeave 通过 spec 任务驱动开发流程，mattpocock 把对话整理为 PRD。 |
 | `/to-issues` | SpecWeave 阶段守卫的"任务拆解"环节 | **同向**：任务颗粒度显式化。SpecWeave 在 8 阶段序列中内置任务拆解，mattpocock 借助 GitHub Issues。 |
-| `/tdd` | [AI 编码准则原则四（目标驱动）](../../../../.agents/rules/ai-coding-guidelines.md) | **直接对应**：SpecWeave 原则四明确写道"'加验证功能' → '先写测试用例覆盖各种无效输入，然后让所有测试通过'"，与 /tdd 完全同构。 |
+| `/tdd` | [AI 编码准则原则四（目标驱动）](../../../../../../.agents/rules/ai-coding-guidelines.md) | **直接对应**：SpecWeave 原则四明确写道"'加验证功能' → '先写测试用例覆盖各种无效输入，然后让所有测试通过'"，与 /tdd 完全同构。 |
 | `/setup-pre-commit` + `/git-guardrails` | SpecWeave 的 ci-check-cmd + atomic-commit-cmd | **同向**：提交门禁。SpecWeave 的 ci-check-cmd 封装 8 步综合检查，atomic-commit-cmd 封装原子提交规范，比 mattpocock 的 pre-commit + guardrails 更细粒度。 |
-| `/diagnose` | [insight-cmd](../../../../.agents/skills/insight-cmd/SKILL.md)（5-Whys 根因诊断） | **同向异构**：两者都强调"复现-定位-修复"闭环。SpecWeave 的 insight-cmd 用 5-Whys 追问至少 3 层为什么，强制触达根本原因；mattpocock 的 /diagnose 文章称"六阶段"但仅列四阶段，深度待验证。 |
+| `/diagnose` | [insight-cmd](../../../../../../.agents/skills/insight-cmd/SKILL.md)（5-Whys 根因诊断） | **同向异构**：两者都强调"复现-定位-修复"闭环。SpecWeave 的 insight-cmd 用 5-Whys 追问至少 3 层为什么，强制触达根本原因；mattpocock 的 /diagnose 文章称"六阶段"但仅列四阶段，深度待验证。 |
 | `/improve-codebase-architecture` | SpecWeave 的 retrospective-cmd + pattern-extraction-cmd | **同向**：定期架构体检。SpecWeave 通过复盘 + 模式萃取实现持续改进，且沉淀至 `docs/retrospective/patterns/` 可复用模式库；mattpocock 是"每三天运行一次"的周期性体检，无沉淀机制描述。 |
-| `/handoff` | SpecWeave 的 [协作协议](../../../../.agents/protocols/README.md)（任务交接） | **直接对应**：跨窗口上下文交接。SpecWeave 有完整的任务交接协议，mattpocock 的 /handoff 是命令化封装。 |
+| `/handoff` | SpecWeave 的 [协作协议](../../../../../../.agents/protocols/README.md)（任务交接） | **直接对应**：跨窗口上下文交接。SpecWeave 有完整的任务交接协议，mattpocock 的 /handoff 是命令化封装。 |
 | `/caveman` | 无直接对应 | **mattpocock 独有**：极简语态压缩 Token。SpecWeave 未提供此能力，可作为参考。 |
-| `/scaffold-exercises` | SpecWeave 的 [ONBOARDING.md](../../../../.agents/ONBOARDING.md) 入门 | **同向**：新人上手。SpecWeave 用 ONBOARDING 快速路由，mattpocock 用练习脚手架。 |
+| `/scaffold-exercises` | SpecWeave 的 [ONBOARDING.md](../../../../../../.agents/ONBOARDING.md) 入门 | **同向**：新人上手。SpecWeave 用 ONBOARDING 快速路由，mattpocock 用练习脚手架。 |
 
 **对照结论**：mattpocock/skills 的 12 个命令中，约 9 个在 SpecWeave 体系中有同构或同向对应，印证了两套体系方法论根基的一致性。差异在于：
 - **SpecWeave 是治理框架**（meta-level），规范"AI 智能体如何协作"，强制机制是启动协议 + 阶段守卫 + 前置文档读取。
@@ -373,7 +373,7 @@ mattpocock/skills 与 SpecWeave 在底层方法论上高度同构，但抽象层
 
 ### 11.5 与 SpecWeave Skill 体系对照——可借鉴的设计模式
 
-SpecWeave 的 Skill 体系（参见 [.agents/skills/README.md](../../../../.agents/skills/README.md)）比 mattpocock 的 12 个扁平命令更体系化，以下设计模式值得 mattpocock 借鉴，也是 SpecWeave 自身的优势沉淀：
+SpecWeave 的 Skill 体系（参见 [.agents/skills/README.md](../../../../../../.agents/skills/README.md)）比 mattpocock 的 12 个扁平命令更体系化，以下设计模式值得 mattpocock 借鉴，也是 SpecWeave 自身的优势沉淀：
 
 1. **五要素模型**：每个 Skill 必须包含 Trigger-Ready Description、Decision Tree、Progressive Disclosure、Why-Explanation、Safety Checklist。mattpocock 的命令仅有一句话描述，缺乏决策树和安全检查，边界清晰度不足。
 2. **渐进式披露三层架构（L0-L3）**：L0 入口速查 → L1 全量索引 → L2 语义匹配 → L3 详细操作。mattpocock 的 12 个命令是扁平列表，无层级路由，命令增多后会发现成本上升。

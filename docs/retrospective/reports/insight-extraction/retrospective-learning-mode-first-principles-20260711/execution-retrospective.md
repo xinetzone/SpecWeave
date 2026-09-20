@@ -81,6 +81,6 @@ PRD摘要是在完整报告完成后用户追加的需求。实际上，对于�
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
 | 分析报告（原子化） | [standalone/first-principles-learning-mode/](../../insight-extraction/standalone/first-principles-learning-mode/README.md) | 15个文件，4-5万字 |
-| PRD摘要 | [prd-summary.md](../../../../../.trae/specs/retrospectives-insights/first-principles-learning-mode-analysis/prd-summary.md) | 280行精炼产品需求文档 |
+| PRD摘要 | [prd-summary.md](../../../archives/spec-working-notes/retrospectives-insights/first-principles-learning-mode-analysis/prd-summary.md) | 280行精炼产品需求文档 |
 | Spec三件套 | [first-principles-learning-mode-analysis/](../../../../../.trae/specs/retrospectives-insights/first-principles-learning-mode-analysis/spec.md) | spec.md/tasks.md/checklist.md |
 | 任务中间产出 | task1-output.md ~ task10-output.md | 各任务推理链记录 |

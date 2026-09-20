@@ -73,7 +73,7 @@ session: "exprt-20260707-minitest-export"
 
 | 资产类型 | 资产名称 | 说明 | 位置 |
 |---------|---------|------|------|
-| 知识资产（主产出） | Minitest生态系统深度洞察报告 | 900行/16章节结构化报告，含4张Mermaid图，覆盖7个仓库和9个文档页面 | [minitest-ecosystem-insight-report.md](../../../../../.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md) |
+| 知识资产（主产出） | Minitest生态系统深度洞察报告 | 900行/16章节结构化报告，含4张Mermaid图，覆盖7个仓库和9个文档页面 | [minitest-ecosystem-insight-report.md](../../../archives/spec-working-notes/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md) |
 | 流程资产 | Spec三件套 | spec.md（161行PRD）、tasks.md（242行/9任务分解）、checklist.md（83行/64验证项） | [minitest-ecosystem-deep-analysis/](../../../../../.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/spec.md) |
 | 中间产出 | 6份子任务报告 | task1-task6-output.md，共3,394行原始分析材料 | 同上 |
 | 复盘资产 | 本次归档全套文件 | README.md/execution-retrospective.md/insight-extraction.md/export-suggestions.md | 本文档所在目录 |

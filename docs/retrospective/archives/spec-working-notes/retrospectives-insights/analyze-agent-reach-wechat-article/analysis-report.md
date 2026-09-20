@@ -460,7 +460,7 @@ Agent Reach 与 SpecWeave 在方法论上有四处同构或互补,详见第 11 �
 
 ### 11.4 与 SpecWeave 工具规范对照(多后端容错模式)
 
-SpecWeave 的工具规范(参见 [.agents/tools/README.md](../../../../.agents/tools/README.md))定义了四类工具(文件操作/代码执行/搜索/通信),每类工具有单一规范,无多后端容错设计。Agent Reach 的多后端路由模式可借鉴:
+SpecWeave 的工具规范(参见 [.agents/tools/README.md](../../../../../../.agents/tools/README.md))定义了四类工具(文件操作/代码执行/搜索/通信),每类工具有单一规范,无多后端容错设计。Agent Reach 的多后端路由模式可借鉴:
 
 | 维度 | Agent Reach | SpecWeave 工具规范 | 借鉴点 |
 |------|------------|-------------------|--------|
@@ -473,7 +473,7 @@ SpecWeave 的工具规范(参见 [.agents/tools/README.md](../../../../.agents/t
 
 ### 11.5 与 SpecWeave Skill 体系对照(自然语言 + 命令行双轨安装)
 
-SpecWeave 的 Skill 体系(参见 [.agents/skills/README.md](../../../../.agents/skills/README.md))定义了三类 Skill(完整Skill/命令集门面/脚本命令门面),共 14 个 Skill,通过 L0-L3 渐进式披露发现。Agent Reach 的双轨安装模式可借鉴:
+SpecWeave 的 Skill 体系(参见 [.agents/skills/README.md](../../../../../../.agents/skills/README.md))定义了三类 Skill(完整Skill/命令集门面/脚本命令门面),共 14 个 Skill,通过 L0-L3 渐进式披露发现。Agent Reach 的双轨安装模式可借鉴:
 
 | 维度 | Agent Reach | SpecWeave Skill 体系 | 借鉴点 |
 |------|------------|---------------------|--------|
@@ -487,7 +487,7 @@ SpecWeave 的 Skill 体系(参见 [.agents/skills/README.md](../../../../.agents
 
 ### 11.6 与 SpecWeave 诊断脚本对照(`doctor` 真体检思路)
 
-SpecWeave 的诊断脚本体系(参见 [.agents/scripts/](../../../../.agents/scripts/README.md))包含大量 `check-*.py` 脚本:check-links、check-duplication、check-mermaid、check-filename、check-hardcode、check-raci、check-stage-guardrails 等,以及整合工具 `repo-check.py`(合并 5 个检查)和 `ci-check.ps1/.sh`(编排 8 步流水线)。Agent Reach 的 `doctor` 与 SpecWeave 的 `check-*` 在"真体检"思路上高度同构:
+SpecWeave 的诊断脚本体系(参见 [.agents/scripts/](../../../../../../.agents/scripts/README.md))包含大量 `check-*.py` 脚本:check-links、check-duplication、check-mermaid、check-filename、check-hardcode、check-raci、check-stage-guardrails 等,以及整合工具 `repo-check.py`(合并 5 个检查)和 `ci-check.ps1/.sh`(编排 8 步流水线)。Agent Reach 的 `doctor` 与 SpecWeave 的 `check-*` 在"真体检"思路上高度同构:
 
 | 维度 | Agent Reach `doctor` | SpecWeave `check-*.py` | 对照分析 |
 |------|----------------------|----------------------|---------|
@@ -502,7 +502,7 @@ SpecWeave 的诊断脚本体系(参见 [.agents/scripts/](../../../../.agents/sc
 
 ### 11.7 与 SpecWeave Agent 能力边界对照(只读不操作安全边界)
 
-SpecWeave 的能力边界声明(参见 [.agents/capability-boundaries.md](../../../../.agents/capability-boundaries.md))为 7 个角色定义了"允许职责"与"禁止事项",如开发者"不擅自变更架构决策"、审查者"不直接修改业务代码"。Agent Reach 的"只读不操作"边界可对照:
+SpecWeave 的能力边界声明(参见 [.agents/capability-boundaries.md](../../../../../../.agents/capability-boundaries.md))为 7 个角色定义了"允许职责"与"禁止事项",如开发者"不擅自变更架构决策"、审查者"不直接修改业务代码"。Agent Reach 的"只读不操作"边界可对照:
 
 | 维度 | Agent Reach | SpecWeave 能力边界 | 对照分析 |
 |------|------------|-------------------|---------|

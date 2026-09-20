@@ -24,7 +24,7 @@ commit: 51901700
 | Spec PRD | [spec.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/spec.md) | ✅ 已完成 | 高 - standards-tools主题Spec PRD范例（含双层文档边界说明） |
 | 任务计划 | [tasks.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/tasks.md) | ✅ 已完成 | 高 - 技术链路式任务拆分范例（7个任务，按入门→落地组织） |
 | 验收清单 | [checklist.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/checklist.md) | ✅ 已完成 | 高 - checklist设计范例（47项，全部通过） |
-| 分析结果 | [analysis-result.md](../../../../../../.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/analysis-result.md) | ✅ 已完成 | 中 - 5个URL内容整合分析（578行） |
+| 分析结果 | [analysis-result.md](../../../../archives/spec-working-notes/standards-tools/learn-volcengine-mobileuse-agent/analysis-result.md) | ✅ 已完成 | 中 - 5个URL内容整合分析（578行） |
 | URL提取原始内容1-5 | extracted-content-1~5.md | ✅ 已完成 | 高 - 5个URL原始内容独立保存（合计634行），溯源范例 |
 | 技术实现指南 | [volcengine-mobileuse-agent-skill-api-guide.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-mobileuse-agent-skill-api-guide.md) | ✅ 已完成 | 极高 - 917行MUA技术指南，含14问题+10实践+7场景，双层文档第二层范例 |
 | standards-tools看板更新 | [README.md](../../../../../../.trae/specs/standards-tools/README.md) | ✅ 已更新 | 中 - 进度标记12/16 |

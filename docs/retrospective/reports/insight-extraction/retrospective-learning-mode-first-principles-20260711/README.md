@@ -27,7 +27,7 @@ template_upgrade: "2026-07-06 v1.2"
 | Spec 文件数 | 14个（spec.md/tasks.md/checklist.md/prd-summary.md + 10个task-output.md） |
 | 任务完成率 | 12/12（100%） |
 | 核心报告（原子化后） | 15个文件（1索引+14章节），约2121行/4-5万字 |
-| PRD摘要 | [prd-summary.md](../../../../../.trae/specs/retrospectives-insights/first-principles-learning-mode-analysis/prd-summary.md)（约280行精炼版） |
+| PRD摘要 | [prd-summary.md](../../../archives/spec-working-notes/retrospectives-insights/first-principles-learning-mode-analysis/prd-summary.md)（约280行精炼版） |
 | Mermaid图表 | 8个（信息加工链/痛点溯源/必要条件金字塔/干扰时间线/用户雷达图/要素层级/边界判定/方法论SOP） |
 | 核心理论引用 | 6学科20+核心概念（认知心理学/神经科学/行为心理学/学习科学/教育学/UX设计） |
 | 现有产品分析 | Forest/Flora/Focus@Will/Freedom/Offtime/番茄ToDo/潮汐等10+产品对比 |
@@ -56,7 +56,7 @@ template_upgrade: "2026-07-06 v1.2"
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/first-principles-learning-mode-analysis/spec.md) | 11个功能需求、7个非功能需求、11个验收标准 |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/first-principles-learning-mode-analysis/tasks.md) | 12个任务（全部标记[x]完成），含Mermaid依赖图 |
 | Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/first-principles-learning-mode-analysis/checklist.md) | 50+项检查点 |
-| PRD摘要 | [prd-summary.md](../../../../../.trae/specs/retrospectives-insights/first-principles-learning-mode-analysis/prd-summary.md) | 约280行精炼PRD |
+| PRD摘要 | [prd-summary.md](../../../archives/spec-working-notes/retrospectives-insights/first-principles-learning-mode-analysis/prd-summary.md) | 约280行精炼PRD |
 | 索引导航 | [analysis-report.md](../../insight-extraction/standalone/first-principles-learning-mode/analysis-report.md) | 54行索引页 |
 | 原子化报告 | 00-13共14个章节文件 | 约2121行/4-5万字 |
 

@@ -34,7 +34,7 @@ title: "i-have-adhd知识沉淀任务二次验证报告"
 | [spec.md](../../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/spec.md) | 140 | PRD需求文档 | Spec工作目录 |
 | [tasks.md](../../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/tasks.md) | 166 | 任务分解与状态追踪 | Spec工作目录 |
 | [checklist.md](../../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/checklist.md) | 60 | 验证检查清单 | Spec工作目录 |
-| [article-content.md](../../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/article-content.md) | 50 | 原文内容提取 | Spec工作目录 |
+| [article-content.md](../analyze-i-have-adhd-article/article-content.md) | 50 | 原文内容提取 | Spec工作目录 |
 | [analysis-report.md](../analyze-i-have-adhd-article/analysis-report.md) | 946 | 完整分析报告（v1.2） | Spec工作目录 |
 | [action-first-output-paradigm.md](../../../../patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md) | 223 | L2方法论模式（v2.0，已更新） | 知识库模式目录 |
 | [reverse-adaptation-innovation.md](../../../../patterns/methodology-patterns/creative-design/reverse-adaptation-innovation.md) | 277 | L2方法论模式（v2.0，已更新） | 知识库模式目录 |

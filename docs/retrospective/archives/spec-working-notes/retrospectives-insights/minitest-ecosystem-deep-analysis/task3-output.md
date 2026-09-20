@@ -179,7 +179,7 @@ if (prHeadSha && prHeadSha !== oidcSha) {
 
 ### 5.1 validateRunFlags - 运行标志校验
 
-在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/validate.ts:15-44](../../../../playground/chaos/src/utils/validate.ts#L15-L44) 中实现：
+在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/validate.ts:15-44](../../../../../../playground/chaos/src/utils/validate.ts#L15-L44) 中实现：
 
 **校验规则：**
 1. 至少启用一个 lane（iOS/Android/Web）
@@ -187,7 +187,7 @@ if (prHeadSha && prHeadSha !== oidcSha) {
 
 ### 5.2 iOS 构建验证与自动打包
 
-在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/validate.ts:137-230](../../../../playground/chaos/src/utils/validate.ts#L137-L230) 中实现：
+在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/validate.ts:137-230](../../../../../../playground/chaos/src/utils/validate.ts#L137-L230) 中实现：
 
 **支持两种格式：**
 
@@ -213,7 +213,7 @@ IPA 结构要求：`Payload/<AppName>.app/`
 
 ### 5.3 Android 构建验证（x86_64 ABI 检查）
 
-在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/validate.ts:55-126](../../../../playground/chaos/src/utils/validate.ts#L55-L126) 中实现：
+在 [file:///d:/AI/.chaos/libs/minitap-ai/minitest-trigger/src/validate.ts:55-126](../../../../../../playground/chaos/src/utils/validate.ts#L55-L126) 中实现：
 
 **验证步骤：**
 1. 文件存在且以 `.apk` 结尾

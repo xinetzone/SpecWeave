@@ -18,7 +18,7 @@ source: "学习模式第一性原理分析项目复盘"
 | 类型 | 路径 | 状态 |
 |------|------|------|
 | 分析报告（原子化） | [standalone/first-principles-learning-mode/](../../insight-extraction/standalone/first-principles-learning-mode/README.md) | ✅ 已完成 |
-| PRD摘要 | [prd-summary.md](../../../../../.trae/specs/retrospectives-insights/first-principles-learning-mode-analysis/prd-summary.md) | ✅ 已完成 |
+| PRD摘要 | [prd-summary.md](../../../archives/spec-working-notes/retrospectives-insights/first-principles-learning-mode-analysis/prd-summary.md) | ✅ 已完成 |
 | Spec三件套 | spec.md/tasks.md/checklist.md | ✅ 已完成 |
 | 复盘报告 | 本目录（README+execution+insight+export） | ✅ 已完成 |
 | 原子提交 | d8fac263 + e17abac7 | ✅ 已完成 |

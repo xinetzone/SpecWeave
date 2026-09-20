@@ -89,8 +89,8 @@ export KMP_DUPLICATE_LIB_OK=TRUE
 ## 四、代码修改清单
 
 ### 4.1 新增文件
-- [build_and_bench.sh](build_and_bench.sh) — 一键编译+性能测试脚本
-- [bench_inceptionv1.py](bench_inceptionv1.py) — Python性能基准测试脚本
+- [build_and_bench.sh](../../../../../../.trae/specs/caffe-framework/caffe-ffi-followup-fixes-analysis/build_and_bench.sh) — 一键编译+性能测试脚本
+- [bench_inceptionv1.py](../../../../../../.trae/specs/caffe-framework/caffe-ffi-followup-fixes-analysis/bench_inceptionv1.py) — Python性能基准测试脚本
 - [openmp-perf-analysis-and-conv-optimization.md](openmp-perf-analysis-and-conv-optimization.md) — 详细技术分析文档
 
 ### 4.2 修改文件

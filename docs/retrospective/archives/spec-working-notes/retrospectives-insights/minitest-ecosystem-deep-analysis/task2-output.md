@@ -151,7 +151,7 @@ main.py 注册了 **15 个命令组**，通过 `app.add_typer()` 挂载到根应
 | 命令组 | 文件 | 核心子命令 | 功能说明 |
 |--------|------|-----------|----------|
 | `init` | `init.py` | (默认) | 输出 AI Agent onboarding playbook，自动检测 agent 环境 |
-| `auth` | [auth.py](../../../../.agents/scripts/forum_bot/auth.py) | login, logout, status, api-key | OAuth PKCE 登录、登出、状态查看、API Key 管理 |
+| `auth` | [auth.py](../../../../../../.agents/scripts/forum_bot/auth.py) | login, logout, status, api-key | OAuth PKCE 登录、登出、状态查看、API Key 管理 |
 | `apps` | `apps.py` | list, create, dependencies | 应用列表、创建(支持多平台/icon上传)、依赖管理 |
 | `user-story` | user_story.py | create, list, get, update, criteria, bindings | 用户故事 CRUD、验收标准、绑定管理 |
 | `test-profile` | test_profile.py | list, get, create, default | 测试配置文件管理 |
@@ -251,7 +251,7 @@ async def upload_file(
 
 ## 6. 三种认证凭证优先级
 
-**位置**: [core/auth.py](../../../../.agents/scripts/forum_bot/auth.py)
+**位置**: [core/auth.py](../../../../../../.agents/scripts/forum_bot/auth.py)
 
 `load_token()` 函数按以下优先级解析认证凭证：
 
@@ -262,7 +262,7 @@ if settings.token:
     return settings.token
 ```
 
-位置：[auth.py:99-100](../../../../.agents/scripts/forum_bot/auth.py#L99-L100)
+位置：[auth.py:99-100](../../../../../../.agents/scripts/forum_bot/auth.py#L99-L100)
 
 ### 优先级 2: MINITEST_API_KEY 环境变量
 
@@ -271,7 +271,7 @@ if settings.api_key:
     return settings.api_key.get_secret_value()
 ```
 
-位置：[auth.py:102-103](../../../../.agents/scripts/forum_bot/auth.py#L102-L103)
+位置：[auth.py:102-103](../../../../../../.agents/scripts/forum_bot/auth.py#L102-L103)
 
 注意：`api_key` 使用 `SecretStr` 类型存储，需要通过 `get_secret_value()` 获取明文。
 
@@ -286,7 +286,7 @@ if creds is not None:
     return creds.access_token
 ```
 
-位置：[auth.py:105-113](../../../../.agents/scripts/forum_bot/auth.py#L105-L113)
+位置：[auth.py:105-113](../../../../../../.agents/scripts/forum_bot/auth.py#L105-L113)
 
 ### 自动刷新机制
 
@@ -303,7 +303,7 @@ def is_expired(self) -> bool:
 位置：
 - 刷新缓冲区: [credentials.py:15](../../../../external/anthropics/anthropic-sdk-python/src/anthropic/resources/beta/vaults/credentials.py#L15)
 - is_expired 属性: [credentials.py:28-31](../../../../external/anthropics/anthropic-sdk-python/src/anthropic/resources/beta/vaults/credentials.py#L28-L31)
-- 自动刷新逻辑: [auth.py:76-92](../../../../.agents/scripts/forum_bot/auth.py#L76-L92)
+- 自动刷新逻辑: [auth.py:76-92](../../../../../../.agents/scripts/forum_bot/auth.py#L76-L92)
 
 ### 凭证文件安全
 
@@ -328,7 +328,7 @@ if settings.token and settings.api_key:
     )
 ```
 
-位置：[auth.py:57-63](../../../../.agents/scripts/forum_bot/auth.py#L57-L63)
+位置：[auth.py:57-63](../../../../../../.agents/scripts/forum_bot/auth.py#L57-L63)
 
 ---
 
@@ -390,7 +390,7 @@ def _to_jsonable(data: Any) -> Any:
 ctx.json_mode = json  # type: ignore[attr-defined]
 ```
 
-位置：[main.py:91](../../../../playground/chaos/libs/Nuitka/tests/distutils/example_3_dependencies_poetry_pyproject/src/main.py#L91)
+位置：[main.py:91](../../../../../../playground/chaos/libs/Nuitka/tests/distutils/example_3_dependencies_poetry_pyproject/src/main.py#L91)
 
 各命令通过 `typer.Context.json_mode` 读取该标志。
 
@@ -601,7 +601,7 @@ model_config = SettingsConfigDict(
 
 ## 11. 数据模型设计
 
-**基类**: [models/base.py](../../../../.agents/scripts/mdi/generators/base.py) - `CamelModel`，自动配置 camelCase 别名。
+**基类**: [models/base.py](../../../../../../.agents/scripts/mdi/generators/base.py) - `CamelModel`，自动配置 camelCase 别名。
 
 ### 核心模型关系
 
@@ -742,7 +742,7 @@ settings = typer.Context.settings
 json_mode = typer.Context.json_mode
 ```
 
-位置：[main.py:90-93](../../../../playground/chaos/libs/Nuitka/tests/distutils/example_3_dependencies_poetry_pyproject/src/main.py#L90-L93)
+位置：[main.py:90-93](../../../../../../playground/chaos/libs/Nuitka/tests/distutils/example_3_dependencies_poetry_pyproject/src/main.py#L90-L93)
 
 ### 13.2 异步运行封装
 
@@ -763,7 +763,7 @@ def run_api_call[T](coro: Coroutine[Any, Any, T]) -> T:
 
 `check_for_updates()` 在 main callback 中调用，24小时缓存，不阻塞命令执行：
 
-位置：[main.py:96](../../../../playground/chaos/libs/Nuitka/tests/distutils/example_3_dependencies_poetry_pyproject/src/main.py#L96)
+位置：[main.py:96](../../../../../../playground/chaos/libs/Nuitka/tests/distutils/example_3_dependencies_poetry_pyproject/src/main.py#L96)
 
 ### 13.4 统一错误处理
 

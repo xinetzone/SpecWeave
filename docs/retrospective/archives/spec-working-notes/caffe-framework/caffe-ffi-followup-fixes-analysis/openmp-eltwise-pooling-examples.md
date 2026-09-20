@@ -14,7 +14,7 @@
 
 **⚠️ 注意：真实 CMake 选项名是 `CAFFE_USE_OPENMP`，不是 `CAFFE_FFI_ENABLE_OPENMP`。**
 
-见 [Options.cmake](../../../../projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake) 第 12 行：
+见 [Options.cmake](../../../../../../projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake) 第 12 行：
 
 ```cmake
 option(CAFFE_USE_OPENMP "Use OpenMP to parallelize compute-heavy loops (pure-C++ GEMM fallback, pooling, elementwise). Set to OFF to force serial execution." ON)

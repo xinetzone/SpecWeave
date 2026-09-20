@@ -31,7 +31,7 @@ session: "retr-20260707-minitest-ecosystem"
 | **最终产出** | 661行/16章节结构化洞察报告 + 4张Mermaid架构图 + 6份子任务报告，总计3,658行 |
 
 **源文件位置：**
-- 主洞察报告：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md](../../../../../.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md)
+- 主洞察报告：[file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md](../../../archives/spec-working-notes/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.md)
 - 工作目录：`file:///d:/AI/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/`
 
 ## 二、实施过程回顾

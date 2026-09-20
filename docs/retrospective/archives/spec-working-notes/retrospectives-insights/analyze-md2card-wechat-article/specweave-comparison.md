@@ -36,10 +36,10 @@ SpecWeave 采用 **Skill 体系与规范驱动开发**，与 md2card 的自由�
 | 复用方式 | 前作代码复用（MDXNotes → md2card） | Skill 复用 + `.agents/scripts/lib/` 共享工具库 + 可复用模式库 |
 
 SpecWeave 的关键规范依据：
-- **启动协议**（[AGENTS.md:3-21](../../../../AGENTS.md#L3-L21)）：强制要求读取规范后再加载 Skill 或生成产出物，禁止跳过
-- **上下文路由表**（[.agents/context-routing.md](../../../../.agents/context-routing.md)）：任务类型→必读规范映射，防范"就近直觉"偏差
+- **启动协议**（[AGENTS.md:3-21](../../../../../../AGENTS.md#L3-L21)）：强制要求读取规范后再加载 Skill 或生成产出物，禁止跳过
+- **上下文路由表**（[.agents/context-routing.md](../../../../../../.agents/context-routing.md)）：任务类型→必读规范映射，防范"就近直觉"偏差
 - **Skill 创建规范**：需读取 vendor 方法论资产 + SpecWeave 补充规范（五要素模型、双方案模式等）
-- **全局核心规则**（[.agents/global-core-rules.md:13](../../../../.agents/global-core-rules.md#L13)）：启动协议优先，违反导致非线性返工成本
+- **全局核心规则**（[.agents/global-core-rules.md:13](../../../../../../.agents/global-core-rules.md#L13)）：启动协议优先，违反导致非线性返工成本
 
 ### 可借鉴点
 
@@ -47,7 +47,7 @@ SpecWeave 的关键规范依据：
 
 2. **对话式纠偏与显式规范的互补**：md2card 证明在快速探索阶段，多轮对话纠偏是高效的；SpecWeave 的显式规范在稳定期和团队协作中不可替代。两者不是对立关系——**Skill 内部可以封装"渐进式生成"流程，而 Skill 的触发条件、输入输出格式由显式规范定义**。
 
-3. **每步有明确输入输出的渐进式生成优于一次性生成**：md2card 三步法的核心洞察是"分三步生成比一步到位质量高、错误少、易调试"。这与 SpecWeave 的三阶段递进原则（[.agents/global-core-rules.md:22](../../../../.agents/global-core-rules.md#L22)）——治理、知识库、抽象均遵循三阶段递进，顺序不可颠倒——在哲学层面高度一致。可以将这一原则进一步应用到 Skill 的执行流程设计中。
+3. **每步有明确输入输出的渐进式生成优于一次性生成**：md2card 三步法的核心洞察是"分三步生成比一步到位质量高、错误少、易调试"。这与 SpecWeave 的三阶段递进原则（[.agents/global-core-rules.md:22](../../../../../../.agents/global-core-rules.md#L22)）——治理、知识库、抽象均遵循三阶段递进，顺序不可颠倒——在哲学层面高度一致。可以将这一原则进一步应用到 Skill 的执行流程设计中。
 
 ### 需警惕点
 
@@ -56,9 +56,9 @@ SpecWeave 的关键规范依据：
    - 上下文压缩后经验丢失（AGENTS.md 步骤 2.2 已明确指出此风险）
    - 无法进行自动化质量门禁
 
-2. **"设计稿先行"不等于"无规范先行"**：md2card 的快速迭代建立在开发者已有 MDXNotes 技术积累和明确的产品定位之上，并非无方向的探索。SpecWeave 的启动协议要求"先读规范再动手"，看似慢实则快——AGENTS.md 明确警告："跳过5分钟的规范读取可能导致30分钟以上的重构返工"（[AGENTS.md:21](../../../../AGENTS.md#L21)）。
+2. **"设计稿先行"不等于"无规范先行"**：md2card 的快速迭代建立在开发者已有 MDXNotes 技术积累和明确的产品定位之上，并非无方向的探索。SpecWeave 的启动协议要求"先读规范再动手"，看似慢实则快——AGENTS.md 明确警告："跳过5分钟的规范读取可能导致30分钟以上的重构返工"（[AGENTS.md:21](../../../../../../AGENTS.md#L21)）。
 
-3. **AI 生成代码必须有人工审查机制**：md2card 方法论也明确指出"不要完全依赖AI生成，生成的代码必须人工审查"。SpecWeave 现有 CI 检查（[.agents/context-routing.md:58](../../../../.agents/context-routing.md#L58)）、代码审查、阶段守卫等机制正是对这一风险的制度化应对。
+3. **AI 生成代码必须有人工审查机制**：md2card 方法论也明确指出"不要完全依赖AI生成，生成的代码必须人工审查"。SpecWeave 现有 CI 检查（[.agents/context-routing.md:58](../../../../../../.agents/context-routing.md#L58)）、代码审查、阶段守卫等机制正是对这一风险的制度化应对。
 
 ---
 
@@ -81,16 +81,16 @@ SpecWeave 建立了严格的 **阶段守卫体系**，同时通过 `.temp/` 目�
 | 对比项 | md2card | SpecWeave |
 |---|---|---|
 | 开发速度 | 周末 MVP，速度优先 | 8阶段标准流程，质量优先 |
-| 原型区域 | 无明确区分，直接开发上线 | `.temp/` 暂存开发 → `apps/` 稳定迁移（[.agents/protocols/app-development-workflow.md](../../../../.agents/protocols/app-development-workflow.md)） |
+| 原型区域 | 无明确区分，直接开发上线 | `.temp/` 暂存开发 → `apps/` 稳定迁移（[.agents/protocols/app-development-workflow.md](../../../../../../.agents/protocols/app-development-workflow.md)） |
 | 质量门禁 | 核心功能可用即可，无正式审查 | 全量迁移需满足4项条件：测试100%通过、代码审查通过、无P0/P1缺陷、文档完善 |
-| 阶段拦截 | 无显式拦截机制，靠开发者自律 | 跨阶段拦截机制 + 阶段跳转审批流程（[.agents/rules/stage-guardrails.md](../../../../.agents/rules/stage-guardrails.md)） |
+| 阶段拦截 | 无显式拦截机制，靠开发者自律 | 跨阶段拦截机制 + 阶段跳转审批流程（[.agents/rules/stage-guardrails.md](../../../../../../.agents/rules/stage-guardrails.md)） |
 | 快速通道 | 默认快速，质量后续迭代 | L0 探针豁免规则（适用于探索性任务） |
 
 SpecWeave 的关键规范依据：
-- **阶段守卫规则**（[.agents/rules/stage-guardrails.md:7-19](../../../../.agents/rules/stage-guardrails.md#L7-L19)）：定义标准8阶段序列、各阶段操作边界、跨阶段拦截与跳转审批
-- **应用开发生命周期**（[.agents/protocols/app-development-workflow.md:58-98](../../../../.agents/protocols/app-development-workflow.md#L58-L98)）：`.temp/` 暂存阶段允许频繁修改、不要求代码审查，聚焦快速迭代与功能验证
-- **L0 探针豁免规则**（[.agents/rules/stage-guardrails.md:27](../../../../.agents/rules/stage-guardrails.md#L27)）：为探索性任务提供规范化的快速通道
-- **迁移条件**（[.agents/protocols/app-development-workflow.md:112-119](../../../../.agents/protocols/app-development-workflow.md#L112-L119)）：全量迁移必须满足测试通过、审查通过、无阻塞缺陷、文档完善4项条件
+- **阶段守卫规则**（[.agents/rules/stage-guardrails.md:7-19](../../../../../../.agents/rules/stage-guardrails.md#L7-L19)）：定义标准8阶段序列、各阶段操作边界、跨阶段拦截与跳转审批
+- **应用开发生命周期**（[.agents/protocols/app-development-workflow.md:58-98](../../../../../../.agents/protocols/app-development-workflow.md#L58-L98)）：`.temp/` 暂存阶段允许频繁修改、不要求代码审查，聚焦快速迭代与功能验证
+- **L0 探针豁免规则**（[.agents/rules/stage-guardrails.md:27](../../../../../../.agents/rules/stage-guardrails.md#L27)）：为探索性任务提供规范化的快速通道
+- **迁移条件**（[.agents/protocols/app-development-workflow.md:112-119](../../../../../../.agents/protocols/app-development-workflow.md#L112-L119)）：全量迁移必须满足测试通过、审查通过、无阻塞缺陷、文档完善4项条件
 
 ### 可借鉴点
 
@@ -114,7 +114,7 @@ SpecWeave 的关键规范依据：
 1. **过度规范化会扼杀探索速度**：如果 `.temp/` 阶段也强制要求完整的规范读取、文档编写、测试覆盖，就失去了"快速原型"的意义。md2card 一个周末完成 MVP 的关键是"只做核心的事"。SpecWeave 需要确保：
    - `.temp/` 阶段的门禁确实比 `apps/` 宽松
    - L0 探针豁免机制在实践中不被过度限制
-   - 启动协议的"按需读取"原则（[.agents/global-core-rules.md:15](../../../../.agents/global-core-rules.md#L15)）得到贯彻——只读取与当前任务直接相关的规范，避免一次性加载全部上下文
+   - 启动协议的"按需读取"原则（[.agents/global-core-rules.md:15](../../../../../../.agents/global-core-rules.md#L15)）得到贯彻——只读取与当前任务直接相关的规范，避免一次性加载全部上下文
 
 2. **"周末MVP"不适合所有场景**：md2card 方法论明确指出"复杂度极高、需要强合规、重资产的产品不适用"。对应到 SpecWeave：
    - 核心规则体系（如 AGENTS.md、阶段守卫、数据安全）的修改不适用快速原型模式
@@ -152,18 +152,18 @@ SpecWeave 采用 **规范前置** 的方法论，两者形成"探索期vs稳定�
 | 适用阶段 | 从0到1探索期，方向不确定 | 稳定协作期，方向已明确需保证一致性 |
 
 SpecWeave 的关键规范依据：
-- **启动协议强制读取规范**（[AGENTS.md:3-21](../../../../AGENTS.md#L3-L21)）：在执行任务前必须读取对应规范，"凭经验做对不等于按方法论做对"
-- **前置文档强制读取协议**（[.agents/context-routing.md:82](../../../../.agents/context-routing.md#L82)）：必读清单/确认机制/PDR-LOG结构化日志
-- **查阅知识库规则**（[.agents/global-core-rules.md:25](../../../../.agents/global-core-rules.md#L25)）：执行任务前主动查阅技术知识库与复盘文档，了解已有经验，避免重复踩坑
-- **歧义主动澄清**（[.agents/global-core-rules.md:19](../../../../.agents/global-core-rules.md#L19)）：遇到需求不明确必须先提问澄清，禁止自行猜测意图
-- **复盘体系**（[AGENTS.md:57-65](../../../../AGENTS.md#L57-L65)）：通过复盘沉淀可复用模式，形成组织记忆
+- **启动协议强制读取规范**（[AGENTS.md:3-21](../../../../../../AGENTS.md#L3-L21)）：在执行任务前必须读取对应规范，"凭经验做对不等于按方法论做对"
+- **前置文档强制读取协议**（[.agents/context-routing.md:82](../../../../../../.agents/context-routing.md#L82)）：必读清单/确认机制/PDR-LOG结构化日志
+- **查阅知识库规则**（[.agents/global-core-rules.md:25](../../../../../../.agents/global-core-rules.md#L25)）：执行任务前主动查阅技术知识库与复盘文档，了解已有经验，避免重复踩坑
+- **歧义主动澄清**（[.agents/global-core-rules.md:19](../../../../../../.agents/global-core-rules.md#L19)）：遇到需求不明确必须先提问澄清，禁止自行猜测意图
+- **复盘体系**（[AGENTS.md:57-65](../../../../../../AGENTS.md#L57-L65)）：通过复盘沉淀可复用模式，形成组织记忆
 
 ### 可借鉴点
 
 1. **新工具/新功能可采用 MVP→用户反馈→再规范化的路径**：SpecWeave 现有体系在"从零创建新东西"时偏重规范前置，可以引入 md2card 的验证逻辑：
    - **新 Skill 开发**：先在 `.temp/` 或实验环境快速实现原型→在实际任务中试用→收集使用反馈→再规范化（编写 SKILL.md、添加验证脚本、纳入上下文路由）
    - **新规范制定**：先通过几个实际案例验证方法论有效性→再沉淀为正式规范→而非一开始就试图定义完美规范
-   - 这与三阶段递进原则（[.agents/global-core-rules.md:22](../../../../.agents/global-core-rules.md#L22)）中"治理（修复→预防→闭环）"的路径一致
+   - 这与三阶段递进原则（[.agents/global-core-rules.md:22](../../../../../../.agents/global-core-rules.md#L22)）中"治理（修复→预防→闭环）"的路径一致
 
 2. **建立"内部用户反馈"机制**：md2card 通过 V2EX 获取外部用户反馈，SpecWeave 作为内部工具体系，可以建立：
    - Skill 使用效果追踪（哪些 Skill 经常被调用、哪些经常出错）
@@ -174,7 +174,7 @@ SpecWeave 的关键规范依据：
 3. **区分"探索期规范"和"稳定期规范"**：md2card 的经验表明，不同阶段需要不同的方法论：
    - **探索期**（新工具/新方向）：轻规范、重验证、允许快速试错
    - **稳定期**（核心流程/高频使用）：重规范、强门禁、保证一致性
-   - SpecWeave 的 L0-L3 流程分级模板（[.agents/rules/stage-guardrails.md:27](../../../../.agents/rules/stage-guardrails.md#L27)）已经有这个思路，可以进一步强化并明确各分级的适用场景
+   - SpecWeave 的 L0-L3 流程分级模板（[.agents/rules/stage-guardrails.md:27](../../../../../../.agents/rules/stage-guardrails.md#L27)）已经有这个思路，可以进一步强化并明确各分级的适用场景
 
 ### 需警惕点
 
@@ -189,7 +189,7 @@ SpecWeave 的关键规范依据：
    - 规范不是拍脑袋制定的，而是来自复盘和实践验证
    - 规范本身也需要接受实践检验并持续迭代
    - 闭环路径：实践→复盘→规范→再实践→再复盘→优化规范
-   - 这正是"修复即闭环"原则（[.agents/global-core-rules.md:24](../../../../.agents/global-core-rules.md#L24)）的体现
+   - 这正是"修复即闭环"原则（[.agents/global-core-rules.md:24](../../../../../../.agents/global-core-rules.md#L24)）的体现
 
 ---
 
@@ -217,11 +217,11 @@ SpecWeave 采用 **spec/tasks/checklist 结构化文档体系**，与 md2card �
 | 文档边界 | 无明确边界，输出即最终产物 | 明确区分 AI 面向文档（`.agents/`）和人类面向文档（`docs/`、`README.md`） |
 
 SpecWeave 的关键规范依据：
-- **派生产物溯源**（[AGENTS.md:54](../../../../AGENTS.md#L54)）：派生产物须在 TOML frontmatter 携带 `source` 字段标注来源
-- **文档边界分离**（[AGENTS.md:53](../../../../AGENTS.md#L53)）：`AGENTS.md`/`.agents/` 面向 AI 智能体，`README.md`/`docs/` 面向人类读者，职责分离
-- **原子化操作**（[.agents/context-routing.md:53](../../../../.agents/context-routing.md#L53)）：原子化收尾一键处理断链修复、导航更新、看板刷新
-- **文档索引自动化**（[.agents/context-routing.md:52](../../../../.agents/context-routing.md#L52)）：docgen 自动生成导航/看板/应用清单，标记区域幂等覆盖
-- **元文档优先原则**（[.agents/global-core-rules.md:23](../../../../.agents/global-core-rules.md#L23)）：优先优化入口文档、索引等元文档，ROI最高
+- **派生产物溯源**（[AGENTS.md:54](../../../../../../AGENTS.md#L54)）：派生产物须在 TOML frontmatter 携带 `source` 字段标注来源
+- **文档边界分离**（[AGENTS.md:53](../../../../../../AGENTS.md#L53)）：`AGENTS.md`/`.agents/` 面向 AI 智能体，`README.md`/`docs/` 面向人类读者，职责分离
+- **原子化操作**（[.agents/context-routing.md:53](../../../../../../.agents/context-routing.md#L53)）：原子化收尾一键处理断链修复、导航更新、看板刷新
+- **文档索引自动化**（[.agents/context-routing.md:52](../../../../../../.agents/context-routing.md#L52)）：docgen 自动生成导航/看板/应用清单，标记区域幂等覆盖
+- **元文档优先原则**（[.agents/global-core-rules.md:23](../../../../../../.agents/global-core-rules.md#L23)）：优先优化入口文档、索引等元文档，ROI最高
 
 ### 可借鉴点
 
@@ -233,7 +233,7 @@ SpecWeave 的关键规范依据：
 
 2. **提炼"结构化但不束缚创造力"的文档哲学**：md2card 的"内容优先"不是"无结构"——Markdown 本身就是结构化的，只是不强制用户选模板。SpecWeave 的结构化文档体系可以借鉴：
    - 模板提供"骨架"但不强制"血肉"——必填项保证最低结构质量，可选项给予灵活空间
-   - L0/L1/L2 三层架构（[.agents/context-routing.md:26](../../../../.agents/context-routing.md#L26)）正是这一理念的体现：L0 ONBOARDING <100行快速上手，L1 SKILL+REGISTRY <500行标准文档，L2 深度文档不限
+   - L0/L1/L2 三层架构（[.agents/context-routing.md:26](../../../../../../.agents/context-routing.md#L26)）正是这一理念的体现：L0 ONBOARDING <100行快速上手，L1 SKILL+REGISTRY <500行标准文档，L2 深度文档不限
    - 可以进一步明确：哪些文档部分是"必须结构化"的（如 frontmatter、章节标题、元数据），哪些是"自由发挥"的（如分析内容、经验描述、代码实现）
 
 3. **"内容即营销"理念在文档体系中的应用**：md2card 通过"用户用产品制作的内容本身就是活广告"实现零成本获客。对应到 SpecWeave：
@@ -246,7 +246,7 @@ SpecWeave 的关键规范依据：
 1. **过度结构化确实可能束缚创造力**：md2card 反对"先选模板再填内容"有其道理——如果模板过于僵化，创作者会花大量时间"填模板"而非"思考内容"。SpecWeave 需要警惕：
    - 模板过于复杂导致智能体花更多精力"符合格式"而非"解决问题"
    - 检查清单过长导致执行成本过高，反而诱发绕过规范的行为
-   - 元文档优先原则（[.agents/global-core-rules.md:23](../../../../.agents/global-core-rules.md#L23)）已经意识到入口文档要精简（>100行优先精简），可以将这一原则扩展到所有模板设计
+   - 元文档优先原则（[.agents/global-core-rules.md:23](../../../../../../.agents/global-core-rules.md#L23)）已经意识到入口文档要精简（>100行优先精简），可以将这一原则扩展到所有模板设计
 
 2. **"一键自动化"有其适用边界**：md2card 能一键转换是因为 Markdown→卡片的转换规则相对明确。SpecWeave 的很多文档（如复盘报告、技术方案、角色定义）涉及深度思考和创造性分析，无法完全自动化：
    - 可以自动化的：格式校验、链接检查、索引生成、frontmatter 生成、目录结构检查

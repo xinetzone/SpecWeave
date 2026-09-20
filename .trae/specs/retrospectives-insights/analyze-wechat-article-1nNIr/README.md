@@ -6,7 +6,7 @@
 
 | 文件 | 说明 |
 |---|---|
-| [analysis-report.md](analysis-report.md) | **最终完整分析报告**，整合8个任务产出，结构完整、逻辑连贯，包含执行摘要、9大章节、所有关键数据表格、选型建议和可信度评估 |
+| [analysis-report.md](../../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-wechat-article-1nNIr/analysis-report.md) | **最终完整分析报告**，整合8个任务产出，结构完整、逻辑连贯，包含执行摘要、9大章节、所有关键数据表格、选型建议和可信度评估 |
 
 ---
 
@@ -14,14 +14,14 @@
 
 | 文件 | 对应任务 | 核心内容 |
 |---|---|---|
-| [task1-content-structure.md](task1-content-structure.md) | 任务1：内容结构化梳理 | 文章元信息表、章节结构划分、关键数值数据分类提取（模型参数、价格、测试数据、百分比、时间、任务排名）、作者核心判断标记 |
-| [task2-methodology-analysis.md](task2-methodology-analysis.md) | 任务2：评测方法论解析 | "变量归一"评测原则深度解析、双维度评分体系（任务完成度+输出质量）、测试环境选择合理性、6场景能力覆盖矩阵、与传统基准测试的差异对比、方法论优势与局限性评估 |
-| [task3-scenarios-analysis.md](task3-scenarios-analysis.md) | 任务3：6场景深度分析 | 每个场景的任务目标、提示词要点、三模型表现详细对比、排名原因深度解析、关键细节数据、关键观察与启示，含6场景综合胜场统计和能力总评 |
-| [task4-capability-matrix.md](task4-capability-matrix.md) | 任务4：能力矩阵对比 | 11维度五星评分能力矩阵表、各模型核心优势领域深度分析、各模型明显短板分析、模型定位与适用场景总结、5大关键发现（胜场统计、Hy3黑马、反直觉洞察等） |
-| [task5-core-insights.md](task5-core-insights.md) | 任务5：核心观点提炼 | Coding能力综合结论、Agentic能力三大颠覆性发现、写作能力颠覆性结论、价格与开源格局、5个反直觉关键发现汇总、作者最终态度总结 |
-| [task6-market-trends.md](task6-market-trends.md) | 任务6：趋势洞察分析 | "全球开源模型看中国"三大硬核依据、"价格战+开源"双轮驱动格局、从"通用大模型"到"场景专用模型"趋势、Agent能力竞争焦点分析、VLM多模态成为下一战场、差异化竞争格局分析、五大趋势总结、给不同角色的行动建议 |
-| [task7-model-recommendations.md](task7-model-recommendations.md) | 任务7：选型建议 | 8大常见场景模型推荐表（首选/备选/避坑）、Hy3性价比分析与适用场景、WorkBuddy两周免费期使用建议（P0/P1/P2优先级）、快速选型决策表、"Hy3打底+专才精修"多模型组合工作流（前端/分析/写作/Agent四大流水线）、日常快速决策口诀 |
-| [task8-reliability-assessment.md](task8-reliability-assessment.md) | 任务8：可信度评估 | 7大可信度优势分析、7大客观局限性认知、结论可信度三级分级（🔴高/🟡中/🟢低）、理想横评v2版本改进建议、参考边界与使用建议 |
+| [task1-content-structure.md](../../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-wechat-article-1nNIr/task1-content-structure.md) | 任务1：内容结构化梳理 | 文章元信息表、章节结构划分、关键数值数据分类提取（模型参数、价格、测试数据、百分比、时间、任务排名）、作者核心判断标记 |
+| [task2-methodology-analysis.md](../../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-wechat-article-1nNIr/task2-methodology-analysis.md) | 任务2：评测方法论解析 | "变量归一"评测原则深度解析、双维度评分体系（任务完成度+输出质量）、测试环境选择合理性、6场景能力覆盖矩阵、与传统基准测试的差异对比、方法论优势与局限性评估 |
+| [task3-scenarios-analysis.md](../../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-wechat-article-1nNIr/task3-scenarios-analysis.md) | 任务3：6场景深度分析 | 每个场景的任务目标、提示词要点、三模型表现详细对比、排名原因深度解析、关键细节数据、关键观察与启示，含6场景综合胜场统计和能力总评 |
+| [task4-capability-matrix.md](../../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-wechat-article-1nNIr/task4-capability-matrix.md) | 任务4：能力矩阵对比 | 11维度五星评分能力矩阵表、各模型核心优势领域深度分析、各模型明显短板分析、模型定位与适用场景总结、5大关键发现（胜场统计、Hy3黑马、反直觉洞察等） |
+| [task5-core-insights.md](../../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-wechat-article-1nNIr/task5-core-insights.md) | 任务5：核心观点提炼 | Coding能力综合结论、Agentic能力三大颠覆性发现、写作能力颠覆性结论、价格与开源格局、5个反直觉关键发现汇总、作者最终态度总结 |
+| [task6-market-trends.md](../../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-wechat-article-1nNIr/task6-market-trends.md) | 任务6：趋势洞察分析 | "全球开源模型看中国"三大硬核依据、"价格战+开源"双轮驱动格局、从"通用大模型"到"场景专用模型"趋势、Agent能力竞争焦点分析、VLM多模态成为下一战场、差异化竞争格局分析、五大趋势总结、给不同角色的行动建议 |
+| [task7-model-recommendations.md](../../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-wechat-article-1nNIr/task7-model-recommendations.md) | 任务7：选型建议 | 8大常见场景模型推荐表（首选/备选/避坑）、Hy3性价比分析与适用场景、WorkBuddy两周免费期使用建议（P0/P1/P2优先级）、快速选型决策表、"Hy3打底+专才精修"多模型组合工作流（前端/分析/写作/Agent四大流水线）、日常快速决策口诀 |
+| [task8-reliability-assessment.md](../../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-wechat-article-1nNIr/task8-reliability-assessment.md) | 任务8：可信度评估 | 7大可信度优势分析、7大客观局限性认知、结论可信度三级分级（🔴高/🟡中/🟢低）、理想横评v2版本改进建议、参考边界与使用建议 |
 
 ---
 
@@ -29,7 +29,7 @@
 
 | 文件 | 说明 |
 |---|---|
-| [article-content.md](article-content.md) | 微信文章原文完整内容 |
+| [article-content.md](../../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-wechat-article-1nNIr/article-content.md) | 微信文章原文完整内容 |
 | [spec.md](spec.md) | 本次分析任务的规格说明文档 |
 | [tasks.md](tasks.md) | 任务分解与执行计划 |
 | [checklist.md](checklist.md) | 分析过程检查清单 |
@@ -57,7 +57,7 @@
 
 ## 📖 如何使用本报告
 
-1. **快速了解结论**：直接阅读 [analysis-report.md](analysis-report.md) 的「执行摘要」
+1. **快速了解结论**：直接阅读 [analysis-report.md](../../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-wechat-article-1nNIr/analysis-report.md) 的「执行摘要」
 2. **按场景选模型**：阅读报告第七章「分场景模型选型实践指南」，内含快速决策口诀和组合工作流建议
 3. **理解评测方法**：阅读第二章「评测方法论解析」，了解为什么本次横评可信度较高
 4. **注意参考边界**：阅读第八章「评测可信度评估与参考边界」，高可信度结论可直接参考，中低可信度请自行验证
