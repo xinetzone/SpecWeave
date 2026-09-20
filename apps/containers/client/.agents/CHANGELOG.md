@@ -46,7 +46,7 @@ tests/test_tasks_surface.py -q` **142 passed / 1 skipped**（1 例
 排障表 `REMOTE HOST IDENTIFICATION` 行改写为「已根治 + 剩余三情形甄别」；
 [overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md) 命令表/持久化块/
 调试工作流三处同步；[AGENTS.md](../AGENTS.md) 变更日志同步。
-提交 `fix(client)` = （待回填）。
+提交 `fix(client)` = `8ac12f7db`、`docs(client)` = `b0156c310`。
 
 ### 2026-09-20 · `fix:` WSL2 GPU 透传补齐两条宿主依赖（`libdxcore.so` + `/usr/lib/wsl/drivers`）
 
