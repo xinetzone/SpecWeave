@@ -6,6 +6,75 @@
 
 ## [Unreleased]
 
+### 2026-09-20 · `feat:` up 横幅回读容器内生成的 SSH 密码与 Jupyter token（C24）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session `sc-20260920-up-credentials`）。
+
+**I 洞察（四元组）**：**现象**——`invoke xmnn.up --gpu` 成功后，用户看不到 SSH
+密码，也看不到 Jupyter token（除非 `.env` 预设过），且执行完 `.env` 仍未见更新，
+据此怀疑「凭证丢失 / 配置未生效」。**根因**——`.env` 的 `USER_PASSWORD` /
+`JUPYTER_TOKEN` 留空是**设计上的常态**：两键经 `_shared/base-rootless.yaml` 以
+`${KEY:-}` 空串透传进容器，由基底 entrypoint 在**容器内**用 `pwgen` 生成，并
+**只打印到容器启动日志**；`up` 横幅原样转发 `.env` 值，自然只能拿到空串（且
+`.env` 在 overlay 路径是**单向只读**：`_load_env_overrides` 只做
+`.env → os.environ`，内核全程无写 `.env` 代码）。**第二重成因**——即便用户去查
+日志，`invoke xmnn.logs` 恒带 `--tail=100` 只看**尾部**，而凭证横幅位于启动日志
+**头部**，容器启动日志较长时横幅早已被挤出窗口，于是「容器里明明打印过」也变成
+「哪里都看不到」。**影响**——用户被迫在「找不到凭证」与「怀疑工具没读 .env」之间
+反复试错，实际只是**信息可见性**缺口，非功能缺失。**建议**——把既有信息在正确的
+位置（`up` 收尾横幅）以只读回读的方式呈现，同时消除 tail 窗口的误导。
+
+**F 第一性原理（凭证可见性的必要条件链）**：凭证要在 `up` 横幅可见，必须满足
+① 值在某处**已存在**（预设或容器内生成）→ ② `up` 能**读到**它 → ③ 读到后**打印**。
+留空场景下 ① 在容器启动日志里已成立，断点在 ②：横幅的数据源只接了 `.env`
+（空串），未接「容器运行态」。故最小改动是把数据源从「`.env` 单源」扩为
+「`.env` 优先、空则回读容器日志」，**不需要**也不应该改写 `.env`——因为凭证
+生成责任已显式留在基底 entrypoint，overlay 若回写 .env 就等于制造第二处事实源，
+并让「凭证是随机的、只在本机」这一契约被静默改写。
+
+**V 对抗审查（四视角）**：① **魔鬼代言人**——"直接让 `up` 把生成的凭证写回
+`.env` 不就好了"：**否决**——会引入第二处凭证事实源并与 entrypoint 的
+`-z` 判定打架（写回后下次启动即变「预设」，日志不再打印随机值横幅），且 overlay
+路径一直以「单向只读 .env」为契约，写回属越界；② **新人**——"`parse` 时按
+`password:` 匹配就够了"：**否决**——`ALLOW_ROOT_SSH=yes` 时日志里先出现
+`Root password:` 行，会把 root 密码误报成开发用户密码，故必须用
+`SSH login:` 行取到的用户名**反查**；③ **老板**——"既然日志里有，文档写清楚让
+用户自己去查就行"：**否决**——`invoke <ns>.logs` 的 `--tail=100` 会让横幅经常
+不在窗口内，纯文档方案等于把「找不到」留给用户（V 阶段同时**采纳**其合理内核：
+把 tail 窗口陷阱写进文档）；④ **未来**——"回读失败会不会把 up 搞挂"：**采纳**——
+回读全程 `warn=True` 且失败静默降级为空三元组，不打印即不阻断，up 主流程零风险。
+
+**A 原子化实现**：① `overlay_core.py` —— 新增 `parse_container_credentials`
+（纯函数，主机零接触、可单测）与 `read_container_credentials`（I/O 包装，按
+PROJECT/SERVICE 标签定位容器后 `podman logs <cid> 2>&1 | head -n 300`）；正则
+`_CRED_SSH_LOGIN_RE` / `_CRED_TOKEN_RE` 与窗口常量 `_CRED_LOG_HEAD_LINES = 300`
+就地声明并注明「勿改回 tail」的理由；`up_stack` 横幅改为回读后再打印
+`密码    <user> / <password>（容器内自动生成，仅本机开发）`，并把「直达」行的
+token 源改为 `回读值 or .env`（预设时二者同源，行为不变）；内核通用、四栈同构。
+
+**验收点**：① `tests/test_overlay_core.py` 新增 8 例：解析四类边界（完整横幅 /
+`Root password` 不得误命中 / 空输入与纯空白 / 仅 SSH 行无 token）+ 横幅两分支
+（有回读 → 打印密码行与直达 URL；无回读 → 两行皆不打印）；②
+`pytest tests/test_overlay_core.py -q`（py314）→ **103 passed / 1 skipped**；
+③ 全量 `pytest tests -q`（py314）→ **238 passed / 2 skipped / 8 failed**，8 例
+失败全部为 `test_ast_inject.py`（依赖 bash 的既有 Windows 原生环境差异，非本次
+回归）；④ `py_compile` 两文件零告警；⑤ `check-links.py --path apps/containers/client`
+无断链（7 条既有目录链接警告与本条无关）。
+
+> **范围（已知未覆盖）**：本条只解决**可见性**——`up` 期间容器确在运行时回读并
+> 打印。容器未运行（如 `skip_build` 且栈已被 down）或该容器是 C24 之前启动的
+> 历史容器时，横幅仍不显示凭证，此时按文档查日志或用 `podman logs <cid> | head
+> -n 300`。`.env` 仍**不回写**（既定契约，非缺陷）；`invoke <ns>.logs` 的
+> `--tail=100` 未改动（其语义是跟踪新日志，不适合回看启动横幅）。
+
+**C 同步**：代码 + 测试提交 `feat(client)` = `257d694fa`
+（`src/jpman_client/tasks/overlay_core.py` / `tests/test_overlay_core.py`）；
+文档提交 `docs(client)` = （待回填）（
+[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §6 C24、
+[docs/11-xmnn-overlay.md](../docs/11-xmnn-overlay.md) 凭证段、
+[overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)、
+[AGENTS.md](../AGENTS.md) P0 C24 + 变更日志、本文件）。
+
 ### 2026-09-20 · `fix:` `up --gpu` 每次都被判「另一控制平面创建」而强制重建栈（C23）
 
 > 编号说明：本条初版曾占用 C22，与同日已先入库的 C22（容器重建轮换 Jupyter cookie

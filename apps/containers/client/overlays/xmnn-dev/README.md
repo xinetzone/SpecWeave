@@ -91,6 +91,11 @@ invoke xmnn.down --volumes               # 连 xmnn-ccache、xmnn-jupyter 命名
 | JupyterLab | http://localhost:8890 | `JUPYTER_TOKEN`（留空则自动生成）；内核选 **Python 3.14 (xmnn dev)**；`invoke xmnn.up` 横幅会打印带 token 的「直达」URL，免登录 |
 | SSH | `ssh -p 2223 devuser@localhost` | `USER_PASSWORD`（留空自动生成） |
 
+> **看不到凭证？** 两个变量留空时，密码/token 由容器内 entrypoint 生成、只进
+> 容器启动日志；`invoke xmnn.up` 收尾会从日志**头部**回读并打印
+> `密码 devuser / <值>` 与带 token 的「直达」URL（C24）。回读只读容器状态，
+> **不会回写 `.env`**。
+
 > **登录态持久化**：Jupyter cookie/notebook 签名密钥存于命名卷 `xmnn-jupyter`
 > （容器内 `/home/devuser/.local/share/jupyter`），普通 `down/up` 重建容器后
 > 浏览器无需重新登录；仅 `down --volumes` 才会清除（清除后重新登录属预期）。

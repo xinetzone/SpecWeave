@@ -218,10 +218,23 @@
   environment、`labels.component`；`xmnn-ccache`/`xmnn-jupyter` 两个命名卷
   等栈专属卷保持栈内声明（基文件无 volumes/build/env_file/ports）。extends
   合并语义（rec_merge / L2844-L2849 路径解析）见 [quant-overlay.md](quant-overlay.md) §4.1。
+- up 成功横幅**回读容器内实际凭证并打印**（C24，2026-09-20）：`.env` 凭证键
+  留空为常态，密码/token 此时由容器内 entrypoint 用 `pwgen` 生成、**只进容器
+  启动日志**，故 `up` 收尾从容器日志**头部**回读（`podman logs <cid> | head
+  -n 300`，勿用 `--tail`——横幅在头部，`invoke <ns>.logs` 默认 `--tail=100`
+  只看尾部，正因如此才会「看不到凭证」）解析出密码行与 token，打印
+  `密码    <user> / <password>` 并用回读 token 构造「直达」行。**`.env` 全程
+  只读、不回写**（凭证生成责任留在基底 entrypoint，overlay 内核不得写 .env）。
+  内核通用实现 `overlay_core.read_container_credentials` /
+  `parse_container_credentials`（四栈同构，解析纯函数可单测）；密码必须用
+  `SSH login:` 行取到的用户名反查对应 password 行——只按 `password:` 匹配会先
+  命中 `Root password:`（`ALLOW_ROOT_SSH=yes` 时存在）而误报 root 密码。
+  回读失败（容器未跑/日志无横幅）静默降级为不打印，绝不阻断 up。
 - up 成功横幅在配置了 `JUPYTER_TOKEN` 时额外打印「直达」行
   （`http://localhost:<jupyter 端口>/lab?token=...`，内核通用 helper
   `overlay_core.jupyter_direct_url`，四栈同构；token 为空不打印），
-  使容器重建后免登录直达，与 C22 共同消除重建即重登体验。
+  使容器重建后免登录直达，与 C22 共同消除重建即重登体验；token 亦优先取
+  C24 回读值（预设时二者同源）。
 - 调试环境变量（PYTHONPATH/TVM_LIBRARY_PATH/LD_LIBRARY_PATH/NPU_TOOLS_ROOT/
   XMNN_TOOLS_ROOT）经 compose environment 注入；LD_LIBRARY_PATH 必须含
   npu_tvm/build、build/vta 与 /opt/conda/envs/main/lib（非登录 exec 不读

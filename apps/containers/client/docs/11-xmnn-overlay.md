@@ -46,8 +46,8 @@ invoke xmnn.down                       # 停止清理（ccache/Jupyter 登录态
   `xmnn-ccache` 一并清除。修复前重建即轮换密钥，旧标签页 Terminal/notebook
   请求在浏览器侧被中止（服务端零日志），排障见
   [04 速查 C-I6](04-troubleshooting-guide.md)。同时 `invoke xmnn.up` 成功横幅
-  在配置了 `JUPYTER_TOKEN` 时打印「直达」URL（`/lab?token=...`，免登录，
-  token 勿外传；token 为空不打印）。
+  打印「直达」URL（`/lab?token=...`，免登录，token 勿外传）——token 取 `.env`
+  预设值，留空则**回读容器内自动生成值**（C24，见下文「凭证」段）。
 - **源码路径**：默认挂载仓库根 `external/chaos/{npu_tvm,npuusertools,models}`；
   可在 `.env` 用 `NPU_TVM_PATH` / `NPUUSERTOOLS_PATH` / `MODELS_PATH`
   覆盖（invoke 路径做存在性硬校验）。TVM 全量编译在 9p 上较慢，可把路径
@@ -106,15 +106,31 @@ listen 需数十秒（实测 66s）。窗口期内打开浏览器会得到 `ERR_
 | JupyterLab | http://localhost:8890 | `JUPYTER_TOKEN`（留空自动生成 32 位） |
 | SSH | `ssh -p 2223 devuser@localhost` | `USER_PASSWORD`（留空自动生成 16 位）；亦可设 `SSH_PUBLIC_KEY` 免密 |
 
-**自动生成的凭证只出现在容器启动日志横幅里，up 命令不回显**：
+**自动生成的凭证会由 `up` 横幅回读打印（C24）**：`.env` 的
+`USER_PASSWORD`/`JUPYTER_TOKEN` 留空时，值由容器内 entrypoint 用 `pwgen`
+生成并只写进**容器启动日志**，因此 `invoke xmnn.up` 收尾会从容器日志**头部**
+回读实际值并打印：
+
+```
+        密码    devuser / <自动生成的 16 位密码>
+        直达    http://localhost:8890/lab?token=<自动生成的 32 位 token>
+```
+
+`up` 横幅看不到（容器未运行、或该容器是 C24 之前启动的）时再查日志：
 
 ```bash
 invoke xmnn.logs   # 找「[IMPORTANT] devuser password: ...」与「Token: ...」
                    # Ctrl+C 仅退出日志跟踪，不影响容器运行
 ```
 
+> `invoke xmnn.logs` 默认 `--tail=100` 只看日志**尾部**，而凭证横幅位于启动
+> 日志**头部**——长启动日志下横幅已被挤出窗口，这也是「看不到凭证」的常见
+> 原因；`up` 的回读因此固定从头部取 300 行。若非要在 logs 里找，可
+> `podman logs <容器> | head -n 300`。
+
 已在 `.env` 预设凭证时，直接用预设值登录（日志不再打印随机值横幅）；
-此时 `invoke xmnn.up` 横幅会打印带 token 的「直达」URL，点开即免登录。
+此时 `invoke xmnn.up` 横幅同样会打印带 token 的「直达」URL，点开即免登录。
+回读只读取容器运行时状态，**不会回写 `.env`**。
 
 > 普通 `down/up` 重建不影响登录态（`xmnn-jupyter` 命名卷持久化，C22）；
 > 若执行过 `down --volumes` 或升级到 C22 之前的版本，旧标签页会被踢回登录，
