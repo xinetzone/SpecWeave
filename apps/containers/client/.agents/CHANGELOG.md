@@ -65,11 +65,12 @@ wsl.exe 自身诊断走 UTF-16LE，被捕获命令输出走 UTF-8，按前 64 �
 > 仍是唯一覆盖入口）。VM 层不可用态的成因（本次为长会话后 WSL 虚拟机进入异常态）
 > 未做深挖，属宿主侧问题。
 
-**C 同步**：代码 + 测试提交 `fix(client)`（`utils.py`/`overlay_core.py`/
+**C 同步**：代码 + 测试提交 `fix(client)` = `8b2ac964e`（`utils.py`/`overlay_core.py`/
 `tests/test_wsl_bridge.py`/`tests/test_overlay_core.py`，4 文件，预防措施
-`[prevent: wsl-probe-stderr-diagnosis]`）；文档提交 `docs(client)`
+`[prevent: wsl-probe-stderr-diagnosis]`）；文档提交 `docs(client)` = `586e44807`
 （[rules/windows-wsl.md](rules/windows-wsl.md) §8 第 3 条、`docs/04-troubleshooting-guide.md`
-W-I17、`docs/03`/`docs/README.md` 速查表范围、本文件）。
+W-I17、`docs/03`/`docs/README.md` 速查表范围、本文件）；本条 hash 回填为第三条
+`docs(client)` 提交。
 
 ### 2026-09-20 · `fix:` `inv xmnn.up --gpu` 在 WSL2 失败——设备运行期门禁 + 自动探测 + 驱动库挂载（C19）
 
