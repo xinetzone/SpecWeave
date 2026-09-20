@@ -48,6 +48,7 @@ class FakeRunner:
         host_alive: bool = True,
         paths: set[str] | None = None,
         cdi: bool = False,
+        container_logs: str = "",
     ):
         self.calls: list[tuple[str, dict]] = []
         self.running = running
@@ -57,6 +58,9 @@ class FakeRunner:
         self.config_files = config_files
         self.live_ps = live_ps
         self.conmon_ps = conmon_ps
+        # C24：容器启动日志（凭证回读源）。默认空串 → 回读解析不到任何凭证，
+        # 横幅不增行，既有用例（未声明 running/logs）语义不变。
+        self.container_logs = container_logs
         # daemon 报的容器 init PID（inspect State.Pid）与其宿主存活状态；
         # running=True 时默认真活体，假 Up 用例自行设置 init_pid 但 host_alive=False
         self.init_pid = init_pid
@@ -96,6 +100,9 @@ class FakeRunner:
             return SimpleNamespace(ok=self.image_exists, stdout="", return_code=0 if self.image_exists else 1)
         if "ss -ltnp" in cmd:
             return SimpleNamespace(ok=True, stdout=self.ss_output, return_code=0)
+        if " logs " in cmd:
+            # C24：凭证回读（podman logs <cid> 2>&1 | head -n N）
+            return SimpleNamespace(ok=True, stdout=self.container_logs, return_code=0)
         if "inspect" in cmd:
             if "State.Pid" in cmd:
                 return SimpleNamespace(
@@ -188,6 +195,55 @@ def test_jupyter_direct_url_strips_whitespace():
 @pytest.mark.parametrize("empty", ["", "   ", None])
 def test_jupyter_direct_url_without_token_returns_empty(empty):
     assert oc.jupyter_direct_url("8890", empty) == ""
+
+
+# ---------------------------------------------------------------------------
+# C24：容器日志凭证解析（.env 留空 → 密码/token 只进启动日志）
+# ---------------------------------------------------------------------------
+
+_CRED_BANNER = """
+[2026-09-20 10:00:00] [WARN]  USER_PASSWORD not set, generated random password for devuser
+
+    ************************************************
+    * [IMPORTANT] devuser password: S3cretPw16
+    * SSH login: ssh devuser@<host> -p 22
+    ************************************************
+
+    Jupyter Server is running at:
+    http://localhost:8888/lab?token=deadbeefdeadbeefdeadbeefdeadbeef
+    Token: deadbeefdeadbeefdeadbeefdeadbeef
+"""
+
+
+def test_parse_credentials_from_entrypoint_banner():
+    assert oc.parse_container_credentials(_CRED_BANNER) == (
+        "devuser",
+        "S3cretPw16",
+        "deadbeefdeadbeefdeadbeefdeadbeef",
+    )
+
+
+def test_parse_credentials_never_misreads_root_password():
+    """只按 `password:` 匹配会先命中 Root password 行——必须用 SSH login 用户名反查。"""
+    log = (
+        "    * [IMPORTANT] Root password:      rootPw16\n"
+        "    * SSH login: ssh devuser@<host> -p 22\n"
+    )
+    user, password, _ = oc.parse_container_credentials(log)
+    assert user == "devuser"
+    assert password == ""  # 不得把 root 密码当成 devuser 密码
+
+
+@pytest.mark.parametrize("text", ["", "   ", None])
+def test_parse_credentials_empty_or_no_banner(text):
+    assert oc.parse_container_credentials(text) == ("", "", "")
+
+
+def test_parse_credentials_ssh_only_has_no_token():
+    user, password, token = oc.parse_container_credentials(
+        "    * SSH login: ssh devuser@<host> -p 22\n"
+    )
+    assert (user, password, token) == ("devuser", "", "")
 
 
 # ---------------------------------------------------------------------------
@@ -1184,6 +1240,31 @@ def test_up_ready_timeout_warns_without_failing(harness, monkeypatch, capsys):
     assert "⚠ Jupyter 未在 120s 内应答" in out
     assert f"invoke {_XMNN.namespace}.logs" in out
     assert "Jupyter localhost:8890" in out  # URL 仍给出，供用户稍后刷新
+
+
+# ---------------------------------------------------------------------------
+# C24：up 横幅回读容器内生成的凭证
+# ---------------------------------------------------------------------------
+
+
+def test_up_banner_prints_readback_credentials(harness, monkeypatch, capsys):
+    """密码与直达 URL 取自**容器日志回读**，而非留空的 .env（本轮问题根因）。"""
+    monkeypatch.setattr(oc, "_running_project_container", lambda c, s: "cid")
+    monkeypatch.delenv("JUPYTER_TOKEN", raising=False)
+    harness.runner.container_logs = _CRED_BANNER
+    oc.up_stack(None, _XMNN, skip_build=True)
+    out = capsys.readouterr().out
+    assert "密码    devuser / S3cretPw16" in out
+    assert "直达    http://localhost:8890/lab?token=deadbeefdeadbeefdeadbeefdeadbeef" in out
+
+
+def test_up_banner_omits_credentials_when_unreadable(harness, monkeypatch, capsys):
+    """回读不到（容器未跑 / 日志无横幅）时静默降级：不增行、不报错。"""
+    monkeypatch.delenv("JUPYTER_TOKEN", raising=False)
+    oc.up_stack(None, _XMNN, skip_build=True)
+    out = capsys.readouterr().out
+    assert "密码" not in out
+    assert "直达" not in out
 
 
 # ---------------------------------------------------------------------------

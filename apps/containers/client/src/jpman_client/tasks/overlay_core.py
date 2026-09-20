@@ -370,6 +370,58 @@ def jupyter_direct_url(port: str, token: str) -> str:
     return f"http://localhost:{port}/lab?token={token}" if token else ""
 
 
+# entrypoint 凭证横幅（jupyter-podman-rootless/entrypoint.sh 的 setup_passwords /
+# print_access_info）：密码行形如 `* [IMPORTANT] devuser password: <pw>`，token 行
+# 形如 `    Token: <tok>`。.env 凭证键留空时二者由容器内 pwgen 生成、**只打印到
+# 容器启动日志**，故 up 收尾须从容器日志回读（overlay 内核不回写 .env）。
+_CRED_SSH_LOGIN_RE = re.compile(r"SSH login:\s*ssh\s+(?P<user>\S+?)@")
+_CRED_TOKEN_RE = re.compile(r"^\s*Token:\s*(?P<token>\S+)\s*$", re.MULTILINE)
+# 回读窗口从**日志头部**取：`invoke <ns>.logs` 默认 `--tail=100` 只看尾部，启动
+# 日志较长时凭证横幅已被挤出窗口——这是「看不到凭证」的第二重原因，勿改回 tail。
+_CRED_LOG_HEAD_LINES = 300
+
+
+def parse_container_credentials(log_text: str) -> tuple[str, str, str]:
+    """从容器启动日志解析 ``(SSH 用户, 密码, Jupyter token)``（纯函数，可单测）。
+
+    密码**必须**用 ``SSH login:`` 行取到的用户名反查其 password 行：只按
+    ``password:`` 匹配会先命中 ``Root password:``（ALLOW_ROOT_SSH=yes 时存在），
+    把 root 密码误报成用户密码。任一项解析不到即返回空串，调用方静默降级。
+    """
+    text = log_text or ""
+    m = _CRED_SSH_LOGIN_RE.search(text)
+    user = m.group("user") if m else ""
+    password = ""
+    if user:
+        pw = re.search(rf"\[IMPORTANT\]\s+{re.escape(user)} password:\s*(?P<pw>\S+)", text)
+        password = pw.group("pw") if pw else ""
+    tok = _CRED_TOKEN_RE.search(text)
+    return user, password, tok.group("token") if tok else ""
+
+
+def read_container_credentials(c: Context, spec: StackSpec) -> tuple[str, str, str]:
+    """从运行中的容器回读 entrypoint 实际生成的凭证（I/O 包装）。
+
+    .env 凭证键留空时密码/token 在容器内生成且只进启动日志，up 横幅若只转发
+    .env 便只能看到空串——故按 PROJECT/SERVICE 标签定位容器、读其启动日志头部
+    解析（见 :func:`parse_container_credentials`）。任一环节失败（容器未跑、
+    日志不可读）静默返回空三元组，绝不阻断 up 主流程。
+    """
+    cid = _running_project_container(c, spec)
+    if not cid:
+        return "", "", ""
+    r = run_cmd(
+        c,
+        f"{detect_runtime()} logs {cid} 2>&1 | head -n {_CRED_LOG_HEAD_LINES}",
+        hide=True,
+        warn=True,
+        echo=False,
+    )
+    if r is None or not getattr(r, "ok", False):
+        return "", "", ""
+    return parse_container_credentials(r.stdout or "")
+
+
 def resolve_build_args(
     spec: StackSpec,
     env: dict,
@@ -1288,7 +1340,15 @@ def up_stack(
     if spec.jupyter_banner_note:
         jupyter_line = f"{jupyter_line}{spec.jupyter_banner_note}"
     print(jupyter_line)
-    direct_url = jupyter_direct_url(jupyter, env.get("JUPYTER_TOKEN", ""))
+    # 凭证回读：.env 留空时密码/token 由容器内 entrypoint 生成、只进启动日志，
+    # 直接读 .env 只会拿到空串（本轮问题根因）——故从容器日志头部回读实际值。
+    cred_user, cred_password, cred_token = read_container_credentials(c, spec)
+    if cred_password:
+        print(
+            f"        密码    {cred_user} / {cred_password}"
+            f"（容器内自动生成，仅本机开发）"
+        )
+    direct_url = jupyter_direct_url(jupyter, cred_token or env.get("JUPYTER_TOKEN", ""))
     if direct_url:
         print(f"        直达    {direct_url}（免登录，token 勿外传）")
     if ready:
