@@ -83,7 +83,8 @@ Jupyter `!nvcc -V` 与 exec 同 PATH（`/usr/local/bin` 在镜像默认 PATH）�
 [AGENTS.md](../AGENTS.md) C18 ② 与新增 **C25**、
 [docs/11](../docs/11-xmnn-overlay.md)、[docs/04](../docs/04-troubleshooting-guide.md)
 新增 **C-I7**、[overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)、
-[.env.example](../.env.example)。提交 `fix(client)` = `<待回填>`。
+[.env.example](../.env.example)。提交 `fix(client)` = `1cd53ab48`、
+`docs(client)` = `10f633d64`。
 
 ### 2026-09-20 · `fix:` 三内部栈补齐 SSH host key 命名卷（quant / monetize / xmnnrt）
 
