@@ -6,6 +6,71 @@
 
 ## [Unreleased]
 
+### 2026-09-20 · `fix:` WSL 桥接探测吞掉 stderr——门禁给出「看似健康」的死胡同指引（W-I17）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session `sc-20260920-wsl-probe-stderr`）。
+
+**I 洞察（四元组）**：**现象**——Windows 原生 `inv xmnn.build --torch cu130` 打印
+「Windows 原生 CPython 不支持 podman-compose 编排路径……且**未能自动桥接至 WSL
+发行版**」门禁块，但 `wsl -l -v` 明示 `podman-machine-default` **Running**，发行版内
+**任何**命令都不可执行；**根因**——WSL2 虚拟机处于 VM 层不可用态（实测
+`wsl.exe -d podman-machine-default -- true` 返回 **11**，stderr
+`<3>WSL (...) ERROR: CreateProcessCommon:813: execvpe(/bin/true) failed: I/O error`），
+而 `_wsl_distro_available()` 只用 `returncode` 判真伪、**把这条 stderr 丢掉了**；
+**影响**——门禁只能提示「WSL 发行版可启动（`wsl --list --verbose`）/ 设置
+`COMPOSE_WSL_DISTRO` / 重装 client 依赖」三件**都与本因无关**的事，用户照着核对得到
+"Running"，反而更难定位；**建议**——诊断类探测**不得吞掉被探测进程的错误输出**，
+「存在但不可用」必须与「不存在」在提示层可区分。
+
+**F 第一性原理**：① 探测的目的是**给出可行动的下一步**，不是"返回 True/False"——
+布尔投影在失败路径上丢弃了唯一有用的信息（失败原因），是**信息降级**而非抽象；
+② "发行版存在"与"发行版可执行"是两个独立事实，`wsl -l -v` 只回答前者，把
+后者交由它回答必然误导；③ 失败处置有**唯一正确解**——VM 层不可用态只能靠
+`wsl --shutdown` 重置虚拟机，这条非显然的补救必须能被**非专家的用户**看到，
+否则等于把排障成本外包给搜索引擎。
+
+**V 对抗审查（四视角）**：① **魔鬼代言人**——"探测失败就自动 `wsl --shutdown`
+不更省事"：**否决**，该命令关闭**全部**发行版进程，编排器擅自重置用户的 WSL
+虚拟机属越权破坏性动作，只能作为**提示**给出；② **新人**——"直接打印全部 stderr
+更清楚"：否决，wsl.exe 诊断含多行 relay/时间戳噪声，取**末条非空行**才是可读摘要；
+③ **老板**——"补个文档就行，代码不改"：否决，用户**已经在**终端看到了误导性
+提示，问题恰恰出在提示本身，文档不能替代运行时诊断；④ **未来**——"把失败原因
+缓存进模块级变量最省事"：否决，`_wsl_probe` 已 `lru_cache`，重算即缓存命中，
+无需引入全局可变状态（并发下更安全）。
+
+**A 原子化实现**：`utils.py` 把探测从 `_wsl_distro_available() -> bool` 升级为
+`_wsl_probe() -> tuple[bool, str]`（返回 `(可用, 失败原因)`，失败原因取 wsl.exe
+stderr 末行），新增 `_wsl_stderr_last_line()`（**UTF-16LE+BOM 与 UTF-8 自动判编码**：
+wsl.exe 自身诊断走 UTF-16LE，被捕获命令输出走 UTF-8，按前 64 字节是否含 NUL 区分）
+与 `wsl_bridge_diagnosis()`（非 Windows 或桥接可用返回空串，`COMPOSE_WSL_DISTRO=none`
+单独说明为「显式关闭」而非故障）；`_wsl_distro_available()` 保留为布尔投影
+（既有接线与打桩点零改动）。`overlay_core.gate_platform()` 门禁块首行打印实测原因
+并附 `wsl --shutdown` 逃生指引（无原因时不打印，避免噪音）。
+
+**验收点**：① 新用例 10 例——UTF-16LE 诊断原文透出、UTF-8 兜底、无 stderr 回退
+退出码、无 wsl.exe 不抛、布尔投影 + 缓存只探测一次、`none` 哨兵、非 Windows 空串、
+桥接可用空串、原因透出；门禁提示 2 例（带诊断时见原因 + `wsl --shutdown`，无诊断
+时两块均不出现）；② `pytest tests/test_wsl_bridge.py tests/test_overlay_core.py -q`
+→ **95 passed / 1 skipped**；③ 全量 `pytest tests -q --ignore=tests/test_ast_inject.py`
+→ **185 passed / 7 skipped / 1 failed**（唯一 failed 为 `test_vs_real_rec_merge_probes`
+的既有环境差异：WSL 内 PyPI `podman-compose 1.6.0` 与仓库 vendored 快照在
+`depends_on` list↔dict 归一化上不一致，本次改动前已存在，非回归）；④ **真机验证**：
+`wsl.exe -d podman-machine-default -- true` 修复前返回 11、`wsl --shutdown` 后返回 0，
+`inv xmnn.ps` 经 Windows 原生桥接执行成功（`✅ 已经 WSL 发行版 podman-machine-default
+桥接执行`），随后 `inv xmnn.build --torch cu130` 正常进入镜像构建并拉取
+`torch-2.14.0+cu130-cp314` wheel。
+
+> **范围（已知未覆盖）**：本修复只让**诊断可见**，不改动桥接目标选择与重试策略——
+> 探测失败仍一律门禁 Exit(1)，不做自动重置、不做多发行版轮询（`COMPOSE_WSL_DISTRO`
+> 仍是唯一覆盖入口）。VM 层不可用态的成因（本次为长会话后 WSL 虚拟机进入异常态）
+> 未做深挖，属宿主侧问题。
+
+**C 同步**：代码 + 测试提交 `fix(client)`（`utils.py`/`overlay_core.py`/
+`tests/test_wsl_bridge.py`/`tests/test_overlay_core.py`，4 文件，预防措施
+`[prevent: wsl-probe-stderr-diagnosis]`）；文档提交 `docs(client)`
+（[rules/windows-wsl.md](rules/windows-wsl.md) §8 第 3 条、`docs/04-troubleshooting-guide.md`
+W-I17、`docs/03`/`docs/README.md` 速查表范围、本文件）。
+
 ### 2026-09-20 · `fix:` `inv xmnn.up --gpu` 在 WSL2 失败——设备运行期门禁 + 自动探测 + 驱动库挂载（C19）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session `sc-20260920-xmnn-up-gpu-fix`）。

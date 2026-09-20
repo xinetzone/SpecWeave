@@ -170,4 +170,6 @@ invoke images
 2. **Linux 放行路径必须先调 `ensure_wsl_rootless_runtime()`**（`overlay_core.gate_platform` 已接线）。
    `/run/user/<uid>` 在 tmpfs 上，由 systemd-logind/pam 登录会话创建；VM 被 WSL 回收重启、会话未经 enterns 进入 systemd 命名空间时该目录不重建，rootless podman 任意命令报 `creating events dirs: mkdir /run/user/<uid>: permission denied`（exit 125）。该函数仅在 `/proc/version` 含 microsoft 时动作：XDG 为空且 `/mnt/wslg/runtime-dir` 可写则兜底（SOP 钦定值，**禁止把 XDG 改成 `/run/user/<uid>`**）；目录缺失则 `sudo -n mkdir/chown/chmod 700` 幂等重建，免密不可用仅警告不阻断（标准 systemd WSL 由 logind 管理，不越权）。
 
+3. **探测失败必须保留 wsl.exe 的 stderr（W-I17）**。`_wsl_probe()` 返回 `(可用, 失败原因)` 而非布尔——发行版「存在且 `wsl -l -v` 显示 Running，但 VM 层不可执行」（2026-09-20 实证：`wsl.exe -d <d> -- true` 返回 11，stderr `<3>WSL (...) ERROR: CreateProcessCommon:813: execvpe(/bin/true) failed: I/O error`）与「发行版不存在」的处置完全不同。吞掉 stderr 后门禁只能给出「检查发行版可启动 / `wsl -l -v`」这类**看似健康**的指引，用户按指引核对得到 Running 反而更难定位。`wsl_bridge_diagnosis()` 在门禁块首行原样打印该原因并附 `wsl --shutdown` 逃生指引；`_wsl_distro_available()` 仅是它的布尔投影（保留既有打桩点）。wsl.exe 自身诊断以 **UTF-16LE+BOM** 写 stderr，被捕获命令输出才是 UTF-8——解码须按 NUL 字节判编码（`_wsl_stderr_last_line`，由 test_wsl_bridge 锁定）。
+
 桥接子进程非 0 必须 `Exit(message, code=rc)`——invoke `Exit` 签名是 `(message, code=None)`，位置参数反序会使退出码恒为 1（由 test_wsl_bridge 锁定）。
