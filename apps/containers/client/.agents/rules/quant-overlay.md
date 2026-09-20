@@ -77,7 +77,10 @@ image/build/ports/volumes/栈 env/`labels.component`。字段映射保留备查
   bridge。
 - workspace 绑定一律**长语法** + `bind.create_host_path: true`（短语法在
   podman-compose 会无条件 `os.makedirs`，Windows/异常路径宿主残留事故的同源教训）。
-- GPU 默认不透传（默认隔离）；仅 `-f compose.gpu.yaml` 时叠加。
+- GPU 默认不透传（默认隔离）；仅 `up --gpu` 时叠加覆盖文件（C19，同
+  [xmnn-overlay.md](xmnn-overlay.md) §11.1——运行期探测设备/驱动库可用性后
+  按形态选 `compose.gpu.yaml` 或 `compose.gpu.wsl.yaml`，缺失 fail-fast，
+  不再把缺省 `/dev/dri` 直接丢给 podman 报 exit 125）。
 
 ## 4. 多文件深合并语义（GPU 覆盖写法依据）
 
@@ -87,9 +90,12 @@ image/build/ports/volumes/栈 env/`labels.component`。字段映射保留备查
 dict bind 不去重**——workspace 绑定全部用长语法（见 §3），故 override 中
 重声明同 target 会产生重复挂载，需人工避免，不能依赖合并器去重。
 
-> `compose.gpu.yaml` 只写新增设备（`/dev/dri:/dev/dri`），**禁止**重复 /dev/fuse；
-整体替换才用 `!override`，本栈无此需求。CDI 形态（nvidia.com/gpu=all）与
-/dev/dri 互斥，以注释给出，不默认启用。
+> `compose.gpu.yaml` 只写新增设备，**禁止**重复 /dev/fuse；设备项为**单条**
+> `${GPU_DEVICE:-/dev/dri}` 插值（`/` 开头=设备路径、否则=CDI 引用，见
+> [xmnn-overlay.md](xmnn-overlay.md) §11.1）——写成 `a:b` 两条并列必有一条
+> 非法（podman-compose 1.6.0 原样下传为 `--device <item>`，不做冒号拆分）。
+> 整体替换才用 `!override`，本栈无此需求；WSL2 形态见姊妹文件
+> `compose.gpu.wsl.yaml`（`/dev/dxg` + 挂 libcuda），**两者互斥不可同时加载**。
 
 ### 4.1 extends 服务级继承（base-rootless.yaml 合并语义）
 

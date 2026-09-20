@@ -58,15 +58,19 @@ invoke xmnn.down                       # 停止清理（ccache 卷默认保留�
   apt/mamba/pip 均需联网）。
 - **对 external/chaos/ai 零依赖**：打包脚本与元数据自包含于叠加层；
   外部源码树只读挂载，打包中的临时 AST 注入会无条件还原。
-- **GPU 与 torch 可选能力（C18，默认全关）**：① GPU —— 仅 `invoke xmnn.up --gpu`
-  才追加 `-f compose.gpu.yaml`，设备由 `GPU_DEVICE` 双形态决定（`/` 开头=宿主机
-  设备路径，否则=CDI 引用如 `nvidia.com/gpu=all`；未设回退 `/dev/dri`，与根
-  `invoke run --gpu` 同键同语义）；默认零设备透传。② torch —— 仅
+- **GPU 与 torch 可选能力（C18·C19，默认全关）**：① GPU —— 仅 `invoke xmnn.up --gpu`
+  才追加 GPU 覆盖文件，设备由 `GPU_DEVICE` 决定（`/` 开头=宿主机设备路径，否则=CDI
+  引用如 `nvidia.com/gpu=all`，与根 `invoke run --gpu` 同键同语义）；**未设/空时自动
+  探测** `/dev/dri → /dev/dxg`（C19，不再是「回退 `/dev/dri`」——WSL2 无 `/dev/dri`，
+  缺省直接透传会 `stat` 失败 exit 125）；探测/校验在 **podman 宿主侧**执行，失败
+  fail-fast 给中文指引。WSL2 形态自动改用 `compose.gpu.wsl.yaml`（`/dev/dxg` +
+  单文件挂载 `libcuda.so.1` 到标准搜索路径，**不设 `LD_LIBRARY_PATH`**）。② torch —— 仅
   `invoke xmnn.build --torch cpu|cu130`（或 `.env TORCH_FLAVOR=`）才在 base env
   `/opt/conda` 装 `torch==2.14.0`（白名单取值，索引 `download.pytorch.org/whl/<flavor>`；
   cu130 是当前唯一与 CPU 侧同 pin 的 CUDA 索引）；形态落 `/opt/xmnn-torch-flavor`，
   构建期守卫 §8 断言「声明 vs 实物」。flavor **不参与镜像 tag**，改后须重建镜像。
-  详细用法见 [overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md#gpu-与-torch-可选能力默认全关c18)。
+  详细用法见 [overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md#gpu-与-torch-可选能力默认全关c18)，
+  WSL2 实测矩阵与排障见 [04-troubleshooting-guide.md](04-troubleshooting-guide.md) W-I16。
 
 ## 启动后连接：Jupyter 与 SSH
 

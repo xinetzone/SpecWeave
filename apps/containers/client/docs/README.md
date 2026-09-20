@@ -26,7 +26,7 @@ source: "README.md"
 |------|------|
 | [02-invoke-reference.md](02-invoke-reference.md) | 命令速查：invoke 任务表、布尔三态契约、known_hosts 自动维护 |
 | [03-windows-wsl.md](03-windows-wsl.md) | Windows 11 × WSL2 支持：三种落地路径、连接优先级、逃生舱、A/B 维度分离 |
-| [04-troubleshooting-guide.md](04-troubleshooting-guide.md) | 30 秒修复速查表：Windows 原生坑 W-I1~W-I4 + 容器/运行时坑 C-I1~C-I5 |
+| [04-troubleshooting-guide.md](04-troubleshooting-guide.md) | 30 秒修复速查表：Windows/WSL 与栈侧语义坑 W-I1~W-I16 + 容器/运行时坑 C-I1~C-I5 |
 | [05-sdk-usage.md](05-sdk-usage.md) | 作为 SDK 使用（Python import） |
 | [06-run-discipline.md](06-run-discipline.md) | 内置纪律：rootless 三必需参数、运行身份 |
 | [07-environment-variables.md](07-environment-variables.md) | .env 配置完整清单：容器级、SDK 级、运行时透传 |

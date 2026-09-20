@@ -309,26 +309,69 @@
   且 `runner.commands == []` / 缺镜像 Exit / `up` 任务体参数存活 /
   `save`·`load` 仅离线栈生成），改动离线路径必须同步这组断言。
 
-## 11. 可选能力 opt-in（GPU / torch，2026-09-20 / C18）
+## 11. 可选能力 opt-in（GPU / torch，2026-09-20 / C18·C19）
 
 **总原则**：两项能力**默认全关**，不开时镜像体积、设备面与离线契约与改造前
-逐字等价（`up` 不加载 `compose.gpu.yaml`、`TORCH_FLAVOR` 为空不装 torch）。
+逐字等价（`up` 不加载 GPU 覆盖文件、`TORCH_FLAVOR` 为空不装 torch）。
 
 ### 11.1 GPU 透传（`up --gpu`）
 
-- 形态与 quant 栈一致：仅当 `--gpu` 时追加 `-f compose.gpu.yaml`（list 追加
+- 形态与 quant 栈一致：仅当 `--gpu` 时追加 `-f <覆盖文件>`（list 追加
   语义只写**新增**设备，不重复 `/dev/fuse`，见 [quant-overlay.md](quant-overlay.md) §4.1）。
 - **设备项只写一条** `${GPU_DEVICE:-/dev/dri}` 单 token 插值，**禁止**写成
   `a:b` 并列两条：podman-compose 1.6.0 把 devices 列表项**原样**下传为
   `--device <item>`（vendor `podman_compose.py` L1382-L1383，不做冒号拆分），
   两条并列时 CDI 形态必有一条非法。
 - `GPU_DEVICE` 双形态（与根 `invoke run --gpu` 同键同语义）：
-  ① 未设/空 → `/dev/dri`；② `/` 开头 → 宿主机设备路径；
-  ③ 其他 → CDI 引用（如 `nvidia.com/gpu=all`，宿主先
-  `nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`）。
-  裸设备路径 `--device /dev/dri` 与显式 `:/dev/dri` 映射等价。
+  ① `/` 开头 → 宿主机设备路径；② 其他 → CDI 引用（如 `nvidia.com/gpu=all`，
+  宿主先 `nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`）；
+  ③ **未设/空 → 自动探测**（不再是「默认 `/dev/dri`」，见下条）。
 - `GPU_DEVICE` 已列入 `bridge_env_keys`——WSL 桥接只透传环境变量、不转发
-  CLI 参数，遗漏会导致桥接后回退默认值。
+  CLI 参数，遗漏会导致桥接后回退自动探测。
+
+#### 11.1.1 运行期可用性门禁与自动探测（C19，2026-09-20）
+
+**背景**（W-I16 实测）：缺省 `GPU_DEVICE=/dev/dri` 在 WSL2 宿主**不存在**
+（`podman-machine-default` 只有 `/dev/dxg`），改造前的 `--gpu` 无任何预检，
+直接透传给 podman → `Error: stat /dev/dri: no such file or directory`，
+`podman-compose up` exit 125。故 **opt-in 能力必须自带运行期可用性门禁**。
+
+- 内核 `resolve_gpu_device(c, spec, env) -> (token, form)` 是唯一解析入口，
+  在 `up_stack()`/`smoke_stack()` 中 `gpu=True` 时才调用，返回的 `form`
+  决定覆盖文件（`gpu_override_file(spec, form)`）：
+  | `form` | 覆盖文件 | 触发条件 |
+  |---|---|---|
+  | `generic` | `compose.gpu.yaml` | `/dev/dri` 等 PCI 设备或 CDI 引用 |
+  | `wsl` | `compose.gpu.wsl.yaml`（存在时；否则回退 generic） | `/dev/dxg` |
+- **三态语义**：① 显式设备路径（`/` 开头）→ 经 `test -e` 校验存在性，缺失
+  fail-fast；② 显式 CDI 引用 → 校验 `/etc/cdi/*.yaml` 或 `/var/run/cdi/*.yaml`
+  已生成；③ 未设/空 → 按 `GPU_DEVICE_FORMS`（`/dev/dri` → `/dev/dxg`）
+  **顺序探测**，取首个存在者并**回写 `os.environ`**（`GPU_DEVICE`），
+  使 compose 插值与提示文案同源。
+- `wsl` 形态额外校验 `/usr/lib/wsl/lib/libcuda.so.1` 存在（驱动库在
+  `podman-machine-default` 内可见，实测见 11.1.2）；探测全失败时 **fail-fast
+  + 中文指引**，不再把非法路径丢给 podman 报 exit 125。
+- **设备探测必须经 run_cmd 在 podman 宿主侧执行**（`test -e`），禁止在本机
+  做 `Path.exists()`——Windows 原生编排时本机文件系统与 WSL 发行版不是同一
+  视图（与 C-I3 的「不做本机存在性判断」同源）。
+
+#### 11.1.2 WSL2 形态的驱动库挂载（实测矩阵，2026-09-20）
+
+`podman-machine-default`（WSL2 后端）内实测四组对照，**只有第三组可用**：
+
+| 配置 | `CDLL("libcuda.so.1")` |
+|---|---|
+| 无任何设备/库 | 失败（库不存在） |
+| 仅 `--device /dev/dxg` | 失败（缺 `libcuda.so.1`） |
+| **`--device /dev/dxg` + 单文件挂载 `/usr/lib/wsl/lib/libcuda.so.1:/usr/lib/libcuda.so.1:ro`** | **成功** |
+| 挂整目录 `/usr/lib/wsl/lib` 或仅设 `LD_LIBRARY_PATH` | 失败 |
+
+- 结论：`compose.gpu.wsl.yaml` = `devices: [/dev/dxg]` + 单文件 bind
+  `read_only: true`（`bind.create_host_path: false`）。
+- **刻意不设 `LD_LIBRARY_PATH`**：该 compose 字段是 **mapping 替换**语义，
+  一旦设 `/usr/lib/wsl/lib` 会冲掉栈原有的 TVM 库路径
+  （`.../npu_tvm/build:.../vta:.../main/lib`）——挂到标准搜索路径
+  `/usr/lib/` 即无需改环境变量（实测容器内 `printenv LD_LIBRARY_PATH` 未被污染）。
 
 ### 11.2 torch 形态（`build --torch` / `TORCH_FLAVOR`）
 
@@ -359,5 +402,15 @@
 `supports_offline` 四路正交 + 公共 `_up_impl`），**禁止 if/elif 互斥分支**：
 xmnn 同时声明两能力后，互斥写法会让 `--offline`/`--no-offline` 被 gpu 分支
 吃掉，静默破坏 §10 离线契约。`up_help` 的 GPU 提示文本按 `gpu_device_env`
-动态生成（有该字段时提示实际设备值，无则提示硬编码 `/dev/dri`）。
+动态生成（有该字段时提示双形态与自动探测顺序，无则提示硬编码 `/dev/dri`）。
+
+### 11.4 测试锁行为（C19）
+
+CUDA 设备解析在 `tests/test_overlay_core.py` 有 9 个用例（覆盖文件 form 分派
+与回退、`/dev/dri` 自动探测、`/dev/dxg` 自动探测 + libcuda 缺失、无设备
+fail-fast、显式路径缺失 fail-fast、CDI 未生成 fail-fast、wsl form 贯通到
+compose argv、quant 同路径、**不开 `--gpu` 绝不探测设备**）；渲染侧在
+`tests/test_compose_merge.py` 断言 `compose.gpu.wsl.yaml` 的
+`devices: [/dev/dxg]` 与 libcuda 单文件 bind，以及 quant 的
+`${GPU_DEVICE}` 双形态插值。改动 GPU 解析路径必须同步这两组断言。
 

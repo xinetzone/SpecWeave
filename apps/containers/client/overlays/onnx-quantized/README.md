@@ -52,7 +52,7 @@
 
 ```bash
 invoke quant.build            # 构建叠加镜像（构建期自动跑守卫 + 3 冒烟；换源写 .env PIP_MIRROR，C15）
-invoke quant.up --skip-build  # 渲染并启动栈（默认随带构建；--skip-build 直接用本地已有镜像，缺失即 fail-fast；--gpu 透传 /dev/dri）
+invoke quant.up --skip-build  # 渲染并启动栈（默认随带构建；--skip-build 直接用本地已有镜像，缺失即 fail-fast；--gpu 透传 GPU，未设 GPU_DEVICE 时自动探测 /dev/dri → /dev/dxg，见「GPU 可选能力」）
 invoke quant.ps               # 查看服务状态与端口
 invoke quant.smoke            # 3 个量化冒烟（栈在运行→compose exec；未运行→podman run --rm）
 invoke quant.logs             # 跟踪日志（Ctrl+C 退出，不影响容器）
@@ -81,7 +81,8 @@ invoke quant.down
 ```bash
 cp .env.example .env           # 按需修改（端口/workspace/凭证/pip 源）
 podman-compose up -d           # 首次自动构建
-podman-compose -f compose.yaml -f compose.gpu.yaml up -d   # 启用 GPU（/dev/dri）
+podman-compose -f compose.yaml -f compose.gpu.yaml up -d       # 启用 GPU（设备取自 ${GPU_DEVICE:-/dev/dri}）
+podman-compose -f compose.yaml -f compose.gpu.wsl.yaml up -d   # WSL2 形态：/dev/dxg + 挂 libcuda（与上一条互斥）
 podman-compose ps
 podman-compose logs -f
 podman-compose down
@@ -90,6 +91,12 @@ podman-compose down
 `compose.yaml` 已内置 rootless 三必需（`/dev/fuse` 设备、`security_opt: label=disable`、
 `cgroupns: host`），workspace 使用长语法绑定，**无特权容器**。
 变量优先级：shell export > `.env` > compose 文件内默认值。
+
+> **GPU 形态与覆盖文件**：`GPU_DEVICE` 双形态——`/` 开头=宿主机设备路径
+> （`/dev/dri` PCI、`/dev/dxg` WSL2），否则=CDI 引用（如 `nvidia.com/gpu=all`）。
+> 两形态各自对应一个覆盖文件（`compose.gpu.yaml` / `compose.gpu.wsl.yaml`），
+> invoke 侧按**运行期探测**结果自动选择；test 见 `docs/04` W-I16。裸 compose
+> 路径需自行选定，两个文件**不可同时加载**（devices 会叠加两条非法项）。
 
 ## 冒烟测试（3 个，纯 ONNX）
 

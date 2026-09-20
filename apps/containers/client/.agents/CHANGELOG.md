@@ -6,6 +6,89 @@
 
 ## [Unreleased]
 
+### 2026-09-20 · `fix:` `inv xmnn.up --gpu` 在 WSL2 失败——设备运行期门禁 + 自动探测 + 驱动库挂载（C19）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session `sc-20260920-xmnn-up-gpu-fix`）。
+
+**I 洞察（四元组）**：**现象**——`inv xmnn.up --gpu --skip-build` 在 WSL2 宿主
+（`podman-machine-default`）exit 125，报 `Error: stat /dev/dri: no such file or directory`
+（`podman-compose up 失败 (exit=125)`）；**根因**——C18 的 `--gpu` 只做「追加覆盖文件」
+这一件事，对设备**是否存在毫无预检**，而 `compose.gpu.yaml` 的缺省值
+`${GPU_DEVICE:-/dev/dri}` 是 **PCI 形态**假设；WSL2 发行版**没有 `/dev/dri`**，
+只有 `/dev/dxg`（`crw-rw-rw- 10,258`）——缺省值直接把非法路径丢给 podman；
+**影响**——`--gpu` 这一 opt-in 能力在本仓库最主要的落地场景（Windows 11 × WSL2）
+100% 不可用，且报错是 podman 原生 stat 文本，用户无从判断该改设备还是改配置；
+**建议**——opt-in 设备能力必须自带**运行期可用性门禁**，并按宿主实况自动选择形态。
+
+**F 第一性原理**：① 设备能力是**运行期事实**而非**声明期事实**——能不能透传 GPU
+取决于当下宿主有没有该设备，故判据必须在 `up` 执行时从 **podman 宿主侧**取得，
+不能在编排期（Windows 原生本机）猜测；② 与 C15/C16 同构：**单一事实源**——
+设备形态的解析只能有一个入口（`resolve_gpu_device`），compose argv 层不得再
+分派；③ WSL2 的 GPU 栈是**两件东西**而非一件——`/dev/dxg`（设备）**加**
+`libcuda.so.1`（驱动库，WSL 侧由宿主注入在 `/usr/lib/wsl/lib`），只给设备不给库，
+`ctypes.CDLL("libcuda.so.1")` 依然失败（实测矩阵见下）；④ 库必须挂到**标准搜索路径**
+（`/usr/lib/`）而非靠 `LD_LIBRARY_PATH`——compose 的 `environment` 是 **mapping 替换**
+语义，一旦覆盖就冲掉栈原有的 TVM 库路径（`npu_tvm/build:build/vta:main/lib`）。
+
+**V 对抗审查（四视角，均有实测支撑）**：① **魔鬼代言人**——"硬编码 `/dev/dxg`
+不是更简单"：否决，本仓库同时面向 Intel/AMD（`/dev/dri`）与 NVIDIA CDI 用户，
+硬编码会把 WSL2 的修复变成**其他所有平台的回归**；② **新人**——"挂整目录
+`/usr/lib/wsl/lib` 更省事"：**实测失败**（该目录下库的依赖链解析不出来），
+只有单文件挂载 `/usr/lib/wsl/lib/libcuda.so.1:/usr/lib/libcuda.so.1:ro` 成功；
+③ **老板**——"加个 env 让用户自己设就行"：否决，缺省即失败等于把配置负担转嫁给
+用户，而"缺什么"是可以自动探测的；④ **未来**——"设 `LD_LIBRARY_PATH` 会不会更稳"：
+**实测失败且有害**——库路径能被冲掉，容器内 `printenv LD_LIBRARY_PATH` 会从
+TVM 路径变成 `/usr/lib/wsl/lib`，故明确写入规则**禁止**。
+
+**实测矩阵（`podman-machine-default` 内，`CDLL("libcuda.so.1")`）**：
+
+| 配置 | 结果 |
+|---|---|
+| 无设备/库 | 失败 |
+| 仅 `--device /dev/dxg` | 失败（缺库） |
+| **`--device /dev/dxg` + 单文件挂载 `libcuda.so.1` → `/usr/lib/`** | **成功** |
+| 挂整目录 或 仅设 `LD_LIBRARY_PATH` | 失败 |
+
+**A 原子化实现**：内核 `overlay_core.py` 新增 `GPU_DEVICE_FORMS`（`/dev/dri` →
+`/dev/dxg`，**顺序即探测优先级**）、`WSL_CUDA_LIB`、`gpu_override_file(spec, form)`、
+`_runtime_path_exists` / `_runtime_cdi_available` / `_form_of_device`、
+`resolve_gpu_device(c, spec, env) -> (token, form)`；`compose_argv`/`run_compose`/
+`run_compose_up` 增加 `gpu_form` 参数（默认 `generic`，保持既有调用零改动）；
+`up_stack()`/`smoke_stack()` 在 `gpu=True` 时调用解析并把 `form` 传入；
+`up_help` 的 `--gpu` 文案改为按 `gpu_device_env` 生成双形态 + 探测顺序说明。
+compose 侧新增 `overlays/xmnn-dev/compose.gpu.wsl.yaml` 与
+`overlays/onnx-quantized/compose.gpu.wsl.yaml`（同构，service 名各异），
+quant 的 `compose.gpu.yaml` 由硬编码 `- /dev/dri:/dev/dri` 改为单条
+`- ${GPU_DEVICE:-/dev/dri}`（与 xmnn 同构）；`quant.py` 补
+`gpu_device_env="GPU_DEVICE"` 与 `bridge_env_keys += GPU_DEVICE`（WSL 桥接只透传
+环境变量、不转发 CLI 参数）。
+
+**验收点**：① `pytest tests -q --ignore=tests/test_ast_inject.py` **182 passed /
+1 skipped**（`-k "gpu or wsl"` 26 passed）——新增 C19 用例 9 例（form 分派与回退、
+`/dev/dri` 自动探测、`/dev/dxg` 自动探测 + libcuda 缺失、无设备 fail-fast、
+显式路径缺失 fail-fast、CDI 未生成 fail-fast、wsl form 贯通 compose argv、
+quant 同内核路径、**不开 `--gpu` 绝不探测设备**）与渲染断言 2 例；② **真机验证**
+（经 WSL 桥接）：`inv xmnn.up --gpu --skip-build` 日志显示自动选中
+`compose.gpu.wsl.yaml`、`GPU /dev/dxg 已透传`、`EXIT=0`；容器内
+`ctypes.CDLL("libcuda.so.1")` → `CUDA_LIB_OK`；`podman exec xmnn-dev ls /dev/dxg`
+存在；`printenv LD_LIBRARY_PATH` 仍为 TVM 路径（未被污染）；③ quant 侧以
+`podman-compose -f compose.yaml -f compose.gpu.wsl.yaml config`（EXIT=0）验证新文件
+可解析（devices + libcuda 单文件 bind + `read_only` 均正确渲染）；④ 验证后
+`inv xmnn.down` 清理，EXIT=0。
+
+> **范围（已知未覆盖）**：真机验证在**无 CUDA 运行时**的镜像上进行（`CDLL` 成功
+> 证明设备 + 驱动库通路可用，未跑实际 CUDA 算例——该镜像 `TORCH_FLAVOR` 为空）；
+> `/dev/dxg` 之外的 WSL 变体（如自定义发行版）未逐一实测，按 `GPU_DEVICE_FORMS`
+> 顺序探测即可覆盖常见形态。
+
+**C 同步**：代码 + 测试提交 `fix(client)`（`overlay_core.py`/`quant.py`/两个
+`compose.gpu.wsl.yaml`/quant `compose.gpu.yaml`/两个测试文件，预防措施
+`[prevent: opt-in-device-runtime-preflight]`）；文档提交 `docs(client)`
+（[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §11.1.1·§11.1.2·§11.4、
+[rules/quant-overlay.md](rules/quant-overlay.md) §3·§4、`docs/04-troubleshooting-guide.md`
+W-I16、`docs/03`/`docs/README.md` 速查表范围、两个 overlay README、`AGENTS.md`
+P0 清单 C19 与变更日志、本文件）。
+
 ### 2026-09-20 · `feat:` xmnn-dev 支持 GPU 可选透传与 torch 可选安装（C18）
 
 **关联七概念场景**：场景5「创新突破」（R→F→V→I→C，session sc-20260920-xmnn-dev-gpu-torch）。

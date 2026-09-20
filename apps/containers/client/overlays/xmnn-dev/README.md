@@ -231,22 +231,43 @@ podman-compose -p xmnn-dev exec xmnn \
 
 ### GPU 透传：`invoke xmnn.up --gpu`
 
-默认**零设备透传**（只继承基底的 `/dev/fuse`）。加 `--gpu` 才叠加
-`compose.gpu.yaml`，设备由 `GPU_DEVICE` 决定（与根 `invoke run --gpu` 同键同语义）：
+默认**零设备透传**（只继承基底的 `/dev/fuse`）。加 `--gpu` 才叠加 GPU 覆盖文件，
+设备由 `GPU_DEVICE` 决定（与根 `invoke run --gpu` 同键同语义）：
 
 | `GPU_DEVICE` 取值 | 效果 |
 |---|---|
-| 未设 / 空 | `/dev/dri`（Intel/AMD Mesa 渲染节点） |
-| 以 `/` 开头 | 该宿主机设备路径，如 `/dev/dri/renderD128` |
-| 其他 | CDI 引用，如 `nvidia.com/gpu=all`（宿主先 `nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`） |
+| 以 `/` 开头 | 该宿主机设备路径，如 `/dev/dri/renderD128`（内核预检存在性，缺失即 fail-fast） |
+| 其他 | CDI 引用，如 `nvidia.com/gpu=all`（宿主先 `nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`；内核预检 `/etc/cdi` 或 `/var/run/cdi` 下有 `*.yaml`） |
+| 未设 / 空 | **自动探测**（C19）：按 `/dev/dri → /dev/dxg` 顺序取第一个存在的设备 |
 
 ```bash
-invoke xmnn.up --gpu                                  # 默认 /dev/dri
+invoke xmnn.up --gpu                                  # 自动探测设备形态
 GPU_DEVICE=nvidia.com/gpu=all invoke xmnn.up --gpu    # NVIDIA CDI（.env 写同键亦可）
 ```
 
-裸 compose 等价：`podman-compose -f compose.yaml -f compose.gpu.yaml up -d`。
-容器内验证：`podman-compose exec xmnn ls /dev/dri` 或 `nvidia-smi`。
+**设备形态 → 覆盖文件**（`overlay_core.resolve_gpu_device` 解析，`GPU_DEVICE`
+解析结果回写环境后由 compose 插值消费，终端提示与容器实收同源）：
+
+| 探测命中 | 形态 | 叠加文件 | 额外声明 |
+|---|---|---|---|
+| `/dev/dri`（Intel/AMD、NVIDIA 直通设备） | `generic` | [`compose.gpu.yaml`](compose.gpu.yaml) | `--device ${GPU_DEVICE:-/dev/dri}` |
+| `/dev/dxg`（WSL2 GPU 半虚拟化） | `wsl` | [`compose.gpu.wsl.yaml`](compose.gpu.wsl.yaml) | `--device /dev/dxg` + 单文件 ro 挂载宿主 `/usr/lib/wsl/lib/libcuda.so.1` → `/usr/lib/libcuda.so.1` |
+
+> **WSL2 为什么要额外挂 libcuda**（2026-09-20 实测）：WSL2 发行版里没有
+> `/dev/dri`（只有 `/dev/dxg`），且 `/dev/dxg` 只是半虚拟化通道，libcuda 由
+> WSL 宿主提供。仅 `--device /dev/dxg`、仅设 `LD_LIBRARY_PATH`、挂整目录
+> `/usr/lib/wsl/lib` 三种做法都**不能**让容器内 `CDLL("libcuda.so.1")` 成功；
+> 唯一最小组合是 `--device /dev/dxg` + 单文件挂载到 `/usr/lib`（基底默认库
+> 搜索目录）。取舍：**刻意不设 `LD_LIBRARY_PATH`**——`environment` 是 mapping
+> 替换语义，覆盖会冲掉本栈已声明的 TVM 库路径。
+
+设备真的不存在时（如宿主未装驱动）`--gpu` 会 **fail-fast** 并打印中文指引，
+而不是把 `Error: stat /dev/dri: no such file or directory`（exit 125）抛给 podman。
+
+裸 compose 等价：`podman-compose -f compose.yaml -f compose.gpu.yaml up -d`
+（WSL2 换成 `-f compose.gpu.wsl.yaml`；两者互斥，**不要同时加载**——devices 会重复）。
+容器内验证：`podman-compose exec xmnn ls /dev/dri /dev/dxg` 或
+`podman-compose exec xmnn /opt/conda/bin/python -c "import ctypes; ctypes.CDLL('libcuda.so.1')"`。
 
 ### torch 形态：`invoke xmnn.build --torch cpu|cu130`
 
@@ -286,7 +307,7 @@ podman-compose exec xmnn python -c "import torch; print(torch.__version__, torch
 | `PIP_MIRROR` / `CONDA_MIRROR` | `official` | 构建期镜像源（official/aliyun/tuna）。**无前缀构建参数单一事实源（C15）**：`invoke xmnn.build`、`xmnn.up` 的 compose 内联 build、裸 `podman-compose build` 三处同键读取；`--pip-mirror/--conda-mirror` 旗标只覆盖单次 `build` |
 | `BASE_IMAGE`（build args + invoke 同键） | `localhost/jupyter-podman-rootless:latest` | 基底镜像覆盖（同样被 `xmnn.build`/`xmnn.up` 读取，C15） |
 | `TORCH_FLAVOR` | 空（不装） | torch 形态白名单 `空`/`cpu`/`cu130`（C15 无前缀键，compose build args + invoke 同键）。`invoke xmnn.build --torch cu130` 只覆盖单次构建；改 `.env` 后需重建镜像。flavor 不参与镜像 tag |
-| `GPU_DEVICE` | 未设（`--gpu` 时为 `/dev/dri`） | GPU 设备双形态：`/` 开头=宿主机设备路径，否则=CDI 引用。**仅 `up --gpu` 时生效**（默认零透传） |
+| `GPU_DEVICE` | 未设 | GPU 设备双形态：`/` 开头=宿主机设备路径，否则=CDI 引用；**未设时自动探测 `/dev/dri → /dev/dxg`**（C19）。**仅 `up --gpu` 时生效**（默认零透传） |
 | `XMNN_OFFLINE` | `0`（关） | 离线总开关（**非 compose 插值键**，由 invoke 读取并经 `-e` 透传进容器）：开启后 `up` 强制跳过构建（`--no-build` 恒真，非离线亦然，C16）、`build` 直接 Exit(1)、容器内打包禁网兜底；等价 `invoke xmnn.up --offline`，关闭用 `--no-offline` |
 
 ## 与相关栈/目录的关系
