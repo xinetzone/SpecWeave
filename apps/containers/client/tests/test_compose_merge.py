@@ -249,6 +249,21 @@ def test_base_file_contains_only_pathless_fields():
     assert "privileged" not in svc and "cap_add" not in svc
 
 
+def test_base_declares_podman_readable_log_driver():
+    """C24 前置条件：日志驱动必须是 podman 可读的 k8s-file。
+
+    2026-09-20 实证：本机发行版默认驱动为 journald
+    （/usr/share/containers/containers.conf），在 WSL 嵌套 systemd 命名空间下
+    ``podman logs`` 返回 0 字节（日志进了宿主 journal，只有 journalctl 能读），
+    会同时打挂 up 凭证回读与 ``invoke <ns>.logs``。故基段显式声明 k8s-file，
+    四栈同构继承——本断言锁死该声明，防止有人「顺手删掉」而静默回退。
+    """
+    base = _load(SHARED)
+    assert base["services"]["rootless-base"]["logging"] == {"driver": "k8s-file"}
+    for stack in GOLDEN:
+        assert render_stack(stack)["logging"] == {"driver": "k8s-file"}
+
+
 # ── AC-3 三栈渲染等价 ────────────────────────────────────────────────────────
 
 

@@ -35,10 +35,22 @@
 # systemd user bus，默认项目网络启 aardvark-dns 必现
 # 「Failed to connect to user scope bus」（未改动的 onnx 栈同机复现，
 # 见 xmnn-dev/compose.yaml 文件头注释），显式 bridge 绕过。三栈统一继承。
+#
+# logging: k8s-file —— C24 起凭证从容器日志回读，且 `invoke <ns>.logs` 依赖
+# `podman logs`。2026-09-20 实证：本机发行版把默认日志驱动设为 journald
+# （/usr/share/containers/containers.conf），在 WSL 嵌套 systemd 命名空间下
+# podman 读取 journald 日志返回空（`podman logs` 是 0 字节，日志实际进了宿主
+# journal 需 journalctl 才能读）。compose 显式改 k8s-file（落盘文件）后
+# `podman logs` 恢复可读，up 凭证回读与 logs 命令同时生效。代价极小：
+# 日志不再进宿主 journal（不跨容器删除保留）。
 
 services:
   rootless-base:
     network_mode: bridge
+    # 显式 k8s-file 而非依赖宿主默认驱动——journald 驱动在本机 WSL 下
+    # `podman logs` 读取为空，会同时打挂 up 凭证回读与 `invoke <ns>.logs`
+    logging:
+      driver: k8s-file
     # ── rootless 三必需（禁止删改；podman-compose 1.6.0 无 cgroupns
     #    翻译器，该字段为空操作，保留以声明语义并向前兼容）──
     devices:
