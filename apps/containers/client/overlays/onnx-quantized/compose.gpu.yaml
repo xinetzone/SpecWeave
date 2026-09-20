@@ -9,13 +9,22 @@
 #   invoke quant.up --gpu
 #   podman-compose -f compose.yaml -f compose.gpu.yaml up -d
 #
-# ① Intel/AMD Mesa（默认）：透传 /dev/dri 渲染节点
-# ② NVIDIA CDI（daemon 宿主先 `nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`）：
-#    podman run 等价 --device nvidia.com/gpu=all；compose 长语法写法取消下方注释
-#    并注释掉 /dev/dri 行（CDI 引用不是宿主机字符设备，两种形态互斥）。
+# 设备形态由 GPU_DEVICE 单键双形态决定（与 xmnn 同构；invoke 侧
+# resolve_gpu_device 会在未设置时自动探测并按形态选覆盖文件）：
+#   ① 未设置 / `/` 开头 → 宿主机设备路径（Intel/AMD Mesa 渲染节点 /dev/dri；
+#      NVIDIA 直通为 /dev/nvidia*）；
+#   ② 非 `/` 开头     → CDI 引用，如 GPU_DEVICE=nvidia.com/gpu=all
+#      （daemon 宿主先 `nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`）。
+#
+# 为什么写成单个插值项而不是两条并列 devices：podman-compose 1.6.0 把
+# devices 列表项**原样**下传为 `--device <item>`（vendor podman_compose.py
+# L1382-L1383，不做冒号拆分），故 CDI 引用与设备路径可共用同一行；
+# 两条并列则必然有一条非法（CDI 引用不是宿主机字符设备）。
+#
+# WSL2（宿主无 /dev/dri、只有 /dev/dxg）：不要手改本文件，内核会自动改用
+# 姊妹文件 compose.gpu.wsl.yaml（额外挂载 WSL 宿主的 libcuda.so.1）。
 
 services:
   quant:
     devices:
-      - /dev/dri:/dev/dri
-      # - nvidia.com/gpu=all:nvidia.com/gpu=all
+      - ${GPU_DEVICE:-/dev/dri}

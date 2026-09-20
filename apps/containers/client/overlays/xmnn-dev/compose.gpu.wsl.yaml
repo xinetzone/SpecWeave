@@ -1,0 +1,37 @@
+---
+# xmnn-dev GPU opt-in 覆盖层 · WSL2 形态（由 invoke 按 GPU 设备形态自动选择）
+#
+# 加载条件（overlay_core.gpu_override_file）：resolved 形态为 `wsl` 且本文件存在。
+# 触发路径——未显式设 GPU_DEVICE 时自动探测到 /dev/dxg（podman-machine-default /
+# WSL2 发行版内无 /dev/dri，2026-09-20 实测）。与 compose.gpu.yaml **互斥**：
+# 两个同加载会让 devices 列表出现重复项，故由内核只选其一。
+#
+# 为什么需要本文件（2026-09-20 单机实测矩阵）：
+#   --device /dev/dxg 单独                      → CDLL("libcuda.so.1") 失败
+#   -v /usr/lib/wsl/lib:/usr/lib/wsl/lib:ro     → 失败（且需配合 LD_LIBRARY_PATH）
+#   仅设 LD_LIBRARY_PATH=/usr/lib/wsl/lib       → 失败（容器内无该文件）
+#   --device /dev/dxg + 单文件挂 libcuda.so.1   → CDLL OK ✅
+# 单文件挂载是本形态的最小充分条件：/dev/dxg 只是半虚拟化通道，libcuda 由 WSL
+# 宿主提供。**刻意不设 LD_LIBRARY_PATH**——镜像基底（Ubuntu 系）的 /usr/lib 是
+# glibc 默认搜索目录，而栈自身在 compose.yaml 已为 TVM 声明
+# `LD_LIBRARY_PATH=/workspace/npu_tvm/build:.../vta:/opt/conda/envs/main/lib`，
+# 任何覆盖都会冲掉 TVM 库路径（environment mapping 字段为替换而非追加）。
+#
+# 用法：
+#   invoke xmnn.up --gpu            # 自动形态判定（宿主无 /dev/dri 时走本文件）
+#   podman-compose -f compose.yaml -f compose.gpu.wsl.yaml up -d
+
+services:
+  xmnn:
+    devices:
+      - /dev/dxg
+    volumes:
+      # 单文件只读挂载，目标取 /usr/lib（基底默认库搜索目录，无需 LD_LIBRARY_PATH）。
+      # create_host_path: false —— 宿主缺失即报错，绝不让 podman 误建空文件
+      # （内核 resolve_gpu_device 已前置校验该路径存在）。
+      - type: bind
+        source: /usr/lib/wsl/lib/libcuda.so.1
+        target: /usr/lib/libcuda.so.1
+        read_only: true
+        bind:
+          create_host_path: false

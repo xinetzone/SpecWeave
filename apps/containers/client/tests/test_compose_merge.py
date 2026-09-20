@@ -200,8 +200,12 @@ def _load(path: Path):
         return yaml.safe_load(f)
 
 
-def render_stack(stack: str, env=None, *, gpu=False):
-    """模拟 resolve_extends + 多文件 rec_merge 后的服务 dict。"""
+def render_stack(stack: str, env=None, *, gpu=False, gpu_file="compose.gpu.yaml"):
+    """模拟 resolve_extends + 多文件 rec_merge 后的服务 dict。
+
+    ``gpu_file`` 对应 GPU 设备形态（C19）：内核按设备形态选 ``compose.gpu.<形态>.yaml``
+    （缺失回退 compose.gpu.yaml），真实管线**只加载一个**设备覆盖文件。
+    """
     g = GOLDEN[stack]
     odir = OVERLAYS / g["dir"]
     doc = _interpolate(_load(odir / "compose.yaml"), env or {})
@@ -216,7 +220,7 @@ def render_stack(stack: str, env=None, *, gpu=False):
     if gpu:
         # 真实管线：文件循环先逐文件 rec_merge（compose ◁ gpu，L2851），
         # 循环后才 resolve_extends（rec_merge({}, base, merged)，L2919）
-        ov = _interpolate(_load(odir / "compose.gpu.yaml"), env or {})
+        ov = _interpolate(_load(odir / gpu_file), env or {})
         stacked = merge(svc, ov["services"][g["service"]])
     else:
         stacked = svc
@@ -300,10 +304,47 @@ def test_quant_gpu_override_appends_dri_without_duplicating_fuse():
     gpu = render_stack("quant", gpu=True)
     assert plain["devices"] == ["/dev/fuse:/dev/fuse"]
     # 多文件 list 追加：fuse 来自 base，dri 来自 override，顺序锁定
-    assert gpu["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dri:/dev/dri"]
+    # 单 token 形态（C19 与 xmnn 同构）：裸设备路径，缺省 /dev/dri
+    assert gpu["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dri"]
     # 其余字段不被 override 影响
     assert gpu["environment"] == plain["environment"]
     assert gpu["ports"] == plain["ports"]
+
+
+def test_quant_gpu_device_double_form_interpolation():
+    """quant 与 xmnn 同键同语义：`/` 开头=device 路径，否则=CDI 引用（C19）。"""
+    assert render_stack("quant", env={"GPU_DEVICE": "nvidia.com/gpu=all"}, gpu=True)[
+        "devices"
+    ] == ["/dev/fuse:/dev/fuse", "nvidia.com/gpu=all"]
+    assert render_stack("quant", env={"GPU_DEVICE": "/dev/nvidia0"}, gpu=True)[
+        "devices"
+    ] == ["/dev/fuse:/dev/fuse", "/dev/nvidia0"]
+
+
+@pytest.mark.parametrize("stack", ["xmnn", "quant"])
+def test_wsl_gpu_override_passes_dxg_and_mounts_libcuda(stack):
+    """WSL2 形态（C19）：/dev/dxg + 单文件挂 libcuda.so.1，且**不动**栈自带环境。
+
+    关键约束：environment 为 mapping 替换语义——若在此文件里写
+    ``LD_LIBRARY_PATH=/usr/lib/wsl/lib`` 会整体冲掉 compose.yaml 已声明的 TVM
+    库路径。故本形态靠把 libcuda 挂进基底默认搜索目录 /usr/lib 来实现，
+    环境变量**零改动**（2026-09-20 实测结论）。
+    """
+    plain = render_stack(stack)
+    wsl = render_stack(stack, gpu=True, gpu_file="compose.gpu.wsl.yaml")
+    assert wsl["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dxg"]
+    assert wsl["environment"] == plain["environment"]
+    # 追加一条 bind：宿主 libcuda → 容器 /usr/lib（glibc 默认搜索目录，无需 LD_LIBRARY_PATH）
+    extra = [
+        v
+        for v in wsl["volumes"]
+        if isinstance(v, dict) and v.get("target") == "/usr/lib/libcuda.so.1"
+    ]
+    assert len(extra) == 1
+    mount = extra[0]
+    assert mount["source"] == "/usr/lib/wsl/lib/libcuda.so.1"
+    assert mount["read_only"] is True
+    assert mount["bind"]["create_host_path"] is False  # 缺失即报错，不误建空文件
 
 
 def test_xmnn_gpu_override_is_opt_in_and_single_device():

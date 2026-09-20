@@ -69,6 +69,21 @@ _CONMON_NAME_RE = re.compile(r"(?:\s|^)-n\s+(?P<name>\S+)")
 # 自由文本（构建期网络请求目标不可由用户输入任意拼接）。
 TORCH_FLAVORS: tuple[str, ...] = ("", "cpu", "cu130")
 
+# GPU 设备形态表：顺序即**自动探测优先级**（`(设备路径, 覆盖文件形态)`）。
+# 形态只决定叠加哪个覆盖文件——``generic`` 用 ``compose.gpu.yaml``，其余用
+# ``compose.gpu.<形态>.yaml``（缺失则回退 generic，见 :func:`gpu_override_file`）。
+# 表驱动而非 if/elif 硬编码：新增平台（如 Jetson /dev/nvhost-*）只加一行。
+GPU_DEVICE_FORMS: tuple[tuple[str, str], ...] = (
+    ("/dev/dri", "generic"),
+    ("/dev/dxg", "wsl"),
+)
+
+# WSL2 GPU 半虚拟化：``/dev/dxg`` 只是半虚拟化通道，libcuda 由 WSL 宿主提供，
+# 容器内**必须**挂载该单文件才能 ``CDLL("libcuda.so.1")``（2026-09-20 实测：
+# 仅挂 /dev/dxg 或仅设 LD_LIBRARY_PATH 均失败；挂整目录 + LD_LIBRARY_PATH 会
+# 冲掉栈自带的 TVM 库路径，故用单文件挂载，见 compose.gpu.wsl.yaml 文件头）。
+WSL_CUDA_LIB = "/usr/lib/wsl/lib/libcuda.so.1"
+
 
 # ---------------------------------------------------------------------------
 # 声明式规格
@@ -153,7 +168,7 @@ class StackSpec:
 
     # —— compose 文件/构建参数差异 ——
     gpu_override: bool = False  # 存在 compose.gpu.yaml 且 up/smoke 暴露 --gpu（quant/xmnn）
-    gpu_device_env: str = ""  # GPU 设备插值键（空=单形态硬编码 /dev/dri；xmnn 用 GPU_DEVICE 双形态）
+    gpu_device_env: str = ""  # GPU 设备插值键（空=不插值，设备项写死；quant/xmnn 均为 GPU_DEVICE）
     conda_mirror: bool = False  # build 暴露 --conda-mirror / CONDA_MIRROR（xmnn）
     torch_flavor: bool = False  # build 暴露 --torch / TORCH_FLAVOR（xmnn；空|cpu|cu130）
     auto_shortflags: bool = False  # invoke 自动短选项（quant 历史为默认开启）
@@ -452,10 +467,28 @@ def compose_up_tail() -> list[str]:
 # ---------------------------------------------------------------------------
 
 
-def compose_argv(spec: StackSpec, *tail: str, gpu: bool = False) -> list[str]:
+def gpu_override_file(spec: StackSpec, form: str = "generic") -> Path:
+    """按形态选 GPU 覆盖文件；``compose.gpu.<形态>.yaml`` 缺失时回退 generic。
+
+    回退是**刻意的**：形态表新增一行时不必同时新增覆盖文件——只有形态确实
+    需要额外声明（如 wsl 需挂 libcuda）才建姊妹文件，否则沿用通用覆盖。
+    """
+    overlay = overlay_dir(spec)
+    if form and form != "generic":
+        candidate = overlay / f"compose.gpu.{form}.yaml"
+        if candidate.exists():
+            return candidate
+    return overlay / "compose.gpu.yaml"
+
+
+def compose_argv(
+    spec: StackSpec, *tail: str, gpu: bool = False, gpu_form: str = "generic"
+) -> list[str]:
     """组装 podman-compose 公共 argv（固定 project name，-f 绝对路径）。
 
-    gpu=True 且栈声明 gpu_override 时叠加 compose.gpu.yaml（透传 /dev/dri）。
+    gpu=True 且栈声明 gpu_override 时叠加 GPU 覆盖文件；``gpu_form`` 决定
+    具体文件（见 :func:`gpu_override_file`，只加载**一个**设备覆盖文件——
+    两个同时加载会让 devices 列表出现重复项，podman 拒绝映射两次）。
     """
     overlay = overlay_dir(spec)
     files = [overlay / "compose.yaml"]
@@ -463,7 +496,7 @@ def compose_argv(spec: StackSpec, *tail: str, gpu: bool = False) -> list[str]:
         if not spec.gpu_override:
             # 内部不变量：非 GPU 栈不应收到 gpu=True（工厂不会暴露该参数）
             raise RuntimeError(f"栈 {spec.namespace} 未声明 gpu_override")
-        files.append(overlay / "compose.gpu.yaml")
+        files.append(gpu_override_file(spec, gpu_form))
     argv = ["podman-compose", "--project-name", spec.project]
     for f in files:
         argv += ["--file", str(f)]
@@ -471,14 +504,21 @@ def compose_argv(spec: StackSpec, *tail: str, gpu: bool = False) -> list[str]:
     return argv
 
 
-def run_compose(c: Context, spec: StackSpec, *tail: str, gpu: bool = False, pty: bool = True) -> None:
+def run_compose(
+    c: Context,
+    spec: StackSpec,
+    *tail: str,
+    gpu: bool = False,
+    gpu_form: str = "generic",
+    pty: bool = True,
+) -> None:
     """执行 podman-compose 子进程（逐参数 shlex.quote，路径含空格也安全）。
 
     extends 对 argv 透明：podman-compose 1.6.0 在解析阶段把
     ``extends.file`` 的相对路径按引用它的 compose 文件目录重写
     （_parse_compose_file L2844-L2849），故绝对 --file + 任意 cwd 均可。
     """
-    argv = compose_argv(spec, *tail, gpu=gpu)
+    argv = compose_argv(spec, *tail, gpu=gpu, gpu_form=gpu_form)
     run_cmd(c, " ".join(shlex.quote(a) for a in argv), pty=pty)
 
 
@@ -526,7 +566,9 @@ def is_benign_compose_noise(line: str, *, names: tuple[str, ...] = ()) -> bool:
     return bool(_PASTA_DBUS_NOISE_RE.match(text))
 
 
-def run_compose_up(c: Context, spec: StackSpec, *tail: str, gpu: bool = False) -> None:
+def run_compose_up(
+    c: Context, spec: StackSpec, *tail: str, gpu: bool = False, gpu_form: str = "generic"
+) -> None:
     """执行 ``up`` 并过滤 podman 原生回显噪声（C17）。
 
     背景：podman-compose 在无 log_formatter 时以 ``close_fds=False`` 让子进程
@@ -540,7 +582,7 @@ def run_compose_up(c: Context, spec: StackSpec, *tail: str, gpu: bool = False) -
       - 过滤判据是白名单三式（见 :func:`is_benign_compose_noise`），有疑问保留；
       - 仅 ``up`` 走本函数——构建/编译等长任务仍逐字实时透传，流式体验不受影响。
     """
-    argv = compose_argv(spec, *tail, gpu=gpu)
+    argv = compose_argv(spec, *tail, gpu=gpu, gpu_form=gpu_form)
     cmd = " ".join(shlex.quote(a) for a in argv)
     print(f"执行: {cmd}")
     r = run_cmd(c, cmd, pty=False, hide=True, warn=True, echo=False)
@@ -1019,6 +1061,104 @@ def build_image(
     return img_tag
 
 
+# ---------------------------------------------------------------------------
+# GPU 设备解析与预检（C19：opt-in 设备的**运行期可用性**门禁）
+# ---------------------------------------------------------------------------
+
+
+def _runtime_path_exists(c: Context, path: str) -> bool:
+    """在 **podman 所在环境**探测路径是否存在。
+
+    run_cmd 在 Windows 原生会自动把整条 invoke 命令重放到 WSL 发行版内执行
+    （run_in_wsl_bridge），故存在性判定天然落在 compose/podman 真正运行的那一侧，
+    不会出现"Windows 侧没有 /dev/dri 就误判为不可用"。
+    """
+    r = run_cmd(c, f"test -e {shlex.quote(path)}", hide=True, warn=True, echo=False)
+    return r is not None and getattr(r, "ok", False)
+
+
+def _runtime_cdi_available(c: Context) -> bool:
+    """探测宿主是否已生成 CDI 设备规格（``nvidia-ctk cdi generate`` 的产物）。"""
+    r = run_cmd(c, "ls /etc/cdi/*.yaml /var/run/cdi/*.yaml", hide=True, warn=True, echo=False)
+    return r is not None and getattr(r, "ok", False) and bool(
+        (getattr(r, "stdout", "") or "").strip()
+    )
+
+
+def _form_of_device(device: str) -> str:
+    """已知设备路径 → 形态；未登记的路径按通用形态处理（generic 覆盖即够）。"""
+    for known, form in GPU_DEVICE_FORMS:
+        if device == known:
+            return form
+    return "generic"
+
+
+def resolve_gpu_device(c: Context, spec: StackSpec, env: dict) -> tuple[str, str]:
+    """解析 GPU 设备令牌与形态，并把令牌**回写 os.environ**（单一事实源）。
+
+    为什么必须预检：compose 里的 ``devices`` 由 podman 在 create 阶段做
+    ``stat``，缺路径时只丢一句 ``Error: stat /dev/dri: no such file or
+    directory`` + exit 125（且次生 ``no container with name ... found``），
+    用户无从得知该改哪个键。故在 up 之前把判定与指引前置。
+
+    令牌优先级：shell export > root .env > 自动探测（``GPU_DEVICE_FORMS`` 顺序）。
+      - ``/`` 开头：宿主机设备路径 → 存在性硬校验，形态按设备查表；
+      - 非 ``/`` 开头：CDI 引用（如 ``nvidia.com/gpu=all``）→ 校验宿主已生成
+        ``/etc/cdi`` 或 ``/var/run/cdi`` 下的 ``*.yaml``；
+      - 空：按形态表探测（``/dev/dri`` 优先于 ``/dev/dxg``，保留 Intel/AMD 与
+        NVIDIA 直通设备的既有行为），全无则 fail-fast。
+
+    wsl 形态额外校验 :data:`WSL_CUDA_LIB`：``/dev/dxg`` 只是半虚拟化通道，
+    缺 libcuda 时 CUDA 不可用，同样前置报错而非让 bind 挂载裸报错。
+    """
+    key = spec.gpu_device_env or "GPU_DEVICE"
+    token = str(os.environ.get(key) or env.get(key) or "")
+
+    if token.startswith("/"):
+        if not _runtime_path_exists(c, token):
+            print(f"[{spec.namespace}] ⚠ {key}={token} 在 podman 宿主不存在，无法透传 GPU：")
+            print(f"[{spec.namespace}]   查看真实设备: ls /dev/dri /dev/dxg")
+            print(
+                f"[{spec.namespace}]   指定设备:     {key}=<设备路径> "
+                f"invoke {spec.namespace}.up --gpu"
+            )
+            print(f"[{spec.namespace}]   自动探测:     unset {key}（缺省探测 /dev/dri → /dev/dxg）")
+            raise Exit(1)
+        form = _form_of_device(token)
+    elif token:
+        if not _runtime_cdi_available(c):
+            print(f"[{spec.namespace}] ⚠ {key}={token} 是 CDI 引用，但宿主未生成 CDI 规格：")
+            print("[%s]   先生成: sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml"
+                  % spec.namespace)
+            print(f"[{spec.namespace}]   或改用设备路径形态: {key}=/dev/dri")
+            raise Exit(1)
+        form = "generic"
+    else:
+        token, form = "", ""
+        for device, candidate in GPU_DEVICE_FORMS:
+            if _runtime_path_exists(c, device):
+                token, form = device, candidate
+                break
+        if not token:
+            names = " / ".join(d for d, _ in GPU_DEVICE_FORMS)
+            print(f"[{spec.namespace}] ⚠ 未探测到可用 GPU 设备（{names} 均不存在），无法 --gpu：")
+            print("[%s]   WSL2：确认 Windows 侧已装 NVIDIA 驱动（nvidia-smi 可用）"
+                  % spec.namespace)
+            print(f"[{spec.namespace}]   Intel/AMD：确认宿主已加载 i915/amdgpu 驱动")
+            print(f"[{spec.namespace}]   或显式指定: {key}=<设备路径或 CDI 引用>")
+            raise Exit(1)
+
+    if form == "wsl" and not _runtime_path_exists(c, WSL_CUDA_LIB):
+        print(f"[{spec.namespace}] ⚠ 检测到 {token}（WSL2 GPU），但宿主缺少 {WSL_CUDA_LIB}：")
+        print("[%s]   该库由 WSL 宿主提供；请确认 Windows 侧 NVIDIA 驱动已安装"
+              % spec.namespace)
+        print(f"[{spec.namespace}]   或强制通用形态（不挂 libcuda）: {key}=/dev/dri")
+        raise Exit(1)
+
+    os.environ[key] = token
+    return token, form
+
+
 def up_stack(
     c: Context,
     spec: StackSpec,
@@ -1051,7 +1191,12 @@ def up_stack(
             c, spec, image_tag(spec, env), action="启动栈", offline=offline
         )
     up_preflight(c, spec, env=env)
-    run_compose_up(c, spec, *compose_up_tail(), gpu=gpu)
+    # GPU 透传：设备令牌与形态在此解析（含运行期可用性预检），解析结果回写
+    # os.environ 后由 compose 插值消费——终端提示与容器实收设备同源（C19）。
+    gpu_token, gpu_form = ("", "generic")
+    if gpu:
+        gpu_token, gpu_form = resolve_gpu_device(c, spec, env)
+    run_compose_up(c, spec, *compose_up_tail(), gpu=gpu, gpu_form=gpu_form)
     ssh = _env_port(spec, env, spec.ssh_port_env, spec.ssh_default)
     jupyter = _env_port(spec, env, spec.jupyter_port_env, spec.jupyter_default)
     print(f"[{spec.namespace}] ✅ 栈已启动：")
@@ -1061,12 +1206,7 @@ def up_stack(
         jupyter_line = f"{jupyter_line}{spec.jupyter_banner_note}"
     print(jupyter_line)
     if gpu and spec.gpu_override:
-        # 设备形态：gpu_device_env 非空=双形态（环境变量插值，/ 开头为设备路径，
-        # 否则为 CDI 引用）；空=单形态硬编码 /dev/dri（quant 历史行为）。
-        dev = "/dev/dri"
-        if spec.gpu_device_env:
-            dev = os.environ.get(spec.gpu_device_env) or env.get(spec.gpu_device_env) or "/dev/dri"
-        print(f"        GPU     {dev} 已透传（compose.gpu.yaml）")
+        print(f"        GPU     {gpu_token} 已透传（{gpu_override_file(spec, gpu_form).name}）")
     if spec.up_footer:
         for line in spec.up_footer:
             print(line)
@@ -1108,6 +1248,11 @@ def smoke_stack(c: Context, spec: StackSpec, *, gpu: bool = False) -> None:
     img_tag = image_tag(spec, env)
     runtime = detect_runtime()
     smoke = spec.smoke
+    # 与 up 同源：--gpu 时先解析设备（形态决定 exec 用哪份覆盖文件，并保证
+    # compose 插值拿到的令牌与栈启动时一致）
+    gpu_form = "generic"
+    if gpu:
+        _, gpu_form = resolve_gpu_device(c, spec, env)
 
     if container_running(c, spec):
         print(f"[{spec.namespace}] {smoke.running_note}")
@@ -1121,6 +1266,7 @@ def smoke_stack(c: Context, spec: StackSpec, *, gpu: bool = False) -> None:
                 smoke.python,
                 f"{smoke.smoke_dir}/{script}",
                 gpu=gpu,
+                gpu_form=gpu_form,
                 pty=False,
             )
     else:
@@ -1289,13 +1435,18 @@ def make_stack_tasks(spec: StackSpec) -> dict:
         }
     if spec.gpu_override:
         dev_hint = (
-            f"{spec.gpu_device_env} 双形态（/ 开头=设备路径；否则=CDI 引用，"
-            "如 nvidia.com/gpu=all；缺省 /dev/dri）"
+            f"{spec.gpu_device_env or 'GPU_DEVICE'} 双形态（/ 开头=设备路径；否则=CDI 引用，"
+            "如 nvidia.com/gpu=all）"
             if spec.gpu_device_env
             else "/dev/dri"
         )
         up_help = {
-            "gpu": f"叠加 compose.gpu.yaml（透传 {dev_hint}；默认隔离不透传 GPU）",
+            "gpu": (
+                f"透传 GPU：{dev_hint}；未设置时自动探测（"
+                + " → ".join(d for d, _ in GPU_DEVICE_FORMS)
+                + "，WSL2 额外叠加 compose.gpu.wsl.yaml 挂载 libcuda）；"
+                "默认隔离不透传 GPU"
+            ),
             **up_help,
         }
 

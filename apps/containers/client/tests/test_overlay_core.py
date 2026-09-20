@@ -45,6 +45,8 @@ class FakeRunner:
         conmon_ps: str = "",
         init_pid: int = 1234,
         host_alive: bool = True,
+        paths: set[str] | None = None,
+        cdi: bool = False,
     ):
         self.calls: list[tuple[str, dict]] = []
         self.running = running
@@ -58,9 +60,23 @@ class FakeRunner:
         # running=True 时默认真活体，假 Up 用例自行设置 init_pid 但 host_alive=False
         self.init_pid = init_pid
         self.host_alive = host_alive
+        # 宿主存在的设备路径集合；None=「一律存在」（历史用例的宽松默认，
+        # 等价于自动探测命中 /dev/dri）。C19 的预检用例传入精确集合。
+        self.paths = paths
+        self.cdi = cdi
 
     def __call__(self, c, cmd, **kwargs):
         self.calls.append((cmd, kwargs))
+        if cmd.startswith("test -e "):
+            path = cmd[len("test -e "):].strip().strip("'\"")
+            exists = True if self.paths is None else path in self.paths
+            return SimpleNamespace(ok=exists, stdout="", return_code=0 if exists else 1)
+        if "/etc/cdi" in cmd:
+            return SimpleNamespace(
+                ok=self.cdi,
+                stdout="/etc/cdi/nvidia.yaml\n" if self.cdi else "",
+                return_code=0 if self.cdi else 2,
+            )
         if "ps -a -q" in cmd:
             return SimpleNamespace(ok=True, stdout=self.stale, return_code=0)
         if "ps -q" in cmd:
@@ -139,6 +155,8 @@ def harness(monkeypatch, tmp_path):
     # 否则宿主 export 的 PIP_MIRROR/BASE_IMAGE 会让黄金 argv 断言随环境漂移
     for key in ("PIP_MIRROR", "CONDA_MIRROR", "BASE_IMAGE"):
         monkeypatch.delenv(key, raising=False)
+    # C19：GPU 设备令牌同样清空，否则宿主 export 的 GPU_DEVICE 会改变形态断言
+    monkeypatch.delenv("GPU_DEVICE", raising=False)
 
     runner = FakeRunner()
     monkeypatch.setattr(oc, "run_cmd", runner)
@@ -190,6 +208,104 @@ def test_compose_argv_gpu_override_stacks(harness):
     for spec in (_MONETIZE, xmnnrt_mod.XMNNRT_SPEC):
         with pytest.raises(RuntimeError, match="gpu_override"):
             oc.compose_argv(spec, "up", "-d", gpu=True)
+
+
+# ---------------------------------------------------------------------------
+# C19：GPU 设备解析与运行期可用性预检（修复 `inv xmnn.up --gpu` exit 125）
+# ---------------------------------------------------------------------------
+
+
+def test_gpu_override_file_form_dispatch_and_fallback(harness):
+    """形态决定覆盖文件；姊妹文件不存在时回退 generic（不必为每形态建文件）。"""
+    d = harness.root / "overlays" / "xmnn-dev"
+    assert oc.gpu_override_file(_XMNN) == d / "compose.gpu.yaml"
+    assert oc.gpu_override_file(_XMNN, "wsl") == d / "compose.gpu.yaml"  # 缺文件→回退
+    (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
+    assert oc.gpu_override_file(_XMNN, "wsl") == d / "compose.gpu.wsl.yaml"
+    argv = oc.compose_argv(_XMNN, "up", "-d", gpu=True, gpu_form="wsl")
+    assert str(d / "compose.gpu.wsl.yaml") in argv
+    assert str(d / "compose.gpu.yaml") not in argv  # 两文件互斥，绝不叠加
+
+
+def test_resolve_gpu_device_autoprobes_dri(harness, monkeypatch):
+    """未设令牌：探测命中 /dev/dri → generic 形态，并回写 os.environ。"""
+    harness.runner.paths = {"/dev/dri"}
+    token, form = oc.resolve_gpu_device(None, _XMNN, {})
+    assert (token, form) == ("/dev/dri", "generic")
+    assert os.environ["GPU_DEVICE"] == "/dev/dri"
+
+
+def test_resolve_gpu_device_autoprobes_wsl_requires_libcuda(harness, monkeypatch):
+    """WSL2 主场景：只有 /dev/dxg + 宿主 libcuda → wsl 形态（本次故障的修复点）。"""
+    harness.runner.paths = {"/dev/dxg", oc.WSL_CUDA_LIB}
+    token, form = oc.resolve_gpu_device(None, _XMNN, {})
+    assert (token, form) == ("/dev/dxg", "wsl")
+    assert os.environ["GPU_DEVICE"] == "/dev/dxg"
+    # 缺 libcuda：CUDA 在容器内不可能可用，必须 fail-fast 而非让 bind 裸报错
+    harness.runner.paths = {"/dev/dxg"}
+    with pytest.raises(Exit) as ei:
+        oc.resolve_gpu_device(None, _XMNN, {})
+    assert ei.value.code == 1
+
+
+def test_resolve_gpu_device_no_device_fails_fast(harness, capsys):
+    """两者皆无 → Exit(1) + 中文指引（替代 podman 的 stat/exit 125 裸报错）。"""
+    harness.runner.paths = set()
+    with pytest.raises(Exit) as ei:
+        oc.resolve_gpu_device(None, _XMNN, {})
+    assert ei.value.code == 1
+    out = capsys.readouterr().out
+    assert "/dev/dri / /dev/dxg 均不存在" in out
+    assert "GPU_DEVICE" in out
+
+
+def test_resolve_gpu_device_explicit_missing_path_fails_fast(harness, monkeypatch, capsys):
+    """显式设备路径不存在：不得静默回退探测，必须报错（用户意图明确）。"""
+    harness.runner.paths = {"/dev/dri"}
+    monkeypatch.setenv("GPU_DEVICE", "/dev/dxg")
+    with pytest.raises(Exit) as ei:
+        oc.resolve_gpu_device(None, _XMNN, {})
+    assert ei.value.code == 1
+    assert "GPU_DEVICE=/dev/dxg 在 podman 宿主不存在" in capsys.readouterr().out
+
+
+def test_resolve_gpu_device_cdi_requires_generated_specs(harness, monkeypatch):
+    """非 `/` 开头=CDI 引用：宿主未生成 /etc/cdi/*.yaml 时前置报错。"""
+    monkeypatch.setenv("GPU_DEVICE", "nvidia.com/gpu=all")
+    harness.runner.cdi = False
+    with pytest.raises(Exit) as ei:
+        oc.resolve_gpu_device(None, _XMNN, {})
+    assert ei.value.code == 1
+    harness.runner.cdi = True
+    assert oc.resolve_gpu_device(None, _XMNN, {}) == ("nvidia.com/gpu=all", "generic")
+
+
+def test_up_gpu_wsl_form_flows_to_compose_argv(harness, monkeypatch, capsys):
+    """端到端：up --gpu 在 WSL2 设备形态下自动改用 compose.gpu.wsl.yaml。"""
+    d = harness.root / "overlays" / "xmnn-dev"
+    (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
+    harness.runner.paths = {"/dev/dxg", oc.WSL_CUDA_LIB}
+    oc.up_stack(None, _XMNN, gpu=True, skip_build=True)
+    up_cmd = [c for c in harness.runner.commands if "up -d --no-build" in c][0]
+    assert str(d / "compose.gpu.wsl.yaml") in up_cmd
+    assert "/dev/dxg 已透传（compose.gpu.wsl.yaml）" in capsys.readouterr().out
+
+
+def test_up_gpu_wsl_form_for_quant_same_kernel_path(harness):
+    """quant 同修：与 xmnn 共用同一解析内核，形态分派不重复实现。"""
+    d = harness.root / "overlays" / "onnx-quantized"
+    (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
+    harness.runner.paths = {"/dev/dxg", oc.WSL_CUDA_LIB}
+    oc.up_stack(None, _QUANT, gpu=True, skip_build=True)
+    up_cmd = [c for c in harness.runner.commands if "up -d --no-build" in c][0]
+    assert str(d / "compose.gpu.wsl.yaml") in up_cmd
+
+
+def test_up_without_gpu_never_probes_devices(harness):
+    """默认隔离承诺：不带 --gpu 时不发生任何设备探测（零副作用）。"""
+    oc.up_stack(None, _XMNN, skip_build=True)
+    assert not any(c.startswith("test -e ") for c in harness.runner.commands)
+    assert "GPU_DEVICE" not in os.environ
 
 
 def test_run_compose_quotes_every_token(harness, monkeypatch):

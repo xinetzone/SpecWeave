@@ -51,6 +51,7 @@ QUANT_SPEC = StackSpec(
     build_done_label="量化叠加镜像",
     build_next_hint="（启动声明式栈）",
     gpu_override=True,
+    gpu_device_env="GPU_DEVICE",
     conda_mirror=False,
     auto_shortflags=True,
     smoke=SmokeSpec(
@@ -74,6 +75,9 @@ QUANT_SPEC = StackSpec(
     bridge_env_keys=(
         "QUANT_IMAGE_TAG", "QUANT_CONTAINER_NAME", "QUANT_WORKSPACE",
         "QUANT_SSH_PORT", "QUANT_JUPYTER_PORT",
+        # GPU 设备令牌：WSL 桥接只透传环境变量、不转发 CLI 参数，故 --gpu 的
+        # 设备解析结果（或用户预设的 CDI 引用）必须显式过桥（C19）
+        "GPU_DEVICE",
     ),
 )
 
