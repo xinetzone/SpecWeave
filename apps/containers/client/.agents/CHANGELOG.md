@@ -6,6 +6,76 @@
 
 ## [Unreleased]
 
+### 2026-09-20 · `fix:` `up --gpu` 每次都被判「另一控制平面创建」而强制重建栈（C23）
+
+> 编号说明：本条初版曾占用 C22，与同日已先入库的 C22（容器重建轮换 Jupyter cookie
+> secret——Terminal 被浏览器层静默中止 / C-I6，见下条）撞号；rebase 到 origin/main 后
+> 本条顺延为 **C23**。
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session `sc-20260920-up-preflight-gpu`）。
+
+**I 洞察（四元组）**：**现象**——`inv xmnn.up --gpu` **每次**执行都打印「⚠ 检测到栈由
+另一控制平面创建（compose 路径标签 `.../compose.yaml,.../compose.gpu.wsl.yaml`），与当前
+平面（`.../compose.yaml`）不一致；直接 up 会被强制 recreate 并可能残留孤儿端口，先优雅
+down …」，随后真的 `down` 再 `up -d --no-build`，容器内 Jupyter 会话被销毁、白等
+~66 秒首启（真机截图复现）。**根因**——`overlay_core.up_preflight` 的跨平面判据（W-I10）
+把**期望值写死成单文件** `str(overlay_dir(spec) / "compose.yaml")`，而 `--gpu` 时
+`compose_argv` 恒下发**两个** `--file`（`compose.yaml` + `compose.gpu.*.yaml`），podman 把
+两文件以**逗号连接**的原文写进 `com.docker.compose.project.config_files` 标签 → 期望串与
+实况**恒不相等** → 判据把「同平面、同参数创建」误判为「他平面创建」。**影响**——凡声明
+`gpu_override` 的栈（xmnn / quant）在 `--gpu` 路径上**必然**触发假分歧：`up` 丧失幂等性、
+用户容器内会话被无谓销毁，且假阳性会淹没判据本意（防 recreate 留孤儿 rootlessport）
+——真出问题时反而不再醒目。**建议**——判据的期望值必须与 `compose_argv` **同源推导**，
+不再允许第二处手写文件集。
+
+**F 第一性原理**：① **判据的期望值必须由「本次真正下发的 argv」推出**——两处各写各的
+就注定漂移，「写死单文件」的本质是把一个**集合**表达成了**标量**；② **不对称性不可去掉**：
+`up --gpu` 对同样由 `--gpu` 创建的栈必须**零动作**（幂等），而 `up`（无 `--gpu`）或形态
+切换（generic↔wsl）对同一栈**仍须**判分歧——因为 compose 的 config-hash 确实会变并**真的**
+recreate；**精确同集**比较是唯一同时满足两侧的判据，前缀/子集匹配会放过第二种情况；
+③ **顺序即语义**：判据需要 `gpu_form` 才能推出文件集，故 `resolve_gpu_device` 必须先于
+`up_preflight`；且 GPU 不可用应 **fail-fast 于任何 `down` 之前**——先拆掉用户正在用的栈
+再报错，是把可恢复的失败放大成破坏性失败。
+
+**V 对抗审查（四视角）**：① **魔鬼代言人**——"recreate 也能跑通，何必改"：**否决**——
+每次 `--gpu` 都拆栈，销毁容器内会话/长任务并白等 66 秒，「`up` 是幂等的」这一语义已被
+破坏，且预检本意（防 recreate 留孤儿 rootlessport）被假阳性淹没；② **新人**——"把 expected
+改成前缀匹配就行了"：**否决**——会让「无 `--gpu` 的 up 复用 `--gpu` 创建的栈」也被放过，
+而那正是 compose 会真 recreate 并留孤儿端口的场景，必须精确同集比较；③ **老板**——"干脆
+去掉判据，让 compose 自己 recreate"：**否决**——判据存在的理由是 recreate 会强拆 pod infra
+留下孤儿 rootlessport 占端口（W-I10 事故根因）；④ **未来**——"以后再加别的覆盖文件又会
+重犯"：**采纳**——抽 `compose_files()` 为唯一事实源，argv 与判据同源，新覆盖文件自动进入
+判据。
+
+**A 原子化实现**：① `overlay_core.py` —— 新增 `compose_files(spec, *, gpu, gpu_form)`
+（本次调用下发的文件集，**唯一事实源**）与 `compose_config_files_label(...)`（逗号连接，
+与 podman 标签同格式）；`compose_argv` 改为复用 `compose_files`；`up_preflight` 新增
+关键字形参 `gpu` / `gpu_form`，期望值改由 `compose_config_files_label` 推出；`up_stack`
+把 `resolve_gpu_device` 提到 `up_preflight` **之前**并把 `(gpu, gpu_form)` 喂给预检
+（顺序即语义，见 F③）。
+
+**验收点**：① `tests/test_overlay_core.py` 新增 6 例：`compose_config_files_label` 的逗号
+约定、**同源锁**（三组 `(gpu, form)` 下 `compose_argv` 的 `--file` 拼接必须逐字等于 label
+输出）、`up_preflight` 的三种平面关系（gpu 平面同集 → 零 down；非 gpu 平面对 gpu 栈 →
+必须 down；form 切换 → 必须 down）、端到端 `up_stack(gpu=True)` 在 gpu 栈上幂等；
+② `pytest tests/test_overlay_core.py -q` → **90 passed / 1 skipped**；③ 真机
+`inv xmnn.up --gpu --skip-build` 输出**无**「另一控制平面」警告、**无** down 行，直接
+`podman-compose … --file compose.yaml --file compose.gpu.wsl.yaml up -d --no-build`，
+且事后 `podman inspect --format '{{.State.StartedAt}}' xmnn-dev` 与执行前一致（证明**未重建**）。
+
+> **范围（已知未覆盖）**：修复依据为**静态推演 + 单测 + 单次真机幂等验证**，未做「连续
+> 两次 `--gpu`」的重复实证（单次已足以证伪"每次必重建"）；`down` 路径仍只下发
+> `compose.yaml`（podman-compose down 按项目标签工作，实测有效，本次未改）；`up` 的
+> `--gpu` 旗标本身不写入 `.env`，故「平面」判据的比较对象是**文件集原文**而非旗标历史——
+> 若某栈**确实**由裸 compose 用不同文件集创建，判分歧行为按设计保留。
+
+**C 同步**：代码 + 测试提交 `fix(client)` = （待回填）（`src/jpman_client/tasks/overlay_core.py`/
+`tests/test_overlay_core.py`）；文档提交 `docs(client)` = （待回填）（
+[rules/invoke-tasks.md](rules/invoke-tasks.md) C23、
+[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §4/§11.1.1/§11.4、
+[docs/04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md) W-I10、本文件）；
+本条 hash 回填为第三条 `docs(client)` 提交。
+
 ### 2026-09-20 · `fix:` 容器重建轮换 Jupyter cookie secret——Terminal 被浏览器层静默中止（C22 / C-I6）
 
 > 编号说明：本条初版曾占用 C21，与同日 xinzo 已先入库的 C21（`up` 就绪等待 /

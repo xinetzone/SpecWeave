@@ -125,7 +125,8 @@
   ccache 卷/镜像/workspace/源码 bind）；
   ② **跨控制平面分歧**——读活体容器标签
   `com.docker.compose.project.config_files` 原文，与本平面将下发的
-  `--file` 原文比较：Windows 裸 compose 写 `D:\...`、WSL 桥接 invoke 写
+  `--file` 原文比较（**含 GPU 覆盖文件**：期望集与 `compose_argv` 同源，
+  见 §11.1.1 C23）：Windows 裸 compose 写 `D:\...`、WSL 桥接 invoke 写
   `/mnt/d/...`，compose config-hash 按原文计算（**禁止路径等价归一**），
   不一致即判为他平面创建的栈，先优雅 `compose down` 再 up，避免
   podman-compose 强制 recreate 时强拆 pod infra 留下孤儿 rootlessport；
@@ -367,6 +368,18 @@
 - **设备探测必须经 run_cmd 在 podman 宿主侧执行**（`test -e`），禁止在本机
   做 `Path.exists()`——Windows 原生编排时本机文件系统与 WSL 发行版不是同一
   视图（与 C-I3 的「不做本机存在性判断」同源）。
+- **解析必须先于 `up_preflight`，且形态要喂给预检（C23，2026-09-20）**：
+  `up_stack` 的调用顺序是 `resolve_gpu_device` → `up_preflight(gpu=…,
+  gpu_form=…)` → `run_compose_up`。两条理由：① 预检的跨平面判据要把
+  「本平面将下发的 `--file` 原文串」与运行容器标签比，而 `--gpu` 会多下发
+  一个覆盖文件，故期望串必须由 `compose_config_files_label()`（与
+  `compose_argv` 共用 `compose_files()`，唯一事实源）推出——写死单文件会让
+  **每次** `--gpu` 都被判「另一控制平面创建」而强制优雅 down + recreate
+  （实测复现，容器 Created 每次刷新）；② GPU 不可用时应当 fail-fast 于任何
+  `down` **之前**，而不是先把用户正在用的栈拆掉再报错。不变量：`up --gpu`
+  对**同样由 `--gpu` 创建**的栈必须零动作（幂等）；而 `up`（无 `--gpu`）或
+  形态切换（generic↔wsl）对 `--gpu` 创建的栈**仍须**判分歧（compose 确会
+  recreate），不得退化成前缀/子集匹配。
 
 #### 11.1.2 WSL2 形态的驱动库挂载（实测矩阵，2026-09-20）
 
@@ -418,7 +431,7 @@ xmnn 同时声明两能力后，互斥写法会让 `--offline`/`--no-offline` �
 吃掉，静默破坏 §10 离线契约。`up_help` 的 GPU 提示文本按 `gpu_device_env`
 动态生成（有该字段时提示双形态与自动探测顺序，无则提示硬编码 `/dev/dri`）。
 
-### 11.4 测试锁行为（C19）
+### 11.4 测试锁行为（C19 / C23）
 
 CUDA 设备解析在 `tests/test_overlay_core.py` 有 9 个用例（覆盖文件 form 分派
 与回退、`/dev/dri` 自动探测、`/dev/dxg` 自动探测 + libcuda 缺失、无设备
@@ -427,6 +440,14 @@ compose argv、quant 同路径、**不开 `--gpu` 绝不探测设备**）；渲�
 `tests/test_compose_merge.py` 断言 `compose.gpu.wsl.yaml` 的
 `devices: [/dev/dxg]` 与 libcuda 单文件 bind，以及 quant 的
 `${GPU_DEVICE}` 双形态插值。改动 GPU 解析路径必须同步这两组断言。
+
+C23 另加 6 例锁住「文件集同源 + 判据不对称性」：`compose_config_files_label`
+的逗号约定（单文件 / `--gpu` 双文件）、**同源锁**（三组 `(gpu, form)` 下
+`compose_argv` 的 `--file` 值拼接必须逐字等于 label 输出）、`up_preflight`
+的三种平面关系（gpu 平面同集 → 零 down；非 gpu 平面对 gpu 栈 → 必须 down；
+form 切换 → 必须 down），以及端到端 `up_stack(gpu=True)` 在 gpu 栈上幂等
+（无 `down`、无「另一控制平面」提示）。改判据或改 `compose_files()` 必须
+同步这组断言——**禁止**放宽为前缀/子集匹配来让用例变绿。
 
 ### 11.5 归档的 torch 形态身份（C20，2026-09-20）
 
