@@ -502,6 +502,38 @@ def gpu_override_file(spec: StackSpec, form: str = "generic") -> Path:
     return overlay / "compose.gpu.yaml"
 
 
+def compose_files(
+    spec: StackSpec, *, gpu: bool = False, gpu_form: str = "generic"
+) -> list[Path]:
+    """本次调用下发的 compose 文件集（**唯一事实源**：argv 与预检判据共用）。
+
+    为什么必须同源：跨控制平面判据（:func:`up_preflight`）比的是 podman 的
+    ``com.docker.compose.project.config_files`` **原文串**，即「本次真正下发的
+    ``--file`` 集合」。两处各推一份必然在新增覆盖文件时误报——2026-09-20 实证：
+    ``up --gpu`` 的期望值只算了 ``compose.yaml``，而运行容器标签是两文件
+    （``.../compose.yaml,.../compose.gpu.wsl.yaml``），二者**恒不相等**，于是
+    每次 ``--gpu`` 都被判成「另一控制平面创建」并强制优雅 down + recreate。
+    """
+    files = [overlay_dir(spec) / "compose.yaml"]
+    if gpu:
+        if not spec.gpu_override:
+            # 内部不变量：非 GPU 栈不应收到 gpu=True（工厂不会暴露该参数）
+            raise RuntimeError(f"栈 {spec.namespace} 未声明 gpu_override")
+        files.append(gpu_override_file(spec, gpu_form))
+    return files
+
+
+def compose_config_files_label(
+    spec: StackSpec, *, gpu: bool = False, gpu_form: str = "generic"
+) -> str:
+    """compose 写进 ``config_files`` 标签的原文串（逗号分隔，与 podman 同格式）。
+
+    用于与运行容器标签做**原文比较**（:func:`config_paths_diverge`）——禁止做
+    路径等价归一（compose 的 config-hash 按原文计算）。
+    """
+    return ",".join(str(f) for f in compose_files(spec, gpu=gpu, gpu_form=gpu_form))
+
+
 def compose_argv(
     spec: StackSpec, *tail: str, gpu: bool = False, gpu_form: str = "generic"
 ) -> list[str]:
@@ -510,16 +542,10 @@ def compose_argv(
     gpu=True 且栈声明 gpu_override 时叠加 GPU 覆盖文件；``gpu_form`` 决定
     具体文件（见 :func:`gpu_override_file`，只加载**一个**设备覆盖文件——
     两个同时加载会让 devices 列表出现重复项，podman 拒绝映射两次）。
+    文件集来自 :func:`compose_files`，与预检判据同源。
     """
-    overlay = overlay_dir(spec)
-    files = [overlay / "compose.yaml"]
-    if gpu:
-        if not spec.gpu_override:
-            # 内部不变量：非 GPU 栈不应收到 gpu=True（工厂不会暴露该参数）
-            raise RuntimeError(f"栈 {spec.namespace} 未声明 gpu_override")
-        files.append(gpu_override_file(spec, gpu_form))
     argv = ["podman-compose", "--project-name", spec.project]
-    for f in files:
+    for f in compose_files(spec, gpu=gpu, gpu_form=gpu_form):
         argv += ["--file", str(f)]
     argv += list(tail)
     return argv
@@ -901,7 +927,14 @@ def _running_config_files(c: Context, spec: StackSpec, container_id: str) -> str
     return ((r.stdout or "").strip() if r is not None and getattr(r, "ok", False) else "")
 
 
-def up_preflight(c: Context, spec: StackSpec, env: Optional[dict] = None) -> None:
+def up_preflight(
+    c: Context,
+    spec: StackSpec,
+    env: Optional[dict] = None,
+    *,
+    gpu: bool = False,
+    gpu_form: str = "generic",
+) -> None:
     """up 前自愈（顺序不可调换）：
 
     1. Created/Exited 项目残留 → compose down（保留卷/绑定）；
@@ -913,6 +946,12 @@ def up_preflight(c: Context, spec: StackSpec, env: Optional[dict] = None) -> Non
        ``/mnt/d/...``，config-hash 按原文计算）→ 先优雅 compose down；
     3. 无活体项目容器时回收孤儿进程：rootlessport（持端口，必收）与
        stale conmon（已删容器遗留，不持端口但跨平面循环会累积）。
+
+    跨平面判据的期望值必须由 :func:`compose_config_files_label` 推出（C22）：
+    ``gpu``/``gpu_form`` 决定本次真正下发的文件集，写死单文件会让 ``up --gpu``
+    每次误判为「另一控制平面创建」而强制重建。**但仍保持精确同集比较**——
+    ``up``（无 ``--gpu``）对 ``--gpu`` 创建的栈判分歧是**正确**行为（compose
+    确会 recreate），修的是假分歧而非取消失歧判定。
     """
     env = env if env is not None else {}
     ports = _stack_ports(spec, env)
@@ -927,7 +966,7 @@ def up_preflight(c: Context, spec: StackSpec, env: Optional[dict] = None) -> Non
         cid = ""
     if cid:
         actual = _running_config_files(c, spec, cid)
-        expected = str(overlay_dir(spec) / "compose.yaml")
+        expected = compose_config_files_label(spec, gpu=gpu, gpu_form=gpu_form)
         if config_paths_diverge(actual, expected):
             print(
                 f"[{spec.namespace}] ⚠ 检测到栈由另一控制平面创建"
@@ -1190,6 +1229,9 @@ def up_stack(
 ) -> None:
     """渲染并启动栈（默认随带构建；up 前过 up_preflight 三道自愈）。
 
+    GPU 解析**先于** up_preflight（C19 + C22）：预检的跨平面判据需要 gpu_form
+    才能推出本次下发的文件集，且 GPU 不可用应在任何 down 之前 fail-fast。
+
     构建执行者唯一（C16）：镜像存在性由内核负责，compose 恒 ``up -d --no-build``。
     默认路径内联 ``build_image`` 后即起容器（全程一次构建）；``--skip-build`` 与
     离线路径不做任何构建，故先做本地镜像存在性预检（缺失 fail-fast + 中文指引），
@@ -1216,12 +1258,15 @@ def up_stack(
         _require_local_image(
             c, spec, image_tag(spec, env), action="启动栈", offline=offline
         )
-    up_preflight(c, spec, env=env)
     # GPU 透传：设备令牌与形态在此解析（含运行期可用性预检），解析结果回写
     # os.environ 后由 compose 插值消费——终端提示与容器实收设备同源（C19）。
+    # **必须在 up_preflight 之前**（顺序即语义）：① 跨平面判据的期望文件集依赖
+    # gpu_form（C22）；② GPU 不可用时 fail-fast 于任何 down 之前——否则先把用户
+    # 正在用的栈拆掉再报错，破坏面被无谓放大。
     gpu_token, gpu_form = ("", "generic")
     if gpu:
         gpu_token, gpu_form = resolve_gpu_device(c, spec, env)
+    up_preflight(c, spec, env=env, gpu=gpu, gpu_form=gpu_form)
     run_compose_up(c, spec, *compose_up_tail(), gpu=gpu, gpu_form=gpu_form)
     ssh = _env_port(spec, env, spec.ssh_port_env, spec.ssh_default)
     jupyter = _env_port(spec, env, spec.jupyter_port_env, spec.jupyter_default)

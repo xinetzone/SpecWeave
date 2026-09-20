@@ -254,6 +254,36 @@ def test_gpu_override_file_form_dispatch_and_fallback(harness):
     assert str(d / "compose.gpu.yaml") not in argv  # 两文件互斥，绝不叠加
 
 
+# ---------------------------------------------------------------------------
+# C22：跨平面判据的期望文件集必须与真正下发的 --file 同源
+# ---------------------------------------------------------------------------
+
+
+def test_compose_config_files_label_matches_compose_convention(harness):
+    """期望串 = 下发 --file 的逗号原文串（与 podman 标签同格式，不做路径归一）。"""
+    d = harness.root / "overlays" / "onnx-quantized"
+    assert oc.compose_config_files_label(_QUANT) == str(d / "compose.yaml")
+    assert oc.compose_config_files_label(_QUANT, gpu=True) == (
+        f"{d / 'compose.yaml'},{d / 'compose.gpu.yaml'}"
+    )
+
+
+def test_argv_files_and_preflight_label_share_one_source(harness):
+    """同源锁：argv 的 --file 集合与预检期望串必须逐字一致。
+
+    这是 C22 的结构性回归门——将来再加覆盖文件（offline/形态若干）时，
+    只要两者仍由 compose_files() 推导，判据就不会重新变成假阳性。
+    """
+    d = harness.root / "overlays" / "xmnn-dev"
+    (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
+    for gpu, form in ((False, "generic"), (True, "generic"), (True, "wsl")):
+        argv = oc.compose_argv(_XMNN, "up", "-d", gpu=gpu, gpu_form=form)
+        files = [argv[i + 1] for i, a in enumerate(argv) if a == "--file"]
+        assert ",".join(files) == oc.compose_config_files_label(
+            _XMNN, gpu=gpu, gpu_form=form
+        )
+
+
 def test_resolve_gpu_device_autoprobes_dri(harness, monkeypatch):
     """未设令牌：探测命中 /dev/dri → generic 形态，并回写 os.environ。"""
     harness.runner.paths = {"/dev/dri"}
@@ -326,6 +356,24 @@ def test_up_gpu_wsl_form_for_quant_same_kernel_path(harness):
     oc.up_stack(None, _QUANT, gpu=True, skip_build=True)
     up_cmd = [c for c in harness.runner.commands if "up -d --no-build" in c][0]
     assert str(d / "compose.gpu.wsl.yaml") in up_cmd
+
+
+def test_up_gpu_on_gpu_created_stack_is_idempotent(harness, capsys):
+    """端到端（C22 的用户可见断言）：连续 `up --gpu` 不得再拆栈重建。
+
+    修复前 up_preflight 的期望值写死 compose.yaml，而运行容器标签是两文件，
+    故每次 --gpu 都被判「另一控制平面创建」→ 优雅 down + recreate（销毁容器内
+    会话并白等 ~66s 首启）。这里断言：真活体 + 标签与本次下发集全等 → 零 down。
+    """
+    d = harness.root / "overlays" / "xmnn-dev"
+    (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
+    harness.runner.paths = {"/dev/dxg", oc.WSL_CUDA_LIB}
+    harness.runner.running = True
+    harness.runner.ss_output = "\n".join(_SS_LINES[:3])
+    harness.runner.config_files = f"{d / 'compose.yaml'},{d / 'compose.gpu.wsl.yaml'}"
+    oc.up_stack(None, _XMNN, gpu=True, skip_build=True)
+    assert not any(" down" in c for c in harness.runner.commands)
+    assert "另一控制平面" not in capsys.readouterr().out
 
 
 def test_up_without_gpu_never_probes_devices(harness):
@@ -555,6 +603,50 @@ def test_up_preflight_same_plane_running_is_noop(harness):
     )
     oc.up_preflight(None, _XMNN, env={})
     assert not any(" down" in c or c.startswith("kill") for c in harness.runner.commands)
+
+
+# ---- C22：--gpu 的期望文件集（修复「每次 --gpu 都被判成另一控制平面」） ----
+
+def _gpu_plane_label(harness, subdir: str, *names: str) -> str:
+    d = harness.root / "overlays" / subdir
+    return ",".join(str(d / n) for n in names)
+
+
+def test_up_preflight_gpu_plane_no_false_divergence(harness):
+    """`up --gpu` 对**同样由 --gpu 创建**的栈：标签与本次下发集全等 → 不重建。"""
+    d = harness.root / "overlays" / "xmnn-dev"
+    (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
+    harness.runner.running = True
+    harness.runner.ss_output = "\n".join(_SS_LINES[:3])
+    harness.runner.config_files = _gpu_plane_label(
+        harness, "xmnn-dev", "compose.yaml", "compose.gpu.wsl.yaml"
+    )
+    oc.up_preflight(None, _XMNN, env={}, gpu=True, gpu_form="wsl")
+    assert not any(" down" in c or c.startswith("kill") for c in harness.runner.commands)
+
+
+def test_up_preflight_gpu_plane_keeps_real_divergence(harness):
+    """不对称性必须保留：无 --gpu 的 up 看到 --gpu 创建的栈仍判分歧（真会 recreate）。"""
+    harness.runner.running = True
+    harness.runner.ss_output = "\n".join(_SS_LINES[:3])
+    harness.runner.config_files = _gpu_plane_label(
+        harness, "xmnn-dev", "compose.yaml", "compose.gpu.wsl.yaml"
+    )
+    oc.up_preflight(None, _XMNN, env={})  # 本平面只下发 compose.yaml
+    assert any(" down" in c for c in harness.runner.commands)
+
+
+def test_up_preflight_form_change_is_still_divergence(harness):
+    """形态切换（generic ↔ wsl）是**真**配置漂移：必须仍走优雅 down。"""
+    d = harness.root / "overlays" / "xmnn-dev"
+    (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
+    harness.runner.running = True
+    harness.runner.ss_output = "\n".join(_SS_LINES[:3])
+    harness.runner.config_files = _gpu_plane_label(
+        harness, "xmnn-dev", "compose.yaml", "compose.gpu.yaml"
+    )
+    oc.up_preflight(None, _XMNN, env={}, gpu=True, gpu_form="wsl")
+    assert any(" down" in c for c in harness.runner.commands)
 
 
 # ---- stale conmon 回收（跨平面循环残留，2026-09-15 真机实证） ----
