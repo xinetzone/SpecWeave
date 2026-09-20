@@ -6,6 +6,78 @@
 
 ## [Unreleased]
 
+### 2026-09-20 · `fix:` `up` 只等容器不等服务——Jupyter 就绪前浏览器必报 `ERR_EMPTY_RESPONSE`（C21）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session `sc-20260920-port8890`）。
+
+**I 洞察（四元组）**：**现象**——`invoke xmnn.up` 打印「✅ 栈已启动」并给出
+`Jupyter localhost:8890`，用户随即用浏览器打开却得到 `ERR_EMPTY_RESPONSE`
+「localhost 未发送任何数据」（此刻命令行 curl 该端口已返回 302）；**根因**——
+`up -d` 返回只代表**容器**在跑，不代表**服务**可访问：rootless 端口转发器
+（rootlessport）在容器起来的**瞬间**就 accept 宿主端口，而容器内
+supervisord → entrypoint → jupyter-lab 真正 listen 需要数十秒（实测
+`StartedAt 09:47:58.75` vs jupyter 进程 `lstart 09:49:04` = **66 秒**），窗口期内
+连接被 accept 后**立即关闭且零字节返回**，浏览器据此报 `ERR_EMPTY_RESPONSE` 而非
+更易理解的 `ECONNREFUSED`；**影响**——用户被「✅ 栈已启动」文案与「端口可连」
+**双重误导**，疑心镜像损坏/端口冲突而去排查完全无关的方向，且**四个工作负载栈
+全部受影响**（就绪等待落在共享内核 `up_stack`）；**建议**——就绪判据必须从
+「容器 Up」升为「**应用层 HTTP 应答**」，超时不是失败而是**给指引**。
+
+**F 第一性原理**：① **「已启动」（容器状态）与「可访问」（服务就绪）是两个断言**，
+不应共用一个 `✅`——断言必须与所依据的证据同级；② **TCP connect 在本场景不是
+就绪证据**：转发器先于后端 accept，故裸 connect 会**假阳性**（"能连上"恰恰是
+窗口期的表征），唯一可靠判据是**读到应用层应答**；③ 就绪等待**不能把慢启动
+判成失败**——容器确实 Up，一次 66 秒的首启被中断成 `Exit(1)` 会让用户误以为
+"起不来"而重复折腾；④ 该能力属**内核职责**：四栈共享 `up_stack`，落在内核
+一处才不会再出现「某个栈忘了等」（与 C18「能力并集」同一取向）。
+
+**V 对抗审查（四视角）**：① **魔鬼代言人**——"刚才那次只是瞬时抖动，刷新就好了，
+不必改"：**部分成立但不否决**——现象确实自愈，但**固定 66 秒的窗口必然复发**
+（不是抖动而是启动路径的固有耗时），每次首启都误导用户；② **新人**——
+"照抄 `refresh_host_keys` 的 TCP 探测（20 秒上限）就行"：**否决**——那里探的是
+同 netns 内**真实监听者**，connect 成功即等价就绪；本场景探的是**转发器**，
+connect 成功**正是未就绪的表征**（语义相反，且 20 秒还短于实测窗口）；
+③ **未来**——"四个栈各加一段等待更灵活"：**收敛**——落内核 `up_stack` 一处，
+四栈零成本共享，新栈不写就绪逻辑；④ **老板**——"就绪前干脆不打印 URL"：
+**采纳其意并等价实现**——不隐藏 URL（用户可能只想先 ssh），而是**就绪才断言
+就绪**，未就绪时 URL 仍给出但明说「可能仍在首次启动，稍后刷新」。
+
+**A 原子化实现**：① `utils.py` —— 新增 `import http.client`、常量
+`UP_READY_TIMEOUT_S`/`UP_READY_POLL_S`/`UP_READY_PROGRESS_S`/`UP_READY_PATH`
+与 `wait_http_ready(port, *, path, timeout, on_progress) -> (bool, str)`
+（双栈地址 `127.0.0.1`/`::1` 各试一次，返回 `(是否就绪, 说明)`；**进度回调排在
+超时判定之前**，保证窗口期最后一段也有反馈）。② `overlay_core.py` —— `up_stack`
+在 `run_compose_up()` 之后按**宿主 Jupyter 端口**等待就绪（`int(jupyter)`，因
+`_env_port` 返回 str）；就绪打印「Jupyter 已就绪（addr → HTTP status）」，
+超时**零 `Exit` 调用**，仅打印「⚠ 未在 120s 内应答 + 容器已在运行，稍后刷新
+浏览器即可 + `invoke <ns>.logs`」；docstring 同步。
+
+**验收点**：① 新增 `tests/test_up_readiness.py`（5 例，daemon-free，纯回环 socket）：
+**TCP 假阳性守卫**（对「只 accept 后立即关闭、零字节回应」的监听者不得判就绪）、
+HTTP 应答判就绪（并断言请求路径 = `UP_READY_PATH`）、路径可配、端口关闭时
+**超时返回而不抛异常**、长等待期间进度回调确实触发；② `tests/test_overlay_core.py`
+新增 2 例：就绪探测必须落在**宿主 Jupyter 端口**（8890）且携带 `on_progress`、
+超时路径**不抛 Exit** 且给出 `logs` 指引与 URL；harness 打桩 `wait_http_ready`
+为「立即就绪」，避免单测真的轮询 120s；③
+`pytest tests/test_up_readiness.py tests/test_overlay_core.py -q` → **89 passed / 1 skipped**；
+④ 全量 `pytest tests -q`（py314）→ **219 passed / 2 skipped**，另有 8 例
+`test_ast_inject.py` 失败属**既有环境差异**（该模块需 WSL2/Linux 的 bash 与
+`os.geteuid`，Windows 原生必然失败，非本次回归）。
+
+> **范围（已知未覆盖）**：就绪探测只覆盖 **Jupyter**（SSH 侧无 HTTP 判据，
+> 未纳入）；探针语义是「**任意 HTTP 应答**」而非「Jupyter 业务响应」——302
+> 登录跳转即判就绪，故 5xx 也算就绪（对"能否打开页面"这一目标足够，不做内容校验）；
+> 机制结论由**强时间证据**（66 秒窗口期 + 零字节关闭 + 两侧 curl 时序）支撑，
+> 未做破坏性复现（重启容器会打断用户正在使用的 Jupyter 会话）；超时值 120s
+> 为常量，暂未做 CLI/`.env` 可配。
+
+**C 同步**：代码 + 测试提交 `fix(client)` = `（待回填）`（`utils.py`/`overlay_core.py`/
+`tests/test_up_readiness.py`/`tests/test_overlay_core.py`，4 文件）；文档提交
+`docs(client)` = `（待回填）`（[docs/04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md)
+W-I18、[rules/invoke-tasks.md](rules/invoke-tasks.md) C21 与测试节、
+`docs/11-xmnn-overlay.md`、`overlays/xmnn-dev/README.md`、本文件）；本条 hash
+回填为第三条 `docs(client)` 提交。
+
 ### 2026-09-20 · `feat:` 离线归档携带 torch 形态身份——`xmnn.save`/`load` 不再静默串档（C20）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session `sc-20260920-xmnn-save-flavor`）。

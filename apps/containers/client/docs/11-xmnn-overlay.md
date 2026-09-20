@@ -77,11 +77,20 @@ invoke xmnn.down                       # 停止清理（ccache 卷默认保留�
 
 ## 启动后连接：Jupyter 与 SSH
 
-`invoke xmnn.up` 成功后**只打印地址**（`SSH localhost:2223` /
+`invoke xmnn.up` 成功后打印地址（`SSH localhost:2223` /
 `Jupyter localhost:8890`），两个服务由容器内 supervisord 托管；密码/token
 取决于 `.env` 的凭证四变量（随
 [_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml)
-统一注入，留空则容器首启自动生成）：
+统一注入，留空即容器首启自动生成）：
+
+**`up` 会等 Jupyter 真正应答才算就绪（C21）**：`up -d` 返回只代表**容器**在跑，
+rootless 端口转发器在容器起的瞬间就 accept 宿主端口，而容器内 jupyter 首次
+listen 需数十秒（实测 66s）。窗口期内打开浏览器会得到 `ERR_EMPTY_RESPONSE`
+（**不是** `ECONNREFUSED`），故 `up` 收尾按**应用层 HTTP 应答**轮询宿主端口：
+就绪打印「Jupyter 已就绪（addr → HTTP status）」；超过 120s 未应答**不判失败**，
+只提示「容器已在运行，稍后刷新浏览器即可」并给出 `invoke xmnn.logs`。四栈
+共享同一实现（内核 `up_stack`），无需逐栈处理。手工自检见
+[04-troubleshooting-guide.md](04-troubleshooting-guide.md) W-I18。
 
 | 服务 | 地址 | 凭证 |
 |---|---|---|
