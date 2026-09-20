@@ -80,8 +80,8 @@ md5 逐字一致**（`8c4b86e5…`），重建前 token 换取的登录 cookie �
 [04-troubleshooting-guide.md](../../docs/04-troubleshooting-guide.md) 新增 C-I6、
 [rules/xmnn-overlay.md](rules/xmnn-overlay.md) §5/§6、
 [docs/11-xmnn-overlay.md](../../docs/11-xmnn-overlay.md)、
-[overlays/xmnn-dev/README.md](../../overlays/xmnn-dev/README.md)）随 `docs(client)`
-提交落库；两个提交 hash 由随后的回填提交补记（沿用 C20/C21 三段式）。
+[overlays/xmnn-dev/README.md](../../overlays/xmnn-dev/README.md)）随文档提交
+`docs(client)` = `e45cd809c` 落库；本条 hash 由回填提交补记（沿用 C20/C21 三段式）。
 
 ### 2026-09-20 · `fix:` `up` 只等容器不等服务——Jupyter 就绪前浏览器必报 `ERR_EMPTY_RESPONSE`（C21）
 
