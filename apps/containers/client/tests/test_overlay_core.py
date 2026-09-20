@@ -7,6 +7,7 @@
 import inspect
 import os
 import re
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -157,6 +158,8 @@ def harness(monkeypatch, tmp_path):
         monkeypatch.delenv(key, raising=False)
     # C19：GPU 设备令牌同样清空，否则宿主 export 的 GPU_DEVICE 会改变形态断言
     monkeypatch.delenv("GPU_DEVICE", raising=False)
+    # C20：torch 形态同理（load 的选档/校验依赖它，宿主 export 会让断言漂移）
+    monkeypatch.delenv("TORCH_FLAVOR", raising=False)
 
     runner = FakeRunner()
     monkeypatch.setattr(oc, "run_cmd", runner)
@@ -946,6 +949,90 @@ def test_save_load_tasks_only_for_offline_stack(harness):
     x = oc.make_stack_tasks(_XMNN)
     assert _param_names(x["save"]) == ["tag", "cache_dir"]
     assert _param_names(x["load"]) == ["path", "cache_dir"]
+
+
+# ---------------------------------------------------------------------------
+# C20：load 的 torch 形态感知（选档过滤 + 显式路径校验）
+# ---------------------------------------------------------------------------
+
+
+def _archive(dir_: Path, flavor: str, ts: str) -> Path:
+    """造出可被 archive_flavor 解析的归档名（内容无关，integrity 已打桩）。"""
+    stem = f"localhost-xmnn-dev-torch-{flavor}" if flavor else "localhost-xmnn-dev-latest"
+    p = dir_ / f"{stem}-abc123def456-{ts}.tar.gz"
+    p.write_bytes(b"x")
+    return p
+
+
+@pytest.fixture
+def load_env(harness, monkeypatch, tmp_path):
+    monkeypatch.setattr(oc, "validate_manifest_integrity", lambda d, p: "")
+    loaded: list[Path] = []
+    monkeypatch.setattr(
+        oc,
+        "load_image",
+        lambda c, p: (loaded.append(p), SimpleNamespace(loaded=True, message=""))[1],
+    )
+    cache = tmp_path / "cache"
+    cache.mkdir()
+    tasks = oc.make_stack_tasks(_XMNN)
+
+    def run(flavor: str, *, path=None, cache_path=None):
+        monkeypatch.setattr(
+            oc,
+            "_load_env_overrides",
+            lambda r: {"TORCH_FLAVOR": flavor} if flavor else {},
+        )
+        tasks["load"].body(None, path=path, cache_dir=str(cache_path or cache))
+
+    return SimpleNamespace(cache=cache, loaded=loaded, run=run)
+
+
+def test_load_filters_archive_by_expected_flavor(load_env, capsys):
+    """cpu 归档更新，但期望 cu130 → 必须取 cu130（否则静默导入错形态）。"""
+    cpu = _archive(load_env.cache, "cpu", "20260920-120000")
+    cu130 = _archive(load_env.cache, "cu130", "20260920-110000")
+    os.utime(cpu, (2_000_000_000, 2_000_000_000))
+    os.utime(cu130, (1_000_000_000, 1_000_000_000))
+    load_env.run("cu130")
+    assert load_env.loaded == [cu130]
+    out = capsys.readouterr().out
+    assert "自动选择最新归档" in out and "归档 torch 形态: cu130" in out
+
+
+def test_load_without_matching_flavor_exits(load_env, capsys):
+    _archive(load_env.cache, "cpu", "20260920-120000")
+    with pytest.raises(Exit) as ei:
+        load_env.run("cu130")
+    assert ei.value.code == 1
+    assert "未找到该形态归档" in capsys.readouterr().out
+
+
+def test_load_explicit_path_flavor_mismatch_exits(load_env, capsys):
+    cpu = _archive(load_env.cache, "cpu", "20260920-120000")
+    with pytest.raises(Exit) as ei:
+        load_env.run("cu130", path=str(cpu))
+    assert ei.value.code == 1
+    assert "形态与 TORCH_FLAVOR 不符" in (ei.value.message or "")
+    assert load_env.loaded == []  # 校验先于导入
+
+
+def test_load_unmarked_legacy_archive_warns_but_passes(load_env, capsys):
+    legacy = _archive(load_env.cache, "", "20260920-120000")
+    load_env.run("cu130", path=str(legacy))
+    assert load_env.loaded == [legacy]
+    assert "未标注 torch 形态" in capsys.readouterr().out
+
+
+def test_load_without_torch_flavor_keeps_latest_semantics(load_env, capsys):
+    """期望形态为空（不装 torch）：不过滤，保持历史「取最新」语义（零回归）。"""
+    older = _archive(load_env.cache, "cu130", "20260920-110000")
+    newer = _archive(load_env.cache, "cpu", "20260920-120000")
+    os.utime(older, (1_000_000_000, 1_000_000_000))
+    os.utime(newer, (2_000_000_000, 2_000_000_000))
+    load_env.run("")
+    assert load_env.loaded == [newer]
+    assert "归档 torch 形态: cpu" in capsys.readouterr().out
 
 
 # ---------------------------------------------------------------------------

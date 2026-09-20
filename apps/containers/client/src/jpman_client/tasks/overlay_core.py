@@ -39,6 +39,7 @@ from invoke.exceptions import Exit
 from .client_core import load_image, save_image
 from .manage import _load_env_overrides, _project_root, _resolve_bool
 from .utils import (
+    archive_flavor,
     check_runtime_ready,
     default_build_cache_dir,
     detect_runtime,
@@ -1603,22 +1604,66 @@ def make_stack_tasks(spec: StackSpec) -> dict:
             if not ok:
                 raise Exit(1, "镜像归档导出失败")
 
-        @task(help={"path": "归档 tar.gz 路径；未指定则取缓存目录中最新的归档", "cache-dir": cache_help}, **deco)
+        def _expected_flavor() -> str:
+            """期望的 torch 形态（与 build 同一解析序：shell export > .env）。
+
+            仅 ``torch_flavor`` 栈有意义；其余栈恒空串，load 保持历史「取最新」语义。
+            """
+            if not s.torch_flavor:
+                return ""
+            env = _load_env_overrides(_project_root())
+            return str(
+                os.environ.get("TORCH_FLAVOR") or env.get("TORCH_FLAVOR") or ""
+            ).strip()
+
+        @task(
+            help={
+                "path": "归档 tar.gz 路径；未指定则按 .env TORCH_FLAVOR 形态选取最新归档",
+                "cache-dir": cache_help,
+            },
+            **deco,
+        )
         def load(c: Context, path: str | None = None, cache_dir: str | None = None) -> None:
-            """从离线归档导入本栈镜像（manifest 完整性校验，缺网可用）。"""
+            """从离线归档导入本栈镜像（manifest 完整性校验，缺网可用）。
+
+            C20：归档名携带 torch 形态（``-torch-<形态>-``），load 据此选档与校验——
+            cpu 与 cu130 两份镜像 tag 相同（``localhost/xmnn-dev:latest``），不带形态
+            过滤的「取最新」会在同族共存时静默导入错形态，直到容器内 torch.cuda 为空
+            才暴露。
+            """
             gates(s)
             ensure_runtime_ready(s)
             _load_env_overrides(_project_root())
             cache_path = Path(cache_dir) if cache_dir else default_build_cache_dir()
+            expected = _expected_flavor()
             if path:
                 tar_path = Path(path).resolve()
             else:
-                tar_path = find_latest_image_tar(cache_path)
+                # 期望形态已知时按形态过滤选档；期望为空（不装 torch）时宁可不过滤，
+                # 但下方仍打印归档形态供人工核对（可辨识 > 静默）。
+                tar_path = find_latest_image_tar(cache_path, expected or None)
                 if tar_path is None:
                     print(f"[{s.namespace}] ⚠ 缓存目录中未找到归档: {cache_path}")
+                    if expected:
+                        print(f"[{s.namespace}]   当前 TORCH_FLAVOR={expected}，未找到该形态归档")
                     print(f"[{s.namespace}]   请在联网机器执行: invoke {s.namespace}.save")
                     raise Exit(1)
                 print(f"[{s.namespace}] 自动选择最新归档: {tar_path}")
+            got = archive_flavor(tar_path.name)
+            if expected and got and got != expected:
+                print(f"[{s.namespace}]  归档 torch 形态: {got} ≠ 期望: {expected}")
+                raise Exit(
+                    f"归档形态与 TORCH_FLAVOR 不符；改 .env TORCH_FLAVOR={got} 后 load，"
+                    f"或换用 {expected} 形态归档（--path 显式指定）。"
+                )
+            if s.torch_flavor:
+                if got:
+                    print(f"[{s.namespace}] 归档 torch 形态: {got}")
+                elif expected:
+                    print(
+                        f"[{s.namespace}] ⚠ 归档未标注 torch 形态（旧产物）；"
+                        f"期望 {expected}，不做拦截"
+                    )
             integrity_err = validate_manifest_integrity(cache_path, tar_path)
             if integrity_err:
                 print(f"[{s.namespace}]  {integrity_err}")

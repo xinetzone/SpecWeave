@@ -583,7 +583,31 @@ def default_build_cache_dir() -> Path:
     return (Path.cwd() / ".image-cache").resolve()
 
 
-def find_latest_image_tar(search_dir: Path) -> Optional[Path]:
+# 归档名中的 torch 形态段：`<stem>-torch-<flavor>-<shortid>-<ts>(.tar.gz|.tar)`。
+# 形式与 client_core.save_image 的命名严格互逆（C20），改动其一必须同步另一处。
+_ARCHIVE_FLAVOR_RE = re.compile(
+    r"-torch-([A-Za-z][A-Za-z0-9._]*)-[0-9a-z]+-\d{8}-\d{6}\.(?:tar\.gz|tar)$"
+)
+
+
+def archive_flavor(filename: str) -> str:
+    """从镜像归档文件名解析 torch 形态（无形态标注返回空串）。
+
+    与 ``client_core.save_image`` 的命名互为倒影。形态段的标记中缀 ``-torch-``
+    不可省：无标记的 ``-<flavor>-`` 会与镜像 tag 自带的 ``-latest`` 段互相冒充，
+    例如 ``localhost-xmnn-dev-latest-<shortid>-<ts>.tar.gz`` 会被反向解析成
+    ``flavor="latest"``（左最早匹配必然落在 ``-latest-`` 上）。
+
+    只解析真实归档名；``*-latest`` 软链接由 :func:`find_latest_image_tar` 跳过，
+    不进入本函数的解析面。
+    """
+    m = _ARCHIVE_FLAVOR_RE.search(Path(filename).name)
+    return m.group(1) if m else ""
+
+
+def find_latest_image_tar(
+    search_dir: Path, flavor: Optional[str] = None
+) -> Optional[Path]:
     """在缓存目录中搜索最新（按 mtime 排序）的镜像 tar/tar.gz。
 
     同时覆盖 ``*.tar.gz``（构建端 ``jpman save`` 产物）与 ``*.tar``（save 在
@@ -594,6 +618,11 @@ def find_latest_image_tar(search_dir: Path) -> Optional[Path]:
     其目标（9p 挂载的符号链接），抛 ``OSError: [WinError 1920]``——修复前
     ``inv load`` 在 Windows 原生下即因此崩溃。真实镜像文件会被正常 glob
     匹配，latest 链接只是冗余别名，跳过不影响"取最新"语义。
+
+    ``flavor``：按归档名中的 ``-torch-<形态>-`` 段过滤。``None``（默认）不过滤，
+    保持历史「取最新」语义；空串只取**未标注形态**的归档；``"cu130"`` 等只取该
+    形态的归档。cpu 与 cu130 归档同族共存时，不带过滤的「取最新」会静默取错，
+    故形态已知的调用方必须传本参数。
     """
     if not search_dir.exists():
         return None
@@ -602,6 +631,8 @@ def find_latest_image_tar(search_dir: Path) -> Optional[Path]:
         for p in search_dir.glob(pattern):
             try:
                 if p.is_symlink():
+                    continue
+                if flavor is not None and archive_flavor(p.name) != flavor:
                     continue
                 candidates.append((p.stat().st_mtime, p))
             except OSError:

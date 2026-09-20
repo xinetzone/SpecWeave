@@ -321,6 +321,23 @@ def image_inspect_info(c: Context, tag: str) -> dict:
     }
 
 
+# torch 形态标签：构建期 build-arg TORCH_FLAVOR 烘入（Containerfile.xmnn-dev），
+# 是与 `/opt/xmnn-torch-flavor` 标记文件并列的镜像内单一事实源。
+TORCH_FLAVOR_LABEL = "org.specweave.torch-flavor"
+
+
+def _image_torch_flavor(info: dict) -> str:
+    """从 ``image_inspect_info`` 的 labels 取 torch 形态（无该 LABEL 返回空串）。
+
+    非 torch 栈（quant/monetize）镜像不带此 LABEL，恒返回空串，调用方据此
+    保持历史行为（C20）。
+    """
+    labels = info.get("labels") or {}
+    if not isinstance(labels, dict):
+        return ""
+    return str(labels.get(TORCH_FLAVOR_LABEL) or "").strip()
+
+
 def _save_via_cli(c: Context, image: str, outfile: Path) -> bool:
     """通过 CLI 流式导出镜像为 gzip tar（podman save | gzip/pigz）。
 
@@ -397,17 +414,27 @@ def save_image(
     cache_dir.mkdir(parents=True, exist_ok=True)
     # short_id 取 digest 去前缀后的前 12 位（避免 `sha256:` 冒号进入文件名/命令，
     # 否则在 Windows shell 管道中破坏命令合法性）
-    short_id = (image_inspect_info(c, image).get("digest") or "").strip()
+    info = image_inspect_info(c, image)
+    short_id = (info.get("digest") or "").strip()
     if ":" in short_id:
         short_id = short_id.split(":", 1)[1]
     short_id = short_id[:12] or "unknown"
+    # torch 形态取镜像 LABEL（构建期烘入，唯一事实源）。形态必须进归档名：
+    # cpu 与 cu130 两份镜像 tag 相同（localhost/xmnn-dev:latest），若归档名也不带
+    # 形态，则两者同族同名、共用同一个 -latest 软链，离线机 load 按 mtime 取
+    # 「最新」会静默导入错形态，直到容器内 torch.cuda 为空才暴露（C20）。
+    flavor = _image_torch_flavor(info)
     ts = _dt.datetime.now().strftime("%Y%m%d-%H%M%S")
     safe_name = image.replace("/", "-").replace(":", "-")
+    # 形态段必须带 `torch` 标记中缀：无标记的 `-<flavor>-` 会与镜像 tag 自带的
+    # `-latest` 段互相冒充——`...-xmnn-dev-latest-<shortid>-<ts>.tar.gz` 会被
+    # 反向解析成 flavor=latest。无形态时不加段，命名与历史产物逐字一致（零回归）。
+    stem = f"{safe_name}-torch-{flavor}" if flavor else safe_name
     # 扩展名由「可用压缩工具」决定：pigz/gzip → .tar.gz；否则 → .tar（未压缩）
     use_gzip = bool(shutil.which("pigz") or shutil.which("gzip"))
     ext = ".tar.gz" if use_gzip else ".tar"
-    outfile = cache_dir / f"{safe_name}-{short_id}-{ts}{ext}"
-    latest_link = cache_dir / f"{safe_name}-latest{ext}"
+    outfile = cache_dir / f"{stem}-{short_id}-{ts}{ext}"
+    latest_link = cache_dir / f"{stem}-latest{ext}"
 
     if not _save_via_cli(c, image, outfile):
         return False
@@ -434,9 +461,11 @@ def save_image(
     except OSError:
         pass
 
-    _append_manifest(cache_dir, image, saved.name, file_size, digest)
+    _append_manifest(cache_dir, image, saved.name, file_size, digest, flavor)
     print(f"[Save] ✅ 已保存: {saved.name} ({file_size / 1024 / 1024:.1f} MB)")
     print(f"[Save]   SHA256: {digest}")
+    if flavor:
+        print(f"[Save]   torch 形态: {flavor}（来源：镜像 LABEL {TORCH_FLAVOR_LABEL}）")
     hint = restore_hint or f"invoke load --path {saved}   或   bash bin/jpman load"
     print(f"[Save]   恢复:  {hint}")
     return True
@@ -477,10 +506,13 @@ def _append_manifest(
     filename: str,
     size_bytes: int,
     sha256_hex: str,
+    flavor: str = "",
 ) -> None:
     """向 manifest.txt 追加一段（对齐构建端 jpman save 的 manifest 格式）。
 
     保证 ``validate_manifest_integrity``（按 IMAGE_FILE 精确匹配段）能读到本段。
+    ``TORCH_FLAVOR`` 为冗余记账字段（归档名才是解析的单一事实源），供人工核对
+    归档与镜像形态是否一致；无 torch 的镜像写空值。
     """
     from datetime import datetime as _dt
 
@@ -490,6 +522,7 @@ def _append_manifest(
         header,
         f"IMAGE_NAME={image}",
         f"IMAGE_FILE={filename}",
+        f"TORCH_FLAVOR={flavor}",
         f"SIZE={size_bytes / 1024 / 1024:.0f}MB",
         f"SHA256={sha256_hex.upper()}",
         f"SAVED={_dt.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')}",
