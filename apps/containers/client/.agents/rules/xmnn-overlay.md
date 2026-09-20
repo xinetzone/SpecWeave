@@ -205,6 +205,16 @@
   docs/04 C-I6）。该目录镜像内属主 1000:1000/mode 700，新命名卷首次
   copy-up 属主与可写性必须保持（真机实测）；down 默认保留，--volumes
   与 ccache 一并删除，删除后重新登录属预期。禁止用 bind 指宿主家目录。
+- **SSH host key 命名卷（2026-09-20 起）**：第三个命名卷
+  `xmnn-ssh-host-keys` 挂 `/var/lib/jpman/ssh-host-keys`。基底 entrypoint
+  以 `mountpoint -q` 为唯一分流判据——挂载即持久模式（key 落卷内、
+  `sshd_config` 的 `HostKey` 指向卷路径、清空 `/etc/ssh` 默认位置），
+  未挂载则回退容器层生成并打 WARN（重建即轮换，客户端遭
+  `REMOTE HOST IDENTIFICATION HAS CHANGED`）。**卷名与落点必须与客户交付栈
+  [overlays/xmnn-runtime/release/compose.yaml](../../overlays/xmnn-runtime/release/compose.yaml)
+  一致**（同 `xmnn-ssh-host-keys` / 同 `/var/lib/jpman/ssh-host-keys`），
+  属主/权限（700 目录 + 600 key）由 entrypoint 自管；down 默认保留，
+  `--volumes` 与上述两卷一并删除（删后指纹轮换属预期）。
 - **wheel 元数据（pyproject.toml 单一事实源，2026-09-16 起）**：
   `[project.scripts] xmflow = xmnn.cli.xmflow:app` 随 whl 生成 console
   script `/opt/conda/bin/xmflow`——Nuitka 包不支持 `python -m`
@@ -228,8 +238,9 @@
   无 systemd user bus 时默认项目网络 aardvark-dns 必失败；实证注释保留在
   基文件与 xmnn compose.yaml 文件头，不得擅自删改。
 - 栈文件只保留栈专属字段：image/build/ports/四个 bind volumes、调试
-  environment、`labels.component`；`xmnn-ccache`/`xmnn-jupyter` 两个命名卷
-  等栈专属卷保持栈内声明（基文件无 volumes/build/env_file/ports）。extends
+  environment、`labels.component`；`xmnn-ccache`/`xmnn-jupyter`/
+  `xmnn-ssh-host-keys` 三个命名卷等栈专属卷保持栈内声明（基文件无
+  volumes/build/env_file/ports）。extends
   合并语义（rec_merge / L2844-L2849 路径解析）见 [quant-overlay.md](quant-overlay.md) §4.1。
 - up 成功横幅**回读容器内实际凭证并打印**（C24，2026-09-20）：`.env` 凭证键
   留空为常态，密码/token 此时由容器内 entrypoint 用 `pwgen` 生成、**只进容器

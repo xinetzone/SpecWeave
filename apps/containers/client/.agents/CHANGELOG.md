@@ -6,6 +6,48 @@
 
 ## [Unreleased]
 
+### 2026-09-20 · `fix:` 补挂 `xmnn-ssh-host-keys` 命名卷（SSH 主机指纹跨重建稳定）
+
+**关联七概念场景**：场景2「问题解决」（I→F→C 轻量链）。起点是用户请求
+「验证 SSH 密钥和 Jupyter token 是否已正确挂载」。
+
+**I 洞察（事实采集）**：四项实测——① `ssh -p 2223 devuser@localhost` 密码登录
+成功（`whoami`/`pwd`/`SSH_LOGIN_OK`）；② Jupyter `/api/status` 带 token **200**、
+不带 token **403**，token 与 up 横幅一致；③ `podman inspect` 挂载表含命名卷
+`xmnn-jupyter`（内含 `notebook_secret`，时间戳 12:06 早于本次 13:45 重建 → 跨
+重建保留）；④ **启动日志 WARN**：`Host key volume not mounted at
+/var/lib/jpman/ssh-host-keys; keys live in the container layer and WILL rotate on
+rebuild`，容器内 `/etc/ssh/ssh_host_*_key` 时间戳 13:45 = 本次重建时间。
+→ 凭证链路全通，**唯一缺口是 SSH host key 未持久化**（每次重建轮换指纹，
+客户端遭 `REMOTE HOST IDENTIFICATION HAS CHANGED`）。
+
+**F 第一性原理**：基底 entrypoint 已把「host key 存哪」抽象为**卷挂载与否**的
+二分（`mountpoint -q /var/lib/jpman/ssh-host-keys` 为唯一判据：挂载=持久模式、
+key 落卷内、`sshd_config` 的 `HostKey` 指向卷路径；未挂载=容器层生成并打 WARN）。
+故修复不必改 entrypoint，只需在 consume 侧把卷挂上——且客户交付栈
+`overlays/xmnn-runtime/release/compose.yaml` 早已挂同卷同落点，本次是
+**内部开发栈对其对齐**。
+
+**A 行动**：`overlays/xmnn-dev/compose.yaml` 新增第三个命名卷
+`xmnn-ssh-host-keys` 挂 `/var/lib/jpman/ssh-host-keys`（服务段 + 顶层声明），
+跟随 `xmnn-ccache`/`xmnn-jupyter` 的既有约定（down 默认保留、`--volumes`
+三卷同删）。
+
+**验收**：`tests/test_compose_merge.py` 黄金快照 `volume_targets` 增列
+`/var/lib/jpman/ssh-host-keys`（漏挂即断言失败）→ WSL 内
+`pytest tests/test_compose_merge.py tests/test_overlay_core.py
+tests/test_tasks_surface.py -q` **142 passed / 1 skipped**（1 例
+`test_vs_real_rec_merge_probes` 为已知既有失败——真实 `rec_merge` 对
+`depends_on` list↔dict 归一化与模拟器分歧，非本次回归）。
+
+**C 同步**：[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §5 新增
+「SSH host key 命名卷」段（含与交付栈同卷名同落点的强制约定）、§6 命名卷
+计数更新；[docs/11-xmnn-overlay.md](../docs/11-xmnn-overlay.md) 新增持久化段、
+排障表 `REMOTE HOST IDENTIFICATION` 行改写为「已根治 + 剩余三情形甄别」；
+[overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md) 命令表/持久化块/
+调试工作流三处同步；[AGENTS.md](../AGENTS.md) 变更日志同步。
+提交 `fix(client)` = （待回填）。
+
 ### 2026-09-20 · `fix:` WSL2 GPU 透传补齐两条宿主依赖（`libdxcore.so` + `/usr/lib/wsl/drivers`）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→A→C，session

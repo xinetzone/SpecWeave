@@ -80,8 +80,8 @@ podman-compose -p xmnn-dev exec xmnn \
     bash /opt/xmnn-builder/scripts/verify-wheel.sh   # 10 项隔离验证（临时 venv，不污染源码环境）
 
 invoke xmnn.logs                         # 跟踪日志（Ctrl+C 退出）
-invoke xmnn.down                         # 停止清理（workspace/源码保留；ccache/登录态卷保留）
-invoke xmnn.down --volumes               # 连 xmnn-ccache、xmnn-jupyter 命名卷一起删除
+invoke xmnn.down                         # 停止清理（workspace/源码保留；ccache/登录态/host key 卷保留）
+invoke xmnn.down --volumes               # 连 xmnn-ccache、xmnn-jupyter、xmnn-ssh-host-keys 命名卷一起删除
 ```
 
 启动后访问（凭证可由环境变量覆盖，见 `.env.example`）：
@@ -101,6 +101,12 @@ invoke xmnn.down --volumes               # 连 xmnn-ccache、xmnn-jupyter 命名
 > 浏览器无需重新登录；仅 `down --volumes` 才会清除（清除后重新登录属预期）。
 > 旧标签页若在重建后提示失败，硬刷新（Ctrl+Shift+R）重登即可，详见
 > [docs/04 排障速查 C-I6](../../docs/04-troubleshooting-guide.md)。
+
+> **SSH host key 持久化**：主机密钥存于命名卷 `xmnn-ssh-host-keys`
+> （容器内 `/var/lib/jpman/ssh-host-keys`），普通 `down/up` 重建容器后**不再
+> 轮换指纹**，客户端 `known_hosts` 无需反复 `ssh-keygen -R` 清理；仅
+> `down --volumes` 才会清除（清除后指纹轮换属预期）。卷名与落点同客户交付栈
+> [xmnn-runtime/release](../xmnn-runtime/release/compose.yaml)。
 
 ## 路径二：裸 podman-compose
 
@@ -149,6 +155,9 @@ podman-compose down
   重复打包自动命中；`--clean` 仅当次禁用 ccache，不清缓存。
 - **登录态缓存**：Jupyter cookie/notebook 密钥在命名卷 `xmnn-jupyter`
   （/home/devuser/.local/share/jupyter），普通 down/up 重建免重登；
+  仅 `down --volumes` 清除。
+- **SSH 指纹缓存**：主机密钥在命名卷 `xmnn-ssh-host-keys`
+  （/var/lib/jpman/ssh-host-keys），普通 down/up 重建指纹不变；
   仅 `down --volumes` 清除。
 
 ## 性能提示（9p）
