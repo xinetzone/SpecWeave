@@ -64,7 +64,7 @@ xmnn-runtime 既有先例，main env 是 free-threading，装 CUDA torch 会破�
 > 时验证；构建期守卫 §8 会在那时给出「声明 vs 实物」结论）。GPU 路径未做真机透传实测
 > （需宿主具备 `/dev/dri` 或 CDI 配置）。
 
-**C 同步**：**未提交，commit hash 待补**（代码侧 `feat(client)` + 文档侧 `docs(client)`）。
+**C 同步**：已提交（代码侧 `feat(client)` = `086d3a998`，11 文件；文档侧 `docs(client)` = `11c926f62`，8 文件；本条 hash 回填为第三条 `docs(client)` 提交）。
 
 ### 2026-09-18 · `fix:` `up` 输出收敛——过滤 podman 原生回显噪声（C17）
 
