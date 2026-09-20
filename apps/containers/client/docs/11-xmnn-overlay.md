@@ -124,9 +124,16 @@ invoke xmnn.logs   # 找「[IMPORTANT] devuser password: ...」与「Token: ...�
 ```
 
 > `invoke xmnn.logs` 默认 `--tail=100` 只看日志**尾部**，而凭证横幅位于启动
-> 日志**头部**——长启动日志下横幅已被挤出窗口，这也是「看不到凭证」的常见
-> 原因；`up` 的回读因此固定从头部取 300 行。若非要在 logs 里找，可
-> `podman logs <容器> | head -n 300`。
+> 日志**头部**——长启动日志下横幅会被挤出窗口；`up` 的回读因此固定从头部取
+> 300 行。若非要在 logs 里找，可 `podman logs <容器> | head -n 300`。
+>
+> **日志驱动必须是 podman 可读的 `k8s-file`**（基段已声明，C24）：本机发行版
+> 默认 `log_driver = journald`，而 WSL 嵌套 systemd 命名空间下 `podman logs`
+> 读 journald 返回**空**（0 字节，日志只在宿主 `journalctl` 里），会同时让
+> 凭证回读与 `invoke xmnn.logs` 失效。若发现 `podman logs` 输出为空而容器
+> 明明在跑，先确认驱动：`podman inspect <容器> --format
+> '{{.HostConfig.LogConfig.Type}}'` 应为 `k8s-file`；旧驱动下启动的容器需
+> `invoke xmnn.down && invoke xmnn.up` 重建一次才生效。
 
 已在 `.env` 预设凭证时，直接用预设值登录（日志不再打印随机值横幅）；
 此时 `invoke xmnn.up` 横幅同样会打印带 token 的「直达」URL，点开即免登录。

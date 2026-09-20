@@ -57,7 +57,9 @@
 证实三必需全部可用标准 Compose 字段表达，**严禁**特权容器与非必要 x-podman。
 三必需连同凭证四变量（`USER_PASSWORD`/`JUPYTER_TOKEN`/`SSH_PUBLIC_KEY`/
 `GRANT_SUDO`）、公共 label（`org.specweave.managed-by=jupyter-podman-client`）、
-`restart: unless-stopped` 与 `network_mode: bridge` 的**单一事实源**是
+`restart: unless-stopped`、`network_mode: bridge` 与日志驱动
+`logging: {driver: k8s-file}`（C24：journald 驱动在本机 WSL 下 `podman logs`
+读不到，会打挂凭证回读与 `invoke <ns>.logs`）的**单一事实源**是
 `overlays/_shared/base-rootless.yaml`（服务名 `rootless-base`）；三栈
 compose.yaml 只以 `extends: {file: ../_shared/base-rootless.yaml, service:
 rootless-base}` 继承，**栈文件禁止重复声明**这些字段，只保留栈专属的

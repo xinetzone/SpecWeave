@@ -65,7 +65,7 @@ source: "AGENTS.md#嵌套路由关系"
 | xmnn-dev 叠加层资产 | [../overlays/xmnn-dev/](../overlays/xmnn-dev/README.md) | Containerfile.xmnn-dev + compose.yaml + builder/（自包含打包内核）+ smoke/ + scripts/ + .env.example |
 | agent-monetize-dev 叠加层资产 | [../overlays/agent-monetize-dev/](../overlays/agent-monetize-dev/README.md) | Containerfile.agent-monetize + compose.yaml + builder/（build-native/build-wheel）+ smoke/ + scripts/ + .env.example |
 | xmnn-runtime 叠加层资产 | [../overlays/xmnn-runtime/](../overlays/xmnn-runtime/README.md) | Containerfile.xmnn-runtime + compose.yaml + wheels/（whl 暂存，不入 git）+ smoke/（9 项硬守卫）+ scripts/（交付内核注册）+ .env.example |
-| 四栈 compose 公共基段 | [../overlays/_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml) | rootless-base 服务：三必需 + 凭证四变量 + network_mode bridge + 公共 label/restart（extends 单一事实源，四栈禁止重复声明） |
+| 四栈 compose 公共基段 | [../overlays/_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml) | rootless-base 服务：三必需 + 凭证四变量 + network_mode bridge + logging k8s-file（C24：journald 驱动在本机 WSL 下 `podman logs` 读不到）+ 公共 label/restart（extends 单一事实源，四栈禁止重复声明） |
 | invoke 入口转发器 | [../tasks.py](../tasks.py) | 根 `tasks.py` 仅转发至 `jpman_client.tasks`（src 布局下 invoke 的入口发现锚点） |
 | Python 依赖声明（client） | [../pyproject.toml](../pyproject.toml) | invoke>=2 / **jpman-common（../shared 须先安装）** / podman>=5 / python-dotenv>=1；scikit-build-core；`[compose]` extra = podman-compose（四栈专用） |
 | Python 依赖声明（共享包） | [../../shared/pyproject.toml](../../shared/pyproject.toml) | jpman-common 0.1.0，scikit-build-core 纯 Python；dependencies=invoke>=2.0；optional `[sdk]` extra=podman>=5.0.0 |

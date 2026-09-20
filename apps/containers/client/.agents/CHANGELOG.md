@@ -6,6 +6,60 @@
 
 ## [Unreleased]
 
+### 2026-09-20 · `fix:` 基段声明 `logging: k8s-file`，恢复 `podman logs` 可读（C24 前置）
+
+**关联七概念场景**：场景2「问题解决」（F→V→C，session `sc-20260920-up-credentials`，
+C24 的**根因追加**）。C24 落地后用户反馈「还是没有显示」，据此重开第一性原理
+诊断。
+
+**F 第一性原理（重开）**：C24 假设「`podman logs` 能读到容器启动日志」。把该
+假设当命题实测：容器 `caecf0206361`（xmnn-dev）`podman logs` 输出 **0 字节**；
+新建一次性容器（ubuntu:26.04 + `echo`）复现 **0 字节**；`podman inspect` 显示
+驱动为 **`journald`**；而 `journalctl CONTAINER_NAME=xmnn-dev` 能读到完整启动
+横幅（含 `[IMPORTANT] devuser password:` / `Token:`）。再验 `podman run
+--log-driver k8s-file` → `podman logs` **15 字节正常**。结论：**日志数据完好，
+但本机 podman 读不到 journald**——`log_driver = journald` 来自发行版
+`/usr/share/containers/containers.conf`（podman-machine 默认），在 WSL 嵌套
+systemd 命名空间下 podman 的 journal 访问失效（CLI `journalctl` 可读）。
+故 C24 的「第二重成因（tail 窗口）」是**表象**，真根因是**日志通道不可读**：
+它不仅打挂凭证回读，还让 `invoke <ns>.logs` **一直是空的**。
+
+**V 对抗审查**：① 魔鬼代言人——「内核回退 `journalctl CONTAINER_ID=<id>` 就行，
+别动基段」：**否决**——只救回读，`invoke <ns>.logs` 继续静默为空，把根因留在
+原地；且内核要引入 journald 专属分支（栈无关内核不该有环境特化）。② 新人——
+「直接改发行版 `containers.conf` 不更省事」：**否决**——那是机器级越权改动、
+machine 重建即丢失，且影响同机其他项目。③ 老板——「日志驱动变更会不会影响
+其他栈」：**采纳**为验收项——基段被四栈 `extends`，故真机重建 xmnn 栈验证驱动
+与日志可读性。④ 未来——「有人顺手删掉这行怎么办」：**采纳**——加正向断言锁死。
+
+**A 原子化实现**：`overlays/_shared/base-rootless.yaml` 服务 `rootless-base` 显式
+声明 `logging: {driver: k8s-file}`（含文件头决策注释：证据 + 代价），四栈经
+`extends` 同构继承；`tests/test_compose_merge.py` 新增
+`test_base_declares_podman_readable_log_driver`（基段 + 四栈渲染双向断言）。
+
+**验收点**：① 单测 `pytest tests/test_compose_merge.py tests/test_overlay_core.py
+-q` → **137 passed / 1 skipped**；② **真机验收（决定性）**：
+`inv xmnn.down && inv xmnn.up --gpu --skip-build` 重建后，`podman inspect` 驱动
+= `k8s-file`、`podman logs xmnn-dev` = **9872 字节可读**（此前 0），up 横幅打印
+`密码    devuser / <16 位>` 与 `直达    http://localhost:8890/lab?token=<32 位>`；
+③ podman-compose 支持该键已核实（其源码把 `logging.driver` 映射为
+`--log-driver`）。
+
+> **代价（已知取舍）**：日志改落容器存储文件，不再进宿主 journal（不跨容器
+> 删除保留）。换取 `podman logs` / `invoke <ns>.logs` / up 凭证回读三条链路
+> 在本机恢复可用。
+> **生效条件**：驱动属**创建期**参数，旧容器需 `inv <ns>.down && inv <ns>.up`
+> 重建一次（本次已在 xmnn 栈执行）。
+
+**C 同步**：代码+测试提交 `fix(client)` = `c7c50bf1a`
+（`overlays/_shared/base-rootless.yaml` / `tests/test_compose_merge.py`）；
+文档提交 `docs(client)` = （待回填）（
+[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §6 C24 前置条件、
+[rules/quant-overlay.md](rules/quant-overlay.md) §3 基段字段清单、
+[docs/11-xmnn-overlay.md](../docs/11-xmnn-overlay.md) 凭证段、
+[.agents/README.md](README.md) 基段行、
+[AGENTS.md](../AGENTS.md) P0 C24 条款⑤ + 变更日志、本文件）。
+
 ### 2026-09-20 · `feat:` up 横幅回读容器内生成的 SSH 密码与 Jupyter token（C24）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session `sc-20260920-up-credentials`）。
@@ -20,7 +74,9 @@
 `.env → os.environ`，内核全程无写 `.env` 代码）。**第二重成因**——即便用户去查
 日志，`invoke xmnn.logs` 恒带 `--tail=100` 只看**尾部**，而凭证横幅位于启动日志
 **头部**，容器启动日志较长时横幅早已被挤出窗口，于是「容器里明明打印过」也变成
-「哪里都看不到」。**影响**——用户被迫在「找不到凭证」与「怀疑工具没读 .env」之间
+「哪里都看不到」。**（2026-09-20 追加更正**：本条当时的「第二重成因」判断**不
+成立**——后续实测发现本机 `podman logs` 读 journald 日志恒为空，见上一条 `fix:`
+条目；tail 窗口只是表象，真根因是日志通道不可读。此处保留原文以存诊断轨迹。）**影响**——用户被迫在「找不到凭证」与「怀疑工具没读 .env」之间
 反复试错，实际只是**信息可见性**缺口，非功能缺失。**建议**——把既有信息在正确的
 位置（`up` 收尾横幅）以只读回读的方式呈现，同时消除 tail 窗口的误导。
 

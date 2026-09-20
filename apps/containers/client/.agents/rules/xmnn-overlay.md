@@ -221,8 +221,8 @@
 - up 成功横幅**回读容器内实际凭证并打印**（C24，2026-09-20）：`.env` 凭证键
   留空为常态，密码/token 此时由容器内 entrypoint 用 `pwgen` 生成、**只进容器
   启动日志**，故 `up` 收尾从容器日志**头部**回读（`podman logs <cid> | head
-  -n 300`，勿用 `--tail`——横幅在头部，`invoke <ns>.logs` 默认 `--tail=100`
-  只看尾部，正因如此才会「看不到凭证」）解析出密码行与 token，打印
+  -n 300`，勿用 `--tail`——横幅在启动日志头部，`invoke <ns>.logs` 默认
+  `--tail=100` 只看尾部，手动查日志时会被挤出窗口）解析出密码行与 token，打印
   `密码    <user> / <password>` 并用回读 token 构造「直达」行。**`.env` 全程
   只读、不回写**（凭证生成责任留在基底 entrypoint，overlay 内核不得写 .env）。
   内核通用实现 `overlay_core.read_container_credentials` /
@@ -230,6 +230,14 @@
   `SSH login:` 行取到的用户名反查对应 password 行——只按 `password:` 匹配会先
   命中 `Root password:`（`ALLOW_ROOT_SSH=yes` 时存在）而误报 root 密码。
   回读失败（容器未跑/日志无横幅）静默降级为不打印，绝不阻断 up。
+  **前置条件——日志必须可被 podman 读取**：2026-09-20 实证本机发行版默认
+  `log_driver = journald`（`/usr/share/containers/containers.conf`），在 WSL
+  嵌套 systemd 命名空间下 `podman logs <cid>` 返回 **0 字节**（日志进了宿主
+  journal，只有 `journalctl CONTAINER_NAME=<name>` 能读），于是凭证回读与
+  `invoke <ns>.logs` **同时**失效——这才是「看不到凭证」的最初根因。修复：
+  基段 `_shared/base-rootless.yaml` 显式声明 `logging: {driver: k8s-file}`
+  （四栈同构继承，`test_compose_merge.py` 有正向断言锁死），日志落盘文件后
+  `podman logs` 恢复可读。**禁止**依赖宿主默认日志驱动。
 - up 成功横幅在配置了 `JUPYTER_TOKEN` 时额外打印「直达」行
   （`http://localhost:<jupyter 端口>/lab?token=...`，内核通用 helper
   `overlay_core.jupyter_direct_url`，四栈同构；token 为空不打印），
