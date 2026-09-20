@@ -71,11 +71,11 @@ HTTP 应答判就绪（并断言请求路径 = `UP_READY_PATH`）、路径可配
 > 未做破坏性复现（重启容器会打断用户正在使用的 Jupyter 会话）；超时值 120s
 > 为常量，暂未做 CLI/`.env` 可配。
 
-**C 同步**：代码 + 测试提交 `fix(client)` = `（待回填）`（`utils.py`/`overlay_core.py`/
+**C 同步**：代码 + 测试提交 `fix(client)` = `5c2b56aa0`（`utils.py`/`overlay_core.py`/
 `tests/test_up_readiness.py`/`tests/test_overlay_core.py`，4 文件）；文档提交
-`docs(client)` = `（待回填）`（[docs/04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md)
+`docs(client)` = `5fd7549b9`（[docs/04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md)
 W-I18、[rules/invoke-tasks.md](rules/invoke-tasks.md) C21 与测试节、
-`docs/11-xmnn-overlay.md`、`overlays/xmnn-dev/README.md`、本文件）；本条 hash
+[docs/11-xmnn-overlay.md](../docs/11-xmnn-overlay.md)、本文件）；本条 hash
 回填为第三条 `docs(client)` 提交。
 
 ### 2026-09-20 · `feat:` 离线归档携带 torch 形态身份——`xmnn.save`/`load` 不再静默串档（C20）
