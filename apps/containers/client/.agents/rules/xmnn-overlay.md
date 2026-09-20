@@ -183,6 +183,14 @@
 - wheel 产物落 `$DIST_DIR`（默认 /workspace/dist，宿主可见）；Nuitka
   中间产物在容器内 /opt/xmnn-builder/build；ccache 走命名卷
   `xmnn-ccache`（挂 /root/.ccache，down 默认保留，--volumes 删除）。
+- **Jupyter 登录态命名卷（2026-09-20 起，C22）**：第二个命名卷
+  `xmnn-jupyter` 挂 `/home/devuser/.local/share/jupyter`，持久化
+  `jupyter_cookie_secret`/`notebook_secret`——否则密钥随容器临时层轮换，
+  `down/up` 重建后浏览器旧标签页的 Terminal/notebook REST 全被踢回登录
+  （请求在浏览器侧中止，服务端零日志，极易误判为 PTY/权限故障，详见
+  docs/04 C-I6）。该目录镜像内属主 1000:1000/mode 700，新命名卷首次
+  copy-up 属主与可写性必须保持（真机实测）；down 默认保留，--volumes
+  与 ccache 一并删除，删除后重新登录属预期。禁止用 bind 指宿主家目录。
 - **wheel 元数据（pyproject.toml 单一事实源，2026-09-16 起）**：
   `[project.scripts] xmflow = xmnn.cli.xmflow:app` 随 whl 生成 console
   script `/opt/conda/bin/xmflow`——Nuitka 包不支持 `python -m`
@@ -206,9 +214,13 @@
   无 systemd user bus 时默认项目网络 aardvark-dns 必失败；实证注释保留在
   基文件与 xmnn compose.yaml 文件头，不得擅自删改。
 - 栈文件只保留栈专属字段：image/build/ports/四个 bind volumes、调试
-  environment、`labels.component`；`xmnn-ccache` 命名卷等栈专属卷保持
-  栈内声明（基文件无 volumes/build/env_file/ports）。extends 合并语义
-  （rec_merge / L2844-L2849 路径解析）见 [quant-overlay.md](quant-overlay.md) §4.1。
+  environment、`labels.component`；`xmnn-ccache`/`xmnn-jupyter` 两个命名卷
+  等栈专属卷保持栈内声明（基文件无 volumes/build/env_file/ports）。extends
+  合并语义（rec_merge / L2844-L2849 路径解析）见 [quant-overlay.md](quant-overlay.md) §4.1。
+- up 成功横幅在配置了 `JUPYTER_TOKEN` 时额外打印「直达」行
+  （`http://localhost:<jupyter 端口>/lab?token=...`，内核通用 helper
+  `overlay_core.jupyter_direct_url`，四栈同构；token 为空不打印），
+  使容器重建后免登录直达，与 C22 共同消除重建即重登体验。
 - 调试环境变量（PYTHONPATH/TVM_LIBRARY_PATH/LD_LIBRARY_PATH/NPU_TOOLS_ROOT/
   XMNN_TOOLS_ROOT）经 compose environment 注入；LD_LIBRARY_PATH 必须含
   npu_tvm/build、build/vta 与 /opt/conda/envs/main/lib（非登录 exec 不读

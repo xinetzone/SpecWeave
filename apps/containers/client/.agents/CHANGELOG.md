@@ -6,6 +6,83 @@
 
 ## [Unreleased]
 
+### 2026-09-20 · `fix:` 容器重建轮换 Jupyter cookie secret——Terminal 被浏览器层静默中止（C22 / C-I6）
+
+> 编号说明：本条初版曾占用 C21，与同日 xinzo 已先入库的 C21（`up` 就绪等待 /
+> W-I18，见下条）撞号；rebase 到 origin/main 后本条顺延为 **C22**，改号前的
+> 本地三提交保留在备份分支 `backup/c22-login-state-pre-rebase`。
+
+**关联七概念场景**：场景2「问题解决」（F→V→C→R→I→E，V 门强制，session `sc-20260920-jupyter-terminal-login`）。
+
+**I 洞察（四元组）**：**现象**——xmnn-dev 栈当日 09:28-09:30 由 `invoke xmnn.up --offline`
+重建后，浏览器旧标签页点击 JupyterLab **Terminal 打开失败**（Console 见
+`PUT /lab/api/workspaces/default` `net::ERR_ABORTED`，另有 Trae 预览注入 `/@vite/client`
+404 的良性噪声）；**根因**——`jupyter_cookie_secret`/`notebook_secret` 位于容器临时层
+（`/home/devuser/.local/share/jupyter`）且无持久化卷，容器重建即重新生成，旧标签页
+cookie 失效后其 `POST /api/terminals` 请求**在浏览器层被重定向/中止、从未到达服务端**
+（访问日志零记录，09:31:16 有 `Clearing invalid/expired login cookie`，09:33:02 重新登录）；
+**影响**——故障表象在 PTY/WebSocket/权限（误导排查方向），实则是纯登录态失效；
+**建议**——第一刀先二分「失败请求是否到达服务端日志」，未到达即认证/浏览器层，
+不再下查容器权限；预防上把密钥目录持久化，并让重建后免登录直达成本为零。
+
+**F 第一性原理（Terminal 打开必要条件链）**：浏览器持有效登录 cookie → REST
+`POST /api/terminals` 过认证并 200 → WS 升级 `/terminals/websocket/<n>`（注意**无**
+`/api` 前缀）→ 服务端 terminado 以 devuser `pty.openpty()` + `/bin/bash` 拉起 shell。
+四段逐级实测：curl REST 200、容器内 tornado 回环 WS 回显成功、devuser pty+bash 正常、
+token 直访与 127.0.0.1 表单登录两路径 Terminal 均成功——唯一断裂点在链首的 cookie。
+
+**V 对抗审查（四视角）**：① **魔鬼代言人**"是 PTY/rootless 权限坏了，应查 usermod/
+SELinux/重建镜像"：**证伪**——四连测试全部通过，且服务端对浏览器的失败请求零日志，
+权限故障不会让请求消失在到达之前；② **新人**"WS 404 了，是不是 terminado 版本不兼容"：
+**证伪**——那条 404 是诊断者自己误打 `/api/terminals/websocket/` 产生（正确路径无
+`/api`），与用户故障无关；③ **老板**"让用户硬刷新重登就算修好"：否决——根因是每次
+重建必然复发的结构性缺陷，恢复动作≠修复，必须持久化密钥；④ **未来**"为何不用 bind
+挂宿主家目录或全局共享一个 secret 文件"：否决——引入宿主路径耦合、跨栈密钥串用与
+uid 漂移风险，命名卷 copy-up 保属主（1000:1000/700 实测）是 rootless 下的正确接缝。
+
+**C 原子修复**：① `overlays/xmnn-dev/compose.yaml` 服务 volumes 增加
+`- xmnn-jupyter:/home/devuser/.local/share/jupyter`（附实证注释），顶层
+`volumes:` 增加 `xmnn-jupyter: {}`；② `tasks/overlay_core.py` 新增纯函数
+`jupyter_direct_url(port, token)`（token 空/空白/None → 空串，否则
+`http://localhost:{port}/lab?token={token}`），`up_stack()` 横幅在 Jupyter 行后打印
+「直达」行（env 经 prepare_env → `_load_env_overrides` 读 .env，python-dotenv 可容忍
+该文件的 CRLF）；③ `tasks/xmnn.py` 的 `down_volumes_help` 文案同步为「同时删除
+xmnn-ccache 与 xmnn-jupyter 命名卷（默认保留：Nuitka 编译缓存 + Jupyter 登录态）」。
+
+**验收点**：① 真机（2026-09-20 10:21-10:26，用户批准后 `invoke xmnn.down` ×2 +
+`xmnn.up --offline` ×2）——curl `POST /api/terminals` 200、容器内 tornado WS 回环成功、
+devuser pty 正常、浏览器两登录路径 Terminal 均打开（用户现场确认恢复），诊断终端全部
+DELETE 清理（`GET /api/terminals` → `[]`）；新卷真机三连证：挂载
+`xmnn-dev_xmnn-jupyter → /home/devuser/.local/share/jupyter`（devuser:devuser 700、
+devuser 可写）、密钥实际落 `runtime/jupyter_cookie_secret`（600）、**两次重建前后
+md5 逐字一致**（`8c4b86e5…`），重建前 token 换取的登录 cookie 在重建后**不带 token**
+`GET /api/terminals` → 200、`POST` 带浏览器同款 `X-XSRFToken` 头 → 200（裸 POST 403
+`'_xsrf' argument missing` 属 XSRF 防护预期，非认证失败），测试终端已 DELETE；up 横幅
+两次均打印「直达」URL；② 卷接缝——`podman run -v xmnn-jupyter-voltest:...`
+实测镜像内 1000:1000/mode 700 目录 copy-up 后属主保持、devuser 可写（测试卷已清理）；
+真实 `podman-compose config`（经 `prepare_env(XMNN_SPEC)`+`compose_argv`）渲染含两个命名卷；
+③ 单测——`test_compose_merge.py` 黄金快照 volume_targets 增列
+`/home/devuser/.local/share/jupyter`（顺序 /workspace、npu_tvm、npuusertools、models、
+/root/.ccache、jupyter）；`test_overlay_core.py` 新增 3 测试函数/5 用例锁 `jupyter_direct_url`
+（带 token、strip 空白、空/空白/None 三参数化返回空串）；与 C21（就绪等待）合并后
+全量 pytest 实测 **215 passed / 7 skipped / 2 failed**（215 = 合并前 208 + C21
+就绪等待新增 7）；2 个存量失败
+（`test_vs_real_rec_merge_probes`、`test_env_template_lf_only`）为改动前基线存量问题，
+与本次无关。
+
+**E 萃取（可复用模式，已固化为 docs C-I6）**：「UI 请求失败但服务端零日志 ⇒ 故障在
+认证/浏览器层，不在容器运行时」——先二分到达性再查权限；另：Jupyter WS 路径是
+`/terminals/websocket/<n>`，REST 才带 `/api`，排障探测勿混用。
+
+**C 同步**：代码/测试 5 文件（`compose.yaml`、`overlay_core.py`、`xmnn.py`、
+`tests/test_compose_merge.py`、`tests/test_overlay_core.py`）随 `fix(client)` =
+`bcfe811b4` 落库；文档 6 处（本文件、[AGENTS.md](../../AGENTS.md) P0 C22 + 变更日志、
+[04-troubleshooting-guide.md](../../docs/04-troubleshooting-guide.md) 新增 C-I6、
+[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §5/§6、
+[docs/11-xmnn-overlay.md](../../docs/11-xmnn-overlay.md)、
+[overlays/xmnn-dev/README.md](../../overlays/xmnn-dev/README.md)）随 `docs(client)`
+提交落库；两个提交 hash 由随后的回填提交补记（沿用 C20/C21 三段式）。
+
 ### 2026-09-20 · `fix:` `up` 只等容器不等服务——Jupyter 就绪前浏览器必报 `ERR_EMPTY_RESPONSE`（C21）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session `sc-20260920-port8890`）。

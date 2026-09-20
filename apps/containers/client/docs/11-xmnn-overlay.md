@@ -18,7 +18,7 @@ invoke xmnn.up --skip-build           # 启动栈：SSH 2223 / Jupyter 8890
 invoke xmnn.smoke                     # 工具链守卫 + 源码挂载检查
 invoke xmnn.build-tvm                 # 可选：栈内编译 build/libtvm.so（已存在则跳过）
 invoke xmnn.wheel                     # Nuitka 全流程打包，wheel 落 workspace/dist
-invoke xmnn.down                       # 停止清理（ccache 卷默认保留）
+invoke xmnn.down                       # 停止清理（ccache/Jupyter 登录态卷默认保留）
 ```
 
 - **构建参数单一事实源（C15）**：`invoke xmnn.build` 与 `up` 的内联构建都读 `.env`
@@ -37,8 +37,17 @@ invoke xmnn.down                       # 停止清理（ccache 卷默认保留�
   labels/restart 与 `network_mode: bridge` 统一在
   [../_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml)
   （三栈共享单一事实源），栈 compose.yaml 以 extends 继承，只保留栈专属
-  image/build/ports/四个 bind/调试 env/组件 label；`xmnn-ccache` 命名卷
-  等栈专属卷仍在栈文件声明。
+  image/build/ports/四个 bind/调试 env/组件 label；`xmnn-ccache`、`xmnn-jupyter`
+  命名卷等栈专属卷仍在栈文件声明。
+- **Jupyter 登录态持久化（C22）**：命名卷 `xmnn-jupyter` 挂容器内
+  `/home/devuser/.local/share/jupyter`（cookie/notebook 签名密钥所在目录，
+  镜像内属主 1000:1000/mode 700，新卷 copy-up 属主实测保持），普通
+  `down/up` 重建后浏览器旧标签页**免重登**；仅 `down --volumes` 与
+  `xmnn-ccache` 一并清除。修复前重建即轮换密钥，旧标签页 Terminal/notebook
+  请求在浏览器侧被中止（服务端零日志），排障见
+  [04 速查 C-I6](04-troubleshooting-guide.md)。同时 `invoke xmnn.up` 成功横幅
+  在配置了 `JUPYTER_TOKEN` 时打印「直达」URL（`/lab?token=...`，免登录，
+  token 勿外传；token 为空不打印）。
 - **源码路径**：默认挂载仓库根 `external/chaos/{npu_tvm,npuusertools,models}`；
   可在 `.env` 用 `NPU_TVM_PATH` / `NPUUSERTOOLS_PATH` / `MODELS_PATH`
   覆盖（invoke 路径做存在性硬校验）。TVM 全量编译在 9p 上较慢，可把路径
@@ -104,7 +113,13 @@ invoke xmnn.logs   # 找「[IMPORTANT] devuser password: ...」与「Token: ...�
                    # Ctrl+C 仅退出日志跟踪，不影响容器运行
 ```
 
-已在 `.env` 预设凭证时，直接用预设值登录（日志不再打印随机值横幅）。
+已在 `.env` 预设凭证时，直接用预设值登录（日志不再打印随机值横幅）；
+此时 `invoke xmnn.up` 横幅会打印带 token 的「直达」URL，点开即免登录。
+
+> 普通 `down/up` 重建不影响登录态（`xmnn-jupyter` 命名卷持久化，C22）；
+> 若执行过 `down --volumes` 或升级到 C22 之前的版本，旧标签页会被踢回登录，
+> `Ctrl+Shift+R` 硬刷新后重登即可——这是密钥轮换的预期表现，不是 Terminal/
+> 权限故障，判别步骤见 [04 速查 C-I6](04-troubleshooting-guide.md)。
 
 ### JupyterLab
 

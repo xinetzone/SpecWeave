@@ -80,16 +80,22 @@ podman-compose -p xmnn-dev exec xmnn \
     bash /opt/xmnn-builder/scripts/verify-wheel.sh   # 10 项隔离验证（临时 venv，不污染源码环境）
 
 invoke xmnn.logs                         # 跟踪日志（Ctrl+C 退出）
-invoke xmnn.down                         # 停止清理（workspace/源码保留；ccache 卷保留）
-invoke xmnn.down --volumes               # 连 xmnn-ccache 命名卷一起删除
+invoke xmnn.down                         # 停止清理（workspace/源码保留；ccache/登录态卷保留）
+invoke xmnn.down --volumes               # 连 xmnn-ccache、xmnn-jupyter 命名卷一起删除
 ```
 
 启动后访问（凭证可由环境变量覆盖，见 `.env.example`）：
 
 | 服务 | 地址 | 凭证 / 入口 |
 |---|---|---|
-| JupyterLab | http://localhost:8890 | `JUPYTER_TOKEN`（留空则自动生成）；内核选 **Python 3.14 (xmnn dev)** |
+| JupyterLab | http://localhost:8890 | `JUPYTER_TOKEN`（留空则自动生成）；内核选 **Python 3.14 (xmnn dev)**；`invoke xmnn.up` 横幅会打印带 token 的「直达」URL，免登录 |
 | SSH | `ssh -p 2223 devuser@localhost` | `USER_PASSWORD`（留空自动生成） |
+
+> **登录态持久化**：Jupyter cookie/notebook 签名密钥存于命名卷 `xmnn-jupyter`
+> （容器内 `/home/devuser/.local/share/jupyter`），普通 `down/up` 重建容器后
+> 浏览器无需重新登录；仅 `down --volumes` 才会清除（清除后重新登录属预期）。
+> 旧标签页若在重建后提示失败，硬刷新（Ctrl+Shift+R）重登即可，详见
+> [docs/04 排障速查 C-I6](../../docs/04-troubleshooting-guide.md)。
 
 ## 路径二：裸 podman-compose
 
@@ -136,6 +142,9 @@ podman-compose down
   宿主可见；该目录被 client `.gitignore` 忽略）。
 - **编译缓存**：Nuitka C 编译缓存在命名卷 `xmnn-ccache`（/root/.ccache），
   重复打包自动命中；`--clean` 仅当次禁用 ccache，不清缓存。
+- **登录态缓存**：Jupyter cookie/notebook 密钥在命名卷 `xmnn-jupyter`
+  （/home/devuser/.local/share/jupyter），普通 down/up 重建免重登；
+  仅 `down --volumes` 清除。
 
 ## 性能提示（9p）
 
