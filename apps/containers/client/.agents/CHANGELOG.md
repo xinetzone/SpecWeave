@@ -69,7 +69,7 @@ token 源改为 `回读值 or .env`（预设时二者同源，行为不变）；
 
 **C 同步**：代码 + 测试提交 `feat(client)` = `257d694fa`
 （`src/jpman_client/tasks/overlay_core.py` / `tests/test_overlay_core.py`）；
-文档提交 `docs(client)` = （待回填）（
+文档提交 `docs(client)` = `aefcaf6d9`（
 [rules/xmnn-overlay.md](rules/xmnn-overlay.md) §6 C24、
 [docs/11-xmnn-overlay.md](../docs/11-xmnn-overlay.md) 凭证段、
 [overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)、
