@@ -50,6 +50,8 @@ class FakeRunner:
         cdi: bool = False,
         container_logs: str = "",
         image_labels: dict | None = None,
+        nvidia_smi_ok: bool = True,
+        nvidia_smi_out: str = "",
     ):
         self.calls: list[tuple[str, dict]] = []
         self.running = running
@@ -74,6 +76,10 @@ class FakeRunner:
         # None = 不注入 → 返回空 stdout → JSON 解析失败 → 形态「无法判定」，
         # 既有用例（未声明本参数）零影响；{} = 有 Labels 但无 torch 形态键。
         self.image_labels = image_labels
+        # NVIDIA CDI 路径的宿主驱动健康探针（check_nvidia_driver_health）：
+        # 默认健康；失配用例注入 nvidia_smi_ok=False + 原生报错文本。
+        self.nvidia_smi_ok = nvidia_smi_ok
+        self.nvidia_smi_out = nvidia_smi_out
 
     def __call__(self, c, cmd, **kwargs):
         self.calls.append((cmd, kwargs))
@@ -86,6 +92,13 @@ class FakeRunner:
                 ok=self.cdi,
                 stdout="/etc/cdi/nvidia.yaml\n" if self.cdi else "",
                 return_code=0 if self.cdi else 2,
+            )
+        if cmd.strip() == "nvidia-smi":
+            return SimpleNamespace(
+                ok=self.nvidia_smi_ok,
+                stdout=self.nvidia_smi_out if self.nvidia_smi_ok else "",
+                stderr="" if self.nvidia_smi_ok else self.nvidia_smi_out,
+                return_code=0 if self.nvidia_smi_ok else 9,
             )
         if "ps -a -q" in cmd:
             return SimpleNamespace(ok=True, stdout=self.stale, return_code=0)
@@ -537,6 +550,62 @@ def test_resolve_gpu_device_autoprobes_dri(harness, monkeypatch):
     assert os.environ["GPU_DEVICE"] == "/dev/dri"
 
 
+def test_resolve_gpu_device_nvidia_cdi_precedes_dri(harness, monkeypatch):
+    """纯 N 卡宿主（2026-09-20 真机故障）：nvidia_drm 也注册 /dev/dri，但
+    CDI 规格 + /dev/nvidiactl 双条件满足时必须优先选 CDI——走 /dev/dri 不
+    注入 libcuda/nvidia-smi，容器内 CUDA 恒不可用。"""
+    monkeypatch.delenv("GPU_DEVICE", raising=False)
+    harness.runner.cdi = True
+    harness.runner.paths = {"/dev/dri", oc.NVIDIA_CONTROL_NODE}
+    token, form = oc.resolve_gpu_device(None, _XMNN, {})
+    assert (token, form) == (oc.NVIDIA_CDI_TOKEN, "generic")
+    assert os.environ["GPU_DEVICE"] == oc.NVIDIA_CDI_TOKEN
+
+
+def test_resolve_gpu_device_cdi_spec_without_nvidiactl_falls_back_to_dri(harness):
+    """守卫第二条件失败（有规格无 N 卡控制节点，异常/残留组合）→ 不选 CDI，
+    回退 /dev/dri，避免把不存在的设备引用下发给 podman。"""
+    harness.runner.cdi = True
+    harness.runner.paths = {"/dev/dri"}
+    assert oc.resolve_gpu_device(None, _XMNN, {}) == ("/dev/dri", "generic")
+
+
+def test_resolve_gpu_device_nvidia_driver_mismatch_fails_fast(
+    harness, monkeypatch, capsys
+):
+    """CDI 路径的宿主驱动健康门禁：nvidia-smi 报 NVML version mismatch
+    （内核模块未随驱动升级重载）时必须 up 前 fail-fast 并给重启/重载指引。"""
+    monkeypatch.delenv("GPU_DEVICE", raising=False)
+    harness.runner.cdi = True
+    harness.runner.paths = {"/dev/dri", oc.NVIDIA_CONTROL_NODE}
+    harness.runner.nvidia_smi_ok = False
+    harness.runner.nvidia_smi_out = (
+        "Failed to initialize NVML: Driver/library version mismatch\n"
+        "NVML library version: 595.91\n"
+    )
+    with pytest.raises(Exit) as ei:
+        oc.resolve_gpu_device(None, _XMNN, {})
+    assert ei.value.code == 1
+    out = capsys.readouterr().out
+    assert "nvidia-smi 无法运行" in out
+    assert "version mismatch" in out
+    assert "重启宿主" in out
+    assert "nvidia-ctk cdi generate" in out
+
+
+def test_resolve_gpu_device_explicit_cdi_also_requires_healthy_driver(
+    harness, monkeypatch, capsys
+):
+    """显式 CDI 引用同过健康探针：CDI 只搬运宿主要素，不修宿主驱动故障。"""
+    monkeypatch.setenv("GPU_DEVICE", "nvidia.com/gpu=all")
+    harness.runner.cdi = True
+    harness.runner.nvidia_smi_ok = False
+    harness.runner.nvidia_smi_out = "Failed to initialize NVML: Driver/library version mismatch"
+    with pytest.raises(Exit):
+        oc.resolve_gpu_device(None, _XMNN, {})
+    assert "重启宿主" in capsys.readouterr().out
+
+
 def test_resolve_gpu_device_autoprobes_wsl_requires_all_gpu_paths(
     harness, monkeypatch, capsys
 ):
@@ -573,7 +642,8 @@ def test_resolve_gpu_device_no_device_fails_fast(harness, capsys):
         oc.resolve_gpu_device(None, _XMNN, {})
     assert ei.value.code == 1
     out = capsys.readouterr().out
-    assert "/dev/dri / /dev/dxg 均不存在" in out
+    assert "/dev/dri / /dev/dxg" in out and "均不存在" in out
+    assert "nvidia-ctk cdi generate" in out
     assert "GPU_DEVICE" in out
 
 
@@ -1563,6 +1633,27 @@ def test_up_banner_omits_credentials_when_unreadable(harness, monkeypatch, capsy
     out = capsys.readouterr().out
     assert "密码" not in out
     assert "直达" not in out
+
+
+def test_up_banner_prints_copyable_ssh_command(harness, capsys):
+    """SSH 行必须是**完整可复制命令**（含 -p 与用户名）。
+
+    只印裸地址 `localhost:2223` 时用户按习惯敲 `ssh devuser@localhost` 会落到
+    宿主自身 sshd（宿主无 devuser 用户）而必报 Permission denied——ssh 不支持
+    user@host:port 语法，端口只能经 -p 表达（04-troubleshooting-guide.md C-I8）。
+    """
+    oc.up_stack(None, _XMNN, skip_build=True)
+    out = capsys.readouterr().out
+    assert "ssh -p 2223 devuser@localhost" in out
+    # 端口须随 spec/环境变量漂移，不得写死默认值
+    assert "SSH     localhost:" not in out
+
+
+def test_up_banner_ssh_command_follows_port_env(harness, monkeypatch, capsys):
+    """端口经 `.env`/环境覆盖时命令同步变化（否则用户连到错误端口）。"""
+    monkeypatch.setenv(_XMNN.ssh_port_env, "2299")
+    oc.up_stack(None, _XMNN, skip_build=True)
+    assert "ssh -p 2299 devuser@localhost" in capsys.readouterr().out
 
 
 # ---------------------------------------------------------------------------

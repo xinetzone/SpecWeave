@@ -267,6 +267,205 @@ Jupyter `!nvcc -V` 与 exec 同 PATH（`/usr/local/bin` 在镜像默认 PATH）�
 [.env.example](../.env.example)。提交 `fix(client)` = `1cd53ab48`、
 `docs(client)` = `10f633d64`。
 
+### 2026-09-20 · `fix:` SSH 会话补齐源码调试环境——`import xmnn/tvm` 不再 `ModuleNotFoundError`（C30 / 排障 C-I9）
+
+**关联七概念场景**：场景2「问题解决」完整链路 I→F→V→C（强制 V 门）。
+起点：用户 `ssh -p 2223 devuser@localhost` 进 xmnn-dev 容器执行
+`python tools/accuracy.py -n debug.iranti_caffe` 报
+`ModuleNotFoundError: No module named 'xmnn'`；`conda activate base` 后**仍报同样错**；
+交互式 `import tvm` 报 `No module named 'tvm'`。
+
+**I 洞察（G2 门，四元组）**：
+① 现象——SSH 会话内 import 全失败，而**同一容器**的 Jupyter「Python 3.14 (xmnn dev)」
+内核与 `podman exec` 下同样的 import 全部正常；② 根因——compose `environment` 注入的
+5 个调试变量（`PYTHONPATH`/`TVM_LIBRARY_PATH`/`LD_LIBRARY_PATH`/`NPU_TOOLS_ROOT`/
+`XMNN_TOOLS_ROOT`）只到达容器 PID 1 与 Jupyter 内核（kernel.json 内嵌），
+**sshd 派生的会话不继承容器 config env**；③ 影响——tvm/vta/xmnn 经 `PYTHONPATH`
+从 `/workspace` 挂载树导入（**不是** site-packages），变量缺失即全链失效，且报错
+形态直指「包缺失/镜像损坏」，把排障方向带偏；④ 建议——在**镜像内**补齐环境，
+而非要求使用者手工 `export`。
+反证/对照实验：`podman exec xmnn-dev printenv` 五键齐全；交互式 `ssh -tt` 与
+`ssh host "cmd"` 两形态实测五键**全空**；仅把这 5 个变量注入 SSH 会话后
+`/opt/conda/bin/python -c "import tvm, xmnn; from xmnn.accuracy_api import accuracy_xmnn"`
+立即通过（tvm ← `/workspace/npu_tvm/python/tvm`、xmnn ← `/workspace/npuusertools/xmnn`）。
+
+**F 第一性原理**：SSH 会话的环境有两条**各自独立**的通路，且都绕开容器 config env——
+① login shell 经 `/etc/profile` → `/etc/profile.d/*`；② `ssh host "cmd"` 的最外层
+`bash -c` **不读任何 shell 启动文件**（实测：bash 仅在执行**脚本文件**时读 BASH_ENV，
+`-c` 命令串不读）。故任何单通道方案必留缺口，只能双通道——基底 entrypoint 早已用
+sshd `SetEnv` 注入 `CONTAINER_HOST`（其注释即写明「SetEnv 是唯一不经任何 shell
+启动文件的注入点」），本次沿用同一先例；且基底 entrypoint **无 hook 机制**，故落点
+必须在本 overlay 镜像侧。
+
+**V 对抗（六条）**：① **first-wins 陷阱**——`SetEnv` 写成 5 行时 `sshd -T` **只回显
+第一条**、其余静默丢弃（实测），必须写成**单行空格分隔**，否则「注入成功但只有 1 个
+变量生效」比原缺陷更难察觉；② sshd **不按连接重读** sshd_config（实测：只改文件、
+不 SIGHUP 时新连接仍拿不到），脚本须补 SIGHUP 分支（构建期无 sshd 自动跳过；已建立
+会话不受影响，`sshd-session` 是独立进程）；③ 幂等——标记行若不参与清理会随每次执行
+**累积**（实测连跑 3 次留 3 行），已并入 sed 清理；④ 安全——`sshd -t` 失败必须
+**整段回滚**，绝不让容器因注入而起不来 sshd；⑤ 漂移——同一组值在 compose
+`environment`、kernel.json（`register-kernel.sh`）、本脚本有**三份副本**，任何一处
+改漏都复现「内核可用、SSH 不可用」，须由单测逐字锁死；⑥ **第二个独立陷阱**——
+SSH 默认落在 **main env**（cp314t，**无 numpy**），补上 `PYTHONPATH` 后若仍用裸
+`python` 会改报 `No module named 'numpy'`，故文档必须写明解释器口径
+（`/opt/conda/bin/python` 或 `conda activate base`）。
+补充：测试替身（临时 sshd_config 路径）不得触发 SIGHUP，故重载分支以「改写的正是
+默认 `/etc/ssh/sshd_config`」为前置条件，避免误伤宿主/其它 sshd 进程。
+
+**C 原子提交**：
+- 新增 [overlays/xmnn-dev/scripts/setup-ssh-env.sh](../overlays/xmnn-dev/scripts/setup-ssh-env.sh)：
+  通道① `/etc/profile.d/50-xmnn-dev-env.sh`（`${VAR:=默认}` 语义，已注入则不覆盖）；
+  通道② sshd_config 单行 `SetEnv`（含标记行、幂等清理历史多行形态）；`sshd -t` 校验
+  失败整段回滚 + `sshd -T` 计数自检（把 first-wins 从静默失败变成**构建期硬失败**）
+  + 运行期 SIGHUP；三个路径可经环境变量改写仅供测试（生产即默认值）。
+- [Containerfile.xmnn-dev](../overlays/xmnn-dev/Containerfile.xmnn-dev) Layer 5
+  与 `register-kernel.sh` 同批执行该脚本（Layer 4 已 `COPY scripts/`，无需改 COPY）。
+- 新增 [tests/test_xmnn_dev_ssh_env.py](../tests/test_xmnn_dev_ssh_env.py) 7 例：
+  三份副本逐字防漂移（compose ↔ kernel.json ↔ 脚本）+ 临时目录实跑（profile.d 内容、
+  单行 SetEnv、幂等含标记行、陈旧多行清理、`sshd -t` 失败回滚）。
+- 文档闭环：[docs/04](../docs/04-troubleshooting-guide.md) 新增 **C-I9**（含判据、
+  老镜像一行 `export` 逃生、解释器口径、first-wins 说明）、
+  [docs/11](../docs/11-xmnn-overlay.md) 服务表后新增「SSH 会话自带源码调试环境」段
+  + 排障表 `import tvm` 行改写、[overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)
+  调试工作流两段改写、[AGENTS.md](../AGENTS.md) P0 清单 C26 与变更日志。
+
+**验收**：`pytest tests/test_xmnn_dev_ssh_env.py -q` → **7 passed**；
+**变异测试**（把脚本改回「每变量一行 SetEnv」）→ 确定性失败 3 例（脚本自检报
+`[ssh-env] ERROR: sshd -T reports 1 setenv entries, expected 5`），还原后 7 passed；
+全量 `pytest tests/ -q`（py314）→ **254 passed / 7 skipped / 1 failed**（唯一失败
+`test_vs_real_rec_merge_probes` 为既有预存在，与本次无关）。
+真机：把脚本即时写入运行中容器（`podman cp` + `podman exec bash`）后，
+`ssh host "cmd"` 与 login shell（`bash -lc`）两形态 `import tvm, xmnn` 均通过，
+用户原始命令的 `ModuleNotFoundError` 消除——余下
+`FileNotFoundError: 文件 temp/debug.iranti_caffe/accuracy/outputs/59.bin 不存在`
+属该网络输入数据缺失，与本缺陷无关；容器内自检 `marker=1 / SetEnv=1 / mode=777`
+（幂等与文件权限均保持）。
+
+**注意**：镜像侧修复需 `invoke xmnn.build && invoke xmnn.up --skip-build` 重建容器
+才持久（重建后 SSH 密码会重新回读、横幅重印；Jupyter 登录态与 host key 已持久化）；
+老镜像按 C-I9 在会话内一行 `export` 逃生。本批全部改动**未提交 git**（用户要求先不提交）。
+
+### 2026-09-20 · `fix:` `up` 横幅 SSH 行改印完整命令（C29 / 排障 C-I8）
+
+**关联七概念场景**：场景2「问题解决」完整链路 I→F→V→C（强制 V 门）。
+起点：用户在宿主终端执行 `ssh devuser@localhost`，输入 `invoke xmnn.up` 横幅
+打印的密码后连续三次 `Permission denied, please try again.`，疑为密码错或
+C24 凭证回读失效。
+
+**I 洞察（G2 门，四元组）**：
+① 现象——未带 `-p` 的 ssh 在宿主终端被拒；② 根因——宿主 `0.0.0.0:22` 由
+**宿主自身 sshd** 监听（`ss -ltnp` 见 `sshd: /usr/sbin/sshd -D [listener]`），
+而宿主无 `devuser` 用户（`getent passwd devuser` 为空），密码比对必然失败，
+容器 SSH 只在宿主 2223/2222/2224/2225；③ 影响——报错与「密码错」不可区分，
+用户按「凭证链路故障」排障，成本高且会误改 C24 链路；④ 建议——横幅给
+**零翻译可执行**的完整命令。反证：同密码 `ssh -p 2223 devuser@localhost`
+登录成功（`uid=1000(devuser)`）、容器 `/etc/shadow` 有 devuser 条目、
+`sshd_config` 为 `PasswordAuthentication yes`、启动日志
+`[IMPORTANT] devuser password:` 与横幅逐字一致 → **凭证链路全通**。
+
+**F 第一性原理**：ssh 客户端**不支持** `user@host:port` 语法，而本栈端口
+非默认（22 被宿主占用，容器不可能用 22）→ 裸地址形态**结构性丢失端口信息**，
+唯一零歧义表达是完整命令行（同仓 `client_core.py` 访问信息横幅早已如此，
+overlay 内核是唯一例外）。
+
+**V 对抗（六条）**：① 只改文案不改肌肉记忆 → 必须同步排障表；
+② 端口若为 22，`-p 22` 仍合法，无回归；③ 禁止把密码并入命令行（进 shell
+history 与 `ps`），密码仍走独立行；④ 列宽与 `Jupyter ` 对齐，版式不变；
+⑤ 改动落在共享内核一处，四栈同受益；⑥ **独立发现**——known_hosts 中
+`[localhost]:2223` 是 host key 卷引入**之前**的旧指纹，修好 `-p` 后首连
+必撞 `REMOTE HOST IDENTIFICATION HAS CHANGED`，须同批给一次性重置指引。
+
+**C 原子提交**：
+- [overlay_core.py](../src/jpman_client/tasks/overlay_core.py) `up_stack`
+  横幅 SSH 行由 `localhost:{port}` 改为 `ssh -p {port} devuser@localhost`
+  （端口取 `_env_port`，随 `.env`/环境漂移，不写死）。
+- [tests/test_overlay_core.py](../tests/test_overlay_core.py) 新增 2 例：
+  `test_up_banner_prints_copyable_ssh_command`（含 `-p` 与用户名，并断言
+  裸地址形态不再出现）、`test_up_banner_ssh_command_follows_port_env`
+  （端口随 env 漂移）。
+- 文档闭环：[docs/04](../docs/04-troubleshooting-guide.md) 新增 **C-I8**
+  （含「宿主 22 ≠ 容器映射」判别式、`ssh-keygen -R "[localhost]:2223"`
+  一次性重置）、[docs/11](../docs/11-xmnn-overlay.md) 横幅描述、
+  [AGENTS.md](../AGENTS.md) P0 清单 C25 与变更日志。
+
+**验收**：`pytest tests/test_overlay_core.py -q` → **109 passed / 1 skipped**；
+全量 `pytest tests/ -q`（py314）→ 首轮 **246 passed / 7 skipped / 2 failed**，
+2 例为既有记录在案的预存在失败（`test_vs_real_rec_merge_probes` 的
+podman-compose rec_merge 分歧、`test_env_template_lf_only` 的 xmnn-runtime
+`release/.env.example` CRLF），与本次无关；后者已在本批归一化行尾后转绿
+（见下「同批行尾归一化」）。真机侧：本次未重建容器（横幅文案随
+下一次 `up` 生效），但根因链已用 `ssh -p 2223` + 横幅密码端到端证实。
+**同批收口（用户追加要求，先不提交）**：`overlays/xmnn-runtime/Containerfile.xmnn-runtime`
+Layer 4 的**构建完成横幅**（非容器内 MOTD，此前表述有误，已更正）原印
+`# services : SSH localhost:2225, Jupyter localhost:8893 (invoke xmnnrt.up)`
+——同一裸地址形态，且把**宿主端口**当作镜像事实印出（镜像构建期根本不知道
+宿主端口，2225/8893 只是 `release/.env` 的默认值，可由 `XMNN_SSH_PORT` /
+`XMNN_JUPYTER_PORT` 覆盖）。改为命令形态并标注端口来源：
+`# services : ssh -p 2225 devuser@localhost（宿主端口，发布栈默认；XMNN_SSH_PORT 可覆盖）`
++ `#            JupyterLab http://localhost:8893（…；启动 invoke xmnnrt.up）`。
+口径与 `release/xmnnctl.ps1::Print-Banner`（`SSH : ssh -p $sport devuser@localhost`，
+端口取 `.env`）和 [overlays/xmnn-runtime/README.md](../overlays/xmnn-runtime/README.md)
+L87（`ssh -p 2225 devuser@localhost`）一致——发布路径本就正确，仅镜像构建
+横幅是例外。该文件工作拷贝为 CRLF（git `text: auto` 归一化，`git diff` 仅
+2 增 1 删，无噪声），新增两行已对齐为 CRLF 以保持单文件行尾统一。未重建
+镜像（横幅随下次 `xmnnrt.build` 生效），无测试断言该横幅文本（全仓仅
+`test_compose_merge.py` 引用 Containerfile 文件名）。
+
+**同批行尾归一化（用户追加要求）**：`overlays/xmnn-runtime/release/.env.example`
+本地工作拷贝为 CRLF，命中 `test_env_template_lf_only`（该守卫**直接读字节**，
+故能检出 git 归一化所掩盖的 CRLF；CRLF 会污染 bash/compose）。已把该文件
+29 行 CRLF 全部归一化为 LF——`file` 判为纯 `UTF-8 text`（不再报 CRLF），
+29 行 / 1302 字节，**内容逐行不变**（仅行尾）。**无仓库级改动**：
+`git hash-object --path` 与索引 blob 均为 `3999d989291e7195be701f5a486fa7115e47c302`、
+`git diff --quiet` 退出码 0（该文件带 `text: auto`，git 读入时本就归一化），
+刷新 stat 缓存后 `git status` 转干净——即本项是**本地工作拷贝卫生**，不产生
+待提交内容。**注意**：CRLF 是 Windows 侧工作拷贝 / 外部进程写入的产物，可能
+再次出现，该守卫正是为捕获此回归而存在。效果：`pytest tests/ -q`（py314）→
+**247 passed / 7 skipped / 1 failed**，仅剩 `test_vs_real_rec_merge_probes`
+（podman-compose rec_merge 分歧）这一既有预存在失败。同目录
+`overlays/xmnn-runtime/.env.example`（31 行）与 `Containerfile.xmnn-runtime`
+（132 行）仍为 CRLF：前者无守卫覆盖、后者已在本批把新增行对齐为 CRLF 以
+保持单文件行尾统一，二者均**未改动**。
+
+### 2026-09-20 · `fix:` xmnn-dev GPU 透传三层断裂修复——NVIDIA CDI 前置 + 宿主驱动健康探针（C19 / 排障 C-I10）
+
+**关联七概念场景**：场景2「问题解决」完整链路 F→R→V→I→E（强制 V 门）。
+起点：xmnn-dev 容器（127.0.0.1:8890）内 `!nvcc -V`/`!nvidia-smi` 均
+`not found`，`torch 2.14.0+cu130` 已装但 `cuda.is_available()=False`。
+
+**R 事实（G1 门）**：四个独立断点实证——① 宿主**驱动内核模块 595.71.05**
+（/proc/driver/nvidia/version）≠ **用户态库 595.91.07**（dpkg
+libnvidia-compute-595-server），宿主自身 `nvidia-smi` 报 `Failed to
+initialize NVML: Driver/library version mismatch`（7 月升级后模块从未重载）；
+② 纯 N 卡（RTX 3090 + 2080 Ti）加载 nvidia_drm 后**也注册 /dev/dri**，
+旧自动探测 `/dev/dri → /dev/dxg` 把 N 卡误判 DRM 形态，只挂渲染节点、
+不注入 libcuda（容器内无 /dev/nvidia*）；③ CDI 规格在 tmpfs
+`/var/run/cdi/nvidia.yaml`，内部 `host-driver-version=550.90.12` 已过期；
+④ llama-server 占用两卡，热重载障碍（用户拍板**重启宿主**规避）。
+
+**V 对抗 → I 根因**：断点②是代码层唯一可修根因，且修复必须让 Intel/AMD/WSL
+三既有路径零行为变化（双条件门）；断点①只能 fail-fast 把宿主损坏挡在 up
+之前。
+
+**A 行动**：
+- 编排层 [overlay_core.py](../src/jpman_client/tasks/overlay_core.py)：
+  新增 `NVIDIA_CDI_TOKEN`/`NVIDIA_CONTROL_NODE` 常量与
+  `check_nvidia_driver_health()`（宿主 nvidia-smi 探针，version mismatch
+  中文诊断 + CDI 重建指引）；`resolve_gpu_device` 自动探测改为
+  **CDI（规格 + /dev/nvidiactl 双条件）→ /dev/dri → /dev/dxg**，
+  显式/自动 CDI 均强制健康探针；--gpu help 同步。
+- 文档闭环（C10）：两份 `.env.example`、overlays/xmnn-dev/README.md
+  §GPU/torch、[docs/04](../docs/04-troubleshooting-guide.md) 新增 **C-I10**
+  （W-I15/W-I16 同步新探测顺序）、[rules/xmnn-overlay.md](rules/xmnn-overlay.md)
+  §11.1.1/§11.4。
+
+**验收**：`pytest tests/ -q` → **244 passed / 7 skipped / 2 failed**，
+2 个失败经 git stash 验证为**预存在**（podman-compose rec_merge 依赖、
+xmnn-runtime .env CRLF），与本次无关；新增 4 个 GPU 用例全绿。
+**真机端到端验证待用户重启宿主后执行**：重建 CDI（/etc/cdi 持久路径）→
+`invoke xmnn.build --torch cu130` → `xmnn.up --offline --gpu` → 容器内
+nvidia-smi 与 `torch.cuda.is_available()=True`（2 卡）。
+
 ### 2026-09-20 · `fix:` 三内部栈补齐 SSH host key 命名卷（quant / monetize / xmnnrt）
 
 **关联七概念场景**：场景2「问题解决」的闭环延伸——承接同日 xmnn-dev 栈

@@ -271,6 +271,20 @@
   XMNN_TOOLS_ROOT）经 compose environment 注入；LD_LIBRARY_PATH 必须含
   npu_tvm/build、build/vta 与 /opt/conda/envs/main/lib（非登录 exec 不读
   profile.d，libtvm 的 NEEDED 解析依赖此注入；spec FR-6 有留痕）。
+- **SSH 会话另需镜像侧补齐（C30）**：sshd 派生会话**不继承容器 config env**，
+  且 `ssh host "cmd"` 的最外层 `bash -c` 不读 `/etc/profile.d/*` 与
+  `.bashrc`/`BASH_ENV`（bash 仅在执行**脚本文件**时读 BASH_ENV）——上述 5 个
+  变量必须由镜像内 `overlays/xmnn-dev/scripts/setup-ssh-env.sh` 以**双通道**
+  补齐（`/etc/profile.d/50-xmnn-dev-env.sh` 覆盖 login shell + sshd_config 的
+  `SetEnv` 覆盖 cmd 形态），构建期在 `Containerfile.xmnn-dev` Layer 5 与
+  `register-kernel.sh` 同批执行。硬约束：① `SetEnv` 在 sshd_config 是
+  **first-wins**（写多行只认第一条，实测 `sshd -T` 仅回显首条），**禁止**
+  写成多行，且脚本须 `sshd -t` 校验失败回滚 + `sshd -T` 计数自检；
+  ② sshd **不按连接重读** sshd_config，运行期应用须 SIGHUP；③ 该值有三份副本
+  （compose environment / kernel.json / 该脚本），由
+  [tests/test_xmnn_dev_ssh_env.py](../../tests/test_xmnn_dev_ssh_env.py) 逐字锁死；
+  ④ SSH 默认落在 main env（cp314t，**无 numpy**），调试/打包用
+  `/opt/conda/bin/python` 或 `conda activate base`；排障见 docs/04 C-I9。
 - 端口默认 2223/8890（与 onnx 的 2222/8888 错开，支持并行）。
 
 ## 7. 标签接缝
@@ -383,7 +397,7 @@
   两条并列时 CDI 形态必有一条非法。
 - `GPU_DEVICE` 双形态（与根 `invoke run --gpu` 同键同语义）：
   ① `/` 开头 → 宿主机设备路径；② 其他 → CDI 引用（如 `nvidia.com/gpu=all`，
-  宿主先 `nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`）；
+  宿主先 `sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`）；
   ③ **未设/空 → 自动探测**（不再是「默认 `/dev/dri`」，见下条）。
 - `GPU_DEVICE` 已列入 `bridge_env_keys`——WSL 桥接只透传环境变量、不转发
   CLI 参数，遗漏会导致桥接后回退自动探测。
@@ -408,13 +422,28 @@
   决定覆盖文件（`gpu_override_file(spec, form)`）：
   | `form` | 覆盖文件 | 触发条件 |
   |---|---|---|
-  | `generic` | `compose.gpu.yaml` | `/dev/dri` 等 PCI 设备或 CDI 引用 |
+  | `generic` | `compose.gpu.yaml` | `nvidia.com/gpu=all`（显式 CDI 或自动命中）、`/dev/dri` 等 PCI 设备 |
   | `wsl` | `compose.gpu.wsl.yaml`（存在时；否则回退 generic） | `/dev/dxg` |
 - **三态语义**：① 显式设备路径（`/` 开头）→ 经 `test -e` 校验存在性，缺失
   fail-fast；② 显式 CDI 引用 → 校验 `/etc/cdi/*.yaml` 或 `/var/run/cdi/*.yaml`
-  已生成；③ 未设/空 → 按 `GPU_DEVICE_FORMS`（`/dev/dri` → `/dev/dxg`）
-  **顺序探测**，取首个存在者并**回写 `os.environ`**（`GPU_DEVICE`），
-  使 compose 插值与提示文案同源。
+  已生成；③ 未设/空 → 自动探测顺序 **NVIDIA CDI → `/dev/dri` → `/dev/dxg`**
+  （2026-09-20 纯 N 卡 Linux 宿主实测后修订，见下「CDI 前置」），取首个命中
+  并**回写 `os.environ`**（`GPU_DEVICE`），使 compose 插值与提示文案同源。
+- **NVIDIA CDI 前置与双条件**（C-I10，2026-09-20 实测）：纯 N 卡宿主加载
+  `nvidia_drm` 后**同样注册 `/dev/dri/card*` 与 `renderD*`**，旧顺序
+  （/dev/dri 优先）会把 N 卡误判成 DRM 形态——只挂渲染节点，CDI 注入的
+  libcuda/nvidia-smi 全缺席，容器内 `torch.cuda.is_available()` 恒 False。
+  自动分支必须同时满足 `_runtime_cdi_available(c)` **且**
+  `_runtime_path_exists(c, "/dev/nvidiactl")` 才选 CDI（token 固定
+  :data:`NVIDIA_CDI_TOKEN`）：双条件防「装了 toolkit 但无 N 卡」的 Intel 宿主
+  误命中，缺一即安全回退 `/dev/dri`。显式 CDI 与自动 CDI **都必须**先过
+  `check_nvidia_driver_health(c, spec, token)`——在宿主跑 `nvidia-smi`，
+  失败即 fail-fast（`Exit(1)`）并对 `version mismatch`/`nvml` 关键词打印
+  重启/模块重载 + `nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`
+  中文诊断。**禁止跳过健康探针直接 up**：驱动内核模块（/proc/driver/nvidia/
+  version）与用户态库（dpkg）失配时宿主自身 NVML 已不可用，放行只会造出
+  设备齐全但 CUDA 初始化失败的容器。CDI 规格写入持久路径 `/etc/cdi/`，
+  tmpfs `/var/run/cdi` 重启即失且可能内部版本过期。
 - `wsl` 形态额外校验 :data:`WSL_GPU_PATHS` **三条**路径
   （`/usr/lib/wsl/lib/libcuda.so.1` + `/usr/lib/wsl/lib/libdxcore.so` +
   `/usr/lib/wsl/drivers`）是否齐备，缺**任一**条即 fail-fast 并**逐条点名**缺失
@@ -507,9 +536,11 @@ xmnn 同时声明两能力后，互斥写法会让 `--offline`/`--no-offline` �
 
 ### 11.4 测试锁行为（C19 / C23）
 
-CUDA 设备解析在 `tests/test_overlay_core.py` 有 9 个用例（覆盖文件 form 分派
+CUDA 设备解析在 `tests/test_overlay_core.py` 有 13 个用例（覆盖文件 form 分派
 与回退、`/dev/dri` 自动探测、`/dev/dxg` 自动探测 + **三条宿主路径缺任一均
 fail-fast**、无设备 fail-fast、显式路径缺失 fail-fast、CDI 未生成 fail-fast、
+**NVIDIA CDI 自动前置于 /dev/dri**、**有 CDI 规格但无 /dev/nvidiactl 回退
+dri**、**驱动版本失配 fail-fast**、**显式 CDI 同样强制健康探针**、
 wsl form 贯通到 compose argv、quant 同路径、**不开 `--gpu` 绝不探测设备**）；
 渲染侧在 `tests/test_compose_merge.py` 断言 `compose.gpu.wsl.yaml` 的
 `devices: [/dev/dxg]` 与 **三条 bind（target 全集 + source 映射 + 逐条

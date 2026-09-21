@@ -113,8 +113,9 @@ invoke xmnn.down                       # 停止清理（ccache / Jupyter 登录�
 
 ## 启动后连接：Jupyter 与 SSH
 
-`invoke xmnn.up` 成功后打印地址（`SSH localhost:2223` /
-`Jupyter localhost:8890`），两个服务由容器内 supervisord 托管；密码/token
+`invoke xmnn.up` 成功后打印**可直接复制的命令与地址**（`SSH ssh -p 2223
+devuser@localhost` / `Jupyter localhost:8890`），两个服务由容器内 supervisord
+托管；密码/token
 取决于 `.env` 的凭证四变量（随
 [_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml)
 统一注入，留空即容器首启自动生成）：
@@ -132,6 +133,15 @@ listen 需数十秒（实测 66s）。窗口期内打开浏览器会得到 `ERR_
 |---|---|---|
 | JupyterLab | http://localhost:8890 | `JUPYTER_TOKEN`（留空自动生成 32 位） |
 | SSH | `ssh -p 2223 devuser@localhost` | `USER_PASSWORD`（留空自动生成 16 位）；亦可设 `SSH_PUBLIC_KEY` 免密 |
+
+**SSH 会话自带源码调试环境（C30）**：`PYTHONPATH`/`TVM_LIBRARY_PATH`/
+`LD_LIBRARY_PATH`/`NPU_TOOLS_ROOT`/`XMNN_TOOLS_ROOT` 由 compose `environment`
+注入容器与 Jupyter 内核，而 **sshd 派生的 SSH 会话不继承容器 config env**，
+故镜像内 `setup-ssh-env.sh` 另以 `/etc/profile.d/50-xmnn-dev-env.sh`（login
+shell）+ `sshd_config` 的 `SetEnv`（覆盖 `ssh host "cmd"` 非交互形态）双通道
+补齐——`ssh -p 2223` 进去即可直接 `import tvm, xmnn`，无需手工 `export`。
+注意 SSH 默认落在 **main env**（cp314t，无 numpy），调试/打包请用
+`/opt/conda/bin/python` 或先 `conda activate base`。
 
 **自动生成的凭证会由 `up` 横幅回读打印（C24）**：`.env` 的
 `USER_PASSWORD`/`JUPYTER_TOKEN` 留空时，值由容器内 entrypoint 用 `pwgen`
@@ -268,7 +278,7 @@ Host xmnn-dev
 | `WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!` | 2026-09-20 起已挂载 `xmnn-ssh-host-keys` 持久卷，普通 `down/up` 重建**不再**轮换指纹——出现该告警只剩三种情形：① 主动执行过 `down --volumes` / `podman volume rm`（删卷即轮换，属预期）；② 记录被旧容器（挂载前）写过，与当前卷内指纹本就不同；③ 换了宿主端口（`[localhost]:<port>` 记录按端口分别保存）。处理：核对容器内指纹 `ssh-keygen -lf /var/lib/jpman/ssh-host-keys/ssh_host_ed25519_key` 确认为本栈后，`ssh-keygen -R '[localhost]:2223'`（改过端口则替换端口号）清除旧记录重连 |
 | `Permission denied (publickey,password)` | 密码：回 `invoke xmnn.logs` 核对横幅；公钥：确认 `.env` 中是**完整一行**公钥且改后做过 `down && up`；另确认用户名是 `devuser` |
 | Windows 找不到 `ssh` 命令 | 安装可选功能「OpenSSH 客户端」，或改用 WSL2 终端执行连接命令 |
-| 连上后 `import tvm` 失败或指向 site-packages | 误用 main env 的 python；改用 `/opt/conda/bin/python`，或直接用 Jupyter 的 `Python 3.14 (xmnn dev)` 内核 |
+| 连上后 `import tvm` / `import xmnn` 报 `ModuleNotFoundError` | 两个独立成因（C30）：① **SSH 会话缺调试环境变量**——sshd 派生的会话不继承容器 config env，`ssh host "cmd"` 又不读任何 shell 启动文件，故 `PYTHONPATH` 为空、挂载树里的 tvm/vta/xmnn 找不到（**不是** site-packages）；镜像内 `setup-ssh-env.sh` 已用 `/etc/profile.d` + sshd `SetEnv` 双通道补齐，老镜像 `invoke xmnn.build && invoke xmnn.up --skip-build` 或按 [04-troubleshooting-guide.md](04-troubleshooting-guide.md) **C-I9** 在会话内一行 `export` 逃生；② 误用 main env 的 python（无 numpy）——调试/打包改用 `/opt/conda/bin/python` 或先 `conda activate base`，也可直接用 Jupyter 的 `Python 3.14 (xmnn dev)` 内核 |
 
 ### 端口与平台
 

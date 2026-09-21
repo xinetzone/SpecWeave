@@ -132,5 +132,6 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
     echo "# wheel    : xmnn cp314 GIL installed into /opt/conda (site-packages)" ; \
     echo "# torch    : ${TORCH_VERSION} (flavor=${TORCH_FLAVOR}; pytorch frontend built-in)" ; \
     echo "# kernel   : Python 3.14 (xmnn runtime) in JupyterLab" ; \
-    echo "# services : SSH localhost:2225, Jupyter localhost:8893 (invoke xmnnrt.up)" ; \
+    echo "# services : ssh -p 2225 devuser@localhost（宿主端口，发布栈默认；XMNN_SSH_PORT 可覆盖）" ; \
+    echo "#            JupyterLab http://localhost:8893（宿主端口；XMNN_JUPYTER_PORT 可覆盖；启动 invoke xmnnrt.up）" ; \
     echo "########################################################################"'

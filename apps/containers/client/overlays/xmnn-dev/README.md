@@ -144,8 +144,18 @@ podman-compose down
 
 - **改代码即时生效**：tvm/vta/xmnn 经 `PYTHONPATH` 从 `/workspace` 挂载树
   导入（不是 site-packages），宿主侧改代码容器内立即生效；Jupyter 用
-  `Python 3.14 (xmnn dev)` 内核，SSH 进去默认 main env，调试/打包请用
-  `/opt/conda/bin/python`（或内核）。
+  `Python 3.14 (xmnn dev)` 内核。
+- **SSH 会话同样带调试环境**（C30）：`PYTHONPATH` / `TVM_LIBRARY_PATH` /
+  `LD_LIBRARY_PATH` / `NPU_TOOLS_ROOT` / `XMNN_TOOLS_ROOT` 由 compose
+  `environment` 注入容器与 Jupyter 内核，SSH 会话则另由镜像内
+  `/etc/profile.d/50-xmnn-dev-env.sh` + `sshd_config` 的 `SetEnv` 双通道补齐
+  （sshd 不继承容器 config env；`ssh host "cmd"` 又不读任何 shell 启动文件），
+  因此 `ssh -p 2223 devuser@localhost` 进去即可直接 `import tvm, xmnn`。
+- **注意解释器**：SSH 默认落在 **main env**（cp314t，未装 numpy），
+  调试/打包请显式用 `/opt/conda/bin/python`，或先 `conda activate base`
+  （base = cp314 GIL，带 numpy/tvm/xmnn）。报 `No module named 'xmnn'`
+  或 `'numpy'` 都是选错解释器所致，见
+  [docs/04 排障速查 C-I9](../../docs/04-troubleshooting-guide.md)。
 - **TVM 库加载**：`TVM_LIBRARY_PATH=/workspace/npu_tvm/build` 与
   `LD_LIBRARY_PATH`（build、build/vta、main/lib）由 compose 注入，
   libtvm.so 及其 LLVM 依赖无需手工配置。
@@ -261,7 +271,7 @@ podman-compose -p xmnn-dev exec xmnn \
 |---|---|
 | 以 `/` 开头 | 该宿主机设备路径，如 `/dev/dri/renderD128`（内核预检存在性，缺失即 fail-fast） |
 | 其他 | CDI 引用，如 `nvidia.com/gpu=all`（宿主先 `nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`；内核预检 `/etc/cdi` 或 `/var/run/cdi` 下有 `*.yaml`） |
-| 未设 / 空 | **自动探测**（C19）：按 `/dev/dri → /dev/dxg` 顺序取第一个存在的设备 |
+| 未设 / 空 | **自动探测**（C19）：按 `NVIDIA CDI（CDI 规格 + /dev/nvidiactl 双条件）→ /dev/dri → /dev/dxg` 取第一个命中的形态 |
 
 ```bash
 invoke xmnn.up --gpu                                  # 自动探测设备形态
@@ -273,7 +283,8 @@ GPU_DEVICE=nvidia.com/gpu=all invoke xmnn.up --gpu    # NVIDIA CDI（.env 写同
 
 | 探测命中 | 形态 | 叠加文件 | 额外声明 |
 |---|---|---|---|
-| `/dev/dri`（Intel/AMD、NVIDIA 直通设备） | `generic` | [`compose.gpu.yaml`](compose.gpu.yaml) | `--device ${GPU_DEVICE:-/dev/dri}` |
+| `nvidia.com/gpu=all`（显式 CDI，或自动探测：`/etc/cdi`·`/var/run/cdi` 下有规格**且** `/dev/nvidiactl` 存在） | `generic` | [`compose.gpu.yaml`](compose.gpu.yaml) | `--device nvidia.com/gpu=all`（CDI 同时注入计算节点、libcuda 与 nvidia-smi）；up 前跑宿主 `nvidia-smi` 健康预检 |
+| `/dev/dri`（Intel/AMD；或无 CDI 规格的 N 卡 DRM 形态） | `generic` | [`compose.gpu.yaml`](compose.gpu.yaml) | `--device ${GPU_DEVICE:-/dev/dri}` |
 | `/dev/dxg`（WSL2 GPU 半虚拟化） | `wsl` | [`compose.gpu.wsl.yaml`](compose.gpu.wsl.yaml) | `--device /dev/dxg` + 三条 ro 挂载：宿主 `/usr/lib/wsl/lib/libcuda.so.1` → `/usr/lib/libcuda.so.1`、`libdxcore.so` → `/usr/lib/libdxcore.so`、目录 `/usr/lib/wsl/drivers` → 同路径 |
 
 > **WSL2 为什么要额外挂库与驱动目录**（2026-09-20 两轮实测）：WSL2 发行版里没有
@@ -292,6 +303,23 @@ GPU_DEVICE=nvidia.com/gpu=all invoke xmnn.up --gpu    # NVIDIA CDI（.env 写同
 
 设备真的不存在时（如宿主未装驱动）`--gpu` 会 **fail-fast** 并打印中文指引，
 而不是把 `Error: stat /dev/dri: no such file or directory`（exit 125）抛给 podman。
+
+> **纯 N 卡宿主为什么 CDI 必须前置于 /dev/dri**（2026-09-20 实测）：NVIDIA 驱动
+> 加载 `nvidia_drm` 后同样注册 `/dev/dri/card*` 与 `/dev/dri/renderD*`，旧探测顺序
+> （/dev/dri → /dev/dxg）会把纯 N 卡误判成 DRM 形态：只挂渲染节点，CDI 注入的
+> `libcuda.so` 与 `nvidia-smi` 全部缺席，容器内 `torch.cuda.is_available()` 恒
+> `False` 且无任何设备节点。新顺序用「CDI 规格存在 **且** `/dev/nvidiactl` 存在」
+> 双条件识别 NVIDIA 形态；两个条件缺一（如 Intel 宿主恰好装了 nvidia-container-toolkit
+> 但无 N 卡）仍安全回退 `/dev/dri`，Intel/AMD/WSL 路径零行为变化。
+>
+> **NVIDIA 驱动健康预检**：选中 NVIDIA 路径（显式 CDI 或自动命中）后，先在宿主跑
+> `nvidia-smi`。最常见的损坏是**驱动升级后内核模块未重载**——`/proc/driver/nvidia/version`
+> 的模块版本旧于 dpkg 里的用户态库版本，宿主自己 `nvidia-smi` 都报
+> `Failed to initialize NVML: Driver/library version mismatch`。此时继续 up 只会
+> 得到一个设备齐全但 CUDA 初始化失败的容器，故直接 fail-fast，中文指引给出
+> `sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`（用 `/etc/cdi`
+> 持久路径，勿用重启即失的 tmpfs `/var/run/cdi`）与重启/模块重载命令。CDI 规格
+> 过期（内部 `host-driver-version` 停留在旧驱动）的症状相同，重建规格即可。
 
 裸 compose 等价：`podman-compose -f compose.yaml -f compose.gpu.yaml up -d`
 （WSL2 换成 `-f compose.gpu.wsl.yaml`；两者互斥，**不要同时加载**——devices 会重复）。
@@ -402,7 +430,7 @@ invoke xmnn.load    # 按 .env TORCH_FLAVOR 形态挑归档；形态不符直接
 | `PIP_MIRROR` / `CONDA_MIRROR` | `official` | 构建期镜像源（official/aliyun/tuna）。**无前缀构建参数单一事实源（C15）**：`invoke xmnn.build`、`xmnn.up` 的 compose 内联 build、裸 `podman-compose build` 三处同键读取；`--pip-mirror/--conda-mirror` 旗标只覆盖单次 `build` |
 | `BASE_IMAGE`（build args + invoke 同键） | `localhost/jupyter-podman-rootless:latest` | 基底镜像覆盖（同样被 `xmnn.build`/`xmnn.up` 读取，C15） |
 | `TORCH_FLAVOR` | 空（不装） | torch 形态白名单 `空`/`cpu`/`cu130`（C15 无前缀键，compose build args + invoke 同键）。`invoke xmnn.build --torch cu130` 只覆盖单次构建；改 `.env` 后需重建镜像。flavor 不参与镜像 tag，但**进归档名**（C20）并决定 `xmnn.load` 选哪个归档。**cu130 形态同时提供 nvcc 编译器工具链**（13.4.92，`/usr/local/bin/nvcc` + `CUDA_HOME=/usr/local/cuda`，C25） |
-| `GPU_DEVICE` | 未设 | GPU 设备双形态：`/` 开头=宿主机设备路径，否则=CDI 引用；**未设时自动探测 `/dev/dri → /dev/dxg`**（C19）。**仅 `up --gpu` 时生效**（默认零透传） |
+| `GPU_DEVICE` | 未设 | GPU 设备双形态：`/` 开头=宿主机设备路径，否则=CDI 引用；**未设时自动探测 `NVIDIA CDI（规格+/dev/nvidiactl 双条件）→ /dev/dri → /dev/dxg`**（C19，纯 N 卡也注册 /dev/dri 故 CDI 必须前置；命中 NVIDIA 路径先做 nvidia-smi 驱动健康预检）。**仅 `up --gpu` 时生效**（默认零透传） |
 | `XMNN_OFFLINE` | `0`（关） | 离线总开关（**非 compose 插值键**，由 invoke 读取并经 `-e` 透传进容器）：开启后 `up` 强制跳过构建（`--no-build` 恒真，非离线亦然，C16）、`build` 直接 Exit(1)、容器内打包禁网兜底；等价 `invoke xmnn.up --offline`，关闭用 `--no-offline` |
 
 ## 与相关栈/目录的关系

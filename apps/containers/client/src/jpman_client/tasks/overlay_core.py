@@ -101,6 +101,16 @@ WSL_GPU_PATHS: tuple[str, ...] = (
     "/usr/lib/wsl/drivers",
 )
 
+# NVIDIA 原生 Linux（非 WSL）GPU 经 CDI 透传：设备节点 + 用户态库（libcuda、
+# nvidia-smi 等）统一由 ``nvidia-ctk cdi generate`` 生成的 CDI 规格注入容器。
+# 反常识点（2026-09-20 真机故障）：加载 nvidia_drm 后，**纯 N 卡宿主也会
+# 注册 /dev/dri**（card0/1 + renderD128/129）。故自动探测不能把「/dev/dri
+# 存在」当作 Intel/AMD 的充分判据——N 卡走 /dev/dri 只透传 DRM 渲染节点，
+# 不注入 libcuda/nvidia-smi，容器内 CUDA 必不可用。自动探测必须先满足
+# 「CDI 规格已生成 **且** /dev/nvidiactl 存在」双条件，优先选 CDI 引用。
+NVIDIA_CDI_TOKEN = "nvidia.com/gpu=all"
+NVIDIA_CONTROL_NODE = "/dev/nvidiactl"
+
 
 # ---------------------------------------------------------------------------
 # 声明式规格
@@ -1350,6 +1360,46 @@ def _runtime_cdi_available(c: Context) -> bool:
     )
 
 
+def check_nvidia_driver_health(c: Context, spec, token: str) -> None:
+    """CDI 透传前的宿主 NVIDIA 驱动健康探针（C19 的运行期可用性门禁）。
+
+    CDI 只负责把宿主要素（设备节点 + libcuda + nvidia-smi）注入容器，**不
+    修复宿主驱动自身的故障**。典型潜伏事故：apt 升级用户态驱动（如
+    595.71→595.91）后未重载内核模块/未重启，宿主 ``nvidia-smi`` 自身即报
+    ``Failed to initialize NVML: Driver/library version mismatch``——此时
+    容器按 CDI 正常创建，但容器内 CUDA 必然不可用。故在 up 之前前置探针，
+    把「容器外根因」翻译为可执行中文指引，而非让用户在容器里猜。
+
+    Intel/AMD（设备路径形态）与 WSL2（/dev/dxg 形态）不调用本函数。
+    """
+    r = run_cmd(c, "nvidia-smi", hide=True, warn=True, echo=False)
+    if r is not None and getattr(r, "ok", False):
+        return
+    raw = (
+        ((getattr(r, "stdout", "") or "") + (getattr(r, "stderr", "") or "")).strip()
+        if r is not None else ""
+    )
+    first_line = raw.splitlines()[0] if raw else "nvidia-smi 执行失败（无输出）"
+    ns = spec.namespace
+    print(f"[{ns}] ⚠ {token} 经 CDI 透传依赖宿主 NVIDIA 驱动，但宿主 nvidia-smi 无法运行：")
+    print(f"[{ns}]   {first_line}")
+    if "version mismatch" in raw.lower() or "nvml" in raw.lower():
+        print(f"[{ns}]   典型原因：驱动升级后内核模块未重载（内核模块版本 ≠ 用户态库版本）。")
+        print(f"[{ns}]   对照版本：cat /proc/driver/nvidia/version  与  dpkg -l | grep nvidia-driver")
+        print(f"[{ns}]   修复（二选一）：")
+        print(f"[{ns}]     1) 重启宿主（推荐，自动对齐内核模块与用户态库）")
+        print(f"[{ns}]     2) 先停占用 GPU 的进程（fuser -v /dev/nvidia*），再：")
+        print(f"[{ns}]        sudo rmmod nvidia_uvm nvidia_drm nvidia_modeset nvidia "
+              f"&& sudo modprobe nvidia")
+    else:
+        print(f"[{ns}]   请排查宿主驱动：nvidia-smi；lsmod | grep nvidia；"
+              f"dmesg | tail -50 | grep -i nvrm")
+    print(f"[{ns}]   驱动恢复后重新生成 CDI 规格（/var/run/cdi 为 tmpfs，重启后丢失）：")
+    print(f"[{ns}]     sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml")
+    print(f"[{ns}]   然后重试：invoke {ns}.up --offline --gpu")
+    raise Exit(1)
+
+
 def _form_of_device(device: str) -> str:
     """已知设备路径 → 形态；未登记的路径按通用形态处理（generic 覆盖即够）。"""
     for known, form in GPU_DEVICE_FORMS:
@@ -1366,12 +1416,18 @@ def resolve_gpu_device(c: Context, spec: StackSpec, env: dict) -> tuple[str, str
     directory`` + exit 125（且次生 ``no container with name ... found``），
     用户无从得知该改哪个键。故在 up 之前把判定与指引前置。
 
-    令牌优先级：shell export > root .env > 自动探测（``GPU_DEVICE_FORMS`` 顺序）。
+    令牌优先级：shell export > root .env > 自动探测。
       - ``/`` 开头：宿主机设备路径 → 存在性硬校验，形态按设备查表；
       - 非 ``/`` 开头：CDI 引用（如 ``nvidia.com/gpu=all``）→ 校验宿主已生成
-        ``/etc/cdi`` 或 ``/var/run/cdi`` 下的 ``*.yaml``；
-      - 空：按形态表探测（``/dev/dri`` 优先于 ``/dev/dxg``，保留 Intel/AMD 与
-        NVIDIA 直通设备的既有行为），全无则 fail-fast。
+        ``/etc/cdi`` 或 ``/var/run/cdi`` 下的 ``*.yaml``，并过宿主驱动健康探针；
+      - 空：自动探测，顺序为 **NVIDIA CDI（CDI 规格 + /dev/nvidiactl 双条件
+        满足时直接选 nvidia.com/gpu=all）→ /dev/dri → /dev/dxg**。
+
+    为什么 CDI 先于 /dev/dri：纯 NVIDIA 宿主加载 nvidia_drm 后同样注册
+    /dev/dri（card/render 节点），但 /dev/dri 形态不注入 libcuda 与
+    nvidia-smi，容器内 CUDA 必不可用（2026-09-20 双卡宿主真机故障）。
+    Intel/AMD 宿主既无 CDI 规格也无 /dev/nvidiactl，双条件不满足，自动
+    回退 /dev/dri，行为零变化。
 
     wsl 形态额外校验 :data:`WSL_GPU_PATHS`（libcuda + libdxcore + drivers 目录）：
     ``/dev/dxg`` 只是半虚拟化通道，三条路径缺任一都会让容器内 CUDA 不可用
@@ -1388,7 +1444,8 @@ def resolve_gpu_device(c: Context, spec: StackSpec, env: dict) -> tuple[str, str
                 f"[{spec.namespace}]   指定设备:     {key}=<设备路径> "
                 f"invoke {spec.namespace}.up --gpu"
             )
-            print(f"[{spec.namespace}]   自动探测:     unset {key}（缺省探测 /dev/dri → /dev/dxg）")
+            print(f"[{spec.namespace}]   自动探测:     unset {key}"
+                  f"（缺省探测 NVIDIA CDI → /dev/dri → /dev/dxg）")
             raise Exit(1)
         form = _form_of_device(token)
     elif token:
@@ -1399,15 +1456,26 @@ def resolve_gpu_device(c: Context, spec: StackSpec, env: dict) -> tuple[str, str
             print(f"[{spec.namespace}]   或改用设备路径形态: {key}=/dev/dri")
             raise Exit(1)
         form = "generic"
+        # CDI 只搬运宿主要素；宿主驱动自身故障（如升级后版本失配）必须在此拦截。
+        check_nvidia_driver_health(c, spec, token)
     else:
         token, form = "", ""
-        for device, candidate in GPU_DEVICE_FORMS:
-            if _runtime_path_exists(c, device):
-                token, form = device, candidate
-                break
+        # ① NVIDIA 原生宿主：CDI 规格 + 控制节点双条件满足 → CDI 引用优先。
+        if _runtime_cdi_available(c) and _runtime_path_exists(c, NVIDIA_CONTROL_NODE):
+            token, form = NVIDIA_CDI_TOKEN, "generic"
+            check_nvidia_driver_health(c, spec, token)
+        else:
+            # ② Intel/AMD（/dev/dri）与 WSL2（/dev/dxg）设备路径形态。
+            for device, candidate in GPU_DEVICE_FORMS:
+                if _runtime_path_exists(c, device):
+                    token, form = device, candidate
+                    break
         if not token:
             names = " / ".join(d for d, _ in GPU_DEVICE_FORMS)
-            print(f"[{spec.namespace}] ⚠ 未探测到可用 GPU 设备（{names} 均不存在），无法 --gpu：")
+            print(f"[{spec.namespace}] ⚠ 未探测到可用 GPU 设备"
+                  f"（NVIDIA CDI 未配置，{names} 也均不存在），无法 --gpu：")
+            print(f"[{spec.namespace}]   NVIDIA 原生：sudo nvidia-ctk cdi generate "
+                  f"--output=/etc/cdi/nvidia.yaml 后重试（自动探测即走 CDI）")
             print("[%s]   WSL2：确认 Windows 侧已装 NVIDIA 驱动（nvidia-smi 可用）"
                   % spec.namespace)
             print(f"[{spec.namespace}]   Intel/AMD：确认宿主已加载 i915/amdgpu 驱动")
@@ -1497,7 +1565,12 @@ def up_stack(
         ),
     )
     print(f"[{spec.namespace}] ✅ 栈已启动：")
-    print(f"        SSH     localhost:{ssh}")
+    # SSH 行给**完整可复制命令**而非裸地址：宿主端口非 22（22 由宿主自身 sshd
+    # 占用，见 04-troubleshooting-guide.md C-I8），而 ssh 不支持 user@host:port
+    # 语法——只印 `localhost:2223` 时用户按习惯敲 `ssh devuser@localhost` 会落到
+    # 宿主 sshd（无 devuser 用户）必报 Permission denied，误判为「密码错/凭证
+    # 回读故障」。与 client_core 的访问信息横幅同口径（单一事实源）。
+    print(f"        SSH     ssh -p {ssh} devuser@localhost")
     jupyter_line = f"        Jupyter localhost:{jupyter}"
     if spec.jupyter_banner_note:
         jupyter_line = f"{jupyter_line}{spec.jupyter_banner_note}"
@@ -1781,7 +1854,9 @@ def make_stack_tasks(spec: StackSpec) -> dict:
         )
         up_help = {
             "gpu": (
-                f"透传 GPU：{dev_hint}；未设置时自动探测（"
+                f"透传 GPU：{dev_hint}；未设置时自动探测"
+                "（NVIDIA CDI 优先：宿主已生成 CDI 规格且存在 /dev/nvidiactl "
+                "时选 nvidia.com/gpu=all；否则 "
                 + " → ".join(d for d, _ in GPU_DEVICE_FORMS)
                 + "，WSL2 额外叠加 compose.gpu.wsl.yaml 挂载 libcuda）；"
                 "默认隔离不透传 GPU"

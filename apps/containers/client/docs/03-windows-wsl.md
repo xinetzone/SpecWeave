@@ -68,4 +68,4 @@ invoke run --workspace D:/spaces/SpecWeave
 - Ctrl+C 不依赖 stdin 转发：invoke 的 KeyboardInterrupt→send_interrupt 信号路径仍会中断 `logs -f` 与长任务。
 - 唯一例外是真交互式入口（`invoke env.shell`、builder 的 `interact.shell`/exec），以 `forward_stdin=True` 显式 opt-in；其 py3.14 崩溃面由 `apply_invoke_stdin_compat()`（4 字节缓冲，同时替换 `invoke.terminals` 与 `invoke.runners` 绑定）在进程导入 `jpman_common.proc` 时自动兜底。
 
-> **排障速查表（W-I1~W-I19 + C-I1~C-I7）** 见 [04-troubleshooting-guide.md](04-troubleshooting-guide.md)。
+> **排障速查表（W-I1~W-I19 + C-I1~C-I10）** 见 [04-troubleshooting-guide.md](04-troubleshooting-guide.md)。
