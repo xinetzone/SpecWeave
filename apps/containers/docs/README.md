@@ -6,19 +6,21 @@ source: "../README.md"
 # apps/containers 组级文档
 
 Podman rootless 容器生态工作组：**构建端**（jupyter-podman-rootless）+
-**消费端**（client）+ **组内共享包**（shared / jpman-common）。
+**消费端**（client）+ **组内共享包**（shared / jpman-common）+
+**离线交付链路**（offline-delivery）。
 
 组级文档只覆盖**跨成员**主题；成员内使用手册见各成员 `docs/`：
 
 - 构建端：[jupyter-podman-rootless/docs/](../jupyter-podman-rootless/docs/README.md)（18 篇）
 - 消费端：[client/docs/](../client/docs/README.md)（13 篇，含 Windows/WSL 与三栈手册）
+- 离线交付链路：[offline-delivery/docs/](../offline-delivery/docs/README.md)（3 篇，产品分层与新增产品指引）
 
 ## 文档目录
 
 | 文档 | 说明 |
 |------|------|
-| [00-overview.md](00-overview.md) | 组全景：三成员职责、镜像流与依赖流、工作负载栈/端口速查、jpman 与 invoke 分工 |
-| [01-getting-started.md](01-getting-started.md) | 跨成员端到端：环境前置 → shared → 构建 → 缓存交接 → load/run → 可选工作负载栈 |
+| [00-overview.md](00-overview.md) | 组全景：四成员职责、镜像流与依赖流、工作负载栈/端口速查、jpman 与 invoke 分工、离线交付链路位置 |
+| [01-getting-started.md](01-getting-started.md) | 跨成员端到端：环境前置 → shared → 构建 → 缓存交接 → load/run → 可选工作负载栈 → 离线交付包 |
 
 ## AI 协作者规范
 

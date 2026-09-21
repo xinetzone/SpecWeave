@@ -41,9 +41,11 @@ requirements*.txt text eol=lf
 # Git hooks (extensionless POSIX shell scripts)
 .githooks/* text eol=lf
 # Extensionless POSIX shell CLIs (no .sh suffix, so the *.sh rule cannot match
-# them): bin/jpman, the customer-facing release/xmnnctl and the dev-repo
-# convenience shim overlays/xmnn-runtime/xmnnctl. Without an explicit
-# rule these fall back to `text=auto`, so a Windows checkout with
+# them): bin/jpman, the customer-facing release/xmnnctl and the
+# apps/containers/offline-delivery toolchain CLIs bin/relpack + bin/relpack.ps1
+# (the former dev-repo convenience shim shipped inside the client app was
+# deleted by the 2026-09-21 extraction of that delivery pipeline). Without an
+# explicit rule these fall back to `text=auto`, so a Windows checkout with
 # core.autocrlf=true writes CRLF and the first run dies in WSL/Linux with
 # "/usr/bin/env: 'bash\r': No such file or directory" (jpman's variant:
 # "set: pipefail: invalid option name") — the shebang is parsed by the kernel
@@ -54,13 +56,16 @@ requirements*.txt text eol=lf
 # while CRLF kills the shebang on Linux/macOS ("pwsh\r: No such file") and
 # fails release-gate.sh G3 (all bundle text must be zero-CR). Hence the
 # explicit eol=lf override below, despite the generic *.ps1 rule.
-# Add one line per new extensionless CLI; the release-bundle tests
-# (relpack.find_crlf_shebang_scripts) fail loudly if a shebang script ships CRLF.
+# Add one line per new extensionless CLI; the offline-delivery release-bundle
+# tests (apps/containers/offline-delivery/tests/) fail loudly if a shebang
+# script ships CRLF.
 # NOTE: unlike .gitignore, a pattern containing a slash is anchored to this
 # file's directory, so a leading `**/` is required to match nested paths.
 **/bin/jpman        text eol=lf
 **/xmnnctl          text eol=lf
 **/xmnnctl.ps1      text eol=lf
+**/relpack          text eol=lf
+**/relpack.ps1      text eol=lf
 
 # -----------------------------------------------------------------------------
 # Autotools (GNU build system) — critical for C/C++ projects like tvm-ffi

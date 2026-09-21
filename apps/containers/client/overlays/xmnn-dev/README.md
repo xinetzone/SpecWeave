@@ -106,7 +106,8 @@ invoke xmnn.down --volumes               # 连 xmnn-ccache、xmnn-jupyter、xmnn
 > （容器内 `/var/lib/jpman/ssh-host-keys`），普通 `down/up` 重建容器后**不再
 > 轮换指纹**，客户端 `known_hosts` 无需反复 `ssh-keygen -R` 清理；仅
 > `down --volumes` 才会清除（清除后指纹轮换属预期）。卷名与落点同客户交付栈
-> [xmnn-runtime/release](../xmnn-runtime/release/compose.yaml)。
+> [offline-delivery](../../../offline-delivery/README.md) 的交付包
+> `release/compose.yaml`。
 
 ## 路径二：裸 podman-compose
 

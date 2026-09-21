@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # xmnn-runtime 内置 torch 层（Containerfile.xmnn-runtime Layer 1）
 #
-# 由 TORCH_FLAVOR 驱动（白名单，invoke 侧 resolve_build_args 已先校验）：
+# 由 TORCH_FLAVOR 驱动（白名单，bin/relpack 侧已先校验）：
 #   cpu    默认 —— CPU wheel（torch.version.cuda is None），与 2026-09-16 起的
 #          内置 CPU 层语义逐字等价（镜像体积/离线契约不变）；
-#   cu130  CUDA 13.0 wheel（torch.version.cuda is not None），须配 up --gpu
-#          才能把 GPU 设备透传进来；
-#   ""     不装。本栈**不可达**（spec.torch_default="cpu"，空值一律回落 cpu），
-#          保留分支仅为与 xmnn-dev 脚本同构 + 防御绕过 invoke 的直调。
+#   cu130  CUDA 13.0 wheel（torch.version.cuda is not None），运行期须靠交付
+#          骨架把 GPU 设备透传进来才能用上；
+#   ""     不装。本产品**不可达**（product.env 的 TORCH_DEFAULT="cpu"，空值一律
+#          回落 cpu），保留分支仅为与 xmnn-dev 脚本同构 + 防御绕过 bin/relpack 的直调。
 #
 # 为什么索引由**形态推导**而不是独立 ARG：PyPI（含 tuna/aliyun 镜像）上的
 # torch 默认是 CUDA 变体，会连带拉入 nvidia-cuda-*/cudnn/nccl 十余个共数 GB

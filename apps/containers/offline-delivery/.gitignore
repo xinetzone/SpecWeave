@@ -1,0 +1,11 @@
+# 产品构建产物与本地态（wheel 与镜像归档一律不入 git）
+products/*/wheels/*.whl
+!products/*/wheels/.gitignore
+products/*/release/.env
+products/*/release/workspace/
+products/*/release/artifacts/*
+!products/*/release/artifacts/.gitignore
+__pycache__/
+.pytest_cache/
+# pytest-benchmark 基准结果缓存
+.benchmarks/

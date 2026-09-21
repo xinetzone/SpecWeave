@@ -185,12 +185,12 @@ def test_torch_flavor_build() -> None:
 
     为什么不能只断言 `torch.version.cuda is None`：torch 形态自 2026-09-20 起
     是 TORCH_FLAVOR 驱动的可选维度（cpu 默认 / cu130 CUDA），写死 CPU 断言会让
-    `invoke xmnnrt.build --torch cu130` 在守卫处误报失败；反过来只断言「能 import」
+    `bin/relpack build --torch cu130` 在守卫处误报失败；反过来只断言「能 import」
     又会放过「声明 cpu 却装了 CUDA 包」的错版（错版只在运行期浮现）。
     故判据是**声明 vs 实物**的一致性：marker（install-torch.sh 写入）↔ version.cuda。
 
     CUDA 形态刻意**不**断言 cuda.is_available()：构建期容器未透传 GPU 设备
-    （设备是运行期维度，见 C19），此时应为 False；运行期 `up --gpu` 后复跑本
+    （设备是运行期维度，见 C19），此时应为 False；运行期由交付骨架透传 GPU 后复跑本
     脚本时该值为 True，仅作 INFO 打印，不作门禁。
     """
     flavor = "<missing>"

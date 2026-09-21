@@ -42,9 +42,9 @@ SSH），通过随包控制脚本一键管理。
 > **执行位置**：以下命令均在**交付包根目录**（本 README 所在目录）执行；
 > 判别标志——该目录含 `xmnnctl.ps1` 与 `artifacts/`（`workspace/` 首次 `up`
 > 时自动创建，刚解压时可能还没有）。
-> **SpecWeave 开发仓库**内可直接在叠加层根执行 `./xmnnctl <命令>`
-> （便捷壳自动转发到本目录真实脚本，运行时文件仍全部落在 `release/`）；
-> 也可 `cd release` 后按客户方式执行。
+> **SpecWeave 开发仓库**内厂商侧入口是 `apps/containers/offline-delivery` 的
+> `bin/relpack`（负责暂存 wheel、构建镜像、打包与冒烟）；
+> 在 `release/` 目录内仍按客户方式执行 `./xmnnctl <命令>`。
 
 ### 第 0 步：在正确的文件夹里打开终端（最容易出错）
 
@@ -180,7 +180,7 @@ sha256sum artifacts/xmnn-runtime-*.tar.gz   # 或 shasum -a 256
 
 | 现象 | 处理 |
 |---|---|
-| 报"术语 'xmnnctl' 不会被识别为 cmdlet" | 当前目录既非交付包根、也无便捷壳：进入含本 README 的目录执行；SpecWeave 开发仓库应在 `overlays/xmnn-runtime` 根目录直接 `./xmnnctl <命令>`（见 §2 执行位置） |
+| 报"术语 'xmnnctl' 不会被识别为 cmdlet" | 当前目录不对：先确认当前目录是否含 `xmnnctl.ps1`，没有就进入含本 README 的交付包根目录再执行；SpecWeave 开发仓库内如需在交付目录外操作，改用 `offline-delivery/bin/relpack`（见 §2 执行位置） |
 | 报 `Cannot connect to Podman` / `unable to connect to Podman socket` | Podman 后台虚拟机未启动：执行 `podman machine start`（或打开 Podman Desktop 等待托盘就绪）后重试原命令；Docker 则启动 Docker Desktop。新版脚本会在导入前直接拦截并给出同样提示 |
 | `load` 提示 sha256 不符 | 镜像文件损坏，重新拷贝/获取交付包后再试 |
 | 紧连接失败后又提示"导入的镜像中没有/版本不符" | 这是旧版脚本的**误导性次生报错**，真因是后台没连上；先按上一行启动机器并重试，不要改版本号 |

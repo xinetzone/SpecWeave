@@ -70,7 +70,7 @@ pip install -e jupyter-podman-rootless   # 构建端（按需 extras: [sdk]/[com
 pip install -e client                    # 消费端（按需 [compose] 启用工作负载栈）
 ```
 
-- 三成员均为 src 布局 + scikit-build-core，editable 安装；构建产物入各成员 `build/` 目录，不得入库。
+- 三个 Python 包成员（jupyter-podman-rootless / client / shared）均为 src 布局 + scikit-build-core，editable 安装；构建产物入各成员 `build/` 目录，不得入库。离线交付成员 offline-delivery 为脚本型成员，无 Python 包。
 - shared 自身测试：`cd shared && pytest`（testpaths=tests；conftest + connection/containers/platform_paths/proc/win32_transcode 五个测试模块，daemon-free）。
 
 ## 5. 变更回归纪律（修复即闭环的组级具体化）

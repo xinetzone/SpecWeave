@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==============================================================================
-# register-kernel.sh — 注册 xmnn-runtime Jupyter 内核（叠加镜像构建期执行一次）
+# register-kernel.sh — 注册 xmnn-runtime Jupyter 内核（产品镜像构建期执行一次）
 #
 # 与 xmnn-dev 内核的差异：
 #   - argv 同为 /opt/conda/bin/python（wheel 是 cp314 GIL ABI，main env 是

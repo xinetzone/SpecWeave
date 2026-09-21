@@ -1,0 +1,199 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# relpack — offline-delivery 厂商侧交付流水线 CLI（bash 4+；WSL / Linux / macOS）
+#
+# 用法: bin/relpack [-p|--product <产品名>] <命令> [选项]
+#   -p, --product <名>  产品名（默认 xmnn-runtime；须存在 products/<名>/product.env）
+#   -h, --help          显示本帮助
+# 命令:
+#   version                                  打印产品名/镜像名/形态 tag/交付版本/wheel 名
+#   stage   [--wheel PATH]                   暂存 wheel 到 products/<产品>/wheels/（只留一个）
+#   build   [--torch cpu|cu130] [--base-image REF] [--pip-mirror official|tuna|aliyun]
+#           [--no-cache] [--wheel PATH]      先暂存 wheel 再构建镜像（双 tag：形态 + :latest）
+#   pack    [--version V]                    导出 artifacts/<镜像名>-<版本>.tar.gz + release.json
+#   smoke   [--version V]                    以交付骨架为唯一入口：init → up → smoke → down
+# 覆盖优先级: CLI 旗标 > 环境变量（BASE_IMAGE / PIP_MIRROR / TORCH_FLAVOR）> product.env
+# 规范: .agents/rules/delivery-pipeline.md  快速开始: docs/01-quickstart.md
+# ==============================================================================
+set -euo pipefail
+APP_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+source "$APP_ROOT/bin/lib/log.sh"
+source "$APP_ROOT/bin/lib/common.sh"
+source "$APP_ROOT/bin/lib/pipeline.sh"
+
+PRODUCT_DEFAULT="xmnn-runtime"   # 唯一允许内嵌的产品常量：默认产品名
+FLAVORS="cpu|cu130"              # 形态白名单（须与 Containerfile 的 TORCH_FLAVOR 一致）
+MIRRORS="official|tuna|aliyun"   # pip 镜像源白名单（与 Containerfile 分支一致）
+PRODUCT="$PRODUCT_DEFAULT"
+OPT_WHEEL=""; OPT_VERSION=""; OPT_TORCH=""; OPT_BASE=""; OPT_MIRROR=""; OPT_NOCACHE=0
+STAGED_WHEEL=""; SMOKE_RUNNING=0
+usage() { sed -n '3,16p' "$0"; }
+
+# 拒绝本命令不支持的选项：$1=允许的选项名（空格分隔）
+allow_opts() {
+    local a=" $1" pair vn on
+    for pair in OPT_WHEEL:wheel OPT_VERSION:version OPT_TORCH:torch \
+                OPT_BASE:base-image OPT_MIRROR:pip-mirror OPT_NOCACHE:no-cache; do
+        vn="${pair%%:*}"; on="${pair#*:}"
+        case "$a " in *" $on "*) continue ;; esac
+        if [ -n "${!vn}" ] && [ "${!vn}" != 0 ]; then die "--$on 不适用于 $CMD 命令（用法见 bin/relpack --help）"; fi
+    done
+}
+
+# 上下文头：每次运行打印一行「产品 / 形态 / 镜像 tag / 版本」
+print_context() { info "产品=$PRODUCT | 形态=$FLAVOR | 镜像=$IMAGE_NAME:$FLAVOR | 版本=$1"; }
+
+check_enum() {  # $1=值 $2=白名单（a|b）$3=名称；白名单外即失败并列出合法值
+    case "|$2|" in *"|$1|"*) ;; *) die "非法$3：$1（白名单 $2）" ;; esac
+}
+
+# —— 命令实现（wheel 暂存/CRLF 守卫/清单写出见 bin/lib/pipeline.sh）——
+
+cmd_version() {
+    local staged name="（暂存区为空）"
+    staged="$(staged_wheel)"
+    if [ -n "$staged" ]; then
+        name="${staged##*/}"; print_context "$(wheel_version "$staged")"
+    else
+        print_context "未暂存"; warn "暂存区 wheels/ 为空：先执行 bin/relpack stage"
+    fi
+    printf '  wheel 文件  : %s\n  wheel 源目录: %s\n  交付骨架    : products/%s/%s\n' \
+           "$name" "$DIST_DIR" "$PRODUCT" "$RELEASE_NAME"
+}
+
+cmd_stage() {
+    stage_wheel "${OPT_WHEEL:-}"
+    print_context "$(wheel_version "$STAGED_WHEEL")"
+    info "下一步：bin/relpack build --torch $FLAVOR（构建镜像）"
+}
+
+cmd_build() {
+    FLAVOR="${OPT_TORCH:-${TORCH_FLAVOR:-$TORCH_DEFAULT}}"; check_enum "$FLAVOR" "$FLAVORS" "形态"
+    local base="${OPT_BASE:-${BASE_IMAGE:-$BASE_IMAGE_DEFAULT}}" mirror="${OPT_MIRROR:-${PIP_MIRROR:-official}}"
+    check_enum "$mirror" "$MIRRORS" "pip 镜像源"
+    require_podman
+    stage_wheel "${OPT_WHEEL:-}"
+    print_context "$(wheel_version "$STAGED_WHEEL")"
+    local args=(--build-arg "BASE_IMAGE=$base" --build-arg "PIP_MIRROR=$mirror" --build-arg "TORCH_FLAVOR=$FLAVOR")
+    if [ "$OPT_NOCACHE" = 1 ]; then args+=(--no-cache); fi
+    info "构建上下文=$PRODUCT_DIR  Containerfile=$CONTAINERFILE  基镜像=$base  pip 源=$mirror"
+    podman build -f "$PRODUCT_DIR/$CONTAINERFILE" "${args[@]}" -t "$IMAGE_NAME:$FLAVOR" -t "$IMAGE_NAME:latest" "$PRODUCT_DIR" \
+        || die "podman build 失败（原始输出见上）；常见原因：基镜像 $base 不在本地（先在 jupyter-podman-rootless 侧产出并 podman load），或 wheels/ 暂存区为空"
+    ok "镜像已构建：$IMAGE_NAME:$FLAVOR"; ok "通用别名 tag：$IMAGE_NAME:latest"
+    info "下一步：bin/relpack pack（导出离线归档）"
+}
+
+cmd_pack() {
+    require_podman
+    guard_crlf_shebang
+    local artifacts="$RELEASE_DIR/artifacts" staged archive tmp image_id torch torch_json sha size wheel_ver ver
+    staged="$(staged_wheel)"
+    [ -n "$staged" ] || die "pack 需要暂存 wheel 写入 release.json：先执行 bin/relpack stage（--version 不替代 wheel）"
+    wheel_ver="$(wheel_version "$staged")"; ver="${OPT_VERSION:-$wheel_ver}"
+    print_context "$ver"
+    podman image exists "$IMAGE_NAME:latest" || die "本地缺少镜像 $IMAGE_NAME:latest：先执行 bin/relpack build --torch $FLAVOR"
+    podman tag "$IMAGE_NAME:latest" "$IMAGE_NAME:$ver"
+    mkdir -p "$artifacts"; rm -f "$artifacts"/.tmp-*.tar.gz
+    archive="${IMAGE_NAME##*/}-$ver.tar.gz"; tmp="$artifacts/.tmp-$ver.tar.gz"
+    info "导出镜像归档（podman save | gzip -1，约需数分钟）…"
+    podman save "$IMAGE_NAME:$ver" | gzip -1 > "$tmp" || die "podman save 或 gzip 失败（原始输出见上）；交付目录未留下归档，可重跑 pack"
+    gzip -t "$tmp" || die "归档校验失败（临时文件已截断）：确认磁盘空间后重跑 pack"
+    mv -f "$tmp" "$artifacts/$archive"
+    image_id="$(podman inspect -f '{{.Id}}' "$IMAGE_NAME:$ver")"
+    # torch 版本：新键 org.specweave.torch-version 优先，缺失回退旧键 org.specweave.torch-cpu
+    torch="$(podman inspect -f '{{$v := index .Config.Labels "org.specweave.torch-version"}}{{if $v}}{{$v}}{{else}}{{index .Config.Labels "org.specweave.torch-cpu"}}{{end}}' "$IMAGE_NAME:$ver")"
+    if [ -n "$torch" ]; then torch_json="\"$torch\""; else
+        torch_json="null"; warn "镜像缺 torch LABEL（org.specweave.torch-version / torch-cpu 皆缺）：release.json 记 null"
+    fi
+    sha="$(sha256sum "$artifacts/$archive" | cut -d' ' -f1)"; size="$(stat -c '%s' "$artifacts/$archive")"
+    write_release_manifest "$artifacts" "$ver" "$staged" "$wheel_ver" "$image_id" "$torch_json" "$archive" "$size" "$sha"
+    ok "归档已产出：products/$PRODUCT/$RELEASE_NAME/artifacts/$archive（$size 字节）"
+    ok "清单已写入：release.json（sha256 ${sha:0:12}…）"
+    info "下一步：bin/relpack smoke（以交付骨架为入口做端到端验证）"
+}
+
+# smoke 收尾：无论前序步骤成败都尝试 down，避免容器残留
+smoke_final_down() {
+    local rc=$?
+    if [ "$SMOKE_RUNNING" != 1 ]; then exit "$rc"; fi
+    SMOKE_RUNNING=0; info "收尾：停止容器（./xmnnctl down）"
+    if (cd "$RELEASE_DIR" && ./xmnnctl down); then ok "容器已停止"; else
+        warn "down 未成功：容器已保留用于排障；手工处置：cd $RELEASE_DIR 后执行 ./xmnnctl down（ps 看状态 / logs 查日志）"
+    fi
+    exit "$rc"
+}
+
+cmd_smoke() {
+    require_podman
+    local env_file="$RELEASE_DIR/.env" env_ver="" wheel_ver="" ver="" staged rc=0
+    staged="$(staged_wheel)"
+    if [ -n "$staged" ]; then wheel_ver="$(wheel_version "$staged")"; fi
+    if [ -f "$env_file" ]; then
+        env_ver="$(grep -E '^XMNN_VERSION=' "$env_file" | tail -n 1 | cut -d= -f2- | tr -d '\r' || true)"
+    fi
+    ver="${OPT_VERSION:-${env_ver:-$wheel_ver}}"
+    [ -n "$ver" ] || die "无法确定交付版本：用 --version <版本>，或先 bin/relpack stage，或让 $RELEASE_NAME/.env 含 XMNN_VERSION"
+    print_context "$ver"
+    if [ -n "$wheel_ver" ] && [ "$ver" != "$wheel_ver" ]; then
+        warn "版本不一致：解析得到 $ver，暂存 wheel 版本为 $wheel_ver（继续执行；GA 交付以 --version 为准）"
+    fi
+    if [ ! -f "$env_file" ]; then
+        info "$RELEASE_NAME/.env 不存在，先执行 ./xmnnctl init"
+        (cd "$RELEASE_DIR" && ./xmnnctl init) || die "骨架 init 失败（原始输出见上）；可手工 cd $RELEASE_DIR 后执行 ./xmnnctl init 排查"
+    fi
+    podman image exists "$IMAGE_NAME:latest" || die "本地缺少镜像 $IMAGE_NAME:latest：先执行 bin/relpack build --torch $FLAVOR"
+    podman tag "$IMAGE_NAME:latest" "$IMAGE_NAME:$ver"
+    ok "镜像已改挂到交付版本 tag：$IMAGE_NAME:$ver"
+    SMOKE_RUNNING=1; trap smoke_final_down EXIT
+    run_smoke_step up ./xmnnctl up || rc=$?
+    if [ "$rc" != 0 ]; then smoke_hint "up" "$rc"; return 1; fi
+    run_smoke_step smoke ./xmnnctl smoke || rc=$?
+    if [ "$rc" != 0 ]; then smoke_hint "smoke" "$rc"; return 1; fi
+    run_smoke_step down ./xmnnctl down || rc=$?
+    if [ "$rc" != 0 ]; then smoke_hint "down" "$rc"; return 1; fi
+    SMOKE_RUNNING=0
+    ok "smoke 通过：交付骨架 init → up → 10 项守卫 → down 全部成功"
+    info "下一步：bin/relpack pack --version <GA 版本>（正式交付打包）"
+}
+
+# —— 入口分发 ——
+
+main() {
+    local opt val
+    while [ "$#" -gt 0 ]; do
+        opt="${1%%=*}"; val=""
+        case "$1" in --*=*) val="${1#*=}" ;; esac
+        case "$opt" in
+            version|stage|build|pack|smoke) CMD="$opt" ;;
+            -h|--help|help) usage; exit 0 ;;
+            -p|--product)
+                if [ -z "$val" ]; then shift; [ "$#" -ge 1 ] || die "-p|--product 需要参数：<产品名>"; val="$1"; fi
+                PRODUCT="$val" ;;
+            --wheel|--version|--torch|--base-image|--pip-mirror)
+                if [ -z "$val" ]; then shift; [ "$#" -ge 1 ] || die "$opt 需要参数（用法见 bin/relpack --help）"; val="$1"; fi
+                case "$opt" in
+                    --wheel) OPT_WHEEL="$val" ;; --version) OPT_VERSION="$val" ;; --torch) OPT_TORCH="$val" ;;
+                    --base-image) OPT_BASE="$val" ;; --pip-mirror) OPT_MIRROR="$val" ;;
+                esac ;;
+            --no-cache) OPT_NOCACHE=1 ;;
+            *) die "未知选项：$1（用法见 bin/relpack --help）" ;;
+        esac
+        shift
+    done
+    if [ -z "${CMD:-}" ]; then usage; exit 1; fi
+    load_product_env "$PRODUCT"
+    PRODUCT_DIR="$(product_dir "$PRODUCT")"
+    DIST_DIR="$(abs_under_root "$WHEEL_DIST")"
+    WHEEL_STAGE="$PRODUCT_DIR/wheels"
+    RELEASE_NAME="$RELEASE_DIR"; RELEASE_DIR="$PRODUCT_DIR/$RELEASE_NAME"
+    FLAVOR="${TORCH_FLAVOR:-$TORCH_DEFAULT}"; check_enum "$FLAVOR" "$FLAVORS" "形态"
+    case "$CMD" in
+        version) allow_opts ""; cmd_version ;;
+        stage)   allow_opts "wheel"; cmd_stage ;;
+        build)   allow_opts "wheel torch base-image pip-mirror no-cache"; cmd_build ;;
+        pack)    allow_opts "version"; cmd_pack ;;
+        smoke)   allow_opts "version"; cmd_smoke ;;
+    esac
+}
+
+main "$@"

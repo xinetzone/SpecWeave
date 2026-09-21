@@ -33,7 +33,7 @@ source: "../AGENTS.md#嵌套路由关系"
 
 | 资产 | 路径 | 说明 |
 |------|------|------|
-| 组级路由入口 | [../AGENTS.md](../AGENTS.md) | 三成员路由表、G1-G4 组级约束、上下文路由 |
+| 组级路由入口 | [../AGENTS.md](../AGENTS.md) | 四成员路由表（构建端 jupyter-podman-rootless / 消费端 client / 组内共享包 shared / 离线交付 offline-delivery）、G1-G4 组级约束、上下文路由 |
 | 共享包（唯一被组层代管的成员） | [../shared/](../shared/pyproject.toml) | jpman-common 0.1.0：`connection.py`（连接层唯一事实源，podman import 唯一允许处）、`platform_paths.py`（to_posix_path 等）、`proc.py`（run_cmd/detect_runtime）、`containers.py`（只读探测）、`_win32_transcode.py`；测试在 ../../shared/tests/ |
 | 构建端 AI 资产 | [../jupyter-podman-rootless/.agents/](../jupyter-podman-rootless/.agents/README.md) | 7 rules：containerfile/entrypoint/services/compose/invoke-tasks/ml-models/build-test |
 | 消费端 AI 资产 | [../client/.agents/](../client/.agents/README.md) | 6 rules：invoke-tasks/sdk-connection/windows-wsl/quant-overlay/xmnn-overlay/monetize-overlay；C1-C14 P0 约束在 ../client/AGENTS.md |
