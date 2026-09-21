@@ -81,7 +81,7 @@
   1.6.0 `rec_merge` 对 `depends_on` list↔dict 抛 ValueError）为**既有失败**，
   与本次改动无关（未触碰 `overlay_core.py` 与 `test_compose_merge.py`）。
 
-提交 `fix(client)` = 待用户确认后提交（hash 回填）。
+提交 `fix(client)` = `5d1db8f31`；配套 `npuusertools` 仓 `fix(xmnn)` = `f1e53c0`。
 
 ### 2026-09-21 · `feat:` 形态感知镜像 tag——`localhost/xmnn-runtime:<形态>` + `:latest` 别名（C28）
 
