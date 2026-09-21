@@ -1,6 +1,6 @@
 # Specs 全局执行看板
 
-> 本目录是 SpecWeave 项目所有规格文档（spec）的指挥中心，按 13 大主题分类组织。本文档由 docgen（C-6）于 **2026-09-20** 自动生成；详细 spec 列表见各主题 README。
+> 本目录是 SpecWeave 项目所有规格文档（spec）的指挥中心，按 13 大主题分类组织。本文档由 docgen（C-6）于 **2026-09-21** 自动生成；详细 spec 列表见各主题 README。
 
 ---
 
@@ -15,14 +15,14 @@
 | [docs-restructure](./docs-restructure/README.md) | 16 | 9 | 4 | 3 | 🔧 [查看](./docs-restructure/README.md) |
 | [retrospectives-insights](./retrospectives-insights/README.md) | 172 | 140 | 15 | 17 | 🔧 [查看](./retrospectives-insights/README.md) |
 | [migration-archival](./migration-archival/README.md) | 15 | 13 | 1 | 1 | 🔧 [查看](./migration-archival/README.md) |
-| [okf-wiki-ecosystem](./okf-wiki-ecosystem/README.md) | 154 | 78 | 8 | 68 | 🔧 [查看](./okf-wiki-ecosystem/README.md) |
+| [okf-wiki-ecosystem](./okf-wiki-ecosystem/README.md) | 165 | 88 | 8 | 69 | 🔧 [查看](./okf-wiki-ecosystem/README.md) |
 | [classics-knowledge](./classics-knowledge/README.md) | 46 | 25 | 1 | 20 | 🔧 [查看](./classics-knowledge/README.md) |
 | [caffe-framework](./caffe-framework/README.md) | 44 | 33 | 6 | 5 | 🔧 [查看](./caffe-framework/README.md) |
 | [xmnn-packaging](./xmnn-packaging/README.md) | 40 | 22 | 9 | 9 | 🔧 [查看](./xmnn-packaging/README.md) |
 | [workspace-governance](./workspace-governance/README.md) | 29 | 19 | 2 | 8 | 🔧 [查看](./workspace-governance/README.md) |
-| [infra-env](./infra-env/README.md) | 29 | 13 | 2 | 14 | 🔧 [查看](./infra-env/README.md) |
+| [infra-env](./infra-env/README.md) | 30 | 13 | 2 | 15 | 🔧 [查看](./infra-env/README.md) |
 | [xuan-compose-refactor](./xuan-compose-refactor/README.md) | 1 | 0 | 0 | 1 | 📋 [查看](./xuan-compose-refactor/README.md) |
-| **合计** | **627** | **421** | **52** | **154** | &mdash; |
+| **合计** | **639** | **431** | **52** | **156** | &mdash; |
 
 **状态**：✓ 已完成 ｜ ! 进行中 ｜ ? 待启动 ｜ — 无 metadata
 
@@ -39,12 +39,12 @@
 5. [docs-restructure](./docs-restructure/README.md) — 16 spec：已有文档原子化拆分、主题分类、目录重构、重复消除、命名统一等结构性整理 spec
 6. [retrospectives-insights](./retrospectives-insights/README.md) — 172 spec：已完成任务/项目系统性复盘、问题诊断、经验萃取、方法论分析的 spec
 7. [migration-archival](./migration-archival/README.md) — 15 spec：外部内容引入、沙箱治理、历史项目迁移、归档体系建立相关 spec
-8. [okf-wiki-ecosystem](./okf-wiki-ecosystem/README.md) — 154 spec：外部源码、官方文档、博客文章的知识化转译（OKF 知识包/Wiki 教程）spec
+8. [okf-wiki-ecosystem](./okf-wiki-ecosystem/README.md) — 165 spec：外部源码、官方文档、博客文章的知识化转译（OKF 知识包/Wiki 教程）spec
 9. [classics-knowledge](./classics-knowledge/README.md) — 46 spec：中西方典籍、道家/中医/数理经典的知识化工程 spec
 10. [caffe-framework](./caffe-framework/README.md) — 44 spec：Caffe FFI、pycaffe、算子实现、Docker 镜像与性能优化 spec
 11. [xmnn-packaging](./xmnn-packaging/README.md) — 40 spec：wheel 构建、Nuitka 打包、运行时镜像、模型精度验证 spec
 12. [workspace-governance](./workspace-governance/README.md) — 29 spec：目录重组、规范整合、子项目管理、工作区模板萃取 spec
-13. [infra-env](./infra-env/README.md) — 29 spec：Docker/devcontainer/conda/Jupyter 环境搭建与运维 spec
+13. [infra-env](./infra-env/README.md) — 30 spec：Docker/devcontainer/conda/Jupyter 环境搭建与运维 spec
 14. [xuan-compose-refactor](./xuan-compose-refactor/README.md) — 1 spec：
 
 ## 📆 新增 Spec 指南
@@ -55,4 +55,4 @@
 4. **创建三件套**：spec.md（YAML frontmatter 含 status/title）+ tasks.md + review.md（独立审查清单）。产物命名与结构以 .agents/skills/TRAE-spec-mode/SKILL.md 为唯一权威依据，禁止使用 checklist.md 等非规范命名。
 5. **更新看板**：运行 `python .agents/scripts/docgen.py theme-dashboards` 刷新主题看板，运行 `python .agents/scripts/docgen.py update-spec-readme` 刷新全局总览。
 
-*本看板由 docgen（C-6）于 2026-09-20 生成，后续自动维护。*
+*本看板由 docgen（C-6）于 2026-09-21 生成，后续自动维护。*
