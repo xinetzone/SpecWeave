@@ -35,11 +35,11 @@
    ```bash
    invoke load        # localhost/jupyter-podman-rootless:latest
    ```
-3. 宿主存在源码目录（默认仓库根 `external/chaos/`）：
+3. 宿主存在源码目录（默认仓库根 `external/` 对应源码树）：
    - `external/chaos/npu_tvm`（TVM 0.19.0 fork；若 `build/libtvm.so`
      已存在可直接打包，否则先 build-tvm——全量编译需先
      `git submodule update --init` 检出 dmlc-core 等子模块）
-   - `external/chaos/npuusertools`（xmnn 包 + tools_cpp/autolibs/fonts 数据）
+   - `external/containers/workspace/dev/npuusertools`（xmnn 包 + tools_cpp/autolibs/fonts 数据）
    - `external/chaos/models`（模型目录）
 4. **Windows 原生自动桥接**：与 quant.* 相同，Windows 原生 CPython 执行时
    自动桥接到 WSL 发行版（默认 `podman-machine-default`——client 专用
@@ -395,7 +395,7 @@ invoke xmnn.load    # 按 .env TORCH_FLAVOR 形态挑归档；形态不符直接
 | `XMNN_SSH_PORT` / `XMNN_JUPYTER_PORT` | `2223` / `8890` | 宿主端口（与 onnx 2222/8888 错开） |
 | `XMNN_WORKSPACE` | `../../workspace` | 通用工作区 → /workspace（wheel 产物在其 dist/） |
 | `NPU_TVM_PATH` | `../../../../../external/chaos/npu_tvm` | TVM 源码宿主路径 |
-| `NPUUSERTOOLS_PATH` | `../../../../../external/chaos/npuusertools` | xmnn 源码宿主路径 |
+| `NPUUSERTOOLS_PATH` | `../../../../../external/containers/workspace/dev/npuusertools` | xmnn 源码宿主路径 |
 | `MODELS_PATH` | `../../../../../external/chaos/models` | 模型目录宿主路径 |
 | `USER_PASSWORD` / `JUPYTER_TOKEN` | 空（自动生成） | 登录凭证 |
 | `SSH_PUBLIC_KEY` / `GRANT_SUDO` | 空 / `yes` | SSH 公钥 / devuser sudo |

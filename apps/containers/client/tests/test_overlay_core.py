@@ -142,7 +142,7 @@ def harness(monkeypatch, tmp_path):
         d.mkdir(parents=True, exist_ok=True)
         (d / spec.containerfile).write_text("# fake\n")
     # xmnn 三源码树（仓库根锚点）
-    for rel in ("external/chaos/npu_tvm", "external/chaos/npuusertools", "external/chaos/models"):
+    for rel in ("external/chaos/npu_tvm", "external/containers/workspace/dev/npuusertools", "external/chaos/models"):
         (tmp_path / "repo" / rel).mkdir(parents=True)
     (tmp_path / "repo" / "apps" / "agent-monetize").mkdir(parents=True)
 

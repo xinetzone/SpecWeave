@@ -35,7 +35,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 find_specweave_root() {
     local current="$SCRIPT_DIR"
     while [ "$current" != "/" ]; do
-        if [ -d "$current/.agents" ] && [ -d "$current/external/chaos/npuusertools" ]; then
+        if [ -d "$current/.agents" ] && [ -d "$current/external/containers/workspace/dev/npuusertools" ]; then
             echo "$current"
             return 0
         fi
@@ -237,11 +237,11 @@ check_file "external/dao/runtime/vta-dev/CMakeLists.txt"
 check_file "external/dao/runtime/vta-dev/scripts/build-wheel.sh"
 check_file "external/dao/runtime/vta-dev/scripts/verify-wheel.sh"
 
-SOURCE_DIR="${SPECWEAVE_ROOT}/external/chaos/npuusertools"
+SOURCE_DIR="${SPECWEAVE_ROOT}/external/containers/workspace/dev/npuusertools"
 if [ -d "$SOURCE_DIR" ]; then
-    log_ok "源码目录存在: external/chaos/npuusertools"
+    log_ok "源码目录存在: external/containers/workspace/dev/npuusertools"
 else
-    log_error "源码目录不存在: external/chaos/npuusertools（bind mount 将失败）"
+    log_error "源码目录不存在: external/containers/workspace/dev/npuusertools（bind mount 将失败）"
     exit 1
 fi
 

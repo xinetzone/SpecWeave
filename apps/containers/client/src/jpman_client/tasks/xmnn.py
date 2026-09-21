@@ -75,7 +75,7 @@ XMNN_SPEC = StackSpec(
     auto_shortflags=False,
     source_mounts=(
         SourceMount("NPU_TVM_PATH", "external/chaos/npu_tvm", "npu_tvm 源码树（含 python/tvm）"),
-        SourceMount("NPUUSERTOOLS_PATH", "external/chaos/npuusertools", "npuusertools 源码树（含 xmnn 包）"),
+        SourceMount("NPUUSERTOOLS_PATH", "external/containers/workspace/dev/npuusertools", "npuusertools 源码树（含 xmnn 包）"),
         SourceMount("MODELS_PATH", "external/chaos/models", "模型目录"),
     ),
     smoke=SmokeSpec(

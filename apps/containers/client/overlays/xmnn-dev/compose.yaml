@@ -59,7 +59,7 @@ services:
         bind:
           create_host_path: true
       - type: bind
-        source: ${NPUUSERTOOLS_PATH:-../../../../../external/chaos/npuusertools}
+        source: ${NPUUSERTOOLS_PATH:-../../../../../external/containers/workspace/dev/npuusertools}
         target: /workspace/npuusertools
         bind:
           create_host_path: true
