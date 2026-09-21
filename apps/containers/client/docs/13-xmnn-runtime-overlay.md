@@ -14,10 +14,12 @@ wheel 的 `_libs`（libtvm.so + libLLVM 22，RPATH `$ORIGIN`）自包含。
 # apps/containers/client
 # 1) 构建器栈产 whl（产物落 workspace/dist）
 invoke xmnn.wheel
-# 2) 暂存最新 whl + 构建运行时镜像（构建期 9 项硬验证 root+devuser 双跑）
+# 2) 暂存最新 whl + 构建运行时镜像（构建期 10 项硬验证 root+devuser 双跑）
 invoke xmnnrt.build                   # pip 源/基底默认读 .env（C15）
+invoke xmnnrt.build --torch cu130     # 可选：CUDA 13.0 版 torch（缺省 cpu）
 # 3) 起交付环境：SSH 2225 / JupyterLab 8893
 invoke xmnnrt.up --skip-build
+invoke xmnnrt.up --gpu --skip-build   # 可选：透传 GPU 设备（默认隔离不透传）
 invoke xmnnrt.smoke
 invoke xmnnrt.down
 ```
@@ -41,12 +43,19 @@ invoke xmnnrt.down
 - 与 [apps/docker-images/xmnn-runtime](../../../docker-images/xmnn-runtime/docker/AGENTS.md)
   互不相关：后者基于外部 `npu-tvm-build:conda`（ai 用户、无 SSH/Jupyter），
   是独立 Docker 谱系。
-- **pytorch 前端开箱即用**：torch **2.14.0+cpu 已内置**于镜像
-  （Containerfile 版本 pin + PyTorch 官方 CPU 索引，守卫第 10 项构建期
-  硬验证 `torch.version.cuda is None`），resnet18/two_inputs 等 .pt 模型
-  无需手装任何依赖；需要 torchvision 时按 overlay README 自建薄镜像层。
+- **pytorch 前端开箱即用**：torch **2.14.0 已内置**于镜像（缺省 CPU 构建；
+  `build --torch cu130` 可换 CUDA 13.0 版，索引由白名单形态推导），守卫第
+  10 项按容器内 marker 硬断言「声明形态 == 实物」；resnet18/two_inputs 等
+  .pt 模型无需手装任何依赖；需要 torchvision 时按 overlay README 自建薄镜像层。
   torch 升级（版本 pin/守卫双点、真机重建、精度回归、回滚与禁项）见
-  overlay README 「torch-cpu 升级指南（SOP）」。
+  overlay README 「torch 升级指南（SOP）」。
+- **GPU 可选（C26，2026-09-20）**：`invoke xmnnrt.up --gpu` 透传设备（复用
+  C19/C23 内核：三态探测 + 形态分派，WSL2 自动改用 `compose.gpu.wsl.yaml`
+  挂 libcuda/libdxcore/drivers）；配合 `build --torch cu130` 才能在容器内
+  真正用上 GPU。两能力默认全关 = 与改造前逐字等价；设备是**运行期**
+  维度、torch 形态是**构建期**维度。本栈 **cu130 不提供 nvcc**（交付运行时
+  P0 禁编译器工具链，需 nvcc 请回 xmnn-dev 栈 C25）。覆盖文件不进
+  `release/` 客户交付包（独立谱系，GPU 交付属后续提案）。
 - compose 公共段同样 extends
   [../_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml)；
   Windows 原生自动桥接同三栈。

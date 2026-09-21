@@ -14,7 +14,7 @@
 #     等，patchelf 统一 RPATH=$ORIGIN）+ xmnn_bootstrap.pth + 数据目录；
 #   - 运行时无需系统 LLVM/Clang/Nuitka，无需 PYTHONPATH/TVM_LIBRARY_PATH；
 #   - wheel 元数据声明运行时依赖，pip install 自动解析；
-#   - torch CPU 内置（pytorch 前端编译/精度所需，版本 pin 见 Layer 1）。
+#   - torch 内置（pytorch 前端编译/精度所需，形态见 Layer 1 / C26）。
 #
 # ABI 契约（不可互换）：
 #   /opt/conda            = Python 3.14 cp314 GIL → wheel 安装目标 + Jupyter 内核
@@ -29,7 +29,7 @@
 #     内层双引号 python -c（buildah 二次分词教训）。
 #
 # 产出：localhost/xmnn-runtime:latest
-# 构建：invoke xmnnrt.build [--wheel path] [--pip-mirror tuna]
+# 构建：invoke xmnnrt.build [--wheel path] [--pip-mirror tuna] [--torch cu130]
 #   （裸 podman build 前需手工把 whl 放进 wheels/）
 # ------------------------------------------------------------
 
@@ -38,35 +38,39 @@ FROM ${BASE_IMAGE}
 
 ARG BASE_IMAGE
 ARG PIP_MIRROR=official
-# torch CPU 版本固定（工具链稳定性：不允许浮动；2026-09-16 真机验证版本）。
-# 升级时同步修改本 ARG 与 smoke/_runtime_smoke.py 的 CPU 构建断言。
+# torch 版本固定（工具链稳定性：不允许浮动；2026-09-16 真机验证版本）。
+# 升级时同步修改本 ARG 与 smoke/_runtime_smoke.py 的 _EXPECTED_TORCH_MAJOR。
 ARG TORCH_VERSION=2.14.0
-# 必须走 PyTorch 官方 CPU 索引：默认 PyPI（含 tuna/aliyun 镜像）的 torch 是
-# CUDA 变体，会拉入 nvidia-cuda-*/cudnn/nccl 十余个共数 GB 的包。
-ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cpu
+# torch 形态（C26，白名单空|cpu|cu130，由 install-torch.sh 分派）：
+#   cpu   = 默认（内置 CPU 层，与 2026-09-16 起的行为逐字等价）
+#   cu130 = CUDA 13.0 wheel，须配 `invoke xmnnrt.up --gpu` 透传设备
+# 取值经 invoke 侧 resolve_build_args 解析（.env TORCH_FLAVOR / --torch），
+# compose 段同键同默认 ${TORCH_FLAVOR:-cpu}（C15）；索引由形态推导，
+# 不设独立 TORCH_INDEX_URL ARG（避免「形态 vs 索引」两处事实源）。
+ARG TORCH_FLAVOR=cpu
 
 LABEL org.specweave.component="xmnn-runtime" \
       org.specweave.layer="xmnn-wheel-runtime" \
       org.specweave.python-abis="base:cp314-gil" \
       org.specweave.wheel-contract="xmnn-cp314-self-contained" \
-      org.specweave.torch-cpu="${TORCH_VERSION}" \
+      org.specweave.torch-version="${TORCH_VERSION}" \
+      org.specweave.torch-flavor="${TORCH_FLAVOR}" \
       org.specweave.base-image="${BASE_IMAGE}"
 
 # ------------------------------------------------------------
-# Layer 1：内置 torch CPU（pytorch 前端，cp314 GIL base env）
-#   - 独立成层且无 COPY 输入：torch 稳定而 whl 频繁变化，置于 whl 层之前
-#     可让重打 whl 的增量构建复用本层（不重复下载约 200 MB）；
-#   - 版本精确 pin + 官方 CPU 索引，杜绝 CUDA 包与版本漂移（构建后由
-#     smoke 第 10 项硬断言 torch.version.cuda is None）；
+# Layer 1：内置 torch（pytorch 前端，cp314 GIL base env）
+#   - 独立成层且无 COPY 输入（仅 COPY 本层的安装脚本）：torch 稳定而 whl
+#     频繁变化，置于 whl 层之前可让重打 whl 的增量构建复用本层（不重复
+#     下载约 200 MB）；改 install-torch.sh 才失效；
+#   - 形态由 TORCH_FLAVOR 白名单驱动（cpu 默认 / cu130），版本精确 pin +
+#     官方索引，杜绝 CUDA 包与版本漂移（构建后由 smoke 第 10 项按**形态
+#     marker**硬断言，见 scripts/install-torch.sh）；
 #   - 不装 torchvision：xmnn compile_api 仅 torch.jit.load + relay 前端，
 #     实测四个 demo 均不需要；需要者按 README 指引在自定义层追加。
 # ------------------------------------------------------------
+COPY scripts/install-torch.sh /opt/xmnnrt-scripts/install-torch.sh
 RUN /bin/bash -lc 'set -euo pipefail ; \
-    echo "[xmnnrt] installing torch==${TORCH_VERSION} (CPU index: ${TORCH_INDEX_URL})" ; \
-    /opt/conda/bin/python -m pip install --no-cache-dir \
-      "torch==${TORCH_VERSION}" --index-url "${TORCH_INDEX_URL}" ; \
-    /opt/conda/bin/python -c "import torch; assert torch.version.cuda is None, torch.__version__; print(\"[xmnnrt] torch\", torch.__version__, \"CPU-only OK\")" ; \
-    rm -rf /root/.cache/pip'
+    /bin/bash /opt/xmnnrt-scripts/install-torch.sh'
 
 # ------------------------------------------------------------
 # Layer 2：安装 xmnn wheel 到 base env（cp314 GIL）
@@ -113,7 +117,7 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
 #   守卫覆盖：cp314 GIL ABI / 三包来自 site-packages（非 /workspace、非
 #   /opt/xmnn-builder）/ _libs 自包含 / 干净环境 ctypes 加载 libtvm.so /
 #   tvm.build(llvm) 向量算例 / relay 数据 / bootstrap .pth / xmnn 数据目录 /
-#   xmnn-runtime 内核可见 / torch CPU 构建（cuda is None + jit 可用）。
+#   xmnn-runtime 内核可见 / torch 形态与实物一致（marker vs version.cuda）。
 #   任一失败即镜像构建失败（不是 WARNING）。
 # ------------------------------------------------------------
 RUN /bin/bash -lc 'set -euo pipefail ; \
@@ -125,7 +129,7 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
     echo "########################################################################" ; \
     echo "# XMNN-RUNTIME OVERLAY BUILD COMPLETE" ; \
     echo "# wheel    : xmnn cp314 GIL installed into /opt/conda (site-packages)" ; \
-    echo "# torch    : ${TORCH_VERSION} CPU-only (pytorch frontend built-in)" ; \
+    echo "# torch    : ${TORCH_VERSION} (flavor=${TORCH_FLAVOR}; pytorch frontend built-in)" ; \
     echo "# kernel   : Python 3.14 (xmnn runtime) in JupyterLab" ; \
     echo "# services : SSH localhost:2225, Jupyter localhost:8893 (invoke xmnnrt.up)" ; \
     echo "########################################################################"'

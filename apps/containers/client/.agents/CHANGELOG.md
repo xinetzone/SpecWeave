@@ -6,6 +6,72 @@
 
 ## [Unreleased]
 
+### 2026-09-20 · `feat:` xmnnrt 支持 GPU——`up --gpu` 设备透传 + `build --torch cpu|cu130`（C26）
+
+**关联七概念场景**：场景5「创新突破」——承接同日 xmnn-dev 的 GPU/torch 能力
+（C18/C19/C25），把同一能力面推广到**交付运行时**栈，并按本栈「干净运行时」
+定位收窄边界。
+
+**I 事实**：
+① 内核（`resolve_gpu_device` 三态探测 + `gpu_override_file` 形态分派 +
+C23 文件集判据）**已完整具备** GPU 能力，`xmnnrt` 只是未声明
+`gpu_override` 与缺两个覆盖文件、`up` 形参面少一个 `gpu`；
+② torch 层此前把 CPU 形态**硬编码**在 Containerfile（`TORCH_INDEX_URL` 固定
+CPU 索引 + 守卫写死 `cuda is None`），故 cu130 会同时在**安装索引**与
+**构建期守卫**两处卡死；
+③ **同一 `TORCH_FLAVOR` 键在两栈语义不同**——xmnn-dev「空=不装」、
+xmnn-runtime「空=回落 cpu（内置契约）」，故缺省值不能在内核硬编码。
+
+**E 方案**（三点，均按「声明优先、单一事实源」落）：
+① **内核**：`StackSpec` 新增 `torch_default`（缺省形态声明位），
+`resolve_build_args` 回落改为 `spec.torch_default`（xmnn 仍 `""`，行为零变化）；
+`_build_help` 公开为 `build_help` 并按缺省分派文案，消除 xmnnrt 侧的 help 复制。
+② **xmnnrt 声明**：`gpu_override=True` + `gpu_device_env="GPU_DEVICE"` +
+`torch_flavor=True` + `torch_default="cpu"`；自定义 `build`/`up` 薄封装各加
+一个形参（`torch`/`gpu`）后原样透传内核——**禁止**在栈模块重复实现分派；
+新增 `compose.gpu.yaml`（`${GPU_DEVICE:-/dev/dri}` 单 token）与
+`compose.gpu.wsl.yaml`（`/dev/dxg` + libcuda/libdxcore/drivers 三条只读 bind），
+compose 段补 `${TORCH_FLAVOR:-cpu}`（与 `spec.torch_default` 同键同默认，C15）。
+③ **镜像**：Layer 1 抽出 `scripts/install-torch.sh`（**独立成层**、索引由白名单
+形态推导，删掉独立 `TORCH_INDEX_URL` ARG）；守卫第 10 项改为**声明 vs 实物**
+（读容器内 `/opt/xmnnrt-torch-flavor` marker）；标签拆为
+`torch-version` + `torch-flavor`（`relpack.py` 更新读取键并保留旧键回退，
+`release.json` 字段与 schema 不变）。
+
+**边界（刻意保留，非缺口）**：
+- `cu130` **不提供 nvcc**——本栈 P0 禁编译器工具链（§4「运行时不含编译器/
+  调试器」），CUDA 版 torch 足以跑 GPU 张量与 `torch.jit` 推理；需 nvcc 编译
+  CUDA 内核 / TVM CUDA codegen 请回 xmnn-dev 栈（C25）；
+- **零 env 改动**：本栈 compose 本就无 `environment` 段（交付语义=干净运行时），
+  GPU 覆盖只加 `devices`（WSL 形态另加 `volumes`），WSL 库挂载靠目标取
+  `/usr/lib`；任何 `LD_LIBRARY_PATH` 注入既污染交付语义又打挂 env 黄金集；
+- 覆盖文件**不进 `release/` 客户离线交付包**（独立谱系，GPU 交付属后续提案）；
+  本次仅触及 `relpack.py` 的标签读取键，交付物内容与字段未变。
+
+**C 验收**（daemon-free 单测 + 真机渲染）：
+- `pytest tests -q --ignore=tests/test_ast_inject.py` **244 passed / 2 skipped**；
+- 新增/更新用例：`test_build_args_torch_default_is_per_spec`（两栈缺省分派）、
+  `test_xmnnrt_build_task_torch_defaults_to_cpu` / `..._flows_cu130`（argv 实物）、
+  `test_compose_torch_flavor_default_matches_spec`（C15 三处同键同默认，读真实
+  compose.yaml）、`test_xmnnrt_gpu_override_is_opt_in_and_adds_no_env`、
+  `test_up_gpu_wsl_form_for_xmnnrt_same_kernel_path`（薄封装是否吞参数）、
+  WSL 渲染断言参数化扩到 xmnnrt；黄金清单同步（build 形参 +`torch`、
+  up/smoke 形参 +`gpu`、smoke docstring 去「CPU」、`xmnnrt.py` 159 行 ≤160）；
+- 真机 WSL `podman-compose config` 逐一核对：默认 `TORCH_FLAVOR=cpu`、
+  `TORCH_FLAVOR=cu130` 正确插值、`-f compose.gpu.yaml` 追加 `/dev/dri`、
+  `-f compose.gpu.wsl.yaml` 追加 `/dev/dxg` + 三条 bind，且**均未新增 env**；
+- **未做**：cu130 镜像真机构建（需重下 CUDA torch，体积大）、GPU 设备透传真机
+  E2E（需 `xmnnrt.build --torch cu130` 完成后执行 `up --gpu` 并在容器内验证
+  `torch.cuda.is_available()`）；镜像构建属有网侧动作，留待用户按 README
+  「GPU 用法」三步验收。
+
+- 同步文档：[.agents/rules/xmnnrt-overlay.md](rules/xmnnrt-overlay.md)（§4/§6/新增
+  §8）、[overlays/xmnn-runtime/README.md](../overlays/xmnn-runtime/README.md)
+  （命令表/守卫 10 项/参数表/GPU 用法/torch 升级 SOP/排障四行）、
+  [docs/13-xmnn-runtime-overlay.md](../docs/13-xmnn-runtime-overlay.md)、
+  [.env.example](../.env.example)（两栈共用键的默认值差异警示）、
+  overlay `.env.example`、[AGENTS.md](../AGENTS.md) C26 条款。
+
 ### 2026-09-20 · `fix:` cu130 形态补齐 CUDA 编译器工具链——容器内 `nvcc` 从 not found 到可编译（C25）
 
 **关联七概念场景**：场景2「问题解决」——现场症状驱动：JupyterLab 内

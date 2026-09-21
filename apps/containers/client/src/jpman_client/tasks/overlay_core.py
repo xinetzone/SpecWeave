@@ -183,6 +183,11 @@ class StackSpec:
     gpu_device_env: str = ""  # GPU 设备插值键（空=不插值，设备项写死；quant/xmnn 均为 GPU_DEVICE）
     conda_mirror: bool = False  # build 暴露 --conda-mirror / CONDA_MIRROR（xmnn）
     torch_flavor: bool = False  # build 暴露 --torch / TORCH_FLAVOR（xmnn；空|cpu|cu130）
+    # torch **缺省**形态（未设 TORCH_FLAVOR 时的回落值，必须 ∈ TORCH_FLAVORS）：
+    #   xmnn-dev     = ""（默认零 torch，opt-in 才装）；
+    #   xmnn-runtime = "cpu"（torch 是内置工具链契约，默认形态即 cpu，仅 cu130 opt-in）。
+    # compose 侧同键默认须一致（C15）：`${TORCH_FLAVOR:-<本值>}`。
+    torch_default: str = ""
     auto_shortflags: bool = False  # invoke 自动短选项（quant 历史为默认开启）
 
     # —— 挂载/冒烟/桥接 ——
@@ -453,6 +458,10 @@ def resolve_build_args(
     ``torch_flavor``：仅声明 ``torch_flavor=True`` 的栈解析（键 ``TORCH_FLAVOR``），
     取值白名单 ``""``（不装）/``cpu``/``cu130``——非白名单在**解析期**即拒绝，
     避免把错误值带到 podman build 才炸（构建一次代价极高）。
+
+    缺省回落取 ``spec.torch_default`` 而非硬编码 ``""``：xmnn-runtime 的 torch
+    是**内置**工具链契约（默认 cpu），空/未设一律视为 cpu；compose 侧同键写
+    ``${TORCH_FLAVOR:-cpu}`` 与之同默认（C15）。
     """
     args = {
         "base_image": str(
@@ -474,7 +483,10 @@ def resolve_build_args(
         )
     if spec.torch_flavor:
         flavor = str(
-            torch or os.environ.get("TORCH_FLAVOR") or env.get("TORCH_FLAVOR") or ""
+            torch
+            or os.environ.get("TORCH_FLAVOR")
+            or env.get("TORCH_FLAVOR")
+            or spec.torch_default
         ).strip()
         if flavor not in TORCH_FLAVORS:
             raise Exit(
@@ -1464,7 +1476,14 @@ def smoke_stack(c: Context, spec: StackSpec, *, gpu: bool = False) -> None:
 # ---------------------------------------------------------------------------
 
 
-def _build_help(spec: StackSpec) -> dict:
+def build_help(spec: StackSpec) -> dict:
+    """``build`` 任务 help 文案（按 spec 能力并集生成）。
+
+    公开给栈模块复用：形态 B 的栈（xmnnrt）自定义 build 只因需多一个
+    ``--wheel`` 参数，其余文案与本函数同源，复制一份即制造双事实源
+    （改一处忘另一处，`invoke <ns>.build --help` 与实际行为不符）。
+    栈侧写法：``help={**build_help(spec), "wheel": "..."}``。
+    """
     help_ = {
         "tag": f"产出镜像标签，默认 {spec.default_image_tag}（或 root .env {spec.image_tag_env}）",
         "base-image": "基底镜像（Containerfile ARG BASE_IMAGE）；默认 .env BASE_IMAGE，缺省 %s"
@@ -1477,8 +1496,16 @@ def _build_help(spec: StackSpec) -> dict:
             "构建期 conda 镜像源：official|aliyun|tuna；默认 .env CONDA_MIRROR，缺省 official"
         )
     if spec.torch_flavor:
+        # 文案随缺省形态分派：xmnn-dev「默认不装」，xmnn-runtime「默认内置 cpu」
+        # （同一 TORCH_FLAVOR 键在两栈语义不同，help 必须自证，否则用户按
+        #  ''/不装'' 理解 runtime 会误判镜像内容）。
+        default_hint = (
+            f"{spec.torch_default}（默认，内置）|cu130"
+            if spec.torch_default
+            else "''（不装，默认）|cpu|cu130"
+        )
         help_["torch"] = (
-            "torch 形态：''（不装，默认）|cpu|cu130；默认 .env TORCH_FLAVOR。"
+            f"torch 形态：{default_hint}；默认 .env TORCH_FLAVOR。"
             "cpu/cu130 经 download.pytorch.org/whl/<形态> 索引安装 torch 2.14.0"
         )
     return help_
@@ -1523,7 +1550,7 @@ def make_stack_tasks(spec: StackSpec) -> dict:
 
     if spec.conda_mirror and spec.torch_flavor:
 
-        @task(help=_build_help(spec), **deco)
+        @task(help=build_help(spec), **deco)
         def build(
             c: Context,
             tag: str | None = None,
@@ -1545,7 +1572,7 @@ def make_stack_tasks(spec: StackSpec) -> dict:
 
     elif spec.conda_mirror:
 
-        @task(help=_build_help(spec), **deco)
+        @task(help=build_help(spec), **deco)
         def build(
             c: Context,
             tag: str | None = None,
@@ -1566,7 +1593,7 @@ def make_stack_tasks(spec: StackSpec) -> dict:
 
     else:
 
-        @task(help=_build_help(spec), **deco)
+        @task(help=build_help(spec), **deco)
         def build(
             c: Context,
             tag: str | None = None,

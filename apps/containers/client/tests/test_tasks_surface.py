@@ -54,7 +54,7 @@ def test_docstrings_golden():
     r = _col("xmnnrt")
     assert r.tasks["build"].__doc__.startswith("暂存 wheel 后构建 xmnn-runtime")
     assert r.tasks["up"].__doc__.startswith("渲染并启动 xmnn-runtime 栈")
-    assert r.tasks["smoke"].__doc__ == "运行 xmnn-runtime 守卫：已装 wheel 与内置 torch CPU 的干净环境 10 项验证。"
+    assert r.tasks["smoke"].__doc__ == "运行 xmnn-runtime 守卫：已装 wheel 与内置 torch 的干净环境 10 项验证。"
 
 
 def test_signatures_golden():
@@ -65,15 +65,15 @@ def test_signatures_golden():
         "tag", "base_image", "pip_mirror", "conda_mirror", "torch", "no_cache",
     ]
     assert _params(m.tasks["build"]) == ["tag", "base_image", "pip_mirror", "no_cache"]
-    # xmnnrt build 多 --wheel 暂存参数（whl 显式指定）
+    # xmnnrt build 多 --wheel 暂存参数（whl 显式指定）与 --torch 形态（C26）
     assert _params(_col("xmnnrt").tasks["build"]) == [
-        "tag", "base_image", "pip_mirror", "wheel", "no_cache",
+        "tag", "base_image", "pip_mirror", "wheel", "torch", "no_cache",
     ]
-    # up/smoke：形参面 = 能力并集——quant/xmnn 有 gpu，xmnn 另有 offline 三态
+    # up/smoke：形参面 = 能力并集——quant/xmnn/xmnnrt 有 gpu，xmnn 另有 offline 三态
     assert _params(q.tasks["up"]) == ["gpu", "skip_build"]
     assert _params(x.tasks["up"]) == ["gpu", "skip_build", "offline", "no_offline"]
     assert _params(m.tasks["up"]) == ["skip_build"]
-    assert _params(_col("xmnnrt").tasks["up"]) == ["skip_build"]
+    assert _params(_col("xmnnrt").tasks["up"]) == ["gpu", "skip_build"]
     # xmnn 离线镜像归档（仅 supports_offline 栈生成）
     assert _params(x.tasks["save"]) == ["tag", "cache_dir"]
     assert _params(x.tasks["load"]) == ["path", "cache_dir"]
@@ -82,7 +82,7 @@ def test_signatures_golden():
     assert _params(q.tasks["smoke"]) == ["gpu"]
     assert _params(x.tasks["smoke"]) == ["gpu"]
     assert _params(m.tasks["smoke"]) == []
-    assert _params(_col("xmnnrt").tasks["smoke"]) == []
+    assert _params(_col("xmnnrt").tasks["smoke"]) == ["gpu"]
     # 其余四任务
     for col in (q, x, m, _col("xmnnrt")):
         assert _params(col.tasks["down"]) == ["volumes"]

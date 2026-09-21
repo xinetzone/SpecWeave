@@ -38,6 +38,10 @@ services:
       args:
         BASE_IMAGE: ${BASE_IMAGE:-localhost/jupyter-podman-rootless:latest}
         PIP_MIRROR: ${PIP_MIRROR:-official}
+        # torch 形态（C26）：cpu=默认（内置 CPU 层，与改造前逐字等价）；
+        # cu130=CUDA 13.0 wheel（须配 up --gpu 才用得上 GPU）。键与 invoke 侧
+        # resolve_build_args 同键同默认（C15，默认值 = spec.torch_default）。
+        TORCH_FLAVOR: ${TORCH_FLAVOR:-cpu}
     ports:
       - "${XMNNRT_SSH_PORT:-2225}:22"
       - "${XMNNRT_JUPYTER_PORT:-8893}:8888"

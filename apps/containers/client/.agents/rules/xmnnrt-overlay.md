@@ -84,16 +84,20 @@
   3.18 GB，含内置 torch CPU；xmnn-dev 4.69 GB）。
 - 禁止安装 LLVM/Clang/Nuitka/gcc/gdb/patchelf 等构建器工具；运行时
   对 libLLVM 的需求由 wheel `_libs`（RPATH `$ORIGIN`）满足。
-- **torch CPU 内置层（Layer 1，2026-09-16 起，工具链稳定契约）**：
-  `ARG TORCH_VERSION=2.14.0` 精确 pin + `ARG TORCH_INDEX_URL` 固定
-  `https://download.pytorch.org/whl/cpu`（默认 PyPI/tuna/aliyun 的
-  torch 是 CUDA 变体，会拉 nvidia 大包，严禁换源）；torch 层无 COPY
-  输入且必须位于 whl 层之前（重打 whl 增量构建复用该层）；只装 torch，
-  不装 torchvision（compile_api 仅 torch.jit.load + relay 前端，实测
-  不需要）；builder 镜像与 pyproject dependencies **不动**（torch 是
-  函数内 lazy import，Nuitka 打包不 follow，构建器无 torch 也能打 whl）。
-  升级 torch：同时改 Containerfile ARG 与 smoke `_EXPECTED_TORCH_MAJOR`，
-  守卫第 10 项硬断言 `torch.version.cuda is None` + jit + CPU 张量算子。
+- **torch 内置层形态可选（Layer 1；2026-09-16 起内置，2026-09-20 起形态可选，C26）**：
+  `ARG TORCH_VERSION=2.14.0` 精确 pin；形态 `ARG TORCH_FLAVOR`（白名单
+  `""|cpu|cu130`，**缺省 cpu**——与 xmnn-dev 的「空=不装」语义相反，缺省由
+  `StackSpec.torch_default` 声明，compose 段 `${TORCH_FLAVOR:-cpu}` 同默认，
+  详见 §8 与 C15）。安装逻辑在 `scripts/install-torch.sh`（**独立成层**且位于
+  whl 层之前，重打 whl 增量构建复用该层）；**索引由形态推导**
+  （`download.pytorch.org/whl/<flavor>`）而**不是**独立 ARG——默认 PyPI/tuna/
+  aliyun 的 torch 是 CUDA 变体，会拉 nvidia 大包，严禁换源，且独立的
+  `TORCH_INDEX_URL` 会制造「形态 vs 索引」两处事实源。形态落盘
+  `/opt/xmnnrt-torch-flavor` 供守卫第 10 项断言「声明 vs 实物」（守卫在镜像内
+  读不到 LABEL）。只装 torch，不装 torchvision（compile_api 仅 torch.jit.load +
+  relay 前端，实测不需要）；`cu130` **不随带 nvcc**（本栈 P0 禁编译器工具链，
+  需 nvcc 编译 CUDA 内核请回 xmnn-dev 栈，其 cu130 经 C25 提供）。升级 torch：
+  同时改 Containerfile ARG 与 smoke `_EXPECTED_TORCH_MAJOR`。
 - wheel 自带 `_xmnn_bootstrap.py` + `xmnn_bootstrap.pth`（builder
   CMakeLists 已 install 进 wheel），**不得**在 runtime 额外 COPY
   任何 bootstrap/init 文件（与 docker-images/xmnn-runtime 的
@@ -109,7 +113,7 @@
   （交付语义=无源码、无 conda lib 路径的干净运行时）；守卫脚本
   对这两项做反向断言。
 
-## 6. 守卫契约（9 项硬验证）
+## 6. 守卫契约（10 项硬验证）
 
 - `smoke/_runtime_smoke.py` 烤入 `/opt/xmnnrt-smoke/`，构建期 root +
   devuser 双身份执行（任一失败镜像构建失败，不允许 WARNING 放行）；
@@ -119,6 +123,14 @@
   导入已安装 wheel**（非临时 venv、非 --no-deps），等价真实客户机
   首次启动；并断言模块路径不含 `/workspace/`、`/opt/xmnn-builder`。
 - tvm.build('llvm') 算例是自包含性的最终证明（镜像无系统 LLVM）。
+- 第 10 项是**形态一致性**判据（C26）：读 `/opt/xmnnrt-torch-flavor`
+  marker → `""` 断言不可 import torch；`cpu` 断言 `torch.version.cuda
+  is None` 且 `cuda.is_available() is False`；`cu130` 断言
+  `torch.version.cuda is not None`。**禁止**把判据写死为 CPU-only——
+  `build --torch cu130` 会在守卫处误报失败；反过来只断言「能 import」
+  又会放过「声明 cpu 却装了 CUDA 包」的错版（错版只在运行期浮现）。
+  CUDA 形态**刻意不断言** `cuda.is_available()`：设备是运行期维度
+  （C19），构建期无 GPU 属正常，该值仅作 INFO 打印。
 
 ## 7. compose / 端口 / 卷
 
@@ -133,3 +145,55 @@
   `release/compose.yaml` 的 `xmnn-ssh-host-keys` 刻意不同**——内部栈与交付包
   属不同生命周期，避免同机共享卷导致一方 `down --volumes` 牵连另一方。
   无源码 bind；端口固定 2225/8893（与三栈错开）。
+
+## 8. 可选能力：GPU 透传与 torch 形态（C26，2026-09-20）
+
+两能力**默认全关 = 与改造前逐字等价**（不开时镜像层、设备面、compose 文件集
+零变化），且互为正交：GPU 是**运行期**维度（只改 compose 文件集），torch 形态
+是**构建期**维度（只改镜像内容）。二者组合才有意义——只透传设备而镜像内是
+CPU 版 torch，容器里仍然用不上 GPU。
+
+### 8.1 GPU：`up --gpu`
+
+- 设备解析/预检/形态分派**完全复用内核**（C19/C23，与 quant/xmnn 同源）：
+  `up --gpu` → `resolve_gpu_device` 三态探测（显式设备路径 → 显式 CDI 引用 →
+  按 `GPU_DEVICE_FORMS` 自动探测 `/dev/dri` → `/dev/dxg`）→ 追加
+  `compose.gpu.yaml` 或 `compose.gpu.wsl.yaml`（**互斥，只加载一个**）。
+  `xmnnrt.py` 只负责把 `gpu` 形参透传给 `up_stack`，**禁止**在栈模块里
+  重复实现形态分派。
+- 两个覆盖文件都是**薄层**：`compose.gpu.yaml` 只写一条设备
+  `${GPU_DEVICE:-/dev/dri}` 单 token 插值（`/` 开头=设备路径，否则=CDI 引用；
+  podman-compose 1.6.0 把 devices 列表项**原样**下传为 `--device <item>`，
+  写成 `a:b` 两条并列必有一条非法）；`compose.gpu.wsl.yaml` 写 `/dev/dxg` +
+  三条只读 bind（libcuda.so.1 / libdxcore.so / `/usr/lib/wsl/drivers`，
+  同为最小充分条件，2026-09-20 实测）。
+- **本栈零 env 改动是硬约束**：compose.yaml **本就没有 `environment` 段**
+  （凭证四变量由基段继承），故覆盖文件只允许加 `devices`（WSL 形态另加
+  `volumes`）。任何 `LD_LIBRARY_PATH` 注入都会凭空新增栈专属 env——既污染
+  「干净交付运行时」语义，又打挂 `test_compose_merge.py` 的 env 黄金集。
+  WSL 库挂载靠**目标取 `/usr/lib`（基底 glibc 默认搜索目录）**实现，不需要
+  也不允许环境变量配合。
+- 覆盖文件**不进客户交付包**：`release/` 是独立谱系（自包含 compose +
+  `xmnnctl`），本次改造不涉及；GPU 交付属后续独立提案。
+
+### 8.2 torch 形态：`build --torch cpu|cu130`
+
+- 缺省 **cpu**（`StackSpec.torch_default="cpu"`，保持 2026-09-16 起的「内置
+  CPU 层」语义）；`cu130` 经 `download.pytorch.org/whl/cu130` 装 CUDA 版
+  torch 2.14.0。取值是**白名单**（`resolve_build_args` 解析期拦截），索引由
+  形态推导，杜绝用户输入拼接网络请求目标。
+- **与 xmnn-dev 的语义差异必须显式理解**：同一个 `.env TORCH_FLAVOR` 键，
+  在 xmnn-dev 是「空=不装 torch」，在 xmnnrt 是「空/未设=回落 **cpu**」。
+  故缺省值**不可**硬编码在内核里（内核只认 `spec.torch_default`），
+  compose 段也必须写 `${TORCH_FLAVOR:-cpu}` 与之同键同默认（C15）。
+- 形态不改镜像 tag（沿用 `XMNNRT_IMAGE_TAG`，一 tag 一形态）：CPU 与 cu130
+  镜像 tag 相同但内容不同，切换形态必须重建镜像；**不做**形态感知的 tag 命名
+  （与 xmnn-dev 一致——它的 arch/torch 区分经 `save` 归档名承担，本栈无
+  `save`/`load`）。
+- **不提供 nvcc**：本栈 P0 禁编译器工具链（§4），CUDA 版 torch 足以跑 GPU
+  张量与 torch.jit 推理；需要编译 CUDA 内核 / TVM CUDA codegen 请回 xmnn-dev
+  栈（其 cu130 经 C25 提供 nvcc 13.4.92）。这是**刻意保留的边界**，不是缺口。
+- 客户交付包（`release/`）的 torch 版本标签读取口径随本次改造改为
+  `org.specweave.torch-version`（旧 `torch-cpu` 键名在 cu130 下失真），
+  `relpack.py` 保留旧键回退以兼容本地残留镜像；`release.json` 字段与
+  schema **无变化**。

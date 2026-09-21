@@ -341,7 +341,7 @@ def test_quant_gpu_device_double_form_interpolation():
     ] == ["/dev/fuse:/dev/fuse", "/dev/nvidia0"]
 
 
-@pytest.mark.parametrize("stack", ["xmnn", "quant"])
+@pytest.mark.parametrize("stack", ["xmnn", "quant", "xmnnrt"])
 def test_wsl_gpu_override_passes_dxg_and_mounts_wsl_libs(stack):
     """WSL2 形态（C19）：/dev/dxg + 三条只读 bind，且**不动**栈自带环境。
 
@@ -400,6 +400,26 @@ def test_xmnn_gpu_device_double_form_interpolation():
     # 空串回退默认（与 _interpolate 的 `${NAME:-default}` 语义一致）
     empty = render_stack("xmnn", env={"GPU_DEVICE": ""}, gpu=True)
     assert empty["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dri"]
+
+
+def test_xmnnrt_gpu_override_is_opt_in_and_adds_no_env():
+    """xmnnrt 的 GPU opt-in（C26）：与 quant/xmnn 同构，但**零 env 改动**。
+
+    本栈是交付运行时，compose.yaml **本就没有 environment 段**（凭证四变量由
+    基段继承，无栈专属变量）。GPU 覆盖因此只允许加 devices：任何 LD_LIBRARY_PATH
+    注入都会凭空新增栈专属 env，既污染交付语义、又打挂 env 黄金集。
+    """
+    plain = render_stack("xmnnrt")
+    assert plain["devices"] == ["/dev/fuse:/dev/fuse"]
+    gpu = render_stack("xmnnrt", gpu=True)
+    assert gpu["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dri"]
+    assert gpu["environment"] == plain["environment"] == {
+        "USER_PASSWORD": "", "JUPYTER_TOKEN": "", "SSH_PUBLIC_KEY": "",
+        "GRANT_SUDO": "yes",
+    }
+    assert gpu["volumes"] == plain["volumes"]  # generic 形态只加设备，不动卷
+    cdi = render_stack("xmnnrt", env={"GPU_DEVICE": "nvidia.com/gpu=all"}, gpu=True)
+    assert cdi["devices"] == ["/dev/fuse:/dev/fuse", "nvidia.com/gpu=all"]
 
 
 def test_env_override_flows_through_interpolation():

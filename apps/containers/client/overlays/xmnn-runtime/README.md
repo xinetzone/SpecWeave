@@ -17,8 +17,9 @@
   supervisord 托管，沿用基底 entrypoint
 - **不包含**：LLVM/Clang、Nuitka、gcc/g++、gdb、ccache；npu_tvm/
   npuusertools 源码树（与 xmnn-dev 的关键差异）
-- **内置**：torch 2.14.0+cpu（pytorch 前端编译/精度；typer/xmflow CLI；
-  构建期 10 项硬验证）
+- **内置**：torch 2.14.0（**缺省 CPU 构建**；`build --torch cu130` 可换
+  CUDA 13.0 版，配 `up --gpu` 才用得上 GPU）——pytorch 前端编译/精度所需；
+  typer/xmflow CLI；构建期 10 项硬验证
 - **编排**：podman-compose（rootless、无 privileged）；AI 硬约束见
   [../../.agents/rules/xmnnrt-overlay.md](../../.agents/rules/xmnnrt-overlay.md)
 
@@ -68,13 +69,17 @@ Python、无需联网，Podman 与 Docker 双兼容。客户侧使用说明见
 ```bash
 invoke xmnnrt.build                       # 自动暂存 workspace/dist 最新 whl 后构建镜像
                                          #   --wheel <path> 显式指定 whl
+                                         #   --torch cu130 换 CUDA 13.0 版 torch（缺省 cpu）
                                          #   换 pip 源请写 .env 的 PIP_MIRROR（C15：
                                          #   build/up 内联构建/compose 段同键）；
                                          #   --pip-mirror tuna|aliyun 只覆盖本次 build
-                                         #   构建期自动执行 9 项硬验证（root+devuser）
+                                         #   构建期自动执行 10 项硬验证（root+devuser）
 invoke xmnnrt.up                          # 启动栈（默认随带构建；自动暂存最新 whl）
+invoke xmnnrt.up --gpu                    # 同上并透传 GPU 设备（默认隔离不透传）
+                                          #   WSL2 自动改用 compose.gpu.wsl.yaml
+                                          #   （/dev/dxg + 三条只读 bind）
 invoke xmnnrt.ps
-invoke xmnnrt.smoke                       # 已装 wheel 的干净环境 9 项守卫
+invoke xmnnrt.smoke                       # 已装 wheel 的干净环境 10 项守卫（--gpu 时按 GPU 文件集 exec）
 invoke xmnnrt.logs
 invoke xmnnrt.down                        # 停止清理（workspace 保留）
 ```
@@ -95,9 +100,14 @@ cp ../../workspace/dist/xmnn-*.whl wheels/
 cp .env.example .env
 podman-compose up -d
 podman-compose down
+# 3) GPU 透传（可选，默认隔离）：额外叠加一个设备覆盖文件，二者互斥
+podman-compose -f compose.yaml -f compose.gpu.yaml up -d          # /dev/dri 或 CDI
+podman-compose -f compose.yaml -f compose.gpu.wsl.yaml up -d      # WSL2（/dev/dxg）
+# 4) 换 torch 形态（可选）：写入 .env 后重建（形态不改 tag，一 tag 一形态）
+#    TORCH_FLAVOR=cu130 && podman-compose build
 ```
 
-## 构建期硬验证（9 项，失败即镜像构建失败）
+## 构建期硬验证（10 项，失败即镜像构建失败）
 
 `smoke/_runtime_smoke.py` 烤入 `/opt/xmnnrt-smoke/`，构建期以 root 与
 devuser 双身份执行，`xmnnrt.smoke` / `podman run --rm` 可重复运行：
@@ -112,6 +122,10 @@ devuser 双身份执行，`xmnnrt.smoke` / `podman run --rm` 可重复运行：
 7. `xmnn_bootstrap.pth` 在 site-packages
 8. xmnn 数据三目录（autolibs/tools_cpp/fonts）
 9. `xmnn-runtime` Jupyter 内核已注册且 argv 指向 base python、env 无源码路径
+10. torch **形态与实物一致**：读容器内 `/opt/xmnnrt-torch-flavor` marker（由
+    `scripts/install-torch.sh` 写入）→ `cpu` 断言 `torch.version.cuda is None`、
+    `cu130` 断言 `is not None`、空断言不可 import；均附 jit 与张量算子探针。
+    CUDA 形态不断言 `cuda.is_available()`（构建期无设备属正常，设备是运行期维度）
 
 ## 参数表
 
@@ -123,6 +137,8 @@ devuser 双身份执行，`xmnnrt.smoke` / `podman run --rm` 可重复运行：
 | `XMNNRT_WORKSPACE` | `../../workspace` | notebook 工作区 → /workspace |
 | `BASE_IMAGE`（build args） | `localhost/jupyter-podman-rootless:latest` | 基底（须与构建器一致） |
 | `PIP_MIRROR`（build args） | `official` | wheel 依赖安装源（official/aliyun/tuna） |
+| `TORCH_FLAVOR`（build args） | `cpu` | torch 形态白名单：`cpu`\|`cu130`（**索引由形态推导，不可换源**；与 xmnn-dev 不同，空=回落 cpu 而非不装） |
+| `GPU_DEVICE`（运行期，opt-in） | 空 = 自动探测 | 仅 `invoke xmnnrt.up --gpu` 生效：`/` 开头=宿主机设备路径（缺省探测 `/dev/dri` → `/dev/dxg`），否则=CDI 引用（如 `nvidia.com/gpu=all`） |
 | `USER_PASSWORD` / `JUPYTER_TOKEN` / `SSH_PUBLIC_KEY` / `GRANT_SUDO` | 空/`yes` | 凭证四变量（基段继承） |
 
 ## 模型精度验证（SIM_VTA2.0 仿真，真机实测 2026-09-16）
@@ -188,32 +204,67 @@ podman run --rm --device /dev/fuse --security-opt label=disable --cgroupns=host 
 
 稳定性约束（Containerfile ARG，修改需重建镜像）：
 
-- `TORCH_VERSION=2.14.0`：精确 pin，升级步骤见下文「torch-cpu 升级指南」；
-- `TORCH_INDEX_URL=https://download.pytorch.org/whl/cpu`：**不可**换成
-  默认 PyPI 或 tuna/aliyun 镜像——那些渠道的 torch 是 CUDA 变体，会拉入
-  nvidia-cuda-*/cudnn/nccl 十余个共数 GB 的包。
+- `TORCH_VERSION=2.14.0`：精确 pin，升级步骤见下文「torch 升级指南」；
+- `TORCH_FLAVOR=cpu`：形态白名单（`cpu` | `cu130`）。**索引由形态推导**
+  （`https://download.pytorch.org/whl/<flavor>`），不设独立
+  `TORCH_INDEX_URL` ARG——**不可**换成默认 PyPI 或 tuna/aliyun 镜像，
+  那些渠道的 torch 是 CUDA 变体，会拉入 nvidia-cuda-*/cudnn/nccl
+  十余个共数 GB 的包（索引与形态两处事实源会互相打架，故合并为一处）。
 
-torch 层无 COPY 输入且位于 whl 层之前：重打 xmnn whl 触发的增量构建会
-复用 torch 层（不重复下载 196 MB）。
+安装逻辑在 [scripts/install-torch.sh](scripts/install-torch.sh)：该层只
+COPY 这一个脚本（无 whl 依赖）且位于 whl 层之前，故重打 xmnn whl 触发的
+增量构建会复用 torch 层（不重复下载约 200 MB）；只有改该脚本或改形态才失效。
 
-## torch-cpu 升级指南（SOP）
+### GPU 用法（`--torch cu130` + `up --gpu`）
 
-torch 版本由**两个点**锁定，升级必须同步修改并真机重建验证。
+GPU 是**运行期**维度、torch 形态是**构建期**维度，二者正交但需配套：
+
+```bash
+# 1) 构建 CUDA 版 torch 的运行时镜像（形态不改 tag，一 tag 一形态）
+invoke xmnnrt.build --torch cu130
+# 2) 起栈并透传设备（未设 GPU_DEVICE 时自动探测 /dev/dri → /dev/dxg；
+#    WSL2 自动改用 compose.gpu.wsl.yaml 并挂 libcuda/libdxcore/drivers）
+invoke xmnnrt.up --gpu --skip-build
+# 3) 容器内自验（构建期守卫不判设备，运行期才可见）
+podman exec xmnn-runtime /opt/conda/bin/python -c \
+  'import torch; print(torch.version.cuda, torch.cuda.is_available(), torch.cuda.get_device_name(0))'
+```
+
+- 只 `build --torch cu130` 而不 `up --gpu`：torch 是 CUDA 版但设备不在容器内，
+  `torch.cuda.is_available()` 为 `False`（默认隔离，符合预期）。
+- 只 `up --gpu` 而镜像是 cpu 形态：设备透传成功但 torch 仍走 CPU。
+- **本栈 cu130 不提供 nvcc**（交付运行时禁编译器工具链，见
+  [rules §4/§8.2](../../.agents/rules/xmnnrt-overlay.md)）：CUDA 版 torch
+  足以跑 GPU 张量与 `torch.jit` 推理；需要编译 CUDA 内核 / TVM CUDA
+  codegen 请回 xmnn-dev 栈（其 cu130 经 C25 提供 nvcc）。
+- 覆盖文件**不进客户交付包**：`release/` 是独立谱系，GPU 交付属后续提案。
+
+## torch 升级指南（SOP）
+
+torch 版本由**两个点**锁定，升级必须同步修改并真机重建验证；形态是第三个
+维度（`cpu` / `cu130`）——**两形态必须同 pin 同一版本**，否则 `cpu` 与 `cu130`
+镜像会漂到不同 torch（2026-09-20 实测：`download.pytorch.org` 各索引下 cp314
+可用版本为 cpu→2.14.0、cu130→2.14.0、cu129→2.13.0、cu128→2.11.0，
+**cu130 是唯一能与其他形态同 pin 的 CUDA 索引**，这也是选 cu130 的理由）。
 
 ### 升级前检查（30 秒）
 
 ```bash
-# 1) 确认目标版本有 cp314 CPU wheel（只列容器实际平台 linux x86_64）
-wsl -d podman-machine-default -- bash -c \
-  'curl -s https://download.pytorch.org/whl/cpu/torch/ | grep -o "torch-[0-9.]*%2Bcpu-cp314-cp314-manylinux[^\" ]*x86_64\.whl" | sort -uV | tail -5'
+# 1) 确认目标版本有 cp314 wheel（只列容器实际平台 linux x86_64；两个索引都要看）
+wsl -d podman-machine-default -- bash -c 'for f in cpu cu130; do
+  echo "== $f =="
+  curl -s https://download.pytorch.org/whl/$f/torch/ \
+    | grep -o "torch-[0-9.]*%2B[a-z0-9]*-cp314-cp314-manylinux[^\" ]*x86_64\.whl" | sort -uV | tail -3
+done'
 
-# 2) 确认当前镜像版本（镜像 LABEL）
+# 2) 确认当前镜像版本与形态（镜像 LABEL）
 podman image inspect localhost/xmnn-runtime:latest \
-  --format '{{index .Config.Labels "org.specweave.torch-cpu"}}'
+  --format '{{index .Config.Labels "org.specweave.torch-version"}} / {{index .Config.Labels "org.specweave.torch-flavor"}}'
 ```
 
-> 硬约束：目标版本必须有 **cp314**（非 cp314t）+ **+cpu** wheel；
-> torch 大版本跨越（如未来 3.x）时守卫 `_EXPECTED_TORCH_MAJOR` 与
+> 硬约束：目标版本必须有 **cp314**（非 cp314t）wheel，且 **cpu 与 cu130
+> 两个索引都提供该版本**（否则形态间版本分叉）；torch 大版本跨越（如未来
+> 3.x）时守卫 `_EXPECTED_TORCH_MAJOR` 与
 > `compile_api._load_pytorch_model` 的 TorchScript 行为需一并评估。
 
 ### 升级步骤（补丁/小版本，如 2.14.0 → 2.14.1）
@@ -226,10 +277,12 @@ podman image inspect localhost/xmnn-runtime:latest \
 2. **真机构建**（必加 `--no-cache`，强制重下 torch 层）：
    ```bash
    cd apps/containers/client
-   invoke xmnnrt.build --no-cache
+   invoke xmnnrt.build --no-cache                   # 缺省 cpu 形态
+   invoke xmnnrt.build --no-cache --torch cu130     # CUDA 形态（两个形态都要重建）
    ```
-   构建期第 10 项守卫会验证 `torch.version.cuda is None` + jit + CPU
-   张量算子；版本 pin 写错（无此 wheel）或误拉 CUDA 变体会在本步失败。
+   构建期第 10 项守卫会按 marker 断言形态与实物一致（cpu → `cuda is None`；
+   cu130 → `cuda is not None`）+ jit + 张量算子；版本 pin 写错（该索引无此
+   wheel）或形态与索引不符会在本步失败。
 
 3. **回归精度**（至少一个 pytorch demo，确认 TorchScript 加载未变）：
    ```bash
@@ -265,16 +318,20 @@ podman image inspect localhost/xmnn-runtime:latest \
 ### 回滚
 
 torch 与镜像 tag 无强绑定（无 lock 文件层），回滚即把
-`TORCH_VERSION` 改回旧值并 `invoke xmnnrt.build --no-cache`；若旧
-镜像仍在本地，可直接 `podman tag <旧 image id> localhost/xmnn-runtime:latest`
-应急（`podman images` 查历史 id）。
+`TORCH_VERSION` 改回旧值并 `invoke xmnnrt.build --no-cache`（形态同理：去掉
+`--torch cu130` 即回到 cpu）；若旧镜像仍在本地，可直接
+`podman tag <旧 image id> localhost/xmnn-runtime:latest` 应急
+（`podman images` 查历史 id）。
 
 ### 不要做的事
 
 - ❌ 不要去掉 `==` 版本 pin（`torch` 浮动会让同一 Dockerfile 不同时间
   构建出不同工具链，违背稳定性目标）；
-- ❌ 不要把 `TORCH_INDEX_URL` 改为 PyPI/tuna/aliyun（拉入 CUDA 大包，
-  第 10 项守卫会因 `cuda is not None` 直接失败）；
+- ❌ 不要把索引改回 PyPI/tuna/aliyun，也不要为「换源」另加一个
+  `TORCH_INDEX_URL` ARG（索引必须由**白名单形态**推导；独立 ARG 会制造
+  「形态 vs 索引」两处事实源，且 PyPI 侧是 CUDA 变体大包）；
+- ❌ 不要把守卫第 10 项改回写死 `torch.version.cuda is None`
+  （会让 `--torch cu130` 在守卫处误报；判据必须是 marker 声明 vs 实物）；
 - ❌ 不要把 torch 加进 wheel pyproject 的默认 dependencies（会同时
   污染 builder 镜像与纯 caffe/onnx 用户；runtime 层是正确归属）；
 - ❌ 不要在运行中容器里 `pip install -U torch`（只对该容器生效，
@@ -311,10 +368,15 @@ RUN /opt/conda/bin/python -m pip install --no-cache-dir torchvision \
    torch CPU 解压后约 0.9 GB；xmnn-dev 4.69 GB）；若需 tar 分发极致
    瘦身，后续可改双阶段（installer stage 安装、runtime stage 只拷
    site-packages 产物）。
-3. **torch 内置的体积取舍**：torch CPU 层约 +0.9 GB，对纯 caffe/onnx
-   用户是冗余；换取的是 pytorch 前端零手装、版本可复现的稳定工具链
-   （2026-09-16 决策）。需要更小镜像可回退到无 torch 基栈+自建薄层层叠。
-4. **运行时不含编译器/调试器**：镜像内无 gcc/gdb/patchelf，设计如此；
+3. **torch 内置的体积取舍**：torch 层约 +0.9 GB（CPU）/ 更大（CUDA 版），
+   对纯 caffe/onnx 用户是冗余；换取的是 pytorch 前端零手装、版本可复现的
+   稳定工具链（2026-09-16 决策）。需要更小镜像可回退到无 torch 基栈+自建
+   薄层层叠（本栈**不**提供「不装 torch」的官方形态：pytorch 前端会不可用，
+   且 `torch_default="cpu"` 使空值一律回落 cpu）。
+4. **cu130 形态不提供 nvcc**：CUDA 版 torch 足以跑 GPU 张量与
+   `torch.jit` 推理，但编译 CUDA 内核 / TVM CUDA codegen 需 nvcc——本栈
+   是交付运行时，P0 禁编译器工具链，该场景请回 xmnn-dev 栈（C25）。
+5. **运行时不含编译器/调试器**：镜像内无 gcc/gdb/patchelf，设计如此；
    源码级调试请用 xmnn-dev 栈。
 
 ## 排障
@@ -324,8 +386,11 @@ RUN /opt/conda/bin/python -m pip install --no-cache-dir torchvision \
 | `xmnnrt.build` 报"未找到 xmnn wheel" | 先在 xmnn-dev 栈 `invoke xmnn.wheel`；或 `--wheel <path>` 指定 |
 | 裸 `podman-compose up` 报 `wheels/xmnn-*.whl not found` | 裸路径不自动暂存：手工 `cp ../../workspace/dist/xmnn-*.whl wheels/` 或先跑一次 `invoke xmnnrt.build` |
 | 构建期守卫 FAIL：模块来自 /workspace | wheel 自包含性被破坏（正常镜像无源码树），检查 whl 是否被旧挂载污染后重新 `xmnn.wheel` |
-| 精度/编译报 `No module named 'torch'` | 镜像过旧：torch CPU 自 2026-09-16 起内置，重新 `invoke xmnnrt.build`；自建变体须从最新 xmnn-runtime 继承 |
-| torch 报错带 CUDA/nvidia 字样 | torch 被换成了默认源的 CUDA 变体；内置层固定走 download.pytorch.org/whl/cpu，勿覆盖 |
+| 精度/编译报 `No module named 'torch'` | 镜像过旧：torch 自 2026-09-16 起内置（2026-09-20 起形态可选）；重新 `invoke xmnnrt.build`；自建变体须从最新 xmnn-runtime 继承 |
+| torch 报错带 CUDA/nvidia 字样（非 cu130 形态） | torch 被换成了非目标形态；索引由 `TORCH_FLAVOR` 白名单推导，勿覆盖为 PyPI/tuna |
+| `up --gpu` 报 `Error: stat ...: no such file or directory` + exit 125 | 设备路径在 podman 宿主侧不存在（C19 预检未过则不会走到这里）；`ls /dev/dri /dev/dxg` 看真实节点，或用 `GPU_DEVICE=<路径>` 显式指定 |
+| `up --gpu` 成功但容器内 `torch.cuda.is_available()` 为 False | 两种可能：① 镜像是 cpu 形态（`build --torch cu130` 后重建）；② WSL2 下宿主缺 `libcuda.so.1`/`libdxcore.so`/`/usr/lib/wsl/drivers`（内核会前置拦截并点名缺失路径） |
+| `build --torch cu130` 报 pip 找不到版本 | 目标版本在 cu130 索引无 cp314 wheel；按 SOP「升级前检查」同时核对 cpu 与 cu130 两个索引 |
 | Jupyter 里选不到 xmnn runtime 内核 | 构建日志检查 register-kernel 段；守卫第 9 项会拦截此情况，镜像不会构建成功 |
 | 换了 whl 版本但镜像内容没变 | 重新 `invoke xmnnrt.build`（任务自动按 dist 最新 mtime 暂存）；`--no-cache` 全量重建 |
 | pip 装依赖慢/失败 | 在 `.env` 设 `PIP_MIRROR=tuna`（或 `aliyun`）后重跑 `invoke xmnnrt.build`（C15：三处同键，CLI 旗标仅覆盖单次 build） |

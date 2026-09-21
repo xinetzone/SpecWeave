@@ -7,6 +7,10 @@ whl 装入干净运行时镜像（cp314 GIL base env + 交付内核，零源码�
 
 命令：build / up / down / ps / logs / smoke + pack（客户离线交付包打包）。
 栈模块禁止 import podman。
+
+两组可选能力（缺省与改造前逐字等价，C18/C26；细节见 rules §8）：``up --gpu``
+透传设备（``GPU_DEVICE`` 双形态）；``build --torch cu130`` 换 CUDA 版 torch
+（**缺省仍是 cpu**——torch 是本栈内置工具链契约，不是 opt-in 增装）。
 """
 
 import shutil
@@ -18,7 +22,7 @@ from invoke.exceptions import Exit
 
 from ..relpack import pack_release
 from .overlay_core import (
-    SmokeSpec, StackSpec, TaskDocs, build_image, ensure_runtime_ready,
+    SmokeSpec, StackSpec, TaskDocs, build_help, build_image, ensure_runtime_ready,
     gates, make_stack_tasks, overlay_dir, prepare_env, up_stack,
 )
 
@@ -36,13 +40,16 @@ XMNNRT_SPEC = StackSpec(
         down="停止并删除 xmnn-runtime 栈容器与网络（workspace 绑定不受影响）。",
         ps="查看 xmnn-runtime 栈服务状态。",
         logs="跟踪 xmnn-runtime 栈服务日志（Ctrl+C 退出，不影响容器运行）。",
-        smoke="运行 xmnn-runtime 守卫：已装 wheel 与内置 torch CPU 的干净环境 10 项验证。",
+        smoke="运行 xmnn-runtime 守卫：已装 wheel 与内置 torch 的干净环境 10 项验证。",
     ),
     down_volumes_help="同时删除 xmnnrt-ssh-host-keys 命名卷（默认保留：SSH 主机指纹跨重建稳定）",
     ssh_default="2225", jupyter_default="8893",
     jupyter_banner_note="（内核：Python 3.14 (xmnn runtime)）",
     build_done_label="xmnn-runtime 运行时镜像",
-    gpu_override=False, conda_mirror=False, auto_shortflags=False,
+    gpu_override=True, gpu_device_env="GPU_DEVICE", conda_mirror=False,
+    # torch 形态（C26）：缺省 cpu = 内置 CPU 层保持原语义，cu130 才换 CUDA wheel
+    torch_flavor=True, torch_default="cpu",
+    auto_shortflags=False,
     smoke=SmokeSpec(
         python="/opt/conda/bin/python", smoke_dir="/opt/xmnnrt-smoke",
         exec_scripts=("_runtime_smoke.py",), standalone_scripts=("_runtime_smoke.py",),
@@ -52,7 +59,7 @@ XMNNRT_SPEC = StackSpec(
     ),
     bridge_env_keys=(
         "XMNNRT_IMAGE_TAG", "XMNNRT_CONTAINER_NAME", "XMNNRT_WORKSPACE",
-        "XMNNRT_SSH_PORT", "XMNNRT_JUPYTER_PORT",
+        "XMNNRT_SSH_PORT", "XMNNRT_JUPYTER_PORT", "TORCH_FLAVOR", "GPU_DEVICE",
     ),
 )
 
@@ -61,12 +68,8 @@ down, ps, logs, smoke = (TASKS[k] for k in ("down", "ps", "logs", "smoke"))
 
 # —— wheel 暂存（构建上下文 = overlay 目录，whl 必须先进 wheels/，不入 git）——
 
-def _wheels_dir() -> Path:
-    return overlay_dir(XMNNRT_SPEC) / "wheels"
-
-
 def _staged_wheels() -> list[Path]:
-    return sorted(_wheels_dir().glob(_WHEEL_PATTERN))
+    return sorted((overlay_dir(XMNNRT_SPEC) / "wheels").glob(_WHEEL_PATTERN))
 
 
 def _latest_dist_wheel() -> Optional[Path]:
@@ -77,7 +80,7 @@ def _latest_dist_wheel() -> Optional[Path]:
 
 
 def _copy_into_stage(src: Path) -> Path:
-    wheels_dir = _wheels_dir()
+    wheels_dir = overlay_dir(XMNNRT_SPEC) / "wheels"
     wheels_dir.mkdir(parents=True, exist_ok=True)
     for old in _staged_wheels():  # 暂存区同时只留一个 whl（COPY glob 确定性）
         old.unlink()
@@ -112,41 +115,38 @@ def _ensure_wheel_staged(explicit: Optional[str]) -> Path:
     print("        （产物默认落 client/workspace/dist/），或用 --wheel <path> 显式指定。")
     raise Exit(1)
 
-@task(
-    help={
-        "tag": "产出镜像标签，默认 localhost/xmnn-runtime:latest（或 .env XMNNRT_IMAGE_TAG）",
-        "base-image": "基底镜像；默认 .env BASE_IMAGE，缺省 localhost/jupyter-podman-rootless:latest（须与构建器同基底）",
-        "pip-mirror": "构建期 pip 镜像源：official|aliyun|tuna；默认 .env PIP_MIRROR，缺省 official",
-        "wheel": "显式指定 whl 路径；默认取 workspace/dist 最新 xmnn-*.whl（已暂存同名则复用）",
-        "no-cache": "等价 podman build --no-cache（强制全量重建）",
-    },
-    auto_shortflags=False,
-)
-def build(c: Context, tag: str | None = None,
-          base_image: str | None = None,
+@task(help={**build_help(XMNNRT_SPEC),
+            "wheel": "显式指定 whl 路径；默认取 workspace/dist 最新 xmnn-*.whl"},
+      auto_shortflags=False)
+def build(c: Context, tag: str | None = None, base_image: str | None = None,
           pip_mirror: str | None = None, wheel: str | None = None,
-          no_cache: bool = False) -> None:
+          torch: str | None = None, no_cache: bool = False) -> None:
     """暂存 wheel 后构建 xmnn-runtime 运行时镜像（构建期 10 项硬验证）。"""
     gates(XMNNRT_SPEC)
     ensure_runtime_ready(XMNNRT_SPEC)
     _ensure_wheel_staged(wheel)
     build_image(c, XMNNRT_SPEC, tag=tag, base_image=base_image,
-                pip_mirror=pip_mirror, no_cache=no_cache)
+                pip_mirror=pip_mirror, torch=torch, no_cache=no_cache)
 
 @task(
-    help={"skip-build": "跳过镜像构建，直接用本地已有镜像（缺失即 fail-fast 并给出指引；"
-                        "compose 段不兜底构建，up 恒 --no-build）。默认随带构建：构建前自动暂存 "
-                        "workspace/dist 最新 whl，内联构建读 .env PIP_MIRROR/BASE_IMAGE，与 compose 段同键"},
+    help={
+        "gpu": "透传 GPU：GPU_DEVICE 双形态（/ 开头=设备路径；否则=CDI 引用，如 "
+               "nvidia.com/gpu=all）；未设时自动探测（/dev/dri → /dev/dxg，WSL2 额外"
+               "叠加 compose.gpu.wsl.yaml 挂载 libcuda）；默认隔离不透传 GPU",
+        "skip-build": "跳过镜像构建，直接用本地已有镜像（缺失即 fail-fast 并给出指引；"
+                      "compose 段不兜底构建，up 恒 --no-build）。默认随带构建：构建前自动暂存 "
+                      "workspace/dist 最新 whl，内联构建读 .env PIP_MIRROR/BASE_IMAGE/TORCH_FLAVOR",
+    },
     auto_shortflags=False,
 )
-def up(c: Context, skip_build: bool = False) -> None:
+def up(c: Context, gpu: bool = False, skip_build: bool = False) -> None:
     """渲染并启动 xmnn-runtime 栈（podman-compose up -d，默认随带构建）。"""
     gates(XMNNRT_SPEC)
     ensure_runtime_ready(XMNNRT_SPEC)
     prepare_env(XMNNRT_SPEC)
     if not skip_build:
         _ensure_wheel_staged(None)
-    up_stack(c, XMNNRT_SPEC, skip_build=skip_build)
+    up_stack(c, XMNNRT_SPEC, gpu=gpu, skip_build=skip_build)
 
 @task(help={"version": "交付版本号（默认取 wheels/ whl 版本；GA 请显式指定，如 1.2.1）"},
       auto_shortflags=False)
