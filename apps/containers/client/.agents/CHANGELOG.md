@@ -6,6 +6,54 @@
 
 ## [Unreleased]
 
+### 2026-09-21 · `fix:` 对照基准改取 vendor pin——修正 test_compose_merge 的假失败（C32）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C）——闭环 C31 验收中记录的
+「既有失败」`test_compose_merge.py::test_vs_real_rec_merge_probes`。
+
+**I 事实**：
+
+① 失败现场：`ValueError: can't merge value of [depends_on] of type <class 'list'>
+and <class 'dict'>`，抛出点为本机安装态 `podman_compose.py:2166`（`rec_merge_one`
+的类型检查）；② **两份自称 1.6.0 的 podman-compose 不是同一快照**：vendor 子模块
+pin `e3df104` = **`v1.6.0-97-ge3df104`**（v1.6.0 发布后又走了 97 个 commit 的
+main），**含**上游 `96a2043`（"coerce depends_on list to dict in rec_merge_one when
+types differ"，2026-06-21，**未随任何 tag 发布**，vendor L2274-L2280
+`# normalizing inputs to dicts`）；本机安装态是 pip 装的**已发布 v1.6.0**
+（py314 site-packages，2026-09-10），**缺**该修复——上游 `__version__` 在两次发布
+之间不 bump，故两者都写 1.6.0；③ CLI `podman-compose` shebang 指向 py314，
+**运行时加载的是安装态（发布版）**；④ 模拟器的 depends_on 特判（`merge_one`）
+对齐的是 **vendor（main）**；⑤ 测试的 `_real_podman_compose()` 却「安装态优先」，
+把两份当等价 → 模拟器（对齐 pin）与安装态（发布版）对照即**假失败**；⑥ 8 个探针中
+**仅 depends_on 两项分歧**，其余 6 项两份等价；⑦ 三栈 `compose.yaml` **均未使用
+depends_on**（`grep -rn depends_on overlays/` 零命中），故该分歧对渲染结论零影响。
+
+**F/V 决策**（V 对抗审查：基准取安装态还是 pin？是否应改为升级本机环境？）：
+
+- **基准取 vendor pin（用户确认）**：仓库以 gitlink pin vendor 为权威
+  （vendor/AGENTS.md：third_party 只读依赖以 pin commit 为准）；取安装态则
+  「环境快照的新旧」单方面决定测试成败，且环境一旦升级到含该修复的版本又
+  **反向失败**——脆弱；
+- **不改为升级本机环境**：安装态与 pin 相差 772 行（含 `PodmanComposeError`、
+  `create_secrets_from_environment` 等），升级会改动共享 conda 环境且超出本次
+  问题边界；取 pin 作基准后，环境升级反而**自然收敛**（届时两份一致）；
+- **回看历史诊断**：本失败自 2026-09-16 起被多次记为「既有失败」，诊断口径为
+  「真实 `rec_merge` 与模拟器对 depends_on 归一化的分歧」——按本次取证，该口径
+  **不准确**：真实分歧在「pin（main）vs 安装态（发布版）」两份上游快照之间，
+  模拟器本身与 pin 逐字一致（`d5f84b431` 当时「24 passed」即为佐证：那次运行
+  命中的是 vendor 而非安装态）。
+
+**E/C 落地**：`tests/test_compose_merge.py`——`_real_podman_compose()` 改为
+**vendor 优先**（`sys.path` 去重插入 + `sys.modules.pop` 防安装态缓存抢先 +
+`assert` 实际加载路径确为 vendor 副本），安装态降为 fallback；模块 docstring、
+`_VENDOR_PC` 注释同步记录两份差异与基准选择。
+
+**V 验收**：`pytest tests/test_compose_merge.py -q` → **38 passed**（修复前
+37 passed / 1 failed）；`pytest tests -q` → **264 passed / 7 skipped / 0 failed**
+（修复前 263 / 7 / 1）；vendor 子模块 `git status` 干净（只读依赖未被污染）。
+
+提交 `fix(client)` = `__COMMIT__`。
+
 ### 2026-09-21 · `fix:` 打包期源码树全程只读——AST 兼容层由构建期注入改为运行期补丁（C31）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，V 门强制）——修复
@@ -76,10 +124,10 @@
 - **补丁自身**：`apply_ast_compat()` 幂等复调无副作用；六节点功能断言
   （`Num(3).value==3` 且 `isinstance(…, ast.Constant)`、`Str/Bytes/NameConstant/
   Index/ExtSlice` 构造正确）通过；
-- **单测**：`pytest tests -q` **263 passed / 7 skipped / 1 failed**，唯一失败
-  `test_compose_merge.py::test_vs_real_rec_merge_probes`（真实 podman-compose
-  1.6.0 `rec_merge` 对 `depends_on` list↔dict 抛 ValueError）为**既有失败**，
-  与本次改动无关（未触碰 `overlay_core.py` 与 `test_compose_merge.py`）。
+- **单测**：`pytest tests -q` **263 passed / 7 skipped / 1 failed**——唯一失败
+  `test_compose_merge.py::test_vs_real_rec_merge_probes` 属**既有失败**，与本次
+  改动无关（未触碰 `overlay_core.py` 与 `test_compose_merge.py`），已由 **C32**
+  单独闭环（对照基准改取 vendor pin），修复后 **264 passed / 7 skipped / 0 failed**。
 
 提交 `fix(client)` = `5d1db8f31`；配套 `npuusertools` 仓 `fix(xmnn)` = `f1e53c0`。
 

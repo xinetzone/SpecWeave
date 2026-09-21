@@ -21,9 +21,12 @@ diff；本测试按 OKF podman-compose 知识包 concepts/06-config-pipeline.md
 - 插值仅支持 ``${NAME}``/``${NAME:-default}``（default 段不含花括号则支持**嵌套**
   ——逐轮替换最内层至不动点，与 1.6.0 实测行为一致，见 ``_expand``），
   不支持 ``:?``/``$$``/服务互引；
-- 类型冲突（dict↔list 等）真实 1.6.0 抛 ValueError，模拟器同样抛出；
-- 环境装有 podman-compose（或 vendor 子模块就位）时，test_vs_real_rec_merge
-  会直接调用真实 rec_merge 对照，模拟器一旦偏离上游即失败。
+- 类型冲突（dict↔list 等）真实 rec_merge_one 抛 ValueError，模拟器同样抛出；
+  **唯一例外是 depends_on**：上游在 rec_merge_one 内做 list↔dict 归一化
+  （vendor pin 含上游 96a2043），故 list+dict 不抛冲突，见 ``merge_one`` 注释；
+- 对照基准为 **vendor 子模块 pin**（仓库 gitlink 权威源；vendor/AGENTS.md：
+  third_party 只读依赖以 pin commit 为准），本机安装态仅作 fallback——
+  2026-09-21 实测两份「1.6.0」**并非同一快照**，详见 ``_real_podman_compose``。
 
 AC-3 正向条款：rootless 三必需不重不漏、env 键并集一致、labels 一致、
 privileged 缺失、栈专属字段（image/build/ports/volumes）原样保留。
@@ -39,7 +42,9 @@ import yaml
 
 OVERLAYS = Path(__file__).resolve().parents[1] / "overlays"
 SHARED = OVERLAYS / "_shared" / "base-rootless.yaml"
-# vendor 只读子模块中的权威源码（与本机已安装包同为 1.6.0）
+# vendor 只读子模块中的权威源码：pin = v1.6.0-97-ge3df104（发布后的 main；
+# __version__ 仍写 1.6.0，与 pip 装的本机发布版并非同一快照，差异见
+# _real_podman_compose 的 docstring）
 _VENDOR_PC = Path(__file__).resolve().parents[4] / "vendor" / "podman-compose"
 
 _INTERP = re.compile(r"\$\{([A-Za-z_][A-Za-z0-9_]*)(?::-([^{}]*))?\}")
@@ -548,16 +553,38 @@ def test_simulator_depends_on_list_dict_normalized():
 # ── 与真实 podman-compose 1.6.0 rec_merge 直接对照（防模拟器漂移）─────────────
 
 def _real_podman_compose():
-    """优先已安装的 podman-compose，回退 vendor 只读子模块；都没有则 skip。"""
+    """取权威 rec_merge 实现：**vendor 子模块 pin 优先**，安装态仅作 fallback。
+
+    2026-09-21 基准修正：vendor pin ``e3df104`` = ``v1.6.0-97-ge3df104``，即
+    **v1.6.0 发布后又走了 97 个 commit 的 main**；而本机安装态是 pip 装的
+    **已发布 v1.6.0**（py314 site-packages，2026-09-10 装入）。上游 ``__version__``
+    在两次发布之间不 bump，故两份都自称 1.6.0，实际**不是同一快照**——安装态缺
+    ``96a2043``（"coerce depends_on list to dict in rec_merge_one when types
+    differ"，2026-06-21，未随任何 tag 发布），其 rec_merge_one 对 depends_on
+    list↔dict 直接抛 ValueError，vendor 则已归一化。仓库以 gitlink pin vendor
+    为权威（vendor/AGENTS.md：third_party 只读依赖以 pin commit 为准），故对照
+    基准取 vendor——否则「环境快照的新旧」会单方面决定测试成败，且环境一旦
+    升级到含该修复的版本又**反向失败**。
+
+    两份实现对本模拟器覆盖的语义**只在 depends_on 一项分歧**（其余 6/8 探针
+    等价）；三栈 compose.yaml 均未使用 depends_on，故该分歧不影响渲染结论。
+    """
+    vendor_src = _VENDOR_PC / "podman_compose.py"
+    if vendor_src.exists():
+        if str(_VENDOR_PC) not in sys.path:
+            sys.path.insert(0, str(_VENDOR_PC))
+        # 安装态副本若已先入 sys.modules，裸 import 会命中它，故先清缓存再导入
+        sys.modules.pop("podman_compose", None)
+        import podman_compose  # type: ignore
+        assert Path(podman_compose.__file__).resolve() == vendor_src.resolve(), (
+            f"未加载到 vendor pin 副本，实际为 {podman_compose.__file__}"
+        )
+        return podman_compose
     try:
         import podman_compose  # type: ignore
         return podman_compose
     except ImportError:
-        if (_VENDOR_PC / "podman_compose.py").exists():
-            sys.path.insert(0, str(_VENDOR_PC))
-            import podman_compose  # type: ignore
-            return podman_compose
-    pytest.skip("环境未安装 podman-compose 且 vendor 子模块不可用")
+        pytest.skip("vendor 子模块不可用且环境未安装 podman-compose")
 
 
 _REC_MERGE_PROBES = [
