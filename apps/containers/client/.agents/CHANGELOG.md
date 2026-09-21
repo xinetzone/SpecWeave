@@ -52,7 +52,7 @@ depends_on**（`grep -rn depends_on overlays/` 零命中），故该分歧对渲
 37 passed / 1 failed）；`pytest tests -q` → **264 passed / 7 skipped / 0 failed**
 （修复前 263 / 7 / 1）；vendor 子模块 `git status` 干净（只读依赖未被污染）。
 
-提交 `fix(client)` = `__COMMIT__`。
+提交 `fix(client)` = `c9107782a`。
 
 ### 2026-09-21 · `fix:` 打包期源码树全程只读——AST 兼容层由构建期注入改为运行期补丁（C31）
 
