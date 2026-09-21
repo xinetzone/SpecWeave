@@ -6,9 +6,12 @@
 #   invoke xmnn.wheel                         # client 任务（经 compose exec）
 #   podman-compose exec xmnn bash /opt/xmnn-builder/scripts/build-wheel.sh
 #
-# 流程：环境自检 → libtvm.so 前置检查 → AST PREAMBLE 注入/还原（全程统一
-#       EXIT trap + 自愈状态机）→ Nuitka 串行编译 tvm → 并行 vta/xmnn
+# 流程：环境自检 → libtvm.so 前置检查 → Nuitka 串行编译 tvm → 并行 vta/xmnn
 #       → python -m build 组装 wheel。
+#
+# 源码树全程只读：Python 3.12+ 移除的 ast 遗留节点由运行期兼容层兜底
+# （_xmnn_bootstrap.py 的 .pth 启动钩子 + xmnn/vta_compat.apply_ast_compat()），
+# 不再向任何包的 __init__.py 注入/还原代码，故无「注入态」残留风险。
 #
 # 产物：$DIST_DIR/xmnn-1.2.1.dev0-cp314-cp314-linux_x86_64.whl
 #       （默认 /workspace/dist，宿主可见的 bind 挂载目录）
@@ -28,19 +31,14 @@ source "${SCRIPT_DIR}/lib/logging.sh"
 LOG_FILE=/dev/null
 log_enable_trap
 
-# AST 注入/还原库（自愈状态机 + 原子备份；R1 F-1 后提取为可测共享库）
-export AST_PYTHON=/opt/conda/bin/python
-source "${SCRIPT_DIR}/lib/ast_inject.sh"
-
 log_set_error_help '  Nuitka 打包失败排查：
   1. "fatal error: xxx.h: No such file" → 工具链缺失，检查叠加镜像构建层
   2. "LLVM error" → 确认 LLVM_CONFIG 指向 main env 的 llvm-config（22.1.x）
   3. "cloudpickle/dill serialization error" → 确认 --enable-plugin=dill-compat
   4. "Killed" / "out of memory" → 降低并发：NUITKA_JOBS=4 inv xmnn.wheel --jobs 4
   5. libtvm.so 缺失 → 先执行：inv xmnn.build-tvm（或 scripts/build-tvm.sh）
-  6. 提示「已含 AST PREAMBLE 但备份缺失」→ 按提示 git checkout 对应 __init__.py
-  7. 交互调试：podman-compose exec xmnn bash，cd /opt/xmnn-builder 重跑本脚本
-  8. "Unmet dependencies (checked against /opt/conda/bin/python): cmake>=3.18"
+  6. 交互调试：podman-compose exec xmnn bash，cd /opt/xmnn-builder 重跑本脚本
+  7. "Unmet dependencies (checked against /opt/conda/bin/python): cmake>=3.18"
      → PYTHONPATH 污染致 scikit-build-core 误判 PyPI cmake 已装（本脚本已用
        env -u PYTHONPATH 规避）；若复现，先 `env -u PYTHONPATH python -m build ...`'
 
@@ -77,22 +75,12 @@ if [ ! -f "$TVM_ROOT/build/libtvm.so" ]; then
     exit 2
 fi
 
-# ── 统一还原兜底：无论正常结束/set -e 错误退出/子 shell 被杀导致父退出，
-#    父进程 EXIT 时都按确定性备份路径幂等还原三对 __init__.py。SIGKILL 打中
-#    父进程本身（机器断电/容器被 kill -9）超出 trap 能力，由 ast_inject 的
-#    重跑自愈状态机收敛（见 lib/ast_inject.sh）。────────────────────────────
+# ── 源码树只读：本脚本不再改写任何 __init__.py，故无需还原兜底 trap。─────
 TVM_PYTHON="$TVM_ROOT/python"
 TVM_PKG="$TVM_PYTHON/tvm"
 VTA_PYTHON="$TVM_ROOT/vta/python"
 VTA_CONFIG_DIR="$TVM_ROOT/vta/vta_hw/config"
 VTA_PKG="$VTA_PYTHON/vta"
-
-_restore_all() {
-    ast_restore "$TVM_PKG/__init__.py" "$TVM_PKG/__init__.py.bak_tvm" 2>/dev/null || true
-    ast_restore "$VTA_PKG/__init__.py" "$VTA_PKG/__init__.py.bak_vta" 2>/dev/null || true
-    ast_restore "$XMN_PKG/__init__.py" "$XMN_PKG/__init__.py.bak_xmnn" 2>/dev/null || true
-}
-trap _restore_all EXIT
 
 # ── ccache 配置（命名卷 /root/.ccache 由 compose 挂载持久化）──────────────
 export CCACHE_MAXSIZE=5G
@@ -192,7 +180,6 @@ mkdir -p "$NUITKA_OUT" "$VTA_NUITKA_OUT" "$XMNN_NUITKA_OUT" "$DIST_DIR"
 echo ""
 log_step "Nuitka-compiling tvm package"
 
-ast_inject "$TVM_PKG/__init__.py" tvm >/dev/null
 set +e
 PYTHONPATH="$TVM_PYTHON:${PYTHONPATH:-}" \
 "$BASE_PYTHON" -m nuitka \
@@ -212,7 +199,6 @@ PYTHONPATH="$TVM_PYTHON:${PYTHONPATH:-}" \
     "$TVM_PKG" 2>&1
 NUITKA_TVM_EXIT=$?
 set -e
-ast_restore "$TVM_PKG/__init__.py" "$TVM_PKG/__init__.py.bak_tvm" || true
 
 if [ "$NUITKA_TVM_EXIT" -ne 0 ]; then
     log_error "tvm Nuitka compilation failed (exit $NUITKA_TVM_EXIT)"
@@ -222,17 +208,11 @@ ls -la "$NUITKA_OUT/"
 log_ok "tvm Nuitka compilation complete"
 
 # ── vta + xmnn：后台并行（串行 ~180s → 并行 ~90s）──────────────────────
-# 子 shell 被 SIGKILL 时其局部清理无法执行，由父 shell 的 _restore_all EXIT
-# trap 按确定性 .bak 路径兜底。
 echo ""
 log_step "Nuitka-compiling vta & xmnn packages (parallel)"
 
 (
     set +e
-    if ! ast_inject "$VTA_PKG/__init__.py" vta >/dev/null 2>&1; then
-        echo "2" > "$BUILDER_DIR/.vta_exit"
-        exit 2
-    fi
     PYTHONPATH="$VTA_PYTHON:$TVM_ROOT/python:${PYTHONPATH:-}" \
     "$BASE_PYTHON" -m nuitka \
         --mode=module \
@@ -249,15 +229,10 @@ log_step "Nuitka-compiling vta & xmnn packages (parallel)"
         --jobs="${NUITKA_JOBS}" \
         "$VTA_PKG" 2>&1
     echo $? > "$BUILDER_DIR/.vta_exit"
-    ast_restore "$VTA_PKG/__init__.py" "$VTA_PKG/__init__.py.bak_vta" >/dev/null 2>&1 || true
 ) &
 
 (
     set +e
-    if ! ast_inject "$XMN_PKG/__init__.py" xmnn >/dev/null 2>&1; then
-        echo "2" > "$BUILDER_DIR/.xmnn_exit"
-        exit 2
-    fi
     PYTHONPATH="$XMN_ROOT:$TVM_ROOT/vta/python:$TVM_ROOT/python:${PYTHONPATH:-}" \
     "$BASE_PYTHON" -m nuitka \
         --mode=module \
@@ -275,7 +250,6 @@ log_step "Nuitka-compiling vta & xmnn packages (parallel)"
         --jobs="${NUITKA_JOBS}" \
         "$XMN_PKG" 2>&1
     echo $? > "$BUILDER_DIR/.xmnn_exit"
-    ast_restore "$XMN_PKG/__init__.py" "$XMN_PKG/__init__.py.bak_xmnn" >/dev/null 2>&1 || true
 ) &
 
 set +e

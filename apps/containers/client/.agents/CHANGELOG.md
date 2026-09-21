@@ -6,6 +6,83 @@
 
 ## [Unreleased]
 
+### 2026-09-21 · `fix:` 打包期源码树全程只读——AST 兼容层由构建期注入改为运行期补丁（C31）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，V 门强制）——修复
+`invoke xmnn.wheel` 的**不可自愈停机**，并按用户指定方向（借鉴
+`xmnn/vta_compat.py` 的运行期补丁范式）**彻底不再修改 tvm 源码**。
+
+**I 事实**：
+
+① 故障现场：`build-wheel.sh` 以 `exit code: 2, line: 192` 中止，报
+`[FATAL] /workspace/npu_tvm/python/tvm/__init__.py 已含 AST PREAMBLE 但备份
+/workspace/npu_tvm/python/tvm/__init__.py.bak_tvm 缺失`；② 精确产生点：
+`lib/ast_inject.sh` 的「marker 在 + 无 bak」分支 `return 2`——该分支在安全模型上
+**不可判定**（既不能确定注入内容是脏的、也不能确定原始内容），只能人工
+`git checkout` 才能继续；③ 成因是上一次构建被 SIGKILL/OOM 中断，EXIT trap
+（`_restore_all`）未及执行，`tvm/__init__.py` 停在「注入态」而备份已丢；
+④ 该注入自始（`67812663d`，2026-09-14）与 `_xmnn_bootstrap.py` 的 `.pth`
+启动钩子**双机制冗余**——后者第 66-100 行的 ast 补丁与注入块逐字等价，
+且在**解释器启动时**执行，早于任何 tvm import；⑤ tvm/vta/xmnn 源码对已移除
+的 ast 遗留节点**零硬依赖**（全部 `getattr(ast,"X",None)` 防御式写法或版本守卫）；
+⑥ Nuitka 编译**不执行**被编译模块、builder 的 CMake **不 import tvm**，且
+构建期 `/opt/conda` site-packages 内**不存在** `xmnn_bootstrap.pth`——即构建期
+本就不需要该补丁。
+
+**F/V 决策**（V 对抗审查：注入是否真是构建期刚需、移除后是否复现原故障、
+运行期补丁能否覆盖 wheel 安装态）：
+
+- **路径 A（构建期改写外部源码树）被否决**：只要写外部源码树，就必然产生
+  「注入态」这一**非法中间态**，SIGKILL/OOM 下不可恢复；四态自愈矩阵中
+  「marker 在 + 无 bak」是不可判定分支，故障是设计使然而非偶然；
+- **路径 B（运行期 monkey-patch）被采纳**：源码树只读、幂等、无残留态，
+  与 `vta_compat.py` 既有 `apply_*_fix()` 范式同构；
+- **范围（用户已确认）**：三包（tvm/vta/xmnn）注入全移除，ast 兼容**收敛到
+  运行期补丁**，彻底消除「注入态残留」这一类故障（含 vta/xmnn 并行编译期
+  OOM 场景）。
+
+**E/C 落地**：
+
+- `xmnn/vta_compat.py` 新增幂等 `apply_ast_compat()`（补齐 NameConstant/Num/
+  Str/Bytes/Index/ExtSlice 为 `ast.Constant` 子类/`ast.expr` 兜底，`_applied`
+  增 `"ast"` 位），`apply_all()` 首行调用；`compile_api.from_frontend()`
+  （compile 与 accuracy 共用入口）在模型加载前显式 `apply_ast_compat()`。
+- `build-wheel.sh`：移除三处 `ast_inject`/`ast_restore`、`AST_PYTHON`、
+  `source lib/ast_inject.sh`、`_restore_all` + `trap … EXIT`、帮助第 6 条
+  （「已含 AST PREAMBLE 但备份缺失」，原 7/8 条重编号），头注流程改为
+  「源码树全程只读」。
+- 删除死代码 `lib/ast_inject.sh` 与 `tests/test_ast_inject.py`（10 例全部
+  针对已删除的注入状态机）。
+- 闭环文档：`.agents/rules/xmnn-overlay.md` §5（「AST 注入/还原纪律」整段
+  改写为「源码树只读纪律」，资产清单去掉 `ast_inject.sh`）、`AGENTS.md` C12、
+  `docs/11-xmnn-overlay.md`、`overlays/xmnn-dev/README.md` 排障行、
+  `.dockerignore`（去 `*.bak_*`/`*.tmp.*`）、`.agents/rules/invoke-tasks.md`
+  （测试现状）。
+
+**V 验收**（全部真机实测）：
+
+- **构建跑通**：容器内 `build-wheel.sh` **exit 0**，产出
+  `xmnn-1.2.1.dev0-cp314-cp314-linux_x86_64.whl`（170M），全日志
+  **零 `[FATAL]`、零 `[INJECT]/[RESTORE]`**——证明构建期注入确为冗余；
+- **隔离验证**：`verify-wheel.sh` **10 passed / 0 failed**（含 test 8
+  `.pth` bootstrap 存在性）；
+- **源码树零改动（AC-9）**：构建前后三包 `__init__.py` md5 逐字一致
+  （tvm `c3da634afaba00e2132cc5f28b6fee2f`、vta `1ab236cb422783328ef873ba14a2d90f`、
+  xmnn `6c958e99f132242be30168d15ba6f154`），`git status` 干净，
+  无 `.bak_*` / `*.tmp.*` 残留；
+- **运行期补丁覆盖 wheel 安装态**：`--system-site-packages` venv 装 wheel 后，
+  新解释器启动即由 `.pth` 完成补丁——六个 ast 遗留节点齐备、
+  `_xmnn_bootstrap` 在 `sys.modules`、`import tvm` 成功；
+- **补丁自身**：`apply_ast_compat()` 幂等复调无副作用；六节点功能断言
+  （`Num(3).value==3` 且 `isinstance(…, ast.Constant)`、`Str/Bytes/NameConstant/
+  Index/ExtSlice` 构造正确）通过；
+- **单测**：`pytest tests -q` **263 passed / 7 skipped / 1 failed**，唯一失败
+  `test_compose_merge.py::test_vs_real_rec_merge_probes`（真实 podman-compose
+  1.6.0 `rec_merge` 对 `depends_on` list↔dict 抛 ValueError）为**既有失败**，
+  与本次改动无关（未触碰 `overlay_core.py` 与 `test_compose_merge.py`）。
+
+提交 `fix(client)` = 待用户确认后提交（hash 回填）。
+
 ### 2026-09-21 · `feat:` 形态感知镜像 tag——`localhost/xmnn-runtime:<形态>` + `:latest` 别名（C28）
 
 **关联七概念场景**：场景3「重构优化」——把 C26（`--torch cpu|cu130`）与 C27
