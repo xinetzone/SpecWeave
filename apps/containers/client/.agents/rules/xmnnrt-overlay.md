@@ -11,7 +11,7 @@
 | 维度 | xmnn-dev（构建器，`xmnn.*`） | xmnn-runtime（本栈，`xmnnrt.*`） |
 |---|---|---|
 | 角色 | 源码调试 + Nuitka 打 wheel | 安装预构建 wheel 的干净交付运行时 |
-| 镜像 | `localhost/xmnn-dev:latest` | `localhost/xmnn-runtime:latest` |
+| 镜像 | `localhost/xmnn-dev:latest` | `localhost/xmnn-runtime:<形态>`（cpu/cu130；`:latest` 别名，C28 §8.4） |
 | 工具链 | LLVM 22/Nuitka 4.2.1/gcc/gdb/ccache | 无（wheel `_libs` 自包含） |
 | 源码 | 运行时 bind npu_tvm/npuusertools/models | 零源码挂载、零构建期源码接触 |
 | 制品关系 | 产出 `client/workspace/dist/xmnn-*.whl` | 经 `wheels/` 暂存区 COPY 该 whl 安装 |
@@ -199,10 +199,10 @@ CPU 版 torch，容器里仍然用不上 GPU。
   在 xmnn-dev 是「空=不装 torch」，在 xmnnrt 是「空/未设=回落 **cpu**」。
   故缺省值**不可**硬编码在内核里（内核只认 `spec.torch_default`），
   compose 段也必须写 `${TORCH_FLAVOR:-cpu}` 与之同键同默认（C15）。
-- 形态不改镜像 tag（沿用 `XMNNRT_IMAGE_TAG`，一 tag 一形态）：CPU 与 cu130
-  镜像 tag 相同但内容不同，切换形态必须重建镜像；**不做**形态感知的 tag 命名
-  （与 xmnn-dev 一致——它的 arch/torch 区分经 `save` 归档名承担，本栈无
-  `save`/`load`）。
+- **形态参与镜像 tag 命名**（C28，2026-09-21 起；取代 C26 原文「一 tag
+  一形态」）：`localhost/xmnn-runtime:<形态>`（cpu / cu130）+ 保留 `:latest`
+  通用别名。改造前 CPU 与 cu130 **标签相同而内容不同**，`up --skip-build`
+  只查 tag 存在性，切形态全靠人记得重建——详见 §8.4。
 - **不提供 nvcc**：本栈 P0 禁编译器工具链（§4），CUDA 版 torch 足以跑 GPU
   张量与 torch.jit 推理；需要编译 CUDA 内核 / TVM CUDA codegen 请回 xmnn-dev
   栈（其 cu130 经 C25 提供 nvcc 13.4.92）。这是**刻意保留的边界**，不是缺口。
@@ -218,9 +218,12 @@ CPU 版 torch，容器里仍然用不上 GPU。
 **存在性**（`_require_local_image` 比的是 tag，不是内容）。于是：
 
 ```bash
-# .env TORCH_FLAVOR=cu130
-invoke xmnnrt.build --torch cpu     # 镜像变 cpu 形态，tag 仍是 latest
-invoke xmnnrt.up --skip-build       # 存在性通过 → 静默跑 cpu 镜像
+# 形态感知 tag 生效时（C28）：build --torch cpu 产出 :cpu（并把 :latest 别名
+# 一并指向它），up 仍按 .env 找 :cu130 —— 命中的是那份真 cu130 镜像，缺口已由
+# **标签身份**堵住。残留场景是身份被接管的模式：
+# .env TORCH_FLAVOR=cu130 且 XMNNRT_IMAGE_TAG=myrepo/xmnn:latest（显式覆盖）
+invoke xmnnrt.build --torch cpu     # 镜像内容变 cpu，标签仍是那个显式名
+invoke xmnnrt.up --skip-build       # 存在性通过 → 静默跑 cpu 镜像（本校验拦）
 ```
 
 构建期守卫第 10 项**发现不了**：它比的是「镜像内 marker vs 镜像内实物」，
@@ -253,3 +256,40 @@ invoke xmnnrt.up --skip-build       # 存在性通过 → 静默跑 cpu 镜像
   （dev 要 nvcc 编译、runtime 要 GPU 张量），故接受该耦合；若未来需要分叉，
   走「栈专属覆盖键优先、回落共享键」的受控扩展（已实测 podman-compose 支持
   嵌套插值 `${XMNNRT_TORCH_FLAVOR:-${TORCH_FLAVOR:-cpu}}`），届时需同步修订 C15。
+
+### 8.4 形态感知镜像 tag（C28，2026-09-21）
+
+**动机**：C26 原文「一 tag 一形态」的实伤——CPU 与 cu130 镜像**标签相同而内容
+不同**，`up --skip-build` 只查 tag 存在性，切形态全靠人记得重建；C27 只是**事后
+不阻断告警**，标签本身仍可能指向「上一次构建的形态」。
+
+**规则**（`StackSpec.flavor_tag` 声明位，**仅 xmnnrt** 声明
+`"localhost/xmnn-runtime"`；非声明栈零回归）：
+
+1. **解析序**：显式 `{PREFIX}_IMAGE_TAG` > 形态感知 tag > `default_image_tag`。
+   形态感知取 `<flavor_tag>:<形态>`，形态由 `overlay_core.image_flavor()` 复用
+   `resolve_build_args` 的**同一解析序**（CLI `--torch` > shell export > `.env`
+   > `spec.torch_default`）——**CLI 单次覆盖也改变标签**，杜绝「装的是 cu130、
+   标签写 cpu」的骗人镜像。空串形态按「未设」处理（回落缺省），**不产生**
+   `xmnn-runtime:` 这类空 tag。
+2. **通用别名必须保留**：`build_image` 对同一镜像双 `-t`（形态 tag +
+   `default_image_tag`）。`:latest` 是**被外部消费**的稳定入口——客户交付打包
+   脚本 `relpack._PACK_SCRIPT` 硬编码 `SRC="localhost/xmnn-runtime:latest"`，
+   README 的 `podman run ... latest` 示例同理；删之则引用集体悬空。显式
+   `--tag` 视为用户自管命名，**不**追加别名。
+3. **compose 侧同键同默认嵌套插值**：`image: ${XMNNRT_IMAGE_TAG:-localhost/
+   xmnn-runtime:${TORCH_FLAVOR:-cpu}}`，与 `image_tag()` **逐字同串**（C16：
+   存在性预检与起容器共用同一判据）。podman-compose 1.6.0 四态实测：无变量
+   →`:cpu`；`TORCH_FLAVOR=cu130`→`:cu130`；显式 `XMNNRT_IMAGE_TAG=custom:v9`
+   胜出；`TORCH_FLAVOR=` 空串→回落 `:cpu`（**不产生空 tag**）。
+4. **迁移**：改造前镜像只挂 `:latest`，改后 `up` 找形态 tag → `up --skip-build`
+   会 Exit(1)。`_require_local_image` 检出「形态 tag 缺失 + 通用 tag 在本地」时
+   打印**零成本改挂**命令 `podman tag localhost/xmnn-runtime:latest
+   localhost/xmnn-runtime:<形态>`（并打印通用标签的 LABEL 形态供判断）；
+   **只提示不自动改挂**——通用标签可能指向另一形态，改挂与否由用户按形态判断。
+5. **C27 校验保留为兜底**：形态 tag 让「声明 ≠ 实物」在**默认路径**上消失，
+   `warn_torch_flavor_mismatch` 自此专管身份被接管的场景（显式
+   `{PREFIX}_IMAGE_TAG` / 手工 `podman tag` / 改造前旧镜像被人工改挂）。
+6. **零回归**：`flavor_tag=""` 的三栈恒 `default_image_tag`
+   （`test_image_tag_unchanged_for_stacks_without_flavor_tag` 锁死）；xmnn-dev
+   的形态区分仍由 `save` 归档名承担（C20），两者机制不混用。

@@ -11,6 +11,7 @@ whl 装入干净运行时镜像（cp314 GIL base env + 交付内核，零源码�
 两组可选能力（缺省与改造前逐字等价，C18/C26；细节见 rules §8）：``up --gpu``
 透传设备（``GPU_DEVICE`` 双形态）；``build --torch cu130`` 换 CUDA 版 torch
 （**缺省仍是 cpu**——torch 是本栈内置工具链契约，不是 opt-in 增装）。
+镜像 tag 随形态走（C28）：``localhost/xmnn-runtime:<形态>`` + 保留 ``:latest`` 别名。
 """
 
 import shutil
@@ -47,8 +48,8 @@ XMNNRT_SPEC = StackSpec(
     jupyter_banner_note="（内核：Python 3.14 (xmnn runtime)）",
     build_done_label="xmnn-runtime 运行时镜像",
     gpu_override=True, gpu_device_env="GPU_DEVICE", conda_mirror=False,
-    # torch 形态（C26）：缺省 cpu = 内置 CPU 层保持原语义，cu130 才换 CUDA wheel
-    torch_flavor=True, torch_default="cpu",
+    # torch 形态（C26）缺省 cpu；形态感知 tag（C28）＝ <flavor_tag>:<形态> ＋ :latest 别名
+    torch_flavor=True, torch_default="cpu", flavor_tag="localhost/xmnn-runtime",
     auto_shortflags=False,
     smoke=SmokeSpec(
         python="/opt/conda/bin/python", smoke_dir="/opt/xmnnrt-smoke",

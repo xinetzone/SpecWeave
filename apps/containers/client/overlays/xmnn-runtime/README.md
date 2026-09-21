@@ -6,8 +6,10 @@
 > 自带 SSH + JupyterLab，Jupyter 内核 `Python 3.14 (xmnn runtime)`
 > 直接从 site-packages 运行自包含 wheel。
 
-- **镜像**：`localhost/xmnn-runtime:latest`（薄叠加
-  FROM `localhost/jupyter-podman-rootless:latest`，与 xmnn-dev 同基底保证 ABI 一致）
+- **镜像**：`localhost/xmnn-runtime:<形态>`（cpu / cu130，形态感知 tag，C28；
+  `:latest` 为最近一次构建的**通用别名**，交付打包脚本与本文示例仍按它取镜像）
+  —— 薄叠加 FROM `localhost/jupyter-podman-rootless:latest`，与 xmnn-dev
+  同基底保证 ABI 一致
 - **ABI**：wheel 为 `cp314-cp314`（GIL enabled），装入 base env
   `/opt/conda`；main env（cp314t）继续跑 Jupyter 服务，不动
 - **制品契约**：`xmnn-1.2.1.dev0-cp314-cp314-linux_x86_64.whl`
@@ -18,7 +20,8 @@
 - **不包含**：LLVM/Clang、Nuitka、gcc/g++、gdb、ccache；npu_tvm/
   npuusertools 源码树（与 xmnn-dev 的关键差异）
 - **内置**：torch 2.14.0（**缺省 CPU 构建**；`build --torch cu130` 可换
-  CUDA 13.0 版，配 `up --gpu` 才用得上 GPU）——pytorch 前端编译/精度所需；
+  CUDA 13.0 版，配 `up --gpu` 才用得上 GPU；**两形态标签不同**：
+  `:cpu` / `:cu130`，C28）——pytorch 前端编译/精度所需；
   typer/xmflow CLI；构建期 10 项硬验证
 - **编排**：podman-compose（rootless、无 privileged）；AI 硬约束见
   [../../.agents/rules/xmnnrt-overlay.md](../../.agents/rules/xmnnrt-overlay.md)
@@ -27,7 +30,7 @@
 
 | 维度 | xmnn-dev（构建器，`xmnn.*`） | xmnn-runtime（本栈，`xmnnrt.*`） |
 |---|---|---|
-| 镜像 | `localhost/xmnn-dev:latest` | `localhost/xmnn-runtime:latest` |
+| 镜像 | `localhost/xmnn-dev:latest` | `localhost/xmnn-runtime:<形态>`（cpu/cu130；`:latest` 别名） |
 | 工具链 | LLVM/Clang 22、Nuitka 4.2.1、gcc/g++、gdb、ccache | 仅 wheel 运行依赖 |
 | 源码 | 运行时 bind npu_tvm/npuusertools/models | **不挂载**（site-packages 运行） |
 | 产物/输入 | 产出 `workspace/dist/xmnn-*.whl` | 消费该 whl（构建前暂存进 `wheels/`） |
@@ -70,11 +73,13 @@ Python、无需联网，Podman 与 Docker 双兼容。客户侧使用说明见
 invoke xmnnrt.build                       # 自动暂存 workspace/dist 最新 whl 后构建镜像
                                          #   --wheel <path> 显式指定 whl
                                          #   --torch cu130 换 CUDA 13.0 版 torch（缺省 cpu）
+                                         #   镜像 tag 随形态走（C28）:cpu/:cu130，
+                                         #   另标记 :latest 通用别名（同镜像双 -t）
                                          #   换 pip 源请写 .env 的 PIP_MIRROR（C15：
                                          #   build/up 内联构建/compose 段同键）；
                                          #   --pip-mirror tuna|aliyun 只覆盖本次 build
                                          #   构建期自动执行 10 项硬验证（root+devuser）
-invoke xmnnrt.up                          # 启动栈（默认随带构建；自动暂存最新 whl）
+invoke xmnnrt.up                          # 起栈（默认随带构建；按 .env TORCH_FLAVOR 找形态 tag）
 invoke xmnnrt.up --gpu                    # 同上并透传 GPU 设备（默认隔离不透传）
                                           #   WSL2 自动改用 compose.gpu.wsl.yaml
                                           #   （/dev/dxg + 三条只读 bind）
@@ -103,7 +108,9 @@ podman-compose down
 # 3) GPU 透传（可选，默认隔离）：额外叠加一个设备覆盖文件，二者互斥
 podman-compose -f compose.yaml -f compose.gpu.yaml up -d          # /dev/dri 或 CDI
 podman-compose -f compose.yaml -f compose.gpu.wsl.yaml up -d      # WSL2（/dev/dxg）
-# 4) 换 torch 形态（可选）：写入 .env 后重建（形态不改 tag，一 tag 一形态）
+# 4) 换 torch 形态（可选）：写入 .env 后重建；形态感知 tag（C28）下
+#    两形态镜像标签不同（:cpu / :cu130），可共存互不覆盖；裸路径只产出
+#    形态 tag —— :latest 通用别名由 invoke xmnnrt.build 追加（同镜像双 -t）
 #    TORCH_FLAVOR=cu130 && podman-compose build
 ```
 
@@ -131,7 +138,7 @@ devuser 双身份执行，`xmnnrt.smoke` / `podman run --rm` 可重复运行：
 
 | 键 | 默认值 | 用途 |
 |---|---|---|
-| `XMNNRT_IMAGE_TAG` | `localhost/xmnn-runtime:latest` | 镜像标签 |
+| `XMNNRT_IMAGE_TAG` | 空 = **形态感知**：`localhost/xmnn-runtime:<形态>`（C28） | 镜像标签。显式设置即**接管命名**：形态感知与 `:latest` 别名同时让位 |
 | `XMNNRT_CONTAINER_NAME` | `xmnn-runtime` | 容器名（project name 固定 xmnn-runtime） |
 | `XMNNRT_SSH_PORT` / `XMNNRT_JUPYTER_PORT` | `2225` / `8893` | 宿主端口 |
 | `XMNNRT_WORKSPACE` | `../../workspace` | notebook 工作区 → /workspace |
@@ -220,7 +227,7 @@ COPY 这一个脚本（无 whl 依赖）且位于 whl 层之前，故重打 xmnn
 GPU 是**运行期**维度、torch 形态是**构建期**维度，二者正交但需配套：
 
 ```bash
-# 1) 构建 CUDA 版 torch 的运行时镜像（形态不改 tag，一 tag 一形态）
+# 1) 构建 CUDA 版 torch 的运行时镜像（产出 :cu130，并把 :latest 别名一并指向它）
 invoke xmnnrt.build --torch cu130
 # 2) 起栈并透传设备（未设 GPU_DEVICE 时自动探测 /dev/dri → /dev/dxg；
 #    WSL2 自动改用 compose.gpu.wsl.yaml 并挂 libcuda/libdxcore/drivers）
@@ -228,6 +235,17 @@ invoke xmnnrt.up --gpu --skip-build
 # 3) 容器内自验（构建期守卫不判设备，运行期才可见）
 podman exec xmnn-runtime /opt/conda/bin/python -c \
   'import torch; print(torch.version.cuda, torch.cuda.is_available(), torch.cuda.get_device_name(0))'
+```
+
+**两形态共存**（C28）：`:cpu` 与 `:cu130` 是**不同标签**，可同时保留、互不覆盖；
+`invoke xmnnrt.up` 找哪个由 `.env TORCH_FLAVOR` 决定（形态感知 tag）。改造前
+构建的镜像只挂 `:latest`，首次使用形态 tag 前先零成本改挂（或用 `up` 时内核
+打印的命令）：
+
+```bash
+podman image inspect localhost/xmnn-runtime:latest \
+  --format '{{index .Config.Labels "org.specweave.torch-flavor"}}'   # 先确认形态
+podman tag localhost/xmnn-runtime:latest localhost/xmnn-runtime:cu130
 ```
 
 - 只 `build --torch cu130` 而不 `up --gpu`：torch 是 CUDA 版但设备不在容器内，
@@ -257,9 +275,11 @@ wsl -d podman-machine-default -- bash -c 'for f in cpu cu130; do
     | grep -o "torch-[0-9.]*%2B[a-z0-9]*-cp314-cp314-manylinux[^\" ]*x86_64\.whl" | sort -uV | tail -3
 done'
 
-# 2) 确认当前镜像版本与形态（镜像 LABEL）
-podman image inspect localhost/xmnn-runtime:latest \
-  --format '{{index .Config.Labels "org.specweave.torch-version"}} / {{index .Config.Labels "org.specweave.torch-flavor"}}'
+# 2) 确认当前镜像版本与形态（镜像 LABEL；两形态标签不同，逐一核对——
+#    形态感知 tag C28：:cpu / :cu130，:latest 仅指向最近一次构建）
+for t in cpu cu130; do echo "== $t =="; podman image inspect localhost/xmnn-runtime:$t \
+  --format '{{index .Config.Labels "org.specweave.torch-version"}} / {{index .Config.Labels "org.specweave.torch-flavor"}}' \
+  2>/dev/null || echo "(未构建)"; done
 ```
 
 > 硬约束：目标版本必须有 **cp314**（非 cp314t）wheel，且 **cpu 与 cu130
@@ -319,9 +339,13 @@ podman image inspect localhost/xmnn-runtime:latest \
 
 torch 与镜像 tag 无强绑定（无 lock 文件层），回滚即把
 `TORCH_VERSION` 改回旧值并 `invoke xmnnrt.build --no-cache`（形态同理：去掉
-`--torch cu130` 即回到 cpu）；若旧镜像仍在本地，可直接
-`podman tag <旧 image id> localhost/xmnn-runtime:latest` 应急
-（`podman images` 查历史 id）。
+`--torch cu130` 即回到 cpu）；若旧镜像仍在本地，可直接把**形态 tag** 指回它应急
+——`up` 找的是 `<基名>:<形态>`（C28），故要改挂该形态 tag 而不只是 `:latest`
+（`podman images` 查历史 id）：
+
+```bash
+podman tag <旧 image id> localhost/xmnn-runtime:cpu     # 应急回滚（形态按需替换）
+```
 
 ### 不要做的事
 
@@ -391,7 +415,8 @@ RUN /opt/conda/bin/python -m pip install --no-cache-dir torchvision \
 | `up --gpu` 报 `Error: stat ...: no such file or directory` + exit 125 | 设备路径在 podman 宿主侧不存在（C19 预检未过则不会走到这里）；`ls /dev/dri /dev/dxg` 看真实节点，或用 `GPU_DEVICE=<路径>` 显式指定 |
 | `up --gpu` 成功但容器内 `torch.cuda.is_available()` 为 False | 两种可能：① 镜像是 cpu 形态（`build --torch cu130` 后重建）；② WSL2 下宿主缺 `libcuda.so.1`/`libdxcore.so`/`/usr/lib/wsl/drivers`（内核会前置拦截并点名缺失路径） |
 | `build --torch cu130` 报 pip 找不到版本 | 目标版本在 cu130 索引无 cp314 wheel；按 SOP「升级前检查」同时核对 cpu 与 cu130 两个索引 |
-| `up` 打印「镜像 torch 形态与声明不一致」 | **正常拦截**（C27）：`.env TORCH_FLAVOR` 与镜像实际形态不符——多因 `build --torch X` 是**单次**覆盖（改镜像不改 `.env`），随后 `up --skip-build` 只查镜像存在性。容器会用**镜像实际形态**运行；要按声明形态跑就 `invoke xmnnrt.build`（读 `.env`）后重建容器 |
+| `up --skip-build` 报「本地缺少镜像 `localhost/xmnn-runtime:cu130`」 | **形态感知 tag 迁移**（C28）：改造前构建的镜像只挂 `:latest`。按提示零成本改挂（`podman tag localhost/xmnn-runtime:latest localhost/xmnn-runtime:<形态>`，镜像已在本机、**无需重建**），或直接 `invoke xmnnrt.up`（随带构建） |
+| `up` 打印「镜像 torch 形态与声明不一致」 | **兜底拦截**（C27；C28 后默认路径已由标签身份堵住，本提示只在身份被接管时出现：显式 `XMNNRT_IMAGE_TAG` / 手工 `podman tag` / 旧镜像被人工改挂）。容器会用**镜像实际形态**运行；要按声明形态跑就 `invoke xmnnrt.build`（读 `.env`）后重建容器 |
 | Jupyter 里选不到 xmnn runtime 内核 | 构建日志检查 register-kernel 段；守卫第 9 项会拦截此情况，镜像不会构建成功 |
 | 换了 whl 版本但镜像内容没变 | 重新 `invoke xmnnrt.build`（任务自动按 dist 最新 mtime 暂存）；`--no-cache` 全量重建 |
 | pip 装依赖慢/失败 | 在 `.env` 设 `PIP_MIRROR=tuna`（或 `aliyun`）后重跑 `invoke xmnnrt.build`（C15：三处同键，CLI 旗标仅覆盖单次 build） |

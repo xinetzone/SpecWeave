@@ -14,7 +14,7 @@ source: "AGENTS.md#嵌套路由关系"
 - 2026-09-13 起增加第 4 个规则主题：opt-in 的 `quant.*` 工作负载栈（podman-compose 子进程层，Windows 原生门禁）；根运行路径仍不引入 compose
 - 2026-09-14 起增加第 5 个规则主题：opt-in 的 `xmnn.*` 开发/打包栈（同族 podman-compose 子进程层；双 ABI + LLVM 22 + Nuitka wheel 打包 + 源码运行时挂载）
 - 2026-09-14 起增加第 6 个规则主题：opt-in 的 `monetize.*` tvm-ffi 原生编译栈（apt clang + pip apache-tvm-ffi 轻量工具链、单一 cp314 GIL、agent-monetize 源码挂载、纯 Python wheel）
-- 2026-09-16 起增加第 7 个规则主题：opt-in 的 `xmnnrt.*` wheel 消费运行时栈（builder/runtime 分离；whl 暂存进 wheels/ 后装入干净运行时镜像，无工具链/零源码挂载，cp314 GIL base env + 交付内核 + 10 项硬守卫）；2026-09-20 该文件增补 **§8 GPU 透传与 torch 形态**（C26：`up --gpu` 复用 C19/C23 内核、`build --torch cpu|cu130` 缺省由 `StackSpec.torch_default` 声明）
+- 2026-09-16 起增加第 7 个规则主题：opt-in 的 `xmnnrt.*` wheel 消费运行时栈（builder/runtime 分离；whl 暂存进 wheels/ 后装入干净运行时镜像，无工具链/零源码挂载，cp314 GIL base env + 交付内核 + 10 项硬守卫）；2026-09-20 该文件增补 **§8 GPU 透传与 torch 形态**（C26：`up --gpu` 复用 C19/C23 内核、`build --torch cpu|cu130` 缺省由 `StackSpec.torch_default` 声明），2026-09-21 再增 **§8.3/§8.4 跨层校验与形态感知 tag**（C27/C28：`localhost/xmnn-runtime:<形态>` + `:latest` 别名）
 - 因此本目录下的 `rules/` 保留消费端独有的 7 个主题文件；其余构建端主题（Containerfile/entrypoint/ml-models 等）一律不重复，相关需求回退到父级工作区
 
 ## 目录结构
@@ -30,7 +30,7 @@ source: "AGENTS.md#嵌套路由关系"
 │   ├── quant-overlay.md   ← quant.* podman-compose 量化栈规范（双门禁、三必需映射、深合并、镜像守卫契约）
 │   ├── xmnn-overlay.md    ← xmnn.* podman-compose 开发/打包栈规范（双 ABI、源码运行时挂载、Nuitka 打包契约）
 │   ├── monetize-overlay.md ← monetize.* tvm-ffi 原生编译栈（apt clang、单一 GIL、3 处源码适配）
-│   └── xmnnrt-overlay.md  ← xmnnrt.* wheel 消费运行时栈（builder/runtime 分离、whl 暂存、10 项干净环境守卫、§8 GPU+torch 形态 C26）
+│   └── xmnnrt-overlay.md  ← xmnnrt.* wheel 消费运行时栈（builder/runtime 分离、whl 暂存、10 项干净环境守卫、§8 GPU+torch 形态 C26 / 跨层校验 C27 / 形态感知 tag C28）
 ├── roles/                 ← （预留占位；未定义 → 回退 SpecWeave 根 7 角色）
 ├── skills/                ← （预留占位；未定义 → 回退 SpecWeave 根 skills/）
 ├── scripts/               ← （预留占位；未定义 → 回退 SpecWeave 根 .agents/scripts/）
@@ -64,7 +64,7 @@ source: "AGENTS.md#嵌套路由关系"
 | 量化叠加层资产 | [../overlays/onnx-quantized/](../overlays/onnx-quantized/README.md) | Containerfile.quantized + compose.yaml/compose.gpu.yaml + smoke/（守卫+3 冒烟）+ .env.example + docs/ |
 | xmnn-dev 叠加层资产 | [../overlays/xmnn-dev/](../overlays/xmnn-dev/README.md) | Containerfile.xmnn-dev + compose.yaml + builder/（自包含打包内核）+ smoke/ + scripts/ + .env.example |
 | agent-monetize-dev 叠加层资产 | [../overlays/agent-monetize-dev/](../overlays/agent-monetize-dev/README.md) | Containerfile.agent-monetize + compose.yaml + builder/（build-native/build-wheel）+ smoke/ + scripts/ + .env.example |
-| xmnn-runtime 叠加层资产 | [../overlays/xmnn-runtime/](../overlays/xmnn-runtime/README.md) | Containerfile.xmnn-runtime + compose.yaml + compose.gpu.yaml / compose.gpu.wsl.yaml（C26 GPU 覆盖，互斥只加载一个）+ wheels/（whl 暂存，不入 git）+ smoke/（10 项硬守卫）+ scripts/（交付内核注册 + install-torch.sh 形态驱动）+ .env.example |
+| xmnn-runtime 叠加层资产 | [../overlays/xmnn-runtime/](../overlays/xmnn-runtime/README.md) | Containerfile.xmnn-runtime + compose.yaml（`image:` 形态感知嵌套插值 C28）+ compose.gpu.yaml / compose.gpu.wsl.yaml（C26 GPU 覆盖，互斥只加载一个）+ wheels/（whl 暂存，不入 git）+ smoke/（10 项硬守卫）+ scripts/（交付内核注册 + install-torch.sh 形态驱动）+ .env.example |
 | 四栈 compose 公共基段 | [../overlays/_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml) | rootless-base 服务：三必需 + 凭证四变量 + network_mode bridge + logging k8s-file（C24：journald 驱动在本机 WSL 下 `podman logs` 读不到）+ 公共 label/restart（extends 单一事实源，四栈禁止重复声明） |
 | invoke 入口转发器 | [../tasks.py](../tasks.py) | 根 `tasks.py` 仅转发至 `jpman_client.tasks`（src 布局下 invoke 的入口发现锚点） |
 | Python 依赖声明（client） | [../pyproject.toml](../pyproject.toml) | invoke>=2 / **jpman-common（../shared 须先安装）** / podman>=5 / python-dotenv>=1；scikit-build-core；`[compose]` extra = podman-compose（四栈专用） |
@@ -87,7 +87,7 @@ source: "AGENTS.md#嵌套路由关系"
 | [overlays/onnx-quantized/README.md](../overlays/onnx-quantized/README.md)（量化工作负载栈） | [quant-overlay.md](rules/quant-overlay.md) | quant.* 六任务、双门禁、三必需 compose 映射、GPU 覆盖 list 追加、镜像守卫五包版本、smoke 双路径 |
 | [overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)（开发/打包栈） | [xmnn-overlay.md](rules/xmnn-overlay.md) | xmnn.* 十任务（含离线 save/load）、双 ABI 工具链、四源码 bind、build-tvm/wheel 长任务、AST 还原、SONAME 守卫、双冒烟、§10 离线契约 |
 | [overlays/agent-monetize-dev/README.md](../overlays/agent-monetize-dev/README.md)（tvm-ffi 原生栈） | [monetize-overlay.md](rules/monetize-overlay.md) | monetize.* 八任务、apt clang+apache-tvm-ffi、build-native/wheel、单一 GIL、3 处源码适配 |
-| [overlays/xmnn-runtime/README.md](../overlays/xmnn-runtime/README.md)（wheel 消费运行时栈） | [xmnnrt-overlay.md](rules/xmnnrt-overlay.md) | xmnnrt.* 七任务、builder/runtime 分工、whl 暂存选择顺序、cp314 GIL 安装、交付内核 env 白名单、10 项守卫双身份、§8 GPU `--gpu` 与 `--torch cu130`（C26，cu130 不含 nvcc） |
+| [overlays/xmnn-runtime/README.md](../overlays/xmnn-runtime/README.md)（wheel 消费运行时栈） | [xmnnrt-overlay.md](rules/xmnnrt-overlay.md) | xmnnrt.* 七任务、builder/runtime 分工、whl 暂存选择顺序、cp314 GIL 安装、交付内核 env 白名单、10 项守卫双身份、§8 GPU `--gpu` 与 `--torch cu130`（C26，cu130 不含 nvcc）、§8.3/§8.4 形态一致性校验（C27）与形态感知 tag（C28：`localhost/xmnn-runtime:<形态>` + `:latest` 别名） |
 
 ## 父级继承（所有未定义一律回退）
 

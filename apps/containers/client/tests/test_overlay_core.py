@@ -396,6 +396,93 @@ def test_up_flavor_check_distinguishes_empty_declaration_from_missing_label(
 
 
 # ---------------------------------------------------------------------------
+# C28：形态感知镜像 tag（torch 形态即标签 + 通用别名；仅声明 flavor_tag 的栈）
+# ---------------------------------------------------------------------------
+
+_XMNNRT = xmnnrt_mod.XMNNRT_SPEC
+
+
+def test_image_tag_flavor_aware_four_states(harness, monkeypatch):
+    """四态（与 compose 嵌套插值实测同构）：缺省 / cu130 / 显式覆盖 / 空串回落。
+
+    invoke 侧与 compose 侧各自算，必须逐字同串（C16 的存在性预检与起容器共用）；
+    空串是「未设」而非「空 tag」——回落缺省形态，不产生 ``xmnn-runtime:``。
+    """
+    monkeypatch.delenv("TORCH_FLAVOR", raising=False)
+    assert oc.image_tag(_XMNNRT, {}) == "localhost/xmnn-runtime:cpu"
+
+    monkeypatch.setenv("TORCH_FLAVOR", "cu130")
+    assert oc.image_tag(_XMNNRT, {}) == "localhost/xmnn-runtime:cu130"
+
+    monkeypatch.setenv("XMNNRT_IMAGE_TAG", "custom:v9")
+    assert oc.image_tag(_XMNNRT, {}) == "custom:v9"
+
+    monkeypatch.delenv("XMNNRT_IMAGE_TAG")
+    monkeypatch.setenv("TORCH_FLAVOR", "")
+    assert oc.image_tag(_XMNNRT, {}) == "localhost/xmnn-runtime:cpu"
+
+
+def test_image_tag_follows_single_shot_cli_torch_override(harness, monkeypatch):
+    """``build --torch cu130``（单次覆盖）必须让 tag 同步落到 ``:cu130``。
+
+    否则会出现「装的是 cu130、标签写 cpu」的骗人镜像——形态解析与构建参数
+    同源（都走 ``resolve_build_args``）是这条断言的实体。
+    """
+    monkeypatch.delenv("TORCH_FLAVOR", raising=False)
+    assert oc.image_tag(_XMNNRT, {}, torch="cu130") == "localhost/xmnn-runtime:cu130"
+
+
+def test_image_tag_unchanged_for_stacks_without_flavor_tag(harness, monkeypatch):
+    """未声明 ``flavor_tag`` 的栈恒 default_image_tag——即使 TORCH_FLAVOR 有值。
+
+    xmnn-dev 声明了 ``torch_flavor`` 但**不**参与形态命名（其形态区分由 ``save``
+    归档名承担，C20）；quant/monetize 连 torch 都没有。三栈零回归。
+    """
+    monkeypatch.setenv("TORCH_FLAVOR", "cu130")
+    for spec in ALL_SPECS:
+        assert not spec.flavor_tag
+        assert oc.image_tag(spec, {}) == spec.default_image_tag
+
+
+def test_image_tag_alias_gating(harness, monkeypatch):
+    """别名只在「形态 tag 生效」时下发：显式覆盖=用户自管命名，不追加。"""
+    monkeypatch.delenv("TORCH_FLAVOR", raising=False)
+    monkeypatch.delenv("XMNNRT_IMAGE_TAG", raising=False)
+    latest = "localhost/xmnn-runtime:latest"
+    assert oc.image_tag_alias(_XMNNRT, {}, "localhost/xmnn-runtime:cpu") == latest
+    assert oc.image_tag_alias(_XMNNRT, {}, latest) == ""  # 已是别名，勿重复
+    assert oc.image_tag_alias(_QUANT, {}, "localhost/onnx-quantized:v9") == ""
+    monkeypatch.setenv("XMNNRT_IMAGE_TAG", "custom:v9")
+    assert oc.image_tag_alias(_XMNNRT, {}, "custom:v9") == ""
+
+
+def test_up_skip_build_hints_zero_cost_tag_migration(harness, monkeypatch, capsys):
+    """C28 迁移提示：形态 tag 缺失但通用 tag 在本地 → 给出 ``podman tag`` 改挂命令。
+
+    这正是本次改造的升级路径（改造前镜像只挂 ``:latest``，改后 ``up`` 找
+    ``:cu130``）；不自动改挂——通用标签可能指向另一形态，形态由打印的 LABEL
+    告知，改挂与否交用户判断。
+    """
+    monkeypatch.setenv("TORCH_FLAVOR", "cu130")
+    harness.runner.image_labels = {_FLAVOR_LABEL: "cu130"}
+    latest = "localhost/xmnn-runtime:latest"
+
+    def fake(c, cmd, **kwargs):
+        harness.runner.calls.append((cmd, kwargs))
+        ok = cmd.endswith(f"image exists {latest}")
+        return SimpleNamespace(ok=ok, stdout="", return_code=0 if ok else 1)
+
+    monkeypatch.setattr(oc, "run_cmd", fake)
+    with pytest.raises(Exit):
+        oc.up_stack(None, _XMNNRT, skip_build=True)
+
+    out = capsys.readouterr().out
+    assert "本地缺少镜像 localhost/xmnn-runtime:cu130" in out
+    assert "torch 形态: cu130" in out
+    assert f"podman tag {latest} localhost/xmnn-runtime:cu130" in out
+
+
+# ---------------------------------------------------------------------------
 # C19：GPU 设备解析与运行期可用性预检（修复 `inv xmnn.up --gpu` exit 125）
 # ---------------------------------------------------------------------------
 
@@ -1048,6 +1135,8 @@ def test_xmnnrt_build_task_torch_defaults_to_cpu(harness, monkeypatch):
     )
     cmd = [c for c in harness.runner.commands if " build " in c][0]
     assert "--build-arg TORCH_FLAVOR=cpu" in cmd
+    # C28：形态感知 tag（缺省形态 cpu）+ 通用别名同镜像双 -t（relpack 打包入口）
+    assert "-t localhost/xmnn-runtime:cpu" in cmd
     assert "-t localhost/xmnn-runtime:latest" in cmd
 
 
@@ -1063,6 +1152,8 @@ def test_xmnnrt_build_task_torch_flag_flows_cu130(harness, monkeypatch):
     cmd = [c for c in harness.runner.commands if " build " in c][0]
     assert "--build-arg TORCH_FLAVOR=cu130" in cmd
     assert "-t localhost/xmnn-runtime:cuda" in cmd
+    # 显式 --tag：用户自管命名，内核不追加通用别名（C28 gating）
+    assert "-t localhost/xmnn-runtime:latest" not in cmd
 
 
 def test_compose_torch_flavor_default_matches_spec(harness):

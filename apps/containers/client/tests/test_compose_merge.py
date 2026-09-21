@@ -18,7 +18,9 @@ diff；本测试按 OKF podman-compose 知识包 concepts/06-config-pipeline.md
 - 不支持 ``!reset``/``!override`` YAML 标签（safe_load 遇标签即失败）；
 - 不模拟 normalize_service 预处理（build.args dict→list、env/labels list→dict、
   security_opt str→list）；三栈 env/labels 均为 dict 形态故渲染无差异；
-- 插值仅支持 ``${NAME}``/``${NAME:-default}``，不支持 ``:?``/``$$``/服务互引；
+- 插值仅支持 ``${NAME}``/``${NAME:-default}``（default 段不含花括号则支持**嵌套**
+  ——逐轮替换最内层至不动点，与 1.6.0 实测行为一致，见 ``_expand``），
+  不支持 ``:?``/``$$``/服务互引；
 - 类型冲突（dict↔list 等）真实 1.6.0 抛 ValueError，模拟器同样抛出；
 - 环境装有 podman-compose（或 vendor 子模块就位）时，test_vs_real_rec_merge
   会直接调用真实 rec_merge 对照，模拟器一旦偏离上游即失败。
@@ -40,7 +42,7 @@ SHARED = OVERLAYS / "_shared" / "base-rootless.yaml"
 # vendor 只读子模块中的权威源码（与本机已安装包同为 1.6.0）
 _VENDOR_PC = Path(__file__).resolve().parents[4] / "vendor" / "podman-compose"
 
-_INTERP = re.compile(r"\$\{([A-Za-z_][A-Za-z0-9_]*)(?::-([^}]*))?\}")
+_INTERP = re.compile(r"\$\{([A-Za-z_][A-Za-z0-9_]*)(?::-([^{}]*))?\}")
 
 # 三栈黄金期望（抽取前逐栈 compose.yaml 的等价清单）
 GOLDEN = {
@@ -95,7 +97,9 @@ GOLDEN = {
     "xmnnrt": {
         "dir": "xmnn-runtime", "service": "xmnnrt",
         "component": "xmnn-runtime",
-        "image": "localhost/xmnn-runtime:latest",
+        # C28：形态感知 tag（缺省形态 cpu = spec.torch_default，与 compose
+        # ${TORCH_FLAVOR:-cpu} 同键同默认）；:latest 仅作通用别名存在
+        "image": "localhost/xmnn-runtime:cpu",
         "container_name": "xmnn-runtime",
         "dockerfile": "Containerfile.xmnn-runtime",
         "ports": ["2225:22", "8893:8888"],
@@ -115,18 +119,38 @@ _REPLACE_KEYS = {"command", "entrypoint"}
 _MISSING = object()
 
 
+def _pick(match, env):
+    """取插值结果：环境值优先（空串视为未设），否则 default 原文。"""
+    name, default = match.group(1), match.group(2)
+    if name in env and env[name] != "":
+        return env[name]
+    return default if default is not None else ""
+
+
+def _expand(text, env, *, max_rounds=8):
+    """逐轮替换**最内层**表达式至不动点——嵌套插值的等价实现（C28）。
+
+    podman-compose 1.6.0 实测支持嵌套：``image: ${XMNNRT_IMAGE_TAG:-localhost/
+    xmnn-runtime:${TORCH_FLAVOR:-cpu}}`` 四态（无变量 / ``cu130`` / 显式覆盖 /
+    空串回落）全部正确。模拟器若沿用单轮 ``[^}]*`` 正则会**在首个 ``}`` 截断**
+    （把内层当外层 default 的一部分），渲染出错误串而假失败。
+    max_rounds 仅是防呆上界：真实嵌套深度 ≤2，正常情况下第 2 轮即不动点。
+    """
+    for _ in range(max_rounds):
+        expanded = _INTERP.sub(lambda m: _pick(m, env), text)
+        if expanded == text:
+            break
+        text = expanded
+    return text
+
+
 def _interpolate(node, env):
     if isinstance(node, dict):
         return {k: _interpolate(v, env) for k, v in node.items()}
     if isinstance(node, list):
         return [_interpolate(v, env) for v in node]
     if isinstance(node, str):
-        def sub(m):
-            name, default = m.group(1), m.group(2)
-            if name in env and env[name] != "":
-                return env[name]
-            return default if default is not None else ""
-        return _INTERP.sub(sub, node)
+        return _expand(node, env)
     return node
 
 
@@ -420,6 +444,32 @@ def test_xmnnrt_gpu_override_is_opt_in_and_adds_no_env():
     assert gpu["volumes"] == plain["volumes"]  # generic 形态只加设备，不动卷
     cdi = render_stack("xmnnrt", env={"GPU_DEVICE": "nvidia.com/gpu=all"}, gpu=True)
     assert cdi["devices"] == ["/dev/fuse:/dev/fuse", "nvidia.com/gpu=all"]
+
+
+def test_xmnnrt_image_tag_is_flavor_aware_with_generic_alias():
+    """C28：形态感知 tag 四态（与 podman-compose 1.6.0 真机实测同构）。
+
+    invoke 侧 ``image_tag()`` 与本节渲染的两侧必须算出同一串（C16），否则
+    ``up --skip-build`` 的存在性预检会与 compose 插值指向不同镜像。
+    """
+    assert render_stack("xmnnrt")["image"] == "localhost/xmnn-runtime:cpu"
+    assert render_stack("xmnnrt", env={"TORCH_FLAVOR": "cu130"})["image"] == (
+        "localhost/xmnn-runtime:cu130"
+    )
+    # 显式覆盖胜出：用户接管命名时形态感知让位（invoke 侧同判据）
+    assert render_stack("xmnnrt", env={"XMNNRT_IMAGE_TAG": "custom:v9"})["image"] == "custom:v9"
+    # 空串是「未设」而非「空 tag」：回落到缺省形态，不产生 `xmnn-runtime:`
+    assert render_stack("xmnnrt", env={"TORCH_FLAVOR": ""})["image"] == (
+        "localhost/xmnn-runtime:cpu"
+    )
+
+
+def test_nested_interpolation_simulator_innermost_first():
+    """模拟器自证：嵌套插值必须**最内层先算**（单轮 `[^}]*` 会截断出错误串）。"""
+    assert _expand("${A:-x:${B:-y}}", {}) == "x:y"
+    assert _expand("${A:-x:${B:-y}}", {"B": "z"}) == "x:z"
+    assert _expand("${A:-x:${B:-y}}", {"A": "w", "B": "z"}) == "w"
+    assert _expand("${A:-x:${B:-y}}", {"A": ""}) == "x:y"  # 空串=未设
 
 
 def test_env_override_flows_through_interpolation():

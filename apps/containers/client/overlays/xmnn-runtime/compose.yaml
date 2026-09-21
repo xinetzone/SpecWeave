@@ -31,7 +31,12 @@ services:
       file: ../_shared/base-rootless.yaml
       service: rootless-base
     container_name: ${XMNNRT_CONTAINER_NAME:-xmnn-runtime}
-    image: ${XMNNRT_IMAGE_TAG:-localhost/xmnn-runtime:latest}
+    # 形态感知 tag（C28）：<基名>:<形态>，形态取自下方 build args 的同一
+    # TORCH_FLAVOR 键（缺省 cpu）——CPU 与 cu130 镜像**标签即内容**。
+    # 嵌套插值经 podman-compose 1.6.0 四态实测（无变量→:cpu；TORCH_FLAVOR=cu130
+    # →:cu130；显式 XMNNRT_IMAGE_TAG=custom:v9 胜出；TORCH_FLAVOR= 空串→回落 :cpu）。
+    # invoke 侧同键同默认（C16）：overlay_core.image_tag() 逐字算出同一串。
+    image: ${XMNNRT_IMAGE_TAG:-localhost/xmnn-runtime:${TORCH_FLAVOR:-cpu}}
     build:
       context: .
       dockerfile: Containerfile.xmnn-runtime

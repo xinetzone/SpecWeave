@@ -28,9 +28,10 @@
 #   - 含引号的验证逻辑固化为 smoke/scripts 下脚本文件，RUN 行不写
 #     内层双引号 python -c（buildah 二次分词教训）。
 #
-# 产出：localhost/xmnn-runtime:latest
+# 产出：localhost/xmnn-runtime:<形态>（cpu|cu130，形态感知 tag，C28；
+#       另标记 localhost/xmnn-runtime:latest 通用别名，由 invoke xmnnrt.build 下发）
 # 构建：invoke xmnnrt.build [--wheel path] [--pip-mirror tuna] [--torch cu130]
-#   （裸 podman build 前需手工把 whl 放进 wheels/）
+#   （裸 podman build 前需手工把 whl 放进 wheels/；裸路径只产出形态 tag）
 # ------------------------------------------------------------
 
 ARG BASE_IMAGE=localhost/jupyter-podman-rootless:latest

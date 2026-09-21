@@ -45,7 +45,11 @@ invoke xmnnrt.down
   是独立 Docker 谱系。
 - **pytorch 前端开箱即用**：torch **2.14.0 已内置**于镜像（缺省 CPU 构建；
   `build --torch cu130` 可换 CUDA 13.0 版，索引由白名单形态推导），守卫第
-  10 项按容器内 marker 硬断言「声明形态 == 实物」；resnet18/two_inputs 等
+  10 项按容器内 marker 硬断言「声明形态 == 实物」；镜像 tag **随形态走**
+  （C28，2026-09-21）：`localhost/xmnn-runtime:cpu` / `:cu130`，另标记
+  `:latest` 通用别名——`up --skip-build` 找的就是当前声明形态的那份镜像，
+  两形态可共存互不覆盖（旧镜像只挂 `:latest`，按 `up` 提示 `podman tag`
+  改挂即可）。resnet18/two_inputs 等
   .pt 模型无需手装任何依赖；需要 torchvision 时按 overlay README 自建薄镜像层。
   torch 升级（版本 pin/守卫双点、真机重建、精度回归、回滚与禁项）见
   overlay README 「torch 升级指南（SOP）」。

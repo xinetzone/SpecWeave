@@ -6,6 +6,57 @@
 
 ## [Unreleased]
 
+### 2026-09-21 · `feat:` 形态感知镜像 tag——`localhost/xmnn-runtime:<形态>` + `:latest` 别名（C28）
+
+**关联七概念场景**：场景3「重构优化」——把 C26（`--torch cpu|cu130`）与 C27
+（up 侧形态校验）留下的**身份缺口**从「事后告警」前移到「标签即内容」。
+用户已确认设计：**默认 tag 改为形态感知 + 同时保留 `:latest` 别名**（同镜像
+双 `-t`，零额外存储）。
+
+**I 事实**：
+
+① C26 原文「一 tag 一形态」的实伤——CPU 与 cu130 镜像**标签相同而内容不同**
+（`localhost/xmnn-runtime:latest`），`up --skip-build` 只查 tag 存在性，切形态
+全靠人记得重建；② C27 的 up 侧校验是**不阻断告警**，且拦的是「已跑错」的
+事后时刻；③ `:latest` 有 **24 处引用**，其中 `relpack._PACK_SCRIPT` 第 163 行
+**硬编码** `SRC="localhost/xmnn-runtime:latest"`（客户交付包入口）——这决定了
+`latest` 不能删；④ `image_tag()` 与 compose `${XMNNRT_IMAGE_TAG:-默认}` 必须
+同键同默认（C16），故 compose 侧要能算出同一串。
+
+**F/V 决策**（V 对抗审查：显式覆盖 vs 形态感知的优先序、`:latest` 是否该保留、
+是否自动改挂旧镜像）：
+
+- **保留 `:latest` 别名**（否则 relpack/README 的 24 处引用集体悬空）；
+- **显式 `{PREFIX}_IMAGE_TAG` 最高优先**（用户接管命名时形态感知让位，且
+  **不追加**别名）；**显式 `--tag`** 同理不追加；
+- **不自动改挂**旧镜像：通用标签可能指向另一形态，改挂与否由用户判断——
+  内核只打印 LABEL 形态 + `podman tag` 命令（零成本，避免重下数 GB）。
+
+**E/C 落地**：
+
+- 内核 `StackSpec` 新增 `flavor_tag` 声明位（默认 `""`，非声明栈零回归）；
+  `image_tag()` 解析序改为「显式覆盖 > 形态感知 > 默认 tag」，形态经新
+  `image_flavor()` 复用 `resolve_build_args`——**CLI `--torch` 单次覆盖也改变
+  标签**（杜绝「装 cu130、标 cpu」）；新增 `image_tag_alias()` 判定别名下发；
+  `build_image()` 双 `-t` + 构建完成横幅打印别名。
+- `xmnnrt.py` 声明 `flavor_tag="localhost/xmnn-runtime"`（**唯一**声明栈）；
+  `compose.yaml` 的 `image:` 改嵌套插值
+  `${XMNNRT_IMAGE_TAG:-localhost/xmnn-runtime:${TORCH_FLAVOR:-cpu}}`。
+- `_require_local_image()` 增**迁移提示**：形态 tag 缺失而通用 tag 在本地时
+  打印 LABEL 形态 + 零成本改挂命令。
+- 单测：`test_compose_merge.py` 的模拟器补**嵌套插值**（原 `[^}]*` 正则会在
+  首个 `}` 截断）+ GOLDEN 改 `:cpu` + 四态用例；`test_overlay_core.py` 新增
+  5 例（四态 / CLI 覆盖驱动 tag / 非声明栈零回归 / 别名 gating / 迁移提示）。
+
+**V 验收**：全量 `pytest tests -q --ignore=tests/test_ast_inject.py`
+**256 passed / 2 skipped**（较基线 +7，零回归）；`xmnnrt.py` 仍 ≤160 行
+（模块预算守卫 `test_modules_bounded_and_declarative` 通过）。
+
+**真机核对**（不改镜像/容器状态）：真实 podman-compose 1.6.0 渲染仓库内
+`compose.yaml` 四态全部正确；本地既有 cu130 镜像零成本改挂到 `:cu130`
+（同镜像 ID、零额外存储）后 LABEL 形态与 `.env` 一致。**未做**：端到端
+`invoke xmnnrt.up --skip-build` 重建容器复核（当时栈在运行，避免中断）。
+
 ### 2026-09-21 · `fix:` 补上「声明形态 vs 镜像实物」的跨层校验（C27）
 
 **关联七概念场景**：场景2「问题解决」——用户质疑前一轮给出的两个「坑」，
@@ -59,9 +110,11 @@ cpu 镜像（`.env` 声明 cu130）。构建期守卫第 10 项比的是「镜�
 - 全量 `pytest tests -q --ignore=tests/test_ast_inject.py` **249 passed /
   2 skipped**（较前基线 +5，零回归）。
 
-**未做**：镜像形态感知 tag（C26 明文「一 tag 一形态」，本次决策保持共享键、
-不动 C15；若未来两栈需分叉，走「栈专属覆盖键优先、回落共享键」的受控扩展，
-嵌套插值 `${XMNNRT_TORCH_FLAVOR:-${TORCH_FLAVOR:-cpu}}` 已实测可行）。
+**后续（同日已补）**：镜像形态感知 tag 已由 **C28** 落地（`localhost/xmnn-runtime:<形态>`
++ `:latest` 别名，见上方条目）——本条的 up 侧校验自此退为**兜底**，专管身份被
+用户接管的场景；共享键 `TORCH_FLAVOR` 仍按本条决策保持 C15 不动（若未来两栈需
+分叉，走「栈专属覆盖键优先、回落共享键」的受控扩展，嵌套插值
+`${XMNNRT_TORCH_FLAVOR:-${TORCH_FLAVOR:-cpu}}` 已实测可行）。
 
 ### 2026-09-20 · `feat:` xmnnrt 支持 GPU——`up --gpu` 设备透传 + `build --torch cpu|cu130`（C26）
 
