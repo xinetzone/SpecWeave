@@ -39,7 +39,10 @@ log_set_error_help '  Nuitka 打包失败排查：
   4. "Killed" / "out of memory" → 降低并发：NUITKA_JOBS=4 inv xmnn.wheel --jobs 4
   5. libtvm.so 缺失 → 先执行：inv xmnn.build-tvm（或 scripts/build-tvm.sh）
   6. 提示「已含 AST PREAMBLE 但备份缺失」→ 按提示 git checkout 对应 __init__.py
-  7. 交互调试：podman-compose exec xmnn bash，cd /opt/xmnn-builder 重跑本脚本'
+  7. 交互调试：podman-compose exec xmnn bash，cd /opt/xmnn-builder 重跑本脚本
+  8. "Unmet dependencies (checked against /opt/conda/bin/python): cmake>=3.18"
+     → PYTHONPATH 污染致 scikit-build-core 误判 PyPI cmake 已装（本脚本已用
+       env -u PYTHONPATH 规避）；若复现，先 `env -u PYTHONPATH python -m build ...`'
 
 # ── 路径变量化（compose 注入环境变量可覆盖全部默认值）─────────────────────
 TVM_ROOT="${TVM_ROOT:-/workspace/npu_tvm}"
@@ -304,7 +307,16 @@ log_kv "LLVM libdir" "$LLVM_LIB_DIR"
 log_kv "dist dir" "$DIST_DIR"
 
 set +e
-"$BASE_PYTHON" -m build \
+# PYTHONPATH 必须剥离（env -u，不可写 PYTHONPATH=""——空串会被 Python 解析为
+# cwd 条目）：compose 注入的 /workspace/npuusertools 下存在非 Python 包的 cmake/
+# 目录（仅 xmnn_version.py.in 模板），PEP 420 使其成为命名空间包，
+# scikit-build-core 的 GetRequires.cmake() 遂误判「PyPI cmake 已装」并申报
+# cmake>=3.18 构建依赖；--no-isolation 下 pypa/build 的依赖检查随即以
+# 「ERROR Unmet dependencies (checked against /opt/conda/bin/python)」硬失败。
+# 实测：保留 PYTHONPATH → 申报 cmake>=3.18；剥离 → 回落系统 cmake 4.4.3，零申报。
+# 本步骤只用 site-packages 内的 build 后端 + 显式 --config-setting 绝对路径，
+# 不需要从源码树导入（PYTHONPATH 仅服务 Nuitka 编译段与交互式调试）。
+env -u PYTHONPATH "$BASE_PYTHON" -m build \
     --wheel \
     --no-isolation \
     --outdir "$DIST_DIR" \
