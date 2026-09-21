@@ -22,8 +22,11 @@ from pathlib import Path
 
 import pytest
 
+# 判据必须含 POSIX 平台：Windows 自带 System32\bash.exe（WSL 启动器）会让
+# `which("bash")` 判真，但测试体依赖 os.geteuid/chmod/符号链接等 POSIX 语义。
 pytestmark = pytest.mark.skipif(
-    shutil.which("bash") is None, reason="ast_inject.sh 需 bash（POSIX 平台）"
+    os.name != "posix" or shutil.which("bash") is None,
+    reason="ast_inject.sh 需 POSIX + bash（Windows 原生自动 skip）",
 )
 
 CLIENT_ROOT = Path(__file__).resolve().parents[1]

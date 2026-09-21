@@ -27,8 +27,11 @@ from pathlib import Path
 import pytest
 import yaml
 
+# 判据必须含 POSIX 平台：Windows 自带 System32\bash.exe（WSL 启动器）会让
+# `which("bash")` 判真，但 WSL 无法翻译 SMB/UNC 检出路径（且本脚本需 sed/grep）。
 pytestmark = pytest.mark.skipif(
-    shutil.which("bash") is None, reason="setup-ssh-env.sh 需 bash（POSIX 平台）"
+    os.name != "posix" or shutil.which("bash") is None,
+    reason="setup-ssh-env.sh 需 POSIX + bash（Windows 原生自动 skip）",
 )
 
 CLIENT_ROOT = Path(__file__).resolve().parents[1]
