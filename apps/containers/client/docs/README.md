@@ -42,6 +42,12 @@ source: "README.md"
 | [12-monetize-overlay.md](12-monetize-overlay.md) | 工作负载栈 agent-monetize-dev：monetize.* 命令、tvm-ffi 原生编译 |
 | [13-xmnn-runtime-overlay.md](13-xmnn-runtime-overlay.md) | 工作负载栈 xmnn-runtime：xmnnrt.* 命令、whl 消费运行时（builder/runtime 分离） |
 
+### 分析报告
+
+| 文档 | 说明 |
+|------|------|
+| [14-xmnn-int4-layers-report.md](14-xmnn-int4-layers-report.md) | 分析报告：`network.xmnn` int4 层清单（is_int4 字段判定、权重打包交叉验证、15 个 int4 层 + 7 个 int8 层） |
+
 ## AI 协作者规范
 
 项目特有的 AI 协作者规范（AI 级硬约束）已原子化拆分至 [.agents/](../.agents/README.md) 目录：

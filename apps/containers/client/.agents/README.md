@@ -70,7 +70,7 @@ source: "AGENTS.md#嵌套路由关系"
 | Python 依赖声明（client） | [../pyproject.toml](../pyproject.toml) | invoke>=2 / **jpman-common（../shared 须先安装）** / podman>=5 / python-dotenv>=1；scikit-build-core；`[compose]` extra = podman-compose（四栈专用） |
 | Python 依赖声明（共享包） | [../../shared/pyproject.toml](../../shared/pyproject.toml) | jpman-common 0.1.0，scikit-build-core 纯 Python；dependencies=invoke>=2.0；optional `[sdk]` extra=podman>=5.0.0 |
 | 环境变量模板（多清单） | [../.env.example](../.env.example) | 容器级 9 项 + SDK 级 4 项 + quant/xmnn/monetize/xmnnrt 四栈插值键完整带注释 |
-| 人类可读文档入口 | [../docs/README.md](../docs/README.md) | 文档索引：安装/快速开始/§5 Windows WSL/§8 .env 完整清单（原子化 00-13） |
+| 人类可读文档入口 | [../docs/README.md](../docs/README.md) | 文档索引：安装/快速开始/§5 Windows WSL/§8 .env 完整清单（原子化 00-14） |
 
 ## 人类文档 ↔ AI 规则对应关系表
 
@@ -85,7 +85,7 @@ source: "AGENTS.md#嵌套路由关系"
 | [docs/05 作为 SDK 使用](../docs/05-sdk-usage.md) | [invoke-tasks.md](rules/invoke-tasks.md) §4 | load_image / run_container / stop_container 三个 API 签名与 ContainerConfig 字段 |
 | [docs/00 与 jpman 分工表](../docs/00-overview.md) | （无对应 AI 规则；仅属于人类产品定位说明） | 不一致时以本项目 `pyproject.toml` 实际依赖 + `src/jpman_client/tasks/` 实际实现为准 |
 | [overlays/onnx-quantized/README.md](../overlays/onnx-quantized/README.md)（量化工作负载栈） | [quant-overlay.md](rules/quant-overlay.md) | quant.* 六任务、双门禁、三必需 compose 映射、GPU 覆盖 list 追加、镜像守卫五包版本、smoke 双路径 |
-| [overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)（开发/打包栈） | [xmnn-overlay.md](rules/xmnn-overlay.md) | xmnn.* 十任务（含离线 save/load）、双 ABI 工具链、四源码 bind、build-tvm/wheel 长任务、AST 还原、SONAME 守卫、双冒烟、§10 离线契约 |
+| [overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)（开发/打包栈） | [xmnn-overlay.md](rules/xmnn-overlay.md) | xmnn.* 十任务（含离线 save/load）、双 ABI 工具链、四源码 bind、build-tvm/wheel 长任务、源码树只读、SONAME 守卫、双冒烟、§10 离线契约 |
 | [overlays/agent-monetize-dev/README.md](../overlays/agent-monetize-dev/README.md)（tvm-ffi 原生栈） | [monetize-overlay.md](rules/monetize-overlay.md) | monetize.* 八任务、apt clang+apache-tvm-ffi、build-native/wheel、单一 GIL、3 处源码适配 |
 | [overlays/xmnn-runtime/README.md](../overlays/xmnn-runtime/README.md)（wheel 消费运行时栈） | [xmnnrt-overlay.md](rules/xmnnrt-overlay.md) | xmnnrt.* 七任务、builder/runtime 分工、whl 暂存选择顺序、cp314 GIL 安装、交付内核 env 白名单、10 项守卫双身份、§8 GPU `--gpu` 与 `--torch cu130`（C26，cu130 不含 nvcc）、§8.3/§8.4 形态一致性校验（C27）与形态感知 tag（C28：`localhost/xmnn-runtime:<形态>` + `:latest` 别名） |
 

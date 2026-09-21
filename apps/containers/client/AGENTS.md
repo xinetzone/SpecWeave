@@ -70,7 +70,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
   └─ apps/AGENTS.md（应用区入口路由，containers/client 条目回退到本文件）
        └─ apps/containers/client/AGENTS.md（本文件 = 消费端子应用路由入口）
             ├─ README.md                       ← 人类可读文档入口（项目定位 + 文档导航）
-            ├─ docs/                           ← 人类可读文档集（00-12 原子文档 + 索引，对齐构建端 docs/ 先例）
+            ├─ docs/                           ← 人类可读文档集（00-14 原子文档 + 索引，对齐构建端 docs/ 先例）
             ├─ .agents/README.md               ← AI 资产容器索引
             │   ├─ CHANGELOG.md                ← 项目变更日志（原子提交汇总）
             │   └─ rules/                      ← 单一职责原子化硬约束
@@ -78,7 +78,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
             │       ├─ sdk-connection.md       ← podman-py 连接策略、6 scheme 白名单、逃逸舱四策略
             │       ├─ windows-wsl.md          ← Windows 11 × WSL2 三级探测 + W-I1~W-I3 速查
             │       ├─ quant-overlay.md        quant.* podman-compose 工作负载栈（门禁/三必需映射/深合并/镜像契约）
-            │       ├─ xmnn-overlay.md         xmnn.* 开发/打包栈（双 ABI/LLVM 22/源码运行时挂载/AST 还原/SONAME 守卫）
+            │       ├─ xmnn-overlay.md         xmnn.* 开发/打包栈（双 ABI/LLVM 22/源码运行时挂载/源码树只读/SONAME 守卫）
             │       ├─ monetize-overlay.md     monetize.* tvm-ffi 原生编译栈（apt clang/单一 GIL/3 处源码适配/.so 不入 wheel）
             │       └─ xmnnrt-overlay.md       xmnnrt.* wheel 消费运行时栈（builder/runtime 分离/whl 暂存/干净环境 10 项守卫/交付内核/§8 GPU+torch 形态 C26）
             ├─ overlays/                      ← 工作负载叠加层（opt-in，镜像与 compose 栈自包含）
@@ -109,7 +109,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | 新增第四工作负载栈（声明 StackSpec） | [.agents/rules/invoke-tasks.md](.agents/rules/invoke-tasks.md) §声明式栈 + [../../../.agents/skills/client-overlay-scaffold/SKILL.md](../../../.agents/skills/client-overlay-scaffold/SKILL.md) | 2026-09-15 后新栈只能写声明模块：`<NAME>_SPEC` StackSpec + `TASKS` + 六别名；compose 用 extends `_shared/base-rootless.yaml`；禁止复制编排同构函数（C14） |
 | quant.\* 工作负载栈（量化叠加镜像/compose up-down/冒烟/GPU opt-in） | [.agents/rules/quant-overlay.md](.agents/rules/quant-overlay.md) | 子进程边界（禁 import podman）、Windows 原生门禁、三必需 compose 映射、list 追加深合并、镜像守卫契约 |
 | 叠加镜像 Containerfile.quantized 修改 / 量化包版本 / 冒烟脚本 | [overlays/onnx-quantized/](overlays/onnx-quantized/README.md) + [quant-overlay.md](.agents/rules/quant-overlay.md) §6 | FROM rootless、main cp314t、版本三重实证、OCI 引号教训、守卫不可删 |
-| xmnn.\* 开发/打包栈（源码挂载/TVM 编译/Nuitka wheel/双 ABI） | [.agents/rules/xmnn-overlay.md](.agents/rules/xmnn-overlay.md) | 子进程边界（禁 import podman）、Windows 门禁、双 ABI 不互换、源码仅运行时挂载、AST 注入还原、SONAME glob 守卫、ccache 卷 |
+| xmnn.\* 开发/打包栈（源码挂载/TVM 编译/Nuitka wheel/双 ABI） | [.agents/rules/xmnn-overlay.md](.agents/rules/xmnn-overlay.md) | 子进程边界（禁 import podman）、Windows 门禁、双 ABI 不互换、源码仅运行时挂载、源码树只读、SONAME glob 守卫、ccache 卷 |
 | xmnn-dev 叠加镜像/工具链/打包脚本/内核修改 | [overlays/xmnn-dev/](overlays/xmnn-dev/README.md) + [xmnn-overlay.md](.agents/rules/xmnn-overlay.md) | base cp314 GIL 打包/main cp314t 服务、LLVM 22.1.8 装 main、builder 资产自包含禁引 ai/、OCI 引号教训 |
 | xmnnrt.\* wheel 消费运行时栈（whl 安装镜像/builder-runtime 分离/交付内核/GPU+torch 形态） | [.agents/rules/xmnnrt-overlay.md](.agents/rules/xmnnrt-overlay.md) + [overlays/xmnn-runtime/](overlays/xmnn-runtime/README.md) | wheel 唯一制品契约、whl 暂存 wheels/、cp314 GIL base env、无工具链零源码挂载、10 项干净环境守卫、§8 GPU `--gpu` 与 `--torch cu130`（C26）、cu130 不含 nvcc |
 | podman-compose 行为冲突裁决（G1 可信源，只读） | `../../../projects/awesome-okf-xs/doc/bundles/jishu/containers/podman-compose/`（concepts/02、03、06、08、10） | 深合并/插值/x-podman/选型以 OKF 知识包为准 |
@@ -133,7 +133,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | Windows WSL 规则 | [.agents/rules/windows-wsl.md](.agents/rules/windows-wsl.md) | 3 级发行版探测 / UTF-16 LE / W-I1~W-I3 速查 |
 | quant 工作负载栈规则 | [.agents/rules/quant-overlay.md](.agents/rules/quant-overlay.md) | quant.\* 六任务 / podman-compose 子进程层 / 双门禁 / 三必需映射 / GPU 覆盖深合并 / 镜像守卫契约 |
 | 量化叠加层（人类文档） | [overlays/onnx-quantized/README.md](overlays/onnx-quantized/README.md) | 快速开始、compose/inv 两路径、与 Docker 源变体差异表 |
-| xmnn 开发/打包栈规则 | [.agents/rules/xmnn-overlay.md](.agents/rules/xmnn-overlay.md) | xmnn.\* 十任务 / 双 ABI 工具链 / 源码运行时挂载 / Nuitka 打包契约 / AST 还原 / SONAME 守卫 / §10 离线契约（`XMNN_OFFLINE` 单一事实源 + save/load 归档） |
+| xmnn 开发/打包栈规则 | [.agents/rules/xmnn-overlay.md](.agents/rules/xmnn-overlay.md) | xmnn.\* 十任务 / 双 ABI 工具链 / 源码运行时挂载 / Nuitka 打包契约 / 源码树只读 / SONAME 守卫 / §10 离线契约（`XMNN_OFFLINE` 单一事实源 + save/load 归档） |
 | xmnn-dev 叠加层（人类文档） | [overlays/xmnn-dev/README.md](overlays/xmnn-dev/README.md) | 开发调试/打包手册、双 ABI、invoke/裸 compose、**两个过程（镜像构建有网 / 离线开发无网；归档导出导入 + 禁网开关 + 构建期离线完备性守卫）**、参数表、性能与排障 |
 | monetize tvm-ffi 栈规则 | [.agents/rules/monetize-overlay.md](.agents/rules/monetize-overlay.md) | monetize.\* 八任务 / apt clang / 单一 cp314 GIL / tvm-ffi rpath / 3 处源码适配 / .so 不入 wheel |
 | agent-monetize-dev 叠加层（人类文档） | [overlays/agent-monetize-dev/README.md](overlays/agent-monetize-dev/README.md) | tvm-ffi 原生编译/纯 Python wheel、invoke/裸 compose、与 xmnn-dev 轻量对比、排障 |

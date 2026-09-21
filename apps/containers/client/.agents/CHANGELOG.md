@@ -6,6 +6,40 @@
 
 ## [Unreleased]
 
+### 2026-09-21 · `docs:` 新增分析报告 `14-xmnn-int4-layers-report.md`，并同步索引计数与 C31 陈旧锚点
+
+**关联七概念场景**：场景4「知识沉淀」——把 `network.xmnn` 的 int4 层判定证据固化为
+可追溯的人类可读文档，并顺带收口 C31 遗留的索引陈旧引用。
+
+**I 事实**：
+
+① 新增 `docs/14-xmnn-int4-layers-report.md`（分析报告：`network.xmnn` int4 层清单，
+含 `is_int4` 字段判定依据、权重打包交叉验证、15 个 int4 层 + 7 个 int8 层）；
+② `docs/README.md` 新增「分析报告」索引段；③ 交付前一致性核对发现三处问题：
+（a）报告 §六 复现步骤含 **3 处绝对宿主路径**（`/media/pc/data/ai/…`），而既有
+**14 篇 docs 的绝对路径出现次数全为 0**——仓库惯例是以 `docs/` 为基准的相对路径；
+（b）报告引用的证据目录 `workspace/temp/debug.iranti_caffe-a8w4/` 经核验**已不存在**，
+而 §一/§七 仍用「清理后将不可复现」的条件式表述，与实际不符；（c）文档集新增 14 号后
+索引计数未同步——`.agents/README.md` L73 写「原子化 00-13」，`AGENTS.md` L73 更旧、
+写「00-12」；④ **C31 遗留**：C31 已把 xmnn-overlay 规则 §5 由「AST 注入/还原纪律」
+改为「源码树只读纪律」，但 4 处索引/锚点行未同步（`.agents/README.md` L88、`AGENTS.md`
+L81/L112/L136 仍写「AST 还原」「AST 注入还原」），其指向的机制已随 C31 删除。
+
+**E/C 落地**：
+
+① 报告 §六 三处绝对路径改为相对路径（`../workspace/temp/…`，与 §一/§二 同口径；
+技能脚本改用 `$WORKSPACE_ROOT`），并补「前置」提示——证据已清理、复现需重新编译；
+② §一 目录定位与 §七 已知限制由条件式改为事实陈述（2026-09-21 核验已清理）；
+③ `.agents/README.md` L73「00-13」→「00-14」、`AGENTS.md` L73「00-12」→「00-14」；
+④ 4 处「AST 还原 / AST 注入还原」→「源码树只读」——**历史变更日志条目按原样保留，
+不改写历史**（`AGENTS.md` L242 的 2026-09-15「00-12」条目即属历史记录）。
+
+**V 验收**：`grep -n "/media/pc/data" docs/14-xmnn-int4-layers-report.md` **零命中**；
+`grep -rn "AST 还原\|AST 注入还原" AGENTS.md .agents/README.md` **零命中**（仅历史条目
+保留原表述）；`pytest tests -q` **264 passed / 7 skipped / 0 failed**（纯文档改动零回归）。
+
+提交 `docs(client)` = `__COMMIT__`。
+
 ### 2026-09-21 · `fix:` 对照基准改取 vendor pin——修正 test_compose_merge 的假失败（C32）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C）——闭环 C31 验收中记录的
