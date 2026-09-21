@@ -57,6 +57,8 @@
 （同镜像 ID、零额外存储）后 LABEL 形态与 `.env` 一致。**未做**：端到端
 `invoke xmnnrt.up --skip-build` 重建容器复核（当时栈在运行，避免中断）。
 
+提交 `feat(client)` = `8ffd3a0f1`。
+
 ### 2026-09-21 · `fix:` 补上「声明形态 vs 镜像实物」的跨层校验（C27）
 
 **关联七概念场景**：场景2「问题解决」——用户质疑前一轮给出的两个「坑」，
@@ -111,10 +113,12 @@ cpu 镜像（`.env` 声明 cu130）。构建期守卫第 10 项比的是「镜�
   2 skipped**（较前基线 +5，零回归）。
 
 **后续（同日已补）**：镜像形态感知 tag 已由 **C28** 落地（`localhost/xmnn-runtime:<形态>`
-+ `:latest` 别名，见上方条目）——本条的 up 侧校验自此退为**兜底**，专管身份被
-用户接管的场景；共享键 `TORCH_FLAVOR` 仍按本条决策保持 C15 不动（若未来两栈需
-分叉，走「栈专属覆盖键优先、回落共享键」的受控扩展，嵌套插值
++ `:latest` 别名，见上方条目 `8ffd3a0f1`）——本条的 up 侧校验自此退为**兜底**，
+专管身份被用户接管的场景；共享键 `TORCH_FLAVOR` 仍按本条决策保持 C15 不动
+（若未来两栈需分叉，走「栈专属覆盖键优先、回落共享键」的受控扩展，嵌套插值
 `${XMNNRT_TORCH_FLAVOR:-${TORCH_FLAVOR:-cpu}}` 已实测可行）。
+
+提交 `fix(client)` = `833828321`。
 
 ### 2026-09-20 · `feat:` xmnnrt 支持 GPU——`up --gpu` 设备透传 + `build --torch cpu|cu130`（C26）
 
@@ -181,6 +185,7 @@ compose 段补 `${TORCH_FLAVOR:-cpu}`（与 `spec.torch_default` 同键同默认
   [docs/13-xmnn-runtime-overlay.md](../docs/13-xmnn-runtime-overlay.md)、
   [.env.example](../.env.example)（两栈共用键的默认值差异警示）、
   overlay `.env.example`、[AGENTS.md](../AGENTS.md) C26 条款。
+  提交 `feat(client)` = `9b6b0610f`。
 
 ### 2026-09-20 · `fix:` cu130 形态补齐 CUDA 编译器工具链——容器内 `nvcc` 从 not found 到可编译（C25）
 
