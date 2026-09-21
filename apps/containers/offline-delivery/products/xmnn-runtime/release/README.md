@@ -28,6 +28,11 @@ SSH），通过随包控制脚本一键管理。
 
 > 交付过程**不需要安装 Python**；Windows 上的 PowerShell 仅用于随包脚本。
 
+> **关于"派生构建"**：`load` 会在你的电脑上把随包载荷（XMNN 本体，一个 wheel
+> 文件）装进底座镜像，因此容器运行时需要具备 **build（构建镜像）能力**——Podman
+> 与 Docker 默认自带，无需额外安装；这一步额外占用约 **1-3 分钟**与约 **0.2 GB**
+> 磁盘（底座归档与 wheel 文件本身另占空间）。整个过程仍然**完全离线**。
+
 ### 开始前，你需要准备三样东西
 
 1. **播放器（Podman 或 Docker，二选一）**
@@ -40,8 +45,8 @@ SSH），通过随包控制脚本一键管理。
 ## 2. 五分钟上手
 
 > **执行位置**：以下命令均在**交付包根目录**（本 README 所在目录）执行；
-> 判别标志——该目录含 `xmnnctl.ps1` 与 `artifacts/`（`workspace/` 首次 `up`
-> 时自动创建，刚解压时可能还没有）。
+> 判别标志——该目录含 `xmnnctl.ps1`、`artifacts/` 与 `payload/`（`workspace/`
+> 首次 `up` 时自动创建，刚解压时可能还没有）。
 > **SpecWeave 开发仓库**内厂商侧入口是 `apps/containers/offline-delivery` 的
 > `bin/relpack`（负责暂存 wheel、构建镜像、打包与冒烟）；
 > 在 `release/` 目录内仍按客户方式执行 `./xmnnctl <命令>`。
@@ -61,7 +66,7 @@ SSH），通过随包控制脚本一键管理。
 # 如提示执行策略被拦截：
 # pwsh -ExecutionPolicy Bypass -File .\xmnnctl.ps1 <命令>
 .\xmnnctl.ps1 init      # 生成 .env，自动创建登录密码与 Jupyter Token（请保存输出）
-.\xmnnctl.ps1 load      # 校验并导入随包镜像（约需 1-3 分钟），自动运行交付守卫
+.\xmnnctl.ps1 load      # 导入底座镜像并把随包载荷装进去（约 1-6 分钟），构建内自动跑 10 项守卫
 .\xmnnctl.ps1 up        # 启动服务，就绪后自动打印访问地址
 ```
 
@@ -70,7 +75,7 @@ SSH），通过随包控制脚本一键管理。
 ```bash
 chmod +x xmnnctl        # 仅首次需要：赋予脚本可执行权限（执行一次即可）
 ./xmnnctl init          # 生成 .env 与随机凭证（请保存输出）
-./xmnnctl load          # 校验并导入随包镜像，自动运行交付守卫
+./xmnnctl load          # 导入底座镜像并装入随包载荷，构建内自动跑 10 项守卫
 ./xmnnctl up            # 启动服务，就绪后打印访问地址
 ```
 
@@ -79,7 +84,7 @@ chmod +x xmnnctl        # 仅首次需要：赋予脚本可执行权限（执行
 | 命令 | 预期输出与耗时（看到这些就是成功） |
 |---|---|
 | `init` | 绿字 `[ OK ] 初始化完成`，紧接着打印 **SSH 登录密码（16 位）** 和 **Jupyter Token（32 位）**——立即复制保存。重复执行只提示"已存在，跳过初始化"，不会覆盖 |
-| `load` | 先出现绿字"完整性校验通过"，然后显示镜像导入进度条；约 **1-5 分钟**（镜像约 1.2 GB，硬盘持续读写是正常现象）；完成后自动运行 10 项交付守卫并列出检查结果 |
+| `load` | 分两段，都会逐条打印进度：① 绿字"完整性校验通过：底座归档"→ 底座导入进度条（约 1.2 GB，约 **1-5 分钟**，硬盘持续读写是正常现象）；② 绿字"完整性校验通过：载荷 wheel"→"派生构建载荷镜像"（约 **1-3 分钟**，日志末尾逐项列出 **10 项守卫结果**）。最后绿字"载荷已装入 localhost/xmnn-runtime:<版本>"即成功。**任一步失败都会红字中止且不产出镜像，可直接重跑**（已导入的部分会自动跳过） |
 | `up` | 自动创建 `workspace` 文件夹并在后台启动；提示"等待 Jupyter 就绪（冷启动约需 1-3 分钟）"；**最后打印一个 `====` 横线包围的方框**，里面写着访问地址，即代表成功 |
 | 任意命令 | 蓝底 `[xmnn]` 是进度，绿色 `[ OK ]` 是成功，黄色 `[WARN]` 是提醒，红色 `[ERR ]` 才是出错 |
 
@@ -107,15 +112,46 @@ chmod +x xmnnctl        # 仅首次需要：赋予脚本可执行权限（执行
 | 操作 | Windows | Linux / macOS |
 |---|---|---|
 | 初始化配置与凭证 | `.\xmnnctl.ps1 init` | `./xmnnctl init` |
-| 导入镜像 | `.\xmnnctl.ps1 load` | `./xmnnctl load` |
+| 导入底座并装入载荷 | `.\xmnnctl.ps1 load` | `./xmnnctl load` |
 | 启动 | `.\xmnnctl.ps1 up` | `./xmnnctl up` |
 | 停止（保留工作区与凭证） | `.\xmnnctl.ps1 down` | `./xmnnctl down` |
 | 查看状态 | `.\xmnnctl.ps1 ps` | `./xmnnctl ps` |
 | 查看日志 | `.\xmnnctl.ps1 logs` | `./xmnnctl logs` |
 | 运行 10 项运行时守卫 | `.\xmnnctl.ps1 smoke` | `./xmnnctl smoke` |
-| 查看版本与镜像摘要 | `.\xmnnctl.ps1 version` | `./xmnnctl version` |
+| 查看交付版本与底座/载荷摘要 | `.\xmnnctl.ps1 version` | `./xmnnctl version` |
 
 重新生成凭证：`init --force`（需随后 `down` 再 `up` 生效）。
+
+### `load` 到底做了什么（一个命令，四步，可反复执行）
+
+1. **预检**：确认容器运行时后台（Podman Machine / Docker Desktop）已启动；
+2. **读清单**：核对 `artifacts/release.json` 与 `.env` 的 `XMNN_VERSION`，两者
+   不一致会直接拒绝执行并告诉你该填哪个版本；
+3. **底座镜像**：本机若已有与清单完全一致（镜像 Id 相同）的底座，**跳过导入**；
+   否则先校验归档 sha256 再导入，导入后再次比对 Id（防止归档与清单不配套）；
+4. **载荷**：校验 `payload/` 内 wheel 的 sha256 → 离线派生构建，把载荷装进底座，
+   **构建过程内跑 10 项守卫与依赖校验**——任一不过即中止且不产出镜像。
+
+派生出的镜像 tag 就是 `.env` 里的版本号（`localhost/xmnn-runtime:<版本>`），
+`up` 启动、`smoke` 体检用的都是它。整个流程**幂等**：中断或失败后重新执行
+`load` 即可，已经完成的步骤会自动跳过，不会重复解压 1.1 GB 归档。
+
+### 更新交付（只换载荷 wheel）
+
+交付方只升级 XMNN 载荷（底座镜像不变）时，**不需要重新传 1.1 GB 的底座归档**：
+
+1. 用新 wheel 替换 `payload\` 目录内的旧文件——目录内**同时只应有一个**
+   `xmnn-<版本>-cp314-cp314-linux_x86_64.whl`（旧的要删掉，避免误装）；
+2. 记事本打开 `.env`，把 `XMNN_VERSION=` 改成交付方给的新版本号
+   （`load` 会与交付清单核对，不一致直接报错并提示正确值）；
+3. 执行 `.\xmnnctl.ps1 load`（Linux/macOS：`./xmnnctl load`）——脚本发现本机
+   底座与清单 Id 一致，**跳过归档导入**，只做载荷校验与派生构建（约 1-3 分钟）；
+4. 执行 `up` 重启服务，即以新载荷的镜像重建容器；`workspace\` 内文件与
+   凭证都不受影响。
+
+> 若交付方同时更新了底座（`artifacts\` 内的归档也会换成新版），把新版
+> `artifacts\` 与 `payload\` 一起替换后再执行 `load` 即可——脚本检测到底座
+> Id 变化时会自动导入新归档。
 
 ### 选择容器运行时（Podman / Docker）
 
@@ -150,23 +186,26 @@ chmod +x xmnnctl        # 仅首次需要：赋予脚本可执行权限（执行
 |---|---|
 | `workspace/` | 持久工作区，映射到容器内 `/workspace`；笔记本、模型输入输出请放此处，`down` 不删除 |
 | `.env` | 配置与凭证（版本、端口、密码、Token）；请妥善保管，勿随日志外发 |
-| `artifacts/` | 随包镜像 `xmnn-runtime-<版本>.tar.gz` 与清单 `release.json` |
+| `artifacts/` | 底座镜像归档 `xmnn-runtime-base-<形态>.tar.gz` 与交付清单 `release.json` |
+| `payload/` | 载荷 wheel（XMNN 本体，`xmnn-<版本>-cp314-cp314-linux_x86_64.whl`）与派生构建用的 `Dockerfile`；**请勿改动或删除 Dockerfile** |
 
 ## 5. 完整性校验
 
-镜像导入前，`load` 会自动比对镜像文件的 **SHA256** 与 `artifacts/release.json`
-中记录的摘要；不一致将拒绝导入（文件可能在拷贝中损坏，请重新获取交付包）。
+`load` 在导入与构建前会分别比对两份大制品的 **SHA256** 与
+`artifacts/release.json` 中记录的摘要：底座归档（`archive.sha256`）与载荷
+wheel（`payload.sha256`）。任一不一致即拒绝继续（文件可能在拷贝中损坏，请
+重新获取交付包）。
 
 如需手工校验：
 
 ```powershell
-# Windows
-(Get-FileHash .\artifacts\xmnn-runtime-*.tar.gz -Algorithm SHA256).Hash.ToLower()
+# Windows（底座归档；载荷 wheel 同理，替换文件名即可）
+(Get-FileHash .\artifacts\xmnn-runtime-base-*.tar.gz -Algorithm SHA256).Hash.ToLower()
 ```
 
 ```bash
 # Linux / macOS
-sha256sum artifacts/xmnn-runtime-*.tar.gz   # 或 shasum -a 256
+sha256sum artifacts/xmnn-runtime-base-*.tar.gz   # 或 shasum -a 256
 ```
 
 ## 6. 离线与网络说明
@@ -182,9 +221,12 @@ sha256sum artifacts/xmnn-runtime-*.tar.gz   # 或 shasum -a 256
 |---|---|
 | 报"术语 'xmnnctl' 不会被识别为 cmdlet" | 当前目录不对：先确认当前目录是否含 `xmnnctl.ps1`，没有就进入含本 README 的交付包根目录再执行；SpecWeave 开发仓库内如需在交付目录外操作，改用 `offline-delivery/bin/relpack`（见 §2 执行位置） |
 | 报 `Cannot connect to Podman` / `unable to connect to Podman socket` | Podman 后台虚拟机未启动：执行 `podman machine start`（或打开 Podman Desktop 等待托盘就绪）后重试原命令；Docker 则启动 Docker Desktop。新版脚本会在导入前直接拦截并给出同样提示 |
-| `load` 提示 sha256 不符 | 镜像文件损坏，重新拷贝/获取交付包后再试 |
+| `load` 提示 sha256 不符（底座归档或载荷 wheel） | 文件在拷贝中损坏：重新拷贝/获取交付包后再试；若 `payload/` 内 wheel 是手工替换的，请向交付方索取完整文件 |
 | 紧连接失败后又提示"导入的镜像中没有/版本不符" | 这是旧版脚本的**误导性次生报错**，真因是后台没连上；先按上一行启动机器并重试，不要改版本号 |
-| `load` 后提示镜像不存在 | 核对 `.env` 中 `XMNN_VERSION` 与 `artifacts/` 内文件名版本是否一致 |
+| `load` 报"版本不一致：.env 的 XMNN_VERSION=… 交付清单 version=…" | 这是**保护性拦截**：交付清单才是权威版本。按报错中的"修法"把 `.env` 的 `XMNN_VERSION` 改成清单里的版本后重试 |
+| `load` 报"派生构建失败" | 构建全程离线，与网络无关。① 先看报错上方是否磁盘空间不足（派生镜像另需约 0.2 GB），清理后重跑 `load`（幂等）；② "载荷声明的依赖未在底座满足"＝构建日志里出现了以 `xmnn` 开头的 `pip check` 冲突行（载荷声明的依赖在底座缺失或版本不符），属**底座与载荷不匹配**（交付方制品问题），把报错原文反馈给对接人员。注：不以 `xmnn` 开头的冲突行（如底座自带 conda 自身的元数据冲突）与本次交付无关，构建会照常继续 |
+| `load` 报"交付包与镜像不匹配…Id 不一致" | `artifacts/` 内的归档与 `release.json` 不是同一批：重新完整获取交付包（两者必须成套） |
+| `load` 后 `up` 仍起不来，报找不到镜像 | 核对 `.env` 的 `XMNN_VERSION` 与 `./xmnnctl version` 打印的"交付版本"是否一致；不一致时先改 `.env` 再 `load` |
 | `up` 后 Jupyter 暂时打不开 | 首次启动约需 1 分钟初始化，脚本会自动等待；超时可用 `logs` 查看进度 |
 | 忘记密码 / Token | 查看 `.env`；或 `init --force` 后 `down`、`up` |
 | 端口被占用（`up` 预检拦截，或报 `bind: address already in use`） | 脚本会指出占用进程并给出处理方式：切换运行时所致 → 先在原运行时 `./xmnnctl -r <另一运行时> down`；其他程序占用或确需并存 → 修改 `.env` 的 `XMNN_SSH_PORT`/`XMNN_JUPYTER_PORT`（并存还需改 `XMNN_CONTAINER_NAME` 并使用独立目录与 `workspace/`）后重新 `up`。手工排查：`ss -ltnp \| grep ':2225'`（Windows：`Get-NetTCPConnection -LocalPort 2225 -State Listen`） |
@@ -208,7 +250,9 @@ sha256sum artifacts/xmnn-runtime-*.tar.gz   # 或 shasum -a 256
 | 终端 / PowerShell | 输入文字命令的窗口；PowerShell 是 Windows 上的终端程序，本包要求 7.0 以上 |
 | 命令 | 粘贴进终端、按回车执行的一句话，例如 `.\xmnnctl.ps1 up` |
 | 容器 | "软件电脑"运行起来后的实例；可以启动（up）、停止（down），停止不影响你的文件 |
-| 镜像 | "软件电脑"的模板；`load` 就是把模板从交付包导入 Podman/Docker |
+| 镜像 | "软件电脑"的模板；`load` 先把**底座模板**（不含 XMNN 的空壳）导入 Podman/Docker，再把**载荷**装进去 |
+| 底座 / 载荷 | 底座＝只有系统与依赖的"空壳模板"（约 1.2 GB 归档）；载荷＝XMNN 本体（一个约 177 MB 的 wheel 文件）。两者合成后才是能用的"软件电脑" |
+| 派生镜像 | 底座装好载荷后生成的镜像，名字就是 `.env` 里的版本号（`localhost/xmnn-runtime:<版本>`）；`up` 启动与 `smoke` 体检用的都是它 |
 | `.env` | 一个普通文本配置文件，存着版本、端口、登录密码和 Token，记事本即可打开 |
 | `workspace` 文件夹 | 交付包里的普通文件夹，等同于容器内的 `/workspace`；笔记本和数据请放这里，`down` 不删除 |
 | localhost 与端口（8893） | localhost 指"你自己这台电脑"，8893 是门牌号；浏览器访问 `localhost:8893` 即访问本机上的该服务 |
@@ -218,7 +262,7 @@ sha256sum artifacts/xmnn-runtime-*.tar.gz   # 或 shasum -a 256
 ### 9.2 高频问题
 
 - **出现红字/黄字是不是失败了？** 黄字 `[WARN]` 是提醒（如"请保存凭证"），可继续；只有红字 `[ERR ]` 且命令提前结束才是失败，对照 §7 排障表处理。
-- **`load` 卡住、进度条几分钟不动？** 镜像约 1.2 GB，1-5 分钟正常，期间勿关终端；超过 10 分钟毫无变化再截图询问对接人员。
+- **`load` 卡住、进度条几分钟不动？** 分两段：底座导入约 1.2 GB，1-5 分钟正常；随后"派生构建载荷镜像"约 1-3 分钟（这一步没有进度条，只在结束时出现构建日志）。期间勿关终端；超过 10 分钟毫无变化再截图询问对接人员。
 - **命令跑完后能关终端窗口吗？** 可以。服务在后台运行，关窗口不受影响；下次操作时重新在该文件夹打开终端即可。
 - **电脑关机/重启后还要重做哪几步？** 先启动 Podman Machine 或 Docker Desktop，在交付包目录执行 `up` 一条命令即可；**不需要**重新 `init` 或 `load`（除非你删掉了导入的镜像）。
 - **浏览器打不开 http://localhost:8893？** 先执行 `ps`，看到容器状态为 `Up`；首次启动请等待 1-3 分钟；仍打不开按 §7 用 `logs` 查看进度。

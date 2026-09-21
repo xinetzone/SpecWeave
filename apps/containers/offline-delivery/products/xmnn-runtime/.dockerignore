@@ -1,7 +1,8 @@
-# xmnn-runtime 产品镜像构建上下文卫生
-# 注意：wheels/ 【不】忽略——xmnn-*.whl 是本镜像构建的必需输入
-# （由 bin/relpack stage 从 apps/containers/workspace/dist 暂存；whl 不入 git
-# 由 wheels/.gitignore 负责，与 docker 上下文无关）。
+# xmnn-runtime 底座镜像构建上下文卫生
+# 底座镜像的构建输入只有四类：Containerfile.xmnn-runtime / deps.txt /
+# scripts/ / smoke/。wheels/ 已废止（2026-09-21）：底座不消费任何 whl，
+# 载荷（xmnn wheel）由交付侧派生时以 `pip install --no-index --no-deps` 装入。
+# 其余目录（release/ 等）不参与任何 COPY 指令。
 
 # Python 字节码缓存（嵌套目录必须用 **/ 前缀，单段只锚定上下文根）。
 **/__pycache__/

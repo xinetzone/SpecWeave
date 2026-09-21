@@ -9,6 +9,12 @@ Podman+Docker 双兼容"契约：
   - 双端控制脚本命令同构，凭证生成加密学安全、字符集仅字母数字；
   - 骨架内 shebang 脚本全 LF（内核先按字节解析 shebang，`bash\\r` 无法启动）。
 
+底座/载荷分离（2026-09-21）后的追加守卫：载荷暂存区由 `products/<产品>/wheels/`
+迁至 `release/payload/`（其内 `Dockerfile` 负责客户机派生装入、构建期跑 root +
+devuser 双身份载荷守卫与 `pip check`，且不得覆盖底座 `ENTRYPOINT`/`CMD`）；
+`release.json` 升 schema v2（`payload` 与 `archive` 两块**都含 `sha256`**），两端
+控制脚本一律按块定向取值，旧「全局第一个 sha256」与旧兜底 glob 不得回归。
+
 迁移自 `apps/containers/client/tests/test_release_bundle.py`（该文件随 Task 6 删除），
 三类处置逐条对照：
   - **保留**：骨架跟踪文件清单、compose 主契约与零仓库知识、podman override 三必需、
@@ -37,6 +43,9 @@ import pytest
 TRACKED = [
     "README.md", "compose.yaml", "compose.podman.yaml", ".env.example",
     "xmnnctl", "xmnnctl.ps1", "artifacts/.gitignore", "workspace/.gitkeep",
+    # 底座/载荷分离（2026-09-21）：载荷 whl 随交付包放在 payload/，由其内
+    # Dockerfile 在客户机派生装入底座；.keep 保留空目录、.gitignore 忽略 whl。
+    "payload/Dockerfile", "payload/.gitignore", "payload/.keep",
 ]
 
 
@@ -131,6 +140,120 @@ def test_release_has_no_python_files(release_dir):
         if p.relative_to(release_dir).parts[0] not in ("artifacts", "workspace")
     ]
     assert pys == [], f"客户目录不应包含 Python 文件：{pys}"
+
+
+def test_payload_dir_replaces_wheels_dir(product_dir, release_dir):
+    """载荷暂存区迁移：`products/<产品>/wheels/` 删除 → `release/payload/` 新增。
+
+    重构前 CLI 把产品 wheel 暂存到产品目录下的 `wheels/` 并让底座构建上下文
+    消费它；重构后底座镜像**不含载荷**，载荷改为随交付包放在 `release/payload/`，
+    由客户机 `xmnnctl load` 经派生构建装入。
+    """
+    assert not (product_dir / "wheels").exists(), "wheels/ 已随底座/载荷分离删除"
+    payload = release_dir / "payload"
+    assert payload.is_dir()
+    gi = (payload / ".gitignore").read_text(encoding="utf-8")
+    assert "*.whl" in gi and "!.gitignore" in gi
+    assert (payload / ".keep").is_file()
+
+
+# ── payload/Dockerfile：客户机派生构建契约 ──────────────────────────────────
+#
+# 底座镜像 `localhost/xmnn-runtime:base-<形态>` 只含依赖面 + torch + 守卫脚本，
+# 载荷（xmnn wheel）由 `xmnnctl load` 以本文件为入口在客户机派生装入，产出
+# `localhost/xmnn-runtime:<交付版本>`（与 compose 的 ${XMNN_VERSION} 逐字一致）。
+
+
+def test_payload_dockerfile_derivation_contract(release_dir):
+    text = (release_dir / "payload" / "Dockerfile").read_text(encoding="utf-8")
+    assert "FROM ${BASE_IMAGE}" in text, "派生镜像必须基于随交付包下发的底座 ref"
+    assert "COPY xmnn-*.whl /tmp/payload/" in text
+    # ① 完全离线：禁网 + 跳过依赖解析（依赖面已由底座铺满，缺失即底座漏项）
+    assert "--no-index" in text and "--no-deps" in text
+    # ② 载荷守卫 root + devuser 双身份各跑一次（任一失败即构建失败）
+    assert "/opt/xmnnrt-smoke/_runtime_smoke.py" in text
+    assert text.count("_runtime_smoke.py") == 2, "守卫须 root 与 devuser 各跑一次"
+    assert "su -s /bin/bash devuser" in text
+    # ③ 依赖区间校验：pip check 全量打印，仅 xmnn 相关冲突判交付失败
+    assert "-m pip check" in text
+    assert 'grep -Eq "^xmnn[[:space:]]"' in text
+    # ④ LABEL 载荷版本（派生镜像可溯源）
+    assert 'org.specweave.payload-version="${PAYLOAD_VERSION}"' in text
+
+
+def test_payload_dockerfile_keeps_base_entrypoint(release_dir):
+    """派生只是「加一层载荷」：不得出现 ENTRYPOINT/CMD 指令行（服务契约沿用底座）。"""
+    text = (release_dir / "payload" / "Dockerfile").read_text(encoding="utf-8")
+    assert not re.search(r"(?m)^\s*(ENTRYPOINT|CMD)\s", text), \
+        "派生构建不得覆盖 ENTRYPOINT/CMD（tini -> entrypoint.sh -> supervisord）"
+
+
+# ── xmnnctl / xmnnctl.ps1：schema v2 清单按块取值 + 底座导入 + 载荷派生 ──────
+#
+# ⚠️ schema v2 的 `payload` 与 `archive` 两块**都含 `"sha256"`**：抓「全局第一个
+# sha256」的旧写法会把载荷摘要当成 1.1 GB 底座归档的摘要去校验，必然误报
+# 「完整性校验失败」。故两端一律按块定向取值，且旧兜底 glob 不得回归。
+
+
+def test_ctl_manifest_read_is_block_scoped(release_dir):
+    bash = (release_dir / "xmnnctl").read_text(encoding="utf-8")
+    pwsh = (release_dir / "xmnnctl.ps1").read_text(encoding="utf-8")
+    # bash：awk 按块定向取值；顶层字段复用同一 helper（不另立抓取逻辑）
+    assert "manifest_block_field() {" in bash
+    assert 'manifest_version_field() { manifest_block_field "-" version; }' in bash
+    for call in ('manifest_block_field payload sha256', 'manifest_block_field archive sha256',
+                 'manifest_block_field image id', 'manifest_block_field "-" schema_version'):
+        assert call in bash, call
+    # pwsh：结构化 JSON 解析（ConvertFrom-Json）+ 同名块键
+    assert "ConvertFrom-Json" in pwsh
+    assert 'Get-ManifestVersion { return (Get-ManifestField "" "version") }' in pwsh
+    for call in ('Get-ManifestField "payload" "sha256"', 'Get-ManifestField "archive" "sha256"',
+                 'Get-ManifestField "image" "id"', 'Get-ManifestField "" "schema_version"'):
+        assert call in pwsh, call
+
+
+@pytest.mark.parametrize("script", ["xmnnctl", "xmnnctl.ps1"])
+def test_ctl_scripts_have_no_legacy_archive_lookup(release_dir, script):
+    """旧「全局第一个 sha256」与旧兜底 glob 已废除，不得回归。"""
+    text = (release_dir / script).read_text(encoding="utf-8")
+    assert """grep -o '"sha256"'""" not in text, "全局第一个 sha256 写法已废除"
+    assert "xmnn-runtime-*.tar.gz" not in text, "旧兜底 glob 已废除（归档按清单文件名取）"
+    assert "xmnn-runtime-$ver.tar.gz" not in text, "旧按交付版本猜归档名已废除"
+
+
+def test_ctl_load_imports_base_and_derives_payload(release_dir):
+    bash = (release_dir / "xmnnctl").read_text(encoding="utf-8")
+    # 清单必须成套：缺 release.json 即 fail-fast
+    assert "交付包不完整：缺 artifacts/release.json" in bash
+    # 版本自检：.env 的 XMNN_VERSION 必须与清单 version 一致
+    assert "版本不一致：.env 的 XMNN_VERSION=" in bash
+    # 底座导入幂等：先比镜像 Id，命中即跳过 1.1 GB 归档导入
+    assert "image_id_matches() {" in bash
+    assert 'if image_id_matches "$base_ref" "$base_id"; then' in bash
+    # 底座归档与载荷 wheel 各按**自己那块**的 sha256 校验
+    assert 'verify_sha256 "artifacts/$archive_file" "$archive_sha" "底座归档"' in bash
+    assert 'verify_sha256 "payload/$payload_file" "$payload_sha" "载荷 wheel"' in bash
+    # 派生构建：上下文 payload/、-f payload/Dockerfile、底座与版本经 --build-arg 下发
+    assert '"$RT" build -f payload/Dockerfile' in bash
+    assert '--build-arg "BASE_IMAGE=$base_ref"' in bash
+    assert '--build-arg "PAYLOAD_VERSION=$ver"' in bash
+    assert '-t "$img_ref" payload' in bash
+    assert 'img_ref="localhost/xmnn-runtime:$ver"' in bash
+
+
+def test_ctl_scripts_load_branch_parity(release_dir):
+    """两端关键分支对等（命名风格各异，语义同一组）。"""
+    bash = (release_dir / "xmnnctl").read_text(encoding="utf-8")
+    pwsh = (release_dir / "xmnnctl.ps1").read_text(encoding="utf-8")
+    assert "manifest_block_field" in bash and "Get-ManifestField" in pwsh
+    assert "verify_sha256" in bash and "Verify-Sha256" in pwsh
+    assert "image_id_matches" in bash and "Test-ImageIdMatches" in pwsh
+    for text in (bash, pwsh):
+        assert "版本不一致：.env 的 XMNN_VERSION=" in text
+        assert "payload/Dockerfile" in text
+        assert "artifacts/release.json" in text
+        assert "BASE_IMAGE=" in text and "PAYLOAD_VERSION=" in text
+        assert "payload/" in text
 
 
 # ── compose.yaml：零仓库知识 + 主契约 ───────────────────────────────────────

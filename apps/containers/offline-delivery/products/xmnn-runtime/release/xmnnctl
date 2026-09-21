@@ -6,15 +6,15 @@
 #   --runtime/-r  选择容器运行时（可放在命令前或后；默认 auto：先探测
 #                 podman 再 docker；命令行优先级高于环境变量 XMNN_RUNTIME）
 #   init     创建 .env 并自动生成登录密码与 Jupyter token
-#   load     校验并导入 artifacts/ 内随包镜像 tar.gz，随后自动运行守卫
+#   load     导入底座镜像 + 把 payload/ 内载荷派生装入底座（均幂等；
+#            派生构建内已含 10 项守卫，失败即不产出镜像）
 #   up       启动服务（先预检宿主端口占用，跨运行时冲突 fail-fast；
 #            缺 .env 时自动 init），就绪后打印访问信息
 #   down     停止并删除容器（workspace 与 SSH host key 卷保留）
 #   ps       查看服务状态
 #   logs     查看服务日志（Ctrl+C 退出，不影响容器运行）
-#   smoke    运行 10 项运行时守卫
-#   version  显示版本与交付清单信息
-#
+#   smoke    运行 10 项运行时守卫（随时复核派生镜像）
+#   version  显示交付版本、底座与载荷摘要
 # 环境变量: XMNN_RUNTIME=podman|docker|auto 选择容器运行时（被 --runtime 覆盖）
 # ==============================================================================
 set -euo pipefail
@@ -179,44 +179,115 @@ do_init() {
     c_warn "请妥善保存凭证；不要将容器日志直接外发（日志可能含凭证）"
 }
 
-# ── 交付制品定位与完整性校验 ────────────────────────────────────────────────
+# ── 交付清单解析与完整性校验（release.json schema v2）────────────────────────
+#
+# ⚠️ schema v2 的 payload 与 archive 两个块**都含 "sha256" 键**：抓「全局第一个
+# sha256」的旧写法必然张冠李戴（把底座归档摘要当成载荷摘要），故一律按块定向
+# 取值。只用 POSIX 自带工具（awk/grep/sed），不引入 jq 等外部依赖。
 
-find_archive() {
-    local ver archive
-    ver="$(env_value XMNN_VERSION)"
-    archive=""
-    if [ -f artifacts/release.json ]; then
-        local f
-        f="$(grep -A6 '"archive"' artifacts/release.json \
-             | grep -o '"file"[[:space:]]*:[[:space:]]*"[^"]*"' | head -n 1 \
-             | sed 's/.*"file"[[:space:]]*:[[:space:]]*"//;s/"$//' || true)"
-        [ -n "$f" ] && [ -f "artifacts/$f" ] && archive="artifacts/$f"
-    fi
-    if [ -z "$archive" ] && [ -n "$ver" ] && [ -f "artifacts/xmnn-runtime-$ver.tar.gz" ]; then
-        archive="artifacts/xmnn-runtime-$ver.tar.gz"
-    fi
-    if [ -z "$archive" ]; then
-        archive="$(ls -t artifacts/xmnn-runtime-*.tar.gz 2>/dev/null | head -n 1 || true)"
-    fi
-    printf '%s' "$archive"
+# manifest_block_field <块名> <键名> → 打印字段值；块/键缺失时无输出且返回 1。
+#   块名传 "-"（或空）表示顶层字段（如 "version"）；顶层的取值只在最外层对象
+#   的直接子键上匹配，绝不会误取同名的嵌套键（如 payload.version）。
+manifest_block_field() {
+    local block="$1" key="$2"
+    [ -f artifacts/release.json ] || return 1
+    awk -v want_block="$block" -v want_key="$key" '
+        { text = text $0 "\n" }
+        END {
+            n = length(text)
+            seg = text
+            # 顶层：键位于最外层对象内（深度 1）；块内：剥掉块的括号后深度 0
+            wdepth = 1
+            if (want_block != "" && want_block != "-") {
+                bs = index(text, "\"" want_block "\"")
+                if (bs == 0) exit 1
+                ob = 0
+                for (p = bs; p <= n; p++) {
+                    if (substr(text, p, 1) == "{") { ob = p; break }
+                }
+                if (ob == 0) exit 1
+                depth = 1
+                q = ob + 1
+                while (q <= n && depth > 0) {
+                    c = substr(text, q, 1)
+                    if (c == "{") depth++
+                    else if (c == "}") depth--
+                    q++
+                }
+                if (depth != 0) exit 1
+                seg = substr(text, ob + 1, q - ob - 2)
+                wdepth = 0
+            }
+            m = length(seg)
+            depth = 0
+            i = 1
+            while (i <= m) {
+                c = substr(seg, i, 1)
+                if (c == "{") { depth++; i++; continue }
+                if (c == "}") { depth--; i++; continue }
+                if (c != "\"") { i++; continue }
+                j = i + 1
+                while (j <= m && substr(seg, j, 1) != "\"") j++
+                if (j > m) exit 1
+                str = substr(seg, i + 1, j - i - 1)
+                # 字符串后紧跟 ":" 才是键；字符集阈值外的逗号/花括号都是值
+                k = j + 1
+                while (k <= m && substr(seg, k, 1) ~ /[[:space:]]/) k++
+                if (substr(seg, k, 1) != ":") { i = j + 1; continue }
+                k++
+                while (k <= m && substr(seg, k, 1) ~ /[[:space:]]/) k++
+                if (depth == wdepth && str == want_key) {
+                    if (substr(seg, k, 1) == "\"") {
+                        e = k + 1
+                        while (e <= m && substr(seg, e, 1) != "\"") e++
+                        print substr(seg, k + 1, e - k - 1)
+                        exit 0
+                    }
+                    e = k
+                    while (e <= m && substr(seg, e, 1) !~ /[,[:space:]}]/) e++
+                    v = substr(seg, k, e - k)
+                    gsub(/^[[:space:]]+|[[:space:]]+$/, "", v)
+                    print v
+                    exit 0
+                }
+                i = j + 1
+            }
+            exit 1
+        }
+    ' artifacts/release.json
 }
 
-verify_archive() {
-    local archive="$1" expected actual
-    [ -f artifacts/release.json ] || return 0
-    expected="$(grep -o '"sha256"[[:space:]]*:[[:space:]]*"[0-9a-f]*"' artifacts/release.json \
-                | head -n 1 | sed 's/.*"\([0-9a-f]\{64\}\)"/\1/')"
-    [ -n "$expected" ] || return 0
+# 交付版本（顶层 version，即载荷版本；派生镜像 tag = .env 的 XMNN_VERSION 须与之一致）
+manifest_version_field() { manifest_block_field "-" version; }
+
+# shasum 优先级：GNU coreutils → Perl shasum（macOS/BSD）→ 空（调用方降级为告警）
+sha256_of() {
+    local out=""
     if command -v sha256sum >/dev/null 2>&1; then
-        actual="$(sha256sum "$archive" | cut -d' ' -f1)"
+        out="$(sha256sum "$1" | cut -d' ' -f1)"
     elif command -v shasum >/dev/null 2>&1; then
-        actual="$(shasum -a 256 "$archive" | cut -d' ' -f1)"
-    else
-        c_warn "未找到 sha256sum/shasum，跳过完整性校验"
+        out="$(shasum -a 256 "$1" | cut -d' ' -f1)"
+    fi
+    printf '%s' "$out" | tr 'A-Z' 'a-z'
+}
+
+# verify_sha256 <文件> <期望 sha256> <中文名>
+# 期望值为空（清单未记录）或无 sha256 工具时降级为告警；不一致即 die。
+verify_sha256() {
+    local actual expected
+    expected="$(printf '%s' "${2:-}" | tr 'A-Z' 'a-z')"
+    if [ -z "$expected" ]; then
+        c_warn "$3：清单未记录 sha256，跳过完整性校验"
         return 0
     fi
-    [ "$actual" = "$expected" ] || die "完整性校验失败：$archive 的 sha256 与 release.json 不符（文件可能已损坏）"
-    c_ok "完整性校验通过（sha256 一致）"
+    actual="$(sha256_of "$1")"
+    if [ -z "$actual" ]; then
+        c_warn "未找到 sha256sum/shasum，跳过 $3 完整性校验"
+        return 0
+    fi
+    [ "$actual" = "$expected" ] \
+        || die "完整性校验失败：$3 的 sha256 与交付清单不符，文件可能在拷贝中损坏（请重新获取交付包）：$1"
+    c_ok "完整性校验通过：$3（sha256 一致）"
 }
 
 # 守护进程可达性预检：CLI 已安装（detect_runtime 只查 PATH）不等于后台
@@ -232,30 +303,97 @@ assert_runtime_alive() {
     }
 }
 
+# 镜像 Id 读取（容器运行时不可用/镜像不存在时为空）；podman 与 docker 的 Id
+# 前缀不一致（一方带 sha256:），比对前统一剥前缀。
+image_id_of() {
+    "$RT" image inspect --format '{{.Id}}' "$1" 2>/dev/null | head -n 1 | tr -d '\r' || true
+}
+
+# image_id_matches <镜像 ref> <清单记录的 Id>：本机镜像与交付清单同源时返回 0
+image_id_matches() {
+    local actual want
+    actual="$(image_id_of "$1")"
+    [ -n "$actual" ] || return 1
+    actual="${actual#sha256:}"
+    want="${2#sha256:}"
+    [ -n "$want" ] || return 1
+    [ "$actual" = "$want" ]
+}
+
+# ── load：导入底座 + 派生载荷（复合流程，幂等）───────────────────────────────
+#
+# 交付包只随带两份大制品：底座归档（约 1.1 GB，artifacts/）与载荷 wheel
+# （约 177 MB，payload/）。load 的语义是：
+#   ① 运行时存活预检 → ② 读 artifacts/release.json 并自检版本一致
+#   ③ 底座：本机已有同 Id 镜像则跳过导入，否则校验 sha256 后 load 并复核 Id
+#   ④ 载荷：校验 payload/ 内 wheel 的 sha256
+#   ⑤ 派生构建：把载荷装入底座（构建内已含守卫与 pip check，失败即不产出 tag）
+# 只换载荷的更新交付不必重传 1.1 GB 归档（③ 命中跳过）。
 do_load() {
-    mkdir -p artifacts
     assert_runtime_alive
-    local archive ver
-    archive="$(find_archive)"
-    [ -n "$archive" ] && [ -f "$archive" ] || die "artifacts/ 下未找到 xmnn-runtime-*.tar.gz，请确认交付包已完整解压"
-    verify_archive "$archive"
-    c_info "导入镜像：$archive"
-    "$RT" load -i "$archive" || die "镜像导入失败：请查看上方 $RT 的原始报错（常见原因：磁盘空间不足）；处理后重新执行 load 即可，导入过程幂等"
+    [ -f artifacts/release.json ] \
+        || die "交付包不完整：缺 artifacts/release.json（请确认交付包已完整解压）"
+    local schema mver ver base_ref base_id archive_file archive_sha payload_file payload_sha img_ref
+    schema="$(manifest_block_field "-" schema_version || true)"
+    if [ -n "$schema" ] && [ "$schema" != "2" ]; then
+        die "交付清单版本不受支持：artifacts/release.json 的 schema_version=$schema（本脚本需要 2）
+  说明：旧清单没有独立载荷信息，无法派生构建；请使用与交付包成套的新版 xmnnctl 重试"
+    fi
+    mver="$(manifest_version_field || true)"
+    base_ref="$(manifest_block_field image ref || true)"
+    base_id="$(manifest_block_field image id || true)"
+    archive_file="$(manifest_block_field archive file || true)"
+    archive_sha="$(manifest_block_field archive sha256 || true)"
+    payload_file="$(manifest_block_field payload file || true)"
+    payload_sha="$(manifest_block_field payload sha256 || true)"
+    [ -n "$mver" ] && [ -n "$base_ref" ] && [ -n "$base_id" ] \
+        && [ -n "$archive_file" ] && [ -n "$payload_file" ] \
+        || die "交付包不完整：artifacts/release.json 缺少必需字段（version / image.ref / image.id / archive.file / payload.file）
+  处理方式：重新获取完整交付包（清单与制品必须成套），或联系交付方核对"
     ver="$(env_value XMNN_VERSION)"
-    [ -n "$ver" ] || die ".env 缺少 XMNN_VERSION"
-    # 镜像 tar 由 podman save 产出：打包机 podman tag 时裸名已归一化，归档内
-    # RepoTag 固定为 localhost/xmnn-runtime:<ver>；docker load 原样保留该名，
-    # 故双运行时统一引用 localhost/ 全称（裸名在 docker 下会按 docker.io 远程镜像解析）。
-    # load 返回后镜像索引偶发瞬时未就绪，重试 5 次（间隔 2s）。
-    local img_ref="localhost/xmnn-runtime:$ver" i
-    for i in 1 2 3 4 5; do
-        "$RT" image inspect "$img_ref" >/dev/null 2>&1 && break
-        [ "$i" = 5 ] && die "导入的镜像中没有 $img_ref；请核对 .env 的 XMNN_VERSION 与交付包版本"
-        sleep 2
-    done
-    c_ok "镜像 $img_ref 已就绪"
-    c_info "执行交付守卫（10 项）"
-    do_smoke || die "交付守卫失败，请联系交付方"
+    [ -n "$ver" ] || die ".env 缺少 XMNN_VERSION（先执行 ./xmnnctl init 生成 .env）"
+    if [ "$ver" != "$mver" ]; then
+        die "版本不一致：.env 的 XMNN_VERSION=$ver，交付清单 version=$mver
+  修法：把 .env 中的 XMNN_VERSION 改为 $mver（交付版本以清单为准），再重新执行 ./xmnnctl load"
+    fi
+
+    # ③ 底座镜像
+    if image_id_matches "$base_ref" "$base_id"; then
+        c_info "底座已在本机，跳过导入：$base_ref"
+    else
+        [ -f "artifacts/$archive_file" ] \
+            || die "交付包不完整：缺少底座归档 artifacts/$archive_file（请确认交付包已完整解压）"
+        verify_sha256 "artifacts/$archive_file" "$archive_sha" "底座归档"
+        c_info "导入底座镜像：artifacts/$archive_file（约 1-5 分钟）"
+        "$RT" load -i "artifacts/$archive_file" \
+            || die "镜像导入失败：请查看上方 $RT 的原始报错（常见原因：磁盘空间不足）；处理后重新执行 load 即可，导入过程幂等"
+        image_id_matches "$base_ref" "$base_id" \
+            || die "交付包与镜像不匹配：导入后 $base_ref 的 Id 与清单记录的 ${base_id:0:12}… 不一致
+  处理方式：归档与清单一同重新获取（必须成套），或联系交付方核对"
+    fi
+    c_ok "底座镜像就绪：$base_ref"
+
+    # ④ 载荷 wheel（构建上下文 = payload/ 目录）
+    [ -f "payload/$payload_file" ] \
+        || die "交付包不完整：缺少载荷 wheel payload/$payload_file
+  载荷应与 artifacts/ 同级放在 payload/ 目录内；请确认交付包已完整解压后重试"
+    verify_sha256 "payload/$payload_file" "$payload_sha" "载荷 wheel"
+    [ -f payload/Dockerfile ] \
+        || die "交付包不完整：缺少派生构建文件 payload/Dockerfile（请重新获取交付包）"
+
+    # ⑤ 派生构建（离线装载荷 + 构建期守卫；失败即中止，不产出 tag）
+    img_ref="localhost/xmnn-runtime:$ver"
+    c_info "派生构建载荷镜像：$img_ref（离线安装 + 10 项守卫，约 1-3 分钟）"
+    "$RT" build -f payload/Dockerfile \
+        --build-arg "BASE_IMAGE=$base_ref" \
+        --build-arg "PAYLOAD_VERSION=$ver" \
+        -t "$img_ref" payload \
+        || die "派生构建失败：请查看上方 $RT 的原始报错；构建全程离线（与网络无关），常见原因：
+  - 磁盘空间不足（派生镜像另需约 0.2 GB）
+  - 底座与载荷不匹配（构建日志中 pip check 报缺依赖）——请把上方报错反馈给交付方
+  处理后重新执行 ./xmnnctl load 即可（幂等，底座已导入时不会重复导入）"
+    c_ok "载荷已装入 $img_ref"
+    c_info "下一步：./xmnnctl up（如需复核守卫可执行 ./xmnnctl smoke）"
 }
 
 # ── compose 包装与服务管理 ──────────────────────────────────────────────────
@@ -400,19 +538,24 @@ container_running() {
 
 do_smoke() {
     assert_runtime_alive
-    local cname ver
+    local cname ver img_ref
     cname="$(env_value XMNN_CONTAINER_NAME)"; cname="${cname:-xmnn-runtime}"
     ver="$(env_value XMNN_VERSION)"
+    [ -n "$ver" ] || die ".env 缺少 XMNN_VERSION；请先 ./xmnnctl init"
+    # 守卫跑的是**派生镜像**（载荷由 load 装入底座后产出），底座不含载荷
+    img_ref="localhost/xmnn-runtime:$ver"
     if container_running "$cname"; then
         c_info "容器运行中，经 exec 执行守卫"
         "$RT" exec "$cname" /opt/conda/bin/python /opt/xmnnrt-smoke/_runtime_smoke.py
     else
-        [ -n "$ver" ] || die ".env 缺少 XMNN_VERSION；请先 ./xmnnctl init"
-        c_info "容器未运行，使用一次性容器执行守卫"
+        if [ -z "$(image_id_of "$img_ref")" ]; then
+            die "本机没有派生镜像 $img_ref：请先执行 ./xmnnctl load（把 payload/ 内载荷装入底座）后再跑 smoke"
+        fi
+        c_info "容器未运行，使用派生镜像 $img_ref 的一次性容器执行守卫"
         # 必须显式 --entrypoint：镜像默认 entrypoint 的命令模式会把脚本交给
         # cp314t 登录环境解析（实测会 9 项失败）。
         "$RT" run --rm ${RUN_FLAGS[@]+"${RUN_FLAGS[@]}"} \
-            --entrypoint /opt/conda/bin/python "localhost/xmnn-runtime:$ver" \
+            --entrypoint /opt/conda/bin/python "$img_ref" \
             /opt/xmnnrt-smoke/_runtime_smoke.py
     fi
 }
@@ -420,13 +563,24 @@ do_smoke() {
 # ── 版本信息 ────────────────────────────────────────────────────────────────
 
 do_version() {
-    local ver
+    local ver mver base_ref base_id payload_file payload_sha archive_file archive_sha
     ver="$(env_value XMNN_VERSION)"
     printf 'xmnn-runtime release: %s\n' "${ver:-未知（请先 ./xmnnctl init）}"
-    if [ -f artifacts/release.json ]; then
-        grep -o '"sha256"[[:space:]]*:[[:space:]]*"[0-9a-f]*"' artifacts/release.json \
-            | head -n 1 | sed 's/.*: *"//;s/"$//' | sed 's/^/archive sha256: /'
+    if [ ! -f artifacts/release.json ]; then
+        c_warn "未找到 artifacts/release.json，无法显示交付清单摘要"
+        return 0
     fi
+    mver="$(manifest_version_field || true)"
+    base_ref="$(manifest_block_field image ref || true)"
+    base_id="$(manifest_block_field image id || true)"
+    payload_file="$(manifest_block_field payload file || true)"
+    payload_sha="$(manifest_block_field payload sha256 || true)"
+    archive_file="$(manifest_block_field archive file || true)"
+    archive_sha="$(manifest_block_field archive sha256 || true)"
+    printf '交付版本   : %s\n' "${mver:-未记录}"
+    printf '底座镜像   : %s（Id %s）\n' "${base_ref:-未记录}" "${base_id:0:12}"
+    printf '载荷 wheel : %s（sha256 %s）\n' "${payload_file:-未记录}" "${payload_sha:0:12}"
+    printf '底座归档   : %s（sha256 %s）\n' "${archive_file:-未记录}" "${archive_sha:0:12}"
 }
 
 # ── 入口分发 ────────────────────────────────────────────────────────────────

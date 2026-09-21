@@ -16,7 +16,7 @@ source: "AGENTS.md#嵌套路由关系"
 ├── README.md                          ← 本文件（资产容器索引）
 ├── CHANGELOG.md                       ← 应用变更日志（原子提交汇总）
 └── rules/
-    └── delivery-pipeline.md           ← 唯一规则主题：离线交付流水线硬约束（8 节）
+    └── delivery-pipeline.md           ← 唯一规则主题：离线交付流水线硬约束（12 节）
 ```
 
 父级已有的资产不在本应用重复：`roles/`、`skills/`、`scripts/`、`workflows/`、`templates/`、
@@ -30,7 +30,7 @@ source: "AGENTS.md#嵌套路由关系"
 
 | 文件 | 覆盖内容 |
 |------|---------|
-| [rules/delivery-pipeline.md](rules/delivery-pipeline.md) | ①交付骨架零 Python/零 `../` 契约与纯移动纪律 ②CRLF shebang 守卫 ③版本语义 ④形态感知 tag ⑤归档原子性 ⑥`release.json` 字段与 torch 双键回退 ⑦禁依赖 `client`/`shared` ⑧Windows 一律 pwsh7 |
+| [rules/delivery-pipeline.md](rules/delivery-pipeline.md) | ①交付骨架零 Python/零 `../` 契约与纯移动纪律 ②CRLF shebang 守卫 ③版本语义 ④形态感知 tag ⑤归档原子性 ⑥`release.json` 字段与 torch 双键回退 ⑦禁依赖 `client`/`shared` ⑧Windows 一律 pwsh7 ⑨底座与载荷分离 ⑩依赖闭包与 `deps.txt` ⑪守卫分段（构建期底座守卫 6 项 / 交付期载荷守卫 10 项）⑫清单 schema v2 与双 `sha256` 解析纪律 |
 
 **单一职责原则**：新增规则只能新增文件，不得把上述主题拆散或复制到父级组层
 （组层反双写纪律 G4）；新增前先走 I→F→V（明确现有文件为何覆盖不了、新文件标题能否被一句话概括、
@@ -40,11 +40,11 @@ source: "AGENTS.md#嵌套路由关系"
 
 | 资产 | 路径 | 说明 |
 |------|------|------|
-| 工具链入口（POSIX） | `../bin/relpack` | bash CLI：`stage`/`build`/`pack`/`smoke`/`version`；唯一产品常量来源是 `product.env` |
+| 工具链入口（POSIX） | `../bin/relpack` | bash CLI：`stage`/`deps`/`build`/`pack`/`smoke`/`version`；唯一产品常量来源是 `product.env` |
 | 工具链入口（Windows） | `../bin/relpack.ps1` | pwsh7 同名命令面，容器命令经 `wsl.exe` 桥接 bash 版 |
 | 产品参数单一事实源 | [../products/xmnn-runtime/product.env](../products/xmnn-runtime/product.env) | `PRODUCT`/`IMAGE_NAME`/`CONTAINERFILE`/`WHEEL_GLOB`/`WHEEL_DIST`/`BASE_IMAGE_DEFAULT`/`TORCH_DEFAULT`/`RELEASE_DIR` |
-| 镜像定义 | [../products/xmnn-runtime/Containerfile.xmnn-runtime](../products/xmnn-runtime/Containerfile.xmnn-runtime) | 四 Layer：torch 形态层 + whl 安装层 + 内核注册与运行时守卫 + 构建期双身份 10 项硬验证 |
-| 客户交付骨架 | [../products/xmnn-runtime/release/](../products/xmnn-runtime/release/README.md) | 客户可见契约：`xmnnctl` / `xmnnctl.ps1` + 自包含 compose + `.env.example` + `artifacts/` |
+| 镜像定义（底座） | [../products/xmnn-runtime/Containerfile.xmnn-runtime](../products/xmnn-runtime/Containerfile.xmnn-runtime) | 四 Layer：torch 形态层 + 运行时依赖层（`deps.txt`，**不含载荷**）+ 内核注册与运行时守卫脚本 + 构建期双身份底座守卫 6 项；载荷由交付侧 `release/payload/Dockerfile` 派生装入 |
+| 客户交付骨架 | [../products/xmnn-runtime/release/](../products/xmnn-runtime/release/README.md) | 客户可见契约：`xmnnctl` / `xmnnctl.ps1` + 自包含 compose + `.env.example` + `payload/`（载荷与派生 Dockerfile）+ `artifacts/`（底座归档与清单） |
 
 ## 人类文档 ↔ AI 规则对应关系
 

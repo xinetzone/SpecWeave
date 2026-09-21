@@ -5,11 +5,15 @@ daemon-free：不调用 podman、不触容器守护进程；只读文件、跑 `
 bash 或可用 WSL 发行版时）与 pwsh 参数解析（有 pwsh 时）。覆盖：
   - 自包含约束：`bin/` 内零 `jpman` / `invoke ` / `pip install` / `client/` /
     `overlays/_shared` 引用（本应用禁依赖 client 与 shared）；
-  - 命令面与选项面齐全（`version|stage|build|pack|smoke` + `--help`；
-    pwsh 侧同名子命令与 `-Product/-Version/-Wheel/-Torch/-BaseImage/-PipMirror/-NoCache`）；
-  - 关键机制静态存在：`podman save`、`gzip -t`、原子 `mv`、CRLF shebang 守卫
-    （且在导出归档**之前**）、torch 标签双键回退、形态白名单 `cpu|cu130`、
-    `product.env` 必需键校验；
+  - 命令面与选项面齐全（`version|stage|deps|build|pack|smoke` + `--help`；
+    pwsh 侧同名子命令与 `-Product/-Version/-Wheel/-Torch/-BaseImage/-PipMirror/-NoCache/-Deps/-Write`）；
+  - 关键机制静态存在：底座 tag `<镜像名>:base-<形态>`（**无 :latest**）、
+    `podman save`、`gzip -t`、原子 `mv`、CRLF shebang 守卫（且在导出归档**之前**）、
+    torch 标签双键回退、形态白名单 `cpu|cu130`、`product.env` 必需键校验、
+    载荷依赖集 `deps`（`Requires-Dist` 无条件项 ↔ `deps.txt`，unzip/bsdtar 回退）；
+  - release.json（schema v2）按块解析回归：`payload` 与 `archive` 两块**都含
+    `sha256`**，交付侧 awk helper（`release/xmnnctl::manifest_block_field`）取值
+    必须互不串位（以 v2 样例清单真实驱动 helper 对拍）；
   - 产品常量唯一性：`product.env` 是唯一来源，CLI 内不得内嵌产品字面量
     （仅允许 `--product` 默认值声明处出现默认产品名）；
   - smoke 步骤调用契约：`run_smoke_step` / `smoke_hint` 实现在 `bin/lib/pipeline.sh`，
@@ -34,7 +38,7 @@ REQUIRED_ENV_KEYS = {
 # 自包含约束：这些字面量在 bin/ 内必须零命中（CLI 零 Python、零 client/shared 依赖）
 FORBIDDEN_IN_BIN = ["jpman", "invoke ", "pip install", "client/", "overlays/_shared"]
 
-COMMANDS = ["version", "stage", "build", "pack", "smoke"]
+COMMANDS = ["version", "stage", "deps", "build", "pack", "smoke"]
 
 # WSL 发行版优先级（与 bin/relpack.ps1::Get-WslDistro 一致）
 _WSL_DISTRO_ENV = ("OFFLINE_DELIVERY_WSL_DISTRO", "XMNN_WSL_DISTRO", "COMPOSE_WSL_DISTRO")
@@ -138,15 +142,16 @@ def test_bin_has_no_foreign_references(bin_dir):
 
 def test_bash_command_and_option_surface(bin_dir):
     text = _read(bin_dir / "relpack")
-    # 命令分发：version|stage|build|pack|smoke 一次性匹配
-    assert re.search(r"(?m)^\s*version\|stage\|build\|pack\|smoke\)", text)
+    # 入口扫描的命令词表（一处收集）与逐命令分发（各带 allow_opts 白名单）
+    assert re.search(r"(?m)^\s*version\|stage\|deps\|build\|pack\|smoke\)\s*CMD=", text)
     for cmd in COMMANDS:
-        assert cmd in text, cmd
+        assert re.search(rf"(?m)^\s*{cmd}\)\s+allow_opts ", text), cmd
     # 帮助入口
     assert "-h|--help|help)" in text and "usage()" in text
     # 选项面
     assert "-p|--product)" in text
-    for opt in ("--wheel", "--version", "--torch", "--base-image", "--pip-mirror", "--no-cache"):
+    for opt in ("--wheel", "--version", "--torch", "--base-image", "--pip-mirror",
+                "--no-cache", "--write"):
         assert opt in text, opt
     # 产品名默认值与 product.env 查找路径
     assert re.search(r'(?m)^PRODUCT_DEFAULT="[^"]+"', text)
@@ -160,12 +165,16 @@ def test_pwsh_command_and_option_surface(bin_dir):
     assert re.search(r"\$Commands\s*=\s*@\(([^)]*)\)", text)
     for cmd in COMMANDS:
         assert f"'{cmd}'" in text, cmd
-    # 选项键与 Windows 原生参数名
+    # 选项键与 Windows 原生参数名（deps 亦有 -Deps / -Write 原生写法）
     for key in ("'p'", "'product'", "'version'", "'wheel'", "'torch'",
-                "'base-image'", "'pip-mirror'", "'no-cache'"):
+                "'base-image'", "'pip-mirror'", "'no-cache'", "'deps'", "'write'"):
         assert key in text, key
-    for flag in ("-Product", "-Version", "-Wheel", "-Torch", "-BaseImage", "-PipMirror", "-NoCache"):
+    for flag in ("-Product", "-Version", "-Wheel", "-Torch", "-BaseImage",
+                 "-PipMirror", "-NoCache", "-Deps", "-Write"):
         assert flag in text, flag
+    # -Deps 等价于 deps 子命令、-Write 桥接为 --write
+    assert "$depsSwitch = $true" in text and "$write = $true" in text
+    assert "$bridgeArgs += '--write'" in text
     # 容器命令统一经 wsl.exe 桥接 bash 版（不做逻辑分叉）
     assert "wsl.exe" in text and "bridgeArgs" in text
 
@@ -175,7 +184,8 @@ def test_command_option_matrix_parity(bin_dir):
     expected = {
         "version": [],
         "stage": ["wheel"],
-        "build": ["wheel", "torch", "base-image", "pip-mirror", "no-cache"],
+        "deps": ["write"],
+        "build": ["torch", "base-image", "pip-mirror", "no-cache"],
         "pack": ["version"],
         "smoke": ["version"],
     }
@@ -199,20 +209,40 @@ def test_command_option_matrix_parity(bin_dir):
 # ── 关键机制静态存在 ───────────────────────────────────────────────────────
 
 
-def test_archive_export_mechanisms(bin_dir):
+def test_base_image_build_and_archive_export(bin_dir):
     text = _read(bin_dir / "relpack")
-    # 形态感知双 tag（形态 + :latest 别名）
-    assert '-t "$IMAGE_NAME:$FLAVOR" -t "$IMAGE_NAME:latest"' in text
+    # 底座 tag：<镜像名>:base-<形态>，**无 :latest 别名**（cpu/cu130 形态互斥，
+    # 共用别名会让后构建者静默覆盖前者语义）
+    assert 'BASE_REF="$IMAGE_NAME:base-$FLAVOR"' in text
+    assert '-t "$BASE_REF" "$PRODUCT_DIR"' in text
+    assert ":latest" not in text, "底座镜像不再产出 :latest"
+    assert '-t "$IMAGE_NAME:$FLAVOR" -t "$IMAGE_NAME:latest"' not in text, "旧双 tag 已废除"
+    # 归档名由镜像名末段 + 形态推导（底座跨版本复用，不以交付版本为身份）
+    assert 'ARCHIVE_BASE="${IMAGE_NAME##*/}-base-$FLAVOR.tar.gz"' in text
+    assert 'archive="$ARCHIVE_BASE"; tmp="$artifacts/.tmp-$archive"' in text
+    assert 'archive="${IMAGE_NAME##*/}-$ver.tar.gz"' not in text, "旧按版本命名归档已废除"
     # 导出链：podman save → gzip -1 → gzip -t 校验 → 原子 mv
-    assert 'podman save "$IMAGE_NAME:$ver" | gzip -1 > "$tmp"' in text
+    assert 'podman save "$BASE_REF" | gzip -1 > "$tmp"' in text
     assert 'gzip -t "$tmp"' in text
     assert 'mv -f "$tmp" "$artifacts/$archive"' in text
-    # 归档名与临时文件同目录同版本（只可能留下临时文件，绝不留下截断归档）
-    assert 'archive="${IMAGE_NAME##*/}-$ver.tar.gz"' in text
-    assert 'tmp="$artifacts/.tmp-$ver.tar.gz"' in text
-    # 归档与清单的 sha256 / 字节数取自校验后的最终文件
-    assert 'sha256sum "$artifacts/$archive"' in text
+    # 归档与载荷的 sha256 / 字节数取自校验后的最终文件
+    assert 'sha256_of "$artifacts/$archive"' in text
+    assert 'sha256_of "$payload"' in text
     assert "write_release_manifest" in _read(bin_dir / "lib" / "pipeline.sh")
+
+
+def test_release_manifest_schema_v2_written(bin_dir):
+    """release.json 升 schema v2：载荷块在前、底座镜像块、底座归档块在后。"""
+    pipeline = _read(bin_dir / "lib" / "pipeline.sh")
+    body = pipeline.split("write_release_manifest() {", 1)[1]
+    assert '"schema_version": "2"' in body
+    # torch 版本与形态双记录（形态缺失记 null，由调用方决定）
+    assert '"torch_version": $torch_json' in body
+    assert '"torch_flavor": $flavor_json' in body
+    assert '"pack_tool": "offline-delivery.relpack"' in body
+    # 两块各一处 sha256（旧 schema 的单一 sha256 已废除）
+    assert body.count('"sha256"') == 2, "schema v2 的 payload 与 archive 各有一个 sha256"
+    assert body.index('"payload": {') < body.index('"image": {') < body.index('"archive": {')
 
 
 def test_crlf_guard_runs_before_archive_export(bin_dir):
@@ -245,12 +275,72 @@ def test_delivery_version_and_flavor_rules(bin_dir, product_env):
 
 
 def test_torch_label_dual_key_fallback(bin_dir):
-    text = _read(bin_dir / "relpack")
+    relpack = _read(bin_dir / "relpack")
+    pipeline = _read(bin_dir / "lib" / "pipeline.sh")
     # 新键优先、缺失回退旧键；两者皆缺记 null 并告警（不得臆测）
-    assert text.index("org.specweave.torch-version") < text.index("org.specweave.torch-cpu")
-    assert '"org.specweave.torch-version"' in text
-    assert '"org.specweave.torch-cpu"' in text
-    assert 'torch_json="null"' in text and "镜像缺 torch LABEL" in text
+    assert relpack.index("org.specweave.torch-version") < relpack.index("org.specweave.torch-cpu")
+    assert '"org.specweave.torch-version"' in relpack
+    assert '"org.specweave.torch-cpu"' in relpack
+    assert "镜像缺 torch" in relpack
+    # null 落在清单写出侧（pipeline.sh），形态 LABEL 缺失同样记 null
+    assert 'torch_json="null"' in pipeline
+    assert 'flavor_json="null"' in pipeline
+
+
+# ── 底座/载荷分离：载荷暂存区 + 依赖集 deps（2026-09-21 重构）───────────────
+#
+# 载荷（xmnn wheel）不再进底座镜像构建上下文：`stage` 落 `release/payload/`
+# （随交付包发出，客户机派生装入）；底座依赖面改由 `deps.txt` 承载，`deps`
+# 子命令从 whl 的 `*.dist-info/METADATA` 取**不含分号**的 `Requires-Dist`
+# （＝无环境 marker 的无条件运行时依赖）比对/重写，零 Python（unzip→bsdtar 回退）。
+
+
+def test_wheel_stage_target_is_release_payload(bin_dir, product_dir, release_dir):
+    relpack = _read(bin_dir / "relpack")
+    assert 'WHEEL_STAGE="$RELEASE_DIR/payload"' in relpack
+    # 暂存区已在交付包内：产品目录下的旧 wheels/ 不再出现于任何 CLI 源文件
+    assert not (product_dir / "wheels").exists()
+    assert (release_dir / "payload").is_dir()
+    for name, text in _cluster(bin_dir).items():
+        assert "wheels/" not in text, f"{name}: 旧 wheels/ 暂存区引用已废除"
+    # 载荷暂存区路径统一经变量，不在多处硬编码
+    assert "$WHEEL_STAGE" in _read(bin_dir / "lib" / "pipeline.sh")
+
+
+def test_deps_subcommand_and_metadata_fallback(bin_dir):
+    relpack = _read(bin_dir / "relpack")
+    pipeline = _read(bin_dir / "lib" / "pipeline.sh")
+    # deps 子命令：--write 重写 deps.txt，默认做一致性校验（差异即 die）
+    assert re.search(r'(?m)^\s*deps\)\s+allow_opts "write"', relpack)
+    assert "cmd_deps() {" in relpack
+    assert 'write_deps_file "$DEPS_FILE" "$whl"' in relpack
+    assert 'deps_consistency "$whl" "$DEPS_FILE"' in relpack
+    assert '--write) OPT_WRITE=1 ;;' in relpack
+    # deps.txt 定位：产品目录下（底座 Layer 2 的构建输入）
+    assert 'DEPS_FILE="$PRODUCT_DIR/deps.txt"' in relpack
+    # 零 Python：unzip -p 优先，回退 bsdtar -xOf；两者皆不可用 → 返回 2 并告警放行
+    assert """unzip -p "$whl" '*.dist-info/METADATA'""" in pipeline
+    assert """bsdtar -xOf "$whl" '*.dist-info/METADATA'""" in pipeline
+    assert 'warn "未找到 unzip 或 bsdtar：' in pipeline
+    # 只取「不含分号」的 Requires-Dist 条目（带 marker / extra 者天然被过滤）
+    assert 'if (index(line, ";") == 0 && length(line) > 0) print line' in pipeline
+    # 一致性差异必须给出对齐动作（deps --write 后重建底座）
+    assert "bin/relpack deps --write" in pipeline
+
+
+def test_deps_txt_is_base_layer_input(product_dir):
+    """deps.txt 是底座依赖面的唯一事实源，且 Containerfile 消费它。"""
+    deps = product_dir / "deps.txt"
+    assert deps.is_file()
+    lines = [l for l in deps.read_text(encoding="utf-8").splitlines()
+             if l.strip() and not l.startswith("#")]
+    assert lines, "deps.txt 不应只有头部注释"
+    assert all(";" not in l for l in lines), "deps.txt 只收无条件依赖（无环境 marker）"
+    assert len(set(lines)) == len(lines), "deps.txt 依赖行不得重复"
+    containerfile = (product_dir / "Containerfile.xmnn-runtime").read_text(encoding="utf-8")
+    assert "pip install --no-cache-dir -r /tmp/deps.txt" in containerfile
+    # 底座不装载荷（反断言）：Containerfile 内零 wheel 输入
+    assert "wheels/" not in containerfile
 
 
 def test_product_env_keys_are_validated(bin_dir, product_env):
@@ -336,12 +426,13 @@ def test_smoke_step_calls_pass_command_only(bin_dir):
     # 骨架目录只作为公共变量（`cmd_smoke` 与 trap 收尾仍在用）
     assert "(cd \"$RELEASE_DIR\" && \"$@\")" in pipeline
     assert 'trap smoke_final_down EXIT' in relpack
-    # 三个调用点：`run_smoke_step <步骤名> ./xmnnctl <步骤名>`
+    # 四个调用点：`run_smoke_step <步骤名> ./xmnnctl <步骤名>`（load → up → smoke → down）
+    # 载荷在交付侧派生，故 load 必须在最前（load 内完成底座导入 + 载荷装入 + 守卫）
     calls = re.findall(r"(?m)^\s*run_smoke_step\s+(.+?)\s*$", relpack)
-    assert len(calls) == 3, calls
+    assert [c.split()[0] for c in calls] == ["load", "up", "smoke", "down"], calls
     for call in calls:
         assert '"$RELEASE_DIR"' not in call, f"目录被当作命令传入：{call}"
-        assert re.fullmatch(r"(up|smoke|down) \./xmnnctl \1 \|\| rc=\$\?", call), call
+        assert re.fullmatch(r"(load|up|smoke|down) \./xmnnctl \1 \|\| rc=\$\?", call), call
 
 
 # 行为用例：在真实 bash（Windows 优先 WSL 启动器）内 source `bin/lib/pipeline.sh`，
@@ -434,3 +525,93 @@ def test_run_smoke_step_missing_command_fails_clean(bin_dir, bash_prefix, tmp_pa
     assert _field(proc.stdout, "SMOKE_RC") == "127", out
     assert "Is a directory" not in out, out
     assert "no-such-cmd" in proc.stderr, out
+
+
+# ── release.json schema v2 按块解析回归（重点）───────────────────────────────
+#
+# 缺陷面：schema v1 只有单一 sha256，交付侧抓「全局第一个 sha256」即可；schema v2
+# 的 `payload` 块在前、`archive` 块在后，**两块键名相同**——沿用旧写法会把载荷
+# 摘要当成 1.1 GB 底座归档的摘要去校验 1.1 GB 的 tar.gz，必然误报「完整性校验
+# 失败」。故 ① 以 v2 样例清单证明旧写法确实取错值；② 以样例真实驱动交付侧的
+# awk helper（`release/xmnnctl::manifest_block_field`），断言取值互不串位、
+# 顶层字段不误取同名嵌套键（`payload.version`）。
+#
+# 样例与 `bin/lib/pipeline.sh::write_release_manifest` 的写出块序逐字同构
+# （payload → image → archive，缩进 2 空格）。
+
+_MANIFEST_PAYLOAD_SHA = "1" * 64
+_MANIFEST_ARCHIVE_SHA = "2" * 64
+_MANIFEST_IMAGE_ID = "3" * 64
+
+_MANIFEST_SAMPLE = f"""{{
+  "schema_version": "2",
+  "product": "xmnn-runtime",
+  "version": "1.2.1.dev0",
+  "payload": {{
+    "file": "xmnn-1.2.1.dev0-cp314-cp314-linux_x86_64.whl",
+    "version": "1.2.1.dev9",
+    "size_bytes": 185000000,
+    "sha256": "{_MANIFEST_PAYLOAD_SHA}"
+  }},
+  "image": {{
+    "ref": "localhost/xmnn-runtime:base-cpu",
+    "id": "{_MANIFEST_IMAGE_ID}",
+    "torch_version": "2.14.0",
+    "torch_flavor": "cpu",
+    "abi": "cp314-gil"
+  }},
+  "archive": {{
+    "file": "xmnn-runtime-base-cpu.tar.gz",
+    "size_bytes": 1234567,
+    "sha256": "{_MANIFEST_ARCHIVE_SHA}"
+  }},
+  "built_at": "2026-09-21T00:00:00+00:00",
+  "source_commit": "{"0" * 40}",
+  "pack_tool": "offline-delivery.relpack"
+}}
+"""
+
+_MANIFEST_HELPER_HARNESS = r'''
+set -uo pipefail
+. "__LIB__"
+printf 'VERSION=%s\n' "$(manifest_block_field - version)"
+printf 'PAYLOAD=%s\n' "$(manifest_block_field payload sha256)"
+printf 'ARCHIVE=%s\n' "$(manifest_block_field archive sha256)"
+printf 'IMAGE=%s\n' "$(manifest_block_field image id)"
+printf 'FLAVOR=%s\n' "$(manifest_block_field image torch_flavor)"
+printf 'ABSENT=%s\n' "$(manifest_block_field archive nope)"
+'''
+
+
+def test_legacy_first_sha256_reading_would_misfire_on_schema_v2():
+    """纯文本对照：旧「全局第一个 sha256」在 v2 样例上取到的是**载荷**摘要。"""
+    naive = re.search(r'"sha256"\s*:\s*"([0-9a-f]{64})"', _MANIFEST_SAMPLE)
+    assert naive is not None
+    assert naive.group(1) == _MANIFEST_PAYLOAD_SHA
+    assert naive.group(1) != _MANIFEST_ARCHIVE_SHA, "两块摘要必须不同，否则判据失效"
+
+
+def test_xmnnctl_manifest_helper_is_block_scoped(product_dir, bash_prefix, tmp_path):
+    """行为：交付侧真实 awk helper 解析 v2 样例，payload / archive 取值互不串位。"""
+    _, wsl_style = bash_prefix
+    release = product_dir / "release"
+    # 剥掉入口分发段后 source：只装载函数（含 manifest_block_field），不触发命令分发
+    head = _read(release / "xmnnctl").split("# ── 入口分发", 1)[0]
+    lib = tmp_path / "xmnnctl-lib.sh"
+    lib.write_text(head, encoding="utf-8", newline="\n")
+    # helper 按 cwd 下的 artifacts/release.json 定位清单；脚本头部 `cd` 到 lib 所在目录
+    art = tmp_path / "artifacts"
+    art.mkdir()
+    (art / "release.json").write_text(_MANIFEST_SAMPLE, encoding="utf-8", newline="\n")
+    script = _MANIFEST_HELPER_HARNESS.replace("__LIB__", _posix(lib, wsl_style))
+    proc = _run_bash_script(bash_prefix, tmp_path, script, "manifest_block.sh")
+    out = proc.stdout + proc.stderr
+    assert proc.returncode == 0, out
+    # 顶层 version 取最外层对象的直接子键，绝不误取 payload.version（样例刻意不同）
+    assert _field(proc.stdout, "VERSION") == "1.2.1.dev0", out
+    assert _field(proc.stdout, "PAYLOAD") == _MANIFEST_PAYLOAD_SHA, out
+    assert _field(proc.stdout, "ARCHIVE") == _MANIFEST_ARCHIVE_SHA, out
+    assert _field(proc.stdout, "IMAGE") == _MANIFEST_IMAGE_ID, out
+    assert _field(proc.stdout, "FLAVOR") == "cpu", out
+    # 块内无该键：无输出（helper 返回 1），不得回退去取别的块的同名键
+    assert _field(proc.stdout, "ABSENT") == "", out

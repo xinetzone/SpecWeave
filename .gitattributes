@@ -129,6 +129,18 @@ docker-compose*.yml text eol=lf
 *.cfg      text eol=lf
 *.conf     text eol=lf
 *.env      text eol=lf
+# Env templates (`.env.example`) ship inside the customer release bundle and are
+# consumed by the bundle's bash/pwsh control scripts and by compose. The rule
+# above only matches a final `.env` suffix, so these files fell back to
+# `text=auto`: a Windows checkout with core.autocrlf=true wrote CRLF into the
+# working tree and made the delivery-bundle LF assertion
+# (apps/containers/offline-delivery/tests/test_release_skeleton.py::
+# test_env_template_lf_only) flaky. Pin the blob AND the checkout to LF; on an
+# already-checked-out CRLF copy, fix it with
+#   git add --renormalize <path> && rm <path> && git checkout -- <path>
+# (`**/` is required to match nested paths — see the note in the Shell & scripts
+# section above.)
+**/.env.example text eol=lf
 *.properties text eol=lf
 
 # -----------------------------------------------------------------------------

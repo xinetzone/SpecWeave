@@ -7,6 +7,48 @@
 
 ## [Unreleased]
 
+### 2026-09-21 | refactor | 底座/载荷分离：xmnn wheel 安装从镜像构建期拆到交付阶段
+
+**关联七概念场景**：场景3「重构优化」——把频繁变动的载荷与极慢变动的底座解耦，消除「换一个 whl 就要重打整镜像」的重复成本。
+
+**背景与动机（I）**：载荷 wheel（约 177 MB）随每个交付版本变化，而底座依赖面（torch + 20 条运行时依赖）变化极慢；
+原设计把 wheel 装入镜像构建期，导致每次换 whl 都要重跑 torch 与依赖安装（首轮联网约 3 分钟、数 GB 网络往返），
+且交付包必须整包重发。此外，若把 wheel 安装改到交付期却**不做依赖闭包与守卫分段**，缺失依赖只会在客户运行期以
+`ImportError` 暴露（`--no-deps` 会静默掩盖），故本次重构必须同时补齐依赖清单与两段守卫。
+
+**本任务落地**：
+
+- **底座镜像**：`localhost/xmnn-runtime:base-<形态>`（cpu|cu130，**无 `:latest`、不含 xmnn**）＝ cp314 GIL base env +
+  torch + 依赖面（`products/xmnn-runtime/deps.txt`，20 条无条件依赖）+ ipykernel + 内核注册脚本 + 守卫脚本；
+  构建上下文收敛为产品目录（`Containerfile.xmnn-runtime` + `deps.txt` + `scripts/` + `smoke/`），**`wheels/` 目录删除**。
+- **底座守卫**：新增 `smoke/_base_guards.py`（Layer 4，root/devuser 双跑，6 项）：双 ABI / `deps.txt` 逐条核验 /
+  `pip check`（放行基镜像既有的 conda×ruamel-yaml 单条冲突）/ torch 形态（marker vs `version.cuda`）/ 内核双可见 /
+  **反断言 `import xmnn` 必须失败**。
+- **交付侧派生构建**：交付包新增 `release/payload/{Dockerfile,.gitignore,.keep}` 与 `payload/xmnn-*.whl`
+  （177 MB，不入 git）；客户 `xmnnctl load` 语义改为「幂等导入底座（按 `release.json.image.id` 比对，已在则跳过）→
+  校验载荷 sha256 → 以 `payload/` 为上下文派生构建 `localhost/xmnn-runtime:<交付版本>`
+  （`pip install --no-index --no-deps`，载荷守卫与 `pip check` 在 `RUN` 内执行，失败即无 tag）→ 校验 `.env` 版本与清单一致」；
+  `smoke`/`version` 改用派生镜像与清单；**`compose.yaml` 逐字未变（对外契约稳定）**。
+- **制品与清单**：`bin/relpack` 的 `stage` 目标改为 `release/payload/`；新增 `deps [--write]`（解析 whl
+  `Requires-Dist` 无条件项并与 `deps.txt` 比对，**deps 变化必须重发底座**）；`build` 产 `:base-<形态>`；
+  `pack` 产 `artifacts/<镜像名末段>-base-<形态>.tar.gz` + **schema v2 `release.json`**
+  （`payload{file,version,size_bytes,sha256}` / `image{ref,id,torch_version,torch_flavor,abi}` /
+  `archive{file,size_bytes,sha256}`）；`smoke` 改为走交付骨架 `load → up → smoke → down`。
+- **文档与治理同步（本切片）**：`AGENTS.md`（项目概述 / 路由树 / P0 约束速览 8→12 条）、`README.md`（命令表 + 快速开始 + 收益口径）、
+  `docs/00-overview.md`（双制品流）、`docs/01-quickstart.md`（`deps` 命令 + 失败处置 + 新增「更新交付（只换 whl）」）、
+  `rules/delivery-pipeline.md`（§1 契约修订至契约冻结 + 新增 §9-§12）。
+
+**影响（交付骨架契约变化点）**：`release/` 新增 `payload/`（载荷 wheel + 派生 `Dockerfile`）并纳入契约；
+`xmnnctl load` 语义从「导入镜像」变为「导入底座 + 派生构建」；`release.json` 升 schema v2（顶层 `version` 为载荷版本，
+新增 `payload` 块与双 `sha256`）；底座 tag 不再有 `:latest`；**`compose.yaml` / `xmnnctl` 命令面 / `.env` 键未变**。
+
+**实测事实**：底座镜像 2.47 GB（首轮联网装依赖约 3 分钟）；底座校验 6 项全过、`deps.txt` 20 条逐条 `[OK]`；
+载荷守卫 10/10；派生镜像增量约 +0.18 GB、构建 1-3 分钟。收益口径：换 whl 只需重发约 **177 MB 载荷**，
+而非约 **1.1 GB 底座归档**（旧口径「4 GB」指 cu130 形态镜像，属误传，不沿用）。
+
+**验收点**：底座守卫 6/6、载荷守卫 10/10、`deps` 一致性校验、`pack` schema v2 清单与归档原子性；
+真机端到端结论见统一验证记录（后续统一验证回填实测输出与 `release.json` 核对结论）。
+
 ### 2026-09-21 | feat | 应用抽取：客户离线交付链路从 client 迁出为独立应用
 
 **关联七概念场景**：场景3「重构优化」——把寄居在消费端的交付链路还给交付方自持。

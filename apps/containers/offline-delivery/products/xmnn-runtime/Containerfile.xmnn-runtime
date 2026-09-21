@@ -1,30 +1,43 @@
 # Containerfile.xmnn-runtime
 # ------------------------------------------------------------
-# XMNN wheel 消费型运行时产品镜像（Podman rootless 谱系）
+# XMNN 运行时**底座**镜像（base-<形态>）：Podman rootless 谱系 cp314 GIL
 #
-# 定位（与 xmnn-dev 的分工，2026-09-16 起）：
-#   xmnn-dev      = 源码调试 + Nuitka 打包【构建器】（LLVM 22/Nuitka/gcc/gdb）
-#   xmnn-runtime  = 安装预构建 whl 的干净【运行时】（无工具链、无源码树）
-# wheel 是两个镜像之间唯一的制品契约：
-#   （上游 xmnn-dev 栈打包）→ apps/containers/workspace/dist 下的 xmnn-*.whl（cp314-cp314 GIL）
-#   bin/relpack stage      → 暂存 whl 进 wheels/ 后构建本镜像
+# 定位（底座 ≠ 载荷，2026-09-21 起）：
+#   底座 = cp314 GIL base env + torch + 依赖面（deps.txt）+ ipykernel + 内核
+#          注册 + 底座守卫。**绝不安装 xmnn wheel**。
+#   载荷 = xmnn wheel，由**交付侧派生**时装入：release/payload/Dockerfile 在
+#          派生镜像内执行 `pip install --no-index --no-deps <whl>`，再跑随底座
+#          保留的载荷守卫 /opt/xmnnrt-smoke/_runtime_smoke.py 验证载荷。
+#   为什么拆两段：载荷（约 170 MB whl，随每个交付版本变化）与底座（依赖面，
+#   变化极慢）解耦后，同一底座可派生多个交付版本，重打载荷不必重装 torch 与
+#   依赖面（省下数分钟构建与数 GB 网络往返），底座本身也可独立复用与缓存。
 #
 # 所属应用（自包含）：apps/containers/offline-delivery，产品目录 products/xmnn-runtime/。
-# 外部输入只有两个：apps/containers/workspace/dist 下的 xmnn-*.whl 与基镜像
-# localhost/jupyter-podman-rootless:latest；本目录不引用应用外的任何路径或代码。
-# 工具链：bin/relpack stage|build|pack|smoke（bash + pwsh7，零 Python）。
+# 外部输入只剩一个：基镜像 localhost/jupyter-podman-rootless:latest
+# （**不再有 wheel 输入**）；本目录不引用应用外的任何路径或代码。
+# 工具链：bin/relpack stage|deps|build|pack|smoke（bash + pwsh7，零 Python 承诺
+# 只约束交付与 CLI；镜像内守卫脚本用镜像自带的 Python）。
 #
-# 自包含事实（builder CMakeLists 实证）：
-#   - wheel 已含 tvm/vta/xmnn Nuitka 扩展 + _libs/（libtvm.so + libLLVM 22
+# 产出镜像 tag（由 bin/relpack build 下发；IMAGE_NAME 见 products/xmnn-runtime/product.env）：
+#   localhost/xmnn-runtime:base-<形态>（形态 = cpu|cu130）
+#   形态感知 tag，**不产出 :latest**：cpu 与 cu130 是互斥形态，共用同一别名
+#   会让后构建者静默覆盖前者的语义。交付镜像 tag localhost/xmnn-runtime:<交付
+#   版本> 由交付侧派生时另行下发，与本文件无关。
+# 构建：bin/relpack build [--pip-mirror tuna] [--torch cu130]
+#   （裸路径：podman build -f Containerfile.xmnn-runtime \
+#      -t localhost/xmnn-runtime:base-cpu .）
+#
+# 自包含事实（builder CMakeLists 实证；载荷侧契约）：
+#   - 载荷 wheel 已含 tvm/vta/xmnn Nuitka 扩展 + _libs/（libtvm.so + libLLVM 22
 #     等，patchelf 统一 RPATH=$ORIGIN）+ xmnn_bootstrap.pth + 数据目录；
-#   - 运行时无需系统 LLVM/Clang/Nuitka，无需 PYTHONPATH/TVM_LIBRARY_PATH；
-#   - wheel 元数据声明运行时依赖，pip install 自动解析；
+#   - 运行期无需系统 LLVM/Clang/Nuitka，无需 PYTHONPATH/TVM_LIBRARY_PATH；
+#   - wheel 声明的无条件运行时依赖落在 deps.txt（底座依赖面的唯一事实源）；
 #   - torch 内置（pytorch 前端编译/精度所需，形态见 Layer 1 / C26）。
 #
 # ABI 契约（不可互换）：
-#   /opt/conda            = Python 3.14 cp314 GIL → wheel 安装目标 + Jupyter 内核
+#   /opt/conda            = Python 3.14 cp314 GIL → 载荷安装目标 + Jupyter 内核
 #   /opt/conda/envs/main  = Python 3.14 cp314t    → Jupyter 服务（基底不动）
-#   wheel tag 为 cp314-cp314，只能装入 base env，禁止装 main。
+#   载荷 wheel tag 为 cp314-cp314，只能装入 base env，禁止装 main。
 #
 # 范式对齐 xmnn-dev / onnx-quantized：
 #   - 薄镜像 FROM localhost/jupyter-podman-rootless:latest，不覆盖
@@ -32,12 +45,6 @@
 #   - 全部 RUN 显式 /bin/bash -lc（OCI 镜像格式忽略 SHELL 指令）；
 #   - 含引号的验证逻辑固化为 smoke/scripts 下脚本文件，RUN 行不写
 #     内层双引号 python -c（buildah 二次分词教训）。
-#
-# 产出镜像 tag（均由 bin/relpack build 下发；IMAGE_NAME 见 products/xmnn-runtime/product.env）：
-#   localhost/xmnn-runtime:<形态>（cpu|cu130，形态感知 tag，C28）
-#   localhost/xmnn-runtime:latest（通用别名）
-# 构建：bin/relpack build [--wheel path] [--pip-mirror tuna] [--torch cu130]
-#   （裸 podman build 前需手工把 whl 放进 wheels/；裸路径只产出形态 tag）
 # ------------------------------------------------------------
 
 ARG BASE_IMAGE=localhost/jupyter-podman-rootless:latest
@@ -57,21 +64,21 @@ ARG TORCH_VERSION=2.14.0
 ARG TORCH_FLAVOR=cpu
 
 LABEL org.specweave.component="xmnn-runtime" \
-      org.specweave.layer="xmnn-wheel-runtime" \
+      org.specweave.layer="xmnn-runtime-base" \
       org.specweave.python-abis="base:cp314-gil" \
-      org.specweave.wheel-contract="xmnn-cp314-self-contained" \
+      org.specweave.wheel-contract="xmnn-cp314-self-contained@payload" \
       org.specweave.torch-version="${TORCH_VERSION}" \
       org.specweave.torch-flavor="${TORCH_FLAVOR}" \
       org.specweave.base-image="${BASE_IMAGE}"
 
 # ------------------------------------------------------------
 # Layer 1：内置 torch（pytorch 前端，cp314 GIL base env）
-#   - 独立成层且无 COPY 输入（仅 COPY 本层的安装脚本）：torch 稳定而 whl
-#     频繁变化，置于 whl 层之前可让重打 whl 的增量构建复用本层（不重复
-#     下载约 200 MB）；改 install-torch.sh 才失效；
+#   - 独立成层且无 COPY 输入（仅 COPY 本层的安装脚本）：torch 稳定而依赖面
+#     与载荷频繁变化，置于 Layer 2 之前可让改动 deps.txt / 重打载荷的增量
+#     构建复用本层（不重复下载约 200 MB）；改 install-torch.sh 才失效；
 #   - 形态由 TORCH_FLAVOR 白名单驱动（cpu 默认 / cu130），版本精确 pin +
-#     官方索引，杜绝 CUDA 包与版本漂移（构建后由 smoke 第 10 项按**形态
-#     marker**硬断言，见 scripts/install-torch.sh）；
+#     官方索引，杜绝 CUDA 包与版本漂移（构建后由底座守卫 §4 按**形态 marker**
+#     硬断言，见 scripts/install-torch.sh）；
 #   - 不装 torchvision：xmnn compile_api 仅 torch.jit.load + relay 前端，
 #     实测四个 demo 均不需要；需要者按应用 docs 指引在自定义层追加。
 # ------------------------------------------------------------
@@ -80,16 +87,20 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
     /bin/bash /opt/xmnnrt-scripts/install-torch.sh'
 
 # ------------------------------------------------------------
-# Layer 2：安装 xmnn wheel 到 base env（cp314 GIL）
-#   - wheels/ 由 bin/relpack stage 从 apps/containers/workspace/dist 暂存（目录同时只留
-#     一个 whl；whl 不入 git，见 wheels/.gitignore）；
-#   - 显式 /opt/conda/bin/python：PATH 顶端是 main（cp314t），裸 pip 会装
-#     错解释器（cp314 wheel 无法装入 cp314t）；
+# Layer 2：底座依赖面（deps.txt + ipykernel）
+#   - deps.txt 由 `bin/relpack deps --write` 从暂存 whl 的 METADATA 生成（只取
+#     不含分号的无条件 Requires-Dist 条目；生成方式与来源见该文件头注）；
+#   - 底座**不装 xmnn wheel**：载荷由交付侧派生时以 `--no-index --no-deps`
+#     装入，故依赖面必须在此铺满——否则派生镜像带着缺失依赖出厂，故障要到
+#     运行期 import 才浮现（构建期无感）；
+#   - 显式 /opt/conda/bin/python：PATH 顶端是 main（cp314t），裸 pip 会装错
+#     解释器（cp314 依赖 wheel 无法装入 cp314t）；
 #   - ipykernel：base env 注册 Jupyter 内核所需（基底 base env 默认未装，
-#     xmnn-dev 由打包工具链带入；运行时镜像在此显式补）；
-#   - wheel 自带运行时依赖声明，pip 自动解析（PIP_MIRROR 可换源）。
+#     xmnn-dev 由打包工具链带入；底座镜像在此显式补）；
+#   - deps.txt 另留一份到 /opt/xmnnrt-smoke/deps.txt，供底座守卫 §2 逐条核验
+#     与镜像内溯源；/tmp/deps.txt 与 pip 缓存随本层清理。
 # ------------------------------------------------------------
-COPY wheels/xmnn-*.whl /tmp/xmnn-wheels/
+COPY deps.txt /tmp/deps.txt
 RUN /bin/bash -lc 'set -euo pipefail ; \
     if [ "${PIP_MIRROR}" = "aliyun" ]; then \
       /opt/conda/bin/python -m pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/ ; \
@@ -101,17 +112,20 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
     else \
       echo "[xmnnrt] pip mirror: official (inherited)" ; \
     fi ; \
-    WHL="$(ls /tmp/xmnn-wheels/xmnn-*.whl | head -1)" ; \
-    echo "[xmnnrt] installing wheel: $WHL" ; \
-    /opt/conda/bin/python -m pip install --no-cache-dir ipykernel "$WHL" ; \
-    /opt/conda/bin/python -m pip show xmnn | grep -E "^(Name|Version|Location)" ; \
-    rm -rf /tmp/xmnn-wheels /root/.cache/pip ; \
+    echo "[xmnnrt] installing base deps from /tmp/deps.txt + ipykernel" ; \
+    /opt/conda/bin/python -m pip install --no-cache-dir -r /tmp/deps.txt ipykernel ; \
+    mkdir -p /opt/xmnnrt-smoke ; \
+    cp /tmp/deps.txt /opt/xmnnrt-smoke/deps.txt ; \
+    rm -f /tmp/deps.txt ; \
+    rm -rf /root/.cache/pip ; \
     find /opt/conda -type d -name "__pycache__" -prune -exec rm -rf {} + 2>/dev/null || true'
 
 # ------------------------------------------------------------
-# Layer 3：内核注册脚本 + 运行时守卫；注册 xmnn-runtime 内核
-#   （argv=/opt/conda/bin/python，root/devuser 双可见；内核 env 不含任何
-#   /workspace 源码路径——交付语义是纯 site-packages wheel）。
+# Layer 3：内核注册脚本 + 守卫脚本；注册 xmnn-runtime 内核
+#   - smoke/ 同时带入底座守卫 _base_guards.py 与载荷守卫 _runtime_smoke.py
+#     （后者保留在底座镜像内，供交付侧派生时执行）；
+#   - 内核 argv=/opt/conda/bin/python，root/devuser 双可见；内核 env 不含任何
+#     /workspace 源码路径——交付语义是纯 site-packages 载荷。
 # ------------------------------------------------------------
 COPY scripts/ /opt/xmnnrt-scripts/
 COPY smoke/ /opt/xmnnrt-smoke/
@@ -120,23 +134,25 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
     bash /opt/xmnnrt-scripts/register-kernel.sh'
 
 # ------------------------------------------------------------
-# Layer 4：构建期硬验证（root + devuser 双身份）
-#   守卫覆盖：cp314 GIL ABI / 三包来自 site-packages（非 /workspace、非
-#   /opt/xmnn-builder）/ _libs 自包含 / 干净环境 ctypes 加载 libtvm.so /
-#   tvm.build(llvm) 向量算例 / relay 数据 / bootstrap .pth / xmnn 数据目录 /
-#   xmnn-runtime 内核可见 / torch 形态与实物一致（marker vs version.cuda）。
-#   任一失败即镜像构建失败（不是 WARNING）。
+# Layer 4：底座守卫（root + devuser 双身份，任一失败即构建失败）
+#   守卫覆盖：双 ABI（base cp314 GIL / main cp314t）/ deps.txt 每条依赖已装 /
+#   pip check 无新冲突（基镜像既有 conda↔ruamel-yaml 债务按收窄模式放行）/
+#   torch 形态与实物一致（marker vs version.cuda）/ xmnn-runtime 内核 root+devuser
+#   双可见 / **反断言：载荷未安装**（import xmnn 必须失败且两个 env 的
+#   site-packages 均无 xmnn 残留）。
 # ------------------------------------------------------------
 RUN /bin/bash -lc 'set -euo pipefail ; \
-    /opt/conda/bin/python /opt/xmnnrt-smoke/_runtime_smoke.py ; \
-    su -s /bin/bash devuser -c "cd /opt/xmnnrt-smoke && /opt/conda/bin/python _runtime_smoke.py" >/dev/null && \
-      echo "[OK] devuser runtime smoke access" ; \
+    /opt/conda/bin/python /opt/xmnnrt-smoke/_base_guards.py ; \
+    su -s /bin/bash devuser -c "cd /opt/xmnnrt-smoke && /opt/conda/bin/python _base_guards.py" >/dev/null && \
+      echo "[OK] devuser base guard access" ; \
     find /opt/xmnnrt-smoke -type d -name __pycache__ -prune -exec rm -rf {} + 2>/dev/null ; \
     find /opt/xmnnrt-smoke -type f -name "*.pyc" -delete 2>/dev/null ; \
     echo "########################################################################" ; \
-    echo "# XMNN-RUNTIME OVERLAY BUILD COMPLETE" ; \
-    echo "# wheel    : xmnn cp314 GIL installed into /opt/conda (site-packages)" ; \
+    echo "# XMNN-RUNTIME BASE IMAGE BUILD COMPLETE (base-${TORCH_FLAVOR})" ; \
+    echo "# base env : /opt/conda (cp314 GIL) + deps.txt runtime deps + ipykernel" ; \
     echo "# torch    : ${TORCH_VERSION} (flavor=${TORCH_FLAVOR}; pytorch frontend built-in)" ; \
+    echo "# payload  : NOT INSTALLED - delivery side derives via \`xmnnctl load\`" ; \
+    echo "#            (release/payload/Dockerfile -> pip install --no-index --no-deps)" ; \
     echo "# kernel   : Python 3.14 (xmnn runtime) in JupyterLab" ; \
     echo "# services : SSH localhost:2225, Jupyter localhost:8893 (bin/relpack smoke)" ; \
     echo "########################################################################"'

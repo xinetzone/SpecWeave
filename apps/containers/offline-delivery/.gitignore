@@ -1,6 +1,5 @@
 # 产品构建产物与本地态（wheel 与镜像归档一律不入 git）
-products/*/wheels/*.whl
-!products/*/wheels/.gitignore
+# 注：载荷 wheel 已迁至 products/*/release/payload/，其忽略规则由该目录内 .gitignore 承担
 products/*/release/.env
 products/*/release/workspace/
 products/*/release/artifacts/*

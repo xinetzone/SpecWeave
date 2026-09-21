@@ -7,14 +7,15 @@
 #   -Runtime/-r  选择容器运行时（可放在命令前或后；默认 auto：先探测
 #                podman 再 docker；命令行优先级高于环境变量 XMNN_RUNTIME）
 #   init     创建 .env 并自动生成登录密码与 Jupyter token
-#   load     校验并导入 artifacts\ 内随包镜像 tar.gz，随后自动运行守卫
+#   load     导入底座镜像 + 把 payload\ 内载荷派生装入底座（均幂等；
+#            派生构建内已含 10 项守卫，失败即不产出镜像）
 #   up       启动服务（先预检宿主端口占用，跨运行时冲突 fail-fast；
 #            缺 .env 时自动 init），就绪后打印访问信息
 #   down     停止并删除容器（workspace 与 SSH host key 卷保留）
 #   ps       查看服务状态
 #   logs     查看服务日志（Ctrl+C 退出，不影响容器运行）
-#   smoke    运行 10 项运行时守卫
-#   version  显示版本与交付清单信息
+#   smoke    运行 10 项运行时守卫（随时复核派生镜像）
+#   version  显示交付版本、底座与载荷摘要
 #
 # 环境变量: XMNN_RUNTIME=podman|docker|auto 选择容器运行时（被 -Runtime 覆盖）
 # 执行策略: 如被拦截，运行
@@ -225,75 +226,161 @@ function Do-Init([string]$Mode = "") {
     Warn "请妥善保存凭证；不要将容器日志直接外发（日志可能含凭证）"
 }
 
-# ── 交付制品定位与完整性校验 ───────────────────────────────────────────────
+# ── 交付清单解析与完整性校验（release.json schema v2）──────────────────────
+#
+# ⚠️ schema v2 的 payload 与 archive 两个块**都含 "sha256" 键**：抓「全局第一个
+# sha256」会把底座归档摘要当成载荷摘要，故一律按块定向取值（结构化 JSON 解析，
+# 不依赖 jq 等外部工具，也不做文本抓取）。
 
-function Find-Archive {
-    $ver = Get-EnvValue XMNN_VERSION
-    $archive = ""
-    if (Test-Path artifacts/release.json) {
-        $json = Get-Content artifacts/release.json -Raw | ConvertFrom-Json
-        $candidate = Join-Path "artifacts" $json.archive.file
-        if (Test-Path $candidate) { $archive = $candidate }
-    }
-    if (-not $archive -and $ver -and (Test-Path "artifacts/xmnn-runtime-$ver.tar.gz")) {
-        $archive = "artifacts/xmnn-runtime-$ver.tar.gz"
-    }
-    if (-not $archive) {
-        $latest = Get-ChildItem artifacts -Filter "xmnn-runtime-*.tar.gz" -ErrorAction SilentlyContinue |
-            Sort-Object LastWriteTime -Descending | Select-Object -First 1
-        if ($latest) { $archive = $latest.FullName }
-    }
-    return $archive
+function Get-Manifest {
+    if (-not (Test-Path artifacts/release.json)) { return $null }
+    return (Get-Content artifacts/release.json -Raw | ConvertFrom-Json)
 }
 
-function Verify-Archive([string]$archive) {
-    if (Test-Path artifacts/release.json) {
-        $json = Get-Content artifacts/release.json -Raw | ConvertFrom-Json
-        $expected = [string]$json.archive.sha256
-        if ($expected) {
-            $actual = (Get-FileHash -Algorithm SHA256 $archive).Hash.ToLower()
-            if ($actual -ne $expected.ToLower()) {
-                Die "完整性校验失败：$archive 的 sha256 与 release.json 不符（文件可能已损坏）"
-            }
-            Ok "完整性校验通过（sha256 一致）"
-        }
+# Get-ManifestField <块名> <键名> → 字符串值；缺清单/缺块/缺键一律返回空串。
+# 块名传 "" 表示顶层字段（如 version）——顶层取值不会误取同名嵌套键（payload.version）。
+function Get-ManifestField([string]$block, [string]$key) {
+    $json = Get-Manifest
+    if (-not $json) { return "" }
+    if (-not $block -or $block -eq "-") {
+        $prop = $json.PSObject.Properties[$key]
+    } else {
+        $holder = $json.PSObject.Properties[$block]
+        if (-not $holder -or -not $holder.Value) { return "" }
+        $prop = $holder.Value.PSObject.Properties[$key]
     }
+    if (-not $prop -or $null -eq $prop.Value) { return "" }
+    return [string]$prop.Value
+}
+
+function Get-ManifestVersion { return (Get-ManifestField "" "version") }
+
+# 摘要前 12 位（提示文案用；空值原样返回空）
+function Get-ShortHash([string]$value) {
+    $v = ([string]$value).Trim()
+    if ($v.Length -le 12) { return $v }
+    return $v.Substring(0, 12)
+}
+
+function Get-Sha256([string]$path) {
+    return (Get-FileHash -Algorithm SHA256 $path).Hash.ToLower()
+}
+
+# Verify-Sha256 <文件> <期望 sha256> <中文名>
+# 期望值为空（清单未记录）时降级为告警；不一致即 Die。
+function Verify-Sha256([string]$path, [string]$expected, [string]$label) {
+    $exp = ([string]$expected).Trim().ToLower()
+    if (-not $exp) { Warn "$label：清单未记录 sha256，跳过完整性校验"; return }
+    $actual = Get-Sha256 $path
+    if ($actual -ne $exp) {
+        Die "完整性校验失败：$label 的 sha256 与交付清单不符，文件可能在拷贝中损坏（请重新获取交付包）：$path"
+    }
+    Ok "完整性校验通过：$label（sha256 一致）"
+}
+
+# 镜像 Id 读取（运行时不可用/镜像不存在时为空）；podman 与 docker 的 Id 前缀
+# 不一致（一方带 sha256:），比对前统一剥前缀。
+function Get-ImageId([string]$ref) {
+    $id = & $Script:Rt image inspect --format "{{.Id}}" $ref 2>$null | Select-Object -First 1
+    if ($LASTEXITCODE -ne 0 -or -not $id) { return "" }
+    return (([string]$id).Trim().ToLower() -replace '^sha256:', '')
+}
+
+# Test-ImageIdMatches <镜像 ref> <清单记录的 Id>：本机镜像与交付清单同源时返回 $true
+function Test-ImageIdMatches([string]$ref, [string]$want) {
+    $actual = Get-ImageId $ref
+    if (-not $actual) { return $false }
+    $w = ([string]$want).Trim().ToLower() -replace '^sha256:', ''
+    return [bool]($w -and $actual -eq $w)
 }
 
 function Do-Load {
-    New-Item -ItemType Directory -Force artifacts | Out-Null
     Assert-RuntimeAlive
-    $archive = Find-Archive
-    if (-not $archive -or -not (Test-Path $archive)) {
-        Die "artifacts 下未找到 xmnn-runtime-*.tar.gz，请确认交付包已完整解压"
+    if (-not (Test-Path artifacts/release.json)) {
+        Die "交付包不完整：缺 artifacts\release.json（请确认交付包已完整解压）"
     }
-    Verify-Archive $archive
-    Info "导入镜像：$archive"
-    & $Script:Rt load -i $archive
-    if ($LASTEXITCODE -ne 0) {
-        Die "镜像导入失败：请查看上方 $($Script:Rt) 的原始报错（常见原因：磁盘空间不足）；处理后重新执行 load 即可，导入过程幂等。"
+    $schema = Get-ManifestField "" "schema_version"
+    if ($schema -and $schema -ne "2") {
+        Die @"
+交付清单版本不受支持：artifacts\release.json 的 schema_version=$schema（本脚本需要 2）
+  说明：旧清单没有独立载荷信息，无法派生构建；请使用与交付包成套的新版 xmnnctl.ps1 重试
+"@
+    }
+    $mver = Get-ManifestVersion
+    $baseRef = Get-ManifestField "image" "ref"
+    $baseId = Get-ManifestField "image" "id"
+    $archiveFile = Get-ManifestField "archive" "file"
+    $archiveSha = Get-ManifestField "archive" "sha256"
+    $payloadFile = Get-ManifestField "payload" "file"
+    $payloadSha = Get-ManifestField "payload" "sha256"
+    if (-not ($mver -and $baseRef -and $baseId -and $archiveFile -and $payloadFile)) {
+        Die @"
+交付包不完整：artifacts\release.json 缺少必需字段（version / image.ref / image.id / archive.file / payload.file）
+  处理方式：重新获取完整交付包（清单与制品必须成套），或联系交付方核对
+"@
     }
     $ver = Get-EnvValue XMNN_VERSION
-    if (-not $ver) { Die ".env 缺少 XMNN_VERSION" }
-    # 镜像 tar 由 podman save 产出：打包机 podman tag 时裸名已归一化，归档内
-    # RepoTag 固定为 localhost/xmnn-runtime:<ver>；docker load 原样保留该名，
-    # 故双运行时统一引用 localhost/ 全称（裸名在 docker 下会按 docker.io 远程镜像解析）。
-    # load 返回后镜像索引偶发瞬时未就绪，重试 5 次（间隔 2s）。
+    if (-not $ver) { Die ".env 缺少 XMNN_VERSION（先执行 .\xmnnctl.ps1 init 生成 .env）" }
+    if ($ver -ne $mver) {
+        Die @"
+版本不一致：.env 的 XMNN_VERSION=$ver，交付清单 version=$mver
+  修法：把 .env 中的 XMNN_VERSION 改为 $mver（交付版本以清单为准），再重新执行 .\xmnnctl.ps1 load
+"@
+    }
+
+    # 底座：本机已有同 Id 镜像则跳过导入（幂等，不重复解 1.1 GB 归档）
+    if (Test-ImageIdMatches $baseRef $baseId) {
+        Info "底座已在本机，跳过导入：$baseRef"
+    } else {
+        $archive = Join-Path "artifacts" $archiveFile
+        if (-not (Test-Path $archive)) {
+            Die "交付包不完整：缺少底座归档 $archive（请确认交付包已完整解压）"
+        }
+        Verify-Sha256 $archive $archiveSha "底座归档"
+        Info "导入底座镜像：$archive（约 1-5 分钟）"
+        & $Script:Rt load -i $archive
+        if ($LASTEXITCODE -ne 0) {
+            Die "镜像导入失败：请查看上方 $($Script:Rt) 的原始报错（常见原因：磁盘空间不足）；处理后重新执行 load 即可，导入过程幂等。"
+        }
+        if (-not (Test-ImageIdMatches $baseRef $baseId)) {
+            Die @"
+交付包与镜像不匹配：导入后 $baseRef 的 Id 与清单记录的 $(Get-ShortHash $baseId)… 不一致
+  处理方式：归档与清单一同重新获取（必须成套），或联系交付方核对
+"@
+        }
+    }
+    Ok "底座镜像就绪：$baseRef"
+
+    # 载荷 wheel（构建上下文 = payload 目录）
+    $payloadPath = Join-Path "payload" $payloadFile
+    if (-not (Test-Path $payloadPath)) {
+        Die @"
+交付包不完整：缺少载荷 wheel $payloadPath
+  载荷应与 artifacts 同级放在 payload 目录内；请确认交付包已完整解压后重试
+"@
+    }
+    Verify-Sha256 $payloadPath $payloadSha "载荷 wheel"
+    if (-not (Test-Path "payload/Dockerfile")) {
+        Die "交付包不完整：缺少派生构建文件 payload\Dockerfile（请重新获取交付包）"
+    }
+
+    # 派生构建（离线装载荷 + 构建期守卫；失败即中止，不产出 tag）
     $imgRef = "localhost/xmnn-runtime:$ver"
-    $ready = $false
-    for ($i = 0; $i -lt 5; $i++) {
-        try {
-            $null = & $Script:Rt image inspect $imgRef 2>$null
-            if ($LASTEXITCODE -eq 0) { $ready = $true; break }
-        } catch { }
-        Start-Sleep -Seconds 2
+    Info "派生构建载荷镜像：$imgRef（离线安装 + 10 项守卫，约 1-3 分钟）"
+    & $Script:Rt build -f payload/Dockerfile `
+        --build-arg "BASE_IMAGE=$baseRef" `
+        --build-arg "PAYLOAD_VERSION=$ver" `
+        -t $imgRef payload
+    if ($LASTEXITCODE -ne 0) {
+        Die @"
+派生构建失败：请查看上方 $($Script:Rt) 的原始报错；构建全程离线（与网络无关），常见原因：
+  - 磁盘空间不足（派生镜像另需约 0.2 GB）
+  - 底座与载荷不匹配（构建日志中 pip check 报缺依赖）——请把上方报错反馈给交付方
+  处理后重新执行 .\xmnnctl.ps1 load 即可（幂等，底座已导入时不会重复导入）
+"@
     }
-    if (-not $ready) {
-        Die "导入的镜像中没有 $imgRef；请核对 .env 的 XMNN_VERSION 与交付包版本"
-    }
-    Ok "镜像 $imgRef 已就绪"
-    Info "执行交付守卫（10 项）"
-    Do-Smoke
+    Ok "载荷已装入 $imgRef"
+    Info "下一步：.\xmnnctl.ps1 up（如需复核守卫可执行 .\xmnnctl.ps1 smoke）"
 }
 
 # ── compose 包装与服务管理 ─────────────────────────────────────────────────
@@ -446,16 +533,21 @@ function Do-Smoke {
     Assert-RuntimeAlive
     $cname = Get-EnvValue XMNN_CONTAINER_NAME; if (-not $cname) { $cname = "xmnn-runtime" }
     $ver = Get-EnvValue XMNN_VERSION
+    if (-not $ver) { Die ".env 缺少 XMNN_VERSION；请先 .\xmnnctl.ps1 init" }
+    # 守卫跑的是**派生镜像**（载荷由 load 装入底座后产出），底座不含载荷
+    $imgRef = "localhost/xmnn-runtime:$ver"
     if (Container-Running $cname) {
         Info "容器运行中，经 exec 执行守卫"
         & $Script:Rt exec $cname /opt/conda/bin/python /opt/xmnnrt-smoke/_runtime_smoke.py
     } else {
-        if (-not $ver) { Die ".env 缺少 XMNN_VERSION；请先 ./xmnnctl.ps1 init" }
-        Info "容器未运行，使用一次性容器执行守卫"
+        if (-not (Get-ImageId $imgRef)) {
+            Die "本机没有派生镜像 $imgRef：请先执行 .\xmnnctl.ps1 load（把 payload 内载荷装入底座）后再跑 smoke"
+        }
+        Info "容器未运行，使用派生镜像 $imgRef 的一次性容器执行守卫"
         # 必须显式 --entrypoint：镜像默认 entrypoint 的命令模式会把脚本交给
         # cp314t 登录环境解析（实测会 9 项失败）。
         & $Script:Rt run --rm @Script:RunFlags --entrypoint /opt/conda/bin/python `
-            "localhost/xmnn-runtime:$ver" /opt/xmnnrt-smoke/_runtime_smoke.py
+            $imgRef /opt/xmnnrt-smoke/_runtime_smoke.py
     }
 }
 
@@ -464,11 +556,22 @@ function Do-Smoke {
 function Do-Version {
     $ver = Get-EnvValue XMNN_VERSION
     if ($ver) { Write-Host "xmnn-runtime release: $ver" }
-    else      { Write-Host "xmnn-runtime release: 未知（请先 ./xmnnctl.ps1 init）" }
-    if (Test-Path artifacts/release.json) {
-        $json = Get-Content artifacts/release.json -Raw | ConvertFrom-Json
-        Write-Host "archive sha256: $($json.archive.sha256)"
+    else      { Write-Host "xmnn-runtime release: 未知（请先 .\xmnnctl.ps1 init）" }
+    if (-not (Test-Path artifacts/release.json)) {
+        Warn "未找到 artifacts\release.json，无法显示交付清单摘要"
+        return
     }
+    $mver = Get-ManifestVersion; if (-not $mver) { $mver = "未记录" }
+    $baseRef = Get-ManifestField "image" "ref"; if (-not $baseRef) { $baseRef = "未记录" }
+    $baseId = Get-ManifestField "image" "id"
+    $payloadFile = Get-ManifestField "payload" "file"; if (-not $payloadFile) { $payloadFile = "未记录" }
+    $payloadSha = Get-ManifestField "payload" "sha256"
+    $archiveFile = Get-ManifestField "archive" "file"; if (-not $archiveFile) { $archiveFile = "未记录" }
+    $archiveSha = Get-ManifestField "archive" "sha256"
+    Write-Host "交付版本   : $mver"
+    Write-Host "底座镜像   : $baseRef（Id $(Get-ShortHash $baseId)）"
+    Write-Host "载荷 wheel : $payloadFile（sha256 $(Get-ShortHash $payloadSha)）"
+    Write-Host "底座归档   : $archiveFile（sha256 $(Get-ShortHash $archiveSha)）"
 }
 
 # ── 入口分发 ────────────────────────────────────────────────────────────────
