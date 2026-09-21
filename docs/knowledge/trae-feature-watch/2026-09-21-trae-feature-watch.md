@@ -1,7 +1,7 @@
 ---
 title: TRAE 生态特性周报（2026-09-21）
 date: 2026-09-21
-source: "多源：TRAE 官方更新日志（docs.trae.cn / docs.trae.ai）+ 本地清单盘点（c:\\Users\\xinzo\\.trae-cn）；各条目来源 URL 见正文"
+source: "多源：TRAE 官方更新日志（docs.trae.cn / docs.trae.ai）+ 本地清单盘点（%USERPROFILE%\\.trae-cn）；各条目来源 URL 见正文"
 report_type: trae-feature-watch
 check_window: "2026-09-07 ~ 2026-09-21"
 ---
@@ -97,7 +97,7 @@ check_window: "2026-09-07 ~ 2026-09-21"
 
 ### 1. Lark 官方插件升级：1.0.4 → 1.0.5
 
-- **来源**：本地清单（`c:\Users\xinzo\.trae-cn\plugins\trae-remote-official\lark\1.0.5`）
+- **来源**：本地清单（`%USERPROFILE%\.trae-cn\plugins\trae-remote-official\lark\1.0.5`）
 - **能力说明**：Lark 插件版本由 1.0.4 升级至 **1.0.5**（旧版本目录已替换）；connector 保持不变，飞书 27 个 lark-* skills 随插件提供。
 - **适用场景与实用价值**：属于官方增量更新，建议在飞书文档/日历/Base 等高频场景中留意能力变化；具体 changelog 官方未随插件附带，**版本差异内容待核验**。
 

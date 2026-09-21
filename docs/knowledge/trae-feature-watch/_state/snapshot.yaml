@@ -209,10 +209,10 @@ official_sources:
     note: 设计库无独立 changelog，增量通过 TraeWork 更新日志与文档页变更监测
 
 # ─────────────────────────────────────────────
-# 本地清单盘点（2026-09-21，本机 c:\Users\xinzo\.trae-cn）
+# 本地清单盘点（2026-09-21，本机 %USERPROFILE%\.trae-cn）
 # ─────────────────────────────────────────────
 local_inventory:
-  plugins_dir: c:\Users\xinzo\.trae-cn\plugins
+  plugins_dir: %USERPROFILE%\.trae-cn\plugins
   plugins:
     - {name: browser-bridge, version: "0.2.0", kind: standalone, has_connector: false}
     - {name: trae-remote-official/browser, version: "1.0.3", kind: official-plugin, has_connector: false}
@@ -228,7 +228,7 @@ local_inventory:
     - {name: trae-remote-official/web-app-development, version: "0.1.1", kind: official-plugin, has_connector: false}
   plugins_total: 12
   connectors: [dingtalk, gitee, github, lark]
-  mcps_dir: c:\Users\xinzo\.trae-cn\mcps
+  mcps_dir: %USERPROFILE%\.trae-cn\mcps
   active_mcp_servers:  # 以本会话 mcp_file_system 声明为准（工作区 s_SpecWeave-01b8097d / solo_agent_lite）
     - {server: integrated_code_mode, tools: [Exec], note: 隔离 JS 运行时编排工具}
     - {server: mcp_plugin_Gitee_gitee, tools_count: 23, note: Gitee 平台 MCP（仓库/Issue/PR/Release/评论）}
@@ -451,4 +451,5 @@ next_run_notes:
   - 待核验：设计系统文档编辑管理能力的上线日期；lark 1.0.5 相对 1.0.4 的具体变更内容；TraeCode CLI 独立更新日志页 URL（搜索服务故障，择期重试）
   - 已销项：企业级 Hook / Fork Chat 日期（均 2026-06-29）；旧路由 v3.6.65 版本号疑云（仅停滞旧路由承载，现行页不含该条目，不再追踪）
   - 新报告命名：YYYY-MM-DD-trae-feature-watch.md；追加进 trae-feature-watch/index.md 的 toctree
+  - 脱敏纪律：报告与快照中的本机路径一律用 %USERPROFILE% 占位符（遵循 docs/knowledge/best-practices/sensitive-info-desensitization-spec.md §6.1），禁止写入真实用户名
   - diff 比对维度：官方源 latest_entry_date/latest_version/recent_entries 增项；本地 plugins 版本增减；connectors 增减；active MCP 增减；session_skills 名单增减

@@ -1,6 +1,6 @@
 ---
 title: TRAE 生态特性监测
-source: "TRAE 官方渠道（docs.trae.cn / docs.trae.ai / trae.cn）+ 本地清单（c:\\Users\\xinzo\\.trae-cn）"
+source: "TRAE 官方渠道（docs.trae.cn / docs.trae.ai / trae.cn）+ 本地清单（%USERPROFILE%\\.trae-cn）"
 ---
 
 # 🔭 TRAE 生态特性监测
