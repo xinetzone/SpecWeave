@@ -69,6 +69,7 @@ apps/<group>/<app-name>/
 | [jupyter-podman-rootless](containers/jupyter-podman-rootless/README.md) | 基于 Podman rootless 的 Jupyter 开发容器（Python 3.14t + Miniforge3 + SSH + OMLMD/OLOT + Toolbx 透传） |
 | [client](containers/client/README.md) | jupyter-podman-rootless 镜像消费端：podman-py load/run/stop + 镜像备份（invoke save/load）+ quant/xmnn/monetize 工作负载栈 |
 | [shared](containers/README.md)（[pyproject](containers/shared/pyproject.toml)） | 组内共享包 jpman-common：podman SDK 连接层唯一事实源 + 只读工具，两端共同依赖（组层 [AGENTS](containers/AGENTS.md) 代管） |
+| [offline-delivery](containers/offline-delivery/README.md) | 厂商侧离线交付链路：消费 `containers/workspace/dist/*.whl` 与基镜像，经零 Python CLI `bin/relpack` 产出客户离线交付包（多产品分层 `products/<产品>/`，首个产品 xmnn-runtime） |
 
 #### docker-images/ —— 容器镜像类（Docker 生态）
 

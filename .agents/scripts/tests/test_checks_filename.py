@@ -49,6 +49,7 @@ class TestIsValid:
             ("Cargo.toml", ".toml"),
             (".gitignore", ""),
             ("xmnn_bootstrap.pth", ".pth"),
+            ("product.env", ".env"),
         ]
         for name, ext in valid_names:
             ok, msg = fn._is_valid(name, ext)

@@ -1,24 +1,25 @@
 ---
 id: "containers-group-overview"
-title: "组全景：builder / client / shared 三成员"
-source: "三成员 pyproject.toml + 各自 AGENTS.md/README.md（2026-09-15 事实）"
+title: "组全景：builder / client / shared / offline-delivery 四成员"
+source: "四成员 AGENTS.md/README.md + 三包 pyproject.toml（2026-09-21 事实）"
 ---
-# 00 · 组全景：构建端 / 消费端 / 共享包
+# 00 · 组全景：构建端 / 消费端 / 共享包 / 离线交付链路
 
-## 1. 三成员一览
+## 1. 四成员一览
 
-| | jupyter-podman-rootless（构建端） | client（消费端） | shared（共享包） |
-|---|---|---|---|
-| 角色 | 生产 rootless Jupyter 镜像 | 加载镜像 + 管理容器生命周期 + opt-in 工作负载栈 | 两端共用的连接层与只读工具 |
-| 发行名 | `jupyter-podman-rootless` | `jupyter-podman-client` | `jpman-common` 0.1.0 |
-| import 名 | `jpman_builder` | `jpman_client` | `jpman_common` |
-| 编排后端 | 三层：podman-compose → podman-py → CLI | 两层：podman-py → CLI（+ 三栈 podman-compose 子进程） | 无编排；`[sdk]` extra 提供 podman |
-| Python | ≥ 3.14，镜像内为 3.14t（free-threading） | ≥ 3.14 | ≥ 3.14 |
-| extras | sdk / compose / full / model | compose（三栈） | sdk |
-| 人类文档 | [18 篇](../jupyter-podman-rootless/docs/README.md) | [13 篇](../client/docs/README.md) | 无（本组级文档代管） |
-| AI 规则 | [7 个 rules](../jupyter-podman-rootless/.agents/README.md) | [6 个 rules + C1-C14](../client/AGENTS.md) | [shared-package.md](../.agents/rules/shared-package.md) |
+| | jupyter-podman-rootless（构建端） | client（消费端） | shared（共享包） | offline-delivery（离线交付链路） |
+|---|---|---|---|---|
+| 角色 | 生产 rootless Jupyter 镜像 | 加载镜像 + 管理容器生命周期 + opt-in 工作负载栈 | 两端共用的连接层与只读工具 | 把预构建 wheel 装入运行时镜像并打包为客户可自持的离线交付物 |
+| 发行名 | `jupyter-podman-rootless` | `jupyter-podman-client` | `jpman-common` 0.1.0 | 无（零 Python 工具链：bash 4+ / pwsh 7.4+ / podman） |
+| import 名 | `jpman_builder` | `jpman_client` | `jpman_common` | 无（`bin/relpack` + `bin/relpack.ps1` 双入口 CLI） |
+| 编排后端 | 三层：podman-compose → podman-py → CLI | 两层：podman-py → CLI（+ 三栈 podman-compose 子进程） | 无编排；`[sdk]` extra 提供 podman | 无编排：直接调用 podman（Windows 经 `wsl.exe` 桥接） |
+| Python | ≥ 3.14，镜像内为 3.14t（free-threading） | ≥ 3.14 | ≥ 3.14 | 不需要宿主 Python |
+| extras | sdk / compose / full / model | compose（三栈） | sdk | 无 |
+| 人类文档 | [18 篇](../jupyter-podman-rootless/docs/README.md) | [13 篇](../client/docs/README.md) | 无（本组级文档代管） | [3 篇](../offline-delivery/docs/README.md) |
+| AI 规则 | [7 个 rules](../jupyter-podman-rootless/.agents/README.md) | [6 个 rules + C1-C14](../client/AGENTS.md) | [shared-package.md](../.agents/rules/shared-package.md) | [delivery-pipeline.md](../offline-delivery/.agents/rules/delivery-pipeline.md)（8 项 P0 + 1 rule） |
 
-三成员均为 scikit-build-core 纯 Python 包（src 布局），构建产物入各自 `build/` 目录。
+三个包成员均为 scikit-build-core 纯 Python 包（src 布局），构建产物入各自 `build/` 目录；
+离线交付链路不建 Python 包，其产品资产按 `products/<产品名>/` 分层，首个产品为 `xmnn-runtime`。
 
 ## 2. 镜像流与依赖流
 
@@ -33,11 +34,19 @@ flowchart LR
         O["opt-in 工作负载栈 quant/xmnn/monetize"]
     end
     Shared["shared：jpman_common 连接层与只读工具"]
+    subgraph Delivery["离线交付链路 offline-delivery"]
+        W["workspace/dist/*.whl 暂存"]
+        D["bin/relpack stage/build/pack/smoke"]
+        Rel["客户交付包：release/ 骨架 + artifacts/*.tar.gz + release.json"]
+    end
     B -->|"podman save"| Cache
     Cache -->|"invoke load 自动取最新 tar"| C
     C -.->|"[compose] extra 启用"| O
     Shared -->|"editable 最先安装 G2"| Build
     Shared -->|"editable 最先安装 G2"| Consume
+    B -->|"基镜像 localhost/jupyter-podman-rootless:latest"| D
+    W -->|"预构建 wheel"| D
+    D --> Rel
 ```
 
 交接约定：
@@ -47,8 +56,13 @@ flowchart LR
 - 消费端 `invoke load` 自动从 `../jupyter-podman-rootless/.image-cache/` 取最新 tar 加载，
   含完整性校验；也支持 `invoke save/images` 做本地备份管理。
 - shared 不产出镜像、不接触 daemon；它是两端 Python 进程内的库依赖（G1/G2）。
+- 离线交付链路处于镜像流**末端分支**：外部输入仅两项——`apps/containers/workspace/dist/*.whl`
+  （xmnn-dev 栈预构建 wheel）与基镜像 `localhost/jupyter-podman-rootless:latest`；产出客户可自持的
+  `release/` 交付骨架（零 Python、零仓库外引用）与 `artifacts/*.tar.gz` + `release.json`。
+  它**不回流**到上述镜像流，也不依赖 client/shared；详见
+  [offline-delivery/docs/00-overview.md](../offline-delivery/docs/00-overview.md)。
 
-## 3. opt-in 工作负载栈速查（均在 client 内）
+## 3. opt-in 工作负载栈速查（三栈，均在 client 内）
 
 三栈平行于根运行路径、互不回流；均为 podman-compose 子进程层，**Windows 原生宿主门禁**
 （需在 WSL2/Linux 内运行，client C11-C13），rootless 三必需经
@@ -72,6 +86,7 @@ extends 统一继承。
 | 在其它 Python 代码里以 SDK 方式加载/运行镜像 | 消费端 SDK 用法：[05-sdk-usage](../client/docs/05-sdk-usage.md) |
 | 在 Windows 11 原生 CPython 上连 Podman | 消费端：[03-windows-wsl](../client/docs/03-windows-wsl.md)（自动探测 WSL9P/Machine/tcp） |
 | 跑量化 / XMNN 打包 / tvm-ffi 编译工作负载 | 消费端三栈（需 `[compose]` extra + WSL2/Linux） |
+| 打客户离线交付包（运行时镜像 + wheel → tar.gz 交付物） | 离线交付链路：`bin/relpack pack`（[offline-delivery/docs/01-quickstart.md](../offline-delivery/docs/01-quickstart.md)），或客户侧 `release/xmnnctl` |
 | 容器出故障要排查 | 消费端 [04-troubleshooting](../client/docs/04-troubleshooting-guide.md)（W-I1~W-I4 / C-I1~C-I5 速查）；构建端 [13-faq](../jupyter-podman-rootless/docs/13-faq.md) |
 
 ## 5. 全组共同契约（摘要）

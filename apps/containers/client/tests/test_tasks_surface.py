@@ -11,7 +11,6 @@ from invoke import Task
 from jpman_client.tasks import monetize as monetize_mod
 from jpman_client.tasks import quant as quant_mod
 from jpman_client.tasks import xmnn as xmnn_mod
-from jpman_client.tasks import xmnnrt as xmnnrt_mod
 from jpman_client.tasks import ns
 
 SIX = ("build", "down", "logs", "ps", "smoke", "up")
@@ -29,7 +28,9 @@ def test_namespace_task_sets():
     assert set(_col("quant").tasks) == set(SIX)
     assert set(_col("xmnn").tasks) == {*SIX, "build-tvm", "wheel", "save", "load"}
     assert set(_col("monetize").tasks) == {*SIX, "build-native", "wheel"}
-    assert set(_col("xmnnrt").tasks) == {*SIX, "pack"}
+    # 原 wheel 消费运行时栈（命名空间前缀 xmnnr*）随客户离线交付链路迁出为
+    # 独立应用 apps/containers/offline-delivery，此处不再注册集合。
+    assert [n for n in ns.collections if n.startswith("xmnnr")] == []
 
 
 def test_root_and_alias_namespaces_intact():
@@ -51,10 +52,6 @@ def test_docstrings_golden():
     assert x.tasks["wheel"].__doc__.startswith("栈内执行 Nuitka 全流程打包")
     assert m.tasks["build-native"].__doc__.startswith("栈内 clang++ 编译")
     assert m.tasks["wheel"].__doc__.startswith("栈内 setuptools 打 agent-monetize")
-    r = _col("xmnnrt")
-    assert r.tasks["build"].__doc__.startswith("暂存 wheel 后构建 xmnn-runtime")
-    assert r.tasks["up"].__doc__.startswith("渲染并启动 xmnn-runtime 栈")
-    assert r.tasks["smoke"].__doc__ == "运行 xmnn-runtime 守卫：已装 wheel 与内置 torch 的干净环境 10 项验证。"
 
 
 def test_signatures_golden():
@@ -65,26 +62,18 @@ def test_signatures_golden():
         "tag", "base_image", "pip_mirror", "conda_mirror", "torch", "no_cache",
     ]
     assert _params(m.tasks["build"]) == ["tag", "base_image", "pip_mirror", "no_cache"]
-    # xmnnrt build 多 --wheel 暂存参数（whl 显式指定）与 --torch 形态（C26）
-    assert _params(_col("xmnnrt").tasks["build"]) == [
-        "tag", "base_image", "pip_mirror", "wheel", "torch", "no_cache",
-    ]
-    # up/smoke：形参面 = 能力并集——quant/xmnn/xmnnrt 有 gpu，xmnn 另有 offline 三态
+    # up/smoke：形参面 = 能力并集——quant/xmnn 有 gpu，xmnn 另有 offline 三态
     assert _params(q.tasks["up"]) == ["gpu", "skip_build"]
     assert _params(x.tasks["up"]) == ["gpu", "skip_build", "offline", "no_offline"]
     assert _params(m.tasks["up"]) == ["skip_build"]
-    assert _params(_col("xmnnrt").tasks["up"]) == ["gpu", "skip_build"]
     # xmnn 离线镜像归档（仅 supports_offline 栈生成）
     assert _params(x.tasks["save"]) == ["tag", "cache_dir"]
     assert _params(x.tasks["load"]) == ["path", "cache_dir"]
-    # pack：客户离线交付包打包（仅 --version）
-    assert _params(_col("xmnnrt").tasks["pack"]) == ["version"]
     assert _params(q.tasks["smoke"]) == ["gpu"]
     assert _params(x.tasks["smoke"]) == ["gpu"]
     assert _params(m.tasks["smoke"]) == []
-    assert _params(_col("xmnnrt").tasks["smoke"]) == ["gpu"]
     # 其余四任务
-    for col in (q, x, m, _col("xmnnrt")):
+    for col in (q, x, m):
         assert _params(col.tasks["down"]) == ["volumes"]
         assert _params(col.tasks["logs"]) == ["tail"]
         assert _params(col.tasks["ps"]) == []
@@ -100,8 +89,6 @@ def test_auto_shortflags_quant_on_others_off():
         assert _col("quant").tasks[name].auto_shortflags is True
         assert _col("xmnn").tasks[name].auto_shortflags is False
         assert _col("monetize").tasks[name].auto_shortflags is False
-        assert _col("xmnnrt").tasks[name].auto_shortflags is False
-    assert _col("xmnnrt").tasks["pack"].auto_shortflags is False
     assert _col("xmnn").tasks["save"].auto_shortflags is False
     assert _col("xmnn").tasks["load"].auto_shortflags is False
     assert _col("xmnn").tasks["wheel"].auto_shortflags is False
@@ -110,7 +97,7 @@ def test_auto_shortflags_quant_on_others_off():
 
 def test_modules_bounded_and_declarative():
     """T4 AC-5：声明模块 ≤160 行，且不再内嵌同构编排函数。"""
-    for mod in (quant_mod, xmnn_mod, monetize_mod, xmnnrt_mod):
+    for mod in (quant_mod, xmnn_mod, monetize_mod):
         assert len(inspect.getsource(mod).splitlines()) <= 160, mod.__name__
         src = inspect.getsource(mod)
         for forbidden in ("def _gate_platform", "def _compose_argv", "def _run_compose",

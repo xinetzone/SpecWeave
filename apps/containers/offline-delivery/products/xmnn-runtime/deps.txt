@@ -1,0 +1,43 @@
+# =============================================================================
+# xmnn-runtime 底座运行时依赖清单（Containerfile.xmnn-runtime Layer 2 的构建输入）
+#
+# 来源 wheel : xmnn-1.2.1.dev0-cp314-cp314-linux_x86_64.whl
+# sha256     : cb5c38182564db903b748af45e45071f5222cfef58b9dc8a3568960d30fcba02
+# 生成时间   : 2026-09-21
+#
+# 生成方式（与 `bin/relpack deps --write` 同构）：
+#   unzip -p <whl> 'xmnn-*.dist-info/METADATA' | grep '^Requires-Dist:'
+#   → 只保留**不含分号**的条目（即无环境 marker 的「无条件运行时依赖」），
+#     去掉 `Requires-Dist:` 前缀与首尾空白后逐行落盘。
+#   `extra == "..."` 类依赖必然带分号，天然被本条规则过滤；torch 亦不在清单内
+#   （由 Layer 1 按 TORCH_FLAVOR 从 download.pytorch.org 官方索引精确 pin 安装）。
+#
+# 语义：本清单是载荷 wheel 声明的无条件运行时依赖 —— 底座镜像只装这些依赖，
+#       既不装 xmnn wheel 本身，也不装任何载荷（载荷由交付侧派生时安装）。
+#
+# ⚠️ 警示：本清单变化必须重发底座镜像（localhost/xmnn-runtime:base-<形态>）。
+#    底座与载荷是两条独立发布线：交付侧 `xmnnctl load` 派生安装载荷时走
+#    `pip install --no-index --no-deps`，**不会**补装缺失依赖。依赖清单一旦变更
+#    而未重发底座，派生出的交付镜像将带着不完整的依赖面出厂（表现为运行期
+#    ImportError，而非构建期失败）。
+# =============================================================================
+numpy>=1.26
+scipy>=1.11
+pandas>=2.1
+matplotlib>=3.8
+Pillow>=10.0
+onnx>=1.15
+protobuf>=4.25
+openpyxl>=3.1
+tabulate>=0.9
+rich>=13.0
+tqdm>=4.66
+tomlkit>=0.12
+decorator>=5.1
+attrs>=23.0
+psutil>=5.9
+cloudpickle>=3.0
+typing_extensions>=4.8
+pytest>=7.0
+telnetlib3>=2.0
+typer>=0.12

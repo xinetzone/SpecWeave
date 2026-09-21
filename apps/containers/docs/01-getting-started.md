@@ -1,11 +1,11 @@
 ---
 id: "containers-group-getting-started"
 title: "跨成员端到端快速开始"
-source: "client/README.md + jupyter-podman-rootless/AGENTS.md 快速开始 + 三成员 pyproject.toml"
+source: "client/README.md + jupyter-podman-rootless/AGENTS.md + offline-delivery/AGENTS.md 快速开始 + 四成员现状（构建端 jupyter-podman-rootless / 消费端 client / 组内共享包 shared 三个 Python 包 + 脚本型成员 offline-delivery 无 Python 包）"
 ---
 # 01 · 跨成员端到端快速开始
 
-本文覆盖单成员文档无法承载的**跨成员顺序**：shared → 构建端 → 缓存交接 → 消费端 → 可选工作负载栈。
+本文覆盖单成员文档无法承载的**跨成员顺序**：shared → 构建端 → 缓存交接 → 消费端 → 可选工作负载栈 → 离线交付包。
 
 ## 0. 前置
 
@@ -84,7 +84,26 @@ invoke quant.down
 xmnn（`xmnn.*`，含 `build-tvm`/`wheel`）与 monetize（`monetize.*`，含 `build-native`/`wheel`）
 同构，详见 [client/docs/10-12](../client/docs/README.md) 与各叠加层 README。
 
-## 6. 验证清单
+## 6. 末端分支：打客户离线交付包（独立应用）
+
+离线交付链路是镜像流的**末端分支**，由独立应用
+[offline-delivery/](../offline-delivery/README.md) 承担：它消费两个外部输入——
+`apps/containers/workspace/dist/*.whl`（预构建 wheel）与基镜像 `localhost/jupyter-podman-rootless:latest`
+（由构建端产出），产出**客户可自持**的离线交付包；不回流到镜像流，也不依赖 client/shared。
+
+```bash
+cd offline-delivery
+bin/relpack stage                 # 暂存 ../workspace/dist 最新 xmnn-*.whl 到 products/xmnn-runtime/wheels/
+bin/relpack build --torch cpu     # 构建运行时镜像（形态 tag + :latest 别名）
+bin/relpack pack                  # 产出 products/xmnn-runtime/release/artifacts/xmnn-runtime-<版本>.tar.gz + release.json
+bin/relpack smoke                 # 以交付骨架为唯一入口做端到端验证
+```
+
+Windows 原生（PowerShell 7.4+，经 `wsl.exe` 桥接）用 `pwsh bin/relpack.ps1 <子命令>`；
+客户侧则只用交付骨架自带的 `xmnnctl` / `xmnnctl.ps1`。完整前置条件与逐命令预期见
+[offline-delivery/docs/01-quickstart.md](../offline-delivery/docs/01-quickstart.md)。
+
+## 7. 验证清单
 
 | 检查 | 期望 |
 |------|------|
@@ -93,9 +112,12 @@ xmnn（`xmnn.*`，含 `build-tvm`/`wheel`）与 monetize（`monetize.*`，含 `b
 | `invoke load` | 从 `.image-cache/` 取 tar 并完成完整性校验 |
 | `invoke run` 后 `invoke status` | 容器 running，打印 SSH/Jupyter 入口 |
 | WSL2 内 `invoke quant.smoke` | 三冒烟 PASS（仅安装 [compose] 后） |
+| `bin/relpack version`（离线交付链路） | 打印产品名/镜像名/形态 tag/交付版本/wheel 名 |
+| `bin/relpack smoke` | 交付骨架 init → up → 容器内 10 项守卫 → down 全通 |
 
-## 7. 排障入口
+## 8. 排障入口
 
 - Windows 原生坑 W-I1~W-I4 / 容器内坑 C-I1~C-I5：[client/docs/04](../client/docs/04-troubleshooting-guide.md)
 - 构建端 FAQ、健康检查：[jupyter docs/13](../jupyter-podman-rootless/docs/13-faq.md)、[12-healthcheck](../jupyter-podman-rootless/docs/12-healthcheck.md)
+- 离线交付排障（缺 wheel/镜像/端口占用）：[offline-delivery/docs/01-quickstart.md](../offline-delivery/docs/01-quickstart.md)
 - rootless 三必需与连接层纪律（G1-G4）：[../AGENTS.md](../AGENTS.md)

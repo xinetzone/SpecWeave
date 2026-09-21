@@ -1,0 +1,601 @@
+#!/usr/bin/env pwsh
+#requires -Version 7.0
+# ==============================================================================
+# xmnnctl.ps1 — XMNN Runtime 客户控制脚本（Windows，PowerShell 7.4+）
+#
+# 用法: ./xmnnctl.ps1 [-Runtime podman|docker|auto] <命令>
+#   -Runtime/-r  选择容器运行时（可放在命令前或后；默认 auto：先探测
+#                podman 再 docker；命令行优先级高于环境变量 XMNN_RUNTIME）
+#   init     创建 .env 并自动生成登录密码与 Jupyter token
+#   load     导入底座镜像 + 把 payload\ 内载荷派生装入底座（均幂等；
+#            派生构建内已含 10 项守卫，失败即不产出镜像）
+#   up       启动服务（先预检宿主端口占用，跨运行时冲突 fail-fast；
+#            缺 .env 时自动 init），就绪后打印访问信息
+#   down     停止并删除容器（workspace 与 SSH host key 卷保留）
+#   ps       查看服务状态
+#   logs     查看服务日志（Ctrl+C 退出，不影响容器运行）
+#   smoke    运行 10 项运行时守卫（随时复核派生镜像）
+#   version  显示交付版本、底座与载荷摘要
+#
+# 环境变量: XMNN_RUNTIME=podman|docker|auto 选择容器运行时（被 -Runtime 覆盖）
+# 执行策略: 如被拦截，运行
+#           pwsh -ExecutionPolicy Bypass -File .\xmnnctl.ps1 <命令>
+# 注意: 请始终使用本脚本，不要在 Git Bash 中运行同名 bash 脚本控制
+#       Windows 容器（路径转换会导致参数错误）。
+# ==============================================================================
+$ErrorActionPreference = "Stop"
+Set-Location -Path $PSScriptRoot
+
+$Script:Rt = ""
+$Script:Compose = @()
+$Script:Files = @()
+$Script:RunFlags = @()
+$Script:CliRuntime = ""   # 命令行 -Runtime 选择（podman|docker|auto）；空=未提供
+$Script:Remain = @()      # 剥离全局参数后剩余的命令与命令参数
+
+function Info($m) { Write-Host "[xmnn] $m" -ForegroundColor Blue }
+function Ok($m)   { Write-Host "[ OK ] $m" -ForegroundColor Green }
+function Warn($m) { Write-Host "[WARN] $m" -ForegroundColor Yellow }
+function Die($m)  { Write-Host "[ERR ] $m" -ForegroundColor Red; exit 1 }
+
+# ── 运行时与 compose 探测 ───────────────────────────────────────────────────
+
+# 扫描全局参数：-Runtime/-r（--runtime 同样接受，支持 -Runtime=x、-rx 粘连）
+# 可出现在命令前后，其余 token 原样保留到 $Script:Remain（如 init 的 --force）；
+# -- 之后全部按位置参数处理。合法性由 Detect-Runtime 判。
+function Parse-GlobalArgs([string[]]$Tokens) {
+    $Script:CliRuntime = ""
+    $Script:Remain = @()
+    for ($i = 0; $i -lt $Tokens.Count; $i++) {
+        $t = $Tokens[$i]
+        switch -Regex ($t) {
+            '^--?runtime=(.+)$' { $Script:CliRuntime = $Matches[1]; break }
+            '^--?runtime$' {
+                if ($i + 1 -ge $Tokens.Count) { Die "$t 需要参数：podman|docker|auto" }
+                $Script:CliRuntime = $Tokens[++$i]; break
+            }
+            '^-r(.+)$' { $Script:CliRuntime = $Matches[1]; break }
+            '^-r$' {
+                if ($i + 1 -ge $Tokens.Count) { Die "$t 需要参数：podman|docker|auto" }
+                $Script:CliRuntime = $Tokens[++$i]; break
+            }
+            '^--$' {
+                for ($i++; $i -lt $Tokens.Count; $i++) { $Script:Remain += $Tokens[$i] }
+                break
+            }
+            default { $Script:Remain += $t }
+        }
+    }
+}
+
+# 用户级 compose 可执行文件的常见落点：pipx 链接在 %USERPROFILE%\.local\bin，
+# pip --user 的 Scripts 在 %APPDATA%\Python\Python3xx\Scripts。
+# 非交互/最小 PATH 环境下 Get-Command 搜不到，会把"已安装"误判成"缺少 compose"。
+function Find-UserCompanion($name) {
+    $candidates = @()
+    if ($env:USERPROFILE) {
+        $candidates += (Join-Path $env:USERPROFILE ".local\bin\$name.exe")
+    }
+    if ($env:APPDATA) {
+        $pyRoot = Join-Path $env:APPDATA "Python"
+        if (Test-Path $pyRoot) {
+            # Scripts 固定在 Python\Python3xx\Scripts（深度 2）；限制深度避免穿入 site-packages
+            $candidates += @(Get-ChildItem -Path $pyRoot -Recurse -Depth 2 -Filter "$name.exe" `
+                -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName })
+        }
+    }
+    return ($candidates | Where-Object { $_ -and (Test-Path $_) } | Select-Object -First 1)
+}
+
+function Detect-Runtime {
+    # 优先级：命令行 -Runtime > 环境变量 XMNN_RUNTIME > auto（自动探测）
+    $choice = if ($Script:CliRuntime) { $Script:CliRuntime }
+              elseif ($env:XMNN_RUNTIME) { $env:XMNN_RUNTIME }
+              else { "auto" }
+    if ($choice -in @("podman", "docker")) {
+        $Script:Rt = $choice
+        if (-not (Get-Command $choice -ErrorAction SilentlyContinue)) {
+            Die "指定的容器运行时 $choice 未安装或不在 PATH；可改用 auto 自动探测"
+        }
+    } elseif ($choice -eq "auto") {
+        if (Get-Command podman -ErrorAction SilentlyContinue) {
+            $Script:Rt = "podman"
+        } elseif (Get-Command docker -ErrorAction SilentlyContinue) {
+            $Script:Rt = "docker"
+        } else {
+            Die "未找到 podman 或 docker，请先安装容器运行时后重试"
+        }
+    } else {
+        Die "运行时只允许 podman|docker|auto（当前：$choice）"
+    }
+
+    if ($Script:Rt -eq "podman") {
+        $null = & podman compose version 2>$null
+        if ($LASTEXITCODE -eq 0) {
+            $Script:Compose = @("podman", "compose")
+        } elseif (Get-Command podman-compose -ErrorAction SilentlyContinue) {
+            $Script:Compose = @("podman-compose")
+        } else {
+            $companion = Find-UserCompanion "podman-compose"
+            if ($companion) {
+                $Script:Compose = @($companion)
+                Warn "podman-compose 不在 PATH，已自动启用：$companion"
+                Warn "建议将其目录加入 PATH（pipx: %USERPROFILE%\.local\bin；pip --user: %APPDATA%\Python\Python3xx\Scripts）"
+            } else {
+                Die @"
+Podman 已安装但缺少 compose 支持：
+  安装（任选其一）:
+    pipx install podman-compose
+    python -m pip install --user podman-compose
+  若已安装仍报此错，确认用户 Scripts 目录（%USERPROFILE%\.local\bin 或
+  %APPDATA%\Python\Python3xx\Scripts）已加入 PATH
+"@
+            }
+        }
+        $Script:Files = @("-f", "compose.yaml", "-f", "compose.podman.yaml")
+        $Script:RunFlags = @("--device", "/dev/fuse", "--security-opt", "label=disable", "--cgroupns", "host")
+    } else {
+        $null = & docker compose version 2>$null
+        if ($LASTEXITCODE -eq 0) {
+            $Script:Compose = @("docker", "compose")
+        } elseif (Get-Command docker-compose -ErrorAction SilentlyContinue) {
+            $Script:Compose = @("docker-compose")
+        } else {
+            $companion = Find-UserCompanion "docker-compose"
+            if ($companion) {
+                $Script:Compose = @($companion)
+                Warn "docker-compose 不在 PATH，已自动启用：$companion"
+            } else {
+                Die @"
+Docker 已安装但缺少 compose 插件：
+  安装 Docker Compose v2 插件，或安装独立版:
+    pipx install docker-compose
+  若已安装仍报此错，确认用户 Scripts 目录已加入 PATH
+"@
+            }
+        }
+        $Script:Files = @("-f", "compose.yaml")
+        $Script:RunFlags = @()
+    }
+}
+
+# 守护进程可达性预检：Get-Command 只能证明 CLI 已安装，不能证明后台
+# 虚拟机/daemon 在运行。不预检会让 load 对 1.2GB 包失败后继续重试，
+# 最终误报"镜像中没有/版本不符"，掩盖"socket 连不上"的真实原因。
+function Assert-RuntimeAlive {
+    $null = & $Script:Rt info 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        if ($Script:Rt -eq "podman") {
+            Die @"
+无法连接 Podman 后台（Linux 虚拟机未运行）：
+  请先启动后重试：
+    podman machine start
+  也可启动 Podman Desktop，等待托盘图标显示运行状态。
+"@
+        } else {
+            Die "无法连接 Docker 后台：请先启动 Docker Desktop 并等待托盘图标变为运行状态后重试。"
+        }
+    }
+}
+
+# ── .env 读取与初始化 ───────────────────────────────────────────────────────
+
+function Get-EnvValue($key) {
+    if (-not (Test-Path .env)) { return "" }
+    $line = Select-String -Path .env -Pattern "^$key=" | Select-Object -Last 1
+    if ($line) { return (($line.Line -split "=", 2)[1]).TrimEnd("`r") }
+    return ""
+}
+
+function Ensure-Env {
+    if (-not (Test-Path .env)) { Warn "未发现 .env，先执行初始化"; Do-Init }
+}
+
+function New-Alnum([int]$len) {
+    # 加密学随机源（System.Security.Cryptography，非 System.Random）；
+    # 字符集仅字母数字，避免凭证中的 shell 元字符被基底 entrypoint 展开。
+    $bytes = [byte[]]::new($len)
+    [System.Security.Cryptography.RandomNumberGenerator]::Fill($bytes)
+    $set = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    -join (0..($len - 1) | ForEach-Object { $set[[int]$bytes[$_] % 62] })
+}
+
+function Set-EnvKey($key, $val) {
+    $lines = Get-Content .env | ForEach-Object {
+        if ($_ -match "^$key=") { "$key=$val" } else { $_ }
+    }
+    # UTF-8 无 BOM + LF 换行：BOM 会使首个配置键无法被 compose 读取；
+    # Set-Content 默认 CRLF 会让 bash/compose 读到带 "\r" 的值。
+    $text = ($lines -join "`n") + "`n"
+    [System.IO.File]::WriteAllText((Resolve-Path .env), $text,
+        (New-Object System.Text.UTF8Encoding($false)))
+}
+
+function Do-Init([string]$Mode = "") {
+    if ((Test-Path .env) -and $Mode -ne "--force") {
+        Info ".env 已存在，跳过初始化（./xmnnctl.ps1 init --force 可重新生成凭证）"
+        return
+    }
+    if (-not (Test-Path .env.example)) { Die "缺少 .env.example，交付包不完整" }
+    Copy-Item .env.example .env
+    Set-EnvKey "USER_PASSWORD" (New-Alnum 16)
+    Set-EnvKey "JUPYTER_TOKEN" (New-Alnum 32)
+    Ok "初始化完成，配置写入 .env"
+    Write-Host "    SSH 登录密码 : $(Get-EnvValue USER_PASSWORD)"
+    Write-Host "    Jupyter Token: $(Get-EnvValue JUPYTER_TOKEN)"
+    Warn "请妥善保存凭证；不要将容器日志直接外发（日志可能含凭证）"
+}
+
+# ── 交付清单解析与完整性校验（release.json schema v2）──────────────────────
+#
+# ⚠️ schema v2 的 payload 与 archive 两个块**都含 "sha256" 键**：抓「全局第一个
+# sha256」会把底座归档摘要当成载荷摘要，故一律按块定向取值（结构化 JSON 解析，
+# 不依赖 jq 等外部工具，也不做文本抓取）。
+
+function Get-Manifest {
+    if (-not (Test-Path artifacts/release.json)) { return $null }
+    return (Get-Content artifacts/release.json -Raw | ConvertFrom-Json)
+}
+
+# Get-ManifestField <块名> <键名> → 字符串值；缺清单/缺块/缺键一律返回空串。
+# 块名传 "" 表示顶层字段（如 version）——顶层取值不会误取同名嵌套键（payload.version）。
+function Get-ManifestField([string]$block, [string]$key) {
+    $json = Get-Manifest
+    if (-not $json) { return "" }
+    if (-not $block -or $block -eq "-") {
+        $prop = $json.PSObject.Properties[$key]
+    } else {
+        $holder = $json.PSObject.Properties[$block]
+        if (-not $holder -or -not $holder.Value) { return "" }
+        $prop = $holder.Value.PSObject.Properties[$key]
+    }
+    if (-not $prop -or $null -eq $prop.Value) { return "" }
+    return [string]$prop.Value
+}
+
+function Get-ManifestVersion { return (Get-ManifestField "" "version") }
+
+# 摘要前 12 位（提示文案用；空值原样返回空）
+function Get-ShortHash([string]$value) {
+    $v = ([string]$value).Trim()
+    if ($v.Length -le 12) { return $v }
+    return $v.Substring(0, 12)
+}
+
+function Get-Sha256([string]$path) {
+    return (Get-FileHash -Algorithm SHA256 $path).Hash.ToLower()
+}
+
+# Verify-Sha256 <文件> <期望 sha256> <中文名>
+# 期望值为空（清单未记录）时降级为告警；不一致即 Die。
+function Verify-Sha256([string]$path, [string]$expected, [string]$label) {
+    $exp = ([string]$expected).Trim().ToLower()
+    if (-not $exp) { Warn "$label：清单未记录 sha256，跳过完整性校验"; return }
+    $actual = Get-Sha256 $path
+    if ($actual -ne $exp) {
+        Die "完整性校验失败：$label 的 sha256 与交付清单不符，文件可能在拷贝中损坏（请重新获取交付包）：$path"
+    }
+    Ok "完整性校验通过：$label（sha256 一致）"
+}
+
+# 镜像 Id 读取（运行时不可用/镜像不存在时为空）；podman 与 docker 的 Id 前缀
+# 不一致（一方带 sha256:），比对前统一剥前缀。
+function Get-ImageId([string]$ref) {
+    $id = & $Script:Rt image inspect --format "{{.Id}}" $ref 2>$null | Select-Object -First 1
+    if ($LASTEXITCODE -ne 0 -or -not $id) { return "" }
+    return (([string]$id).Trim().ToLower() -replace '^sha256:', '')
+}
+
+# Test-ImageIdMatches <镜像 ref> <清单记录的 Id>：本机镜像与交付清单同源时返回 $true
+function Test-ImageIdMatches([string]$ref, [string]$want) {
+    $actual = Get-ImageId $ref
+    if (-not $actual) { return $false }
+    $w = ([string]$want).Trim().ToLower() -replace '^sha256:', ''
+    return [bool]($w -and $actual -eq $w)
+}
+
+function Do-Load {
+    Assert-RuntimeAlive
+    if (-not (Test-Path artifacts/release.json)) {
+        Die "交付包不完整：缺 artifacts\release.json（请确认交付包已完整解压）"
+    }
+    $schema = Get-ManifestField "" "schema_version"
+    if ($schema -and $schema -ne "2") {
+        Die @"
+交付清单版本不受支持：artifacts\release.json 的 schema_version=$schema（本脚本需要 2）
+  说明：旧清单没有独立载荷信息，无法派生构建；请使用与交付包成套的新版 xmnnctl.ps1 重试
+"@
+    }
+    $mver = Get-ManifestVersion
+    $baseRef = Get-ManifestField "image" "ref"
+    $baseId = Get-ManifestField "image" "id"
+    $archiveFile = Get-ManifestField "archive" "file"
+    $archiveSha = Get-ManifestField "archive" "sha256"
+    $payloadFile = Get-ManifestField "payload" "file"
+    $payloadSha = Get-ManifestField "payload" "sha256"
+    if (-not ($mver -and $baseRef -and $baseId -and $archiveFile -and $payloadFile)) {
+        Die @"
+交付包不完整：artifacts\release.json 缺少必需字段（version / image.ref / image.id / archive.file / payload.file）
+  处理方式：重新获取完整交付包（清单与制品必须成套），或联系交付方核对
+"@
+    }
+    $ver = Get-EnvValue XMNN_VERSION
+    if (-not $ver) { Die ".env 缺少 XMNN_VERSION（先执行 .\xmnnctl.ps1 init 生成 .env）" }
+    if ($ver -ne $mver) {
+        Die @"
+版本不一致：.env 的 XMNN_VERSION=$ver，交付清单 version=$mver
+  修法：把 .env 中的 XMNN_VERSION 改为 $mver（交付版本以清单为准），再重新执行 .\xmnnctl.ps1 load
+"@
+    }
+
+    # 底座：本机已有同 Id 镜像则跳过导入（幂等，不重复解 1.1 GB 归档）
+    if (Test-ImageIdMatches $baseRef $baseId) {
+        Info "底座已在本机，跳过导入：$baseRef"
+    } else {
+        $archive = Join-Path "artifacts" $archiveFile
+        if (-not (Test-Path $archive)) {
+            Die "交付包不完整：缺少底座归档 $archive（请确认交付包已完整解压）"
+        }
+        Verify-Sha256 $archive $archiveSha "底座归档"
+        Info "导入底座镜像：$archive（约 1-5 分钟）"
+        & $Script:Rt load -i $archive
+        if ($LASTEXITCODE -ne 0) {
+            Die "镜像导入失败：请查看上方 $($Script:Rt) 的原始报错（常见原因：磁盘空间不足）；处理后重新执行 load 即可，导入过程幂等。"
+        }
+        if (-not (Test-ImageIdMatches $baseRef $baseId)) {
+            Die @"
+交付包与镜像不匹配：导入后 $baseRef 的 Id 与清单记录的 $(Get-ShortHash $baseId)… 不一致
+  处理方式：归档与清单一同重新获取（必须成套），或联系交付方核对
+"@
+        }
+    }
+    Ok "底座镜像就绪：$baseRef"
+
+    # 载荷 wheel（构建上下文 = payload 目录）
+    $payloadPath = Join-Path "payload" $payloadFile
+    if (-not (Test-Path $payloadPath)) {
+        Die @"
+交付包不完整：缺少载荷 wheel $payloadPath
+  载荷应与 artifacts 同级放在 payload 目录内；请确认交付包已完整解压后重试
+"@
+    }
+    Verify-Sha256 $payloadPath $payloadSha "载荷 wheel"
+    if (-not (Test-Path "payload/Dockerfile")) {
+        Die "交付包不完整：缺少派生构建文件 payload\Dockerfile（请重新获取交付包）"
+    }
+
+    # 派生构建（离线装载荷 + 构建期守卫；失败即中止，不产出 tag）
+    $imgRef = "localhost/xmnn-runtime:$ver"
+    Info "派生构建载荷镜像：$imgRef（离线安装 + 10 项守卫，约 1-3 分钟）"
+    & $Script:Rt build -f payload/Dockerfile `
+        --build-arg "BASE_IMAGE=$baseRef" `
+        --build-arg "PAYLOAD_VERSION=$ver" `
+        -t $imgRef payload
+    if ($LASTEXITCODE -ne 0) {
+        Die @"
+派生构建失败：请查看上方 $($Script:Rt) 的原始报错；构建全程离线（与网络无关），常见原因：
+  - 磁盘空间不足（派生镜像另需约 0.2 GB）
+  - 底座与载荷不匹配（构建日志中 pip check 报缺依赖）——请把上方报错反馈给交付方
+  处理后重新执行 .\xmnnctl.ps1 load 即可（幂等，底座已导入时不会重复导入）
+"@
+    }
+    Ok "载荷已装入 $imgRef"
+    Info "下一步：.\xmnnctl.ps1 up（如需复核守卫可执行 .\xmnnctl.ps1 smoke）"
+}
+
+# ── compose 包装与服务管理 ─────────────────────────────────────────────────
+
+function Invoke-Compose([Parameter(Position = 0)][string]$ArgsLine) {
+    # 以字符串行传入再 split：直接调用 Invoke-Compose up -d 时，"-d"
+    # 会被 PowerShell 当作本函数的参数名而吞掉（实际执行前台 up 挂住）。
+    $rest = @($ArgsLine -split '\s+' | Where-Object { $_ })
+    if ($Script:Compose.Count -eq 2) {
+        & $Script:Compose[0] $Script:Compose[1] @Script:Files @rest
+    } else {
+        & $Script:Compose[0] @Script:Files @rest
+    }
+}
+
+function Do-Down { Invoke-Compose "down"; Ok "已停止（workspace 与 SSH host key 卷保留）" }
+function Do-Ps   { Invoke-Compose "ps" }
+function Do-Logs { Invoke-Compose "logs -f --tail 100" }
+
+function Wait-Ready([int]$port) {
+    for ($i = 0; $i -lt 150; $i++) {
+        try {
+            $resp = Invoke-WebRequest -UseBasicParsing "http://127.0.0.1:$port/lab" -TimeoutSec 3
+            if ($resp.StatusCode -lt 400) { return $true }
+        } catch { }
+        Start-Sleep -Seconds 2
+    }
+    return $false
+}
+
+function Print-Banner {
+    $sport = Get-EnvValue XMNN_SSH_PORT; if (-not $sport) { $sport = "2225" }
+    $jport = Get-EnvValue XMNN_JUPYTER_PORT; if (-not $jport) { $jport = "8893" }
+    $ver = Get-EnvValue XMNN_VERSION
+    Write-Host ""
+    Write-Host "============================================================"
+    Write-Host " XMNN Runtime $ver 已启动"
+    Write-Host " JupyterLab : http://localhost:$jport"
+    Write-Host "              内核选择 Python 3.14 (xmnn runtime)"
+    Write-Host " SSH        : ssh -p $sport devuser@localhost"
+    Write-Host " 工作区     : ./workspace （容器内 /workspace）"
+    Write-Host " 凭证       : .env（USER_PASSWORD / JUPYTER_TOKEN）"
+    Write-Host " 停止       : ./xmnnctl.ps1 down"
+    Write-Host "============================================================"
+    Write-Host ""
+}
+
+# ── 宿主端口预检（up 前 fail-fast）──────────────────────────────────────────
+#
+# podman rootless 与 docker 共享同一个宿主网络命名空间：rootless 的端口转发
+# 表现为宿主上的独立进程，另一引擎的容器列表/元数据完全看不到它。只查当前
+# 引擎的 ps 会漏掉跨引擎占用，直到 compose up 绑定阶段才被系统拒绝
+# （"bind: address already in use"），且报错不指认占用者。预检直接探测宿主
+# 网络栈：TcpClient 本机连接（跨平台零依赖），并用 Get-NetTCPConnection 指认
+# 占用进程（Windows 原生 NetTCPIP）。
+
+function Test-HostPortListening([int]$port) {
+    # 500ms 超时：空闲端口通常立即 RST；localhost 黑洞场景兜底
+    $client = [System.Net.Sockets.TcpClient]::new()
+    try {
+        $iar = $client.BeginConnect("127.0.0.1", $port, $null, $null)
+        if (-not $iar.AsyncWaitHandle.WaitOne(500)) { return $false }
+        $client.EndConnect($iar)
+        return $true
+    } catch {
+        return $false
+    } finally {
+        $client.Close()
+    }
+}
+
+function Get-PortHolder([int]$port) {
+    try {
+        $conn = Get-NetTCPConnection -LocalPort $port -State Listen `
+            -ErrorAction Stop | Select-Object -First 1
+        if ($conn) {
+            $proc = Get-Process -Id $conn.OwningProcess -ErrorAction SilentlyContinue
+            if ($proc) { return "$($proc.ProcessName)（pid=$($proc.Id)）" }
+            return "未知进程（pid=$($conn.OwningProcess)）"
+        }
+    } catch { }
+    return "未知进程（经 TCP 连接探测确认）"
+}
+
+# 本引擎同名容器自身是否已发布该端口。重复 up / 改配置重建时 compose 先停旧
+# 容器再绑定，不会与自己冲突——此情形豁免（仅告警），避免预检误杀幂等重入。
+function Test-SelfPublishesPort([string]$cname, [int]$port) {
+    $ports = @(& $Script:Rt ps --filter "name=^$cname$" --format "{{.Ports}}" 2>$null)
+    return [bool](($ports -join " ") -match ":$port->")
+}
+
+function Assert-HostPorts {
+    $cname = Get-EnvValue XMNN_CONTAINER_NAME; if (-not $cname) { $cname = "xmnn-runtime" }
+    $sport = Get-EnvValue XMNN_SSH_PORT; if (-not $sport) { $sport = "2225" }
+    $jport = Get-EnvValue XMNN_JUPYTER_PORT; if (-not $jport) { $jport = "8893" }
+    foreach ($raw in @($sport, $jport)) {
+        $port = 0
+        if (-not [int]::TryParse([string]$raw, [ref]$port) -or $port -lt 1 -or $port -gt 65535) {
+            Die ".env 端口配置非法：$raw（应为 1-65535 的数字）"
+        }
+        if (-not (Test-HostPortListening $port)) { continue }
+        if (Test-SelfPublishesPort $cname $port) {
+            Warn "宿主端口 $port 已由本运行时（$($Script:Rt)）的容器 $cname 发布；up 将原地更新该容器"
+            continue
+        }
+        $other = if ($Script:Rt -eq "podman") { "docker" } else { "podman" }
+        $holder = Get-PortHolder $port
+        Die @"
+宿主端口 $port 已被占用：$holder
+  容器引擎之间互不可见对方的端口占用——这通常是另一运行时（$other）已启动
+  同名容器，或本机其他程序占用了该端口。
+  排查命令：Get-NetTCPConnection -LocalPort $port -State Listen |
+            Select-Object LocalAddress,LocalPort,OwningProcess
+  处理方式（二选一）：
+    1) 切换到 $($Script:Rt)：先停掉另一运行时的实例
+         .\xmnnctl.ps1 -r $other down
+       （down 删除容器但保留 workspace 与 SSH host key 卷；只想停用、保留
+         容器可回退执行 $other stop $cname）
+    2) 两套实例长期并存：复制一份独立交付目录，在其 .env 中同时修改
+       XMNN_SSH_PORT / XMNN_JUPYTER_PORT（换空闲端口）与 XMNN_CONTAINER_NAME，
+       且不要让两个实例映射同一个 workspace 目录
+"@
+    }
+}
+
+function Do-Up {
+    New-Item -ItemType Directory -Force workspace | Out-Null
+    Assert-RuntimeAlive
+    Assert-HostPorts
+    Info "启动 xmnn-runtime（$($Script:Rt)）"
+    Invoke-Compose "up -d"
+    $jport = Get-EnvValue XMNN_JUPYTER_PORT; if (-not $jport) { $jport = "8893" }
+    Info "等待 Jupyter 就绪（冷启动约需 1-3 分钟）"
+    if (Wait-Ready([int]$jport)) {
+        Ok "服务已就绪"
+    } else {
+        Warn "限定时间内未检测到 Jupyter 响应，请用 ./xmnnctl.ps1 logs 查看启动进度"
+    }
+    Print-Banner
+}
+
+# ── 运行时守卫 ──────────────────────────────────────────────────────────────
+
+function Container-Running([string]$name) {
+    $names = @(& $Script:Rt ps --format "{{.Names}}" 2>$null)
+    return ($names -contains $name)
+}
+
+function Do-Smoke {
+    Assert-RuntimeAlive
+    $cname = Get-EnvValue XMNN_CONTAINER_NAME; if (-not $cname) { $cname = "xmnn-runtime" }
+    $ver = Get-EnvValue XMNN_VERSION
+    if (-not $ver) { Die ".env 缺少 XMNN_VERSION；请先 .\xmnnctl.ps1 init" }
+    # 守卫跑的是**派生镜像**（载荷由 load 装入底座后产出），底座不含载荷
+    $imgRef = "localhost/xmnn-runtime:$ver"
+    if (Container-Running $cname) {
+        Info "容器运行中，经 exec 执行守卫"
+        & $Script:Rt exec $cname /opt/conda/bin/python /opt/xmnnrt-smoke/_runtime_smoke.py
+    } else {
+        if (-not (Get-ImageId $imgRef)) {
+            Die "本机没有派生镜像 $imgRef：请先执行 .\xmnnctl.ps1 load（把 payload 内载荷装入底座）后再跑 smoke"
+        }
+        Info "容器未运行，使用派生镜像 $imgRef 的一次性容器执行守卫"
+        # 必须显式 --entrypoint：镜像默认 entrypoint 的命令模式会把脚本交给
+        # cp314t 登录环境解析（实测会 9 项失败）。
+        & $Script:Rt run --rm @Script:RunFlags --entrypoint /opt/conda/bin/python `
+            $imgRef /opt/xmnnrt-smoke/_runtime_smoke.py
+    }
+}
+
+# ── 版本信息 ────────────────────────────────────────────────────────────────
+
+function Do-Version {
+    $ver = Get-EnvValue XMNN_VERSION
+    if ($ver) { Write-Host "xmnn-runtime release: $ver" }
+    else      { Write-Host "xmnn-runtime release: 未知（请先 .\xmnnctl.ps1 init）" }
+    if (-not (Test-Path artifacts/release.json)) {
+        Warn "未找到 artifacts\release.json，无法显示交付清单摘要"
+        return
+    }
+    $mver = Get-ManifestVersion; if (-not $mver) { $mver = "未记录" }
+    $baseRef = Get-ManifestField "image" "ref"; if (-not $baseRef) { $baseRef = "未记录" }
+    $baseId = Get-ManifestField "image" "id"
+    $payloadFile = Get-ManifestField "payload" "file"; if (-not $payloadFile) { $payloadFile = "未记录" }
+    $payloadSha = Get-ManifestField "payload" "sha256"
+    $archiveFile = Get-ManifestField "archive" "file"; if (-not $archiveFile) { $archiveFile = "未记录" }
+    $archiveSha = Get-ManifestField "archive" "sha256"
+    Write-Host "交付版本   : $mver"
+    Write-Host "底座镜像   : $baseRef（Id $(Get-ShortHash $baseId)）"
+    Write-Host "载荷 wheel : $payloadFile（sha256 $(Get-ShortHash $payloadSha)）"
+    Write-Host "底座归档   : $archiveFile（sha256 $(Get-ShortHash $archiveSha)）"
+}
+
+# ── 入口分发 ────────────────────────────────────────────────────────────────
+
+Parse-GlobalArgs $args
+$cmd = if ($Script:Remain.Count -ge 1) { [string]$Script:Remain[0] } else { "" }
+switch ($cmd) {
+    "init" {
+        Detect-Runtime
+        $mode = if ($Script:Remain.Count -ge 2) { [string]$Script:Remain[1] } else { "" }
+        Do-Init $mode
+    }
+    "load"    { Detect-Runtime; Ensure-Env; Do-Load }
+    "up"      { Detect-Runtime; Ensure-Env; Do-Up }
+    "down"    { Detect-Runtime; Ensure-Env; Do-Down }
+    "ps"      { Detect-Runtime; Ensure-Env; Do-Ps }
+    "logs"    { Detect-Runtime; Ensure-Env; Do-Logs }
+    "smoke"   { Detect-Runtime; Ensure-Env; Do-Smoke }
+    "version" { Do-Version }
+    { $_ -in @("-h", "--help", "help") } {
+        Write-Host "用法: ./xmnnctl.ps1 [-Runtime podman|docker|auto] <init|load|up|down|ps|logs|smoke|version>"
+    }
+    default {
+        if (-not $cmd) { Write-Host "用法: ./xmnnctl.ps1 [-Runtime podman|docker|auto] <init|load|up|down|ps|logs|smoke|version>"; exit 1 }
+        Die "未知命令：$cmd（支持 init/load/up/down/ps/logs/smoke/version）"
+    }
+}

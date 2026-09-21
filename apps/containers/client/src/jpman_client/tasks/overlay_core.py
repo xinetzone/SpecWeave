@@ -198,16 +198,6 @@ class StackSpec:
     gpu_device_env: str = ""  # GPU 设备插值键（空=不插值，设备项写死；quant/xmnn 均为 GPU_DEVICE）
     conda_mirror: bool = False  # build 暴露 --conda-mirror / CONDA_MIRROR（xmnn）
     torch_flavor: bool = False  # build 暴露 --torch / TORCH_FLAVOR（xmnn；空|cpu|cu130）
-    # torch **缺省**形态（未设 TORCH_FLAVOR 时的回落值，必须 ∈ TORCH_FLAVORS）：
-    #   xmnn-dev     = ""（默认零 torch，opt-in 才装）；
-    #   xmnn-runtime = "cpu"（torch 是内置工具链契约，默认形态即 cpu，仅 cu130 opt-in）。
-    # compose 侧同键默认须一致（C15）：`${TORCH_FLAVOR:-<本值>}`。
-    torch_default: str = ""
-    # 形态感知镜像 tag 基名（C28，仅 torch_flavor 栈有意义）：非空时
-    # ``image_tag()`` 返回 ``<flavor_tag>:<形态>``（如 localhost/xmnn-runtime:cu130），
-    # 并额外把 ``default_image_tag`` 作为**通用别名**一并下发（同一镜像双 -t，
-    # 零额外存储）。空 = 不参与，tag 恒为 ``default_image_tag``（三栈零回归）。
-    flavor_tag: str = ""
     auto_shortflags: bool = False  # invoke 自动短选项（quant 历史为默认开启）
 
     # —— 挂载/冒烟/桥接 ——
@@ -381,60 +371,17 @@ def prepare_env(spec: StackSpec) -> dict:
     return env
 
 
-def image_flavor(spec: StackSpec, env: dict, *, torch: Optional[str] = None) -> str:
-    """本次调用的 torch 形态（非 torch 栈恒空串）。
-
-    解析序与 ``resolve_build_args`` **同源**（CLI ``--torch`` > shell export >
-    .env > ``spec.torch_default``），故 ``build --torch cu130``（单次覆盖）也能
-    让 tag 随之落到 ``:cu130``，不会出现「装的是 cu130、标签写 cpu」。
-    非法值在解析期即 Exit（同 C15 白名单）。
-    """
-    if not spec.torch_flavor:
-        return ""
-    return str(resolve_build_args(spec, env, torch=torch).get("torch_flavor") or "")
-
-
-def image_tag(spec: StackSpec, env: dict, *, torch: Optional[str] = None) -> str:
+def image_tag(spec: StackSpec, env: dict) -> str:
     """本次调用的镜像 tag（C16：必须与 compose 段同键同默认）。
 
-    解析序：显式 ``{PREFIX}_IMAGE_TAG`` > **形态感知 tag** > ``default_image_tag``。
-    形态感知（C28）：``spec.flavor_tag`` 非空且形态非空时取
-    ``<flavor_tag>:<形态>``——**标签即内容**，`up`/`build` 两侧（invoke 内核与
-    compose `${XMNNRT_IMAGE_TAG:-localhost/xmnn-runtime:${TORCH_FLAVOR:-cpu}}`）
-    各自算出同一串；CPU 与 cu130 镜像不再共用标签，`--skip-build` 也就不会
-    静默跑到另一形态的镜像上（C27 校验因此退为兜底，见 rules §8.3/§8.4）。
-
-    非 torch 栈（``flavor_tag``/``torch_flavor`` 任一为空）走第三分支，与
-    改造前逐字等价。
+    解析序：显式 ``{PREFIX}_IMAGE_TAG`` > ``default_image_tag``。
     """
     explicit = str(
         os.environ.get(spec.image_tag_env) or env.get(spec.image_tag_env) or ""
     )
     if explicit:
         return explicit
-    flavor = image_flavor(spec, env, torch=torch)
-    if spec.flavor_tag and flavor:
-        return f"{spec.flavor_tag}:{flavor}"
     return spec.default_image_tag
-
-
-def image_tag_alias(spec: StackSpec, env: dict, img_tag: str) -> str:
-    """形态感知 tag 生效时同时下发的**通用别名**（``default_image_tag``），否则空串。
-
-    为什么不能只留形态 tag：``default_image_tag``（``:latest``）是被外部消费的
-    稳定入口——客户交付打包脚本 ``relpack._PACK_SCRIPT`` 直接写死
-    ``SRC="localhost/xmnn-runtime:latest"``，README 的 ``podman run ... latest``
-    示例同理。改名为形态 tag 而丢掉 latest 会让这些引用集体悬空。
-
-    仅在「声明了 ``flavor_tag`` + 未被显式 ``{PREFIX}_IMAGE_TAG`` 接管 +
-    本次 tag 确非通用别名」时返回别名——显式覆盖意味着用户自管命名，内核不
-    擅自追加标签。同一镜像双 ``-t`` 是 OCI 的标签语义，零额外存储开销。
-    """
-    if not spec.flavor_tag:
-        return ""
-    if os.environ.get(spec.image_tag_env) or env.get(spec.image_tag_env):
-        return ""
-    return spec.default_image_tag if img_tag != spec.default_image_tag else ""
 
 
 def _env_port(spec: StackSpec, env: dict, key: str, default: str) -> str:
@@ -525,11 +472,8 @@ def resolve_build_args(
 
     ``torch_flavor``：仅声明 ``torch_flavor=True`` 的栈解析（键 ``TORCH_FLAVOR``），
     取值白名单 ``""``（不装）/``cpu``/``cu130``——非白名单在**解析期**即拒绝，
-    避免把错误值带到 podman build 才炸（构建一次代价极高）。
-
-    缺省回落取 ``spec.torch_default`` 而非硬编码 ``""``：xmnn-runtime 的 torch
-    是**内置**工具链契约（默认 cpu），空/未设一律视为 cpu；compose 侧同键写
-    ``${TORCH_FLAVOR:-cpu}`` 与之同默认（C15）。
+    避免把错误值带到 podman build 才炸（构建一次代价极高）。缺省回落空串
+    （不装 torch）；compose 侧同键写 ``${TORCH_FLAVOR:-}`` 与之同默认（C15）。
     """
     args = {
         "base_image": str(
@@ -551,10 +495,7 @@ def resolve_build_args(
         )
     if spec.torch_flavor:
         flavor = str(
-            torch
-            or os.environ.get("TORCH_FLAVOR")
-            or env.get("TORCH_FLAVOR")
-            or spec.torch_default
+            torch or os.environ.get("TORCH_FLAVOR") or env.get("TORCH_FLAVOR") or ""
         ).strip()
         if flavor not in TORCH_FLAVORS:
             raise Exit(
@@ -1169,19 +1110,6 @@ def _require_local_image(
             f"[{spec.namespace}]   显式构建后启动: invoke {spec.namespace}.build"
             f" && invoke {spec.namespace}.up --skip-build"
         )
-    # 形态感知 tag（C28）迁移提示：改造前的镜像只挂通用 tag（latest），形态 tag
-    # 尚未创建时给出**零成本改挂**命令——镜像已在本机，重下数 GB 是纯浪费。
-    # 只做提示不做自动改挂：形态是否一致由用户判断（标签可能指向另一形态）。
-    if spec.flavor_tag and img_tag != spec.default_image_tag:
-        r2 = run_cmd(
-            c, f"{runtime} image exists {spec.default_image_tag}",
-            hide=True, warn=True, echo=False,
-        )
-        if r2 is not None and getattr(r2, "ok", False):
-            actual = image_torch_flavor(c, spec.default_image_tag)
-            print(f"[{spec.namespace}]   本机另有 {spec.default_image_tag}"
-                  f"（torch 形态: {actual or '未标注'}）；若与本次期望形态一致，可零成本改挂：")
-            print(f"[{spec.namespace}]     podman tag {spec.default_image_tag} {img_tag}")
     raise Exit(1)
 
 
@@ -1215,8 +1143,7 @@ def warn_torch_flavor_mismatch(c: Context, spec: StackSpec, env: dict) -> None:
     容器实跑 cpu」静默成立。本函数在起容器前把该偏差显式化。
 
     期望值取 ``resolve_build_args``（与 ``build`` 同一解析序：CLI > shell >
-    .env > ``spec.torch_default``）——``up`` 无 ``--torch`` 形参，故实际等价于
-    ``.env`` / 缺省。
+    .env > 空串）——``up`` 无 ``--torch`` 形参，故实际等价于 ``.env`` / 缺省。
 
     **警告不阻断**：镜像本身可用，形态不符只影响能力面（如无 CUDA），用户可能
     刻意临时用另一形态；fail-fast 会把「能用」的场景一并挡掉。仅当形态确实
@@ -1282,10 +1209,7 @@ def build_image(
     )
     base_image = args["base_image"]
     runtime = detect_runtime()
-    img_tag = tag or image_tag(spec, env, torch=torch)
-    # 形态感知 tag（C28）：显式 --tag 视为用户自管命名，不追加别名；其余情况由
-    # image_tag_alias 判定（形态 tag 生效 + 未被 {PREFIX}_IMAGE_TAG 接管）。
-    alias = "" if tag else image_tag_alias(spec, env, img_tag)
+    img_tag = tag or image_tag(spec, env)
     overlay = overlay_dir(spec)
     containerfile = overlay / spec.containerfile
     if not containerfile.exists():
@@ -1320,15 +1244,11 @@ def build_image(
             f"--build-arg TORCH_FLAVOR={shlex.quote(args.get('torch_flavor') or '')}"
         )
     parts.append(f"-t {shlex.quote(img_tag)}")
-    if alias:
-        parts.append(f"-t {shlex.quote(alias)}")
     if no_cache:
         parts.append("--no-cache")
     parts.append(shlex.quote(str(overlay)))
     run_cmd(c, " ".join(parts), pty=True)
     print(f"[{spec.namespace}] ✅ {spec.build_done_label}构建完成: {img_tag}")
-    if alias:
-        print(f"[{spec.namespace}]   同时标记通用别名: {alias}（历史引用/交付打包脚本仍按它取镜像）")
     tail = f"invoke {spec.namespace}.up"
     if spec.build_next_hint:
         tail = f"{tail}    {spec.build_next_hint}"
@@ -1689,23 +1609,12 @@ def smoke_stack(c: Context, spec: StackSpec, *, gpu: bool = False) -> None:
 def build_help(spec: StackSpec) -> dict:
     """``build`` 任务 help 文案（按 spec 能力并集生成）。
 
-    公开给栈模块复用：形态 B 的栈（xmnnrt）自定义 build 只因需多一个
-    ``--wheel`` 参数，其余文案与本函数同源，复制一份即制造双事实源
-    （改一处忘另一处，`invoke <ns>.build --help` 与实际行为不符）。
-    栈侧写法：``help={**build_help(spec), "wheel": "..."}``。
+    公开给栈模块复用：需自定义 ``build``（例如多一个 ``--wheel`` 参数）的栈
+    写法为 ``help={**build_help(spec), "wheel": "..."}``——复制一份即制造双
+    事实源（改一处忘另一处，`invoke <ns>.build --help` 与实际行为不符）。
     """
-    if spec.flavor_tag and spec.torch_default:
-        # 形态感知 tag（C28）：文案必须自证「tag 随形态变」，否则用户按旧口径
-        # 找 localhost/xmnn-runtime:latest 会看到「另一形态」的镜像（它现在是
-        # 最近一次构建的通用别名）。
-        tag_default = (
-            f"{spec.flavor_tag}:<形态>（形态感知：形态取 TORCH_FLAVOR，缺省 "
-            f"{spec.flavor_tag}:{spec.torch_default}；同时标记通用别名 {spec.default_image_tag}）"
-        )
-    else:
-        tag_default = spec.default_image_tag
     help_ = {
-        "tag": f"产出镜像标签，默认 {tag_default}（或 root .env {spec.image_tag_env}）",
+        "tag": f"产出镜像标签，默认 {spec.default_image_tag}（或 root .env {spec.image_tag_env}）",
         "base-image": "基底镜像（Containerfile ARG BASE_IMAGE）；默认 .env BASE_IMAGE，缺省 %s"
         % spec.default_base_image,
         "pip-mirror": "构建期 pip 镜像源：official|aliyun|tuna；默认 .env PIP_MIRROR，缺省 official",
@@ -1716,16 +1625,8 @@ def build_help(spec: StackSpec) -> dict:
             "构建期 conda 镜像源：official|aliyun|tuna；默认 .env CONDA_MIRROR，缺省 official"
         )
     if spec.torch_flavor:
-        # 文案随缺省形态分派：xmnn-dev「默认不装」，xmnn-runtime「默认内置 cpu」
-        # （同一 TORCH_FLAVOR 键在两栈语义不同，help 必须自证，否则用户按
-        #  ''/不装'' 理解 runtime 会误判镜像内容）。
-        default_hint = (
-            f"{spec.torch_default}（默认，内置）|cu130"
-            if spec.torch_default
-            else "''（不装，默认）|cpu|cu130"
-        )
         help_["torch"] = (
-            f"torch 形态：{default_hint}；默认 .env TORCH_FLAVOR。"
+            "torch 形态：''（不装，默认）|cpu|cu130；默认 .env TORCH_FLAVOR。"
             "cpu/cu130 经 download.pytorch.org/whl/<形态> 索引安装 torch 2.14.0"
         )
     return help_

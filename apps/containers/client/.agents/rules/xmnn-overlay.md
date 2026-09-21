@@ -207,7 +207,8 @@
   `sshd_config` 的 `HostKey` 指向卷路径、清空 `/etc/ssh` 默认位置），
   未挂载则回退容器层生成并打 WARN（重建即轮换，客户端遭
   `REMOTE HOST IDENTIFICATION HAS CHANGED`）。**卷名与落点必须与客户交付栈
-  [overlays/xmnn-runtime/release/compose.yaml](../../overlays/xmnn-runtime/release/compose.yaml)
+  [offline-delivery](../../../offline-delivery/README.md) 的交付包
+  `release/compose.yaml`
   一致**（同 `xmnn-ssh-host-keys` / 同 `/var/lib/jpman/ssh-host-keys`），
   属主/权限（700 目录 + 600 key）由 entrypoint 自管；down 默认保留，
   `--volumes` 与上述两卷一并删除（删后指纹轮换属预期）。
@@ -246,7 +247,7 @@
   `密码    <user> / <password>` 并用回读 token 构造「直达」行。**`.env` 全程
   只读、不回写**（凭证生成责任留在基底 entrypoint，overlay 内核不得写 .env）。
   内核通用实现 `overlay_core.read_container_credentials` /
-  `parse_container_credentials`（四栈同构，解析纯函数可单测）；密码必须用
+  `parse_container_credentials`（三栈同构，解析纯函数可单测）；密码必须用
   `SSH login:` 行取到的用户名反查对应 password 行——只按 `password:` 匹配会先
   命中 `Root password:`（`ALLOW_ROOT_SSH=yes` 时存在）而误报 root 密码。
   回读失败（容器未跑/日志无横幅）静默降级为不打印，绝不阻断 up。
@@ -256,11 +257,11 @@
   journal，只有 `journalctl CONTAINER_NAME=<name>` 能读），于是凭证回读与
   `invoke <ns>.logs` **同时**失效——这才是「看不到凭证」的最初根因。修复：
   基段 `_shared/base-rootless.yaml` 显式声明 `logging: {driver: k8s-file}`
-  （四栈同构继承，`test_compose_merge.py` 有正向断言锁死），日志落盘文件后
+  （三栈同构继承，`test_compose_merge.py` 有正向断言锁死），日志落盘文件后
   `podman logs` 恢复可读。**禁止**依赖宿主默认日志驱动。
 - up 成功横幅在配置了 `JUPYTER_TOKEN` 时额外打印「直达」行
   （`http://localhost:<jupyter 端口>/lab?token=...`，内核通用 helper
-  `overlay_core.jupyter_direct_url`，四栈同构；token 为空不打印），
+  `overlay_core.jupyter_direct_url`，三栈同构；token 为空不打印），
   使容器重建后免登录直达，与 C22 共同消除重建即重登体验；token 亦优先取
   C24 回读值（预设时二者同源）。
 - 调试环境变量（PYTHONPATH/TVM_LIBRARY_PATH/LD_LIBRARY_PATH/NPU_TOOLS_ROOT/

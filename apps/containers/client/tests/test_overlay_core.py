@@ -18,7 +18,6 @@ from jpman_client.tasks import monetize as monetize_mod
 from jpman_client.tasks import overlay_core as oc
 from jpman_client.tasks import quant as quant_mod
 from jpman_client.tasks import xmnn as xmnn_mod
-from jpman_client.tasks import xmnnrt as xmnnrt_mod
 
 _QUANT = quant_mod.QUANT_SPEC
 _XMNN = xmnn_mod.XMNN_SPEC
@@ -149,15 +148,14 @@ class FakeRunner:
 def harness(monkeypatch, tmp_path):
     root = tmp_path / "repo" / "apps" / "containers" / "client"
     root.mkdir(parents=True)
-    # xmnnrt 只为「构建 argv / compose 覆盖」类用例建假 overlay 目录；**不进
-    # ALL_SPECS**（它是形态 B 的薄封装栈，bridge/source-mount/离线等黄金断言
-    # 不适用），故仅在本循环展开。
-    for spec in (*ALL_SPECS, xmnnrt_mod.XMNNRT_SPEC):
+    # 为每个 SPEC 建假 overlay 目录与 Containerfile（构建 argv / compose 覆盖类
+    # 用例需要 overlay 目录真实存在）。
+    for spec in ALL_SPECS:
         d = root / "overlays" / spec.overlay_subdir
         d.mkdir(parents=True, exist_ok=True)
         (d / spec.containerfile).write_text("# fake\n")
     # xmnn 三源码树（仓库根锚点）
-    for rel in ("external/chaos/npu_tvm", "external/chaos/npuusertools", "external/chaos/models"):
+    for rel in ("external/chaos/npu_tvm", "external/containers/workspace/dev/npuusertools", "external/chaos/models"):
         (tmp_path / "repo" / rel).mkdir(parents=True)
     (tmp_path / "repo" / "apps" / "agent-monetize").mkdir(parents=True)
 
@@ -178,9 +176,9 @@ def harness(monkeypatch, tmp_path):
     monkeypatch.setattr(
         oc, "wait_http_ready", lambda port, **kw: (True, f"127.0.0.1:{port} → HTTP 302")
     )
-    # 清掉三栈 env，避免宿主环境污染（xmnnrt 一并清：其 workspace_env 会被
-    # prepare_env 写成 POSIX 串回灌 os.environ，不清会跨用例漂移）
-    for spec in (*ALL_SPECS, xmnnrt_mod.XMNNRT_SPEC):
+    # 清掉三栈 env，避免宿主环境污染（会经 prepare_env 写成 POSIX 串回灌
+    # os.environ，不清会跨用例漂移）
+    for spec in ALL_SPECS:
         for key in (spec.workspace_env, spec.image_tag_env, spec.ssh_port_env, spec.jupyter_port_env):
             monkeypatch.delenv(key, raising=False)
         monkeypatch.delenv(spec.offline_env_key, raising=False)
@@ -322,16 +320,6 @@ def test_compose_argv_gpu_override_stacks(harness):
     with pytest.raises(RuntimeError, match="gpu_override"):
         oc.compose_argv(_MONETIZE, "up", "-d", gpu=True)
 
-    # xmnnrt 自 2026-09-20 起同样声明 gpu_override（C26：与 --torch cu130 配套）
-    rd = harness.root / "overlays" / "xmnn-runtime"
-    rargv = oc.compose_argv(xmnnrt_mod.XMNNRT_SPEC, "up", "-d", gpu=True)
-    assert rargv == [
-        "podman-compose", "--project-name", "xmnn-runtime",
-        "--file", str(rd / "compose.yaml"),
-        "--file", str(rd / "compose.gpu.yaml"),
-        "up", "-d",
-    ]
-
 
 # ---------------------------------------------------------------------------
 # C27：起容器前的 torch 形态一致性校验（`--torch` 单次覆盖的静默盲区）
@@ -406,93 +394,6 @@ def test_up_flavor_check_distinguishes_empty_declaration_from_missing_label(
     harness.runner.image_labels = {_FLAVOR_LABEL: "cpu"}
     oc.up_stack(None, _XMNN, skip_build=True)
     assert "形态与声明不一致" in capsys.readouterr().out
-
-
-# ---------------------------------------------------------------------------
-# C28：形态感知镜像 tag（torch 形态即标签 + 通用别名；仅声明 flavor_tag 的栈）
-# ---------------------------------------------------------------------------
-
-_XMNNRT = xmnnrt_mod.XMNNRT_SPEC
-
-
-def test_image_tag_flavor_aware_four_states(harness, monkeypatch):
-    """四态（与 compose 嵌套插值实测同构）：缺省 / cu130 / 显式覆盖 / 空串回落。
-
-    invoke 侧与 compose 侧各自算，必须逐字同串（C16 的存在性预检与起容器共用）；
-    空串是「未设」而非「空 tag」——回落缺省形态，不产生 ``xmnn-runtime:``。
-    """
-    monkeypatch.delenv("TORCH_FLAVOR", raising=False)
-    assert oc.image_tag(_XMNNRT, {}) == "localhost/xmnn-runtime:cpu"
-
-    monkeypatch.setenv("TORCH_FLAVOR", "cu130")
-    assert oc.image_tag(_XMNNRT, {}) == "localhost/xmnn-runtime:cu130"
-
-    monkeypatch.setenv("XMNNRT_IMAGE_TAG", "custom:v9")
-    assert oc.image_tag(_XMNNRT, {}) == "custom:v9"
-
-    monkeypatch.delenv("XMNNRT_IMAGE_TAG")
-    monkeypatch.setenv("TORCH_FLAVOR", "")
-    assert oc.image_tag(_XMNNRT, {}) == "localhost/xmnn-runtime:cpu"
-
-
-def test_image_tag_follows_single_shot_cli_torch_override(harness, monkeypatch):
-    """``build --torch cu130``（单次覆盖）必须让 tag 同步落到 ``:cu130``。
-
-    否则会出现「装的是 cu130、标签写 cpu」的骗人镜像——形态解析与构建参数
-    同源（都走 ``resolve_build_args``）是这条断言的实体。
-    """
-    monkeypatch.delenv("TORCH_FLAVOR", raising=False)
-    assert oc.image_tag(_XMNNRT, {}, torch="cu130") == "localhost/xmnn-runtime:cu130"
-
-
-def test_image_tag_unchanged_for_stacks_without_flavor_tag(harness, monkeypatch):
-    """未声明 ``flavor_tag`` 的栈恒 default_image_tag——即使 TORCH_FLAVOR 有值。
-
-    xmnn-dev 声明了 ``torch_flavor`` 但**不**参与形态命名（其形态区分由 ``save``
-    归档名承担，C20）；quant/monetize 连 torch 都没有。三栈零回归。
-    """
-    monkeypatch.setenv("TORCH_FLAVOR", "cu130")
-    for spec in ALL_SPECS:
-        assert not spec.flavor_tag
-        assert oc.image_tag(spec, {}) == spec.default_image_tag
-
-
-def test_image_tag_alias_gating(harness, monkeypatch):
-    """别名只在「形态 tag 生效」时下发：显式覆盖=用户自管命名，不追加。"""
-    monkeypatch.delenv("TORCH_FLAVOR", raising=False)
-    monkeypatch.delenv("XMNNRT_IMAGE_TAG", raising=False)
-    latest = "localhost/xmnn-runtime:latest"
-    assert oc.image_tag_alias(_XMNNRT, {}, "localhost/xmnn-runtime:cpu") == latest
-    assert oc.image_tag_alias(_XMNNRT, {}, latest) == ""  # 已是别名，勿重复
-    assert oc.image_tag_alias(_QUANT, {}, "localhost/onnx-quantized:v9") == ""
-    monkeypatch.setenv("XMNNRT_IMAGE_TAG", "custom:v9")
-    assert oc.image_tag_alias(_XMNNRT, {}, "custom:v9") == ""
-
-
-def test_up_skip_build_hints_zero_cost_tag_migration(harness, monkeypatch, capsys):
-    """C28 迁移提示：形态 tag 缺失但通用 tag 在本地 → 给出 ``podman tag`` 改挂命令。
-
-    这正是本次改造的升级路径（改造前镜像只挂 ``:latest``，改后 ``up`` 找
-    ``:cu130``）；不自动改挂——通用标签可能指向另一形态，形态由打印的 LABEL
-    告知，改挂与否交用户判断。
-    """
-    monkeypatch.setenv("TORCH_FLAVOR", "cu130")
-    harness.runner.image_labels = {_FLAVOR_LABEL: "cu130"}
-    latest = "localhost/xmnn-runtime:latest"
-
-    def fake(c, cmd, **kwargs):
-        harness.runner.calls.append((cmd, kwargs))
-        ok = cmd.endswith(f"image exists {latest}")
-        return SimpleNamespace(ok=ok, stdout="", return_code=0 if ok else 1)
-
-    monkeypatch.setattr(oc, "run_cmd", fake)
-    with pytest.raises(Exit):
-        oc.up_stack(None, _XMNNRT, skip_build=True)
-
-    out = capsys.readouterr().out
-    assert "本地缺少镜像 localhost/xmnn-runtime:cu130" in out
-    assert "torch 形态: cu130" in out
-    assert f"podman tag {latest} localhost/xmnn-runtime:cu130" in out
 
 
 # ---------------------------------------------------------------------------
@@ -687,21 +588,6 @@ def test_up_gpu_wsl_form_for_quant_same_kernel_path(harness):
     oc.up_stack(None, _QUANT, gpu=True, skip_build=True)
     up_cmd = [c for c in harness.runner.commands if "up -d --no-build" in c][0]
     assert str(d / "compose.gpu.wsl.yaml") in up_cmd
-
-
-def test_up_gpu_wsl_form_for_xmnnrt_same_kernel_path(harness, capsys):
-    """xmnnrt 同修（C26）：与 xmnn/quant 共用同一解析内核，形态分派不重复实现。
-
-    xmnnrt 的 up 是**自定义薄封装**（需先暂存 whl），故必须显式过一遍——若
-    薄封装漏传 ``gpu``/``gpu_form``，内核能力再全也不会生效（参数被吞）。
-    """
-    d = harness.root / "overlays" / "xmnn-runtime"
-    (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
-    harness.runner.paths = {"/dev/dxg", *oc.WSL_GPU_PATHS}
-    oc.up_stack(None, xmnnrt_mod.XMNNRT_SPEC, gpu=True, skip_build=True)
-    up_cmd = [c for c in harness.runner.commands if "up -d --no-build" in c][0]
-    assert str(d / "compose.gpu.wsl.yaml") in up_cmd
-    assert "/dev/dxg 已透传（compose.gpu.wsl.yaml）" in capsys.readouterr().out
 
 
 def test_up_gpu_on_gpu_created_stack_is_idempotent(harness, capsys):
@@ -1188,57 +1074,17 @@ def test_build_task_argv_xmnn_torch_flavor_flows(harness):
     assert "-t localhost/xmnn-dev:cuda" in build_cmd
 
 
-def test_xmnnrt_build_task_torch_defaults_to_cpu(harness, monkeypatch):
-    """C26：xmnnrt 的 ``--torch`` 缺省是 cpu（内置层语义不变）。
-
-    与 xmnn-dev 的**语义差异**：同一 ``TORCH_FLAVOR`` 键在那边空=不装、在这边
-    空=回落 cpu（spec.torch_default）。断言必须落在 argv 实物上——`prepare_env`
-    每个用例只允许调用一次（会把 workspace 写成 POSIX 串回灌 os.environ，
-    二次调用在 Windows 上会解析成 `D:\\mnt\\...`），故 cu130 覆盖另起一例。
-    """
-    monkeypatch.delenv("TORCH_FLAVOR", raising=False)
-    monkeypatch.setattr(xmnnrt_mod, "_ensure_wheel_staged", lambda explicit: None)
-
-    xmnnrt_mod.TASKS["build"].body(
-        None, tag=None, base_image=None, pip_mirror=None,
-        wheel=None, torch=None, no_cache=False,
-    )
-    cmd = [c for c in harness.runner.commands if " build " in c][0]
-    assert "--build-arg TORCH_FLAVOR=cpu" in cmd
-    # C28：形态感知 tag（缺省形态 cpu）+ 通用别名同镜像双 -t（relpack 打包入口）
-    assert "-t localhost/xmnn-runtime:cpu" in cmd
-    assert "-t localhost/xmnn-runtime:latest" in cmd
-
-
-def test_xmnnrt_build_task_torch_flag_flows_cu130(harness, monkeypatch):
-    """``--torch cu130`` 必须落到 podman build 的 ``--build-arg``（C15 三处一致）。"""
-    monkeypatch.delenv("TORCH_FLAVOR", raising=False)
-    monkeypatch.setattr(xmnnrt_mod, "_ensure_wheel_staged", lambda explicit: None)
-
-    xmnnrt_mod.TASKS["build"].body(
-        None, tag="localhost/xmnn-runtime:cuda", base_image=None, pip_mirror=None,
-        wheel=None, torch="cu130", no_cache=False,
-    )
-    cmd = [c for c in harness.runner.commands if " build " in c][0]
-    assert "--build-arg TORCH_FLAVOR=cu130" in cmd
-    assert "-t localhost/xmnn-runtime:cuda" in cmd
-    # 显式 --tag：用户自管命名，内核不追加通用别名（C28 gating）
-    assert "-t localhost/xmnn-runtime:latest" not in cmd
-
-
-def test_compose_torch_flavor_default_matches_spec(harness):
-    """C15 + C26：compose 段 ``${TORCH_FLAVOR:-<默认>}`` 必须等于 spec.torch_default。
+def test_compose_torch_flavor_default_matches_kernel_default(harness):
+    """C15：compose 段 ``${TORCH_FLAVOR:-<默认>}`` 必须与内核缺省同默认。
 
     三处同键同默认（`invoke build` / `up` 内联构建 / compose build 段）是层缓存
-    不失效的前提；缺省一旦分叉，无 .env 时 `invoke xmnnrt.build` 与裸
-    `podman-compose up` 会构建出**两个形态不同、标签相同**的镜像。
+    不失效的前提；内核缺省为**空串**（不装 torch），compose 段必须逐字一致。
     """
     overlays = Path(__file__).resolve().parents[1] / "overlays"
-    for spec in (_XMNN, xmnnrt_mod.XMNNRT_SPEC):
-        text = (overlays / spec.overlay_subdir / "compose.yaml").read_text(encoding="utf-8")
-        m = re.search(r"\$\{TORCH_FLAVOR:-([^}]*)\}", text)
-        assert m, f"{spec.overlay_subdir}/compose.yaml 未声明 TORCH_FLAVOR 构建参数"
-        assert m.group(1) == spec.torch_default, spec.overlay_subdir
+    text = (overlays / _XMNN.overlay_subdir / "compose.yaml").read_text(encoding="utf-8")
+    m = re.search(r"\$\{TORCH_FLAVOR:-([^}]*)\}", text)
+    assert m, f"{_XMNN.overlay_subdir}/compose.yaml 未声明 TORCH_FLAVOR 构建参数"
+    assert m.group(1) == ""
 
 
 def test_build_missing_base_image_exits(harness):
@@ -1332,31 +1178,6 @@ def test_build_args_torch_flavor_whitelist(harness, monkeypatch):
     with pytest.raises(Exit):
         oc.resolve_build_args(_XMNN, {})
     assert oc.resolve_build_args(_XMNN, {}, torch="cpu")["torch_flavor"] == "cpu"
-
-
-def test_build_args_torch_default_is_per_spec(harness, monkeypatch):
-    """C26：torch 缺省形态由 spec 声明（xmnn 空=不装；xmnnrt cpu=内置契约）。
-
-    同一 ``TORCH_FLAVOR`` 键在两栈语义不同，故缺省值不可硬编码在内核里，
-    否则 `invoke xmnnrt.build`（无 .env）会退化成「不装 torch」，静默把内置
-    层摘掉（镜像能构建成功，pytorch 前端要等运行期才炸）。
-    """
-    monkeypatch.delenv("TORCH_FLAVOR", raising=False)
-    assert oc.resolve_build_args(_XMNN, {})["torch_flavor"] == ""
-    assert _XMNN.torch_default == ""
-    assert oc.resolve_build_args(xmnnrt_mod.XMNNRT_SPEC, {})["torch_flavor"] == "cpu"
-    assert xmnnrt_mod.XMNNRT_SPEC.torch_default == "cpu"
-    # 显式旗标/环境仍然可覆盖缺省（cu130 是唯一 opt-in 形态）
-    assert (
-        oc.resolve_build_args(xmnnrt_mod.XMNNRT_SPEC, {}, torch="cu130")["torch_flavor"]
-        == "cu130"
-    )
-    monkeypatch.setenv("TORCH_FLAVOR", "cu130")
-    assert oc.resolve_build_args(xmnnrt_mod.XMNNRT_SPEC, {})["torch_flavor"] == "cu130"
-    # 非法值在 xmnnrt 侧同样解析期拦截
-    monkeypatch.setenv("TORCH_FLAVOR", "cu129")
-    with pytest.raises(Exit):
-        oc.resolve_build_args(xmnnrt_mod.XMNNRT_SPEC, {})
 
 
 def test_build_args_cli_flag_beats_env(harness, monkeypatch):

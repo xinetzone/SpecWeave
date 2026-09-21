@@ -1,0 +1,4 @@
+# 载荷 wheel（约 177 MB）由交付流水线 stage 进本目录，二进制不入 git；
+# 目录本身靠 .keep 保留，Dockerfile 必须随交付包下发。
+*.whl
+!.gitignore

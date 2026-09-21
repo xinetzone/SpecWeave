@@ -16,7 +16,8 @@
 #
 # 为什么装进 base env（/opt/conda）而非 main env：C13 双 ABI 不可互换——
 # torch 的 wheel tag 是 cp314-cp314，只能落在 base env（GIL 版）；main env
-# 是 cp314t free-threading，ABI 不匹配。与 xmnn-runtime 同一条先例。
+# 是 cp314t free-threading，ABI 不匹配。与客户交付栈（offline-delivery 应用
+# 的交付包 products/ 目录）同一条先例。
 #
 # 形态落盘 /opt/xmnn-torch-flavor 供构建期守卫 §8 断言（守卫读不到 LABEL）。
 set -euo pipefail

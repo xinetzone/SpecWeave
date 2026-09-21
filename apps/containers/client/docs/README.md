@@ -9,7 +9,7 @@ source: "README.md"
 从本地加载构建端产出的镜像，并提供极简的容器生命周期管理。核心差异能力是
 **Windows 11 × WSL2 跨平台 SDK 连接** + **rootless 三必需硬编码** +
 **两层后端自动降级（SDK → CLI fallback）**，另含 opt-in 的 `quant.*` / `xmnn.*` /
-`monetize.*` / `xmnnrt.*` 四个 podman-compose 工作负载栈命名空间。
+`monetize.*` 三个 podman-compose 工作负载栈命名空间。
 
 ## 文档目录
 
@@ -40,7 +40,10 @@ source: "README.md"
 | [10-quant-overlay.md](10-quant-overlay.md) | 工作负载栈 onnx-quantized：quant.* 命令、配置、裸 compose |
 | [11-xmnn-overlay.md](11-xmnn-overlay.md) | 工作负载栈 xmnn-dev：xmnn.* 命令、双 ABI、源码挂载、Nuitka 打包 |
 | [12-monetize-overlay.md](12-monetize-overlay.md) | 工作负载栈 agent-monetize-dev：monetize.* 命令、tvm-ffi 原生编译 |
-| [13-xmnn-runtime-overlay.md](13-xmnn-runtime-overlay.md) | 工作负载栈 xmnn-runtime：xmnnrt.* 命令、whl 消费运行时（builder/runtime 分离） |
+
+> 原第四栈（wheel 消费运行时 + 客户离线交付）已于 2026-09-21
+> 迁出为独立应用 [../../offline-delivery/](../../offline-delivery/README.md)，
+> 本文档集不再收录。
 
 ### 分析报告
 
@@ -52,7 +55,7 @@ source: "README.md"
 
 项目特有的 AI 协作者规范（AI 级硬约束）已原子化拆分至 [.agents/](../.agents/README.md) 目录：
 invoke 任务规范 / SDK 连接硬约束 / Windows WSL 规则 / quant 工作负载栈规则 /
-xmnn 开发/打包栈规则 / monetize tvm-ffi 栈规则 / xmnnrt wheel 消费运行时栈规则。
+xmnn 开发/打包栈规则 / monetize tvm-ffi 栈规则。
 
 ## 快速开始
 

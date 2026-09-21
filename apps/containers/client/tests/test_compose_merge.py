@@ -99,23 +99,6 @@ GOLDEN = {
             "PYTHONPATH", "LD_LIBRARY_PATH",
         },
     },
-    "xmnnrt": {
-        "dir": "xmnn-runtime", "service": "xmnnrt",
-        "component": "xmnn-runtime",
-        # C28：形态感知 tag（缺省形态 cpu = spec.torch_default，与 compose
-        # ${TORCH_FLAVOR:-cpu} 同键同默认）；:latest 仅作通用别名存在
-        "image": "localhost/xmnn-runtime:cpu",
-        "container_name": "xmnn-runtime",
-        "dockerfile": "Containerfile.xmnn-runtime",
-        "ports": ["2225:22", "8893:8888"],
-        # wheel 消费栈：仅 workspace bind，不挂源码；命名卷 = SSH host key 持久化
-        "volume_targets": ["/workspace", "/var/lib/jpman/ssh-host-keys"],
-        # 无栈专属 environment（wheel 自包含，不注入 PYTHONPATH/
-        # TVM_LIBRARY_PATH/LD_LIBRARY_PATH）；只有基段继承的凭证四变量
-        "env": {
-            "USER_PASSWORD", "JUPYTER_TOKEN", "SSH_PUBLIC_KEY", "GRANT_SUDO",
-        },
-    },
 }
 
 # ── 最小合并模拟器（语义对齐 podman-compose 1.6.0 rec_merge_one）──────────────
@@ -135,10 +118,10 @@ def _pick(match, env):
 def _expand(text, env, *, max_rounds=8):
     """逐轮替换**最内层**表达式至不动点——嵌套插值的等价实现（C28）。
 
-    podman-compose 1.6.0 实测支持嵌套：``image: ${XMNNRT_IMAGE_TAG:-localhost/
-    xmnn-runtime:${TORCH_FLAVOR:-cpu}}`` 四态（无变量 / ``cu130`` / 显式覆盖 /
-    空串回落）全部正确。模拟器若沿用单轮 ``[^}]*`` 正则会**在首个 ``}`` 截断**
-    （把内层当外层 default 的一部分），渲染出错误串而假失败。
+    podman-compose 1.6.0 实测支持嵌套：``${A:-x:${B:-y}}`` 四态（无变量 /
+    ``B`` 有值 / 显式覆盖 / 空串回落）全部正确。模拟器若沿用单轮 ``[^}]*``
+    正则会在**首个 ``}`` 截断**（把内层当外层 default 的一部分），渲染出
+    错误串而假失败。
     max_rounds 仅是防呆上界：真实嵌套深度 ≤2，正常情况下第 2 轮即不动点。
     """
     for _ in range(max_rounds):
@@ -289,7 +272,7 @@ def test_base_declares_podman_readable_log_driver():
     （/usr/share/containers/containers.conf），在 WSL 嵌套 systemd 命名空间下
     ``podman logs`` 返回 0 字节（日志进了宿主 journal，只有 journalctl 能读），
     会同时打挂 up 凭证回读与 ``invoke <ns>.logs``。故基段显式声明 k8s-file，
-    四栈同构继承——本断言锁死该声明，防止有人「顺手删掉」而静默回退。
+    三栈同构继承——本断言锁死该声明，防止有人「顺手删掉」而静默回退。
     """
     base = _load(SHARED)
     assert base["services"]["rootless-base"]["logging"] == {"driver": "k8s-file"}
@@ -370,7 +353,7 @@ def test_quant_gpu_device_double_form_interpolation():
     ] == ["/dev/fuse:/dev/fuse", "/dev/nvidia0"]
 
 
-@pytest.mark.parametrize("stack", ["xmnn", "quant", "xmnnrt"])
+@pytest.mark.parametrize("stack", ["xmnn", "quant"])
 def test_wsl_gpu_override_passes_dxg_and_mounts_wsl_libs(stack):
     """WSL2 形态（C19）：/dev/dxg + 三条只读 bind，且**不动**栈自带环境。
 
@@ -429,44 +412,6 @@ def test_xmnn_gpu_device_double_form_interpolation():
     # 空串回退默认（与 _interpolate 的 `${NAME:-default}` 语义一致）
     empty = render_stack("xmnn", env={"GPU_DEVICE": ""}, gpu=True)
     assert empty["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dri"]
-
-
-def test_xmnnrt_gpu_override_is_opt_in_and_adds_no_env():
-    """xmnnrt 的 GPU opt-in（C26）：与 quant/xmnn 同构，但**零 env 改动**。
-
-    本栈是交付运行时，compose.yaml **本就没有 environment 段**（凭证四变量由
-    基段继承，无栈专属变量）。GPU 覆盖因此只允许加 devices：任何 LD_LIBRARY_PATH
-    注入都会凭空新增栈专属 env，既污染交付语义、又打挂 env 黄金集。
-    """
-    plain = render_stack("xmnnrt")
-    assert plain["devices"] == ["/dev/fuse:/dev/fuse"]
-    gpu = render_stack("xmnnrt", gpu=True)
-    assert gpu["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dri"]
-    assert gpu["environment"] == plain["environment"] == {
-        "USER_PASSWORD": "", "JUPYTER_TOKEN": "", "SSH_PUBLIC_KEY": "",
-        "GRANT_SUDO": "yes",
-    }
-    assert gpu["volumes"] == plain["volumes"]  # generic 形态只加设备，不动卷
-    cdi = render_stack("xmnnrt", env={"GPU_DEVICE": "nvidia.com/gpu=all"}, gpu=True)
-    assert cdi["devices"] == ["/dev/fuse:/dev/fuse", "nvidia.com/gpu=all"]
-
-
-def test_xmnnrt_image_tag_is_flavor_aware_with_generic_alias():
-    """C28：形态感知 tag 四态（与 podman-compose 1.6.0 真机实测同构）。
-
-    invoke 侧 ``image_tag()`` 与本节渲染的两侧必须算出同一串（C16），否则
-    ``up --skip-build`` 的存在性预检会与 compose 插值指向不同镜像。
-    """
-    assert render_stack("xmnnrt")["image"] == "localhost/xmnn-runtime:cpu"
-    assert render_stack("xmnnrt", env={"TORCH_FLAVOR": "cu130"})["image"] == (
-        "localhost/xmnn-runtime:cu130"
-    )
-    # 显式覆盖胜出：用户接管命名时形态感知让位（invoke 侧同判据）
-    assert render_stack("xmnnrt", env={"XMNNRT_IMAGE_TAG": "custom:v9"})["image"] == "custom:v9"
-    # 空串是「未设」而非「空 tag」：回落到缺省形态，不产生 `xmnn-runtime:`
-    assert render_stack("xmnnrt", env={"TORCH_FLAVOR": ""})["image"] == (
-        "localhost/xmnn-runtime:cpu"
-    )
 
 
 def test_nested_interpolation_simulator_innermost_first():

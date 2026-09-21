@@ -52,7 +52,7 @@ invoke xmnn.down                       # 停止清理（ccache / Jupyter 登录�
   `/var/lib/jpman/ssh-host-keys`，`down/up` 重建容器**不再轮换主机指纹**，
   客户端 `known_hosts` 无需反复 `ssh-keygen -R` 清理（未挂载时基底 entrypoint
   回退「容器层生成 + 重建即轮换」并打 WARN；卷名与落点同客户交付栈
-  `overlays/xmnn-runtime/release/compose.yaml`）。仅 `down --volumes` 与
+  （`offline-delivery` 应用的交付包 `release/compose.yaml`））。仅 `down --volumes` 与
   上述两卷一并清除（删后指纹轮换属预期）。
 - **源码路径**：默认挂载仓库根 `external/chaos/{npu_tvm,npuusertools,models}`；
   可在 `.env` 用 `NPU_TVM_PATH` / `NPUUSERTOOLS_PATH` / `MODELS_PATH`
@@ -128,7 +128,7 @@ rootless 端口转发器在容器起的瞬间就 accept 宿主端口，而容器
 listen 需数十秒（实测 66s）。窗口期内打开浏览器会得到 `ERR_EMPTY_RESPONSE`
 （**不是** `ECONNREFUSED`），故 `up` 收尾按**应用层 HTTP 应答**轮询宿主端口：
 就绪打印「Jupyter 已就绪（addr → HTTP status）」；超过 120s 未应答**不判失败**，
-只提示「容器已在运行，稍后刷新浏览器即可」并给出 `invoke xmnn.logs`。四栈
+只提示「容器已在运行，稍后刷新浏览器即可」并给出 `invoke xmnn.logs`。三栈
 共享同一实现（内核 `up_stack`），无需逐栈处理。手工自检见
 [04-troubleshooting-guide.md](04-troubleshooting-guide.md) W-I18。
 
@@ -286,8 +286,7 @@ Host xmnn-dev
 ### 端口与平台
 
 - 端口可用 `.env` 的 `XMNN_SSH_PORT` / `XMNN_JUPYTER_PORT` 改写；默认
-  2223/8890 与 quant 2222/8888、monetize 2224/8892、xmnnrt 2225/8893
-  错开，多栈可并行运行。
+  2223/8890 与 quant 2222/8888、monetize 2224/8892 错开，多栈可并行运行。
 - Windows 原生 CPython 经自动桥接启动时，栈运行在 `podman-machine-default`
   内，浏览器与 SSH 客户端仍访问**本机 localhost**（WSL2 localhost 转发）；
   栈本身在 WSL2 发行版内或 Linux/macOS 上启动时同理。

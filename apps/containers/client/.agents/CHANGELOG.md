@@ -165,6 +165,58 @@ depends_on**（`grep -rn depends_on overlays/` 零命中），故该分歧对渲
 
 提交 `fix(client)` = `5d1db8f31`；配套 `npuusertools` 仓 `fix(xmnn)` = `f1e53c0`。
 
+### 2026-09-21 · `refactor:` client 侧彻底移除 wheel 消费运行时栈与客户离线交付链路（Task 6）
+
+**关联七概念场景**：场景3「重构优化」——把已迁出的客户离线交付链路在 client
+侧的原实现彻底删除，并清理仅服务该栈的内核死代码，消除「两份镜像定义」的
+事实源分裂。
+
+**迁出清单（client 侧删除）**：
+
+- `overlays/xmnn-runtime/`（**整目录**）：遗留的 `compose.yaml`、
+  `compose.gpu.yaml`、`compose.gpu.wsl.yaml`、`xmnnctl`、`xmnnctl.ps1`、
+  `.env.example`、`README.md`、`smoke/__pycache__` 等；保留 `overlays/xmnn-dev/`、
+  `overlays/onnx-quantized/`、`overlays/agent-monetize-dev/`、
+  `overlays/_shared/base-rootless.yaml`。
+- `src/jpman_client/relpack.py`（厂商侧交付打包器）、
+  `src/jpman_client/tasks/xmnnrt.py`（该栈声明模块）。
+- `tests/test_release_bundle.py`、`tests/test_xmnnrt_stage.py`。
+- `.agents/rules/xmnnrt-overlay.md`、`docs/13-xmnn-runtime-overlay.md`。
+
+**替代入口**：新独立应用 `apps/containers/offline-delivery`——`bin/relpack`
+（+ `bin/relpack.ps1`）承接原厂商侧打包职责，产品资产在
+`products/xmnn-runtime/{product.env,Containerfile.xmnn-runtime,scripts/,smoke/,wheels/,release/}`，
+方法论入口 `.agents/rules/delivery-pipeline.md`。
+
+**内核死代码清理**（`src/jpman_client/tasks/overlay_core.py`，迁出后**无任何声明者**）：
+
+- 删除 `StackSpec.torch_default` 与 `StackSpec.flavor_tag` 字段及其注释；
+- 删除 `image_flavor()`、`image_tag_alias()` 两个函数；
+- `image_tag()` 去掉形态分支，回到 `<default_image_tag>` 语义（同时去掉只为该
+  分支而存在的 `torch` 形参）；
+- `resolve_build_args()` 的缺省回落去掉 `spec.torch_default`（回到硬缺省空串）；
+- `build_image()` 去掉 alias/双 `tag` 分支；`_require_local_image()` 去掉形态
+  tag 迁移提示分支；`build_help()` 去掉形态 tag 文案分支。
+- **保留** `warn_torch_flavor_mismatch()` / `image_torch_flavor()`——xmnn-dev
+  仍声明 `torch_flavor=True`，C27 对 xmnn-dev 仍生效。
+
+**同步更新**：`tasks/__init__.py`（去 import + 去集合注册）、`AGENTS.md`
+（概述/成员描述/嵌套路由树/上下文路由表/快速开始期望值/变更日志；P0 表原
+C26/C27/C28 三条合并为一条「已迁出」备注，C18/C19/C25 保持不动）、`README.md`、
+`.agents/README.md`（规则文件 7→6）、`docs/README.md`（文档集 00-13→00-12）、
+`.env.example`（移除仅服务该栈的 `XMNNRT_*` 与 `TORCH_FLAVOR`/`GPU_DEVICE`
+专项键）、`.gitignore`、`.agents/rules/invoke-tasks.md`、`.agents/rules/xmnn-overlay.md`
+（交付栈卷名锚点改指新应用）、`docs/11-xmnn-overlay.md`、
+`overlays/xmnn-dev/{compose.yaml,README.md,builder/scripts/install-torch.sh}`
+（客户交付栈引用改指新应用）、`tests/test_tasks_surface.py`（黄金命名空间清单
+去该栈）、`tests/test_compose_merge.py`（去该栈渲染/卷/tag 断言与黄金期望项）、
+`tests/test_overlay_core.py`（去该栈专属用例与内核符号专属用例）。
+
+**验收点**：`invoke --list` 不再出现该栈命名空间，根/container/env/quant/xmnn/
+monetize 表面逐字不变；client 全量单测全绿（存量 `tests/test_ast_inject.py`
+Windows 原生 bash 差异除外）；新应用 `apps/containers/offline-delivery/tests`
+仍 53 passed。
+
 ### 2026-09-21 · `feat:` 形态感知镜像 tag——`localhost/xmnn-runtime:<形态>` + `:latest` 别名（C28）
 
 **关联七概念场景**：场景3「重构优化」——把 C26（`--torch cpu|cu130`）与 C27
@@ -338,10 +390,10 @@ compose 段补 `${TORCH_FLAVOR:-cpu}`（与 `spec.torch_default` 同键同默认
   `torch.cuda.is_available()`）；镜像构建属有网侧动作，留待用户按 README
   「GPU 用法」三步验收。
 
-- 同步文档：[.agents/rules/xmnnrt-overlay.md](rules/xmnnrt-overlay.md)（§4/§6/新增
-  §8）、[overlays/xmnn-runtime/README.md](../overlays/xmnn-runtime/README.md)
+- 同步文档：`.agents/rules/xmnnrt-overlay.md`（§4/§6/新增
+  §8）、`overlays/xmnn-runtime/README.md`
   （命令表/守卫 10 项/参数表/GPU 用法/torch 升级 SOP/排障四行）、
-  [docs/13-xmnn-runtime-overlay.md](../docs/13-xmnn-runtime-overlay.md)、
+  `docs/13-xmnn-runtime-overlay.md`、
   [.env.example](../.env.example)（两栈共用键的默认值差异警示）、
   overlay `.env.example`、[AGENTS.md](../AGENTS.md) C26 条款。
   提交 `feat(client)` = `9b6b0610f`。
@@ -659,9 +711,9 @@ entrypoint 对未挂载卷的 WARN 回退路径）。
 
 **C 同步**：[rules/quant-overlay.md](rules/quant-overlay.md) §3、
 [rules/monetize-overlay.md](rules/monetize-overlay.md) §3、
-[rules/xmnnrt-overlay.md](rules/xmnnrt-overlay.md) §7 三处卷段落；
+`rules/xmnnrt-overlay.md` §7 三处卷段落；
 [docs/10](../docs/10-quant-overlay.md)、[docs/12](../docs/12-monetize-overlay.md)、
-[docs/13](../docs/13-xmnn-runtime-overlay.md) 各增「SSH host key 持久化」条目。
+`docs/13-xmnn-runtime-overlay.md` 各增「SSH host key 持久化」条目。
 提交 `fix(client)` = `d2ff3a8af`、`docs(client)` = `62444134c`。
 
 ### 2026-09-20 · `fix:` 补挂 `xmnn-ssh-host-keys` 命名卷（SSH 主机指纹跨重建稳定）
@@ -1490,7 +1542,7 @@ xmnn-runtime 既有先例，main env 是 free-threading，装 CUDA torch 会破�
 
 **验收点**：`python -m pytest tests -q --ignore=tests/test_ast_inject.py` → **162 passed / 1 skipped**（较 C15 基线 160 净增 2 例）；安全性依据 `image_tag(spec, env)` 与 compose 的 `${PREFIX}_IMAGE_TAG:-默认}` 同键同默认，tag 不漂移。
 
-**C 同步**：预防措施 `[prevent: single-build-executor]`——`invoke x.up` 恒 `up -d --no-build`，镜像存在性只由内核 `build_image()` 负责；`--skip-build`/`--offline` 必须先过本地镜像存在性预检。规则固化于 [rules/invoke-tasks.md](rules/invoke-tasks.md) §5 新增 **C16**、`AGENTS.md` P0 清单 C16 与 C12 离线条款修订、[docs/02-invoke-reference.md](../docs/02-invoke-reference.md) §参数契约 C16 段、`docs/10`-`13`、[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §10（纠正已失效的 `compose_up_tail(offline=True)` 签名引用）、[rules/xmnnrt-overlay.md](rules/xmnnrt-overlay.md) §3、`.env.example` 与四 overlay README。
+**C 同步**：预防措施 `[prevent: single-build-executor]`——`invoke x.up` 恒 `up -d --no-build`，镜像存在性只由内核 `build_image()` 负责；`--skip-build`/`--offline` 必须先过本地镜像存在性预检。规则固化于 [rules/invoke-tasks.md](rules/invoke-tasks.md) §5 新增 **C16**、`AGENTS.md` P0 清单 C16 与 C12 离线条款修订、[docs/02-invoke-reference.md](../docs/02-invoke-reference.md) §参数契约 C16 段、`docs/10`-`13`、`rules/xmnn-overlay.md` §10（纠正已失效的 `compose_up_tail(offline=True)` 签名引用）、`rules/xmnnrt-overlay.md` §3、`.env.example` 与四 overlay README。
 
 ### 2026-09-18 · `fix:` 构建参数单一事实源——`up` 内联构建与 compose 段同键（C15），消除换源后白重建
 
@@ -1662,7 +1714,7 @@ xmnn-runtime 既有先例，main env 是 free-threading，装 CUDA torch 会破�
 
 **V 对抗审查（四视角）**：① P0 同名 whl 陈旧——dev0 wheel 文件名恒定，旧逻辑只比文件名会在重打包后复用旧暂存 whl，修正为 name+size+mtime_ns 三全等才跳过（copy2 保 mtime 保证二次运行正确复用），新增 tests/test_xmnnrt_stage.py 7 例锁定选择顺序；② 依赖开放区间版本漂移、③ whl COPY 层体积两项记录为已知设计边界（README「已知边界」+ 规则 §4），版本锁定归属 wheel 打包端。
 
-**C 同步**：新增规则 [xmnnrt-overlay.md](../.agents/rules/xmnnrt-overlay.md)（7 节特有契约）；docs/13 + docs 索引、client AGENTS/.agents README/apps AGENTS 路由登记；根 .env.example 加 XMNNRT 段；预防措施 `[prevent: test-case, build-gate]`——黄金两表锁定栈表面与 compose 渲染，9 项守卫构建期硬失败，暂存选择顺序 7 例单测锁定；全量 95 passed/1 skipped。
+**C 同步**：新增规则 `.agents/rules/xmnnrt-overlay.md`（7 节特有契约）；docs/13 + docs 索引、client AGENTS/.agents README/apps AGENTS 路由登记；根 .env.example 加 XMNNRT 段；预防措施 `[prevent: test-case, build-gate]`——黄金两表锁定栈表面与 compose 渲染，9 项守卫构建期硬失败，暂存选择顺序 7 例单测锁定；全量 95 passed/1 skipped。
 
 ### 2026-09-16 · `fix:` `inv xmnn.wheel` 构建成功却 exit 1——invoke 3.0.3 × Python 3.14 stdin 线程 FIONREAD 缓冲溢出（假失败）
 

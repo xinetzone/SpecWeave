@@ -25,9 +25,13 @@ ALLOWED_EXTENSIONS = {
     ".sh", ".bat", ".ps1", ".gitignore", ".gitattributes",
     ".txt", ".csv", ".pdf", ".docx", ".png", ".jpg", ".jpeg", ".gif", ".svg",
     ".tag", ".example", ".template",
-    ".ini", ".conf", ".cfg", ".log", ".lock", ".env.example",
+    ".ini", ".conf", ".cfg", ".log", ".lock", ".env", ".env.example",
     ".ttf", ".pth",
 }
+# 白名单含 ".env" 的理由：本项目存在「产品描述/段配置」形态的 *.env（如
+# apps/containers/offline-delivery/products/xmnn-runtime/product.env，九键产品定义，
+# 非凭证）；而裸 ".env" 的 Path.suffix 为空串，本就不经过扩展名校验，
+# 密钥保护由 .gitignore + 工作区红线（禁止提交 .env/*.key/*.pem）承担。
 # 约定名：容器构建文件（Containerfile / Dockerfile 及其形态后缀，如 Containerfile.xmnn-dev）。
 # Path.suffix 会把形态后缀（.xmnn-dev）误判为扩展名，故这类文件跳过扩展名检查。
 CONTAINERFILE_STEMS = {"containerfile", "dockerfile"}

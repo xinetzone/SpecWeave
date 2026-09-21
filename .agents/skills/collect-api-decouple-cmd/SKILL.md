@@ -5,8 +5,8 @@ description: "当用户要求把'硬件/设备采集（推理、板端执行、�
 argument-hint: "<目标采集函数：文件#L起-止>"
 user-invocable: true
 paths:
-  - "external/chaos/npuusertools/xmnn/infer_api.py"
-  - "external/chaos/npuusertools/xmnn/performance_api.py"
+  - "external/containers/workspace/dev/npuusertools/xmnn/infer_api.py"
+  - "external/containers/workspace/dev/npuusertools/xmnn/performance_api.py"
 title: "采集-解析分离与日志复用改造 Skill"
 ---
 
@@ -173,13 +173,13 @@ mkdir/rmtree 调用，并在代码处留注释说明为何不能调用原工厂�
 
 ## 8. 参考案例（本工作区实证）
 
-- [infer_api.py](../../../external/chaos/npuusertools/xmnn/infer_api.py)：
+- [infer_api.py](../../../external/containers/workspace/dev/npuusertools/xmnn/infer_api.py)：
   `inference_xmnn_dump_costtime` 拆为 `_run_costtime_inference`（设备两次采集）→
   `_parse_costtime_logs`（存在性校验+解析）→ `_build_costtime_toml`（纯计算），
   契约为 `CosttimeLogData`；`inference_xmnn_dump_bandwidth` 对称加开关。
   关键坑：`Evaluate.__post_init__` 会 unlink 旧可执行文件并重新拷贝——它只允许出现在
   采集分支。
-- [performance_api.py](../../../external/chaos/npuusertools/xmnn/performance_api.py)：
+- [performance_api.py](../../../external/containers/workspace/dev/npuusertools/xmnn/performance_api.py)：
   外层 `xmnn_performance` 实现"采集一次 × N 档后处理"；`run_inference` 由
   `performance_xmnn → performance_task → xmnn_performance → _run_performance_inference`
   五层透传。
