@@ -38,7 +38,7 @@ L81/L112/L136 仍写「AST 还原」「AST 注入还原」），其指向的机�
 `grep -rn "AST 还原\|AST 注入还原" AGENTS.md .agents/README.md` **零命中**（仅历史条目
 保留原表述）；`pytest tests -q` **264 passed / 7 skipped / 0 failed**（纯文档改动零回归）。
 
-提交 `docs(client)` = `__COMMIT__`。
+提交 `docs(client)` = `8e072bd92`。
 
 ### 2026-09-21 · `fix:` 对照基准改取 vendor pin——修正 test_compose_merge 的假失败（C32）
 
