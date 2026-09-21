@@ -48,6 +48,7 @@ class TestIsValid:
             ("test-file_name.py", ".py"),
             ("Cargo.toml", ".toml"),
             (".gitignore", ""),
+            ("xmnn_bootstrap.pth", ".pth"),
         ]
         for name, ext in valid_names:
             ok, msg = fn._is_valid(name, ext)
@@ -99,6 +100,23 @@ class TestIsValid:
         ok, msg = fn._is_valid("archive.zip", ".zip")
         assert not ok
         assert "扩展名" in msg
+
+    def test_containerfile_variant_names_allowed(self):
+        """容器构建文件的形态后缀（如 Containerfile.xmnn-dev）不按扩展名拦截。"""
+        for name, ext in [
+            ("Containerfile.xmnn-dev", ".xmnn-dev"),
+            ("Containerfile.xmnn-runtime", ".xmnn-runtime"),
+            ("Containerfile.client", ".client"),
+            ("Dockerfile.dev", ".dev"),
+        ]:
+            ok, msg = fn._is_valid(name, ext)
+            assert ok, f"Expected {name} to be valid, got: {msg}"
+
+    def test_containerfile_exemption_keeps_name_checks(self):
+        """约定名豁免仅限扩展名检查，名称合法性检查仍然生效。"""
+        ok, msg = fn._is_valid("CON.xmnn-dev", ".xmnn-dev")
+        assert not ok
+        assert "保留名称" in msg
 
     def test_none_extension_skipped(self):
         """extension 为 None 时不检查扩展名。"""

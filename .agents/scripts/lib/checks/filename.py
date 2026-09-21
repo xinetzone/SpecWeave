@@ -26,8 +26,11 @@ ALLOWED_EXTENSIONS = {
     ".txt", ".csv", ".pdf", ".docx", ".png", ".jpg", ".jpeg", ".gif", ".svg",
     ".tag", ".example", ".template",
     ".ini", ".conf", ".cfg", ".log", ".lock", ".env.example",
-    ".ttf",
+    ".ttf", ".pth",
 }
+# 约定名：容器构建文件（Containerfile / Dockerfile 及其形态后缀，如 Containerfile.xmnn-dev）。
+# Path.suffix 会把形态后缀（.xmnn-dev）误判为扩展名，故这类文件跳过扩展名检查。
+CONTAINERFILE_STEMS = {"containerfile", "dockerfile"}
 ALLOWED_CHARS = re.compile(r'^[a-zA-Z0-9._\-/\\]+$')
 NON_ASCII = re.compile(r'[^\x00-\x7F]')
 CONSECUTIVE_HYPHENS = re.compile(r'--+')
@@ -53,6 +56,8 @@ def _is_valid(filename: str, extension: str | None) -> tuple[bool, str]:
     name_no_ext = filename.rsplit('.', 1)[0] if '.' in filename else filename
     if name_no_ext.upper() in RESERVED_NAMES:
         return False, f"是 Windows 保留名称: {filename}"
+    if filename.split('.', 1)[0].lower() in CONTAINERFILE_STEMS:
+        return True, ""
     if extension and extension.lower() not in ALLOWED_EXTENSIONS:
         return False, f"扩展名不允许: {extension}"
     return True, ""
