@@ -49,6 +49,7 @@ class FakeRunner:
         paths: set[str] | None = None,
         cdi: bool = False,
         container_logs: str = "",
+        image_labels: dict | None = None,
     ):
         self.calls: list[tuple[str, dict]] = []
         self.running = running
@@ -69,6 +70,10 @@ class FakeRunner:
         # 等价于自动探测命中 /dev/dri）。C19 的预检用例传入精确集合。
         self.paths = paths
         self.cdi = cdi
+        # C27：镜像 LABEL 集合（`podman image inspect` 原始 JSON 的 Labels）。
+        # None = 不注入 → 返回空 stdout → JSON 解析失败 → 形态「无法判定」，
+        # 既有用例（未声明本参数）零影响；{} = 有 Labels 但无 torch 形态键。
+        self.image_labels = image_labels
 
     def __call__(self, c, cmd, **kwargs):
         self.calls.append((cmd, kwargs))
@@ -179,6 +184,15 @@ def harness(monkeypatch, tmp_path):
 
     runner = FakeRunner()
     monkeypatch.setattr(oc, "run_cmd", runner)
+    # C27：镜像 LABEL 查询桩。``image_inspect_info`` 内部走 client_core 自己的
+    # run_cmd 绑定（不受上面 oc.run_cmd 桩影响，且 kernel 不应跨模块旁路 I/O 缝），
+    # 故按既有约定（同 load_image）在 **oc 命名空间**打桩，由 runner.image_labels
+    # 驱动；默认 None → labels 空 → 形态「无法判定」，既有用例零影响。
+    monkeypatch.setattr(
+        oc,
+        "image_inspect_info",
+        lambda c, tag: {"digest": "", "labels": dict(runner.image_labels or {})},
+    )
     return SimpleNamespace(root=root, repo=tmp_path / "repo", runner=runner, tmp=tmp_path)
 
 
@@ -304,6 +318,81 @@ def test_compose_argv_gpu_override_stacks(harness):
         "--file", str(rd / "compose.gpu.yaml"),
         "up", "-d",
     ]
+
+
+# ---------------------------------------------------------------------------
+# C27：起容器前的 torch 形态一致性校验（`--torch` 单次覆盖的静默盲区）
+# ---------------------------------------------------------------------------
+
+_FLAVOR_LABEL = "org.specweave.torch-flavor"
+
+
+def test_up_warns_when_image_flavor_differs_from_declared(harness, monkeypatch, capsys):
+    """`build --torch cpu` 后 `up --skip-build`：.env 声明 cu130 但镜像实为 cpu。
+
+    C15「CLI 旗标只覆盖单次」× C16「up 恒 --no-build」的交叉盲区：存在性预检
+    只查 tag、up 形参面无 `--torch`、构建期守卫只比镜像内部自洽（marker vs
+    version.cuda），三处都发现不了，只能在此显式化。
+    """
+    monkeypatch.setenv("TORCH_FLAVOR", "cu130")
+    harness.runner.image_labels = {_FLAVOR_LABEL: "cpu"}
+
+    oc.up_stack(None, _XMNN, skip_build=True)
+
+    out = capsys.readouterr().out
+    assert "镜像 torch 形态与声明不一致" in out
+    assert "声明（.env TORCH_FLAVOR）: cu130" in out
+    assert "镜像实际" in out and "cpu" in out
+    assert "容器将以**镜像实际形态**运行" in out
+
+
+def test_up_silent_when_image_flavor_matches(harness, monkeypatch, capsys):
+    """一致时零噪音（默认路径刚由 build_image 重建，必然走此分支）。"""
+    monkeypatch.setenv("TORCH_FLAVOR", "cu130")
+    harness.runner.image_labels = {_FLAVOR_LABEL: "cu130"}
+
+    oc.up_stack(None, _XMNN, skip_build=True)
+
+    assert "形态与声明不一致" not in capsys.readouterr().out
+
+
+def test_up_flavor_check_tolerates_legacy_image_without_label(harness, capsys):
+    """改造前的旧镜像无该 LABEL → 无法判定，不得误报（同 C20 旧归档纪律）。"""
+    harness.runner.image_labels = {}
+
+    oc.up_stack(None, _XMNN, skip_build=True)
+
+    assert "形态与声明不一致" not in capsys.readouterr().out
+
+
+def test_up_flavor_check_never_probes_non_torch_stack(harness, capsys):
+    """quant/monetize 未声明 torch_flavor → 既不查询也不提示（零回归）。"""
+    harness.runner.image_labels = {_FLAVOR_LABEL: "cu130"}
+
+    oc.up_stack(None, _MONETIZE, skip_build=True)
+
+    assert "形态与声明不一致" not in capsys.readouterr().out
+    assert not [c for c in harness.runner.commands if "image inspect" in c]
+
+
+def test_up_flavor_check_distinguishes_empty_declaration_from_missing_label(
+    harness, monkeypatch, capsys
+):
+    """空串是合法声明（不装 torch），与「无 LABEL」必须分流（entity 判定核心）。
+
+    xmnn-dev 的 `.env TORCH_FLAVOR=`（显式不装）与旧镜像（无标签）在
+    client_core._image_torch_flavor 里都归空串；本校验若照搬会把旧镜像误报成
+    「声明空、实物 cpu」。故此处锁定：有 LABEL 且值为空串 + 期望空 = 静默。
+    """
+    monkeypatch.delenv("TORCH_FLAVOR", raising=False)
+    harness.runner.image_labels = {_FLAVOR_LABEL: ""}
+    oc.up_stack(None, _XMNN, skip_build=True)
+    assert "形态与声明不一致" not in capsys.readouterr().out
+
+    # 反向：有 LABEL 且值为 cpu，但 .env 显式声明不装 → 必须报
+    harness.runner.image_labels = {_FLAVOR_LABEL: "cpu"}
+    oc.up_stack(None, _XMNN, skip_build=True)
+    assert "形态与声明不一致" in capsys.readouterr().out
 
 
 # ---------------------------------------------------------------------------

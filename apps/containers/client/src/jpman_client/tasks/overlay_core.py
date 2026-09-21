@@ -36,7 +36,12 @@ from typing import Optional
 from invoke import Context, task
 from invoke.exceptions import Exit
 
-from .client_core import load_image, save_image
+from .client_core import (
+    TORCH_FLAVOR_LABEL,
+    image_inspect_info,
+    load_image,
+    save_image,
+)
 from .manage import _load_env_overrides, _project_root, _resolve_bool
 from .utils import (
     UP_READY_TIMEOUT_S,
@@ -1104,6 +1109,61 @@ def _require_local_image(
     raise Exit(1)
 
 
+def image_torch_flavor(c: Context, img_tag: str) -> Optional[str]:
+    """读镜像 LABEL 里的 torch 形态；**无该 LABEL 返回 None**。
+
+    与 ``client_core._image_torch_flavor`` 的关键差异：那个把「无 LABEL」与
+    「LABEL 为空」都归为空串（供 save 命名用，二者等价即可）；本函数必须
+    区分——空串是**合法声明**（``TORCH_FLAVOR=""`` = 不装 torch），无 LABEL
+    才是**无法判定**（改造前的旧镜像 / 非 torch 栈的镜像），后者不得参与比对，
+    否则会把「旧镜像无标签」误报成「形态不符」。
+
+    经 ``client_core.image_inspect_info`` 取原始 JSON 而非 ``--format`` 模板：
+    规避 Windows cmd 与 Linux bash 双 shell 下的模板引号差异（同源先例见该
+    函数 docstring）；镜像不存在或解析失败返回 ``{}``，本函数据此返回 None。
+    """
+    labels = (image_inspect_info(c, img_tag) or {}).get("labels") or {}
+    if TORCH_FLAVOR_LABEL not in labels:
+        return None
+    return str(labels.get(TORCH_FLAVOR_LABEL) or "").strip()
+
+
+def warn_torch_flavor_mismatch(c: Context, spec: StackSpec, env: dict) -> None:
+    """校验「本次 up 期望的 torch 形态」与「本地镜像实际形态」是否一致（C27）。
+
+    为什么需要（2026-09-21 实证缺口）：CLI ``--torch`` 只覆盖单次构建（C15），
+    故 ``build --torch cpu`` 会把 ``latest`` 打成 cpu 形态，而随后的
+    ``up --skip-build`` 只查镜像**存在性**、形参面又没有 ``--torch``，无从得知
+    CLI 意图；构建期守卫第 10 项比的是「镜像 marker vs 镜像实物」，两者一致
+    必然 PASS，**也不会**发现与 ``.env`` 的偏差 → 最终「``.env`` 声明 cu130、
+    容器实跑 cpu」静默成立。本函数在起容器前把该偏差显式化。
+
+    期望值取 ``resolve_build_args``（与 ``build`` 同一解析序：CLI > shell >
+    .env > ``spec.torch_default``）——``up`` 无 ``--torch`` 形参，故实际等价于
+    ``.env`` / 缺省。
+
+    **警告不阻断**：镜像本身可用，形态不符只影响能力面（如无 CUDA），用户可能
+    刻意临时用另一形态；fail-fast 会把「能用」的场景一并挡掉。仅当形态确实
+    不符才输出，一致时静默（非 ``torch_flavor`` 栈直接返回，零回归）。
+    """
+    if not spec.torch_flavor:
+        return
+    img_tag = image_tag(spec, env)
+    actual = image_torch_flavor(c, img_tag)
+    if actual is None:
+        return  # 旧镜像无该 LABEL：无法判定，不打扰
+    expected = str(resolve_build_args(spec, env).get("torch_flavor") or "")
+    if actual == expected:
+        return
+    expected_hint = expected or "''（不装 torch）"
+    print(f"[{spec.namespace}] ⚠ 镜像 torch 形态与声明不一致：")
+    print(f"[{spec.namespace}]     声明（.env TORCH_FLAVOR）: {expected_hint}")
+    print(f"[{spec.namespace}]     镜像实际（{img_tag}）: {actual or '空（不装 torch）'}")
+    print(f"[{spec.namespace}]   容器将以**镜像实际形态**运行。如需声明形态：")
+    print(f"[{spec.namespace}]     重建镜像: invoke {spec.namespace}.build"
+          f"    （读 .env；--torch 旗标只覆盖单次构建，不改变 .env）")
+
+
 def build_image(
     c: Context,
     spec: StackSpec,
@@ -1335,6 +1395,10 @@ def up_stack(
         _require_local_image(
             c, spec, image_tag(spec, env), action="启动栈", offline=offline
         )
+    # 形态一致性校验（C27）：非 --skip-build 路径刚由 build_image 按同一
+    # resolve_build_args 重建，形态必然一致（零噪音通过）；该分支真正拦截的是
+    # `build --torch X`（单次覆盖，C15）后 `up --skip-build` 的「声明 ≠ 实物」。
+    warn_torch_flavor_mismatch(c, spec, env)
     # GPU 透传：设备令牌与形态在此解析（含运行期可用性预检），解析结果回写
     # os.environ 后由 compose 插值消费——终端提示与容器实收设备同源（C19）。
     # **必须在 up_preflight 之前**（顺序即语义）：① 跨平面判据的期望文件集依赖

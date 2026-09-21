@@ -131,6 +131,19 @@
   又会放过「声明 cpu 却装了 CUDA 包」的错版（错版只在运行期浮现）。
   CUDA 形态**刻意不断言** `cuda.is_available()`：设备是运行期维度
   （C19），构建期无 GPU 属正常，该值仅作 INFO 打印。
+- **standalone 路径可用性依赖一个隐式行为**（2026-09-21 实测澄清）：本栈
+  `podman run --rm --entrypoint ...` 之所以可用，是因为叠加镜像是 **OCI 格式**
+  而 **OCI 忽略 `HEALTHCHECK` 指令**——基底 `Containerfile:859` 定义了
+  HEALTHCHECK（`/usr/local/bin/healthcheck.sh`），但基底自身的 ManifestType 是
+  `docker.v2`、叠加镜像全是 `oci.v1`，故 xmnn-dev/xmnn-runtime 实际都**不带**
+  healthcheck（`podman image inspect` 顶层 Healthcheck = null）。
+  **反面**：直接对**基底镜像**跑 `podman run --rm` 会失败
+  （`Error: create healthcheck: unable to get systemd connection ...`，
+  WSL 下 systemd 会话总线不可达），需 `--no-healthcheck` 绕开
+  （构建端 `Containerfile.toolbx` 早已用 `HEALTHCHECK NONE` 处理同类问题）。
+  故**禁止**把「podman build 默认输出 OCI」当作理所当然——若上游改为默认
+  docker 格式，四栈 standalone 冒烟会集体失效，须同步补 `--no-healthcheck`
+  或显式 `HEALTHCHECK NONE`。
 
 ## 7. compose / 端口 / 卷
 
@@ -197,3 +210,46 @@ CPU 版 torch，容器里仍然用不上 GPU。
   `org.specweave.torch-version`（旧 `torch-cpu` 键名在 cu130 下失真），
   `relpack.py` 保留旧键回退以兼容本地残留镜像；`release.json` 字段与
   schema **无变化**。
+
+### 8.3 起容器前的形态一致性校验（C27，2026-09-21）
+
+**缺口**（C15 × C16 的交叉盲区）：`--torch` 是**单次** CLI 覆盖，只作用于
+`build`；而 `up` 的形参面没有 `--torch`（拿到也无效——它不做构建），只查镜像
+**存在性**（`_require_local_image` 比的是 tag，不是内容）。于是：
+
+```bash
+# .env TORCH_FLAVOR=cu130
+invoke xmnnrt.build --torch cpu     # 镜像变 cpu 形态，tag 仍是 latest
+invoke xmnnrt.up --skip-build       # 存在性通过 → 静默跑 cpu 镜像
+```
+
+构建期守卫第 10 项**发现不了**：它比的是「镜像内 marker vs 镜像内实物」，
+两者一致必然 PASS——偏差在**跨层**（`.env` 声明 vs 镜像内容），不在镜像内部。
+
+**规则**：`up` 起容器前必须过 `overlay_core.warn_torch_flavor_mismatch()`，
+把 `resolve_build_args` 解析出的**期望形态**与镜像 LABEL
+（`client_core.TORCH_FLAVOR_LABEL`）比对，不符则打印中文指引（含修复命令）。
+
+- **警告不阻断**（同 C21 超时不判失败、C24 回读失败不阻断）：镜像可用，形态
+  不符只影响能力面（如无 CUDA）；用户也可能刻意临时用另一形态，fail-fast 会
+  把「能用」的场景一并挡掉。
+- **判据在 `up_stack` 内、仅 `torch_flavor` 栈生效**（quant/monetize 零探测
+  零噪音）。非 `--skip-build` 路径刚由 `build_image` 按同一 `resolve_build_args`
+  重建，形态必然一致（零噪音通过），该卡点真正拦的是 `--skip-build`/`--offline`。
+- **「无 LABEL」与「LABEL 为空串」必须分流**：空串是**合法声明**
+  （`TORCH_FLAVOR=""` = 不装 torch），无 LABEL 是**无法判定**（改造前旧镜像 /
+  非 torch 栈镜像）。故本校验另立 `overlay_core.image_torch_flavor()` 返回
+  `Optional[str]`（None=无标签），**不得**复用 `client_core._image_torch_flavor`
+  （那个把两者都归空串，供 save 命名用——照搬会把旧镜像误报成「声明空、实物
+  cpu」）。真机实测：`xmnn-runtime:latest`→`cu130`、`1.2.1.dev0`（旧 CPU）→
+  `None`、基底镜像→`None`，零误报。
+- **查询走 `client_core.image_inspect_info`**（原始 JSON，规避 Windows cmd 与
+  Linux bash 双 shell 的 `--format` 模板引号差异），镜像不存在/解析失败降级为
+  None，不抛异常阻断主流程。测试按既有约定在 **`oc` 命名空间**打桩该符号
+  （同 `load_image`），**不**去 patch `client_core.run_cmd`——内核自己的 I/O 缝
+  是 `oc.run_cmd`，跨模块旁路会同时破坏两条约定。
+- **共享键语义（本次决策：保持 C15 不动）**：`TORCH_FLAVOR` 是两栈共用的无前缀
+  键（C15），xmnn-dev 与 xmnnrt **无法各自独立取值**。当前两栈诉求恰好一致
+  （dev 要 nvcc 编译、runtime 要 GPU 张量），故接受该耦合；若未来需要分叉，
+  走「栈专属覆盖键优先、回落共享键」的受控扩展（已实测 podman-compose 支持
+  嵌套插值 `${XMNNRT_TORCH_FLAVOR:-${TORCH_FLAVOR:-cpu}}`），届时需同步修订 C15。

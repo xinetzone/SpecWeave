@@ -6,6 +6,63 @@
 
 ## [Unreleased]
 
+### 2026-09-21 · `fix:` 补上「声明形态 vs 镜像实物」的跨层校验（C27）
+
+**关联七概念场景**：场景2「问题解决」——用户质疑前一轮给出的两个「坑」，
+按 F→V→C→R→I→E 链路核验，结果**一个成立、一个被实测推翻**。
+
+**F/I 根因**（9 轮真机探针 + 代码路径复核）：
+
+① 坑①「tag 覆盖」成立，但定性需修正——`.env TORCH_FLAVOR=cu130` 是**刻意
+设置**（注释块指向 xmnn-dev 的 nvcc，实测 xmnn-dev 已装 cu130 torch +
+`/usr/local/bin/nvcc`），两栈诉求恰好一致，状态自洽；真正的问题是**共享键
+使两栈无法独立取值**（C15 明文设计）。
+
+② 坑②「`podman run --rm` 失败影响 standalone 冒烟」**被推翻**：基底镜像
+`ManifestType=docker.v2`（带 HEALTHCHECK，`Containerfile:859`），而叠加镜像
+全是 **OCI v1——OCI 格式忽略 HEALTHCHECK 指令**，故 xmnn-dev / xmnn-runtime
+均无 healthcheck，`podman run --rm` 实测 `rc=0`。四栈 standalone 冒烟路径
+**完全不受影响**；`invoke run` 用的 `jupyter-podman-client` 同为 OCI。
+该坑的表述在 rules/README 中一并修正，并记下「依赖 OCI 忽略 HEALTHCHECK」
+这一**隐式行为**（若 podman 改默认格式，四栈会集体失效）。
+
+③ **核验中发现真实缺口**（比原 #1 更实在）：`--torch` 是**单次** CLI 覆盖
+（C15），只作用于 `build`；`up` 形参面没有 `--torch`，且 `_require_local_image`
+比的是 **tag 不是内容** → `build --torch cpu` 后 `up --skip-build` 会**静默**跑
+cpu 镜像（`.env` 声明 cu130）。构建期守卫第 10 项比的是「镜像内 marker vs
+镜像内实物」，两者一致必然 PASS——偏差在**跨层**，镜像内部自洽检测永远
+发现不了。
+
+**E/C 落地**（用户决策：加 up 侧校验 + 保持共享键）：
+
+- 内核新增 `image_torch_flavor(c, tag) -> Optional[str]`：**区分「无 LABEL」
+  与「LABEL 为空串」**——后者是合法声明（`TORCH_FLAVOR=""` = 不装 torch），
+  前者是无法判定（旧镜像）。**不复用** `client_core._image_torch_flavor`
+  （把两者都归空串，照搬会把旧 CPU 镜像误报成「声明空、实物 cpu」）。
+- 内核新增 `warn_torch_flavor_mismatch(c, spec, env)`，在 `up_stack` 内、
+  镜像存在性预检之后调用；仅 `torch_flavor` 栈生效（quant/monetize 零探测）。
+  不符则打印「声明 / 镜像实际 / 修复命令」三行中文指引，**警告不阻断**
+  （同 C21 超时不判失败、C24 回读失败不阻断）。
+- 查询走 `client_core.image_inspect_info`（原始 JSON，规避双 shell `--format`
+  引号差异）；镜像不存在/解析失败降级为「不判定」，不抛异常。
+- 测试按既有约定在 **`oc` 命名空间**打桩该符号（同 `load_image`）——**不**
+  patch `client_core.run_cmd`：内核自己的 I/O 缝是 `oc.run_cmd`，跨模块旁路
+  会同时破坏两条约定（首版实现踩到，已改正）。
+
+**V 验收**（真机 + 单测）：
+
+- 真机 `image_torch_flavor` 五例零误报：`xmnn-runtime:latest`→`cu130`、
+  `xmnn-dev:latest`→`cu130`、`xmnn-runtime:1.2.1.dev0`（旧 CPU）→`None`、
+  基底镜像→`None`、不存在→`None`；
+- 新增 5 例单测（不符报警 / 一致静默 / 旧镜像无 LABEL 不误报 / 非 torch 栈
+  零探测 / 「空串声明 vs 无 LABEL」分流正反两向）；
+- 全量 `pytest tests -q --ignore=tests/test_ast_inject.py` **249 passed /
+  2 skipped**（较前基线 +5，零回归）。
+
+**未做**：镜像形态感知 tag（C26 明文「一 tag 一形态」，本次决策保持共享键、
+不动 C15；若未来两栈需分叉，走「栈专属覆盖键优先、回落共享键」的受控扩展，
+嵌套插值 `${XMNNRT_TORCH_FLAVOR:-${TORCH_FLAVOR:-cpu}}` 已实测可行）。
+
 ### 2026-09-20 · `feat:` xmnnrt 支持 GPU——`up --gpu` 设备透传 + `build --torch cpu|cu130`（C26）
 
 **关联七概念场景**：场景5「创新突破」——承接同日 xmnn-dev 的 GPU/torch 能力

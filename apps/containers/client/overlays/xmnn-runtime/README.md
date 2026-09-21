@@ -391,6 +391,7 @@ RUN /opt/conda/bin/python -m pip install --no-cache-dir torchvision \
 | `up --gpu` 报 `Error: stat ...: no such file or directory` + exit 125 | 设备路径在 podman 宿主侧不存在（C19 预检未过则不会走到这里）；`ls /dev/dri /dev/dxg` 看真实节点，或用 `GPU_DEVICE=<路径>` 显式指定 |
 | `up --gpu` 成功但容器内 `torch.cuda.is_available()` 为 False | 两种可能：① 镜像是 cpu 形态（`build --torch cu130` 后重建）；② WSL2 下宿主缺 `libcuda.so.1`/`libdxcore.so`/`/usr/lib/wsl/drivers`（内核会前置拦截并点名缺失路径） |
 | `build --torch cu130` 报 pip 找不到版本 | 目标版本在 cu130 索引无 cp314 wheel；按 SOP「升级前检查」同时核对 cpu 与 cu130 两个索引 |
+| `up` 打印「镜像 torch 形态与声明不一致」 | **正常拦截**（C27）：`.env TORCH_FLAVOR` 与镜像实际形态不符——多因 `build --torch X` 是**单次**覆盖（改镜像不改 `.env`），随后 `up --skip-build` 只查镜像存在性。容器会用**镜像实际形态**运行；要按声明形态跑就 `invoke xmnnrt.build`（读 `.env`）后重建容器 |
 | Jupyter 里选不到 xmnn runtime 内核 | 构建日志检查 register-kernel 段；守卫第 9 项会拦截此情况，镜像不会构建成功 |
 | 换了 whl 版本但镜像内容没变 | 重新 `invoke xmnnrt.build`（任务自动按 dist 最新 mtime 暂存）；`--no-cache` 全量重建 |
 | pip 装依赖慢/失败 | 在 `.env` 设 `PIP_MIRROR=tuna`（或 `aliyun`）后重跑 `invoke xmnnrt.build`（C15：三处同键，CLI 旗标仅覆盖单次 build） |
