@@ -84,12 +84,11 @@ source: "workspace/temp/debug.iranti_caffe-a8w4"
 
 > 前置：`../workspace/temp/` 下的证据文件已于 2026-09-21 核验**不存在**（临时区被清理），
 > 复现需先在 `xmnn-dev` 栈内重新编译该模型并产出 `compile/` 下同名产物。
-> 路径均以本目录（`docs/`）为基准；`$WORKSPACE_ROOT` 指 SpecWeave 工作区根。
+> 路径均以本目录（`docs/`）为基准。
 
 ```bash
-# 1) 解码（skill：xmnn-decode，脚本位于工作区根 .trae/skills/xmnn-decode/）
-bash "$WORKSPACE_ROOT/.trae/skills/xmnn-decode/run.sh" \
-  ../workspace/temp/debug.iranti_caffe-a8w4/compile/network.xmnn
+# 1) 解码（skill：xmnn-decode）
+xmnn-decode ../workspace/temp/debug.iranti_caffe-a8w4/compile/network.xmnn
 
 # 2) 解析各带权算子的 is_int4 字段（脚本见附录 A，先落盘为 list_int4.py）
 python list_int4.py \
