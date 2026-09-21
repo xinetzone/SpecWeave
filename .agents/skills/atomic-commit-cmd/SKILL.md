@@ -108,7 +108,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/atomic-commit-cmd/SKILL.toml"
 - [ ] vendor/目录变更符合子模块管理规范（不直接提交vendor内容）
 - [ ] **spec目录白名单检查**：
   - [ ] 若变更涉及 `.trae/specs/` 下已完成/归档状态的spec目录，确认没有将分析报告(analysis-report.md)、任务输出(task*-*.md)、文章内容(article-content.md)等产出物文件遗留在spec目录中
-  - [ ] 产出物文件必须归档至 `docs/` 对应目录，spec目录仅保留 spec.md/tasks.md/checklist.md/README.md/.gitkeep 等规划文件
+  - [ ] 产出物文件必须归档至 `docs/` 对应目录，spec目录仅保留 spec.md/tasks.md/review.md（及 facts.md/insights.md 过程件）与 README.md/.gitkeep
   - [ ] 可运行 `python .agents/scripts/check-spec-output-archive.py` 快速验证
 - [ ] **fix类型提交专项检查**：
   - [ ] 若本次提交包含Bug修复（type=fix），是否包含预防措施（检查脚本/测试用例/规则更新/反模式清单）？
@@ -167,6 +167,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/atomic-commit-cmd/SKILL.toml"
 
 ## 11. Changelog
 
+- **v1.8.0** (2026-09-20): 对齐 spec 白名单口径至现行标准——检查脚本白名单补入 review.md（TRAE-spec-mode 规划三件套）与 facts.md/insights.md（工作流声明的过程件），checklist.md 降级为存量兼容命名。清除了 553 次 review.md 类误报（492 项历史告警中 414 项为白名单漂移误报，真实债务 78 项）。基于 492 项历史遗留告警的根因复盘。
 - **v1.7.0** (2026-07-13): 新增"spec目录白名单检查"安全项，强制产出物归档至docs/而非遗留在spec规划目录中。配套check-spec-output-archive.py自动化检查脚本（19种产出物命名模式匹配），已集成至ci-check流水线Step 7（当前warn-only，待历史51个遗留spec清理后升级为error）。基于文章分析任务产出物路径错误问题的第一性原理复盘萃取。
 - **v1.6.0** (2026-07-06): 新增"批量提交场景重扫描"检查项，解决批量原子提交后工作区残留变更被误判为已处理的隐患。三处同步增强：§5步骤6新增重扫描提示、§6安全检查清单新增批量提交项、L2文档atomic-commit.md步骤5新增第5项验证。基于5次批量原子提交复盘中"4个文件未显示在初始扫描"问题萃取。
 - **v1.5.0** (2026-07-05): 新增"fix类型提交专项检查"清单，强制执行"修复即闭环"三阶段SOP（修复→预防→闭环），禁止纯点修复提交。平凡修复（拼写/格式/注释/清理）可豁免但须自查确认。基于SpecWeave 13天全生命周期复盘洞察萃取。

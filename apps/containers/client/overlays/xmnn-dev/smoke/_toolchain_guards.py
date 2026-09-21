@@ -23,6 +23,11 @@
      按 build-arg TORCH_FLAVOR 写入），断言「声明形态 == 实际形态」——空声明
      时 torch 必须缺席（默认镜像零 torch），cpu/cu130 时 version.cuda 必须
      分别为 None/非 None。声明与实物脱钩（如缓存串味、ARG 未透传）在此拦截。
+  9. CUDA 编译器工具链（C25）：cu130 形态随包 nvcc（Layer 2.6）。三查——
+    ① /opt/xmnn-cuda-nvcc-version 标记版本 == `nvcc --version` 实测版本；
+    ② /usr/local/cuda 农场布局（bin/include/lib64/nvvm + libcudart.so 短名）；
+    ③ **真编译 + 真链接**一个最小 .cu（唯一能拦住 glibc/crt 头冲突与三包错版
+    的判据——「nvcc 存在」不等于「编得过」）。非 cu130 形态反向断言 nvcc 缺席。
 
 任何断言失败即以非零退出（构建期 RUN 失败、run --rm 冒烟失败）。
 """
@@ -35,6 +40,7 @@ import shutil
 import subprocess
 import sys
 import sysconfig
+import tempfile
 import tomllib
 from pathlib import Path
 
@@ -259,10 +265,99 @@ elif declared_flavor == "cu130":
 if torch_installed:
     print(f"  torch: {getattr(torch, '__version__', '?')} cuda={torch_cuda!r}")
 
+
+print("\n== 9. CUDA 编译器工具链（cu130 形态随包 nvcc，C25：声明 vs 实物）==")
+
+
+def nvcc_compile_probe(nvcc: str) -> tuple[bool, str]:
+    """真编译 + 真链接一个最小 .cu（不运行——构建期无 GPU 设备，属预期边界）。
+
+    「nvcc --version 可执行」不是充分条件：glibc/crt 头规格冲突（13.0 与
+    glibc 2.43 的 rsqrt noexcept）与 nvcc/nvvm/crt 三包错版（cicc 产 PTX
+    9.4、ptxas 只认 9.0）都只在编译期暴露，故守卫必须真编一个 .cu。
+    """
+    src = (
+        "#include <cuda_runtime.h>\n"
+        "__global__ void guard_add_one(int *p) { p[0] += 1; }\n"
+        "int main() {\n"
+        "    int h = 41; int *d = nullptr;\n"
+        "    cudaMalloc(&d, sizeof(int));\n"
+        "    cudaMemcpy(d, &h, sizeof(int), cudaMemcpyHostToDevice);\n"
+        "    guard_add_one<<<1, 1>>>(d);\n"
+        "    cudaMemcpy(&h, d, sizeof(int), cudaMemcpyDeviceToHost);\n"
+        "    cudaFree(d);\n"
+        "    return h == 42 ? 0 : 1;\n"
+        "}\n"
+    )
+
+    def last_err(proc: subprocess.CompletedProcess) -> str:
+        text = (proc.stderr or proc.stdout or "").strip()
+        lines = [ln for ln in text.splitlines() if ln.strip()]
+        return lines[-1][:160] if lines else "no output"
+
+    try:
+        with tempfile.TemporaryDirectory(prefix="nvcc-guard-") as td:
+            cu = Path(td) / "guard_probe.cu"
+            cu.write_text(src, encoding="utf-8")
+            comp = subprocess.run(
+                [nvcc, "-c", str(cu), "-o", str(Path(td) / "guard_probe.o")],
+                capture_output=True, text=True, timeout=600,
+            )
+            if comp.returncode != 0:
+                return False, f"compile rc={comp.returncode}: {last_err(comp)}"
+            link = subprocess.run(
+                [nvcc, str(cu), "-o", str(Path(td) / "guard_probe"), "-lcudart"],
+                capture_output=True, text=True, timeout=600,
+            )
+            if link.returncode != 0:
+                return False, f"link rc={link.returncode}: {last_err(link)}"
+            return True, "compile + link OK（-c 与 -lcudart 双段；不运行）"
+    except (OSError, subprocess.SubprocessError) as exc:
+        return False, str(exc)
+
+
+NVCC_MARKER = Path("/opt/xmnn-cuda-nvcc-version")
+nvcc_path = shutil.which("nvcc")
+if declared_flavor == "cu130":
+    declared_nvcc = (
+        NVCC_MARKER.read_text(encoding="utf-8").strip() if NVCC_MARKER.is_file() else None
+    )
+    check("cu130 → nvcc 版本标记存在（Layer 2.6 已执行）", bool(declared_nvcc),
+          repr(declared_nvcc))
+    check("cu130 → nvcc 在 PATH 上可解析（/usr/local/bin wrapper）",
+          nvcc_path is not None, nvcc_path or "NOT FOUND")
+    if nvcc_path:
+        rc, out = run_version(nvcc_path, "--version")
+        rel = [ln for ln in out.splitlines() if "release" in ln]
+        check("nvcc --version 可执行", rc == 0, rel[-1] if rel else out[:100])
+        if declared_nvcc:
+            check(f"nvcc 实测版本 == 标记版本 {declared_nvcc}", declared_nvcc in out,
+                  "一致" if declared_nvcc in out else "版本漂移（pip 升级/缓存串味）")
+        for rel_path in (
+            "bin/nvcc",
+            "include/cuda_runtime.h",
+            "lib64/libcudart.so",
+            "nvvm/libdevice",
+        ):
+            check(f"/usr/local/cuda/{rel_path}", Path("/usr/local/cuda", rel_path).exists())
+        # 动态链接器登记（编译产物「开箱即跑」的必要条件）：无它则编译链接都过，
+        # 但二进制运行期报 `libcudart.so.13: cannot open shared object file`——
+        # 只在「运行」时才暴露，故必须在此断言 ldconfig 缓存已含 libcudart。
+        rc, out = run_version("ldconfig", "-p")
+        check("ldconfig 已登记 libcudart（编译产物可运行）",
+              rc == 0 and "libcudart" in out,
+              next((ln for ln in out.splitlines() if "libcudart" in ln), out[:80]).strip())
+        ok, detail = nvcc_compile_probe(nvcc_path)
+        check("nvcc 编译 + 链接最小 .cu（-lcudart）", ok, detail)
+else:
+    check(f"声明形态 {declared_flavor!r} → nvcc 必须缺席（默认隔离）",
+          nvcc_path is None and not NVCC_MARKER.is_file(),
+          f"which={nvcc_path}, marker_exists={NVCC_MARKER.is_file()}")
+
 print("")
 if failures:
     print(f"[FAIL] {len(failures)} 项守卫未通过：{failures}")
     sys.exit(1)
 print("[OK] xmnn-dev toolchain guards all passed "
       "(dual ABI + LLVM 22.1 toolchain + nuitka 4.2.1 + builder assets + SONAME "
-      "+ offline self-sufficiency + torch flavor)")
+      "+ offline self-sufficiency + torch flavor + cuda nvcc)")

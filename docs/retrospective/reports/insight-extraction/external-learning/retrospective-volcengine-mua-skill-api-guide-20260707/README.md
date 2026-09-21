@@ -108,7 +108,7 @@ retrospective-volcengine-mua-skill-api-guide-20260707/
 - Spec PRD：[spec.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/spec.md)
 - Spec任务计划：[tasks.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/tasks.md)
 - Spec验收清单：[checklist.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/checklist.md)
-- Spec分析结果：[analysis-result.md](../../../../../../.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/analysis-result.md)
+- Spec分析结果：[analysis-result.md](../../../../archives/spec-working-notes/standards-tools/learn-volcengine-mobileuse-agent/analysis-result.md)
 - Spec看板：[README.md](../../../../../../.trae/specs/standards-tools/README.md)（标记12/16完成）
 
 ### 关联复盘

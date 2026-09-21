@@ -28,6 +28,7 @@ scripts/index
 tags/index
 tech/index
 templates/index
+trae-feature-watch/index
 troubleshooting/index
 anti-crawler-strategy-playbook
 caffe-ffi-perf-instrumentation-template
@@ -51,6 +52,7 @@ VENDOR-INTEGRATION
 | **AI 教育** | AI 教育智能体与教育科技学习成果（OpenMAIC 知识包等） | [OpenMAIC 知识包](ai-education/openmaic/index.md) |
 | **算法艺术** | 生成式艺术与算法创意探索（Atomic Emergence 等） | [Atomic Emergence 哲学](algorithmic-art/atomic-emergence/concepts/philosophy.md) |
 | **工程化研究** | 深度学习原子化设计等工程方法论研究 | [AI Agent 原子化设计分析](engineering/deep-learning-atomic-design/concepts/ai-agent-atomic-design-analysis.md) |
+| **[TRAE 生态特性监测](trae-feature-watch/index.md)** | 每周例行追踪官方更新日志、文档新特性、TraeWork 设计库与本地插件/skills 清单变化 | [最新一期周报（2026-09-21）](trae-feature-watch/2026-09-21-trae-feature-watch.md) |
 
 ## 🎯 如何使用
 

@@ -2,10 +2,11 @@
 # 用途：每周例行任务比对官方更新日志条目与本地插件/skills/MCP 清单，检测增量
 # 维护：trae-feature-watch 例行任务自动覆写；人工勿手改计数（以官方页与本地盘点重算为准）
 # 首次运行：2026-09-07（baseline，仅建基线，不生成特性报告）
+# 上次比对：2026-09-21（diff，有更新 → 2026-09-21-trae-feature-watch.md，11 条）
 schema_version: 1
 first_run_at: "2026-09-07"
-last_check_at: "2026-09-07"
-run_kind: baseline  # baseline=首次基线；diff=常规比对（有更新出报告 / 无更新仅刷新时间戳）
+last_check_at: "2026-09-21"
+run_kind: diff  # baseline=首次基线；diff=常规比对（有更新出报告 / 无更新仅刷新时间戳）
 
 # ─────────────────────────────────────────────
 # 官方信息源（公开内容；每条均附 URL，版本号照录官方原文）
@@ -13,10 +14,14 @@ run_kind: baseline  # baseline=首次基线；diff=常规比对（有更新出�
 official_sources:
   - id: trae-enterprise-release-notes
     url: https://docs.trae.cn/enterprise_release-notes
-    product: TRAE 企业版（控制台/管理 API）
-    latest_entry_date: "2026-09-02"
-    latest_entry_summary: 支持将飞书文档添加为企业文档集
+    product: TRAE 企业版（控制台/管理 API；条目覆盖 TraeCode/TraeCode Plugin/TraeCode CLI 企业版）
+    latest_entry_date: "2026-09-15"
+    latest_entry_summary: 新增系统内置模型 DeepSeek-V4.1-Flash
     recent_entries:
+      - date: "2026-09-15"
+        scope: TraeCode、TraeCode Plugin、TraeCode CLI 企业版
+        items:
+          - 新增系统内置模型 DeepSeek-V4.1-Flash
       - date: "2026-09-02"
         items:
           - 支持将飞书文档添加为企业文档集
@@ -28,18 +33,34 @@ official_sources:
           - 新增系统内置模型 GLM-5.3-Flash
           - TraeCode 中内置智能体 "Agent" 与 "SOLO Agent" 合并为 "Agent"
           - 企业版控制台支持查看企业自定义模型用量明细
-          - 人员管理/部门管理/用量管理/数据分析四类开放平台 API 批量新增与更新（含部门 CRUD、部门用量、部门 MCP 使用排行等）
+          - 人员管理/部门管理/用量管理/数据分析四类开放平台 API 批量新增与更新
+      - date: "2026-08-26"
+        items:
+          - 支持为指定 TRAE 内置模型开启 Max 模式或设置思考强度
+      - date: "2026-08-18"
+        items:
+          - 新增系统内置模型 GLM-5.3、DeepSeek-V4-Pro 正式版
+      - date: "2026-08-17"
+        items:
+          - TraeWork 企业版支持 Design 模式（须放通相关域名）
+          - 新增系统内置模型 Qwen-3.8-Max
       - date: "2026-08-11"
         items:
           - 新增"部门管理"功能（部门 CRUD、人员部门信息、批量导入、部门数据分析/用量统计/模型开放范围管理）
-    pending_verification:
-      - 企业版日志检索摘要另见"企业级 Hook（生命周期钩子，适用 TraeCode、TraeCode CLI）"与"Fork Chat（从会话流任一节点创建会话副本）"条目，位于 08-28～09-02 间被截断段落，下次运行需抓取全文核验日期与细节
+      - date: "2026-08-06"
+        items:
+          - 新增系统内置模型 DeepSeek-V4-Flash 正式版
+          - TraeCode SOLO 模式支持 "Goal" 工作流（目标导向多轮续跑）
+    resolved_items:  # 基线待核验项销项
+      - "企业级 Hook（适用 TraeCode、TraeCode CLI）日期核实为 2026-06-29"
+      - "Fork Chat（从会话流任一节点创建会话副本）日期核实为 2026-06-29"
 
   - id: traecode-intl-changelog
     url: https://docs.trae.ai/ide/changelog
     product: TraeCode（国际版 IDE，docs.trae.ai）
     latest_entry_date: "2026-08-19"
     latest_version: "v3.5.89 ~ v3.5.91（Hotfix）"
+    note: 国际站本周无新增，顶部仍为 2026-08-19；国内现行页（v3.3.101）节奏领先，继续两站并查
     recent_entries:
       - date: "2026-08-19"
         version: "v3.5.89 ~ v3.5.91"
@@ -68,80 +89,77 @@ official_sources:
         items:
           - 【仅个人版】设置中新增"浏览器"配置页（浏览器控制/Browser Use）
           - 【仅个人版】Windows 接入 MSSDK
-      - date: "2026-06-29"
-        version: v3.5.71
-        kind: 功能发布
-        items: [Browser Use 部分卡片增加截图展示]
-      - date: "2026-06-23"
-        version: "v3.5.69 ~ v3.5.70"
-        kind: 功能发布
-        items:
-          - 整合内置智能体：仅保留 Chat、Agent
-          - 修复 Write 工具流式编辑已有文件时的 Diff 问题
-      - date: "2026-06-17"
-        version: v3.5.67
-        kind: 功能发布
-        items:
-          - 开放 TRAE 企业版
-          - 支持加载 .trae/agents 目录下的 Subagents 定义文件（需在 Beta 功能设置页开启"启用 Subagents 目录"开关）
-          - -1/3003 等可重试错误端上自动重试，并撤回未执行的工具卡片
-      - date: "2026-06-10"
-        version: v3.5.66
-        kind: 功能发布
-        items:
-          - 支持钩子（Hook）功能：智能体执行特定事件节点运行自定义 Shell 命令
-          - 逐步灰度 Agent 删除工具自动执行，被删文件可在系统回收站/废纸篓找回
 
   - id: trae-cn-ide-changelog
-    url: https://docs.trae.cn/ide/changelog
-    product: TRAE CN（国内版 IDE，docs.trae.cn）
-    latest_entry_date: "2026-06-09"
-    latest_version: "v3.3.64 ~ v3.6.65（原文照录；3.6.65 疑为 3.3.65 笔误，待核验）"
-    note: 国内站 IDE 更新日志最新条目停留在 2026-06-09，国际站已更新至 2026-08-19；监测时两站并查，国内站停滞本身列为观察项
+    url: https://docs.trae.cn/ide_changelog  # 2026-09-21 修正：旧 URL ide/changelog 为停滞路由
+    product: TraeCode（国内现行更新日志页）
+    latest_entry_date: "2026-09-15"
+    latest_version: "v3.3.101（Hotfix）"
+    url_correction:
+      canonical: https://docs.trae.cn/ide_changelog
+      legacy_stale: https://docs.trae.cn/ide/changelog
+      legacy_state: 旧路由页面标题"TRAE CN"，条目停滞 2026-06-09；基线"国内站停滞"系误用旧 URL 的误判
+      cross_check: https://www.trae.cn/changelog（官网统一更新日志，内容与现行页一致）
     recent_entries:
-      - date: "2026-06-09"
-        version: "v3.3.64 ~ v3.6.65"
+      - date: "2026-09-15"
+        version: v3.3.101
+        kind: Hotfix
+        items: [修复已知问题]
+      - date: "2026-09-11"
+        version: v3.3.100
+        kind: Hotfix
+        items: [修复已知问题]
+      - date: "2026-09-08"
+        version: v3.3.99
         kind: 功能发布
         items:
-          - 【仅企业版】支持在客户端中一键上传日志
-      - date: "2026-06-04"
-        version: v3.3.63
+          - 支持分享对话
+          - 支持配置网络代理
+      - date: "2026-09-04"
+        version: v3.3.98
+        kind: Hotfix
+        items: [修复已知问题]
+      - date: "2026-09-03"
+        version: v3.3.97
         kind: 功能发布
         items:
-          - 【仅个人版】TRAE CN 与 TRAE 国际版的全局技能目录相互兼容
-          - 修复 Subagent 卡片展开/折叠问题
-      - date: "2026-05-08"
-        version: v3.3.56
+          - 【仅个人版】支持插件市场
+      - date: "2026-09-01"
+        version: "v3.3.93 ~ v3.3.96"
         kind: 功能发布
         items:
-          - Builder 与 Builder with MCP 智能体合并为 Agent；SOLO Coder 更名为 SOLO Agent
-          - .trae/commands/ 项目命令文件支持最多 3 层目录嵌套
-      - date: "2026-04-28"
-        version: v3.3.54
+          - 【仅企业版】Solo Agent 与 Agent 合并为 Agent（/goal、/plan、/spec；Max 模式；Auto Mode；自定义智能体）
+      - date: "2026-08-20"
+        version: v3.3.92
         kind: 功能发布
         items:
-          - 新增斜杠命令（自定义命令）功能
-          - 设置面板归类为"索引与文档""技能与命令""规则"
-      - date: "2026-04-14"
-        version: v3.3.51
+          - 支持 TRAE 移动端连接 TraeCode
+      - date: "2026-08-19"
+        version: "v3.3.89 ~ v3.3.91"
+        kind: Hotfix
+        items: [修复已知问题]
+      - date: "2026-08-12"
+        version: v3.3.88
         kind: 功能发布
         items:
-          - 规则嵌套（.trae/rules/ 子文件夹，递归最多 3 层）与子目录规则
-          - Git Commit Message 生成规则配置入口
-          - MCP Server 支持完整 OAuth 授权流程（授权/运行/调用/解除）
-          - 自定义模型支持自定义请求地址
-      - date: "2026-04-02"
-        version: v3.3.44
+          - 【仅个人版】支持电脑控制（Computer Use）
+      - date: "2026-08-07"
+        version: "v3.3.84 ~ v3.3.86"
         kind: 功能发布
         items:
-          - 支持从 .agents/skills 目录自动加载技能
-          - 支持为 AI 生成的 Git Commit Message 设置规则
+          - 支持为部分模型开启 Max 模式
+          - 支持跳转至对话流中的任一 Query
+      - date: "2026-07-30"
+        version: "v3.3.81 ~ v3.3.83"
+        kind: 功能发布
+        items: [上线以积分为核心的计费模式]
 
   - id: traework-changelog
     url: https://docs.trae.cn/work_changelog
     product: TraeWork（桌面版/网页版/移动端 App）
     latest_entry_date: "2026-08-21"
     latest_version: "桌面版 v0.1.49 ~ v0.1.52（网页版同步）"
+    note: 本周无新增条目
     recent_entries:
       - date: "2026-08-21"
         version: "桌面版 v0.1.49 ~ v0.1.52"
@@ -166,46 +184,35 @@ official_sources:
         items:
           - 上线以积分为核心的计费模式
           - 上线模板库
-      - date: "2026-07-27"
-        version: "移动端 App v0.0.15"
-        items: [对话输入框中可选择插件调用]
       - date: "2026-07-21"
         version: "桌面版 v0.1.35 ~ v0.1.39"
         items:
           - 上线插件市场
           - 支持视频生成能力
-      - date: "2026-07-14"
-        version: "桌面版 v0.1.24 ~ v0.1.34；移动端 v0.0.12 ~ v0.0.13"
-        items:
-          - 支持分享 HTML 格式产物
-          - 任务搜索与置顶优化
-          - 新增站内信消息通知
       - date: "2026-06-24"
         version: "桌面版 v0.1.21 ~ v0.1.23"
         items:
           - 发布 Design 模式（输入设计需求/上传参考图/选择设计系统，生成页面原型或高保真设计）
           - 语音讨论支持联网搜索、读取项目级记忆
           - 支持记忆（偏好与规则保存为记忆）
-      - date: "2026-06-09"
-        version: "v0.1.18"
-        items:
-          - TRAE SOLO 升级为 TraeWork
-          - TraeWork 支持企业版账号登录
 
   - id: traework-design-system-doc
     url: https://docs.trae.cn/solo_design-system
     product: TraeWork 设计系统 / Design Library（Design 模式配套文档）
-    latest_known_state: "Design 模式 2026-06-24 发布；Design Library 三种添加方式：解析 Figma 文件自动提取主题色/字体层级/组件样式、导入设计规范、风格探索（对话生成设计系统）；内置 TRAE Work/豆包/Apple/Claude/Google/Vercel 等预设品牌设计系统；支持 UI 截图设计还原"
+    latest_known_state: "内置 16 套设计系统全量核验：TraeWork、TraeCode、Volcengine、TikTok、Doubao、Apple、Claude、Google、Vercel、Minimalist、21th、Motion Fit、Golden Time、Nerv、Barbie、Vibe Camp；自定义系统添加三方式（解析 Figma / 导入 TraeDesign zip / 风格探索）；支持全生命周期编辑（主题变量编辑器、组件对话调整、图形 SVG 上传去色、README+SKILL.md 规范挂载）与重命名/副本/导出 zip/删除"
+    new_vs_baseline:  # 本期文档增量
+      - 自定义设计系统全生命周期编辑管理能力（文档现状，官方未标变更日期，时间待核验）
+      - 16 套内置清单补全（同名 design skills 基线已存在，判定旧有，不可按日期核验）
     related_docs:
       - https://docs.trae.cn/work_use-the-design-mode
       - https://docs.trae.cn/work_plugins
     note: 设计库无独立 changelog，增量通过 TraeWork 更新日志与文档页变更监测
 
 # ─────────────────────────────────────────────
-# 本地清单盘点（2026-09-07，本机 c:\Users\xinzo\.trae-cn）
+# 本地清单盘点（2026-09-21，本机 %USERPROFILE%\.trae-cn）
 # ─────────────────────────────────────────────
 local_inventory:
-  plugins_dir: c:\Users\xinzo\.trae-cn\plugins
+  plugins_dir: %USERPROFILE%\.trae-cn\plugins
   plugins:
     - {name: browser-bridge, version: "0.2.0", kind: standalone, has_connector: false}
     - {name: trae-remote-official/browser, version: "1.0.3", kind: official-plugin, has_connector: false}
@@ -215,20 +222,24 @@ local_inventory:
     - {name: trae-remote-official/frontend-design, version: "0.0.0", kind: official-plugin, has_connector: false}
     - {name: trae-remote-official/gitee, version: "0.0.3", kind: official-plugin, has_connector: true}
     - {name: trae-remote-official/github, version: "0.1.2", kind: official-plugin, has_connector: true}
-    - {name: trae-remote-official/lark, version: "1.0.4", kind: official-plugin, has_connector: true}
+    - {name: trae-remote-official/lark, version: "1.0.5", kind: official-plugin, has_connector: true}  # 1.0.4 → 1.0.5
     - {name: trae-remote-official/seedance, version: "1.0.1", kind: official-plugin, has_connector: false}
     - {name: trae-remote-official/seedream, version: "1.0.1", kind: official-plugin, has_connector: false}
     - {name: trae-remote-official/web-app-development, version: "0.1.1", kind: official-plugin, has_connector: false}
   plugins_total: 12
   connectors: [dingtalk, gitee, github, lark]
-  mcps_dir: c:\Users\xinzo\.trae-cn\mcps
+  mcps_dir: %USERPROFILE%\.trae-cn\mcps
   active_mcp_servers:  # 以本会话 mcp_file_system 声明为准（工作区 s_SpecWeave-01b8097d / solo_agent_lite）
     - {server: integrated_code_mode, tools: [Exec], note: 隔离 JS 运行时编排工具}
     - {server: mcp_plugin_Gitee_gitee, tools_count: 23, note: Gitee 平台 MCP（仓库/Issue/PR/Release/评论）}
-  mcp_cache_note: mcps 目录按工作区会话缓存（s_<workspace> 前缀）；另见 mcp_Computer_Use 工具缓存（click/drag/launch_app 等 13 工具），当前会话未在 mcp_file_system 声明为活跃
-  session_skills_count: 188
+  mcp_cache_note: mcps 目录按工作区会话缓存（s_<workspace> 前缀）；另见 mcp_Computer_Use 工具缓存，当前会话未在 mcp_file_system 声明为活跃
+  session_skills_count: 189  # 156 用户级 + 33 插件贡献（基线 188）
+  session_skills_diff_vs_last:
+    added: [sovereign-rollout-cmd]
+    removed: []
+    note: sovereign-rollout-cmd 为治理类技能（提案草案零写入→批准门→落盘→报告验证四阶段）
   session_skills:
-    # 内置/平台与用户级 skills（155 个）
+    # 内置/平台与用户级 skills（156 个；本期新增 sovereign-rollout-cmd）
     - 21th-design
     - Dashboard Page
     - Doc Page
@@ -363,6 +374,7 @@ local_inventory:
     - solo-graphic-generation
     - solo-image-edit
     - source-code-to-okf-wiki
+    - sovereign-rollout-cmd
     - task-execution-summary
     - test-driven-development
     - theme-factory
@@ -384,7 +396,7 @@ local_inventory:
     - xlsx
     - yuanli-design-system
     - 天眼一下
-    # 插件贡献 skills（33 个）
+    # 插件贡献 skills（33 个，无变化）
     - trae-remote-official:dingtalk:dws
     - trae-remote-official:frontend-design:frontend-design
     - trae-remote-official:github:gh-address-comments
@@ -423,18 +435,21 @@ local_inventory:
 # 采集失败记录（重试后仍失败者登记于此，禁止编造）
 # ─────────────────────────────────────────────
 fetch_failures:
-  - source: WebSearch「TraeCode CLI 更新日志 / trae cli changelog」
-    attempts: 3
-    error: "搜索服务两次返回 system error 10000000（Failed to call search service）；第三次换词成功但未返回 CLI 专项 changelog 页"
-    fallback: 改由 docs.trae.ai/ide/changelog 直连获取（TraeCode 条目）；企业版日志提及 TraeCode CLI 适用企业级 Hook。CLI 独立 changelog 页面 URL 待下次核验
-    resolved: partial
+  - source: TraeCode CLI 独立更新日志页
+    attempts: 2  # WebSearch 两次（另基线期 3 次累计）
+    error: "WebSearch「TraeCode CLI 更新日志」两次返回 system error 10000000（Failed to call search service）；直连猜测地址 https://docs.trae.cn/cli_changelog 返回「页面不存在或已移动」"
+    fallback: CLI 变更以企业版更新日志中覆盖 TraeCode CLI 的条目为部分事实源（2026-09-15 DeepSeek-V4.1-Flash 明确适用 TraeCode CLI 企业版）
+    resolved: no
 
 # ─────────────────────────────────────────────
 # 下次运行注意事项
 # ─────────────────────────────────────────────
 next_run_notes:
-  - 首篇特性报告生成时：创建 docs/knowledge/trae-feature-watch/index.md（含 toctree 收录报告），并在 docs/knowledge/index.md 的 toctree 与分类表中登记 trae-feature-watch/index，避免 Sphinx 断链
-  - 报告命名：YYYY-MM-DD-trae-feature-watch.md（运行日日期，kebab-case），frontmatter 必含 source 字段
-  - 国内站 IDE changelog 停滞观察：复查 https://docs.trae.cn/ide/changelog 是否更新（基线时停在 2026-06-09）
-  - 待核验项：企业版"企业级 Hook / Fork Chat"条目日期；v3.6.65 版本号笔误；TraeCode CLI 独立更新日志页
+  - diff 基线已切到现行 URL：TraeCode 国内日志看 https://docs.trae.cn/ide_changelog（勿再用 ide/changelog 停滞旧路由）
+  - 复查国际版 https://docs.trae.ai/ide/changelog 是否追平国内条目（本期仍停 08-19）
+  - 复查 TraeWork https://docs.trae.cn/work_changelog 是否有新条目（本期仍停 08-21）
+  - 待核验：设计系统文档编辑管理能力的上线日期；lark 1.0.5 相对 1.0.4 的具体变更内容；TraeCode CLI 独立更新日志页 URL（搜索服务故障，择期重试）
+  - 已销项：企业级 Hook / Fork Chat 日期（均 2026-06-29）；旧路由 v3.6.65 版本号疑云（仅停滞旧路由承载，现行页不含该条目，不再追踪）
+  - 新报告命名：YYYY-MM-DD-trae-feature-watch.md；追加进 trae-feature-watch/index.md 的 toctree
+  - 脱敏纪律：报告与快照中的本机路径一律用 %USERPROFILE% 占位符（遵循 docs/knowledge/best-practices/sensitive-info-desensitization-spec.md §6.1），禁止写入真实用户名
   - diff 比对维度：官方源 latest_entry_date/latest_version/recent_entries 增项；本地 plugins 版本增减；connectors 增减；active MCP 增减；session_skills 名单增减

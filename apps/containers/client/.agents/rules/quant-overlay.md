@@ -63,7 +63,11 @@
 `overlays/_shared/base-rootless.yaml`（服务名 `rootless-base`）；三栈
 compose.yaml 只以 `extends: {file: ../_shared/base-rootless.yaml, service:
 rootless-base}` 继承，**栈文件禁止重复声明**这些字段，只保留栈专属的
-image/build/ports/volumes/栈 env/`labels.component`。字段映射保留备查
+image/build/ports/volumes/栈 env/`labels.component`——volumes 含 workspace
+长语法 bind 与 `quant-ssh-host-keys` 命名卷（2026-09-20 起：挂
+`/var/lib/jpman/ssh-host-keys` 持久化 SSH host key，`down/up` 重建容器不
+轮换主机指纹；entrypoint 以 `mountpoint -q` 分流持久/容器层两模式，
+down 默认保留、`--volumes` 删除）。字段映射保留备查
 （现位于基文件）：
 
 | rootless 三必需（utils.ContainerConfig 默认值同源） | 基文件 compose 字段 |

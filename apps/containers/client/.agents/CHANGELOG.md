@@ -6,6 +6,348 @@
 
 ## [Unreleased]
 
+### 2026-09-21 · `feat:` 形态感知镜像 tag——`localhost/xmnn-runtime:<形态>` + `:latest` 别名（C28）
+
+**关联七概念场景**：场景3「重构优化」——把 C26（`--torch cpu|cu130`）与 C27
+（up 侧形态校验）留下的**身份缺口**从「事后告警」前移到「标签即内容」。
+用户已确认设计：**默认 tag 改为形态感知 + 同时保留 `:latest` 别名**（同镜像
+双 `-t`，零额外存储）。
+
+**I 事实**：
+
+① C26 原文「一 tag 一形态」的实伤——CPU 与 cu130 镜像**标签相同而内容不同**
+（`localhost/xmnn-runtime:latest`），`up --skip-build` 只查 tag 存在性，切形态
+全靠人记得重建；② C27 的 up 侧校验是**不阻断告警**，且拦的是「已跑错」的
+事后时刻；③ `:latest` 有 **24 处引用**，其中 `relpack._PACK_SCRIPT` 第 163 行
+**硬编码** `SRC="localhost/xmnn-runtime:latest"`（客户交付包入口）——这决定了
+`latest` 不能删；④ `image_tag()` 与 compose `${XMNNRT_IMAGE_TAG:-默认}` 必须
+同键同默认（C16），故 compose 侧要能算出同一串。
+
+**F/V 决策**（V 对抗审查：显式覆盖 vs 形态感知的优先序、`:latest` 是否该保留、
+是否自动改挂旧镜像）：
+
+- **保留 `:latest` 别名**（否则 relpack/README 的 24 处引用集体悬空）；
+- **显式 `{PREFIX}_IMAGE_TAG` 最高优先**（用户接管命名时形态感知让位，且
+  **不追加**别名）；**显式 `--tag`** 同理不追加；
+- **不自动改挂**旧镜像：通用标签可能指向另一形态，改挂与否由用户判断——
+  内核只打印 LABEL 形态 + `podman tag` 命令（零成本，避免重下数 GB）。
+
+**E/C 落地**：
+
+- 内核 `StackSpec` 新增 `flavor_tag` 声明位（默认 `""`，非声明栈零回归）；
+  `image_tag()` 解析序改为「显式覆盖 > 形态感知 > 默认 tag」，形态经新
+  `image_flavor()` 复用 `resolve_build_args`——**CLI `--torch` 单次覆盖也改变
+  标签**（杜绝「装 cu130、标 cpu」）；新增 `image_tag_alias()` 判定别名下发；
+  `build_image()` 双 `-t` + 构建完成横幅打印别名。
+- `xmnnrt.py` 声明 `flavor_tag="localhost/xmnn-runtime"`（**唯一**声明栈）；
+  `compose.yaml` 的 `image:` 改嵌套插值
+  `${XMNNRT_IMAGE_TAG:-localhost/xmnn-runtime:${TORCH_FLAVOR:-cpu}}`。
+- `_require_local_image()` 增**迁移提示**：形态 tag 缺失而通用 tag 在本地时
+  打印 LABEL 形态 + 零成本改挂命令。
+- 单测：`test_compose_merge.py` 的模拟器补**嵌套插值**（原 `[^}]*` 正则会在
+  首个 `}` 截断）+ GOLDEN 改 `:cpu` + 四态用例；`test_overlay_core.py` 新增
+  5 例（四态 / CLI 覆盖驱动 tag / 非声明栈零回归 / 别名 gating / 迁移提示）。
+
+**V 验收**：全量 `pytest tests -q --ignore=tests/test_ast_inject.py`
+**256 passed / 2 skipped**（较基线 +7，零回归）；`xmnnrt.py` 仍 ≤160 行
+（模块预算守卫 `test_modules_bounded_and_declarative` 通过）。
+
+**真机核对**（不改镜像/容器状态）：真实 podman-compose 1.6.0 渲染仓库内
+`compose.yaml` 四态全部正确；本地既有 cu130 镜像零成本改挂到 `:cu130`
+（同镜像 ID、零额外存储）后 LABEL 形态与 `.env` 一致。**未做**：端到端
+`invoke xmnnrt.up --skip-build` 重建容器复核（当时栈在运行，避免中断）。
+
+提交 `feat(client)` = `8ffd3a0f1`。
+
+### 2026-09-21 · `fix:` 补上「声明形态 vs 镜像实物」的跨层校验（C27）
+
+**关联七概念场景**：场景2「问题解决」——用户质疑前一轮给出的两个「坑」，
+按 F→V→C→R→I→E 链路核验，结果**一个成立、一个被实测推翻**。
+
+**F/I 根因**（9 轮真机探针 + 代码路径复核）：
+
+① 坑①「tag 覆盖」成立，但定性需修正——`.env TORCH_FLAVOR=cu130` 是**刻意
+设置**（注释块指向 xmnn-dev 的 nvcc，实测 xmnn-dev 已装 cu130 torch +
+`/usr/local/bin/nvcc`），两栈诉求恰好一致，状态自洽；真正的问题是**共享键
+使两栈无法独立取值**（C15 明文设计）。
+
+② 坑②「`podman run --rm` 失败影响 standalone 冒烟」**被推翻**：基底镜像
+`ManifestType=docker.v2`（带 HEALTHCHECK，`Containerfile:859`），而叠加镜像
+全是 **OCI v1——OCI 格式忽略 HEALTHCHECK 指令**，故 xmnn-dev / xmnn-runtime
+均无 healthcheck，`podman run --rm` 实测 `rc=0`。四栈 standalone 冒烟路径
+**完全不受影响**；`invoke run` 用的 `jupyter-podman-client` 同为 OCI。
+该坑的表述在 rules/README 中一并修正，并记下「依赖 OCI 忽略 HEALTHCHECK」
+这一**隐式行为**（若 podman 改默认格式，四栈会集体失效）。
+
+③ **核验中发现真实缺口**（比原 #1 更实在）：`--torch` 是**单次** CLI 覆盖
+（C15），只作用于 `build`；`up` 形参面没有 `--torch`，且 `_require_local_image`
+比的是 **tag 不是内容** → `build --torch cpu` 后 `up --skip-build` 会**静默**跑
+cpu 镜像（`.env` 声明 cu130）。构建期守卫第 10 项比的是「镜像内 marker vs
+镜像内实物」，两者一致必然 PASS——偏差在**跨层**，镜像内部自洽检测永远
+发现不了。
+
+**E/C 落地**（用户决策：加 up 侧校验 + 保持共享键）：
+
+- 内核新增 `image_torch_flavor(c, tag) -> Optional[str]`：**区分「无 LABEL」
+  与「LABEL 为空串」**——后者是合法声明（`TORCH_FLAVOR=""` = 不装 torch），
+  前者是无法判定（旧镜像）。**不复用** `client_core._image_torch_flavor`
+  （把两者都归空串，照搬会把旧 CPU 镜像误报成「声明空、实物 cpu」）。
+- 内核新增 `warn_torch_flavor_mismatch(c, spec, env)`，在 `up_stack` 内、
+  镜像存在性预检之后调用；仅 `torch_flavor` 栈生效（quant/monetize 零探测）。
+  不符则打印「声明 / 镜像实际 / 修复命令」三行中文指引，**警告不阻断**
+  （同 C21 超时不判失败、C24 回读失败不阻断）。
+- 查询走 `client_core.image_inspect_info`（原始 JSON，规避双 shell `--format`
+  引号差异）；镜像不存在/解析失败降级为「不判定」，不抛异常。
+- 测试按既有约定在 **`oc` 命名空间**打桩该符号（同 `load_image`）——**不**
+  patch `client_core.run_cmd`：内核自己的 I/O 缝是 `oc.run_cmd`，跨模块旁路
+  会同时破坏两条约定（首版实现踩到，已改正）。
+
+**V 验收**（真机 + 单测）：
+
+- 真机 `image_torch_flavor` 五例零误报：`xmnn-runtime:latest`→`cu130`、
+  `xmnn-dev:latest`→`cu130`、`xmnn-runtime:1.2.1.dev0`（旧 CPU）→`None`、
+  基底镜像→`None`、不存在→`None`；
+- 新增 5 例单测（不符报警 / 一致静默 / 旧镜像无 LABEL 不误报 / 非 torch 栈
+  零探测 / 「空串声明 vs 无 LABEL」分流正反两向）；
+- 全量 `pytest tests -q --ignore=tests/test_ast_inject.py` **249 passed /
+  2 skipped**（较前基线 +5，零回归）。
+
+**后续（同日已补）**：镜像形态感知 tag 已由 **C28** 落地（`localhost/xmnn-runtime:<形态>`
++ `:latest` 别名，见上方条目 `8ffd3a0f1`）——本条的 up 侧校验自此退为**兜底**，
+专管身份被用户接管的场景；共享键 `TORCH_FLAVOR` 仍按本条决策保持 C15 不动
+（若未来两栈需分叉，走「栈专属覆盖键优先、回落共享键」的受控扩展，嵌套插值
+`${XMNNRT_TORCH_FLAVOR:-${TORCH_FLAVOR:-cpu}}` 已实测可行）。
+
+提交 `fix(client)` = `833828321`。
+
+### 2026-09-20 · `feat:` xmnnrt 支持 GPU——`up --gpu` 设备透传 + `build --torch cpu|cu130`（C26）
+
+**关联七概念场景**：场景5「创新突破」——承接同日 xmnn-dev 的 GPU/torch 能力
+（C18/C19/C25），把同一能力面推广到**交付运行时**栈，并按本栈「干净运行时」
+定位收窄边界。
+
+**I 事实**：
+① 内核（`resolve_gpu_device` 三态探测 + `gpu_override_file` 形态分派 +
+C23 文件集判据）**已完整具备** GPU 能力，`xmnnrt` 只是未声明
+`gpu_override` 与缺两个覆盖文件、`up` 形参面少一个 `gpu`；
+② torch 层此前把 CPU 形态**硬编码**在 Containerfile（`TORCH_INDEX_URL` 固定
+CPU 索引 + 守卫写死 `cuda is None`），故 cu130 会同时在**安装索引**与
+**构建期守卫**两处卡死；
+③ **同一 `TORCH_FLAVOR` 键在两栈语义不同**——xmnn-dev「空=不装」、
+xmnn-runtime「空=回落 cpu（内置契约）」，故缺省值不能在内核硬编码。
+
+**E 方案**（三点，均按「声明优先、单一事实源」落）：
+① **内核**：`StackSpec` 新增 `torch_default`（缺省形态声明位），
+`resolve_build_args` 回落改为 `spec.torch_default`（xmnn 仍 `""`，行为零变化）；
+`_build_help` 公开为 `build_help` 并按缺省分派文案，消除 xmnnrt 侧的 help 复制。
+② **xmnnrt 声明**：`gpu_override=True` + `gpu_device_env="GPU_DEVICE"` +
+`torch_flavor=True` + `torch_default="cpu"`；自定义 `build`/`up` 薄封装各加
+一个形参（`torch`/`gpu`）后原样透传内核——**禁止**在栈模块重复实现分派；
+新增 `compose.gpu.yaml`（`${GPU_DEVICE:-/dev/dri}` 单 token）与
+`compose.gpu.wsl.yaml`（`/dev/dxg` + libcuda/libdxcore/drivers 三条只读 bind），
+compose 段补 `${TORCH_FLAVOR:-cpu}`（与 `spec.torch_default` 同键同默认，C15）。
+③ **镜像**：Layer 1 抽出 `scripts/install-torch.sh`（**独立成层**、索引由白名单
+形态推导，删掉独立 `TORCH_INDEX_URL` ARG）；守卫第 10 项改为**声明 vs 实物**
+（读容器内 `/opt/xmnnrt-torch-flavor` marker）；标签拆为
+`torch-version` + `torch-flavor`（`relpack.py` 更新读取键并保留旧键回退，
+`release.json` 字段与 schema 不变）。
+
+**边界（刻意保留，非缺口）**：
+- `cu130` **不提供 nvcc**——本栈 P0 禁编译器工具链（§4「运行时不含编译器/
+  调试器」），CUDA 版 torch 足以跑 GPU 张量与 `torch.jit` 推理；需 nvcc 编译
+  CUDA 内核 / TVM CUDA codegen 请回 xmnn-dev 栈（C25）；
+- **零 env 改动**：本栈 compose 本就无 `environment` 段（交付语义=干净运行时），
+  GPU 覆盖只加 `devices`（WSL 形态另加 `volumes`），WSL 库挂载靠目标取
+  `/usr/lib`；任何 `LD_LIBRARY_PATH` 注入既污染交付语义又打挂 env 黄金集；
+- 覆盖文件**不进 `release/` 客户离线交付包**（独立谱系，GPU 交付属后续提案）；
+  本次仅触及 `relpack.py` 的标签读取键，交付物内容与字段未变。
+
+**C 验收**（daemon-free 单测 + 真机渲染）：
+- `pytest tests -q --ignore=tests/test_ast_inject.py` **244 passed / 2 skipped**；
+- 新增/更新用例：`test_build_args_torch_default_is_per_spec`（两栈缺省分派）、
+  `test_xmnnrt_build_task_torch_defaults_to_cpu` / `..._flows_cu130`（argv 实物）、
+  `test_compose_torch_flavor_default_matches_spec`（C15 三处同键同默认，读真实
+  compose.yaml）、`test_xmnnrt_gpu_override_is_opt_in_and_adds_no_env`、
+  `test_up_gpu_wsl_form_for_xmnnrt_same_kernel_path`（薄封装是否吞参数）、
+  WSL 渲染断言参数化扩到 xmnnrt；黄金清单同步（build 形参 +`torch`、
+  up/smoke 形参 +`gpu`、smoke docstring 去「CPU」、`xmnnrt.py` 159 行 ≤160）；
+- 真机 WSL `podman-compose config` 逐一核对：默认 `TORCH_FLAVOR=cpu`、
+  `TORCH_FLAVOR=cu130` 正确插值、`-f compose.gpu.yaml` 追加 `/dev/dri`、
+  `-f compose.gpu.wsl.yaml` 追加 `/dev/dxg` + 三条 bind，且**均未新增 env**；
+- **未做**：cu130 镜像真机构建（需重下 CUDA torch，体积大）、GPU 设备透传真机
+  E2E（需 `xmnnrt.build --torch cu130` 完成后执行 `up --gpu` 并在容器内验证
+  `torch.cuda.is_available()`）；镜像构建属有网侧动作，留待用户按 README
+  「GPU 用法」三步验收。
+
+- 同步文档：[.agents/rules/xmnnrt-overlay.md](rules/xmnnrt-overlay.md)（§4/§6/新增
+  §8）、[overlays/xmnn-runtime/README.md](../overlays/xmnn-runtime/README.md)
+  （命令表/守卫 10 项/参数表/GPU 用法/torch 升级 SOP/排障四行）、
+  [docs/13-xmnn-runtime-overlay.md](../docs/13-xmnn-runtime-overlay.md)、
+  [.env.example](../.env.example)（两栈共用键的默认值差异警示）、
+  overlay `.env.example`、[AGENTS.md](../AGENTS.md) C26 条款。
+  提交 `feat(client)` = `9b6b0610f`。
+
+### 2026-09-20 · `fix:` cu130 形态补齐 CUDA 编译器工具链——容器内 `nvcc` 从 not found 到可编译（C25）
+
+**关联七概念场景**：场景2「问题解决」——现场症状驱动：JupyterLab 内
+`!nvcc -V` 报 `nvcc: not found`，而同环境下 `torch.cuda.is_available()`
+为 True（「GPU 可用但编不了 CUDA」的半形态）。
+
+**I 事实**（真机 + 五轮一次性容器探针）：
+① 容器内 `pip list` 有 `torch 2.14.0+cu130`、`cuda-toolkit 13.0.3.0`
+（**元包，`Requires:` 为空**，仅由 torch 拉入）与 nvidia-* 运行期组件；
+`site-packages/nvidia/cu13/` 只有 `{include,lib}`、**无 `bin`** → 无 nvcc；
+② `nvidia-cuda-nvcc` 在 PyPI 有 13.0.48–13.4.92；**单独 pin 13.0.88** 安装时
+`nvidia-nvvm`/`nvidia-cuda-crt` 被解析到 13.4.92 → **ptxas 与 cicc 错轨**，
+编译报 `ptxas fatal: Unsupported .version 9.4; current version is '9.0'`；
+③ 三包同 pin 13.0.88 后仍在**头文件层**失败：基座 Ubuntu 26.04 / glibc 2.43 的
+`mathcalls.h` 与 CUDA 13.0 `crt/math_functions.h` 的 `rsqrt` noexcept 规格冲突
+（`-std=c++14/17/20` 三档均复现）；**13.4.92 编译通过**；
+④ 布局/调用三连：裸软链 `/usr/local/bin/nvcc → 真身` 报
+`cuda_runtime.h: No such file`（nvcc 以 argv[0] 目录定位自身根）；`-lcudart`
+报 `cannot find -lcudart`（pip 布局无短名，nvcc 默认只搜 lib64）；农场
+`/usr/local/cuda/{bin,include,lib64,nvvm}` + 短名软链 + wrapper exec 全路径后
+`nvcc -V`/编译/链接全通过；`CUDA_HOME=/usr/local/cuda` 被
+`torch.utils.cpp_extension` 正确识别（`bin/nvcc`、`include/cuda_runtime.h`、
+`lib64/libcudart.so` 三查为真）。
+⑤ 真机运行期补刀（首轮镜像重建后）：`nvcc` 编译 + `-lcudart` 链接都成功，但
+**运行**时 `libcudart.so.13: cannot open shared object file`——链接期有 nvcc
+默认 `-L`、运行期 ld.so 不认识 `/usr/local/cuda/lib64`；真实 toolkit 安装器
+靠 `/etc/ld.so.conf.d/*.conf` + `ldconfig` 解决（本修复初版遗漏，已补齐）。
+
+**F 根因**：**能力声明粒度不足 + 验收判据错层**——cu130 形态只覆盖「CUDA
+运行时（跑）」，编译器层（编）既无声明也无断言：依赖闭包（torch → 运行期
+nvidia-* + 空元包）天然不含 `nvidia-cuda-nvcc`，而既有验收
+（`cuInit()`/`torch.cuda.is_available()`/`CDLL`）与守卫 §8（torch 形状）
+全部锚在运行期层 →「运行时冒充工具链」被静默放行。
+
+**A 行动**：归属裁决——**并入 cu130 形态**（语义 = 「CUDA 13 开发环境」），
+不新增独立构建开关（独立开关会引入第三个「同 tag 不同内容」的形态维度，
+复刻 C20 归档盲区需改动 save/load 契约，收益不抵复杂度）。新增
+`builder/scripts/install-cuda-toolkit.sh`（**Layer 2.6，独立成层**保住 torch
+~2GB 层缓存；`""`/`cpu` 跳过 = C18 默认隔离不变；三包同轨 pin `13.4.92`；
+`PIP_MIRROR` 三档索引；农场 + 短名 + wrapper + 标记
+`/opt/xmnn-cuda-nvcc-version`）；Containerfile 末尾
+`ENV CUDA_HOME=/usr/local/cuda`（置末尾以免使既有层缓存失效）。
+
+**V 对抗审查**（四视角命中，采纳 ≥2 条已落盘）：
+① 魔鬼代言人「并入 cu130 是形态语义漂移，且旧 cu130 归档与新归档将**同名不同
+内容**」→ **采纳**：不新增归档身份维度（复刻 C20 盲区的前提是互斥能力，此处属
+同一形态的版本演进），但在 C25/docs 明示「旧 cu130 归档不含 nvcc，需要者重建后
+重新 `save`」；② 未来视角「pin 13.4 与 torch 13.0 不同轨会被后人误当笔误改回
+13.0」→ **采纳**：脚本头注 + 规则 §11.6 + docs/11 三处写明「编译器线高于运行时
+线是基座约束（glibc 2.43 与 CUDA 13.0 crt 头冲突，`-std` 三档无解）」并保留失败
+证据摘要；③ 完整性攻击者「`nvcc --version` 能跑 ≠ 能编」→ **采纳**：守卫 §9 以
+**真编译 + 真链接**最小 `.cu` 为判据（两个只在编译期暴露的失败模式：头规格冲突、
+`ptxas`/`cicc` 错版）；④ 边界攻击者「运行期 pip 升级单包会静默丢短名软链」→
+**采纳**：C25 ⑤ 明令禁止，须回有网侧重打镜像；⑤ 新人视角「用户不知道 nvcc 随
+cu130 而来、也不知道 13.4 与 13.0 的关系」→ **采纳**：`.env`/`.env.example`/
+README/docs 三处对齐；⑥ 老板视角「构建时间与镜像 +约 200MB」→ 接受（相对 10GB
+镜像 <2%，且只在 opt-in 的 cu130 形态）；⑦ 未采纳：独立构建开关 + 归档身份扩展
+（成本高于收益，见 F 阶段裁决）。
+
+**验收**：`_toolchain_guards.py` 新增 **§9** 四查——① 标记版本 ==
+`nvcc --version` 实测；② 农场布局齐备；③ `ldconfig -p` 已登记 `libcudart`
+（产物「开箱即跑」的必要条件）；④ **真编译 + 真链接**最小 `.cu`
+（`-c` 与 `-lcudart` 双段，**不运行**——构建期无 GPU 属预期边界），非 cu130
+形态反向断言 nvcc 与标记双双缺席。**真机复核（2026-09-20 实测）**：镜像重建 →
+`invoke xmnn.down && invoke xmnn.up --gpu --skip-build` → 容器内 `nvcc -V`
+= 13.4.92、`CUDA_HOME=/usr/local/cuda`；`nvcc probe.cu -o probe -lcudart && ./probe`
+→ 缺省 arch 报 `unsupported toolchain`（sm_75 产物 vs 本机 **RTX 5050 Laptop
+cc 12.0**），`-arch=native` 后 `result=42` **全链路通过**（编译→链接→GPU 运行）；
+devuser 身份 `nvcc -V` 通过（内核用户面同源）；`invoke xmnn.smoke` 全绿
+（守卫 §9 + 源码挂载 + `tvm.build('llvm')`）；`torch.cuda.is_available()=True`。
+构建期守卫已把「标记==实测 / 农场 / ldconfig / 真编译真链接」四查固化；
+Jupyter `!nvcc -V` 与 exec 同 PATH（`/usr/local/bin` 在镜像默认 PATH）。
+
+**C 同步**：[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §11.2·§11.6（新增）、
+[AGENTS.md](../AGENTS.md) C18 ② 与新增 **C25**、
+[docs/11](../docs/11-xmnn-overlay.md)、[docs/04](../docs/04-troubleshooting-guide.md)
+新增 **C-I7**、[overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)、
+[.env.example](../.env.example)。提交 `fix(client)` = `1cd53ab48`、
+`docs(client)` = `10f633d64`。
+
+### 2026-09-20 · `fix:` 三内部栈补齐 SSH host key 命名卷（quant / monetize / xmnnrt）
+
+**关联七概念场景**：场景2「问题解决」的闭环延伸——承接同日 xmnn-dev 栈
+`xmnn-ssh-host-keys` 条目（本文件上一条），补齐**其余三个内部栈**的同款缺口。
+
+**I 事实**：`podman inspect` 与三栈 compose 核对确认 quant / monetize / xmnnrt
+均**无任何命名卷**（volumes 仅 bind），三者同源于 `jupyter-podman-rootless`
+基底 → 其 SSH host key 同样住容器层、`down/up` 重建即轮换指纹（基底
+entrypoint 对未挂载卷的 WARN 回退路径）。
+
+**F 第一性原理（命名规则）**：既有命名卷前缀 = **invoke 命名空间前缀**
+（`xmnn-ccache` 对应 `xmnn.*`），故三栈按同一规则取
+`quant-` / `monetize-` / `xmnnrt-ssh-host-keys`。**xmnnrt 内部栈刻意与客户
+交付栈 `release/compose.yaml` 的 `xmnn-ssh-host-keys` 不同名**——两者项目名
+同为 `xmnn-runtime`，若同名则会共享同一实际卷（`xmnn-runtime_xmnn-...`），
+一方 `down --volumes` 会牵连另一方；内部栈与交付包属不同生命周期，应隔离。
+
+**A 行动**：三栈 compose.yaml 各增服务段命名卷 + 顶层 `volumes:` 声明；
+`xmnn.py` 的 `down_volumes_help` 补第三个卷名；`xmnnrt.py` 的
+`down_volumes_help` 由「本栈无命名卷，参数为空操作」改为实际语义（**该文案
+已随本改动失真**，属必须同步项）。
+
+**验收**：`test_compose_merge.py` 三栈黄金快照 `volume_targets` 增列
+`/var/lib/jpman/ssh-host-keys` → WSL 内五个测试文件
+（compose_merge/overlay_core/tasks_surface/xmnnrt_stage/release_bundle）
+**194 passed / 7 skipped**（1 例 `test_vs_real_rec_merge_probes` 为已知既有
+失败）；三栈真实 `podman-compose config` 渲染逐一核对：卷声明与服务挂载
+逐字正确（`quant-` / `monetize-` / `xmnnrt-ssh-host-keys` → `/var/lib/jpman/ssh-host-keys`）。
+真机重建验证未做（三个栈中两个正在运行，避免中断）；机制与 xmnn-dev 同源
+（同一基底 entrypoint + 同款挂载），且 `xmnn-runtime/release` 栈早已用同
+机制交付验证。
+
+**C 同步**：[rules/quant-overlay.md](rules/quant-overlay.md) §3、
+[rules/monetize-overlay.md](rules/monetize-overlay.md) §3、
+[rules/xmnnrt-overlay.md](rules/xmnnrt-overlay.md) §7 三处卷段落；
+[docs/10](../docs/10-quant-overlay.md)、[docs/12](../docs/12-monetize-overlay.md)、
+[docs/13](../docs/13-xmnn-runtime-overlay.md) 各增「SSH host key 持久化」条目。
+提交 `fix(client)` = `d2ff3a8af`、`docs(client)` = `62444134c`。
+
+### 2026-09-20 · `fix:` 补挂 `xmnn-ssh-host-keys` 命名卷（SSH 主机指纹跨重建稳定）
+
+**关联七概念场景**：场景2「问题解决」（I→F→C 轻量链）。起点是用户请求
+「验证 SSH 密钥和 Jupyter token 是否已正确挂载」。
+
+**I 洞察（事实采集）**：四项实测——① `ssh -p 2223 devuser@localhost` 密码登录
+成功（`whoami`/`pwd`/`SSH_LOGIN_OK`）；② Jupyter `/api/status` 带 token **200**、
+不带 token **403**，token 与 up 横幅一致；③ `podman inspect` 挂载表含命名卷
+`xmnn-jupyter`（内含 `notebook_secret`，时间戳 12:06 早于本次 13:45 重建 → 跨
+重建保留）；④ **启动日志 WARN**：`Host key volume not mounted at
+/var/lib/jpman/ssh-host-keys; keys live in the container layer and WILL rotate on
+rebuild`，容器内 `/etc/ssh/ssh_host_*_key` 时间戳 13:45 = 本次重建时间。
+→ 凭证链路全通，**唯一缺口是 SSH host key 未持久化**（每次重建轮换指纹，
+客户端遭 `REMOTE HOST IDENTIFICATION HAS CHANGED`）。
+
+**F 第一性原理**：基底 entrypoint 已把「host key 存哪」抽象为**卷挂载与否**的
+二分（`mountpoint -q /var/lib/jpman/ssh-host-keys` 为唯一判据：挂载=持久模式、
+key 落卷内、`sshd_config` 的 `HostKey` 指向卷路径；未挂载=容器层生成并打 WARN）。
+故修复不必改 entrypoint，只需在 consume 侧把卷挂上——且客户交付栈
+`overlays/xmnn-runtime/release/compose.yaml` 早已挂同卷同落点，本次是
+**内部开发栈对其对齐**。
+
+**A 行动**：`overlays/xmnn-dev/compose.yaml` 新增第三个命名卷
+`xmnn-ssh-host-keys` 挂 `/var/lib/jpman/ssh-host-keys`（服务段 + 顶层声明），
+跟随 `xmnn-ccache`/`xmnn-jupyter` 的既有约定（down 默认保留、`--volumes`
+三卷同删）。
+
+**验收**：`tests/test_compose_merge.py` 黄金快照 `volume_targets` 增列
+`/var/lib/jpman/ssh-host-keys`（漏挂即断言失败）→ WSL 内
+`pytest tests/test_compose_merge.py tests/test_overlay_core.py
+tests/test_tasks_surface.py -q` **142 passed / 1 skipped**（1 例
+`test_vs_real_rec_merge_probes` 为已知既有失败——真实 `rec_merge` 对
+`depends_on` list↔dict 归一化与模拟器分歧，非本次回归）。
+
+**C 同步**：[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §5 新增
+「SSH host key 命名卷」段（含与交付栈同卷名同落点的强制约定）、§6 命名卷
+计数更新；[docs/11-xmnn-overlay.md](../docs/11-xmnn-overlay.md) 新增持久化段、
+排障表 `REMOTE HOST IDENTIFICATION` 行改写为「已根治 + 剩余三情形甄别」；
+[overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md) 命令表/持久化块/
+调试工作流三处同步；[AGENTS.md](../AGENTS.md) 变更日志同步。
+提交 `fix(client)` = `8ac12f7db`、`docs(client)` = `b0156c310`。
+
 ### 2026-09-20 · `fix:` WSL2 GPU 透传补齐两条宿主依赖（`libdxcore.so` + `/usr/lib/wsl/drivers`）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→A→C，session

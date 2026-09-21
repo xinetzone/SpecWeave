@@ -18,7 +18,7 @@ invoke xmnn.up --skip-build           # 启动栈：SSH 2223 / Jupyter 8890
 invoke xmnn.smoke                     # 工具链守卫 + 源码挂载检查
 invoke xmnn.build-tvm                 # 可选：栈内编译 build/libtvm.so（已存在则跳过）
 invoke xmnn.wheel                     # Nuitka 全流程打包，wheel 落 workspace/dist
-invoke xmnn.down                       # 停止清理（ccache/Jupyter 登录态卷默认保留）
+invoke xmnn.down                       # 停止清理（ccache / Jupyter 登录态 / SSH host key 卷默认保留）
 ```
 
 - **构建参数单一事实源（C15）**：`invoke xmnn.build` 与 `up` 的内联构建都读 `.env`
@@ -37,8 +37,8 @@ invoke xmnn.down                       # 停止清理（ccache/Jupyter 登录态
   labels/restart 与 `network_mode: bridge` 统一在
   [../_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml)
   （三栈共享单一事实源），栈 compose.yaml 以 extends 继承，只保留栈专属
-  image/build/ports/四个 bind/调试 env/组件 label；`xmnn-ccache`、`xmnn-jupyter`
-  命名卷等栈专属卷仍在栈文件声明。
+  image/build/ports/四个 bind/调试 env/组件 label；`xmnn-ccache`、`xmnn-jupyter`、
+  `xmnn-ssh-host-keys` 命名卷等栈专属卷仍在栈文件声明。
 - **Jupyter 登录态持久化（C22）**：命名卷 `xmnn-jupyter` 挂容器内
   `/home/devuser/.local/share/jupyter`（cookie/notebook 签名密钥所在目录，
   镜像内属主 1000:1000/mode 700，新卷 copy-up 属主实测保持），普通
@@ -48,6 +48,12 @@ invoke xmnn.down                       # 停止清理（ccache/Jupyter 登录态
   [04 速查 C-I6](04-troubleshooting-guide.md)。同时 `invoke xmnn.up` 成功横幅
   打印「直达」URL（`/lab?token=...`，免登录，token 勿外传）——token 取 `.env`
   预设值，留空则**回读容器内自动生成值**（C24，见下文「凭证」段）。
+- **SSH host key 持久化**：命名卷 `xmnn-ssh-host-keys` 挂容器内
+  `/var/lib/jpman/ssh-host-keys`，`down/up` 重建容器**不再轮换主机指纹**，
+  客户端 `known_hosts` 无需反复 `ssh-keygen -R` 清理（未挂载时基底 entrypoint
+  回退「容器层生成 + 重建即轮换」并打 WARN；卷名与落点同客户交付栈
+  `overlays/xmnn-runtime/release/compose.yaml`）。仅 `down --volumes` 与
+  上述两卷一并清除（删后指纹轮换属预期）。
 - **源码路径**：默认挂载仓库根 `external/chaos/{npu_tvm,npuusertools,models}`；
   可在 `.env` 用 `NPU_TVM_PATH` / `NPUUSERTOOLS_PATH` / `MODELS_PATH`
   覆盖（invoke 路径做存在性硬校验）。TVM 全量编译在 9p 上较慢，可把路径
@@ -67,7 +73,7 @@ invoke xmnn.down                       # 停止清理（ccache/Jupyter 登录态
   apt/mamba/pip 均需联网）。
 - **对 external/chaos/ai 零依赖**：打包脚本与元数据自包含于叠加层；
   外部源码树只读挂载，打包中的临时 AST 注入会无条件还原。
-- **GPU 与 torch 可选能力（C18·C19·C20，默认全关）**：两者**分属两个正交维度**——
+- **GPU 与 torch 可选能力（C18·C19·C20·C25，默认全关）**：两者**分属两个正交维度**——
   **运行期维度（设备透传）只由 `up --gpu` 决定，构建期维度（torch 形态）只由
   `build --torch` 决定**，因此**没有也不该有 `build --gpu`**：透传只改 compose
   文件集（`--device` + 只读库 bind），**不动镜像内容**，构建期没有 GPU 相关对象可改
@@ -83,7 +89,15 @@ invoke xmnn.down                       # 停止清理（ccache/Jupyter 登录态
   `invoke xmnn.build --torch cpu|cu130`（或 `.env TORCH_FLAVOR=`）才在 base env
   `/opt/conda` 装 `torch==2.14.0`（白名单取值，索引 `download.pytorch.org/whl/<flavor>`；
   cu130 是当前唯一与 CPU 侧同 pin 的 CUDA 索引）；形态落 `/opt/xmnn-torch-flavor`，
-  构建期守卫 §8 断言「声明 vs 实物」。flavor **不参与镜像 tag**，改后须重建镜像；
+  构建期守卫 §8 断言「声明 vs 实物」。**cu130 形态同时提供 CUDA 编译器工具链
+  nvcc（C25，2026-09-20 起）**：容器内 `nvcc -V` 可用（命令 `/usr/local/bin/nvcc`
+  包装器 → `/usr/local/cuda` 农场，`CUDA_HOME=/usr/local/cuda`），可编译 + 链接
+  `.cu`（`-lcudart` 可用）；编译器 pin **13.4.92**（基座 Ubuntu 26.04 / glibc 2.43
+  与 CUDA 13.0 的 crt 头规格冲突，13.0 系实测编不过），**`""`/`cpu` 形态零 CUDA
+  编译器**；构建期守卫 §9 以「真编译 + 真链接最小 `.cu`」实测（不做假通过）。
+  注意 `nvidia-smi` **不在**容器内（属运行期 WSL 形态，另案）。细节见
+  [.agents/rules/xmnn-overlay.md](../.agents/rules/xmnn-overlay.md) §11.6。
+  flavor **不参与镜像 tag**，改后须重建镜像；
   但 **形态会写进归档名**（C20）：`save` 读镜像 LABEL 命名
   `...-torch-<形态>-<id>-<时间戳>.tar.gz`，`load` 按 `.env TORCH_FLAVOR` 挑归档并在
   形态不符时 Exit(1)——同一 tag 的 cpu / cu130 归档由此可辨识，避免无网侧静默导入错形态。
@@ -251,7 +265,7 @@ Host xmnn-dev
 | 现象 | 原因与处理 |
 |---|---|
 | `Connection refused` / 连接被拒 | 栈未运行或端口非默认：先 `invoke xmnn.ps` 核对；`.env` 改过 `XMNN_SSH_PORT` 时，`-p` 与 ssh config 的 `Port` 同步替换 |
-| `WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!` | xmnn 栈未挂载 host-key 持久卷，`down`/`up` 重建容器会轮换主机指纹。执行 `ssh-keygen -R '[localhost]:2223'`（改过端口则替换端口号）清除旧记录后重连 |
+| `WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!` | 2026-09-20 起已挂载 `xmnn-ssh-host-keys` 持久卷，普通 `down/up` 重建**不再**轮换指纹——出现该告警只剩三种情形：① 主动执行过 `down --volumes` / `podman volume rm`（删卷即轮换，属预期）；② 记录被旧容器（挂载前）写过，与当前卷内指纹本就不同；③ 换了宿主端口（`[localhost]:<port>` 记录按端口分别保存）。处理：核对容器内指纹 `ssh-keygen -lf /var/lib/jpman/ssh-host-keys/ssh_host_ed25519_key` 确认为本栈后，`ssh-keygen -R '[localhost]:2223'`（改过端口则替换端口号）清除旧记录重连 |
 | `Permission denied (publickey,password)` | 密码：回 `invoke xmnn.logs` 核对横幅；公钥：确认 `.env` 中是**完整一行**公钥且改后做过 `down && up`；另确认用户名是 `devuser` |
 | Windows 找不到 `ssh` 命令 | 安装可选功能「OpenSSH 客户端」，或改用 WSL2 终端执行连接命令 |
 | 连上后 `import tvm` 失败或指向 site-packages | 误用 main env 的 python；改用 `/opt/conda/bin/python`，或直接用 Jupyter 的 `Python 3.14 (xmnn dev)` 内核 |

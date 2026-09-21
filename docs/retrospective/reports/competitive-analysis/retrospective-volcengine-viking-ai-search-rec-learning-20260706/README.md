@@ -24,7 +24,7 @@ scenario: "B-single-day-medium"
 |------|------|
 | 源内容 | 火山引擎Viking AI搜索推荐产品官网单页 |
 | 结构化学习笔记 | [viking-ai-search-rec-core-notes.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/viking-ai-search-rec-core-notes.md)（340行，12大章节） |
-| 网页提取内容 | [web-content.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.md) |
+| 网页提取内容 | [web-content.md](../../../archives/spec-working-notes/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.md) |
 | Spec 文件数 | 4 个（spec.md / tasks.md / checklist.md / web-content.md） |
 | 任务时间线阶段 | 7 个阶段 |
 | 工作流模式 | Spec Mode（规划→审批→实施→验证），主Agent直接执行（无Sub-Agent委派） |
@@ -56,7 +56,7 @@ scenario: "B-single-day-medium"
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/spec.md) | 173 行 |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/tasks.md) | 13 个任务 |
 | Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/checklist.md) | 20 个检查点 |
-| 网页提取内容 | [web-content.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.md) | 提取的网页原始内容 |
+| 网页提取内容 | [web-content.md](../../../archives/spec-working-notes/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.md) | 提取的网页原始内容 |
 | 结构化学习笔记 | [viking-ai-search-rec-core-notes.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/viking-ai-search-rec-core-notes.md) | 340 行，12大章节 |
 
 **复盘报告**：

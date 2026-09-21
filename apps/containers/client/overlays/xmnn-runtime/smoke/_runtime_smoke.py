@@ -21,7 +21,7 @@
   7. xmnn_bootstrap.pth 在 site-packages
   8. xmnn 数据三目录（autolibs/tools_cpp/fonts）
   9. xmnn-runtime Jupyter 内核已注册且 argv 指向 base python
- 10. torch 为内置 CPU 构建（version.cuda is None，TorchScript/jit 可用）
+ 10. torch 形态与实物一致（marker vs version.cuda；cpu/cu130/空三态）
 """
 
 import ctypes
@@ -41,6 +41,9 @@ _MAIN_JUPYTER = "/opt/conda/envs/main/bin/jupyter"
 _KERNEL_JSON = "/opt/conda/envs/main/share/jupyter/kernels/xmnn-runtime/kernel.json"
 # 与 Containerfile ARG TORCH_VERSION 对齐（仅校验主版本一致，补丁号以镜像实际为准）
 _EXPECTED_TORCH_MAJOR = "2."
+# 形态标记由 scripts/install-torch.sh 写入（C26）；守卫读 marker 而非 LABEL
+# （镜像内运行时读不到 LABEL），据此断言「声明形态 == 实物」，两种形态互斥断言。
+_TORCH_FLAVOR_MARKER = "/opt/xmnnrt-torch-flavor"
 
 
 def check(name: str, fn) -> None:
@@ -177,24 +180,70 @@ def test_kernel_registered() -> None:
     print("  visible to main env jupyter")
 
 
-def test_torch_cpu_build() -> None:
+def test_torch_flavor_build() -> None:
+    """§10 形态契约（C26）：marker 声明什么形态，实物就必须是什么形态。
+
+    为什么不能只断言 `torch.version.cuda is None`：torch 形态自 2026-09-20 起
+    是 TORCH_FLAVOR 驱动的可选维度（cpu 默认 / cu130 CUDA），写死 CPU 断言会让
+    `invoke xmnnrt.build --torch cu130` 在守卫处误报失败；反过来只断言「能 import」
+    又会放过「声明 cpu 却装了 CUDA 包」的错版（错版只在运行期浮现）。
+    故判据是**声明 vs 实物**的一致性：marker（install-torch.sh 写入）↔ version.cuda。
+
+    CUDA 形态刻意**不**断言 cuda.is_available()：构建期容器未透传 GPU 设备
+    （设备是运行期维度，见 C19），此时应为 False；运行期 `up --gpu` 后复跑本
+    脚本时该值为 True，仅作 INFO 打印，不作门禁。
+    """
+    flavor = "<missing>"
+    try:
+        with open(_TORCH_FLAVOR_MARKER, encoding="utf-8") as fh:
+            flavor = fh.read().strip()
+    except OSError:
+        pass
+    print(f"  marker {_TORCH_FLAVOR_MARKER} = {flavor!r}")
+    _assert(
+        flavor in ("", "cpu", "cu130"),
+        f"torch 形态标记异常（应存在且 ∈ ''|cpu|cu130）: {flavor!r}",
+    )
+
+    if flavor == "":
+        try:
+            import torch  # noqa: F401
+        except ImportError:
+            print("  形态 ''（不装 torch）：镜像内无 torch ✅")
+            return
+        raise AssertionError("形态声明为 ''（不装 torch），但镜像内可 import torch")
+
     import torch
 
     ver = torch.__version__
     print(f"  torch.__version__ = {ver}")
     print(f"  torch.version.cuda = {torch.version.cuda}")
     _assert(ver.startswith(_EXPECTED_TORCH_MAJOR), f"torch 主版本异常: {ver}")
-    # CPU wheel 的 torch.version.cuda 为 None；CUDA 变体会返回 '13.x' 字符串
-    _assert(torch.version.cuda is None,
-            f"必须是 CPU 构建（torch.version.cuda 应为 None），实际 {torch.version.cuda}")
+    if flavor == "cu130":
+        _assert(
+            torch.version.cuda is not None,
+            f"cu130 形态必须是 CUDA 构建，实际 torch.version.cuda={torch.version.cuda}",
+        )
+        print(f"  CUDA build OK (cuda {torch.version.cuda})")
+        print(
+            f"  torch.cuda.is_available() = {torch.cuda.is_available()}"
+            "（构建期无 GPU 属正常；运行期经 up --gpu 透传后应为 True）"
+        )
+    else:
+        # CPU wheel 的 torch.version.cuda 为 None；CUDA 变体会返回 '13.x' 字符串
+        _assert(
+            torch.version.cuda is None,
+            f"cpu 形态必须是 CPU 构建（torch.version.cuda 应为 None），实际 {torch.version.cuda}",
+        )
+        # 设备面只应有 CPU（rootless 仿真镜像不带 nvidia 运行时）
+        _assert(torch.cuda.is_available() is False, "CPU 镜像不应报告 CUDA 可用")
+        print("  CPU build OK")
     # pytorch 前端 compile_api 依赖 torch.jit.load；确认 TorchScript 子模块在
     _assert(hasattr(torch, "jit") and hasattr(torch.jit, "load"), "torch.jit.load 不可用")
-    # 设备面只应有 CPU（rootless 仿真镜像不带 nvidia 运行时）
-    _assert(torch.cuda.is_available() is False, "CPU 镜像不应报告 CUDA 可用")
-    # 轻量功能探针：张量算子走 CPU 正常
+    # 轻量功能探针：张量算子走 CPU 正常（两种形态都必须过）
     x = torch.arange(6, dtype=torch.float32).reshape(2, 3)
     _assert(float(x.sum()) == 15.0, "torch CPU 张量算子异常")
-    print("  CPU tensor ops OK")
+    print("  tensor ops OK")
 
 
 def main() -> int:
@@ -215,7 +264,7 @@ def main() -> int:
     check("7. xmnn_bootstrap.pth installed", test_bootstrap_pth)
     check("8. xmnn data directories", test_xmnn_data_dirs)
     check("9. xmnn-runtime jupyter kernel", test_kernel_registered)
-    check("10. torch CPU-only build (jit + tensor ops)", test_torch_cpu_build)
+    check("10. torch flavor matches artifact (marker vs version.cuda)", test_torch_flavor_build)
 
     print("==========================================")
     print(f"  SUMMARY: {PASS} passed, {FAIL} failed")

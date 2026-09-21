@@ -34,6 +34,10 @@ invoke monetize.down
   [../_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml)
   经 extends 单一提供，栈 compose.yaml 只写 agent-monetize 专属字段
   （image/build/ports/两个 bind/PYTHONPATH 与 LD_LIBRARY_PATH/组件 label）。
+- **SSH host key 持久化（2026-09-20）**：命名卷 `monetize-ssh-host-keys` 挂
+  `/var/lib/jpman/ssh-host-keys`，`down/up` 重建容器**不再轮换主机指纹**
+  （客户端 `known_hosts` 免清理）；仅 `down --volumes` 清除（删后指纹轮换
+  属预期）。未挂载时基底 entrypoint 回退「容器层生成 + 重建即轮换」并打 WARN。
 - 对 agent-monetize 仅 3 处跨平台适配（.dll→按平台选 .so/.dylib），
   Windows build.ps1 不回归；.so 不打入 wheel。
 - Windows 原生自动桥接同 quant/xmnn（`COMPOSE_WSL_DISTRO` 可指定发行版 / `none` 关闭回退门禁）。

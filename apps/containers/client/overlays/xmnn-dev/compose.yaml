@@ -77,6 +77,13 @@ services:
       # 镜像内该目录属主 1000:1000 mode 700，新卷首次 copy-up 属主保持，devuser 可写。
       # down 默认保留；down --volumes 与 xmnn-ccache 一并删除。
       - xmnn-jupyter:/home/devuser/.local/share/jupyter
+      # SSH host key 命名卷：挂上后 entrypoint 以 `mountpoint -q` 切到持久模式
+      # （key 存卷内、sshd_config 的 HostKey 指向该目录），down/up 重建容器
+      # 不再轮换主机指纹，客户端 known_hosts 无需反复 `ssh-keygen -R` 清理。
+      # 未挂载时 entrypoint 回退容器层生成并打 WARN（旧行为，重建即轮换）。
+      # 与客户交付栈 overlays/xmnn-runtime/release/compose.yaml 同卷名同落点。
+      # down 默认保留；down --volumes 与上述两卷一并删除（删后指纹轮换属预期）。
+      - xmnn-ssh-host-keys:/var/lib/jpman/ssh-host-keys
     environment:
       # 凭证四变量（USER_PASSWORD/JUPYTER_TOKEN/SSH_PUBLIC_KEY/GRANT_SUDO）
       # 与 rootless 三必需由 rootless-base 继承，勿在此重复声明。
@@ -97,3 +104,4 @@ services:
 volumes:
   xmnn-ccache: {}
   xmnn-jupyter: {}
+  xmnn-ssh-host-keys: {}

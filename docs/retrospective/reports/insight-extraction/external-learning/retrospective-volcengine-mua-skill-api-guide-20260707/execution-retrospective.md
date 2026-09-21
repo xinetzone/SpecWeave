@@ -40,7 +40,7 @@ commit: 51901700
 | PRD文档 | [spec.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/spec.md) | 已完成 | 127行 |
 | 任务计划 | [tasks.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/tasks.md) | 已完成 | 126行，7个任务 |
 | 验收清单 | [checklist.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/checklist.md) | 已完成 | 47行（全部通过） |
-| 分析结果 | [analysis-result.md](../../../../../../.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/analysis-result.md) | 已完成 | 578行 |
+| 分析结果 | [analysis-result.md](../../../../archives/spec-working-notes/standards-tools/learn-volcengine-mobileuse-agent/analysis-result.md) | 已完成 | 578行 |
 | URL提取内容1-5 | extracted-content-1~5.md | 已完成 | 合计634行 |
 | 技术实现指南 | [volcengine-mobileuse-agent-skill-api-guide.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-mobileuse-agent-skill-api-guide.md) | 已完成 | 917行 |
 | standards-tools看板更新 | [README.md](../../../../../../.trae/specs/standards-tools/README.md) | 已完成 | 12/16完成 |

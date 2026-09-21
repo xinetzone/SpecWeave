@@ -149,6 +149,10 @@ def _run_wsl_script(script_path: Path, args: list[str], timeout: int) -> str:
 # set -o pipefail：podman save 失败时不以 gzip 的退出码为准；
 # 临时文件 + gzip -t + 原子 mv 保证交付目录中不出现截断归档；
 # uid 在 VM 内实测，不硬编码。
+#
+# TORCH 标签自 2026-09-20 起读 ``org.specweave.torch-version``（torch 形态成为
+# 可选维度 C26 后，原 ``torch-cpu`` 键名在 cu130 形态下会失真），保留旧键回退
+# 是为兼容本地残留的改造前镜像（回退命中时 release.json 字段语义不变）。
 _PACK_SCRIPT = """set -euo pipefail
 VER="$1"
 ARCHIVE="$2"
@@ -167,7 +171,7 @@ podman save "$NAME:$VER" | gzip -1 > "$TMP"
 gzip -t "$TMP"
 mv "$TMP" "$ART/$ARCHIVE"
 echo "IMAGE_ID=$(podman inspect -f '{{.Id}}' "$NAME:$VER")"
-echo "TORCH=$(podman inspect -f '{{index .Config.Labels "org.specweave.torch-cpu"}}' "$NAME:$VER")"
+echo "TORCH=$(podman inspect -f '{{$v := index .Config.Labels "org.specweave.torch-version"}}{{if $v}}{{$v}}{{else}}{{index .Config.Labels "org.specweave.torch-cpu"}}{{end}}' "$NAME:$VER")"
 echo "SHA=$(sha256sum "$ART/$ARCHIVE" | cut -d' ' -f1)"
 echo "SIZE=$(stat -c '%s' "$ART/$ARCHIVE")"
 """

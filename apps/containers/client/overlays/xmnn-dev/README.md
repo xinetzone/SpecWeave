@@ -80,8 +80,8 @@ podman-compose -p xmnn-dev exec xmnn \
     bash /opt/xmnn-builder/scripts/verify-wheel.sh   # 10 项隔离验证（临时 venv，不污染源码环境）
 
 invoke xmnn.logs                         # 跟踪日志（Ctrl+C 退出）
-invoke xmnn.down                         # 停止清理（workspace/源码保留；ccache/登录态卷保留）
-invoke xmnn.down --volumes               # 连 xmnn-ccache、xmnn-jupyter 命名卷一起删除
+invoke xmnn.down                         # 停止清理（workspace/源码保留；ccache/登录态/host key 卷保留）
+invoke xmnn.down --volumes               # 连 xmnn-ccache、xmnn-jupyter、xmnn-ssh-host-keys 命名卷一起删除
 ```
 
 启动后访问（凭证可由环境变量覆盖，见 `.env.example`）：
@@ -101,6 +101,12 @@ invoke xmnn.down --volumes               # 连 xmnn-ccache、xmnn-jupyter 命名
 > 浏览器无需重新登录；仅 `down --volumes` 才会清除（清除后重新登录属预期）。
 > 旧标签页若在重建后提示失败，硬刷新（Ctrl+Shift+R）重登即可，详见
 > [docs/04 排障速查 C-I6](../../docs/04-troubleshooting-guide.md)。
+
+> **SSH host key 持久化**：主机密钥存于命名卷 `xmnn-ssh-host-keys`
+> （容器内 `/var/lib/jpman/ssh-host-keys`），普通 `down/up` 重建容器后**不再
+> 轮换指纹**，客户端 `known_hosts` 无需反复 `ssh-keygen -R` 清理；仅
+> `down --volumes` 才会清除（清除后指纹轮换属预期）。卷名与落点同客户交付栈
+> [xmnn-runtime/release](../xmnn-runtime/release/compose.yaml)。
 
 ## 路径二：裸 podman-compose
 
@@ -149,6 +155,9 @@ podman-compose down
   重复打包自动命中；`--clean` 仅当次禁用 ccache，不清缓存。
 - **登录态缓存**：Jupyter cookie/notebook 密钥在命名卷 `xmnn-jupyter`
   （/home/devuser/.local/share/jupyter），普通 down/up 重建免重登；
+  仅 `down --volumes` 清除。
+- **SSH 指纹缓存**：主机密钥在命名卷 `xmnn-ssh-host-keys`
+  （/var/lib/jpman/ssh-host-keys），普通 down/up 重建指纹不变；
   仅 `down --volumes` 清除。
 
 ## 性能提示（9p）
@@ -331,6 +340,28 @@ podman-compose exec xmnn python -c "import torch; print(torch.__version__, torch
   cu128→2.11.0），换索引会引入版本漂移。
 - torch 属可选依赖，**不进** `builder/pyproject.toml`，离线完备性守卫不受影响；
   空形态镜像仍离线自足。
+- **cu130 形态同时提供 CUDA 编译器工具链（nvcc，C25）**：容器内可直接
+  `nvcc -V` 与编译/链接/运行 `.cu`——命令是 `/usr/local/bin/nvcc`（包装器），
+  `CUDA_HOME=/usr/local/cuda` 已由镜像 ENV 提供（`torch.utils.cpp_extension`
+  等生态工具可直接用），`/etc/ld.so.conf.d/` 已登记农场 `lib64`（**产物开箱即跑，
+  无需设 `LD_LIBRARY_PATH`**）。**编译器版本 13.4.92**，与 torch 的 CUDA 13.0 运行时
+  **不同轨**：这是基座约束（Ubuntu 26.04 / glibc 2.43 与 CUDA 13.0 的 crt 头
+  规格冲突，13.0 系实测编不过），不是可选偏好；`""`/`cpu` 形态**零 CUDA 编译器**。
+  镜像构建期守卫 §9 会**真编译 + 真链接**一个最小 `.cu`（只看 `nvcc -V` 不算数）。
+
+  ```bash
+  # 验证（栈运行时）
+  podman-compose exec xmnn nvcc -V      # → Cuda compilation tools, release 13.4, V13.4.92
+  # 最小算例（仅编译，无需 GPU 设备；链接用 -lcudart，运行需 up --gpu 透传设备）
+  podman-compose exec xmnn bash -lc 'printf "#include <cuda_runtime.h>\n__global__ void k(int*p){p[0]+=1;}\n" > /tmp/k.cu && nvcc -c /tmp/k.cu -o /tmp/k.o && echo COMPILE-OK'
+  ```
+
+  > **本机 GPU 提示（2026-09-20 实测）**：本机为 **RTX 5050 Laptop（cc 12.0 /
+  > sm_120）**，而 nvcc 缺省 `-arch` 是 sm_75——缺省产物**能编能链、启动期报**
+  > `the provided PTX was compiled with an unsupported toolchain`（PTX JIT 被驱动
+  > 拒绝）。编译时加 `-arch=native`（设备可见时）或 `-arch=sm_120` 即可正常运行
+  > （实测 `result=42`）。镜像**刻意不预设 arch**：`-arch=native` 需要编译期可见
+  > 设备（构建期无 GPU），预设还会把产物绑死本机。
 
 ### 归档可辨识：形态进归档名（C20）
 
@@ -370,7 +401,7 @@ invoke xmnn.load    # 按 .env TORCH_FLAVOR 形态挑归档；形态不符直接
 | `OMP_NUM_THREADS` / `NUITKA_JOBS` | `4` / `8` | 线程与 Nuitka 并发 |
 | `PIP_MIRROR` / `CONDA_MIRROR` | `official` | 构建期镜像源（official/aliyun/tuna）。**无前缀构建参数单一事实源（C15）**：`invoke xmnn.build`、`xmnn.up` 的 compose 内联 build、裸 `podman-compose build` 三处同键读取；`--pip-mirror/--conda-mirror` 旗标只覆盖单次 `build` |
 | `BASE_IMAGE`（build args + invoke 同键） | `localhost/jupyter-podman-rootless:latest` | 基底镜像覆盖（同样被 `xmnn.build`/`xmnn.up` 读取，C15） |
-| `TORCH_FLAVOR` | 空（不装） | torch 形态白名单 `空`/`cpu`/`cu130`（C15 无前缀键，compose build args + invoke 同键）。`invoke xmnn.build --torch cu130` 只覆盖单次构建；改 `.env` 后需重建镜像。flavor 不参与镜像 tag，但**进归档名**（C20）并决定 `xmnn.load` 选哪个归档 |
+| `TORCH_FLAVOR` | 空（不装） | torch 形态白名单 `空`/`cpu`/`cu130`（C15 无前缀键，compose build args + invoke 同键）。`invoke xmnn.build --torch cu130` 只覆盖单次构建；改 `.env` 后需重建镜像。flavor 不参与镜像 tag，但**进归档名**（C20）并决定 `xmnn.load` 选哪个归档。**cu130 形态同时提供 nvcc 编译器工具链**（13.4.92，`/usr/local/bin/nvcc` + `CUDA_HOME=/usr/local/cuda`，C25） |
 | `GPU_DEVICE` | 未设 | GPU 设备双形态：`/` 开头=宿主机设备路径，否则=CDI 引用；**未设时自动探测 `/dev/dri → /dev/dxg`**（C19）。**仅 `up --gpu` 时生效**（默认零透传） |
 | `XMNN_OFFLINE` | `0`（关） | 离线总开关（**非 compose 插值键**，由 invoke 读取并经 `-e` 透传进容器）：开启后 `up` 强制跳过构建（`--no-build` 恒真，非离线亦然，C16）、`build` 直接 Exit(1)、容器内打包禁网兜底；等价 `invoke xmnn.up --offline`，关闭用 `--no-offline` |
 

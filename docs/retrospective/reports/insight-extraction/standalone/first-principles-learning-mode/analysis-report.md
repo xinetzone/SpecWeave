@@ -48,7 +48,7 @@ atomized: true
 
 ## 相关文档
 
-- [PRD摘要](../../../../../../.trae/specs/retrospectives-insights/first-principles-learning-mode-analysis/prd-summary.md) — 从本报告提炼的产品需求文档摘要
+- [PRD摘要](../../../../archives/spec-working-notes/retrospectives-insights/first-principles-learning-mode-analysis/prd-summary.md) — 从本报告提炼的产品需求文档摘要
 
 <!-- changelog -->
 - 2026-07-11 | feat | 初版完成：12章+附录，基于第一性原理的学习模式功能定义完整报告
