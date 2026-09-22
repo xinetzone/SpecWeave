@@ -124,7 +124,9 @@ class SourceMount:
     - env：注入子进程环境的变量名（compose.yaml 内同名插值）。
     - default_rel：缺省相对路径；相对 anchor 解析（repo=仓库根=client 上三级，
       client=client 根；external/chaos 类源码锚仓库根而非 client）。
-    - must_exist：是否做宿主存在性硬校验（源码树 True；workspace 走自动 mkdir）。
+    - must_exist：是否做宿主存在性硬校验（源码树 True：缺失 Exit 1）；
+      False = temp 类目录，缺失时幂等 mkdir（与 workspace 同语义），
+      默认相对路径可经 ``..`` 上溯锚点之外的宿主目录。
     """
 
     env: str
@@ -319,12 +321,20 @@ def ensure_runtime_ready(spec: StackSpec) -> None:
 # ---------------------------------------------------------------------------
 
 
-def _resolve_path(spec: StackSpec, raw: str, *, must_exist: bool, label: str) -> str:
-    """相对路径相对 invoke cwd 解析；转绝对 POSIX；可选存在性硬校验。"""
+def _resolve_path(
+    spec: StackSpec, raw: str, *, must_exist: bool, label: str, create: bool = False
+) -> str:
+    """相对路径相对 invoke cwd 解析；转绝对 POSIX；可选存在性硬校验 / 幂等创建。
+
+    ``create=True``（temp 类目录）与 ``must_exist=True`` 互斥：前者缺失即建
+    （目录不存在属正常首态），后者缺失 Exit(1)（源码树类，静默创建会掩盖配错）。
+    """
     p = Path(raw).expanduser()
     if not p.is_absolute():
         p = (Path.cwd() / p).resolve()
-    if must_exist and not p.exists():
+    if create:
+        p.mkdir(parents=True, exist_ok=True)
+    elif must_exist and not p.exists():
         print(f"[{spec.namespace}] ⚠ {label}宿主路径不存在：{p}")
         print("        请在 .env / 环境变量中设置对应变量指向有效目录后重试。")
         raise Exit(1)
@@ -337,7 +347,8 @@ def prepare_env(spec: StackSpec) -> dict:
     - workspace 解析为绝对 POSIX 路径注入（compose 任务可从任意 cwd 调用，
       不能依赖 compose.yaml 内相对路径）；幂等 mkdir + checkpoint 可写放宽。
     - source_mounts 的源码路径按各自锚点（仓库根/client 根）取缺省值，
-      解析为绝对 POSIX，must_exist 时做存在性硬校验。
+      解析为绝对 POSIX，must_exist 时做存在性硬校验；must_exist=False 的
+      temp 类目录走幂等 mkdir（与 workspace 同语义，缺失属正常首态）。
     """
     env = _load_env_overrides(_project_root())
     root = _project_root()
@@ -365,7 +376,11 @@ def prepare_env(spec: StackSpec) -> dict:
             or str((base / mount.default_rel).resolve())
         )
         os.environ[mount.env] = _resolve_path(
-            spec, raw, must_exist=mount.must_exist, label=mount.label
+            spec,
+            raw,
+            must_exist=mount.must_exist,
+            create=not mount.must_exist,
+            label=mount.label,
         )
 
     return env

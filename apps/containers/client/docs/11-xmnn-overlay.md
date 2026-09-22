@@ -58,6 +58,12 @@ invoke xmnn.down                       # 停止清理（ccache / Jupyter 登录�
   可在 `.env` 用 `NPU_TVM_PATH` / `NPUUSERTOOLS_PATH` / `MODELS_PATH`
   覆盖（invoke 路径做存在性硬校验）。TVM 全量编译在 9p 上较慢，可把路径
   指向 WSL 原生克隆。
+- **临时目录**：`XMNN_TEMP_PATH` 默认取仓库根上溯四级 = 根工作区 `.temp`
+  （本工作区 `/media/pc/data/ai/.temp`，根 AGENTS.md 定义的统一临时目录），
+  挂容器内 `/workspace/temp`；与源码三类不同，**缺失不做硬校验**而是幂等
+  mkdir。⚠️ 该 bind 覆盖 `/workspace` 下的同名子目录，容器内不再可见宿主
+  `client/workspace/temp`（宿主文件不受影响）；换检出位置布局不同时须显式
+  指定绝对路径。
 - **Windows 原生自动桥接**：同 quant.*（默认桥接 `podman-machine-default`；
   `COMPOSE_WSL_DISTRO` 可指其他发行版，`none` 关闭并回退门禁）。
 - **两个过程：镜像构建（有网） → 离线开发（无网）**：过程一在有网侧

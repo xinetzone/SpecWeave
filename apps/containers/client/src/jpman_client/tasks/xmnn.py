@@ -3,7 +3,8 @@
 声明式栈：唯一事实源 ``XMNN_SPEC``；六任务由 overlay_core.make_stack_tasks
 工厂生成，栈内 exec 长任务（build-tvm/wheel）用内核 helper 薄封装（形态 B）。
 驱动 ``overlays/xmnn-dev``：运行时 bind 挂载 npu_tvm / npuusertools / models
-源码（锚定仓库根 external/chaos），容器内 LLVM 22 + Nuitka 4.2.1 工具链。
+源码（锚定仓库根 external/chaos）与根工作区 .temp（容器内 /workspace/temp，
+``XMNN_TEMP_PATH`` 可覆盖），容器内 LLVM 22 + Nuitka 4.2.1 工具链。
 
 双 cp314 ABI 契约（C13，禁止互换）：base env /opt/conda = cp314 GIL（工具链
 守卫/内核/打包解释器 BASE_PYTHON）；main env /opt/conda/envs/main = cp314t
@@ -77,6 +78,9 @@ XMNN_SPEC = StackSpec(
         SourceMount("NPU_TVM_PATH", "external/chaos/npu_tvm", "npu_tvm 源码树（含 python/tvm）"),
         SourceMount("NPUUSERTOOLS_PATH", "external/containers/workspace/dev/npuusertools", "npuusertools 源码树（含 xmnn 包）"),
         SourceMount("MODELS_PATH", "external/chaos/models", "模型目录"),
+        # 临时目录（/workspace/temp）：缺省锚仓库根上溯四级 = 根工作区 .temp；
+        # must_exist=False → 缺失幂等 mkdir（追加在末尾：既有用例锁 source_mounts[0]）。
+        SourceMount("XMNN_TEMP_PATH", "../../../../.temp", "临时目录（根工作区 .temp）", must_exist=False),
     ),
     smoke=SmokeSpec(
         python="/opt/conda/bin/python",
@@ -90,7 +94,7 @@ XMNN_SPEC = StackSpec(
     bridge_env_keys=(
         "XMNN_IMAGE_TAG", "XMNN_CONTAINER_NAME", "XMNN_WORKSPACE",
         "XMNN_SSH_PORT", "XMNN_JUPYTER_PORT", "XMNN_OFFLINE",
-        "NPU_TVM_PATH", "NPUUSERTOOLS_PATH", "MODELS_PATH",
+        "NPU_TVM_PATH", "NPUUSERTOOLS_PATH", "MODELS_PATH", "XMNN_TEMP_PATH",
         "TORCH_FLAVOR", "GPU_DEVICE",
     ),
     supports_offline=True,
@@ -101,11 +105,7 @@ build, up, down, ps, logs, smoke, save, load = (
     TASKS[k] for k in ("build", "up", "down", "ps", "logs", "smoke", "save", "load")
 )
 
-
-# ---------------------------------------------------------------------------
 # 栈内 exec 长任务（build-tvm / wheel；产物落 /workspace，源码/workspace 绑定）
-# ---------------------------------------------------------------------------
-
 
 @task(
     help={

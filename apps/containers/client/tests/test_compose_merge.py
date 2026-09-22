@@ -73,7 +73,7 @@ GOLDEN = {
         "ports": ["2223:22", "8890:8888"],
         "volume_targets": [
             "/workspace", "/workspace/npu_tvm", "/workspace/npuusertools",
-            "/workspace/models", "/root/.ccache",
+            "/workspace/models", "/workspace/temp", "/root/.ccache",
             "/home/devuser/.local/share/jupyter",
             "/var/lib/jpman/ssh-host-keys",
         ],

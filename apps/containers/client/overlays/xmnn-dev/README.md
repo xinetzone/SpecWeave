@@ -1,10 +1,10 @@
 # XMNN 开发与 wheel 打包叠加层（Podman rootless + podman-compose）
 
 > 一句话：在 `localhost/jupyter-podman-rootless:latest` 之上做一层工具链叠加，
-> 运行时把 **npu_tvm / npuusertools / models 源码 bind 挂载进容器**，提供
-> tvm/vta/xmnn 的源码调试环境（SSH + JupyterLab + xmnn-dev 内核），并在
-> 容器内用 **LLVM/Clang 22 + Nuitka 4.2.1** 一键打出 cp314 的
-> `xmnn-1.2.1.dev0-cp314-cp314-linux_x86_64.whl`。
+> 运行时把 **npu_tvm / npuusertools / models 源码 + 根工作区临时目录 .temp**
+> bind 挂载进容器，提供 tvm/vta/xmnn 的源码调试环境（SSH + JupyterLab +
+> xmnn-dev 内核），并在容器内用 **LLVM/Clang 22 + Nuitka 4.2.1** 一键打出
+> cp314 的 `xmnn-1.2.1.dev0-cp314-cp314-linux_x86_64.whl`。
 
 - **镜像**：`localhost/xmnn-dev:latest`（薄叠加；含完整编译工具链，体积大于量化栈）
 - **双 Python ABI**：base env `/opt/conda/bin/python` = **cp314 GIL enabled**
@@ -14,6 +14,8 @@
   supervisord 托管，沿用基底 entrypoint
 - **源码**：运行时挂载，容器内固定路径 `/workspace/npu_tvm`、
   `/workspace/npuusertools`、`/workspace/models`（镜像构建期零接触源码）
+- **临时目录**：`XMNN_TEMP_PATH`（默认根工作区 `.temp`）挂容器内
+  `/workspace/temp`，编译/调试临时产物落仓库外 scratch 盘位
 - **编排**：podman-compose（rootless、无 privileged）；AI 硬约束见
   [../../.agents/rules/xmnn-overlay.md](../../.agents/rules/xmnn-overlay.md)
 
@@ -128,7 +130,7 @@ podman-compose down
 > `invoke xmnn.save` / `invoke xmnn.load`（带 manifest 校验），裸 compose 无对应命令。
 
 `compose.yaml` 已内置 rootless 三必需（`/dev/fuse`、`label=disable`、
-`cgroupns: host`），四个 bind 全部长语法，**无特权容器**；
+`cgroupns: host`），五个 bind 全部长语法，**无特权容器**；
 `network_mode: bridge` 是 2026-09-14 同机实证（machine 无 systemd user bus
 时默认项目网络 aardvark-dns 失败），见 compose 文件头注释。
 
@@ -170,6 +172,12 @@ podman-compose down
 - **SSH 指纹缓存**：主机密钥在命名卷 `xmnn-ssh-host-keys`
   （/var/lib/jpman/ssh-host-keys），普通 down/up 重建指纹不变；
   仅 `down --volumes` 清除。
+- **临时目录**：`/workspace/temp` 由 `XMNN_TEMP_PATH` 绑定到宿主根工作区
+  `.temp`（默认按本仓布局推导：invoke 取仓库根上溯四级、裸 compose 九级，
+  本工作区均为 `/media/pc/data/ai/.temp`）；该目录缺失不报错，invoke 侧
+  幂等 mkdir。⚠️ 它**覆盖 `/workspace` 下的同名子目录**——容器内
+  `/workspace/temp` 从此不再是宿主 `client/workspace/temp`（宿主侧文件不受
+  影响，仅容器内不可见）；换检出位置请显式设 `XMNN_TEMP_PATH` 绝对路径。
 
 ## 性能提示（9p）
 

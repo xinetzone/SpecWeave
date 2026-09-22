@@ -82,12 +82,22 @@
 
 ## 4. 源码仅运行时挂载（构建期零接触）
 
-- 四个 bind（一律长语法 + `bind.create_host_path: true`）：
+- 五个 bind（一律长语法 + `bind.create_host_path: true`）：
   `XMNN_WORKSPACE→/workspace`、`NPU_TVM_PATH→/workspace/npu_tvm`、
-  `NPUUSERTOOLS_PATH→/workspace/npuusertools`、`MODELS_PATH→/workspace/models`。
-- invoke 路径把四个宿主路径解析为**绝对 POSIX 路径**注入（Dimension A
+  `NPUUSERTOOLS_PATH→/workspace/npuusertools`、`MODELS_PATH→/workspace/models`、
+  `XMNN_TEMP_PATH→/workspace/temp`。
+- invoke 路径把五个宿主路径解析为**绝对 POSIX 路径**注入（Dimension A
   复用 `to_posix_path`），相对路径相对 invoke cwd；三个源码路径做
-  **存在性硬校验**（缺失 Exit 1 + 中文指引），workspace 自动 mkdir。
+  **存在性硬校验**（缺失 Exit 1 + 中文指引），workspace 与 temp 走幂等
+  mkdir（`SourceMount.must_exist=False`，缺失属正常首态）。
+- **临时目录 bind 的三条特例**（2026-09-22）：① 缺省锚仓库根**上溯四级**
+  （`../../../../.temp`，即根 AGENTS.md 定义的统一临时目录），是**仓库之外**
+  的路径——换检出位置布局不同时必须在 `.env` 显式设绝对路径，否则会在锚点
+  外建同名目录；② 与四个同族 bind 的差异仅在「不列入存在性硬校验」，其余
+  （长语法 + `create_host_path: true` + 绝对 POSIX 注入）逐条同构；
+  ③ 该 bind **覆盖 `/workspace` 下的同名子目录**：容器内 `/workspace/temp`
+  不再是宿主 `client/workspace/temp`（宿主文件不受影响，仅容器内不可见），
+  这是刻意语义（临时产物落仓库外 scratch 盘位），不是缺陷。
 - **已知副产物（2026-09-14 裸 podman-compose 1.6.0 实测）**：裸
   `podman-compose up`（不经 invoke 绝对路径注入）时，长语法 bind 的相对
   source + `create_host_path: true` 会在 `client/workspace/` 下预创建
@@ -234,7 +244,7 @@
 - `network_mode: bridge` 是**带证据的偏差**：2026-09-14 同机实证 machine
   无 systemd user bus 时默认项目网络 aardvark-dns 必失败；实证注释保留在
   基文件与 xmnn compose.yaml 文件头，不得擅自删改。
-- 栈文件只保留栈专属字段：image/build/ports/四个 bind volumes、调试
+- 栈文件只保留栈专属字段：image/build/ports/五个 bind volumes、调试
   environment、`labels.component`；`xmnn-ccache`/`xmnn-jupyter`/
   `xmnn-ssh-host-keys` 三个命名卷等栈专属卷保持栈内声明（基文件无
   volumes/build/env_file/ports）。extends

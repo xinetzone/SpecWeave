@@ -184,6 +184,9 @@ def harness(monkeypatch, tmp_path):
         monkeypatch.delenv(spec.offline_env_key, raising=False)
         for m in spec.source_mounts:
             monkeypatch.delenv(m.env, raising=False)
+    # XMNN_TEMP_PATH 缺省锚「仓库根上溯四级」，在 tmp 布局下会指到文件系统根之外；
+    # 统一钉到 tmp 目录，保证用例 hermetic（也覆盖「非空路径 → 幂等 mkdir」形态）
+    monkeypatch.setenv("XMNN_TEMP_PATH", str(tmp_path / "temp"))
     # C15：build-arg 单一事实源键（无前缀，与 compose 段插值键同键）也必须清空，
     # 否则宿主 export 的 PIP_MIRROR/BASE_IMAGE 会让黄金 argv 断言随环境漂移
     for key in ("PIP_MIRROR", "CONDA_MIRROR", "BASE_IMAGE"):
@@ -664,6 +667,23 @@ def test_prepare_env_xmnn_mounts_anchor_repo_root(harness):
     assert os.environ["MODELS_PATH"].endswith("models")
 
 
+def test_prepare_env_xmnn_temp_mount_default_and_autocreate(harness, monkeypatch):
+    """临时目录挂载：缺省锚仓库根上溯四级（根工作区 .temp），缺失幂等 mkdir。
+
+    不在 tmp 布局下实跑缺省值——上溯四级会指到 tmp 之外（文件系统根一带），
+    故只做声明式断言；mkdir 语义用显式 env 覆盖实跑。
+    """
+    spec = next(m for m in _XMNN.source_mounts if m.env == "XMNN_TEMP_PATH")
+    assert spec.anchor == "repo" and spec.default_rel == "../../../../.temp"
+    assert spec.must_exist is False
+    target = harness.tmp / "fresh-temp"
+    assert not target.exists()
+    monkeypatch.setenv("XMNN_TEMP_PATH", str(target))
+    oc.prepare_env(_XMNN)
+    assert target.is_dir()
+    assert os.environ["XMNN_TEMP_PATH"] == oc.to_posix_path(target)
+
+
 def test_prepare_env_empty_placeholder_does_not_override(harness, monkeypatch):
     """C9：空字符串 env 占位不得覆盖默认值（or 链穿透空串）。"""
     monkeypatch.setenv("QUANT_SSH_PORT", "")
@@ -1028,6 +1048,7 @@ def test_bridge_keys_isolated_per_stack():
     assert "XMNN_" not in joined and "MONETIZE_" not in joined
     assert "QUANT_WORKSPACE" in _QUANT.bridge_env_keys
     assert "NPU_TVM_PATH" in _XMNN.bridge_env_keys
+    assert "XMNN_TEMP_PATH" in _XMNN.bridge_env_keys
     assert "MONETIZE_SRC_PATH" in _MONETIZE.bridge_env_keys
     xj = " ".join(_XMNN.bridge_env_keys)
     assert "QUANT_" not in xj and "MONETIZE_" not in xj

@@ -46,8 +46,9 @@ services:
       - "${XMNN_JUPYTER_PORT:-8890}:8888"
     volumes:
       # 全部长语法 bind：短语法在 podman-compose 下会 os.makedirs 误建源路径。
-      # invoke 路径把四个宿主路径解析为绝对 POSIX 路径注入（存在性硬校验）；
-      # 裸 compose 相对路径相对本文件：五级 ../../../../../ 回到仓库根。
+      # invoke 路径把五个宿主路径解析为绝对 POSIX 路径注入（源码三类存在性硬
+      # 校验；temp 类缺省自动 mkdir）；裸 compose 相对路径相对本文件：
+      # 五级 ../../../../../ 回到仓库根（external/* 源码锚点）。
       - type: bind
         source: ${XMNN_WORKSPACE:-../../workspace}
         target: /workspace
@@ -66,6 +67,18 @@ services:
       - type: bind
         source: ${MODELS_PATH:-../../../../../external/chaos/models}
         target: /workspace/models
+        bind:
+          create_host_path: true
+      # 临时目录：容器内 /workspace/temp 改绑到宿主根工作区 .temp（根 AGENTS.md
+      # 定义的统一临时目录），使编译/调试的临时产物落仓库外的 scratch 盘位、
+      # 不混入 client/workspace。缺省值九级 ../../../../../ 回到 /media/pc/data/ai
+      # （本仓布局推导；换检出位置须显式设 XMNN_TEMP_PATH）。invoke 侧同键解析为
+      # 绝对 POSIX 并幂等 mkdir——目录缺失属正常首态，故不列入存在性硬校验。
+      # ⚠️ 该 bind 覆盖 /workspace 下的同名子目录：容器内 /workspace/temp 不再是
+      # 宿主 client/workspace/temp（后者在容器内不可见，宿主侧不受影响）。
+      - type: bind
+        source: ${XMNN_TEMP_PATH:-../../../../../../../../../.temp}
+        target: /workspace/temp
         bind:
           create_host_path: true
       # ccache 命名卷持久化（Nuitka C 编译缓存）；down 默认保留，--volumes 删除。
