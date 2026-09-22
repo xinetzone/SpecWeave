@@ -51,6 +51,7 @@ class FakeRunner:
         image_labels: dict | None = None,
         nvidia_smi_ok: bool = True,
         nvidia_smi_out: str = "",
+        image_exists_tags: set[str] | None = None,
     ):
         self.calls: list[tuple[str, dict]] = []
         self.running = running
@@ -79,11 +80,14 @@ class FakeRunner:
         # 默认健康；失配用例注入 nvidia_smi_ok=False + 原生报错文本。
         self.nvidia_smi_ok = nvidia_smi_ok
         self.nvidia_smi_out = nvidia_smi_out
+        # 按 tag 精确控制镜像存在性；None = 沿用 image_exists 布尔（历史用例）。
+        self.image_exists_tags = image_exists_tags
 
     def __call__(self, c, cmd, **kwargs):
         self.calls.append((cmd, kwargs))
-        if cmd.startswith("test -e "):
-            path = cmd[len("test -e "):].strip().strip("'\"")
+        if cmd.startswith("test -e ") or cmd.startswith("test -S "):
+            path = cmd[len("test -e "):] if cmd.startswith("test -e ") else cmd[len("test -S "):]
+            path = path.strip().strip("'\"")
             exists = True if self.paths is None else path in self.paths
             return SimpleNamespace(ok=exists, stdout="", return_code=0 if exists else 1)
         if "/etc/cdi" in cmd:
@@ -114,7 +118,14 @@ class FakeRunner:
         if "ps -eo" in cmd:
             return SimpleNamespace(ok=True, stdout=self.conmon_ps, return_code=0)
         if "image exists" in cmd:
-            return SimpleNamespace(ok=self.image_exists, stdout="", return_code=0 if self.image_exists else 1)
+            tag = cmd.split("image exists", 1)[1].strip()
+            if self.image_exists_tags is not None:
+                ok = tag in self.image_exists_tags
+            else:
+                ok = self.image_exists
+            return SimpleNamespace(ok=ok, stdout="", return_code=0 if ok else 1)
+        if cmd.strip() == "ss -lnt":
+            return SimpleNamespace(ok=True, stdout=self.ss_output, return_code=0)
         if "ss -ltnp" in cmd:
             return SimpleNamespace(ok=True, stdout=self.ss_output, return_code=0)
         if " logs " in cmd:
@@ -195,6 +206,12 @@ def harness(monkeypatch, tmp_path):
     monkeypatch.delenv("GPU_DEVICE", raising=False)
     # C20：torch 形态同理（load 的选档/校验依赖它，宿主 export 会让断言漂移）
     monkeypatch.delenv("TORCH_FLAVOR", raising=False)
+    # 透传覆盖的插值键：宿主 export 会改变门禁/渲染断言
+    for key in (
+        "DBUS_SESSION_BUS_PATH", "HOST_NET_SSHD_PORT", "USB_DEVICE",
+        "NATIVE_PASSTHROUGH_IMAGE_TAG",
+    ):
+        monkeypatch.delenv(key, raising=False)
 
     runner = FakeRunner()
     monkeypatch.setattr(oc, "run_cmd", runner)
@@ -1026,10 +1043,12 @@ def test_factory_up_smoke_params_are_capability_union(harness):
     """
     q, x, m = (oc.make_stack_tasks(s) for s in (_QUANT, _NATIVE, _MONETIZE))
     assert _param_names(q["up"]) == ["gpu", "skip_build"]
-    assert _param_names(x["up"]) == ["gpu", "skip_build", "offline", "no_offline"]
+    assert _param_names(x["up"]) == [
+        "gpu", "passthrough", "usb", "skip_build", "offline", "no_offline",
+    ]
     assert _param_names(m["up"]) == ["skip_build"]
     assert _param_names(q["smoke"]) == ["gpu"]
-    assert _param_names(x["smoke"]) == ["gpu"]
+    assert _param_names(x["smoke"]) == ["gpu", "passthrough", "usb"]
     assert _param_names(m["smoke"]) == []
     assert _param_names(q["down"]) == ["volumes"]
     assert _param_names(x["logs"]) == ["tail"]
@@ -1575,3 +1594,216 @@ def test_up_stack_captures_compose_up_output(harness):
     oc.up_stack(None, _QUANT, skip_build=True)
     kw = [k for cmd, k in harness.runner.calls if "up -d --no-build" in cmd][0]
     assert kw["hide"] is True and kw["echo"] is False and kw["pty"] is False
+
+
+# ---------------------------------------------------------------------------
+# 透传覆盖（host 网络 + D-Bus / USB；与 C19/C23 同族 opt-in 门禁）
+# ---------------------------------------------------------------------------
+
+
+def _argv_files(argv: list[str]) -> list[str]:
+    return [argv[i + 1] for i, a in enumerate(argv) if a == "--file"]
+
+
+def test_compose_files_passthrough_usb_order_and_label(harness):
+    """文件序 base → GPU → 透传主层 → USB；label 与 argv 同源。"""
+    d = harness.root / "overlays/native-dev"
+    argv = oc.compose_argv(_NATIVE, "up", "-d", passthrough=True)
+    assert _argv_files(argv) == [
+        str(d / "compose.yaml"), str(d / "compose.passthrough.yaml"),
+    ]
+    argv = oc.compose_argv(_NATIVE, "up", "-d", usb=True)
+    assert _argv_files(argv) == [
+        str(d / "compose.yaml"), str(d / "compose.passthrough.usb.yaml"),
+    ]
+    argv = oc.compose_argv(
+        _NATIVE, "up", "-d", gpu=True, passthrough=True, usb=True
+    )
+    assert _argv_files(argv) == [
+        str(d / "compose.yaml"),
+        str(d / "compose.gpu.yaml"),
+        str(d / "compose.passthrough.yaml"),
+        str(d / "compose.passthrough.usb.yaml"),
+    ]
+    assert ",".join(_argv_files(argv)) == oc.compose_config_files_label(
+        _NATIVE, gpu=True, passthrough=True, usb=True
+    )
+    # 未声明能力的栈收到开关 = 内部不变量违例
+    with pytest.raises(RuntimeError, match="passthrough_overlay"):
+        oc.compose_files(_QUANT, passthrough=True)
+    with pytest.raises(RuntimeError, match="usb_overlay"):
+        oc.compose_files(_MONETIZE, usb=True)
+
+
+def test_resolve_passthrough_happy_path_writes_env(harness):
+    harness.runner.paths = {"/run/user/1000/bus"}
+    dbus, sshd = oc.resolve_passthrough(None, _NATIVE, {})
+    assert (dbus, sshd) == ("/run/user/1000/bus", "2223")
+    assert os.environ["DBUS_SESSION_BUS_PATH"] == "/run/user/1000/bus"
+    assert os.environ["HOST_NET_SSHD_PORT"] == "2223"
+
+
+def test_resolve_passthrough_env_token_precedence(harness):
+    """.env 令牌可换系统总线 / SSH 端口（shell export 不在本用例设置）。"""
+    harness.runner.paths = {"/run/dbus/system_bus_socket"}
+    dbus, sshd = oc.resolve_passthrough(None, _NATIVE, {
+        "DBUS_SESSION_BUS_PATH": "/run/dbus/system_bus_socket",
+        "HOST_NET_SSHD_PORT": "2333",
+    })
+    assert dbus == "/run/dbus/system_bus_socket" and sshd == "2333"
+    cmds = harness.runner.commands
+    assert "test -S /run/dbus/system_bus_socket" in cmds
+
+
+def test_resolve_passthrough_missing_dbus_fails_fast(harness, capsys):
+    harness.runner.paths = set()
+    with pytest.raises(Exit) as ei:
+        oc.resolve_passthrough(None, _NATIVE, {})
+    assert ei.value.code == 1
+    out = capsys.readouterr().out
+    assert "D-Bus 会话总线" in out
+    assert "DBUS_SESSION_BUS_PATH=/run/dbus/system_bus_socket" in out
+    assert "去掉 --passthrough" in out
+
+
+def test_resolve_passthrough_busy_ports_fail_fast(harness, capsys):
+    harness.runner.paths = {"/run/user/1000/bus"}
+    harness.runner.ss_output = (
+        "State  Recv-Q Send-Q Local Address  Peer Address\n"
+        "LISTEN 0  0  0.0.0.0:8888  0.0.0.0:*\n"
+        "LISTEN 0  0  0.0.0.0:2223  0.0.0.0:*\n"
+    )
+    with pytest.raises(Exit):
+        oc.resolve_passthrough(None, _NATIVE, {})
+    out = capsys.readouterr().out
+    assert "8888" in out and "2223" in out
+    assert "HOST_NET_SSHD_PORT" in out
+    # ss 缺失/无输出时不阻断（同族「ss 缺失则跳过」）
+    harness.runner.ss_output = ""
+    assert oc._runtime_listening_ports(None, ["8888"]) == []
+
+
+def test_resolve_usb_happy_path_writes_env(harness):
+    harness.runner.paths = {"/dev/bus/usb"}
+    assert oc.resolve_usb_device(None, _NATIVE, {}) == "/dev/bus/usb"
+    assert os.environ["USB_DEVICE"] == "/dev/bus/usb"
+
+
+def test_resolve_usb_missing_fails_with_usbipd_guide(harness, capsys):
+    harness.runner.paths = set()
+    with pytest.raises(Exit) as ei:
+        oc.resolve_usb_device(None, _NATIVE, {})
+    assert ei.value.code == 1
+    out = capsys.readouterr().out
+    assert "usbipd attach --wsl --distribution podman-machine-default" in out
+    assert "USB_DEVICE=/dev/bus/usb/001/002" in out
+    assert "去掉 --usb" in out
+
+
+def test_ensure_passthrough_tag_already_present(harness):
+    tags = {"localhost/native-dev:passthrough"}
+    harness.runner.image_exists_tags = tags
+    tag = oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=True)
+    assert tag == "localhost/native-dev:passthrough"
+    assert not any(c.startswith("podman tag") for c in harness.runner.commands)
+
+
+def test_ensure_passthrough_tag_copied_from_base(harness, capsys):
+    harness.runner.image_exists_tags = {"localhost/native-dev:latest"}
+    tag = oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=False)
+    assert tag == "localhost/native-dev:passthrough"
+    assert "podman tag localhost/native-dev:latest localhost/native-dev:passthrough" in (
+        harness.runner.commands
+    )
+    assert "打 tag" in capsys.readouterr().out
+
+
+def test_ensure_passthrough_tag_both_absent_offline_guidance(harness, capsys):
+    harness.runner.image_exists_tags = set()
+    with pytest.raises(Exit):
+        oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=True)
+    out = capsys.readouterr().out
+    assert "invoke native.save" in out and "invoke native.load" in out
+    assert not any(c.startswith("podman tag") for c in harness.runner.commands)
+
+
+def test_ensure_passthrough_tag_both_absent_build_guidance(harness, capsys):
+    harness.runner.image_exists_tags = set()
+    with pytest.raises(Exit):
+        oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=False)
+    assert "invoke native.up --passthrough" in capsys.readouterr().out
+
+
+def test_up_passthrough_argv_banner_and_ready_port(harness, monkeypatch, capsys):
+    """--passthrough：文件集含主层；就绪探测 8888；横幅 host 端口与透传行。"""
+    seen = []
+
+    def fake_wait(port, **kw):
+        seen.append(port)
+        return True, "ok"
+
+    monkeypatch.setattr(oc, "wait_http_ready", fake_wait)
+    oc.up_stack(None, _NATIVE, passthrough=True)
+    assert seen == [8888]
+    up_cmd = [c for c in harness.runner.commands if "up -d --no-build" in c][0]
+    assert "compose.passthrough.yaml" in up_cmd
+    assert "compose.passthrough.usb.yaml" not in up_cmd
+    out = capsys.readouterr().out
+    assert "ssh -p 2223 devuser@localhost" in out
+    assert "Jupyter localhost:8888" in out
+    assert "透传    host 网络 + D-Bus" in out
+
+
+def test_up_usb_argv_and_banner(harness, capsys):
+    oc.up_stack(None, _NATIVE, usb=True)
+    up_cmd = [c for c in harness.runner.commands if "up -d --no-build" in c][0]
+    assert "compose.passthrough.usb.yaml" in up_cmd
+    assert "compose.passthrough.yaml" not in up_cmd
+    out = capsys.readouterr().out
+    assert "USB     /dev/bus/usb 已透传" in out
+    # bridge 形态不变（仍是 8890/2223 映射）
+    assert "Jupyter localhost:8890" in out
+
+
+def test_up_passthrough_gate_fails_before_any_down_or_up(harness, capsys):
+    """门禁失败时绝不拆栈：无 down、无 up（build 可先跑）。"""
+    harness.runner.paths = set()  # D-Bus 缺失
+    with pytest.raises(Exit):
+        oc.up_stack(None, _NATIVE, passthrough=True)
+    cmds = harness.runner.commands
+    assert not any(" down" in c for c in cmds)
+    assert not any("up -d" in c for c in cmds)
+
+
+def test_smoke_running_native_passthrough_uses_same_files(harness):
+    """栈运行路径的 exec argv 必须与 up 同源（含透传主层）。"""
+    harness.runner.running = True
+    harness.runner.paths = {"/run/user/1000/bus", "/dev/bus/usb"}
+    # host 形态栈自身占用 8888/2223——冒烟不得判为端口冲突（W-I19 回归）
+    harness.runner.ss_output = (
+        "LISTEN 0 128 0.0.0.0:8888 0.0.0.0:*\n"
+        "LISTEN 0 128 0.0.0.0:2223 0.0.0.0:*\n"
+    )
+    oc.smoke_stack(None, _NATIVE, passthrough=True, usb=True)
+    exec_cmd = [c for c in harness.runner.commands if " exec " in c][0]
+    assert "compose.passthrough.yaml" in exec_cmd
+    assert "compose.passthrough.usb.yaml" in exec_cmd
+
+
+def test_resolve_passthrough_check_ports_false_skips_busy_gate(harness, capsys):
+    """冒烟调用形态：端口被占也通过；D-Bus 检查与 env 回写仍执行。"""
+    harness.runner.paths = {"/run/user/1000/bus"}
+    harness.runner.ss_output = "LISTEN 0 128 0.0.0.0:8888 0.0.0.0:*\n"
+    dbus, sshd = oc.resolve_passthrough(
+        None, _NATIVE, {}, check_ports=False
+    )
+    assert (dbus, sshd) == ("/run/user/1000/bus", "2223")
+    assert os.environ["HOST_NET_SSHD_PORT"] == "2223"
+
+
+def test_smoke_standalone_native_notes_flags_ignored(harness, capsys):
+    harness.runner.running = False
+    harness.runner.paths = {"/dev/bus/usb"}
+    oc.smoke_stack(None, _NATIVE, usb=True)
+    out = capsys.readouterr().out
+    assert "--passthrough/--usb 仅在栈运行路径生效" in out

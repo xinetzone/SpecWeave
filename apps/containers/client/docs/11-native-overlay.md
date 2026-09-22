@@ -122,6 +122,28 @@ invoke native.down                       # 停止清理（ccache / Jupyter 登�
   `build --torch cu130 && save` 备好，离线侧不补装。
   详细用法见 [overlays/native-dev/docs/04 GPU 与 torch](../overlays/native-dev/docs/04-gpu-and-torch.md)，
   WSL2 实测矩阵与排障见 [04-troubleshooting-guide.md](04-troubleshooting-guide.md) W-I16。
+- **④ 透传可选能力（host 网络 + D-Bus / USB，默认全关）**：对齐构建端透传体系与
+  SDK 的 `invoke run` 开关（见 [09-passthrough.md](09-passthrough.md)），
+  但属**第三个正交运行期维度**——只改 compose 文件集与网络形态，**不动镜像内容**：
+  - `invoke native.up --passthrough` 叠加
+    [compose.passthrough.yaml](../overlays/native-dev/compose.passthrough.yaml)：
+    `network_mode: host`、`ports: !reset`（host 网络禁端口发布）、镜像切
+    `localhost/native-dev:passthrough`（同内容专用 tag，缺失自动从基础 tag
+    `podman tag`，零空间零构建）；容器直接绑宿主端口——**Jupyter 固定 8888**、
+    SSH 默认 2223（`HOST_NET_SSHD_PORT` 可改），并只读 bind 会话 D-Bus
+    `/run/user/1000/bus` → `/tmp/runtime-user/bus`（`DBUS_SESSION_BUS_PATH`
+    可换系统总线）；
+  - `invoke native.up --usb` 叠加
+    [compose.passthrough.usb.yaml](../overlays/native-dev/compose.passthrough.usb.yaml)
+    追加 `/dev/bus/usb`（`USB_DEVICE` 可指定单设备），bridge 网络与端口映射不变；
+  - **门禁全部先于 up_preflight/任何 down**：daemon 宿主侧 `test -S` D-Bus socket、
+    `ss -lnt` 查 8888/SSH 占用、`test -e` USB 路径——任一不满足即 Exit 1 给中文
+    可执行指引（缺 USB 给 usbipd-win attach `podman-machine-default` 三步）；
+  - ⚠ 8888 与 quant 默认 Jupyter 冲突，**透传形态与 quant 栈不可并行**
+    （先 `invoke quant.down`；SSH 端口可换但 Jupyter 8888 不可换）；
+  - 可与 `--gpu` / `--offline` 自由组合：`native.up --gpu --passthrough --usb`
+    文件序 base → GPU → 透传主层 → USB；`native.smoke --passthrough/--usb`
+    栈运行路径与启动同源文件，栈未运行时显式提示旗标忽略。
 
 ## 启动后连接：Jupyter 与 SSH
 

@@ -1,5 +1,4 @@
 """native-dev 原生开发/打包叠加栈的 podman-compose 编排任务（opt-in 命名空间）。
-
 声明式栈：唯一事实源 ``NATIVE_SPEC``；八任务由 overlay_core.make_stack_tasks
 工厂生成，栈内 exec 长任务（build-tvm/wheel）用内核 helper 薄封装（形态 B）。
 驱动 ``overlays/native-dev``：运行时 bind 挂载 npu_tvm / npuusertools / models
@@ -10,21 +9,22 @@
 的默认挂载变体，命名不绑定任何可插拔依赖；当前默认产品为 xmnn wheel。
 双 cp314 ABI 契约（C13，禁止互换）：base env /opt/conda = cp314 GIL（工具链
 守卫/内核/打包解释器 BASE_PYTHON）；main env /opt/conda/envs/main = cp314t
-free-threading（量化/运行时）。build-tvm/wheel 经 bash 脚本在栈内执行。
-10 个命令：build / up / down / ps / logs / smoke / save / load，加长任务
-build-tvm（栈内编译 TVM C++）与 wheel（Nuitka 打 xmnn whl 落 workspace/dist）；
-save/load = 镜像归档导出/导入（无网机器交付通道）。
+free-threading（量化/运行时）。10 命令：build/up/down/ps/logs/smoke/save/load，
+加长任务 build-tvm（栈内编译 TVM C++）、wheel（Nuitka 打 xmnn whl）。
 
-三组可选能力（默认全关 = 默认隔离，C18）：
+四组可选能力（默认全关 = 默认隔离，C18）：
   - GPU：``up --gpu`` 叠加 ``compose.gpu.yaml``，设备经 ``GPU_DEVICE`` 双形态
     插值（``/`` 开头=设备路径，缺省 ``/dev/dri``；否则=CDI 引用）；
+  - 透传：``up --passthrough`` 叠加 host 网络 + D-Bus 主层（Jupyter 固定
+    8888、SSH 2223，镜像切 :passthrough 同内容自动 tag）；``--usb`` 叠加
+    USB 总线（WSL2 须先 usbipd-win attach）；资源缺失即中文 fail-fast；
   - torch：``build --torch cpu|cu130``（或 .env ``TORCH_FLAVOR``）才在 base env
     装对应 wheel，形态落 /opt/native-torch-flavor 供构建期守卫 §8 断言；
-  - 离线：``up --offline``（或 .env ``NATIVE_OFFLINE=1``）不构建镜像，只以本地
-    已 load 镜像 ``up --no-build``，并注入 ``NATIVE_OFFLINE=1`` 禁容器内联网。
+  - 离线：``up --offline``（或 .env ``NATIVE_OFFLINE=1``）只以本地已 load 镜像
+    ``up --no-build``，并注入 ``NATIVE_OFFLINE=1`` 禁容器内联网。
 
 平台姿态（内核统一）：Windows 原生优先透明桥接 WSL，不可桥接再门禁；POSIX
-缺 podman-compose 提示 ``pip install -e ".[compose]"``。环境变量优先级：shell export
+缺 podman-compose 提示 ``pip install -e ".[compose]"``。变量优先级：shell export
 > root client .env（override=False）> compose.yaml 内 ${VAR:-default}。
 """
 from invoke import Context, task
@@ -72,6 +72,8 @@ NATIVE_SPEC = StackSpec(
     ),
     gpu_override=True,
     gpu_device_env="GPU_DEVICE",
+    passthrough_overlay=True, usb_overlay=True,
+    passthrough_tag_default="localhost/native-dev:passthrough",
     conda_mirror=True,
     torch_flavor=True,
     auto_shortflags=False,
@@ -96,7 +98,8 @@ NATIVE_SPEC = StackSpec(
         "NATIVE_IMAGE_TAG", "NATIVE_CONTAINER_NAME", "NATIVE_WORKSPACE",
         "NATIVE_SSH_PORT", "NATIVE_JUPYTER_PORT", "NATIVE_OFFLINE",
         "NPU_TVM_PATH", "NPUUSERTOOLS_PATH", "MODELS_PATH", "NATIVE_TEMP_PATH",
-        "TORCH_FLAVOR", "GPU_DEVICE",
+        "TORCH_FLAVOR", "GPU_DEVICE", "NATIVE_PASSTHROUGH_IMAGE_TAG",
+        "DBUS_SESSION_BUS_PATH", "HOST_NET_SSHD_PORT", "USB_DEVICE",
     ),
     supports_offline=True,
 )
@@ -107,7 +110,6 @@ build, up, down, ps, logs, smoke, save, load = (
 )
 
 # 栈内 exec 长任务（build-tvm / wheel；产物落 /workspace，源码/workspace 绑定）
-
 @task(
     help={
         "jobs": "Nuitka 并行任务数（映射 NUITKA_JOBS，默认读 compose env=8；内存不足用 4）",
@@ -117,9 +119,7 @@ build, up, down, ps, logs, smoke, save, load = (
     auto_shortflags=False,
 )
 def wheel(
-    c: Context,
-    jobs: int | None = None,
-    clean: bool = False,
+    c: Context, jobs: int | None = None, clean: bool = False,
     tvm_flags: str | None = None,
 ) -> None:
     """栈内执行 Nuitka 全流程打包 xmnn whl（tvm→vta/xmnn→wheel，长任务）。

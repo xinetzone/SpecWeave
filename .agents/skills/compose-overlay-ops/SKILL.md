@@ -208,6 +208,7 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
 | 容器内 podman/podman-compose 报 newuidmap EPERM | 嵌套 rootless 结构性死路 | 不在本 Skill 处理，转 jpman-podman-ops §9.1（B-scheme） |
 | PowerShell 内联 wsl bash 命令报 `syntax error near (` | `$()`/`$VAR` 被 PowerShell 插值展开 | 把 bash 逻辑写成脚本文件，`wsl -d <d> -- bash /mnt/d/.../x.sh` |
 | **长任务（wheel/build-tvm/build）容器内实际成功**（🎉 COMPLETE/产物已生成）却抛 `invoke.exceptions.ThreadException`，栈中 `fcntl.ioctl(input_, termios.FIONREAD, b"  ") → SystemError: buffer overflow`，桥接层报 `WSL 桥接命令失败 (exit=1)`（2026-09-16 实证，client W-I13） | **invoke 3.0.3 × Python 3.14 stdin 线程假失败**：invoke 对 TTY stdin 用 2 字节缓冲做 FIONREAD（signed short），内核固定写回 4 字节 int，py3.14 加固后必崩（queued=0 也崩，与重定向无关）；桥接 stdin 是 console 中继 pty，pty=True 的 stdin 转发线程收尾必触发 | **已自动修复（editable 零操作）**：jpman_common.proc.run_cmd 默认 `in_stream=False`（不创建 stdin 线程，三栈同族），真交互入口（env.shell、interact.shell/exec）显式 forward_stdin=True 且由 apply_invoke_stdin_compat（4 字节缓冲，同时替换 terminals+runners 两处绑定）兜底。**遇此报错先看日志末尾是否已 COMPLETE——成功即产物有效，勿重跑长任务**；手工逃生：发行版内 `pip install --user --upgrade invoke` |
+| **透传栈运行中跑 `invoke native.smoke --passthrough`，门禁报 8888/2223「已被占用」并 Exit 1**（栈本身明明活着，2026-09-22 真机实证，W-I19） | **冒烟路径误复用 up 的端口空闲门禁**：host 网络形态下 8888/SSH 端口必然被**该栈自身**占用，「端口被占=冲突」的 up 语义在冒烟场景把「栈活着」误判成故障。注：D-Bus socket 门禁与令牌回写在冒烟路径仍然必要 | **已修复（editable 零操作）**：`resolve_passthrough(..., check_ports=False)`——冒烟路径（`smoke_stack` 栈运行分支与 standalone 分支）跳过端口占用检查，D-Bus socket 检查与 env 回写保留；`up_stack` 仍走 `check_ports=True`。回归测试两项（栈自身占端口时 smoke 成功 + `check_ports=False` 直测），client 210 passed、真机 smoke Exit 0。手工逃生：确认占用者是本栈（`ss -lntp`）后无需处理，升级到含此修复的代码重跑即可 |
 
 ## 10. Gotchas
 
@@ -265,8 +266,28 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
     jpman_common.proc 双层修复（默认 in_stream=False + 4 字节兼容补丁），
     editable 即时生效；排查此类问题用三态 pty 探针（原生必崩 /
     in_stream=False / 兼容补丁），探针文件属 `.temp/` 测完即删。
+13. **up 门禁 ≠ smoke 门禁，复用要按场景裁剪**（2026-09-22 实证，W-I19）：
+    host 网络透传栈自身占着 8888/SSH 端口，冒烟复用 up 的「端口必须空闲」
+    检查必误报——资源门禁要区分「将要启动」（空闲才合法）与「验证已在运行」
+    （被本栈占用是预期）。通用判据：**门禁断言的是「目标形态的合法性」**，
+    同一资源在不同目标形态下合法性相反，直接复用整条门禁链会把成功判成失败。
+    同族实证的路径坑：`NATIVE_TEMP_PATH` 缺省锚（仓库根上溯四级）在 WSL
+    `/mnt/d/...` 布局下可能解析成 `/.temp` 致 `Permission denied`（up 前
+    prepare_env 阶段）；显式 `export NATIVE_TEMP_PATH=/mnt/d/spaces/SpecWeave/.temp`
+    或写入 client `.env` 解决。
 
 ## 11. Changelog
+
+- **v1.0.6** (2026-09-22): 错误表新增「透传栈冒烟报 8888/2223 已被占用」
+  行（W-I19）——冒烟路径误复用 up 的端口空闲门禁，而 host 网络栈自身必然
+  占用这些端口，把「栈活着」误判成冲突。修复：`resolve_passthrough` 增加
+  `check_ports` 形参，`smoke_stack` 两条路径均传 `False`（D-Bus socket
+  检查与 env 回写保留），`up_stack` 维持 `True`；新增 2 项回归测试。
+  Gotchas 新增第 13 条（up/smoke 门禁按目标形态裁剪的通用判据），并收录
+  `NATIVE_TEMP_PATH` 缺省锚在 WSL 布局解析成 `/.temp` 的路径坑。真机验收：
+  `invoke native.up --passthrough` 构建（cu130）+ 启动 + 双端 302，
+  `invoke native.smoke --passthrough` Exit 0（工具链守卫 + 挂载 + tvm.build）；
+  client 全量 210 passed / 9 skipped。
 
 - **v1.0.5** (2026-09-16): 错误表新增「长任务成功却 exit 1」行——invoke
   3.0.3 × Python 3.14 stdin 线程 FIONREAD 2 字节缓冲 `SystemError: buffer

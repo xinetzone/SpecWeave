@@ -15,7 +15,8 @@ diff；本测试按 OKF podman-compose 知识包 concepts/06-config-pipeline.md
   resolve_extends（base ◁ merged），优先级 base < compose < override。
 
 模拟器保真边界（只模拟三栈真实用到的 YAML 子集，勿外推）：
-- 不支持 ``!reset``/``!override`` YAML 标签（safe_load 遇标签即失败）；
+- 支持 ``!reset`` 标签（native 透传主层使用：整键删除，对齐 vendor ResetTag
+  L2253-2255）；不支持 ``!override``；
 - 不模拟 normalize_service 预处理（build.args dict→list、env/labels list→dict、
   security_opt str→list）；三栈 env/labels 均为 dict 形态故渲染无差异；
 - 插值仅支持 ``${NAME}``/``${NAME:-default}``（default 段不含花括号则支持**嵌套**
@@ -107,6 +108,21 @@ _REPLACE_KEYS = {"command", "entrypoint"}
 _MISSING = object()
 
 
+class _ResetMarker:
+    """``!reset`` 标签标记（对应 vendor ResetTag：单例语义）。"""
+
+
+_RESET = _ResetMarker()
+
+
+def _construct_reset(loader, node):  # noqa: ARG001
+    return _RESET
+
+
+# 与 vendor ResetTag.from_yaml 同效：忽略节点内容（!reset [] 亦为裸标记）
+yaml.SafeLoader.add_constructor("!reset", _construct_reset)
+
+
 def _pick(match, env):
     """取插值结果：环境值优先（空串视为未设），否则 default 原文。"""
     name, default = match.group(1), match.group(2)
@@ -160,7 +176,7 @@ def merge_one(a, b, key=None):
     - volumes：仅短语法字符串按 target 去重，覆盖方获胜并移至尾部，
       长语法 dict 不去重（L2289-L2297）；
     - 普通 list 追加；dict 递归；标量后值覆盖。
-    不含 !reset/!override 标签语义（三栈 YAML 未使用）。
+    !reset 在 dict 分支按整键删除处理；不含 !override 语义。
     """
     if a is _MISSING:
         return copy.deepcopy(b)
@@ -179,7 +195,17 @@ def merge_one(a, b, key=None):
     if isinstance(a, dict) and isinstance(b, dict):
         out = copy.deepcopy(a)
         for k, v in b.items():
-            out[k] = merge_one(out[k], v, k) if k in out else copy.deepcopy(v)
+            existing = out.get(k, _MISSING)
+            # ResetTag 语义（vendor L2253-2255）：任一侧 !reset → 整键删除
+            if v is _RESET or existing is _RESET:
+                out.pop(k, None)
+            elif existing is _MISSING:
+                out[k] = copy.deepcopy(v)
+            else:
+                out[k] = merge_one(existing, v, k)
+        # 仅 target 残留的 reset（source 无此键）同样删除（vendor L2241-2243）
+        for k in [k for k, v in out.items() if v is _RESET]:
+            del out[k]
         return out
     if isinstance(a, list) and isinstance(b, list):
         if key == "volumes":
@@ -217,11 +243,16 @@ def _load(path: Path):
         return yaml.safe_load(f)
 
 
-def render_stack(stack: str, env=None, *, gpu=False, gpu_file="compose.gpu.yaml"):
+def render_stack(
+    stack: str, env=None, *, gpu=False, gpu_file="compose.gpu.yaml",
+    passthrough=False, usb=False,
+):
     """模拟 resolve_extends + 多文件 rec_merge 后的服务 dict。
 
     ``gpu_file`` 对应 GPU 设备形态（C19）：内核按设备形态选 ``compose.gpu.<形态>.yaml``
     （缺失回退 compose.gpu.yaml），真实管线**只加载一个**设备覆盖文件。
+    ``passthrough``/``usb`` 按内核文件顺序（base → GPU → 透传主层 → USB 层）
+    逐文件 rec_merge。
     """
     g = GOLDEN[stack]
     odir = OVERLAYS / g["dir"]
@@ -234,13 +265,20 @@ def render_stack(stack: str, env=None, *, gpu=False, gpu_file="compose.gpu.yaml"
     assert base_path == SHARED.resolve() and base_path.exists()
     base_doc = _interpolate(_load(base_path), env or {})
     base_svc = base_doc["services"][svc["extends"]["service"]]
+    # 覆盖文件按真实下发顺序逐个 rec_merge（compose ◁ ov1 ◁ ov2 …）
+    overlay_files = []
     if gpu:
-        # 真实管线：文件循环先逐文件 rec_merge（compose ◁ gpu，L2851），
+        overlay_files.append(gpu_file)
+    if passthrough:
+        overlay_files.append("compose.passthrough.yaml")
+    if usb:
+        overlay_files.append("compose.passthrough.usb.yaml")
+    stacked = svc
+    for name in overlay_files:
+        # 真实管线：文件循环先逐文件 rec_merge（L2851），
         # 循环后才 resolve_extends（rec_merge({}, base, merged)，L2919）
-        ov = _interpolate(_load(odir / gpu_file), env or {})
-        stacked = merge(svc, ov["services"][g["service"]])
-    else:
-        stacked = svc
+        ov = _interpolate(_load(odir / name), env or {})
+        stacked = merge(stacked, ov["services"][g["service"]])
     merged = merge({}, base_svc, stacked)
     return merged
 
@@ -412,6 +450,77 @@ def test_native_gpu_device_double_form_interpolation():
     # 空串回退默认（与 _interpolate 的 `${NAME:-default}` 语义一致）
     empty = render_stack("native", env={"GPU_DEVICE": ""}, gpu=True)
     assert empty["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dri"]
+
+
+def test_native_passthrough_main_layer_host_network_and_dbus():
+    """透传主层：host 网络 + ports 整键删除 + 专用 tag + D-Bus bind/env。"""
+    plain = render_stack("native")
+    pt = render_stack("native", passthrough=True)
+    assert pt["network_mode"] == "host"
+    assert "ports" not in pt  # !reset → 整键删除（host 网络禁端口发布）
+    assert pt["image"] == "localhost/native-dev:passthrough"
+    # D-Bus socket bind：长语法、ro、源缺失绝不自动创建
+    dbus = [
+        v for v in pt["volumes"]
+        if isinstance(v, dict) and v["target"] == "/tmp/runtime-user/bus"
+    ]
+    assert len(dbus) == 1
+    assert dbus[0]["source"] == "/run/user/1000/bus"
+    assert dbus[0]["read_only"] is True
+    assert dbus[0]["bind"]["create_host_path"] is False
+    env = pt["environment"]
+    assert env["XDG_RUNTIME_DIR"] == "/tmp/runtime-user"
+    assert env["DBUS_SESSION_BUS_ADDRESS"] == "unix:path=/tmp/runtime-user/bus"
+    assert env["SSHD_PORT"] == "2223"
+    # rootless 必需与栈原生 volumes 保留（只增不改）
+    assert pt["devices"] == plain["devices"]
+    targets = [_volume_target(v) for v in pt["volumes"]]
+    assert "/tmp/runtime-user/bus" in targets
+    for t in ("/workspace", "/workspace/npu_tvm", "/root/.ccache"):
+        assert t in targets
+
+
+def test_native_passthrough_env_interpolation_overrides():
+    """主层四个插值键均可经 env 覆盖。"""
+    pt = render_stack("native", env={
+        "NATIVE_PASSTHROUGH_IMAGE_TAG": "registry.example/x:p",
+        "DBUS_SESSION_BUS_PATH": "/run/dbus/system_bus_socket",
+        "HOST_NET_SSHD_PORT": "2333",
+    }, passthrough=True)
+    assert pt["image"] == "registry.example/x:p"
+    assert pt["environment"]["SSHD_PORT"] == "2333"
+    dbus = [
+        v for v in pt["volumes"]
+        if isinstance(v, dict) and v["target"] == "/tmp/runtime-user/bus"
+    ][0]
+    assert dbus["source"] == "/run/dbus/system_bus_socket"
+
+
+def test_native_usb_layer_appends_device_without_network_change():
+    """USB 层：devices 追加，bridge 网络与端口不动。"""
+    plain = render_stack("native")
+    usb = render_stack("native", usb=True)
+    assert usb["devices"] == [
+        "/dev/fuse:/dev/fuse", "/dev/bus/usb:/dev/bus/usb",
+    ]
+    assert usb["network_mode"] == "bridge"
+    assert usb["ports"] == plain["ports"]
+    # USB_DEVICE 精确指定单设备
+    one = render_stack(
+        "native", env={"USB_DEVICE": "/dev/bus/usb/001/002"}, usb=True
+    )
+    assert one["devices"][-1] == "/dev/bus/usb/001/002:/dev/bus/usb"
+
+
+def test_native_passthrough_and_usb_combined_merge_order():
+    """主层 + USB：host 形态下 devices 仍追加合并（fuse+usb）。"""
+    svc = render_stack("native", passthrough=True, usb=True)
+    assert svc["network_mode"] == "host"
+    assert "ports" not in svc
+    assert svc["devices"] == [
+        "/dev/fuse:/dev/fuse", "/dev/bus/usb:/dev/bus/usb",
+    ]
+    assert svc["image"] == "localhost/native-dev:passthrough"
 
 
 def test_nested_interpolation_simulator_innermost_first():

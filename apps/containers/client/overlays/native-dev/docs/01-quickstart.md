@@ -46,6 +46,8 @@ invoke native.load --path <归档.tar.gz>    # 从归档导入镜像（完整性
 invoke native.up --offline                 # 离线启动：不构建、不起网络请求（参见 [03 离线交付](03-offline-delivery.md)）
 invoke native.up                           # 有网侧常规启动（默认随带构建；--skip-build 直接用本地镜像）
 invoke native.up --gpu                     # 【可选】透传 GPU 设备（默认零透传，见 [04 GPU 与 torch](04-gpu-and-torch.md)）
+invoke native.up --passthrough             # 【可选】host 网络（Jupyter 8888/SSH 2223）+ D-Bus（见 [05 参数与关系](05-params-and-relations.md)）
+invoke native.up --usb                     # 【可选】追加透传 USB 总线（WSL2 先 usbipd-win attach）
 invoke native.ps                           # 服务状态
 invoke native.smoke                        # 工具链守卫 + 源码挂载检查（libtvm 缺席时跳过算例段）
 

@@ -1,0 +1,53 @@
+---
+# compose.passthrough.yaml — 运行时透传主层（opt-in；对齐构建端同名文件）
+#
+# 用法：
+#   invoke native.up --passthrough
+#   podman-compose -f compose.yaml -f compose.passthrough.yaml up -d
+#
+# 开启项（见 client docs/11-native-overlay.md）：
+#   [1] Host 网络模式 —— 共享宿主网络栈，无端口映射。
+#       host 形态下容器内 Jupyter 固定监听 8888（无映射，不能再用 8890），
+#       SSH 经 SSHD_PORT 改非特权端口（rootless 不能绑 <1024），默认 2223。
+#   [4] D-Bus 会话总线 —— 桌面集成（通知、系统设置）。
+#
+# 姊妹 opt-in 层（宿主实际具备资源时再叠加）：
+#   compose.passthrough.usb.yaml  [5] USB /dev/bus/usb
+#
+# 前置条件 —— 挂载源缺失时 podman 硬失败（exit 125）且不自动创建：
+#   test -S "${DBUS_SESSION_BUS_PATH:-/run/user/1000/bus}" && echo "D-Bus OK"
+#   ss -lnt | grep -E ':(8888|2223) '                                     # 应为空
+# invoke 路径已把上述检查前置为中文 fail-fast。
+#
+# 安全 —— host 网络取消网络隔离，D-Bus 会话总线允许容器进程与宿主桌面会话
+# 通信。仅用于可信镜像。
+
+services:
+  native:
+    # 透传栈专用 tag：同一 Containerfile、独立身份，默认隔离栈继续用 :latest。
+    # 刻意写 NATIVE_PASSTHROUGH_IMAGE_TAG 而非 NATIVE_IMAGE_TAG——后者默认
+    # localhost/native-dev:latest，会让本覆盖静默失效。镜像内容零差异（host
+    # 网络/D-Bus 均为运行期维度，与「GPU 是运行期维度」同理），invoke 内核
+    # 以 `podman tag` 确保该 tag 就位（同镜像 ID，零额外空间）。
+    image: ${NATIVE_PASSTHROUGH_IMAGE_TAG:-localhost/native-dev:passthrough}
+    # [1] Host 网络：容器直接绑定宿主端口（覆盖基段 network_mode: bridge）
+    network_mode: host
+    # 端口发布与 host 网络互斥 —— 清除基座端口映射
+    ports: !reset []
+    volumes:
+      # [4] D-Bus 会话总线 socket（只读）
+      # create_host_path: false —— socket 源绝不自动创建；短语法无此通道，
+      # podman-compose 会在源缺失时于宿主 mkdir 出错误目录。
+      - type: bind
+        source: ${DBUS_SESSION_BUS_PATH:-/run/user/1000/bus}
+        target: /tmp/runtime-user/bus
+        read_only: true
+        bind:
+          create_host_path: false
+    environment:
+      XDG_RUNTIME_DIR: /tmp/runtime-user
+      DBUS_SESSION_BUS_ADDRESS: unix:path=/tmp/runtime-user/bus
+      # rootless 下容器 root 映射为非特权宿主 UID，不能绑特权端口 22
+      # （sshd 会报 "Bind to port 22 ... Permission denied"）。默认 2223
+      # （与 bridge 形态 native SSH 的宿主端口一致）；entrypoint 启动时应用。
+      SSHD_PORT: ${HOST_NET_SSHD_PORT:-2223}

@@ -202,6 +202,11 @@ class StackSpec:
     torch_flavor: bool = False  # build 暴露 --torch / TORCH_FLAVOR（native；空|cpu|cu130）
     auto_shortflags: bool = False  # invoke 自动短选项（quant 历史为默认开启）
 
+    # —— 透传覆盖（与 GPU 同族 opt-in，默认全关）——
+    passthrough_overlay: bool = False  # compose.passthrough.yaml：host 网络 + D-Bus
+    usb_overlay: bool = False  # compose.passthrough.usb.yaml：USB 总线
+    passthrough_tag_default: str = ""  # 透传栈默认镜像 tag（独立身份，同镜像内容）
+
     # —— 挂载/冒烟/桥接 ——
     source_mounts: tuple[SourceMount, ...] = ()
     smoke: Optional[SmokeSpec] = None
@@ -221,6 +226,10 @@ class StackSpec:
     @property
     def image_tag_env(self) -> str:
         return f"{self.env_prefix}_IMAGE_TAG"
+
+    @property
+    def passthrough_image_env(self) -> str:
+        return f"{self.env_prefix}_PASSTHROUGH_IMAGE_TAG"
 
     @property
     def ssh_port_env(self) -> str:
@@ -599,7 +608,12 @@ def gpu_override_file(spec: StackSpec, form: str = "generic") -> Path:
 
 
 def compose_files(
-    spec: StackSpec, *, gpu: bool = False, gpu_form: str = "generic"
+    spec: StackSpec,
+    *,
+    gpu: bool = False,
+    gpu_form: str = "generic",
+    passthrough: bool = False,
+    usb: bool = False,
 ) -> list[Path]:
     """本次调用下发的 compose 文件集（**唯一事实源**：argv 与预检判据共用）。
 
@@ -609,6 +623,8 @@ def compose_files(
     ``up --gpu`` 的期望值只算了 ``compose.yaml``，而运行容器标签是两文件
     （``.../compose.yaml,.../compose.gpu.wsl.yaml``），二者**恒不相等**，于是
     每次 ``--gpu`` 都被判成「另一控制平面创建」并强制优雅 down + recreate。
+
+    文件顺序（compose 按序叠加合并）：base → GPU → 透传主层 → USB 层。
     """
     files = [overlay_dir(spec) / "compose.yaml"]
     if gpu:
@@ -616,32 +632,58 @@ def compose_files(
             # 内部不变量：非 GPU 栈不应收到 gpu=True（工厂不会暴露该参数）
             raise RuntimeError(f"栈 {spec.namespace} 未声明 gpu_override")
         files.append(gpu_override_file(spec, gpu_form))
+    if passthrough:
+        if not spec.passthrough_overlay:
+            raise RuntimeError(f"栈 {spec.namespace} 未声明 passthrough_overlay")
+        files.append(overlay_dir(spec) / "compose.passthrough.yaml")
+    if usb:
+        if not spec.usb_overlay:
+            raise RuntimeError(f"栈 {spec.namespace} 未声明 usb_overlay")
+        files.append(overlay_dir(spec) / "compose.passthrough.usb.yaml")
     return files
 
 
 def compose_config_files_label(
-    spec: StackSpec, *, gpu: bool = False, gpu_form: str = "generic"
+    spec: StackSpec,
+    *,
+    gpu: bool = False,
+    gpu_form: str = "generic",
+    passthrough: bool = False,
+    usb: bool = False,
 ) -> str:
     """compose 写进 ``config_files`` 标签的原文串（逗号分隔，与 podman 同格式）。
 
     用于与运行容器标签做**原文比较**（:func:`config_paths_diverge`）——禁止做
     路径等价归一（compose 的 config-hash 按原文计算）。
     """
-    return ",".join(str(f) for f in compose_files(spec, gpu=gpu, gpu_form=gpu_form))
+    return ",".join(
+        str(f)
+        for f in compose_files(
+            spec, gpu=gpu, gpu_form=gpu_form, passthrough=passthrough, usb=usb
+        )
+    )
 
 
 def compose_argv(
-    spec: StackSpec, *tail: str, gpu: bool = False, gpu_form: str = "generic"
+    spec: StackSpec,
+    *tail: str,
+    gpu: bool = False,
+    gpu_form: str = "generic",
+    passthrough: bool = False,
+    usb: bool = False,
 ) -> list[str]:
     """组装 podman-compose 公共 argv（固定 project name，-f 绝对路径）。
 
     gpu=True 且栈声明 gpu_override 时叠加 GPU 覆盖文件；``gpu_form`` 决定
     具体文件（见 :func:`gpu_override_file`，只加载**一个**设备覆盖文件——
     两个同时加载会让 devices 列表出现重复项，podman 拒绝映射两次）。
+    ``passthrough``/``usb`` 追加透传两覆盖层。
     文件集来自 :func:`compose_files`，与预检判据同源。
     """
     argv = ["podman-compose", "--project-name", spec.project]
-    for f in compose_files(spec, gpu=gpu, gpu_form=gpu_form):
+    for f in compose_files(
+        spec, gpu=gpu, gpu_form=gpu_form, passthrough=passthrough, usb=usb
+    ):
         argv += ["--file", str(f)]
     argv += list(tail)
     return argv
@@ -653,6 +695,8 @@ def run_compose(
     *tail: str,
     gpu: bool = False,
     gpu_form: str = "generic",
+    passthrough: bool = False,
+    usb: bool = False,
     pty: bool = True,
 ) -> None:
     """执行 podman-compose 子进程（逐参数 shlex.quote，路径含空格也安全）。
@@ -661,7 +705,9 @@ def run_compose(
     ``extends.file`` 的相对路径按引用它的 compose 文件目录重写
     （_parse_compose_file L2844-L2849），故绝对 --file + 任意 cwd 均可。
     """
-    argv = compose_argv(spec, *tail, gpu=gpu, gpu_form=gpu_form)
+    argv = compose_argv(
+        spec, *tail, gpu=gpu, gpu_form=gpu_form, passthrough=passthrough, usb=usb
+    )
     run_cmd(c, " ".join(shlex.quote(a) for a in argv), pty=pty)
 
 
@@ -710,7 +756,13 @@ def is_benign_compose_noise(line: str, *, names: tuple[str, ...] = ()) -> bool:
 
 
 def run_compose_up(
-    c: Context, spec: StackSpec, *tail: str, gpu: bool = False, gpu_form: str = "generic"
+    c: Context,
+    spec: StackSpec,
+    *tail: str,
+    gpu: bool = False,
+    gpu_form: str = "generic",
+    passthrough: bool = False,
+    usb: bool = False,
 ) -> None:
     """执行 ``up`` 并过滤 podman 原生回显噪声（C17）。
 
@@ -725,7 +777,9 @@ def run_compose_up(
       - 过滤判据是白名单三式（见 :func:`is_benign_compose_noise`），有疑问保留；
       - 仅 ``up`` 走本函数——构建/编译等长任务仍逐字实时透传，流式体验不受影响。
     """
-    argv = compose_argv(spec, *tail, gpu=gpu, gpu_form=gpu_form)
+    argv = compose_argv(
+        spec, *tail, gpu=gpu, gpu_form=gpu_form, passthrough=passthrough, usb=usb
+    )
     cmd = " ".join(shlex.quote(a) for a in argv)
     print(f"执行: {cmd}")
     r = run_cmd(c, cmd, pty=False, hide=True, warn=True, echo=False)
@@ -1030,6 +1084,8 @@ def up_preflight(
     *,
     gpu: bool = False,
     gpu_form: str = "generic",
+    passthrough: bool = False,
+    usb: bool = False,
 ) -> None:
     """up 前自愈（顺序不可调换）：
 
@@ -1062,7 +1118,9 @@ def up_preflight(
         cid = ""
     if cid:
         actual = _running_config_files(c, spec, cid)
-        expected = compose_config_files_label(spec, gpu=gpu, gpu_form=gpu_form)
+        expected = compose_config_files_label(
+            spec, gpu=gpu, gpu_form=gpu_form, passthrough=passthrough, usb=usb
+        )
         if config_paths_diverge(actual, expected):
             print(
                 f"[{spec.namespace}] ⚠ 检测到栈由另一控制平面创建"
@@ -1432,6 +1490,160 @@ def resolve_gpu_device(c: Context, spec: StackSpec, env: dict) -> tuple[str, str
     return token, form
 
 
+# ---------------------------------------------------------------------------
+# 透传覆盖解析与门禁（host 网络/D-Bus/USB；与 C19 同族 opt-in 门禁）
+# ---------------------------------------------------------------------------
+
+
+def _runtime_socket_exists(c: Context, path: str) -> bool:
+    """在 podman 所在环境探测路径是否为 socket（``test -S``）。"""
+    r = run_cmd(c, f"test -S {shlex.quote(path)}", hide=True, warn=True, echo=False)
+    return r is not None and getattr(r, "ok", False)
+
+
+def _runtime_listening_ports(c: Context, ports: list[str]) -> list[str]:
+    """返回 ``ss -lnt`` 中**此刻被监听**的给定端口子集。
+
+    ss 不可用（r 失败/无输出）时返回空列表跳过——与孤儿端口回收同族
+    「ss 缺失则跳过」的不阻断原则；判据为 Local Address 列以 ``:<端口>``
+    收尾（IPv4 ``0.0.0.0:p`` / IPv6 ``[::]:p``），不做进程归属判断。
+    """
+    r = run_cmd(c, "ss -lnt", hide=True, warn=True, echo=False)
+    text = (getattr(r, "stdout", "") or "") if r is not None else ""
+    if not text.strip():
+        return []
+    return [
+        p
+        for p in ports
+        if re.search(r":" + re.escape(p) + r"\s", text)
+    ]
+
+
+def resolve_passthrough(
+    c: Context, spec: StackSpec, env: dict, *, check_ports: bool = True
+) -> tuple[str, str]:
+    """透传主层门禁：D-Bus 会话 socket 存在 + host 端口空闲。
+
+    ``check_ports=False`` 用于冒烟路径：栈正以 host 网络运行时 8888/SSH 端口
+    **必然被该栈自身占用**，端口空闲检查会把「栈活着」误判成冲突（2026-09-22
+    实证）；standalone 路径为裸 podman run 也不占这些端口。D-Bus socket
+    检查与令牌回写不受影响。
+
+    为什么前置（与 GPU 同族）：D-Bus bind 源缺失时 podman 只报 exit 125；
+    host 网络下容器直接绑宿主端口，8888（Jupyter 固定）或 SSH 端口被占时
+    容器虽起但服务不可达——都是**容器创建期之后才暴露**的故障。故在任何
+    down/up 之前判定并翻译成中文可执行指引。
+
+    令牌优先级：shell export > root .env > 缺省。回写 os.environ 供 compose
+    插值（DBUS_SESSION_BUS_PATH / HOST_NET_SSHD_PORT），返回两者解析值。
+    """
+    ns = spec.namespace
+    dbus_path = str(
+        os.environ.get("DBUS_SESSION_BUS_PATH")
+        or env.get("DBUS_SESSION_BUS_PATH")
+        or "/run/user/1000/bus"
+    )
+    if not _runtime_socket_exists(c, dbus_path):
+        print(f"[{ns}] ⚠ --passthrough 需要宿主 D-Bus 会话总线，但 {dbus_path} 不是 socket：")
+        print(f"[{ns}]   物理 Linux：确认用户会话已登录（loginctl）并运行 "
+              "systemctl --user 总线；")
+        print(f"[{ns}]   WSL2：podman machine 内须有 user 会话——可在发行版内以普通")
+        print("           用户执行 `sudo systemctl start dbus`（系统总线）后改用")
+        print(f"           DBUS_SESSION_BUS_PATH=/run/dbus/system_bus_socket invoke "
+              f"{ns}.up --passthrough")
+        print(f"[{ns}]   不需要 D-Bus 时直接去掉 --passthrough。")
+        raise Exit(1)
+    sshd_port = str(
+        os.environ.get("HOST_NET_SSHD_PORT")
+        or env.get("HOST_NET_SSHD_PORT")
+        or spec.ssh_default
+    )
+    busy = _runtime_listening_ports(c, ["8888", sshd_port]) if check_ports else []
+    if busy:
+        print(f"[{ns}] ⚠ --passthrough 走 host 网络，容器要直接绑定宿主端口，"
+              f"但以下端口已被占用：{', '.join(busy)}")
+        print(f"[{ns}]   host 形态端口固定：Jupyter 8888、SSH {sshd_port}")
+        print(f"[{ns}]   处理：① 停掉占用栈（如 invoke quant.down / invoke native.down）；")
+        print(f"         ② 或换 SSH 端口：HOST_NET_SSHD_PORT=<空闲端口> invoke "
+              f"{ns}.up --passthrough")
+        print(f"[{ns}]   查看占用：ss -lntp")
+        raise Exit(1)
+    os.environ["DBUS_SESSION_BUS_PATH"] = dbus_path
+    os.environ["HOST_NET_SSHD_PORT"] = sshd_port
+    return dbus_path, sshd_port
+
+
+def resolve_usb_device(c: Context, spec: StackSpec, env: dict) -> str:
+    """USB 透传门禁：设备路径在 podman 宿主存在（缺路径时 podman exit 125）。
+
+    WSL2 宿主默认无 USB 总线（本机实测 ``/dev/bus/usb`` 不存在）：须先用
+    usbipd-win 把 Windows 侧 USB 设备转发到 podman-machine-default 发行版。
+    令牌优先级：shell export > root .env > ``/dev/bus/usb``；回写 os.environ。
+    """
+    ns = spec.namespace
+    token = str(
+        os.environ.get("USB_DEVICE") or env.get("USB_DEVICE") or "/dev/bus/usb"
+    )
+    if not _runtime_path_exists(c, token):
+        print(f"[{ns}] ⚠ --usb 需要 USB 设备，但 {token} 在 podman 宿主不存在：")
+        print(f"[{ns}]   WSL2 宿主默认无 USB 总线；在 Windows 管理员 PowerShell 用 "
+              "usbipd-win 转发：")
+        print("           usbipd list")
+        print("           usbipd bind --busid <BUSID>")
+        print("           usbipd attach --wsl --distribution podman-machine-default "
+              "--busid <BUSID>")
+        print(f"[{ns}]     attach 后重跑本命令（验证：ls /dev/bus/usb）。")
+        print(f"[{ns}]   物理 Linux：lsusb 核对设备；或显式指定单设备 "
+              f"USB_DEVICE=/dev/bus/usb/001/002")
+        print(f"[{ns}]   不需要 USB 时去掉 --usb。")
+        raise Exit(1)
+    os.environ["USB_DEVICE"] = token
+    return token
+
+
+def _local_image_exists(c: Context, img_tag: str) -> bool:
+    """本地镜像存在性（``podman image exists``）。"""
+    r = run_cmd(
+        c, f"{detect_runtime()} image exists {img_tag}",
+        hide=True, warn=True, echo=False,
+    )
+    return r is not None and getattr(r, "ok", False)
+
+
+def ensure_passthrough_tag(
+    c: Context, spec: StackSpec, env: dict, *, offline: bool
+) -> str:
+    """确保透传栈镜像 tag 就位，返回该 tag。
+
+    host 网络/D-Bus/USB 全是运行期维度（与「GPU 是运行期维度」同理），
+    透传栈与默认栈镜像内容零差异——专用 tag 缺失时直接从基础 tag
+    ``podman tag``（秒级、同镜像 ID、零额外空间）。
+    两个 tag 均不在本地（仅可能出现在 ``--skip-build``/离线路径）：fail-fast。
+    """
+    ns = spec.namespace
+    pt_tag = str(
+        os.environ.get(spec.passthrough_image_env)
+        or env.get(spec.passthrough_image_env)
+        or spec.passthrough_tag_default
+    )
+    if _local_image_exists(c, pt_tag):
+        return pt_tag
+    base_tag = image_tag(spec, env)
+    if base_tag != pt_tag and _local_image_exists(c, base_tag):
+        print(f"[{ns}] ℹ 透传镜像 {pt_tag} 缺失，从 {base_tag} 打 tag"
+              "（镜像内容相同，零额外构建）…")
+        run_cmd(c, f"{detect_runtime()} tag {base_tag} {pt_tag}", hide=True)
+        return pt_tag
+    if offline:
+        print(f"[{ns}] ⚠ 离线 --passthrough 需要镜像 {pt_tag}（或基础镜像 {base_tag}），本地均无：")
+        print(f"[{ns}]   联网机器导出: invoke {ns}.save")
+        print(f"[{ns}]   本机导入:     invoke {ns}.load --path <归档.tar.gz>")
+    else:
+        print(f"[{ns}] ⚠ --skip-build 且透传/基础镜像均不在本地，无法启动透传栈：")
+        print(f"[{ns}]   随带构建启动: invoke {ns}.up --passthrough")
+    raise Exit(1)
+
+
 def up_stack(
     c: Context,
     spec: StackSpec,
@@ -1439,6 +1651,8 @@ def up_stack(
     gpu: bool = False,
     skip_build: bool = False,
     offline: bool = False,
+    passthrough: bool = False,
+    usb: bool = False,
 ) -> None:
     """渲染并启动栈（默认随带构建；up 前过 up_preflight 三道自愈）。
 
@@ -1467,7 +1681,9 @@ def up_stack(
     if not skip_build:
         build_image(c, spec, tag=None, no_cache=False)
     env = dict(os.environ)
-    if skip_build:
+    # passthrough 的镜像存在性由 ensure_passthrough_tag 统一处理（接受透传/基础
+    # tag 任一）；非透传保持原有单 tag 预检。
+    if skip_build and not passthrough:
         _require_local_image(
             c, spec, image_tag(spec, env), action="启动栈", offline=offline
         )
@@ -1475,18 +1691,36 @@ def up_stack(
     # resolve_build_args 重建，形态必然一致（零噪音通过）；该分支真正拦截的是
     # `build --torch X`（单次覆盖，C15）后 `up --skip-build` 的「声明 ≠ 实物」。
     warn_torch_flavor_mismatch(c, spec, env)
-    # GPU 透传：设备令牌与形态在此解析（含运行期可用性预检），解析结果回写
-    # os.environ 后由 compose 插值消费——终端提示与容器实收设备同源（C19）。
-    # **必须在 up_preflight 之前**（顺序即语义）：① 跨平面判据的期望文件集依赖
-    # gpu_form（C23）；② GPU 不可用时 fail-fast 于任何 down 之前——否则先把用户
-    # 正在用的栈拆掉再报错，破坏面被无谓放大。
+    # 门禁全部**先于 up_preflight / 任何 down**（顺序即语义，对齐 GPU C19/C23）：
+    # GPU → 透传主层（含镜像 tag 就位）→ USB。任一不可用即 fail-fast，绝不先拆
+    # 用户正在用的栈再报错。
     gpu_token, gpu_form = ("", "generic")
     if gpu:
         gpu_token, gpu_form = resolve_gpu_device(c, spec, env)
-    up_preflight(c, spec, env=env, gpu=gpu, gpu_form=gpu_form)
-    run_compose_up(c, spec, *compose_up_tail(), gpu=gpu, gpu_form=gpu_form)
-    ssh = _env_port(spec, env, spec.ssh_port_env, spec.ssh_default)
-    jupyter = _env_port(spec, env, spec.jupyter_port_env, spec.jupyter_default)
+    dbus_path, sshd_port = ("", spec.ssh_default)
+    pt_tag = ""
+    if passthrough:
+        dbus_path, sshd_port = resolve_passthrough(c, spec, env)
+        pt_tag = ensure_passthrough_tag(c, spec, env, offline=offline)
+    usb_token = ""
+    if usb:
+        usb_token = resolve_usb_device(c, spec, env)
+    up_preflight(
+        c, spec, env=env, gpu=gpu, gpu_form=gpu_form,
+        passthrough=passthrough, usb=usb,
+    )
+    run_compose_up(
+        c, spec, *compose_up_tail(), gpu=gpu, gpu_form=gpu_form,
+        passthrough=passthrough, usb=usb,
+    )
+    # host 形态：Jupyter 固定 8888、SSH 用 SSHD_PORT（无端口映射）；bridge 形态
+    # 继续按 .env 键解析。
+    ssh = sshd_port if passthrough else _env_port(
+        spec, env, spec.ssh_port_env, spec.ssh_default
+    )
+    jupyter = "8888" if passthrough else _env_port(
+        spec, env, spec.jupyter_port_env, spec.jupyter_default
+    )
     # 就绪等待（C21）：`up -d` 返回只代表**容器**在跑，不代表**服务**可访问。
     # rootlessport 在容器起来的瞬间就 accept 宿主端口，而容器内 jupyter 需数十秒
     # （native 实测 66 秒）才 listen，窗口期内连接被接受后立即关闭且零字节返回，
@@ -1529,6 +1763,10 @@ def up_stack(
         print(f"[{spec.namespace}]   仍在等待则查日志: invoke {spec.namespace}.logs")
     if gpu and spec.gpu_override:
         print(f"        GPU     {gpu_token} 已透传（{gpu_override_file(spec, gpu_form).name}）")
+    if passthrough:
+        print(f"        透传    host 网络 + D-Bus（{dbus_path}；镜像 {pt_tag or '...'}）")
+    if usb:
+        print(f"        USB     {usb_token} 已透传")
     if spec.up_footer:
         for line in spec.up_footer:
             print(line)
@@ -1560,9 +1798,20 @@ def logs_stack(c: Context, spec: StackSpec, tail: int = 100) -> None:
 # ---------------------------------------------------------------------------
 
 
-def smoke_stack(c: Context, spec: StackSpec, *, gpu: bool = False) -> None:
+def smoke_stack(
+    c: Context,
+    spec: StackSpec,
+    *,
+    gpu: bool = False,
+    passthrough: bool = False,
+    usb: bool = False,
+) -> None:
     """运行栈冒烟：栈在运行 → compose exec 执行 exec_scripts；未运行 →
-    podman run --rm 一次性容器执行 standalone_scripts。"""
+    podman run --rm 一次性容器执行 standalone_scripts。
+
+    栈运行路径的文件集必须与栈启动时同源（``gpu``/``passthrough``/``usb``
+    决定 exec 寻址与设备/网络命名），故参数先过与 up 相同的门禁解析。
+    """
     if spec.smoke is None:
         raise RuntimeError(f"栈 {spec.namespace} 未声明 smoke 规格")
     ensure_runtime_ready(spec)
@@ -1570,11 +1819,17 @@ def smoke_stack(c: Context, spec: StackSpec, *, gpu: bool = False) -> None:
     img_tag = image_tag(spec, env)
     runtime = detect_runtime()
     smoke = spec.smoke
-    # 与 up 同源：--gpu 时先解析设备（形态决定 exec 用哪份覆盖文件，并保证
-    # compose 插值拿到的令牌与栈启动时一致）
+    # 与 up 同源解析：保证 compose 插值拿到的令牌与栈启动时一致，并决定 exec
+    # 用哪份覆盖文件。
     gpu_form = "generic"
     if gpu:
         _, gpu_form = resolve_gpu_device(c, spec, env)
+    if passthrough:
+        # check_ports=False：运行中栈自身占用 host 端口属预期（非冲突）
+        resolve_passthrough(c, spec, env, check_ports=False)
+        ensure_passthrough_tag(c, spec, env, offline=False)
+    if usb:
+        resolve_usb_device(c, spec, env)
 
     if container_running(c, spec):
         print(f"[{spec.namespace}] {smoke.running_note}")
@@ -1589,10 +1844,18 @@ def smoke_stack(c: Context, spec: StackSpec, *, gpu: bool = False) -> None:
                 f"{smoke.smoke_dir}/{script}",
                 gpu=gpu,
                 gpu_form=gpu_form,
+                passthrough=passthrough,
+                usb=usb,
                 pty=False,
             )
     else:
         print(f"[{spec.namespace}] {smoke.standalone_note}")
+        if passthrough or usb:
+            # standalone 为裸 podman run，不带透传覆盖；守卫脚本本身不依赖
+            # 这些设备（与 GPU standalone 同语义），但须显式声明参数被忽略，
+            # 防止把「透传已验证」误读为设备已生效。
+            print(f"[{spec.namespace}]   ℹ 栈未运行：--passthrough/--usb 仅在栈运行"
+                  "路径生效，本次只跑无设备依赖的独立守卫。")
         for script in smoke.standalone_scripts:
             # 注意：standalone 路径为迁移前逐字节等价的裸 `podman run --rm`
             # （不带 rootless 三必需，历史仅跑纯 CPU ONNX/守卫脚本）。未来若
@@ -1779,8 +2042,26 @@ def make_stack_tasks(spec: StackSpec) -> dict:
             ),
             **up_help,
         }
+    if spec.passthrough_overlay:
+        up_help = {
+            "passthrough": (
+                "透传主层：host 网络（Jupyter 固定 8888、SSH 用 HOST_NET_SSHD_PORT）"
+                " + D-Bus 会话总线；镜像切透传专用 tag（同内容，自动 podman tag）。"
+                "宿主缺 D-Bus socket 或端口被占即 fail-fast；默认隔离"
+            ),
+            **up_help,
+        }
+    if spec.usb_overlay:
+        up_help = {
+            "usb": (
+                "透传 USB 总线（compose.passthrough.usb.yaml）：默认 /dev/bus/usb，"
+                "可用 USB_DEVICE 指定单设备。WSL2 须先 usbipd-win attach，"
+                "设备缺失即 fail-fast；默认隔离"
+            ),
+            **up_help,
+        }
 
-    # —— up（形参面 = gpu_override ∪ supports_offline，两个能力正交组合） ——
+    # —— up（形参面 = gpu_override ∪ supports_offline ∪ 透传两覆盖，能力正交） ——
     # 历史写法是 gpu/offline/else 三路互斥，导致 native 一旦同时声明两个能力，
     # --offline 会被 gpu 分支吃掉。改为"能力并集决定形参面"，公共实现下沉。
     def _up_impl(
@@ -1790,6 +2071,8 @@ def make_stack_tasks(spec: StackSpec) -> dict:
         skip_build: bool,
         offline: bool,
         no_offline: bool,
+        passthrough: bool = False,
+        usb: bool = False,
     ) -> None:
         # 离线开关必须**先于 gates** 固化进 os.environ（WSL 桥接只透传环境
         # 变量、不转发 CLI 参数，晚于桥接则旗标丢失）
@@ -1797,19 +2080,41 @@ def make_stack_tasks(spec: StackSpec) -> dict:
         gates(s)
         ensure_runtime_ready(s)
         prepare_env(s)
-        up_stack(c, s, gpu=gpu, skip_build=skip_build, offline=is_offline)
+        up_stack(
+            c, s, gpu=gpu, skip_build=skip_build, offline=is_offline,
+            passthrough=passthrough, usb=usb,
+        )
 
     if spec.gpu_override and spec.supports_offline:
 
-        @task(help=up_help, **deco)
-        def up(
-            c: Context,
-            gpu: bool = False,
-            skip_build: bool = False,
-            offline: bool = False,
-            no_offline: bool = False,
-        ) -> None:
-            _up_impl(c, gpu=gpu, skip_build=skip_build, offline=offline, no_offline=no_offline)
+        if spec.passthrough_overlay or spec.usb_overlay:
+
+            @task(help=up_help, **deco)
+            def up(
+                c: Context,
+                gpu: bool = False,
+                passthrough: bool = False,
+                usb: bool = False,
+                skip_build: bool = False,
+                offline: bool = False,
+                no_offline: bool = False,
+            ) -> None:
+                _up_impl(
+                    c, gpu=gpu, passthrough=passthrough, usb=usb,
+                    skip_build=skip_build, offline=offline, no_offline=no_offline,
+                )
+
+        else:
+
+            @task(help=up_help, **deco)
+            def up(
+                c: Context,
+                gpu: bool = False,
+                skip_build: bool = False,
+                offline: bool = False,
+                no_offline: bool = False,
+            ) -> None:
+                _up_impl(c, gpu=gpu, skip_build=skip_build, offline=offline, no_offline=no_offline)
 
     elif spec.gpu_override:
 
@@ -1860,18 +2165,39 @@ def make_stack_tasks(spec: StackSpec) -> dict:
 
     logs.__doc__ = spec.docs.logs
 
-    # —— smoke ——
+    # —— smoke（形参面 = gpu_override ∪ 透传两覆盖，仅影响 exec 寻址） ——
     if spec.gpu_override:
 
-        @task(
-            help={
-                "gpu": "运行栈经 compose 启动时是否带 GPU 覆盖（仅影响 exec 寻址，不影响冒烟本身）"
-            },
-            **deco,
-        )
-        def smoke(c: Context, gpu: bool = False) -> None:
-            gates(s)
-            smoke_stack(c, s, gpu=gpu)
+        if spec.passthrough_overlay or spec.usb_overlay:
+
+            @task(
+                help={
+                    "gpu": "运行栈带 GPU 覆盖时置位（exec 寻址同源）",
+                    "passthrough": "运行栈带透传主层时置位（exec 寻址同源）",
+                    "usb": "运行栈带 USB 覆盖时置位（exec 寻址同源）",
+                },
+                **deco,
+            )
+            def smoke(
+                c: Context,
+                gpu: bool = False,
+                passthrough: bool = False,
+                usb: bool = False,
+            ) -> None:
+                gates(s)
+                smoke_stack(c, s, gpu=gpu, passthrough=passthrough, usb=usb)
+
+        else:
+
+            @task(
+                help={
+                    "gpu": "运行栈经 compose 启动时是否带 GPU 覆盖（仅影响 exec 寻址，不影响冒烟本身）"
+                },
+                **deco,
+            )
+            def smoke(c: Context, gpu: bool = False) -> None:
+                gates(s)
+                smoke_stack(c, s, gpu=gpu)
 
     else:
 

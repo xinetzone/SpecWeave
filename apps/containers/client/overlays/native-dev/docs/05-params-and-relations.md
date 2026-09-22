@@ -24,6 +24,10 @@ source: "README.md#参数表compose-插值-env-键"
 | `TORCH_FLAVOR` | 空（不装） | torch 形态白名单 `空`/`cpu`/`cu130`（C15 无前缀键，compose build args + invoke 同键）。`invoke native.build --torch cu130` 只覆盖单次构建；改 `.env` 后需重建镜像。flavor 不参与镜像 tag，但**进归档名**（C20）并决定 `native.load` 选哪个归档。**cu130 形态同时提供 nvcc 编译器工具链**（13.4.92，`/usr/local/bin/nvcc` + `CUDA_HOME=/usr/local/cuda`，C25） |
 | `GPU_DEVICE` | 未设 | GPU 设备双形态：`/` 开头=宿主机设备路径，否则=CDI 引用；**未设时自动探测 `NVIDIA CDI（规格+/dev/nvidiactl 双条件）→ /dev/dri → /dev/dxg`**（C19，纯 N 卡也注册 /dev/dri 故 CDI 必须前置；命中 NVIDIA 路径先做 nvidia-smi 驱动健康预检）。**仅 `up --gpu` 时生效**（默认零透传） |
 | `NATIVE_OFFLINE` | `0`（关） | 离线总开关（**非 compose 插值键**，由 invoke 读取并经 `-e` 透传进容器）：开启后 `up` 强制跳过构建（`--no-build` 恒真，非离线亦然，C16）、`build` 直接 Exit(1)、容器内打包禁网兜底；等价 `invoke native.up --offline`，关闭用 `--no-offline` |
+| `NATIVE_PASSTHROUGH_IMAGE_TAG` | `localhost/native-dev:passthrough` | 透传形态镜像 tag：内容与基础 tag 完全相同，缺失时自动 `podman tag`（零空间零构建）。**仅 `up --passthrough` 时生效** |
+| `DBUS_SESSION_BUS_PATH` | `/run/user/1000/bus` | 只读 bind 进容器的会话 D-Bus socket；可改 `/run/dbus/system_bus_socket`（系统总线）。门禁 `test -S` 必须为 socket |
+| `HOST_NET_SSHD_PORT` | `2223` | host 形态容器 SSH 直接绑定的宿主端口；Jupyter 固定 8888 不可换。门禁 `ss -lnt` 查 8888/此端口占用 |
+| `USB_DEVICE` | `/dev/bus/usb` | USB 设备路径（可指 `/dev/bus/usb/001/002` 单设备）。**仅 `up --usb` 时生效**；WSL2 须先 usbipd-win attach 到 podman-machine-default，门禁 `test -e` |
 
 ## 与相关栈/目录的关系
 

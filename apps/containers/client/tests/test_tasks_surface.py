@@ -63,14 +63,17 @@ def test_signatures_golden():
     ]
     assert _params(m.tasks["build"]) == ["tag", "base_image", "pip_mirror", "no_cache"]
     # up/smoke：形参面 = 能力并集——quant/native 有 gpu，native 另有 offline 三态
+    # 与透传主层/USB 两覆盖
     assert _params(q.tasks["up"]) == ["gpu", "skip_build"]
-    assert _params(x.tasks["up"]) == ["gpu", "skip_build", "offline", "no_offline"]
+    assert _params(x.tasks["up"]) == [
+        "gpu", "passthrough", "usb", "skip_build", "offline", "no_offline",
+    ]
     assert _params(m.tasks["up"]) == ["skip_build"]
     # native 离线镜像归档（仅 supports_offline 栈生成）
     assert _params(x.tasks["save"]) == ["tag", "cache_dir"]
     assert _params(x.tasks["load"]) == ["path", "cache_dir"]
     assert _params(q.tasks["smoke"]) == ["gpu"]
-    assert _params(x.tasks["smoke"]) == ["gpu"]
+    assert _params(x.tasks["smoke"]) == ["gpu", "passthrough", "usb"]
     assert _params(m.tasks["smoke"]) == []
     # 其余四任务
     for col in (q, x, m):
