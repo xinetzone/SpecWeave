@@ -29,7 +29,7 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DIST_DIR="${DIST_DIR:-/workspace/dist}"
 BASE_PYTHON=/opt/conda/bin/python
-VENV=/tmp/xmnn-verify-venv
+VENV=/tmp/native-verify-venv
 
 # 干净环境：不继承任何指向源码树/build 树/conda lib 的路径。
 # compose 为「源码调试态」注入了 PYTHONPATH=/workspace/npu_tvm/... 与
@@ -45,7 +45,7 @@ export PATH="/opt/conda/bin:${PATH:-}"
 WHL="${1:-$(ls -t "$DIST_DIR"/xmnn-*.whl 2>/dev/null | head -1 || true)}"
 if [ -z "$WHL" ] || [ ! -f "$WHL" ]; then
     echo "❌ 未找到 wheel：$WHL"
-    echo "   先执行 inv xmnn.wheel（默认产物目录 $DIST_DIR）"
+    echo "   先执行 inv native.wheel（默认产物目录 $DIST_DIR）"
     exit 1
 fi
 

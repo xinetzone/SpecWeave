@@ -1,12 +1,12 @@
 ---
-# xmnn-dev GPU opt-in 覆盖层（默认隔离：不 -f 本文件时 GPU 不透传）
+# native-dev GPU opt-in 覆盖层（默认隔离：不 -f 本文件时 GPU 不透传）
 #
 # 深合并语义依据：知识包 concepts/06-config-pipeline.md——
 # 多文件 list 字段为「追加」合并，故此处只需写【新增】设备，
 # 不重复 /dev/fuse（devices 无去重，重复会导致映射两次）。
 #
 # 用法：
-#   invoke xmnn.up --gpu
+#   invoke native.up --gpu
 #   podman-compose -f compose.yaml -f compose.gpu.yaml up -d
 #
 # 设备形态由 GPU_DEVICE 单键双形态决定（与根 `invoke run --gpu` 同一分派语义）：
@@ -21,6 +21,6 @@
 # 无法用"注释切换"以外的方式表达。
 
 services:
-  xmnn:
+  native:
     devices:
       - ${GPU_DEVICE:-/dev/dri}

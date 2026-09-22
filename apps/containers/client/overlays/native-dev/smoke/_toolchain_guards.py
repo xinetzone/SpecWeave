@@ -1,6 +1,6 @@
-"""xmnn-dev 叠加层工具链守卫（构建期 + podman run --rm 双路径，不依赖源码挂载）。
+"""native-dev 叠加层工具链守卫（构建期 + podman run --rm 双路径，不依赖源码挂载）。
 
-运行方式：/opt/conda/bin/python /opt/xmnn-dev-smoke/_toolchain_guards.py
+运行方式：/opt/conda/bin/python /opt/native-dev-smoke/_toolchain_guards.py
 
 守卫集合：
   1. 双 ABI：脚本自身解释器（base env）必须为 cp314 GIL enabled；
@@ -12,19 +12,19 @@
      并断言运行解释器版本在 Nuitka 的 getSupportedPythonVersions() 内——
      Nuitka 对未列入版本的 python 会打 "only experimentally supported"
      警告，该警告是升级 python 后最易遗漏的构建期噪声；
-  4. /opt/xmnn-builder 打包资产齐全；
+  4. /opt/native-builder 打包资产齐全；
   5. LLVM 依赖库 7 个 glob 在 llvm-config --libdir 全部可命中并打印实际
      SONAME（SONAME 漂移的构建期硬拦截，对应 CMakeLists 的 glob 收集）；
   6. devuser 可读性（Containerfile 以 su 复跑间接保证）；
   7. 离线完备性（阶段一契约）：无网侧不能再补装任何依赖，故编译/打包前端
      与 pyproject [project].dependencies 声明的运行时依赖必须全部已在镜像内。
      守卫自身不联网、不装包（否则守卫成为新的离线缺口）。
-  8. torch 形态（C18）：读镜像内标记文件 /opt/xmnn-torch-flavor（由 Layer 2.5
+  8. torch 形态（C18）：读镜像内标记文件 /opt/native-torch-flavor（由 Layer 2.5
      按 build-arg TORCH_FLAVOR 写入），断言「声明形态 == 实际形态」——空声明
      时 torch 必须缺席（默认镜像零 torch），cpu/cu130 时 version.cuda 必须
      分别为 None/非 None。声明与实物脱钩（如缓存串味、ARG 未透传）在此拦截。
   9. CUDA 编译器工具链（C25）：cu130 形态随包 nvcc（Layer 2.6）。三查——
-    ① /opt/xmnn-cuda-nvcc-version 标记版本 == `nvcc --version` 实测版本；
+    ① /opt/native-cuda-nvcc-version 标记版本 == `nvcc --version` 实测版本；
     ② /usr/local/cuda 农场布局（bin/include/lib64/nvvm + libcudart.so 短名）；
     ③ **真编译 + 真链接**一个最小 .cu（唯一能拦住 glibc/crt 头冲突与三包错版
     的判据——「nvcc 存在」不等于「编得过」）。非 cu130 形态反向断言 nvcc 缺席。
@@ -46,7 +46,7 @@ from pathlib import Path
 
 MAIN_PREFIX = Path("/opt/conda/envs/main")
 MAIN_PYTHON = MAIN_PREFIX / "bin" / "python"
-BUILDER_DIR = Path("/opt/xmnn-builder")
+BUILDER_DIR = Path("/opt/native-builder")
 
 failures: list[str] = []
 
@@ -145,7 +145,7 @@ for mod, label in (
     except Exception as exc:  # noqa: BLE001
         check(f"{label} 可导入", False, str(exc))
 
-print("\n== 4. /opt/xmnn-builder 打包资产 ==")
+print("\n== 4. /opt/native-builder 打包资产 ==")
 required_assets = [
     "pyproject.toml",
     "CMakeLists.txt",
@@ -157,7 +157,7 @@ required_assets = [
     "scripts/lib/logging.sh",
 ]
 for rel in required_assets:
-    check(f"xmn-builder/{rel}", (BUILDER_DIR / rel).is_file())
+    check(f"native-builder/{rel}", (BUILDER_DIR / rel).is_file())
 
 print("\n== 5. LLVM 依赖库 SONAME 实测（llvm-config --libdir）==")
 rc, libdir = run_version(str(MAIN_PREFIX / "bin" / "llvm-config"), "--libdir")
@@ -184,7 +184,7 @@ if os.path.isdir(libdir):
         check(f"LLVM 依赖 {label} ({pattern})", bool(hits), ", ".join(names[:4]))
 
 print("\n== 6. devuser 可读性（由 Containerfile 以 su 复跑整个脚本间接保证）==")
-print("  本脚本路径 /opt/xmnn-dev-smoke/_toolchain_guards.py，chmod a+rX 烤入")
+print("  本脚本路径 /opt/native-dev-smoke/_toolchain_guards.py，chmod a+rX 烤入")
 
 print("\n== 7. 离线完备性（阶段一契约：镜像自足，无网侧不得再补依赖）==")
 # 判定基准：显式构造 build-tvm.sh / build-wheel.sh 实际建立的两段 PATH
@@ -231,14 +231,14 @@ for dist in ("nuitka", "scikit-build-core", "build", "wheel", "invoke", "ipykern
 print("\n== 8. torch 形态（声明 vs 实物，C18）==")
 # 标记文件由 Layer 2.5 写入（空串亦写，故文件必存在）；守卫读不到 LABEL，
 # 标记文件是「本镜像声明的 torch 形态」在容器内的唯一载体。
-FLAVOR_MARKER = Path("/opt/xmnn-torch-flavor")
+FLAVOR_MARKER = Path("/opt/native-torch-flavor")
 declared_flavor: str | None = None
 if FLAVOR_MARKER.is_file():
     declared_flavor = FLAVOR_MARKER.read_text(encoding="utf-8").strip()
-    check("读取 /opt/xmnn-torch-flavor", declared_flavor in ("", "cpu", "cu130"),
+    check("读取 /opt/native-torch-flavor", declared_flavor in ("", "cpu", "cu130"),
           repr(declared_flavor))
 else:
-    check("读取 /opt/xmnn-torch-flavor", False,
+    check("读取 /opt/native-torch-flavor", False,
           "标记文件缺失（Layer 2.5 install-torch.sh 未执行）")
 
 torch_installed = False
@@ -316,7 +316,7 @@ def nvcc_compile_probe(nvcc: str) -> tuple[bool, str]:
         return False, str(exc)
 
 
-NVCC_MARKER = Path("/opt/xmnn-cuda-nvcc-version")
+NVCC_MARKER = Path("/opt/native-cuda-nvcc-version")
 nvcc_path = shutil.which("nvcc")
 if declared_flavor == "cu130":
     declared_nvcc = (
@@ -358,6 +358,6 @@ print("")
 if failures:
     print(f"[FAIL] {len(failures)} 项守卫未通过：{failures}")
     sys.exit(1)
-print("[OK] xmnn-dev toolchain guards all passed "
+print("[OK] native-dev toolchain guards all passed "
       "(dual ABI + LLVM 22.1 toolchain + nuitka 4.2.1 + builder assets + SONAME "
       "+ offline self-sufficiency + torch flavor + cuda nvcc)")

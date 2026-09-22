@@ -9,10 +9,10 @@ else()
     message(STATUS "  Python 版本: ${Python3_VERSION} (满足 >=3.14 要求)")
 endif()
 
-# 自包含 CACHE 变量：默认值指向 xmnn-dev 叠加层的容器内运行时布局，
+# 自包含 CACHE 变量：默认值指向 native-dev 叠加层的容器内运行时布局，
 # 构建时由 scripts/build-wheel.sh 以 cmake.define.* 覆盖（LLVM_LIB_DIR 取
 # `llvm-config --libdir` 实测值，禁止硬编码 conda 快照 SONAME）。
-set(NUITKA_OUTPUT_DIR "/opt/xmnn-builder/build/nuitka" CACHE PATH "Nuitka compilation output directory")
+set(NUITKA_OUTPUT_DIR "/opt/native-builder/build/nuitka" CACHE PATH "Nuitka compilation output directory")
 set(TVM_BUILD_DIR "/workspace/npu_tvm/build" CACHE PATH "TVM C++ build directory")
 set(TVM_ROOT_DIR "/workspace/npu_tvm" CACHE PATH "TVM source root directory")
 set(XMN_PYTHON_DIR "/workspace/npuusertools" CACHE PATH "npuusertools source directory")
@@ -54,7 +54,7 @@ if(EXISTS "${TVM_LIB}")
     install(FILES "${TVM_LIB}" DESTINATION "${INSTALL_LIBDIR}")
     message(STATUS "  Will install TVM native lib: ${TVM_LIB}")
 else()
-    message(FATAL_ERROR "libtvm.so not found at ${TVM_LIB}（先运行 scripts/build-tvm.sh 或 inv xmnn.build-tvm）")
+    message(FATAL_ERROR "libtvm.so not found at ${TVM_LIB}（先运行 scripts/build-tvm.sh 或 inv native.build-tvm）")
 endif()
 
 # ------------------------------------------------------------------------------

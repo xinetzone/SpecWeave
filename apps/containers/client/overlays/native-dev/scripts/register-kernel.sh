@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==============================================================================
-# register-kernel.sh — 注册 xmnn-dev Jupyter 内核（叠加镜像构建期执行一次）
+# register-kernel.sh — 注册 native-dev Jupyter 内核（叠加镜像构建期执行一次）
 #
 # 双 ABI 背景（2026-09-14 实证）：
 #   - Jupyter 服务在 main env（/opt/conda/envs/main/bin/jupyter，cp314t）；
@@ -15,7 +15,7 @@ set -euo pipefail
 
 CONDA_PYTHON=/opt/conda/bin/python
 JUPYTER_BIN=/opt/conda/envs/main/bin/jupyter
-KERNEL_NAME=xmnn-dev
+KERNEL_NAME=native-dev
 KERNEL_DIR=/opt/conda/envs/main/share/jupyter/kernels/${KERNEL_NAME}
 
 echo "[kernel] interpreter (cp314 GIL ABI): ${CONDA_PYTHON}"
@@ -31,7 +31,7 @@ cat > "${KERNEL_DIR}/kernel.json" <<'JSON'
   "-f",
   "{connection_file}"
  ],
- "display_name": "Python 3.14 (xmnn dev)",
+ "display_name": "Python 3.14 (native dev)",
  "language": "python",
  "env": {
   "PATH": "/opt/conda/bin:/opt/conda/envs/main/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",

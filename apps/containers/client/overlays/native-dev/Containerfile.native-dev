@@ -1,6 +1,6 @@
-# Containerfile.xmnn-dev
+# Containerfile.native-dev
 # ------------------------------------------------------------
-# XMNN 开发 + 打包工具链叠加层（Podman rootless 谱系）
+# 原生编译 + wheel 打包工具链叠加层（Podman rootless 谱系）
 #
 # 范式对齐：overlays/onnx-quantized/Containerfile.quantized
 #   - 薄叠加 FROM localhost/jupyter-podman-rootless:latest，不覆盖
@@ -11,20 +11,20 @@
 #
 # 双 ABI（2026-09-14 rootless 基底实证）：
 #   /opt/conda            = Python 3.14.7 cp314 GIL enabled
-#                            → Nuitka 编译解释器 / 打包依赖 / xmnn-dev 内核
+#                            → Nuitka 编译解释器 / 打包依赖 / native-dev 内核
 #   /opt/conda/envs/main  = Python 3.14.7 cp314t free-threading
 #                            → Jupyter 服务（不动）+ LLVM/Clang 22.1.8 工具链
 #   conda 安装时 pin python=*=*cp314t，防止求解把 main 互换为 GIL 版。
 #
 # 源码（npu_tvm/npuusertools/models）只在运行时经 compose bind mount 进入
-# /workspace；构建期零接触宿主源码，构建上下文 = 本目录。
+# /workspace，且都是可剥离的挂载变体；构建期零接触宿主源码，构建上下文 = 本目录。
 #
-# 产出：localhost/xmnn-dev:latest
-# 构建：invoke xmnn.build [--pip-mirror tuna --conda-mirror tuna] [--torch cpu|cu130]
-#   或：podman build -f Containerfile.xmnn-dev \
+# 产出：localhost/native-dev:latest
+# 构建：invoke native.build [--pip-mirror tuna --conda-mirror tuna] [--torch cpu|cu130]
+#   或：podman build -f Containerfile.native-dev \
 #         --build-arg PIP_MIRROR=tuna --build-arg CONDA_MIRROR=tuna \
 #         --build-arg TORCH_FLAVOR=cu130 \
-#         -t localhost/xmnn-dev:latest .
+#         -t localhost/native-dev:latest .
 #   TORCH_FLAVOR 默认空 = 不装 torch（镜像零 torch，体积与离线契约不变）。
 # ------------------------------------------------------------
 
@@ -37,8 +37,8 @@ ARG CONDA_MIRROR=official
 ARG TORCH_FLAVOR=
 ARG TORCH_VERSION=2.14.0
 
-LABEL org.specweave.component="xmnn-dev" \
-      org.specweave.layer="xmnn-dev-toolchain" \
+LABEL org.specweave.component="native-dev" \
+      org.specweave.layer="native-dev-toolchain" \
       org.specweave.python-abis="base:cp314-gil,main:cp314t" \
       org.specweave.llvm="22.1.8" \
       org.specweave.nuitka="4.2.1" \
@@ -50,7 +50,7 @@ LABEL org.specweave.component="xmnn-dev" \
 # Layer 1：系统层小工具（apt 源继承基底构建期配置，不重复改写）
 #   - patchelf：wheel 内 _libs/*.so 设 $ORIGIN RPATH（CMake 阶段调用）
 #   - gdb：源码调试开发（用户显式诉求之一）
-#   - gcc/g++：npu_tvm 编译前端——VTA FSIM 仿真驱动（vta/vta_hw/src/sim_*）
+#   - gcc/g++：npu_tvm 变体编译前端——VTA FSIM 仿真驱动（vta/vta_hw/src/sim_*）
 #     的「VLA + 初始化器」是 Clang 22 hard error（variable-sized object may
 #     not be initialized）、GCC 允许的扩展；LLVM/Clang 22 工具链仍装 main
 #     env（llvm-config 供 CMake、lld 供链接、守卫断言）。
@@ -60,7 +60,7 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
     apt-get update ; \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends patchelf gdb gcc g++ ; \
     rm -rf /var/lib/apt/lists/* ; \
-    echo "[xmnn] patchelf: $(patchelf --version 2>&1) ; gdb: $(gdb --version | head -1) ; gcc: $(gcc --version | head -1)"'
+    echo "[native] patchelf: $(patchelf --version 2>&1) ; gdb: $(gdb --version | head -1) ; gcc: $(gcc --version | head -1)"'
 
 # ------------------------------------------------------------
 # Layer 2：main env 装入 LLVM/Clang 22.1.8 原生工具链
@@ -72,13 +72,13 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
 RUN /bin/bash -lc 'set -euo pipefail ; \
     if [ "${CONDA_MIRROR}" = "tuna" ]; then \
       CH="https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/" ; \
-      echo "[xmnn] conda mirror: tuna" ; \
+      echo "[native] conda mirror: tuna" ; \
     elif [ "${CONDA_MIRROR}" = "aliyun" ]; then \
       CH="https://mirrors.aliyun.com/anaconda/cloud/conda-forge/" ; \
-      echo "[xmnn] conda mirror: aliyun" ; \
+      echo "[native] conda mirror: aliyun" ; \
     else \
       CH="conda-forge" ; \
-      echo "[xmnn] conda mirror: conda-forge (inherited)" ; \
+      echo "[native] conda mirror: conda-forge (inherited)" ; \
     fi ; \
     /opt/conda/bin/mamba install -y -n main --override-channels -c "$CH" \
       "python=*=*cp314t" \
@@ -95,14 +95,14 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
 #     增量复用不失效（否则 ~2GB wheel 会随 builder 变更反复重下）。
 #   - 形态默认 ""（不装）→ 本层只写 marker，零体积贡献；cpu/cu130 经
 #     download.pytorch.org 对应索引装 torch 2.14.0，形态写入
-#     /opt/xmnn-torch-flavor 供构建期守卫 §8 断言（守卫读不到 LABEL）。
+#     /opt/native-torch-flavor 供构建期守卫 §8 断言（守卫读不到 LABEL）。
 #   - 逻辑在脚本文件内（不在 RUN 行写内层引号 python -c，buildah 二次分词教训）。
 # ------------------------------------------------------------
-COPY builder/scripts/install-torch.sh /opt/xmnn-builder/scripts/install-torch.sh
+COPY builder/scripts/install-torch.sh /opt/native-builder/scripts/install-torch.sh
 RUN /bin/bash -lc 'set -euo pipefail ; \
-    chmod +x /opt/xmnn-builder/scripts/install-torch.sh ; \
-    /opt/xmnn-builder/scripts/install-torch.sh ; \
-    rm -f /opt/xmnn-builder/scripts/install-torch.sh'
+    chmod +x /opt/native-builder/scripts/install-torch.sh ; \
+    /opt/native-builder/scripts/install-torch.sh ; \
+    rm -f /opt/native-builder/scripts/install-torch.sh'
 
 # ------------------------------------------------------------
 # Layer 2.6：CUDA 编译器工具链（nvcc）——随 cu130 形态提供（2026-09-20，C25）
@@ -110,11 +110,11 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
 #     pin 13.4.92 与「三包同轨」的依据、农场布局与包装器纪律见脚本头注。
 #   - **独立成层**：改本脚本不触碰 Layer 2.5（torch ~2GB wheel 层缓存不失效）。
 # ------------------------------------------------------------
-COPY builder/scripts/install-cuda-toolkit.sh /opt/xmnn-builder/scripts/install-cuda-toolkit.sh
+COPY builder/scripts/install-cuda-toolkit.sh /opt/native-builder/scripts/install-cuda-toolkit.sh
 RUN /bin/bash -lc 'set -euo pipefail ; \
-    chmod +x /opt/xmnn-builder/scripts/install-cuda-toolkit.sh ; \
-    /opt/xmnn-builder/scripts/install-cuda-toolkit.sh ; \
-    rm -f /opt/xmnn-builder/scripts/install-cuda-toolkit.sh'
+    chmod +x /opt/native-builder/scripts/install-cuda-toolkit.sh ; \
+    /opt/native-builder/scripts/install-cuda-toolkit.sh ; \
+    rm -f /opt/native-builder/scripts/install-cuda-toolkit.sh'
 
 # ------------------------------------------------------------
 # Layer 3：COPY 打包资产（含 pyproject）后，往 base env 装 Nuitka 打包栈与
@@ -122,20 +122,20 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
 # /opt/conda/bin/python：PATH 顶端是 main（cp314t），
 # 裸 pip/python 会装错解释器。PIP_MIRROR 与 onnx 叠加层同构三段。
 # ------------------------------------------------------------
-COPY builder/ /opt/xmnn-builder/
+COPY builder/ /opt/native-builder/
 RUN /bin/bash -lc 'set -euo pipefail ; \
-    chmod -R a+rX /opt/xmnn-builder ; \
+    chmod -R a+rX /opt/native-builder ; \
     if [ "${PIP_MIRROR}" = "aliyun" ]; then \
       /opt/conda/bin/python -m pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/ ; \
       /opt/conda/bin/python -m pip config set global.trusted-host mirrors.aliyun.com ; \
-      echo "[xmnn] pip mirror: aliyun" ; \
+      echo "[native] pip mirror: aliyun" ; \
     elif [ "${PIP_MIRROR}" = "tuna" ]; then \
       /opt/conda/bin/python -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/ ; \
-      echo "[xmnn] pip mirror: tuna" ; \
+      echo "[native] pip mirror: tuna" ; \
     else \
-      echo "[xmnn] pip mirror: official (inherited)" ; \
+      echo "[native] pip mirror: official (inherited)" ; \
     fi ; \
-    /opt/conda/bin/python /opt/xmnn-builder/scripts/install-build-deps.py ; \
+    /opt/conda/bin/python /opt/native-builder/scripts/install-build-deps.py ; \
     rm -rf /root/.cache/pip ; \
     find /opt/conda -type d -name "__pycache__" -prune -exec rm -rf {} + 2>/dev/null || true ; \
     /opt/conda/bin/python -m nuitka --version'
@@ -143,12 +143,12 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
 # ------------------------------------------------------------
 # Layer 4：smoke 守卫 + 内核注册脚本
 # ------------------------------------------------------------
-COPY smoke/ /opt/xmnn-dev-smoke/
-COPY scripts/ /opt/xmnn-scripts/
-RUN chmod -R a+rX /opt/xmnn-dev-smoke /opt/xmnn-scripts
+COPY smoke/ /opt/native-dev-smoke/
+COPY scripts/ /opt/native-scripts/
+RUN chmod -R a+rX /opt/native-dev-smoke /opt/native-scripts
 
 # ------------------------------------------------------------
-# Layer 5：注册 xmnn-dev 内核（root/devuser 双可见）+ SSH 会话环境注入 +
+# Layer 5：注册 native-dev 内核（root/devuser 双可见）+ SSH 会话环境注入 +
 #   构建期工具链/离线完备性守卫（root 与 devuser 两身份各跑一次，对齐 onnx
 #   叠加层 devuser 访问验证）。
 #   §7 离线完备性把「阶段二（无网侧）所需的一切」在构建期实测断言：
@@ -158,21 +158,21 @@ RUN chmod -R a+rX /opt/xmnn-dev-smoke /opt/xmnn-scripts
 #   /etc/profile.d + sshd SetEnv 双通道补齐，否则 SSH 里 import tvm/xmnn 必失败。
 # ------------------------------------------------------------
 RUN /bin/bash -lc 'set -euo pipefail ; \
-    bash /opt/xmnn-scripts/register-kernel.sh ; \
-    bash /opt/xmnn-scripts/setup-ssh-env.sh ; \
-    cd /opt/xmnn-dev-smoke ; \
+    bash /opt/native-scripts/register-kernel.sh ; \
+    bash /opt/native-scripts/setup-ssh-env.sh ; \
+    cd /opt/native-dev-smoke ; \
     /opt/conda/bin/python _toolchain_guards.py ; \
-    su -s /bin/bash devuser -c "cd /opt/xmnn-dev-smoke && /opt/conda/bin/python _toolchain_guards.py" >/dev/null && \
+    su -s /bin/bash devuser -c "cd /opt/native-dev-smoke && /opt/conda/bin/python _toolchain_guards.py" >/dev/null && \
       echo "[OK] devuser toolchain guard access" ; \
-    find /opt/xmnn-builder /opt/xmnn-dev-smoke /opt/xmnn-scripts -type d -name __pycache__ -prune -exec rm -rf {} + 2>/dev/null ; \
-    find /opt/xmnn-builder /opt/xmnn-dev-smoke /opt/xmnn-scripts -type f -name "*.pyc" -delete 2>/dev/null ; \
+    find /opt/native-builder /opt/native-dev-smoke /opt/native-scripts -type d -name __pycache__ -prune -exec rm -rf {} + 2>/dev/null ; \
+    find /opt/native-builder /opt/native-dev-smoke /opt/native-scripts -type f -name "*.pyc" -delete 2>/dev/null ; \
     echo "########################################################################" ; \
-    echo "# XMNN-DEV OVERLAY BUILD COMPLETE" ; \
+    echo "# NATIVE-DEV OVERLAY BUILD COMPLETE" ; \
     echo "# toolchain : LLVM/Clang 22.1.8 (main env) + Nuitka 4.2.1 (base cp314 GIL)" ; \
-    echo "# sources   : /workspace/npu_tvm + /workspace/npuusertools (runtime bind)" ; \
-    echo "# packaging : inv xmnn.build-tvm -> inv xmnn.wheel -> verify-wheel.sh" ; \
-    echo "# torch     : flavor=$(cat /opt/xmnn-torch-flavor)（空=未装；cpu|cu130 见 LABEL）" ; \
-    echo "# cuda-nvcc : $(cat /opt/xmnn-cuda-nvcc-version 2>/dev/null || echo 未装)（cu130 形态随包；/usr/local/bin/nvcc）" ; \
+    echo "# sources   : /workspace/npu_tvm + /workspace/npuusertools (runtime bind, 可剥离)" ; \
+    echo "# packaging : inv native.build-tvm -> inv native.wheel -> verify-wheel.sh" ; \
+    echo "# torch     : flavor=$(cat /opt/native-torch-flavor)（空=未装；cpu|cu130 见 LABEL）" ; \
+    echo "# cuda-nvcc : $(cat /opt/native-cuda-nvcc-version 2>/dev/null || echo 未装)（cu130 形态随包；/usr/local/bin/nvcc）" ; \
     echo "# offline   : phase-2 全离线（编译/打包依赖已烤入，由 §7 守卫断言）" ; \
     echo "########################################################################"'
 

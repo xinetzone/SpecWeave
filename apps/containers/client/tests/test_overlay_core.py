@@ -1,6 +1,6 @@
 """overlay_core 数据驱动编排内核的离线单测（无 daemon、无子进程）。
 
-三栈 SPEC 直接从 quant/xmnn/monetize 模块导入（T4 后唯一事实源在模块），
+三栈 SPEC 直接从 quant/native/monetize 模块导入（T4 后唯一事实源在模块），
 内核行为以这三份真实声明驱动；任务注册表面另见 test_tasks_surface.py。
 """
 
@@ -17,12 +17,12 @@ from invoke.exceptions import Exit
 from jpman_client.tasks import monetize as monetize_mod
 from jpman_client.tasks import overlay_core as oc
 from jpman_client.tasks import quant as quant_mod
-from jpman_client.tasks import xmnn as xmnn_mod
+from jpman_client.tasks import native as native_mod
 
 _QUANT = quant_mod.QUANT_SPEC
-_XMNN = xmnn_mod.XMNN_SPEC
+_NATIVE = native_mod.NATIVE_SPEC
 _MONETIZE = monetize_mod.MONETIZE_SPEC
-ALL_SPECS = (_QUANT, _XMNN, _MONETIZE)
+ALL_SPECS = (_QUANT, _NATIVE, _MONETIZE)
 
 
 # ---------------------------------------------------------------------------
@@ -154,7 +154,7 @@ def harness(monkeypatch, tmp_path):
         d = root / "overlays" / spec.overlay_subdir
         d.mkdir(parents=True, exist_ok=True)
         (d / spec.containerfile).write_text("# fake\n")
-    # xmnn 三源码树（仓库根锚点）
+    # native 三源码树（仓库根锚点）
     for rel in ("external/chaos/npu_tvm", "external/containers/workspace/dev/npuusertools", "external/chaos/models"):
         (tmp_path / "repo" / rel).mkdir(parents=True)
     (tmp_path / "repo" / "apps" / "agent-monetize").mkdir(parents=True)
@@ -184,9 +184,9 @@ def harness(monkeypatch, tmp_path):
         monkeypatch.delenv(spec.offline_env_key, raising=False)
         for m in spec.source_mounts:
             monkeypatch.delenv(m.env, raising=False)
-    # XMNN_TEMP_PATH 缺省锚「仓库根上溯四级」，在 tmp 布局下会指到文件系统根之外；
+    # NATIVE_TEMP_PATH 缺省锚「仓库根上溯四级」，在 tmp 布局下会指到文件系统根之外；
     # 统一钉到 tmp 目录，保证用例 hermetic（也覆盖「非空路径 → 幂等 mkdir」形态）
-    monkeypatch.setenv("XMNN_TEMP_PATH", str(tmp_path / "temp"))
+    monkeypatch.setenv("NATIVE_TEMP_PATH", str(tmp_path / "temp"))
     # C15：build-arg 单一事实源键（无前缀，与 compose 段插值键同键）也必须清空，
     # 否则宿主 export 的 PIP_MIRROR/BASE_IMAGE 会让黄金 argv 断言随环境漂移
     for key in ("PIP_MIRROR", "CONDA_MIRROR", "BASE_IMAGE"):
@@ -310,11 +310,11 @@ def test_compose_argv_gpu_override_stacks(harness):
         "--file", str(d / "compose.gpu.yaml"),
         "up", "-d",
     ]
-    # xmnn 自 2026-09-20 起同样声明 gpu_override（GPU opt-in，C18）
-    xd = harness.root / "overlays" / "xmnn-dev"
-    xargv = oc.compose_argv(_XMNN, "up", "-d", gpu=True)
+    # native 自 2026-09-20 起同样声明 gpu_override（GPU opt-in，C18）
+    xd = harness.root / "overlays" / "native-dev"
+    xargv = oc.compose_argv(_NATIVE, "up", "-d", gpu=True)
     assert xargv == [
-        "podman-compose", "--project-name", "xmnn-dev",
+        "podman-compose", "--project-name", "native-dev",
         "--file", str(xd / "compose.yaml"),
         "--file", str(xd / "compose.gpu.yaml"),
         "up", "-d",
@@ -341,7 +341,7 @@ def test_up_warns_when_image_flavor_differs_from_declared(harness, monkeypatch, 
     monkeypatch.setenv("TORCH_FLAVOR", "cu130")
     harness.runner.image_labels = {_FLAVOR_LABEL: "cpu"}
 
-    oc.up_stack(None, _XMNN, skip_build=True)
+    oc.up_stack(None, _NATIVE, skip_build=True)
 
     out = capsys.readouterr().out
     assert "镜像 torch 形态与声明不一致" in out
@@ -355,7 +355,7 @@ def test_up_silent_when_image_flavor_matches(harness, monkeypatch, capsys):
     monkeypatch.setenv("TORCH_FLAVOR", "cu130")
     harness.runner.image_labels = {_FLAVOR_LABEL: "cu130"}
 
-    oc.up_stack(None, _XMNN, skip_build=True)
+    oc.up_stack(None, _NATIVE, skip_build=True)
 
     assert "形态与声明不一致" not in capsys.readouterr().out
 
@@ -364,7 +364,7 @@ def test_up_flavor_check_tolerates_legacy_image_without_label(harness, capsys):
     """改造前的旧镜像无该 LABEL → 无法判定，不得误报（同 C20 旧归档纪律）。"""
     harness.runner.image_labels = {}
 
-    oc.up_stack(None, _XMNN, skip_build=True)
+    oc.up_stack(None, _NATIVE, skip_build=True)
 
     assert "形态与声明不一致" not in capsys.readouterr().out
 
@@ -384,34 +384,34 @@ def test_up_flavor_check_distinguishes_empty_declaration_from_missing_label(
 ):
     """空串是合法声明（不装 torch），与「无 LABEL」必须分流（entity 判定核心）。
 
-    xmnn-dev 的 `.env TORCH_FLAVOR=`（显式不装）与旧镜像（无标签）在
+    native-dev 的 `.env TORCH_FLAVOR=`（显式不装）与旧镜像（无标签）在
     client_core._image_torch_flavor 里都归空串；本校验若照搬会把旧镜像误报成
     「声明空、实物 cpu」。故此处锁定：有 LABEL 且值为空串 + 期望空 = 静默。
     """
     monkeypatch.delenv("TORCH_FLAVOR", raising=False)
     harness.runner.image_labels = {_FLAVOR_LABEL: ""}
-    oc.up_stack(None, _XMNN, skip_build=True)
+    oc.up_stack(None, _NATIVE, skip_build=True)
     assert "形态与声明不一致" not in capsys.readouterr().out
 
     # 反向：有 LABEL 且值为 cpu，但 .env 显式声明不装 → 必须报
     harness.runner.image_labels = {_FLAVOR_LABEL: "cpu"}
-    oc.up_stack(None, _XMNN, skip_build=True)
+    oc.up_stack(None, _NATIVE, skip_build=True)
     assert "形态与声明不一致" in capsys.readouterr().out
 
 
 # ---------------------------------------------------------------------------
-# C19：GPU 设备解析与运行期可用性预检（修复 `inv xmnn.up --gpu` exit 125）
+# C19：GPU 设备解析与运行期可用性预检（修复 `inv native.up --gpu` exit 125）
 # ---------------------------------------------------------------------------
 
 
 def test_gpu_override_file_form_dispatch_and_fallback(harness):
     """形态决定覆盖文件；姊妹文件不存在时回退 generic（不必为每形态建文件）。"""
-    d = harness.root / "overlays" / "xmnn-dev"
-    assert oc.gpu_override_file(_XMNN) == d / "compose.gpu.yaml"
-    assert oc.gpu_override_file(_XMNN, "wsl") == d / "compose.gpu.yaml"  # 缺文件→回退
+    d = harness.root / "overlays" / "native-dev"
+    assert oc.gpu_override_file(_NATIVE) == d / "compose.gpu.yaml"
+    assert oc.gpu_override_file(_NATIVE, "wsl") == d / "compose.gpu.yaml"  # 缺文件→回退
     (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
-    assert oc.gpu_override_file(_XMNN, "wsl") == d / "compose.gpu.wsl.yaml"
-    argv = oc.compose_argv(_XMNN, "up", "-d", gpu=True, gpu_form="wsl")
+    assert oc.gpu_override_file(_NATIVE, "wsl") == d / "compose.gpu.wsl.yaml"
+    argv = oc.compose_argv(_NATIVE, "up", "-d", gpu=True, gpu_form="wsl")
     assert str(d / "compose.gpu.wsl.yaml") in argv
     assert str(d / "compose.gpu.yaml") not in argv  # 两文件互斥，绝不叠加
 
@@ -436,20 +436,20 @@ def test_argv_files_and_preflight_label_share_one_source(harness):
     这是 C23 的结构性回归门——将来再加覆盖文件（offline/形态若干）时，
     只要两者仍由 compose_files() 推导，判据就不会重新变成假阳性。
     """
-    d = harness.root / "overlays" / "xmnn-dev"
+    d = harness.root / "overlays" / "native-dev"
     (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
     for gpu, form in ((False, "generic"), (True, "generic"), (True, "wsl")):
-        argv = oc.compose_argv(_XMNN, "up", "-d", gpu=gpu, gpu_form=form)
+        argv = oc.compose_argv(_NATIVE, "up", "-d", gpu=gpu, gpu_form=form)
         files = [argv[i + 1] for i, a in enumerate(argv) if a == "--file"]
         assert ",".join(files) == oc.compose_config_files_label(
-            _XMNN, gpu=gpu, gpu_form=form
+            _NATIVE, gpu=gpu, gpu_form=form
         )
 
 
 def test_resolve_gpu_device_autoprobes_dri(harness, monkeypatch):
     """未设令牌：探测命中 /dev/dri → generic 形态，并回写 os.environ。"""
     harness.runner.paths = {"/dev/dri"}
-    token, form = oc.resolve_gpu_device(None, _XMNN, {})
+    token, form = oc.resolve_gpu_device(None, _NATIVE, {})
     assert (token, form) == ("/dev/dri", "generic")
     assert os.environ["GPU_DEVICE"] == "/dev/dri"
 
@@ -461,7 +461,7 @@ def test_resolve_gpu_device_nvidia_cdi_precedes_dri(harness, monkeypatch):
     monkeypatch.delenv("GPU_DEVICE", raising=False)
     harness.runner.cdi = True
     harness.runner.paths = {"/dev/dri", oc.NVIDIA_CONTROL_NODE}
-    token, form = oc.resolve_gpu_device(None, _XMNN, {})
+    token, form = oc.resolve_gpu_device(None, _NATIVE, {})
     assert (token, form) == (oc.NVIDIA_CDI_TOKEN, "generic")
     assert os.environ["GPU_DEVICE"] == oc.NVIDIA_CDI_TOKEN
 
@@ -471,7 +471,7 @@ def test_resolve_gpu_device_cdi_spec_without_nvidiactl_falls_back_to_dri(harness
     回退 /dev/dri，避免把不存在的设备引用下发给 podman。"""
     harness.runner.cdi = True
     harness.runner.paths = {"/dev/dri"}
-    assert oc.resolve_gpu_device(None, _XMNN, {}) == ("/dev/dri", "generic")
+    assert oc.resolve_gpu_device(None, _NATIVE, {}) == ("/dev/dri", "generic")
 
 
 def test_resolve_gpu_device_nvidia_driver_mismatch_fails_fast(
@@ -488,7 +488,7 @@ def test_resolve_gpu_device_nvidia_driver_mismatch_fails_fast(
         "NVML library version: 595.91\n"
     )
     with pytest.raises(Exit) as ei:
-        oc.resolve_gpu_device(None, _XMNN, {})
+        oc.resolve_gpu_device(None, _NATIVE, {})
     assert ei.value.code == 1
     out = capsys.readouterr().out
     assert "nvidia-smi 无法运行" in out
@@ -506,7 +506,7 @@ def test_resolve_gpu_device_explicit_cdi_also_requires_healthy_driver(
     harness.runner.nvidia_smi_ok = False
     harness.runner.nvidia_smi_out = "Failed to initialize NVML: Driver/library version mismatch"
     with pytest.raises(Exit):
-        oc.resolve_gpu_device(None, _XMNN, {})
+        oc.resolve_gpu_device(None, _NATIVE, {})
     assert "重启宿主" in capsys.readouterr().out
 
 
@@ -523,7 +523,7 @@ def test_resolve_gpu_device_autoprobes_wsl_requires_all_gpu_paths(
     不让 compose 的 bind 在 create 阶段裸报错（create_host_path: false 会直接失败）。
     """
     harness.runner.paths = {"/dev/dxg", *oc.WSL_GPU_PATHS}
-    token, form = oc.resolve_gpu_device(None, _XMNN, {})
+    token, form = oc.resolve_gpu_device(None, _NATIVE, {})
     assert (token, form) == ("/dev/dxg", "wsl")
     assert os.environ["GPU_DEVICE"] == "/dev/dxg"
     for missing in oc.WSL_GPU_PATHS:
@@ -534,7 +534,7 @@ def test_resolve_gpu_device_autoprobes_wsl_requires_all_gpu_paths(
             *(p for p in oc.WSL_GPU_PATHS if p != missing),
         }
         with pytest.raises(Exit) as ei:
-            oc.resolve_gpu_device(None, _XMNN, {})
+            oc.resolve_gpu_device(None, _NATIVE, {})
         assert ei.value.code == 1
         assert missing in capsys.readouterr().out  # 指引点名缺失路径
 
@@ -543,7 +543,7 @@ def test_resolve_gpu_device_no_device_fails_fast(harness, capsys):
     """两者皆无 → Exit(1) + 中文指引（替代 podman 的 stat/exit 125 裸报错）。"""
     harness.runner.paths = set()
     with pytest.raises(Exit) as ei:
-        oc.resolve_gpu_device(None, _XMNN, {})
+        oc.resolve_gpu_device(None, _NATIVE, {})
     assert ei.value.code == 1
     out = capsys.readouterr().out
     assert "/dev/dri / /dev/dxg" in out and "均不存在" in out
@@ -556,7 +556,7 @@ def test_resolve_gpu_device_explicit_missing_path_fails_fast(harness, monkeypatc
     harness.runner.paths = {"/dev/dri"}
     monkeypatch.setenv("GPU_DEVICE", "/dev/dxg")
     with pytest.raises(Exit) as ei:
-        oc.resolve_gpu_device(None, _XMNN, {})
+        oc.resolve_gpu_device(None, _NATIVE, {})
     assert ei.value.code == 1
     assert "GPU_DEVICE=/dev/dxg 在 podman 宿主不存在" in capsys.readouterr().out
 
@@ -566,25 +566,25 @@ def test_resolve_gpu_device_cdi_requires_generated_specs(harness, monkeypatch):
     monkeypatch.setenv("GPU_DEVICE", "nvidia.com/gpu=all")
     harness.runner.cdi = False
     with pytest.raises(Exit) as ei:
-        oc.resolve_gpu_device(None, _XMNN, {})
+        oc.resolve_gpu_device(None, _NATIVE, {})
     assert ei.value.code == 1
     harness.runner.cdi = True
-    assert oc.resolve_gpu_device(None, _XMNN, {}) == ("nvidia.com/gpu=all", "generic")
+    assert oc.resolve_gpu_device(None, _NATIVE, {}) == ("nvidia.com/gpu=all", "generic")
 
 
 def test_up_gpu_wsl_form_flows_to_compose_argv(harness, monkeypatch, capsys):
     """端到端：up --gpu 在 WSL2 设备形态下自动改用 compose.gpu.wsl.yaml。"""
-    d = harness.root / "overlays" / "xmnn-dev"
+    d = harness.root / "overlays" / "native-dev"
     (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
     harness.runner.paths = {"/dev/dxg", *oc.WSL_GPU_PATHS}
-    oc.up_stack(None, _XMNN, gpu=True, skip_build=True)
+    oc.up_stack(None, _NATIVE, gpu=True, skip_build=True)
     up_cmd = [c for c in harness.runner.commands if "up -d --no-build" in c][0]
     assert str(d / "compose.gpu.wsl.yaml") in up_cmd
     assert "/dev/dxg 已透传（compose.gpu.wsl.yaml）" in capsys.readouterr().out
 
 
 def test_up_gpu_wsl_form_for_quant_same_kernel_path(harness):
-    """quant 同修：与 xmnn 共用同一解析内核，形态分派不重复实现。"""
+    """quant 同修：与 native 共用同一解析内核，形态分派不重复实现。"""
     d = harness.root / "overlays" / "onnx-quantized"
     (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
     harness.runner.paths = {"/dev/dxg", *oc.WSL_GPU_PATHS}
@@ -600,20 +600,20 @@ def test_up_gpu_on_gpu_created_stack_is_idempotent(harness, capsys):
     故每次 --gpu 都被判「另一控制平面创建」→ 优雅 down + recreate（销毁容器内
     会话并白等 ~66s 首启）。这里断言：真活体 + 标签与本次下发集全等 → 零 down。
     """
-    d = harness.root / "overlays" / "xmnn-dev"
+    d = harness.root / "overlays" / "native-dev"
     (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
     harness.runner.paths = {"/dev/dxg", *oc.WSL_GPU_PATHS}
     harness.runner.running = True
     harness.runner.ss_output = "\n".join(_SS_LINES[:3])
     harness.runner.config_files = f"{d / 'compose.yaml'},{d / 'compose.gpu.wsl.yaml'}"
-    oc.up_stack(None, _XMNN, gpu=True, skip_build=True)
+    oc.up_stack(None, _NATIVE, gpu=True, skip_build=True)
     assert not any(" down" in c for c in harness.runner.commands)
     assert "另一控制平面" not in capsys.readouterr().out
 
 
 def test_up_without_gpu_never_probes_devices(harness):
     """默认隔离承诺：不带 --gpu 时不发生任何设备探测（零副作用）。"""
-    oc.up_stack(None, _XMNN, skip_build=True)
+    oc.up_stack(None, _NATIVE, skip_build=True)
     assert not any(c.startswith("test -e ") for c in harness.runner.commands)
     assert "GPU_DEVICE" not in os.environ
 
@@ -660,28 +660,28 @@ def test_prepare_env_missing_source_mount_hard_fails(spec, harness, monkeypatch)
     assert ei.value.code == 1
 
 
-def test_prepare_env_xmnn_mounts_anchor_repo_root(harness):
-    oc.prepare_env(_XMNN)
+def test_prepare_env_native_mounts_anchor_repo_root(harness):
+    oc.prepare_env(_NATIVE)
     assert os.environ["NPU_TVM_PATH"].endswith("repo/external/chaos/npu_tvm")
     assert os.environ["NPUUSERTOOLS_PATH"].endswith("npuusertools")
     assert os.environ["MODELS_PATH"].endswith("models")
 
 
-def test_prepare_env_xmnn_temp_mount_default_and_autocreate(harness, monkeypatch):
+def test_prepare_env_native_temp_mount_default_and_autocreate(harness, monkeypatch):
     """临时目录挂载：缺省锚仓库根上溯四级（根工作区 .temp），缺失幂等 mkdir。
 
     不在 tmp 布局下实跑缺省值——上溯四级会指到 tmp 之外（文件系统根一带），
     故只做声明式断言；mkdir 语义用显式 env 覆盖实跑。
     """
-    spec = next(m for m in _XMNN.source_mounts if m.env == "XMNN_TEMP_PATH")
+    spec = next(m for m in _NATIVE.source_mounts if m.env == "NATIVE_TEMP_PATH")
     assert spec.anchor == "repo" and spec.default_rel == "../../../../.temp"
     assert spec.must_exist is False
     target = harness.tmp / "fresh-temp"
     assert not target.exists()
-    monkeypatch.setenv("XMNN_TEMP_PATH", str(target))
-    oc.prepare_env(_XMNN)
+    monkeypatch.setenv("NATIVE_TEMP_PATH", str(target))
+    oc.prepare_env(_NATIVE)
     assert target.is_dir()
-    assert os.environ["XMNN_TEMP_PATH"] == oc.to_posix_path(target)
+    assert os.environ["NATIVE_TEMP_PATH"] == oc.to_posix_path(target)
 
 
 def test_prepare_env_empty_placeholder_does_not_override(harness, monkeypatch):
@@ -713,7 +713,7 @@ def test_gate_platform_windows_bridge_passes_stack_keys(harness, monkeypatch):
     monkeypatch.setattr(oc, "platform", SimpleNamespace(system=lambda: "Windows"))
     monkeypatch.setattr(oc, "run_in_wsl_bridge", fake_bridge)
     with pytest.raises(Exit) as ei:
-        oc.gate_platform(_XMNN)
+        oc.gate_platform(_NATIVE)
     assert ei.value.code == 0
     assert "NPU_TVM_PATH" in seen["keys"]
     assert "QUANT_IMAGE_TAG" not in seen["keys"]
@@ -763,10 +763,10 @@ def test_gate_compose_binary_missing(harness, monkeypatch, capsys):
 
 def test_container_running_label_filters(harness):
     harness.runner.running = True
-    assert oc.container_running(None, _XMNN) is True
+    assert oc.container_running(None, _NATIVE) is True
     cmd = harness.runner.commands[-1]
-    assert f"label={oc.PROJECT_LABEL}=xmnn-dev" in cmd
-    assert f"label={oc.SERVICE_LABEL}=xmnn" in cmd
+    assert f"label={oc.PROJECT_LABEL}=native-dev" in cmd
+    assert f"label={oc.SERVICE_LABEL}=native" in cmd
 
 
 def test_reconcile_no_stale_is_noop(harness):
@@ -809,8 +809,8 @@ def test_parse_ss_port_holders_realworld():
 
 def test_config_paths_diverge_is_raw_string_compare():
     # compose config-hash 按原文计算：指向同一文件的 D:\ 与 /mnt/d 仍算分歧
-    win = r"D:\spaces\SpecWeave\apps\containers\client\overlays\xmnn-dev\compose.yaml"
-    wsl = "/mnt/d/spaces/SpecWeave/apps/containers/client/overlays/xmnn-dev/compose.yaml"
+    win = r"D:\spaces\SpecWeave\apps\containers\client\overlays\native-dev\compose.yaml"
+    wsl = "/mnt/d/spaces/SpecWeave/apps/containers/client/overlays/native-dev/compose.yaml"
     assert oc.config_paths_diverge(win, wsl) is True
     assert oc.config_paths_diverge(wsl, wsl) is False
     # inspect 失败（actual 为空）时不动作：未知不判分歧
@@ -820,7 +820,7 @@ def test_config_paths_diverge_is_raw_string_compare():
 def test_up_preflight_reaps_orphan_rootlessport(harness):
     # 无活体项目容器（裸 compose 失败现场），孤儿 rootlessport 占着 2223/8890
     harness.runner.ss_output = "\n".join(_SS_LINES[:3])
-    oc.up_preflight(None, _XMNN, env={})
+    oc.up_preflight(None, _NATIVE, env={})
     kills = [c for c in harness.runner.commands if c.startswith("kill")]
     assert kills == ["kill 92823"]  # TERM 即生效，不应升级 kill -9
     assert not any(" down" in c for c in harness.runner.commands)
@@ -829,7 +829,7 @@ def test_up_preflight_reaps_orphan_rootlessport(harness):
 def test_up_preflight_never_kills_other_holders(harness):
     # pasta（jupyter 栈转发器）即使监听端口也绝不回收
     harness.runner.ss_output = _SS_LINES[3]
-    oc.up_preflight(None, _XMNN, env={})
+    oc.up_preflight(None, _NATIVE, env={})
     assert not any(c.startswith("kill") for c in harness.runner.commands)
 
 
@@ -838,11 +838,11 @@ def test_up_preflight_cross_plane_running_container_triggers_down(harness):
     harness.runner.ss_output = "\n".join(_SS_LINES[:3])
     harness.runner.config_files = (
         r"D:\spaces\SpecWeave\apps\containers\client"
-        r"\overlays\xmnn-dev\compose.yaml"
+        r"\overlays\native-dev\compose.yaml"
     )
-    oc.up_preflight(None, _XMNN, env={})
+    oc.up_preflight(None, _NATIVE, env={})
     downs = [c for c in harness.runner.commands if " down" in c]
-    assert len(downs) == 1 and "--project-name xmnn-dev" in downs[0]
+    assert len(downs) == 1 and "--project-name native-dev" in downs[0]
     # 优雅 down 后无活体容器，剩余孤儿同样被回收
     assert any(c.startswith("kill ") and "-9" not in c for c in harness.runner.commands)
 
@@ -851,9 +851,9 @@ def test_up_preflight_same_plane_running_is_noop(harness):
     harness.runner.running = True
     harness.runner.ss_output = "\n".join(_SS_LINES[:3])
     harness.runner.config_files = str(
-        harness.root / "overlays" / _XMNN.overlay_subdir / "compose.yaml"
+        harness.root / "overlays" / _NATIVE.overlay_subdir / "compose.yaml"
     )
-    oc.up_preflight(None, _XMNN, env={})
+    oc.up_preflight(None, _NATIVE, env={})
     assert not any(" down" in c or c.startswith("kill") for c in harness.runner.commands)
 
 
@@ -866,14 +866,14 @@ def _gpu_plane_label(harness, subdir: str, *names: str) -> str:
 
 def test_up_preflight_gpu_plane_no_false_divergence(harness):
     """`up --gpu` 对**同样由 --gpu 创建**的栈：标签与本次下发集全等 → 不重建。"""
-    d = harness.root / "overlays" / "xmnn-dev"
+    d = harness.root / "overlays" / "native-dev"
     (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
     harness.runner.running = True
     harness.runner.ss_output = "\n".join(_SS_LINES[:3])
     harness.runner.config_files = _gpu_plane_label(
-        harness, "xmnn-dev", "compose.yaml", "compose.gpu.wsl.yaml"
+        harness, "native-dev", "compose.yaml", "compose.gpu.wsl.yaml"
     )
-    oc.up_preflight(None, _XMNN, env={}, gpu=True, gpu_form="wsl")
+    oc.up_preflight(None, _NATIVE, env={}, gpu=True, gpu_form="wsl")
     assert not any(" down" in c or c.startswith("kill") for c in harness.runner.commands)
 
 
@@ -882,22 +882,22 @@ def test_up_preflight_gpu_plane_keeps_real_divergence(harness):
     harness.runner.running = True
     harness.runner.ss_output = "\n".join(_SS_LINES[:3])
     harness.runner.config_files = _gpu_plane_label(
-        harness, "xmnn-dev", "compose.yaml", "compose.gpu.wsl.yaml"
+        harness, "native-dev", "compose.yaml", "compose.gpu.wsl.yaml"
     )
-    oc.up_preflight(None, _XMNN, env={})  # 本平面只下发 compose.yaml
+    oc.up_preflight(None, _NATIVE, env={})  # 本平面只下发 compose.yaml
     assert any(" down" in c for c in harness.runner.commands)
 
 
 def test_up_preflight_form_change_is_still_divergence(harness):
     """形态切换（generic ↔ wsl）是**真**配置漂移：必须仍走优雅 down。"""
-    d = harness.root / "overlays" / "xmnn-dev"
+    d = harness.root / "overlays" / "native-dev"
     (d / "compose.gpu.wsl.yaml").write_text("services: {}\n")
     harness.runner.running = True
     harness.runner.ss_output = "\n".join(_SS_LINES[:3])
     harness.runner.config_files = _gpu_plane_label(
-        harness, "xmnn-dev", "compose.yaml", "compose.gpu.yaml"
+        harness, "native-dev", "compose.yaml", "compose.gpu.yaml"
     )
-    oc.up_preflight(None, _XMNN, env={}, gpu=True, gpu_form="wsl")
+    oc.up_preflight(None, _NATIVE, env={}, gpu=True, gpu_form="wsl")
     assert any(" down" in c for c in harness.runner.commands)
 
 
@@ -917,29 +917,29 @@ def _conmon_line(pid: int, cid: str, name: str) -> str:
 
 
 def test_parse_conmon_process_realworld():
-    pid, cid, name = oc.parse_conmon_process(_conmon_line(111413, _CID_STALE_X, "xmnn-dev"))
-    assert (pid, cid, name) == (111413, _CID_STALE_X, "xmnn-dev")
+    pid, cid, name = oc.parse_conmon_process(_conmon_line(111413, _CID_STALE_X, "native-dev"))
+    assert (pid, cid, name) == (111413, _CID_STALE_X, "native-dev")
     assert oc.parse_conmon_process("  900 /usr/sbin/crun -b /x") is None
     assert oc.parse_conmon_process("not-a-pid /usr/bin/conmon -c x") is None
 
 
 def test_stale_conmon_detection_double_gate(harness):
-    # live：当前运行 xmnn 容器；ps 含 活xmnn / stale-xmnn / stale-quant 三个 conmon
+    # live：当前运行 native 容器；ps 含 活native / stale-native / stale-quant 三个 conmon
     harness.runner.live_ps = _CID_LIVE[:12]
     harness.runner.conmon_ps = "\n".join([
-        _conmon_line(100, _CID_LIVE, "xmnn-dev"),
-        _conmon_line(111413, _CID_STALE_X, "xmnn-dev"),
+        _conmon_line(100, _CID_LIVE, "native-dev"),
+        _conmon_line(111413, _CID_STALE_X, "native-dev"),
         _conmon_line(200, _CID_STALE_Q, "onnx-quantized"),
     ])
-    stale = oc._list_stale_conmons(None, _XMNN)
+    stale = oc._list_stale_conmons(None, _NATIVE)
     # 只回收：本栈名 + 容器已不在 libpod；活 conmon 与他栈 conmon 都不动
     assert stale == [(111413, _CID_STALE_X[:12])]
 
 
 def test_up_preflight_reaps_stale_conmon_and_rootlessport(harness):
     harness.runner.ss_output = "\n".join(_SS_LINES[:3])
-    harness.runner.conmon_ps = _conmon_line(111413, _CID_STALE_X, "xmnn-dev")
-    oc.up_preflight(None, _XMNN, env={})
+    harness.runner.conmon_ps = _conmon_line(111413, _CID_STALE_X, "native-dev")
+    oc.up_preflight(None, _NATIVE, env={})
     kills = [c for c in harness.runner.commands if c.startswith("kill ") and "-9" not in c]
     # 一次 rootlessport(92823) + 一次 stale conmon(111413)，分别精确点名
     assert "kill 92823" in kills
@@ -955,11 +955,11 @@ def test_container_truly_alive_gate(harness):
     harness.runner.running = True
     harness.runner.init_pid = 111845
     harness.runner.host_alive = False
-    assert oc.container_running(None, _XMNN) is True  # daemon 视角仍撒谎
-    cid = oc._running_project_container(None, _XMNN)
-    assert oc._container_truly_alive(None, _XMNN, cid) is False
+    assert oc.container_running(None, _NATIVE) is True  # daemon 视角仍撒谎
+    cid = oc._running_project_container(None, _NATIVE)
+    assert oc._container_truly_alive(None, _NATIVE, cid) is False
     harness.runner.host_alive = True
-    assert oc._container_truly_alive(None, _XMNN, cid) is True
+    assert oc._container_truly_alive(None, _NATIVE, cid) is True
 
 
 def test_up_preflight_fake_up_forces_clean_rebuild(harness):
@@ -968,8 +968,8 @@ def test_up_preflight_fake_up_forces_clean_rebuild(harness):
     harness.runner.init_pid = 111845
     harness.runner.host_alive = False
     harness.runner.ss_output = "\n".join(_SS_LINES[:3])
-    harness.runner.conmon_ps = _conmon_line(111413, _CID_STALE_X, "xmnn-dev")
-    oc.up_preflight(None, _XMNN, env={})
+    harness.runner.conmon_ps = _conmon_line(111413, _CID_STALE_X, "native-dev")
+    oc.up_preflight(None, _NATIVE, env={})
     cmds = harness.runner.commands
     # 必须先 compose down 清失实状态（不是 no-op），再回收孤儿，再 up 由调用方执行
     assert any(" down" in c for c in cmds)
@@ -982,7 +982,7 @@ def test_require_running_rejects_fake_up(harness):
     harness.runner.init_pid = 111845
     harness.runner.host_alive = False
     with pytest.raises(Exit):
-        oc.require_running(None, _XMNN)
+        oc.require_running(None, _NATIVE)
 
 
 # ---------------------------------------------------------------------------
@@ -1009,7 +1009,7 @@ def test_factory_tasks_and_docs(harness):
 
 def test_factory_build_signature_conda_variant(harness):
     q = oc.make_stack_tasks(_QUANT)
-    x = oc.make_stack_tasks(_XMNN)
+    x = oc.make_stack_tasks(_NATIVE)
     m = oc.make_stack_tasks(_MONETIZE)
     assert _param_names(q["build"]) == ["tag", "base_image", "pip_mirror", "no_cache"]
     assert _param_names(x["build"]) == [
@@ -1021,10 +1021,10 @@ def test_factory_build_signature_conda_variant(harness):
 def test_factory_up_smoke_params_are_capability_union(harness):
     """up/smoke 形参面 = 已声明能力的并集（gpu_override ∪ supports_offline）。
 
-    xmnn 自 2026-09-20 起同时声明两者，故 gpu 与 offline 必须**并存**——
+    native 自 2026-09-20 起同时声明两者，故 gpu 与 offline 必须**并存**——
     历史的三路互斥写法会让 --offline 被 gpu 分支吃掉（C18）。
     """
-    q, x, m = (oc.make_stack_tasks(s) for s in (_QUANT, _XMNN, _MONETIZE))
+    q, x, m = (oc.make_stack_tasks(s) for s in (_QUANT, _NATIVE, _MONETIZE))
     assert _param_names(q["up"]) == ["gpu", "skip_build"]
     assert _param_names(x["up"]) == ["gpu", "skip_build", "offline", "no_offline"]
     assert _param_names(m["up"]) == ["skip_build"]
@@ -1037,7 +1037,7 @@ def test_factory_up_smoke_params_are_capability_union(harness):
 
 def test_factory_auto_shortflags_quant_on_others_off(harness):
     q = oc.make_stack_tasks(_QUANT)
-    x = oc.make_stack_tasks(_XMNN)
+    x = oc.make_stack_tasks(_NATIVE)
     assert all(t.auto_shortflags is True for t in q.values())
     assert all(t.auto_shortflags is False for t in x.values())
 
@@ -1045,12 +1045,12 @@ def test_factory_auto_shortflags_quant_on_others_off(harness):
 def test_bridge_keys_isolated_per_stack():
     """桥接键下沉后，各栈只带自己的前缀，不枚举其他栈（F-10）。"""
     joined = " ".join(_QUANT.bridge_env_keys)
-    assert "XMNN_" not in joined and "MONETIZE_" not in joined
+    assert "NATIVE_" not in joined and "MONETIZE_" not in joined
     assert "QUANT_WORKSPACE" in _QUANT.bridge_env_keys
-    assert "NPU_TVM_PATH" in _XMNN.bridge_env_keys
-    assert "XMNN_TEMP_PATH" in _XMNN.bridge_env_keys
+    assert "NPU_TVM_PATH" in _NATIVE.bridge_env_keys
+    assert "NATIVE_TEMP_PATH" in _NATIVE.bridge_env_keys
     assert "MONETIZE_SRC_PATH" in _MONETIZE.bridge_env_keys
-    xj = " ".join(_XMNN.bridge_env_keys)
+    xj = " ".join(_NATIVE.bridge_env_keys)
     assert "QUANT_" not in xj and "MONETIZE_" not in xj
 
 
@@ -1070,29 +1070,29 @@ def test_build_task_argv_quant_no_conda(harness):
     assert "CONDA_MIRROR" not in build_cmd
 
 
-def test_build_task_argv_xmnn_includes_conda(harness):
-    tasks = oc.make_stack_tasks(_XMNN)
+def test_build_task_argv_native_includes_conda(harness):
+    tasks = oc.make_stack_tasks(_NATIVE)
     tasks["build"].body(
-        None, tag=None, base_image=_XMNN.default_base_image,
+        None, tag=None, base_image=_NATIVE.default_base_image,
         pip_mirror="aliyun", conda_mirror="tuna", no_cache=False,
     )
     build_cmd = [c for c in harness.runner.commands if " build " in c][0]
     assert "--build-arg CONDA_MIRROR=tuna" in build_cmd
-    assert "-t localhost/xmnn-dev:latest" in build_cmd
+    assert "-t localhost/native-dev:latest" in build_cmd
     # C15：三处同键——TORCH_FLAVOR 与 compose.yaml build.args 的 ${TORCH_FLAVOR:-} 同键
     assert "--build-arg TORCH_FLAVOR=" in build_cmd
 
 
-def test_build_task_argv_xmnn_torch_flavor_flows(harness):
+def test_build_task_argv_native_torch_flavor_flows(harness):
     """--torch cu130 必须落到 podman build 的 --build-arg（C15 三处一致）。"""
-    tasks = oc.make_stack_tasks(_XMNN)
+    tasks = oc.make_stack_tasks(_NATIVE)
     tasks["build"].body(
-        None, tag="localhost/xmnn-dev:cuda", base_image=_XMNN.default_base_image,
+        None, tag="localhost/native-dev:cuda", base_image=_NATIVE.default_base_image,
         pip_mirror="official", conda_mirror="official", torch="cu130", no_cache=False,
     )
     build_cmd = [c for c in harness.runner.commands if " build " in c][0]
     assert "--build-arg TORCH_FLAVOR=cu130" in build_cmd
-    assert "-t localhost/xmnn-dev:cuda" in build_cmd
+    assert "-t localhost/native-dev:cuda" in build_cmd
 
 
 def test_compose_torch_flavor_default_matches_kernel_default(harness):
@@ -1102,9 +1102,9 @@ def test_compose_torch_flavor_default_matches_kernel_default(harness):
     不失效的前提；内核缺省为**空串**（不装 torch），compose 段必须逐字一致。
     """
     overlays = Path(__file__).resolve().parents[1] / "overlays"
-    text = (overlays / _XMNN.overlay_subdir / "compose.yaml").read_text(encoding="utf-8")
+    text = (overlays / _NATIVE.overlay_subdir / "compose.yaml").read_text(encoding="utf-8")
     m = re.search(r"\$\{TORCH_FLAVOR:-([^}]*)\}", text)
-    assert m, f"{_XMNN.overlay_subdir}/compose.yaml 未声明 TORCH_FLAVOR 构建参数"
+    assert m, f"{_NATIVE.overlay_subdir}/compose.yaml 未声明 TORCH_FLAVOR 构建参数"
     assert m.group(1) == ""
 
 
@@ -1158,7 +1158,7 @@ def test_up_inline_build_reads_env_build_args(harness, monkeypatch):
     monkeypatch.setenv("PIP_MIRROR", "tuna")
     monkeypatch.setenv("CONDA_MIRROR", "aliyun")
     monkeypatch.setenv("BASE_IMAGE", "localhost/base:env")
-    oc.up_stack(None, _XMNN, gpu=False)
+    oc.up_stack(None, _NATIVE, gpu=False)
     build_cmd = [c for c in harness.runner.commands if " build " in c][0]
     assert "--build-arg PIP_MIRROR=tuna" in build_cmd
     assert "--build-arg CONDA_MIRROR=aliyun" in build_cmd
@@ -1178,9 +1178,9 @@ def test_build_task_defaults_follow_env(harness, monkeypatch):
 def test_build_args_fall_back_to_defaults_without_env(harness, monkeypatch):
     """未设 .env 键时回退 spec 默认（回归保护：旧行为零变化）。"""
     monkeypatch.delenv("TORCH_FLAVOR", raising=False)
-    args = oc.resolve_build_args(_XMNN, {})
+    args = oc.resolve_build_args(_NATIVE, {})
     assert args == {
-        "base_image": _XMNN.default_base_image,
+        "base_image": _NATIVE.default_base_image,
         "pip_mirror": "official",
         "conda_mirror": "official",
         "torch_flavor": "",
@@ -1193,12 +1193,12 @@ def test_build_args_torch_flavor_whitelist(harness, monkeypatch):
     """TORCH_FLAVOR 白名单在解析期拦截（构建一次代价极高，错误必须前置）。"""
     monkeypatch.delenv("TORCH_FLAVOR", raising=False)
     for flavor in ("", "cpu", "cu130"):
-        assert oc.resolve_build_args(_XMNN, {}, torch=flavor)["torch_flavor"] == flavor
-    assert oc.resolve_build_args(_XMNN, {}, torch="")["torch_flavor"] == ""
+        assert oc.resolve_build_args(_NATIVE, {}, torch=flavor)["torch_flavor"] == flavor
+    assert oc.resolve_build_args(_NATIVE, {}, torch="")["torch_flavor"] == ""
     monkeypatch.setenv("TORCH_FLAVOR", "cu129")
     with pytest.raises(Exit):
-        oc.resolve_build_args(_XMNN, {})
-    assert oc.resolve_build_args(_XMNN, {}, torch="cpu")["torch_flavor"] == "cpu"
+        oc.resolve_build_args(_NATIVE, {})
+    assert oc.resolve_build_args(_NATIVE, {}, torch="cpu")["torch_flavor"] == "cpu"
 
 
 def test_build_args_cli_flag_beats_env(harness, monkeypatch):
@@ -1209,7 +1209,7 @@ def test_build_args_cli_flag_beats_env(harness, monkeypatch):
 
 
 def test_down_task_volumes_flag(harness):
-    tasks = oc.make_stack_tasks(_XMNN)
+    tasks = oc.make_stack_tasks(_NATIVE)
     tasks["down"].body(None, volumes=True)
     assert harness.runner.commands[-1].endswith("down --volumes")
 
@@ -1231,9 +1231,9 @@ def test_smoke_stopped_quant_runs_three_standalone(harness):
     assert not any(" exec " in c for c in harness.runner.commands)
 
 
-def test_smoke_stopped_xmnn_guard_only(harness):
+def test_smoke_stopped_native_guard_only(harness):
     harness.runner.running = False
-    oc.smoke_stack(None, _XMNN)
+    oc.smoke_stack(None, _NATIVE)
     run_cmds = [c for c in harness.runner.commands if " run --rm " in c]
     assert len(run_cmds) == 1
     assert "_toolchain_guards.py" in run_cmds[0]
@@ -1249,33 +1249,33 @@ def test_smoke_running_monetize_two_scripts(harness):
 
 
 # ---------------------------------------------------------------------------
-# 离线模式（仅 xmnn 声明 supports_offline；V-1 桥接透传 / V-2 compose --no-build）
+# 离线模式（仅 native 声明 supports_offline；V-1 桥接透传 / V-2 compose --no-build）
 # ---------------------------------------------------------------------------
 
 
-def test_offline_declared_only_for_xmnn():
-    assert _XMNN.supports_offline is True
+def test_offline_declared_only_for_native():
+    assert _NATIVE.supports_offline is True
     assert _QUANT.supports_offline is False and _MONETIZE.supports_offline is False
-    assert _XMNN.offline_env_key == "XMNN_OFFLINE"
-    assert "XMNN_OFFLINE" in _XMNN.bridge_env_keys
+    assert _NATIVE.offline_env_key == "NATIVE_OFFLINE"
+    assert "NATIVE_OFFLINE" in _NATIVE.bridge_env_keys
 
 
 def test_resolve_offline_flag_written_back_to_env(harness, monkeypatch):
     """V-1：显式旗标必须在 gates（WSL 桥接）之前固化进 os.environ。"""
-    monkeypatch.setenv("XMNN_OFFLINE", "0")
-    assert oc.resolve_offline(_XMNN, True, False) is True
-    assert os.environ["XMNN_OFFLINE"] == "1"
-    assert oc.resolve_offline(_XMNN, False, True) is False
-    assert os.environ["XMNN_OFFLINE"] == "0"
+    monkeypatch.setenv("NATIVE_OFFLINE", "0")
+    assert oc.resolve_offline(_NATIVE, True, False) is True
+    assert os.environ["NATIVE_OFFLINE"] == "1"
+    assert oc.resolve_offline(_NATIVE, False, True) is False
+    assert os.environ["NATIVE_OFFLINE"] == "0"
 
 
 def test_resolve_offline_env_fallback_conflict_and_non_offline_stack(harness, monkeypatch):
-    monkeypatch.setenv("XMNN_OFFLINE", "yes")
-    assert oc.resolve_offline(_XMNN, False, False) is True
+    monkeypatch.setenv("NATIVE_OFFLINE", "yes")
+    assert oc.resolve_offline(_NATIVE, False, False) is True
     monkeypatch.setenv("QUANT_OFFLINE", "1")
     assert oc.resolve_offline(_QUANT, False, False) is False
     with pytest.raises(Exit):
-        oc.resolve_offline(_XMNN, True, True)
+        oc.resolve_offline(_NATIVE, True, True)
 
 
 def test_compose_up_tail_always_no_build():
@@ -1284,26 +1284,26 @@ def test_compose_up_tail_always_no_build():
 
 
 def test_offline_exec_env_gated_by_declaration_and_env(harness, monkeypatch):
-    monkeypatch.delenv("XMNN_OFFLINE", raising=False)
-    assert oc.offline_exec_env(_XMNN) == []
-    monkeypatch.setenv("XMNN_OFFLINE", "1")
-    assert oc.offline_exec_env(_XMNN) == ["-e", "XMNN_OFFLINE=1"]
+    monkeypatch.delenv("NATIVE_OFFLINE", raising=False)
+    assert oc.offline_exec_env(_NATIVE) == []
+    monkeypatch.setenv("NATIVE_OFFLINE", "1")
+    assert oc.offline_exec_env(_NATIVE) == ["-e", "NATIVE_OFFLINE=1"]
     assert oc.offline_exec_env(_QUANT) == []
 
 
 def test_build_image_offline_fails_fast_before_any_command(harness, monkeypatch):
-    monkeypatch.setenv("XMNN_OFFLINE", "1")
+    monkeypatch.setenv("NATIVE_OFFLINE", "1")
     with pytest.raises(Exit) as ei:
         oc.build_image(
-            None, _XMNN, tag=None,
-            base_image=_XMNN.default_base_image, pip_mirror="official",
+            None, _NATIVE, tag=None,
+            base_image=_NATIVE.default_base_image, pip_mirror="official",
         )
     assert ei.value.code == 1
     assert harness.runner.commands == []  # 未发生任何 podman 调用
 
 
 def test_up_offline_forces_skip_build_and_compose_no_build(harness):
-    oc.up_stack(None, _XMNN, offline=True)
+    oc.up_stack(None, _NATIVE, offline=True)
     cmds = harness.runner.commands
     assert not any(" build " in c for c in cmds)
     assert any("up -d --no-build" in c for c in cmds)
@@ -1312,23 +1312,23 @@ def test_up_offline_forces_skip_build_and_compose_no_build(harness):
 def test_up_offline_missing_image_exits(harness, capsys):
     harness.runner.image_exists = False
     with pytest.raises(Exit) as ei:
-        oc.up_stack(None, _XMNN, offline=True)
+        oc.up_stack(None, _NATIVE, offline=True)
     assert ei.value.code == 1
     assert "离线模式下本地缺少镜像" in capsys.readouterr().out
 
 
 def test_up_task_body_offline_flag_survives_to_argv(harness, monkeypatch):
-    monkeypatch.setenv("XMNN_OFFLINE", "0")
-    tasks = oc.make_stack_tasks(_XMNN)
+    monkeypatch.setenv("NATIVE_OFFLINE", "0")
+    tasks = oc.make_stack_tasks(_NATIVE)
     tasks["up"].body(None, skip_build=False, offline=True, no_offline=False)
-    assert os.environ["XMNN_OFFLINE"] == "1"
+    assert os.environ["NATIVE_OFFLINE"] == "1"
     assert any("up -d --no-build" in c for c in harness.runner.commands)
 
 
 def test_save_load_tasks_only_for_offline_stack(harness):
     assert "save" not in oc.make_stack_tasks(_QUANT)
     assert "load" not in oc.make_stack_tasks(_MONETIZE)
-    x = oc.make_stack_tasks(_XMNN)
+    x = oc.make_stack_tasks(_NATIVE)
     assert _param_names(x["save"]) == ["tag", "cache_dir"]
     assert _param_names(x["load"]) == ["path", "cache_dir"]
 
@@ -1340,7 +1340,7 @@ def test_save_load_tasks_only_for_offline_stack(harness):
 
 def _archive(dir_: Path, flavor: str, ts: str) -> Path:
     """造出可被 archive_flavor 解析的归档名（内容无关，integrity 已打桩）。"""
-    stem = f"localhost-xmnn-dev-torch-{flavor}" if flavor else "localhost-xmnn-dev-latest"
+    stem = f"localhost-native-dev-torch-{flavor}" if flavor else "localhost-native-dev-latest"
     p = dir_ / f"{stem}-abc123def456-{ts}.tar.gz"
     p.write_bytes(b"x")
     return p
@@ -1357,7 +1357,7 @@ def load_env(harness, monkeypatch, tmp_path):
     )
     cache = tmp_path / "cache"
     cache.mkdir()
-    tasks = oc.make_stack_tasks(_XMNN)
+    tasks = oc.make_stack_tasks(_NATIVE)
 
     def run(flavor: str, *, path=None, cache_path=None):
         monkeypatch.setattr(
@@ -1432,7 +1432,7 @@ def test_up_waits_for_jupyter_on_host_port(harness, monkeypatch, capsys):
         return True, f"127.0.0.1:{port} → HTTP 302"
 
     monkeypatch.setattr(oc, "wait_http_ready", fake)
-    oc.up_stack(None, _XMNN, skip_build=True)
+    oc.up_stack(None, _NATIVE, skip_build=True)
     assert seen["port"] == 8890
     assert callable(seen["progress"])
     out = capsys.readouterr().out
@@ -1445,10 +1445,10 @@ def test_up_ready_timeout_warns_without_failing(harness, monkeypatch, capsys):
     monkeypatch.setattr(
         oc, "wait_http_ready", lambda port, **kw: (False, "RemoteDisconnected（120s 无 HTTP 应答）")
     )
-    oc.up_stack(None, _XMNN, skip_build=True)  # 不抛 Exit
+    oc.up_stack(None, _NATIVE, skip_build=True)  # 不抛 Exit
     out = capsys.readouterr().out
     assert "⚠ Jupyter 未在 120s 内应答" in out
-    assert f"invoke {_XMNN.namespace}.logs" in out
+    assert f"invoke {_NATIVE.namespace}.logs" in out
     assert "Jupyter localhost:8890" in out  # URL 仍给出，供用户稍后刷新
 
 
@@ -1462,7 +1462,7 @@ def test_up_banner_prints_readback_credentials(harness, monkeypatch, capsys):
     monkeypatch.setattr(oc, "_running_project_container", lambda c, s: "cid")
     monkeypatch.delenv("JUPYTER_TOKEN", raising=False)
     harness.runner.container_logs = _CRED_BANNER
-    oc.up_stack(None, _XMNN, skip_build=True)
+    oc.up_stack(None, _NATIVE, skip_build=True)
     out = capsys.readouterr().out
     assert "密码    devuser / S3cretPw16" in out
     assert "直达    http://localhost:8890/lab?token=deadbeefdeadbeefdeadbeefdeadbeef" in out
@@ -1471,7 +1471,7 @@ def test_up_banner_prints_readback_credentials(harness, monkeypatch, capsys):
 def test_up_banner_omits_credentials_when_unreadable(harness, monkeypatch, capsys):
     """回读不到（容器未跑 / 日志无横幅）时静默降级：不增行、不报错。"""
     monkeypatch.delenv("JUPYTER_TOKEN", raising=False)
-    oc.up_stack(None, _XMNN, skip_build=True)
+    oc.up_stack(None, _NATIVE, skip_build=True)
     out = capsys.readouterr().out
     assert "密码" not in out
     assert "直达" not in out
@@ -1484,7 +1484,7 @@ def test_up_banner_prints_copyable_ssh_command(harness, capsys):
     宿主自身 sshd（宿主无 devuser 用户）而必报 Permission denied——ssh 不支持
     user@host:port 语法，端口只能经 -p 表达（04-troubleshooting-guide.md C-I8）。
     """
-    oc.up_stack(None, _XMNN, skip_build=True)
+    oc.up_stack(None, _NATIVE, skip_build=True)
     out = capsys.readouterr().out
     assert "ssh -p 2223 devuser@localhost" in out
     # 端口须随 spec/环境变量漂移，不得写死默认值
@@ -1493,8 +1493,8 @@ def test_up_banner_prints_copyable_ssh_command(harness, capsys):
 
 def test_up_banner_ssh_command_follows_port_env(harness, monkeypatch, capsys):
     """端口经 `.env`/环境覆盖时命令同步变化（否则用户连到错误端口）。"""
-    monkeypatch.setenv(_XMNN.ssh_port_env, "2299")
-    oc.up_stack(None, _XMNN, skip_build=True)
+    monkeypatch.setenv(_NATIVE.ssh_port_env, "2299")
+    oc.up_stack(None, _NATIVE, skip_build=True)
     assert "ssh -p 2299 devuser@localhost" in capsys.readouterr().out
 
 
@@ -1512,12 +1512,12 @@ _PASTA_DBUS_LINE = (
 
 def test_is_benign_compose_noise_whitelist_only():
     """判据为白名单三式；真实错误一律返回 False（宁可多显示，不可吞）。"""
-    names = oc.compose_echo_names(_XMNN)
+    names = oc.compose_echo_names(_NATIVE)
     assert oc.is_benign_compose_noise(_HEX_ID, names=names)
     assert oc.is_benign_compose_noise(f"  {_HEX_ID}  ", names=names)  # 允许两侧空白
-    assert oc.is_benign_compose_noise(_XMNN.project, names=names)
-    assert oc.is_benign_compose_noise(f"pod_{_XMNN.project}", names=names)
-    assert oc.is_benign_compose_noise(f"{_XMNN.project}_default", names=names)
+    assert oc.is_benign_compose_noise(_NATIVE.project, names=names)
+    assert oc.is_benign_compose_noise(f"pod_{_NATIVE.project}", names=names)
+    assert oc.is_benign_compose_noise(f"{_NATIVE.project}_default", names=names)
     assert oc.is_benign_compose_noise(_PASTA_DBUS_LINE, names=names)
     # —— 反例：真实错误必须可见（含裸 ID / 名字出现在上下文里） ——
     assert not oc.is_benign_compose_noise(
@@ -1526,7 +1526,7 @@ def test_is_benign_compose_noise_whitelist_only():
         "IO error: No such file or directory (os error 2)",
         names=names,
     )
-    assert not oc.is_benign_compose_noise(f"{_XMNN.project} 端口被占用", names=names)
+    assert not oc.is_benign_compose_noise(f"{_NATIVE.project} 端口被占用", names=names)
     assert not oc.is_benign_compose_noise("abc123", names=names)  # 非 64 位十六进制
     assert not oc.is_benign_compose_noise(
         "ERROR[0001] failed to move the rootless netns pasta process to the "
@@ -1546,23 +1546,23 @@ def test_run_compose_up_filters_echo_noise(harness, monkeypatch, capsys):
     """up 成功路径：ID/资源名/无会话总线提示被过滤，其余行原样保留。"""
     _stub_run_cmd(
         monkeypatch,
-        stdout=f"{_HEX_ID}\n{_HEX_ID2}\n{_XMNN.project}\n",
+        stdout=f"{_HEX_ID}\n{_HEX_ID2}\n{_NATIVE.project}\n",
         stderr=_PASTA_DBUS_LINE + "\n",
     )
-    oc.run_compose_up(None, _XMNN, *oc.compose_up_tail())
+    oc.run_compose_up(None, _NATIVE, *oc.compose_up_tail())
     out = capsys.readouterr().out
     assert _HEX_ID not in out and _HEX_ID2 not in out
     assert "ERROR[0001]" not in out
-    assert _XMNN.project not in out.splitlines()  # 裸名字行被丢弃（执行行含名字）
+    assert _NATIVE.project not in out.splitlines()  # 裸名字行被丢弃（执行行含名字）
     assert "已过滤 4 行" in out
 
 
 def test_run_compose_up_failure_prints_raw_and_exits(harness, monkeypatch, capsys):
     """失败路径零过滤：裸 ID 与真实错误全量原样回放，退出码透传。"""
     err = f'Error: unable to start container "{_HEX_ID}": netavark: IO error'
-    _stub_run_cmd(monkeypatch, stdout=f"{_HEX_ID}\n{_XMNN.project}\n", stderr=err + "\n", ok=False, rc=125)
+    _stub_run_cmd(monkeypatch, stdout=f"{_HEX_ID}\n{_NATIVE.project}\n", stderr=err + "\n", ok=False, rc=125)
     with pytest.raises(Exit) as ei:
-        oc.run_compose_up(None, _XMNN, *oc.compose_up_tail())
+        oc.run_compose_up(None, _NATIVE, *oc.compose_up_tail())
     assert ei.value.code == 125
     out = capsys.readouterr().out
     assert _HEX_ID in out and "netavark" in out

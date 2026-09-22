@@ -1,14 +1,14 @@
 ---
 name: compose-overlay-ops
 version: 1.0.5
-description: "apps/containers/client 下 podman-compose 工作负载叠加栈（quant.* / xmnn.* / monetize.* 三命名空间，overlays/onnx-quantized、overlays/xmnn-dev、overlays/agent-monetize-dev）的启动/停止/重建/冒烟验证运维编排。当用户提到启动/重启/重新构建/重建 xmnn-dev、onnx-quantized、agent-monetize-dev 叠加栈或镜像，xmnn.up/xmnn.build/xmnn.wheel/xmnn.build-tvm/xmnn.smoke、quant.up、monetize.up，栈起不来、容器 Exited (0)、Jupyter 8890/8888/8892 打不开、netavark nft 报错、nftables、保存 notebook Errno 13、checkpoint 权限、WSL 发行版回收容器、发行版里跑 podman-compose、基底镜像缺失、tuna 构建 xmnn 镜像、长任务构建成功却 exit 1（ThreadException/FIONREAD/SystemError buffer overflow 假失败）等场景时，必须使用此技能。封装经实证的标准 SOP（保活锚→四维修复预检→build→up→浸泡→官方 smoke→双端端口/保存验证）、执行发行版选择（jupyter-podman-rootless 而非 flapping machine）、普通重建与 --no-cache 的裁决、12 个本机实证陷阱。与 jpman-podman-ops（单容器日常驾驶/构建端/嵌套 Podman）、client-overlay-scaffold（新建叠加栈）形成边界路由；不要手动拼 podman-compose 参数或套用 Docker Desktop 经验。"
+description: "apps/containers/client 下 podman-compose 工作负载叠加栈（quant.* / native.* / monetize.* 三命名空间，overlays/onnx-quantized、overlays/native-dev、overlays/agent-monetize-dev）的启动/停止/重建/冒烟验证运维编排。当用户提到启动/重启/重新构建/重建 native-dev、onnx-quantized、agent-monetize-dev 叠加栈或镜像，native.up/native.build/native.wheel/native.build-tvm/native.smoke、quant.up、monetize.up，栈起不来、容器 Exited (0)、Jupyter 8890/8888/8892 打不开、netavark nft 报错、nftables、保存 notebook Errno 13、checkpoint 权限、WSL 发行版回收容器、发行版里跑 podman-compose、基底镜像缺失、tuna 构建 native 镜像、长任务构建成功却 exit 1（ThreadException/FIONREAD/SystemError buffer overflow 假失败）等场景时，必须使用此技能。封装经实证的标准 SOP（保活锚→四维修复预检→build→up→浸泡→官方 smoke→双端端口/保存验证）、执行发行版选择（jupyter-podman-rootless 而非 flapping machine）、普通重建与 --no-cache 的裁决、12 个本机实证陷阱。与 jpman-podman-ops（单容器日常驾驶/构建端/嵌套 Podman）、client-overlay-scaffold（新建叠加栈）形成边界路由；不要手动拼 podman-compose 参数或套用 Docker Desktop 经验。"
 argument-hint: "<栈名> <up|down|build|rebuild|smoke|ps|logs> [选项]"
 disable-model-invocation: false
 user-invocable: true
 paths:
   - ".agents/skills/compose-overlay-ops/**"
   - "apps/containers/client/overlays/**"
-  - "apps/containers/client/src/jpman_client/tasks/{quant,xmnn,monetize}.py"
+  - "apps/containers/client/src/jpman_client/tasks/{quant,native,monetize}.py"
 title: "Compose 叠加栈运维 (compose-overlay-ops)"
 ---
 
@@ -26,7 +26,7 @@ title: "Compose 叠加栈运维 (compose-overlay-ops)"
 
 | Skill | 管辖对象 | 不管辖 |
 |---|---|---|
-| **compose-overlay-ops（本）** | **已交付**的 quant/xmnn/monetize compose 栈：启动、停止、重建镜像、重建栈、冒烟、运行时权限/网络/发行版排障 | 新建栈（→ scaffold）、构建端基底镜像、镜像灾备、嵌套 Podman |
+| **compose-overlay-ops（本）** | **已交付**的 quant/native/monetize compose 栈：启动、停止、重建镜像、重建栈、冒烟、运行时权限/网络/发行版排障 | 新建栈（→ scaffold）、构建端基底镜像、镜像灾备、嵌套 Podman |
 | jpman-podman-ops | jpman 单容器日常驾驶、构建端镜像 rebuild、.image-cache/wsl-export、容器内嵌套 podman（newuidmap EPERM §9.1）、machine 就绪通用纪律 | compose 工作负载栈编排 |
 | client-overlay-scaffold | **从零新建**一个叠加栈（12 件套/骨架模板/接线登记） | 栈交付后的运行 |
 | docker-cache-cmd / docker-wsl-bridge-cmd | 镜像 tar 灾备、镜像转 WSL 发行版 | — |
@@ -41,16 +41,16 @@ title: "Compose 叠加栈运维 (compose-overlay-ops)"
 | 命名空间 | overlay 目录 | 宿主端口（SSH/Jupyter） | 特有内容 |
 |---|---|---|---|
 | `quant.*`（6 任务） | overlays/onnx-quantized | 2222 / 8888 | ONNX 五包，纯 cp314t |
-| `xmnn.*`（8 任务） | overlays/xmnn-dev | 2223 / 8890 | 双 ABI（base cp314 GIL 打包/main cp314t 服务）、LLVM 22.1.8、Nuitka 4.2.1、bind npu_tvm/npuusertools/models |
+| `native.*`（8 任务） | overlays/native-dev | 2223 / 8890 | 双 ABI（base cp314 GIL 打包/main cp314t 服务）、LLVM 22.1.8、Nuitka 4.2.1、bind npu_tvm/npuusertools/models |
 | `monetize.*`（8 任务） | overlays/agent-monetize-dev | 2224 / 8892 | apt clang + apache-tvm-ffi，单一 cp314 GIL |
 
 > 任务清单、环境变量键、守卫契约以 client `AGENTS.md` 路由表与
-> `.agents/rules/{quant,xmnn,monetize}-overlay.md` 为权威；本 Skill 不复制其内容。
+> `.agents/rules/{quant,native,monetize}-overlay.md` 为权威；本 Skill 不复制其内容。
 
 ## 4. 何时触发
 
-- "启动/拉起/重启/重建 xmnn-dev（或 quant/monetize）栈/镜像/容器"
-- "xmnn.up / xmnn.build / xmnn.smoke / quant.up / monetize.up 失败/卡住"
+- "启动/拉起/重启/重建 native-dev（或 quant/monetize）栈/镜像/容器"
+- "native.up / native.build / native.smoke / quant.up / monetize.up 失败/卡住"
 - 容器状态 `Exited (0)`、Jupyter 端口打不开、netavark/nft 报错
 - Jupyter 保存 notebook `[Errno 13] .ipynb_checkpoints`
 - WSL 发行版里跑 podman-compose、基底镜像"缺失"误报、tuna 构建
@@ -96,7 +96,7 @@ wsl -d podman-machine-default -- sleep infinity   # 后台运行，勿关
 ```bash
 wsl -d podman-machine-default -- bash -lc '
   podman ps -a --format "{{.Names}} | {{.Status}}" ;
-  podman images --format "{{.Repository}}:{{.Tag}}" | grep -E "xmnn|quant|monetize|jupyter-podman-rootless" ;
+  podman images --format "{{.Repository}}:{{.Tag}}" | grep -E "native|quant|monetize|jupyter-podman-rootless" ;
   ls -d /mnt/d/spaces/SpecWeave/external/chaos/{npu_tvm,npuusertools,models} 2>/dev/null'
 ```
 
@@ -123,12 +123,12 @@ wsl -d podman-machine-default -- bash -lc '
 # 推荐固化一个执行器脚本（避免 PowerShell→wsl 的 $ 插值问题，见 §9 陷阱 7）：
 #   export PATH="$HOME/.local/bin:$PATH"
 #   cd /mnt/d/spaces/SpecWeave/apps/containers/client && exec invoke "$@"
-wsl -d podman-machine-default -- bash <run-inv.sh> xmnn.build --pip-mirror tuna --conda-mirror tuna
+wsl -d podman-machine-default -- bash <run-inv.sh> native.build --pip-mirror tuna --conda-mirror tuna
 ```
 
 - 普通重建命中层缓存，**镜像 ID 不变是正常结论**（修复若只在宿主侧
   invoke 代码，镜像内容本就不变）；仅当 Containerfile/构建资产变更或明确
-  要求时才 `--no-cache`（xmnn 全量约 6 分钟，重下 LLVM 427MB）。
+  要求时才 `--no-cache`（native 全量约 6 分钟，重下 LLVM 427MB）。
 - 长构建用后台任务 + 流式落盘观察；**禁止 `Select-Object -Last N`**
   （它缓冲到进程结束才输出，伪装"卡死"）。
 - 构建日志中 `WARN SHELL/HEALTHCHECK is not supported for OCI image
@@ -138,15 +138,15 @@ wsl -d podman-machine-default -- bash <run-inv.sh> xmnn.build --pip-mirror tuna 
 ### 步骤 3：启动 / 重建栈
 
 ```bash
-invoke xmnn.up                 # 默认随带构建
-invoke xmnn.down && invoke xmnn.up --skip-build   # 重建栈（换镜像/换配置后必须）
+invoke native.up                 # 默认随带构建
+invoke native.down && invoke native.up --skip-build   # 重建栈（换镜像/换配置后必须）
 ```
 
 ### 步骤 4：浸泡后再验证（不要 up 完立刻下结论）
 
 - 等 **45~90 秒**：entrypoint Step 4 含最长 30s socket 等待循环，
-  Jupyter 其后还要 ~5s；随后 `invoke xmnn.ps` 必须是 `Up`。
-- 官方冒烟：`invoke xmnn.smoke`（工具链守卫 + 挂载/import/算例；
+  Jupyter 其后还要 ~5s；随后 `invoke native.ps` 必须是 `Up`。
+- 官方冒烟：`invoke native.smoke`（工具链守卫 + 挂载/import/算例；
   libtvm 已编译时会真实跑 `tvm.build('llvm')` 向量加）。
 - 双端端口：WSL 内 `curl -o /dev/null -w '%{http_code}' 127.0.0.1:8890/lab`
   期望 302；Windows PowerShell `Invoke-WebRequest http://localhost:8890/lab`
@@ -165,7 +165,7 @@ rootless+9p/drvfs 下容器内 root 预建的 checkpoint 目录在容器视角�
 （非递归），所以 notebook 本体可写、子目录不可写。
 
 **修复（已固化在编排层）**：`utils.ensure_workspace_checkpoint_writable()`
-在 xmnn/quant 的 `_prepare_env()` mkdir 工作区后幂等 `chmod 0777` **仅
+在 native/quant 的 `_prepare_env()` mkdir 工作区后幂等 `chmod 0777` **仅
 `.ipynb_checkpoints` 单一目录**（不改属主、不递归、不碰源码 bind；
 drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
 `chmod 777 apps/containers/client/workspace/.ipynb_checkpoints`。
@@ -189,21 +189,21 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
 
 | 现象 | 实证根因 | 处理 |
 |---|---|---|
-| 容器 `Exited (0)`、日志停在中段 | 发行版空闲被回收（非应用崩溃） | 开保活锚 → `xmnn.down && xmnn.up --skip-build` |
+| 容器 `Exited (0)`、日志停在中段 | 发行版空闲被回收（非应用崩溃） | 开保活锚 → `native.down && native.up --skip-build` |
 | **假 Up**：`podman ps` 显示 Up、`inspect .State.Pid` 有值且 status=running、Jupyter 端口甚至仍 302，但任何 `exec` 报 `crun: container <id> does not exist: open $XDG_RUNTIME_DIR/crun/<id>/status: No such file or directory`；该 PID 在宿主 `ps -p` 已不存在，`crun/` 目录下只剩 `.cache`/`.empty-directory` | conmon/容器进程在发行版回收循环中被杀，但 libpod sqlite 仍记 running；stale conmon 与 rootlessport 作为孤儿进程存活（端口/HTTP 因此假象正常）。**ps 与端口都不可信，`podman exec <name> echo ok` 是唯一活体判据** | **定向清理（免 `wsl --shutdown`，2026-09-15 实证，不影响同发行版其他栈）**：①`invoke <ns>.down`（容忍 `conmon exited prematurely`/netavark netns ENOENT 告警，记录已删）；②`ss -ltnp \| grep <端口>` 找孤儿 **rootlessport** PID → `kill`；③`ps -ef \| grep <容器ID>` 找 **stale conmon** PID → `kill`；④复查端口 free；⑤`invoke <ns>.up --skip-build` → 浸泡 70~90s → exec+curl 双验证 |
 | `podman machine ssh` 报 not running（start 刚成功） | machine gvproxy 不驻留、空闲回收 | 原 flapping machine 已删除（由 jupyter-podman-rootless 改名顶替） |
 | 守卫误报"本地缺少基底镜像"（镜像明明在） | `.env` 空 `CONTAINER_HOST=` 被注入致 podman CLI 误入 REST 模式 exit 125 | 已修为仅注入非空值（manage._load_env_overrides）；勿在 shell 里 export 空串 |
 | `netavark: unable to execute "nft"` | 发行版缺 nftables | `sudo apt-get install -y nftables` |
 | `lstat /run/user/1001: no such file` | 错误覆盖 XDG_RUNTIME_DIR | 删除覆盖，沿用 /mnt/wslg/runtime-dir |
 | Jupyter 保存 Errno 13（checkpoint） | root 预建目录 0:0 755 | §7（编排层已自动 chmod；手工 chmod 777） |
-| `npu_tvm 源码树宿主路径不存在`（指向 client/external） | 默认路径锚错层级；仓库根=client.parents[2] | xmnn.py 已修；自定义栈注意同级锚定 |
+| `npu_tvm 源码树宿主路径不存在`（指向 client/external） | 默认路径锚错层级；仓库根=client.parents[2] | native.py 已修；自定义栈注意同级锚定 |
 | aardvark-dns / user scope bus 报错 | machine 无 systemd user bus | compose 已声明 `network_mode: bridge`（带证据偏差，勿删） |
 | `up -d` 报 `rootlessport listen tcp 0.0.0.0:2223: bind: address already in use`（exit 125），前序常伴 `conmon exited prematurely: conmon process killed`，同一次 up 先打印旧容器 ID 又打印新容器 ID；换端口却能成功 | **四因（① 为 2026-09-15 晚实证的确定性首因，三次复现）**：① **跨控制平面标签分歧**——Windows 原生裸 `podman-compose`（overlay 目录执行）给容器打 `com.docker.compose.project.config_files=D:\...`，Windows `invoke`（透明桥接）/WSL invoke 固定用 `--file /mnt/d/...`；compose config-hash 按标签**原文**计算，两平面交替即判漂移强制 recreate，pod 模式强拆 infra conmon 时 rootlessport 已被 WSL `/init` 收养为孤儿，新 pod bind 必败（**先优雅 down 也可能留同样孤儿**）；同平面连续执行幂等可作鉴别。② Created/Exited 残留容器持有端口分配。③ **假 Up 后容器被 down 但孤儿 rootlessport 存活**：`ss -ltnp` **能**看到 `users:(("rootlessport",pid=NNN))` 显式持有者；同时查杀 stale conmon（见"假 Up"行）。④ WSL localhost 转发（wslrelay）粘滞：幽灵 LISTEN 无可见持有者，`ss/netstat/fuser/lsof` 查不到≠没占 | **首选 `invoke <ns>.up --skip-build`**：up 前 `up_preflight` 三道全自动（v1.0.3）——残留 compose down / 跨平面活体栈先优雅 down / 孤儿 rootlessport 经 `ss -ltnp` 定点 kill（只认 rootlessport 名，不碰他栈 pasta），裸 compose 翻车现场直接重跑即恢复。**纪律：同一栈固定单一控制平面**，勿在 Windows 裸 compose 与 invoke 间来回切。手工兜底：`ss -ltnp \| grep <端口>` 有显式持有者定向 kill；无持有者=wslrelay 粘滞才用 `wsl --shutdown`（需用户授权，波及同发行版全部栈）或 `.env` 固化换端口 2225/8891 |
 | **Windows 原生 `inv <ns>.build`（或任何桥接任务）不执行任务，终端却进入一个交互 shell**（伴随 *automatically entered into a nested process namespace... to log out you need to exit twice* 的 motd，原 build 命令丢失，2026-09-16 实证） | **桥接登录 shell 被 enterns 劫持**：桥接器曾下发 `wsl -d podman-machine-default -- bash -lc <任务>`；Fedora-WSL 系镜像的 `/etc/profile.d/enterns.sh` 在检测到嵌套 systemd（`/lib/systemd/systemd` 非 PID 1）时无参执行 `/usr/local/bin/enterns`，对普通用户走 `sudo nsenter -m -p -t <pid> su -l $USER`——拉起全新交互登录 shell，`-lc` 任务串在命名空间切换中被丢弃；同目录 `docker-host.sh` 登录即跑 `podman info`，podman 未就绪时还会污染 `DOCKER_HOST=unix://`（client W-I11） | **已自动修复（editable 即时生效，零操作）**：桥接改非登录 `bash -c`（PATH 显式前置 `~/.local/bin`、LANG 兜底 C.UTF-8），profile 两个副作用均不触发。手工纪律：在该发行版跑自动化一律 `wsl -d <d> -- bash <script.sh>`（非登录，与 run-inv.sh 同构），不要用裸 `wsl -d <d>` 登录会话承载任务；已误入嵌套 shell 时连按两次 `exit`/Ctrl-D 退出 |
 | podman 任意命令（含 WSL 内原生 invoke）报 `creating events dirs: mkdir /run/user/1000: permission denied`（exit 125），warning `RunRoot ... not writable`；常伴容器 `Exited (0) 292 years ago` | **VM 回收后 tmpfs 运行时目录未重建**：`/run/user/<uid>` 在 tmpfs 上，由 systemd-logind/pam 会话创建；本发行版无 systemd 于 PID 1，VM 重启后未经 enterns 进 systemd ns 的会话不重建该目录；rootless podman events/runroot 硬编码回退此路径（**仅 export XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir 不能替代**，client W-I12） | **已自动修复（零操作）**：`inv <ns>.*` 的 Linux 放行路径调 `ensure_wsl_rootless_runtime()`（仅 WSL2），`sudo -n mkdir/chown/chmod 700` 幂等重建，免密不可用仅警告。手工：`sudo mkdir -p /run/user/$(id -u) && sudo chown $(id -u):$(id -u) /run/user/$(id -u) && sudo chmod 700 /run/user/$(id -u)`，再 `inv <ns>.up --skip-build` 恢复栈 |
 | 外部 Go-http-client 经 `podman.sock` 调 `POST /libpod/system/prune`（journal 可见，2026-09-16 实证一次），跨项目删除全部 Exited 容器（含 jupyter-podman 单容器）与悬空镜像；有 tag 镜像/命名卷无损 | 共享该 socket 的 UI/自动化（容器管理面板等）执行了 system prune（all=false 只删 stopped 容器+dangling 镜像）；本项目编排器从不下发 prune | 恢复栈一条命令：`inv <ns>.up --skip-build`；jupyter-podman 单容器走 jpman 单容器路径启动。预防：不要在共享该发行版 socket 的 UI 里点"清理/Purge"，或操作前先确认栈处于 Up |
 | 裸 compose 后 workspace 下出现 npu_tvm 等空目录 | podman-compose 1.6 相对 source+create_host_path 预创建副产物 | 不影响真挂载；down 后 `rmdir`；用 invoke 绝对路径注入不产生 |
-| 裸 `podman-compose up -d` exit 0 但 Jupyter 根目录出现 `.git`/`apps`/`docs`，容器里 `/workspace` 竟是整个仓库根 | overlay 目录私有 `.env` 的 `<NS>_WORKSPACE` 误按 client 基准写层级：overlay 文件比 client 深两级，`../../../../..`（五级）相对 overlay 子目录正好解析到仓库根；模板正确值是 `../../workspace`（上两级=client/workspace） | 把 `.env` 改回 `XMNN_WORKSPACE=../../workspace`（quant/monetize 同理）→ `down && up -d`；仓库根已被入口 chmod 777 的副作用要 `chmod 755 <仓库根>` 还原。`.env` 被 gitignore 属本地私有，排查时务必实读该文件而非只看 compose.yaml |
+| 裸 `podman-compose up -d` exit 0 但 Jupyter 根目录出现 `.git`/`apps`/`docs`，容器里 `/workspace` 竟是整个仓库根 | overlay 目录私有 `.env` 的 `<NS>_WORKSPACE` 误按 client 基准写层级：overlay 文件比 client 深两级，`../../../../..`（五级）相对 overlay 子目录正好解析到仓库根；模板正确值是 `../../workspace`（上两级=client/workspace） | 把 `.env` 改回 `NATIVE_WORKSPACE=../../workspace`（quant/monetize 同理）→ `down && up -d`；仓库根已被入口 chmod 777 的副作用要 `chmod 755 <仓库根>` 还原。`.env` 被 gitignore 属本地私有，排查时务必实读该文件而非只看 compose.yaml |
 | up 后 55~60 秒 Jupyter 端口 curl 返回 000，容器却是 Up | entrypoint Step 4 容器内 podman 初始化偶发等 ~70 秒（平时约 30s），浸泡不足误判 | 等满 70~90s 再判活；日志走到 `Step 5/7` 后 supervisord 约 5s 内起 Jupyter（非故障） |
 | 容器内 podman/podman-compose 报 newuidmap EPERM | 嵌套 rootless 结构性死路 | 不在本 Skill 处理，转 jpman-podman-ops §9.1（B-scheme） |
 | PowerShell 内联 wsl bash 命令报 `syntax error near (` | `$()`/`$VAR` 被 PowerShell 插值展开 | 把 bash 逻辑写成脚本文件，`wsl -d <d> -- bash /mnt/d/.../x.sh` |
@@ -249,7 +249,7 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
     （2026-09-16 实证，client W-I11）：podman-machine-default 是 Fedora-WSL
     系镜像，登录会话的 `/etc/profile.d/enterns.sh` 在嵌套 systemd 存活时无参
     执行 enterns → `sudo nsenter ... su -l $USER`，把命令劫持成交互 shell
-    （`inv xmnn.build` “进入 shell”的真相）；同目录 docker-host.sh 还会在
+    （`inv native.build` “进入 shell”的真相）；同目录 docker-host.sh 还会在
     podman 未就绪时污染 `DOCKER_HOST=unix://`。client 桥接器已固定非登录
     （PATH 显式前置 + LANG 兜底）；手工诊断/脚本一律
     `wsl -d <d> -- bash /mnt/d/.../*.sh`，不要用裸 `wsl -d <d>` 登录会话承载

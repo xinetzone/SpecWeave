@@ -4,7 +4,7 @@
 # 加载条件（overlay_core.gpu_override_file）：resolved 形态为 `wsl` 且本文件存在。
 # 与 compose.gpu.yaml **互斥**——两个同加载会让 devices 列表出现重复项，内核只选其一。
 #
-# 形态实测矩阵与最小充分条件见姊妹文件 ../../xmnn-dev/compose.gpu.wsl.yaml 文件头
+# 形态实测矩阵与最小充分条件见姊妹文件 ../../native-dev/compose.gpu.wsl.yaml 文件头
 # （2026-09-20 两轮单机实测）：`--device /dev/dxg` + 三条只读 bind（libcuda.so.1、
 # libdxcore.so 单文件 + /usr/lib/wsl/drivers 目录）是 WSL2 下让容器内
 # cuInit() 返回 0、torch.cuda.is_available() 为 True 的最小组合。**刻意不设

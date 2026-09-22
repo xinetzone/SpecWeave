@@ -1,4 +1,4 @@
-"""数据驱动的 podman-compose 叠加栈编排内核（quant/xmnn/monetize 同族共享）。
+"""数据驱动的 podman-compose 叠加栈编排内核（quant/native/monetize 同族共享）。
 
 设计目标（OKF 重构 R→I→E）：
   - 每个叠加栈只声明一份 ``StackSpec``（身份/端口/挂载/构建参数/冒烟形态/
@@ -141,10 +141,10 @@ class SmokeSpec:
     """冒烟形态（三栈差异的声明式描述）。
 
     - python：栈内解释器绝对路径（quant 用 main env free-threaded 之外的
-      /opt/conda/envs/main/bin/python；xmnn/monetize 用 base env /opt/conda/bin/python）。
+      /opt/conda/envs/main/bin/python；native/monetize 用 base env /opt/conda/bin/python）。
     - exec_scripts：栈运行时经 ``compose exec`` 逐个执行的脚本（相对 smoke_dir）。
     - standalone_scripts：栈未运行时经 ``podman run --rm --entrypoint`` 逐个
-      执行的脚本（quant 为全部 3 个纯 ONNX；xmnn/monetize 仅工具链守卫，
+      执行的脚本（quant 为全部 3 个纯 ONNX；native/monetize 仅工具链守卫，
       挂载/原生冒烟要求先 up）。
     """
 
@@ -174,14 +174,14 @@ class StackSpec:
     """单个 podman-compose 叠加栈的完整声明（compose.yaml 之外的 Python 侧事实源）。"""
 
     # —— 身份 ——
-    namespace: str  # invoke 命名空间/横幅前缀：quant | xmnn | monetize
+    namespace: str  # invoke 命名空间/横幅前缀：quant | native | monetize
     project: str  # compose --project-name（标签 io.podman.compose.project 值）
     service: str  # compose 服务名（io.podman.compose.service 值）
     overlay_subdir: str  # overlays/<本目录>（compose.yaml/Containerfile 所在）
     containerfile: str  # overlay 目录内的 Containerfile 文件名
     default_image_tag: str
     default_base_image: str
-    env_prefix: str  # QUANT | XMNN | MONETIZE（衍生 _WORKSPACE/_IMAGE_TAG/端口键）
+    env_prefix: str  # QUANT | NATIVE | MONETIZE（衍生 _WORKSPACE/_IMAGE_TAG/端口键）
 
     # —— 任务表面文案（--list 黄金快照逐字保持） ——
     docs: TaskDocs
@@ -190,16 +190,16 @@ class StackSpec:
     # —— 端口/横幅 ——
     ssh_default: str
     jupyter_default: str
-    jupyter_banner_note: str = ""  # xmnn 的「（内核：Python 3.14 (xmnn dev)）」
+    jupyter_banner_note: str = ""  # native 的「（内核：Python 3.14 (native dev)）」
     build_done_label: str = "叠加镜像"  # 构建完成文案（quant 历史为「量化叠加镜像」）
     build_next_hint: str = ""  # 构建完成行尾补充（quant：（启动声明式栈））
-    up_footer: tuple[str, ...] = ()  # 空=自动单行；xmnn 用三行（含编译/打包提示）
+    up_footer: tuple[str, ...] = ()  # 空=自动单行；native 用三行（含编译/打包提示）
 
     # —— compose 文件/构建参数差异 ——
-    gpu_override: bool = False  # 存在 compose.gpu.yaml 且 up/smoke 暴露 --gpu（quant/xmnn）
-    gpu_device_env: str = ""  # GPU 设备插值键（空=不插值，设备项写死；quant/xmnn 均为 GPU_DEVICE）
-    conda_mirror: bool = False  # build 暴露 --conda-mirror / CONDA_MIRROR（xmnn）
-    torch_flavor: bool = False  # build 暴露 --torch / TORCH_FLAVOR（xmnn；空|cpu|cu130）
+    gpu_override: bool = False  # 存在 compose.gpu.yaml 且 up/smoke 暴露 --gpu（quant/native）
+    gpu_device_env: str = ""  # GPU 设备插值键（空=不插值，设备项写死；quant/native 均为 GPU_DEVICE）
+    conda_mirror: bool = False  # build 暴露 --conda-mirror / CONDA_MIRROR（native）
+    torch_flavor: bool = False  # build 暴露 --torch / TORCH_FLAVOR（native；空|cpu|cu130）
     auto_shortflags: bool = False  # invoke 自动短选项（quant 历史为默认开启）
 
     # —— 挂载/冒烟/桥接 ——
@@ -1489,7 +1489,7 @@ def up_stack(
     jupyter = _env_port(spec, env, spec.jupyter_port_env, spec.jupyter_default)
     # 就绪等待（C21）：`up -d` 返回只代表**容器**在跑，不代表**服务**可访问。
     # rootlessport 在容器起来的瞬间就 accept 宿主端口，而容器内 jupyter 需数十秒
-    # （xmnn 实测 66 秒）才 listen，窗口期内连接被接受后立即关闭且零字节返回，
+    # （native 实测 66 秒）才 listen，窗口期内连接被接受后立即关闭且零字节返回，
     # 浏览器报 ERR_EMPTY_RESPONSE——用户被「✅ 栈已启动」与「端口可连」双重误导。
     # 故按**应用层应答**判定就绪（TCP connect 在本场景假阳性），超时不判失败。
     ready, detail = wait_http_ready(
@@ -1781,7 +1781,7 @@ def make_stack_tasks(spec: StackSpec) -> dict:
         }
 
     # —— up（形参面 = gpu_override ∪ supports_offline，两个能力正交组合） ——
-    # 历史写法是 gpu/offline/else 三路互斥，导致 xmnn 一旦同时声明两个能力，
+    # 历史写法是 gpu/offline/else 三路互斥，导致 native 一旦同时声明两个能力，
     # --offline 会被 gpu 分支吃掉。改为"能力并集决定形参面"，公共实现下沉。
     def _up_impl(
         c: Context,
@@ -1948,7 +1948,7 @@ def make_stack_tasks(spec: StackSpec) -> dict:
             """从离线归档导入本栈镜像（manifest 完整性校验，缺网可用）。
 
             C20：归档名携带 torch 形态（``-torch-<形态>-``），load 据此选档与校验——
-            cpu 与 cu130 两份镜像 tag 相同（``localhost/xmnn-dev:latest``），不带形态
+            cpu 与 cu130 两份镜像 tag 相同（``localhost/native-dev:latest``），不带形态
             过滤的「取最新」会在同族共存时静默导入错形态，直到容器内 torch.cuda 为空
             才暴露。
             """

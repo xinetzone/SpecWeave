@@ -3,8 +3,8 @@
 # build-tvm.sh — 在容器内编译 TVM C++ 原生库（libtvm.so），xmnn wheel 的前置
 #
 # 调用方式：
-#   invoke xmnn.build-tvm
-#   podman-compose exec xmnn bash /opt/xmnn-builder/scripts/build-tvm.sh
+#   invoke native.build-tvm
+#   podman-compose exec native bash /opt/native-builder/scripts/build-tvm.sh
 #
 # 做什么：
 #   1. 导出 main env 的 LLVM/Clang 工具链（22.1.x）与 base cp314 解释器；
@@ -62,7 +62,7 @@ if [ ! -d "$TVM_ROOT/3rdparty/dmlc-core" ] || [ -z "$(ls -A "$TVM_ROOT/3rdparty/
     echo "  （仅 dmlc-core 亦可：git submodule update --init 3rdparty/dmlc-core）"
     # 源码子模块属「阶段一预备」范畴：本脚本只用镜像内工具链编译，本身不联网，
     # 但补齐子模块需要联网——无网侧补不了，必须随源码一起在联网侧准备好。
-    if [ "${XMNN_OFFLINE:-0}" = "1" ]; then
+    if [ "${NATIVE_OFFLINE:-0}" = "1" ]; then
         log_error "离线模式：源码子模块须在联网侧检出后随源码一起携带，无网侧无法补齐"
     fi
     exit 2
@@ -123,7 +123,7 @@ TVM_LIB="$TVM_ROOT/build/libtvm.so"
 if [ -f "$TVM_LIB" ]; then
     echo ""
     log_ok "libtvm.so 就绪：$TVM_LIB ($(du -h "$TVM_LIB" | cut -f1))"
-    log_info "下一步：inv xmnn.wheel（Nuitka 打包 xmnn whl）"
+    log_info "下一步：inv native.wheel（Nuitka 打包 xmnn whl）"
 else
     log_error "编译结束但未找到 $TVM_LIB"
     exit 1

@@ -1,10 +1,10 @@
-# xmnn.* 开发/打包叠加栈规则（podman-compose 编排层）
+# native.* 开发/打包叠加栈规则（podman-compose 编排层）
 
-> 单一职责：本文件只约束 `invoke xmnn.*` 命名空间与
-> `overlays/xmnn-dev/` 叠加栈。根命名空间（SDK→CLI 两层）规则见
+> 单一职责：本文件只约束 `invoke native.*` 命名空间与
+> `overlays/native-dev/` 叠加栈。根命名空间（SDK→CLI 两层）规则见
 > [invoke-tasks.md](invoke-tasks.md) 与 [sdk-connection.md](sdk-connection.md)；
 > 同族 quant 栈规则见 [quant-overlay.md](quant-overlay.md)，本文件不重述其
-> 通用条款，只定义 xmnn 栈特有契约。
+> 通用条款，只定义 native 栈特有契约。
 
 ## 1. 架构边界（四层不可混）
 
@@ -13,15 +13,15 @@
 | 根/`container.*` | podman-py SDK → CLI fallback | 单容器命令式生命周期（零回归对象） |
 | `env.*` | podman CLI 子进程 | client SDK 自举叠加镜像 |
 | `quant.*` | podman-compose 子进程 | ONNX 量化工作负载栈 |
-| **`xmnn.*`（本文件）** | **podman-compose 子进程（禁止 import podman）** | **npu_tvm/xmnn 源码调试 + Nuitka wheel 打包栈（overlays/xmnn-dev）** |
+| **`native.*`（本文件）** | **podman-compose 子进程（禁止 import podman）** | **npu_tvm/xmnn 源码调试 + Nuitka wheel 打包栈（overlays/native-dev）** |
 
-- xmnn.py 内**禁止** `import podman` / `from podman`；禁止把本层提升为
+- native.py 内**禁止** `import podman` / `from podman`；禁止把本层提升为
   `invoke run` 的后端或向根路径回流（同 C11 裁决）。
-- xmnn.py 现为 **StackSpec 声明 + 长任务薄封装**：唯一事实源 `XMNN_SPEC`，
+- native.py 现为 **StackSpec 声明 + 长任务薄封装**：唯一事实源 `NATIVE_SPEC`，
   六任务（build/up/down/ps/logs/smoke）由
-  `overlay_core.make_stack_tasks(XMNN_SPEC)` 工厂生成（`supports_offline=True`
+  `overlay_core.make_stack_tasks(NATIVE_SPEC)` 工厂生成（`supports_offline=True`
   时工厂额外生成 `save` / `load` 两个离线条目）；`build-tvm` /
-  `wheel` 两个栈内 exec 长任务保留在 xmnn.py，调内核 helper（gates /
+  `wheel` 两个栈内 exec 长任务保留在 native.py，调内核 helper（gates /
   ensure_runtime_ready / require_running / run_compose）。同构编排函数
   （门禁/prepare_env/compose_argv/残留自愈等）唯一定义在 overlay_core。
   红线：overlay_core 与 jpman_common 零栈知识（不得 import 具体栈模块、
@@ -34,21 +34,21 @@
 ## 2. 平台门禁 / WSL 桥接（硬约束）
 
 与 quant 栈完全同族：
-1. Windows 原生 CPython 一律先过 `overlay_core.gate_platform(XMNN_SPEC)`
+1. Windows 原生 CPython 一律先过 `overlay_core.gate_platform(NATIVE_SPEC)`
    ——**自动桥接优先**（2026-09-15 起）：经
-   `utils.run_in_wsl_bridge(extra_env_keys=XMNN_SPEC.bridge_env_keys)`
+   `utils.run_in_wsl_bridge(extra_env_keys=NATIVE_SPEC.bridge_env_keys)`
    把本任务原样转发到 WSL 发行版（默认 `podman-machine-default`（client
    专用 rootless 发行版，与 flapping 的默认 machine 相互独立、镜像存储
    不互通；`COMPOSE_WSL_DISTRO` 可覆盖，`none` 显式关闭））内执行，
    实时透传，返回码原样上抛；桥接成功即 `Exit(0)` 收尾，不再走
-   Windows 侧后续逻辑。栈专属透传键（5 个 XMNN_* 键 + NPU_TVM_PATH /
-   NPUUSERTOOLS_PATH / MODELS_PATH）由 `XMNN_SPEC.bridge_env_keys`
+   Windows 侧后续逻辑。栈专属透传键（5 个 NATIVE_* 键 + NPU_TVM_PATH /
+   NPUUSERTOOLS_PATH / MODELS_PATH）由 `NATIVE_SPEC.bridge_env_keys`
    声明，utils 只内置 `_BRIDGE_COMMON_ENV_KEYS` 通用键集；
 2. 桥接不可用（无 wsl.exe / 发行版缺失 / none 哨兵）才回退门禁
    `Exit(1)`（动态推导的 /mnt 路径 + 发行版检查 + WSL2 发行版 /
    `invoke env.run-cmd` 双路径中文指引）；
 3. POSIX 缺 podman-compose 二进制
-   `overlay_core.gate_compose_binary(XMNN_SPEC)` Exit(1)，
+   `overlay_core.gate_compose_binary(NATIVE_SPEC)` Exit(1)，
    提示 `pip install -e ".[compose]"`（复用既有 optional extra，不新增依赖）；
 4. 顺序固定：先平台后二进制；build/up/smoke/build-tvm/wheel 另过 daemon 预检
    （`overlay_core.ensure_runtime_ready`）。
@@ -83,9 +83,9 @@
 ## 4. 源码仅运行时挂载（构建期零接触）
 
 - 五个 bind（一律长语法 + `bind.create_host_path: true`）：
-  `XMNN_WORKSPACE→/workspace`、`NPU_TVM_PATH→/workspace/npu_tvm`、
+  `NATIVE_WORKSPACE→/workspace`、`NPU_TVM_PATH→/workspace/npu_tvm`、
   `NPUUSERTOOLS_PATH→/workspace/npuusertools`、`MODELS_PATH→/workspace/models`、
-  `XMNN_TEMP_PATH→/workspace/temp`。
+  `NATIVE_TEMP_PATH→/workspace/temp`。
 - invoke 路径把五个宿主路径解析为**绝对 POSIX 路径**注入（Dimension A
   复用 `to_posix_path`），相对路径相对 invoke cwd；三个源码路径做
   **存在性硬校验**（缺失 Exit 1 + 中文指引），workspace 与 temp 走幂等
@@ -121,9 +121,9 @@
   rm -rf build 可强制全量」——9p 无主文件场景该命令会失败。
 - **checkpoint 可写性契约**：Jupyter 以 devuser(1000) 运行，而
   rootless+9p/drvfs 下容器内 root 预建的
-  `$XMNN_WORKSPACE/.ipynb_checkpoints`
+  `$NATIVE_WORKSPACE/.ipynb_checkpoints`
   在容器视角为 0:0 755，devuser 保存 notebook 必报 Errno 13。invoke 侧
-  `overlay_core.prepare_env(XMNN_SPEC)` 在 mkdir 工作区后**必须**调用
+  `overlay_core.prepare_env(NATIVE_SPEC)` 在 mkdir 工作区后**必须**调用
   `utils.ensure_workspace_checkpoint_writable()`（quant 栈同族接线；
   幂等 0777、只改权限位不改属主、只作用该单一目录不递归、不触碰三个源码
   bind）；禁止把该职责退回镜像/entrypoint 层（薄叠加不覆盖基底）。
@@ -160,11 +160,11 @@
   强拆 infra conmon，rootlessport 在 WSL 被 `/init` 收养成为孤儿继续监听，
   新 pod bind 2223/8890 报 `address already in use`（exit 125，优雅 down
   同样可能触发，故②后必须接③）；裸 compose 翻车现场直接重跑
-  `invoke xmnn.up --skip-build` 即可恢复。**纪律：同一栈固定单一控制平面**
+  `invoke native.up --skip-build` 即可恢复。**纪律：同一栈固定单一控制平面**
   （长期裸 Windows compose 就不切 invoke，反之亦然）。quant/monetize
   同族接线；排障条目 W-I10。
 
-## 5. 打包内核契约（/opt/xmnn-builder 自包含）
+## 5. 打包内核契约（/opt/native-builder 自包含）
 
 - 资产：pyproject.toml（wheel 元数据单一事实源，19 依赖）、CMakeLists.txt、
   _xmnn_bootstrap.py、xmnn_bootstrap.pth、scripts/{build-wheel.sh,
@@ -201,10 +201,10 @@
   构建期守卫对 llvm-config --libdir 做同款 glob 硬检查并打印实际 SONAME。
   patchelf 缺失/数据目录缺失同为 FATAL（不允许 WARNING 静默出残 wheel）。
 - wheel 产物落 `$DIST_DIR`（默认 /workspace/dist，宿主可见）；Nuitka
-  中间产物在容器内 /opt/xmnn-builder/build；ccache 走命名卷
-  `xmnn-ccache`（挂 /root/.ccache，down 默认保留，--volumes 删除）。
+  中间产物在容器内 /opt/native-builder/build；ccache 走命名卷
+  `native-ccache`（挂 /root/.ccache，down 默认保留，--volumes 删除）。
 - **Jupyter 登录态命名卷（2026-09-20 起，C22）**：第二个命名卷
-  `xmnn-jupyter` 挂 `/home/devuser/.local/share/jupyter`，持久化
+  `native-jupyter` 挂 `/home/devuser/.local/share/jupyter`，持久化
   `jupyter_cookie_secret`/`notebook_secret`——否则密钥随容器临时层轮换，
   `down/up` 重建后浏览器旧标签页的 Terminal/notebook REST 全被踢回登录
   （请求在浏览器侧中止，服务端零日志，极易误判为 PTY/权限故障，详见
@@ -212,14 +212,15 @@
   copy-up 属主与可写性必须保持（真机实测）；down 默认保留，--volumes
   与 ccache 一并删除，删除后重新登录属预期。禁止用 bind 指宿主家目录。
 - **SSH host key 命名卷（2026-09-20 起）**：第三个命名卷
-  `xmnn-ssh-host-keys` 挂 `/var/lib/jpman/ssh-host-keys`。基底 entrypoint
+  `native-ssh-host-keys` 挂 `/var/lib/jpman/ssh-host-keys`。基底 entrypoint
   以 `mountpoint -q` 为唯一分流判据——挂载即持久模式（key 落卷内、
   `sshd_config` 的 `HostKey` 指向卷路径、清空 `/etc/ssh` 默认位置），
   未挂载则回退容器层生成并打 WARN（重建即轮换，客户端遭
-  `REMOTE HOST IDENTIFICATION HAS CHANGED`）。**卷名与落点必须与客户交付栈
+  `REMOTE HOST IDENTIFICATION HAS CHANGED`）。**落点必须与客户交付栈
   [offline-delivery](../../../offline-delivery/README.md) 的交付包
-  `release/compose.yaml`
-  一致**（同 `xmnn-ssh-host-keys` / 同 `/var/lib/jpman/ssh-host-keys`），
+  `products/xmnn-runtime/release/compose.yaml`
+  相同**（同 `/var/lib/jpman/ssh-host-keys`）；卷名随栈前缀（本栈
+  `native-ssh-host-keys`，交付栈为 `xmnn-ssh-host-keys`——卷本就按栈隔离），
   属主/权限（700 目录 + 600 key）由 entrypoint 自管；down 默认保留，
   `--volumes` 与上述两卷一并删除（删后指纹轮换属预期）。
 - **wheel 元数据（pyproject.toml 单一事实源，2026-09-16 起）**：
@@ -228,7 +229,7 @@
   （runpy get_code），console script 是交付镜像内 CLI 的唯一入口；
   `typer>=0.12` 必须在 dependencies（CLI 运行时依赖，不能只放 dev
   extra）。改 pyproject 后须重打 whl；运行中旧栈容器的
-  /opt/xmnn-builder 是镜像 COPY 副本（非挂载），需 `podman cp` 进容器
+  /opt/native-builder 是镜像 COPY 副本（非挂载），需 `podman cp` 进容器
   或重建镜像，打包才读得到新文件。
 - verify-wheel.sh 在 `--system-site-packages` 临时 venv 内装 wheel 跑
   10 项检查，结束删除 venv——base env 的源码调试链路零污染。
@@ -238,15 +239,15 @@
 - 三必需（`devices: [/dev/fuse:/dev/fuse]`、`security_opt: [label=disable]`、
   `cgroupns: host`，1.6.0 空操作须注释声明）、凭证四变量与
   `network_mode: bridge` 已**上移 `../_shared/base-rootless.yaml`**
-  （extends 单一事实源），xmnn 栈 compose.yaml 以
+  （extends 单一事实源），native 栈 compose.yaml 以
   `extends: {file: ../_shared/base-rootless.yaml, service: rootless-base}`
   继承，**禁止在栈文件重复声明**；严禁 privileged、docker.sock、host 网络。
 - `network_mode: bridge` 是**带证据的偏差**：2026-09-14 同机实证 machine
   无 systemd user bus 时默认项目网络 aardvark-dns 必失败；实证注释保留在
-  基文件与 xmnn compose.yaml 文件头，不得擅自删改。
+  基文件与 native compose.yaml 文件头，不得擅自删改。
 - 栈文件只保留栈专属字段：image/build/ports/五个 bind volumes、调试
-  environment、`labels.component`；`xmnn-ccache`/`xmnn-jupyter`/
-  `xmnn-ssh-host-keys` 三个命名卷等栈专属卷保持栈内声明（基文件无
+  environment、`labels.component`；`native-ccache`/`native-jupyter`/
+  `native-ssh-host-keys` 三个命名卷等栈专属卷保持栈内声明（基文件无
   volumes/build/env_file/ports）。extends
   合并语义（rec_merge / L2844-L2849 路径解析）见 [quant-overlay.md](quant-overlay.md) §4.1。
 - up 成功横幅**回读容器内实际凭证并打印**（C24，2026-09-20）：`.env` 凭证键
@@ -281,15 +282,15 @@
 - **SSH 会话另需镜像侧补齐（C30）**：sshd 派生会话**不继承容器 config env**，
   且 `ssh host "cmd"` 的最外层 `bash -c` 不读 `/etc/profile.d/*` 与
   `.bashrc`/`BASH_ENV`（bash 仅在执行**脚本文件**时读 BASH_ENV）——上述 5 个
-  变量必须由镜像内 `overlays/xmnn-dev/scripts/setup-ssh-env.sh` 以**双通道**
-  补齐（`/etc/profile.d/50-xmnn-dev-env.sh` 覆盖 login shell + sshd_config 的
-  `SetEnv` 覆盖 cmd 形态），构建期在 `Containerfile.xmnn-dev` Layer 5 与
+  变量必须由镜像内 `overlays/native-dev/scripts/setup-ssh-env.sh` 以**双通道**
+  补齐（`/etc/profile.d/50-native-dev-env.sh` 覆盖 login shell + sshd_config 的
+  `SetEnv` 覆盖 cmd 形态），构建期在 `Containerfile.native-dev` Layer 5 与
   `register-kernel.sh` 同批执行。硬约束：① `SetEnv` 在 sshd_config 是
   **first-wins**（写多行只认第一条，实测 `sshd -T` 仅回显首条），**禁止**
   写成多行，且脚本须 `sshd -t` 校验失败回滚 + `sshd -T` 计数自检；
   ② sshd **不按连接重读** sshd_config，运行期应用须 SIGHUP；③ 该值有三份副本
   （compose environment / kernel.json / 该脚本），由
-  [tests/test_xmnn_dev_ssh_env.py](../../tests/test_xmnn_dev_ssh_env.py) 逐字锁死；
+  [tests/test_native_dev_ssh_env.py](../../tests/test_native_dev_ssh_env.py) 逐字锁死；
   ④ SSH 默认落在 main env（cp314t，**无 numpy**），调试/打包用
   `/opt/conda/bin/python` 或 `conda activate base`；排障见 docs/04 C-I9。
 - 端口默认 2223/8890（与 onnx 的 2222/8888 错开，支持并行）。
@@ -297,12 +298,12 @@
 ## 7. 标签接缝
 
 沿用 podman-compose 自动写的 `io.podman.compose.project` /
-`io.podman.compose.service` 标签做运行探测（xmnn.smoke/wheel/build-tvm
+`io.podman.compose.service` 标签做运行探测（native.smoke/wheel/build-tvm
 的容器筛选），不自行发明标签键；业务标签仅允许 `org.specweave.*`。
 
 ## 8. 冒烟双路径
 
-- `_toolchain_guards.py`（镜像烤入 /opt/xmnn-dev-smoke）：构建期 root +
+- `_toolchain_guards.py`（镜像烤入 /opt/native-dev-smoke）：构建期 root +
   devuser 双身份执行；栈未运行时 `podman run --rm --entrypoint
   /opt/conda/bin/python <img> <script>` 也可独立执行（不依赖挂载）。
   §7「离线完备性」同在该脚本内（契约见 §10），随构建期双身份执行自动获得
@@ -310,7 +311,7 @@
 - `smoke_mounts.py`：仅栈运行路径（compose exec）；三挂载点断言始终执行；
   libtvm.so 缺席时跳过 import/算例段并 exit 0（首次未编译合法），存在时
   断言 tvm/vta/xmnn 来自 /workspace 源码并跑 tvm.build('llvm') 向量加。
-- 内核 `xmnn-dev`（argv=/opt/conda/bin/python，env 携带源码路径）注册到
+- 内核 `native-dev`（argv=/opt/conda/bin/python，env 携带源码路径）注册到
   main env share/jupyter/kernels，root/devuser 双可见，构建期断言。
 
 ## 9. 选型依据与边界
@@ -326,9 +327,9 @@
 ## 10. 离线契约
 
 - **两阶段契约（2026-09-17 固化，不新增命令名）**：本栈开发流程显式拆为
-  **阶段一「镜像环境构建」（有网侧，一次性）** = `xmnn.build` + `xmnn.save`，
-  与 **阶段二「启动开发环境并开发」（无网侧）** = `xmnn.load` +
-  `xmnn.up --offline` + `build-tvm` / `wheel` / `verify-wheel.sh`。两阶段是
+  **阶段一「镜像环境构建」（有网侧，一次性）** = `native.build` + `native.save`，
+  与 **阶段二「启动开发环境并开发」（无网侧）** = `native.load` +
+  `native.up --offline` + `build-tvm` / `wheel` / `verify-wheel.sh`。两阶段是
   既有任务的**用法契约**而非新入口，命令表面保持 10 个不变。契约要求：
   ① 阶段二可能触达的每一项外部依赖，都必须在阶段一固化进镜像；
   ② 阶段间只有单向传递（镜像归档 + 使用者自备源码树），阶段二**没有回补
@@ -356,12 +357,12 @@
   并说明阶段一如何覆盖该依赖。
 - **能力边界（不可越界承诺）**：离线只覆盖「运行 + 容器内编译/打包」，
   **不覆盖从零构建镜像**（构建期 apt / mamba / pip 三段均需联网）。无网
-  机器必须通过镜像归档获得镜像，任何试图让 `xmnn.build` 在离线可用的
+  机器必须通过镜像归档获得镜像，任何试图让 `native.build` 在离线可用的
   改动都属于越界，应走独立规格。
-- **单一事实源 `XMNN_OFFLINE`**（`0`/`1`，默认 `0`）：栈侧经
+- **单一事实源 `NATIVE_OFFLINE`**（`0`/`1`，默认 `0`）：栈侧经
   `StackSpec.supports_offline=True` 声明后由内核 `resolve_offline()` 解析
   （显式开 > 显式关 > `.env` > 默认，复用 `_resolve_bool` 三态语义）。
-  ⚠️ **必须解析后立即回写 `os.environ[XMNN_OFFLINE]`，且必须发生在
+  ⚠️ **必须解析后立即回写 `os.environ[NATIVE_OFFLINE]`，且必须发生在
   `gates()` 之前**：WSL 桥接只透传 `bridge_env_keys` 中列出的环境变量、
   **不转发 CLI 参数**，`--offline` 若不固化进环境就会在桥接后丢失。
   `.env` 键不写入 compose `environment` 段（保住 `test_compose_merge.py`
@@ -373,14 +374,14 @@
   compose 的 `build:` 段仅服务裸 `podman-compose` 路径。因此离线**只需**强制
   `skip_build=True`（`resolve_offline()` 结果）即可禁网，不再依赖额外的 `--no-build`
   开关；镜像缺失时 `_require_local_image(offline=True)` fail-fast Exit(1)，指引
-  `xmnn.save` / `xmnn.load`。
+  `native.save` / `native.load`。
 - **`save`/`load` 沿用既有镜像缓存约定**：tar.gz + 时间戳命名 + `latest`
   软链 + manifest/SHA256 校验（`default_build_cache_dir` /
   `find_latest_image_tar` / `validate_manifest_integrity`），不新造归档
   格式；`load` 必须先校验 manifest 再导入（拷贝损坏在 load 步暴露）。
   归档名另携带 **torch 形态**中缀（`-torch-<形态>-`），见 §11.5（C20）。
 - **容器内打包禁网 = 硬失败而非降级**：`build-wheel.sh` 读同一
-  `XMNN_OFFLINE`，三处行为——① numpy/scipy 导入失败时不再 pip 兜底而是
+  `NATIVE_OFFLINE`，三处行为——① numpy/scipy 导入失败时不再 pip 兜底而是
   `exit 2`；② Nuitka 的 `--assume-yes-for-downloads` 改由 `$NUITKA_DL_FLAG`
   承载（离线为空值，unquoted 展开整体消失）；③ pip 镜像 `case` 整体跳过，
   且缺系统 gcc（VTA FSIM 的 VLA 依赖）前置断言 `exit 2`。
@@ -412,7 +413,7 @@
   compose 文件集（`--device` + 只读库 bind），**不改镜像内容**，构建期没有
   GPU 相关对象可操作；镜像内唯一与 GPU 相关的差异是 torch 形态，已由
   §11.2 `build --torch` 承担。两维度正交，故 `up --gpu` 与 `--offline`
-  可自由组合——**`invoke xmnn.up --gpu --offline` 必须可用**（离线只禁构建：
+  可自由组合——**`invoke native.up --gpu --offline` 必须可用**（离线只禁构建：
   `offline → skip_build` + 本地镜像存在性预检，与设备探测零耦合；2026-09-20
   真机实测通过，容器零重建）。任何把 GPU 判定挪进构建期、或让离线分支拒绝
   `--gpu` 的改动都属回归。
@@ -519,12 +520,12 @@
   依据 C13 双 ABI 不可互换；pin `torch==2.14.0`（`TORCH_VERSION`）。
   **cu130 是 2026-09-20 实测唯一与 CPU 侧同 pin 的 CUDA 索引**
   （cu129→2.13.0、cu128→2.11.0 会引入版本漂移，勿改用）。
-- 形态落 `/opt/xmnn-torch-flavor`（空/cpu/cu130），由构建期守卫
+- 形态落 `/opt/native-torch-flavor`（空/cpu/cu130），由构建期守卫
   `_toolchain_guards.py` §8 断言「声明 vs 实物」：空→torch 必须缺席、
   cpu→已装且 `torch.version.cuda is None`、cu130→已装且非空。脚本缺失标记
   文件即判失败（Layer 2.5 未执行）。
-- **flavor 不参与镜像 tag**（沿用 `XMNN_IMAGE_TAG`，一 tag 一形态）；
-  换 flavor 后必须 `invoke xmnn.build` 重建，不能靠 `up` 增量刷新。
+- **flavor 不参与镜像 tag**（沿用 `NATIVE_IMAGE_TAG`，一 tag 一形态）；
+  换 flavor 后必须 `invoke native.build` 重建，不能靠 `up` 增量刷新。
   由此产生的「同 tag 双形态归档不可辨识」盲区由 §11.5（C20）在归档层补齐。
 - torch 属**可选依赖**，不写入 `builder/pyproject.toml`，故 §7 离线完备性
   守卫不受影响（空形态下镜像仍离线自足）；但 **cu130 形态的 CUDA 运行时
@@ -537,7 +538,7 @@
 
 `make_stack_tasks()` 的 `up`/`smoke` 形参按**能力并集**生成（`gpu_override`、
 `supports_offline` 四路正交 + 公共 `_up_impl`），**禁止 if/elif 互斥分支**：
-xmnn 同时声明两能力后，互斥写法会让 `--offline`/`--no-offline` 被 gpu 分支
+native 同时声明两能力后，互斥写法会让 `--offline`/`--no-offline` 被 gpu 分支
 吃掉，静默破坏 §10 离线契约。`up_help` 的 GPU 提示文本按 `gpu_device_env`
 动态生成（有该字段时提示双形态与自动探测顺序，无则提示硬编码 `/dev/dri`）。
 
@@ -569,18 +570,18 @@ form 切换 → 必须 down），以及端到端 `up_stack(gpu=True)` 在 gpu �
 
 **问题**：§11.2「flavor 不参与镜像 tag」+ §10「`load` 按 mtime 取最新归档」
 两条正确规则叠加出一个盲区——cpu 与 cu130 两份镜像 **tag 相同**
-（`localhost/xmnn-dev:latest`），若归档名也不带形态，则两者同族同名、共用
+（`localhost/native-dev:latest`），若归档名也不带形态，则两者同族同名、共用
 同一个 `-latest` 软链，离线机 `load` 会**静默导入错形态**，直到容器内
 `torch.cuda` 为空才暴露。
 
 - 形态的唯一事实源是镜像内 **LABEL `org.specweave.torch-flavor`**
-  （构建期 build-arg 烘入，与 `/opt/xmnn-torch-flavor` 标记文件并列）。
+  （构建期 build-arg 烘入，与 `/opt/native-torch-flavor` 标记文件并列）。
   `save_image` 复用已有的 `image_inspect_info` 调用顺带取 LABEL，
   **签名不变**（不新增参数）。
 - 归档名：`<safe_name>[-torch-<形态>]-<short_id12>-<YYYYMMDD-HHMMSS>.<ext>`，
   `-latest` 软链同 stem。**无形态时不加段**，命名与历史产物逐字一致。
 - **形态段必须带 `-torch-` 标记中缀**：镜像 tag 自带 `-latest` 段，无标记的
-  `-<形态>-` 会被反向正则左最早匹配成 `flavor=latest`（`...-xmnn-dev-latest-<shortid>-<ts>.tar.gz`）。
+  `-<形态>-` 会被反向正则左最早匹配成 `flavor=latest`（`...-native-dev-latest-<shortid>-<ts>.tar.gz`）。
   `client_core.save_image` 的命名与 `utils.archive_flavor` 的解析**严格互逆**，
   改动其一必须同步另一处。
 - `find_latest_image_tar(search_dir, flavor=None)`：`None` 不过滤（历史语义、
@@ -644,14 +645,14 @@ True，但容器内 `nvcc -V` 报 `not found`。根因两层：① torch cu130 �
 - **CUDA_HOME**：Containerfile 末尾 `ENV CUDA_HOME=/usr/local/cuda`（置文件末尾
   以免使既有层缓存失效）；无它则 `which nvcc` 推出 `/usr/local`（wrapper 所在
   目录）而非农场根，torch 扩展编译头文件解析错误。
-- **动态链接器登记（`/etc/ld.so.conf.d/10-xmnn-cuda.conf` + `ldconfig`）**：
+- **动态链接器登记（`/etc/ld.so.conf.d/10-native-cuda.conf` + `ldconfig`）**：
   真实 toolkit 安装器同款做法。缺这一步时**编译/链接都过、运行期才炸**——
   `libcudart.so.13: cannot open shared object file`（链接期有 nvcc 默认 `-L`，
   运行期 ld.so 不认识 `/usr/local/cuda/lib64`；2026-09-20 真机实测）。替代
   方案是让用户设 `LD_LIBRARY_PATH`，与本栈 C19 纪律（禁以 env 覆盖库路径）
   冲突，故必须在镜像层解决。
 - **构建期守卫**：`smoke/_toolchain_guards.py` §9 四查——① 标记
-  `/opt/xmnn-cuda-nvcc-version` 与 `nvcc --version` 实测版本一致；② 农场布局
+  `/opt/native-cuda-nvcc-version` 与 `nvcc --version` 实测版本一致；② 农场布局
   齐备（`bin/nvcc`、`include/cuda_runtime.h`、`lib64/libcudart.so`、
   `nvvm/libdevice`）；③ `ldconfig -p` 已登记 `libcudart`（产物可运行）；
   ④ **真编译 + 真链接**最小 `.cu`（`-c` 与 `-lcudart` 双段，**不运行**——构建

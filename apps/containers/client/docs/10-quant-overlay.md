@@ -29,7 +29,7 @@ invoke quant.down                    # 停止并清理
   已有镜像（缺失立即 Exit 1，指引 `quant.up` / `quant.build`）。compose 的
   `build:` 段仅服务裸 `podman-compose` 路径。
 
-- **Windows 原生自动桥接**：`quant.*`/`xmnn.*`/`monetize.*` 在 Windows 原生
+- **Windows 原生自动桥接**：`quant.*`/`native.*`/`monetize.*` 在 Windows 原生
   CPython 默认**自动桥接**到 WSL 发行版 `podman-machine-default`（client
   专用 rootless 发行版，与 flapping 的默认 machine 相互独立、镜像存储
   不互通；`COMPOSE_WSL_DISTRO` 可覆盖，`none` 显式关闭）内执行（2026-09-15

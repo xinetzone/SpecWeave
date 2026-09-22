@@ -12,7 +12,7 @@ pip 包 apache-tvm-ffi，无需 LLVM 22/Nuitka/编译 TVM），单一 cp314 GIL�
 
 ```bash
 # apps/containers/client
-pip install -e ".[compose]"           # 与 quant/xmnn 同一个可选依赖
+pip install -e ".[compose]"           # 与 quant/native 同一个可选依赖
 invoke monetize.build                 # 构建参数（pip 源、基底）默认读 .env（C15）
 invoke monetize.up --skip-build
 invoke monetize.build-native          # clang++ → score_opportunity.so
@@ -28,7 +28,7 @@ invoke monetize.down
   默认 `monetize.up` 内联构建一次即起容器；`--skip-build` 不做任何构建，故要求本地
   已有镜像（缺失立即 Exit 1，指引 `monetize.up` / `monetize.build`）。compose 的
   `build:` 段仅服务裸 `podman-compose` 路径。
-- 端口默认 **2224/8892**（与 quant 2222/8888、xmnn 2223/8890 错开）。
+- 端口默认 **2224/8892**（与 quant 2222/8888、native 2223/8890 错开）。
 - compose 公共段（rootless 三必需、凭证四变量、公共 labels/restart、
   `network_mode: bridge`）由三栈共享的
   [../_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml)
@@ -40,6 +40,6 @@ invoke monetize.down
   属预期）。未挂载时基底 entrypoint 回退「容器层生成 + 重建即轮换」并打 WARN。
 - 对 agent-monetize 仅 3 处跨平台适配（.dll→按平台选 .so/.dylib），
   Windows build.ps1 不回归；.so 不打入 wheel。
-- Windows 原生自动桥接同 quant/xmnn（`COMPOSE_WSL_DISTRO` 可指定发行版 / `none` 关闭回退门禁）。
+- Windows 原生自动桥接同 quant/native（`COMPOSE_WSL_DISTRO` 可指定发行版 / `none` 关闭回退门禁）。
 - 完整说明：[overlays/agent-monetize-dev/README.md](../overlays/agent-monetize-dev/README.md)；
   AI 硬约束 [.agents/rules/monetize-overlay.md](../.agents/rules/monetize-overlay.md)（C13）。

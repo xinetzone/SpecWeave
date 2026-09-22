@@ -1,30 +1,31 @@
-"""xmnn-dev 开发/打包叠加栈的 podman-compose 编排任务（opt-in 命名空间）。
+"""native-dev 原生开发/打包叠加栈的 podman-compose 编排任务（opt-in 命名空间）。
 
-声明式栈：唯一事实源 ``XMNN_SPEC``；六任务由 overlay_core.make_stack_tasks
+声明式栈：唯一事实源 ``NATIVE_SPEC``；八任务由 overlay_core.make_stack_tasks
 工厂生成，栈内 exec 长任务（build-tvm/wheel）用内核 helper 薄封装（形态 B）。
-驱动 ``overlays/xmnn-dev``：运行时 bind 挂载 npu_tvm / npuusertools / models
-源码（锚定仓库根 external/chaos）与根工作区 .temp（容器内 /workspace/temp，
-``XMNN_TEMP_PATH`` 可覆盖），容器内 LLVM 22 + Nuitka 4.2.1 工具链。
+驱动 ``overlays/native-dev``：运行时 bind 挂载 npu_tvm / npuusertools / models
+源码（锚定 external/chaos）与 .temp（容器内 /workspace/temp，
+``NATIVE_TEMP_PATH`` 可覆盖），容器内 LLVM 22 + Nuitka 4.2.1 工具链。
 
+栈本质是通用原生编译/wheel 打包平台：TVM 与 npuusertools 均为可改绑/可剥离
+的默认挂载变体，命名不绑定任何可插拔依赖；当前默认产品为 xmnn wheel。
 双 cp314 ABI 契约（C13，禁止互换）：base env /opt/conda = cp314 GIL（工具链
 守卫/内核/打包解释器 BASE_PYTHON）；main env /opt/conda/envs/main = cp314t
 free-threading（量化/运行时）。build-tvm/wheel 经 bash 脚本在栈内执行。
-
 10 个命令：build / up / down / ps / logs / smoke / save / load，加长任务
-build-tvm（栈内编译 TVM C++ 原生库）与 wheel（Nuitka 打包 xmnn whl，产物落
-workspace/dist）；save/load = 镜像归档导出/导入（无网机器交付通道）。
+build-tvm（栈内编译 TVM C++）与 wheel（Nuitka 打 xmnn whl 落 workspace/dist）；
+save/load = 镜像归档导出/导入（无网机器交付通道）。
 
 三组可选能力（默认全关 = 默认隔离，C18）：
   - GPU：``up --gpu`` 叠加 ``compose.gpu.yaml``，设备经 ``GPU_DEVICE`` 双形态
     插值（``/`` 开头=设备路径，缺省 ``/dev/dri``；否则=CDI 引用）；
   - torch：``build --torch cpu|cu130``（或 .env ``TORCH_FLAVOR``）才在 base env
-    装对应 wheel，形态落 /opt/xmnn-torch-flavor 供构建期守卫 §8 断言；
-  - 离线：``up --offline``（或 .env ``XMNN_OFFLINE=1``）不构建镜像，只以本地
-    已 load 镜像 ``up --no-build``，并注入 ``XMNN_OFFLINE=1`` 禁容器内联网。
+    装对应 wheel，形态落 /opt/native-torch-flavor 供构建期守卫 §8 断言；
+  - 离线：``up --offline``（或 .env ``NATIVE_OFFLINE=1``）不构建镜像，只以本地
+    已 load 镜像 ``up --no-build``，并注入 ``NATIVE_OFFLINE=1`` 禁容器内联网。
 
 平台姿态（内核统一）：Windows 原生优先透明桥接 WSL，不可桥接再门禁；POSIX
-缺 podman-compose 提示装 ``pip install -e ".[compose]"``。环境变量优先级：
-shell export > root client .env（override=False）> compose.yaml 内 ${VAR:-default}。
+缺 podman-compose 提示 ``pip install -e ".[compose]"``。环境变量优先级：shell export
+> root client .env（override=False）> compose.yaml 内 ${VAR:-default}。
 """
 from invoke import Context, task
 
@@ -41,33 +42,33 @@ from .overlay_core import (
     run_compose,
 )
 
-BUILDER_SCRIPTS = "/opt/xmnn-builder/scripts"
+BUILDER_SCRIPTS = "/opt/native-builder/scripts"
 
-XMNN_SPEC = StackSpec(
-    namespace="xmnn",
-    project="xmnn-dev",
-    service="xmnn",
-    overlay_subdir="xmnn-dev",
-    containerfile="Containerfile.xmnn-dev",
-    default_image_tag="localhost/xmnn-dev:latest",
+NATIVE_SPEC = StackSpec(
+    namespace="native",
+    project="native-dev",
+    service="native",
+    overlay_subdir="native-dev",
+    containerfile="Containerfile.native-dev",
+    default_image_tag="localhost/native-dev:latest",
     default_base_image="localhost/jupyter-podman-rootless:latest",
-    env_prefix="XMNN",
+    env_prefix="NATIVE",
     docs=TaskDocs(
-        build="构建 xmnn-dev 叠加镜像（main env LLVM 22 工具链 + base env Nuitka 打包栈）。",
-        up="渲染并启动 xmnn-dev 栈（podman-compose up -d，默认随带构建）。",
-        down="停止并删除 xmnn-dev 栈容器与网络（源码/workspace 绑定不受影响）。",
-        ps="查看 xmnn-dev 栈服务状态。",
-        logs="跟踪 xmnn-dev 栈服务日志（Ctrl+C 退出，不影响容器运行）。",
-        smoke="运行 xmnn-dev 冒烟：工具链守卫（始终）+ 源码挂载检查（栈运行时）。",
+        build="构建 native-dev 叠加镜像（main env LLVM 22 工具链 + base env Nuitka 打包栈）。",
+        up="渲染并启动 native-dev 栈（podman-compose up -d，默认随带构建）。",
+        down="停止并删除 native-dev 栈容器与网络（源码/workspace 绑定不受影响）。",
+        ps="查看 native-dev 栈服务状态。",
+        logs="跟踪 native-dev 栈服务日志（Ctrl+C 退出，不影响容器运行）。",
+        smoke="运行 native-dev 冒烟：工具链守卫（始终）+ 源码挂载检查（栈运行时）。",
     ),
-    down_volumes_help="同时删除 xmnn-ccache / xmnn-jupyter / xmnn-ssh-host-keys 命名卷（默认保留：Nuitka 编译缓存 + Jupyter 登录态 + SSH 主机指纹）",
+    down_volumes_help="同时删除 native-ccache / native-jupyter / native-ssh-host-keys 命名卷（默认保留：Nuitka 编译缓存 + Jupyter 登录态 + SSH 主机指纹）",
     ssh_default="2223",
     jupyter_default="8890",
-    jupyter_banner_note="（内核：Python 3.14 (xmnn dev)）",
+    jupyter_banner_note="（内核：Python 3.14 (native dev)）",
     up_footer=(
-        "[xmnn]   状态: invoke xmnn.ps    日志: invoke xmnn.logs",
-        "[xmnn]   冒烟: invoke xmnn.smoke",
-        "[xmnn]   编译 TVM: invoke xmnn.build-tvm    打包 wheel: invoke xmnn.wheel",
+        "[native]   状态: invoke native.ps    日志: invoke native.logs",
+        "[native]   冒烟: invoke native.smoke",
+        "[native]   编译 TVM: invoke native.build-tvm    打包 wheel: invoke native.wheel",
     ),
     gpu_override=True,
     gpu_device_env="GPU_DEVICE",
@@ -80,11 +81,11 @@ XMNN_SPEC = StackSpec(
         SourceMount("MODELS_PATH", "external/chaos/models", "模型目录"),
         # 临时目录（/workspace/temp）：缺省锚仓库根上溯四级 = 根工作区 .temp；
         # must_exist=False → 缺失幂等 mkdir（追加在末尾：既有用例锁 source_mounts[0]）。
-        SourceMount("XMNN_TEMP_PATH", "../../../../.temp", "临时目录（根工作区 .temp）", must_exist=False),
+        SourceMount("NATIVE_TEMP_PATH", "../../../../.temp", "临时目录（根工作区 .temp）", must_exist=False),
     ),
     smoke=SmokeSpec(
         python="/opt/conda/bin/python",
-        smoke_dir="/opt/xmnn-dev-smoke",
+        smoke_dir="/opt/native-dev-smoke",
         exec_scripts=("_toolchain_guards.py", "smoke_mounts.py"),
         standalone_scripts=("_toolchain_guards.py",),
         running_note="检测到运行中的栈，经 compose exec 执行守卫与挂载冒烟：",
@@ -92,15 +93,15 @@ XMNN_SPEC = StackSpec(
         done_message="冒烟通过",
     ),
     bridge_env_keys=(
-        "XMNN_IMAGE_TAG", "XMNN_CONTAINER_NAME", "XMNN_WORKSPACE",
-        "XMNN_SSH_PORT", "XMNN_JUPYTER_PORT", "XMNN_OFFLINE",
-        "NPU_TVM_PATH", "NPUUSERTOOLS_PATH", "MODELS_PATH", "XMNN_TEMP_PATH",
+        "NATIVE_IMAGE_TAG", "NATIVE_CONTAINER_NAME", "NATIVE_WORKSPACE",
+        "NATIVE_SSH_PORT", "NATIVE_JUPYTER_PORT", "NATIVE_OFFLINE",
+        "NPU_TVM_PATH", "NPUUSERTOOLS_PATH", "MODELS_PATH", "NATIVE_TEMP_PATH",
         "TORCH_FLAVOR", "GPU_DEVICE",
     ),
     supports_offline=True,
 )
 
-TASKS = make_stack_tasks(XMNN_SPEC)
+TASKS = make_stack_tasks(NATIVE_SPEC)
 build, up, down, ps, logs, smoke, save, load = (
     TASKS[k] for k in ("build", "up", "down", "ps", "logs", "smoke", "save", "load")
 )
@@ -126,9 +127,9 @@ def wheel(
     产物落 /workspace/dist（宿主 workspace/dist）。前置：
     栈在运行且 /workspace/npu_tvm/build/libtvm.so 已就位（否则先 build-tvm）。
     """
-    gates(XMNN_SPEC)
-    ensure_runtime_ready(XMNN_SPEC)
-    require_running(c, XMNN_SPEC)
+    gates(NATIVE_SPEC)
+    ensure_runtime_ready(NATIVE_SPEC)
+    require_running(c, NATIVE_SPEC)
     extra: list[str] = []
     if jobs is not None:
         extra += ["-e", f"NUITKA_JOBS={int(jobs)}"]
@@ -137,23 +138,23 @@ def wheel(
     if tvm_flags:
         extra += ["-e", f"TVM_COMPILE_FLAGS={tvm_flags}"]
     run_compose(
-        c, XMNN_SPEC, "exec", *extra, *offline_exec_env(XMNN_SPEC),
-        "-T", XMNN_SPEC.service,
+        c, NATIVE_SPEC, "exec", *extra, *offline_exec_env(NATIVE_SPEC),
+        "-T", NATIVE_SPEC.service,
         "bash", f"{BUILDER_SCRIPTS}/build-wheel.sh", pty=True,
     )
-    print("[xmnn] ✅ wheel 打包流程结束；产物目录：容器 /workspace/dist（宿主 workspace/dist）")
-    print("[xmnn]   10 项隔离验证（临时 venv，不污染源码环境）：")
-    print(f"           podman-compose exec xmnn bash {BUILDER_SCRIPTS}/verify-wheel.sh")
+    print("[native] ✅ wheel 打包流程结束；产物目录：容器 /workspace/dist（宿主 workspace/dist）")
+    print("[native]   10 项隔离验证（临时 venv，不污染源码环境）：")
+    print(f"           podman-compose exec native bash {BUILDER_SCRIPTS}/verify-wheel.sh")
 
 
 @task(auto_shortflags=False)
 def build_tvm(c: Context) -> None:
     """栈内编译 TVM C++ 原生库（inv config -f + USE_EXAMPLE_TARGET_HOOKS + inv make）。"""
-    gates(XMNN_SPEC)
-    ensure_runtime_ready(XMNN_SPEC)
-    require_running(c, XMNN_SPEC)
-    print("[xmnn] 首次全量编译耗时较长（ccache 命中后增量很快）；Ctrl+C 不影响容器。")
+    gates(NATIVE_SPEC)
+    ensure_runtime_ready(NATIVE_SPEC)
+    require_running(c, NATIVE_SPEC)
+    print("[native] 首次全量编译耗时较长（ccache 命中后增量很快）；Ctrl+C 不影响容器。")
     run_compose(
-        c, XMNN_SPEC, "exec", *offline_exec_env(XMNN_SPEC), "-T", XMNN_SPEC.service,
+        c, NATIVE_SPEC, "exec", *offline_exec_env(NATIVE_SPEC), "-T", NATIVE_SPEC.service,
         "bash", f"{BUILDER_SCRIPTS}/build-tvm.sh", pty=True,
     )

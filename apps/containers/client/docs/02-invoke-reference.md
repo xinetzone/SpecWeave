@@ -44,7 +44,7 @@ source: "README.md#4-命令速查"
 >
 > `TORCH_FLAVOR` 取值受**白名单**约束（空 / `cpu` / `cu130`），非法值在解析期 Exit 1——
 > 该值直接拼进 `download.pytorch.org/whl/<flavor>` 索引 URL，构建期网络请求目标不得由
-> 用户输入任意拼接（C18）。仅 `xmnn.build` 暴露 `--torch`。
+> 用户输入任意拼接（C18）。仅 `native.build` 暴露 `--torch`。
 
 > **构建执行者唯一（C16，2026-09-18）**：`invoke x.up` 恒以
 > `podman-compose up -d --no-build` 起容器——**镜像存在性只由内核 `build_image()` 负责**。

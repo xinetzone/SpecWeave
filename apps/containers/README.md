@@ -7,7 +7,7 @@
 | 成员 | 角色 | 入口 |
 |------|------|------|
 | [jupyter-podman-rootless/](jupyter-podman-rootless/README.md) | **构建端**：rootless Jupyter 镜像（Python 3.14t + Miniforge3 + SSH + Podman DinP + OMLMD/OLOT + Toolbx），三层后端 compose→SDK→CLI | README · [docs/](jupyter-podman-rootless/docs/README.md)（18 篇）· [AGENTS.md](jupyter-podman-rootless/AGENTS.md) |
-| [client/](client/README.md) | **消费端**：从 tar 缓存加载镜像 + 生命周期管理，SDK→CLI 两层后端，Windows 11 × WSL2 原生支持；含 quant/xmnn/monetize 三个 opt-in podman-compose 工作负载栈 | README · [docs/](client/docs/README.md)（13 篇）· [AGENTS.md](client/AGENTS.md) |
+| [client/](client/README.md) | **消费端**：从 tar 缓存加载镜像 + 生命周期管理，SDK→CLI 两层后端，Windows 11 × WSL2 原生支持；含 quant/native/monetize 三个 opt-in podman-compose 工作负载栈 | README · [docs/](client/docs/README.md)（13 篇）· [AGENTS.md](client/AGENTS.md) |
 | [shared/](shared/pyproject.toml) | **共享包** jpman-common 0.1.0：podman SDK 连接层唯一事实源 + 平台/进程/容器只读工具，两端共同依赖（无独立文档，由组层代管） | pyproject · `src/jpman_common/` · [组级规则](.agents/rules/shared-package.md) |
 | [offline-delivery/](offline-delivery/README.md) | **离线交付链路**：消费 `workspace/dist/*.whl` + 基镜像 `localhost/jupyter-podman-rootless:latest`，经 `bin/relpack`（零 Python CLI）产出客户可自持离线交付包；多产品分层 `products/<产品>/`，首个产品 xmnn-runtime | README · [docs/](offline-delivery/docs/README.md)（3 篇）· [AGENTS.md](offline-delivery/AGENTS.md) |
 

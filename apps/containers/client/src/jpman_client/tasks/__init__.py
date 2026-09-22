@@ -21,15 +21,15 @@ quant.* 工作负载栈命名空间（6 个命令，opt-in，podman-compose 子�
   invoke quant.build / up / down / ps / logs / smoke
   驱动 overlays/onnx-quantized 量化叠加栈；Windows 原生门禁，详见 quant.py
 
-xmnn.* 开发/打包栈命名空间（10 个命令，opt-in，podman-compose 子进程）：
-  invoke xmnn.build / up / down / ps / logs / smoke / build-tvm / wheel
-  invoke xmnn.save / load     导出/导入镜像归档（无网机器离线通道，up --offline）
-  驱动 overlays/xmnn-dev 开发打包栈（运行时挂载 npu_tvm/npuusertools 源码，
-  LLVM 22 + Nuitka 4.2.1 工具链）；Windows 原生门禁，详见 xmnn.py
+native.* 原生开发/打包栈命名空间（10 个命令，opt-in，podman-compose 子进程）：
+  invoke native.build / up / down / ps / logs / smoke / build-tvm / wheel
+  invoke native.save / load     导出/导入镜像归档（无网机器离线通道，up --offline）
+  驱动 overlays/native-dev 原生开发打包栈（运行时挂载 npu_tvm/npuusertools 源码，
+  LLVM 22 + Nuitka 4.2.1 工具链）；Windows 原生门禁，详见 native.py
 """
 from invoke import Collection
 
-from . import env_in_container, manage, monetize, quant, xmnn
+from . import env_in_container, manage, monetize, quant, native
 
 ns = Collection()
 
@@ -67,13 +67,13 @@ for _name, _task in quant.TASKS.items():
     quant_ns.add_task(_task, _name)
 ns.add_collection(quant_ns)
 
-# ---- xmnn.* XMNN 开发/打包栈命名空间（podman-compose，opt-in） ----
-xmnn_ns = Collection("xmnn")
-for _name, _task in xmnn.TASKS.items():
-    xmnn_ns.add_task(_task, _name)
-xmnn_ns.add_task(xmnn.build_tvm, "build-tvm")
-xmnn_ns.add_task(xmnn.wheel, "wheel")
-ns.add_collection(xmnn_ns)
+# ---- native.* Native 原生开发/打包栈命名空间（podman-compose，opt-in） ----
+native_ns = Collection("native")
+for _name, _task in native.TASKS.items():
+    native_ns.add_task(_task, _name)
+native_ns.add_task(native.build_tvm, "build-tvm")
+native_ns.add_task(native.wheel, "wheel")
+ns.add_collection(native_ns)
 
 # ---- monetize.* agent-monetize 开发/tvm-ffi 原生编译打包栈（podman-compose，opt-in） ----
 monetize_ns = Collection("monetize")
@@ -97,7 +97,7 @@ ns.configure(
             "client_image": "localhost/jupyter-podman-client:latest",
             "client_container": "jpman-client-env",
         },
-        # 注：quant/xmnn/monetize 三栈的镜像/端口/容器名等配置在 2026-09-15
+        # 注：quant/native/monetize 三栈的镜像/端口/容器名等配置在 2026-09-15
         # 声明式重构后唯一事实源是各栈模块的 StackSpec（经任务闭包消费），
         # 不再经 invoke Collection.configure 注入；勿在此重新登记，以免形成
         # 无人消费却误导维护者的第二事实源。

@@ -14,7 +14,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | forum-posting | "发帖"、"编辑帖子"、"回复帖子"、"跟帖"、"清理草稿"、"读取帖子"、"操作forum.trae.cn"、"Discourse论坛" | 2（forum-bot.py脚本 + integrated_browser MCP） | v1.1.0 | [skills/forum-posting/SKILL.md](../skills/forum-posting/SKILL.md) |
 | home-assistant | "智能家居"、"控制设备"、"查询状态"、"home assistant"、"ha_api" | 1（REST API，零第三方依赖） | v1.2.0 | [skills/home-assistant/SKILL.md](../skills/home-assistant/SKILL.md) |
 | git-commit-helper | "提交"、"commit"、"原子提交"、"代码提交"、"提交变更"、"git commit"、"保存更改" | 1（内置validate_commit.py脚本，三查暂存法） | v1.1.0 | [skills/git-commit-helper/SKILL.md](../skills/git-commit-helper/SKILL.md) |
-| client-overlay-scaffold | "新增/创建 client 叠加层"、"工作负载栈"、"新 invoke 命名空间 compose 栈"、"照 onnx-quantized/xmnn-dev/agent-monetize-dev 再做一个"、"overlay 脚手架" | 2（形态 A 运行时依赖栈 / 形态 B 工具链挂载栈；v1.1 起声明式 StackSpec + extends rootless-base 基段，compose/namespace/.env 三套骨架模板 + 交付清单 + 两张测试黄金表） | v1.1.0 | [skills/client-overlay-scaffold/SKILL.md](../skills/client-overlay-scaffold/SKILL.md) |
+| client-overlay-scaffold | "新增/创建 client 叠加层"、"工作负载栈"、"新 invoke 命名空间 compose 栈"、"照 onnx-quantized/native-dev/agent-monetize-dev 再做一个"、"overlay 脚手架" | 2（形态 A 运行时依赖栈 / 形态 B 工具链挂载栈；v1.1 起声明式 StackSpec + extends rootless-base 基段，compose/namespace/.env 三套骨架模板 + 交付清单 + 两张测试黄金表） | v1.1.0 | [skills/client-overlay-scaffold/SKILL.md](../skills/client-overlay-scaffold/SKILL.md) |
 | collect-api-decouple-cmd | "推理和后处理分开"、"采集/推理变成可选"、"已经推理过了复用日志"、"跳过设备执行"、"重放日志"、"只重新算指标" | 1（副作用边界切分 + dataclass 阶段契约 + run_<step> 开关逐层贯通 + 复用分支规避清理型工厂，I→F→A→V 执行卡） | v1.0.0 | [skills/collect-api-decouple-cmd/SKILL.md](../skills/collect-api-decouple-cmd/SKILL.md) |
 
 ### 工作流门面（3个）
@@ -52,7 +52,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 
 | Skill名 | 触发词 | 对应脚本 | 版本 | 路径 |
 |---------|--------|---------|------|------|
-| compose-overlay-ops | "启动/重建 xmnn-dev/onnx-quantized/agent-monetize 栈"、"xmnn.up/build/smoke"、"quant.up"、"容器 Exited(0)"、"netavark nft"、"Jupyter 保存 Errno 13"、"checkpoint 权限"、"WSL 发行版回收容器"、"tuna 构建叠加镜像" | invoke quant.*/xmnn.*/monetize.*（apps/containers/client，podman-compose 子进程层；保活锚→预检→build→up→浸泡→smoke SOP） | v1.0.0 | [skills/compose-overlay-ops/SKILL.md](../skills/compose-overlay-ops/SKILL.md) |
+| compose-overlay-ops | "启动/重建 native-dev/onnx-quantized/agent-monetize 栈"、"native.up/build/smoke"、"quant.up"、"容器 Exited(0)"、"netavark nft"、"Jupyter 保存 Errno 13"、"checkpoint 权限"、"WSL 发行版回收容器"、"tuna 构建叠加镜像" | invoke quant.*/native.*/monetize.*（apps/containers/client，podman-compose 子进程层；保活锚→预检→build→up→浸泡→smoke SOP） | v1.0.0 | [skills/compose-overlay-ops/SKILL.md](../skills/compose-overlay-ops/SKILL.md) |
 | jpman-podman-ops | "jpman"、"启动jupyter容器"、"podman machine"、"工作区挂载"、"容器WARN分诊"、"fuse device"、"rootless排障"、"WSL保活"、"rebuild" | jpman（apps/containers/jupyter-podman-rootless/bin，bash/cmd/ps1 三版本） | v1.2.0 | [skills/jpman-podman-ops/SKILL.md](../skills/jpman-podman-ops/SKILL.md) |
 | docker-cache-cmd | "保存镜像"、"缓存Docker镜像"、"docker缓存"、"镜像缓存"、"加载镜像"、"封存镜像"、"docker save/load"、"WSL重置恢复"、"镜像本地缓存" | docker-cache（bash脚本） | v1.0.0 | [skills/docker-cache-cmd/SKILL.md](../skills/docker-cache-cmd/SKILL.md) |
 | docker-wsl-bridge-cmd | "镜像转WSL"、"docker镜像导入WSL"、"镜像转rootfs"、"podman export转wsl"、"WSL重置后恢复开发环境"、"docker-wsl-bridge"、"没有Docker Desktop怎么启动镜像" | wsl+podman跨Shell编排 | v1.0.0 | [skills/docker-wsl-bridge-cmd/SKILL.md](../skills/docker-wsl-bridge-cmd/SKILL.md) |

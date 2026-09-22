@@ -15,7 +15,7 @@ source: "workspace/temp/debug.iranti_caffe-a8w4"
   - `compile/0-compile.log` — 编译日志
   - `compile/autotvm_bandwidth_first.log` — 自动调优日志
 
-> 目录定位：本报告分析的是工作负载栈 `xmnn-dev`（见 [11-xmnn-overlay.md](11-xmnn-overlay.md)）运行时产生的模型调试产物。
+> 目录定位：本报告分析的是工作负载栈 `native-dev`（见 [11-native-overlay.md](11-native-overlay.md)）运行时产生的模型调试产物。
 > 该产物位于客户端工作区的 `workspace/temp/` 临时区，可被清理；**2026-09-21 核验：该目录已被清理**，
 > 原始证据文件已不可复现，如需复算请先重新编译模型并归档产物（步骤见 §六）。
 

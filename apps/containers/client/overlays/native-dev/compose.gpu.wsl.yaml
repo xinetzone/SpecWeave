@@ -1,5 +1,5 @@
 ---
-# xmnn-dev GPU opt-in 覆盖层 · WSL2 形态（由 invoke 按 GPU 设备形态自动选择）
+# native-dev GPU opt-in 覆盖层 · WSL2 形态（由 invoke 按 GPU 设备形态自动选择）
 #
 # 加载条件（overlay_core.gpu_override_file）：resolved 形态为 `wsl` 且本文件存在。
 # 触发路径——未显式设 GPU_DEVICE 时自动探测到 /dev/dxg（podman-machine-default /
@@ -29,11 +29,11 @@
 # 任何覆盖都会冲掉 TVM 库路径（environment mapping 字段为替换而非追加）。
 #
 # 用法：
-#   invoke xmnn.up --gpu            # 自动形态判定（宿主无 /dev/dri 时走本文件）
+#   invoke native.up --gpu            # 自动形态判定（宿主无 /dev/dri 时走本文件）
 #   podman-compose -f compose.yaml -f compose.gpu.wsl.yaml up -d
 
 services:
-  xmnn:
+  native:
     devices:
       - /dev/dxg
     volumes:

@@ -471,10 +471,10 @@ devuser 身份 `nvcc -V` 通过（内核用户面同源）；`invoke xmnn.smoke`
 构建期守卫已把「标记==实测 / 农场 / ldconfig / 真编译真链接」四查固化；
 Jupyter `!nvcc -V` 与 exec 同 PATH（`/usr/local/bin` 在镜像默认 PATH）。
 
-**C 同步**：[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §11.2·§11.6（新增）、
+**C 同步**：[rules/xmnn-overlay.md](rules/native-overlay.md) §11.2·§11.6（新增）、
 [AGENTS.md](../AGENTS.md) C18 ② 与新增 **C25**、
-[docs/11](../docs/11-xmnn-overlay.md)、[docs/04](../docs/04-troubleshooting-guide.md)
-新增 **C-I7**、[overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)、
+[docs/11](../docs/11-native-overlay.md)、[docs/04](../docs/04-troubleshooting-guide.md)
+新增 **C-I7**、[overlays/xmnn-dev/README.md](../overlays/native-dev/README.md)、
 [.env.example](../.env.example)。提交 `fix(client)` = `1cd53ab48`、
 `docs(client)` = `10f633d64`。
 
@@ -524,20 +524,20 @@ SSH 默认落在 **main env**（cp314t，**无 numpy**），补上 `PYTHONPATH` 
 默认 `/etc/ssh/sshd_config`」为前置条件，避免误伤宿主/其它 sshd 进程。
 
 **C 原子提交**：
-- 新增 [overlays/xmnn-dev/scripts/setup-ssh-env.sh](../overlays/xmnn-dev/scripts/setup-ssh-env.sh)：
+- 新增 [overlays/xmnn-dev/scripts/setup-ssh-env.sh](../overlays/native-dev/scripts/setup-ssh-env.sh)：
   通道① `/etc/profile.d/50-xmnn-dev-env.sh`（`${VAR:=默认}` 语义，已注入则不覆盖）；
   通道② sshd_config 单行 `SetEnv`（含标记行、幂等清理历史多行形态）；`sshd -t` 校验
   失败整段回滚 + `sshd -T` 计数自检（把 first-wins 从静默失败变成**构建期硬失败**）
   + 运行期 SIGHUP；三个路径可经环境变量改写仅供测试（生产即默认值）。
-- [Containerfile.xmnn-dev](../overlays/xmnn-dev/Containerfile.xmnn-dev) Layer 5
+- [Containerfile.xmnn-dev](../overlays/native-dev/Containerfile.native-dev) Layer 5
   与 `register-kernel.sh` 同批执行该脚本（Layer 4 已 `COPY scripts/`，无需改 COPY）。
-- 新增 [tests/test_xmnn_dev_ssh_env.py](../tests/test_xmnn_dev_ssh_env.py) 7 例：
+- 新增 [tests/test_xmnn_dev_ssh_env.py](../tests/test_native_dev_ssh_env.py) 7 例：
   三份副本逐字防漂移（compose ↔ kernel.json ↔ 脚本）+ 临时目录实跑（profile.d 内容、
   单行 SetEnv、幂等含标记行、陈旧多行清理、`sshd -t` 失败回滚）。
 - 文档闭环：[docs/04](../docs/04-troubleshooting-guide.md) 新增 **C-I9**（含判据、
   老镜像一行 `export` 逃生、解释器口径、first-wins 说明）、
-  [docs/11](../docs/11-xmnn-overlay.md) 服务表后新增「SSH 会话自带源码调试环境」段
-  + 排障表 `import tvm` 行改写、[overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)
+  [docs/11](../docs/11-native-overlay.md) 服务表后新增「SSH 会话自带源码调试环境」段
+  + 排障表 `import tvm` 行改写、[overlays/xmnn-dev/README.md](../overlays/native-dev/README.md)
   调试工作流两段改写、[AGENTS.md](../AGENTS.md) P0 清单 C26 与变更日志。
 
 **验收**：`pytest tests/test_xmnn_dev_ssh_env.py -q` → **7 passed**；
@@ -596,7 +596,7 @@ history 与 `ps`），密码仍走独立行；④ 列宽与 `Jupyter ` 对齐，
   （端口随 env 漂移）。
 - 文档闭环：[docs/04](../docs/04-troubleshooting-guide.md) 新增 **C-I8**
   （含「宿主 22 ≠ 容器映射」判别式、`ssh-keygen -R "[localhost]:2223"`
-  一次性重置）、[docs/11](../docs/11-xmnn-overlay.md) 横幅描述、
+  一次性重置）、[docs/11](../docs/11-native-overlay.md) 横幅描述、
   [AGENTS.md](../AGENTS.md) P0 清单 C25 与变更日志。
 
 **验收**：`pytest tests/test_overlay_core.py -q` → **109 passed / 1 skipped**；
@@ -615,7 +615,7 @@ Layer 4 的**构建完成横幅**（非容器内 MOTD，此前表述有误，已
 `# services : ssh -p 2225 devuser@localhost（宿主端口，发布栈默认；XMNN_SSH_PORT 可覆盖）`
 + `#            JupyterLab http://localhost:8893（…；启动 invoke xmnnrt.up）`。
 口径与 `release/xmnnctl.ps1::Print-Banner`（`SSH : ssh -p $sport devuser@localhost`，
-端口取 `.env`）和 [overlays/xmnn-runtime/README.md](../overlays/xmnn-runtime/README.md)
+端口取 `.env`）和 [overlays/xmnn-runtime/README.md](../../offline-delivery/products/xmnn-runtime/release/README.md)
 L87（`ssh -p 2225 devuser@localhost`）一致——发布路径本就正确，仅镜像构建
 横幅是例外。该文件工作拷贝为 CRLF（git `text: auto` 归一化，`git diff` 仅
 2 增 1 删，无噪声），新增两行已对齐为 CRLF 以保持单文件行尾统一。未重建
@@ -667,7 +667,7 @@ initialize NVML: Driver/library version mismatch`（7 月升级后模块从未�
   显式/自动 CDI 均强制健康探针；--gpu help 同步。
 - 文档闭环（C10）：两份 `.env.example`、overlays/xmnn-dev/README.md
   §GPU/torch、[docs/04](../docs/04-troubleshooting-guide.md) 新增 **C-I10**
-  （W-I15/W-I16 同步新探测顺序）、[rules/xmnn-overlay.md](rules/xmnn-overlay.md)
+  （W-I15/W-I16 同步新探测顺序）、[rules/xmnn-overlay.md](rules/native-overlay.md)
   §11.1.1/§11.4。
 
 **验收**：`pytest tests/ -q` → **244 passed / 7 skipped / 2 failed**，
@@ -750,11 +750,11 @@ tests/test_tasks_surface.py -q` **142 passed / 1 skipped**（1 例
 `test_vs_real_rec_merge_probes` 为已知既有失败——真实 `rec_merge` 对
 `depends_on` list↔dict 归一化与模拟器分歧，非本次回归）。
 
-**C 同步**：[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §5 新增
+**C 同步**：[rules/xmnn-overlay.md](rules/native-overlay.md) §5 新增
 「SSH host key 命名卷」段（含与交付栈同卷名同落点的强制约定）、§6 命名卷
-计数更新；[docs/11-xmnn-overlay.md](../docs/11-xmnn-overlay.md) 新增持久化段、
+计数更新；[docs/11-xmnn-overlay.md](../docs/11-native-overlay.md) 新增持久化段、
 排障表 `REMOTE HOST IDENTIFICATION` 行改写为「已根治 + 剩余三情形甄别」；
-[overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md) 命令表/持久化块/
+[overlays/xmnn-dev/README.md](../overlays/native-dev/README.md) 命令表/持久化块/
 调试工作流三处同步；[AGENTS.md](../AGENTS.md) 变更日志同步。
 提交 `fix(client)` = `8ac12f7db`、`docs(client)` = `b0156c310`。
 
@@ -807,12 +807,12 @@ tests/test_tasks_surface.py -q` → **142 passed / 1 skipped**（1 例
 
 **C 同步**：[docs/04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md)
 W-I16 补第二轮实测（「库能加载≠设备可见」+ 三条 bind + `cuInit` 判据）、
-[docs/11-xmnn-overlay.md](../docs/11-xmnn-overlay.md) 明确**两维度正交**
+[docs/11-xmnn-overlay.md](../docs/11-native-overlay.md) 明确**两维度正交**
 （GPU=运行期 `up --gpu`／torch=构建期 `build --torch`，故无 `build --gpu`；
 `inv xmnn.up --gpu --offline` 实测可用）、
-[overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md) 同步三条 bind 与
+[overlays/xmnn-dev/README.md](../overlays/native-dev/README.md) 同步三条 bind 与
 「改 flavor 须重建镜像+重建容器」、
-[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §11.1「禁止引入 `build --gpu`」
+[rules/xmnn-overlay.md](rules/native-overlay.md) §11.1「禁止引入 `build --gpu`」
 + §11.1.2 两轮矩阵 + §11.4 测试锁。
 提交 `fix(client)` = `ee49d2857`、`docs(client)` = `f9c99832b`。
 
@@ -857,7 +857,7 @@ W-I16 补第二轮实测（「库能加载≠设备可见」+ 三条 bind + `cuI
 
 **C 同步**：[docs/04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md)
 新增 **W-I19**（含 `65534` 判据、换 inode 三步、chmod/chown 空操作陷阱）、
-[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §4 新增「工作区 9p 无主文件契约」。
+[rules/xmnn-overlay.md](rules/native-overlay.md) §4 新增「工作区 9p 无主文件契约」。
 提交 `docs(client)` = `ada8cf4de`。
 
 ### 2026-09-20 · `fix:` 基段声明 `logging: k8s-file`，恢复 `podman logs` 可读（C24 前置）
@@ -908,9 +908,9 @@ machine 重建即丢失，且影响同机其他项目。③ 老板——「日�
 **C 同步**：代码+测试提交 `fix(client)` = `c7c50bf1a`
 （`overlays/_shared/base-rootless.yaml` / `tests/test_compose_merge.py`）；
 文档提交 `docs(client)` = `582cef178`（
-[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §6 C24 前置条件、
+[rules/xmnn-overlay.md](rules/native-overlay.md) §6 C24 前置条件、
 [rules/quant-overlay.md](rules/quant-overlay.md) §3 基段字段清单、
-[docs/11-xmnn-overlay.md](../docs/11-xmnn-overlay.md) 凭证段、
+[docs/11-xmnn-overlay.md](../docs/11-native-overlay.md) 凭证段、
 [.agents/README.md](README.md) 基段行、
 [AGENTS.md](../AGENTS.md) P0 C24 条款⑤ + 变更日志、本文件）。
 
@@ -980,9 +980,9 @@ token 源改为 `回读值 or .env`（预设时二者同源，行为不变）；
 **C 同步**：代码 + 测试提交 `feat(client)` = `257d694fa`
 （`src/jpman_client/tasks/overlay_core.py` / `tests/test_overlay_core.py`）；
 文档提交 `docs(client)` = `aefcaf6d9`（
-[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §6 C24、
-[docs/11-xmnn-overlay.md](../docs/11-xmnn-overlay.md) 凭证段、
-[overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)、
+[rules/xmnn-overlay.md](rules/native-overlay.md) §6 C24、
+[docs/11-xmnn-overlay.md](../docs/11-native-overlay.md) 凭证段、
+[overlays/xmnn-dev/README.md](../overlays/native-dev/README.md)、
 [AGENTS.md](../AGENTS.md) P0 C24 + 变更日志、本文件）。
 
 ### 2026-09-20 · `fix:` `up --gpu` 每次都被判「另一控制平面创建」而强制重建栈（C23）
@@ -1053,7 +1053,7 @@ up -d --no-build`，随后「Jupyter 已就绪（127.0.0.1 → HTTP 302）」—
 **C 同步**：代码 + 测试提交 `fix(client)` = `6b1fb287d`（`src/jpman_client/tasks/overlay_core.py`/
 `tests/test_overlay_core.py`）；文档提交 `docs(client)` = `73ede8f84`（
 [rules/invoke-tasks.md](rules/invoke-tasks.md) C23、
-[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §4/§11.1.1/§11.4、
+[rules/xmnn-overlay.md](rules/native-overlay.md) §4/§11.1.1/§11.4、
 [docs/04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md) W-I10、本文件）；
 本条 hash 回填为第三条 `docs(client)` 提交。
 
@@ -1129,9 +1129,9 @@ md5 逐字一致**（`8c4b86e5…`），重建前 token 换取的登录 cookie �
 `tests/test_compose_merge.py`、`tests/test_overlay_core.py`）随 `fix(client)` =
 `bcfe811b4` 落库；文档 6 处（本文件、[AGENTS.md](../AGENTS.md) P0 C22 + 变更日志、
 [04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md) 新增 C-I6、
-[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §5/§6、
-[docs/11-xmnn-overlay.md](../docs/11-xmnn-overlay.md)、
-[overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)）随文档提交
+[rules/xmnn-overlay.md](rules/native-overlay.md) §5/§6、
+[docs/11-xmnn-overlay.md](../docs/11-native-overlay.md)、
+[overlays/xmnn-dev/README.md](../overlays/native-dev/README.md)）随文档提交
 `docs(client)` = `e45cd809c` 落库；本条 hash 由回填提交补记（沿用 C20/C21 三段式）。
 
 ### 2026-09-20 · `fix:` `up` 只等容器不等服务——Jupyter 就绪前浏览器必报 `ERR_EMPTY_RESPONSE`（C21）
@@ -1203,7 +1203,7 @@ HTTP 应答判就绪（并断言请求路径 = `UP_READY_PATH`）、路径可配
 `tests/test_up_readiness.py`/`tests/test_overlay_core.py`，4 文件）；文档提交
 `docs(client)` = `5fd7549b9`（[docs/04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md)
 W-I18、[rules/invoke-tasks.md](rules/invoke-tasks.md) C21 与测试节、
-[docs/11-xmnn-overlay.md](../docs/11-xmnn-overlay.md)、本文件）；本条 hash
+[docs/11-xmnn-overlay.md](../docs/11-native-overlay.md)、本文件）；本条 hash
 回填为第三条 `docs(client)` 提交。
 
 ### 2026-09-20 · `feat:` 离线归档携带 torch 形态身份——`xmnn.save`/`load` 不再静默串档（C20）
@@ -1272,7 +1272,7 @@ WSL2/Linux 的 bash 与 `os.geteuid`，Windows 原生必然失败，非本次回
 
 **C 同步**：代码 + 测试提交 `feat(client)` = `88e1a9f35`（`client_core.py`/`utils.py`/
 `overlay_core.py`/`tests/test_image_archive.py`/`tests/test_overlay_core.py`，5 文件）；
-文档提交 `docs(client)` = `2ee7a2dd4`（[rules/xmnn-overlay.md](rules/xmnn-overlay.md)
+文档提交 `docs(client)` = `2ee7a2dd4`（[rules/xmnn-overlay.md](rules/native-overlay.md)
 §10/§11.2/§11.5、[rules/invoke-tasks.md](rules/invoke-tasks.md) C20 与测试节、
 `overlays/xmnn-dev/README.md`、`docs/11-xmnn-overlay.md`、本文件）；本条 hash 回填为
 第三条 `docs(client)` 提交。
@@ -1421,7 +1421,7 @@ quant 同内核路径、**不开 `--gpu` 绝不探测设备**）与渲染断言 
 **C 同步**：代码 + 测试提交 `fix(client)` = `34c2bbf83`（`overlay_core.py`/`quant.py`/
 两个 `compose.gpu.wsl.yaml`/quant `compose.gpu.yaml`/两个测试文件，7 文件，
 预防措施 `[prevent: opt-in-device-runtime-preflight]`）；文档提交 `docs(client)`
-= `a946496c1`（13 文件：[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §11.1.1·§11.1.2·§11.4、
+= `a946496c1`（13 文件：[rules/xmnn-overlay.md](rules/native-overlay.md) §11.1.1·§11.1.2·§11.4、
 [rules/quant-overlay.md](rules/quant-overlay.md) §3·§4、`docs/04-troubleshooting-guide.md`
 W-I16、`docs/03`/`docs/README.md`/`docs/11` 速查表与说明、两个 overlay README 与
 `.env.example`、`AGENTS.md` P0 清单 C19 与变更日志、本文件）。
@@ -1524,7 +1524,7 @@ xmnn-runtime 既有先例，main env 是 free-threading，装 CUDA torch 会破�
 
 > **未做**：`build-wheel.sh` 全流程跑（需先 `build-tvm` 产出 libtvm.so，本次宿主 `workspace/npu_tvm/build/` 无该产物，全流程约需 20-40 分钟），故本轮未复现真实端到端打包；改旗标对产物的等价性以「同机同模块对拍产物文件名 + 可导入性一致」佐证。**镜像未重建，改动尚未在 `invoke xmnn.wheel` 路径生效。**
 
-**C 同步**：代码侧提交 `375189b68`（`fix(client)`，4 文件：build-wheel.sh / install-build-deps.py / Containerfile.xmnn-dev / _toolchain_guards.py）——预防措施 `[prevent: pipe-producer-truncation]`（版本行禁 `head` 掐断 Python 生产者）+ `[prevent: nuitka-supported-python]`（构建期守卫拦截解释器不在支持列表）。规则固化于 [rules/xmnn-overlay.md](rules/xmnn-overlay.md) §打包契约新增「模式旗标必须写 `--mode=module`」条款。**待用户在有网侧重跑 `inv xmnn.build` 重建 xmnn-dev 镜像使修复生效**（`/opt/xmnn-builder` 与 base env 均为烤入层）。
+**C 同步**：代码侧提交 `375189b68`（`fix(client)`，4 文件：build-wheel.sh / install-build-deps.py / Containerfile.xmnn-dev / _toolchain_guards.py）——预防措施 `[prevent: pipe-producer-truncation]`（版本行禁 `head` 掐断 Python 生产者）+ `[prevent: nuitka-supported-python]`（构建期守卫拦截解释器不在支持列表）。规则固化于 [rules/xmnn-overlay.md](rules/native-overlay.md) §打包契约新增「模式旗标必须写 `--mode=module`」条款。**待用户在有网侧重跑 `inv xmnn.build` 重建 xmnn-dev 镜像使修复生效**（`/opt/xmnn-builder` 与 base env 均为烤入层）。
 
 ### 2026-09-18 · `fix:` 构建执行者唯一——`up` 恒 `--no-build`，消除双构建（C16，方案 B 治本）
 
@@ -1578,7 +1578,7 @@ xmnn-runtime 既有先例，main env 是 free-threading，装 CUDA torch 会破�
 
 **验收点**：`pytest tests -q` → 158 passed / 7 skipped（新增 10 例全绿；2 个存量失败与本次无关：`.env.example` CRLF、podman-compose depends_on list/dict 合并，已另行报告）；真机 `inv xmnn.build` 重建镜像后 `inv xmnn.wheel` 端到端产出 whl（含 CMake 组装阶段）；外部源码树 `git status` 干净、无 `.bak*`/`.tmp.*` 残留。
 
-**C 同步**：预防措施 `[prevent: no-metadata-copy-on-bind-tree]`——容器内对宿主 bind 树一律「备份只复制字节、还原写回原 inode、组装用 cp -R」，规则固化于 [rules/xmnn-overlay.md](rules/xmnn-overlay.md) §5 与 P0 清单 C12，daemon-free 静态守卫防回退。
+**C 同步**：预防措施 `[prevent: no-metadata-copy-on-bind-tree]`——容器内对宿主 bind 树一律「备份只复制字节、还原写回原 inode、组装用 cp -R」，规则固化于 [rules/xmnn-overlay.md](rules/native-overlay.md) §5 与 P0 清单 C12，daemon-free 静态守卫防回退。
 
 ### 2026-09-17 · `fix:` 清扫运行时依赖计数的陈旧文案（19 → 动态表述）
 
@@ -1600,7 +1600,7 @@ xmnn-runtime 既有先例，main env 是 free-threading，装 CUDA torch 会破�
 
 **验收点**：`pytest tests -q` 无回归（本次为容器内脚本 + 守卫 + 文档改动，Python 编排侧零变化）；守卫 `py_compile` 通过；check-links 无新增断链；镜像重建后 Layer 5 应打印 §7 全 `[OK]`（离线自足即过程一的验收条件，真机 `xmnn.build` 待跑）。
 
-**C 同步**：预防措施 `[prevent: phase1-self-sufficiency-guard]`——把"离线能不能用"从运行期问题转为构建期断言，缺口结构性前移到有网侧；规则固化于 [rules/xmnn-overlay.md](rules/xmnn-overlay.md) §10 三条与 P0 清单 C12。
+**C 同步**：预防措施 `[prevent: phase1-self-sufficiency-guard]`——把"离线能不能用"从运行期问题转为构建期断言，缺口结构性前移到有网侧；规则固化于 [rules/xmnn-overlay.md](rules/native-overlay.md) §10 三条与 P0 清单 C12。
 
 ### 2026-09-17 · `feat:` xmnn.\* 离线模式——镜像归档 save/load + `XMNN_OFFLINE` 全链路禁网
 
@@ -1616,7 +1616,7 @@ xmnn-runtime 既有先例，main env 是 free-threading，装 CUDA torch 会破�
 
 **验收点（测试锁行为）**：`tests/test_overlay_core.py` 新增 10 例（声明范围仅 xmnn / 环境回写 V-1 / `.env` 回退与同开同关冲突 / `--no-build` V-2 / `exec -e` 门控 / `build` 首行 fail-fast 且 `runner.commands == []` / 缺镜像 Exit / `up` 任务体参数存活至 argv / `save`·`load` 仅离线栈生成），`test_tasks_surface.py` 黄金清单同步；`apps/containers/client` 下 `pytest tests -q` → **147 passed, 1 skipped**；`bash -n build-wheel.sh` exit 0。
 
-**C 同步**：预防措施 `[prevent: offline-hard-fail]`——离线路径一律"硬失败 + 中文指引"，禁止静默降级为联网重试（无网环境下静默联网只会把真实原因埋在超时里）；规则固化于 [rules/xmnn-overlay.md](rules/xmnn-overlay.md) §10 与 P0 清单 C12，人类文档见 [../overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md) §两个过程（该章节 2026-09-17 由「离线模式」更名而来），`.env.example`（client 与 overlay 两处键集合）同步登记。
+**C 同步**：预防措施 `[prevent: offline-hard-fail]`——离线路径一律"硬失败 + 中文指引"，禁止静默降级为联网重试（无网环境下静默联网只会把真实原因埋在超时里）；规则固化于 [rules/xmnn-overlay.md](rules/native-overlay.md) §10 与 P0 清单 C12，人类文档见 [../overlays/xmnn-dev/README.md](../overlays/native-dev/README.md) §两个过程（该章节 2026-09-17 由「离线模式」更名而来），`.env.example`（client 与 overlay 两处键集合）同步登记。
 
 ### 2026-09-17 · `fix:` load 时 Podman 未启动被误报"镜像版本不符"——双脚本新增守护可达性预检与 load 退出码检查
 
@@ -1706,7 +1706,7 @@ xmnn-runtime 既有先例，main env 是 free-threading，装 CUDA torch 会破�
 
 **关联七概念场景**：场景3「重构优化」（I→F→A→V→C，session sc-20260916-xmnn-wheel-split，未提交，commit hash 待补）。
 
-**洞察与方案**：`inv xmnn.wheel` 原在重型开发镜像内完成构建后，verify-wheel.sh 仅以同镜像 `--system-site-packages` venv + `--no-deps` 验证（证明"开发镜像里能 import"，从未证明干净客户机从零安装）；且 [xmnn-overlay.md §9](../.agents/rules/xmnn-overlay.md) 早已裁决 wheel 消费型 scratch 栈"不回流 xmnn-dev"但从未落地。第一性原理：wheel 是构建器→运行时唯一制品契约（cp314 GIL、`_libs` RPATH `$ORIGIN` 自包含、内置 `.pth`、19 依赖元数据），两镜像 FROM 同一 rootless 基底即 ABI 同源。新增第四栈 `overlays/xmnn-runtime`（namespace `xmnnrt`，形态 A，2225/8893）：whl 装 base env `/opt/conda` + 补 ipykernel + 注册 `Python 3.14 (xmnn runtime)` 交付内核（env 仅 PATH 白名单）；零 LLVM/Nuitka 工具链、零源码挂载。
+**洞察与方案**：`inv xmnn.wheel` 原在重型开发镜像内完成构建后，verify-wheel.sh 仅以同镜像 `--system-site-packages` venv + `--no-deps` 验证（证明"开发镜像里能 import"，从未证明干净客户机从零安装）；且 [xmnn-overlay.md §9](../.agents/rules/native-overlay.md) 早已裁决 wheel 消费型 scratch 栈"不回流 xmnn-dev"但从未落地。第一性原理：wheel 是构建器→运行时唯一制品契约（cp314 GIL、`_libs` RPATH `$ORIGIN` 自包含、内置 `.pth`、19 依赖元数据），两镜像 FROM 同一 rootless 基底即 ABI 同源。新增第四栈 `overlays/xmnn-runtime`（namespace `xmnnrt`，形态 A，2225/8893）：whl 装 base env `/opt/conda` + 补 ipykernel + 注册 `Python 3.14 (xmnn runtime)` 交付内核（env 仅 PATH 白名单）；零 LLVM/Nuitka 工具链、零源码挂载。
 
 **whl 暂存契约**：`xmnnrt.build/up` 调内核构建前把 whl 暂存进 overlay `wheels/`（显式 `--wheel` > workspace/dist 最新 mtime > 已暂存复用 > Exit 1 指引；暂存区同时只留一个 whl；whl 不入 git、.dockerignore 反放行）。build/up 为 ≤160 行声明模块中的薄封装（与 build-tvm/wheel 长任务同性质豁免），不复制任何编排函数（C14）。
 

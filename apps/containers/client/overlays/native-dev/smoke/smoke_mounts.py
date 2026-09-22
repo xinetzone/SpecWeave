@@ -1,8 +1,8 @@
-"""xmnn-dev 运行期冒烟：源码挂载可见性 + tvm/vta/xmnn 源码调试链路。
+"""native-dev 运行期冒烟：源码挂载可见性 + tvm/vta/xmnn 源码调试链路。
 
 运行方式（栈在运行时）：
-  podman-compose exec -T xmnn /opt/conda/bin/python /opt/xmnn-dev-smoke/smoke_mounts.py
-  invoke xmnn.smoke
+  podman-compose exec -T native /opt/conda/bin/python /opt/native-dev-smoke/smoke_mounts.py
+  invoke native.smoke
 
 语义：
   - 始终断言三个 bind 挂载点与关键子目录可访问；
@@ -45,8 +45,8 @@ libtvm = TVM_ROOT / "build" / "libtvm.so"
 
 if not libtvm.is_file():
     print("\n[SKIP] libtvm.so 尚未构建（", libtvm, "）")
-    print("       首次环境的合法状态。编译 TVM：inv xmnn.build-tvm")
-    print("       随后打包 wheel：inv xmnn.wheel")
+    print("       首次环境的合法状态。编译 TVM：inv native.build-tvm")
+    print("       随后打包 wheel：inv native.wheel")
     if failures:
         print(f"\n[FAIL] 挂载点断言 {len(failures)} 项未通过：{failures}")
         sys.exit(1)
@@ -86,4 +86,4 @@ print("")
 if failures:
     print(f"[FAIL] {len(failures)} 项未通过：{failures}")
     sys.exit(1)
-print("[OK] xmnn source mounts + imports + tvm.build smoke passed")
+print("[OK] native source mounts + imports + tvm.build smoke passed")

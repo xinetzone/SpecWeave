@@ -1,7 +1,7 @@
 # Containerfile.agent-monetize — agent-monetize 源码调试 + tvm-ffi 原生
 # 编译/打包叠加层（Podman rootless 谱系）
 #
-# 与 xmnn-dev 的差异（形态 B 轻量变体）：
+# 与 native-dev 的差异（形态 B 轻量变体）：
 #   - 工具链用 apt clang（单 .cc 编译，对 LLVM 版本不敏感），不装 conda LLVM 22
 #   - tvm-ffi 头/库全部来自 pip wheel apache-tvm-ffi（自带 libtvm_ffi.so）
 #   - 单一 cp314 GIL ABI（base env），无 Nuitka/free-threading 双 ABI

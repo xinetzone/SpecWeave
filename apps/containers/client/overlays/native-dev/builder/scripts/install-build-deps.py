@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """把 xmnn wheel 的打包工具链与 pyproject 声明的全部运行时依赖装入 base env（cp314 GIL）。
 
-单一事实源：运行时依赖直接读 /opt/xmnn-builder/pyproject.toml 的
+单一事实源：运行时依赖直接读 /opt/native-builder/pyproject.toml 的
 [project].dependencies，禁止在 Containerfile 重复维护一份清单。
 在叠加镜像构建期以 /opt/conda/bin/python 调用。
 """
@@ -11,7 +11,7 @@ import sys
 import tomllib
 from pathlib import Path
 
-PYPROJECT = Path("/opt/xmnn-builder/pyproject.toml")
+PYPROJECT = Path("/opt/native-builder/pyproject.toml")
 
 # 打包工具链（不进入 wheel 元数据，仅镜像内需要）
 BUILD_TOOLS = [

@@ -306,7 +306,7 @@ def image_load_cli_command(runtime: str, tar_path: Path | str) -> str:
 def ensure_workspace_checkpoint_writable(workspace: Path | str) -> None:
     """确保工作区根的 Jupyter checkpoint 目录对容器内非 root 服务可写。
 
-    背景（2026-09-14 xmnn-dev 栈实测）：基底 entrypoint 仅对 ``/workspace`` 根
+    背景（2026-09-14 native-dev 栈实测）：基底 entrypoint 仅对 ``/workspace`` 根
     本身 chmod 777（非递归，保护宿主文件属主），而 Jupyter 经 supervisord 以
     devuser（容器内 uid 1000）运行。rootless podman 经 9p/drvfs 挂载宿主工作区
     时，容器内 root 预建的 ``.ipynb_checkpoints`` 在容器视角属主为 0:0、模式
@@ -335,7 +335,7 @@ def ensure_workspace_checkpoint_writable(workspace: Path | str) -> None:
 # Windows 原生 → WSL 发行版透明桥接（compose 子进程层的平台门禁平替）
 #
 # 背景（F/V 阶段 2026-09-15 设计）：
-#   quant/xmnn/monetize 三栈的 podman-compose 短语法挂载在 Windows 原生 CPython
+#   quant/native/monetize 三栈的 podman-compose 短语法挂载在 Windows 原生 CPython
 #   存在已知缺陷（os.makedirs 误建源路径等），原设计一律 _gate_platform() 门禁
 #   Exit(1)。但"门禁"是保护手段而非目标——本质目标 = Windows 原生输入
 #   ``invoke <stack>.build`` 能正确构建。已实证的 POSIX 执行环境
@@ -596,7 +596,7 @@ def archive_flavor(filename: str) -> str:
 
     与 ``client_core.save_image`` 的命名互为倒影。形态段的标记中缀 ``-torch-``
     不可省：无标记的 ``-<flavor>-`` 会与镜像 tag 自带的 ``-latest`` 段互相冒充，
-    例如 ``localhost-xmnn-dev-latest-<shortid>-<ts>.tar.gz`` 会被反向解析成
+    例如 ``localhost-native-dev-latest-<shortid>-<ts>.tar.gz`` 会被反向解析成
     ``flavor="latest"``（左最早匹配必然落在 ``-latest-`` 上）。
 
     只解析真实归档名；``*-latest`` 软链接由 :func:`find_latest_image_tar` 跳过，
@@ -899,7 +899,7 @@ def refresh_host_keys(cfg: ContainerConfig) -> None:
 # ── 服务就绪探测（C21）────────────────────────────────────────────────────────
 # 「容器 Up」≠「服务可访问」：rootless 端口转发器（rootlessport）在容器起来的
 # **瞬间**就 accept 宿主端口上的连接，而容器内 supervisord → entrypoint →
-# jupyter-lab 真正 listen 需要数十秒（xmnn 实测 66 秒）。窗口期内连接被接受后
+# jupyter-lab 真正 listen 需要数十秒（native 实测 66 秒）。窗口期内连接被接受后
 # **立即关闭且零字节返回**，浏览器报 `ERR_EMPTY_RESPONSE`（而非更易理解的
 # `ECONNREFUSED`），用户被「✅ 栈已启动」文案与「端口可连」双重误导。
 #

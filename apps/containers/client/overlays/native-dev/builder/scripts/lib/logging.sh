@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# xmnn-dev 共享构建日志函数库（vendor 自包含，禁止跨目录引用外部 chaos 工程）
+# native-dev 共享构建日志函数库（vendor 自包含，禁止跨目录引用外部 chaos 工程）
 #
 # 用法：在构建脚本中 source 本文件：
 #
@@ -80,7 +80,7 @@ on_error() {
      - C/C++ 编译失败     → Nuitka/LLVM 错误，查看编译日志
      - cmake 打包失败     → 检查 NUITKA_OUTPUT_DIR / libtvm.so / LLVM_LIB_DIR
   2. 资源不足（Killed / out of memory）：降低 NUITKA_JOBS（如 4），建议 ≥8GB 内存
-  3. 前置缺失：libtvm.so 不存在 → 先运行 scripts/build-tvm.sh（inv xmnn.build-tvm）
+  3. 前置缺失：libtvm.so 不存在 → 先运行 scripts/build-tvm.sh（inv native.build-tvm）
 HELP
     fi
 

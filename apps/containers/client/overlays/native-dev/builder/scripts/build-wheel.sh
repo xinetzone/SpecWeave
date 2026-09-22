@@ -1,10 +1,10 @@
 #!/bin/bash
 # ==============================================================================
-# build-wheel.sh — xmnn-dev 叠加层容器内 Nuitka 打包脚本（运行时调用）
+# build-wheel.sh — native-dev 叠加层容器内 Nuitka 打包脚本（运行时调用）
 #
 # 调用方式：
-#   invoke xmnn.wheel                         # client 任务（经 compose exec）
-#   podman-compose exec xmnn bash /opt/xmnn-builder/scripts/build-wheel.sh
+#   invoke native.wheel                       # client 任务（经 compose exec）
+#   podman-compose exec native bash /opt/native-builder/scripts/build-wheel.sh
 #
 # 流程：环境自检 → libtvm.so 前置检查 → Nuitka 串行编译 tvm → 并行 vta/xmnn
 #       → python -m build 组装 wheel。
@@ -25,7 +25,7 @@
 set -Eeuo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-BUILDER_DIR="${BUILDER_DIR:-$(cd "$SCRIPT_DIR/.." && pwd)}"   # /opt/xmnn-builder
+BUILDER_DIR="${BUILDER_DIR:-$(cd "$SCRIPT_DIR/.." && pwd)}"   # /opt/native-builder
 
 source "${SCRIPT_DIR}/lib/logging.sh"
 LOG_FILE=/dev/null
@@ -35,9 +35,9 @@ log_set_error_help '  Nuitka 打包失败排查：
   1. "fatal error: xxx.h: No such file" → 工具链缺失，检查叠加镜像构建层
   2. "LLVM error" → 确认 LLVM_CONFIG 指向 main env 的 llvm-config（22.1.x）
   3. "cloudpickle/dill serialization error" → 确认 --enable-plugin=dill-compat
-  4. "Killed" / "out of memory" → 降低并发：NUITKA_JOBS=4 inv xmnn.wheel --jobs 4
-  5. libtvm.so 缺失 → 先执行：inv xmnn.build-tvm（或 scripts/build-tvm.sh）
-  6. 交互调试：podman-compose exec xmnn bash，cd /opt/xmnn-builder 重跑本脚本
+  4. "Killed" / "out of memory" → 降低并发：NUITKA_JOBS=4 inv native.wheel --jobs 4
+  5. libtvm.so 缺失 → 先执行：inv native.build-tvm（或 scripts/build-tvm.sh）
+  6. 交互调试：podman-compose exec native bash，cd /opt/native-builder 重跑本脚本
   7. "Unmet dependencies (checked against /opt/conda/bin/python): cmake>=3.18"
      → PYTHONPATH 污染致 scikit-build-core 误判 PyPI cmake 已装（本脚本已用
        env -u PYTHONPATH 规避）；若复现，先 `env -u PYTHONPATH python -m build ...`'
@@ -70,8 +70,8 @@ LLVM_LIB_DIR="$("$LLVM_CONFIG" --libdir)"
 # ── libtvm.so 前置检查（消费挂载源码树中的既有 TVM 构建产物）──────────────
 if [ ! -f "$TVM_ROOT/build/libtvm.so" ]; then
     log_error "未找到 $TVM_ROOT/build/libtvm.so"
-    echo "  → 请先在运行中的栈内编译 TVM：inv xmnn.build-tvm"
-    echo "    （或 podman-compose exec xmnn bash /opt/xmnn-builder/scripts/build-tvm.sh）"
+    echo "  → 请先在运行中的栈内编译 TVM：inv native.build-tvm"
+    echo "    （或 podman-compose exec native bash /opt/native-builder/scripts/build-tvm.sh）"
     exit 2
 fi
 
@@ -85,9 +85,9 @@ VTA_PKG="$VTA_PYTHON/vta"
 # ── ccache 配置（命名卷 /root/.ccache 由 compose 挂载持久化）──────────────
 export CCACHE_MAXSIZE=5G
 CLEAN_REBUILD="${CLEAN_REBUILD:-0}"
-# 离线模式（invoke xmnn.up --offline / root .env XMNN_OFFLINE=1 经 exec -e 注入）：
+# 离线模式（invoke native.up --offline / root .env NATIVE_OFFLINE=1 经 exec -e 注入）：
 # 禁用一切联网兜底，缺依赖即硬失败，不在无网机器上静默挂起或拉取。
-XMNN_OFFLINE="${XMNN_OFFLINE:-0}"
+NATIVE_OFFLINE="${NATIVE_OFFLINE:-0}"
 mkdir -p "$CCACHE_DIR"
 if command -v ccache >/dev/null 2>&1; then
     export NUITKA_CCACHE_BINARY="$(command -v ccache)"
@@ -112,7 +112,7 @@ NOFOLLOW_IMPORTS="${NOFOLLOW_IMPORTS:-torch,torchvision,onnx2pytorch}"
 TVM_COMPILE_FLAGS="${TVM_COMPILE_FLAGS:-}"
 # Nuitka 辅助工具（ccache/depends 等）的下载确认旗标：离线时置空（不带引号展开 →
 # 零词消失），使 Nuitka 在需要下载时直接失败而非交互式等待或静默联网。
-if [ "$XMNN_OFFLINE" = "1" ]; then
+if [ "$NATIVE_OFFLINE" = "1" ]; then
     NUITKA_DL_FLAG=""
 else
     NUITKA_DL_FLAG="--assume-yes-for-downloads"
@@ -126,9 +126,9 @@ nofollow_args() {
 }
 
 log_section "Environment Check"
-if [ "$XMNN_OFFLINE" = "1" ] && ! command -v gcc >/dev/null 2>&1; then
-    log_error "离线模式（XMNN_OFFLINE=1）：系统 gcc 缺失（镜像层应已 apt 安装 gcc/g++），无法编译"
-    log_error "请在联网机器重建镜像并重新导出归档：invoke xmnn.build && invoke xmnn.save"
+if [ "$NATIVE_OFFLINE" = "1" ] && ! command -v gcc >/dev/null 2>&1; then
+    log_error "离线模式（NATIVE_OFFLINE=1）：系统 gcc 缺失（镜像层应已 apt 安装 gcc/g++），无法编译"
+    log_error "请在联网机器重建镜像并重新导出归档：invoke native.build && invoke native.save"
     exit 2
 fi
 "$BASE_PYTHON" --version
@@ -145,7 +145,7 @@ log_kv "LLVM" "$($LLVM_CONFIG --version) @ $LLVM_LIB_DIR"
 log_kv "nuitka" "$("$BASE_PYTHON" -m nuitka --version 2>/dev/null \
     | awk 'NR==1{v=$0} /^Commercial:/{c=$0} END{printf "%s%s", v, (c ? " (" c ")" : "")}')"
 
-if [ "$XMNN_OFFLINE" = "1" ]; then
+if [ "$NATIVE_OFFLINE" = "1" ]; then
     log_info "offline mode: pip 镜像配置跳过 / Nuitka 下载旗标已禁用（NUITKA_DL_FLAG 置空）"
 else
     case "${PIP_MIRROR:-official}" in
@@ -166,9 +166,9 @@ fi
 log_section "Ensuring numpy/scipy present"
 if "$BASE_PYTHON" -c "import numpy, scipy; print(f'  numpy {numpy.__version__}, scipy {scipy.__version__} OK')"; then
     :
-elif [ "$XMNN_OFFLINE" = "1" ]; then
-    log_error "离线模式（XMNN_OFFLINE=1）：base env 缺少 numpy/scipy，且禁止联网 pip 安装"
-    log_error "镜像层本应已装；请在联网机器重跑 invoke xmnn.build 后重新导出归档"
+elif [ "$NATIVE_OFFLINE" = "1" ]; then
+    log_error "离线模式（NATIVE_OFFLINE=1）：base env 缺少 numpy/scipy，且禁止联网 pip 安装"
+    log_error "镜像层本应已装；请在联网机器重跑 invoke native.build 后重新导出归档"
     exit 2
 else
     "$BASE_PYTHON" -m pip install --no-cache-dir "numpy>=1.26" "scipy>=1.11"

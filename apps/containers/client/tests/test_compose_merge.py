@@ -64,12 +64,12 @@ GOLDEN = {
             "OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS",
         },
     },
-    "xmnn": {
-        "dir": "xmnn-dev", "service": "xmnn",
-        "component": "xmnn-dev",
-        "image": "localhost/xmnn-dev:latest",
-        "container_name": "xmnn-dev",
-        "dockerfile": "Containerfile.xmnn-dev",
+    "native": {
+        "dir": "native-dev", "service": "native",
+        "component": "native-dev",
+        "image": "localhost/native-dev:latest",
+        "container_name": "native-dev",
+        "dockerfile": "Containerfile.native-dev",
         "ports": ["2223:22", "8890:8888"],
         "volume_targets": [
             "/workspace", "/workspace/npu_tvm", "/workspace/npuusertools",
@@ -336,7 +336,7 @@ def test_quant_gpu_override_appends_dri_without_duplicating_fuse():
     gpu = render_stack("quant", gpu=True)
     assert plain["devices"] == ["/dev/fuse:/dev/fuse"]
     # 多文件 list 追加：fuse 来自 base，dri 来自 override，顺序锁定
-    # 单 token 形态（C19 与 xmnn 同构）：裸设备路径，缺省 /dev/dri
+    # 单 token 形态（C19 与 native 同构）：裸设备路径，缺省 /dev/dri
     assert gpu["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dri"]
     # 其余字段不被 override 影响
     assert gpu["environment"] == plain["environment"]
@@ -344,7 +344,7 @@ def test_quant_gpu_override_appends_dri_without_duplicating_fuse():
 
 
 def test_quant_gpu_device_double_form_interpolation():
-    """quant 与 xmnn 同键同语义：`/` 开头=device 路径，否则=CDI 引用（C19）。"""
+    """quant 与 native 同键同语义：`/` 开头=device 路径，否则=CDI 引用（C19）。"""
     assert render_stack("quant", env={"GPU_DEVICE": "nvidia.com/gpu=all"}, gpu=True)[
         "devices"
     ] == ["/dev/fuse:/dev/fuse", "nvidia.com/gpu=all"]
@@ -353,7 +353,7 @@ def test_quant_gpu_device_double_form_interpolation():
     ] == ["/dev/fuse:/dev/fuse", "/dev/nvidia0"]
 
 
-@pytest.mark.parametrize("stack", ["xmnn", "quant"])
+@pytest.mark.parametrize("stack", ["native", "quant"])
 def test_wsl_gpu_override_passes_dxg_and_mounts_wsl_libs(stack):
     """WSL2 形态（C19）：/dev/dxg + 三条只读 bind，且**不动**栈自带环境。
 
@@ -387,11 +387,11 @@ def test_wsl_gpu_override_passes_dxg_and_mounts_wsl_libs(stack):
         assert mount["bind"]["create_host_path"] is False  # 缺失即报错，不误建空文件
 
 
-def test_xmnn_gpu_override_is_opt_in_and_single_device():
-    """xmnn 的 GPU opt-in（C18）与 quant 同构，但设备项是单条插值（双形态）。"""
-    plain = render_stack("xmnn")
+def test_native_gpu_override_is_opt_in_and_single_device():
+    """native 的 GPU opt-in（C18）与 quant 同构，但设备项是单条插值（双形态）。"""
+    plain = render_stack("native")
     assert plain["devices"] == ["/dev/fuse:/dev/fuse"]
-    gpu = render_stack("xmnn", gpu=True)
+    gpu = render_stack("native", gpu=True)
     # 单 token 形态：裸设备路径（`--device /dev/dri` 等价于 :/dev/dri 显式映射），
     # 不可写成 /dev/dri:/dev/dri —— CDI 引用形态会因此变成非法串
     assert gpu["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dri"]
@@ -399,18 +399,18 @@ def test_xmnn_gpu_override_is_opt_in_and_single_device():
     assert gpu["ports"] == plain["ports"]
 
 
-def test_xmnn_gpu_device_double_form_interpolation():
+def test_native_gpu_device_double_form_interpolation():
     """GPU_DEVICE 双形态：`/` 开头=宿主机设备路径；否则=CDI 引用（与 invoke run --gpu 同语义）。
 
     关键：override 内**只有一条** devices 项——podman-compose 1.6.0 把列表项原样
     下传为 `--device <item>`（vendor L1382-L1383，不做冒号拆分），两条并列必有一条非法。
     """
-    cdi = render_stack("xmnn", env={"GPU_DEVICE": "nvidia.com/gpu=all"}, gpu=True)
+    cdi = render_stack("native", env={"GPU_DEVICE": "nvidia.com/gpu=all"}, gpu=True)
     assert cdi["devices"] == ["/dev/fuse:/dev/fuse", "nvidia.com/gpu=all"]
-    path = render_stack("xmnn", env={"GPU_DEVICE": "/dev/dri/renderD128"}, gpu=True)
+    path = render_stack("native", env={"GPU_DEVICE": "/dev/dri/renderD128"}, gpu=True)
     assert path["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dri/renderD128"]
     # 空串回退默认（与 _interpolate 的 `${NAME:-default}` 语义一致）
-    empty = render_stack("xmnn", env={"GPU_DEVICE": ""}, gpu=True)
+    empty = render_stack("native", env={"GPU_DEVICE": ""}, gpu=True)
     assert empty["devices"] == ["/dev/fuse:/dev/fuse", "/dev/dri"]
 
 
@@ -423,8 +423,8 @@ def test_nested_interpolation_simulator_innermost_first():
 
 
 def test_env_override_flows_through_interpolation():
-    svc = render_stack("xmnn", env={
-        "XMNN_IMAGE_TAG": "registry.example/x:9", "XMNN_SSH_PORT": "2300",
+    svc = render_stack("native", env={
+        "NATIVE_IMAGE_TAG": "registry.example/x:9", "NATIVE_SSH_PORT": "2300",
         "NUITKA_JOBS": "16", "GRANT_SUDO": "no",
     })
     assert svc["image"] == "registry.example/x:9"

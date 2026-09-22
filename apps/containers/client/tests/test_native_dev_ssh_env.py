@@ -1,6 +1,6 @@
 """setup-ssh-env.sh 的 daemon-free 单测（问题解决场景：SSH 会话缺调试环境变量）。
 
-覆盖契约（见 overlays/xmnn-dev/scripts/setup-ssh-env.sh 头注）：
+覆盖契约（见 overlays/native-dev/scripts/setup-ssh-env.sh 头注）：
 
 - **防漂移**：同一组 5 个调试变量在仓库里有三份副本——compose.yaml 的
   ``environment``、register-kernel.sh 内嵌的 kernel env、setup-ssh-env.sh 的
@@ -35,7 +35,7 @@ pytestmark = pytest.mark.skipif(
 )
 
 CLIENT_ROOT = Path(__file__).resolve().parents[1]
-OVERLAY = CLIENT_ROOT / "overlays" / "xmnn-dev"
+OVERLAY = CLIENT_ROOT / "overlays" / "native-dev"
 SCRIPT = OVERLAY / "scripts" / "setup-ssh-env.sh"
 KERNEL_SCRIPT = OVERLAY / "scripts" / "register-kernel.sh"
 COMPOSE = OVERLAY / "compose.yaml"
@@ -53,9 +53,9 @@ DEBUG_VARS = (
 # 因此若脚本回退成「每变量一行」，脚本自身的生效性自检会读到 1 != 5 而失败。
 STUB_SSHD = """#!/bin/sh
 case "$1" in
-  -t) exit "${XMNN_TEST_SSHD_T_EXIT:-0}" ;;
+  -t) exit "${NATIVE_TEST_SSHD_T_EXIT:-0}" ;;
   -T)
-    line=$(grep -m1 '^SetEnv ' "$XMNN_TEST_SSHD_CONFIG" 2>/dev/null || true)
+    line=$(grep -m1 '^SetEnv ' "$NATIVE_TEST_SSHD_CONFIG" 2>/dev/null || true)
     [ -n "$line" ] || exit 0
     for pair in ${line#SetEnv }; do printf 'setenv %s\\n' "$pair"; done
     ;;
@@ -73,7 +73,7 @@ def _script_literals() -> dict[str, str]:
 
 def _compose_debug_env() -> dict[str, str]:
     data = yaml.safe_load(COMPOSE.read_text(encoding="utf-8"))
-    env = data["services"]["xmnn"]["environment"]
+    env = data["services"]["native"]["environment"]
     return {k: v for k, v in env.items() if k in DEBUG_VARS}
 
 
@@ -110,7 +110,7 @@ def test_all_debug_vars_present_in_all_three_copies() -> None:
 
 class _Sandbox:
     def __init__(self, tmp_path: Path, config_text: str = "Port 22\n") -> None:
-        self.profile = tmp_path / "profile.d" / "50-xmnn-dev-env.sh"
+        self.profile = tmp_path / "profile.d" / "50-native-dev-env.sh"
         self.profile.parent.mkdir(parents=True, exist_ok=True)
         self.config = tmp_path / "sshd_config"
         self.config.write_text(config_text, encoding="utf-8")
@@ -122,11 +122,11 @@ class _Sandbox:
     def run(self, t_exit: int = 0) -> subprocess.CompletedProcess:
         env = dict(os.environ)
         env.update(
-            XMNN_SSH_ENV_PROFILE_FILE=str(self.profile),
-            XMNN_SSH_ENV_SSHD_CONFIG=str(self.config),
-            XMNN_SSH_ENV_SSHD_BIN=str(self.stub),
-            XMNN_TEST_SSHD_CONFIG=str(self.config),
-            XMNN_TEST_SSHD_T_EXIT=str(t_exit),
+            NATIVE_SSH_ENV_PROFILE_FILE=str(self.profile),
+            NATIVE_SSH_ENV_SSHD_CONFIG=str(self.config),
+            NATIVE_SSH_ENV_SSHD_BIN=str(self.stub),
+            NATIVE_TEST_SSHD_CONFIG=str(self.config),
+            NATIVE_TEST_SSHD_T_EXIT=str(t_exit),
         )
         return subprocess.run(
             ["bash", str(SCRIPT)], env=env, capture_output=True, text=True
@@ -154,8 +154,7 @@ def test_writes_profile_d_and_single_setenv_line(tmp_path: Path) -> None:
     assert len(lines) == 1, f"SetEnv 必须单行（first-wins）：{lines}"
     for name, value in _compose_debug_env().items():
         assert f"{name}={value}" in lines[0]
-    assert not box.config.with_suffix(".xmnn-dev.bak").exists()
-
+    assert not box.config.with_suffix(".native-dev.bak").exists()
 
 def test_idempotent_across_repeated_runs(tmp_path: Path) -> None:
     box = _Sandbox(tmp_path)
@@ -164,7 +163,7 @@ def test_idempotent_across_repeated_runs(tmp_path: Path) -> None:
     assert len(box.setenv_lines()) == 1
     # 标记行同样不得累积（V 审查实测：只删 SetEnv 不删标记时连跑 3 次留 3 行）
     text = box.config.read_text(encoding="utf-8")
-    assert text.count("# xmnn-dev ssh-env") == 1
+    assert text.count("# native-dev ssh-env") == 1
     assert box.profile.read_text(encoding="utf-8").count("export PYTHONPATH") == 1
 
 
@@ -187,4 +186,4 @@ def test_rolls_back_when_sshd_config_invalid(tmp_path: Path) -> None:
 
     assert proc.returncode != 0
     assert box.config.read_text(encoding="utf-8") == box.original
-    assert not box.config.with_suffix(".xmnn-dev.bak").exists()
+    assert not box.config.with_suffix(".native-dev.bak").exists()

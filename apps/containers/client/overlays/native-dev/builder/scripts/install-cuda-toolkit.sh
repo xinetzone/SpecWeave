@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# xmnn-dev CUDA 编译器工具链安装层（Containerfile.xmnn-dev Layer 2.6）
+# native-dev CUDA 编译器工具链安装层（Containerfile.native-dev Layer 2.6）
 #
 # 由 TORCH_FLAVOR 驱动（与 Layer 2.5 同一构建期维度）：
 #   ""  / cpu 不装 —— 默认与 CPU 形态零 CUDA 编译器，镜像与改造前逐字等价
@@ -41,25 +41,25 @@
 set -euo pipefail
 
 PY=/opt/conda/bin/python
-MARKER=/opt/xmnn-cuda-nvcc-version
+MARKER=/opt/native-cuda-nvcc-version
 CUDA_HOME_DIR=/usr/local/cuda
 FLAVOR="${TORCH_FLAVOR:-}"
 
 # —— flavor → nvcc 版本映射（唯一事实源；未来新增 CUDA 形态在此加一行） ——
 case "${FLAVOR}" in
   "")
-    echo "[xmnn] cuda-nvcc: skipped（TORCH_FLAVOR 为空 —— 默认镜像无 torch 亦无 CUDA 编译器）"
+    echo "[native] cuda-nvcc: skipped（TORCH_FLAVOR 为空 —— 默认镜像无 torch 亦无 CUDA 编译器）"
     exit 0
     ;;
   cpu)
-    echo "[xmnn] cuda-nvcc: skipped（cpu 形态不带 CUDA 编译器）"
+    echo "[native] cuda-nvcc: skipped（cpu 形态不带 CUDA 编译器）"
     exit 0
     ;;
   cu130)
     NVCC_VERSION=13.4.92
     ;;
   *)
-    echo "[xmnn] ERROR: TORCH_FLAVOR 必须为空|cpu|cu130，实际为 '${FLAVOR}'" >&2
+    echo "[native] ERROR: TORCH_FLAVOR 必须为空|cpu|cu130，实际为 '${FLAVOR}'" >&2
     exit 1
     ;;
 esac
@@ -74,7 +74,7 @@ esac
 SITE=$("${PY}" -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')
 CU13="${SITE}/nvidia/cu13"
 
-echo "[xmnn] cuda-nvcc: 安装 ${NVCC_VERSION} 三件套（nvcc + cuda-crt + nvvm，同轨 pin）"
+echo "[native] cuda-nvcc: 安装 ${NVCC_VERSION} 三件套（nvcc + cuda-crt + nvvm，同轨 pin）"
 "${PY}" -m pip install --no-cache-dir --index-url "${PIP_INDEX}" \
   "nvidia-cuda-nvcc==${NVCC_VERSION}" \
   "nvidia-cuda-crt==${NVCC_VERSION}" \
@@ -114,10 +114,10 @@ chmod 0755 /usr/local/bin/nvcc
 # shared object file`（链接期有 nvcc 默认 -L，运行期 ld.so 不认识 /usr/local/cuda/lib64）
 # ——2026-09-20 真机实测；唯一替代是让用户设 LD_LIBRARY_PATH，而本栈纪律
 # 明令禁止用 env 覆盖库路径（C19：会冲掉 TVM 库路径），故必须在镜像层解决。
-printf '%s\n' "${CUDA_HOME_DIR}/lib64" > /etc/ld.so.conf.d/10-xmnn-cuda.conf
+printf '%s\n' "${CUDA_HOME_DIR}/lib64" > /etc/ld.so.conf.d/10-native-cuda.conf
 ldconfig
 ldconfig -p | grep -m1 libcudart || true
 
 printf '%s' "${NVCC_VERSION}" > "${MARKER}"
-echo "[xmnn] cuda-nvcc: ${NVCC_VERSION} 就绪（命令: /usr/local/bin/nvcc，CUDA_HOME: ${CUDA_HOME_DIR}）"
+echo "[native] cuda-nvcc: ${NVCC_VERSION} 就绪（命令: /usr/local/bin/nvcc，CUDA_HOME: ${CUDA_HOME_DIR}）"
 /usr/local/bin/nvcc --version | tail -2
