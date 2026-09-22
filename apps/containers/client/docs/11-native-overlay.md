@@ -117,7 +117,7 @@ invoke native.down                       # 停止清理（ccache / Jupyter 登�
   离线侧完整序列：无网机 `invoke native.load --path <归档>` →
   `invoke native.up --gpu --offline`；CUDA 版 torch 属**镜像内容**，只能在有网侧
   `build --torch cu130 && save` 备好，离线侧不补装。
-  详细用法见 [overlays/native-dev/README.md](../overlays/native-dev/README.md#gpu-与-torch-可选能力默认全关c18c19c20)，
+  详细用法见 [overlays/native-dev/docs/04 GPU 与 torch](../overlays/native-dev/docs/04-gpu-and-torch.md)，
   WSL2 实测矩阵与排障见 [04-troubleshooting-guide.md](04-troubleshooting-guide.md) W-I16。
 
 ## 启动后连接：Jupyter 与 SSH
