@@ -93,7 +93,12 @@
 - **临时目录 bind 的三条特例**（2026-09-22）：① 缺省锚仓库根**上溯四级**
   （`../../../../.temp`，即根 AGENTS.md 定义的统一临时目录），是**仓库之外**
   的路径——换检出位置布局不同时必须在 `.env` 显式设绝对路径，否则会在锚点
-  外建同名目录；② 与四个同族 bind 的差异仅在「不列入存在性硬校验」，其余
+  外建同名目录；**2026-09-23 起该契约由内核 `overlay_core._resolve_path`
+  收口**：解析结果落在文件系统根直接子级（`/.temp`、`D:\.temp`）即判定
+  上溯越界，Exit(1) + 中文指引点名待设变量（不再裸抛 `PermissionError`），
+  `create` 分支的 `OSError` 同样转为可操作报错；测试锁见
+  `tests/test_overlay_core.py` 守卫三例（越界 fail-fast / 合法相对路径不误伤 /
+  权限拒绝转 Exit）；② 与四个同族 bind 的差异仅在「不列入存在性硬校验」，其余
   （长语法 + `create_host_path: true` + 绝对 POSIX 注入）逐条同构；
   ③ 该 bind **覆盖 `/workspace` 下的同名子目录**：容器内 `/workspace/temp`
   不再是宿主 `client/workspace/temp`（宿主文件不受影响，仅容器内不可见），

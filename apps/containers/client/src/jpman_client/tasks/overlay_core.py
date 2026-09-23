@@ -331,18 +331,44 @@ def ensure_runtime_ready(spec: StackSpec) -> None:
 
 
 def _resolve_path(
-    spec: StackSpec, raw: str, *, must_exist: bool, label: str, create: bool = False
+    spec: StackSpec,
+    raw: str,
+    *,
+    must_exist: bool,
+    label: str,
+    create: bool = False,
+    env_key: str = "",
 ) -> str:
     """相对路径相对 invoke cwd 解析；转绝对 POSIX；可选存在性硬校验 / 幂等创建。
 
     ``create=True``（temp 类目录）与 ``must_exist=True`` 互斥：前者缺失即建
     （目录不存在属正常首态），后者缺失 Exit(1)（源码树类，静默创建会掩盖配错）。
+
+    越界解析守卫（2026-09-23）：含 ``..`` 的相对值/缺省值在浅布局检出下
+    （如 WSL ``/mnt/d/spaces/SpecWeave``，仓库根上溯四级=文件系统根）会解析成
+    **文件系统根直接子级**（``/.temp``、``D:\.temp``）——该位置既无权创建、
+    也从来不是合法挂载点，裸 ``mkdir`` 只会抛出原始 ``PermissionError``
+    traceback。此时 fail-fast 并指引显式设置 ``env_key`` 绝对路径（native
+    叠加层规则 §4①「换检出位置布局不同时必须显式设 .env」的代码收口）；
+    ``create`` 分支的 ``OSError`` 同样转为可操作报错而非裸栈。
     """
     p = Path(raw).expanduser()
     if not p.is_absolute():
         p = (Path.cwd() / p).resolve()
+    if p.parent == Path(p.anchor):
+        # 解析结果落在文件系统根直接子级 = 相对/缺省值上溯越出了检出布局
+        hint = f"（例如 {env_key}=<宿主绝对路径>）" if env_key else ""
+        print(f"[{spec.namespace}] ⚠ {label}路径解析越界：{p}")
+        print("        相对/缺省路径的上溯层数超出了当前检出布局，落点为文件系统根直接子级。")
+        print(f"        请在 .env / 环境变量中为该变量设置布局无关的绝对路径后重试{hint}。")
+        raise Exit(1)
     if create:
-        p.mkdir(parents=True, exist_ok=True)
+        try:
+            p.mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            print(f"[{spec.namespace}] ⚠ {label}目录创建失败：{p}（{e}）")
+            print("        请在 .env / 环境变量中设置对应变量指向可写目录后重试。")
+            raise Exit(1) from e
     elif must_exist and not p.exists():
         print(f"[{spec.namespace}] ⚠ {label}宿主路径不存在：{p}")
         print("        请在 .env / 环境变量中设置对应变量指向有效目录后重试。")
@@ -390,6 +416,7 @@ def prepare_env(spec: StackSpec) -> dict:
             must_exist=mount.must_exist,
             create=not mount.must_exist,
             label=mount.label,
+            env_key=mount.env,
         )
 
     return env

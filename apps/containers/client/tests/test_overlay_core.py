@@ -701,6 +701,54 @@ def test_prepare_env_native_temp_mount_default_and_autocreate(harness, monkeypat
     assert os.environ["NATIVE_TEMP_PATH"] == oc.to_posix_path(target)
 
 
+def test_resolve_path_relative_deep_path_autocreates(harness, monkeypatch):
+    """守卫不误伤合法相对路径：cwd 下正常深度仍幂等创建并转 POSIX 注入。"""
+    monkeypatch.chdir(harness.root)
+    got = oc._resolve_path(
+        _NATIVE, "scratch-temp", must_exist=False, create=True, label="临时目录"
+    )
+    target = harness.root / "scratch-temp"
+    assert target.is_dir()
+    assert got == oc.to_posix_path(target)
+
+
+def test_resolve_path_filesystem_root_child_fails_fast(harness, monkeypatch, capsys):
+    """越界解析守卫：上溯越出检出布局（解析成 /.temp / D:\\.temp）必须 fail-fast
+    并指引设 env_key，而非裸 PermissionError（native-overlay 规则 §4① 收口）。"""
+    monkeypatch.chdir(harness.tmp)
+    with pytest.raises(Exit) as ei:
+        oc._resolve_path(
+            _NATIVE,
+            "../../../../../../../../../../.temp",
+            must_exist=False,
+            create=True,
+            label="临时目录（根工作区 .temp）",
+            env_key="NATIVE_TEMP_PATH",
+        )
+    assert ei.value.code == 1
+    out = capsys.readouterr().out
+    assert "NATIVE_TEMP_PATH" in out
+    assert "越界" in out
+
+
+@pytest.mark.skipif(
+    os.name == "nt" or getattr(os, "geteuid", lambda: 1)() == 0,
+    reason="需非 root POSIX：目录写位才构成真实权限拒绝（Windows 只读位不阻止写入）",
+)
+def test_resolve_path_mkdir_permission_error_becomes_exit(harness, monkeypatch, capsys):
+    """create 分支的 OSError 转为可操作 Exit(1)（含 errno），而非裸 traceback。"""
+    inner = harness.tmp / "locked" / "inner"
+    inner.mkdir(parents=True)
+    os.chmod(inner, 0o500)
+    monkeypatch.chdir(inner)
+    with pytest.raises(Exit) as ei:
+        oc._resolve_path(
+            _NATIVE, "grandchild", must_exist=False, create=True, label="临时目录"
+        )
+    assert ei.value.code == 1
+    assert "目录创建失败" in capsys.readouterr().out
+
+
 def test_prepare_env_empty_placeholder_does_not_override(harness, monkeypatch):
     """C9：空字符串 env 占位不得覆盖默认值（or 链穿透空串）。"""
     monkeypatch.setenv("QUANT_SSH_PORT", "")
