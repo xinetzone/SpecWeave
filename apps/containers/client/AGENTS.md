@@ -72,6 +72,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
             ├─ docs/                           ← 人类可读文档集（00-12 原子文档 + 14 分析报告 + 索引，对齐构建端 docs/ 先例）
             ├─ .agents/README.md               ← AI 资产容器索引
             │   ├─ CHANGELOG.md                ← 项目变更日志（原子提交汇总）
+            │   ├─ archive/                    ← 变更日志历史归档（2026-09-23 原子化，按日期段拆分，条目零改写）
             │   └─ rules/                      ← 单一职责原子化硬约束
             │       ├─ invoke-tasks.md         ← src/jpman_client/tasks/ 包结构 / 命名空间 / CLI fallback 行为承诺
             │       ├─ sdk-connection.md       ← podman-py 连接策略、6 scheme 白名单、逃逸舱四策略

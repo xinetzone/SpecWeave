@@ -222,7 +222,7 @@ date: 2026-09-15
 M1/M2 两条 major 修复经源码逐行核对、真实 1.6.0 端到端复跑、变异/假绿/skip/污染四方向攻击后确认正确且无新引入缺陷；M3/M4 minor 关闭；N1/N2/N4 处置到位。新增发现仅 N6/N7 两条 nit（doc 边界措辞与历史/外部表面行号），登记跟踪不阻塞。
 
 残留风险（承接 R1，均不阻塞）：
-- **P1 真机 E2E 后置**：六项真机验证（三栈 up/smoke/down、quant GPU、bridge 出网、builder 垫片）仍待 podman machine/WSL 环境恢复，清单见 [client CHANGELOG#L31-L39](file:///d:/spaces/SpecWeave/apps/containers/client/.agents/CHANGELOG.md#L31-L39)；
+- **P1 真机 E2E 后置**：六项真机验证（三栈 up/smoke/down、quant GPU、bridge 出网、builder 垫片）仍待 podman machine/WSL 环境恢复，清单见 [client CHANGELOG#L43-L51](../../../../apps/containers/client/.agents/CHANGELOG.md#L43-L51)；
 - **P2 根套件基线**：本次仅复跑 client/shared（92 passed）；jupyter-podman-rootless 测试属手工/真机性质，维持 R1 基线结论；
 - **N3/N5**（插值子集、spec cmake 措辞）+ 本次 **N6/N7** 登记后处理。
 

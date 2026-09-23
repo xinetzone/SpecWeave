@@ -23,6 +23,7 @@ source: "AGENTS.md#嵌套路由关系"
 .agents/
 ├── README.md              ← 本文件（资产容器索引）
 ├── CHANGELOG.md           ← 项目变更日志（原子提交汇总，七概念链路归档）
+├── archive/               ← 变更日志历史归档（2026-09-23 原子化，按日期段拆分，条目零改写）
 ├── rules/                 ← 项目特有规则（单一职责，按主题拆分；6 个实文件 = 消费端独有）
 │   ├── invoke-tasks.md    ← invoke 任务开发规范（两层后端架构、命名空间、CLI fallback 承诺）
 │   ├── sdk-connection.md  ← podman-py SDK 连接硬约束（6 scheme 白名单、四策略逃生舱、Windows base_url 必显式）
