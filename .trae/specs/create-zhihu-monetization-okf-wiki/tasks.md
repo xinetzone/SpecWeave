@@ -207,18 +207,39 @@
 ## Task 10: 原子提交交付（C）
 
 **Priority**: medium
-**Status**: pending
+**Status**: completed
 **依赖**: Task 9
 **映射 AC**: AC-11
 **内容**: 按既定顺序提交：① awesome-okf-xs 子模块内提交（bundle 全文件 + 组 index + 总 index，显式列全文件）→ ② 主仓库提交 spec 区（.trae/specs/create-zhihu-monetization-okf-wiki/）→ ③ 主仓库提交 docs/ 变现路径 + 子模块指针更新。使用 `python .agents/scripts/git-commit-utf8.py -m "type(scope): 中文描述" <显式文件...>`；Conventional Commits；不 push；提交后 git log 验证顺序与内容。
 
-- [ ] Subtask 10.1: 子模块内提交（bundle + 索引）
-- [ ] Subtask 10.2: 主仓库 spec 区提交
-- [ ] Subtask 10.3: 主仓库 docs/ 路径文档 + 子模块指针提交
-- [ ] Subtask 10.4: git log 验证三笔提交顺序/内容；确认未 push
+- [x] Subtask 10.1: 子模块内提交（bundle + 索引）
+- [x] Subtask 10.2: 主仓库 spec 区提交
+- [x] Subtask 10.3: 主仓库 docs/ 路径文档 + 子模块指针提交
+- [x] Subtask 10.4: git log 验证三笔提交顺序/内容；确认未 push
 
 **Test Requirements**:
 - TR-10.1 (rule): 三笔提交顺序正确、消息符合 Conventional Commits 中文规范；远端无新增提交
+
+**完成记录（2026-09-23）**: 三笔提交按序完成，均走 UTF-8 bytes 通道、pre-commit hooks 全过（敏感信息检测未检出、.temp 生命周期不阻塞）：
+
+1. **子模块**（awesome-okf-xs）`752ea456`：`docs(bundles): 新增知乎变现体系知识包（sheke/industry 分组 18→19 束，总库 564→565 束，status: flagged）`——17 files（bundle 14 + 组 index + sheke/index + 总 index）；
+2. **主仓库** `61eae7e2a`：`docs(spec): 知乎变现体系 OKF Wiki 与个人变现路径设计全流程留痕`——8 files（spec 区 8 篇 .md）；
+3. **主仓库** `7fc4c4ab1`：`docs(retrospective): 新增知乎个人变现路径报告（competitive-analysis 体例，三角色矩阵与防画饼口径，含子模块 bundle 指针）`——7 files（docs 4 篇 + 父索引 2 处 + 子模块 gitlink 指针）。
+
+**验证**：git log 确认三笔顺序正确（主仓库 7fc4c4ab1 → 61eae7e2a → 既有 e391da8d7）；主仓库 `ahead 2`、子模块 `ahead 1`，均**未 push**；两仓工作区干净（无 M/?? 残留）。
+**过程注记**：① git-commit-utf8.py 带「目录参数」时暂存区一致性比对未展开目录导致误拦（FAIL 但 add 已成功执行）→ 改用「显式 add + 已暂存模式」完成，暂存区内容经 git status 复核正确（3 M + 14 A）；② spec 区 raw/（3 信源全文 + screenshots）按 `.trae/specs/.gitignore` 既有 `raw/` 规则不入库（过程存档机制，结论已入 facts.md 67 条）；③ 验证临时脚本已清理。
+
+---
+
+## 队列状态
+
+**Task 1–10 全部 completed**（2026-09-23）。AC-1 ~ AC-11 验收标准逐项达成：
+- AC-1/AC-2：67 条 F 编号事实 + P0 核验（16 条结论：确认 1/部分确认 5/单源 10）；
+- AC-3/AC-4：bundle 落 sheke/industry/zhihu-monetization（14 文件、无 examples、三处索引 +1 同步）；
+- AC-5：机械门禁六项全绿（UTF-8/双份 F 集/toctree/计数/链接/敏感信息）；
+- AC-6/AC-7：flagged + stale_after 2026-12-31 传导至全部产物；
+- AC-8/AC-9/AC-10：docs/ 路径报告含起步/门槛/时间表/收益区间/退出/风险六要素，魔鬼代言人证伪 5 点全过（#4 AI 边界重大缺陷已修复为 §3.8 可操作自检）；
+- AC-11：三笔原子提交顺序正确、未 push。
 
 ## Task Dependencies
 
