@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="陈墨 — 独立产品设计师作品集，展示极简设计、品牌与数字产品设计案例。">
+  <title>陈墨 | 独立产品设计师</title>
+
+  <!-- 字体：Inter + Noto Sans SC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+  <!-- 全局样式 -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <header class="site-header" id="header">
+    <div class="site-header__container">
+      <a href="#hero" class="site-header__brand" aria-label="返回首页">
+        <span class="site-header__logo">陈墨</span>
+      </a>
+
+      <!-- 桌面端导航 -->
+      <nav class="site-header__nav" aria-label="主导航">
+        <ul class="site-header__menu">
+          <li><a href="#hero" class="site-header__link is-active" data-target="hero">首页</a></li>
+          <li><a href="#works" class="site-header__link" data-target="works">作品展示</a></li>
+          <li><a href="#experience" class="site-header__link" data-target="experience">关于我</a></li>
+          <li><a href="#contact" class="site-header__link" data-target="contact">联系方式</a></li>
+        </ul>
+      </nav>
+
+      <!-- 移动端汉堡按钮 -->
+      <button class="site-header__toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="打开导航菜单">
+        <span class="site-header__bar"></span>
+        <span class="site-header__bar"></span>
+        <span class="site-header__bar"></span>
+      </button>
+    </div>
+
+    <!-- 移动端全屏导航 -->
+    <nav class="site-header__mobile-nav" id="mobileNav" aria-label="移动端导航">
+      <ul class="site-header__mobile-menu">
+        <li><a href="#hero" class="site-header__mobile-link" data-target="hero">首页</a></li>
+        <li><a href="#works" class="site-header__mobile-link" data-target="works">作品展示</a></li>
+        <li><a href="#experience" class="site-header__mobile-link" data-target="experience">关于我</a></li>
+        <li><a href="#contact" class="site-header__mobile-link" data-target="contact">联系方式</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="site-main">
+    <!-- Hero 区域 -->
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+      <div class="hero__content">
+        <h1 class="hero__title" id="hero-title">陈墨</h1>
+        <p class="hero__subtitle">独立产品设计师</p>
+        <p class="hero__tagline">以极简设计语言，构建清晰而有温度的数字体验。</p>
+      </div>
+      <a href="#works" class="hero__scroll" aria-label="向下滚动查看作品">
+        <span class="hero__scroll-line"></span>
+      </a>
+    </section>
+
+    <!-- 作品展示区 -->
+    <section class="works" id="works" aria-labelledby="works-title">
+      <div class="works__container">
+        <header class="works__header">
+          <h2 class="works__title" id="works-title">精选作品</h2>
+          <p class="works__desc">每一个项目都从理解人与情境开始，用克制的设计回应真实需求。</p>
+        </header>
+
+        <div class="works__grid">
+          <article class="work-card" data-project="1">
+            <a href="projects/project-1.html" class="work-card__link" aria-label="查看 绿意生活 项目详情">
+              <figure class="work-card__figure">
+                <img src="assets/project-1-thumb.jpg" alt="绿意生活 App 界面展示" class="work-card__image" loading="lazy" width="800" height="600">
+              </figure>
+              <div class="work-card__body">
+                <h3 class="work-card__title">绿意生活</h3>
+                <p class="work-card__category">移动应用 / 可持续生活</p>
+                <p class="work-card__summary">一款帮助用户记录低碳行为、培养绿色习惯的可持续生活方式应用，通过温和的视觉语言与游戏化机制，让环保成为一种日常选择。</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="work-card" data-project="2">
+            <a href="projects/project-2.html" class="work-card__link" aria-label="查看 云书 项目详情">
+              <figure class="work-card__figure">
+                <img src="assets/project-2-thumb.jpg" alt="云书阅读平台界面展示" class="work-card__image" loading="lazy" width="800" height="600">
+              </figure>
+              <div class="work-card__body">
+                <h3 class="work-card__title">云书阅读</h3>
+                <p class="work-card__category">Web 平台 / 数字阅读</p>
+                <p class="work-card__summary">为文学爱好者打造的沉浸式数字阅读平台，重新设计信息架构与阅读器体验，让长文本阅读在屏幕上也拥有纸质书的专注与舒适。</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="work-card" data-project="3">
+            <a href="projects/project-3.html" class="work-card__link" aria-label="查看 城市骑行 项目详情">
+              <figure class="work-card__figure">
+                <img src="assets/project-3-thumb.jpg" alt="城市骑行品牌视觉识别展示" class="work-card__image" loading="lazy" width="800" height="600">
+              </figure>
+              <div class="work-card__body">
+                <h3 class="work-card__title">城市骑行</h3>
+                <p class="work-card__category">品牌设计 / 网站设计</p>
+                <p class="work-card__summary">为城市骑行社群打造的品牌识别与官方网站，以几何图形与大地色系传递自由、探索与城市连接的品牌精神。</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="work-card" data-project="4">
+            <a href="projects/project-4.html" class="work-card__link" aria-label="查看 艺廊空间 项目详情">
+              <figure class="work-card__figure">
+                <img src="assets/project-4-thumb.jpg" alt="艺廊空间官网界面展示" class="work-card__image" loading="lazy" width="800" height="600">
+              </figure>
+              <div class="work-card__body">
+                <h3 class="work-card__title">艺廊空间</h3>
+                <p class="work-card__category">网站设计 / 当代艺术</p>
+                <p class="work-card__summary">当代艺术画廊的线上展览空间，以大画幅影像与留白排版让作品成为绝对主角，为访客营造静谧的观展氛围。</p>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 经验背景区 -->
+    <section class="experience" id="experience" aria-labelledby="experience-title">
+      <div class="experience__container">
+        <header class="experience__header">
+          <h2 class="experience__title" id="experience-title">关于我</h2>
+          <p class="experience__intro">相信设计是解决问题的方式，而非装饰。七年产品设计经验，专注于数字产品与品牌体验的融合。</p>
+        </header>
+
+        <div class="timeline">
+          <h3 class="timeline__heading">工作经验</h3>
+          <ol class="timeline__list">
+            <li class="timeline__item">
+              <div class="timeline__marker" aria-hidden="true"></div>
+              <div class="timeline__content">
+                <div class="timeline__meta">
+                  <time class="timeline__date">2022.03 — 至今</time>
+                </div>
+                <h4 class="timeline__company">墨白设计工作室</h4>
+                <p class="timeline__role">高级产品设计师</p>
+                <p class="timeline__duty">主导多个移动端与 Web 端产品的完整设计流程，负责用户研究、信息架构、交互原型与视觉落地，帮助初创团队完成从 0 到 1 的产品孵化。</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <div class="timeline__marker" aria-hidden="true"></div>
+              <div class="timeline__content">
+                <div class="timeline__meta">
+                  <time class="timeline__date">2019.06 — 2022.02</time>
+                </div>
+                <h4 class="timeline__company">星河科技</h4>
+                <p class="timeline__role">UI/UX 设计师</p>
+                <p class="timeline__duty">参与企业级 SaaS 平台与电商产品的界面设计，建立组件化设计规范，推动设计系统落地，提升团队协作效率与产品一致性。</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <div class="timeline__marker" aria-hidden="true"></div>
+              <div class="timeline__content">
+                <div class="timeline__meta">
+                  <time class="timeline__date">2017.07 — 2019.05</time>
+                </div>
+                <h4 class="timeline__company">青鸟创意</h4>
+                <p class="timeline__role">视觉设计师</p>
+                <p class="timeline__duty">负责品牌视觉、宣传物料与网页设计，培养了对排版、色彩与细节把控的敏感度，为后续产品设计师工作打下坚实基础。</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="timeline">
+          <h3 class="timeline__heading">教育经历</h3>
+          <ol class="timeline__list">
+            <li class="timeline__item">
+              <div class="timeline__marker" aria-hidden="true"></div>
+              <div class="timeline__content">
+                <div class="timeline__meta">
+                  <time class="timeline__date">2020.09 — 2021.06</time>
+                </div>
+                <h4 class="timeline__company">中央美术学院</h4>
+                <p class="timeline__role">设计思维研修</p>
+                <p class="timeline__duty">系统学习以用户为中心的设计方法论，深入研究服务设计与系统思维，拓展了从商业视角理解设计问题的能力。</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <div class="timeline__marker" aria-hidden="true"></div>
+              <div class="timeline__content">
+                <div class="timeline__meta">
+                  <time class="timeline__date">2015.09 — 2019.06</time>
+                </div>
+                <h4 class="timeline__company">江南大学</h4>
+                <p class="timeline__role">视觉传达设计 学士</p>
+                <p class="timeline__duty">学习平面设计、品牌识别与数字媒体设计，毕业作品获校级优秀毕业设计，奠定扎实的视觉与信息设计基础。</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 联系方式 -->
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="contact__container">
+        <h2 class="contact__title" id="contact-title">联系方式</h2>
+        <p class="contact__desc">有合作意向或想了解更多作品，欢迎通过邮件联系我。</p>
+        <a href="mailto:hello@chenmo.design" class="contact__email">hello@chenmo.design</a>
+        <div class="contact__social">
+          <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" class="contact__link" aria-label="Dribbble">Dribbble</a>
+          <a href="https://behance.net" target="_blank" rel="noopener noreferrer" class="contact__link" aria-label="Behance">Behance</a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="contact__link" aria-label="LinkedIn">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="site-footer">
+    <div class="site-footer__container">
+      <p class="site-footer__copy">&copy; 2024 陈墨. 保留所有权利。</p>
+      <p class="site-footer__credit">用极简设计，讲述真实故事。</p>
+    </div>
+  </footer>
+
+  <!-- 交互脚本 -->
+  <script src="script.js" defer></script>
+</body>
+</html>

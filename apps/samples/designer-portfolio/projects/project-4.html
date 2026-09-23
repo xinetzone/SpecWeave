@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="艺廊空间 — 陈墨设计作品集：当代艺术画廊官方网站设计。">
+  <title>艺廊空间 | 陈墨作品集</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="project-page">
+  <header class="site-header" id="header">
+    <div class="site-header__container">
+      <a href="../index.html#hero" class="site-header__brand" aria-label="返回首页">
+        <span class="site-header__logo">陈墨</span>
+      </a>
+      <nav class="site-header__nav" aria-label="主导航">
+        <ul class="site-header__menu">
+          <li><a href="../index.html#hero" class="site-header__link" data-target="hero">首页</a></li>
+          <li><a href="../index.html#works" class="site-header__link" data-target="works">作品展示</a></li>
+          <li><a href="../index.html#experience" class="site-header__link" data-target="experience">关于我</a></li>
+          <li><a href="../index.html#contact" class="site-header__link" data-target="contact">联系方式</a></li>
+        </ul>
+      </nav>
+      <button class="site-header__toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="打开导航菜单">
+        <span class="site-header__bar"></span>
+        <span class="site-header__bar"></span>
+        <span class="site-header__bar"></span>
+      </button>
+    </div>
+    <nav class="site-header__mobile-nav" id="mobileNav" aria-label="移动端导航">
+      <ul class="site-header__mobile-menu">
+        <li><a href="../index.html#hero" class="site-header__mobile-link" data-target="hero">首页</a></li>
+        <li><a href="../index.html#works" class="site-header__mobile-link" data-target="works">作品展示</a></li>
+        <li><a href="../index.html#experience" class="site-header__mobile-link" data-target="experience">关于我</a></li>
+        <li><a href="../index.html#contact" class="site-header__mobile-link" data-target="contact">联系方式</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="project-main">
+    <header class="project-header">
+      <div class="project-header__container">
+        <a href="../index.html#works" class="project-header__back">返回作品集</a>
+        <h1 class="project-header__title">艺廊空间</h1>
+        <p class="project-header__category">网站设计 / 当代艺术</p>
+      </div>
+    </header>
+
+    <figure class="project-hero">
+      <img src="../assets/project-4-detail.jpg" alt="艺廊空间官网完整界面展示" class="project-hero__image" loading="lazy" width="1600" height="900">
+    </figure>
+
+    <div class="project-content">
+      <div class="project-content__container">
+        <div class="project-meta">
+          <dl class="project-meta__list">
+            <div class="project-meta__item">
+              <dt class="project-meta__label">项目年份</dt>
+              <dd class="project-meta__value">2024</dd>
+            </div>
+            <div class="project-meta__item">
+              <dt class="project-meta__label">我的角色</dt>
+              <dd class="project-meta__value">视觉与交互设计师</dd>
+            </div>
+            <div class="project-meta__item">
+              <dt class="project-meta__label">交付物</dt>
+              <dd class="project-meta__value">响应式网站 / 动效规范</dd>
+            </div>
+          </dl>
+        </div>
+
+        <section class="project-content__section">
+          <h2 class="project-content__heading">项目背景</h2>
+          <p class="project-content__text">艺廊空间是一家关注当代亚洲艺术的画廊，希望重新设计官方网站，以更好地呈现展览、艺术家与作品。网站的目标受众包括收藏家、策展人、艺术爱好者与媒体，需要在专业感与可访问性之间取得平衡。</p>
+        </section>
+
+        <section class="project-content__section">
+          <h2 class="project-content__heading">设计思路</h2>
+          <p class="project-content__text">艺术网站的最高原则是让作品成为主角。因此我采用了大量留白、克制的中西文混排与柔和的中性色调。标题使用优雅的衬线风格字体与无衬线字体的搭配，正文则保持极高的可读性。</p>
+          <p class="project-content__text">展览页面以大画幅作品图片为核心，配以极简的展览信息与艺术家介绍。滚动时，图片以缓慢的淡入动画出现，模拟在实体画廊中漫步观展的节奏感。导航始终保持低调，不抢夺艺术作品的视觉焦点。</p>
+        </section>
+
+        <section class="project-content__section">
+          <h2 class="project-content__heading">设计过程</h2>
+          <p class="project-content__text">设计开始前，我走访了多家实体画廊，记录观展者的浏览动线与停留行为。这些观察帮助我确定了“大图、少字、慢节奏”的设计方向。随后我完成了 4 套首页方案，与客户共同选择了最具东方留白美学的版本。</p>
+          <p class="project-content__text">技术实现上，我为网站制定了图片懒加载与渐进式加载策略，确保大尺寸艺术作品图片在不影响体验的前提下快速呈现。网站上线后，平均页面停留时间提升了 45%，移动端访问占比达到 38%。</p>
+        </section>
+      </div>
+    </div>
+
+    <nav class="project-nav" aria-label="项目导航">
+      <a href="../index.html#works" class="project-nav__link">返回作品集</a>
+    </nav>
+  </main>
+
+  <a href="../index.html#works" class="back-button" id="backButton" aria-label="返回作品集">
+    <span aria-hidden="true">←</span>
+    <span class="back-button__text">返回</span>
+  </a>
+
+  <footer class="site-footer">
+    <div class="site-footer__container">
+      <p class="site-footer__copy">&copy; 2024 陈墨. 保留所有权利。</p>
+      <p class="site-footer__credit">用极简设计，讲述真实故事。</p>
+    </div>
+  </footer>
+
+  <script src="../script.js" defer></script>
+</body>
+</html>

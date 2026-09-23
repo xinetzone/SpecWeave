@@ -47,6 +47,7 @@ apps/
 └── samples/               ← 示例/原型类分组
     ├── cow-demo/
     ├── short-video-site/
+    ├── designer-portfolio/
     └── zleap-workspace-first-prototype/
 ```
 

@@ -32,7 +32,7 @@ apps/
 ├── docker-images/         ← 容器镜像类应用（7 个）
 ├── ai-agents/             ← AI 应用类（3 个）
 ├── dev-tools/             ← 开发工具类（2 个）
-└── samples/               ← 示例/原型类（3 个）
+└── samples/               ← 示例/原型类（5 个）
 ```
 
 分组规则：
@@ -106,6 +106,7 @@ apps/<group>/<app-name>/
 |------|------|
 | [cow-demo](samples/cow-demo/README.md) | 零拷贝 COW 读写分离模式 C++ 示例框架 |
 | [short-video-site](samples/short-video-site/README.md) | ReelVibe 短视频网站（AI 全流程开发 Demo） |
+| [designer-portfolio](samples/designer-portfolio/README.md) | 设计师作品集静态网站（纯 HTML/CSS/JS + GSAP，零构建 Demo，首页 + 4 个项目详情页） |
 | [serial-camera-controller](samples/serial-camera-controller/README.md) | 串口控制 USB 摄像头抓图/录像（CH340+OpenCV+pyserial） |
 | [samples-retrospective](samples/samples-retrospective/README.md) | samples 区复盘与经验沉淀 |
 | zleap-workspace-first-prototype | 工作区首个原型（多模型路由，暂缺 README） |

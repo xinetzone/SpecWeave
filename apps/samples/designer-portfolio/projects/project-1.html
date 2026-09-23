@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="绿意生活 — 陈墨设计作品集：一款可持续生活方式移动应用。">
+  <title>绿意生活 | 陈墨作品集</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="project-page">
+  <header class="site-header" id="header">
+    <div class="site-header__container">
+      <a href="../index.html#hero" class="site-header__brand" aria-label="返回首页">
+        <span class="site-header__logo">陈墨</span>
+      </a>
+      <nav class="site-header__nav" aria-label="主导航">
+        <ul class="site-header__menu">
+          <li><a href="../index.html#hero" class="site-header__link" data-target="hero">首页</a></li>
+          <li><a href="../index.html#works" class="site-header__link" data-target="works">作品展示</a></li>
+          <li><a href="../index.html#experience" class="site-header__link" data-target="experience">关于我</a></li>
+          <li><a href="../index.html#contact" class="site-header__link" data-target="contact">联系方式</a></li>
+        </ul>
+      </nav>
+      <button class="site-header__toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="打开导航菜单">
+        <span class="site-header__bar"></span>
+        <span class="site-header__bar"></span>
+        <span class="site-header__bar"></span>
+      </button>
+    </div>
+    <nav class="site-header__mobile-nav" id="mobileNav" aria-label="移动端导航">
+      <ul class="site-header__mobile-menu">
+        <li><a href="../index.html#hero" class="site-header__mobile-link" data-target="hero">首页</a></li>
+        <li><a href="../index.html#works" class="site-header__mobile-link" data-target="works">作品展示</a></li>
+        <li><a href="../index.html#experience" class="site-header__mobile-link" data-target="experience">关于我</a></li>
+        <li><a href="../index.html#contact" class="site-header__mobile-link" data-target="contact">联系方式</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="project-main">
+    <header class="project-header">
+      <div class="project-header__container">
+        <a href="../index.html#works" class="project-header__back">返回作品集</a>
+        <h1 class="project-header__title">绿意生活</h1>
+        <p class="project-header__category">移动应用 / 可持续生活</p>
+      </div>
+    </header>
+
+    <figure class="project-hero">
+      <img src="../assets/project-1-detail.jpg" alt="绿意生活 App 完整界面展示" class="project-hero__image" loading="lazy" width="1600" height="900">
+    </figure>
+
+    <div class="project-content">
+      <div class="project-content__container">
+        <div class="project-meta">
+          <dl class="project-meta__list">
+            <div class="project-meta__item">
+              <dt class="project-meta__label">项目年份</dt>
+              <dd class="project-meta__value">2024</dd>
+            </div>
+            <div class="project-meta__item">
+              <dt class="project-meta__label">我的角色</dt>
+              <dd class="project-meta__value">产品设计师</dd>
+            </div>
+            <div class="project-meta__item">
+              <dt class="project-meta__label">交付物</dt>
+              <dd class="project-meta__value">App 设计 / 组件库</dd>
+            </div>
+          </dl>
+        </div>
+
+        <section class="project-content__section">
+          <h2 class="project-content__heading">项目背景</h2>
+          <p class="project-content__text">绿意生活是一款面向年轻都市人群的可持续生活方式应用。用户可以通过记录日常低碳行为，如步行通勤、自带餐具、植物饮食等，逐步养成更环保的生活习惯。项目的核心挑战在于：如何让环保这件看似沉重的话题，变得轻松、愉悦且可持续。</p>
+        </section>
+
+        <section class="project-content__section">
+          <h2 class="project-content__heading">设计思路</h2>
+          <p class="project-content__text">设计之初，我希望通过视觉语言传递“温和而坚定”的品牌气质。整体采用低饱和度的鼠尾草绿与暖白色为主调，避免使用高饱和色彩带来的焦虑感。界面中大量运用圆角、留白与柔和的图标，让用户在记录行为时感受到被鼓励，而非被评判。</p>
+          <p class="project-content__text">在信息架构上，我将首页设计为“今日进度”视图，让用户一眼看到当天的完成情况与下一项可完成任务。通过轻量化的游戏化机制，如连续打卡、成就徽章与周度回顾，帮助用户建立长期的行为惯性。</p>
+        </section>
+
+        <section class="project-content__section">
+          <h2 class="project-content__heading">设计过程</h2>
+          <p class="project-content__text">项目共经历四个阶段：用户调研、概念验证、高保真设计与可用性测试。调研阶段访谈了 24 位潜在用户，发现大多数人并非不愿意环保，而是缺乏简单、低门槛的记录工具。基于这一洞察，我简化了行为记录的步骤，将单次记录控制在 3 秒以内。</p>
+          <p class="project-content__text">在高保真阶段，我建立了完整的组件库与设计令牌，确保后续迭代的一致性。可用性测试覆盖 12 位用户，任务完成率达到 94%，首页行为记录的感知易用性评分提升了 37%。</p>
+        </section>
+      </div>
+    </div>
+
+    <nav class="project-nav" aria-label="项目导航">
+      <a href="../index.html#works" class="project-nav__link">返回作品集</a>
+    </nav>
+  </main>
+
+  <a href="../index.html#works" class="back-button" id="backButton" aria-label="返回作品集">
+    <span aria-hidden="true">←</span>
+    <span class="back-button__text">返回</span>
+  </a>
+
+  <footer class="site-footer">
+    <div class="site-footer__container">
+      <p class="site-footer__copy">&copy; 2024 陈墨. 保留所有权利。</p>
+      <p class="site-footer__credit">用极简设计，讲述真实故事。</p>
+    </div>
+  </footer>
+
+  <script src="../script.js" defer></script>
+</body>
+</html>
