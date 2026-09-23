@@ -42,3 +42,4 @@
 | [04 GPU 与 torch](docs/04-gpu-and-torch.md) | GPU 透传三形态（CDI/DRI/DXG）、torch cpu/cu130 形态、nvcc 13.4.92、归档名形态标记 |
 | [05 参数与栈关系](docs/05-params-and-relations.md) | compose 插值 / .env 键全表、与量化/交付等相关栈目录的关系 |
 | [06 排障速查](docs/06-troubleshooting.md) | 常见现象与处理（控制平面交替、OOM、离线无镜像、checkpoint 权限等） |
+| [07 透传与组合指南](docs/07-passthrough-and-combos.md) | 透传/GPU/torch-gpu/GUI/USB 组合矩阵、全家桶命令、组合排障 |
