@@ -6,6 +6,8 @@
 #   podman-compose -f compose.yaml -f compose.passthrough.usb.yaml up -d
 # 主层 + USB（host 网络形态）：
 #   invoke native.up --passthrough --usb
+# GUI + USB（bridge 形态，文件序 GUI 在 USB 前）：
+#   invoke native.up --gui --usb
 #
 # 前置 —— 设备路径缺失时 podman 硬失败（exit 125）：
 #   test -e "${USB_DEVICE:-/dev/bus/usb}" && echo "USB OK"

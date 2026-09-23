@@ -1,0 +1,38 @@
+---
+# compose.passthrough.gui.yaml — [2] GUI·Wayland socket 透传（opt-in）
+#
+# 用法（bridge 形态即可用，无需 --passthrough）：
+#   invoke native.up --gui
+#   podman-compose -f compose.yaml -f compose.passthrough.gui.yaml up -d
+# 与 X11 姊妹层 / 其他维度任意组合（文件序 base → GPU → 透传 → GUI → USB）：
+#   invoke native.up --gui --passthrough --gpu
+#
+# 对齐构建端同名文件 compose.passthrough.gui.yaml 与根 invoke run --wayland
+# （client docs/09-passthrough.md ②）：只挂 Wayland socket + 两个寻址变量。
+# X11（XWayland）由姊妹层 compose.passthrough.gui.x11.yaml 按探测结果追加；
+# invoke 门禁在 daemon 宿主侧 test -S 命中后才加载本层并回写插值令牌，
+# 未命中 wayland 但命中 X11 的宿主只加载 x11 层。
+#
+# 前置 —— 挂载源缺失时 podman 硬失败（exit 125）且不自动创建：
+#   test -S "${GUI_WAYLAND_SOCKET:-/mnt/wslg/runtime-dir/wayland-0}" && echo "Wayland OK"
+# WSL2（Windows 11 WSLg）socket 固定在 /mnt/wslg/runtime-dir（kernel 默认探测
+# 首选）；物理 Linux 用 HOST_XDG_RUNTIME_DIR 指向 $XDG_RUNTIME_DIR。
+#
+# 安全 —— Wayland socket 允许容器进程接入宿主合成器会话（截屏/输入注入面），
+# 仅用于可信镜像。默认全关，不开时与本层不存在逐字等价。
+
+services:
+  native:
+    volumes:
+      # create_host_path: false —— socket 类源绝不自动创建；短语法无此通道，
+      # podman-compose 会在源缺失时于宿主 mkdir 出错误目录（同 D-Bus/USB 纪律）。
+      # 完整 socket 路径由内核 resolve_gui 探测后回写 GUI_WAYLAND_SOCKET；
+      # 裸 compose 缺省走 WSLg 固定路径。
+      - type: bind
+        source: ${GUI_WAYLAND_SOCKET:-/mnt/wslg/runtime-dir/wayland-0}
+        target: /tmp/runtime-user/${HOST_WAYLAND_DISPLAY:-wayland-0}
+        bind:
+          create_host_path: false
+    environment:
+      XDG_RUNTIME_DIR: /tmp/runtime-user
+      WAYLAND_DISPLAY: ${HOST_WAYLAND_DISPLAY:-wayland-0}

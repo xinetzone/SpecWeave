@@ -205,6 +205,7 @@ class StackSpec:
     # —— 透传覆盖（与 GPU 同族 opt-in，默认全关）——
     passthrough_overlay: bool = False  # compose.passthrough.yaml：host 网络 + D-Bus
     usb_overlay: bool = False  # compose.passthrough.usb.yaml：USB 总线
+    gui_overlay: bool = False  # compose.passthrough.gui(.x11).yaml：Wayland/X11 显示
     passthrough_tag_default: str = ""  # 透传栈默认镜像 tag（独立身份，同镜像内容）
 
     # —— 挂载/冒烟/桥接 ——
@@ -640,6 +641,8 @@ def compose_files(
     gpu: bool = False,
     gpu_form: str = "generic",
     passthrough: bool = False,
+    gui: bool = False,
+    gui_forms: tuple[str, ...] = (),
     usb: bool = False,
 ) -> list[Path]:
     """本次调用下发的 compose 文件集（**唯一事实源**：argv 与预检判据共用）。
@@ -651,7 +654,8 @@ def compose_files(
     （``.../compose.yaml,.../compose.gpu.wsl.yaml``），二者**恒不相等**，于是
     每次 ``--gpu`` 都被判成「另一控制平面创建」并强制优雅 down + recreate。
 
-    文件顺序（compose 按序叠加合并）：base → GPU → 透传主层 → USB 层。
+    文件顺序（compose 按序叠加合并）：base → GPU → 透传主层 → GUI
+    （Wayland → X11）→ USB 层。
     """
     files = [overlay_dir(spec) / "compose.yaml"]
     if gpu:
@@ -663,6 +667,17 @@ def compose_files(
         if not spec.passthrough_overlay:
             raise RuntimeError(f"栈 {spec.namespace} 未声明 passthrough_overlay")
         files.append(overlay_dir(spec) / "compose.passthrough.yaml")
+    if gui:
+        if not spec.gui_overlay:
+            raise RuntimeError(f"栈 {spec.namespace} 未声明 gui_overlay")
+        if not gui_forms:
+            # 内部不变量：gui=True 必须携带 resolve_gui 的探测结果——空形态
+            # 意味着门禁未过却下发了 GUI 层（缺源 bind 必 exit 125）。
+            raise RuntimeError("gui=True 但 gui_forms 为空（resolve_gui 未命中任何显示 socket）")
+        if "wayland" in gui_forms:
+            files.append(overlay_dir(spec) / "compose.passthrough.gui.yaml")
+        if "x11" in gui_forms:
+            files.append(overlay_dir(spec) / "compose.passthrough.gui.x11.yaml")
     if usb:
         if not spec.usb_overlay:
             raise RuntimeError(f"栈 {spec.namespace} 未声明 usb_overlay")
@@ -676,6 +691,8 @@ def compose_config_files_label(
     gpu: bool = False,
     gpu_form: str = "generic",
     passthrough: bool = False,
+    gui: bool = False,
+    gui_forms: tuple[str, ...] = (),
     usb: bool = False,
 ) -> str:
     """compose 写进 ``config_files`` 标签的原文串（逗号分隔，与 podman 同格式）。
@@ -686,7 +703,8 @@ def compose_config_files_label(
     return ",".join(
         str(f)
         for f in compose_files(
-            spec, gpu=gpu, gpu_form=gpu_form, passthrough=passthrough, usb=usb
+            spec, gpu=gpu, gpu_form=gpu_form, passthrough=passthrough,
+            gui=gui, gui_forms=gui_forms, usb=usb,
         )
     )
 
@@ -697,6 +715,8 @@ def compose_argv(
     gpu: bool = False,
     gpu_form: str = "generic",
     passthrough: bool = False,
+    gui: bool = False,
+    gui_forms: tuple[str, ...] = (),
     usb: bool = False,
 ) -> list[str]:
     """组装 podman-compose 公共 argv（固定 project name，-f 绝对路径）。
@@ -704,12 +724,13 @@ def compose_argv(
     gpu=True 且栈声明 gpu_override 时叠加 GPU 覆盖文件；``gpu_form`` 决定
     具体文件（见 :func:`gpu_override_file`，只加载**一个**设备覆盖文件——
     两个同时加载会让 devices 列表出现重复项，podman 拒绝映射两次）。
-    ``passthrough``/``usb`` 追加透传两覆盖层。
-    文件集来自 :func:`compose_files`，与预检判据同源。
+    ``passthrough``/``gui``/``usb`` 追加透传各覆盖层（GUI 按探测形态加载
+    Wayland/X11 一或两层）。文件集来自 :func:`compose_files`，与预检判据同源。
     """
     argv = ["podman-compose", "--project-name", spec.project]
     for f in compose_files(
-        spec, gpu=gpu, gpu_form=gpu_form, passthrough=passthrough, usb=usb
+        spec, gpu=gpu, gpu_form=gpu_form, passthrough=passthrough,
+        gui=gui, gui_forms=gui_forms, usb=usb,
     ):
         argv += ["--file", str(f)]
     argv += list(tail)
@@ -723,6 +744,8 @@ def run_compose(
     gpu: bool = False,
     gpu_form: str = "generic",
     passthrough: bool = False,
+    gui: bool = False,
+    gui_forms: tuple[str, ...] = (),
     usb: bool = False,
     pty: bool = True,
 ) -> None:
@@ -733,7 +756,8 @@ def run_compose(
     （_parse_compose_file L2844-L2849），故绝对 --file + 任意 cwd 均可。
     """
     argv = compose_argv(
-        spec, *tail, gpu=gpu, gpu_form=gpu_form, passthrough=passthrough, usb=usb
+        spec, *tail, gpu=gpu, gpu_form=gpu_form, passthrough=passthrough,
+        gui=gui, gui_forms=gui_forms, usb=usb,
     )
     run_cmd(c, " ".join(shlex.quote(a) for a in argv), pty=pty)
 
@@ -789,6 +813,8 @@ def run_compose_up(
     gpu: bool = False,
     gpu_form: str = "generic",
     passthrough: bool = False,
+    gui: bool = False,
+    gui_forms: tuple[str, ...] = (),
     usb: bool = False,
 ) -> None:
     """执行 ``up`` 并过滤 podman 原生回显噪声（C17）。
@@ -805,7 +831,8 @@ def run_compose_up(
       - 仅 ``up`` 走本函数——构建/编译等长任务仍逐字实时透传，流式体验不受影响。
     """
     argv = compose_argv(
-        spec, *tail, gpu=gpu, gpu_form=gpu_form, passthrough=passthrough, usb=usb
+        spec, *tail, gpu=gpu, gpu_form=gpu_form, passthrough=passthrough,
+        gui=gui, gui_forms=gui_forms, usb=usb,
     )
     cmd = " ".join(shlex.quote(a) for a in argv)
     print(f"执行: {cmd}")
@@ -1138,6 +1165,8 @@ def up_preflight(
     gpu: bool = False,
     gpu_form: str = "generic",
     passthrough: bool = False,
+    gui: bool = False,
+    gui_forms: tuple[str, ...] = (),
     usb: bool = False,
 ) -> None:
     """up 前自愈（顺序不可调换）：
@@ -1172,7 +1201,8 @@ def up_preflight(
     if cid:
         actual = _running_config_files(c, spec, cid)
         expected = compose_config_files_label(
-            spec, gpu=gpu, gpu_form=gpu_form, passthrough=passthrough, usb=usb
+            spec, gpu=gpu, gpu_form=gpu_form, passthrough=passthrough,
+            gui=gui, gui_forms=gui_forms, usb=usb,
         )
         if config_paths_diverge(actual, expected):
             print(
@@ -1664,6 +1694,87 @@ def resolve_usb_device(c: Context, spec: StackSpec, env: dict) -> str:
     return token
 
 
+# GUI（Wayland/X11）显示 socket 的固定探测路径（daemon 宿主侧）。
+# WSLg（Windows 11 内置）在 podman-machine-default 内恒定挂载于 /mnt/wslg：
+# 2026-09-23 真机实证 wayland-0 与 .X11-unix/X0 均为 0777 socket；非登录 shell
+# 的 DISPLAY/WAYLAND_DISPLAY/XDG_RUNTIME_DIR 全空，故默认值必须内核显式给出，
+# 不可读 daemon 宿主 env。物理 Linux 回退 /run/user/1000（与 D-Bus 缺省同 uid）。
+GUI_WAYLAND_DEFAULT_DIRS = ("/mnt/wslg/runtime-dir", "/run/user/1000")
+GUI_X11_DEFAULT_DIRS = ("/mnt/wslg/.X11-unix", "/tmp/.X11-unix")
+
+
+def resolve_gui(c: Context, spec: StackSpec, env: dict) -> tuple[str, ...]:
+    """GUI 透传门禁：在 podman 宿主探测 Wayland / X11 显示 socket。
+
+    返回命中形态序列（``("wayland", "x11")`` 的子集，顺序固定），并把 compose
+    插值令牌回写 ``os.environ``：
+
+      - wayland：``GUI_WAYLAND_SOCKET``（完整 socket 路径）+
+        ``HOST_WAYLAND_DISPLAY``（缺省 wayland-0）；
+      - x11：``GUI_X11_SOCKETDIR``（X0 所在目录）+ ``GUI_DISPLAY``（缺省 :0）。
+
+    两通道**任一命中即放行**（物理宿主可能只有其一），各自对应独立覆盖文件，
+    由 :func:`compose_files` 按形态加载；两者都缺才 fail-fast。socket 源缺失
+    时 podman 只会 exit 125（且 bind 了不存在的 X server 时容器内 GUI 不可用），
+    故与 GPU/USB/D-Bus 同族在任何 down/up 之前前置探测。
+
+    探测全部经 run_cmd 落在 podman 宿主侧（禁止本机 Path.exists()，同 C19）。
+    令牌优先级：shell export > root .env > 形态缺省路径。
+    """
+    ns = spec.namespace
+    display = str(
+        os.environ.get("HOST_WAYLAND_DISPLAY")
+        or env.get("HOST_WAYLAND_DISPLAY")
+        or "wayland-0"
+    )
+    xdg = os.environ.get("HOST_XDG_RUNTIME_DIR") or env.get("HOST_XDG_RUNTIME_DIR")
+    wayland_dirs = ([xdg] if xdg else []) + [d for d in GUI_WAYLAND_DEFAULT_DIRS if d != xdg]
+    wayland_socket = next(
+        (f"{d}/{display}" for d in wayland_dirs if _runtime_socket_exists(c, f"{d}/{display}")),
+        "",
+    )
+
+    x11_dir = str(
+        os.environ.get("GUI_X11_SOCKETDIR") or env.get("GUI_X11_SOCKETDIR") or ""
+    )
+    x11_dirs = ([x11_dir] if x11_dir else []) + [
+        d for d in GUI_X11_DEFAULT_DIRS if d != x11_dir
+    ]
+    # WSLg 首选 /mnt/wslg/.X11-unix（真实目录）；/tmp/.X11-unix 在部分版本是
+    # 指向它的符号链接，挂源由候选顺序规避。判据是目录内 X0 socket 真实存在。
+    x11_found = next(
+        (d for d in x11_dirs if _runtime_socket_exists(c, f"{d}/X0")),
+        "",
+    )
+
+    if not wayland_socket and not x11_found:
+        print(f"[{ns}] ⚠ --gui 需要 GUI 显示 socket，但在 podman 宿主未探测到"
+              " Wayland/X11 任一通道：")
+        print(f"[{ns}]   WSL2（Windows 11 WSLg，本机主路径）："
+              "`ls /mnt/wslg/runtime-dir/wayland-0 /mnt/wslg/.X11-unix/X0` "
+              "应见 socket；")
+        print("           WSLg 为 Win11 内置组件（Windows 10 不支持），"
+              "若已禁用需在 .wslconfig 启用 GUI 应用支持后 wsl --shutdown 重进。")
+        print(f"[{ns}]   物理 Linux：设 HOST_XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR "
+              "（Wayland）；X11 需 `xhost local:root` 放行并可用 "
+              "GUI_X11_SOCKETDIR 改指 socket 目录。")
+        print(f"[{ns}]   自检：wsl -d podman-machine-default -- "
+              "test -S /mnt/wslg/runtime-dir/wayland-0")
+        print(f"[{ns}]   不需要 GUI 时去掉 --gui。")
+        raise Exit(1)
+
+    forms: list[str] = []
+    if wayland_socket:
+        os.environ["GUI_WAYLAND_SOCKET"] = wayland_socket
+        os.environ["HOST_WAYLAND_DISPLAY"] = display
+        forms.append("wayland")
+    if x11_found:
+        os.environ["GUI_X11_SOCKETDIR"] = x11_found
+        os.environ.setdefault("GUI_DISPLAY", ":0")
+        forms.append("x11")
+    return tuple(forms)
+
+
 def _local_image_exists(c: Context, img_tag: str) -> bool:
     """本地镜像存在性（``podman image exists``）。"""
     r = run_cmd(
@@ -1715,6 +1826,7 @@ def up_stack(
     skip_build: bool = False,
     offline: bool = False,
     passthrough: bool = False,
+    gui: bool = False,
     usb: bool = False,
 ) -> None:
     """渲染并启动栈（默认随带构建；up 前过 up_preflight 三道自愈）。
@@ -1755,8 +1867,8 @@ def up_stack(
     # `build --torch X`（单次覆盖，C15）后 `up --skip-build` 的「声明 ≠ 实物」。
     warn_torch_flavor_mismatch(c, spec, env)
     # 门禁全部**先于 up_preflight / 任何 down**（顺序即语义，对齐 GPU C19/C23）：
-    # GPU → 透传主层（含镜像 tag 就位）→ USB。任一不可用即 fail-fast，绝不先拆
-    # 用户正在用的栈再报错。
+    # GPU → 透传主层（含镜像 tag 就位）→ GUI（Wayland/X11 形态探测）→ USB。
+    # 任一不可用即 fail-fast，绝不先拆用户正在用的栈再报错。
     gpu_token, gpu_form = ("", "generic")
     if gpu:
         gpu_token, gpu_form = resolve_gpu_device(c, spec, env)
@@ -1765,16 +1877,19 @@ def up_stack(
     if passthrough:
         dbus_path, sshd_port = resolve_passthrough(c, spec, env)
         pt_tag = ensure_passthrough_tag(c, spec, env, offline=offline)
+    gui_forms: tuple[str, ...] = ()
+    if gui:
+        gui_forms = resolve_gui(c, spec, env)
     usb_token = ""
     if usb:
         usb_token = resolve_usb_device(c, spec, env)
     up_preflight(
         c, spec, env=env, gpu=gpu, gpu_form=gpu_form,
-        passthrough=passthrough, usb=usb,
+        passthrough=passthrough, gui=gui, gui_forms=gui_forms, usb=usb,
     )
     run_compose_up(
         c, spec, *compose_up_tail(), gpu=gpu, gpu_form=gpu_form,
-        passthrough=passthrough, usb=usb,
+        passthrough=passthrough, gui=gui, gui_forms=gui_forms, usb=usb,
     )
     # host 形态：Jupyter 固定 8888、SSH 用 SSHD_PORT（无端口映射）；bridge 形态
     # 继续按 .env 键解析。
@@ -1828,6 +1943,13 @@ def up_stack(
         print(f"        GPU     {gpu_token} 已透传（{gpu_override_file(spec, gpu_form).name}）")
     if passthrough:
         print(f"        透传    host 网络 + D-Bus（{dbus_path}；镜像 {pt_tag or '...'}）")
+    if gui and gui_forms:
+        parts = []
+        if "wayland" in gui_forms:
+            parts.append(f"Wayland {os.environ.get('GUI_WAYLAND_SOCKET', '')}")
+        if "x11" in gui_forms:
+            parts.append(f"X11 {os.environ.get('GUI_X11_SOCKETDIR', '')}")
+        print(f"        GUI     {' + '.join(parts)} 已透传（bridge/host 形态均可用）")
     if usb:
         print(f"        USB     {usb_token} 已透传")
     if spec.up_footer:
@@ -1867,12 +1989,13 @@ def smoke_stack(
     *,
     gpu: bool = False,
     passthrough: bool = False,
+    gui: bool = False,
     usb: bool = False,
 ) -> None:
     """运行栈冒烟：栈在运行 → compose exec 执行 exec_scripts；未运行 →
     podman run --rm 一次性容器执行 standalone_scripts。
 
-    栈运行路径的文件集必须与栈启动时同源（``gpu``/``passthrough``/``usb``
+    栈运行路径的文件集必须与栈启动时同源（``gpu``/``passthrough``/``gui``/``usb``
     决定 exec 寻址与设备/网络命名），故参数先过与 up 相同的门禁解析。
     """
     if spec.smoke is None:
@@ -1891,6 +2014,9 @@ def smoke_stack(
         # check_ports=False：运行中栈自身占用 host 端口属预期（非冲突）
         resolve_passthrough(c, spec, env, check_ports=False)
         ensure_passthrough_tag(c, spec, env, offline=False)
+    gui_forms: tuple[str, ...] = ()
+    if gui:
+        gui_forms = resolve_gui(c, spec, env)
     if usb:
         resolve_usb_device(c, spec, env)
 
@@ -1908,17 +2034,19 @@ def smoke_stack(
                 gpu=gpu,
                 gpu_form=gpu_form,
                 passthrough=passthrough,
+                gui=gui,
+                gui_forms=gui_forms,
                 usb=usb,
                 pty=False,
             )
     else:
         print(f"[{spec.namespace}] {smoke.standalone_note}")
-        if passthrough or usb:
+        if passthrough or gui or usb:
             # standalone 为裸 podman run，不带透传覆盖；守卫脚本本身不依赖
             # 这些设备（与 GPU standalone 同语义），但须显式声明参数被忽略，
             # 防止把「透传已验证」误读为设备已生效。
-            print(f"[{spec.namespace}]   ℹ 栈未运行：--passthrough/--usb 仅在栈运行"
-                  "路径生效，本次只跑无设备依赖的独立守卫。")
+            print(f"[{spec.namespace}]   ℹ 栈未运行：--passthrough/--gui/--usb 仅在"
+                  "栈运行路径生效，本次只跑无设备依赖的独立守卫。")
         for script in smoke.standalone_scripts:
             # 注意：standalone 路径为迁移前逐字节等价的裸 `podman run --rm`
             # （不带 rootless 三必需，历史仅跑纯 CPU ONNX/守卫脚本）。未来若
@@ -2123,8 +2251,19 @@ def make_stack_tasks(spec: StackSpec) -> dict:
             ),
             **up_help,
         }
+    if spec.gui_overlay:
+        up_help = {
+            "gui": (
+                "透传 GUI 显示（compose.passthrough.gui[.x11].yaml）：内核在 daemon "
+                "宿主探测 Wayland socket 与 X11 socket，命中几层挂几层（WSLg 下"
+                "两层恒共存）。bridge 形态即可用（无需 --passthrough）；物理 Linux "
+                "用 HOST_XDG_RUNTIME_DIR / GUI_X11_SOCKETDIR 改指，X11 另需 xhost "
+                "放行；均未命中即 fail-fast；默认隔离"
+            ),
+            **up_help,
+        }
 
-    # —— up（形参面 = gpu_override ∪ supports_offline ∪ 透传两覆盖，能力正交） ——
+    # —— up（形参面 = gpu_override ∪ supports_offline ∪ 透传各覆盖，能力正交） ——
     # 历史写法是 gpu/offline/else 三路互斥，导致 native 一旦同时声明两个能力，
     # --offline 会被 gpu 分支吃掉。改为"能力并集决定形参面"，公共实现下沉。
     def _up_impl(
@@ -2135,6 +2274,7 @@ def make_stack_tasks(spec: StackSpec) -> dict:
         offline: bool,
         no_offline: bool,
         passthrough: bool = False,
+        gui: bool = False,
         usb: bool = False,
     ) -> None:
         # 离线开关必须**先于 gates** 固化进 os.environ（WSL 桥接只透传环境
@@ -2145,25 +2285,26 @@ def make_stack_tasks(spec: StackSpec) -> dict:
         prepare_env(s)
         up_stack(
             c, s, gpu=gpu, skip_build=skip_build, offline=is_offline,
-            passthrough=passthrough, usb=usb,
+            passthrough=passthrough, gui=gui, usb=usb,
         )
 
     if spec.gpu_override and spec.supports_offline:
 
-        if spec.passthrough_overlay or spec.usb_overlay:
+        if spec.passthrough_overlay or spec.usb_overlay or spec.gui_overlay:
 
             @task(help=up_help, **deco)
             def up(
                 c: Context,
                 gpu: bool = False,
                 passthrough: bool = False,
+                gui: bool = False,
                 usb: bool = False,
                 skip_build: bool = False,
                 offline: bool = False,
                 no_offline: bool = False,
             ) -> None:
                 _up_impl(
-                    c, gpu=gpu, passthrough=passthrough, usb=usb,
+                    c, gpu=gpu, passthrough=passthrough, gui=gui, usb=usb,
                     skip_build=skip_build, offline=offline, no_offline=no_offline,
                 )
 
@@ -2228,15 +2369,16 @@ def make_stack_tasks(spec: StackSpec) -> dict:
 
     logs.__doc__ = spec.docs.logs
 
-    # —— smoke（形参面 = gpu_override ∪ 透传两覆盖，仅影响 exec 寻址） ——
+    # —— smoke（形参面 = gpu_override ∪ 透传各覆盖，仅影响 exec 寻址） ——
     if spec.gpu_override:
 
-        if spec.passthrough_overlay or spec.usb_overlay:
+        if spec.passthrough_overlay or spec.usb_overlay or spec.gui_overlay:
 
             @task(
                 help={
                     "gpu": "运行栈带 GPU 覆盖时置位（exec 寻址同源）",
                     "passthrough": "运行栈带透传主层时置位（exec 寻址同源）",
+                    "gui": "运行栈带 GUI 覆盖时置位（exec 寻址同源）",
                     "usb": "运行栈带 USB 覆盖时置位（exec 寻址同源）",
                 },
                 **deco,
@@ -2245,10 +2387,11 @@ def make_stack_tasks(spec: StackSpec) -> dict:
                 c: Context,
                 gpu: bool = False,
                 passthrough: bool = False,
+                gui: bool = False,
                 usb: bool = False,
             ) -> None:
                 gates(s)
-                smoke_stack(c, s, gpu=gpu, passthrough=passthrough, usb=usb)
+                smoke_stack(c, s, gpu=gpu, passthrough=passthrough, gui=gui, usb=usb)
 
         else:
 
