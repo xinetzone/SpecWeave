@@ -106,7 +106,7 @@ date: 2026-09-15
 
 ### 2.3 老板（投入产出、交付风险、承诺兑现）
 
-- 结构性目标全部兑现：三模块 88/158/120 行（≤160，[quant.py](file:///d:/spaces/SpecWeave/apps/containers/client/src/jpman_client/tasks/quant.py)、[native.py](../../../../apps/containers/client/src/jpman_client/tasks/native.py)、[monetize.py](file:///d:/spaces/SpecWeave/apps/containers/client/src/jpman_client/tasks/monetize.py)）、同构函数唯一定义在内核、builder UID 硬编码消除（实测 `hasattr(client,'_podman_runtime_uid')=False`、`get_client.__module__=jpman_common.connection`）、client 57 passed/1 skipped、shared 92 passed（审查者 py314 复跑全绿）、栈任务 22 个、vendor 零改动。
+- 结构性目标全部兑现：三模块 90/160/120 行（≤160，[quant.py](file:///d:/spaces/SpecWeave/apps/containers/client/src/jpman_client/tasks/quant.py)、[native.py](../../../../apps/containers/client/src/jpman_client/tasks/native.py)、[monetize.py](file:///d:/spaces/SpecWeave/apps/containers/client/src/jpman_client/tasks/monetize.py)）、同构函数唯一定义在内核、builder UID 硬编码消除（实测 `hasattr(client,'_podman_runtime_uid')=False`、`get_client.__module__=jpman_common.connection`）、client 57 passed/1 skipped、shared 92 passed（审查者 py314 复跑全绿）、栈任务 22 个、vendor 零改动。
 - AC-1/AC-2/AC-3/AC-4/AC-5/AC-6/AC-8/AC-9 静态证据成立；AC-7 文档量大，本次抽查的 rec_merge 表述恰是其中唯一失实簇（M2），check-links 结论未复验但与本次评级无关。
 - 剩余风险敞口诚实登记：真机 E2E 六项后置（用户已裁决不阻塞），quant bridge 行为变更已用户可见记录。**本次没有发现任何夸大或静默关闭的痕迹。**
 - 修复成本评估：M1 是 1 个测试文件内 ~20 行改动，M2 是 5 处注释/文档措辞；均无产品代码风险，应在收尾前完成，不值得带着已知错误测试进入维护期。
