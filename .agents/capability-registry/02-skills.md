@@ -48,7 +48,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | atomic-commit-cmd | "提交"、"commit"、"原子提交"、"代码提交"、"git commit" | 3（标准/快速/CI检查） | v1.2.1 | [skills/atomic-commit-cmd/SKILL.md](../skills/atomic-commit-cmd/SKILL.md) |
 | mermaid-cmd | "mermaid"、"流程图"、"时序图"、"状态图"、"画个图"、"图表"、"架构图"、"思维导图"、"画流程图" | 3（快速生成/检查修复/复杂协作） | v1.1.0 | [skills/mermaid-cmd/SKILL.md](../skills/mermaid-cmd/SKILL.md) |
 
-### 脚本命令门面（11个）
+### 脚本命令门面（12个）
 
 | Skill名 | 触发词 | 对应脚本 | 版本 | 路径 |
 |---------|--------|---------|------|------|
@@ -63,6 +63,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | ci-check-cmd | "CI检查"、"提交前检查"、"综合检查"、"ci-check"、"流水线检查"、"提交门禁"、"全量检查"、"跑一下CI"、"pre-commit"、"预检" | ci-check.ps1 + ci-check.sh | v1.0.0 | [skills/ci-check-cmd/SKILL.md](../skills/ci-check-cmd/SKILL.md) |
 | check-duplication-cmd | "重复代码"、"重复检查"、"代码重复"、"check-duplication"、"重复检测"、"提取共享库"、"DRY检查"、"脚本重复" | check-duplication.py + lib/ | v1.0.0 | [skills/check-duplication-cmd/SKILL.md](../skills/check-duplication-cmd/SKILL.md) |
 | knowledge-graph-generator | "知识图谱"、"knowledge graph"、"概念关系可视化"、"交互式知识图谱"、"节点关系网络"、"生成知识图谱" | generate-graph.py + knowledge_graph_core.py | v1.0.0 | [skills/knowledge-graph-generator/SKILL.md](../skills/knowledge-graph-generator/SKILL.md) |
+| artifact-consistency-audit | "核验一致性"、"复验"、"体检"、"覆盖率核对"、"引用是否忠实"、"有无遗漏"、"修补后复验"、"对照源文档检查" | 复用 check-links.py + check-source-traceability.py（无新建脚本） | v1.0.0 | [skills/artifact-consistency-audit/SKILL.md](../skills/artifact-consistency-audit/SKILL.md) |
 
 > **Skill类型说明**：
 > - **完整Skill**：包含完整双方案实现、工具函数、详细步骤，可独立完成复杂任务
