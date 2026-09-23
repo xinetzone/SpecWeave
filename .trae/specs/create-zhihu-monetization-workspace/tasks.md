@@ -148,23 +148,33 @@ source: "派生自本目录 spec.md（AC-1~AC-10）；内容源：docs/retrospec
 ## Task 8: 原子提交与看板收尾（C）
 
 **Priority**: medium
-**Status**: in_progress
+**Status**: completed
 **Depends On**: Task 7（审查通过）
 **映射 AC**: AC-10
 **内容**: ① 先跑 docgen 两条命令（`python .agents/scripts/docgen.py theme-dashboards`、`update-spec-readme`），检查 diff——仅纳入与本次相关变化，无关重写回退并留痕；② 按原子性提交（spec 区与工作区+索引分笔或合并单笔，单一职责优先），使用 `python .agents/scripts/git-commit-utf8.py -m "type(scope): 中文描述" <显式文件...>`；③ 验证 `git log` / `git status` / 未 push / docs 与 bundle 零 diff。
 
-- [ ] Subtask 8.1: docgen 看板刷新与 diff 审查（不可用则留痕）
-- [ ] Subtask 8.2: 原子提交（显式文件清单）
-- [ ] Subtask 8.3: 提交验证（顺序 / 内容 / 未 push / 零意外 diff）
+- [x] Subtask 8.1: docgen 看板刷新与 diff 审查（不可用则留痕）
+- [x] Subtask 8.2: 原子提交（显式文件清单）
+- [x] Subtask 8.3: 提交验证（顺序 / 内容 / 未 push / 零意外 diff）
 
 **Test Requirements**:
 - TR-8.1 (rule): 提交信息符合 Conventional Commits 中文；变更文件清单与预期一致；未 push；docs 与 bundle 零 diff
+
+**Completion Evidence**:
+- TR-8.1 (rule): 三笔提交（提交信息均为 Conventional Commits 中文，UTF-8 bytes 通道，仅本地未 push）——
+  ① `821f7cfc7` `docs(spec): 新增知乎变现执行工作区 spec 与任务队列（含 V 门独立审查记录）`：4 文件 = spec.md / tasks.md / review.md / `.trae/specs/README.md`（627 insertions / 4 deletions）；
+  ② `217c54cf9` `docs(projects): 新增知乎变现执行工作区（monetize/zhihu-monetization，链接 docs 报告与 OKF bundle，数据隔离 + 执行台账 + 索引登记）`：8 文件 = 工作区六文件（README/AGENTS/tracker/records/.gitignore/local/README）+ `projects/README.md` + `projects/AGENTS.md`（326 insertions / 0 deletions，两处索引为纯新增行）；
+  ③ 本笔 `docs(spec): 收尾更新任务队列（Task 8 完成记录与提交证据）`：仅 tasks.md。
+  机械核验：`git status -sb` 无 `ahead`/upstream 推送记录（未 push）；`git diff --submodule` 空输出（子模块指针零变动）；docs/ 与 `projects/awesome-okf-xs/doc/bundles/` 零 diff；`git show --stat HEAD~1` 抽查提交 2 文件清单恰为上述 8 项、不含任何无关文件；提交后 `git status --short` 仅余 S1 基线既有状态，用户 4 个疑似无关文件（`apps/containers/client/.agents/archive/2026-09-15-16.md`、`2026-09-20-p1.md`、`apps/containers/client/docs/04-troubleshooting-guide.md`、`docs/tech/references/development-standards.md`）实测在基线与提交后均为 clean（无 M），全程未 add、未触碰。
+- Subtask 8.1 留痕（docgen 可用性 + diff 审查）：两条子命令均可用。`theme-dashboards` 刷新 13 个主题看板（本 spec 位于 `.trae/specs/` 顶层、无主题 README，被 docgen 跳过）。`update-spec-readme` 重生成全局看板（647 spec）。影响面审查与处置：① `.trae/specs/okf-wiki-ecosystem/README.md`（166+/160−，与本次无任何关系的整篇重排），S1 基线 clean 且仅被本次 docgen 改动 → 整文件 `git restore --` 回退；② `.trae/specs/README.md` 逐行收窄——回退 okf-wiki-ecosystem 165→171、infra-env 13/2/15→14/2/14 的计数漂移与兄弟 spec `create-zhihu-monetization-okf-wiki`（非本次产出）条目，仅保留本 spec 条目（1 spec / 0 完成 / 1 进行中）、合计 640/431/53/156（= 基线 639 + 本 spec 1，算术自洽）与生成日期 2026-09-21→2026-09-23，最终 `git diff --stat` 为该文件 10 行改动（6+/4−）；③ 零回退 S1 基线既有改动。
 
 ---
 
 ## 队列状态
 
-**Task 1–8 全部 pending**（2026-09-23，待用户批准后启动）。
+**Task 1–8 全部 completed**（2026-09-23，C 门收尾完成：提交 `821f7cfc7` + `217c54cf9` + 本笔队列收尾，全部仅本地、未 push，队列已清空）。
+
+AC 达成情况一行摘要：AC-1 六文件齐备 ✅ ｜ AC-2 链接全可达（93 条相对链接 0 断链、零 `file:///`）✅ ｜ AC-3 单一事实来源（抽查 3/3 通过、零逐字整句复制）✅ ｜ AC-4 数据隔离（`local/*` 命中忽略、`local/README.md` 正常入库）✅ ｜ AC-5 时效与风险传导（`rule_snapshot` / `status: flagged` / `stale_after: 2026-12-31` / 防画饼口径 / 复核提示）✅ ｜ AC-6 区域索引登记（两处各 +1 行、既有行零改动）✅ ｜ AC-7 溯源与事实纪律（F 编号 26/26 命中、零无源数字）✅ ｜ AC-8 执行者可用性 4/5（阈值 ≥4）✅ ｜ AC-9 V 门审查质量 5/5（阈值 ≥4）✅ ｜ AC-10 原子提交（三笔单一职责、Conventional Commits 中文、docs/ 与 bundle 零 diff、未 push）✅。
 
 ## Task Dependencies
 
