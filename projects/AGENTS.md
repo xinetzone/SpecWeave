@@ -31,6 +31,7 @@ projects/AGENTS.md 与 projects/.agents/ 由 SpecWeave 主权区维护，直接�
 | xuanspace | [projects/xuanspace/AGENTS.md](xuanspace/AGENTS.md) | 玄境（Xuanspace）Python 3.14.6+ monorepo 项目管理工具 |
 | awesome-okf-xs | [projects/awesome-okf-xs/AGENTS.md](awesome-okf-xs/AGENTS.md) | 玄境项目 OKF（开源知识格式）文档库 |
 | daoapps.github.io | [projects/daoapps.github.io/AGENTS.md](daoapps.github.io/AGENTS.md) | 道用（daoApps）组织站点——全站 Sphinx 源码，含组织主页与结伴子站，由 GitHub Actions 构建发布到 GitHub Pages |
+| monetize | [monetize/zhihu-monetization/AGENTS.md](monetize/zhihu-monetization/AGENTS.md) | 变现执行工作区（主仓库直接跟踪的普通目录，非 git 子模块）；当前主题：知乎变现执行工作台 |
 
 ### 嵌套优先级
 
