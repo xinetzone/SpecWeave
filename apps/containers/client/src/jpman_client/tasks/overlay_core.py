@@ -890,6 +890,32 @@ def _running_project_container(c: Context, spec: StackSpec) -> str:
     return (r.stdout or "").strip().split()[0] if (r.stdout or "").strip() else ""
 
 
+def _own_host_container_running(c: Context, spec: StackSpec) -> bool:
+    """本栈是否有 running 且 host 网络形态的容器（透传主层）。
+
+    host 网络下容器内 Jupyter(8888)/SSH(HOST_NET_SSHD_PORT) 直接绑宿主，
+    故 ``ss`` 看到的占用**必然含本栈自身**——重复 up 属幂等场景，交
+    podman-compose 处理（文件集无变化=no-op，组合旗标变化=自动 recreate），
+    不由端口门禁拦截。容器不在跑 / 非 host 形态 → False，fail-fast 语义不变
+    （2026-09-23 实证：bridge 形态跑着而 8888/2223 被*其他*进程占用时仍须拦）。
+    """
+    cid = _running_project_container(c, spec)
+    if not cid:
+        return False
+    runtime = detect_runtime()
+    r = run_cmd(
+        c,
+        f"{runtime} inspect --format "
+        f"{shlex.quote('{{.State.Running}} {{.HostConfig.NetworkMode}}')} {cid}",
+        hide=True,
+        warn=True,
+        echo=False,
+    )
+    out = ((r.stdout or "").strip() if r is not None and getattr(r, "ok", False) else "")
+    parts = out.split()
+    return len(parts) == 2 and parts[0] == "true" and parts[1] == "host"
+
+
 def _container_init_pid(c: Context, container_id: str) -> int:
     """读 daemon 记录的容器 init PID（``.State.Pid``）；查询失败/0 返回 0。"""
     runtime = detect_runtime()
@@ -1549,12 +1575,13 @@ def _runtime_listening_ports(c: Context, ports: list[str]) -> list[str]:
 def resolve_passthrough(
     c: Context, spec: StackSpec, env: dict, *, check_ports: bool = True
 ) -> tuple[str, str]:
-    """透传主层门禁：D-Bus 会话 socket 存在 + host 端口空闲。
+    """透传主层门禁：D-Bus 会话 socket 存在 + host 端口无外部占用。
 
-    ``check_ports=False`` 用于冒烟路径：栈正以 host 网络运行时 8888/SSH 端口
-    **必然被该栈自身占用**，端口空闲检查会把「栈活着」误判成冲突（2026-09-22
-    实证）；standalone 路径为裸 podman run 也不占这些端口。D-Bus socket
-    检查与令牌回写不受影响。
+    ``check_ports=False`` 用于冒烟路径：standalone 裸 ``podman run`` 不占
+    8888/SSH 端口，跳过检查可简化夹具。端口占用若由**本栈正在运行的 host
+    形态容器**持有（重复 up），属幂等场景：打印提示后放行交 podman-compose
+    处理，不再 fail-fast（2026-09-23 实证修复）；其余占用保持 fail-fast。
+    D-Bus socket 检查与令牌回写不受影响。
 
     为什么前置（与 GPU 同族）：D-Bus bind 源缺失时 podman 只报 exit 125；
     host 网络下容器直接绑宿主端口，8888（Jupyter 固定）或 SSH 端口被占时
@@ -1587,14 +1614,24 @@ def resolve_passthrough(
     )
     busy = _runtime_listening_ports(c, ["8888", sshd_port]) if check_ports else []
     if busy:
-        print(f"[{ns}] ⚠ --passthrough 走 host 网络，容器要直接绑定宿主端口，"
-              f"但以下端口已被占用：{', '.join(busy)}")
-        print(f"[{ns}]   host 形态端口固定：Jupyter 8888、SSH {sshd_port}")
-        print(f"[{ns}]   处理：① 停掉占用栈（如 invoke quant.down / invoke native.down）；")
-        print(f"         ② 或换 SSH 端口：HOST_NET_SSHD_PORT=<空闲端口> invoke "
-              f"{ns}.up --passthrough")
-        print(f"[{ns}]   查看占用：ss -lntp")
-        raise Exit(1)
+        if _own_host_container_running(c, spec):
+            # 幂等场景：占用者就是本栈正在运行的 host 形态容器——重复 up 交
+            # podman-compose 处理，不由门禁拦截（详见 helper docstring）。
+            print(f"[{ns}] ℹ --passthrough 端口 {', '.join(busy)} 由本栈正在运行的 "
+                  f"host 形态容器持有（重复 up 幂等场景，不拦截）")
+            print(f"[{ns}]   文件集无变化 → no-op；组合旗标有变化 → podman-compose "
+                  f"自动 recreate")
+            print(f"[{ns}]   如需强制重建：invoke {ns}.down && invoke "
+                  f"{ns}.up --passthrough ...")
+        else:
+            print(f"[{ns}] ⚠ --passthrough 走 host 网络，容器要直接绑定宿主端口，"
+                  f"但以下端口已被占用：{', '.join(busy)}")
+            print(f"[{ns}]   host 形态端口固定：Jupyter 8888、SSH {sshd_port}")
+            print(f"[{ns}]   处理：① 停掉占用栈（如 invoke quant.down / invoke native.down）；")
+            print(f"         ② 或换 SSH 端口：HOST_NET_SSHD_PORT=<空闲端口> invoke "
+                  f"{ns}.up --passthrough")
+            print(f"[{ns}]   查看占用：ss -lntp")
+            raise Exit(1)
     os.environ["DBUS_SESSION_BUS_PATH"] = dbus_path
     os.environ["HOST_NET_SSHD_PORT"] = sshd_port
     return dbus_path, sshd_port

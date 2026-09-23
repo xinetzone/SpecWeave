@@ -52,6 +52,10 @@ class FakeRunner:
         nvidia_smi_ok: bool = True,
         nvidia_smi_out: str = "",
         image_exists_tags: set[str] | None = None,
+        # _own_host_container_running 的 inspect 假输出
+        # （``{{.State.Running}} {{.HostConfig.NetworkMode}}`` 渲染值）。
+        # 空串 = 双段判据不成立 → helper 判 False，既有 busy 用例 fail-fast 语义不变。
+        net_mode: str = "",
     ):
         self.calls: list[tuple[str, dict]] = []
         self.running = running
@@ -82,6 +86,7 @@ class FakeRunner:
         self.nvidia_smi_out = nvidia_smi_out
         # 按 tag 精确控制镜像存在性；None = 沿用 image_exists 布尔（历史用例）。
         self.image_exists_tags = image_exists_tags
+        self.net_mode = net_mode
 
     def __call__(self, c, cmd, **kwargs):
         self.calls.append((cmd, kwargs))
@@ -132,6 +137,8 @@ class FakeRunner:
             # C24：凭证回读（podman logs <cid> 2>&1 | head -n N）
             return SimpleNamespace(ok=True, stdout=self.container_logs, return_code=0)
         if "inspect" in cmd:
+            if "State.Running" in cmd:
+                return SimpleNamespace(ok=True, stdout=self.net_mode, return_code=0)
             if "State.Pid" in cmd:
                 return SimpleNamespace(
                     ok=True, stdout=str(self.init_pid) if self.init_pid else "0", return_code=0
@@ -1729,6 +1736,60 @@ def test_resolve_passthrough_busy_ports_fail_fast(harness, capsys):
     # ss 缺失/无输出时不阻断（同族「ss 缺失则跳过」）
     harness.runner.ss_output = ""
     assert oc._runtime_listening_ports(None, ["8888"]) == []
+
+
+def test_own_host_container_running_helper(harness):
+    """helper 判据：无 running 容器不发 inspect；仅「true host」双段为 True。"""
+    # 无 running 容器 → False，且不发 inspect 查询
+    assert oc._own_host_container_running(None, _NATIVE) is False
+    assert not any("State.Running" in cmd for cmd in harness.runner.commands)
+    harness.runner.running = True
+    # 输出非「true host」精确双段 → False（fail-fast 语义不变）
+    for bad in ("true bridge", "false host", "", "true host extra"):
+        harness.runner.net_mode = bad
+        assert oc._own_host_container_running(None, _NATIVE) is False, bad
+    harness.runner.net_mode = "true host"
+    assert oc._own_host_container_running(None, _NATIVE) is True
+    inspect_cmds = [c for c in harness.runner.commands if "State.Running" in c]
+    assert len(inspect_cmds) == 5
+    assert inspect_cmds[-1] == (
+        "podman inspect --format "
+        "'{{.State.Running}} {{.HostConfig.NetworkMode}}' cid"
+    )
+
+
+def test_resolve_passthrough_own_host_busy_ports_pass_through(harness, capsys):
+    """重复 up：8888/2223 由本栈 host 形态容器持有 → 提示后放行（幂等场景）。"""
+    harness.runner.paths = {"/run/user/1000/bus"}
+    harness.runner.running = True
+    harness.runner.net_mode = "true host"
+    harness.runner.ss_output = (
+        "State  Recv-Q Send-Q Local Address  Peer Address\n"
+        "LISTEN 0  0  0.0.0.0:8888  0.0.0.0:*\n"
+        "LISTEN 0  0  0.0.0.0:2223  0.0.0.0:*\n"
+    )
+    dbus, sshd = oc.resolve_passthrough(None, _NATIVE, {})
+    assert (dbus, sshd) == ("/run/user/1000/bus", "2223")
+    out = capsys.readouterr().out
+    assert "8888, 2223" in out
+    assert "本栈正在运行的 host 形态容器" in out
+    assert "不拦截" in out
+    assert "podman-compose" in out
+    assert "已被占用" not in out
+
+
+def test_resolve_passthrough_own_bridge_container_still_fails_fast(harness, capsys):
+    """bridge 形态容器在跑 ≠ 占用者：端口被其他进程占用时保持 fail-fast。"""
+    harness.runner.paths = {"/run/user/1000/bus"}
+    harness.runner.running = True
+    harness.runner.net_mode = "true bridge"
+    harness.runner.ss_output = (
+        "State  Recv-Q Send-Q Local Address  Peer Address\n"
+        "LISTEN 0  0  0.0.0.0:8888  0.0.0.0:*\n"
+    )
+    with pytest.raises(Exit):
+        oc.resolve_passthrough(None, _NATIVE, {})
+    assert "已被占用" in capsys.readouterr().out
 
 
 def test_resolve_usb_happy_path_writes_env(harness):

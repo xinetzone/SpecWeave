@@ -140,6 +140,7 @@ invoke 侧无 GUI 旗标。现有可用路径：
 |---|---|
 | `--passthrough` 后浏览器连 8890 无响应 | host 形态 Jupyter **固定 8888**，8890 不发布 |
 | `--passthrough` 起栈报端口占用（exit 125） | `ss -lnt` 查 8888/2223；invoke 门禁已前置，裸 compose 需自查 |
+| 重复 `up --passthrough` 报「端口已被占用：8888, 2223」 | **不是冲突**——占用者就是本栈正在运行的 host 形态容器。invoke 门禁（`resolve_passthrough`）识别此幂等场景后放行，交 podman-compose 处理（文件集无变化=no-op，组合旗标变化=自动 recreate）；强制重建用 `invoke native.down && invoke native.up --passthrough ...`。若仍被拦说明占用者是其他进程，按上一行处理 |
 | D-Bus 挂载报源不存在 | 宿主会话总线实际路径写 `DBUS_SESSION_BUS_PATH`（缺省 `/run/user/1000/bus`；socket 类源**绝不自动创建**，`create_host_path: false`） |
 | `--usb` 报 `/dev/bus/usb` 不存在 | WSL2 先 usbipd-win attach（见组合 C）；物理机 `lsusb` 核对 |
 | `--gpu` 容器内 `torch.cuda.is_available()` 恒 False | 先跑 04 文档的设备枚举验证（`cuInit`/`cuDeviceGetCount`）区分库缺失与 NO_DEVICE；WSL2 核对三条 bind 是否齐备 |
