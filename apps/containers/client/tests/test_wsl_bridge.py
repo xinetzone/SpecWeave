@@ -36,7 +36,7 @@ def bridge_harness(monkeypatch):
 
 def test_bridge_uses_non_login_bash(bridge_harness):
     """回归：bash -lc 登录会话被 enterns su -l 劫持成交互 shell。"""
-    distro = utils.run_in_wsl_bridge(argv=["xmnn.build", "--pip-mirror", "tuna"])
+    distro = utils.run_in_wsl_bridge(argv=["native.build", "--pip-mirror", "tuna"])
     assert distro == "podman-machine-default"
     argv = bridge_harness["argv"]
     assert argv[:4] == ["wsl.exe", "-d", "podman-machine-default", "--"]
@@ -49,7 +49,7 @@ def test_bridge_uses_non_login_bash(bridge_harness):
     assert '$HOME/.local/bin:$PATH' in script
     assert 'LANG' in script
     # cwd 切换与原任务逐字保留（shlex.join 的 join 形式）
-    assert "invoke xmnn.build --pip-mirror tuna" in script
+    assert "invoke native.build --pip-mirror tuna" in script
 
 
 def test_bridge_empty_argv_does_not_enter_shell(monkeypatch, bridge_harness):
@@ -72,7 +72,7 @@ def test_bridge_failure_propagates_exit_code(monkeypatch):
         subprocess, "run", lambda argv, **kw: SimpleNamespace(returncode=42)
     )
     with pytest.raises(invoke.exceptions.Exit) as ei:
-        utils.run_in_wsl_bridge(argv=["xmnn.ps"])
+        utils.run_in_wsl_bridge(argv=["native.ps"])
     assert ei.value.code == 42
 
 

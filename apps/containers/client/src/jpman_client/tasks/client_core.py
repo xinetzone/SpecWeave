@@ -321,8 +321,8 @@ def image_inspect_info(c: Context, tag: str) -> dict:
     }
 
 
-# torch 形态标签：构建期 build-arg TORCH_FLAVOR 烘入（Containerfile.xmnn-dev），
-# 是与 `/opt/xmnn-torch-flavor` 标记文件并列的镜像内单一事实源。
+# torch 形态标签：构建期 build-arg TORCH_FLAVOR 烘入（Containerfile.native-dev），
+# 是与 `/opt/native-torch-flavor` 标记文件并列的镜像内单一事实源。
 TORCH_FLAVOR_LABEL = "org.specweave.torch-flavor"
 
 
@@ -420,14 +420,13 @@ def save_image(
         short_id = short_id.split(":", 1)[1]
     short_id = short_id[:12] or "unknown"
     # torch 形态取镜像 LABEL（构建期烘入，唯一事实源）。形态必须进归档名：
-    # cpu 与 cu130 两份镜像 tag 相同（localhost/xmnn-dev:latest），若归档名也不带
+    # cpu 与 cu130 两份镜像 tag 相同（localhost/native-dev:latest），若归档名也不带
     # 形态，则两者同族同名、共用同一个 -latest 软链，离线机 load 按 mtime 取
     # 「最新」会静默导入错形态，直到容器内 torch.cuda 为空才暴露（C20）。
     flavor = _image_torch_flavor(info)
     ts = _dt.datetime.now().strftime("%Y%m%d-%H%M%S")
     safe_name = image.replace("/", "-").replace(":", "-")
     # 形态段必须带 `torch` 标记中缀：无标记的 `-<flavor>-` 会与镜像 tag 自带的
-    # `-latest` 段互相冒充——`...-xmnn-dev-latest-<shortid>-<ts>.tar.gz` 会被
     # 反向解析成 flavor=latest。无形态时不加段，命名与历史产物逐字一致（零回归）。
     stem = f"{safe_name}-torch-{flavor}" if flavor else safe_name
     # 扩展名由「可用压缩工具」决定：pigz/gzip → .tar.gz；否则 → .tar（未压缩）

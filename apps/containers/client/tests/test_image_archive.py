@@ -1,6 +1,6 @@
 """镜像归档的 torch 形态打通单测（C20，daemon-free / 无子进程）。
 
-背景：cpu 与 cu130 两份镜像 **tag 相同**（``localhost/xmnn-dev:latest``），形态只
+背景：cpu 与 cu130 两份镜像 **tag 相同**（``localhost/native-dev:latest``），形态只
 存在于镜像 LABEL。若归档名也不携带形态，两者同族同名、共用同一个 ``-latest``
 软链，离线机 ``load`` 按 mtime 取「最新」会静默导入错形态。
 
@@ -29,20 +29,20 @@ _SHORT = "abc123def456"
 
 
 def test_archive_flavor_parses_marked_segment():
-    assert u.archive_flavor(f"localhost-xmnn-dev-torch-cu130-{_SHORT}-{_TS}.tar.gz") == "cu130"
-    assert u.archive_flavor(f"localhost-xmnn-dev-torch-cpu-{_SHORT}-{_TS}.tar") == "cpu"
-    assert u.archive_flavor(f"localhost-xmnn-dev-torch-cu130-unknown-{_TS}.tar.gz") == "cu130"
+    assert u.archive_flavor(f"localhost-native-dev-torch-cu130-{_SHORT}-{_TS}.tar.gz") == "cu130"
+    assert u.archive_flavor(f"localhost-native-dev-torch-cpu-{_SHORT}-{_TS}.tar") == "cpu"
+    assert u.archive_flavor(f"localhost-native-dev-torch-cu130-unknown-{_TS}.tar.gz") == "cu130"
 
 
 def test_archive_flavor_ignores_tag_latest_segment():
     """无标记的 ``-<形态>-`` 会与镜像 tag 自带的 ``-latest`` 段互相冒充。"""
-    assert u.archive_flavor(f"localhost-xmnn-dev-latest-{_SHORT}-{_TS}.tar.gz") == ""
+    assert u.archive_flavor(f"localhost-native-dev-latest-{_SHORT}-{_TS}.tar.gz") == ""
 
 
 def test_archive_flavor_returns_empty_for_non_archives():
     assert u.archive_flavor("manifest.txt") == ""
     # `-latest` 软链名：形态段后必须紧跟 shortid+ts，软链名不参与解析
-    assert u.archive_flavor("localhost-xmnn-dev-torch-cu130-latest.tar") == ""
+    assert u.archive_flavor("localhost-native-dev-torch-cu130-latest.tar") == ""
 
 
 # ---------------------------------------------------------------------------
@@ -58,9 +58,9 @@ def _mk(dir_: Path, name: str, mtime: float) -> Path:
 
 
 def test_find_latest_image_tar_filters_by_flavor(tmp_path):
-    newer_cpu = _mk(tmp_path, f"localhost-xmnn-dev-torch-cpu-{_SHORT}-20260920-120000.tar.gz", 2_000_000_000)
-    older_cu130 = _mk(tmp_path, f"localhost-xmnn-dev-torch-cu130-{_SHORT}-20260920-110000.tar.gz", 1_000_000_000)
-    _mk(tmp_path, f"localhost-xmnn-dev-{_SHORT}-20260920-100000.tar.gz", 900_000_000)
+    newer_cpu = _mk(tmp_path, f"localhost-native-dev-torch-cpu-{_SHORT}-20260920-120000.tar.gz", 2_000_000_000)
+    older_cu130 = _mk(tmp_path, f"localhost-native-dev-torch-cu130-{_SHORT}-20260920-110000.tar.gz", 1_000_000_000)
+    _mk(tmp_path, f"localhost-native-dev-{_SHORT}-20260920-100000.tar.gz", 900_000_000)
 
     # 默认不过滤：保持历史「取最新」语义（零回归）
     assert u.find_latest_image_tar(tmp_path) == newer_cpu
@@ -73,7 +73,7 @@ def test_find_latest_image_tar_filters_by_flavor(tmp_path):
 
 
 def test_find_latest_image_tar_skips_symlinks(tmp_path):
-    real = _mk(tmp_path, f"localhost-xmnn-dev-torch-cu130-{_SHORT}-{_TS}.tar.gz", 1_000_000_000)
+    real = _mk(tmp_path, f"localhost-native-dev-torch-cu130-{_SHORT}-{_TS}.tar.gz", 1_000_000_000)
     try:
         (tmp_path / "newer.tar.gz").symlink_to(real.name)
     except (OSError, NotImplementedError):
@@ -118,12 +118,12 @@ def save_env(monkeypatch, tmp_path):
 
 def test_save_image_archive_name_carries_flavor(save_env):
     save_env.set_flavor("cu130")
-    assert cc.save_image(None, "localhost/xmnn-dev:latest", save_env.cache) is True
+    assert cc.save_image(None, "localhost/native-dev:latest", save_env.cache) is True
 
     archives = [p for p in save_env.cache.iterdir() if not p.is_symlink() and p.suffix == ".tar"]
     assert len(archives) == 1
     name = archives[0].name
-    assert name.startswith(f"localhost-xmnn-dev-latest-torch-cu130-{_SHORT}-")
+    assert name.startswith(f"localhost-native-dev-latest-torch-cu130-{_SHORT}-")
     # 命名与解析严格互逆（改其一必须同步另一处）
     assert u.archive_flavor(name) == "cu130"
 
@@ -135,12 +135,12 @@ def test_save_image_archive_name_carries_flavor(save_env):
 def test_save_image_without_flavor_keeps_legacy_naming(save_env):
     """非 torch 栈 / 未烘 LABEL 的镜像：命名与历史产物逐字一致（零回归）。"""
     save_env.set_flavor("")
-    assert cc.save_image(None, "localhost/xmnn-dev:latest", save_env.cache) is True
+    assert cc.save_image(None, "localhost/native-dev:latest", save_env.cache) is True
 
     archives = [p for p in save_env.cache.iterdir() if not p.is_symlink() and p.suffix == ".tar"]
     assert len(archives) == 1
     name = archives[0].name
-    assert name.startswith(f"localhost-xmnn-dev-latest-{_SHORT}-")
+    assert name.startswith(f"localhost-native-dev-latest-{_SHORT}-")
     assert "-torch-" not in name
     assert u.archive_flavor(name) == ""
     assert "TORCH_FLAVOR=\n" in (save_env.cache / "manifest.txt").read_text(encoding="utf-8")

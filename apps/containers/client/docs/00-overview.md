@@ -44,4 +44,4 @@ apps/containers/
 1. **两层后端自动降级**：podman-py SDK（优先）→ CLI fallback（`podman.exe` 子进程）
 2. **rootless 三必需硬编码**：`--device /dev/fuse` + `--security-opt label=disable` + `--cgroupns=host`，严禁 `--privileged`（见 [06-run-discipline.md](06-run-discipline.md)）
 3. **Windows 11 × WSL2 跨平台 SDK 连接**：WSL9P / Podman Machine / tcp 多候选自动探测（见 [03-windows-wsl.md](03-windows-wsl.md)）
-4. **opt-in 工作负载栈**：`quant.*`（[10-quant-overlay.md](10-quant-overlay.md)）/ `xmnn.*`（[11-xmnn-overlay.md](11-xmnn-overlay.md)）/ `monetize.*`（[12-monetize-overlay.md](12-monetize-overlay.md)），podman-compose 子进程层
+4. **opt-in 工作负载栈**：`quant.*`（[10-quant-overlay.md](10-quant-overlay.md)）/ `native.*`（[11-native-overlay.md](11-native-overlay.md)）/ `monetize.*`（[12-monetize-overlay.md](12-monetize-overlay.md)），podman-compose 子进程层

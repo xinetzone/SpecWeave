@@ -30,7 +30,7 @@ pip install -e shared
 ```bash
 # 消费端（含三栈编排器）
 pip install -e client                     # 仅 load/run：SDK→CLI
-pip install -e "client[compose]"          # 需要 quant/xmnn/monetize 工作负载栈时
+pip install -e "client[compose]"          # 需要 quant/native/monetize 工作负载栈时
 
 # 构建端（要在宿主侧构建镜像时）
 pip install -e "jupyter-podman-rootless[compose]"
@@ -81,7 +81,7 @@ invoke quant.smoke                         # 三项冒烟（int8/fp16/QDQ）
 invoke quant.down
 ```
 
-xmnn（`xmnn.*`，含 `build-tvm`/`wheel`）与 monetize（`monetize.*`，含 `build-native`/`wheel`）
+native（`native.*`，含 `build-tvm`/`wheel`）与 monetize（`monetize.*`，含 `build-native`/`wheel`）
 同构，详见 [client/docs/10-12](../client/docs/README.md) 与各叠加层 README。
 
 ## 6. 末端分支：打客户离线交付包（独立应用）
@@ -108,7 +108,7 @@ Windows 原生（PowerShell 7.4+，经 `wsl.exe` 桥接）用 `pwsh bin/relpack.
 | 检查 | 期望 |
 |------|------|
 | `python -c "import jpman_common; print(jpman_common.__version__)"` | `0.1.0` |
-| client 目录 `invoke --list` | 根任务 + container.* + env.* + quant/xmnn/monetize 命名空间齐全 |
+| client 目录 `invoke --list` | 根任务 + container.* + env.* + quant/native/monetize 命名空间齐全 |
 | `invoke load` | 从 `.image-cache/` 取 tar 并完成完整性校验 |
 | `invoke run` 后 `invoke status` | 容器 running，打印 SSH/Jupyter 入口 |
 | WSL2 内 `invoke quant.smoke` | 三冒烟 PASS（仅安装 [compose] 后） |

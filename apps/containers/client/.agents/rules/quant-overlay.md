@@ -20,7 +20,7 @@
   logs/smoke）即模块全部内容；门禁/环境准备/argv/执行/残留自愈/冒烟双路径
   等同构编排逻辑**唯一定义在 overlay_core**，quant.py 不再含任何编排函数。
 - **红线：内核零栈知识 / 栈模块零 podman**——overlay_core 与共享包 jpman_common
-  不得 import quant/xmnn/monetize，也不得出现具体栈名/栈路径（栈知识一律由
+  不得 import quant/native/monetize，也不得出现具体栈名/栈路径（栈知识一律由
   StackSpec 实例从外部注入）；`import podman` 只允许出现在
   `apps/containers/shared` 的 jpman_common 内。
 - 禁止把 compose 提升为 `invoke run` 的第三层后端（用户 2026-09-13 裁决）：
@@ -84,7 +84,7 @@ down 默认保留、`--volumes` 删除）。字段映射保留备查
 - workspace 绑定一律**长语法** + `bind.create_host_path: true`（短语法在
   podman-compose 会无条件 `os.makedirs`，Windows/异常路径宿主残留事故的同源教训）。
 - GPU 默认不透传（默认隔离）；仅 `up --gpu` 时叠加覆盖文件（C19，同
-  [xmnn-overlay.md](xmnn-overlay.md) §11.1——运行期探测设备/驱动库可用性后
+  [native-overlay.md](native-overlay.md) §11.1——运行期探测设备/驱动库可用性后
   按形态选 `compose.gpu.yaml` 或 `compose.gpu.wsl.yaml`，缺失 fail-fast，
   不再把缺省 `/dev/dri` 直接丢给 podman 报 exit 125）。
 
@@ -98,7 +98,7 @@ dict bind 不去重**——workspace 绑定全部用长语法（见 §3），故
 
 > `compose.gpu.yaml` 只写新增设备，**禁止**重复 /dev/fuse；设备项为**单条**
 > `${GPU_DEVICE:-/dev/dri}` 插值（`/` 开头=设备路径、否则=CDI 引用，见
-> [xmnn-overlay.md](xmnn-overlay.md) §11.1）——写成 `a:b` 两条并列必有一条
+> [native-overlay.md](native-overlay.md) §11.1）——写成 `a:b` 两条并列必有一条
 > 非法（podman-compose 1.6.0 原样下传为 `--device <item>`，不做冒号拆分）。
 > 整体替换才用 `!override`，本栈无此需求；WSL2 形态见姊妹文件
 > `compose.gpu.wsl.yaml`（`/dev/dxg` + 挂 libcuda），**两者互斥不可同时加载**。

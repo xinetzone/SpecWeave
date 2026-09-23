@@ -1,7 +1,7 @@
 ---
 name: client-overlay-scaffold
 version: 1.1.0
-description: "在 apps/containers/client/overlays/ 新建 podman-compose 工作负载叠加层（onnx-quantized/xmnn-dev/agent-monetize-dev 的下一个栈）的脚手架。当用户要求新增/创建 client 叠加层、新工作负载栈、新 invoke xxx.* compose 命名空间、照三栈再做一个栈、给 rootless 基底加声明式服务栈时，必须使用此技能。v1.1 起骨架改为「声明式 StackSpec + extends rootless-base 基段」：栈模块只写 <NAME>_SPEC（jpman_client/tasks/overlay_core.py 的 StackSpec）+ TASKS=make_stack_tasks(spec) + 六别名，compose.yaml 以 extends 继承 overlays/_shared/base-rootless.yaml（rootless 三必需/凭证四变量/network_mode bridge 单一事实源），不再复制任何生命周期代码。封装：栈形态决策树、标准 12 件套文件清单、compose/invoke/.env 三套骨架模板（templates/）、rootless 三必需与 Windows 桥接不可变纪律、7 个必改接线登记点（含 tests/test_tasks_surface.py 黄金清单与 tests/test_compose_merge.py GOLDEN 表）、静态门禁→真实构建→E2E→独立 Review 验证链，以及 podman-compose 1.6 extends rec_merge/OCI/双 ABI/SONAME/.dockerignore 等全部实测踩坑。不要凭记忆手写 compose 与任务模块——本技能的骨架与 Gotchas 来自三个已交付栈（quant/xmnn/monetize）的真实 E2E 与两轮独立审查。"
+description: "在 apps/containers/client/overlays/ 新建 podman-compose 工作负载叠加层（onnx-quantized/native-dev/agent-monetize-dev 的下一个栈）的脚手架。当用户要求新增/创建 client 叠加层、新工作负载栈、新 invoke xxx.* compose 命名空间、照三栈再做一个栈、给 rootless 基底加声明式服务栈时，必须使用此技能。v1.1 起骨架改为「声明式 StackSpec + extends rootless-base 基段」：栈模块只写 <NAME>_SPEC（jpman_client/tasks/overlay_core.py 的 StackSpec）+ TASKS=make_stack_tasks(spec) + 六别名，compose.yaml 以 extends 继承 overlays/_shared/base-rootless.yaml（rootless 三必需/凭证四变量/network_mode bridge 单一事实源），不再复制任何生命周期代码。封装：栈形态决策树、标准 12 件套文件清单、compose/invoke/.env 三套骨架模板（templates/）、rootless 三必需与 Windows 桥接不可变纪律、7 个必改接线登记点（含 tests/test_tasks_surface.py 黄金清单与 tests/test_compose_merge.py GOLDEN 表）、静态门禁→真实构建→E2E→独立 Review 验证链，以及 podman-compose 1.6 extends rec_merge/OCI/双 ABI/SONAME/.dockerignore 等全部实测踩坑。不要凭记忆手写 compose 与任务模块——本技能的骨架与 Gotchas 来自三个已交付栈（quant/native/monetize）的真实 E2E 与两轮独立审查。"
 argument-hint: "<栈名/用途> [选项]"
 disable-model-invocation: false
 user-invocable: true
@@ -27,7 +27,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/client-overlay-scaffold/SKILL.to
 | 形态 | 参考实现 | 特征 |
 |------|---------|------|
 | **A. 运行时依赖栈（简单）** | [onnx-quantized](../../../apps/containers/client/overlays/onnx-quantized/README.md) | 镜像只装 pip/conda 包，6 任务（build/up/down/ps/logs/smoke），构建期守卫+冒烟；`gpu_override=True`、`auto_shortflags=True` |
-| **B. 工具链/挂载栈（复杂）** | [xmnn-dev](../../../apps/containers/client/overlays/xmnn-dev/README.md)、[agent-monetize-dev](../../../apps/containers/client/overlays/agent-monetize-dev/README.md) | A 全部 + 运行时 bind 宿主源码目录（`source_mounts`）+ 重型 conda 工具链 + exec 长任务（xmnn build-tvm/wheel、monetize build-native/wheel）+ 专属内核/数据产物 |
+| **B. 工具链/挂载栈（复杂）** | [native-dev](../../../apps/containers/client/overlays/native-dev/README.md)、[agent-monetize-dev](../../../apps/containers/client/overlays/agent-monetize-dev/README.md) | A 全部 + 运行时 bind 宿主源码目录（`source_mounts`）+ 重型 conda 工具链 + exec 长任务（native build-tvm/wheel、monetize build-native/wheel）+ 专属内核/数据产物 |
 
 核心交付：标准文件骨架、不可变编排纪律、接线登记清单、真实验证链。
 
@@ -45,7 +45,7 @@ StackSpec(...)`（[overlay_core.py](../../../apps/containers/client/src/jpman_cl
 ## 3. 何时使用本技能
 
 触发词：新增/创建/再做一个 client 叠加层、工作负载栈、overlay、
-`invoke <ns>.*` compose 命名空间、"照 onnx-quantized/xmnn-dev 那样"、
+`invoke <ns>.*` compose 命名空间、"照 onnx-quantized/native-dev 那样"、
 给 rootless 基底加声明式服务（带自己镜像+compose+生命周期）。
 
 > **边界（不要误用）**：只是用 `invoke run --tag <img>` 跑一次任意镜像 →
@@ -59,7 +59,7 @@ StackSpec(...)`（[overlay_core.py](../../../apps/containers/client/src/jpman_cl
 ├─ 一次性/任意镜像运行 → 根 invoke run，不建栈
 ├─ 有固定镜像+固定 compose+需要声明式生命周期（up/down/ps）
 │  ├─ 只在镜像内装包、不挂宿主目录、无长任务 → 形态 A（抄 onnx-quantized）
-│  └─ 要 bind 宿主源码/数据 或 容器内编译/打包等长任务 → 形态 B（抄 xmnn-dev）
+│  └─ 要 bind 宿主源码/数据 或 容器内编译/打包等长任务 → 形态 B（抄 native-dev）
 └─ 与已有栈同域？ → 优先扩现有 overlay（加任务/compose 覆盖文件），慎重新建
 ```
 
@@ -67,11 +67,11 @@ StackSpec(...)`（[overlay_core.py](../../../apps/containers/client/src/jpman_cl
 
 | 变量 | 规则 | 示例 |
 |------|------|------|
-| 栈目录 `<STACK>` | kebab-case，名词 | `onnx-quantized`、`xmnn-dev`、`agent-monetize-dev` |
-| 命名空间 `<NS>` | 目录名的点号化短名（通常短于栈目录） | `quant`、`xmnn`、`monetize` |
-| 镜像标签 | `localhost/<STACK>:latest` | `localhost/xmnn-dev:latest` |
-| 服务名 `<SVC>` | 单数短名 | `quant`、`xmnn`、`monetize` |
-| env 前缀 | 大写命名空间专属前缀 | `QUANT_*`、`XMNN_*`、`MONETIZE_*` |
+| 栈目录 `<STACK>` | kebab-case，名词 | `onnx-quantized`、`native-dev`、`agent-monetize-dev` |
+| 命名空间 `<NS>` | 目录名的点号化短名（通常短于栈目录） | `quant`、`native`、`monetize` |
+| 镜像标签 | `localhost/<STACK>:latest` | `localhost/native-dev:latest` |
+| 服务名 `<SVC>` | 单数短名 | `quant`、`native`、`monetize` |
+| env 前缀 | 大写命名空间专属前缀 | `QUANT_*`、`NATIVE_*`、`MONETIZE_*` |
 | 端口 | 与已运行栈错开，先查 §5 | 2222/8888 → 2223/8890 → 2224/8892 |
 
 ## 5. 标准产物清单（12 件套）
@@ -119,11 +119,11 @@ cp ../../../.agents/skills/client-overlay-scaffold/templates/namespace.py.skelet
 > `bridge_env_keys`/`gpu_override`/`conda_mirror`/`auto_shortflags`/
 > `docs=TaskDocs(...)` 等）；compose 骨架只留栈专属字段，公共段走 extends。
 > 长任务（B 形态的 build-tvm/wheel/build-native 等）在骨架标注处按
-> monetize.py/xmnn.py 的写法用内核 helper（gates/ensure_runtime_ready/
+> monetize.py/native.py 的写法用内核 helper（gates/ensure_runtime_ready/
 > require_running/run_compose）薄封装；增删键后必须同步三方键集合（§7.4）
 > 与两个测试黄金表（§9 第 7 点）。
 
-## 7. 不可变纪律（红线，直接抄 quant-overlay/xmnn-overlay 规则）
+## 7. 不可变纪律（红线，直接抄 quant-overlay/native-overlay 规则）
 
 ### 7.1 架构边界（声明式内核，零复制）
 - 栈模块 `<ns>.py` **禁止 `import podman`**；只通过子进程驱动
@@ -221,7 +221,7 @@ unless-stopped` **只声明在** [_shared/base-rootless.yaml](../../../apps/cont
 1. **`tasks/__init__.py`（循环注册，不逐个手写）**：顶部 `from . import ...,
    <ns>`；建 `<ns>_ns = Collection("<ns>")` 后
    `for _name, _task in <ns>.TASKS.items(): <ns>_ns.add_task(_task, _name)`；
-   长任务再单独 `add_task`（参照 xmnn/monetize 命名空间段）；
+   长任务再单独 `add_task`（参照 native/monetize 命名空间段）；
    `ns.configure` 加该栈 image_tag/base_image/container_name/端口段；
    模块 docstring 更新命名空间总数与命令清单。
 2. **根 client `.env.example`**：新增 `<NS>` 注释段，键与 overlay

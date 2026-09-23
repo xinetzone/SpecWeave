@@ -37,7 +37,7 @@ source: "../../shared/pyproject.toml + ../../shared/src/jpman_common/ + ../../cl
 **准入判据（全部满足才可放入 shared）**：
 
 1. 两端（builder + client）存在实际调用方，或属于连接层/只读工具的自然组成
-2. 零栈知识：不出现 quant / xmnn / monetize 或任一具体工作负载栈的常量、路径、任务名
+2. 零栈知识：不出现 quant / native / monetize 或任一具体工作负载栈的常量、路径、任务名
 3. 无写操作编排（启停/构建/栈编排属成员任务层，不进 shared）
 4. 不依赖成员包（shared 不得 import `jpman_builder` / `jpman_client`，依赖方向只能单向向上）
 
@@ -90,7 +90,7 @@ pip install -e client                    # 消费端（按需 [compose] 启用�
 ## 6. 反模式
 
 - ❌ 在 client 或 builder 任务模块直接 `import podman` 新写连接分支（必须经 connection.py）。
-- ❌ 把 quant/xmnn/monetize 的 compose 路径、端口、镜像名下沉到 shared"方便复用"。
+- ❌ 把 quant/native/monetize 的 compose 路径、端口、镜像名下沉到 shared"方便复用"。
 - ❌ 先装 client 后装 shared，靠 PYTHONPATH 偶然命中（G2 安装顺序）。
 - ❌ 为 shared 引入第三个消费者之外的用途而不加准入论证（如被 apps/ 其它分组直接依赖——
   届时应先升级为 apps 级共享资产，而非原地扩张）。

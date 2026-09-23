@@ -119,3 +119,32 @@ machine 重启后需重新 attach。
 > 精确指定。配合 `--usb`（USB 总线级）即可在容器内用 v4l2/OpenCV 直接采集摄像头。
 > 前置：先完成上方 usbipd bind/attach 使摄像头在 daemon 宿主出现 `/dev/video*`；
 > 缺失时 podman 硬失败（exit 125），走 C-I3 诊断。
+
+## 声明式栈侧等价：`native.up --passthrough / --usb`
+
+native-dev 栈（podman-compose 编排）以**分层覆盖文件**对齐同一套透传，与上表
+①④⑤逐项对应（默认全关，不带开关时渲染/运行与旧版本逐字等价）：
+
+| `invoke run` 开关 | native 栈用法 | 覆盖文件（overlays/native-dev） |
+|---|---|---|
+| `--host-network` + `--dbus` | `invoke native.up --passthrough` | `compose.passthrough.yaml`（host 网络 + D-Bus） |
+| `--usb` | `invoke native.up --usb` | `compose.passthrough.usb.yaml`（追加 `/dev/bus/usb`） |
+
+与 SDK 路径的差异（均为栈编排内生）：
+
+- **host 形态端口固定**：Jupyter 8888（容器内固定，bridge 形态的 8890 不再使用）、
+  SSH 默认 2223 可用 `HOST_NET_SSHD_PORT` 换；`ports` 以 `!reset` 整键删除
+  （host 网络与 `-p` 互斥）。故透传形态与占着 8888 的栈（如 quant）**不可并行**。
+- **D-Bus bind**：`/run/user/1000/bus` → `/tmp/runtime-user/bus`（只读、源缺失绝不
+  自动创建），并注入 `XDG_RUNTIME_DIR` / `DBUS_SESSION_BUS_ADDRESS`；
+  `DBUS_SESSION_BUS_PATH` 可改指系统总线 `/run/dbus/system_bus_socket`。
+- **透传专用镜像 tag**：`NATIVE_PASSTHROUGH_IMAGE_TAG`（默认
+  `localhost/native-dev:passthrough`）——内容与基础 tag 完全相同，本地缺失时
+  自动 `podman tag`（同镜像 ID、零额外空间、零构建）。
+- **门禁先于任何 down/up**：与 `invoke run` 的事后翻译不同，栈路径在 daemon 宿主侧
+  预先 `test -S`（D-Bus socket）、`ss -lnt`（8888/SSH 占用）、`test -e`
+  （USB 路径），不满足即 Exit 1 给中文可执行指引（USB 缺失给 usbipd-win 转发
+  `podman-machine-default` 的三条命令），绝不先拆用户在用的栈。
+- `--passthrough` 与 `--usb` 可并用，亦可与 `--gpu` / `--offline` 自由组合；
+  `native.smoke --passthrough/--usb` 仅在栈运行路径生效（与启动同源文件），
+  栈未运行时显式提示旗标被忽略。详见 [11-native-overlay.md](11-native-overlay.md)。

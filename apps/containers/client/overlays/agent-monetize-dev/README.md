@@ -5,7 +5,7 @@
 > tvm-ffi 原生 `score_opportunity.so`（头/库来自 pip 包 apache-tvm-ffi），
 > Python 经 tvm-ffi 走原生 PackedFunc 打分；并能 setuptools 打纯 Python
 > wheel。这是 **client-overlay-scaffold 形态 B 的轻量变体**（对比
-> [xmnn-dev](../xmnn-dev/README.md)：无 Nuitka、不编 TVM、apt clang）。
+> [native-dev](../native-dev/README.md)：无 Nuitka、不编 TVM、apt clang）。
 
 - **镜像**：`localhost/agent-monetize-dev:latest`（薄叠加；FROM rootless）
 - **Python**：`/opt/conda/bin/python` **cp314 GIL**（apache-tvm-ffi wheel
@@ -66,7 +66,7 @@ podman-compose down
 | 键 | 默认 | 用途 |
 |---|---|---|
 | MONETIZE_IMAGE_TAG/CONTAINER_NAME | localhost/agent-monetize-dev:latest / agent-monetize-dev | 镜像/容器 |
-| MONETIZE_SSH_PORT / JUPYTER_PORT | 2224 / 8892 | 宿主端口（错开 quant 2222/8888、xmnn 2223/8890） |
+| MONETIZE_SSH_PORT / JUPYTER_PORT | 2224 / 8892 | 宿主端口（错开 quant 2222/8888、native 2223/8890） |
 | MONETIZE_WORKSPACE | ../../workspace | → /workspace |
 | MONETIZE_SRC_PATH | ../../../../agent-monetize | agent-monetize 源码宿主路径（invoke 存在性硬校验） |
 | USER_PASSWORD / JUPYTER_TOKEN / SSH_PUBLIC_KEY / GRANT_SUDO | 空/空/空/yes | 凭证 |
@@ -75,7 +75,7 @@ podman-compose down
 
 ## 与相关栈的关系
 
-| 维度 | 本栈（monetize） | xmnn-dev |
+| 维度 | 本栈（monetize） | native-dev |
 |---|---|---|
 | 源码 | apps/agent-monetize（单 .cc tvm-ffi） | external/chaos npu_tvm+npuusertools |
 | 工具链 | apt clang + pip apache-tvm-ffi | conda LLVM 22 + Nuitka 4.2.1 |

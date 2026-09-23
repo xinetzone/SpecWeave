@@ -10,7 +10,7 @@ from invoke import Task
 
 from jpman_client.tasks import monetize as monetize_mod
 from jpman_client.tasks import quant as quant_mod
-from jpman_client.tasks import xmnn as xmnn_mod
+from jpman_client.tasks import native as native_mod
 from jpman_client.tasks import ns
 
 SIX = ("build", "down", "logs", "ps", "smoke", "up")
@@ -26,7 +26,7 @@ def _params(task: Task) -> list[str]:
 
 def test_namespace_task_sets():
     assert set(_col("quant").tasks) == set(SIX)
-    assert set(_col("xmnn").tasks) == {*SIX, "build-tvm", "wheel", "save", "load"}
+    assert set(_col("native").tasks) == {*SIX, "build-tvm", "wheel", "save", "load"}
     assert set(_col("monetize").tasks) == {*SIX, "build-native", "wheel"}
     # 原 wheel 消费运行时栈（命名空间前缀 xmnnr*）随客户离线交付链路迁出为
     # 独立应用 apps/containers/offline-delivery，此处不再注册集合。
@@ -45,7 +45,7 @@ def test_root_and_alias_namespaces_intact():
 
 
 def test_docstrings_golden():
-    q, x, m = _col("quant"), _col("xmnn"), _col("monetize")
+    q, x, m = _col("quant"), _col("native"), _col("monetize")
     assert q.tasks["build"].__doc__.startswith("构建 ONNX 量化叠加镜像")
     assert q.tasks["smoke"].__doc__ == "运行 3 个纯 ONNX 冒烟（动态 INT8 / FP16 / 静态 QDQ）。"
     assert x.tasks["build-tvm"].__doc__.startswith("栈内编译 TVM C++ 原生库")
@@ -55,22 +55,25 @@ def test_docstrings_golden():
 
 
 def test_signatures_golden():
-    q, x, m = _col("quant"), _col("xmnn"), _col("monetize")
-    # build 参数集（xmnn 多 conda_mirror 与 torch）
+    q, x, m = _col("quant"), _col("native"), _col("monetize")
+    # build 参数集（native 多 conda_mirror 与 torch）
     assert _params(q.tasks["build"]) == ["tag", "base_image", "pip_mirror", "no_cache"]
     assert _params(x.tasks["build"]) == [
         "tag", "base_image", "pip_mirror", "conda_mirror", "torch", "no_cache",
     ]
     assert _params(m.tasks["build"]) == ["tag", "base_image", "pip_mirror", "no_cache"]
-    # up/smoke：形参面 = 能力并集——quant/xmnn 有 gpu，xmnn 另有 offline 三态
+    # up/smoke：形参面 = 能力并集——quant/native 有 gpu，native 另有 offline 三态
+    # 与透传主层/USB 两覆盖
     assert _params(q.tasks["up"]) == ["gpu", "skip_build"]
-    assert _params(x.tasks["up"]) == ["gpu", "skip_build", "offline", "no_offline"]
+    assert _params(x.tasks["up"]) == [
+        "gpu", "passthrough", "usb", "skip_build", "offline", "no_offline",
+    ]
     assert _params(m.tasks["up"]) == ["skip_build"]
-    # xmnn 离线镜像归档（仅 supports_offline 栈生成）
+    # native 离线镜像归档（仅 supports_offline 栈生成）
     assert _params(x.tasks["save"]) == ["tag", "cache_dir"]
     assert _params(x.tasks["load"]) == ["path", "cache_dir"]
     assert _params(q.tasks["smoke"]) == ["gpu"]
-    assert _params(x.tasks["smoke"]) == ["gpu"]
+    assert _params(x.tasks["smoke"]) == ["gpu", "passthrough", "usb"]
     assert _params(m.tasks["smoke"]) == []
     # 其余四任务
     for col in (q, x, m):
@@ -87,17 +90,17 @@ def test_signatures_golden():
 def test_auto_shortflags_quant_on_others_off():
     for name in SIX:
         assert _col("quant").tasks[name].auto_shortflags is True
-        assert _col("xmnn").tasks[name].auto_shortflags is False
+        assert _col("native").tasks[name].auto_shortflags is False
         assert _col("monetize").tasks[name].auto_shortflags is False
-    assert _col("xmnn").tasks["save"].auto_shortflags is False
-    assert _col("xmnn").tasks["load"].auto_shortflags is False
-    assert _col("xmnn").tasks["wheel"].auto_shortflags is False
+    assert _col("native").tasks["save"].auto_shortflags is False
+    assert _col("native").tasks["load"].auto_shortflags is False
+    assert _col("native").tasks["wheel"].auto_shortflags is False
     assert _col("monetize").tasks["wheel"].auto_shortflags is False
 
 
 def test_modules_bounded_and_declarative():
     """T4 AC-5：声明模块 ≤160 行，且不再内嵌同构编排函数。"""
-    for mod in (quant_mod, xmnn_mod, monetize_mod):
+    for mod in (quant_mod, native_mod, monetize_mod):
         assert len(inspect.getsource(mod).splitlines()) <= 160, mod.__name__
         src = inspect.getsource(mod)
         for forbidden in ("def _gate_platform", "def _compose_argv", "def _run_compose",

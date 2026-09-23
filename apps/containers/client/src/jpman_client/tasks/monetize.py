@@ -7,7 +7,7 @@ overlay_core.make_stack_tasks 工厂生成，栈内 exec 长任务（build-nativ
 驱动 ``overlays/agent-monetize-dev`` 叠加栈：栈内 clang++ 编译 tvm-ffi 原生
 模块（score_opportunity.so，链接 apache-tvm-ffi）与 setuptools 打纯 Python
 wheel；apache-tvm-ffi wheel 为 cp314 GIL，编译/运行/内核解释器统一 base env
-（/opt/conda/bin/python，单 ABI；与 xmnn 双 ABI 不同）。
+（/opt/conda/bin/python，单 ABI；与 native 双 ABI 不同）。
 
 定位（红线）：
   - 本模块**禁止 import podman**，只通过子进程驱动 podman-compose；

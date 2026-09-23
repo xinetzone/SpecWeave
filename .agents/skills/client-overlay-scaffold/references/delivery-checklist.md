@@ -61,7 +61,7 @@
 
 ## 5. 收口
 
-- [ ] 改动全部落在白名单；既有 overlay（onnx/xmnn/monetize）与三栈 SPEC/TASKS 零回归
+- [ ] 改动全部落在白名单；既有 overlay（onnx/native/monetize）与三栈 SPEC/TASKS 零回归
 - [ ] 复杂栈完成 fresh-context 独立 Review（rule+rubric），actionable 清零
 - [ ] 产物版本/镜像 ID/关键命令输出归档到 spec 或任务证据
 - [ ] 未授权不执行 git commit（用户明示后按 atomic-commit-cmd 提交）

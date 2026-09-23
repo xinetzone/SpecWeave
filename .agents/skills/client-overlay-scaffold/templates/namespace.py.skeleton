@@ -16,7 +16,7 @@
   - 与根 SDK→CLI 两层平行，禁止回流 invoke run；
   - 内核 overlay_core 与 jpman_common 零栈知识，栈差异只能经 SPEC 字段注入。
 
-形态 B 的 exec 长任务（编译/打包）见文件尾部模板，参照 xmnn.py
+形态 B 的 exec 长任务（编译/打包）见文件尾部模板，参照 native.py
 （build-tvm/wheel）与 monetize.py（build-native/wheel）的真实写法。
 """
 from __future__ import annotations
@@ -57,9 +57,9 @@ __NSU___SPEC = StackSpec(
     # jupyter_banner_note="（内核：Python 3.14 (__NS__ dev)）",  # 按需
     # build_done_label="叠加镜像",      # quant 历史用「量化叠加镜像」
     # build_next_hint="",               # 构建完成行尾补充
-    # up_footer=(),                     # 空=自动单行；xmnn 用三行提示长任务
+    # up_footer=(),                     # 空=自动单行；native 用三行提示长任务
     gpu_override=False,               # 有 compose.gpu.yaml 且 up/smoke 要 --gpu 才 True（quant）
-    conda_mirror=False,               # build 要 --conda-mirror 才 True（xmnn）
+    conda_mirror=False,               # build 要 --conda-mirror 才 True（native）
     auto_shortflags=False,            # quant 历史为 True，新栈保持 False
     # 【形态 B：宿主源码/数据 bind；先解开上方 SourceMount 导入。
     # anchor="repo" 锚仓库根（default_rel 写 "apps/<dir>" / "external/<dir>"），
@@ -98,7 +98,7 @@ smoke = TASKS["smoke"]
 
 
 # ---------------------------------------------------------------------------
-# 【形态 B：栈内 exec 长任务在此追加（真实写法参照 monetize.py / xmnn.py）】
+# 【形态 B：栈内 exec 长任务在此追加（真实写法参照 monetize.py / native.py）】
 #
 # 固定四步前置：gates → ensure_runtime_ready → require_running → run_compose；
 # 环境变量透传把 ["-e", f"KEY={v}"] 插在 "exec" 与服务名之间。

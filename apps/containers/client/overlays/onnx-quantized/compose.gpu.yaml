@@ -9,7 +9,7 @@
 #   invoke quant.up --gpu
 #   podman-compose -f compose.yaml -f compose.gpu.yaml up -d
 #
-# 设备形态由 GPU_DEVICE 单键双形态决定（与 xmnn 同构；invoke 侧
+# 设备形态由 GPU_DEVICE 单键双形态决定（与 native 同构；invoke 侧
 # resolve_gpu_device 会在未设置时自动探测并按形态选覆盖文件）：
 #   ① 未设置 / `/` 开头 → 宿主机设备路径（Intel/AMD Mesa 渲染节点 /dev/dri；
 #      NVIDIA 直通为 /dev/nvidia*）；

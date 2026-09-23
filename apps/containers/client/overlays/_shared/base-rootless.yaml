@@ -1,5 +1,5 @@
 ---
-# rootless-base —— onnx-quantized / xmnn-dev / agent-monetize-dev 三栈共享的
+# rootless-base —— onnx-quantized / native-dev / agent-monetize-dev 三栈共享的
 # rootless 服务基段（compose extends 的单一事实源）。
 #
 # 被 ../<stack>/compose.yaml 以如下方式继承：
@@ -34,7 +34,7 @@
 # network_mode: bridge —— 2026-09-14 同机实证：podman-machine-default 无
 # systemd user bus，默认项目网络启 aardvark-dns 必现
 # 「Failed to connect to user scope bus」（未改动的 onnx 栈同机复现，
-# 见 xmnn-dev/compose.yaml 文件头注释），显式 bridge 绕过。三栈统一继承。
+# 见 native-dev/compose.yaml 文件头注释），显式 bridge 绕过。三栈统一继承。
 #
 # logging: k8s-file —— C24 起凭证从容器日志回读，且 `invoke <ns>.logs` 依赖
 # `podman logs`。2026-09-20 实证：本机发行版把默认日志驱动设为 journald

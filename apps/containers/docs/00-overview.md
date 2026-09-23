@@ -72,7 +72,7 @@ extends 统一继承。
 | 命名空间 | 叠加层目录 | 用途 | SSH / Jupyter 端口 |
 |----------|-----------|------|--------------------|
 | `quant.*`（6 任务） | [overlays/onnx-quantized/](../client/overlays/onnx-quantized/README.md) | ONNX 量化工具链（dynamic int8 / fp16 / static QDQ 冒烟） | 2222 / 8888 |
-| `xmnn.*`（8 任务） | [overlays/xmnn-dev/](../client/overlays/xmnn-dev/README.md) | XMNN 源码调试 + LLVM 22 + Nuitka 双 ABI 打 wheel | 2223 / 8890 |
+| `native.*`（10 任务） | [overlays/native-dev/](../client/overlays/native-dev/README.md) | XMNN 源码调试 + LLVM 22 + Nuitka 双 ABI 打 wheel | 2223 / 8890 |
 | `monetize.*`（8 任务） | [overlays/agent-monetize-dev/](../client/overlays/agent-monetize-dev/README.md) | agent-monetize 源码 + apt clang/apache-tvm-ffi 原生编译 | 2224 / 8892 |
 
 详细手册与裸 compose 用法见消费端 docs/10-12。
