@@ -1650,12 +1650,11 @@ def resolve_usb_device(c: Context, spec: StackSpec, env: dict) -> str:
     )
     if not _runtime_path_exists(c, token):
         print(f"[{ns}] ⚠ --usb 需要 USB 设备，但 {token} 在 podman 宿主不存在：")
-        print(f"[{ns}]   WSL2 宿主默认无 USB 总线；在 Windows 管理员 PowerShell 用 "
+        print(f"[{ns}]   WSL2 宿主默认无 USB 总线；在 Windows PowerShell 用 "
               "usbipd-win 转发：")
         print("           usbipd list")
-        print("           usbipd bind --busid <BUSID>")
-        print("           usbipd attach --wsl --distribution podman-machine-default "
-              "--busid <BUSID>")
+        print("           usbipd bind --busid <BUSID>   # 需管理员；装有火绒时加 --force")
+        print("           usbipd attach --wsl podman-machine-default --busid <BUSID>")
         print(f"[{ns}]     attach 后重跑本命令（验证：ls /dev/bus/usb）。")
         print(f"[{ns}]   物理 Linux：lsusb 核对设备；或显式指定单设备 "
               f"USB_DEVICE=/dev/bus/usb/001/002")

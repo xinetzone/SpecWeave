@@ -6,6 +6,22 @@
 
 ## [Unreleased]
 
+### 2026-09-23 · `fix:` 同步 usbipd 5.x 语法与火绒场景指引（4 处散点）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C）——执行 `usbipd attach` 转发摄像头（busid 2-8）时暴露仓库 4 处 usbipd 命令用法停留在旧版语法，用户照做即报错。
+
+**I 事实**：usbipd-win 5.x 起 `attach` 的 `--distribution` 参数已移除，改为 `--wsl <[DISTRIBUTION]>`（可选值）；旧语法 `attach --wsl --distribution podman-machine-default` 实测报 `Unrecognized command or argument 'podman-machine-default'`。散点 4 处：内核门禁文案（`overlay_core.resolve_usb_device`）、守卫测试断言、`docs/07` 组合 C powershell 块、`compose.passthrough.usb.yaml` 注释。附带两个环境事实：本机 usbipd 服务默认未启动（Manual，`sc.exe start usbipd` 可恢复；依赖内核驱动 VBoxUsbMon 由 usbipd-win 安装包自带、随服务自动加载，无需装 VirtualBox）；火绒安全（Huorong）的 hrdevmon 设备监控过滤器挂在 USB 设备类，usbipd 不识别 → list warning + bind 需 `--force`（非致命提示）。
+
+**F 定论**：外围工具主版本升级后仓库命令示例未同步，属指引失真；bind 需管理员、attach 不需管理员的权限边界与火绒 `--force` 场景此前无记载。
+
+**V 定稿**：4 处统一为 5.x 语法 `usbipd attach --wsl podman-machine-default --busid <BUSID>`；bind 标注「需管理员；装有火绒时加 --force」；`docs/07` 组合 C 前置补服务启动说明，排障表新增「service not running + hrdevmon」双根因行（服务 `sc.exe start usbipd` / 火绒过滤器 `bind --force`，两因独立）。
+
+**E/C 落地**：`overlay_core.py` `resolve_usb_device` 门禁文案 5.x 化；`test_overlay_core.py` 断言同步（`assert "usbipd attach --wsl podman-machine-default" in out`）；`docs/07-passthrough-and-combos.md` 组合 C 前置 + powershell 块 + 排障行；`compose.passthrough.usb.yaml` 注释补 usbipd 5.3 实测标注。
+
+**V 验收**：`pytest tests -q` **215 passed / 10 skipped**（断言同步后零回归）；`check-links --path overlays/native-dev/docs` **20/20 通过**；全仓 `--distribution` 扫描确认 usbipd 旧语法零残留（剩余命中均为 wsl bundle 的 `wsl --distribution`，无关）；真机 `usbipd attach --wsl podman-machine-default --busid 2-8` 成功（摄像头 Attached，WSL `/dev/bus/usb/001` 可见），`invoke native.up --passthrough --gpu --usb` EXITCODE=0 全家桶跑通。
+
+提交 `fix(client)` = 本提交（CHANGELOG 留痕与代码/文档变更同笔落盘）。
+
 ### 2026-09-23 · `fix:` 透传门禁识别本栈 host 容器占用，重复 up 幂等放行
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C）——`invoke native.up --passthrough --gpu --usb` 在 trae-preview 控制台构建后报「端口已被占用：8888, 2223」exit 1，实为误报。

@@ -1804,7 +1804,7 @@ def test_resolve_usb_missing_fails_with_usbipd_guide(harness, capsys):
         oc.resolve_usb_device(None, _NATIVE, {})
     assert ei.value.code == 1
     out = capsys.readouterr().out
-    assert "usbipd attach --wsl --distribution podman-machine-default" in out
+    assert "usbipd attach --wsl podman-machine-default" in out
     assert "USB_DEVICE=/dev/bus/usb/001/002" in out
     assert "去掉 --usb" in out
 
