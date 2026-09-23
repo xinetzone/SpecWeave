@@ -28,6 +28,9 @@ source: "README.md#参数表compose-插值-env-键"
 | `DBUS_SESSION_BUS_PATH` | `/run/user/1000/bus` | 只读 bind 进容器的会话 D-Bus socket；可改 `/run/dbus/system_bus_socket`（系统总线）。门禁 `test -S` 必须为 socket |
 | `HOST_NET_SSHD_PORT` | `2223` | host 形态容器 SSH 直接绑定的宿主端口；Jupyter 固定 8888 不可换。门禁 `ss -lnt` 查 8888/此端口占用 |
 | `USB_DEVICE` | `/dev/bus/usb` | USB 设备路径（可指 `/dev/bus/usb/001/002` 单设备）。**仅 `up --usb` 时生效**；WSL2 须先 usbipd-win attach 到 podman-machine-default，门禁 `test -e` |
+| `HOST_XDG_RUNTIME_DIR` / `HOST_WAYLAND_DISPLAY` | 未设 / `wayland-0` | GUI Wayland 宿主会话运行时目录与显示名。未设时内核按 `/mnt/wslg/runtime-dir`（WSLg）→ `/run/user/1000` 探测。**仅 `up --gui` 时生效**（C33） |
+| `GUI_X11_SOCKETDIR` / `GUI_DISPLAY` | 未设（探测 `/mnt/wslg/.X11-unix` → `/tmp/.X11-unix`）/ `:0` | GUI X11 socket 目录与显示号；探测到目录内 `X0` 才挂 X11 层。物理 Linux 常需配合宿主 `xhost local:root`。**仅 `up --gui` 时生效**（C33） |
+| `GUI_WAYLAND_SOCKET` | 内核探测回写 | Wayland socket 完整路径令牌（内核 `resolve_gui` 命中后回写供 compose 插值，裸 compose 缺省 `/mnt/wslg/runtime-dir/wayland-0`）。一般不手动设 |
 
 ## 与相关栈/目录的关系
 
