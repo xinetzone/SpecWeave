@@ -6,6 +6,22 @@
 
 ## [Unreleased]
 
+### 2026-09-23 · `fix:` 透传门禁识别本栈 host 容器占用，重复 up 幂等放行
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C）——`invoke native.up --passthrough --gpu --usb` 在 trae-preview 控制台构建后报「端口已被占用：8888, 2223」exit 1，实为误报。
+
+**I 事实**：host 网络下容器内 Jupyter(8888)/SSH(`HOST_NET_SSHD_PORT` 默认 2223) 直接绑宿主，`ss -lnt` 看到的占用必然含本栈自身；真机实证 8888 行**无持有者 pid**（容器内 jupyter 以 root 运行，普通用户 ss 不可见），2223 持有者为 sshd——PID 树归属判定不可靠；`podman ps` 仅 native-dev passthrough 容器 Up，占用者即本栈。
+
+**F 定论**：门禁语义缺口——把幂等场景（栈自身持有端口）误判成外部冲突 fail-fast。
+
+**V 定稿**：占用者身份判定弃用 ss PID 归属，改用 `podman inspect --format '{{.State.Running}} {{.HostConfig.NetworkMode}}'` 双段判据（`true host` 才放行；容器不在跑/非 host 形态 → fail-fast 语义不变）。
+
+**E/C 落地**：`overlay_core.py` 新增 `_own_host_container_running`；`resolve_passthrough` busy 分支分流（own host → ℹ 提示放行，交 podman-compose 幂等处理：文件集无变化=no-op、组合旗标变化=自动 recreate；其余保留原五条中文指引 fail-fast）；`docs/07-passthrough-and-combos.md` 排障表补「重复 up 被端口门禁拦」行；`test_overlay_core.py` 增 3 守卫测试（helper 判据矩阵 / own host 放行 / own bridge 仍 fail-fast）。
+
+**V 验收**：`pytest tests -q` **215 passed / 10 skipped**（较修复前 +3，零回归）；`check-links --path overlays/native-dev/docs` 通过；真机复核待用户重跑 `invoke native.up --passthrough --gpu`（WSL2 宿主无 `/dev/bus/usb` 时 `--usb` 门禁按设计 fail-fast，属环境事实非 bug）。
+
+提交 `fix(client)` = `e96eb84f0`。
+
 ### 2026-09-21 · `docs:` 新增分析报告 `14-xmnn-int4-layers-report.md`，并同步索引计数与 C31 陈旧锚点
 
 **关联七概念场景**：场景4「知识沉淀」——把 `network.xmnn` 的 int4 层判定证据固化为
