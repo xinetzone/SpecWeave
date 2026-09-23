@@ -123,7 +123,7 @@ T1 shared 基座包（平台/进程/容器工具）─┬─→ T3 overlay_core 
 
 **Completion Evidence**（2026-09 实施完成）：
 
-- 三模块声明化（行数均 ≤160 目标）：[quant.py](apps/containers/client/src/jpman_client/tasks/quant.py) 88 行（QUANT_SPEC + TASKS + 6 别名）、[monetize.py](apps/containers/client/src/jpman_client/tasks/monetize.py) 121 行（MONETIZE_SPEC + 6 任务 + build_native/wheel 长任务）、[xmnn.py](apps/containers/client/src/jpman_client/tasks/xmnn.py) 158 行（XMNN_SPEC + 6 任务 + build_tvm/wheel 长任务，docstring 含双 cp314 ABI 契约 C13）。
+- 三模块声明化（行数均 ≤160 目标）：[quant.py](../../../../apps/containers/client/src/jpman_client/tasks/quant.py) 88 行（QUANT_SPEC + TASKS + 6 别名）、[monetize.py](../../../../apps/containers/client/src/jpman_client/tasks/monetize.py) 121 行（MONETIZE_SPEC + 6 任务 + build_native/wheel 长任务）、[native.py](../../../../apps/containers/client/src/jpman_client/tasks/native.py) 158 行（NATIVE_SPEC + 6 任务 + build_tvm/wheel 长任务，docstring 含双 cp314 ABI 契约 C13）。
 - F-10 桥接键下沉：`utils.py` 的 `_BRIDGE_ENV_KEYS`（含三栈枚举）改名 `_BRIDGE_COMMON_ENV_KEYS`（仅 11 个通用键），`run_in_wsl_bridge(argv=None, extra_env_keys=())` 内 `keys = set(_BRIDGE_COMMON_ENV_KEYS) | set(extra_env_keys)`；overlay_core.gate_platform 传 `extra_env_keys=spec.bridge_env_keys`。Grep 证据：utils.py 中 QUANT/XMNN/MONETIZE/NPU_TVM 零命中。
 - 注册：`tasks/__init__.py` 三命名空间改为 `for _name,_task in <mod>.TASKS.items()` 循环注册，xmnn/monetize 长任务单独 add_task；configure() 块未动。
 - 等价性验证（py314）：三栈迁移后 `invoke --list` 与迁移前快照**逐行一致**——根 7 任务 + container.*/env.* 别名 + quant 6 + xmnn 8（含 build-tvm/wheel）+ monetize 8（含 build-native/wheel），描述文本、换行折叠、中文文案零变化；短选项差异（quant auto_shortflags=True，其余 False）保持。
@@ -157,12 +157,12 @@ T1 shared 基座包（平台/进程/容器工具）─┬─→ T3 overlay_core 
 
 **Completion Evidence**（2026-09 实施完成）：
 
-- 新建 [base-rootless.yaml](apps/containers/client/overlays/_shared/base-rootless.yaml)：服务名 `rootless-base`，仅含 network_mode bridge、rootless 三必需（devices /dev/fuse、security_opt label=disable、cgroupns host）、凭证四变量（保持 `${VAR:-}`/`${GRANT_SUDO:-yes}` 插值空值语义）、label org.specweave.managed-by、restart unless-stopped；**无** volumes/build/env_file/ports/image/container_name（test_base_file_contains_only_pathless_fields 正向锁定）。
+- 新建 [base-rootless.yaml](../../../../apps/containers/client/overlays/_shared/base-rootless.yaml)：服务名 `rootless-base`，仅含 network_mode bridge、rootless 三必需（devices /dev/fuse、security_opt label=disable、cgroupns host）、凭证四变量（保持 `${VAR:-}`/`${GRANT_SUDO:-yes}` 插值空值语义）、label org.specweave.managed-by、restart unless-stopped；**无** volumes/build/env_file/ports/image/container_name（test_base_file_contains_only_pathless_fields 正向锁定）。
 - 三栈 compose.yaml 改 `extends: {file: ../_shared/base-rootless.yaml, service: rootless-base}`，删除已上移字段；image/container_name/build/ports/volumes/栈专属 env/组件 label 全保留；compose.gpu.yaml 未动。
 - **真实 1.6.0 解析管线验证**（本机 py314 环境装有 podman-compose 1.6.0，无 daemon 亦可跑解析）：直接驱动 `PodmanCompose._parse_args + _parse_compose_file` 取 resolve_extends 后的 `self.containers`（注意 `config` 子命令打印的是 L2895 resolve 前的 merged_yaml 快照，不含 extends 合并，不能用作 diff 依据）。四组渲染全部符合黄金清单：quant devices=[/dev/fuse] 且 env 6 键；quant GPU devices=[/dev/fuse,/dev/dri]（list 追加、fuse 不重）；xmnn env 11 键/volumes 5 target；monetize env 6 键/volumes 2 target/ports 2224、8892；三栈 network_mode=bridge、cgroupns=host、security_opt=[label=disable]、labels 并集（managed-by+component）、restart=unless-stopped、privileged=None。
 - **路径解析实证（修正规格假设）**：1.6.0 并非按裸 CWD 解析 extends.file——`_parse_compose_file` L2845-2847 先把 extends.file 按引用 compose 文件目录 join 重写，再由 resolve_extends（L2329）`rec_merge({}, base, current)` 合并；故内核 run_compose **无需 cd**（绝对 --file 任意 cwd 可跑，插桩 open() 实证打开的是 `overlays/onnx-quantized/../_shared/base-rootless.yaml`），已在 base 与三栈文件头、overlay_core.run_compose docstring 注明 L2845 行为。
 - **行为变更（已知、经批准规格要求）**：quant 栈此前无 network_mode 声明，现随基文件统一获得 `bridge`。依据 xmnn-dev 旧 compose.yaml 文件头 2026-09-14 实证（machine 无 systemd user bus，默认项目网络 aardvark-dns 必现 Failed to connect to user scope bus，未改动 onnx 栈同机复现）；T6 CHANGELOG 须用户可见地记录此项。
-- 兜底离线测试 [test_compose_merge.py](apps/containers/client/tests/test_compose_merge.py)（18 用例）：按 F-3 语义实现 rec_merge 模拟器（dict 递归/list 追加/command、entrypoint 替换/volumes 按 target 去重先到先得），对仓库真实 YAML 渲染并断言 AC-3 全部条款（privileged/cap_add 缺失为正向断言、env 键并集、插值覆盖、三必需不重不漏），另含 3 个模拟器自证用例防假阳性。
+- 兜底离线测试 [test_compose_merge.py](../../../../apps/containers/client/tests/test_compose_merge.py)（18 用例）：按 F-3 语义实现 rec_merge 模拟器（dict 递归/list 追加/command、entrypoint 替换/volumes 按 target 去重先到先得），对仓库真实 YAML 渲染并断言 AC-3 全部条款（privileged/cap_add 缺失为正向断言、env 键并集、插值覆盖、三必需不重不漏），另含 3 个模拟器自证用例防假阳性。
 - client 全量：**57 passed, 1 skipped**；`invoke --list` 栈任务数 22（6+8+8）不回归。
 
 ---
@@ -190,11 +190,11 @@ T1 shared 基座包（平台/进程/容器工具）─┬─→ T3 overlay_core 
 - **FR-10**：utils.py 三处注释、.env.example L61-63、三 overlay README 桥接句全部中性化；Grep "改名顶替" client 全域 **0 命中**。
 - **builder 侧**（子代理 B，已逐项核验落地）：AGENTS.md L36/L61-64 共享包条与文件地图；.agents/README.md L41-42；.agents/rules/invoke-tasks.md（垫片/连接层/依赖段 8 处）、entrypoint.md L50；docs/08-directory-structure.md L10-11/L24/L41-42/L117/L121-122 共享包章节；docs/09-three-tier-backend.md L80/L125 实现位置与伪代码说明（主线复核补改）；README 项目结构移除断引 CMakeLists.txt 行、加 ../shared/（主线复核补改）；docs/07 修复 1 处历史断链（vendor 相对层级少一级 → ../../../../vendor/toolbox/...）。
 - **builder CHANGELOG**：`.agents/CHANGELOG.md` 加 2026-09-15 refactor 行（垫片/保留面/安装顺序/真机 E2E 回链 client 第 5 项）。
-- **client CHANGELOG**：[.agents/CHANGELOG.md](apps/containers/client/.agents/CHANGELOG.md) Unreleased 顶部加重构完整条目（5 项原子交付/F 双证实证/quant bridge 行为变更/静态等价门/**真机 E2E 后置清单 6 项含勾选框与成功判据**）。
-- **scaffold 技能**（子代理 B）：[client-overlay-scaffold](.agents/skills/client-overlay-scaffold/) 升 **v1.1.0**——SKILL.md §12 安全清单 + §13 Changelog；templates/namespace.py.skeleton 重写为 StackSpec+TASKS+六别名+形态B长任务；compose.yaml.skeleton 改 extends 形态；env.example.skeleton 改桥接/非桥接两区；references/delivery-checklist.md 三张黄金表门 + 7 接线点；技能 README L45、CHANGELOG L10（v1.20 技能包）、capability-registry/02-skills.md L17、SKILL.toml date/version 同步。
+- **client CHANGELOG**：[.agents/CHANGELOG.md#L153-L183](../../../../apps/containers/client/.agents/archive/2026-09-15-16.md#L153-L183) 2026-09-15 重构完整条目（5 项原子交付/F 双证实证/quant bridge 行为变更/静态等价门/**真机 E2E 后置清单 6 项含勾选框与成功判据**）。注：该条目已随 2026-09-23 CHANGELOG 原子化从主文件 Unreleased 移入 archive/2026-09-15-16.md，链接重指至归档位置。
+- **scaffold 技能**（子代理 B）：[client-overlay-scaffold](../../../../.agents/skills/client-overlay-scaffold/SKILL.md) 升 **v1.1.0**——SKILL.md §12 安全清单 + §13 Changelog；templates/namespace.py.skeleton 重写为 StackSpec+TASKS+六别名+形态B长任务；compose.yaml.skeleton 改 extends 形态；env.example.skeleton 改桥接/非桥接两区；references/delivery-checklist.md 三张黄金表门 + 7 接线点；技能 README L45、CHANGELOG L10（v1.20 技能包）、capability-registry/02-skills.md L17、SKILL.toml date/version 同步。
 - **docs/ 根文档**：查 toctree 后无根级 containers 架构章节（apps 内文档自成体系），重构记录落在两端 CHANGELOG/AGENTS，无需根 docs 新增（符合任务书「先查 toctree 定位再改」）。
 - **check-links**：`check-links.py --path apps/containers` → **校验通过（0 断链，12 个目录链接警告均为历史既有的指向目录模式）**；`--path .agents/skills/client-overlay-scaffold` → 6/6 通过。无新增 .ps1，跳过 pwsh7 合规。
-- **E2E 后置清单回链**：[apps/containers/client/.agents/CHANGELOG.md](apps/containers/client/.agents/CHANGELOG.md) 2026-09-15 条目「V 真机 E2E 后置清单」（前置→xmnn/quant/quant-gpu/monetize/builder 五组六项 + 成功判据 + 失败闭环要求）。
+- **E2E 后置清单回链**：[client CHANGELOG 2026-09-15 条目#L175-L183](../../../../apps/containers/client/.agents/archive/2026-09-15-16.md#L175-L183)「V 真机 E2E 后置清单」（前置→xmnn/quant/quant-gpu/monetize/builder 五组六项 + 成功判据 + 失败闭环要求）。
 
 ---
 
@@ -245,13 +245,13 @@ T1 shared 基座包（平台/进程/容器工具）─┬─→ T3 overlay_core 
 
 ## T8：独立对抗审查（V 强制）与修复闭环（2026-09-15 完成）
 
-**R1 审查**：fresh general_purpose_task 子代理，四视角（魔鬼代言人/新人/老板/未来），以仓库内 [vendor/podman-compose/podman_compose.py](../../../vendor/podman-compose/podman_compose.py)（1.6.0 只读 submodule，用户中途补充权威源路径）逐行核对 + 真实管线运行探针。结论 **CONDITIONAL PASS**：0 blocker / 2 major / 2 minor / 5 nit，报告见 [review.md](review.md) §0-§5。
+**R1 审查**：fresh general_purpose_task 子代理，四视角（魔鬼代言人/新人/老板/未来），以仓库内 [vendor/podman-compose/podman_compose.py](../../../../vendor/podman-compose/podman_compose.py)（1.6.0 只读 submodule，用户中途补充权威源路径）逐行核对 + 真实管线运行探针。结论 **CONDITIONAL PASS**：0 blocker / 2 major / 2 minor / 5 nit，报告见 [review.md](review.md) §0-§5。
 
 **修复（实施方）与 R2 复核（独立子代理）**：
 
 | 项 | 级别 | 问题 | 处置 | R2 复核 |
 |---|---|---|---|---|
-| M1 | major | 合并模拟器 volumes 两处与 vendor 真实语义反向：短语法被写成「先到先得基方胜」（真实 L2289-L2297 为覆盖方胜+移尾）、长语法 dict 被模拟成按 target 去重（真实**不去重**，且 scaffold 恰强制长语法 bind） | 重写 [test_compose_merge.py](../../apps/containers/client/tests/test_compose_merge.py) merge_one volumes 分支；删除锁错语义的旧自证，换 4 条新自证；新增 `_real_podman_compose()`（已安装包→vendor 回退→skip）与真实 rec_merge 探针 2 条；render_stack 括号改真实管线顺序（先 -f 后 extends，N2） | 逐行同构核对 + 探针通过；假绿四方向攻击（误导入/误 skip/版本断言/输入污染）被防住 |
+| M1 | major | 合并模拟器 volumes 两处与 vendor 真实语义反向：短语法被写成「先到先得基方胜」（真实 L2289-L2297 为覆盖方胜+移尾）、长语法 dict 被模拟成按 target 去重（真实**不去重**，且 scaffold 恰强制长语法 bind） | 重写 [test_compose_merge.py](../../../../apps/containers/client/tests/test_compose_merge.py) merge_one volumes 分支；删除锁错语义的旧自证，换 4 条新自证；新增 `_real_podman_compose()`（已安装包→vendor 回退→skip）与真实 rec_merge 探针 2 条；render_stack 括号改真实管线顺序（先 -f 后 extends，N2） | 逐行同构核对 + 探针通过；假绿四方向攻击（误导入/误 skip/版本断言/输入污染）被防住 |
 | M2 | major | 「volumes 按 target 去重」失实表述扩散 | 更正 8 处：base-rootless.yaml 文件头、quant-overlay.md §4/§4.1、xmnn/monetize-overlay.md、scaffold SKILL §7.6/G15/Changelog、compose.yaml.skeleton、client CHANGELOG | 全仓 grep 零残留、check-links 0 断链、行号再核精确 |
 | M3 | minor | 模拟器静默宽容类型冲突、保真范围未声明 | docstring 声明保真边界（!reset/!override 不支持、normalize 子集、插值仅 ${N:-}）；实现 None+dict 特判与跨类型 ValueError | 通过 |
 | M4 | minor | tasks/__init__.py 三栈 ns.configure 死配置（零消费，误导新人） | 删除三段、加防回填注释（唯一事实源 StackSpec） | src 全量 grep 无间接消费；39 任务/栈 22 正常 |
