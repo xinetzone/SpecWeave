@@ -36,6 +36,14 @@ from typing import Optional
 from invoke import Context, task
 from invoke.exceptions import Exit
 
+# B-scheme 宿主 rootless socket 预检/路径推导的唯一事实源（与 invoke run
+# 路径 client_core.run_container 同源；禁止在本模块私有副本）。
+from jpman_common.connection import (
+    bsock_missing_guidance,
+    ensure_host_podman_socket,
+    podman_sock_path,
+)
+
 from .client_core import (
     TORCH_FLAVOR_LABEL,
     image_inspect_info,
@@ -1629,6 +1637,52 @@ def _runtime_listening_ports(c: Context, ports: list[str]) -> list[str]:
     ]
 
 
+def resolve_host_podman_socket(c: Context, spec: StackSpec, env: dict) -> str:
+    """B-scheme 预检：确保宿主 rootless podman socket 就绪并解析挂载令牌。
+
+    三叠加栈均 extends 基底 jupyter-podman-rootless 镜像；其 entrypoint 在
+    无 ``HOST_PODMAN_SOCK`` 时**静默回退容器内自建 rootless daemon（DinP）**。
+    rootless 容器内再嵌套 rootless 必被 ``newuidmap`` 拒（``write to uid_map
+    failed: Operation not permitted``），socket 永不生成，而 entrypoint 仍
+    导出指向死路径的 CONTAINER_HOST——直到 Notebook 里
+    ``PodmanClient.from_env()`` 才报 FileNotFoundError（2026-09-24
+    native-dev 实证；旧 B-scheme 修复只接了 jupyter 主栈 compose 与
+    invoke run，三个叠加栈漏接，非回归而是覆盖盲区）。
+
+    故受管叠加栈与 ``client_core.run_container`` 同口径：up 前先确保宿主
+    socket 就绪（Linux 免提权自愈 ``systemctl --user start podman.socket``；
+    非 Linux/容器内/非 podman 自动放行），再把令牌写入 ``os.environ`` 供
+    compose 的 source/target/env 三处插值。compose 挂载契约是
+    **source == target == HOST_PODMAN_SOCK**（entrypoint 在容器内按该值
+    ``test -S`` 并建符号链接/属组衔接）。
+
+    令牌优先级：shell export > 根 .env（load_dotenv override=False）>
+    :func:`podman_sock_path` 运行期推导（UID 不硬编码）。
+    """
+    ns = spec.namespace
+    ready, detail, started = ensure_host_podman_socket()
+    if not ready:
+        print(f"[{ns}] ⚠ B-scheme 宿主 rootless podman socket 未就绪——容器内 "
+              "Notebook/CLI 的 PodmanClient 需要经它复用宿主 daemon；")
+        print(f"[{ns}]   entrypoint 的容器内自建 daemon 回退在嵌套 rootless 下"
+              "不可用（newuidmap: Operation not permitted）。")
+        print(bsock_missing_guidance(detail))
+        raise Exit(1)
+    # 各候选先 strip 再判空：纯空白令牌（truthy）不得落到 compose/entrypoint——
+    # env 空串会让 entrypoint `[ -n ]` 落空回退 DinP，而 ${VAR:-default}
+    # 挂载却回退 1000，形成静默不一致（评审加固，2026-09-24）。
+    token = (
+        str(os.environ.get("HOST_PODMAN_SOCK") or "").strip()
+        or str(env.get("HOST_PODMAN_SOCK") or "").strip()
+        or podman_sock_path()
+    )
+    os.environ["HOST_PODMAN_SOCK"] = token
+    env["HOST_PODMAN_SOCK"] = token
+    if started:
+        print(f"[{ns}][B-scheme] 已自动启动用户级 podman.socket: {token}")
+    return token
+
+
 def resolve_passthrough(
     c: Context, spec: StackSpec, env: dict, *, check_ports: bool = True
 ) -> tuple[str, str]:
@@ -1904,9 +1958,14 @@ def up_stack(
     """
     if offline:
         skip_build = True
+    env = dict(os.environ)
+    # B-scheme 门禁最先于一切（build/down/任何资源变更）：三叠加栈的 Notebook/
+    # CLI 经宿主 rootless socket 复用宿主 daemon；socket 缺失时 entrypoint 的
+    # DinP 回退在嵌套 rootless 下不可用（newuidmap），缺源挂载还会让 compose
+    # 硬失败——故在此统一预检+免提权自愈，并把同路径令牌注入 compose 插值。
+    resolve_host_podman_socket(c, spec, env)
     if not skip_build:
         build_image(c, spec, tag=None, no_cache=False)
-    env = dict(os.environ)
     # passthrough 的镜像存在性由 ensure_passthrough_tag 统一处理（接受透传/基础
     # tag 任一）；非透传保持原有单 tag 预检。
     if skip_build and not passthrough:

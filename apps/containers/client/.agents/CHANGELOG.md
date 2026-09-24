@@ -18,6 +18,20 @@
 
 ## [Unreleased]
 
+### 2026-09-24 · `fix(client):` 三叠加栈补齐 B-scheme 宿主 podman socket 直通（容器内 PodmanClient FileNotFoundError，C34）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C）——native-dev 容器 Jupyter（Python 3.14 kernel / devuser）执行 `PodmanClient.from_env().containers.list()` 报 `FileNotFoundError: [Errno 2]`（`podman/api/uds.py` UDS connect）；用户记忆中该问题已修，实则修过的范围未覆盖叠加栈。
+
+**I 事实（非回归，是覆盖盲区）**：2026-09-07/12 的 B-scheme 修复（C-I2/C-I5）只接入 **jupyter 主栈**（`jupyter-podman-rootless/compose.yaml`）与**根 invoke run 路径**（`client_core.py`）；三个 extends `_shared/base-rootless.yaml` 的叠加栈（native-dev / onnx-quantized / agent-monetize-dev）compose **从未挂载宿主 socket**（`git log -S podman.sock -- overlays/` 零命中）。基底 entrypoint 无 `HOST_PODMAN_SOCK` 时静默回退容器内自建 rootless daemon（DinP），而 rootless 套 rootless 必被 `newuidmap: write to uid_map failed: Operation not permitted` 拒绝，socket 30s 内不生成，entrypoint 却仍导出指向死路径的 `CONTAINER_HOST`，故障迟到 Notebook 运行时才以 FileNotFoundError 暴露。
+
+**F 定论**：受管栈信任模型与 jupyter 主栈一致（同机可信、devuser 即宿主用户），三栈默认直通宿主 rootless socket、不加 opt-out 开关；缺源必须 fail-fast，禁止 DinP 静默回退与 `os.makedirs` 误建挂载源。
+
+**E/C 落地**：① 内核新增 `resolve_host_podman_socket()`（`overlay_core.py`），在 `up_stack()` 中**先于 build/一切门禁/任何 down** 调共享库唯一事实源 `jpman_common.connection.ensure_host_podman_socket()`（Linux 免提权 `systemctl --user start podman.socket` 自愈；非 Linux/容器内/非 podman 放行），失败打印 C-I5 三步中文指引并 `Exit(1)`；令牌优先级 shell export > 根 .env > `podman_sock_path()`（UID 经 `PODMAN_RUNTIME_UID`/`$XDG_RUNTIME_DIR`/`id -u` 推导，禁硬编码），回写 `os.environ` 供 compose source/target/env 三处插值。② 三栈 compose 各加同路径长语法 bind（`source == target == ${HOST_PODMAN_SOCK:-/run/user/1000/...}`，`create_host_path: false`）+ 同名 env，缺省 1000 仅服务裸 compose 的 WSL2 惯例 UID。③ 三栈 `.env.example` 增令牌文档（UID/systemctl/linger/裸 compose 硬失败保护说明）。④ 防再漏接的准入硬约束写入 native-overlay §11.8（C34）：凡 extends rootless-base 的新栈必须显式接 B-scheme 或书面声明禁用，禁依赖 DinP 回退；07 文档排障表增 C-I5 行、05 参数表补两键。独立评审另加固纯空白令牌逐级回落（strip 先于 or，防 env 空串与挂载缺省静默分叉）。entrypoint.sh 与镜像零改动（B-scheme 分支早已完备）。
+
+**V 验收**：`pytest tests -q` **265 passed / 1 skipped**（新增 34 例：预检令牌优先级三态、纯空白令牌逐级回落、C-I5 fail-fast 且 runner 零子进程、自愈提示、compose 子进程环境带令牌；三栈渲染断言 socket bind/source==target/`create_host_path: false`/env 同步与 1006 覆盖、透传及全组合形态不丢挂载）。另两栈 `podman-compose -f compose.yaml config`（py314 / podman-compose 1.6.0）渲染对等：默认 1000 同路径 bind + env，`HOST_PODMAN_SOCK=/run/user/1006/...` 覆盖时 source/target/env 三处同步。真机 `native.down && native.up --passthrough --gpu --usb --offline`（约 32s 就绪）：日志含 `[B-scheme] Host podman socket linked`、`[OK] devuser can read/write host podman socket`，全日志 `newuidmap`/DinP 回退关键词计数 0；`podman inspect` 实证 `/run/user/1006/podman/podman.sock` 同路径挂载与 env 注入；容器内 devuser `python -c "from podman import PodmanClient; print(len(PodmanClient.from_env().containers.list(all=True)))"` 返回 `1`（native-dev 自身），原截图 FileNotFoundError 路径走通（浏览器重跑截图 cell 留用户复核，代码路径与该实测同构）。
+
+提交 `fix(client)` = 本提交（CHANGELOG 留痕与代码/测试/文档变更同笔落盘）。
+
 ### 2026-09-24 · `fix:` up 就绪探测超时归因逐地址列出，::1 永久拒绝不再独占文案冒充 IPv6 故障
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C）——承接同日 D-Bus 修复后真机 `native.up --passthrough` 首启，横幅误报「Jupyter 未在 120s 内应答（ConnectionRefusedError @ ::1:8888）」，而服务实际稍后即在 `127.0.0.1:8888` 正常 302。

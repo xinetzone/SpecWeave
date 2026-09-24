@@ -18,6 +18,7 @@ source: "README.md#参数表compose-插值-env-键"
 | `MODELS_PATH` | `../../../../../external/chaos/models` | 模型目录宿主路径 |
 | `USER_PASSWORD` / `JUPYTER_TOKEN` | 空（自动生成） | 登录凭证 |
 | `SSH_PUBLIC_KEY` / `GRANT_SUDO` | 空 / `yes` | SSH 公钥 / devuser sudo |
+| `HOST_PODMAN_SOCK` / `PODMAN_RUNTIME_UID` | `/run/user/1000/podman/podman.sock` / 未设 | **B-scheme 宿主 rootless podman socket（C34，默认核心挂载，非 opt-in）**：容器内 Notebook/CLI 经它复用宿主 daemon，挂载 source==target==本键。`1000` 仅 WSL2 惯例 UID 的裸 compose 缺省；物理 Linux 按 `id -u` 覆盖（或只设 `PODMAN_RUNTIME_UID`，invoke 路径据此推导，裸 compose 不读此键）。invoke up 自动预检并免提权 `systemctl --user start podman.socket` 自愈；裸 compose 路径错误会在挂载期硬失败（`create_host_path: false`，有意保护）。排障见 07 文档 C-I5 行 |
 | `OMP_NUM_THREADS` / `NUITKA_JOBS` | `4` / `8` | 线程与 Nuitka 并发 |
 | `PIP_MIRROR` / `CONDA_MIRROR` | `official` | 构建期镜像源（official/aliyun/tuna）。**无前缀构建参数单一事实源（C15）**：`invoke native.build`、`native.up` 的 compose 内联 build、裸 `podman-compose build` 三处同键读取；`--pip-mirror/--conda-mirror` 旗标只覆盖单次 `build` |
 | `BASE_IMAGE`（build args + invoke 同键） | `localhost/jupyter-podman-rootless:latest` | 基底镜像覆盖（同样被 `native.build`/`native.up` 读取，C15） |

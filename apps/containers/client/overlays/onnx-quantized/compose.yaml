@@ -37,6 +37,20 @@ services:
       - "${QUANT_SSH_PORT:-2222}:22"
       - "${QUANT_JUPYTER_PORT:-8888}:8888"
     volumes:
+      # ── B-scheme: 直连宿主 rootless podman daemon（绕过嵌套 userns）──
+      # 容器内 Notebook/CLI 的 PodmanClient 经此 socket 复用宿主 daemon。
+      # source 必须 == target == environment.HOST_PODMAN_SOCK（entrypoint
+      # 按该值 test -S 并建符号链接/属组衔接）。invoke up 预检宿主 socket
+      # 就绪并注入实际路径（UID 不硬编码）；1000 缺省仅供裸 podman-compose
+      # 在 WSL2 惯例 UID 下使用，物理机 UID 不同在 .env 覆盖
+      # HOST_PODMAN_SOCK/PODMAN_RUNTIME_UID。create_host_path: false——
+      # socket 源缺失必须硬失败，禁止 os.makedirs 误建目录冒充 socket；
+      # 缺失时 entrypoint 的 DinP 回退在嵌套 rootless 下被 newuidmap 拒绝。
+      - type: bind
+        source: ${HOST_PODMAN_SOCK:-/run/user/1000/podman/podman.sock}
+        target: ${HOST_PODMAN_SOCK:-/run/user/1000/podman/podman.sock}
+        bind:
+          create_host_path: false
       # workspace 一律长语法 bind：短语法在 podman-compose 下会 os.makedirs
       # 自动创建源路径（Windows 宿主曾把 /run 误解析为盘符路径，构建端已踩坑）。
       # 默认相对本文件（../../workspace = apps/containers/client/workspace）；
@@ -54,6 +68,8 @@ services:
     environment:
       # 凭证四变量（USER_PASSWORD/JUPYTER_TOKEN/SSH_PUBLIC_KEY/GRANT_SUDO）
       # 与 network_mode bridge 由 rootless-base 继承，勿在此重复声明。
+      # ── B-scheme：宿主 podman socket 同路径挂载点（见 volumes 首段注释）──
+      HOST_PODMAN_SOCK: "${HOST_PODMAN_SOCK:-/run/user/1000/podman/podman.sock}"
       # 量化推理线程调优（镜像 ENV 默认 4，此处可运行时覆盖）
       OMP_NUM_THREADS: ${OMP_NUM_THREADS:-4}
       OPENBLAS_NUM_THREADS: ${OPENBLAS_NUM_THREADS:-1}
