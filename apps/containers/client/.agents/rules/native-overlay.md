@@ -542,9 +542,11 @@
 ### 11.3 内核形参面 = 能力并集
 
 `make_stack_tasks()` 的 `up`/`smoke` 形参按**能力并集**生成（`gpu_override`、
-`supports_offline` 四路正交 + 公共 `_up_impl`），**禁止 if/elif 互斥分支**：
+`passthrough_overlay`、`gui_overlay`、`usb_overlay`、`supports_offline`
+五路正交 + 公共 `_up_impl`），**禁止 if/elif 互斥分支**：
 native 同时声明两能力后，互斥写法会让 `--offline`/`--no-offline` 被 gpu 分支
-吃掉，静默破坏 §10 离线契约。`up_help` 的 GPU 提示文本按 `gpu_device_env`
+吃掉，静默破坏 §10 离线契约（GUI 为 2026-09-23 C33 加入的第五路，见 §11.7）。
+`up_help` 的 GPU 提示文本按 `gpu_device_env`
 动态生成（有该字段时提示双形态与自动探测顺序，无则提示硬编码 `/dev/dri`）。
 
 ### 11.4 测试锁行为（C19 / C23）
@@ -677,4 +679,57 @@ True，但容器内 `nvcc -V` 报 `not found`。根因两层：① torch cu130 �
 - **边界**：`nvidia-smi` 属运行期 WSL 形态（宿主 `/usr/lib/wsl/lib/nvidia-smi`
   还需 `libnvidia-ml` 等依赖），**不在本条款范围**；容器内编译产物能否运行仍
   取决于 `up --gpu` 的设备透传（C19）。
+
+### 11.7 GUI 显示透传（`up --gui`，C33，2026-09-23）
+
+**背景**：07 文档原记载「本栈无 GUI 转发叠加层」，X11/Wayland 需求只能裸
+compose 自行挂载；根 `invoke run --wayland` 有能力但未下沉声明式栈。本条款把
+GUI 收口为与 GPU/USB/D-Bus 同族的 **opt-in 运行期维度**（默认全关，不开时
+渲染/运行逐字等价）。
+
+- **栈开关 `--gui`（非 `--wayland`）且是根路径超集**：根 `invoke run --wayland`
+  只挂 Wayland 单 socket；栈侧 `resolve_gui()` 在 daemon 宿主探测
+  **Wayland 与 X11 两条独立通道**，命中几层加载几层，任一命中即放行——
+  WSLg 下两通道恒共存（真机实证 `/mnt/wslg/runtime-dir/wayland-0` 与
+  `/mnt/wslg/.X11-unix/X0`），纯 Wayland/纯 X11 物理宿主只挂一层。旗标名取
+  `--gui` 对齐 07 维度表与文件名，根/栈命名差异由 client docs/09 映射表维系。
+- **两个姊妹覆盖文件，禁止合并为单文件**：`compose.passthrough.gui.yaml`
+  （Wayland：bind `${GUI_WAYLAND_SOCKET:-/mnt/wslg/runtime-dir/wayland-0}` →
+  `/tmp/runtime-user/${HOST_WAYLAND_DISPLAY:-wayland-0}`，env
+  `XDG_RUNTIME_DIR`/`WAYLAND_DISPLAY`）与 `compose.passthrough.gui.x11.yaml`
+  （X11：bind **目录** `${GUI_X11_SOCKETDIR:-/mnt/wslg/.X11-unix}` →
+  `/tmp/.X11-unix`，env `DISPLAY`）。静态 compose 无法按宿主条件删 bind，
+  缺源 + `create_host_path: false` 必 exit 125——故文件集由内核探测结果决定
+  （与 `gpu_override_file` 按形态选文件同构），**禁止**在一份文件里写死双 bind。
+- **探测序与令牌（shell export > .env > 缺省）**：Wayland 显式
+  `$HOST_XDG_RUNTIME_DIR/$HOST_WAYLAND_DISPLAY` →
+  `/mnt/wslg/runtime-dir/<display>` → `/run/user/1000/<display>`；X11 显式
+  `$GUI_X11_SOCKETDIR` → `/mnt/wslg/.X11-unix` → `/tmp/.X11-unix`
+  （判据 `<dir>/X0` 是 socket）。命中后回写 `GUI_WAYLAND_SOCKET` /
+  `HOST_WAYLAND_DISPLAY` / `GUI_X11_SOCKETDIR` / `GUI_DISPLAY` 供 compose
+  插值；全部 `test -S` 经 `run_cmd` 落 daemon 宿主（禁本机 `Path.exists()`，
+  同 C19）；两通道皆缺 → Exit(1) 三分支中文指引（WSLg/Win10、物理 Linux
+  xhost、去掉 `--gui`）。非登录 shell 的 `DISPLAY`/`XDG_RUNTIME_DIR` 实测为空，
+  **默认路径必须内核显式给出**。
+- **正交性**：GUI 只追加 `volumes` + `environment`，**bridge 形态即可用**
+  （Jupyter 保持 8890），不要求 `--passthrough`、不切镜像 tag、不改网络；
+  与 D-Bus 层共用容器内 `/tmp/runtime-user`（文件名 `wayland-0` vs `bus`
+  不冲突）。文件加载顺序：base → GPU → 透传 → GUI（Wayland → X11）→ USB；
+  `compose_files()` 的 `gui`/`gui_forms` 参数是 argv 与 `up_preflight`
+  config_files 标签的唯一事实源（同 C23）。门禁序 GPU → 透传 → GUI → USB，
+  任一失败先于任何 down/up。
+- **形参面（C18 能力并集）**：`StackSpec.gui_overlay` 声明（仅 native 置真）；
+  工厂 up/smoke 形参在透传分支并集增加 `gui`（黄金清单
+  test_tasks_surface / test_factory_up_smoke_params_are_capability_union 锁位）；
+  `gui=True` 但 `gui_forms=()` 是内部不变量违例（RuntimeError），未声明栈
+  收到 `gui=True` 同违例。
+- **WSL 桥接键**：只转发用户可设四键（`HOST_XDG_RUNTIME_DIR` /
+  `HOST_WAYLAND_DISPLAY` / `GUI_X11_SOCKETDIR` / `GUI_DISPLAY`）；探测令牌
+  `GUI_WAYLAND_SOCKET` 在 WSL 侧重跑 resolve_gui 生成，不入 bridge_env_keys。
+- **安全边界**：Wayland/X11 socket 允许容器进程接入宿主桌面会话（截屏、输入
+  注入面），两文件头与 07 文档必须保留「仅用于可信镜像、默认全关」警示；
+  物理 Linux X11 需宿主 `xhost local:root`（WSLg X server 默认 -ac 免认证）。
+- **冒烟同源**：`native.smoke --gui` 仅在栈运行路径把两文件带入 exec argv；
+  standalone 裸 run 不带 GUI 覆盖，提示文案含 `--gui`。冒烟守卫本身不依赖
+  显示 socket（Hello-World 级连通验证由 07 文档的 AF_UNIX 三行命令承担）。
 

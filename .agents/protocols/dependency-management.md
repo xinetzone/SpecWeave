@@ -33,13 +33,14 @@ vendor/
 ### 其他临时目录结构示例
 
 ```
-.temp/                      # 任务中间产物
-│   ├── cache/               # 缓存文件
-│   ├── logs/                # 日志文件
-│   └── output/             # 临时输出
-.venv/                      # Python 虚拟环境
-│   ├── Scripts/             # Windows 下虚拟环境脚本
-│   └── Lib/                 # 虚拟环境库文件
+.temp/                # 任务中间产物（按用途分类，禁止根级散放）
+│   ├── backup/       # 迁移/重构前的备份快照（保留期 3 天）
+│   ├── experiments/  # 实验性脚本（保留期 14 天）
+│   ├── exports/      # 临时数据导出（保留期 14 天）
+│   └── screenshots/  # 调试截图与临时图片（保留期 14 天）
+.venv/                # Python 虚拟环境
+│   ├── Scripts/      # Windows 下虚拟环境脚本
+│   └── Lib/          # 虚拟环境库文件
 ```
 
 ## vendor/ 目录管理规范
@@ -78,7 +79,7 @@ vendor/
 
 ## 其他临时目录使用规范
 
-1. **中间产物命名规范**：`.temp/` 中的文件应使用有意义的命名，包含任务标识与时间戳，避免无意义临时文件堆积。
+1. **中间产物命名规范**：`.temp/` 下必须按用途前缀（`backup/`、`experiments/`、`exports/`、`screenshots/`）分类存放，名称必须包含创建日期（`YYYYMMDD`）或关联 task-id（`task-<id>`）；禁止在 `.temp/` 根级直接散放文件——不合规命名无法计算保留期、不参与自动清理（2026-09-23 实证：全量非合规时 `--clean` 空转）。完整约定（用途分类/保留期/清理机制/反模式）见 [config-file-placement-convention.md](../../docs/knowledge/best-practices/config-file-placement-convention.md)，检测与清理入口为 `python .agents/scripts/check-temp-lifecycle.py`。
 2. **虚拟环境隔离**：每个项目应使用独立的 `.venv/` 虚拟环境，禁止跨项目共享虚拟环境；虚拟环境名称统一为 `.venv`，便于工具识别。
 3. **禁止混用**：`vendor/` 仅存放第三方依赖，`.temp/` 仅存放中间产物，禁止混用或存放无关文件。
 
@@ -91,8 +92,8 @@ vendor/
 2. **清理无用依赖**：移除不再使用的第三方库；清理前应确认无代码引用。
 3. **项目完成后清理 .temp/**：任务完成后，相关智能体应清理 `.temp/` 中由该任务产生的中间产物；项目交付前应清空整个 `.temp/` 目录。
 4. **虚拟环境按项目隔离**：每个项目维护独立的 `.venv/` 虚拟环境；项目归档或删除时，应同步删除对应的 `.venv/` 目录。
-5. **缓存自动过期**：`.temp/cache/` 中的缓存文件建议设置过期时间（如 7 天），超期自动清理。
-6. **日志轮转**：`.temp/logs/` 中的日志文件应实施轮转策略，单文件超过 10MB 或保留超过 30 天时自动清理。
+5. **保留期分层**：`.temp/` 内容按用途分类设置保留期——`backup/` 3 天；`experiments/`、`exports/`、`screenshots/` 14 天；未分类根级 7 天。超期内容由 `check-temp-lifecycle.py` 检测并提示清理（缓存、日志、输出等一切中间产物同样按 4 类用途分类治理，不再单列 `cache/`、`logs/`、`output/` 子目录）。
+6. **CI 阈值对齐**：CI/预提交钩子以「>14 天警告、>30 天阻塞」为统一阈值（与用途分类保留期解耦）；本地可用 `python .agents/scripts/check-temp-lifecycle.py --clean` 按保留期提前清理。
 7. **清理记录**：重大清理操作应记录清理时间、清理内容与执行者，便于追溯。
 
 ## vendor/ 验证脚本

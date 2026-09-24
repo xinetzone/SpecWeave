@@ -245,14 +245,14 @@ def _load(path: Path):
 
 def render_stack(
     stack: str, env=None, *, gpu=False, gpu_file="compose.gpu.yaml",
-    passthrough=False, usb=False,
+    passthrough=False, gui_forms=(), usb=False,
 ):
     """模拟 resolve_extends + 多文件 rec_merge 后的服务 dict。
 
     ``gpu_file`` 对应 GPU 设备形态（C19）：内核按设备形态选 ``compose.gpu.<形态>.yaml``
     （缺失回退 compose.gpu.yaml），真实管线**只加载一个**设备覆盖文件。
-    ``passthrough``/``usb`` 按内核文件顺序（base → GPU → 透传主层 → USB 层）
-    逐文件 rec_merge。
+    ``passthrough``/``gui_forms``/``usb`` 按内核文件顺序（base → GPU → 透传主层
+    → GUI（Wayland → X11）→ USB 层）逐文件 rec_merge。
     """
     g = GOLDEN[stack]
     odir = OVERLAYS / g["dir"]
@@ -271,6 +271,10 @@ def render_stack(
         overlay_files.append(gpu_file)
     if passthrough:
         overlay_files.append("compose.passthrough.yaml")
+    if "wayland" in gui_forms:
+        overlay_files.append("compose.passthrough.gui.yaml")
+    if "x11" in gui_forms:
+        overlay_files.append("compose.passthrough.gui.x11.yaml")
     if usb:
         overlay_files.append("compose.passthrough.usb.yaml")
     stacked = svc
@@ -521,6 +525,80 @@ def test_native_passthrough_and_usb_combined_merge_order():
         "/dev/fuse:/dev/fuse", "/dev/bus/usb:/dev/bus/usb",
     ]
     assert svc["image"] == "localhost/native-dev:passthrough"
+
+
+def _volume_map(svc):
+    return {v["target"]: v for v in svc["volumes"] if isinstance(v, dict)}
+
+
+def test_native_gui_wayland_layer_defaults_to_wslg():
+    """GUI Wayland 层（C33）：WSLg 缺省路径 bind + 两寻址 env；bridge 不动。"""
+    plain = render_stack("native")
+    wl = render_stack("native", gui_forms=("wayland",))
+    vm = _volume_map(wl)
+    assert vm["/tmp/runtime-user/wayland-0"]["source"] == (
+        "/mnt/wslg/runtime-dir/wayland-0"
+    )
+    assert vm["/tmp/runtime-user/wayland-0"]["bind"]["create_host_path"] is False
+    assert wl["environment"]["XDG_RUNTIME_DIR"] == "/tmp/runtime-user"
+    assert wl["environment"]["WAYLAND_DISPLAY"] == "wayland-0"
+    # GUI 不要求 host 网络：bridge 形态与端口逐字不动
+    assert wl["network_mode"] == "bridge"
+    assert wl["ports"] == plain["ports"]
+    assert wl["image"] == plain["image"]
+
+
+def test_native_gui_wayland_env_overrides():
+    """物理 Linux：HOST_XDG_RUNTIME_DIR/HOST_WAYLAND_DISPLAY 改指源与 target。"""
+    wl = render_stack("native", env={
+        "GUI_WAYLAND_SOCKET": "/run/user/1000/wayland-1",
+        "HOST_WAYLAND_DISPLAY": "wayland-1",
+    }, gui_forms=("wayland",))
+    vm = _volume_map(wl)
+    assert vm["/tmp/runtime-user/wayland-1"]["source"] == "/run/user/1000/wayland-1"
+    assert wl["environment"]["WAYLAND_DISPLAY"] == "wayland-1"
+
+
+def test_native_gui_x11_layer_mounts_dir_and_display():
+    """X11 层：挂 socket **目录**（非单文件）+ DISPLAY；不注入 Wayland 变量。"""
+    x11 = render_stack("native", gui_forms=("x11",))
+    vm = _volume_map(x11)
+    assert vm["/tmp/.X11-unix"]["source"] == "/mnt/wslg/.X11-unix"
+    assert vm["/tmp/.X11-unix"]["bind"]["create_host_path"] is False
+    assert x11["environment"]["DISPLAY"] == ":0"
+    assert "WAYLAND_DISPLAY" not in x11["environment"]
+    assert "XDG_RUNTIME_DIR" not in x11["environment"]
+    one = render_stack("native", env={
+        "GUI_X11_SOCKETDIR": "/tmp/.X11-unix", "GUI_DISPLAY": ":1",
+    }, gui_forms=("x11",))
+    assert _volume_map(one)["/tmp/.X11-unix"]["source"] == "/tmp/.X11-unix"
+    assert one["environment"]["DISPLAY"] == ":1"
+
+
+def test_native_gui_dual_forms_and_full_combo():
+    """Wayland+X11 两层并存；全家桶（gpu+passthrough+gui+usb）字段不冲突。"""
+    gui = render_stack("native", gui_forms=("wayland", "x11"))
+    vm = _volume_map(gui)
+    assert "/tmp/runtime-user/wayland-0" in vm and "/tmp/.X11-unix" in vm
+    assert gui["environment"]["WAYLAND_DISPLAY"] == "wayland-0"
+    assert gui["environment"]["DISPLAY"] == ":0"
+    # volumes 追加语义：基座 9 条卷一个不少
+    assert len(gui["volumes"]) == len(render_stack("native")["volumes"]) + 2
+
+    full = render_stack(
+        "native", gpu=True, gpu_file="compose.gpu.wsl.yaml",
+        passthrough=True, gui_forms=("wayland", "x11"), usb=True,
+    )
+    assert full["network_mode"] == "host"
+    assert "ports" not in full
+    # 裸 token 设备项由 podman-compose 运行时原样下传（C18：不做冒号拆分），
+    # 模拟器不做归一，故保持 /dev/dxg 原形。
+    assert full["devices"] == [
+        "/dev/fuse:/dev/fuse",
+        "/dev/dxg",
+        "/dev/bus/usb:/dev/bus/usb",
+    ]
+    assert full["image"] == "localhost/native-dev:passthrough"
 
 
 def test_nested_interpolation_simulator_innermost_first():

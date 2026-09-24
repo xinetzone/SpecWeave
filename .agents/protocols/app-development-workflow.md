@@ -177,9 +177,9 @@ stateDiagram-v2
 
 | 维度 | dependency-management.md | 本协议 |
 |---|---|---|
-| 管理范围 | `.temp/` 下所有中间产物的通用规范（缓存、日志、输出） | `.temp/` 中**应用开发**场景的专用规范 |
-| 目录约束 | 定义 `.temp/cache/`、`.temp/logs/`、`.temp/output/` 的子目录结构 | 定义 `.temp/<app-name>/` 的应用目录结构与生命周期 |
-| 清理机制 | 定义缓存过期、日志轮转、任务完成后清空的通用策略 | 定义应用迁移后的专属清理流程（删除 `.temp/<app-name>/`） |
+| 管理范围 | `.temp/` 下所有中间产物的通用规范（命名、保留期、清理） | `.temp/` 中**应用开发**场景的专用规范 |
+| 目录约束 | 定义 4 类用途分类（`backup/`、`experiments/`、`exports/`、`screenshots/`）与命名规范 | 定义 `.temp/<app-name>/` 的应用目录结构与生命周期 |
+| 清理机制 | 定义保留期分层（3/7/14 天）、CI 阈值（14 天警告/30 天阻塞）与任务完成后清空的通用策略 | 定义应用迁移后的专属清理流程（删除 `.temp/<app-name>/`） |
 | 依赖管理 | 禁止 `node_modules/`、`.venv/` 等临时依赖提交 | 引用并沿用 dependency-management.md 的禁止提交条款与清理机制 |
 
 简言之，dependency-management.md 是 `.temp/` 的**通用管理章程**，本协议是基于其之上的**应用开发专项规则**。应用在暂存开发期间的临时依赖管理仍遵循 dependency-management.md 的规定，本协议不作重复约定。

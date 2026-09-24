@@ -1,0 +1,32 @@
+---
+# compose.passthrough.gui.x11.yaml — [2b] GUI·X11 socket 透传（opt-in，Wayland 姊妹层）
+#
+# 仅在 invoke 门禁于 daemon 宿主探测到 X11 socket（<dir>/X0）时才与
+# compose.passthrough.gui.yaml 一并加载；纯 Wayland 宿主不加载本层。
+# 两文件独立，互不要求同时存在（物理宿主可能只有其一）。
+#
+# WSL2（Windows 11）：WSLg 的 XWayland 固定提供 /mnt/wslg/.X11-unix/X0
+# （2026-09-23 podman-machine-default 真机实证；内核首选该真实路径，
+# 不走可能是符号链接的 /tmp/.X11-unix）。
+#
+# 前置 —— 目录内须有 X0 socket，缺失时 podman 硬失败（exit 125）：
+#   test -S "${GUI_X11_SOCKETDIR:-/mnt/wslg/.X11-unix}/X0" && echo "X11 OK"
+#
+# 物理 Linux 另需在宿主放行容器连接（WSLg 的 X server 默认 -ac 免认证）：
+#   xhost local:root
+#
+# 安全 —— X11 socket 允许容器进程读取/合成所有 X 客户端事件（键盘输入、截图），
+# 仅用于可信镜像。
+
+services:
+  native:
+    volumes:
+      # 挂 socket 所在**目录**（非单文件）：X11 客户端按 DISPLAY 编号寻址 X0，
+      # 且要能在目录内创建临时授权文件。源为目录，create_host_path 同样锁 false。
+      - type: bind
+        source: ${GUI_X11_SOCKETDIR:-/mnt/wslg/.X11-unix}
+        target: /tmp/.X11-unix
+        bind:
+          create_host_path: false
+    environment:
+      DISPLAY: ${GUI_DISPLAY:-:0}

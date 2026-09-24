@@ -235,6 +235,9 @@ def harness(monkeypatch, tmp_path):
     for key in (
         "DBUS_SESSION_BUS_PATH", "HOST_NET_SSHD_PORT", "USB_DEVICE",
         "NATIVE_PASSTHROUGH_IMAGE_TAG",
+        # C33：GUI 探测入参与回写令牌
+        "HOST_XDG_RUNTIME_DIR", "HOST_WAYLAND_DISPLAY",
+        "GUI_WAYLAND_SOCKET", "GUI_X11_SOCKETDIR", "GUI_DISPLAY",
     ):
         monkeypatch.delenv(key, raising=False)
 
@@ -1117,11 +1120,11 @@ def test_factory_up_smoke_params_are_capability_union(harness):
     q, x, m = (oc.make_stack_tasks(s) for s in (_QUANT, _NATIVE, _MONETIZE))
     assert _param_names(q["up"]) == ["gpu", "skip_build"]
     assert _param_names(x["up"]) == [
-        "gpu", "passthrough", "usb", "skip_build", "offline", "no_offline",
+        "gpu", "passthrough", "gui", "usb", "skip_build", "offline", "no_offline",
     ]
     assert _param_names(m["up"]) == ["skip_build"]
     assert _param_names(q["smoke"]) == ["gpu"]
-    assert _param_names(x["smoke"]) == ["gpu", "passthrough", "usb"]
+    assert _param_names(x["smoke"]) == ["gpu", "passthrough", "gui", "usb"]
     assert _param_names(m["smoke"]) == []
     assert _param_names(q["down"]) == ["volumes"]
     assert _param_names(x["logs"]) == ["tail"]
@@ -1679,7 +1682,7 @@ def _argv_files(argv: list[str]) -> list[str]:
 
 
 def test_compose_files_passthrough_usb_order_and_label(harness):
-    """文件序 base → GPU → 透传主层 → USB；label 与 argv 同源。"""
+    """文件序 base → GPU → 透传主层 → GUI（Wayland→X11）→ USB；label 同源。"""
     d = harness.root / "overlays/native-dev"
     argv = oc.compose_argv(_NATIVE, "up", "-d", passthrough=True)
     assert _argv_files(argv) == [
@@ -1690,22 +1693,36 @@ def test_compose_files_passthrough_usb_order_and_label(harness):
         str(d / "compose.yaml"), str(d / "compose.passthrough.usb.yaml"),
     ]
     argv = oc.compose_argv(
-        _NATIVE, "up", "-d", gpu=True, passthrough=True, usb=True
+        _NATIVE, "up", "-d", gpu=True, passthrough=True,
+        gui=True, gui_forms=("wayland", "x11"), usb=True,
     )
     assert _argv_files(argv) == [
         str(d / "compose.yaml"),
         str(d / "compose.gpu.yaml"),
         str(d / "compose.passthrough.yaml"),
+        str(d / "compose.passthrough.gui.yaml"),
+        str(d / "compose.passthrough.gui.x11.yaml"),
         str(d / "compose.passthrough.usb.yaml"),
     ]
     assert ",".join(_argv_files(argv)) == oc.compose_config_files_label(
-        _NATIVE, gpu=True, passthrough=True, usb=True
+        _NATIVE, gpu=True, passthrough=True,
+        gui=True, gui_forms=("wayland", "x11"), usb=True,
     )
+    # 单通道形态只加载对应一层
+    argv = oc.compose_argv(_NATIVE, "up", "-d", gui=True, gui_forms=("x11",))
+    assert _argv_files(argv) == [
+        str(d / "compose.yaml"), str(d / "compose.passthrough.gui.x11.yaml"),
+    ]
     # 未声明能力的栈收到开关 = 内部不变量违例
     with pytest.raises(RuntimeError, match="passthrough_overlay"):
         oc.compose_files(_QUANT, passthrough=True)
     with pytest.raises(RuntimeError, match="usb_overlay"):
         oc.compose_files(_MONETIZE, usb=True)
+    with pytest.raises(RuntimeError, match="gui_overlay"):
+        oc.compose_files(_QUANT, gui=True, gui_forms=("wayland",))
+    # gui=True 但无探测形态 = 门禁被绕过的内部不变量违例
+    with pytest.raises(RuntimeError, match="gui_forms 为空"):
+        oc.compose_files(_NATIVE, gui=True)
 
 
 def test_resolve_passthrough_happy_path_writes_env(harness):
@@ -1886,6 +1903,117 @@ def test_resolve_usb_missing_fails_with_usbipd_guide(harness, capsys):
     assert "去掉 --usb" in out
 
 
+# ── C33：GUI（Wayland/X11）门禁 ──────────────────────────────────────────────
+
+
+def test_resolve_gui_wslg_dual_forms_writes_env(harness):
+    """WSLg 双通道共存：返回两形态并回写四份插值令牌。"""
+    harness.runner.paths = {
+        "/mnt/wslg/runtime-dir/wayland-0",
+        "/mnt/wslg/.X11-unix/X0",
+    }
+    forms = oc.resolve_gui(None, _NATIVE, {})
+    assert forms == ("wayland", "x11")
+    assert os.environ["GUI_WAYLAND_SOCKET"] == "/mnt/wslg/runtime-dir/wayland-0"
+    assert os.environ["HOST_WAYLAND_DISPLAY"] == "wayland-0"
+    assert os.environ["GUI_X11_SOCKETDIR"] == "/mnt/wslg/.X11-unix"
+    assert os.environ["GUI_DISPLAY"] == ":0"
+    cmds = harness.runner.commands
+    assert "test -S /mnt/wslg/runtime-dir/wayland-0" in cmds
+    assert "test -S /mnt/wslg/.X11-unix/X0" in cmds
+    # WSLg 命中即停：物理回退路径不应再被探测
+    assert not any("/run/user/1000/wayland-0" in c for c in cmds)
+    assert not any(c.endswith("test -S /tmp/.X11-unix/X0") for c in cmds)
+
+
+def test_resolve_gui_wayland_only(harness):
+    """纯 Wayland 宿主：只挂 Wayland 层，不产生 X11 令牌。"""
+    harness.runner.paths = {"/run/user/1000/wayland-0"}
+    assert oc.resolve_gui(None, _NATIVE, {}) == ("wayland",)
+    assert os.environ["GUI_WAYLAND_SOCKET"] == "/run/user/1000/wayland-0"
+    assert "GUI_X11_SOCKETDIR" not in os.environ
+
+
+def test_resolve_gui_x11_only(harness):
+    """纯 X11 宿主（/tmp/.X11-unix 回退候选命中）：只挂 X11 层。"""
+    harness.runner.paths = {"/tmp/.X11-unix/X0"}
+    assert oc.resolve_gui(None, _NATIVE, {}) == ("x11",)
+    assert os.environ["GUI_X11_SOCKETDIR"] == "/tmp/.X11-unix"
+    assert "GUI_WAYLAND_SOCKET" not in os.environ
+
+
+def test_resolve_gui_env_tokens_take_precedence(harness):
+    """shell/.env 显式令牌优先于默认候选（物理 Linux 改指）。"""
+    harness.runner.paths = {
+        "/custom/xdg/wayland-9",
+        "/custom/x11/X0",
+        "/mnt/wslg/runtime-dir/wayland-0",
+        "/mnt/wslg/.X11-unix/X0",
+    }
+    forms = oc.resolve_gui(None, _NATIVE, {
+        "HOST_XDG_RUNTIME_DIR": "/custom/xdg",
+        "HOST_WAYLAND_DISPLAY": "wayland-9",
+        "GUI_X11_SOCKETDIR": "/custom/x11",
+    })
+    assert forms == ("wayland", "x11")
+    assert os.environ["GUI_WAYLAND_SOCKET"] == "/custom/xdg/wayland-9"
+    assert os.environ["HOST_WAYLAND_DISPLAY"] == "wayland-9"
+    assert os.environ["GUI_X11_SOCKETDIR"] == "/custom/x11"
+
+
+def test_resolve_gui_missing_both_fails_fast(harness, capsys):
+    """两通道都缺：Exit(1) + 三分支中文指引，且不回写任何令牌。"""
+    harness.runner.paths = set()
+    with pytest.raises(Exit) as ei:
+        oc.resolve_gui(None, _NATIVE, {})
+    assert ei.value.code == 1
+    out = capsys.readouterr().out
+    assert "WSLg" in out and "HOST_XDG_RUNTIME_DIR" in out and "xhost" in out
+    assert "去掉 --gui" in out
+    assert "GUI_WAYLAND_SOCKET" not in os.environ
+    assert "GUI_X11_SOCKETDIR" not in os.environ
+
+
+def test_up_gui_argv_banner_bridge_form(harness, capsys):
+    """--gui（bridge）：文件集含两 GUI 层；端口仍是 8890/2223；横幅 GUI 行。"""
+    harness.runner.paths = {
+        "/mnt/wslg/runtime-dir/wayland-0",
+        "/mnt/wslg/.X11-unix/X0",
+    }
+    oc.up_stack(None, _NATIVE, gui=True, skip_build=True)
+    up_cmd = [c for c in harness.runner.commands if "up -d --no-build" in c][0]
+    assert "compose.passthrough.gui.yaml" in up_cmd
+    assert "compose.passthrough.gui.x11.yaml" in up_cmd
+    assert "compose.passthrough.yaml" not in up_cmd
+    out = capsys.readouterr().out
+    assert "Jupyter localhost:8890" in out
+    assert "Wayland /mnt/wslg/runtime-dir/wayland-0" in out
+    assert "X11 /mnt/wslg/.X11-unix" in out
+
+
+def test_up_gui_gate_fails_before_any_down_or_up(harness, capsys):
+    """GUI 门禁失败时绝不拆栈：无 down、无 up（build 可先跑）。"""
+    harness.runner.paths = set()
+    with pytest.raises(Exit):
+        oc.up_stack(None, _NATIVE, gui=True, skip_build=True)
+    cmds = harness.runner.commands
+    assert not any(" down" in c for c in cmds)
+    assert not any("up -d" in c for c in cmds)
+
+
+def test_smoke_running_native_gui_uses_same_files(harness):
+    """栈运行路径的 exec argv 必须与 up 同源（含两层 GUI 覆盖）。"""
+    harness.runner.running = True
+    harness.runner.paths = {
+        "/mnt/wslg/runtime-dir/wayland-0",
+        "/mnt/wslg/.X11-unix/X0",
+    }
+    oc.smoke_stack(None, _NATIVE, gui=True)
+    exec_cmd = [c for c in harness.runner.commands if " exec " in c][0]
+    assert "compose.passthrough.gui.yaml" in exec_cmd
+    assert "compose.passthrough.gui.x11.yaml" in exec_cmd
+
+
 def test_ensure_passthrough_tag_already_present(harness):
     tags = {"localhost/native-dev:passthrough"}
     harness.runner.image_exists_tags = tags
@@ -1992,4 +2120,4 @@ def test_smoke_standalone_native_notes_flags_ignored(harness, capsys):
     harness.runner.paths = {"/dev/bus/usb"}
     oc.smoke_stack(None, _NATIVE, usb=True)
     out = capsys.readouterr().out
-    assert "--passthrough/--usb 仅在栈运行路径生效" in out
+    assert "--passthrough/--gui/--usb 仅在栈运行路径生效" in out

@@ -1,6 +1,6 @@
 # Specs 全局执行看板
 
-> 本目录是 SpecWeave 项目所有规格文档（spec）的指挥中心，按 13 大主题分类组织。本文档由 docgen（C-6）于 **2026-09-21** 自动生成；详细 spec 列表见各主题 README。
+> 本目录是 SpecWeave 项目所有规格文档（spec）的指挥中心，按 13 大主题分类组织。本文档由 docgen（C-6）于 **2026-09-23** 自动生成；详细 spec 列表见各主题 README。
 
 ---
 
@@ -21,8 +21,9 @@
 | [xmnn-packaging](./xmnn-packaging/README.md) | 40 | 22 | 9 | 9 | 🔧 [查看](./xmnn-packaging/README.md) |
 | [workspace-governance](./workspace-governance/README.md) | 29 | 19 | 2 | 8 | 🔧 [查看](./workspace-governance/README.md) |
 | [infra-env](./infra-env/README.md) | 30 | 13 | 2 | 15 | 🔧 [查看](./infra-env/README.md) |
+| [create-zhihu-monetization-workspace](./create-zhihu-monetization-workspace/README.md) | 1 | 0 | 1 | 0 | 📋 [查看](./create-zhihu-monetization-workspace/README.md) |
 | [xuan-compose-refactor](./xuan-compose-refactor/README.md) | 1 | 0 | 0 | 1 | 📋 [查看](./xuan-compose-refactor/README.md) |
-| **合计** | **639** | **431** | **52** | **156** | &mdash; |
+| **合计** | **640** | **431** | **53** | **156** | &mdash; |
 
 **状态**：✓ 已完成 ｜ ! 进行中 ｜ ? 待启动 ｜ — 无 metadata
 
@@ -45,7 +46,8 @@
 11. [xmnn-packaging](./xmnn-packaging/README.md) — 40 spec：wheel 构建、Nuitka 打包、运行时镜像、模型精度验证 spec
 12. [workspace-governance](./workspace-governance/README.md) — 29 spec：目录重组、规范整合、子项目管理、工作区模板萃取 spec
 13. [infra-env](./infra-env/README.md) — 30 spec：Docker/devcontainer/conda/Jupyter 环境搭建与运维 spec
-14. [xuan-compose-refactor](./xuan-compose-refactor/README.md) — 1 spec：
+14. [create-zhihu-monetization-workspace](./create-zhihu-monetization-workspace/README.md) — 1 spec：
+15. [xuan-compose-refactor](./xuan-compose-refactor/README.md) — 1 spec：
 
 ## 📆 新增 Spec 指南
 
@@ -55,4 +57,4 @@
 4. **创建三件套**：spec.md（YAML frontmatter 含 status/title）+ tasks.md + review.md（独立审查清单）。产物命名与结构以 .agents/skills/TRAE-spec-mode/SKILL.md 为唯一权威依据，禁止使用 checklist.md 等非规范命名。
 5. **更新看板**：运行 `python .agents/scripts/docgen.py theme-dashboards` 刷新主题看板，运行 `python .agents/scripts/docgen.py update-spec-readme` 刷新全局总览。
 
-*本看板由 docgen（C-6）于 2026-09-21 生成，后续自动维护。*
+*本看板由 docgen（C-6）于 2026-09-23 生成，后续自动维护。*

@@ -31,6 +31,7 @@ projects/AGENTS.md 与 projects/.agents/ 由 SpecWeave 主权区维护，直接�
 | xuanspace | [projects/xuanspace/AGENTS.md](xuanspace/AGENTS.md) | 玄境（Xuanspace）Python 3.14.6+ monorepo 项目管理工具 |
 | awesome-okf-xs | [projects/awesome-okf-xs/AGENTS.md](awesome-okf-xs/AGENTS.md) | 玄境项目 OKF（开源知识格式）文档库 |
 | daoapps.github.io | [projects/daoapps.github.io/AGENTS.md](daoapps.github.io/AGENTS.md) | 道用（daoApps）组织站点——全站 Sphinx 源码，含组织主页与结伴子站，由 GitHub Actions 构建发布到 GitHub Pages |
+| monetize | [monetize/AGENTS.md](monetize/AGENTS.md) | 变现执行工作区容器（主仓库直接跟踪的普通目录，非 git 子模块）；含主题工作台 zhihu-monetization（知乎变现） |
 
 ### 嵌套优先级
 
@@ -39,7 +40,8 @@ SpecWeave 根 AGENTS.md
   └─ projects/AGENTS.md（本文件，projects 区域入口）
        ├─ projects/xuanspace/AGENTS.md（xuanspace 子项目入口）
        ├─ projects/awesome-okf-xs/AGENTS.md（awesome-okf-xs 子项目入口）
-       └─ projects/daoapps.github.io/AGENTS.md（daoapps.github.io 子项目入口）
+       ├─ projects/daoapps.github.io/AGENTS.md（daoapps.github.io 子项目入口）
+       └─ projects/monetize/AGENTS.md（monetize 变现执行工作区容器入口 · 主仓库直接跟踪的普通目录，非子模块；下辖主题工作台 zhihu-monetization）
 ```
 
 进入任意子目录后，优先读取**离当前工作目录最近**的 AGENTS.md。若子项目规则与本文件冲突，以子项目为准（子项目覆盖父层）。
@@ -128,6 +130,17 @@ projects 区域内各子项目可被 SpecWeave 跨边界调用的资产清单。
 | 契约测试 | [daoapps.github.io/tests/test_site_contract.py](daoapps.github.io/tests/test_site_contract.py) | 22 项站点契约（结构、配色、引文版本、内容纪律、页脚分层） |
 | 发布流水线 | [daoapps.github.io/.github/workflows/pages.yml](daoapps.github.io/.github/workflows/pages.yml) | 质量门 → Sphinx 构建 → GitHub Pages 部署 |
 
+### monetize 子项目
+
+| 资产 | 路径 | 说明 |
+|------|------|------|
+| 容器智能体入口 | [monetize/AGENTS.md](monetize/AGENTS.md) | monetize 容器智能体入口：主题路由表 + 全容器纪律红线 |
+| 容器总览 | [monetize/README.md](monetize/README.md) | 容器定位、主题注册表、主题工作台标准形态与新增主题步骤 |
+| 主题智能体入口 | [monetize/zhihu-monetization/AGENTS.md](monetize/zhihu-monetization/AGENTS.md) | 知乎变现执行工作台入口：文件地图、读写纪律、纪律传导、路由表 |
+| 主题入口与链接矩阵 | [monetize/zhihu-monetization/README.md](monetize/zhihu-monetization/README.md) | 指向 docs 路径报告四篇与 OKF bundle 知识底座（只链接不复制） |
+| 执行台账 | [monetize/zhihu-monetization/tracker.md](monetize/zhihu-monetization/tracker.md) | 18 条行动项勾选 + 日期戳（执行状态唯一承载；按勾选纪律可写） |
+| 记录表模板 | [monetize/zhihu-monetization/records.md](monetize/zhihu-monetization/records.md) | 到账 / 周核对 / 中断登记 / 周期复盘 / 发布自检留痕（真实数据入 `local/`，不入库） |
+
 ## 边界声明
 
 | 资产 | 归属 | SpecWeave 可修改 | 说明 |
@@ -144,6 +157,9 @@ projects 区域内各子项目可被 SpecWeave 跨边界调用的资产清单。
 | projects/daoapps.github.io/ | daoapps.github.io 子项目 | ❌ 否 | 通过 gitlink 追踪，修改需走子项目开发流程 |
 | projects/daoapps.github.io/AGENTS.md | daoapps.github.io 子项目 | ❌ 否 | 子项目自治入口 |
 | projects/daoapps.github.io/doc/ | daoapps.github.io 子项目 | ❌ 否 | 站点 Sphinx 源码（组织主页 + 结伴子站） |
+| projects/monetize/ | SpecWeave 主权区 | ✅ 是 | 变现执行工作区容器（主仓库直接跟踪的普通目录，非 git 子模块） |
+| projects/monetize/zhihu-monetization/ | SpecWeave 主权区 | ✅ 是 | 知乎变现执行工作台（AGENTS.md 智能体入口 + 入口 README + 执行台账 + 记录表） |
+| projects/monetize/zhihu-monetization/local/ | 用户本地数据（隔离区） | —（禁入库） | 真实执行数据（截图 / 到账记录等）仅本地存放；已 gitignore，仅 `local/README.md` 入库 |
 
 ## 跨子项目调用规范
 

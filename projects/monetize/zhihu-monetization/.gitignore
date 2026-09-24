@@ -1,0 +1,3 @@
+# 真实执行数据本地隔离区：仅 local/README.md（机制说明）入库，其余内容一律不入库
+local/*
+!local/README.md

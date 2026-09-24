@@ -130,7 +130,7 @@ Trae IDE 内置设计系统库完整归档（2026-09-03 导入），来源目录
 | yuanli-design-system | Yuanli（源力） | 源力设计系统（Volcengine，PRD 驱动中文生成）：PRD→页面生成规则 + 完整 token/组件/UI kit | [SKILL.md](yuanli-design-system/SKILL.md) |
 | vibecamp-design | Vibecamp | Vibecamp 大胆编辑风 dashboard 产品：设计准则/色彩/字体/组件参考/UI kit | [SKILL.md](vibecamp-design/SKILL.md) |
 
-### 脚本命令门面（11个）
+### 脚本命令门面（12个）
 
 | Skill名称 | 类型 | 对应脚本 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -145,6 +145,7 @@ Trae IDE 内置设计系统库完整归档（2026-09-03 导入），来源目录
 | ci-check-cmd | 脚本门面 | ci-check.ps1/ci-check.sh | CI检查、提交前检查、综合检查、流水线检查、全量检查、pre-commit | [ci-check-cmd/SKILL.md](ci-check-cmd/SKILL.md) |
 | check-duplication-cmd | 脚本门面 | check-duplication.py | 重复代码、重复检查、代码重复、提取共享库、DRY检查、脚本重复 | [check-duplication-cmd/SKILL.md](check-duplication-cmd/SKILL.md) |
 | knowledge-graph-generator | 脚本门面 | generate-graph.py | 知识图谱、knowledge graph、概念关系可视化、交互式知识图谱、节点关系网络 | [knowledge-graph-generator/SKILL.md](knowledge-graph-generator/SKILL.md) |
+| artifact-consistency-audit | 脚本门面 | 复用 check-links.py + check-source-traceability.py（无新建脚本） | 核验一致性、复验、体检、覆盖率核对、引用是否忠实、有无遗漏、修补后复验 | [artifact-consistency-audit/SKILL.md](artifact-consistency-audit/SKILL.md) |
 
 ## 模板
 

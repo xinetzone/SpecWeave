@@ -34,6 +34,7 @@ tags: [知乎, 创作者激励, 盐粒, 个人变现路径, 副业, 防画饼, O
 |---|---|---|
 | 想先判断「适不适合我、能指望什么」 | 本页（§三角色矩阵 + §四收益口径速查） | 10 分钟 |
 | AI/技术内容创作者，准备动手 | [AI/技术创作者主路径](ai-creator-main-path.md)（起点 → 18 条行动项 → 退出条件） | 20 分钟 |
+| 已读完主路径，开始执行 | [执行 TODO](todo.md)（18 条行动项的日历排期：9.30 报名窗、国庆降级、周期节奏） | 5 分钟/日 |
 | 关心「会不会被规则变动坑、AI 写作边界在哪」 | [风险、时效与边界](risks-and-boundaries.md) | 15 分钟 |
 | 想核验文中任一数字 | [OKF bundle：变现路径矩阵](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/zhihu-monetization/concepts/07-monetization-path-matrix.md) 与 [核验报告](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/zhihu-monetization/references/verification.md)（F 编号逐条溯源） | 按需 |
 

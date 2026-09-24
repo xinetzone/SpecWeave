@@ -15,9 +15,9 @@ free-threading（量化/运行时）。10 命令：build/up/down/ps/logs/smoke/s
 四组可选能力（默认全关 = 默认隔离，C18）：
   - GPU：``up --gpu`` 叠加 ``compose.gpu.yaml``，设备经 ``GPU_DEVICE`` 双形态
     插值（``/`` 开头=设备路径，缺省 ``/dev/dri``；否则=CDI 引用）；
-  - 透传：``up --passthrough`` 叠加 host 网络 + D-Bus 主层（Jupyter 固定
-    8888、SSH 2223，镜像切 :passthrough 同内容自动 tag）；``--usb`` 叠加
-    USB 总线（WSL2 须先 usbipd-win attach）；资源缺失即中文 fail-fast；
+  - 透传：``--passthrough`` host 网络 + D-Bus 主层（Jupyter 固定 8888、SSH 2223，
+    镜像切 :passthrough 自动 tag）；``--gui`` Wayland/X11 显示 socket（WSLg
+    双通道、bridge 可用，C33）；``--usb`` USB 总线（先 usbipd attach）；缺失即 fail-fast；
   - torch：``build --torch cpu|cu130``（或 .env ``TORCH_FLAVOR``）才在 base env
     装对应 wheel，形态落 /opt/native-torch-flavor 供构建期守卫 §8 断言；
   - 离线：``up --offline``（或 .env ``NATIVE_OFFLINE=1``）只以本地已 load 镜像
@@ -70,13 +70,10 @@ NATIVE_SPEC = StackSpec(
         "[native]   冒烟: invoke native.smoke",
         "[native]   编译 TVM: invoke native.build-tvm    打包 wheel: invoke native.wheel",
     ),
-    gpu_override=True,
-    gpu_device_env="GPU_DEVICE",
-    passthrough_overlay=True, usb_overlay=True,
+    gpu_override=True, gpu_device_env="GPU_DEVICE",
+    passthrough_overlay=True, usb_overlay=True, gui_overlay=True,
     passthrough_tag_default="localhost/native-dev:passthrough",
-    conda_mirror=True,
-    torch_flavor=True,
-    auto_shortflags=False,
+    conda_mirror=True, torch_flavor=True, auto_shortflags=False,
     source_mounts=(
         SourceMount("NPU_TVM_PATH", "external/chaos/npu_tvm", "npu_tvm 源码树（含 python/tvm）"),
         SourceMount("NPUUSERTOOLS_PATH", "external/containers/workspace/dev/npuusertools", "npuusertools 源码树（含 xmnn 包）"),
@@ -100,6 +97,8 @@ NATIVE_SPEC = StackSpec(
         "NPU_TVM_PATH", "NPUUSERTOOLS_PATH", "MODELS_PATH", "NATIVE_TEMP_PATH",
         "TORCH_FLAVOR", "GPU_DEVICE", "NATIVE_PASSTHROUGH_IMAGE_TAG",
         "DBUS_SESSION_BUS_PATH", "HOST_NET_SSHD_PORT", "USB_DEVICE",
+        # GUI（C33）仅转发用户可设键；探测令牌在 WSL 侧重新生成，不入桥接。
+        "HOST_XDG_RUNTIME_DIR", "HOST_WAYLAND_DISPLAY", "GUI_X11_SOCKETDIR", "GUI_DISPLAY",
     ),
     supports_offline=True,
 )

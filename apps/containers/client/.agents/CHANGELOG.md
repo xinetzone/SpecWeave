@@ -46,6 +46,22 @@
 
 提交 `fix(client)` = 本提交（CHANGELOG 留痕与代码/文档变更同笔落盘）。
 
+### 2026-09-23 · `feat:` native 栈新增第五运行期维度 `up --gui`（WSLg Wayland/X11 双通道显示透传，C33）
+
+**关联七概念场景**：场景5「创新突破」（F→V→I→C）——07 文档「GUI：现状与可用路径」原记载本栈无 GUI 叠加层、X11/Wayland 只能裸 compose 自行挂载；本次把文档承诺的「仿 USB 层扩展」落地为一等 opt-in 能力。
+
+**F 公理**：GUI 转发本质 = daemon 宿主 AF_UNIX 显示 socket bind + 客户端寻址 env，纯运行期、零镜像变更；WSLg 在 podman-machine-default 内固定提供 Wayland（`/mnt/wslg/runtime-dir/wayland-0`）与 X11（`/mnt/wslg/.X11-unix/X0`）两通道（真机 `wsl -d podman-machine-default` 实证均为 0777 socket，非登录 shell 的 DISPLAY/XDG_RUNTIME_DIR 全空）；静态 compose 无法按缺源删 bind（缺源 exit 125），故文件集必须由探测结果决定（同 `gpu_override_file` 形态选择先例），不能一份文件写死双 bind。
+
+**V 对抗（采纳 5 项）**：① X11 源首选 `/mnt/wslg/.X11-unix` 真实路径，规避他机 `/tmp/.X11-unix` 符号链接；② fail-fast 指引三分支（WSLg/Win10、物理 Linux、去开关）+ 物理机 `xhost local:root`；③ 文档给免依赖 Hello-World 验证（AF_UNIX connect 三行）；④ socket 挂载安全警示（截屏/输入注入面，仅可信镜像）；⑤ 任一通道命中即放行，纯 Wayland/纯 X11 宿主只挂一层。
+
+**I/C 落地**：新增 `compose.passthrough.gui.yaml`（Wayland）与 `compose.passthrough.gui.x11.yaml`（X11 目录+DISPLAY）两姊妹层；`StackSpec.gui_overlay`（仅 native 置真）+ 内核 `resolve_gui()`（daemon 宿主 `test -S` 探测序：显式 env → WSLg → /run/user|/tmp 回退，回写 GUI_WAYLAND_SOCKET/HOST_WAYLAND_DISPLAY/GUI_X11_SOCKETDIR/GUI_DISPLAY）；`compose_files`/argv/preflight/up/smoke 全链贯通 `gui`/`gui_forms`（文件序 base→GPU→透传→GUI(wayland→x11)→USB）；工厂 up/smoke 形参并集加 `gui`；bridge_env_keys 转发用户可设四键。GUI **bridge 形态即可用**（不切 tag、不改网络），与 `--passthrough/--gpu/--usb/--offline` 全正交。
+
+**文档/契约**：07 新增「组合 D：GUI」（矩阵 +11 行、排障 +3 行，全家桶顺延组合 E）、05 参数表 +4 键、`.env.example` GUI 段、client docs/09 栈等价表（标明是根 `--wayland` 超集）、native-overlay §11.7（C33 完整契约）、client AGENTS C18 扩五路 + C33 P0 行、invoke-tasks C18 同步。
+
+**V 验收**：`pytest tests -q` **227 passed / 10 skipped**（新增 12 用例：resolve_gui 五态、文件序/形态不变量、up argv+横幅、门禁先于 down、smoke 同源、merge 渲染四层；三份黄金清单同步）；CLI `invoke native.up --help` 含 `--gui`。**真机 WSLg E2E（podman-machine-default）**：零配置 `invoke native.up --gui --skip-build` 自动加载两 GUI 层（argv 实证文件序正确），bridge 形态/`:latest` tag/8890 端口逐字不变；容器内 `WAYLAND_DISPLAY=wayland-0`/`DISPLAY=:0`/`XDG_RUNTIME_DIR=/tmp/runtime-user` 齐备，两 socket 可见，Wayland AF_UNIX connect 成功，**X11 真实协议握手成功**（12 字节 setup，status=1，XWayland 免认证应答——超越 socket 可达、证明 X server 真应答）；`native.smoke --gui` 同源 exec 通过。验收后栈恢复原 `--passthrough --gpu --usb` 形态。
+
+提交 `feat(client)` = 本提交（CHANGELOG 留痕与代码/文档变更同笔落盘）。
+
 ### 2026-09-23 · `docs:` CHANGELOG 原子化拆分为 archive/ 六段（251296 字节 → 6.2KB 索引页）
 
 **关联七概念场景**：场景3「重构优化」（I→F→A→C）——主文件累积至 2245 行 / 251296 字节 / 71 条目，超出 64KB 可读性阈值，新增条目被历史噪声淹没。

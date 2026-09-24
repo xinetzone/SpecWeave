@@ -11,8 +11,10 @@
 #       SSH 经 SSHD_PORT 改非特权端口（rootless 不能绑 <1024），默认 2223。
 #   [4] D-Bus 会话总线 —— 桌面集成（通知、系统设置）。
 #
-# 姊妹 opt-in 层（宿主实际具备资源时再叠加）：
-#   compose.passthrough.usb.yaml  [5] USB /dev/bus/usb
+# 姊妹 opt-in 层（宿主实际具备资源时再叠加，均可独立于本层使用）：
+#   compose.passthrough.gui.yaml      [2] GUI Wayland socket（bridge 形态可用）
+#   compose.passthrough.gui.x11.yaml  [2b] GUI X11 socket（按探测追加）
+#   compose.passthrough.usb.yaml      [5] USB /dev/bus/usb
 #
 # 前置条件 —— 挂载源缺失时 podman 硬失败（exit 125）且不自动创建：
 #   test -S "${DBUS_SESSION_BUS_PATH:-${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/bus}" \
