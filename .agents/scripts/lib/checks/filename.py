@@ -23,11 +23,15 @@ ALLOWED_EXTENSIONS = {
     ".md", ".py", ".js", ".ts", ".jsx", ".tsx", ".go", ".java",
     ".yaml", ".yml", ".json", ".toml", ".xml", ".html", ".css",
     ".sh", ".bat", ".ps1", ".gitignore", ".gitattributes",
+    ".sql",
     ".txt", ".csv", ".pdf", ".docx", ".png", ".jpg", ".jpeg", ".gif", ".svg",
     ".tag", ".example", ".template",
     ".ini", ".conf", ".cfg", ".log", ".lock", ".env", ".env.example",
     ".ttf", ".pth",
 }
+# 白名单含 ".sql" 的理由：apps/dev-tools/wechat-mp-archiver 引入运行时按路径
+# 加载的 SQLite 建表脚本（db/schema.sql），SQL 是仓库新增的一类纯文本声明式
+# 资产；纳入白名单不影响密钥（.env/*.key）与临时产物（.venv/__pycache__）防护。
 # 白名单含 ".env" 的理由：本项目存在「产品描述/段配置」形态的 *.env（如
 # apps/containers/offline-delivery/products/xmnn-runtime/product.env，九键产品定义，
 # 非凭证）；而裸 ".env" 的 Path.suffix 为空串，本就不经过扩展名校验，
