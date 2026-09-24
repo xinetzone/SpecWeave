@@ -57,6 +57,7 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | ai-agents/ | ai-code-assistant | —（遵循根规范） | ❌ 无 | AI 代码助手 Web 应用 |
 | dev-tools/ | camera-power-controller | —（遵循根规范） | ❌ 无 | 摄像头电源控制工具 |
 | dev-tools/ | prompt_extraction | —（遵循根规范） | ❌ 无 | 提示词质量评估与提取工具 |
+| dev-tools/ | wechat-mp-archiver | —（遵循根规范） | ❌ 无 | 微信公众号全量内容归档工具（私有部署采集服务 + Python 薄管线，输出离线归档/RAG 语料/分析报表；scikit-build-core 纯 Python 包，`mp-archiver` CLI） |
 | samples/ | cow-demo | —（遵循根规范） | ❌ 无 | 零拷贝COW读写分离模式C++示例框架 |
 | samples/ | short-video-site | —（遵循根规范） | ❌ 无 | ReelVibe 短视频网站（AI全流程开发Demo） |
 | samples/ | designer-portfolio | —（遵循根规范） | ❌ 无 | 设计师作品集静态网站（纯HTML/CSS/JS + GSAP CDN，零构建Demo，首页+4个项目详情页） |
@@ -258,6 +259,7 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/ai-agents/eve-minimal-agent/ | 应用自治（遵循根规范） | ✅ 是 | Vercel Eve 最小可运行 Agent 示例 |
 | apps/dev-tools/camera-power-controller/ | 应用自治（遵循根规范） | ✅ 是 | 摄像头电源控制工具 |
 | apps/dev-tools/prompt_extraction/ | 应用自治（遵循根规范） | ✅ 是 | 提示词提取工具 |
+| apps/dev-tools/wechat-mp-archiver/ | 应用自治（遵循根规范） | ✅ 是 | 微信公众号全量内容归档工具（采集适配器分层 + SQLite 五表状态机 + 保守限速；规格见 `.trae/specs/wechat-mp-content-archiver/`，方案见 `docs/knowledge/operations/wechat-mp-full-archive-solution.md`） |
 | apps/samples/cow-demo/ | 应用自治（遵循根规范） | ✅ 是 | 零拷贝COW读写分离模式C++示例框架 |
 | apps/samples/short-video-site/ | 应用自治（遵循根规范） | ✅ 是 | ReelVibe 短视频网站（AI全流程开发Demo） |
 | apps/samples/designer-portfolio/ | 应用自治（遵循根规范） | ✅ 是 | 设计师作品集静态网站（纯HTML/CSS/JS + GSAP CDN，零构建Demo，首页+4个项目详情页） |
