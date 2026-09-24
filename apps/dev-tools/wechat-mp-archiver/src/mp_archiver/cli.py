@@ -39,6 +39,7 @@ from .core.pipeline import run_pipeline
 from .core.validation import check_metadata_completeness
 from .db import connect, get_account_biz_by_alias, init_db
 from .exporters.rag import export_rag_jsonl
+from .exporters.report import generate_report
 from .http_client import RateLimitedClient
 from .logging_utils import configure_logging, redact
 
@@ -500,6 +501,47 @@ def _cmd_export_rag(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_report(args: argparse.Namespace) -> int:
+    """离线生成分析报表（CSV 明细 + 单文件 HTML，不发起任何网络请求）。"""
+    settings = get_settings()
+    configure_logging(settings.log_level)
+    conn = connect(settings.db_path)
+    init_db(conn)
+
+    account_biz = None
+    if args.account:
+        account_biz = get_account_biz_by_alias(conn, args.account)
+        if account_biz is None:
+            print(f"[fail] 未找到公众号「{args.account}」，请先执行 list 同步列表")
+            return 3
+
+    out_dir = Path(args.out) if args.out else settings.export_root / "report"
+    print(f"[..] 生成分析报表 → {out_dir}（report.html + report.csv）")
+    result = generate_report(conn, out_dir, account_biz=account_biz, top_n=args.top)
+    d = result.data
+
+    print(
+        f"[ok] 报表已生成：文章 {d.total_articles} 篇（有发布时间 {d.timed_articles}，"
+        f"无时间 {d.missing_time}）"
+    )
+    print(
+        f"     原创占比 "
+        + (f"{d.original_ratio:.1%}（{d.original_count}/{d.timed_articles}）"
+           if d.original_ratio is not None else "无数据")
+        + f"；合集 {len(d.album_top)} 个"
+    )
+    if d.downloaded_total:
+        print(
+            f"     含音视频 {d.with_av}/{d.downloaded_total} 篇"
+            f"（音频 {d.with_audio}、视频 {d.with_video}，分母为已归档文章）"
+        )
+    else:
+        print("     含音视频占比：暂无已归档文章（执行 fetch 后即可统计）")
+    print(f"[ok] HTML（离线可开）：{result.html_path}")
+    print(f"[ok] CSV 明细（Excel 可开）：{result.csv_path}")
+    return 0
+
+
 def _cmd_resolve_biz(args: argparse.Namespace) -> int:
     settings = get_settings()
     configure_logging(settings.log_level)
@@ -627,6 +669,18 @@ def build_parser() -> argparse.ArgumentParser:
     p_export.add_argument("--limit", type=int, default=None,
                           help="调试用：最多导出篇数")
     p_export.set_defaults(func=_cmd_export_rag)
+
+    p_report = sub.add_parser(
+        "report",
+        help="离线生成分析报表（CSV 明细 + 单文件 HTML，五项统计，不触网）",
+    )
+    p_report.add_argument("-a", "--account", default=None,
+                          help="仅统计指定公众号（默认全部账号）")
+    p_report.add_argument("-o", "--out", default=None,
+                          help="输出目录（默认 exports/report/，整体覆盖）")
+    p_report.add_argument("--top", type=int, default=10,
+                          help="合集 Top N（默认 10）")
+    p_report.set_defaults(func=_cmd_report)
 
     p_resolve = sub.add_parser(
         "resolve-biz",

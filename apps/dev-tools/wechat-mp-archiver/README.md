@@ -44,6 +44,8 @@ mp-archiver run -a 意识食谱 --full    # 全量回溯：完整翻页 + 下架
 mp-archiver sync-official -a 意识食谱  # 可选：自有认证号官方清单交叉补全（见 deploy/README.md 第 11 节）
 mp-archiver export-rag                    # 离线导出 RAG JSONL 语料（全部账号 → exports/rag.jsonl）
 mp-archiver export-rag -a 意识食谱 --no-clean --with-raw  # 单账号/不清洗/附清洗前原文对照
+mp-archiver report                    # 离线生成分析报表（全部账号 → exports/report/）
+mp-archiver report -a 意识食谱 --top 20   # 单账号 + 合集 Top 20
 pytest                 # 运行测试
 ```
 
@@ -66,6 +68,8 @@ pytest                 # 运行测试
 
 选项：`-a/--account`（默认全部账号）、`-o/--out`（默认 `exports/rag.jsonl`，可用 `MP_ARCHIVER_EXPORT_ROOT` 改根目录）、`--no-clean`（关清洗）、`--with-raw`（附原文对照）、`--limit`（调试限量）。DB 标记 downloaded 但 HTML 缺失/路径越界的单篇计入失败、不阻断其余导出，存在失败时退出码为 1。
 
+`report` 是纯派生离线命令（不触网、幂等，HTML/CSV 均临时文件 + 原子覆盖），产出到 `exports/report/`：`report.html` 为单文件报表（内联 CSS，无 JS/外链/CDN，断网可开），含五项统计——①发文量时间序列（年/月）、②星期×时段（0–23 时）发布热力、③原创占比、④合集 Top N、⑤含音频/视频文章占比；`report.csv` 为逐篇明细（UTF-8 BOM，Excel 直接打开），含发布时间 UTC 原文与北京时间派生列（年/年月/星期/小时），可自行透视复核。统计口径在报表页首明确声明：前四项基于**有发布时间的全部文章**（未归档也参与），音视频占比基于**已归档（downloaded）文章**（富媒体仅在正文归档时识别）；所有时间按**北京时间（UTC+8）**聚合（SQL 侧 `strftime(..., '+8 hours')`）。报表页脚附每项数字对应的对账 SQL（`:biz` 为占位参数），可直接在 SQLite 上核对。选项：`-a/--account`（默认全部账号）、`-o/--out`（输出目录，默认 `exports/report/`）、`--top`（合集 Top N，默认 10）。空库/单篇/无合集等边界渲染空态而非报错；退出码 `0` 成功、`3` 账号未找到。
+
 ## 结构
 
 ```
@@ -78,5 +82,5 @@ src/mp_archiver/
 ├── db/                # SQLite 五表（articles/media/comments/metrics/sync_state）
 ├── adapters/          # 采集源适配器（采集服务 R2 / 官方接口）
 ├── core/              # 列表同步、正文/富媒体/互动归档、pipeline 统一编排
-└── exporters/         # 派生产物导出（RAG JSONL：rag.py 编排 + core/text_extract.py 提取与清洗）
+└── exporters/         # 派生产物导出（RAG JSONL：rag.py；分析报表：report.py；提取清洗：core/text_extract.py）
 ```

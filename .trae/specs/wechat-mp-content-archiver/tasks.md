@@ -194,9 +194,21 @@
   - `rubric` TR-10.2: 语料洁净度；scale 1-5；anchors 1=标签/噪声满屏，3=可读但有残留，5=噪声干净+段落完整+可按元数据过滤；threshold >= 3；证据：抽样 5 篇人工评阅。
 
 ## Task 11: 分析报表
-- **Status**: `pending`
+- **Status**: `completed`（软件完成 2026-09-24；TR-11.1 对账已由 17 项单测在样例库闭环，真实号报表评阅待部署环境执行）
 - **Priority**: medium
 - **Depends On**: Task 6
+- **Completion Evidence（软件侧）**:
+  - 报表模块（新增 [src/mp_archiver/exporters/report.py](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/exporters/report.py)，纯派生离线任务不触网）：
+    - 聚合层 `load_report_data()`：五项统计全部由带 `GROUP BY` 的单条 SQL 产出——年/月序列 `strftime('%Y'|'%Y-%m', publish_time, '+8 hours')`、星期×小时热力 `strftime('%w'|'%H', ..., '+8 hours')`、原创计数、合集 Top N（`n DESC, album ASC` 稳定排序）、音视频文章数（`media JOIN articles`，`media_type IN ('audio','video')` 的 `DISTINCT article_id`）。
+    - **双口径显式声明**：统计①–④分母为有 `publish_time` 的全部文章（未归档也参与，M 集）；统计⑤分母为 `status=downloaded`（D 集，媒体行仅正文归档时写入，避免假性偏低）；`ReportData.scoped` 显式布尔标志区分单账号/全量，不依赖账号别名推断。
+    - **北京时间口径**：SQL 聚合 `+8 hours` 与明细层 pandas `to_datetime(utc=True).tz_convert('Asia/Shanghai')` 双路一致；UTC 跨日/跨月/跨年（如 2023-12-31T17:00→北京 2024-01-01 周一 01 时）有单测锁定；兼容上游 `isoformat()` 实际产出的 `+00:00` 后缀与 `Z` 后缀（已实测 SQLite 四种时间形态）。
+    - 明细层 `build_articles_frame()`：pandas SQL 读取（含 `EXISTS` 子查询的 has_audio/has_video），派生列发布时间_北京/年/年月/星期（中文）/小时；CSV 固定列序 + 中文表头 + **utf-8-sig BOM**（Excel 打开不乱码）+ 换行 LF。
+    - HTML 渲染：Jinja2 内联模板（autoescape 开启，专辑名 `<img onerror>` 注入有转义测试）、内联 CSS、**零 JS/零外链/零 CDN**（测试断言无 `src="http`/`href="http`/`<script`）；7×24 热力用静态 rgba 背景色；KPI/比例条/月年条形全为静态 HTML；空库/无时间/单篇/无合集/无媒体均渲染空态文案；页脚展开区附七组对账 SQL（scoped 时自动带 `:biz` 过滤，全部账号时不带）。
+    - 原子写入：HTML 与 CSV 均同目录 `.tmp + os.replace` 整体覆盖，重跑字节稳定、无 .tmp 残留。CSV 防公式注入：`=+-@`/制表/回车开头文本单元格前置单引号（OWASP 建议，标题/链接/合集名为公众号侧可控文本）。
+    - CLI `report [-a 账号] [-o 目录] [--top N]`（[cli.py](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/cli.py)）：默认输出 `exports/report/report.{html,csv}`（复用 Task 10 的 `MP_ARCHIVER_EXPORT_ROOT`）；终端打印各口径计数；退出码 0 成功/3 账号未找到。pyproject 依赖新增 `pandas>=2.2`、`jinja2>=3.1`（venv 实装 pandas 3.0.6 / jinja2 3.1.6）。
+  - TR-11.1（软件侧闭环）：新增 [tests/test_report.py](../../../apps/dev-tools/wechat-mp-archiver/tests/test_report.py) 17 例——五项统计数字与**独立重算 SQL** 逐项断言一致（年/月/热力/原创/合集/音视频，含跨账号、跨年、pending 不进音视频分母、一篇同时含音视频去重）、CSV 明细行数与北京派生列、HTML 五区块+对账 SQL+离线单文件+转义、账号过滤、Top N 排序与限量、幂等无残留、真实 `+00:00` 时间格式、CSV 注入防护、scoped 页脚（含账号别名恰为「全部账号」的反例）、CLI 0/3 退出码；全量 **205/205 通过**（基线 188 + 新增 17，无回归）。
+  - TR-11.2（闭环）：空库（两文件正常生成、CSV 仅表头、KPI 显「—」非 None）、单篇、无发布时间（2 篇）等边界均有单测且不报错。
+  - **真实号报表评阅挂起**：主机暂无真实归档语料，HTML 视觉评阅（热力配色/中文排版）与 TR-11.1 真实库对账待部署环境执行；对账 SQL 已内置报表页脚，届时可直接复制核对。
 - **Description**:
   - `mp-archiver report`：CSV 明细 + 单文件 HTML（pandas + jinja2，无外部依赖可离线打开），五项统计：发文量时间序列（月/年）、星期×时段热力、原创占比、合集 Top 分布、含音频/视频文章占比。
 - **Acceptance Criteria Addressed**: AC-12
