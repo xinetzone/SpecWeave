@@ -236,22 +236,35 @@ def upsert_sync_state(
     last_cursor: str | None = None,
     total_seen: int | None = None,
     credential_status: CredentialStatus = CredentialStatus.NONE,
+    extras: str | None = None,
 ) -> None:
-    """写入账号同步水位（按 account_biz 主键 upsert）。"""
+    """写入账号同步水位（按 account_biz 主键 upsert）。
+
+    ``extras`` 为 JSON 字符串；传 ``None`` 时保留既有值（COALESCE），
+    用于增量刷新水位但不抹掉全量完成标记等历史信息。
+    """
     conn.execute(
         """
         INSERT INTO sync_state (
             account_biz, account_alias, last_sync_at, last_cursor,
-            total_seen, credential_status
-        ) VALUES (?, ?, datetime('now'), ?, COALESCE(?, 0), ?)
+            total_seen, credential_status, extras
+        ) VALUES (?, ?, datetime('now'), ?, COALESCE(?, 0), ?, ?)
         ON CONFLICT(account_biz) DO UPDATE SET
             account_alias     = COALESCE(NULLIF(excluded.account_alias, ''), sync_state.account_alias),
             last_sync_at      = excluded.last_sync_at,
             last_cursor       = COALESCE(excluded.last_cursor, sync_state.last_cursor),
             total_seen       = COALESCE(excluded.total_seen, sync_state.total_seen),
-            credential_status = excluded.credential_status
+            credential_status = excluded.credential_status,
+            extras            = COALESCE(excluded.extras, sync_state.extras)
         """,
-        (account_biz, account_alias, last_cursor, total_seen, credential_status.value),
+        (
+            account_biz,
+            account_alias,
+            last_cursor,
+            total_seen,
+            credential_status.value,
+            extras,
+        ),
     )
     conn.commit()
 

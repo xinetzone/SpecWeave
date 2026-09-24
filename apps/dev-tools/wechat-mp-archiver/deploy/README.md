@@ -68,7 +68,7 @@ docker compose logs -f collector
 1. 打开 <http://127.0.0.1:5000/login.html>（如页面异常先执行 `docker compose restart collector`）；
 2. 用同一专用订阅号管理员微信扫码确认；
 3. 重跑 `mp-archiver doctor` 确认恢复；
-4. 管线侧采集任务具备状态机，失效期间标记失败的文章可用后续命令重试（Task 9 增量/重试落地后提供），无需全量重采。
+4. 管线侧采集任务具备状态机，失效期间标记失败的文章可用 `mp-archiver run -a <账号> --full --include-failed` 或日常增量任务自动重试（见第 12 节），无需全量重采。
 
 ## 6. 停止、升级与备份
 
@@ -175,3 +175,80 @@ mp-archiver fetch -a <公众号> --fetch-metrics
 - 已删除条目（`is_deleted=1`）跳过并计数，不进入待采集队列；
 - `articles.source` 标记来源：`exporter` / `official_api`，同一篇文章被两个源命中时合并为 `exporter+official_api`，可用于事后对账；
 - 官方同步不回退已有采集状态（已归档文章保持 `downloaded`），正文、图片、Markdown 的实际下载仍由 `fetch` 统一完成。
+
+## 12. 定时调度（增量同步与周期全量）
+
+日常无需手动执行：增量任务列表只翻到「整页全已知」即停、正文只下载新文章，天然幂等，重复执行零新增、零重复文件；进程被中途终止后重跑即可从断点补齐（已归档文章按状态跳过，文章目录整体重建保证无残留碎片）。
+
+### 12.1 频率建议
+
+| 任务 | 建议频率 | 说明 |
+|---|---|---|
+| 增量同步 `sync` | 每日 1 次（建议 03:00–05:00 低峰时段，分钟数取非整点，如 03:17） | 登录态经验约 4 天有效，每日一次足以追平；过高频率没有时效收益，徒增风控暴露 |
+| 全量回溯 `run --full` | 每周至多 1 次（或每月 1 次） | 完整翻到历史尾页并做下架对账，请求量大；用于发现历史文章删除/违规并校验元数据完整性 |
+| 登录态失效后 | 人工扫码（第 5 节），不自动重试 | 自动重试无法恢复凭证，只会产生无效请求；任务退出码为 2 时需人工介入 |
+
+> 执行调度前确认采集容器在线（`docker compose ps` 为 healthy）。增量任务失败不影响下次执行；正文单篇失败会在后续增量（含 `--include-failed` 的全量）中自动重试。
+
+### 12.2 Windows 任务计划程序（pwsh7）
+
+仓库提供 [sync-incremental.ps1](sync-incremental.ps1)（要求 PowerShell 7.4+），自动定位项目根目录、优先使用项目 `.venv`、透传退出码并将输出追加到 `logs/sync-yyyyMMdd.log`。
+
+先手工验证一次：
+
+```powershell
+pwsh -File .\deploy\sync-incremental.ps1 -Account "账号别名"
+```
+
+注册每日增量任务（在项目根目录的 pwsh7 会话中执行；路径请按实际位置替换）：
+
+```powershell
+$root    = (Get-Location).Path
+$script  = Join-Path $root 'deploy\sync-incremental.ps1'
+$pwsh    = (Get-Command pwsh).Source
+$account = '账号别名'
+
+$action = New-ScheduledTaskAction -Execute $pwsh -Argument `
+    "-NoProfile -ExecutionPolicy Bypass -File `"$script`" -Account `"$account`""
+$trigger = New-ScheduledTaskTrigger -Daily -At 03:17
+$settings = New-ScheduledTaskSettingsSet `
+    -StartWhenAvailable `
+    -ExecutionTimeLimit (New-TimeSpan -Hours 2) `
+    -DontStopOnIdleEnd
+Register-ScheduledTask -TaskName 'mp-archiver-sync-daily' `
+    -Action $action -Trigger $trigger -Settings $settings `
+    -Description 'wechat-mp-archiver 每日增量同步（列表→正文/富媒体）'
+```
+
+再注册每周全量对账（周日 04:17，带 `-Full`）：
+
+```powershell
+$fullTrigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At 04:17
+$fullAction = New-ScheduledTaskAction -Execute $pwsh -Argument `
+    "-NoProfile -ExecutionPolicy Bypass -File `"$script`" -Account `"$account`" -Full"
+Register-ScheduledTask -TaskName 'mp-archiver-full-weekly' `
+    -Action $fullAction -Trigger $fullTrigger -Settings $settings `
+    -Description 'wechat-mp-archiver 每周全量回溯+下架对账'
+```
+
+任务默认在当前用户下运行；需要未登录时也执行，可在「任务计划程序」图形界面中改为「不管用户是否登录都要运行」并凭据保存（此时请确保 Docker Desktop/WSL 与 `.venv` 在该会话可用）。查看结果：任务计划程序「历史」选项卡，或项目 `logs/` 目录。
+
+退出码监测语义：`0` 成功；`1` 有文章归档失败（下次自动重试）或参数错误；`2` 登录态失效，需按第 5 节重新扫码；`3` 账号未找到/biz 缺失；`4` 采集服务不可达或环境异常。
+
+### 12.3 NAS / Linux（cron）
+
+在安装了归档管线（Python 3.14+ 虚拟环境）的主机上：
+
+```bash
+crontab -e
+# 每日 03:17 增量（日志追加到项目 logs/）
+17 3 * * * cd /srv/wechat-mp-archiver && \
+  /srv/wechat-mp-archiver/.venv/bin/mp-archiver sync -a '账号别名' \
+  >> logs/sync-$(date +\%Y\%m\%d).log 2>&1
+# 每周日 04:17 全量回溯+下架对账（失败重试）
+17 4 * * 0 cd /srv/wechat-mp-archiver && \
+  /srv/wechat-mp-archiver/.venv/bin/mp-archiver run -a '账号别名' --full --include-failed \
+  >> logs/sync-$(date +\%Y\%m\%d).log 2>&1
+```
+
+采集服务容器与归档管线可以同机部署；若分机部署，注意管线需能访问采集服务的回环/内网地址（默认 `MP_ARCHIVER_EXPORTER_URL=http://127.0.0.1:5000`，分机时改为内网地址并设置双方一致的 API Token，仍不得暴露公网）。容器化定时可在 NAS 上用与 cron 等价的「计划任务」功能调用同一命令，或由宿主机 `docker exec` 进入含 Python 环境的辅助容器执行；采集服务容器本身不包含归档管线，不要把同步命令发到采集容器内。

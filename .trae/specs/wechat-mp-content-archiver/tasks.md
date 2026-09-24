@@ -158,9 +158,16 @@
 - **Notes**: 真实接口联调于 2026-09-24 完成（TR-8.1 凭证部分已实测）：分段证据链确认配置/网络/token/biz 四段均通过，但 `freepublish/batchget` 对该号返回 `total_count=0`——这是**接口覆盖范围限制**（仅含已发布图文，不含群发历史），非配置或权限错误。结论：自有号官方 API 路径在本号场景下不产出文章，历史全量采集仍需以 R2 exporter 为主源；官方 API adapter 代码本身可用，对覆盖范围内的号有效。测试层面：发现并修复 `test_cli_missing_biz_exits_three` 预存在失败（pydantic-settings `.env` 回退陷阱），全量 147/147 通过。后续合集路径（`appmsgalbum`）已探查：技术可抓（`window.cgiData.articleList` 含完整 mid/idx/sn/title/create_time），但合集是作者手动选编的主题精选，不覆盖全量历史，不作为主采集源。
 
 ## Task 9: 增量模式与 CLI 编排
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 6, Task 7
+- **Completion Evidence**:
+  - 增量水位与 catch-up（[src/mp_archiver/core/list_sync.py](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/core/list_sync.py)）：复用 sync_state 表 `extras` 列（JSON），完整翻到尾页时写入 `full_completed_at`（UTC 日期）作为「曾完成全量」标记；`upsert_sync_state` 新增 `extras` 形参（COALESCE 语义，None 保留旧值）。增量模式（`catch_up=True`）从最新页向后翻，整页零新增（全已知）且非尾页即提前停止，`SyncReport.caught_up=True`，不做下架对账；**安全护栏**：若无 full_completed_at 标记（上次全量被 max_pages 截断或空库），增量必须翻到尾页，防止永久漏文。
+  - 统一编排（新增 [src/mp_archiver/core/pipeline.py](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/core/pipeline.py)）：`run_pipeline()` 两阶段——阶段 1 携带本地 Bearer Token 访问采集服务同步列表；阶段 2 用 `model_copy(exporter_token=SecretStr(""))` 剥离 Token 后直连微信公域执行 `fetch_articles`（内含富媒体本地化与 settings.fetch_metrics 条件互动采集），凭证边界与独立 fetch 命令一致。列表异常不吞，交由 CLI 映射退出码。导出（export-rag/report）属 Task 10/11，本任务不编排。
+  - CLI（[src/mp_archiver/cli.py](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/cli.py)）：新增 `sync -a <账号> [--limit N] [--fetch-metrics]`（增量）与 `run -a <账号> --full [--include-failed] [--limit N] [--fetch-metrics] [--no-reconcile] [--max-pages N]`（全量回溯+对账，`--full` 为显式确认门，缺失时退出码 1 且不执行）。输出含增量追平/尾页状态、对账计数、全量后元数据完整性、正文成功/失败/跳过与互动摘要；退出码沿用 0/1/2/3/4 五档语义。
+  - TR-9.1（软件侧闭环）：新增 16 个单测，全量 163/163 通过（基线 147 + 新增 16，无回归）。① [tests/test_list_sync.py](../../../apps/dev-tools/wechat-mp-archiver/tests/test_list_sync.py) 新增 3 例：全量后增量首页 1 新 1 旧继续、次页全旧即停（offset 未越界请求，验证不再翻页）、标记保留；截断全量（无标记）增量不提前停并补回缺口文章；空库增量走完全程。② [tests/test_pipeline.py](../../../apps/dev-tools/wechat-mp-archiver/tests/test_pipeline.py) 5 例：增量/全量接线与 Token 两阶段边界（stage1 `local-token`、stage2 空串）、列表阶段 CredentialExpiredError 时不进入正文、列表阶段 catch_up 实翻页验证、**失败注入中断续跑**（前两篇注入 RuntimeError 模拟 kill，首次 2 成功 2 失败；二次 `include_failed` 补齐 4/4 downloaded；第三次零待采集，全树 SHA-256 哈希集合 8 个文件前后不变——零新增、零重复文件）。③ [tests/test_cli_pipeline.py](../../../apps/dev-tools/wechat-mp-archiver/tests/test_cli_pipeline.py) 8 例：零新增追平退出 0、`--limit/--fetch-metrics` 透传、无 `--full` 被拦截退出 1 且编排零调用、全量成功含对账/完整性输出、正文失败退出 1、凭证失效 2/账号缺失 3/端点异常 4。
+  - TR-9.1 真实 kill 演练：挂起。主机无 Docker 环境、真实号扫码待用户完成，与 TR-3.1/TR-4.1 等真机验收项一并在部署环境执行；中断恢复的软件语义（文章状态机筛选 + 目录整体重建 + 账号水位 extras）已由上述失败注入单测覆盖。
+  - TR-9.2：新增 [deploy/sync-incremental.ps1](../../../apps/dev-tools/wechat-mp-archiver/deploy/sync-incremental.ps1)（首行 `#Requires -Version 7.4`，通过 check-pwsh7-compliance；自动定位项目根、优先 .venv、追加 `logs/sync-yyyyMMdd.log`、透传五档退出码，支持 `-Account/-Full/-FetchMetrics`）；`.gitignore` 增忽略 `logs/`；[deploy/README.md](../../../apps/dev-tools/wechat-mp-archiver/deploy/README.md) 新增第 12 节：频率建议（增量每日 1 次 03:17、全量每周至多 1 次、失效不自动重试）、可直接注册的 Windows 任务计划程序 pwsh7 命令（每日增量 + 每周全量两个任务）、NAS/Linux cron 等价示例与分机部署/容器边界说明；第 5 节重试指引同步更新。README.md 命令区与结构树同步更新。
 - **Description**:
   - 实现增量水位（每账号最新采集时间/游标）与 `mp-archiver sync --account ...`（增量）、`run --full`（回溯+校验）命令；统一编排列表→正文→媒体→互动→导出。
   - 提供调度方案文档：本机计划任务（Windows 任务计划程序 pwsh7 脚本）或 NAS cron/容器定时，含频率建议。

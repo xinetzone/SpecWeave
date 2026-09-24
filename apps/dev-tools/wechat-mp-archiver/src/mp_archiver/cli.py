@@ -34,6 +34,7 @@ from .core.official_probe import (
     run_full_probe,
 )
 from .core.official_sync import sync_official_articles
+from .core.pipeline import run_pipeline
 from .core.validation import check_metadata_completeness
 from .db import connect, init_db
 from .http_client import RateLimitedClient
@@ -226,6 +227,117 @@ def _cmd_fetch(args: argparse.Namespace) -> int:
     return 1 if report.failed else 0
 
 
+def _print_fetch_summary(report, *, metrics_enabled: bool) -> None:
+    """复用 fetch 命令的归档结果打印格式。"""
+    if report.total == 0:
+        print("[ok] 正文阶段：没有符合条件的待采集文章（新增为零，已全部归档）")
+        return
+    print(
+        f"[ok] 正文阶段结束：共 {report.total} 篇，成功 {report.downloaded}，"
+        f"跳过 {report.skipped}（已删除/违规），失败 {report.failed}"
+    )
+    if metrics_enabled:
+        print(
+            f"[ok] 互动数据：采集成功 {report.interactions_collected} 篇、"
+            f"评论 {report.comments_collected} 条；"
+            f"缺凭证跳过 {report.interactions_skipped} 篇；"
+            f"失败 {report.interactions_failed} 篇"
+            + ("（失败不影响正文归档，可稍后重跑）" if report.interactions_failed else "")
+        )
+    if report.image_failures:
+        print(
+            f"[warn] {report.image_failures} 张正文图片下载失败，"
+            "已在各文章 metadata.json 登记例外并保留远程引用，可稍后重跑补齐"
+        )
+    for item in report.items:
+        if item.state == "failed":
+            print(f"  [fail] {item.title}：{item.error}")
+        elif item.state == "skipped":
+            print(f"  [skip] {item.title}：{item.error}")
+
+
+def _run_pipeline_command(args: argparse.Namespace, *, full: bool) -> int:
+    settings = get_settings()
+    configure_logging(settings.log_level)
+    conn = connect(settings.db_path)
+    init_db(conn)
+
+    if args.fetch_metrics:
+        settings = settings.model_copy(update={"fetch_metrics": True})
+
+    mode_label = "全量回溯+对账" if full else "增量同步"
+    stages = "列表 → 正文/富媒体" + (" → 互动" if settings.fetch_metrics else "")
+    print(f"[..] {mode_label}公众号「{args.account}」：{stages}")
+
+    try:
+        report = run_pipeline(
+            conn,
+            settings,
+            args.account,
+            full=full,
+            include_failed=getattr(args, "include_failed", False),
+            fetch_limit=args.limit,
+            max_pages=getattr(args, "max_pages", None),
+            no_reconcile=getattr(args, "no_reconcile", False),
+        )
+    except CredentialExpiredError as exc:
+        print(f"[fail] 登录态失效：{exc}")
+        print("       请按 deploy/README.md 第 3/5 节用专用订阅号重新扫码")
+        return 2
+    except AccountNotFoundError as exc:
+        print(f"[fail] {exc}")
+        return 3
+    except (BizUnavailableError, EndpointDiscoveryError) as exc:
+        print(f"[fail] {exc}")
+        return 4
+    except LookupError as exc:
+        print(f"[fail] {exc}")
+        return 3
+    except (ApiRetError, PayloadError) as exc:
+        print(f"[fail] 采集服务返回异常：{exc}")
+        return 1
+    except (httpx.TimeoutException, httpx.TransportError) as exc:
+        print(f"[fail] 无法连接采集服务：{exc.__class__.__name__}: {exc}")
+        print("       请确认容器已启动（docker compose ps），详见 deploy/README.md")
+        return 4
+
+    lr = report.list
+    if lr.caught_up:
+        print(
+            f"[ok] 列表增量追平（翻页 {lr.pages}，新增 {lr.inserted}，"
+            f"更新 {lr.updated}）；未扫描到尾页，不做下架对账"
+        )
+    else:
+        tail = "已到历史尾页" if lr.completed else "未到历史尾页（截断）"
+        print(
+            f"[ok] 列表同步完成（{tail}）：翻页 {lr.pages}，新增 {lr.inserted}，"
+            f"更新 {lr.updated}，跳过非图文 {lr.skipped_non_article}，"
+            f"对账标记不可见 {lr.hidden_marked} 篇"
+        )
+    if full and lr.completed:
+        completeness = check_metadata_completeness(conn, lr.biz)
+        rates = "，".join(f"{k} 非空率 {v:.1%}" for k, v in completeness.rates().items())
+        tag = "[ok]" if completeness.ok else "[warn]"
+        print(f"{tag} 元数据完整性（共 {completeness.total} 篇）：{rates}")
+
+    _print_fetch_summary(report.fetch, metrics_enabled=settings.fetch_metrics)
+    return 1 if report.has_fetch_failures else 0
+
+
+def _cmd_sync(args: argparse.Namespace) -> int:
+    """增量：列表 catch-up 追平 + 仅归档 pending 新文章。"""
+    return _run_pipeline_command(args, full=False)
+
+
+def _cmd_run(args: argparse.Namespace) -> int:
+    """全量回溯+校验；--full 为显式确认开关，防止误触发长任务。"""
+    if not args.full:
+        print("[fail] run 执行全量回溯需显式添加 --full；日常增量请使用："
+              "mp-archiver sync -a <账号>")
+        return 1
+    return _run_pipeline_command(args, full=True)
+
+
 def _cmd_sync_official(args: argparse.Namespace) -> int:
     settings = get_settings()
     configure_logging(settings.log_level)
@@ -386,6 +498,42 @@ def build_parser() -> argparse.ArgumentParser:
         help="同时采集评论与阅读/点赞等互动指标（需配置互动凭证，见 deploy/README.md）",
     )
     p_fetch.set_defaults(func=_cmd_fetch)
+
+    p_sync = sub.add_parser(
+        "sync",
+        help="增量同步：列表追平新文章并归档正文/富媒体（日常调度使用）",
+    )
+    p_sync.add_argument("-a", "--account", required=True, help="公众号昵称或微信号")
+    p_sync.add_argument("--limit", type=int, default=None,
+                        help="本次最多归档新文章篇数（默认全部新增）")
+    p_sync.add_argument(
+        "--fetch-metrics", action="store_true",
+        help="同时采集评论与阅读/点赞等互动指标（需配置互动凭证，见 deploy/README.md 第 8 节）",
+    )
+    p_sync.set_defaults(func=_cmd_sync)
+
+    p_run = sub.add_parser(
+        "run",
+        help="全量回溯+下架对账+归档（需显式 --full 确认；首次建库或周期校验使用）",
+    )
+    p_run.add_argument("-a", "--account", required=True, help="公众号昵称或微信号")
+    p_run.add_argument(
+        "--full", action="store_true",
+        help="显式确认执行全量回溯（完整翻页并做不可见文章对账）",
+    )
+    p_run.add_argument("--include-failed", action="store_true",
+                       help="同时重试此前 failed 的文章")
+    p_run.add_argument("--limit", type=int, default=None,
+                       help="本次最多归档篇数（默认全部待采集）")
+    p_run.add_argument(
+        "--fetch-metrics", action="store_true",
+        help="同时采集评论与阅读/点赞等互动指标（需配置互动凭证，见 deploy/README.md 第 8 节）",
+    )
+    p_run.add_argument("--no-reconcile", action="store_true",
+                       help="即使到尾页也不执行不可见文章对账")
+    p_run.add_argument("--max-pages", type=int, default=None,
+                       help="调试用：限制列表翻页数（截断不做对账）")
+    p_run.set_defaults(func=_cmd_run)
 
     p_official = sub.add_parser(
         "sync-official",

@@ -39,9 +39,13 @@ mp-archiver list -a 意识食谱 --max-pages 2   # 调试：仅翻 2 页（不�
 mp-archiver fetch -a 意识食谱         # 归档正文（HTML/Markdown/图片/metadata 四件套）
 mp-archiver fetch -a 意识食谱 --limit 10     # 先小批量试跑
 mp-archiver fetch -a 意识食谱 --include-failed  # 同时重试此前失败的文章
+mp-archiver sync -a 意识食谱          # 日常增量：列表追平 + 归档新文章（幂等，可重复执行）
+mp-archiver run -a 意识食谱 --full    # 全量回溯：完整翻页 + 下架对账 + 归档（可加 --include-failed）
 mp-archiver sync-official -a 意识食谱  # 可选：自有认证号官方清单交叉补全（见 deploy/README.md 第 11 节）
 pytest                 # 运行测试
 ```
+
+`sync` 与 `run` 是统一编排命令，一次完成「列表 → 正文/富媒体 →（可选）互动」：增量模式从最新页向后翻，遇到整页全已知即停，只下载 pending 新文章；全量模式翻到历史尾页并执行下架对账（未显式加 `--full` 不会执行，防止误触发长任务）。两者均幂等可中断：进程随时终止后重跑，已归档文章按状态自动跳过、失败文章随后续任务补齐，不产生重复文件。退出码：`0` 成功；`1` 存在失败文章或参数错误；`2` 登录态失效需重新扫码；`3` 账号未找到；`4` 采集服务不可达/环境异常。每日增量与每周全量的计划任务配置（Windows 任务计划程序 pwsh 脚本、NAS cron）见 [deploy/README.md 第 12 节](deploy/README.md)。
 
 `list` 会自动发现采集服务的搜索/历史端点（可由环境变量覆写），翻页采集元数据并幂等入库；完整翻到尾页后执行下架/不可见文章对账，凭证失效时返回退出码 2 并提示重新扫码。
 
@@ -57,7 +61,7 @@ src/mp_archiver/
 ├── naming.py          # 跨平台安全文件名
 ├── http_client.py     # 保守限速 + 指数退避 HTTP 客户端
 ├── db/                # SQLite 五表（articles/media/comments/metrics/sync_state）
-├── adapters/          # 采集源适配器（Task 3+）
-├── core/              # 归档管线（Task 4+）
+├── adapters/          # 采集源适配器（采集服务 R2 / 官方接口）
+├── core/              # 列表同步、正文/富媒体/互动归档、pipeline 统一编排
 └── exporters/         # RAG/报表导出（Task 10+）
 ```
