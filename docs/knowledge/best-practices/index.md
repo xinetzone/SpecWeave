@@ -41,6 +41,7 @@ git-commit-mojibake-diagnosis
 git-hook-chain-architecture
 git-push-rejected-resolution
 hand-computed-gradient-verification
+intel-dsa-driver-update-guide
 l2-progressive-disclosure-optimization
 l2-progressive-disclosure-performance
 mermaid-guide
