@@ -1554,6 +1554,33 @@ def _runtime_socket_exists(c: Context, path: str) -> bool:
     return r is not None and getattr(r, "ok", False)
 
 
+def _runtime_probe_session_bus(c: Context) -> str:
+    """在 podman 所在环境按标准优先级探测 D-Bus 会话总线 socket。
+
+    命中返回 socket 路径，全无命中返回 ``""``。探测顺序：
+      1. ``$DBUS_SESSION_BUS_ADDRESS`` 的 ``unix:path=``（去掉可能的 ``,guid=`` 尾段）；
+      2. ``$XDG_RUNTIME_DIR/bus``（systemd 用户会话标准位置）；
+      3. ``/run/user/$(id -u)/bus``（兜底动态推导）。
+
+    必须运行期探测、**不得硬编码 UID**：历史缺省 ``/run/user/1000/bus`` 在
+    UID≠1000 的宿主必然不存在（2026-09-24 物理 Linux 本机 UID=1006 实证，
+    会话总线实为 /run/user/1006/bus）。探测须落在 podman 真正运行的环境——
+    Windows 原生经 WSL 桥接时，Python 侧 ``os.environ`` 是 Windows 会话，
+    不反映 daemon 侧的 XDG_RUNTIME_DIR / id -u。
+    """
+    probe = (
+        'addr="${DBUS_SESSION_BUS_ADDRESS#unix:path=}"; addr="${addr%%,*}"; '
+        'for cand in "$addr" "$XDG_RUNTIME_DIR/bus" '
+        '"/run/user/$(id -u)/bus"; do '
+        'if [ -S "$cand" ]; then printf "%s" "$cand"; exit 0; fi; '
+        'done; exit 1'
+    )
+    r = run_cmd(c, probe, hide=True, warn=True, echo=False)
+    if r is None or not getattr(r, "ok", False):
+        return ""
+    return str(getattr(r, "stdout", "") or "").strip()
+
+
 def _runtime_listening_ports(c: Context, ports: list[str]) -> list[str]:
     """返回 ``ss -lnt`` 中**此刻被监听**的给定端口子集。
 
@@ -1588,25 +1615,49 @@ def resolve_passthrough(
     容器虽起但服务不可达——都是**容器创建期之后才暴露**的故障。故在任何
     down/up 之前判定并翻译成中文可执行指引。
 
-    令牌优先级：shell export > root .env > 缺省。回写 os.environ 供 compose
-    插值（DBUS_SESSION_BUS_PATH / HOST_NET_SSHD_PORT），返回两者解析值。
+    令牌优先级：shell export > root .env > 运行期自动探测（见
+    :func:`_runtime_probe_session_bus`；历史缺省硬编码 /run/user/1000/bus
+    已废弃——UID 随宿主而变）。回写 os.environ 供 compose 插值
+    （DBUS_SESSION_BUS_PATH / HOST_NET_SSHD_PORT），返回两者解析值。
     """
     ns = spec.namespace
-    dbus_path = str(
+    explicit = str(
         os.environ.get("DBUS_SESSION_BUS_PATH")
         or env.get("DBUS_SESSION_BUS_PATH")
-        or "/run/user/1000/bus"
-    )
-    if not _runtime_socket_exists(c, dbus_path):
-        print(f"[{ns}] ⚠ --passthrough 需要宿主 D-Bus 会话总线，但 {dbus_path} 不是 socket：")
-        print(f"[{ns}]   物理 Linux：确认用户会话已登录（loginctl）并运行 "
-              "systemctl --user 总线；")
-        print(f"[{ns}]   WSL2：podman machine 内须有 user 会话——可在发行版内以普通")
-        print("           用户执行 `sudo systemctl start dbus`（系统总线）后改用")
-        print(f"           DBUS_SESSION_BUS_PATH=/run/dbus/system_bus_socket invoke "
-              f"{ns}.up --passthrough")
-        print(f"[{ns}]   不需要 D-Bus 时直接去掉 --passthrough。")
-        raise Exit(1)
+        or ""
+    ).strip()
+    if explicit:
+        # 显式令牌（shell export > .env）：尊重用户选择，仅校验是否为 socket。
+        if not _runtime_socket_exists(c, explicit):
+            print(f"[{ns}] ⚠ --passthrough 需要宿主 D-Bus 会话总线，但显式指定的 "
+                  f"{explicit} 不是 socket：")
+            print(f"[{ns}]   物理 Linux 核对：ls -l \"$XDG_RUNTIME_DIR/bus\""
+                  "（实际路径按当前登录用户，UID 未必是 1000）；")
+            print(f"[{ns}]   WSL2：podman machine 内须有 user 会话——可在发行版内以普通")
+            print("           用户执行 `sudo systemctl start dbus`（系统总线）后改用")
+            print(f"           DBUS_SESSION_BUS_PATH=/run/dbus/system_bus_socket invoke "
+                  f"{ns}.up --passthrough")
+            print(f"[{ns}]   不需要 D-Bus 时直接去掉 --passthrough。")
+            raise Exit(1)
+        dbus_path = explicit
+    else:
+        # 无显式令牌：在 podman 运行环境动态探测（$DBUS_SESSION_BUS_ADDRESS →
+        # $XDG_RUNTIME_DIR/bus → /run/user/$(id -u)/bus），不硬编码任何 UID。
+        dbus_path = _runtime_probe_session_bus(c)
+        if not dbus_path:
+            print(f"[{ns}] ⚠ --passthrough 需要宿主 D-Bus 会话总线，但未在 podman "
+                  "所在环境探测到会话总线 socket：")
+            print(f"[{ns}]   已按顺序探测：$DBUS_SESSION_BUS_ADDRESS(unix:path=) "
+                  "→ $XDG_RUNTIME_DIR/bus → /run/user/$(id -u)/bus")
+            print(f"[{ns}]   物理 Linux：确认用户会话已登录（loginctl）且用户总线在跑：")
+            print("           loginctl list-sessions；systemctl --user is-active "
+                  "default.target")
+            print(f"[{ns}]   WSL2：podman machine 内须有 user 会话——可在发行版内以普通")
+            print("           用户执行 `sudo systemctl start dbus`（系统总线）后改用")
+            print(f"           DBUS_SESSION_BUS_PATH=/run/dbus/system_bus_socket invoke "
+                  f"{ns}.up --passthrough")
+            print(f"[{ns}]   不需要 D-Bus 时直接去掉 --passthrough。")
+            raise Exit(1)
     sshd_port = str(
         os.environ.get("HOST_NET_SSHD_PORT")
         or env.get("HOST_NET_SSHD_PORT")

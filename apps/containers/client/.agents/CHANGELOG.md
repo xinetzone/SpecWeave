@@ -18,6 +18,20 @@
 
 ## [Unreleased]
 
+### 2026-09-24 · `fix:` --passthrough D-Bus 会话总线缺省路径改运行期动态探测（UID 不再硬编码 1000）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C）——`invoke native.up --passthrough --gpu --usb --offline` 在物理 Linux 本机门禁 Exit(1)，报「/run/user/1000/bus 不是 socket」。
+
+**I 事实**：`overlay_core.resolve_passthrough` 把会话总线缺省路径硬编码为 `/run/user/1000/bus`（仅 `DBUS_SESSION_BUS_PATH` 显式令牌可覆盖）；本机用户 `ai` 的 **UID=1006**，`/run/user/1000` 整个不存在，真实会话总线在 `/run/user/1006/bus`（`XDG_RUNTIME_DIR=/run/user/1006`、`DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1006/bus`、`systemctl --user` active，物理 Linux 非 WSL），门禁 `test -S` 必败。同条命令的 TORCH_FLAVOR 形态告警是另一独立非阻断项（本机 `.env` 未声明=空、镜像 LABEL 实为 cu130），按用户确认在本机 `.env`（gitignore，不入库）写 `TORCH_FLAVOR=cu130` 收口，不进本次提交。
+
+**F 定论**：UID 随宿主而变，缺省路径不得写死。无显式令牌时在 **podman 真正运行的环境**（兼容 Windows→WSL 桥接，故经 `run_cmd` 而非读 Python 侧 `os.environ`）按标准优先级探测：`$DBUS_SESSION_BUS_ADDRESS`(unix:path=，剥除 `,guid=` 尾段) → `$XDG_RUNTIME_DIR/bus` → `/run/user/$(id -u)/bus`；显式令牌最高优先、只做 `test -S` 校验的语义不变。
+
+**E/C 落地**：内核新增 `_runtime_probe_session_bus()`（单条 POSIX shell 三候选探测，命中输出路径，全失空串）；`resolve_passthrough` 拆「显式令牌无效」与「自动探测无果」两类中文 fail-fast 文案（后者列出探测顺序并给物理 Linux `loginctl`/`systemctl --user` 核对步骤与 WSL2 系统总线逃生路径）；`compose.passthrough.yaml` 前置检查注释、`docs/07-passthrough-and-combos.md` 排障行、`.env.example` 注释同步（注明 UID 未必是 1000、留空自动探测）。`test_overlay_core.py` FakeRunner 增加会话总线探测模拟，新增 5 例（UID≠1000 自动命中、显式令牌跳过探测、显式无效路径文案、探测全失 fail-fast、helper 空失败）。
+
+**V 验收**：`pytest tests -q` **229 passed / 1 skipped**；真机重跑原命令 EXIT 0，横幅 `透传 host 网络 + D-Bus（/run/user/1006/bus；…passthrough）`、torch 形态告警消失；`podman inspect` 实证 `net=host` + 挂载 `/run/user/1006/bus -> /tmp/runtime-user/bus`，容器内 `test -S` 通过，`/dev/bus/usb` 001–008 可见，`nvidia-smi -L` 见 RTX 3090 + RTX 2080 Ti，Jupyter 302 可达。
+
+提交 `fix(client)` = 本提交（CHANGELOG 留痕与代码/文档变更同笔落盘）。
+
 ### 2026-09-23 · `docs:` CHANGELOG 原子化拆分为 archive/ 六段（251296 字节 → 6.2KB 索引页）
 
 **关联七概念场景**：场景3「重构优化」（I→F→A→C）——主文件累积至 2245 行 / 251296 字节 / 71 条目，超出 64KB 可读性阈值，新增条目被历史噪声淹没。

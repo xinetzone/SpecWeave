@@ -87,6 +87,9 @@ class FakeRunner:
         # 按 tag 精确控制镜像存在性；None = 沿用 image_exists 布尔（历史用例）。
         self.image_exists_tags = image_exists_tags
         self.net_mode = net_mode
+        # _runtime_probe_session_bus 的显式探测结果；空串时回退为 paths 集合中
+        # 形如 /run/user/<uid>/bus 的首个命中（模拟 daemon 侧按 id -u 自动探测）。
+        self.session_bus = ""
 
     def __call__(self, c, cmd, **kwargs):
         self.calls.append((cmd, kwargs))
@@ -95,6 +98,21 @@ class FakeRunner:
             path = path.strip().strip("'\"")
             exists = True if self.paths is None else path in self.paths
             return SimpleNamespace(ok=exists, stdout="", return_code=0 if exists else 1)
+        if '"/run/user/$(id -u)/bus"' in cmd:
+            # _runtime_probe_session_bus：模拟 daemon 侧三候选自动探测。
+            # paths=None 是历史「一律存在」的宽松默认 → 探测命中历史缺省路径；
+            # set() = 精确为空（无会话总线）；非空集合取其中 /run/user/<uid>/bus。
+            if self.session_bus:
+                out = self.session_bus
+            elif self.paths is None:
+                out = "/run/user/1000/bus"
+            else:
+                hits = sorted(
+                    p for p in self.paths
+                    if re.fullmatch(r"/run/user/[^/]+/bus", p)
+                )
+                out = hits[0] if hits else ""
+            return SimpleNamespace(ok=bool(out), stdout=out, return_code=0 if out else 1)
         if "/etc/cdi" in cmd:
             return SimpleNamespace(
                 ok=self.cdi,
@@ -1719,6 +1737,65 @@ def test_resolve_passthrough_missing_dbus_fails_fast(harness, capsys):
     assert "D-Bus 会话总线" in out
     assert "DBUS_SESSION_BUS_PATH=/run/dbus/system_bus_socket" in out
     assert "去掉 --passthrough" in out
+
+
+def test_resolve_passthrough_auto_probes_non_1000_uid(harness):
+    """UID≠1000 的宿主：不再依赖硬编码缺省，按 id -u 探测到真实会话总线。
+
+    2026-09-24 本机回归：UID=1006，总线在 /run/user/1006/bus，历史缺省
+    /run/user/1000/bus 必然不存在。
+    """
+    harness.runner.paths = {"/run/user/1006/bus"}
+    dbus, sshd = oc.resolve_passthrough(None, _NATIVE, {})
+    assert (dbus, sshd) == ("/run/user/1006/bus", "2223")
+    assert os.environ["DBUS_SESSION_BUS_PATH"] == "/run/user/1006/bus"
+    probe = [c for c in harness.runner.commands if '"/run/user/$(id -u)/bus"' in c]
+    assert len(probe) == 1
+    # 探测覆盖三候选：DBUS_SESSION_BUS_ADDRESS / XDG_RUNTIME_DIR / id -u
+    assert "DBUS_SESSION_BUS_ADDRESS" in probe[0]
+    assert "XDG_RUNTIME_DIR" in probe[0]
+
+
+def test_resolve_passthrough_explicit_token_skips_probe(harness):
+    """显式 DBUS_SESSION_BUS_PATH 最高优先：只做 test -S，不跑自动探测。"""
+    harness.runner.paths = {"/run/dbus/system_bus_socket"}
+    dbus, _ = oc.resolve_passthrough(None, _NATIVE, {
+        "DBUS_SESSION_BUS_PATH": "/run/dbus/system_bus_socket",
+    })
+    assert dbus == "/run/dbus/system_bus_socket"
+    assert not any('"/run/user/$(id -u)/bus"' in c for c in harness.runner.commands)
+
+
+def test_resolve_passthrough_explicit_invalid_path_guide(harness, capsys):
+    """显式令牌指向非 socket：fail-fast 且报出用户指定的路径。"""
+    harness.runner.paths = set()
+    with pytest.raises(Exit):
+        oc.resolve_passthrough(None, _NATIVE, {
+            "DBUS_SESSION_BUS_PATH": "/run/user/1000/bus",
+        })
+    out = capsys.readouterr().out
+    assert "/run/user/1000/bus 不是 socket" in out
+    assert "XDG_RUNTIME_DIR" in out
+
+
+def test_resolve_passthrough_probe_miss_fails_fast(harness, capsys):
+    """三候选均无 socket（如无 user 会话的最小化 WSL）：fail-fast + 探测顺序说明。"""
+    harness.runner.paths = set()
+    harness.runner.session_bus = ""
+    with pytest.raises(Exit) as ei:
+        oc.resolve_passthrough(None, _NATIVE, {})
+    assert ei.value.code == 1
+    out = capsys.readouterr().out
+    assert "未在 podman" in out
+    assert "XDG_RUNTIME_DIR/bus" in out
+    assert "/run/user/$(id -u)/bus" in out
+    assert "DBUS_SESSION_BUS_PATH=/run/dbus/system_bus_socket" in out
+    assert "去掉 --passthrough" in out
+
+
+def test_runtime_probe_session_bus_returns_empty_on_failure(harness):
+    harness.runner.paths = set()
+    assert oc._runtime_probe_session_bus(None) == ""
 
 
 def test_resolve_passthrough_busy_ports_fail_fast(harness, capsys):
