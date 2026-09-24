@@ -144,6 +144,8 @@
   - 新增 [src/mp_archiver/core/official_sync.py](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/core/official_sync.py)：biz 解析（显式配置 → R2 已同步数据按别名查）、去重入库（`preserve_status=True` 不回退采集状态）、配额触顶优雅停止。
   - articles 表新增 `source` 列（schema.sql + ALTER 迁移），多源命中合并为 `exporter+official_api`；CLI 新增 `sync-official -a`（无凭证零请求跳过/48001 降级退出码 0/网络错误退出码 4/biz 缺失退出码 3），实跑验证通过。
   - TR-8.1：[tests/test_official_api.py](../../../apps/dev-tools/wechat-mp-archiver/tests/test_official_api.py) 22 个 mock 用例覆盖解析展开、48001/其他 errcode、token 刷新一次（二次仍失败不循环）、无凭证零请求、biz 缺失/R2 别名回退、与 R2 合并保状态、配额触顶/持久化/跨日重置/坏文件容错、no_content 裁剪自动重取/永久空页报错、畸形 item/越界时间戳、CLI 五档退出码（0/3/4 × 48001、biz 缺失、40164、非 JSON、空白 secret）；全量 120/120 通过。
+  - TR-8.1 真实联调（2026-09-24 完成）：分段证据链排障推进，五段探针 `official-doctor -a 自有号` 实测结论如下。① 配置形态：biz `MzcwMzE5NTI5NA==` 经 [resolve_article_identity](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/core/official_probe.py) 用 MicroMessenger UA 抓取公众号文章短链提取（绕过 `wappoc_appmsgcaptcha` 人机验证码页），填入 .env。② 网络可达：本机直连 `api.weixin.qq.com/getcallbackip` 200 响应。③ token 换取：用户在公众平台后台加入出口 IP `124.160.63.178` 白名单后（40164 解除），`cgi-bin/token` 返回有效 `access_token`。④ batchget 实页：`freepublish/batchget` 调用成功但 `total_count=0`——该号文章经群发发布，**不在 freepublish 覆盖范围**（接口契约仅含"已发布图文"含"发表不通知"，群发历史不返回），代码注释已声明此边界。⑤ biz 一致性：合集页 `__biz=MzcwMzE5NTI5NA==` 与配置一致。
+  - TR-8.1 失败测试修复（同日）：`test_cli_missing_biz_exits_three` 预存在失败定位与修复。根因不是 `OfficialApiAdapter.__init__` 在构造时触发 token 请求（实测构造无副作用），而是**测试隔离不彻底**——`monkeypatch.delenv("MP_ARCHIVER_WECHAT_OFFICIAL_BIZ")` 只删环境变量，但 pydantic-settings 在环境变量缺失时**回退到项目根 `.env` 文件**加载 biz，导致 biz 检查通过、token 被实际发起。修复：`monkeypatch.setenv("MP_ARCHIVER_WECHAT_OFFICIAL_BIZ", "")`——环境变量存在且为空，pydantic 直接取空串不回退 .env。修复后该测试通过，全量 147/147 通过，无回归。另：[official_probe.py](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/core/official_probe.py) 同期加固 `resolve_article_identity`：新增 `_MICROMESSENGER_UA` 常量、`_is_valid_biz()` 校验函数（排除 `${window.biz}` JS 占位符、要求 Base64 形态）、`wappoc` 验证码页直接抛 `PayloadError`；`tests/test_official_probe.py` 新增 3 个测试覆盖新行为。
   - 独立评审（fresh context）首轮结论 NEEDS-FIX，5 个 P1 与 8 项 P2 已全部关闭：P1-1 no_content=1 静默零产出（有组无条目时 no_content=0 自动重取，仍空抛 PayloadError）；P1-2 item/group 畸形类型安全处理；P1-3 越界时间戳与非法 errcode 容错（_safe_int/OverflowError/OSError）；P1-4 CLI 补 ApiRetError（40164/40125/45009 定向提示）/PayloadError/非 JSON 干净处理退出码 4；P1-5 文档统一为"官方仅列认证服务号、认证订阅号以后台权限页与实测为准"。P2：source 合并改 Python 端精确成员+字典序规范化（merge_source 幂等，杜绝 api 误命中 official_api）、配额状态文件非对象/非数字容错、身份键优先取图文 URL 的 mid/idx/sn（article_id 退化）、夹具 is_deleted 改布尔、CLI strip 预检、错误输出 redact 兜底、EXTERNAL_REF 复用注释。
   - TR-8.2：deploy/README.md 新增第 11 节（适用边界/配置使用/入库语义），故障表补 3 行；.env.example 补 `MP_ARCHIVER_WECHAT_OFFICIAL_BIZ`、`MP_ARCHIVER_OFFICIAL_DAILY_CALL_CAP` 与边界注释；README.md 命令区补 `sync-official`。
 - **Description**:
@@ -153,7 +155,7 @@
 - **Test Requirements**:
   - `rule` TR-8.1: 无凭证时该源不发起请求、不报错；有凭证（或 mock 48001/正常响应）时分支行为正确；配额守护在到达阈值前停止。证据：mock 单测。
   - `rule` TR-8.2: 文档准确陈述接口边界与权限收紧事实。证据：文档评审。
-- **Notes**: 真实接口联调依赖用户自有认证号凭证，列入端到端实测任务（TR-8.1 凭证部分待环境）。
+- **Notes**: 真实接口联调于 2026-09-24 完成（TR-8.1 凭证部分已实测）：分段证据链确认配置/网络/token/biz 四段均通过，但 `freepublish/batchget` 对该号返回 `total_count=0`——这是**接口覆盖范围限制**（仅含已发布图文，不含群发历史），非配置或权限错误。结论：自有号官方 API 路径在本号场景下不产出文章，历史全量采集仍需以 R2 exporter 为主源；官方 API adapter 代码本身可用，对覆盖范围内的号有效。测试层面：发现并修复 `test_cli_missing_biz_exits_three` 预存在失败（pydantic-settings `.env` 回退陷阱），全量 147/147 通过。后续合集路径（`appmsgalbum`）已探查：技术可抓（`window.cgiData.articleList` 含完整 mid/idx/sn/title/create_time），但合集是作者手动选编的主题精选，不覆盖全量历史，不作为主采集源。
 
 ## Task 9: 增量模式与 CLI 编排
 - **Status**: `pending`
