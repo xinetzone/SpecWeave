@@ -25,11 +25,20 @@ sources:
   - id: S-011
     resource: /references/article-source.md
     title: DaoCloud MatrixHub 赛题任务书 PDF
+  - id: S-012
+    resource: /references/article-source.md
+    title: openKylin 官方下载中心（3.0 WSL/Desktop WSL 镜像）
+  - id: S-013
+    resource: /references/article-source.md
+    title: openKylin 3.0 正式发布新闻
+  - id: S-014
+    resource: /references/article-source.md
+    title: openKylin 社区孵化仓库 openkylin-wsl（非参赛环境依据）
 ---
 
 # 四份企业赛题任务书深读：选题决策与创新切入点
 
-> **本文依据**：4 份命题企业经大赛官网发布的**任务书 PDF 原件**（2026-09-24 下载并全文解析），事实编号 F-066 ~ F-114，原文逐字摘录见 [信源与事实清单](/references/article-source.md)。
+> **本文依据**：4 份命题企业经大赛官网发布的**任务书 PDF 原件**（2026-09-24 下载并全文解析），事实编号 F-066 ~ F-118（F-115 ~ F-118 为 openKylin 3.0 官方下载页/发布新闻核验增量），原文逐字摘录见 [信源与事实清单](/references/article-source.md)。
 > **标注约定**：无标注内容均为任务书原文事实；标"💡 编者建议"的为根据评分表推演的参赛/创新建议，**非官方承诺或要求**。
 
 ## 〇、最重要的发现：企业命题各有一张"专属评分表"
@@ -51,7 +60,7 @@ sources:
 |------|-------------------|-------------------|---------------|-------------------|
 | 赛道 | 开源 AI 工具 | 开源 AI 工具 | 开源 AI 工具 | 智算云 |
 | 一句话产物 | 能批量跑分、自动判分的记忆 Benchmark（F-066、F-070） | 输入社区中心点、输出等时圈体检报告的 Web/小程序（F-078、F-080） | 基于 XmovAvatar 的具身智能体应用（F-088、F-093） | 模型仓库安全扫描与下载准入系统，并向上游提 PR（F-101、F-109） |
-| 必备环境 | openKylin 操作系统、至少 2 款智能体（F-074） | 百度地图 API Key、Docker（F-080、F-082） | 魔珐星云账号+邀请码积分、Web/Android（F-091、F-092） | MatrixHub 仓库、容器隔离环境、ClamAV 等扫描器（F-112、F-113） |
+| 必备环境 | openKylin 3.0（官方提供 Desktop/Server/WSL/Desktop WSL 镜像，F-116）、至少 2 款智能体（F-074） | 百度地图 API Key、Docker（F-080、F-082） | 魔珐星云账号+邀请码积分、Web/Android（F-091、F-092） | MatrixHub 仓库、容器隔离环境、ClamAV 等扫描器（F-112、F-113） |
 | 技术关键词 | 证据模型、自动判分、.deb/CLI | 等时圈算法、距离矩阵、空间插值、QPS 降级 | 3D 数字人、SSML、RAG、MCP、状态编排 | Pickle 静态分析、HF API 兼容、状态机、Helm |
 | 最强约束 | 必须在 openKylin 直接编译运行（F-072） | 真实社区对比测试报告（F-083） | 至少做满表达层，须论证"非数字人不可"（F-093、F-095） | 必须实质性贡献上游，外部脚本不算完成（F-112） |
 | 专项激励 | 无明示 | 无明示 | 1000 免费积分（邀请码 XJKA436Y6J，F-092） | DaoCloud 专项奖金（F-114） |
@@ -106,7 +115,24 @@ sources:
 
 - 纯做"题库 + 人工标注答案 + 调模型打分"会同时丢掉数据设计与自动评分两档分（占 50%）。
 - 视频只跑一款智能体不满足"至少两款"硬要求（F-074）。
-- 评委要在 openKylin 复现，Windows/macOS 独占开发的团队需尽早准备 openKylin 环境（虚拟机/实体机）。
+- 评委要在 openKylin 复现，Windows/macOS 独占开发的团队需尽早准备 openKylin 环境。
+
+### 2.6 运行环境怎么选：openKylin 3.0 已官方支持 WSL（2026-09-24 核验）
+
+> 以下事实段依据 openKylin 官方下载中心与 3.0 发布新闻（F-115 ~ F-118），建议段为编者意见（非官方）。
+
+**事实**：
+
+- openKylin **3.0 正式版 2026-09-05 发布**，官方下载中心为 AMD64（X86）同时提供 **WSL 镜像（336M）与 Desktop WSL 镜像（6.1G）**（均为 2026-08-28 构建），WSL 是与 Desktop/Server 并列的官方一等分发形态（F-115、F-116）。3.0 还将智能体纳入系统级底座，KylinBot、WorkBuddy、OpenClaw、Raccoon Work 均可完整运行并经 MCP 调用桌面能力（F-115）——与本题评测对象直接相关。
+- Gitee 上的 openkylin/openkylin-wsl 是**社区孵化仓库**（rootfs 停留在 2.0 SP1，约两年未更新），与官方 3.0 WSL 镜像不是同一信源，不要混用（F-117）。
+- 任务书 F-072"在 openKylin 上直接编译运行"**未限定系统形态**；但 F-074 要求"openKylin **桌面环境**下"录屏、F-076 按"openKylin **标准环境**稳定复现"打分，Desktop WSL 是否被评审等同于标准桌面，任务书与官网均无书面说明（F-118）。
+
+**💡 编者建议（非官方）**：
+
+1. **开发与 CLI 验证**：Windows 团队可直接从官方下载中心获取 3.0 **WSL 镜像（336M）**导入 WSL2，完成编译、CLI 工具、自动评分链路开发——这是官方支持的路径，比虚拟机轻量；
+2. **智能体适配与 GUI 联调**：优先试官方 **Desktop WSL（6.1G）**，它是官方为桌面场景构建的 WSL 形态；若 UKUI 桌面、系统服务或被测智能体在其中行为不完整，回退到完整虚拟机；
+3. **最终演示与评审基线（稳妥策略）**：3–5 分钟雷达图录屏（F-074）与评委复现（F-076）建议以 3.0 **标准 Desktop 镜像（7.5G）的虚拟机/实体机**为基线录制，证据上无任何争议空间；时间允许时可补录一段 Desktop WSL 运行画面作为"多形态可复现"加分材料；
+4. **提交前可向会务组 oscc@oschina.cn 或 openKylin 命题方书面确认**"Desktop WSL 是否视为标准桌面环境"——若获肯定答复，全程 WSL 即合规；这一封确认邮件本身也可写进复现材料。
 
 ---
 

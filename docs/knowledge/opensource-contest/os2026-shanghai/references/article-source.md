@@ -2,7 +2,7 @@
 okf_version: "0.2"
 type: Reference
 title: 2026 上海开源软件应用创新大赛 信源与事实清单
-description: 大赛官网事实采集登记（F-001~F-114）与全部信源元数据，含信源距离分级，为知识包唯一事实来源
+description: 大赛官网事实采集登记（F-001~F-118）与全部信源元数据，含信源距离分级，为知识包唯一事实来源
 tags: [opensource, contest, shanghai, oschina, source, facts]
 generated:
   by: agent-trae
@@ -35,6 +35,12 @@ sources:
     url: https://apiv1.oschina.net/api/files/fhhc7e8z6no3gyt/7dlpn932ysr8jzf/ai_ai_1_RCsVsPR7wS.pdf
   - id: brief-matrixhub
     url: https://apiv1.oschina.net/api/files/fhhc7e8z6no3gyt/7yo1xu1cgsd8nj8/dao_cloud_matrix_hub_1_PECU13fk9F.pdf
+  - id: openkylin-downloads
+    url: https://www.openkylin.top/downloads/index-cn.html
+  - id: openkylin-3-release
+    url: https://www.openkylin.top/news/4098-cn.html
+  - id: openkylin-wsl-incubator
+    url: https://gitee.com/openkylin/openkylin-wsl
 ---
 
 # 信源登记与事实清单
@@ -54,10 +60,13 @@ sources:
 | S-009 | 百度地图赛题任务书《基于地图开放能力的"15 分钟生活圈"智能体检与规划助手》 | https://apiv1.oschina.net/api/files/fhhc7e8z6no3gyt/tnm1g74nkqey4eu/ai_15_nIsJ99EN3y.pdf | 命题企业官方任务书 PDF | 一手（命题方原件） | 最高 |
 | S-010 | 魔珐科技赛题任务书《让 AI「活」起来：基于魔珐星云具身交互智能的创新应用》 | https://apiv1.oschina.net/api/files/fhhc7e8z6no3gyt/7dlpn932ysr8jzf/ai_ai_1_RCsVsPR7wS.pdf | 命题企业官方任务书 PDF | 一手（命题方原件） | 最高 |
 | S-011 | DaoCloud 赛题任务书《MatrixHub 模型制品恶意内容扫描与安全准入系统》 | https://apiv1.oschina.net/api/files/fhhc7e8z6no3gyt/7yo1xu1cgsd8nj8/dao_cloud_matrix_hub_1_PECU13fk9F.pdf | 命题企业官方任务书 PDF | 一手（命题方原件） | 最高 |
+| S-012 | openKylin 官方系统下载中心（3.0 镜像表，含 WSL/Desktop WSL） | https://www.openkylin.top/downloads/index-cn.html | openKylin 官网下载页 | 官方发布 | 最高（2026-09-24 实时抓取） |
+| S-013 | openKylin 官网新闻《内核跃迁，智能原生——openKylin 3.0 正式发布》（2026-09-07） | https://www.openkylin.top/news/4098-cn.html | openKylin 官网新闻 | 官方发布 | 最高 |
+| S-014 | openKylin Gitee 社区孵化仓库 openkylin/openkylin-wsl（2.0 SP1 rootfs） | https://gitee.com/openkylin/openkylin-wsl | 社区孵化项目（非官方下载中心） | 第三方社区 | 中（仅用于区分信源，不作为参赛环境依据） |
 
-> 信源距离说明：本知识包主信源为赛事官网（S-001）；政策背景以政府正式文件（S-002）为准；S-004 至 S-007 为 OSCHINA 生态合作作者与第三方平台内容，仅用于交叉核验与历史版本比对，其解读性观点不作为官方事实；S-008 至 S-011 为命题企业经官网分发的赛题任务书 PDF 原件（一手信源，距离最近），赛题细节以其为最高权威。
+> 信源距离说明：本知识包主信源为赛事官网（S-001）；政策背景以政府正式文件（S-002）为准；S-004 至 S-007 为 OSCHINA 生态合作作者与第三方平台内容，仅用于交叉核验与历史版本比对，其解读性观点不作为官方事实；S-008 至 S-011 为命题企业经官网分发的赛题任务书 PDF 原件（一手信源，距离最近），赛题细节以其为最高权威；S-012/S-013 为 openKylin 官方下载中心与发布新闻，赛题运行环境事实以其为准；S-014 为社区孵化仓库，与官方 3.0 WSL 镜像冲突时以 S-012 为准。
 
-## 事实清单（F-001 ~ F-114，与 spec facts.md 双份一致）
+## 事实清单（F-001 ~ F-118，与 spec facts.md 双份一致）
 
 ### A. 大赛身份与政策背景
 
@@ -236,3 +245,12 @@ sources:
 | F-112 | 实现约束（红线）：必须基于 MatrixHub 公开仓库实质性贡献并保持 HF 兼容访问方式，仅在外部跑独立扫描脚本、无法关联仓库版本或影响准入决策的不视为完成；检测范围限定模型制品中的恶意软件、危险序列化、可执行载荷及供应链风险，**不要求**检测模型输出有害性、训练数据投毒、模型后门或对抗样本；允许集成 ClamAV、公开 Pickle 静态分析工具等开源扫描器（不要求自研引擎），但必须说明各扫描器覆盖范围与误报漏报边界，不得将单次通过表述为绝对安全 | S-011 |
 | F-113 | 实现约束（续）：扫描过程不得加载模型、反序列化不可信对象、导入模型自带模块或执行仓库脚本；任务使用低权限隔离环境，默认禁止访问业务凭据与不必要外网；测试不得使用真实活跃恶意软件，通用检测用 EICAR 等无害标准样本、危险序列化用仅静态识别不会执行的受控样本；下载准入必须明确处理待扫描、扫描失败、扫描器不可用状态（可严格阻断或受控放行，但界面/API/审计/客户端错误必须准确展示实际决策）；model_info API 须识别 securityStatus 与 blobs 参数、返回 huggingface_hub ModelInfo 可解析的 securityRepoStatus 字段且与请求 revision 对应，未扫描/扫描中/失败/完成不得折叠为同一空值；应先通过公开 Issue 或设计提案与 MatrixHub 社区对齐方向，获维护者或社区有效认可即可进入完整评审，不要求截止前合并，最终合入状态与时间不作为参赛或获奖必要条件 | S-011 |
 | F-114 | 官方参考：MatrixHub 官方仓库与文档、Hugging Face Malware Scanning、HF Pickle Scanning；补充材料：MatrixHub v1alpha1 OpenAPI（api/openapiv2/v1alpha1）、hfd Hugging Face API 兼容清单（hf-api-status.md）、HF 安全扫描效果样例仓库 mcpotato/42-eicar-street（仅参考文件级告警与仓库级状态展示效果，非指定实现）。专属评分六维：检测覆盖与准确性 25%、MatrixHub 集成与安全准入 25%、扫描执行安全性 15%、可靠性与规模适应性 15%、可解释性与治理体验 10%、工程质量与社区认可 10%；选做团队优秀作品获 DaoCloud 专项奖金激励（具体以 DaoCloud 要求为准） | S-011 |
+
+### I-5. openKylin 运行环境补充（官方下载页核验，更正 WSL 旧判）
+
+| 编号 | 事实 | 信源 |
+|------|------|------|
+| F-115 | openKylin 3.0 正式版于 2026-09-05 发布（官方发布新闻 2026-09-07），提供 Desktop、Server、WSL、嵌入式等多形态镜像；内核升级至 Linux 7.0，桌面环境为 UKUI 4.24；KylinBot、WorkBuddy、OpenClaw、Raccoon Work 等智能体均可在 3.0 完整运行，智能体经 MCP 协议直接调用桌面能力 | S-012 / S-013 |
+| F-116 | openKylin 官方下载中心 3.0 镜像表为 AMD64（X86）提供两种 WSL 形态：WSL 镜像 336M（2026-08-28 更新，下载 id=126）与 Desktop WSL 镜像 6.1G（2026-08-28 更新，id=127）；"所有版本"场景筛选器含"WSL"选项——WSL 是 openKylin 3.0 的官方一等分发形态，不再仅是社区孵化项目 | S-012 |
+| F-117 | openKylin Gitee 组织下另有社区孵化仓库 openkylin/openkylin-wsl，提供自制 2.0 SP1 rootfs（最后更新约两年前），与 3.0 官方下载中心的 WSL/Desktop WSL 镜像不是同一信源；获取参赛环境应以官方下载中心为准 | S-014 / S-012 |
+| F-118 | openKylin 3.0 标准 X86 Desktop 镜像 7.5G（2026-09-05），与 WSL（336M）、Desktop WSL（6.1G）、Server（1.8G）并列为官方并行形态；任务书 F-072"在 openKylin 直接编译运行"未限定形态，官方 WSL 镜像可支撑开发与 CLI 验证；F-074 演示要求"openKylin 桌面环境"录屏、F-076 要求"openKylin 标准环境"复现，Desktop WSL 是否被评审等同于标准桌面环境，任务书与官网均无书面说明 | S-012 / S-008 |

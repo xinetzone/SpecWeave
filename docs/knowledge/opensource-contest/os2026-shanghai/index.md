@@ -27,6 +27,10 @@ sources:
     url: https://apiv1.oschina.net/api/files/fhhc7e8z6no3gyt/7dlpn932ysr8jzf/ai_ai_1_RCsVsPR7wS.pdf
   - id: brief-matrixhub
     url: https://apiv1.oschina.net/api/files/fhhc7e8z6no3gyt/7yo1xu1cgsd8nj8/dao_cloud_matrix_hub_1_PECU13fk9F.pdf
+  - id: openkylin-downloads
+    url: https://www.openkylin.top/downloads/index-cn.html
+  - id: openkylin-3-release
+    url: https://www.openkylin.top/news/4098-cn.html
   - id: policy-doc
     url: https://www.shanghai.gov.cn/nw12344/20251225/7ccd262a2d094d5792a13fa896a892a2.html
 ---
@@ -56,7 +60,7 @@ log
 | 操作 | [参赛操作指南](concepts/03-participation-guide.md) | 报名四步、材料三件套、两阶段评审、四维释义、FAQ |
 | 洞察 | [政策传导与备赛模式](concepts/04-policy-and-insights.md) | 四条机制洞察 +"权重对位备赛法"可迁移模式 |
 | 赛题深读 | [四份企业赛题任务书深读](concepts/05-challenge-briefs-deep-dive.md) | openKylin/百度地图/魔珐/DaoCloud 四题官方任务书逐项拆解、专属评分表对位与创新切入点 |
-| 信源 | [信源与事实清单](references/article-source.md) | 11 信源 + F-001~F-114 事实全表（含 4 份官方任务书 PDF） |
+| 信源 | [信源与事实清单](references/article-source.md) | 14 信源 + F-001~F-118 事实全表（含 4 份官方任务书 PDF、openKylin 3.0 官方信源） |
 | 核验 | [P0 核验报告](references/verification.md) | 22 项核验、勘误四清单、复核计划 |
 | 日志 | [变更日志](log.md) | 版本记录与复核计划 |
 

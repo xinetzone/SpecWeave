@@ -25,6 +25,20 @@ sources:
     url: https://www.cnblogs.com/dadongosc/p/22418716
   - id: huodongxing
     url: https://jinqiao.huodongxing.com/event/1873862071700
+  - id: brief-openkylin
+    url: https://apiv1.oschina.net/api/files/fhhc7e8z6no3gyt/w9qliatd2m6lgs8/ai_open_kylin_open_kylin_benchmark_XaCQyZepC8.pdf
+  - id: brief-baidu-15min
+    url: https://apiv1.oschina.net/api/files/fhhc7e8z6no3gyt/tnm1g74nkqey4eu/ai_15_nIsJ99EN3y.pdf
+  - id: brief-xmov
+    url: https://apiv1.oschina.net/api/files/fhhc7e8z6no3gyt/7dlpn932ysr8jzf/ai_ai_1_RCsVsPR7wS.pdf
+  - id: brief-matrixhub
+    url: https://apiv1.oschina.net/api/files/fhhc7e8z6no3gyt/7yo1xu1cgsd8nj8/dao_cloud_matrix_hub_1_PECU13fk9F.pdf
+  - id: openkylin-downloads
+    url: https://www.openkylin.top/downloads/index-cn.html
+  - id: openkylin-3-release
+    url: https://www.openkylin.top/news/4098-cn.html
+  - id: openkylin-wsl-incubator
+    url: https://gitee.com/openkylin/openkylin-wsl
 ---
 
 # P0 核验报告
@@ -114,3 +128,14 @@ sources:
 | 文本提取完整性 | pdfplumber 提取全文 3–4 页/份无缺页；FontBBox 警告仅为字体元数据提示，不影响文字；4 份 PDF 均为文本型（非扫描图），提取内容含完整表格结构 |
 | 敏感信息处理 | 魔珐邀请码 XJKA436Y6J（F-092）为任务书**公开发放**的参赛资源，按原文保留；未发现凭据/密钥类泄露 |
 | 判定 | stable：49 条新事实全部源自一手原件，无需二次外部核验；任务书后续如由组委会邮件更新（赛题答疑/勘误），以邮件为准并追加 log |
+
+## 六、v1.2 更正核验：openKylin WSL 支持（2026-09-24）
+
+| 核验项 | 方法与结论 |
+|--------|-----------|
+| 更正触发 | 编者在对话中曾依据 Gitee 社区孵化仓库 openkylin/openkylin-wsl（rootfs 停留 2.0 SP1、约两年未更新）判断"WSL 仅孵化支持、不建议用于参赛"；用户指出官方下载页存在 WSL 镜像后，重新抓取一手页面核验 |
+| 一手证据 | 官方下载中心（S-012，2026-09-24 实时抓取）明示：openKylin 3.0（2026-09-05 发布）为 AMD64(X86) 提供 **WSL 336M（id=126）与 Desktop WSL 6.1G（id=127）** 两个镜像（2026-08-28 构建），"所有版本"场景筛选器含 WSL；3.0 发布新闻（S-013）佐证"Desktop、Server、WSL 及嵌入式多形态镜像" |
+| 错误根因 | 时效性失守：openKylin 3.0 于 19 天前（2026-09-05）刚发布，编者沿用了 2.0 时代的旧信源，未先核验官方下载页现状；信源距离上，社区孵化仓库（S-014）不得凌驾于官方下载中心（S-012） |
+| 处置 | 新增 F-115~F-118（双份逐字登记，S-012/S-013/S-014），05 篇新增 §2.6"运行环境怎么选"：官方 WSL 可用于开发/CLI 验证（F-072 未限定形态），Desktop WSL 可用于 GUI 联调；但 F-074"桌面环境录屏"与 F-076"标准环境复现"是否接受 Desktop WSL 无官方书面说明，最终演示仍建议以标准 Desktop 镜像虚拟机/实体机为基线，或先取得命题方书面确认 |
+| 残留不确定性 | Desktop WSL 镜像内 UKUI 完整度、官方 WSL 安装步骤文档尚未逐项核验（下载页安装指南入口存在）；stale_after 前或报名答疑时复核 openKylin 官方文档与组委会口径 |
+| 判定 | stable（事实层）；建议层维持"稳妥基线 + 书面确认"双保险，不把未确认事项表述成官方承诺 |
