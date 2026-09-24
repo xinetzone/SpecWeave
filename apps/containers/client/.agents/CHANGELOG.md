@@ -18,6 +18,20 @@
 
 ## [Unreleased]
 
+### 2026-09-24 · `fix:` up 就绪探测超时归因逐地址列出，::1 永久拒绝不再独占文案冒充 IPv6 故障
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C）——承接同日 D-Bus 修复后真机 `native.up --passthrough` 首启，横幅误报「Jupyter 未在 120s 内应答（ConnectionRefusedError @ ::1:8888）」，而服务实际稍后即在 `127.0.0.1:8888` 正常 302。
+
+**I 事实**：`utils.wait_http_ready` 每轮已按 `127.0.0.1` → `::1` 顺序探测、v4 成功即返回（**无假阴性**），但用单变量 `last` 记录末次异常，每轮都被最后探测的 `::1` 覆盖；Jupyter 默认只绑 `0.0.0.0`（容器日志 `running at http://0.0.0.0:8888`，宿主 `ss -lnt` 仅 `0.0.0.0:8888` 无 `:::8888`），**`::1` 拒绝是永久预期行为**——于是任何超时文案都只剩 `::1`，把 IPv4 侧真实信号（尚未 listen 的 ConnectionRefused、rootlessport 零字节窗的 ConnectionReset）淹没，被误读为「IPv6 故障」。时间线实证：容器 10:07:37 启动、Jupyter 10:09:37 才 listen，首启约 120s 紧贴 `UP_READY_TIMEOUT_S` 边界。
+
+**F 定论**：探测策略无需改（双栈都试、v4 优先），缺陷只在错误归因——两地址末次错误须各自独立保留，超时文案逐地址列出且 IPv4 在前（权威信号），并显式注明「::1 拒绝在服务仅绑 IPv4 时属预期，以 127.0.0.1 状态为准」。
+
+**E/C 落地**：`wait_http_ready` 以 `last_err` dict 替换单变量，超时返回 `127.0.0.1 <异常>；::1 <异常>（Ns 无 HTTP 应答；…）`；成功路径与「超时不抛异常、不判失败」契约不变。`test_up_readiness.py` 新增 2 例：双地址归因顺序（v4 在 v6 前、含「仅绑 IPv4」说明）、v4 零字节窗 ConnectionResetError 与 v6 ConnectionRefusedError 两类错误同时保留。
+
+**V 验收**：`pytest tests -q` **231 passed / 1 skipped**；函数级实证运行中服务返回 `(True, '127.0.0.1 → HTTP 302')`、封闭端口返回双地址新文案；端到端 `native.down && native.up --passthrough --gpu --usb --offline` 约 100s 正确打印「Jupyter 已就绪（127.0.0.1 → HTTP 302）」无误报。遗留边界（本次未改）：cu130 镜像首启约 120s 紧贴超时上限，偶发超时时可单独调宽该栈超时。
+
+提交 `fix(client)` = 本提交（CHANGELOG 留痕与代码/测试变更同笔落盘）。
+
 ### 2026-09-24 · `fix:` --passthrough D-Bus 会话总线缺省路径改运行期动态探测（UID 不再硬编码 1000）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C）——`invoke native.up --passthrough --gpu --usb --offline` 在物理 Linux 本机门禁 Exit(1)，报「/run/user/1000/bus 不是 socket」。

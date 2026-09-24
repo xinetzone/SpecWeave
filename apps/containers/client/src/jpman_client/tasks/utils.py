@@ -926,6 +926,12 @@ def wait_http_ready(
 
     探测地址显式覆盖 ``127.0.0.1`` 与 ``::1``（与 :func:`refresh_host_keys`
     同因：``localhost`` 可能优先解析到未监听的 ``::1``，而转发只绑 IPv4）。
+    两地址**各自独立记录末次错误**：IPv4 优先探测且其状态是就绪判据的权威信号；
+    ``::1`` 在服务仅绑 IPv4（Jupyter 默认 ``0.0.0.0``，rootlessport 多数配置亦
+    仅 v4）时会**永久拒绝**——这是预期噪声，绝不能让它独占超时文案（历史实现
+    用单变量 ``last``，每轮被最后探测的 ``::1`` 覆盖，把 v4 侧真实状态——
+    尚未 listen 的 ConnectionRefused 或 rootlessport 零字节窗——淹没，
+    误导成「IPv6 故障」；2026-09-24 native host 形态实证）。
 
     超时**不抛异常、不判失败**：容器确实已 Up，只是服务仍在首次启动；调用方
     应打印可执行指引而非中断（对齐 `up_preflight` 的「自愈优先、指引兜底」）。
@@ -933,19 +939,21 @@ def wait_http_ready(
     """
     import time as _time
 
+    addrs = ("127.0.0.1", "::1")
     started = _time.monotonic()
     deadline = started + timeout
     next_progress = started + UP_READY_PROGRESS_S
-    last = "无应答"
+    # 各地址末次错误（异常类名）；保留到超时时逐地址归因，不互相覆盖。
+    last_err: dict[str, str] = {}
     while True:
-        for addr in ("127.0.0.1", "::1"):
+        for addr in addrs:
             conn = http.client.HTTPConnection(addr, int(port), timeout=2.0)
             try:
                 conn.request("GET", path)
                 resp = conn.getresponse()
                 return True, f"{addr} → HTTP {resp.status}"
             except (OSError, http.client.HTTPException) as exc:
-                last = f"{type(exc).__name__} @ {addr}:{port}"
+                last_err[addr] = type(exc).__name__
             finally:
                 conn.close()
         now = _time.monotonic()
@@ -954,5 +962,11 @@ def wait_http_ready(
             on_progress(now - started)
             next_progress = now + UP_READY_PROGRESS_S
         if now >= deadline:
-            return False, f"{last}（{now - started:.0f}s 无 HTTP 应答）"
+            per_addr = "；".join(
+                f"{a} {last_err.get(a, '无应答')}" for a in addrs
+            )
+            return False, (
+                f"{per_addr}（{now - started:.0f}s 无 HTTP 应答；"
+                "::1 拒绝在服务仅绑 IPv4 时属预期，以 127.0.0.1 状态为准）"
+            )
         _time.sleep(UP_READY_POLL_S)
