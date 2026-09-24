@@ -22,6 +22,7 @@ mdi/index
 mdi-research/index
 myst-unified-ecosystem/index
 operations/index
+opensource-contest/index
 platform/index
 quality-assurance/index
 scripts/index
@@ -50,6 +51,7 @@ VENDOR-INTEGRATION
 | **[Python 3.14 标准库知识包](../../projects/awesome-okf-xs/doc/bundles/jishu/python/stdlib/index.md)** | Python 3.14 标准库系统学习（contextlib / contextvars / sys.monitoring / annotationlib / dataclasses / traceback） | [概述](../../projects/awesome-okf-xs/doc/bundles/jishu/python/stdlib/index.md) |
 | **[AI Engineering](ai-engineering/index.md)** | AI Agent 工程化领域知识库（Loop Engineering、Karpathy LLM Wiki 分析等） | [Loop Engineering 知识库](ai-engineering/concepts/loop-engineering-knowledge-base.md) |
 | **AI 教育** | AI 教育智能体与教育科技学习成果（OpenMAIC 知识包等） | [OpenMAIC 知识包](ai-education/openmaic/index.md) |
+| **[开源赛事](opensource-contest/index.md)** | 开源竞赛与政策型开发者大赛的参赛知识包（规则、赛程、评审机制、备赛方法论） | [2026 上海开源软件应用创新大赛知识包](opensource-contest/os2026-shanghai/index.md) |
 | **算法艺术** | 生成式艺术与算法创意探索（Atomic Emergence 等） | [Atomic Emergence 哲学](algorithmic-art/atomic-emergence/concepts/philosophy.md) |
 | **工程化研究** | 深度学习原子化设计等工程方法论研究 | [AI Agent 原子化设计分析](engineering/deep-learning-atomic-design/concepts/ai-agent-atomic-design-analysis.md) |
 | **[TRAE 生态特性监测](trae-feature-watch/index.md)** | 每周例行追踪官方更新日志、文档新特性、TraeWork 设计库与本地插件/skills 清单变化 | [最新一期周报（2026-09-21）](trae-feature-watch/2026-09-21-trae-feature-watch.md) |
