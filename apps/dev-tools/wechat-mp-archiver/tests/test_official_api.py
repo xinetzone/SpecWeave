@@ -519,7 +519,11 @@ def test_cli_missing_biz_exits_three(monkeypatch, tmp_path, capsys):
     from mp_archiver import cli as cli_module
 
     _cli_env(monkeypatch, tmp_path)
-    monkeypatch.delenv("MP_ARCHIVER_WECHAT_OFFICIAL_BIZ")
+    # 注意：用 setenv("") 而非 delenv——pydantic-settings 在环境变量缺失时
+    # 会回退到项目根 .env 文件加载 biz，导致测试隔离失效（实测：delenv 后 biz
+    # 仍为 .env 里的 MzcwMzE5NTI5NA==，biz 检查通过，进而发起 token 请求）。
+    # setenv("") 让环境变量存在且为空，pydantic 直接取空串，不回退到 .env。
+    monkeypatch.setenv("MP_ARCHIVER_WECHAT_OFFICIAL_BIZ", "")
     called = {"n": 0}
 
     class _ProbeClient:
