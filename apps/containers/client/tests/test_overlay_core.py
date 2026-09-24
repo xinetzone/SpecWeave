@@ -87,6 +87,9 @@ class FakeRunner:
         # 按 tag 精确控制镜像存在性；None = 沿用 image_exists 布尔（历史用例）。
         self.image_exists_tags = image_exists_tags
         self.net_mode = net_mode
+        # _runtime_probe_session_bus 的显式探测结果；空串时回退为 paths 集合中
+        # 形如 /run/user/<uid>/bus 的首个命中（模拟 daemon 侧按 id -u 自动探测）。
+        self.session_bus = ""
 
     def __call__(self, c, cmd, **kwargs):
         self.calls.append((cmd, kwargs))
@@ -95,6 +98,21 @@ class FakeRunner:
             path = path.strip().strip("'\"")
             exists = True if self.paths is None else path in self.paths
             return SimpleNamespace(ok=exists, stdout="", return_code=0 if exists else 1)
+        if '"/run/user/$(id -u)/bus"' in cmd:
+            # _runtime_probe_session_bus：模拟 daemon 侧三候选自动探测。
+            # paths=None 是历史「一律存在」的宽松默认 → 探测命中历史缺省路径；
+            # set() = 精确为空（无会话总线）；非空集合取其中 /run/user/<uid>/bus。
+            if self.session_bus:
+                out = self.session_bus
+            elif self.paths is None:
+                out = "/run/user/1000/bus"
+            else:
+                hits = sorted(
+                    p for p in self.paths
+                    if re.fullmatch(r"/run/user/[^/]+/bus", p)
+                )
+                out = hits[0] if hits else ""
+            return SimpleNamespace(ok=bool(out), stdout=out, return_code=0 if out else 1)
         if "/etc/cdi" in cmd:
             return SimpleNamespace(
                 ok=self.cdi,
@@ -188,6 +206,15 @@ def harness(monkeypatch, tmp_path):
     monkeypatch.setattr(oc.shutil, "which", lambda name: "/usr/bin/podman-compose")
     monkeypatch.setattr(oc, "run_in_wsl_bridge", lambda *a, **k: None)
     monkeypatch.setattr(oc, "ensure_wsl_rootless_runtime", lambda: None)
+    # C34：B-scheme 预检接触面默认打桩为「socket 已就绪、无需自愈」，保持
+    # 既有 up_stack 用例 hermetic（真实宿主探测不可进单测）；失败/自愈形态
+    # 由 C34 专用用例自行替换。
+    monkeypatch.setattr(oc, "ensure_host_podman_socket", lambda: (True, "", False))
+    monkeypatch.setattr(
+        oc, "podman_sock_path", lambda: "/run/user/1000/podman/podman.sock"
+    )
+    monkeypatch.delenv("HOST_PODMAN_SOCK", raising=False)
+    monkeypatch.delenv("PODMAN_RUNTIME_UID", raising=False)
     monkeypatch.setattr(oc.time, "sleep", lambda *_a, **_k: None)
     # C21：就绪探测打桩为「立即就绪」，避免单测真的去轮询宿主端口（最长 120s）。
     # 探测语义本身（含 TCP 假阳性守卫）由 test_up_readiness.py 用回环 socket 锁。
@@ -1738,6 +1765,65 @@ def test_resolve_passthrough_missing_dbus_fails_fast(harness, capsys):
     assert "去掉 --passthrough" in out
 
 
+def test_resolve_passthrough_auto_probes_non_1000_uid(harness):
+    """UID≠1000 的宿主：不再依赖硬编码缺省，按 id -u 探测到真实会话总线。
+
+    2026-09-24 本机回归：UID=1006，总线在 /run/user/1006/bus，历史缺省
+    /run/user/1000/bus 必然不存在。
+    """
+    harness.runner.paths = {"/run/user/1006/bus"}
+    dbus, sshd = oc.resolve_passthrough(None, _NATIVE, {})
+    assert (dbus, sshd) == ("/run/user/1006/bus", "2223")
+    assert os.environ["DBUS_SESSION_BUS_PATH"] == "/run/user/1006/bus"
+    probe = [c for c in harness.runner.commands if '"/run/user/$(id -u)/bus"' in c]
+    assert len(probe) == 1
+    # 探测覆盖三候选：DBUS_SESSION_BUS_ADDRESS / XDG_RUNTIME_DIR / id -u
+    assert "DBUS_SESSION_BUS_ADDRESS" in probe[0]
+    assert "XDG_RUNTIME_DIR" in probe[0]
+
+
+def test_resolve_passthrough_explicit_token_skips_probe(harness):
+    """显式 DBUS_SESSION_BUS_PATH 最高优先：只做 test -S，不跑自动探测。"""
+    harness.runner.paths = {"/run/dbus/system_bus_socket"}
+    dbus, _ = oc.resolve_passthrough(None, _NATIVE, {
+        "DBUS_SESSION_BUS_PATH": "/run/dbus/system_bus_socket",
+    })
+    assert dbus == "/run/dbus/system_bus_socket"
+    assert not any('"/run/user/$(id -u)/bus"' in c for c in harness.runner.commands)
+
+
+def test_resolve_passthrough_explicit_invalid_path_guide(harness, capsys):
+    """显式令牌指向非 socket：fail-fast 且报出用户指定的路径。"""
+    harness.runner.paths = set()
+    with pytest.raises(Exit):
+        oc.resolve_passthrough(None, _NATIVE, {
+            "DBUS_SESSION_BUS_PATH": "/run/user/1000/bus",
+        })
+    out = capsys.readouterr().out
+    assert "/run/user/1000/bus 不是 socket" in out
+    assert "XDG_RUNTIME_DIR" in out
+
+
+def test_resolve_passthrough_probe_miss_fails_fast(harness, capsys):
+    """三候选均无 socket（如无 user 会话的最小化 WSL）：fail-fast + 探测顺序说明。"""
+    harness.runner.paths = set()
+    harness.runner.session_bus = ""
+    with pytest.raises(Exit) as ei:
+        oc.resolve_passthrough(None, _NATIVE, {})
+    assert ei.value.code == 1
+    out = capsys.readouterr().out
+    assert "未在 podman" in out
+    assert "XDG_RUNTIME_DIR/bus" in out
+    assert "/run/user/$(id -u)/bus" in out
+    assert "DBUS_SESSION_BUS_PATH=/run/dbus/system_bus_socket" in out
+    assert "去掉 --passthrough" in out
+
+
+def test_runtime_probe_session_bus_returns_empty_on_failure(harness):
+    harness.runner.paths = set()
+    assert oc._runtime_probe_session_bus(None) == ""
+
+
 def test_resolve_passthrough_busy_ports_fail_fast(harness, capsys):
     harness.runner.paths = {"/run/user/1000/bus"}
     harness.runner.ss_output = (
@@ -2044,3 +2130,127 @@ def test_smoke_standalone_native_notes_flags_ignored(harness, capsys):
     oc.smoke_stack(None, _NATIVE, usb=True)
     out = capsys.readouterr().out
     assert "--passthrough/--gui/--usb 仅在栈运行路径生效" in out
+
+
+# ---------------------------------------------------------------------------
+# C34：B-scheme 宿主 podman socket 预检与令牌注入（三栈 up 门禁第一位）
+#
+# 背景：三叠加栈 compose 此前从未挂载宿主 socket，entrypoint 静默回退 DinP
+# （嵌套 rootless 必被 newuidmap 拒），Notebook 运行时才 FileNotFoundError。
+# resolve_host_podman_socket 是三栈共用的唯一预检点，必须先于一切子进程。
+# ---------------------------------------------------------------------------
+
+_DEFAULT_SOCK = "/run/user/1000/podman/podman.sock"
+
+
+@pytest.mark.parametrize("spec", ALL_SPECS)
+def test_resolve_host_podman_socket_injects_token(harness, spec):
+    """就绪时：推导令牌同时回写 env dict 与 os.environ（compose 三处插值）。"""
+    env = {}
+    token = oc.resolve_host_podman_socket(None, spec, env)
+    assert token == _DEFAULT_SOCK
+    assert env["HOST_PODMAN_SOCK"] == _DEFAULT_SOCK
+    assert os.environ["HOST_PODMAN_SOCK"] == _DEFAULT_SOCK
+
+
+def test_resolve_shell_export_token_has_top_priority(harness, monkeypatch):
+    """shell export > .env（env dict）> podman_sock_path() 推导值。"""
+    monkeypatch.setenv("HOST_PODMAN_SOCK", "/run/user/1006/podman/podman.sock")
+    env = {"HOST_PODMAN_SOCK": "/run/user/9999/podman/podman.sock"}
+    token = oc.resolve_host_podman_socket(None, _NATIVE, env)
+    assert token == "/run/user/1006/podman/podman.sock"
+    assert env["HOST_PODMAN_SOCK"] == "/run/user/1006/podman/podman.sock"
+    assert os.environ["HOST_PODMAN_SOCK"] == "/run/user/1006/podman/podman.sock"
+
+
+def test_resolve_dotenv_token_beats_derived_default(harness, monkeypatch):
+    """shell 未 export 时 .env 令牌（env dict）压过推导缺省（物理机 UID 覆盖）。"""
+    monkeypatch.delenv("HOST_PODMAN_SOCK", raising=False)
+    env = {"HOST_PODMAN_SOCK": "/run/user/1005/podman/podman.sock"}
+    token = oc.resolve_host_podman_socket(None, _NATIVE, env)
+    assert token == "/run/user/1005/podman/podman.sock"
+    assert os.environ["HOST_PODMAN_SOCK"] == "/run/user/1005/podman/podman.sock"
+
+
+def test_resolve_blank_token_falls_through_to_next_candidate(harness, monkeypatch):
+    """纯空白令牌（truthy 串）不得中选：shell 空白 → .env 候选 → 推导缺省。"""
+    monkeypatch.setenv("HOST_PODMAN_SOCK", "   ")
+    env = {"HOST_PODMAN_SOCK": "  "}
+    token = oc.resolve_host_podman_socket(None, _NATIVE, env)
+    assert token == _DEFAULT_SOCK
+    assert os.environ["HOST_PODMAN_SOCK"] == _DEFAULT_SOCK
+    assert env["HOST_PODMAN_SOCK"] == _DEFAULT_SOCK
+
+    # shell 空白、.env 有效 → 取 .env 候选（逐级 strip 判空）
+    monkeypatch.setenv("HOST_PODMAN_SOCK", "   ")
+    env = {"HOST_PODMAN_SOCK": " /run/user/1005/podman/podman.sock "}
+    token = oc.resolve_host_podman_socket(None, _NATIVE, env)
+    assert token == "/run/user/1005/podman/podman.sock"
+
+
+def test_resolve_missing_socket_exits_with_ci5_guidance(harness, monkeypatch, capsys):
+    """socket 未就绪 → Exit(1) + C-I5 三步指引 + 自愈失败明细。"""
+    monkeypatch.setattr(
+        oc,
+        "ensure_host_podman_socket",
+        lambda: (False, "unit start timed out", False),
+    )
+    with pytest.raises(Exit):
+        oc.resolve_host_podman_socket(None, _NATIVE, {})
+    out = capsys.readouterr().out
+    assert "[C-I5]" in out
+    assert "systemctl --user start podman.socket" in out
+    assert "enable-linger" in out
+    assert "unit start timed out" in out
+
+
+@pytest.mark.parametrize("spec", ALL_SPECS)
+def test_up_fails_fast_before_any_subprocess_when_socket_missing(
+    harness, monkeypatch, spec
+):
+    """门禁先于 build/镜像预检/compose：失败时 runner 零子进程、无 down/up。"""
+    monkeypatch.setattr(
+        oc, "ensure_host_podman_socket",
+        lambda: (False, "no socket", False),
+    )
+    with pytest.raises(Exit):
+        oc.up_stack(None, spec, skip_build=True)
+    assert harness.runner.calls == []
+
+
+def test_resolve_announces_socket_self_heal(harness, monkeypatch, capsys):
+    """本次自动拉起 socket（started=True）时打印自愈提示；False 时静默。"""
+    monkeypatch.setattr(
+        oc, "ensure_host_podman_socket", lambda: (True, "", True)
+    )
+    oc.resolve_host_podman_socket(None, _NATIVE, {})
+    out = capsys.readouterr().out
+    assert "[B-scheme] 已自动启动用户级 podman.socket" in out
+
+
+def test_resolve_silent_when_socket_already_ready(harness, capsys):
+    oc.resolve_host_podman_socket(None, _NATIVE, {})
+    assert "[B-scheme] 已自动启动" not in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("spec", ALL_SPECS)
+def test_up_passes_socket_token_to_compose_subprocess(
+    harness, monkeypatch, spec
+):
+    """成功路径：compose up 子进程继承的 os.environ 必须带解析后令牌。
+
+    run_compose_up 不显式传 env（compose 插值读进程环境），故在调用时刻
+    快照 os.environ 锁定，而不是检查 run_cmd 的 env kwarg。
+    """
+    inner = harness.runner
+    seen_env: dict[str, str] = {}
+
+    def _record(c, cmd, **kw):
+        if " up -d" in cmd:
+            seen_env.update(os.environ)
+        return inner(c, cmd, **kw)
+
+    monkeypatch.setattr(oc, "run_cmd", _record)
+    oc.up_stack(None, spec, skip_build=True)
+    assert seen_env, "未观察到 compose up -d 调用"
+    assert seen_env["HOST_PODMAN_SOCK"] == _DEFAULT_SOCK

@@ -733,3 +733,40 @@ GUI 收口为与 GPU/USB/D-Bus 同族的 **opt-in 运行期维度**（默认全�
   standalone 裸 run 不带 GUI 覆盖，提示文案含 `--gui`。冒烟守卫本身不依赖
   显示 socket（Hello-World 级连通验证由 07 文档的 AF_UNIX 三行命令承担）。
 
+### 11.8 B-scheme 宿主 podman socket 直通（C34，2026-09-24）
+
+**背景**：容器内 Notebook/CLI 的 `podman.PodmanClient.from_env()` 报
+`FileNotFoundError (uds.py connect)`。根因不是 socket 路径漂移，而是三叠加栈
+（native-dev / onnx-quantized / agent-monetize-dev）compose **从未接入**
+B-scheme（旧修复只覆盖 jupyter 主栈 compose 与根 `invoke run`）：无
+`HOST_PODMAN_SOCK` 时基底 entrypoint 静默回退容器内自建 rootless daemon
+（DinP），rootless 套 rootless 必被 `newuidmap` 拒
+（`write to uid_map failed: Operation not permitted`），socket 永不生成，
+entrypoint 却仍导出指向死路径的 `CONTAINER_HOST`，故障迟到 Notebook 运行时
+才暴露。
+
+- **受管栈默认直通、无 opt-out 开关**（信任模型对齐 jupyter 主栈与
+  `invoke run`）：三栈 compose 必须各含一组 B-scheme 声明——
+  volumes 长语法 bind，**`source == target == ${HOST_PODMAN_SOCK:-...}`**
+  （同路径是 entrypoint `test -S $HOST_PODMAN_SOCK` 的硬契约），
+  `bind.create_host_path: false`（缺源必须 podman 硬失败，禁止
+  os.makedirs 误建）；environment 同名键同值。缺省值 1000 仅服务裸
+  podman-compose 的 WSL2 惯例 UID。
+- **invoke 路径单一预检点**：`overlay_core.resolve_host_podman_socket()`
+  在 `up_stack()` 中**先于 build/一切门禁/任何 down** 调用
+  `jpman_common.connection.ensure_host_podman_socket()`（Linux 免提权
+  `systemctl --user start podman.socket` 自愈；非 Linux/容器内/非 podman
+  放行），失败以 C-I5 指引 Exit(1)；令牌优先级 shell export > 根 .env >
+  `podman_sock_path()`（UID 经 `PODMAN_RUNTIME_UID`/`$XDG_RUNTIME_DIR`/
+  `id -u` 推导，禁硬编码），写 `os.environ` 供 compose source/target/env
+  三处插值。三栈共用此一处钩子，禁止各栈私有副本。
+- **新栈准入硬约束（E 沉淀，防再次漏接）**：凡 `extends: rootless-base`
+  （即基于 jupyter-podman-rootless 镜像）的新叠加栈，compose 必须显式接入
+  B-scheme 挂载段 + `HOST_PODMAN_SOCK` env，或在栈文件头与本规则中书面
+  声明「不提供容器内 podman 访问」的禁用理由；**禁止依赖 entrypoint DinP
+  静默回退充当默认**（嵌套 rootless 在物理 Linux 与 WSL 均不可用）。
+  `test_compose_merge.py` 的三栈渲染断言是该约束的测试锁。
+- **不改 entrypoint/不重建镜像**：B-scheme 分支（符号链接、属组衔接、
+  sshd SetEnv、CONTAINER_HOST 导出）已在基底镜像完备；DinP 死路径仍导出
+  CONTAINER_HOST 的可诊断性问题属 entrypoint 侧后续议题，不在本条款范围。
+

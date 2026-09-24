@@ -59,9 +59,13 @@ GOLDEN = {
         "container_name": "onnx-quantized",
         "dockerfile": "Containerfile.quantized",
         "ports": ["2222:22", "8888:8888"],
-        "volume_targets": ["/workspace", "/var/lib/jpman/ssh-host-keys"],
+        "volume_targets": [
+            "/run/user/1000/podman/podman.sock",
+            "/workspace", "/var/lib/jpman/ssh-host-keys",
+        ],
         "env": {
             "USER_PASSWORD", "JUPYTER_TOKEN", "SSH_PUBLIC_KEY", "GRANT_SUDO",
+            "HOST_PODMAN_SOCK",
             "OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS",
         },
     },
@@ -73,6 +77,7 @@ GOLDEN = {
         "dockerfile": "Containerfile.native-dev",
         "ports": ["2223:22", "8890:8888"],
         "volume_targets": [
+            "/run/user/1000/podman/podman.sock",
             "/workspace", "/workspace/npu_tvm", "/workspace/npuusertools",
             "/workspace/models", "/workspace/temp", "/root/.ccache",
             "/home/devuser/.local/share/jupyter",
@@ -80,6 +85,7 @@ GOLDEN = {
         ],
         "env": {
             "USER_PASSWORD", "JUPYTER_TOKEN", "SSH_PUBLIC_KEY", "GRANT_SUDO",
+            "HOST_PODMAN_SOCK",
             "PYTHONPATH", "TVM_LIBRARY_PATH", "LD_LIBRARY_PATH",
             "NPU_TOOLS_ROOT", "XMNN_TOOLS_ROOT", "OMP_NUM_THREADS", "NUITKA_JOBS",
         },
@@ -92,11 +98,13 @@ GOLDEN = {
         "dockerfile": "Containerfile.agent-monetize",
         "ports": ["2224:22", "8892:8888"],
         "volume_targets": [
+            "/run/user/1000/podman/podman.sock",
             "/workspace", "/workspace/agent-monetize",
             "/var/lib/jpman/ssh-host-keys",
         ],
         "env": {
             "USER_PASSWORD", "JUPYTER_TOKEN", "SSH_PUBLIC_KEY", "GRANT_SUDO",
+            "HOST_PODMAN_SOCK",
             "PYTHONPATH", "LD_LIBRARY_PATH",
         },
     },
@@ -367,10 +375,14 @@ def test_rendered_stack_specific_fields_preserved(stack):
     assert svc["build"]["dockerfile"] == g["dockerfile"]
     assert svc["ports"] == g["ports"]
     assert [_volume_target(v) for v in svc["volumes"]] == g["volume_targets"]
-    # 全部 bind 保长语法 + create_host_path（G1）
+    # bind 一律长语法；工作区类 bind 允许自动建源（G1），socket 类源必须
+    # create_host_path: false（C34：缺源硬失败，禁止误建目录冒充 socket）
     for v in svc["volumes"]:
         if isinstance(v, dict) and v["type"] == "bind":
-            assert v["bind"]["create_host_path"] is True
+            if str(v.get("target", "")).endswith("/podman/podman.sock"):
+                assert v["bind"]["create_host_path"] is False
+            else:
+                assert v["bind"]["create_host_path"] is True
 
 
 def test_quant_gpu_override_appends_dri_without_duplicating_fuse():
@@ -618,6 +630,64 @@ def test_env_override_flows_through_interpolation():
     assert svc["ports"] == ["2300:22", "8890:8888"]
     assert svc["environment"]["NUITKA_JOBS"] == "16"
     assert svc["environment"]["GRANT_SUDO"] == "no"
+
+
+# ── C34：B-scheme 宿主 podman socket 三栈直通（默认核心挂载，非 opt-in）──────
+
+_DEFAULT_SOCK_PATH = "/run/user/1000/podman/podman.sock"
+
+
+def _socket_binds(svc):
+    return [
+        v for v in svc["volumes"]
+        if isinstance(v, dict)
+        and str(v.get("target", "")).endswith("/podman/podman.sock")
+    ]
+
+
+@pytest.mark.parametrize("stack", list(GOLDEN))
+def test_bscheme_socket_bind_default_render(stack):
+    """三栈各恰好一条 socket bind：source==target==env，缺源禁自动创建。"""
+    svc = render_stack(stack)
+    binds = _socket_binds(svc)
+    assert len(binds) == 1
+    bind = binds[0]
+    assert bind["source"] == _DEFAULT_SOCK_PATH
+    assert bind["target"] == _DEFAULT_SOCK_PATH
+    assert bind["type"] == "bind"
+    assert bind["bind"]["create_host_path"] is False
+    assert svc["environment"]["HOST_PODMAN_SOCK"] == _DEFAULT_SOCK_PATH
+
+
+@pytest.mark.parametrize("stack", list(GOLDEN))
+def test_bscheme_socket_env_override_moves_source_target_and_env(stack):
+    """HOST_PODMAN_SOCK 覆盖时 source/target/env 三处必须同步（entrypoint 契约）。
+
+    source==target 是基底 entrypoint ``test -S $HOST_PODMAN_SOCK`` 的硬契约；
+    任一处漏插值都会让容器内判定落空而静默回退 DinP。
+    """
+    sock = "/run/user/1006/podman/podman.sock"
+    svc = render_stack(stack, env={"HOST_PODMAN_SOCK": sock})
+    binds = _socket_binds(svc)
+    assert len(binds) == 1
+    assert binds[0]["source"] == sock
+    assert binds[0]["target"] == sock
+    assert svc["environment"]["HOST_PODMAN_SOCK"] == sock
+
+
+def test_bscheme_socket_present_in_native_passthrough_render():
+    """B-scheme 是默认核心挂载：host 透传形态（ports 被 reset）下必须仍在。"""
+    pt = render_stack("native", passthrough=True)
+    binds = _socket_binds(pt)
+    assert len(binds) == 1
+    assert binds[0]["target"] == _DEFAULT_SOCK_PATH
+    assert pt["environment"]["HOST_PODMAN_SOCK"] == _DEFAULT_SOCK_PATH
+    # 全组合形态同样保留
+    full = render_stack(
+        "native", gpu=True, gpu_file="compose.gpu.wsl.yaml",
+        passthrough=True, gui_forms=("wayland", "x11"), usb=True,
+    )
+    assert len(_socket_binds(full)) == 1
 
 
 # ── 模拟器自证（防止模拟器本身写错导致假阳性）────────────────────────────────
