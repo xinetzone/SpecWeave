@@ -4,6 +4,7 @@ import argparse
 import json
 import platform
 import sys
+from pathlib import Path
 
 import httpx
 from pydantic import SecretStr
@@ -36,7 +37,8 @@ from .core.official_probe import (
 from .core.official_sync import sync_official_articles
 from .core.pipeline import run_pipeline
 from .core.validation import check_metadata_completeness
-from .db import connect, init_db
+from .db import connect, get_account_biz_by_alias, init_db
+from .exporters.rag import export_rag_jsonl
 from .http_client import RateLimitedClient
 from .logging_utils import configure_logging, redact
 
@@ -447,6 +449,57 @@ def _cmd_official_doctor(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_export_rag(args: argparse.Namespace) -> int:
+    """离线导出已归档文章为 RAG JSONL（不发起任何网络请求）。"""
+    settings = get_settings()
+    configure_logging(settings.log_level)
+    conn = connect(settings.db_path)
+    init_db(conn)
+
+    account_biz = None
+    if args.account:
+        account_biz = get_account_biz_by_alias(conn, args.account)
+        if account_biz is None:
+            print(f"[fail] 未找到公众号「{args.account}」，请先执行 list 同步列表")
+            return 3
+
+    out_path = Path(args.out) if args.out else settings.export_root / "rag.jsonl"
+    scope = f"账号「{args.account}」" if args.account else "全部账号"
+    mode = "原文（不清洗）" if args.no_clean else "清洗后纯文本"
+    print(f"[..] 导出 RAG JSONL：{scope}，{mode} → {out_path}")
+
+    report = export_rag_jsonl(
+        conn,
+        settings.archive_root,
+        out_path,
+        account_biz=account_biz,
+        clean=not args.no_clean,
+        with_raw=args.with_raw,
+        limit=args.limit,
+    )
+
+    print(
+        f"[ok] 导出完成：{report.exported}/{report.total} 篇已写入 "
+        f"（其中空正文 {report.empty_text} 篇，仍保留元数据条目）"
+    )
+    if not args.no_clean:
+        print(
+            f"[ok] 模板噪声清洗：删除引导/装饰行 {report.removed_noise_lines}，"
+            f"折叠相邻重复行 {report.collapsed_duplicates}，"
+            f"裁剪文末平台推荐块 {report.trimmed_tail_lines}"
+        )
+    if args.with_raw:
+        print("[ok] 已追加 text_raw 字段（清洗前原文），可逐行对照评阅")
+    for item in report.items:
+        if item.state == "failed":
+            print(f"  [fail] {item.title}：{item.error}")
+    if report.has_failures:
+        print("[warn] 存在读取失败条目（DB 标记 downloaded 但归档文件缺失/损坏）；"
+              "重跑 fetch 补齐后重新导出即可")
+        return 1
+    return 0
+
+
 def _cmd_resolve_biz(args: argparse.Namespace) -> int:
     settings = get_settings()
     configure_logging(settings.log_level)
@@ -519,7 +572,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_run.add_argument("-a", "--account", required=True, help="公众号昵称或微信号")
     p_run.add_argument(
         "--full", action="store_true",
-        help="显式确认执行全量回溯（完整翻页并做不可见文章对账）",
+        help="显式确认执行全量回溯（完整翻到尾页并做不可见文章对账）",
     )
     p_run.add_argument("--include-failed", action="store_true",
                        help="同时重试此前 failed 的文章")
@@ -558,6 +611,22 @@ def build_parser() -> argparse.ArgumentParser:
         help="仅做网络可达性预检（无需任何凭证）",
     )
     p_doctor_official.set_defaults(func=_cmd_official_doctor)
+
+    p_export = sub.add_parser(
+        "export-rag",
+        help="离线导出已归档文章为 RAG JSONL 语料（纯文本+元数据，不触网）",
+    )
+    p_export.add_argument("-a", "--account", default=None,
+                          help="仅导出指定公众号（默认全部账号）")
+    p_export.add_argument("-o", "--out", default=None,
+                          help="输出文件路径（默认 exports/rag.jsonl，整体覆盖）")
+    p_export.add_argument("--no-clean", action="store_true",
+                          help="关闭模板噪声清洗，输出未清洗纯文本")
+    p_export.add_argument("--with-raw", action="store_true",
+                          help="同时写入 text_raw 字段（清洗前原文），供前后对照评阅")
+    p_export.add_argument("--limit", type=int, default=None,
+                          help="调试用：最多导出篇数")
+    p_export.set_defaults(func=_cmd_export_rag)
 
     p_resolve = sub.add_parser(
         "resolve-biz",

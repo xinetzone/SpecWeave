@@ -300,6 +300,32 @@ def iter_articles_by_status(
     yield from conn.execute(sql, params)
 
 
+def iter_downloaded_articles(
+    conn: sqlite3.Connection,
+    *,
+    account_biz: str | None = None,
+    limit: int | None = None,
+):
+    """枚举已归档（status=downloaded）文章，供 RAG/报表等离线导出使用。
+
+    按发布时间升序（NULL 置后）、id 升序稳定排序；``account_biz`` 为 None
+    时导出全部账号。
+    """
+    where = "biz = ? AND status = ?" if account_biz is not None else "status = ?"
+    sql = (
+        f"SELECT * FROM articles WHERE {where} "
+        "ORDER BY publish_time IS NULL, publish_time ASC, id ASC"
+    )
+    if account_biz is not None:
+        params: tuple = (account_biz, ArticleStatus.DOWNLOADED.value)
+    else:
+        params = (ArticleStatus.DOWNLOADED.value,)
+    if limit is not None:
+        sql += " LIMIT ?"
+        params = (*params, limit)
+    yield from conn.execute(sql, params)
+
+
 def upsert_media(
     conn: sqlite3.Connection,
     *,

@@ -37,6 +37,8 @@ class Settings(BaseSettings):
     # 存储
     archive_root: Path = Path("archive")
     db_path: Path = Path("data") / "archive.db"
+    # 派生产物目录（RAG JSONL / 分析报表；已在 .gitignore 忽略）
+    export_root: Path = Path("exports")
 
     # 限速与重试
     request_delay_min: float = Field(2.0, ge=0.0)

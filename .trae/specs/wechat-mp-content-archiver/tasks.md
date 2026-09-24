@@ -177,9 +177,15 @@
   - `rule` TR-9.2: 文档含可直接使用的计划任务配置示例（pwsh7 合规）。证据：文档。
 
 ## Task 10: RAG JSONL 导出与清洗
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 6
+- **Completion Evidence**:
+  - 纯文本提取器（新增 [src/mp_archiver/core/text_extract.py](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/core/text_extract.py)，无 IO 纯函数层）：`html_to_plain_text()` 从本地化 `article.html` 的 `#js_content`（缺失时回退 article→body→根）提取——块级元素闭合转换行保留段落、`li` 转 `- `、`<pre>` 经哨兵标记保留代码缩进、script/style/img 等无文本节点移除（含懒加载图 alt 广告文案）、mpvoice/mpvideo/qqmusic 等富媒体自定义标签转「［音频：标题］」占位行（标题取 data-name/name/title/alt）；`\xa0`/全角空格/tab 规范化、连续空行折叠。`clean_plain_text()` 保守清洗并返回 CleanStats（removed_noise_lines/collapsed_duplicates/trimmed_tail_lines）：①短行整行强匹配（去空白 ≤40 字 + 关注/扫码/在看/转发/赞赏等动作词正则 + 纯装饰符号行），代码缩进行豁免；②相邻完全重复非空行折叠；③平台推荐块仅在文章后半部命中锚点（「喜欢此内容的人还喜欢」等 4 个）时整段裁剪，前半部命中保留，防正文误伤。
+  - 导出编排（新增 [src/mp_archiver/exporters/rag.py](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/exporters/rag.py)）：`export_rag_jsonl()` 枚举 DB 中 status=downloaded 文章（新增 `db.iter_downloaded_articles`，发布时间升序、支持账号 biz 过滤与 limit，已登记 db/__init__.py re-export），逐篇读归档 HTML→提取→可选清洗→写 JSONL；UTF-8、LF、`ensure_ascii=False`、同目录 `.tmp`+`os.replace` 原子覆盖（幂等），单篇异常（路径为空/绝对路径或 `..` 越界/文件缺失/解析错误）隔离计 failed 不阻断批次，空正文（纯图片帖）仍保留元数据条目；报告 RagExportReport 含 total/exported/empty_text/failed 与清洗计数。字段为需求七字段的超集：`id/account/title/author/publish_time/url/original(bool)/album/digest/text`，`--with-raw` 追加 `text_raw`（清洗前原文）实现逐行对照。
+  - CLI（[src/mp_archiver/cli.py](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/cli.py)）：新增离线命令 `export-rag [-a 账号] [-o 文件] [--no-clean] [--with-raw] [--limit N]`；默认输出 `exports/rag.jsonl`（新增配置 `MP_ARCHIVER_EXPORT_ROOT`，默认 exports/，已在 .gitignore；.env.example 已补）；打印导出计数与三类清洗动作统计与失败清单；退出码 0 成功/1 存在失败条目/3 账号未找到。README.md 命令区新增命令、字段表与清洗纪律说明，结构树 exporters 注释同步。
+  - TR-10.1（软件侧闭环）：新增 25 个单测，全量 188/188 通过（基线 163 + 新增 25，无回归）。① [tests/test_text_extract.py](../../../apps/dev-tools/wechat-mp-archiver/tests/test_text_extract.py) 14 例：块级段落与导航排除、懒加载 img 移除、富媒体占位、pre 缩进保留（提取后与清洗后双锁）、容器缺失回退、空白规范化、空/纯 script 页容错；清洗 7 例（引导/装饰行删除、**正文讨论"二维码技术原理"不误伤**、尾部推荐块裁剪/前半部锚点保留、重复行折叠、空文本稳定）。② [tests/test_rag_export.py](../../../apps/dev-tools/wechat-mp-archiver/tests/test_rag_export.py) 11 例：逐行 json.loads 合法、字段集齐全、original 为 bool、UTF-8 中文、发布时间升序、仅 downloaded 导出、账号过滤、clean/--no-clean/--with-raw 三模式对照、HTML 缺失隔离、**路径越界拒绝**、空正文保留、空库 0 行且自动建目录、幂等重跑字节稳定且无 .tmp 残留、CLI 退出码 0/1/3。另在隔离临时库完成真实进程 CLI 端到端冒烟（造文→导出→with-raw 对照人工核对），结果符合预期；仓库 check-links 校验通过。
+  - TR-10.2（rubric，挂起）：真实号抽样 5 篇人工评阅挂起——主机暂无真实归档语料，与 TR-3.1/TR-9.1 等真机验收项一并在部署环境执行。软件侧评阅条件已就绪：默认清洗产出 + `--no-clean` 独立产出 + `--with-raw` 同条记录双文本对照 + CLI 打印清洗动作计数，可直接按 anchors（1=标签/噪声满屏，3=可读有残留，5=干净+段落完整+可按元数据过滤）打分；防误伤机制（长度门+动作词+尾部锚定+代码缩进豁免）已由单测显式锁定。
 - **Description**:
   - `mp-archiver export-rag`：逐篇输出 JSONL（title/author/publish_time/url/original/album/text）；纯文本提取器去 HTML 标签，可选清洗模板噪声（文末推广、二维码图注、重复声明），段落结构保留；清洗前后可对照。
 - **Acceptance Criteria Addressed**: AC-11, AC-18
