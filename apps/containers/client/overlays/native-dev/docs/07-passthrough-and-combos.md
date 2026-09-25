@@ -149,7 +149,15 @@ podman-compose exec native python3 -c "import socket; s=socket.socket(socket.AF_
 podman-compose exec native python3 -c "import socket; s=socket(socket.AF_UNIX); s.connect(\"/tmp/.X11-unix/X0\"); print(\"x11 OK\")"
 ```
 
-真正弹窗体需镜像内有 GUI 客户端（如 `apt install x11-apps` 后 `xeyes`）；
+真正弹窗体需镜像内有 GUI 客户端——**native-dev 已内置 tkinter**（base env
+Tk 8.6 运行时 + X11 客户端库，Layer 4.5 从基底深度清理中恢复），可直接弹窗：
+
+```bash
+podman-compose exec native /opt/conda/bin/python -c \
+  "import tkinter as tk; r=tk.Tk(); r.title('native-dev GUI'); tk.Label(r, text='GUI OK').pack(); r.mainloop()"
+```
+
+其余 GUI 客户端（如 `xeyes`）仍可自行 `apt install x11-apps`；
 JupyterLab 交互绘图（matplotlib 等）不受影响、无需 `--gui`。
 
 - **安全边界**：两个 socket 都允许容器进程接入宿主桌面会话（截屏、输入注入面），
