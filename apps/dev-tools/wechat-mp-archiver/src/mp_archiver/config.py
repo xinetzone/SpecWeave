@@ -48,6 +48,9 @@ class Settings(BaseSettings):
     backoff_cap: float = Field(60.0, gt=0.0)
     timeout: float = Field(30.0, gt=0.0)
     proxy_url: str = ""
+    # 正文批次连续传输故障（超时/连接错误，重试用尽）达到该值即中止整批：
+    # 网络/服务整体不可用时不空转猛打；403/验证码页等账号级风控信号 1 次即中止。
+    transport_abort_threshold: int = Field(2, ge=1)
 
     # 互动数据开关（默认关闭：无公开接口且易触发风控）
     fetch_metrics: bool = False

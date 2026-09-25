@@ -48,12 +48,44 @@ class PageUnavailableError(PayloadError):
         self.kind = kind
 
 
+_SUBSTANTIAL_MEDIA_TAGS = (
+    "img", "video", "iframe", "mpvoice", "mp-common-videosnap",
+)
+
+
+def _has_substantial_content(content) -> bool:
+    """正文容器是否含有实质内容（非空文本或媒体节点）。"""
+    if content.get_text(strip=True):
+        return True
+    return any(content.find(tag) is not None for tag in _SUBSTANTIAL_MEDIA_TAGS)
+
+
 def classify_page(raw_html: str) -> str:
-    """返回页面状态：ok / deleted / violation / risk。"""
+    """返回页面状态：ok / deleted / violation / risk。
+
+    判定以**页面结构**为准，而非对整页 HTML 做子串匹配——风控标记词
+    （如"去验证""环境异常"）可能恰好出现在正常文章正文中，全文匹配会
+    误判并触发批次熔断。规则：
+
+    - 正文容器 ``#js_content`` 存在且含实质内容（文本/媒体节点）→ ``ok``，
+      即使正文本身引用了这些词；
+    - 容器缺失或为空时，只在**容器之外**的页面文本中查找拦截页标记；
+    - 容器缺失/为空又查不到任何标记 → ``risk``（疑似改版后的未知验证页，
+      由批次熔断保护，可凭日志人工复核后 ``--include-failed``）。
+    """
+    page = BeautifulSoup(raw_html, "html.parser")
+    for tag in page.find_all(["script", "style"]):
+        tag.decompose()
+    content = page.select_one(CONTENT_SELECTOR)
+    if content is not None and _has_substantial_content(content):
+        return "ok"
+    if content is not None:
+        content.extract()
+    outside_text = page.get_text(" ", strip=True)
     for kind, markers in _PAGE_MARKERS.items():
-        if any(marker in raw_html for marker in markers):
+        if any(marker in outside_text for marker in markers):
             return kind
-    return "ok"
+    return "risk"
 
 
 def extract_content_soup(raw_html: str) -> BeautifulSoup:

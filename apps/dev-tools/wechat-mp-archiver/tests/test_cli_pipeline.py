@@ -100,6 +100,40 @@ def test_sync_with_limit_and_metrics(monkeypatch, tmp_path):
     assert calls[0]["fetch_limit"] == 3
 
 
+def test_pipeline_fetch_aborted_exits_4_with_banner(monkeypatch, tmp_path, capsys):
+    """sync/run 路径正文阶段熔断：横幅可见且退出码 4（Task 12 P2-8）。"""
+    from mp_archiver import cli as cli_module
+
+    _cli_env(monkeypatch, tmp_path)
+    fetch = FetchReport(
+        biz="BIZ==",
+        total=5,
+        downloaded=0,
+        failed=1,
+        items=(FetchItem(
+            article_id=7, title="风控篇", state="failed",
+            error="[risk_control] 文章页 HTTP 403（疑似账号/IP 级风控）",
+        ),),
+        aborted=True,
+        abort_reason="[risk_control] 文章页 HTTP 403（疑似账号/IP 级风控）",
+        pending_in_account=4,
+    )
+    report = PipelineReport(
+        account="意识食谱", mode="incremental",
+        list=_list_report(caught_up=True),
+        fetch=fetch,
+    )
+    _install_pipeline(monkeypatch, report=report)
+
+    code = cli_module.main(["sync", "-a", "意识食谱"])
+    out = capsys.readouterr().out
+
+    assert code == 4
+    assert "[abort]" in out
+    assert "剩余 4 篇保持 pending" in out
+    assert "重跑" in out
+
+
 def test_run_requires_full_flag(monkeypatch, tmp_path, capsys):
     from mp_archiver import cli as cli_module
 

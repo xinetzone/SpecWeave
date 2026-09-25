@@ -217,16 +217,27 @@
   - `rule` TR-11.2: 空库/单篇等边界数据不报错。证据：单测。
 
 ## Task 12: 故障注入与韧性验收
-- **Status**: `pending`
+- **Status**: `completed`（软件完成 2026-09-25；六剧本以 MockTransport 故障注入在 CI 内闭环并留可复现演练命令，真实微信环境/Docker 扫码实操演练仍挂起）
 - **Priority**: high
 - **Depends On**: Task 9
+- **Completion Evidence（软件侧）**:
+  - 故障按作用域分流（I/F 阶段事实采集→七概念 I→F→A→V→C，AC-10/AC-8）：
+    - **账号/IP 级风控立即熔断**：文章页 403/429 在 [http_client.py](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/http_client.py) 请求级指数退避（`min(cap, base·2^attempt)+抖动`，封顶 60s）用尽后，由 [article_archive.py](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/core/article_archive.py) `archive_article()` 抛 `RiskControlError(kind="risk_control")`；验证码/环境异常页经**结构感知**页面判定（`#js_content` 缺失或为空才在容器外查风控标记，正文非空时即便包含「去验证/环境异常」等词也判正常，杜绝误杀）同样熔断。当前篇置 failed（原因 `risk_abort:` 前缀可查），本批后续文章保持 pending **零请求**，CLI 打印 `[abort]` 横幅并返回退出码 4。
+    - **连续传输/服务故障阈值熔断**：超时/连接错误重试用尽、以及文章页 500/502/503/504 重试用尽（`RiskControlError(kind="transport")`）先隔离为单篇 failed；连续达新配置 `transport_abort_threshold`（[config.py](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/config.py) 默认 2，`MP_ARCHIVER_TRANSPORT_ABORT_THRESHOLD` 可调）才熔断；成功篇/删除违规跳过篇/单篇业务失败（404 等）均重置连续计数，偶发抖动不误熔断。
+    - **单篇/单资源失败隔离**：单篇 404 不重试、置 failed 批次继续，批次末尾输出成功/跳过/失败分类计数与失败清单；图片 404/语音 5xx 等媒体失效逐项登记 media 表与 `metadata.json` 例外表（保留远程引用），文章仍 downloaded；采集服务 401/403 维持凭证过期语义（退出码 2，不在凭证错误上空耗重试预算）。
+    - **退避可观测且脱敏**：`_backoff()` 每次退避输出 WARNING 日志（`HTTP 重试退避：GET <host> 第 n/m 次…x.xx 秒后重试`），只记 netloc 不记 query/userinfo（sn 不入日志），畸形 URL 回退 `<unknown-host>`。
+    - **现场保留与幂等续跑（AC-8）**：`FetchReport` 新增 `aborted/abort_reason/pending_in_account` 与 `pending_left`；每篇成败即时落库，普通重跑只采 pending（自动越过 failed 熔断篇），`--include-failed` 才重试失败篇；三批续跑演练验证最终 5 篇 downloaded、恰 5 目录 5 份 article.html 无重复；`--limit` 熔断时横幅额外提示库内真实 pending 总量。
+  - TR-12.1（软件侧闭环）：新增 [tests/test_fault_injection.py](../../../apps/dev-tools/wechat-mp-archiver/tests/test_fault_injection.py) **15 例**故障注入演练（全程 MockTransport 不触网），剧本与用例一一对应——①403 退避 3 请求/`[2.0,4.0]` 秒/日志可见/仅处理 1 篇即熔断；②验证码页（含空 `js_content` 变体，断言零归档产物）；③a 超时连续 2 篇熔断（退避秒数精确断言）、③b 超时被 404/成功篇隔开不熔断；④单篇 404 隔离不重试；成功/失败/跳过三分类计数；⑤图片 404+语音 500 例外表与 media 行状态；⑥adapter 403→`CredentialExpiredError` 仅 1 请求 + 列表中途凭证失效落库 `expired`；⑦熔断→pending 续跑→`--include-failed` 补齐的幂等三批；⑧fetch CLI 与 ⑨sync pipeline 两路径熔断横幅 + 退出码 4（后者在 [test_cli_pipeline.py](../../../apps/dev-tools/wechat-mp-archiver/tests/test_cli_pipeline.py)）；另含 `--limit` 本批/库内剩余计数断言。**演练日志归档方式**：测试模块 docstring 固化可复现命令 `pytest tests/test_fault_injection.py -s -o log_cli=true --log-cli-level=WARNING`（退避/熔断日志随演练实时输出，即 TR-12.1 要求的可重复演练日志）。
+  - TR-12.2（闭环）：fresh-context 独立对抗评审（六类反例实证）发现 **2 个 P1 + 8 项 P2 全部处置**——P1-1 风控 marker 全文子串匹配会误杀正文含风控词的正常文章（修复为结构感知判定 + 回归）；P1-2 文章页 5xx 重试用尽后被当业务失败、网关整体故障时逐篇重试放大请求（修复为 `kind="transport"` 连续计数熔断 + 回归，同时激活原死契约）；P2 含未知拦截页变体熔断、`--limit` 横幅真实剩余、退避日志畸形 URL 防泄露、阈值默认值双写注释、退出码 4 语义在 README 固化、pipeline 熔断路径补测等；图床 CDN 整体故障维持「媒体隔离不阻断文章」既有边界（与剧本⑤一致，记录为刻意决策）。
+  - 全量 **221/221 通过**（Task 11 基线 205 + 新增 16：演练文件 15、CLI pipeline 1），旧风控断言（`PageUnavailableError` → `risk_abort/risk_control`）同步更新，无回归。文档：[README.md](../../../apps/dev-tools/wechat-mp-archiver/README.md) 新增「故障处置与断点续跑（韧性设计）」小节（六类故障行为/处置表 + 退出码语义）。
+  - **真实演练挂起**：403/验证码/超时在真实微信域名上的触发频率、风控页真实文案样本校准（`_PAGE_MARKERS` 经验值，源码已留校准入口）需 Docker 采集服务扫码环境实操；软件侧熔断/退避/隔离/续跑机制与可观测性已全部可测。
 - **Description**:
   - 演练剧本：403/验证码页/超时/单篇 404/媒体链接失效/凭证过期；验证指数退避、现场保留、失败隔离与 failed 清单输出、续跑恢复。
   - 据演练结果修补 Task 2 客户端与各 adapter 的韧性缺口。
 - **Acceptance Criteria Addressed**: AC-10, AC-8
 - **Test Requirements**:
-  - `rule` TR-12.1: 五类故障注入下行为符合 AC-10；无猛打请求（退避日志可见），批次最终给出成功/失败/跳过分类计数。证据：演练日志归档。
-  - `rule` TR-12.2: 演练中发现的问题全部关闭并有回归测试。证据：问题清单与测试。
+  - `rule` TR-12.1: 五类故障注入下行为符合 AC-10；无猛打请求（退避日志可见），批次最终给出成功/失败/跳过分类计数。证据：tests/test_fault_injection.py 15 例 + docstring 可复现演练日志命令（CI 内 MockTransport 闭环；真实环境实操挂起）。
+  - `rule` TR-12.2: 演练中发现的问题全部关闭并有回归测试。证据：独立对抗评审 P1×2/P2 清单全部处置，6 个 V 阶段回归用例（marker 误杀、未知拦截页、5xx 连续熔断/单次不熔断、limit 计数、pipeline CLI 退出码）。
 
 ## Task 13: 文档、合规声明与默认限速
 - **Status**: `pending`
