@@ -59,6 +59,7 @@ from .utils import (
     detect_runtime,
     ensure_workspace_checkpoint_writable,
     ensure_wsl_rootless_runtime,
+    ensure_wsl_user_session,
     find_latest_image_tar,
     run_cmd,
     run_in_wsl_bridge,
@@ -274,11 +275,15 @@ def gate_platform(spec: StackSpec) -> None:
 
     桥接成功时 run_in_wsl_bridge 已在发行版内完整执行任务，本进程 Exit(0)
     收尾（WSL2 内 Python 报 Linux 直接放行，不进入 Windows 分支）。
-    Linux 放行路径先做 WSL rootless 运行时目录自愈（VM 回收后
-    /run/user/<uid> 缺失致 podman exit 125；非 WSL 平台零副作用）。
+    Linux 放行路径先做两级 WSL 幂等自愈（VM 回收后裸启动发行版时）：
+      ① `ensure_wsl_rootless_runtime`：/run/user/<uid> 目录（podman exit 125）；
+      ② `ensure_wsl_user_session`：嵌套 systemd 用户会话（bus + podman.socket，
+         喂给其后的 B-scheme 门禁与 --passthrough D-Bus 门禁）。
+    非 WSL 平台零副作用。
     """
     if platform.system() != "Windows":
         ensure_wsl_rootless_runtime()
+        ensure_wsl_user_session()
         return
     distro = run_in_wsl_bridge(extra_env_keys=spec.bridge_env_keys)
     if distro is not None:
@@ -1679,7 +1684,7 @@ def resolve_host_podman_socket(c: Context, spec: StackSpec, env: dict) -> str:
     os.environ["HOST_PODMAN_SOCK"] = token
     env["HOST_PODMAN_SOCK"] = token
     if started:
-        print(f"[{ns}][B-scheme] 已自动启动用户级 podman.socket: {token}")
+        print(f"[{ns}][B-scheme] 已自动启动宿主 rootless podman socket 服务: {token}")
     return token
 
 

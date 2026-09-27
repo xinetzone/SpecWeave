@@ -2225,7 +2225,7 @@ def test_resolve_announces_socket_self_heal(harness, monkeypatch, capsys):
     )
     oc.resolve_host_podman_socket(None, _NATIVE, {})
     out = capsys.readouterr().out
-    assert "[B-scheme] 已自动启动用户级 podman.socket" in out
+    assert "[B-scheme] 已自动启动宿主 rootless podman socket 服务" in out
 
 
 def test_resolve_silent_when_socket_already_ready(harness, capsys):
