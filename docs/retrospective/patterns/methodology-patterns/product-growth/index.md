@@ -50,5 +50,6 @@ three-layer-delivery-pipeline
 three-tier-iot-architecture
 vertical-saas-mcp-capability-exposure
 vertical-scenario-ai-three-elements
+weight-aligned-preparation
 zero-sum-rule-inversion
 ```
