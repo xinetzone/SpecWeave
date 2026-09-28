@@ -592,10 +592,21 @@ def ensure_wsl_user_session() -> None:
     2026-09-27 实测：裸启动发行版内 7s 内 systemd + bus + podman.sock 齐备
     （以桥接真实身份 user + sudo -n 验证）。
 
-    仅在 ``bus`` 与 ``podman.sock`` **均缺失**时动作（会话在跑时两者必然
-    存在，避免重复拉起）；``sudo -n`` 免密不可用时仅警告不阻断（标准环境由
-    Windows 侧 machine 管理会话，不越权）；启动后轮询 ``bus`` 出现（~10s），
-    超时仅告警——后续门禁仍会给出 C-I5 / D-Bus 中文指引，保持可诊断。
+    仅在 ``bus`` **缺失**时动作——bus 是 systemd 用户会话的**唯一权威产物**
+    （dbus-broker 只能由 user manager socket-activated）；``podman.sock``
+    不能作为会话在否判据：它另有独立产出路径 ``podman system service``
+    （``jpman_common.ensure_host_podman_socket`` 的兜底）。2026-09-27 实证的
+    半会话死锁即源于旧 OR 判据：spawn 兜底先产出 socket，本函数据此跳过，
+    bus 永久缺失、``--passthrough`` D-Bus 门禁永久失败。
+
+    过渡态（V 对抗审查 V-4）：socket 已被手工 service 占用时拉起会话，
+    systemd 的 podman.socket 单元 bind 失败（journal 留错），但 bus 正常、
+    socket 继续由手工 service 服务，功能无损——不中途切换 daemon，up 全程
+    只解析一次 socket（切换反而造成连接不一致）。
+
+    ``sudo -n`` 免密不可用时仅警告不阻断（标准环境由 Windows 侧 machine
+    管理会话，不越权）；启动后轮询 ``bus`` 出现（~10s），超时仅告警——
+    后续门禁仍会给出 C-I5 / D-Bus 中文指引，保持可诊断。
     """
     if platform.system() != "Linux":
         return
@@ -608,8 +619,9 @@ def ensure_wsl_user_session() -> None:
 
     uid = os.getuid()  # 仅 Linux 分支可达
     runtime_dir = Path(f"/run/user/{uid}")
-    if (runtime_dir / "bus").exists() or (runtime_dir / "podman" / "podman.sock").exists():
-        return  # 会话已在（两资源同源产出，命中其一即跳过）
+    if (runtime_dir / "bus").exists():
+        return  # bus 是会话唯一权威产物；socket 可能由独立 service 产出，
+    # 以它为判据会造成「半会话死锁」（见函数 docstring）。
 
     start = (
         "sudo -n sh -c 'setsid nohup unshare --kill-child --fork --pid "
@@ -626,7 +638,7 @@ def ensure_wsl_user_session() -> None:
     for _ in range(_WSL_SESSION_POLL_ATTEMPTS):
         time.sleep(_WSL_SESSION_POLL_INTERVAL)
         if (runtime_dir / "bus").exists():
-            print("[compose] 已自动拉起 WSL 用户会话（systemd）——bus 与 podman.socket 就绪")
+            print("[compose] 已自动拉起 WSL 用户会话（systemd）——D-Bus 总线就绪")
             return
     print(
         f"[compose] ⚠ WSL 用户会话拉起后 bus 未在 "
