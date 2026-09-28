@@ -1,9 +1,11 @@
 # Spec：微信推广博文《一个程序员的省钱实录》→ OKF Wiki 知识包
 
 > spec id: inurl-free-models-blog-okf-wiki
-> created: 2026-09-16；**updated: 2026-09-28（三次复核 G5：四目标页面深度学习，F-088~F-105，flagged 第三次维持）**
-> 历轮：G1-G3 首轮博文转化（2026-09-16，F-001~F-070）→ G4 站点直证二次复核（2026-09-28，F-071~F-087）→ **G5 三次复核（2026-09-28，F-088~F-105）**
-> 方法论：seven-concepts 场景4（知识沉淀 R→I→E）× blog-article-to-okf-wiki 七阶段（R→I→E→V→C）
+> created: 2026-09-16；**updated: 2026-09-28（同主题合并：吸收姊妹 spec inurl-byok-free-models-blog-okf-wiki，F-106~F-122）**
+> 历轮：G1-G3 首轮博文转化（2026-09-16，F-001~F-070）→ G4 站点直证二次复核（2026-09-28，F-071~F-087）→ G5 三次复核（2026-09-28，F-088~F-105）→ **同主题双软文合并（2026-09-28，信源 B 去重并入 F-106~F-122）**
+> 方法论：seven-concepts 场景4（知识沉淀 R→I→E）× blog-article-to-okf-wiki 七阶段（R→I→E→V→C）；合并轮次为 seven-concepts 场景3（I→F→A→V→C）
+
+> **🔀 2026-09-28 同主题合并注记（session=`sc-20260928-inurl-merge`）**：同账号同产品的第二封信源——09-04《同事偷偷用这个网站，一年省下5000块》原独立 spec `inurl-byok-free-models-blog-okf-wiki/` 与 bundle `jishu/ai/inurl-byok-free-models/`——经用户拍板并入本 spec 与主 bundle（主 bundle 更名 `jishu/ai/inurl-byok-token-hub/`，git mv 保历史）。第二文 35 条事实中 14 条与信源 A 重复不另立编号，21 条独有原文归并为 F-106~F-122（见 [facts.md](facts.md) H 区；去重映射见 bundle `references/article-source.md` H.2）；新增勘误 E7（5000 块查无）、E8（Agnes 新加坡国籍）、E9（Agnes 阶段性 $0/20RPM）。生态登记总数 575→574；两旧束路径最终均不存在。
 
 ## 1. 任务定义
 
