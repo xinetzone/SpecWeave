@@ -59,7 +59,7 @@ related_patterns:
 | F-022 | 应用侧 `_resolve_pin_url`（首页 4 次轮询 → `/people/<token>/pins` 16 次轮询、每轮 scrollTo 递增 600px）在真实环境两次实测返回 None；第二次实测中 pins 页 `a[href*="/pin/"]` 在 6 轮（约 7.2s）内计数为 0 |
 | F-023 | `git status --porcelain` 中 `projects/monetize/zhihu-monetization/local/` 条目数为 0；tracker.md 有 1 行改动（M1-1 行 `- [ ]`→`- [x] 2026-09-28`，日期戳 `____`→`2026-09-28`）；`projects/awesome-okf-xs` submodule 指针另显示 modified（来源待查） |
 | F-024 | `local/backups/tracker-20260928-131506.md` 14014 字节，与 review.md 记录的真实 tracker.md 大小一致 |
-| F-025 | 待清理项：测试 pin `2087922795351230404` 仍在线；草稿箱存两篇测试草稿（`p/2087896058693149765` 早期污染草稿、`p/2087920154151752616` 本轮文章草稿）；`%TEMP%` 下有 zch-*.py 探针与 zch-*.png 截图 |
+| F-025 | 清理结果（当日 16:35-16:42 完成）：测试 pin `2087922795351230404` 本人授权删除，API 404+详情页「资源不存在」确证；专栏草稿箱 3 篇测试草稿（含一篇「无标题」，摘要同为冒烟文案）经 `DELETE /api/articles/<url 中真实 ID>` 全部删除——页面自带删除按钮因 19 位 ID 大整数舍入报「文章未找到」；`%TEMP%` 65 个 zch-* 探针/截图清空；local/ 15 项留痕删除仅余 5 个原有文件；M1-1 勾选曾被提交为未推送的 `877e7a939`，经用户确认 `reset --mixed HEAD~1` 撤销，tracker 零差异 |
 | F-026 | publisher 填充优先级链：cdp-insert > draftjs-inject（execCommand）> bridge fill；cdp 通道不存在时回退旧路径；焦点 3 轮失败或回读长度不足 expected-2 时抛 PublishError 转降级（打开页面+剪贴板+中文指引，degraded 零存证） |
 | F-027 | 回答类型真实填充未执行（待用户提供教育领域问题 URL）；spec Open Question「主攻领域=教育」用户已口头确认，spec 文件未回填 |
 | F-028 | 服务启动方式：cwd=应用目录，`PYTHONPATH=src`，`python -c "from zhihu_checkin_hub.cli import app; app()" serve -w <workspace>`；端口 17253；GET `/` 返回 200，无 /api/health |
@@ -78,6 +78,9 @@ related_patterns:
 | 下午 | CDP 受信输入攻坚：fill/execCommand 失败定性 → 分块受信实验 → 文章填充成功（degraded→成功竞态修复） |
 | 15:20:35 | 想法真实发布（用户本人点按钮）；confirm 409 → 手工反查详情页 → confirm 200，截图 374KB 存证 |
 | 15:30 后 | 应用级 pin 反查器编码+3 桩测试；真实环境两次实测未命中（懒渲染/节流待诊）；157 测试全绿 |
+| 15:50 | CDP 受信输入+pin 反查代码随 `9685eb179` 提交 |
+| 16:03 | 冒烟勾选曾生成提交 `877e7a939`（未推送） |
+| 16:20–16:42 | 测试 pin 删除（API 404 确证）、3 篇草稿删除（发现知乎页面 ID 大整数舍入致自带删除按钮失效）、临时探针与 local 留痕清空、撤服务、还原 tracker 并 reset 撤销勾选提交 |
 
 ## 三、核心洞察（I 阶段，四元组）
 
@@ -165,21 +168,21 @@ failure_signal: cdp 方法不可用→已自动回退 execCommand/fill 旧路径
 
 ## 六、原子行动项（A 阶段）
 
-| # | 行动项 | Owner | 验收标准（可独立验证） | 优先级 |
+| # | 行动项 | Owner | 状态与验收结果 | 优先级 |
 |---|---|---|---|---|
-| A-1 | 删除在线测试 pin `2087922795351230404`（应用不代操作；在知乎想法详情页本人删除） | 用户本人 | 该 URL 不可见/个人 pins 页无此条；本地存证截图保留 | 最高（合规） |
-| A-2 | 草稿箱丢弃两篇测试草稿 `p/2087896058693149765`、`p/2087920154151752616` | 用户本人 | 知乎草稿箱两篇不可见 | 高 |
-| A-3 | 真实环境验证并修复 pin 反查：先诊断 F-022 根因（Edge 切前台后跑 pins 页链接计数/等待时长/选择器探针），再定方案；固化真实 JS 探针脚本；`_resolve_pin_url` 从首页实跑到命中真实 pin URL | AI 执行+用户在场切窗口 | 真实运行输出 resolved=pin URL；新增探针留存；157+ 测试全绿；**此为 Task 14 关闭前置** | 高 |
-| A-4 | 回答类型真实填充 1 次：用户提供教育领域问题 URL，验证填充+问题 ID 比对防误发；错误问题 ID 阻断顺带实测 | 用户提供 URL / AI 执行 | 三类型填充均有真实记录（TR-14.1）；错误 ID 走 degraded | 中 |
-| A-5 | 规格回写（A-3/A-4 完成后）：tasks.md Task 14→completed+TR-14.1/TR-14.2 实测；review.md AC-13 评分（门槛≥3）+四条真实环境记录（信封/zhuanlan URL/选择器 SyntaxError/DraftJS 受信输入+懒挂载+焦点+pin 不跳页）；spec Open Question 回填「主攻领域=教育」 | AI | 三文件状态一致、无 blocked 残留（或如实保留未验项） | 中 |
-| A-6 | 收尾：删 `%TEMP%\zch-*.py/png`；与用户确认 tracker.md M1-1 勾选保留或还原（submodule 内改动）；排查 `projects/awesome-okf-xs` 指针 modified 来源；`git status --porcelain` 复核 local/ 零入库 | AI+用户决策 | 临时文件清空；tracker 去留有记录；git status 符合预期 | 中 |
-| A-7 | 5 个未提交代码文件（F-006）在 A-3 验证通过后按 atomic-commit-cmd 走原子提交（cdp 受信输入 / pin 反查可拆两笔） | AI，**需用户显式授权** | 每笔单一职责、预提交测试全绿、Conventional Commits 中文主体 | 中 |
+| A-1 | 删除在线测试 pin `2087922795351230404` | 用户授权 / AI 执行 | ✅ **已完成（16:3x）**：详情页核验正文后经「设置→删除→确认」删除；API 404「资源不存在」+详情页跳转文案双重确证 | 最高（合规） |
+| A-2 | 丢弃测试草稿（实际 3 篇，含「无标题」） | 用户授权 / AI 执行 | ✅ **已完成**：页面删除按钮因 ID 大整数舍入失效，改用 `DELETE /api/articles/<url 真实 ID>`，逐篇回读 3→0；真实 ID：...2616/...9603/...9765 | 高 |
+| A-3 | 真实环境验证并修复 pin 反查：先诊断 F-022 根因（Edge 切前台后跑 pins 页链接计数/等待时长/选择器探针），再定方案；固化真实 JS 探针脚本；`_resolve_pin_url` 从首页实跑到命中真实 pin URL | AI 执行+用户在场切窗口 | ⬜ 待办（**Task 14 关闭前置**）：注意唯一真实 pin 样本已删除，后续验证需新发一条测试 pin 或改用其他公开 pin 设计只读验证 | 高 |
+| A-4 | 回答类型真实填充 1 次：用户提供教育领域问题 URL，验证填充+问题 ID 比对防误发；错误问题 ID 阻断顺带实测 | 用户提供 URL / AI 执行 | ⬜ 待办：三类型填充真实记录（TR-14.1）；错误 ID 走 degraded | 中 |
+| A-5 | 规格回写（A-3/A-4 完成后）：tasks.md Task 14→completed+TR-14.1/TR-14.2 实测；review.md AC-13 评分（门槛≥3）+真实环境记录；spec Open Question 回填「主攻领域=教育」 | AI | ⬜ 待办：三文件状态一致、无 blocked 残留（或如实保留未验项） | 中 |
+| A-6 | 收尾清理 | AI+用户决策 | ✅ **已完成（16:42）**：`%TEMP%` 65 个 zch-* 清空；local/ 15 项留痕删除（仅余 README/content-plan/records+W1-1 截图 2 张）；tracker M1-1 还原、未推送勾选提交 877e7a939 经用户确认 reset 撤销；服务停止、17253 释放。残留与本任务无关项：`.trae/specs/okf-wiki-ecosystem/` 两文件、`projects/awesome-okf-xs` 指针（用户其他工作） | 中 |
+| A-7 | 应用代码原子提交 | — | ✅ **不再适用**：CDP+pin 反查代码已在 `9685eb179`（15:50）提交，工作区零应用代码差异；A-3 若产生新改动再按 atomic-commit-cmd 提交 | 中 |
 
-**G4 自检**：7 项均单一职责、可独立验证、有 Owner 与验收标准；A-7 显式标注需用户授权（本报告不代为提交）。**G4 通过。**
+**G4 自检**：7 项均单一职责、可独立验证、有 Owner 与验收标准；A-1/A-2/A-6 已按授权执行并回读确证，A-7 经核实不再适用。**G4 通过。**
 
 ## 七、C 阶段说明与质量门汇总
 
-- 已存在的 2 笔提交（F-005）符合 Conventional Commits 且 fix 笔带 `[prevent: test-case]` 预防标注；当前 5 个未提交文件不在本报告处置范围，按 A-7 经用户授权后原子提交。
+- 应用代码 3 笔提交（F-005）符合 Conventional Commits 且 fix 笔带预防说明；冒烟勾选误登记提交 `877e7a939` 经用户授权 reset 撤销（未推送、仅回退指针与暂存区，工作区文件无丢失）；复盘报告与索引为本次新增/修改文档，提交时机由用户决定。
 - 本报告落盘后更新 [milestone/index.md](index.md) 索引（报告表 + toctree 各一行）。
 
 | 质量门 | 结果 | 关键记录 |
