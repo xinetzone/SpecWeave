@@ -2248,16 +2248,22 @@ def _local_image_id(c: Context, img_tag: str) -> str | None:
 
 def ensure_passthrough_tag(
     c: Context, spec: StackSpec, env: dict, *, offline: bool
-) -> str:
-    """确保透传栈镜像 tag 就位，返回该 tag。
+) -> tuple[str, bool]:
+    """确保透传栈镜像 tag 就位，返回 ``(该 tag, 是否发生陈旧收敛)``。
 
     host 网络/D-Bus/USB 全是运行期维度（与「GPU 是运行期维度」同理），
     透传栈与默认栈镜像内容零差异——两 tag 的契约是**永远指向同一镜像 ID**：
 
     - 专用 tag 缺失：从基础 tag ``podman tag``（秒级、零额外空间）；
-    - 两 tag 均在但 ID 不一致（镜像重建后透传 tag 陈旧）：重新打 tag 收敛；
-      否则重建引入的修复对透传栈永远不生效。
+    - 两 tag 均在但 ID 不一致（镜像重建后透传 tag 陈旧）：重新打 tag 收敛，
+      并返回 ``converged=True``；否则重建引入的修复对透传栈永远不生效。
     - 基础 tag 不在本地（``--skip-build``/离线仅透传 tag 存在）：沿用透传 tag。
+
+    ``converged`` 的语义是**陈旧指针被刷新**（仅 ID 不一致分支）：tag 是镜像
+    仓库内的指针文件，重打不触及任何容器——已在跑的透传容器仍快照旧镜像，
+    podman-compose 1.x 的 ``up`` 也不比对容器镜像 ID 与 tag 当前 ID（2026-09-28
+    对照实证），故调用方须据此下发 ``--force-recreate``。首次缺失补打不算收敛
+    （此时容器尚不存在，普通创建即可）。
 
     ID 读取失败：警告并沿用（保守不阻断）。
     两个 tag 均不在本地：fail-fast。
@@ -2279,17 +2285,21 @@ def ensure_passthrough_tag(
                 print(f"[{ns}] ℹ 透传镜像 {pt_tag} 已过期（与 {base_tag} 镜像 ID "
                       f"不一致），从 {base_tag} 重新打 tag（镜像内容相同，零额外空间）…")
                 run_cmd(c, f"{detect_runtime()} tag {base_tag} {pt_tag}", hide=True)
-            return pt_tag
+                print(f"[{ns}] ℹ tag 已收敛：本次 up 将以 --force-recreate 重建"
+                      "透传容器（bind 挂载的工作目录不受影响，仅容器层未保存"
+                      "状态会丢失）")
+                return pt_tag, True
+            return pt_tag, False
         print(f"[{ns}] ⚠ 无法读取透传/基础镜像 ID，沿用现有 {pt_tag}；如内容过旧"
               f"可手动执行: {detect_runtime()} tag {base_tag} {pt_tag}")
-        return pt_tag
+        return pt_tag, False
     if pt_exists:
-        return pt_tag
+        return pt_tag, False
     if base_exists:
         print(f"[{ns}] ℹ 透传镜像 {pt_tag} 缺失，从 {base_tag} 打 tag"
               "（镜像内容相同，零额外构建）…")
         run_cmd(c, f"{detect_runtime()} tag {base_tag} {pt_tag}", hide=True)
-        return pt_tag
+        return pt_tag, False
     if offline:
         print(f"[{ns}] ⚠ 离线 --passthrough 需要镜像 {pt_tag}（或基础镜像 {base_tag}），本地均无：")
         print(f"[{ns}]   联网机器导出: invoke {ns}.save")
@@ -2361,9 +2371,12 @@ def up_stack(
         gpu_token, gpu_form = resolve_gpu_device(c, spec, env)
     dbus_path, sshd_port = ("", spec.ssh_default)
     pt_tag = ""
+    pt_converged = False
     if passthrough:
         dbus_path, sshd_port = resolve_passthrough(c, spec, env)
-        pt_tag = ensure_passthrough_tag(c, spec, env, offline=offline)
+        pt_tag, pt_converged = ensure_passthrough_tag(
+            c, spec, env, offline=offline
+        )
     gui_forms: tuple[str, ...] = ()
     if gui:
         # X11/TCP（ssh -X 转发）只监听宿主 loopback，仅 host 网络形态可达；
@@ -2376,8 +2389,14 @@ def up_stack(
         c, spec, env=env, gpu=gpu, gpu_form=gpu_form,
         passthrough=passthrough, gui=gui, gui_forms=gui_forms, usb=usb,
     )
+    # 陈旧收敛时把 --force-recreate 紧跟 up（V-2）：重打 tag 不触容器，
+    # 普通 up 不会让运行中的容器切换到新镜像 ID（2026-09-28 对照实证）。
+    up_tail = ["up"]
+    if pt_converged:
+        up_tail.append("--force-recreate")
+    up_tail += ["-d", "--no-build"]
     run_compose_up(
-        c, spec, *compose_up_tail(), gpu=gpu, gpu_form=gpu_form,
+        c, spec, *up_tail, gpu=gpu, gpu_form=gpu_form,
         passthrough=passthrough, gui=gui, gui_forms=gui_forms, usb=usb,
     )
     # host 形态：Jupyter 固定 8888、SSH 用 SSHD_PORT（无端口映射）；bridge 形态

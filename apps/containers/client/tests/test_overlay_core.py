@@ -2294,15 +2294,17 @@ def test_smoke_running_native_gui_x11_tcp_uses_same_files(harness, monkeypatch):
 def test_ensure_passthrough_tag_already_present(harness):
     tags = {"localhost/native-dev:passthrough"}
     harness.runner.image_exists_tags = tags
-    tag = oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=True)
+    tag, converged = oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=True)
     assert tag == "localhost/native-dev:passthrough"
+    assert converged is False
     assert not any(c.startswith("podman tag") for c in harness.runner.commands)
 
 
 def test_ensure_passthrough_tag_copied_from_base(harness, capsys):
     harness.runner.image_exists_tags = {"localhost/native-dev:latest"}
-    tag = oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=False)
+    tag, converged = oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=False)
     assert tag == "localhost/native-dev:passthrough"
+    assert converged is False  # 首次缺失补打不算陈旧收敛
     assert "podman tag localhost/native-dev:latest localhost/native-dev:passthrough" in (
         harness.runner.commands
     )
@@ -2317,8 +2319,9 @@ def test_ensure_passthrough_tag_stale_retagged_from_base(harness, capsys):
         "localhost/native-dev:latest": "sha256:new",
         "localhost/native-dev:passthrough": "sha256:old",
     }
-    tag = oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=True)
+    tag, converged = oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=True)
     assert tag == "localhost/native-dev:passthrough"
+    assert converged is True  # 陈旧收敛 → up 须据此 force-recreate
     assert "podman tag localhost/native-dev:latest localhost/native-dev:passthrough" in (
         harness.runner.commands
     )
@@ -2334,8 +2337,9 @@ def test_ensure_passthrough_tag_in_sync_no_action(harness):
         "localhost/native-dev:latest": "sha256:same",
         "localhost/native-dev:passthrough": "sha256:same",
     }
-    tag = oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=True)
+    tag, converged = oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=True)
     assert tag == "localhost/native-dev:passthrough"
+    assert converged is False
     assert not any(c.startswith("podman tag") for c in harness.runner.commands)
 
 
@@ -2343,8 +2347,9 @@ def test_ensure_passthrough_tag_id_unreadable_keeps_existing(harness, capsys):
     """ID 读取失败：警告 + 沿用现有透传 tag，不阻断（保守降级）。"""
     tags = {"localhost/native-dev:latest", "localhost/native-dev:passthrough"}
     harness.runner.image_exists_tags = tags
-    tag = oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=True)
+    tag, converged = oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=True)
     assert tag == "localhost/native-dev:passthrough"
+    assert converged is False
     assert not any(c.startswith("podman tag") for c in harness.runner.commands)
     assert "无法读取透传/基础镜像 ID" in capsys.readouterr().out
 
@@ -2383,6 +2388,26 @@ def test_up_passthrough_argv_banner_and_ready_port(harness, monkeypatch, capsys)
     assert "ssh -p 2223 devuser@localhost" in out
     assert "Jupyter localhost:8888" in out
     assert "透传    host 网络 + D-Bus" in out
+
+
+def test_up_passthrough_force_recreate_on_convergence(harness, monkeypatch):
+    """陈旧收敛（converged=True）→ up argv 含 --force-recreate（紧跟 up）。
+
+    无此旗标时 podman-compose 不比对容器镜像 ID 与 tag 当前 ID，运行中的
+    容器永远留在旧镜像（2026-09-28 对照实证：连续两次 up 容器 ID 不变）。
+    """
+    monkeypatch.setattr(
+        oc, "ensure_passthrough_tag",
+        lambda *a, **k: ("localhost/native-dev:passthrough", True),
+    )
+    monkeypatch.setattr(oc, "wait_http_ready", lambda *a, **k: (True, "ok"))
+    oc.up_stack(None, _NATIVE, passthrough=True)
+    up_cmds = [
+        c for c in harness.runner.commands
+        if re.search(r"\bup\b.*--no-build", c)
+    ]
+    assert len(up_cmds) == 1
+    assert "up --force-recreate -d --no-build" in up_cmds[0]
 
 
 def test_up_usb_argv_and_banner(harness, capsys):
