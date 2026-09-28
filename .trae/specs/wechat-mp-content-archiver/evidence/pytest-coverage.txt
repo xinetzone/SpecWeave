@@ -1,0 +1,89 @@
+# TR-14.1 覆盖率与全量测试证据（Task 14）
+
+采集时间：2026-09-28    工作目录：apps/dev-tools/wechat-mp-archiver
+解释器：.venv\Scripts\python.exe（Python 3.14.7-final-0，win32）
+pytest 配置：pyproject.toml 的 [tool.pytest.ini_options] → testpaths = ["tests"]、addopts = "-q"
+
+复现命令（PowerShell，须在应用目录执行）：
+  $env:COVERAGE_FILE="$env:TEMP\mp14.coverage"     # 覆盖率数据落系统临时目录，避免在仓库内生成 .coverage
+  .venv\Scripts\python.exe -m pytest --cov=src/mp_archiver --cov-report=term-missing
+
+----- 原始输出开始（首部：进度）-----
+........................................................................ [ 23%]
+........................................................................ [ 47%]
+........................................................................ [ 71%]
+........................................................................ [ 95%]
+
+----- 原始输出（中部：折叠说明）-----
+[折叠] 首部进度点之后、覆盖率表之前为 90 条 ResourceWarning 明细（约 500 行）。
+该告警为既有现象：测试内 sqlite3 连接未显式 close（ResourceWarning: unclosed database），
+非本次变更引入、不影响任何用例结果。为控制证据体积此处折叠，需原样复现按上方命令执行即可。
+
+----- 原始输出（尾部：覆盖率表 + 汇总）-----
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.14.7-final-0 _______________
+
+Name                                              Stmts   Miss  Cover   Missing
+-------------------------------------------------------------------------------
+src\mp_archiver\__init__.py                           1      0   100%
+src\mp_archiver\__main__.py                           2      0   100%
+src\mp_archiver\adapters\__init__.py                  8      0   100%
+src\mp_archiver\adapters\api_surface.py              50      2    96%   46, 50
+src\mp_archiver\adapters\base.py                     13      0   100%
+src\mp_archiver\adapters\health.py                   46      1    98%   61
+src\mp_archiver\adapters\official_api.py            142      6    96%   67-68, 70, 127, 221, 247
+src\mp_archiver\adapters\wechat_download_api.py     103      0   100%
+src\mp_archiver\adapters\wechat_payload.py          153      0   100%
+src\mp_archiver\cli.py                              432      0   100%
+src\mp_archiver\config.py                            48      2    96%   87, 93
+src\mp_archiver\core\__init__.py                      0      0   100%
+src\mp_archiver\core\article_archive.py             229      6    97%   135, 138-139, 352, 505-506
+src\mp_archiver\core\comment_sync.py                145     14    90%   79, 91, 111, 116, 119, 133, 190, 196, 203, 231, 301-309
+src\mp_archiver\core\credentials.py                  11      0   100%
+src\mp_archiver\core\html_transform.py              103      3    97%   78, 119, 178
+src\mp_archiver\core\list_sync.py                    72      6    92%   56-57, 81, 120, 127-128
+src\mp_archiver\core\media_collect.py                84      5    94%   59-63
+src\mp_archiver\core\media_discovery.py              92      6    93%   100, 129, 131, 134, 140, 158
+src\mp_archiver\core\official_probe.py              187     23    88%   61, 84, 93, 146, 154-157, 182, 189-190, 226, 232, 239-247, 266, 408-409, 412-413
+src\mp_archiver\core\official_sync.py                66      4    94%   94-97
+src\mp_archiver\core\pipeline.py                     23      0   100%
+src\mp_archiver\core\text_extract.py                130      3    98%   201, 262, 264
+src\mp_archiver\core\validation.py                   17      0   100%
+src\mp_archiver\db\__init__.py                        2      0   100%
+src\mp_archiver\db\database.py                      101      4    96%   48, 324-325, 492
+src\mp_archiver\exceptions.py                        12      0   100%
+src\mp_archiver\exporters\__init__.py                 0      0   100%
+src\mp_archiver\exporters\rag.py                     79      3    96%   107-112
+src\mp_archiver\exporters\report.py                  137      1    99%   255
+src\mp_archiver\http_client.py                       65      3    95%   47, 53, 67
+src\mp_archiver\logging_utils.py                     29      2    93%   28, 58
+src\mp_archiver\models.py                            45      5    89%   62-66
+src\mp_archiver\naming.py                            38      2    95%   58-59
+-------------------------------------------------------------------------------
+TOTAL                                              2665    101    96%
+302 passed, 90 warnings in 47.03s
+
+----- 原始输出结束 -----
+
+## 判读（TR-14.1）
+
+- **全量 pytest 全绿**：`302 passed`，0 failed / 0 error / 0 skipped（无 `pytest.skip`、无 `xfail`）。
+  相较 Task 13 基线 221 例，本轮净增 81 例，构成经 `--collect-only` 逐文件核对：
+  新增 `tests/test_cli_commands.py` 52 例（含 `__main__` 入口 1 例）、新增
+  `tests/test_acceptance_e2e.py` 6 例、`tests/test_wechat_payload.py` 14→29（+15）、
+  `tests/test_wechat_download_adapter.py` 7→15（+8）；合计 52+6+15+8 = 81，与 302−221 吻合，无回归。
+  （末例 `test_acceptance_ac7_cli_run_without_credentials_exits_zero` 为 V 阶段对抗评审 P1 修复项：
+   原 §4.4 退出码取证来自桩掉编排层的 CLI 打印用例，现补真实 CLI 端到端用例。）
+- **TOTAL 覆盖率 96%**（2665 语句 / 101 未覆盖），满足 TR-14.1「覆盖率 ≥80%」。
+- **解析/清洗/媒体/状态机/编排等关键模块全部 ≥90%**：
+  `wechat_payload.py` 100%、`wechat_download_api.py` 100%、`cli.py` 100%、`pipeline.py` 100%、
+  `validation.py` 100%、`credentials.py` 100%、`exceptions.py` 100%、`report.py` 99%、
+  `text_extract.py` 98%、`article_archive.py` 97%、`html_transform.py` 97%、`database.py` 96%、
+  `config.py` 96%、`rag.py` 96%、`api_surface.py` 96%、`official_api.py` 96%、`http_client.py` 95%、
+  `naming.py` 95%、`media_collect.py` 94%、`official_sync.py` 94%、`media_discovery.py` 93%、
+  `logging_utils.py` 93%、`list_sync.py` 92%、`comment_sync.py` 90%（临界达标）。
+- **低于 90% 的仅 2 个非关键模块**：`models.py` 89%（pydantic 声明式模型，未覆盖行为 `62-66` 为
+  字段校验辅助分支）、`official_probe.py` 88%（诊断期探测代码，未覆盖行集中在真实网络交互的多端点
+  回退分支，主路径已由 MockTransport 单测覆盖）。
+- **残余告警**：90 条 `ResourceWarning: unclosed database` 为测试侧 sqlite 连接未显式 close 的既有
+  卫生问题（非本轮引入、不影响用例结论），记录在案供后续清理。

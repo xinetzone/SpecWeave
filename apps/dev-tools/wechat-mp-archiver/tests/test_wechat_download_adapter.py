@@ -5,12 +5,18 @@ import json
 import httpx
 import pytest
 
+from mp_archiver.adapters.base import AccountRef
 from mp_archiver.adapters.wechat_download_api import (
     AccountNotFoundError,
+    BizUnavailableError,
     EndpointDiscoveryError,
     WechatDownloadApiAdapter,
 )
-from mp_archiver.adapters.wechat_payload import CredentialExpiredError
+from mp_archiver.adapters.wechat_payload import (
+    ApiRetError,
+    CredentialExpiredError,
+    PayloadError,
+)
 from mp_archiver.config import Settings
 from mp_archiver.http_client import RateLimitedClient
 
@@ -217,3 +223,150 @@ def test_override_paths_are_used(settings):
     assert requested == ["/custom/search", "/custom/list"]
     # 非标准参数名按端点声明匹配（biz + cursor），count/f 未声明则不发送
     assert page.articles[0].sn == "sn001"
+
+
+# ---- 端点发现与参数分支（Task 14 覆盖率补齐） ----
+
+def test_adapter_surface_property_exposes_endpoints(settings):
+    """surface 属性返回发现到的 search/history 端点。"""
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/openapi.json":
+            return httpx.Response(200, json=SPEC)
+        return httpx.Response(404)
+
+    client = _make_client(settings, handler)
+    adapter = WechatDownloadApiAdapter.build(client, base_url="http://127.0.0.1:5000")
+    surface = adapter.surface
+    assert surface.search.path == SEARCH_PATH
+    assert surface.history.path == HISTORY_PATH
+
+
+def test_build_openapi_http_error_raises_discovery_error(settings):
+    """OpenAPI 返回 500（非 200/401/403）→ EndpointDiscoveryError。"""
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(500, text="server error")
+
+    client = _make_client(settings, handler)
+    with pytest.raises(EndpointDiscoveryError):
+        WechatDownloadApiAdapter.build(client, base_url="http://127.0.0.1:5000")
+
+
+def test_build_openapi_non_json_raises_discovery_error(settings):
+    """OpenAPI 响应体不是 JSON → EndpointDiscoveryError。"""
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200, content=b"<html>not json</html>")
+
+    client = _make_client(settings, handler)
+    with pytest.raises(EndpointDiscoveryError):
+        WechatDownloadApiAdapter.build(client, base_url="http://127.0.0.1:5000")
+
+
+def _spec_with_history_params(params):
+    """搜索端点固定，历史端点参数按需声明，用于参数匹配分支测试。"""
+    return {"paths": {
+        "/api/searchbiz": {"get": {}},
+        "/api/getmsg": {"get": {"parameters": params}},
+    }}
+
+
+def test_history_uses_declared_fakeid_when_account_has_no_biz(settings):
+    """端点只声明 fakeid 且账号有 fakeid → 发送 fakeid 而非 __biz。"""
+    seen = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/openapi.json":
+            return httpx.Response(200, json=_spec_with_history_params([
+                {"name": "fakeid", "in": "query"},
+                {"name": "offset", "in": "query"},
+            ]))
+        seen["params"] = dict(request.url.params)
+        return httpx.Response(200, json=_history_payload())
+
+    client = _make_client(settings, handler)
+    adapter = WechatDownloadApiAdapter.build(client, base_url="http://127.0.0.1:5000")
+    account = AccountRef(nickname="意识食谱", alias="mindfood", fakeid="998877", biz="")
+    page = adapter.fetch_history_page(account, offset=0)
+    assert seen["params"]["fakeid"] == "998877"
+    assert "__biz" not in seen["params"]
+    assert seen["params"]["offset"] == "0"
+    assert len(page.articles) == 1
+
+
+def test_history_without_query_declarations_uses_native_contract(settings):
+    """端点无 query 声明且账号有 biz → 按微信原生契约发 __biz 并补 count/f。"""
+    seen = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/openapi.json":
+            return httpx.Response(200, json={"paths": {
+                "/api/searchbiz": {"get": {}},
+                "/api/getmsg": {"get": {}},
+            }})
+        seen["params"] = dict(request.url.params)
+        return httpx.Response(200, json=_history_payload())
+
+    client = _make_client(settings, handler)
+    adapter = WechatDownloadApiAdapter.build(client, base_url="http://127.0.0.1:5000")
+    account = AccountRef(nickname="意识食谱", alias="mindfood", fakeid="998877",
+                         biz=BIZ)
+    adapter.fetch_history_page(account, offset=0)
+    assert seen["params"]["__biz"] == BIZ
+    assert seen["params"]["offset"] == "0"
+    assert seen["params"]["count"] == "10"
+    assert seen["params"]["f"] == "json"
+
+
+def test_history_without_biz_and_unmatched_params_raises(settings):
+    """端点有声明但不接受 biz/fakeid 且账号无 biz → BizUnavailableError。"""
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/openapi.json":
+            return httpx.Response(200, json=_spec_with_history_params([
+                {"name": "q", "in": "query"},
+            ]))
+        return httpx.Response(200, json=_history_payload())
+
+    client = _make_client(settings, handler)
+    adapter = WechatDownloadApiAdapter.build(client, base_url="http://127.0.0.1:5000")
+    account = AccountRef(nickname="意识食谱", alias="mindfood", fakeid="", biz="")
+    with pytest.raises(BizUnavailableError):
+        adapter.fetch_history_page(account, offset=0)
+
+
+def test_request_json_http_error_raises_api_ret_error(settings):
+    """端点返回非 200（500）→ ApiRetError 携带状态码。"""
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/openapi.json":
+            return httpx.Response(200, json=SPEC)
+        return httpx.Response(500, text="boom")
+
+    client = _make_client(settings, handler)
+    adapter = WechatDownloadApiAdapter.build(client, base_url="http://127.0.0.1:5000")
+    with pytest.raises(ApiRetError) as ei:
+        adapter.resolve_account("意识食谱")
+    assert ei.value.ret == 500
+
+
+def test_request_json_non_json_body_raises_payload_error(settings):
+    """端点返回 200 但响应体不是 JSON → PayloadError。"""
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/openapi.json":
+            return httpx.Response(200, json=SPEC)
+        return httpx.Response(200, content=b"<html>oops</html>")
+
+    client = _make_client(settings, handler)
+    adapter = WechatDownloadApiAdapter.build(client, base_url="http://127.0.0.1:5000")
+    with pytest.raises(PayloadError):
+        adapter.resolve_account("意识食谱")
+
+
+def test_request_json_non_object_body_raises_payload_error(settings):
+    """端点返回 JSON 数组（非对象）→ PayloadError。"""
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/openapi.json":
+            return httpx.Response(200, json=SPEC)
+        return httpx.Response(200, json=[1, 2, 3])
+
+    client = _make_client(settings, handler)
+    adapter = WechatDownloadApiAdapter.build(client, base_url="http://127.0.0.1:5000")
+    with pytest.raises(PayloadError):
+        adapter.resolve_account("意识食谱")

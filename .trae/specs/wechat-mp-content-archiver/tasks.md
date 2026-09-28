@@ -24,6 +24,7 @@
 
 ## Task 2: 项目骨架与公共基建
 - **Status**: `completed`（2026-09-24）
+- **AC 验收取证（Task 14 / TR-14.2）**: AC-9 凭证零泄露的独立取证记录（`git ls-files` / `git grep` 原始输出与逐行归类）见 [evidence/acceptance-evidence.md](evidence/acceptance-evidence.md) §6 与 [evidence/credential-scan.txt](evidence/credential-scan.txt)。
 - **Priority**: high
 - **Depends On**: Task 1
 - **Path Decision**: 依 `apps/AGENTS.md` 应用分组规则（2026-09-24 回读磁盘原文），落位由 spec 暂定的 `apps/wechat-mp-archiver/` 细化为 **`apps/dev-tools/wechat-mp-archiver/`**（dev-tools 组，与 camera-power-controller / prompt_extraction 同组）；简单工具无独立 AGENTS.md，已在 apps/AGENTS.md 路由表与边界声明两处登记。
@@ -67,6 +68,7 @@
 
 ## Task 4: 全量文章列表采集器
 - **Status**: `in_progress`（软件完成 2026-09-24；TR-4.1 真实号对照待采集服务部署+扫码后闭环）
+- **AC 验收取证（Task 14 / TR-14.2）**: AC-4 全量列表落库的端到端取证（11 条落库 + 对账标记 + 唯一键去重 + 已删状态记录，期望值↔实测值对照表）见 [evidence/acceptance-evidence.md](evidence/acceptance-evidence.md) §1。
 - **Priority**: high
 - **Depends On**: Task 3
 - **Completion Evidence（软件侧）**:
@@ -90,6 +92,7 @@
 
 ## Task 5: 正文存档与图片本地化
 - **Status**: `in_progress`（软件完成 2026-09-24；TR-5.1 真实抽样 10 篇与 TR-5.3 人工保真度评分待实测后闭环）
+- **AC 验收取证（Task 14 / TR-14.2）**: AC-5 正文与图片离线保真的端到端取证（10 篇四件套齐全、图片 100% 本地化、无远程残留、长文/图集形态无损）见 [evidence/acceptance-evidence.md](evidence/acceptance-evidence.md) §2。
 - **Priority**: high
 - **Depends On**: Task 4
 - **Completion Evidence（软件侧）**:
@@ -112,6 +115,7 @@
 
 ## Task 6: 富媒体分类采集
 - **Status**: `in_progress`（软件完成 2026-09-25；TR-6.2 已由 7 项识别器/归档单测闭环；TR-6.1 真实 mpvoice 文章播放抽检待采集服务部署+扫码后闭环）
+- **AC 验收取证（Task 14 / TR-14.2）**: AC-6 富媒体分类处置的端到端取证（四类媒体逐类计数、`media/` 仅 1 个真实落盘文件即「无伪造」强证据）见 [evidence/acceptance-evidence.md](evidence/acceptance-evidence.md) §3。
 - **Priority**: high
 - **Depends On**: Task 5
 - **Description**:
@@ -124,6 +128,7 @@
 
 ## Task 7: 评论与互动数据条件采集
 - **Status**: `in_progress`（软件完成 2026-09-25；TR-7.2 已由 11 项解析/降级/集成单测闭环（无凭证整批退出正常、状态 skipped_no_credential）；TR-7.1 真实凭证对照待用户抓包提供 appmsg_token/pass_ticket 后联调；接口字段为经验形态，已在 comment_sync.py 标注实测校准点；凭证获取步骤见 deploy/README.md 第 8 节）
+- **AC 验收取证（Task 14 / TR-14.2）**: AC-7 互动条件性采集三态（开关关闭零写入 / 无凭证 `skipped_no_credential` / 有凭证评论与指标入库）与真实 CLI `run --full --fetch-metrics` 退出码 0 的独立取证见 [evidence/acceptance-evidence.md](evidence/acceptance-evidence.md) §4。
 - **Priority**: medium
 - **Depends On**: Task 5
 - **Description**:
@@ -159,6 +164,7 @@
 
 ## Task 9: 增量模式与 CLI 编排
 - **Status**: `completed`
+- **AC 验收取证（Task 14 / TR-14.2）**: AC-8 重跑幂等（DB 四表计数 + 归档文件清单集合级双不变）与失败注入续跑的独立取证见 [evidence/acceptance-evidence.md](evidence/acceptance-evidence.md) §5。
 - **Priority**: medium
 - **Depends On**: Task 6, Task 7
 - **Completion Evidence**:
@@ -218,6 +224,7 @@
 
 ## Task 12: 故障注入与韧性验收
 - **Status**: `completed`（软件完成 2026-09-25；六剧本以 MockTransport 故障注入在 CI 内闭环并留可复现演练命令，真实微信环境/Docker 扫码实操演练仍挂起）
+- **AC 验收取证（Task 14 / TR-14.2）**: AC-8 断点续跑与 AC-10 熔断语义的独立取证见 [evidence/acceptance-evidence.md](evidence/acceptance-evidence.md) §0 结论摘要与 §5.2（中断后续跑）。
 - **Priority**: high
 - **Depends On**: Task 9
 - **Completion Evidence（软件侧）**:
@@ -265,9 +272,16 @@
   - `rule` TR-13.2: 干净临时目录从零走查（init-db/五表/doctor/list/fetch 退出码与默认值）已由独立评审实跑通过；真机扫码部署演练挂起。证据：本 Completion Evidence 走查段。
 
 ## Task 14: 测试体系与端到端验收
-- **Status**: `pending`
+- **Status**: `completed`（2026-09-28；软件侧闭环：302 全绿 + 覆盖率 96% + 证据包落盘 + V 阶段独立评审 P0=0；真机扫码部署类验收项已显式挂起）
 - **Priority**: high
 - **Depends On**: Task 12, Task 13
+- **Completion Evidence（软件侧）**:
+  - **TR-14.1（闭环）**：全仓库 `pytest` **302 passed**（Task 13 基线 221 + 净增 81），0 failed / 0 error / 0 skipped；覆盖率 **TOTAL 96%**（2665 语句 / 101 未覆盖）；关键模块全部 ≥90%——`wechat_payload` / `wechat_download_api` / `cli` / `pipeline` / `validation` / `credentials` / `exceptions` 均 100%，最低 `comment_sync` 90%；仅 `models.py` 89%、`official_probe.py` 88% 两个非核心模块低于 90%。凭证扫描：`git ls-files` 该应用 65 个受控文件中仅两份 `*.example` 命中，无 `.env` / `data/` / `*.db` / `archive/` / `exports/` 被跟踪；`git grep` 69 行命中逐行确认全为 `*.example` 空占位 / 文档与代码符号引用 / 测试夹具显式假值。证据：[evidence/pytest-coverage.txt](evidence/pytest-coverage.txt)、[evidence/credential-scan.txt](evidence/credential-scan.txt)。
+  - **测试补强构成**：新增 [tests/test_cli_commands.py](../../../apps/dev-tools/wechat-mp-archiver/tests/test_cli_commands.py) 52 例（11 个子命令的正常/异常/退出码/输出文案 + `python -m` 入口）、新增 [tests/test_acceptance_e2e.py](../../../apps/dev-tools/wechat-mp-archiver/tests/test_acceptance_e2e.py) 6 例（AC-4/5/6/7/8 端到端）、[tests/test_wechat_payload.py](../../../apps/dev-tools/wechat-mp-archiver/tests/test_wechat_payload.py) 14→29（+15，覆盖率 86%→100%）、[tests/test_wechat_download_adapter.py](../../../apps/dev-tools/wechat-mp-archiver/tests/test_wechat_download_adapter.py) 7→15（+8，84%→100%）；另 [tests/test_report.py](../../../apps/dev-tools/wechat-mp-archiver/tests/test_report.py) 冻结时钟加固消除 `generated_at` 跨秒偶发失败，[pyproject.toml](../../../apps/dev-tools/wechat-mp-archiver/pyproject.toml) dev 附加依赖补 `pytest-cov>=5.0` 使覆盖率取证可复现。**未改动 `src/` 下任何生产代码**（`git status --short` 中 `src/` 零变更）。
+  - **TR-14.2（闭环）**：验收证据包 [evidence/](evidence/README.md)（5 文件）——正文 [acceptance-evidence.md](evidence/acceptance-evidence.md) 给出逐条 AC 的 Given/When/Then 对照、断言期望值↔实测值对照表、结论与挂起项；配套三份原始输出 [e2e-acceptance.txt](evidence/e2e-acceptance.txt)（6 例逐例 PASSED + 用例↔AC 对照）、[pytest-coverage.txt](evidence/pytest-coverage.txt)、[credential-scan.txt](evidence/credential-scan.txt)，以及索引与复现命令 [README.md](evidence/README.md)。证据包路径已写入 **Task 2 / 4 / 5 / 6 / 7 / 9 / 12** 的 Completion Evidence（见各任务 Status 行下方的「AC 验收取证（Task 14 / TR-14.2）」条目）。
+  - **TR-14.3（rubric 自评 5，下限 4）**：五项锚点要素（幂等可续跑 / adapter 隔离 / 日志完善 / 解析层 fixture 单测 / 文档齐全）均有可复现证据（详见 [acceptance-evidence.md](evidence/acceptance-evidence.md) §8）；扣分项披露：90 条既有 `ResourceWarning: unclosed database`（测试侧 sqlite 连接未显式 close，非本轮引入）与 `models.py` 89%、`official_probe.py` 88%，若评审计入则为 4 —— 两种口径均 ≥ 阈值 4。
+  - **V 阶段 fresh-context 独立对抗评审（P0=0）**：评审提出 **2 个 P1 + 4 项 P2，全部处置**。P1-1 证据包 §6 文字结论「44 行命中」与粘贴原始输出（69 行）自相矛盾 → 更正为 69 行并复核；P1-2 §4.4「任务整体退出码 0」原引用桩掉编排层的 CLI 打印用例（`run_pipeline` 被替换为返回伪造 `PipelineReport` 的假函数，属推论冒充实测）→ 补真实 CLI 端到端用例 `test_acceptance_ac7_cli_run_without_credentials_exits_zero`（从 `cli.main(["run","-a",…,"--full","--fetch-metrics"])` 走完真实两阶段编排，仅把 HTTP 传输替换为 `httpx.MockTransport`）并改写该取证段。P2-3 `python -m` 入口用例原用 `--help`（argparse 在 `main()` 内部即抛 `SystemExit`，包装行 `raise SystemExit(main())` 的「int 返回值→退出码」路径永不执行）→ 改用 `init-db` 真实锁定；P2-4 证据包行号链接越界 ±1 修正；P2-5 `parse_article_url` 的自比对恒真断言改为具体字段断言；P2-6 `sync-official` 异常断言由笼统 `[fail]` 收窄为四类异常各自专属文案。修复后重跑全量 302 passed、覆盖率与关键模块数值不变。
+  - **挂起（须真机扫码部署环境，不臆造）**：AC-4 最早文章与微信客户端对照（TR-4.1）、AC-5 真实 10 篇断网阅读与人工保真度评分（TR-5.1/5.3）、AC-6 真实 mpvoice 播放抽检（TR-6.1）、AC-7 真实凭证联调（TR-7.1）、AC-8 真实进程 kill 中断演练（TR-9.1）——均依赖 Docker 采集服务 + 专用订阅号扫码环境；汇总表见 [acceptance-evidence.md](evidence/acceptance-evidence.md) §9。软件侧等价证据（结构/引用层核对、失败注入续跑、字节级比对、MockTransport 全链路）已在本证据包逐条给出。
 - **Description**:
   - 以本地 HTML/JSON fixture 覆盖解析/清洗/媒体识别/去重/状态机等纯逻辑，覆盖率 ≥80%（关键模块 ≥90%）；执行全仓库 pytest 无回归；完成 AC-4/5/6/7/8 的端到端验收取证；凭证泄露扫描；整理验收证据包。
 - **Acceptance Criteria Addressed**: AC-4, AC-5, AC-6, AC-7, AC-8, AC-9, AC-17

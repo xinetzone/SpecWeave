@@ -64,7 +64,8 @@ def test_parse_article_url_decodes_biz_and_parts():
 
 
 def test_parse_article_url_empty_and_bad_idx():
-    assert parse_article_url("") == parse_article_url("")
+    empty = parse_article_url("")
+    assert (empty.biz, empty.mid, empty.idx, empty.sn) == (None, None, None, None)
     parts = parse_article_url("http://x/?__biz=a&mid=1&idx=abc")
     assert parts.idx is None
     assert parts.biz == "a"
@@ -194,3 +195,106 @@ def test_parse_accounts_errors():
     with pytest.raises(ApiRetError):
         parse_accounts({"ret": 500})
     assert select_account((), "x") is None
+
+
+# ---- 边界与降级分支（Task 14 覆盖率补齐） ----
+
+def test_parse_history_page_non_dict_payload_raises():
+    """非 JSON 对象的历史消息响应（如数组）→ PayloadError。"""
+    with pytest.raises(PayloadError):
+        parse_history_page([])
+
+
+def test_parse_history_page_ret_not_int_raises_api_ret_error():
+    """ret 不可转 int：归 -1 后抛 ApiRetError，文案取 errmsg。"""
+    with pytest.raises(ApiRetError) as ei:
+        parse_history_page({"ret": "oops", "errmsg": "平台异常"})
+    assert ei.value.ret == -1
+    assert ei.value.errmsg == "平台异常"
+
+
+def test_parse_history_page_light_wrapper_list_and_items():
+    """无 general_msg_list 时的轻包装：分别取 list 与 items 兜底。"""
+    page_list = parse_history_page({"ret": 0, "list": [_batch()]})
+    assert len(page_list.articles) == 1
+    page_items = parse_history_page({"ret": 0, "items": [_batch()]})
+    assert len(page_items.articles) == 1
+    assert page_items.articles[0].mid == "2447531234"
+
+
+def test_parse_history_page_batches_not_list_raises():
+    """general_msg_list 解析出的对象其 list 不是数组 → PayloadError。"""
+    with pytest.raises(PayloadError):
+        parse_history_page(
+            {"ret": 0, "general_msg_list": json.dumps({"list": "x"})}
+        )
+
+
+def test_parse_history_page_skips_non_dict_batch():
+    """批次元素非 dict：跳过且不计入非图文统计。"""
+    page = parse_history_page(_payload([_batch(), "垃圾批次", 123]))
+    assert len(page.articles) == 1
+    assert page.skipped_non_article == 0
+
+
+def test_parse_history_page_next_offset_not_int_defaults_zero():
+    """next_offset 非数值：归 0 且不抛异常。"""
+    payload = _payload([_batch()])
+    payload["next_offset"] = "末尾"
+    page = parse_history_page(payload)
+    assert page.next_offset == 0
+    assert len(page.articles) == 1
+
+
+def test_parse_history_page_bad_datetime_yields_none():
+    """comm_msg_info.datetime 非法（字符串/None）：publish_time 为 None 仍入库。"""
+    page_str = parse_history_page(_payload([_batch(ts="abc")]))
+    assert page_str.articles[0].publish_time is None
+    page_none = parse_history_page(_payload([_batch(ts=None)]))
+    assert page_none.articles[0].publish_time is None
+
+
+def test_parse_history_page_copyright_stat_not_int_defaults_false():
+    """copyright_stat 非数值：归 0，is_original 为 False。"""
+    page = parse_history_page(_payload([_batch(copyright_stat="oops")]))
+    assert page.articles[0].is_original is False
+
+
+def test_parse_accounts_non_dict_payload_raises():
+    """非 JSON 对象的搜索响应 → PayloadError。"""
+    with pytest.raises(PayloadError):
+        parse_accounts("not-an-object")
+
+
+def test_parse_accounts_base_resp_ret_not_int_and_errmsg():
+    """base_resp.ret 不可转 int → ApiRetError(-1)，文案取自 base_resp.errmsg。"""
+    with pytest.raises(ApiRetError) as ei:
+        parse_accounts({"base_resp": {"ret": "oops", "errmsg": "搜索被拒"}})
+    assert ei.value.ret == -1
+    assert ei.value.errmsg == "搜索被拒"
+
+
+def test_parse_accounts_list_bad_json_raises():
+    """list 为非法 JSON 字符串 → PayloadError。"""
+    with pytest.raises(PayloadError):
+        parse_accounts({"list": "{not json"})
+
+
+def test_parse_accounts_list_none_falls_back_to_items():
+    """list 为 None：回退 items，且非 dict 元素被跳过。"""
+    accounts = parse_accounts({"list": None, "items": [
+        "脏数据", {"fakeid": 7, "nickname": "回退号", "alias": "fb"}]})
+    assert len(accounts) == 1
+    assert accounts[0].nickname == "回退号"
+
+
+def test_parse_accounts_list_not_array_raises():
+    """list 既非字符串也非数组 → PayloadError。"""
+    with pytest.raises(PayloadError):
+        parse_accounts({"list": 123})
+
+
+def test_select_account_blank_name_returns_none():
+    """空/纯空白名称直接返回 None（不做包含匹配）。"""
+    accounts = (AccountRef("意识食谱", "mindfood", "1", BIZ),)
+    assert select_account(accounts, "   ") is None
