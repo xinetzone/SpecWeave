@@ -28,6 +28,7 @@ import platform
 import re
 import shlex
 import shutil
+import struct
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -668,7 +669,8 @@ def compose_files(
     每次 ``--gpu`` 都被判成「另一控制平面创建」并强制优雅 down + recreate。
 
     文件顺序（compose 按序叠加合并）：base → GPU → 透传主层 → GUI
-    （Wayland → X11）→ USB 层。
+    （Wayland → X11 unix → X11/TCP）→ USB 层。x11 与 x11-tcp 互斥
+    （resolve_gui 保证），不会同时出现。
     """
     files = [overlay_dir(spec) / "compose.yaml"]
     if gpu:
@@ -691,6 +693,8 @@ def compose_files(
             files.append(overlay_dir(spec) / "compose.passthrough.gui.yaml")
         if "x11" in gui_forms:
             files.append(overlay_dir(spec) / "compose.passthrough.gui.x11.yaml")
+        if "x11-tcp" in gui_forms:
+            files.append(overlay_dir(spec) / "compose.passthrough.gui.x11.tcp.yaml")
     if usb:
         if not spec.usb_overlay:
             raise RuntimeError(f"栈 {spec.namespace} 未声明 usb_overlay")
@@ -1804,85 +1808,421 @@ def resolve_usb_device(c: Context, spec: StackSpec, env: dict) -> str:
     return token
 
 
-# GUI（Wayland/X11）显示 socket 的固定探测路径（daemon 宿主侧）。
-# WSLg（Windows 11 内置）在 podman-machine-default 内恒定挂载于 /mnt/wslg：
-# 2026-09-23 真机实证 wayland-0 与 .X11-unix/X0 均为 0777 socket；非登录 shell
-# 的 DISPLAY/WAYLAND_DISPLAY/XDG_RUNTIME_DIR 全空，故默认值必须内核显式给出，
-# 不可读 daemon 宿主 env。物理 Linux 回退 /run/user/1000（与 D-Bus 缺省同 uid）。
-GUI_WAYLAND_DEFAULT_DIRS = ("/mnt/wslg/runtime-dir", "/run/user/1000")
-GUI_X11_DEFAULT_DIRS = ("/mnt/wslg/.X11-unix", "/tmp/.X11-unix")
+# GUI 三种显示形态（探测全部落在 daemon 宿主侧，禁止本机 Path.exists()，同
+# C19；socket 源缺失时 podman 只报 exit 125，故与 GPU/USB/D-Bus 同族在任何
+# down/up 之前前置探测）：
+#   wayland  — Wayland AF_UNIX socket，bind 单文件（compose.passthrough.gui.yaml）；
+#   x11      — X11 AF_UNIX socket，bind 整个 socket 目录（...gui.x11.yaml）；
+#   x11-tcp  — X11 over TCP，即 `ssh -X` 的 127.0.0.1:60<n> 转发，**仅 host
+#              网络形态**（--passthrough）可达容器，需注入 xauth cookie
+#              （...gui.x11.tcp.yaml，只写 environment + cookie 文件 bind）。
+#
+# 会话目录动态推导（$XDG_RUNTIME_DIR → /run/user/$(id -u)），**禁止写死
+# 1000**：同模块 D-Bus 探测 2026-09-24 已因物理 Linux 本机 UID=1006 实证改
+# 动态，GUI 旧默认 /run/user/1000 是未同步的覆盖盲区；/run/user/1000 仅作
+# 历史兜底保留。/mnt/wslg 是 WSL2 podman machine 内 WSLg 的固定挂载
+# （2026-09-23 真机实证 wayland-0 与 .X11-unix/X0 均为 0777 socket）。
+GUI_WAYLAND_DISPLAY_DEFAULT = "wayland-0"
+GUI_WAYLAND_FALLBACK_DIRS = ("/mnt/wslg/runtime-dir", "/run/user/1000")
+GUI_X11_UNIX_FALLBACK_DIRS = (
+    "/mnt/wslg/.X11-unix",
+    "/tmp/.X11-unix",
+)
+# SSH X11 转发只接受 loopback：绝不把容器引向任意远程 X server（安全面），
+# 且 host 网络下也只有宿主 loopback 对容器可达。显示号 n → 端口 6000+n。
+GUI_X11_TCP_HOSTS = ("localhost", "127.0.0.1", "::1")
+GUI_X11_TCP_PORT_BASE = 6000
+# 自动抽取 cookie 后生成的 FamilyWild 最小授权文件名（落会话运行时目录）。
+GUI_XAUTHORITY_NAME_TMPL = "gui-xauthority-{display}"
 
 
-def resolve_gui(c: Context, spec: StackSpec, env: dict) -> tuple[str, ...]:
-    """GUI 透传门禁：在 podman 宿主探测 Wayland / X11 显示 socket。
+def _runtime_session_gui_env(c: Context) -> tuple[str, str, str]:
+    """daemon 宿主当前会话的 ``(XDG_RUNTIME_DIR, WAYLAND_DISPLAY, DISPLAY)``。
 
-    返回命中形态序列（``("wayland", "x11")`` 的子集，顺序固定），并把 compose
-    插值令牌回写 ``os.environ``：
+    目录按 ``$XDG_RUNTIME_DIR → /run/user/$(id -u)`` 动态推导（UID 不硬编码，
+    同 :func:`_runtime_probe_session_bus`）；WAYLAND_DISPLAY 缺省 wayland-0。
+    探测必须落 podman 宿主——Windows 原生经 WSL 桥接时本函数只在发行版内
+    执行（桥接 Exit 0），Python 侧 os.environ 是 Windows 会话，不反映 daemon
+    侧的 XDG_RUNTIME_DIR / DISPLAY。失败返回空目录元组，由调用方回退固定候选。
+    """
+    probe = (
+        'd="${XDG_RUNTIME_DIR:-}"; [ -z "$d" ] && d="/run/user/$(id -u)"; '
+        'w="${WAYLAND_DISPLAY:-' + GUI_WAYLAND_DISPLAY_DEFAULT + '}"; '
+        'x="${DISPLAY:-}"; printf \'%s\\t%s\\t%s\' "$d" "$w" "$x"'
+    )
+    r = run_cmd(c, probe, hide=True, warn=True, echo=False)
+    text = str(getattr(r, "stdout", "") or "") if r is not None else ""
+    parts = text.rstrip("\n").split("\t", 2)
+    if len(parts) == 3 and parts[0]:
+        return parts[0], parts[1] or GUI_WAYLAND_DISPLAY_DEFAULT, parts[2]
+    return "", GUI_WAYLAND_DISPLAY_DEFAULT, ""
 
-      - wayland：``GUI_WAYLAND_SOCKET``（完整 socket 路径）+
-        ``HOST_WAYLAND_DISPLAY``（缺省 wayland-0）；
-      - x11：``GUI_X11_SOCKETDIR``（X0 所在目录）+ ``GUI_DISPLAY``（缺省 :0）。
 
-    两通道**任一命中即放行**（物理宿主可能只有其一），各自对应独立覆盖文件，
-    由 :func:`compose_files` 按形态加载；两者都缺才 fail-fast。socket 源缺失
-    时 podman 只会 exit 125（且 bind 了不存在的 X server 时容器内 GUI 不可用），
-    故与 GPU/USB/D-Bus 同族在任何 down/up 之前前置探测。
+def _dedup_keep_order(items: list[str]) -> list[str]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for item in items:
+        if item and item not in seen:
+            seen.add(item)
+            out.append(item)
+    return out
 
-    探测全部经 run_cmd 落在 podman 宿主侧（禁止本机 Path.exists()，同 C19）。
-    令牌优先级：shell export > root .env > 形态缺省路径。
+
+def parse_x11_tcp_display(value: str) -> Optional[tuple[str, int]]:
+    """解析 X11 的 TCP 形态 ``[host]:display[.screen]``，仅接受 loopback。
+
+    返回规范化的 ``(host, display_no)``（localhost 归一为 127.0.0.1）；
+    unix 形态（``:0``/无 host）、非 loopback 主机、非法显示号一律返回 None。
+    后两者的严格拒绝是安全约束：--gui 不得把容器指向用户未明示可达性的
+    远程 X server。
+    """
+    text = (value or "").strip()
+    if not text or text.startswith(":"):
+        return None
+    # 显示号在最后一个冒号之后——host 可能是 bracketed IPv6（[::1]:2），
+    # partition 会在地址内部的冒号切开。
+    host, _, rest = text.rpartition(":")
+    num = rest.split(".", 1)[0]
+    if not rest or not num.isdigit():
+        return None
+    host = host.strip("[]").lower()
+    if host not in GUI_X11_TCP_HOSTS:
+        return None
+    display_no = int(num)
+    if not 0 <= display_no <= 99:
+        return None
+    norm_host = "::1" if host == "::1" else "127.0.0.1"
+    return norm_host, display_no
+
+
+def parse_x11_unix_display(value: str) -> int:
+    """解析 unix 形态 ``:n[.screen]`` 的显示号；非法/缺失返回 0（X0）。"""
+    match = re.fullmatch(r":(\d+)(?:\.\d+)?", (value or "").strip())
+    return int(match.group(1)) if match else 0
+
+
+def _runtime_tcp_open(c: Context, host: str, port: int) -> bool:
+    """daemon 宿主侧 TCP 连通探测（bash /dev/tcp，2s 超时）。
+
+    注意：TCP 可连**不等于**对端是健康 X server——SSH 转发会话失效后
+    60xx 可能仍 LISTEN 但 X 握手被 RST（2026-09-28 本机实证）。故本探测
+    只证明「有服务接受连接」，cookie/协议层失败仍会在容器侧暴露，诊断
+    文案必须覆盖连接被重置的失效会话场景。
+    """
+    r = run_cmd(
+        c,
+        f"timeout 2 bash -c {shlex.quote(f'exec 3<>/dev/tcp/{host}/{port}')}",
+        hide=True, warn=True, echo=False,
+    )
+    return r is not None and getattr(r, "ok", False)
+
+
+def _runtime_x11_probe(c: Context, host: str, port: int) -> bool:
+    """daemon 宿主侧 X11 **协议握手**探针（裸 TCP 可连不算数）。
+
+    发固定 44 字节 X11 Connection（11.0 + MIT-MAGIC-COOKIE-1 + 全零 cookie），
+    读响应首字节：``l``(108)/``B``(66) 才是 X server（授权被拒也会回字节序
+    字节 + 非 0 reason——本探针只判协议身份，不判 cookie 对错）。两类假端口
+    必须排除（2026-09-28 本机实证）：sshd 失效转发 accept 后立刻 RST → 读空；
+    占用 60xx 段的 HTTP 服务 → 首字节是 ``H``（``HTTP/1.1``）。
+    """
+    body = (
+        b"l\x00"
+        + struct.pack(">HHHH", 11, 0, len(b"MIT-MAGIC-COOKIE-1"), 16)
+        + b"MIT-MAGIC-COOKIE-1"
+        + b"\x00" * 16
+    )
+    packet = "".join(f"\\x{byte:02x}" for byte in body)
+    inner = (
+        f"exec 3<>/dev/tcp/{host}/{port} && "
+        f"printf '{packet}' >&3 && "
+        "head -c 1 <&3 | od -An -tu1 | tr -d ' \\n'"
+    )
+    r = run_cmd(
+        c, f"timeout 2 bash -c {shlex.quote(inner)}",
+        hide=True, warn=True, echo=False,
+    )
+    text = str(getattr(r, "stdout", "") or "").strip() if r is not None else ""
+    return text in {"108", "66"}
+
+
+def _runtime_active_x11_displays(c: Context) -> list[tuple[str, int]]:
+    """列出 daemon 宿主经 X11 握手确认存活的 loopback 转发 ``(host, display_no)``。
+
+    ``ss`` 的 :60xx 只是必要条件：逐个做协议握手复核，排除僵尸 sshd 转发与
+    占用同段端口的非 X 服务（如 6060 上的 HTTP）。只保留 loopback 绑定——
+    诊断语义是「ssh -X 转发」，不把外部 X server 误报为可复用会话。
+    """
+    r = run_cmd(c, "ss -lnt", hide=True, warn=True, echo=False)
+    text = str(getattr(r, "stdout", "") or "") if r is not None else ""
+    found: list[tuple[str, int]] = []
+    seen: set[tuple[str, int]] = set()
+    for line in text.splitlines()[1:]:
+        cols = line.split()
+        if len(cols) < 4:
+            continue
+        match = re.fullmatch(r"(?:\[(.+)\]|(.+)):60(\d{2})", cols[3])
+        if not match:
+            continue
+        raw_host, display_no = (match.group(1) or match.group(2)), int(match.group(3))
+        if raw_host not in ("127.0.0.1", "localhost", "::1", "*", "0.0.0.0"):
+            continue
+        host = "::1" if raw_host == "::1" else "127.0.0.1"
+        key = (host, display_no)
+        if key in seen:
+            continue
+        seen.add(key)
+        if _runtime_x11_probe(c, host, GUI_X11_TCP_PORT_BASE + display_no):
+            found.append(key)
+    return sorted(found, key=lambda item: item[1])
+
+
+def _xauth_take16(buf: bytes, offset: int) -> tuple[bytes, int]:
+    length = struct.unpack(">H", buf[offset:offset + 2])[0]
+    offset += 2
+    return buf[offset:offset + length], offset + length
+
+
+def extract_xauth_entry(
+    data: bytes, display_no: int
+) -> Optional[tuple[bytes, bytes]]:
+    """从 .Xauthority 字节流抽取指定显示号的首条 ``(protocol, cookie)``。
+
+    纯函数、零第三方依赖（Xauthority 为 family(u16)+4 段 u16 长度前缀串）。
+    无匹配返回 None。调用方不得把 cookie 明文写入日志。
+    """
+    target = str(display_no).encode()
+    offset = 0
+    while offset < len(data) - 2:
+        try:
+            offset += 2  # family
+            address, offset = _xauth_take16(data, offset)
+            number, offset = _xauth_take16(data, offset)
+            proto, offset = _xauth_take16(data, offset)
+            cookie, offset = _xauth_take16(data, offset)
+        except struct.error:
+            return None
+        if number == target and proto and cookie:
+            return proto, cookie
+    return None
+
+
+def encode_familywild_xauth(display_no: int, proto: bytes, cookie: bytes) -> bytes:
+    """编码为单条 FamilyWild(0) Xauthority 记录。
+
+    FamilyWild 对 X 客户端连接的任意地址族通配——容器经 127.0.0.1 连宿主
+    SSH 转发 proxy 时，客户端地址与宿主条目的 ``Alg`` 地址不匹配，精确
+    条目不会被 Xlib 选中，必须用 FamilyWild。
+    """
+    out = struct.pack(">H", 0)
+    for chunk in (b"", str(display_no).encode(), proto, cookie):
+        out += struct.pack(">H", len(chunk)) + chunk
+    return out
+
+
+def _prepare_x11_tcp_authority(
+    env: dict, display_no: int, session_dir: str
+) -> tuple[str, str]:
+    """准备 X11 TCP 形态的 xauth 授权文件，返回 ``(路径, 失败原因)``。
+
+    显式 ``GUI_XAUTHORITY_FILE``（shell export > .env）优先且原样采用；
+    否则从本机 ``~/.Xauthority`` 抽取 display 条目，在会话运行时目录生成
+    FamilyWild 单条最小文件。物理 Linux 下 daemon 宿主即本机，路径同视图；
+    WSL 桥接进程在桥接处 Exit 0、不会执行到本函数。
+
+    文件权限 0644：rootless 容器内 devuser 是子 uid，0600 单文件 bind 后
+    容器内不可读；宿主侧由会话目录（``$XDG_RUNTIME_DIR``，0700）兜底防
+    遍历。不得把 cookie 内容打印到日志。
+    """
+    explicit = str(
+        os.environ.get("GUI_XAUTHORITY_FILE")
+        or env.get("GUI_XAUTHORITY_FILE")
+        or ""
+    ).strip()
+    if explicit:
+        if os.path.isfile(explicit):
+            return explicit, ""
+        return "", f"显式指定的 GUI_XAUTHORITY_FILE={explicit} 在本机不是文件"
+    source = os.path.expanduser("~/.Xauthority")
+    try:
+        entry = extract_xauth_entry(Path(source).read_bytes(), display_no)
+    except OSError:
+        return "", f"无 {source}（SSH X11 转发的 cookie 由 sshd 写入该文件）"
+    if entry is None:
+        return "", f"{source} 中没有显示号 :{display_no} 的 xauth 条目"
+    proto, cookie = entry
+    dest_dir = session_dir or "/tmp"
+    dest = os.path.join(dest_dir, GUI_XAUTHORITY_NAME_TMPL.format(display=display_no))
+    try:
+        Path(dest_dir).mkdir(parents=True, exist_ok=True)
+        Path(dest).write_bytes(encode_familywild_xauth(display_no, proto, cookie))
+        os.chmod(dest, 0o644)
+    except OSError as exc:
+        return "", f"写入 xauth 授权文件 {dest} 失败：{exc}"
+    return dest, ""
+
+
+def resolve_gui(
+    c: Context, spec: StackSpec, env: dict, *, host_network: bool = False
+) -> tuple[str, ...]:
+    """GUI 透传门禁：在 podman 宿主探测 Wayland / X11(unix) / X11(TCP)。
+
+    返回命中形态序列（``wayland`` / ``x11`` / ``x11-tcp`` 的子集，顺序固定），
+    并把 compose 插值令牌回写 ``os.environ``：
+
+      - wayland：``GUI_WAYLAND_SOCKET`` + ``HOST_WAYLAND_DISPLAY``；
+      - x11（AF_UNIX）：``GUI_X11_SOCKETDIR`` + ``GUI_DISPLAY=:n``；
+      - x11-tcp（SSH 转发）：``GUI_DISPLAY=127.0.0.1:n`` +
+        ``GUI_XAUTHORITY_FILE``；**仅 ``host_network=True``（--passthrough）
+        时可用**——bridge 容器无法路由宿主 loopback。
+
+    Wayland 与 X11 两通道正交（可并存）；x11 与 x11-tcp 是同一显示服务的
+    两种传输，**互斥**，unix 命中即不再探 TCP。任一形态命中即放行；皆缺
+    才 fail-fast，且诊断按实际证据（失效 SSH 会话 / bridge 拦截 / 缺
+    cookie）给可执行指引。令牌优先级：shell export > root .env > 探测默认。
     """
     ns = spec.namespace
-    display = str(
+    session_dir, session_wl, session_display = _runtime_session_gui_env(c)
+
+    # ── Wayland（AF_UNIX）：显式 HOST_XDG → 会话动态目录 → WSLg → 1000 兜底 ──
+    wayland_name = str(
         os.environ.get("HOST_WAYLAND_DISPLAY")
         or env.get("HOST_WAYLAND_DISPLAY")
-        or "wayland-0"
+        or session_wl
+        or GUI_WAYLAND_DISPLAY_DEFAULT
     )
-    xdg = os.environ.get("HOST_XDG_RUNTIME_DIR") or env.get("HOST_XDG_RUNTIME_DIR")
-    wayland_dirs = ([xdg] if xdg else []) + [d for d in GUI_WAYLAND_DEFAULT_DIRS if d != xdg]
+    explicit_xdg = str(
+        os.environ.get("HOST_XDG_RUNTIME_DIR")
+        or env.get("HOST_XDG_RUNTIME_DIR")
+        or ""
+    ).strip()
+    wayland_dirs = _dedup_keep_order(
+        ([explicit_xdg] if explicit_xdg else [])
+        + ([session_dir] if session_dir else [])
+        + list(GUI_WAYLAND_FALLBACK_DIRS)
+    )
     wayland_socket = next(
-        (f"{d}/{display}" for d in wayland_dirs if _runtime_socket_exists(c, f"{d}/{display}")),
+        (
+            f"{directory}/{wayland_name}"
+            for directory in wayland_dirs
+            if _runtime_socket_exists(c, f"{directory}/{wayland_name}")
+        ),
         "",
     )
 
-    x11_dir = str(
+    # ── X11（AF_UNIX）：显式目录 → 会话 .X11-unix → WSLg → /tmp 兜底 ──
+    unix_no = parse_x11_unix_display(
+        str(os.environ.get("GUI_DISPLAY") or env.get("GUI_DISPLAY") or "")
+    )
+    x11_socket_name = f"X{unix_no}"
+    explicit_x11_dir = str(
         os.environ.get("GUI_X11_SOCKETDIR") or env.get("GUI_X11_SOCKETDIR") or ""
+    ).strip()
+    x11_dirs = _dedup_keep_order(
+        ([explicit_x11_dir] if explicit_x11_dir else [])
+        + ([f"{session_dir}/.X11-unix"] if session_dir else [])
+        + list(GUI_X11_UNIX_FALLBACK_DIRS)
     )
-    x11_dirs = ([x11_dir] if x11_dir else []) + [
-        d for d in GUI_X11_DEFAULT_DIRS if d != x11_dir
-    ]
     # WSLg 首选 /mnt/wslg/.X11-unix（真实目录）；/tmp/.X11-unix 在部分版本是
-    # 指向它的符号链接，挂源由候选顺序规避。判据是目录内 X0 socket 真实存在。
+    # 指向它的符号链接，挂源由候选顺序规避。判据是目录内 X<n> socket 真实存在。
     x11_found = next(
-        (d for d in x11_dirs if _runtime_socket_exists(c, f"{d}/X0")),
+        (
+            directory
+            for directory in x11_dirs
+            if _runtime_socket_exists(c, f"{directory}/{x11_socket_name}")
+        ),
         "",
     )
 
-    if not wayland_socket and not x11_found:
-        print(f"[{ns}] ⚠ --gui 需要 GUI 显示 socket，但在 podman 宿主未探测到"
-              " Wayland/X11 任一通道：")
-        print(f"[{ns}]   WSL2（Windows 11 WSLg，本机主路径）："
-              "`ls /mnt/wslg/runtime-dir/wayland-0 /mnt/wslg/.X11-unix/X0` "
-              "应见 socket；")
-        print("           WSLg 为 Win11 内置组件（Windows 10 不支持），"
-              "若已禁用需在 .wslconfig 启用 GUI 应用支持后 wsl --shutdown 重进。")
-        print(f"[{ns}]   物理 Linux：设 HOST_XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR "
-              "（Wayland）；X11 需 `xhost local:root` 放行并可用 "
-              "GUI_X11_SOCKETDIR 改指 socket 目录。")
-        print(f"[{ns}]   自检：wsl -d podman-machine-default -- "
-              "test -S /mnt/wslg/runtime-dir/wayland-0")
-        print(f"[{ns}]   不需要 GUI 时去掉 --gui。")
-        raise Exit(1)
+    # ── X11 over TCP（ssh -X 转发）：unix 未命中时才考虑，仅 loopback ──
+    tcp_raw = str(
+        os.environ.get("GUI_X11_TCP_DISPLAY")
+        or env.get("GUI_X11_TCP_DISPLAY")
+        or session_display
+        or ""
+    ).strip()
+    parsed_tcp = parse_x11_tcp_display(tcp_raw)
+    tcp_open: Optional[tuple[str, int, int]] = None
+    tcp_dead: Optional[tuple[str, int, int]] = None
+    if parsed_tcp is not None and not x11_found:
+        tcp_host, tcp_no = parsed_tcp
+        tcp_port = GUI_X11_TCP_PORT_BASE + tcp_no
+        if _runtime_tcp_open(c, tcp_host, tcp_port):
+            tcp_open = (tcp_host, tcp_no, tcp_port)
+        else:
+            tcp_dead = (tcp_host, tcp_no, tcp_port)
 
     forms: list[str] = []
     if wayland_socket:
         os.environ["GUI_WAYLAND_SOCKET"] = wayland_socket
-        os.environ["HOST_WAYLAND_DISPLAY"] = display
+        os.environ["HOST_WAYLAND_DISPLAY"] = wayland_name
         forms.append("wayland")
     if x11_found:
         os.environ["GUI_X11_SOCKETDIR"] = x11_found
-        os.environ.setdefault("GUI_DISPLAY", ":0")
+        os.environ["GUI_DISPLAY"] = f":{unix_no}"
         forms.append("x11")
-    return tuple(forms)
+
+    tcp_needs_passthrough = False
+    tcp_auth_reason = ""
+    if tcp_open is not None and not x11_found:
+        if not host_network:
+            # 端口在宿主 loopback 活着，但 bridge 容器不可路由——不能静默换
+            # 形态下发，交 fail-fast 给出组合旗标指引。
+            tcp_needs_passthrough = True
+        else:
+            auth_path, auth_reason = _prepare_x11_tcp_authority(
+                env, tcp_open[1], session_dir
+            )
+            if auth_path:
+                os.environ["GUI_DISPLAY"] = f"{tcp_open[0]}:{tcp_open[1]}"
+                os.environ["GUI_XAUTHORITY_FILE"] = auth_path
+                forms.append("x11-tcp")
+            else:
+                tcp_auth_reason = auth_reason
+
+    if forms:
+        return tuple(forms)
+
+    # ── 全部未命中：按实际证据聚合可执行指引（C10 修复即闭环） ──
+    print(f"[{ns}] ⚠ --gui 需要 GUI 显示通道，但在 podman 宿主未探测到"
+          " 可用的 Wayland/X11：")
+    print(f"[{ns}]   Wayland 已探测：{', '.join(wayland_dirs)}（socket 名 {wayland_name}）")
+    print(f"[{ns}]   X11 unix 已探测：{', '.join(x11_dirs)}（{x11_socket_name}）")
+    if tcp_dead is not None:
+        _, dead_no, dead_port = tcp_dead
+        active = [
+            f"{host}:{GUI_X11_TCP_PORT_BASE + no}（显示 :{no}）"
+            for host, no in _runtime_active_x11_displays(c)
+        ]
+        print(f"[{ns}]   ℹ 检测到 SSH X11 转发 DISPLAY={tcp_raw}，但端口 "
+              f"{dead_port} 无响应——SSH 会话可能已失效（转发器随会话退出）；")
+        print("           请用 `ssh -X`（或 ssh -Y）重新登录后再执行本命令；"
+              f"经 X11 握手确认存活的 loopback 转发："
+              f"{', '.join(active) if active else '无（僵尸转发与 60xx 上的非 X11 服务已排除）'}。")
+        print("           自查：ss -lnt | grep 60 后须确认为 ssh -X 转发；"
+              "不要凭陈旧 DISPLAY 猜测。")
+    if tcp_needs_passthrough:
+        _, bridge_no, bridge_port = tcp_open
+        print(f"[{ns}]   ℹ 检测到活跃的 SSH X11 转发 :{bridge_no}（端口 "
+              f"{bridge_port}），但它只在宿主 loopback 监听：")
+        print("           bridge 网络的容器不可路由该端口——X11/TCP 形态必须叠加"
+              " host 网络，请改用：")
+        print(f"           invoke {ns}.up --passthrough --gui（可与 --offline 等"
+              "正交组合）")
+    if tcp_auth_reason:
+        print(f"[{ns}]   ℹ X11/TCP 端口可达但 xauth 授权缺失：{tcp_auth_reason}；")
+        print("           重新 `ssh -X` 登录可生成 cookie；或手工准备只含该显示的"
+              "授权文件后用 GUI_XAUTHORITY_FILE=<路径> 指定。")
+    print(f"[{ns}]   WSL2（Windows 11 WSLg）：`ls /mnt/wslg/runtime-dir/wayland-0 "
+          "/mnt/wslg/.X11-unix/X0` 应见 socket；WSLg 为 Win11 内置组件"
+          "（Windows 10 不支持）。")
+    print(f"[{ns}]   物理 Linux 本地会话：Wayland 设 "
+          "HOST_XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR；本机 X11 unix socket 需 "
+          "`xhost local:root` 放行；")
+    print(f"           SSH 远程（ssh -X，无本地桌面）：使用 --passthrough --gui，"
+          "内核自动探测 loopback 转发并注入 xauth cookie。")
+    print(f"[{ns}]   不需要 GUI 时去掉 --gui。")
+    raise Exit(1)
 
 
 def _local_image_exists(c: Context, img_tag: str) -> bool:
@@ -2014,8 +2354,8 @@ def up_stack(
     # `build --torch X`（单次覆盖，C15）后 `up --skip-build` 的「声明 ≠ 实物」。
     warn_torch_flavor_mismatch(c, spec, env)
     # 门禁全部**先于 up_preflight / 任何 down**（顺序即语义，对齐 GPU C19/C23）：
-    # GPU → 透传主层（含镜像 tag 就位）→ GUI（Wayland/X11 形态探测）→ USB。
-    # 任一不可用即 fail-fast，绝不先拆用户正在用的栈再报错。
+    # GPU → 透传主层（含镜像 tag 就位）→ GUI（Wayland/X11/X11-TCP 形态探测）
+    # → USB。任一不可用即 fail-fast，绝不先拆用户正在用的栈再报错。
     gpu_token, gpu_form = ("", "generic")
     if gpu:
         gpu_token, gpu_form = resolve_gpu_device(c, spec, env)
@@ -2026,7 +2366,9 @@ def up_stack(
         pt_tag = ensure_passthrough_tag(c, spec, env, offline=offline)
     gui_forms: tuple[str, ...] = ()
     if gui:
-        gui_forms = resolve_gui(c, spec, env)
+        # X11/TCP（ssh -X 转发）只监听宿主 loopback，仅 host 网络形态可达；
+        # bridge 下命中转发端口时 resolve_gui 不给形态、转 fail-fast 指引。
+        gui_forms = resolve_gui(c, spec, env, host_network=passthrough)
     usb_token = ""
     if usb:
         usb_token = resolve_usb_device(c, spec, env)
@@ -2096,7 +2438,15 @@ def up_stack(
             parts.append(f"Wayland {os.environ.get('GUI_WAYLAND_SOCKET', '')}")
         if "x11" in gui_forms:
             parts.append(f"X11 {os.environ.get('GUI_X11_SOCKETDIR', '')}")
-        print(f"        GUI     {' + '.join(parts)} 已透传（bridge/host 形态均可用）")
+        if "x11-tcp" in gui_forms:
+            parts.append(
+                f"X11/TCP {os.environ.get('GUI_DISPLAY', '')}（xauth cookie 已注入）"
+            )
+        # X11/TCP 走宿主 loopback，只在 --passthrough（host 网络）下可达；
+        # Wayland/X11 unix 是 bind mount，bridge/host 两形态均可用。
+        scope = "；X11/TCP 仅 host 形态可达" if "x11-tcp" in gui_forms \
+            else "（bridge/host 形态均可用）"
+        print(f"        GUI     {' + '.join(parts)} 已透传{scope}")
     if usb:
         print(f"        USB     {usb_token} 已透传")
     if spec.up_footer:
@@ -2163,7 +2513,7 @@ def smoke_stack(
         ensure_passthrough_tag(c, spec, env, offline=False)
     gui_forms: tuple[str, ...] = ()
     if gui:
-        gui_forms = resolve_gui(c, spec, env)
+        gui_forms = resolve_gui(c, spec, env, host_network=passthrough)
     if usb:
         resolve_usb_device(c, spec, env)
 
@@ -2401,11 +2751,15 @@ def make_stack_tasks(spec: StackSpec) -> dict:
     if spec.gui_overlay:
         up_help = {
             "gui": (
-                "透传 GUI 显示（compose.passthrough.gui[.x11].yaml）：内核在 daemon "
-                "宿主探测 Wayland socket 与 X11 socket，命中几层挂几层（WSLg 下"
-                "两层恒共存）。bridge 形态即可用（无需 --passthrough）；物理 Linux "
-                "用 HOST_XDG_RUNTIME_DIR / GUI_X11_SOCKETDIR 改指，X11 另需 xhost "
-                "放行；均未命中即 fail-fast；默认隔离"
+                "透传 GUI 显示（compose.passthrough.gui[.x11[.tcp]].yaml）：内核在 "
+                "daemon 宿主探测 Wayland socket 与 X11 socket，命中几层挂几层"
+                "（WSLg 下两层恒共存）。Wayland/X11 unix 在 bridge 形态即可用"
+                "（无需 --passthrough）；物理 Linux 用 HOST_XDG_RUNTIME_DIR / "
+                "GUI_X11_SOCKETDIR 改指，X11 另需 xhost 放行。SSH 远程（ssh -X，"
+                "无本地桌面）的 X11/TCP 转发仅监听宿主 loopback，须叠加 "
+                "--passthrough，内核自动探测 127.0.0.1:60<n> 并注入 xauth cookie"
+                "（可用 GUI_X11_TCP_DISPLAY / GUI_XAUTHORITY_FILE 显式指定）；"
+                "均未命中即 fail-fast；默认隔离"
             ),
             **up_help,
         }

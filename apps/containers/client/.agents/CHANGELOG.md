@@ -18,6 +18,22 @@
 
 ## [Unreleased]
 
+### 2026-09-28 · `fix(client):` `--gui` 支持动态会话目录与 SSH X11/TCP 透传（resolve_gui fail-fast 误伤 ssh -X 会话，C33 增补；排障 C-I11）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C）——物理 Linux 本机（UID=1006，`ssh -X` 远程会话）执行 `invoke native.up --passthrough --gpu --gui --offline` 连续 Exit(1)，trae-server 日志片段表现为 "ffline"，真实命令在 `resolve_gui()` 门禁失败。
+
+**I 事实**：①GUI 候选目录硬编码 `/run/user/1000`，而本机会话在 `/run/user/1006`（同族 D-Bus 探测 2026-09-24 已改 `id -u` 动态、GUI 漏同步）；②门禁只认 Wayland/X11 unix 两通道，`ssh -X` 会话无 `.X11-unix` socket，sshd 只在宿主 loopback 开 `127.0.0.1:60<n>`（本机 `DISPLAY=localhost:11.0`）；③实证 **TCP 可连 ≠ X 可用**：6010 仍 LISTEN 但 X 握手被 RST（僵尸转发 proxy），6011 connection refused——故严禁自动扫描会话、严格按当前 `$DISPLAY` 探测；④`~/.Xauthority` 条目按显示号存放（family u16 + 4 段 u16 长度前缀串，本机 display 10–41），容器经 loopback 接入时宿主条目的地址族不匹配，必须 FamilyWild 单条授权；⑤invoke 2.2.0 `auto_shortflags=False`，"ffline" 确为 `--offline` 片段而非缩写歧义。
+
+**F 定论**：GUI 扩为三形态——wayland / x11 unix（bridge 可用，bind mount）+ **x11-tcp**（仅 host 网络，env+cookie 文件 bind）。x11 与 x11-tcp 互斥（同一显示服务两传输），均可与 wayland 并存。安全约束：只接受 loopback 目标（localhost/127.0.0.1/::1，显示号 0–99）；只下发该显示号的 FamilyWild(0) 单条 cookie（不转发完整 .Xauthority），cookie 禁止入日志。
+
+**V 对抗（12 条意见落地要点）**：探针全部落 daemon 宿主（禁本机 Path.exists，同 C19）；cookie 文件 0644（rootless 容器内子 uid 读不了 0600 单文件 bind，会话目录 0700 兜底）；裸 compose 缺令牌时 cookie 源为 sentinel `/tmp/.gui-xauthority-missing`（挂载即 exit 125，不静默放行）；bridge 命中转发端口不静默换形态、转 fail-fast 组合旗标指引；失效会话诊断**改用 X11 协议握手复核** `ss -lnt` 的 60xx 候选（发 44 字节 Connection 验响应首字节 l/B）——真机 6060 实为 HTTP 服务、6010 为 accept 后 RST 的僵尸转发，裸端口列举会双双误报；`parse_x11_tcp_display` 用 rpartition 正确解析 bracketed IPv6 `[::1]:2`；fail-fast 保留 WSLg/物理机/去旗标通用指引，cookie 失败不污染已命中形态。
+
+**C 落地**：①内核 `overlay_core.py`：新增 `_runtime_session_gui_env`（printf 探针取会话三元组）、`parse_x11_tcp_display`/`parse_x11_unix_display`、`_runtime_tcp_open`（bash /dev/tcp 2s 超时）、`_runtime_active_x11_displays`、`extract_xauth_entry`/`_xauth_take16`/`encode_familywild_xauth`（纯 struct、零第三方）、`_prepare_x11_tcp_authority`；`resolve_gui(..., *, host_network=False)` 动态候选 + 三形态 + 证据化诊断；`compose_files/compose_argv/run_compose/up_preflight` 全链路参数透传 `x11-tcp`，`up_stack`/`smoke_stack` 以 `host_network=passthrough` 调用，横幅区分「仅 host 形态可达」。②部署面新增 `overlays/native-dev/compose.passthrough.gui.x11.tcp.yaml`（cookie read_only bind + `DISPLAY`/`XAUTHORITY`，文件头安全警示）；`native.py` bridge_env_keys 增 `GUI_X11_TCP_DISPLAY`/`GUI_XAUTHORITY_FILE`（声明模块守住 AC-5 ≤160 行护栏，最终 160 行）；`--gui` help 补 ssh -X 说明。③测试：FakeRunner 增会话探针/TCP 探活打桩，新增动态 UID、x11-tcp 成功（cookie 抽取+文件集+env 回写）、bridge 拦截、失效会话、缺 cookie、unix 抑制 TCP、up 横幅、smoke 同源及 `parse_*`/xauth 纯函数共 21 个用例，compose 渲染增 tcp 层与 sentinel 2 例。④文档：C33（native-overlay §11.7）增补第三形态全部规则，AGENTS.md C33 行同步；07 组合 D 维度表/探测序/SSH 小节、09 映射表、04 速查表 C-I11、透传主层文件头、native-dev `.env.example` 闭环。
+
+**V 验收**：`pytest -q` **296 passed / 1 skipped**（全量，含 24 新增/更新）。真机三分支（UID=1006）：①原命令复跑——精确诊断「6011 无响应/会话可能失效」，X11 握手复核后**无任何确认存活的转发**（6010 accept 即 RST、6060 回 `HTTP/1.1` 均被排除），Exit 1 先于任何 down/up；②`GUI_X11_TCP_DISPLAY=127.0.0.1:10` 不带 `--passthrough`——bridge 拦截诊断并给 `invoke native.up --passthrough --gui` 指引；③直接调 `resolve_gui(host_network=True)` 对真实 `~/.Xauthority`——返回 `('x11-tcp',)`、回写 `GUI_DISPLAY=127.0.0.1:10`、生成 `/run/user/1006/gui-xauthority-10`（family=0 FamilyWild、仅含显示 10 单条、0644），验证后已清理。
+
+提交 `fix(client)` = 本提交（CHANGELOG 留痕与代码/测试/文档变更同笔落盘）。
+
 ### 2026-09-24 · `fix(client):` 三叠加栈补齐 B-scheme 宿主 podman socket 直通（容器内 PodmanClient FileNotFoundError，C34）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C）——native-dev 容器 Jupyter（Python 3.14 kernel / devuser）执行 `PodmanClient.from_env().containers.list()` 报 `FileNotFoundError: [Errno 2]`（`podman/api/uds.py` UDS connect）；用户记忆中该问题已修，实则修过的范围未覆盖叠加栈。

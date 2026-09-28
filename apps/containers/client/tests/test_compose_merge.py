@@ -260,7 +260,7 @@ def render_stack(
     ``gpu_file`` 对应 GPU 设备形态（C19）：内核按设备形态选 ``compose.gpu.<形态>.yaml``
     （缺失回退 compose.gpu.yaml），真实管线**只加载一个**设备覆盖文件。
     ``passthrough``/``gui_forms``/``usb`` 按内核文件顺序（base → GPU → 透传主层
-    → GUI（Wayland → X11）→ USB 层）逐文件 rec_merge。
+    → GUI（Wayland → X11 → X11/TCP）→ USB 层）逐文件 rec_merge。
     """
     g = GOLDEN[stack]
     odir = OVERLAYS / g["dir"]
@@ -283,6 +283,8 @@ def render_stack(
         overlay_files.append("compose.passthrough.gui.yaml")
     if "x11" in gui_forms:
         overlay_files.append("compose.passthrough.gui.x11.yaml")
+    if "x11-tcp" in gui_forms:
+        overlay_files.append("compose.passthrough.gui.x11.tcp.yaml")
     if usb:
         overlay_files.append("compose.passthrough.usb.yaml")
     stacked = svc
@@ -611,6 +613,34 @@ def test_native_gui_dual_forms_and_full_combo():
         "/dev/bus/usb:/dev/bus/usb",
     ]
     assert full["image"] == "localhost/native-dev:passthrough"
+
+
+def test_native_gui_x11_tcp_layer_host_form():
+    """X11/TCP 层（ssh -X）：cookie 文件只读 bind + DISPLAY/XAUTHORITY；host 网络。"""
+    tcp = render_stack("native", env={
+        "GUI_DISPLAY": "127.0.0.1:11",
+        "GUI_XAUTHORITY_FILE": "/run/user/1006/gui-xauthority-11",
+    }, passthrough=True, gui_forms=("x11-tcp",))
+    vm = _volume_map(tcp)
+    v = vm["/tmp/runtime-user/gui-xauthority"]
+    assert v["source"] == "/run/user/1006/gui-xauthority-11"
+    assert v["read_only"] is True
+    assert v["bind"]["create_host_path"] is False
+    assert tcp["environment"]["DISPLAY"] == "127.0.0.1:11"
+    assert tcp["environment"]["XAUTHORITY"] == "/tmp/runtime-user/gui-xauthority"
+    assert tcp["network_mode"] == "host"
+    # 不带 unix socket 目录层
+    assert "/tmp/.X11-unix" not in vm
+
+
+def test_native_gui_x11_tcp_sentinel_without_token():
+    """裸 compose 缺令牌：cookie 源落 sentinel 不存在路径（挂载即 exit 125，非静默放行）。"""
+    tcp = render_stack("native", passthrough=True, gui_forms=("x11-tcp",))
+    vm = _volume_map(tcp)
+    assert vm["/tmp/runtime-user/gui-xauthority"]["source"] == (
+        "/tmp/.gui-xauthority-missing"
+    )
+    assert tcp["environment"]["DISPLAY"] == "127.0.0.1:0"
 
 
 def test_nested_interpolation_simulator_innermost_first():

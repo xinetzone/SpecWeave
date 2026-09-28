@@ -1,0 +1,48 @@
+---
+# compose.passthrough.gui.x11.tcp.yaml — [2c] GUI·X11 over TCP 透传（opt-in）
+#
+# 适用场景：SSH 远程登录（ssh -X / ssh -Y）、daemon 宿主没有本地桌面与
+# /tmp/.X11-unix socket，sshd 把 X11 转发到宿主 loopback 的 127.0.0.1:60<n>。
+# 与 x11 unix 层互斥（同一显示服务的两种传输），可与 Wayland 层并存。
+#
+# 强依赖 compose.passthrough.yaml —— X11/TCP 转发只监听宿主 loopback，
+# bridge 容器不可路由；本层仅在 --passthrough（network_mode: host）下由
+# invoke 门禁加载，裸 compose 手工叠加本层而不带透传主层必然连不通。
+#
+# 用法（内核探测到 loopback 转发且 xauth cookie 可抽取时自动加载）：
+#   invoke native.up --passthrough --gui
+#   invoke native.up --passthrough --gui --offline      # 与其他维度正交
+# 显式指定转发显示 / 授权文件（默认读会话 $DISPLAY 与 ~/.Xauthority）：
+#   GUI_X11_TCP_DISPLAY=127.0.0.1:11 GUI_XAUTHORITY_FILE=/path/xauth \
+#     invoke native.up --passthrough --gui
+#
+# 前置 —— 转发端口须活着且对端是健康 X server（SSH 会话失效后端口可能仍
+# LISTEN 但握手被 RST，内核 fail-fast 诊断会列出当前活跃的 60xx）：
+#   ss -lnt | grep 60            # 见 127.0.0.1:60<n> LISTEN
+#
+# 安全 —— X server 接入允许容器进程读取/合成所有 X 客户端事件（键盘输入、
+# 截图），且 cookie 是进入宿主 X 会话的凭据：
+#   1. 仅用于可信镜像；
+#   2. 内核只把 ~/.Xauthority 中该显示的条目重编码为 FamilyWild 单条最小文件
+#      （不转发完整 .Xauthority），文件落会话运行时目录、0644（rootless 容器
+#      内为子 uid，0600 单文件 bind 后不可读）；
+#   3. 仅接受 loopback 目标（localhost/127.0.0.1/::1），拒绝任意远程主机。
+# 默认全关，不开时与本层不存在逐字等价。
+
+services:
+  native:
+    volumes:
+      # cookie 文件 bind（非目录）：源由 resolve_gui 注入 GUI_XAUTHORITY_FILE，
+      # create_host_path: false —— 缺失时硬失败（exit 125），绝不 mkdir 假源。
+      # 缺省 sentinel 指向必然不存在的路径，防止裸 compose 加载本层时静默放行。
+      # /tmp/runtime-user 由透传主层的 D-Bus bind 确保存在（本层强依赖主层）。
+      - type: bind
+        source: ${GUI_XAUTHORITY_FILE:-/tmp/.gui-xauthority-missing}
+        target: /tmp/runtime-user/gui-xauthority
+        read_only: true
+        bind:
+          create_host_path: false
+    environment:
+      # host 网络下容器直连宿主 loopback 的 sshd X11 转发 proxy。
+      DISPLAY: ${GUI_DISPLAY:-127.0.0.1:0}
+      XAUTHORITY: /tmp/runtime-user/gui-xauthority

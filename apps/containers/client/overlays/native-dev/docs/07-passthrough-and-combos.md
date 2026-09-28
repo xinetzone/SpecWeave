@@ -17,7 +17,7 @@ source: "README.md#运行时组合叠加层opt-in正交维度"
 |---|---|---|---|
 | GPU | `up --gpu` | [`compose.gpu.yaml`](../compose.gpu.yaml) 或 [`compose.gpu.wsl.yaml`](../compose.gpu.wsl.yaml)（**互斥，内核按形态二选一**） | 关（零设备透传，仅基底 `/dev/fuse`） |
 | 透传 | `up --passthrough` | [`compose.passthrough.yaml`](../compose.passthrough.yaml) | 关（bridge 网络 + 端口映射） |
-| GUI | `up --gui` | [`compose.passthrough.gui.yaml`](../compose.passthrough.gui.yaml)（Wayland）+ 命中时追加 [`compose.passthrough.gui.x11.yaml`](../compose.passthrough.gui.x11.yaml)（X11，按探测） | 关（零显示 socket 挂载） |
+| GUI | `up --gui`（X11/TCP 需 `--passthrough --gui`） | [`compose.passthrough.gui.yaml`](../compose.passthrough.gui.yaml)（Wayland）+ 按探测追加 [`compose.passthrough.gui.x11.yaml`](../compose.passthrough.gui.x11.yaml)（X11 unix）/ [`compose.passthrough.gui.x11.tcp.yaml`](../compose.passthrough.gui.x11.tcp.yaml)（X11/TCP，仅 host 形态） | 关（零显示 socket/cookie 挂载） |
 | USB | `up --usb` | [`compose.passthrough.usb.yaml`](../compose.passthrough.usb.yaml) | 关 |
 | torch | `build --torch cpu\|cu130` | 镜像内容（build args） | 关（不含 torch） |
 
@@ -125,8 +125,8 @@ invoke native.up --passthrough --usb  # host 网络 + USB
 ## 组合 D：GUI（Wayland/X11 显示转发）
 
 ```bash
-invoke native.up --gui                 # bridge 形态 + GUI（Jupyter 仍 8890）
-invoke native.up --gui --passthrough   # host 形态 + GUI（Jupyter 8888）
+invoke native.up --gui                 # bridge 形态 + GUI（Wayland/X11 unix，Jupyter 仍 8890）
+invoke native.up --gui --passthrough   # host 形态 + GUI（Jupyter 8888；SSH 远程 X11/TCP 需此组合）
 invoke native.up --gui --gpu           # GUI + GPU（容器内 GL/CUDA 与显示同栈）
 ```
 
@@ -135,14 +135,33 @@ invoke native.up --gui --gpu           # GUI + GPU（容器内 GL/CUDA 与显示
 
 | 通道 | 宿主探测序（前者命中即停） | 容器内落点 / 环境变量 |
 |---|---|---|
-| Wayland | 显式 `$HOST_XDG_RUNTIME_DIR/$HOST_WAYLAND_DISPLAY` → `/mnt/wslg/runtime-dir/wayland-0` → `/run/user/1000/wayland-0` | socket → `/tmp/runtime-user/<display>`；`XDG_RUNTIME_DIR=/tmp/runtime-user`、`WAYLAND_DISPLAY` |
-| X11（XWayland） | 显式 `$GUI_X11_SOCKETDIR` → `/mnt/wslg/.X11-unix` → `/tmp/.X11-unix`（目录内须有 `X0`） | 目录 → `/tmp/.X11-unix`；`DISPLAY=:0`（`GUI_DISPLAY` 可改） |
+| Wayland | 显式 `$HOST_XDG_RUNTIME_DIR/$HOST_WAYLAND_DISPLAY` → **会话动态目录** `$XDG_RUNTIME_DIR/<display>`（或 `/run/user/$(id -u)`，UID 不写死）→ `/mnt/wslg/runtime-dir/wayland-0` → `/run/user/1000/wayland-0`（历史兜底） | socket → `/tmp/runtime-user/<display>`；`XDG_RUNTIME_DIR=/tmp/runtime-user`、`WAYLAND_DISPLAY` |
+| X11 unix（XWayland） | 显式 `$GUI_X11_SOCKETDIR` → 会话动态目录/.X11-unix → `/mnt/wslg/.X11-unix` → `/tmp/.X11-unix`（目录内须有 `X<n>`） | 目录 → `/tmp/.X11-unix`；`DISPLAY=:n`（`GUI_DISPLAY` 可改） |
+| X11/TCP（`ssh -X` 转发） | 会话 `$DISPLAY` 或 `$GUI_X11_TCP_DISPLAY`（只接受 `localhost/127.0.0.1/::1`，显示号 0–99）→ 探活 `127.0.0.1:60<n>`；**unix 命中则跳过** | 不挂 socket；cookie 文件 → `/tmp/runtime-user/gui-xauthority`；`DISPLAY=127.0.0.1:n`、`XAUTHORITY=...`。**仅 host 形态** |
 
 WSL2（Windows 11）下两通道由 WSLg 恒定提供（2026-09-23 真机实证
 `/mnt/wslg/runtime-dir/wayland-0` 与 `/mnt/wslg/.X11-unix/X0` 均为 0777 socket），
 无需任何手动配置；**Windows 10 不含 WSLg**。物理 Linux：Wayland 设
 `HOST_XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR`；X11 另需在宿主 `xhost local:root`
 放行（WSLg 的 X server 默认免认证）。
+
+**SSH 远程（`ssh -X`/`ssh -Y`，无本地桌面）**：daemon 宿主没有
+`.X11-unix` socket，sshd 把 X11 转发到宿主 loopback 的 `127.0.0.1:60<n>`
+（n 为显示号）。该端口 bridge 容器不可路由，**必须用 host 形态**：
+
+```bash
+ssh -X user@host                      # 先以 X11 转发登录（sshd 写 cookie 到 ~/.Xauthority）
+invoke native.up --passthrough --gui  # 内核自动探测 $DISPLAY 并注入 xauth cookie
+# 或显式指定：
+GUI_X11_TCP_DISPLAY=127.0.0.1:11 GUI_XAUTHORITY_FILE=/path/xauth \
+  invoke native.up --passthrough --gui
+```
+
+内核从本机 `~/.Xauthority` 抽取该显示号条目，重编码为只含单条 FamilyWild 记录
+的最小授权文件（不转发完整 `.Xauthority`），落 `$XDG_RUNTIME_DIR/gui-xauthority-<n>`。
+注意 **TCP 可连不等于 X 可用**——SSH 会话退出后转发 proxy 可能残留 LISTEN 但
+握手被重置；此时门禁按「失效会话」处理并列出当前活跃的 `60xx`，重新 `ssh -X`
+登录即可（自检：`ss -lnt | grep 60`）。
 
 容器内三行验证（免额外装包，AF_UNIX 能连上即转发到位）：
 
@@ -164,7 +183,8 @@ podman-compose exec native /opt/conda/bin/python -c \
 JupyterLab 交互绘图（matplotlib 等）不受影响、无需 `--gui`。
 
 - **安全边界**：两个 socket 都允许容器进程接入宿主桌面会话（截屏、输入注入面），
-  与 USB/D-Bus 同级——**仅用于可信镜像**，默认全关。
+  X11/TCP 的 cookie 是进入宿主 X 会话的凭据——内核只接受 loopback 目标、只下发
+  单显示号的 FamilyWild 最小 cookie，与 USB/D-Bus 同级——**仅用于可信镜像**，默认全关。
 - **与根 `invoke run --wayland` 的关系**：根路径只挂 Wayland 单通道
   （`--wayland`）；栈侧 `--gui` 是其超集（Wayland + X11 按探测双通道），
   文件名对齐构建端 `compose.passthrough.gui.yaml`，语义对照见 client
