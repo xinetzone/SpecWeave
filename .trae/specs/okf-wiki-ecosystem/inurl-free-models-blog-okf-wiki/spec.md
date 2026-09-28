@@ -99,7 +99,7 @@
 | 规划编号 | 簇 | 要点 | 主要来源 |
 |---|---|---|---|
 | F-088 | 零迭代 | 四 URL 全 200；catalog 428,592B / SHA256 3F689C07…BD0F1，与 G4 字节级一致 | curl + 哈希 |
-| F-089 | 零迭代·P0 | plans 三档原价原额未变（0/3、¥990/30d/10、¥2990/30d/∞、邀新 7 天 standard）→ F-072/F-070 证据持续 | `/api/billing/plans` |
+| F-089 | 零迭代·P0 | plans 三档原价原额未变（0/3、990 分（¥9.9）/30d/10、2990 分（¥29.9）/30d/∞、邀新 7 天 standard；接口字段以分计价）→ F-072/F-070 证据持续 | `/api/billing/plans` |
 | F-090 | 零迭代 | 46=17 free+29 paid（19 public+10 hidden）、133 模型、隐藏 10 家名单逐条同 G4、mock 仍 localhost:3002/mock-chat | catalog 机器审计 |
 | F-091 | 零迭代 | capabilities 仍顶层 12 键，text=12/code=5/image=7，无 video/audio → F-082 持续 | catalog 机器审计 |
 | F-092 | 零迭代·P0 | Agnes「百万级上下文」、百度「每月 100 万」、LongCat「1M/注册送 1000 万」三审仍在 → F-079 持续 | /models 渲染文本 |

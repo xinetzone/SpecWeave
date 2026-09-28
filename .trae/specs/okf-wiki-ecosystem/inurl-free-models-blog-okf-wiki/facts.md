@@ -128,7 +128,7 @@
 | 编号 | 类型 | 事实（2026-09-28 实测口径） | 来源 | 核验 |
 |------|------|------|------|------|
 | F-071 | O | 四个 URL（`/`、`/app`、`/guide`、`/models`）全部可达（HTTPS/Cloudflare），首页 title 与「聚合 APIToken·端到端加密密钥库」定位未变 | curl 状态码/title | ✅ F-044 持续 |
-| F-072 | O+P | `/api/billing/plans` 原样：enabled/mock=false/manual=false；免费 ¥0/freeKeyLimit=3、标准 ¥990/30 天/10 密钥、专业 ¥2990/30 天/无限；inviteReward 7 天 standard；专业档功能列表新增「早期功能内测」，其余与 09-16 一致 | `/api/billing/plans` | ✅ F-051 持续（核心勘误证据仍成立） |
+| F-072 | O+P | `/api/billing/plans` 原样：enabled/mock=false/manual=false；免费 ¥0/freeKeyLimit=3、标准 990 分（=¥9.9/月）/30 天/10 密钥、专业 2990 分（=¥29.9/月）/30 天/无限；inviteReward 7 天 standard；专业档功能列表新增「早期功能内测」，其余与 09-16 一致 | `/api/billing/plans` | ✅ F-051 持续（核心勘误证据仍成立） |
 | F-073 | O | `/api/turnstile` 仍 `{"enabled":false,"siteKey":"0x4AAAAAAD7LmJfa2KBA4Uab"}`（siteKey 与 09-16 相同）；/guide 步骤 1 仍写「注册会有人机验证，请完成 Cloudflare 验证框」 | `/api/turnstile` + /guide | ⚠️ F-054 脱节持续 |
 | F-074 | O | 博文点名 5 模型 id 当日逐一 EXISTS：`qwen/qwen-coder-plus`、`deepseek/deepseek-v4-flash`、`zhipu-free/glm-4-flash`、`longcat/LongCat-Flash-Chat`、`agnes/agnes-2.5-flash` | `/api/catalog` | ✅ F-049 持续 |
 | F-075 | O | /app 内联 JS 加密链未变：`deriveKeyFromSecret` 仍 PBKDF2 iterations=100000/SHA-256 → AES-GCM length=256；`escrow_pw`（password+userId 盐）/`escrow_rec`（恢复密语+email 盐）POST `/api/escrow`；另观察到 `/api/recover`（邮箱发起、恢复密语解密）、`/api/password`（改密时重加密 escrow_pw）、`/api/me`、`/api/keys`，恢复/改密流程与双 escrow 设计自洽 | /app 前端 JS | ✅ F-052 持续 |
@@ -152,7 +152,7 @@
 | 编号 | 类型 | 事实（2026-09-28 实测口径） | 来源 | 核验 |
 |------|------|------|------|------|
 | F-088 | O | 四目标（/app、/#why、/models#paid、/guide）全部 HTTP 200；`/api/catalog` 当日 **428,592 字节、SHA-256 `3F689C07FAE9FC67C76C10F8850D02F9F5066697498358EE69D32A13714BD0F1`**——与 G4（F-077）记录的 428,592 字节为**字节级同一文件**；本轮机器审计（provider/tier/public/model/capabilities 计数）与 G4 全部一致 | curl 状态码 + sha256sum | ✅ 站点目录零迭代 |
-| F-089 | O+P | `/api/billing/plans` 原样：enabled/mock=false/manual=false；免费 ¥0/freeKeyLimit=3、标准 ¥990/30 天/10 密钥、专业 ¥2990/30 天/无限；inviteReward 7 天 standard | `/api/billing/plans` | ✅ 持续（F-072）；F-070 核心勘误的定价证据第三次原样成立 |
+| F-089 | O+P | `/api/billing/plans` 原样：enabled/mock=false/manual=false；免费 ¥0/freeKeyLimit=3、标准 990 分（=¥9.9/月）/30 天/10 密钥、专业 2990 分（=¥29.9/月）/30 天/无限；inviteReward 7 天 standard | `/api/billing/plans` | ✅ 持续（F-072）；F-070 核心勘误的定价证据第三次原样成立 |
 | F-090 | O | catalog 机器审计：46 provider = **17 free + 29 paid（19 public:true + 10 public:false）**，共 **133 个模型**；10 家隐藏付费商名单与 G4 逐条一致（ppio、mock、together、siliconflow、deepinfra、fireworks、hyperbolic、lepton、novita、openai-compatible）；mock 仍 baseUrl=`http://localhost:3002`、模型 mock-chat | `/api/catalog` 机器审计 | ⚠️ 持续（F-077）：测试/预留条目仍在生产公开目录 |
 | F-091 | O | capabilities 仍为顶层 dict 仅 **12 键**，标签分布 **text=12 / code=5 / image=7**，无 video/audio 标签亦无对应模型 | `/api/catalog` 机器审计 | ⚠️ 持续（F-082）：inurl-video/inurl-audio 必然空转 |
 | F-092 | P | /models 渲染文本三审仍含三处已被官方勘误口径：①Agnes 卡「agnes-2.5-flash 支持百万级上下文」；②百度千帆卡「新用户每月赠送 100 万 tokens」；③LongCat 卡「原生 1M 上下文，新用户注册送 1000 万 Tokens」 | /models 渲染文本 | ❌ 持续（F-079）：站点 12+ 天未修正（F-061/F-062/F-059） |
