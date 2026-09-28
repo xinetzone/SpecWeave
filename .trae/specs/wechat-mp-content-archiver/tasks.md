@@ -240,16 +240,29 @@
   - `rule` TR-12.2: 演练中发现的问题全部关闭并有回归测试。证据：独立对抗评审 P1×2/P2 清单全部处置，6 个 V 阶段回归用例（marker 误杀、未知拦截页、5xx 连续熔断/单次不熔断、limit 计数、pipeline CLI 退出码）。
 
 ## Task 13: 文档、合规声明与默认限速
-- **Status**: `pending`
+- **Status**: `completed`（软件完成 2026-09-28；文档可用性走查已在干净临时目录实跑闭环，真机扫码部署演练与截图仍挂起）
 - **Priority**: high
 - **Depends On**: Task 10, Task 11
+- **Completion Evidence（软件侧）**:
+  - 主文档 [README.md](../../../apps/dev-tools/wechat-mp-archiver/README.md) 按任务清单补齐八块：
+    - **架构图（Mermaid）**：三泳道（微信平台 / 采集服务 Docker 仅绑回环 / 本机管线），显式区分「回环取列表」与「正文媒体直连 mp.weixin.qq.com（剥离 Token）」两条数据流及离线派生产物；通过仓库维护版检查器 `python .agents/scripts/check-mermaid.py --path apps/dev-tools/wechat-mp-archiver`（0 错误；该检查器规则为单行标签、禁 `<br/>`/圈码/【】/Markdown 列表触发符——注：仓库根 `check_mermaid.py` 是硬编码到历史路径的一次性脚本，不扫描本项目，TR-13.1 取证以 `.agents/scripts/check-mermaid.py` 为准）；`check-links.py --path` 同目录 0 断链。
+    - **部署与从零演练**：安装段标注 Python ≥3.14 与 Docker（含 Linux/macOS venv 激活路径）；「快速开始」7 步——专用订阅号准备 → `deploy/` 起容器扫码 → 复制 `.env` → `init-db`/`doctor` → `list --max-pages 2` → `fetch --limit 1` 单篇四件套核对 → 转入 `sync`/`run --full` 日常。
+    - **账号准备与凭证获取/续期**：凭证矩阵覆盖扫码登录态（经验 4 天，退出码 2/doctor 授权提示 → deploy 第 4–5 节重扫）、`MP_ARCHIVER_EXPORTER_TOKEN`（与 `collector.env` 的 `MCP_TOKEN` 同值，已核对 [collector.env.example](../../../apps/dev-tools/wechat-mp-archiver/deploy/collector.env.example)）、互动票据（deploy 第 8 节抓包，失效记 `skipped_no_credential`）、官方 AppID/AppSecret（deploy 第 11 节，48001 自动降级、日配额 90）。
+    - **CLI 用法**：命令块补齐此前遗漏的 `official-doctor`、`resolve-biz`，与 [cli.py](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/cli.py) argparse 实际 11 个子命令及全部选项逐一核对；退出码语义补全（3 在 `sync-official` 路径含 biz 未配置；4 含 R2 列表 biz 不可得——V 阶段 P1 修复，deploy 第 12.2 节同步更正）。
+    - **存储布局**：目录树逐项对代码取证——`.env`、`data/archive.db`（articles/media/comments/metrics/sync_state 五表）、`data/official_api_quota.json`、文章目录四件套 `article.html`/`article.md`/`metadata.json`/`images/`/`media/`、`exports/rag.jsonl` 与 `exports/report/report.{html,csv}`、`logs/`，采集服务凭证卷 `mp_archiver_collector_data`（deploy 侧）。
+    - **故障排查索引**：熔断（链 Task 12 韧性表）、登录态过期、采集服务未响应（改用真实输出串，doctor 退出码仍 0）、无服务时 list 约 1 分钟退避后退出码 4、媒体防盗链/视频号迁移平台侧不可得、互动票据短期失效、官方 48001/配额/biz 六行，与 deploy 第 10 节交叉引用。
+    - **合规声明六条**：①个人学习/本地存档（含离线 RAG）限定，禁止商用与公开再分发、禁止重建替代服务；②不绕付费阅读/会员/赞赏等访问控制与平台权限；③尊重版权、合理引用标注出处；④频率自律（默认限速、每日增量至多一次/全量每周至多一次、见风控信号即停）；⑤凭证与数据安全（本人扫码、`.env` 不入库且日志脱敏、服务不暴露公网）；⑥**24 小时删除义务**（权利人主张/投诉/合规要求时 24h 内删除正文、媒体与派生产物且不留副本）。AC-14 五要点 + 任务要求的 24h 声明全覆盖，且每条承诺与代码实际行为一致（互动默认关闭、派生产物纯离线等）。
+  - **默认限速保守值与依据**：[config.py](../../../apps/dev-tools/wechat-mp-archiver/src/mp_archiver/config.py) 限速字段上方注释核定结论，[.env.example](../../../apps/dev-tools/wechat-mp-archiver/.env.example) 同步；README「默认限速」表列 6 项参数实测默认值（请求间隔 2.0/5.0 秒、重试 5、退避 2.0 封顶 60、超时 30、传输熔断阈值 2、官方日配额 90）。依据分层表述：**保守方向**来自方案文档 3.2 节实证失效模式（高频请求触发验证码/临时封禁）与第六节访问克制；**2–5 秒具体区间为本项目工程判断**（贴近人工浏览节奏，非平台公布阈值，V 阶段 P2 修正了引用强度）；调度频率依据 deploy 第 12 节（登录态约 4 天，每日增量可追平）。
+  - TR-13.1（闭环）：合规六要点齐全；默认限速参数存在且为保守值并在两处配置文件标注依据；Mermaid 与链接检查器输出 0 错误（命令见上）。
+  - TR-13.2（软件侧闭环）：fresh-context 独立评审员在系统临时干净目录实跑「建库→五表→doctor→无服务 list→未知账号 fetch」走查：`init-db` 退出 0 且建成恰好五表；设置默认值逐项读取为 2.0/5.0/5/2.0/60.0/30.0/2/90 与文档表一致；doctor 无服务时仅告警不崩溃（退出 0，输出串与文档一致）；无服务 list 经退避后退出 4；未知账号 fetch 退出 3。另核全部命令/参数/路径/卷名/交叉引用节号属实，临时产物已清理。评审输出 **P0=0、P1=1、P2=7 全部处置**：P1（deploy 退出码 3/4 的 biz 映射与代码矛盾）已更正 README 与 deploy 两处；P2 含 Mermaid 补正文直连边、RAG 音频/视频/音乐占位符精确化、doctor 真实输出串、依据引用强度、Linux/macOS 激活路径、list 退避等待窗口提示，末项为根历史检查器不适用本项目的取证说明（本证据已记录）。全量 **221/221 通过**（config.py 仅注释变更，无回归）。
+  - **真机演练挂起**：Docker 起容器、专用订阅号扫码截图、真实账号单篇下载的环境实操待部署环境执行（deploy/README.md 第 3 节已留截图位）；文档命令本身已逐条与代码/实跑对齐。
 - **Description**:
   - README：架构图（Mermaid）、部署、账号准备（专用订阅号注册/扫码）、凭证获取与续期、CLI 用法、存储布局、故障排查（风控/验证/票据过期/媒体不可得）、合规声明（个人学习存档、禁止商用再分发与绕付费、尊重版权、24h 删除声明、频率自律）。
   - 核定默认限速为保守值并在配置中标注依据。
 - **Acceptance Criteria Addressed**: AC-14
 - **Test Requirements**:
-  - `rule` TR-13.1: README 合规五要点齐全；默认限速参数存在且为保守值；Mermaid 通过 `check_mermaid.py`。证据：文档 + 检查输出。
-  - `rule` TR-13.2: 按文档从零可在干净环境完成部署与一次单篇下载演练（文档可用性走查）。证据：走查记录。
+  - `rule` TR-13.1: README 合规五要点齐全（实际交付六条，含 24h 删除）；默认限速参数存在且为保守值并标注依据；Mermaid 通过仓库维护版检查器 `.agents/scripts/check-mermaid.py --path apps/dev-tools/wechat-mp-archiver`（0 错误），链接检查同过。证据：README/config.py/.env.example + 检查输出（本证据记录）。
+  - `rule` TR-13.2: 干净临时目录从零走查（init-db/五表/doctor/list/fetch 退出码与默认值）已由独立评审实跑通过；真机扫码部署演练挂起。证据：本 Completion Evidence 走查段。
 
 ## Task 14: 测试体系与端到端验收
 - **Status**: `pending`
