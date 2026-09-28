@@ -35,6 +35,12 @@
     libX11 客户端库全部可解析（dlopen 任一缺失即 ImportError）；`tkinter.Tcl()`
     再证 tcl8.6 脚本目录（init.tcl 等）在位。不建 Tk 窗口（构建期无显示，属
     预期边界；弹窗链路由运行期 `up --gui` + WSLg socket 实测覆盖）。
+  11. AST 启动钩子（Layer 5 install-ast-bootstrap.sh，2026-09-28）：CPython
+     3.12+ 移除 ast.NameConstant/Num/Str/Bytes/Ellipsis，tvm 源码树的
+     py_converter.py 在**导入期**引用它们，运行期补丁晚于导入——唯一注入位
+     点是 site 初始化期 .pth 钩子。本守卫以「新解释器进程 hasattr」双端断言
+     base/main 都已烤入（main 侧子进程**不带 -S**，否则跳过 site 处理恰好
+     绕过被测对象）。
 
 任何断言失败即以非零退出（构建期 RUN 失败、run --rm 冒烟失败）。
 """
@@ -379,6 +385,36 @@ try:
           tcl_patchlevel)
 except Exception as exc:  # noqa: BLE001
     check("tkinter 可导入（libtk/libtcl/X11 客户端库齐备）", False, str(exc))
+
+print("\n== 11. AST 启动钩子（xmnn_bootstrap.pth，import tvm 前置条件）==")
+# CPython 3.12+ 移除 ast 遗留节点，tvm 源码树 py_converter.py 在导入期
+# `from ast import ..., NameConstant, Num, Str`——只有 site 初始化期 .pth 钩子
+# 赶得在导入之前（Layer 5 install-ast-bootstrap.sh 烤入）。本守卫自身就是
+# 「钩子生效后的新解释器进程」：能 import 到钩子模块 + ast 别名齐备即双证。
+try:
+    import _xmnn_bootstrap  # noqa: F401,PLC0415
+
+    check("_xmnn_bootstrap 可导入（base site-packages 就位）", True)
+except Exception as exc:  # noqa: BLE001
+    check("_xmnn_bootstrap 可导入（base site-packages 就位）", False, str(exc))
+import ast as _ast  # noqa: PLC0415
+
+check("base 启动期 ast 别名齐备",
+      all(hasattr(_ast, n) for n in ("NameConstant", "Num", "Str", "Bytes", "Ellipsis")),
+      f"ast 来自 {_ast.__file__}")
+main_ast_code = (
+    "import ast; "
+    "assert all(hasattr(ast, n) for n in "
+    "('NameConstant', 'Num', 'Str', 'Bytes', 'Ellipsis')), 'ast aliases missing'"
+)
+# 注意不带 -S：-S 跳过 site 处理，恰好绕过被测对象（.pth 不执行）
+main_ast = subprocess.run(
+    [str(MAIN_PYTHON), "-c", main_ast_code],
+    capture_output=True, text=True, timeout=30,
+)
+main_ast_err = (main_ast.stderr or "").strip().splitlines()
+check("main 启动期 ast 别名齐备", main_ast.returncode == 0,
+      main_ast_err[-1][:120] if main_ast_err else "OK")
 
 print("")
 if failures:

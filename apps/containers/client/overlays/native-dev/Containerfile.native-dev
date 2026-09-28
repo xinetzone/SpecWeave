@@ -168,6 +168,9 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
 
 # ------------------------------------------------------------
 # Layer 5：注册 native-dev 内核（root/devuser 双可见）+ SSH 会话环境注入 +
+#   AST 启动钩子烤入（base/main 两解释器 site-packages 写 _xmnn_bootstrap.py +
+#   xmnn_bootstrap.pth，Terminal/SSH/内核 import tvm 的导入期前置条件，
+#   见 scripts/install-ast-bootstrap.sh 头注与守卫 §11）+
 #   构建期工具链/离线完备性守卫（root 与 devuser 两身份各跑一次，对齐 onnx
 #   叠加层 devuser 访问验证）。
 #   §7 离线完备性把「阶段二（无网侧）所需的一切」在构建期实测断言：
@@ -177,6 +180,7 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
 #   /etc/profile.d + sshd SetEnv 双通道补齐，否则 SSH 里 import tvm/xmnn 必失败。
 # ------------------------------------------------------------
 RUN /bin/bash -lc 'set -euo pipefail ; \
+    bash /opt/native-scripts/install-ast-bootstrap.sh ; \
     bash /opt/native-scripts/register-kernel.sh ; \
     bash /opt/native-scripts/setup-ssh-env.sh ; \
     cd /opt/native-dev-smoke ; \
