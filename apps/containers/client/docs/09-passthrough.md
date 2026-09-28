@@ -128,7 +128,8 @@ native-dev 栈（podman-compose 编排）以**分层覆盖文件**对齐同一�
 | `invoke run` 开关 | native 栈用法 | 覆盖文件（overlays/native-dev） |
 |---|---|---|
 | `--host-network` + `--dbus` | `invoke native.up --passthrough` | `compose.passthrough.yaml`（host 网络 + D-Bus） |
-| `--wayland` | `invoke native.up --gui`（**超集**：Wayland + X11 双通道按探测加载） | `compose.passthrough.gui.yaml`（+ 命中 X11 时追加 `compose.passthrough.gui.x11.yaml`） |
+| `--wayland` | `invoke native.up --gui`（**超集**：Wayland + X11 unix 按探测加载） | `compose.passthrough.gui.yaml`（+ 命中 X11 unix 时追加 `compose.passthrough.gui.x11.yaml`） |
+| （根路径无对应） | `invoke native.up --passthrough --gui`（SSH 远程 `ssh -X` 的 X11/TCP 转发） | 命中 loopback `127.0.0.1:60<n>` 且 cookie 可抽取时追加 `compose.passthrough.gui.x11.tcp.yaml`（**仅 host 形态**） |
 | `--usb` | `invoke native.up --usb` | `compose.passthrough.usb.yaml`（追加 `/dev/bus/usb`） |
 
 与 SDK 路径的差异（均为栈编排内生）：
@@ -152,6 +153,13 @@ native-dev 栈（podman-compose 编排）以**分层覆盖文件**对齐同一�
   追加 `compose.passthrough.gui.x11.yaml`（挂 socket 目录 + `DISPLAY`）。
   `--gui` 在 **bridge 形态即可用**（不走 host 网络，Jupyter 保持 8890），
   物理 Linux X11 需宿主 `xhost local:root`。
+- **SSH 远程 X11/TCP（`ssh -X`，第三形态）**：无本地桌面的会话只有 sshd 在
+  宿主 loopback 的 `127.0.0.1:60<n>` 转发，unix socket 不存在；该端口 bridge
+  容器不可路由，故须 `--passthrough --gui`。门禁只接受 loopback 目标
+  （`GUI_X11_TCP_DISPLAY` 可改指），并把 `~/.Xauthority` 中该显示号的 cookie
+  重编码为 FamilyWild 单条文件注入（`GUI_XAUTHORITY_FILE` 可覆盖）；TCP 可连
+  不等于 X 可用，失效会话会在诊断中列出活跃 60xx 并提示重新 `ssh -X`。
+  会话目录按 `$XDG_RUNTIME_DIR → /run/user/$(id -u)` 动态推导（不写死 1000）。
 - `--passthrough` / `--gui` / `--usb` 三者可任意并用，亦可与 `--gpu` /
   `--offline` 自由组合；`native.smoke --passthrough/--gui/--usb` 仅在栈运行
   路径生效（与启动同源文件），栈未运行时显式提示旗标被忽略。

@@ -97,8 +97,9 @@ NATIVE_SPEC = StackSpec(
         "NPU_TVM_PATH", "NPUUSERTOOLS_PATH", "MODELS_PATH", "NATIVE_TEMP_PATH",
         "TORCH_FLAVOR", "GPU_DEVICE", "NATIVE_PASSTHROUGH_IMAGE_TAG",
         "DBUS_SESSION_BUS_PATH", "HOST_NET_SSHD_PORT", "USB_DEVICE",
-        # GUI（C33）仅转发用户可设键；探测令牌在 WSL 侧重新生成，不入桥接。
+        # GUI（C33）：仅转发用户可设键；末两键供 ssh -X 的 X11/TCP 形态；探测令牌不入桥接。
         "HOST_XDG_RUNTIME_DIR", "HOST_WAYLAND_DISPLAY", "GUI_X11_SOCKETDIR", "GUI_DISPLAY",
+        "GUI_X11_TCP_DISPLAY", "GUI_XAUTHORITY_FILE",
     ),
     supports_offline=True,
 )

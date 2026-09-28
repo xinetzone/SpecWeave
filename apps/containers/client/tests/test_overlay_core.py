@@ -7,6 +7,7 @@
 import inspect
 import os
 import re
+import struct
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -94,6 +95,14 @@ class FakeRunner:
         # _runtime_probe_session_bus 的显式探测结果；空串时回退为 paths 集合中
         # 形如 /run/user/<uid>/bus 的首个命中（模拟 daemon 侧按 id -u 自动探测）。
         self.session_bus = ""
+        # _runtime_session_gui_env printf 探针：None=空 stdout（回退固定候选）；
+        # 元组 = (XDG_RUNTIME_DIR, WAYLAND_DISPLAY, DISPLAY)。
+        self.session_gui: tuple[str, str, str] | None = None
+        # _runtime_tcp_open：daemon 宿主 loopback 上可连的 (host, port) 集合。
+        self.tcp_open: set[tuple[str, int]] = set()
+        # _runtime_x11_probe：经 X11 协议握手确认存活的 (host, port)；
+        # None = 握手结果回退 tcp_open（旧用例语义）。HTTP/RST 端口不在此列。
+        self.x11_handshake: set[tuple[str, int]] | None = None
 
     def __call__(self, c, cmd, **kwargs):
         self.calls.append((cmd, kwargs))
@@ -117,6 +126,29 @@ class FakeRunner:
                 )
                 out = hits[0] if hits else ""
             return SimpleNamespace(ok=bool(out), stdout=out, return_code=0 if out else 1)
+        if "od -An -tu1" in cmd:
+            # _runtime_x11_probe：X11 握手复核（僵尸转发 RST / HTTP 服务须排除）。
+            m = re.search(r"/dev/tcp/(.+?)/(\d+)", cmd)
+            host, port = m.group(1), int(m.group(2))
+            pool = (self.x11_handshake if self.x11_handshake is not None
+                    else self.tcp_open)
+            ok = (host, port) in pool
+            return SimpleNamespace(ok=ok, stdout="108" if ok else "",
+                                   return_code=0 if ok else 1)
+        if "/dev/tcp/" in cmd:
+            # _runtime_tcp_open：bash /dev/tcp 探活（X11/TCP 转发端口）。
+            m = re.search(r"/dev/tcp/(.+?)/(\d+)", cmd)
+            host, port = m.group(1), int(m.group(2))
+            ok = (host, port) in self.tcp_open
+            return SimpleNamespace(ok=ok, stdout="", return_code=0 if ok else 1)
+        if "WAYLAND_DISPLAY" in cmd and "printf" in cmd:
+            # _runtime_session_gui_env：daemon 侧会话环境探针
+            if self.session_gui is not None:
+                d, w, x = self.session_gui
+                stdout = f"{d}\t{w}\t{x}"
+            else:
+                stdout = ""
+            return SimpleNamespace(ok=True, stdout=stdout, return_code=0)
         if "/etc/cdi" in cmd:
             return SimpleNamespace(
                 ok=self.cdi,
@@ -257,6 +289,8 @@ def harness(monkeypatch, tmp_path):
         # C33：GUI 探测入参与回写令牌
         "HOST_XDG_RUNTIME_DIR", "HOST_WAYLAND_DISPLAY",
         "GUI_WAYLAND_SOCKET", "GUI_X11_SOCKETDIR", "GUI_DISPLAY",
+        # X11/TCP（ssh -X）形态的入参与回写令牌
+        "GUI_X11_TCP_DISPLAY", "GUI_XAUTHORITY_FILE",
     ):
         monkeypatch.delenv(key, raising=False)
 
@@ -1701,7 +1735,7 @@ def _argv_files(argv: list[str]) -> list[str]:
 
 
 def test_compose_files_passthrough_usb_order_and_label(harness):
-    """文件序 base → GPU → 透传主层 → GUI（Wayland→X11）→ USB；label 同源。"""
+    """文件序 base → GPU → 透传主层 → GUI（Wayland→X11/X11-TCP）→ USB；label 同源。"""
     d = harness.root / "overlays/native-dev"
     argv = oc.compose_argv(_NATIVE, "up", "-d", passthrough=True)
     assert _argv_files(argv) == [
@@ -1731,6 +1765,17 @@ def test_compose_files_passthrough_usb_order_and_label(harness):
     argv = oc.compose_argv(_NATIVE, "up", "-d", gui=True, gui_forms=("x11",))
     assert _argv_files(argv) == [
         str(d / "compose.yaml"), str(d / "compose.passthrough.gui.x11.yaml"),
+    ]
+    # X11/TCP（ssh -X）：必随透传主层；可与 Wayland 并存，与 x11 unix 互斥
+    argv = oc.compose_argv(
+        _NATIVE, "up", "-d", passthrough=True,
+        gui=True, gui_forms=("wayland", "x11-tcp"),
+    )
+    assert _argv_files(argv) == [
+        str(d / "compose.yaml"),
+        str(d / "compose.passthrough.yaml"),
+        str(d / "compose.passthrough.gui.yaml"),
+        str(d / "compose.passthrough.gui.x11.tcp.yaml"),
     ]
     # 未声明能力的栈收到开关 = 内部不变量违例
     with pytest.raises(RuntimeError, match="passthrough_overlay"):
@@ -2031,6 +2076,219 @@ def test_smoke_running_native_gui_uses_same_files(harness):
     exec_cmd = [c for c in harness.runner.commands if " exec " in c][0]
     assert "compose.passthrough.gui.yaml" in exec_cmd
     assert "compose.passthrough.gui.x11.yaml" in exec_cmd
+
+
+# ── C33：GUI 动态会话目录（UID≠1000）与 X11/TCP（ssh -X）────────────────────
+
+
+def _write_xauth(path: Path, records):
+    """写 .Xauthority 测试文件；record = (family, address, number, proto, cookie)。"""
+    data = b""
+    for family, address, number, proto, cookie in records:
+        data += struct.pack(">H", family)
+        for chunk in (address, number, proto, cookie):
+            data += struct.pack(">H", len(chunk)) + chunk
+    path.write_bytes(data)
+
+
+def _gui_home(harness, monkeypatch, name="home", records=None):
+    """准备假 HOME 并按需写入 .Xauthority 记录（cookie 读取经 expanduser）。"""
+    home = harness.tmp / name
+    home.mkdir(exist_ok=True)
+    if records is not None:
+        _write_xauth(home / ".Xauthority", records)
+    monkeypatch.setenv("HOME", str(home))
+    return home
+
+
+_XAUTH_11 = (256, b"somehost", b"11", b"MIT-MAGIC-COOKIE-1", bytes(range(16)))
+_XAUTH_10 = (256, b"somehost", b"10", b"MIT-MAGIC-COOKIE-1", b"z" * 16)
+
+
+def test_parse_x11_tcp_display_accepts_loopback():
+    assert oc.parse_x11_tcp_display("localhost:11.0") == ("127.0.0.1", 11)
+    assert oc.parse_x11_tcp_display("127.0.0.1:0") == ("127.0.0.1", 0)
+    assert oc.parse_x11_tcp_display("[::1]:2") == ("::1", 2)
+    assert oc.parse_x11_tcp_display("LOCALHOST:11") == ("127.0.0.1", 11)
+
+
+@pytest.mark.parametrize("value", [
+    "", ":0", ":11.0", "localhost", "localhost:", "localhost:100",
+    "localhost:abc", "1.2.3.4:0", "evil.example:11",
+])
+def test_parse_x11_tcp_display_rejects_non_loopback_or_bad(value):
+    # unix 形态、非 loopback 主机、非法/越界显示号一律拒绝（安全约束）
+    assert oc.parse_x11_tcp_display(value) is None
+
+
+def test_parse_x11_unix_display_numbers():
+    assert oc.parse_x11_unix_display(":11") == 11
+    assert oc.parse_x11_unix_display(":0.0") == 0
+    assert oc.parse_x11_unix_display("") == 0
+    assert oc.parse_x11_unix_display("localhost:11") == 0
+
+
+def test_extract_xauth_entry_and_familywild_roundtrip(tmp_path):
+    src = tmp_path / ".Xauthority"
+    _write_xauth(src, [_XAUTH_10, _XAUTH_11])
+    assert oc.extract_xauth_entry(src.read_bytes(), 11) == (
+        b"MIT-MAGIC-COOKIE-1", bytes(range(16))
+    )
+    assert oc.extract_xauth_entry(src.read_bytes(), 41) is None
+    encoded = oc.encode_familywild_xauth(
+        11, b"MIT-MAGIC-COOKIE-1", bytes(range(16))
+    )
+    assert struct.unpack(">H", encoded[:2])[0] == 0  # FamilyWild
+    # 重编码文件只含显示 11 单条：其余显示号取不到（最小授权）
+    assert oc.extract_xauth_entry(encoded, 10) is None
+    assert oc.extract_xauth_entry(encoded, 11) == (
+        b"MIT-MAGIC-COOKIE-1", bytes(range(16))
+    )
+
+
+def test_resolve_gui_dynamic_uid_session_dir(harness):
+    """UID=1006：会话探针给 /run/user/1006，Wayland socket 动态命中（不写死 1000）。"""
+    harness.runner.session_gui = ("/run/user/1006", "wayland-0", "")
+    harness.runner.paths = {"/run/user/1006/wayland-0"}
+    assert oc.resolve_gui(None, _NATIVE, {}) == ("wayland",)
+    assert os.environ["GUI_WAYLAND_SOCKET"] == "/run/user/1006/wayland-0"
+    cmds = harness.runner.commands
+    assert not any("/run/user/1000/wayland-0" in c for c in cmds)
+
+
+def test_resolve_gui_x11_tcp_host_form_writes_cookie(harness, monkeypatch):
+    """ssh -X 会话 + host 网络：命中 x11-tcp，生成 FamilyWild cookie 并回写令牌。"""
+    session_dir = harness.tmp / "run1006"
+    session_dir.mkdir()
+    harness.runner.session_gui = (str(session_dir), "wayland-0", "localhost:11.0")
+    harness.runner.paths = set()
+    harness.runner.tcp_open = {("127.0.0.1", 6011)}
+    _gui_home(harness, monkeypatch, records=[_XAUTH_10, _XAUTH_11])
+    forms = oc.resolve_gui(None, _NATIVE, {}, host_network=True)
+    assert forms == ("x11-tcp",)
+    assert os.environ["GUI_DISPLAY"] == "127.0.0.1:11"
+    auth = Path(os.environ["GUI_XAUTHORITY_FILE"])
+    assert auth == session_dir / "gui-xauthority-11"
+    assert oct(auth.stat().st_mode & 0o777) == "0o644"
+    assert oc.extract_xauth_entry(auth.read_bytes(), 11) is not None
+    assert oc.extract_xauth_entry(auth.read_bytes(), 10) is None
+    files = oc.compose_files(_NATIVE, passthrough=True, gui=True, gui_forms=forms)
+    assert [f.name for f in files].count("compose.passthrough.gui.x11.tcp.yaml") == 1
+    assert not any(f.name == "compose.passthrough.gui.x11.yaml" for f in files)
+
+
+def test_resolve_gui_x11_tcp_bridge_blocked_fails_fast(harness, capsys):
+    """bridge 形态：转发端口活着也不可路由宿主 loopback → fail-fast 指引加旗标。"""
+    harness.runner.session_gui = ("/run/user/1006", "wayland-0", "localhost:11.0")
+    harness.runner.paths = set()
+    harness.runner.tcp_open = {("127.0.0.1", 6011)}
+    with pytest.raises(Exit) as ei:
+        oc.resolve_gui(None, _NATIVE, {})  # host_network 默认 False
+    assert ei.value.code == 1
+    out = capsys.readouterr().out
+    assert "loopback" in out
+    assert "invoke native.up --passthrough --gui" in out
+    assert "GUI_DISPLAY" not in os.environ
+    assert "GUI_XAUTHORITY_FILE" not in os.environ
+
+
+def test_resolve_gui_x11_tcp_dead_session_lists_active(harness, capsys):
+    """失效 SSH 会话：6011 无响应但 6010 仍 LISTEN → 诊断列出活跃转发并提示重登。"""
+    harness.runner.session_gui = ("/run/user/1006", "wayland-0", "localhost:11.0")
+    harness.runner.paths = set()
+    harness.runner.tcp_open = set()
+    # 6010 TCP 可连（ss 在列）且 X11 握手通过——才算另一个会话的活转发
+    harness.runner.x11_handshake = {("127.0.0.1", 6010)}
+    harness.runner.ss_output = (
+        "State    Recv-Q   Send-Q     Local Address:Port      Peer Address:Port\n"
+        "LISTEN   0        128        127.0.0.1:6010          0.0.0.0:*\n"
+    )
+    with pytest.raises(Exit):
+        oc.resolve_gui(None, _NATIVE, {}, host_network=True)
+    out = capsys.readouterr().out
+    assert "6011" in out and "SSH 会话可能已失效" in out
+    assert "127.0.0.1:6010（显示 :10）" in out
+    assert "ssh -X" in out
+
+
+def test_resolve_gui_x11_tcp_non_x11_port_excluded_from_active(harness, capsys):
+    """60xx 上的非 X11 服务（实测 6060=HTTP）与僵尸转发（RST）均不得列入活转发。"""
+    harness.runner.session_gui = ("/run/user/1006", "wayland-0", "localhost:11.0")
+    harness.runner.paths = set()
+    harness.runner.tcp_open = set()
+    harness.runner.x11_handshake = set()  # 6010 RST、6060 回 HTTP——握手全不过
+    harness.runner.ss_output = (
+        "State    Recv-Q   Send-Q     Local Address:Port      Peer Address:Port\n"
+        "LISTEN   0        128        127.0.0.1:6010          0.0.0.0:*\n"
+        "LISTEN   0        4096       127.0.0.1:6060          0.0.0.0:*\n"
+    )
+    with pytest.raises(Exit):
+        oc.resolve_gui(None, _NATIVE, {}, host_network=True)
+    out = capsys.readouterr().out
+    assert "经 X11 握手确认存活的 loopback 转发：无" in out
+    assert ":60" not in out and "6060" not in out  # HTTP 端口不得误导
+
+
+def test_resolve_gui_x11_tcp_missing_cookie_fails_fast(harness, monkeypatch, capsys):
+    """端口可达但无 cookie：fail-fast 给 xauth 指引，通用指引不丢，不留半成品文件。"""
+    session_dir = harness.tmp / "run1006b"
+    session_dir.mkdir()
+    harness.runner.session_gui = (str(session_dir), "wayland-0", "localhost:11.0")
+    harness.runner.paths = set()
+    harness.runner.tcp_open = {("127.0.0.1", 6011)}
+    _gui_home(harness, monkeypatch, name="home-empty")  # 无 .Xauthority
+    with pytest.raises(Exit):
+        oc.resolve_gui(None, _NATIVE, {}, host_network=True)
+    out = capsys.readouterr().out
+    assert "xauth 授权缺失" in out
+    assert "GUI_XAUTHORITY_FILE" in out
+    assert "去掉 --gui" in out
+    assert not (session_dir / "gui-xauthority-11").exists()
+
+
+def test_resolve_gui_unix_socket_suppresses_tcp(harness):
+    """unix 命中即不探 TCP（两种传输互斥），即便会话 DISPLAY 指向转发也忽略。"""
+    harness.runner.session_gui = ("/run/user/1006", "wayland-0", "localhost:11.0")
+    harness.runner.paths = {"/run/user/1006/.X11-unix/X0"}
+    harness.runner.tcp_open = {("127.0.0.1", 6011)}
+    assert oc.resolve_gui(None, _NATIVE, {}, host_network=True) == ("x11",)
+    assert not any("/dev/tcp/" in c for c in harness.runner.commands)
+    assert os.environ["GUI_DISPLAY"] == ":0"
+    assert "GUI_XAUTHORITY_FILE" not in os.environ
+
+
+def test_up_gui_x11_tcp_host_form_argv_and_banner(harness, monkeypatch, capsys):
+    """--passthrough --gui（ssh -X）：文件集含主层+tcp 层；横幅 host 形态信息。"""
+    session_dir = harness.tmp / "run1006c"
+    session_dir.mkdir()
+    harness.runner.session_gui = (str(session_dir), "wayland-0", "localhost:11.0")
+    harness.runner.paths = {"/run/user/1006/bus"}
+    harness.runner.tcp_open = {("127.0.0.1", 6011)}
+    _gui_home(harness, monkeypatch, records=[_XAUTH_11])
+    oc.up_stack(None, _NATIVE, passthrough=True, gui=True, skip_build=True)
+    up_cmd = [c for c in harness.runner.commands if "up -d --no-build" in c][0]
+    assert "compose.passthrough.yaml" in up_cmd
+    assert "compose.passthrough.gui.x11.tcp.yaml" in up_cmd
+    assert "compose.passthrough.gui.x11.yaml" not in up_cmd
+    out = capsys.readouterr().out
+    assert "Jupyter localhost:8888" in out  # host 形态固定端口
+    assert "X11/TCP 127.0.0.1:11" in out
+    assert "仅 host 形态可达" in out
+
+
+def test_smoke_running_native_gui_x11_tcp_uses_same_files(harness, monkeypatch):
+    """栈运行路径 smoke 的 exec argv 与 up 同源（含 tcp GUI 层，不含 unix 层）。"""
+    session_dir = harness.tmp / "run1006d"
+    session_dir.mkdir()
+    harness.runner.running = True
+    harness.runner.session_gui = (str(session_dir), "wayland-0", "localhost:11.0")
+    harness.runner.paths = {"/run/user/1006/bus"}
+    harness.runner.tcp_open = {("127.0.0.1", 6011)}
+    _gui_home(harness, monkeypatch, name="home2", records=[_XAUTH_11])
+    oc.smoke_stack(None, _NATIVE, passthrough=True, gui=True)
+    exec_cmd = [c for c in harness.runner.commands if " exec " in c][0]
+    assert "compose.passthrough.gui.x11.tcp.yaml" in exec_cmd
+    assert "compose.passthrough.gui.x11.yaml" not in exec_cmd
 
 
 def test_ensure_passthrough_tag_already_present(harness):
