@@ -1,7 +1,7 @@
 # Spec：微信推广博文《一个程序员的省钱实录》→ OKF Wiki 知识包
 
 > spec id: inurl-free-models-blog-okf-wiki
-> created: 2026-09-16
+> created: 2026-09-16；**updated: 2026-09-28（站点直证二次复核，G4：F-071~F-087，flagged 维持）**
 > 方法论：seven-concepts 场景4（知识沉淀 R→I→E）× blog-article-to-okf-wiki 七阶段（R→I→E→V→C）
 
 ## 1. 任务定义
@@ -60,3 +60,9 @@
 - bundle 文件集 + 三级索引接入（ai 组 index 导航表+toctree、bundles/index.md 计数同步：jishu 406→407、total 538→539，以现值复核）
 - V 阶段：四视角审查、双份 F 编号集合比对、手动等效机械门禁（gates 依赖可用性先探测，不可用则按清单手动验证并 log 注明）
 - C 阶段：不主动 commit/push，输出原子提交建议（子模块 → 主仓库 spec → 主仓库 gitlink）待用户确认
+
+## 9. 2026-09-28 二次复核（站点直证增量）
+
+- 触发：用户指令「学习 https://token.inurl.link/，更新 okf wiki 教程」——方法论不变（seven-concepts 场景 4），信源从推广博文转为**产品站直接实测**（curl 直打四页面 + 公开 GET 接口，未注册未下载；浏览器子代理受拦截零产出后的降级路径）。
+- 产物：facts.md 新增 G4（F-071~F-087，17 条，与 bundle `article-source.md` 双份一致）；bundle 侧 verification.md 增 §7、index/log/concepts 00-02/examples 01 增量补注，共改 9 个 bundle 文件。
+- 结论：核心 ❌（F-060/F-064/F-069/F-070）的产品侧依据原样成立，站点目录反新增 F-079 ❌（重复已勘误口径 12 天未改）；产品迭代与新增边界并存（F-077/F-081/F-082/F-084）。**维持 status: flagged 与 stale_after: 2026-12-31**，下轮复核项增加 public:false 厂商开放情况与 track.js/短链数据披露。

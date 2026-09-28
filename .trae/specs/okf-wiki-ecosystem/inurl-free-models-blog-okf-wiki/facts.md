@@ -1,7 +1,7 @@
 # 事实集：微信推广博文《一个程序员的省钱实录》
 
-> 采集时间：2026-09-16
-> 信源：https://mp.weixin.qq.com/s/dSTvvOjPIRpbSJHIqxi0Gw（browser_use 提取 `#js_content` 全文，约 2800 字符）
+> 采集时间：2026-09-16；**二次复核（站点直证）：2026-09-28（G4：F-071 ~ F-087）**
+> 信源：https://mp.weixin.qq.com/s/dSTvvOjPIRpbSJHIqxi0Gw（browser_use 提取 `#js_content` 全文，约 2800 字符）；二次复核信源：token.inurl.link 四页面 HTML 与公开 GET 接口（curl 直打，未注册未下载）
 > 类型标记：O=客观事实　V=作者观点/体验/推断　P=产品/厂商声明（推广对象）
 > 信源距离：博文=推广软文；核验结论：待核 / ✅通过 / ⚠️口径差异或单源 / ❌证伪
 > P 级：P0=必核验（数字/日期/产品核心声明）　P1=选核验　P2=可单源（背景/个人叙事/观点）
@@ -123,8 +123,31 @@
 | F-069 | O | 型号时效：**GPT-4o 等老模型已于 2026-02-13 从 ChatGPT 退役**（2025-10 账单时点旗舰也已是 GPT-5）；2026-09 OpenAI 旗舰推理模型为 **GPT-5.6 Sol（2026-07-09 起推送）**；Anthropic 现旗舰为 **Claude Opus 5（2026-07-24 发布）**（Opus 4.8 为 2026-05-28 上代）；另有更高定位 Fable/Mythos 5.1（2026-09-01） | help.openai.com Model Release Notes + anthropic.com 官方新闻 | ❌ F-036 推荐在博文发布当日（2026-09-02）即已过时 |
 | F-070 | O | **核心勘误（0 元口径冲突）**：博文 F-041 称"注册了 17 家免费模型的 Key"并用 inurl 实现月费 0 元；但产品免费档仅允许 3 个厂商密钥（F-051），而"17"恰为 /models 页免费厂商计数（F-050）。录入 10 个 Key 需 ¥9.9/月、无限 Key 需 ¥29.9/月——**"17 家 Key 全量托管"与"0 元"在产品自身价格表下不可兼得**；叠加 DeepSeek 付费（F-064）、Agnes/LongCat 百万上下文付费化（F-059/F-062），博文主结论"0 元干完所有活"仅在"≤3 个免费厂商 + 不含 DeepSeek + 长上下文受限"的收窄口径下方可成立 | F-041×F-050×F-051×F-064×F-059×F-062 交叉 | ❌ 核心声明口径勘误（flagged 依据） |
 
+### G4. 2026-09-28 二次复核（F-071 ~ F-087，站点直证；curl 直打公开页面/接口，仍未注册未下载）
+
+| 编号 | 类型 | 事实（2026-09-28 实测口径） | 来源 | 核验 |
+|------|------|------|------|------|
+| F-071 | O | 四个 URL（`/`、`/app`、`/guide`、`/models`）全部可达（HTTPS/Cloudflare），首页 title 与「聚合 APIToken·端到端加密密钥库」定位未变 | curl 状态码/title | ✅ F-044 持续 |
+| F-072 | O+P | `/api/billing/plans` 原样：enabled/mock=false/manual=false；免费 ¥0/freeKeyLimit=3、标准 ¥990/30 天/10 密钥、专业 ¥2990/30 天/无限；inviteReward 7 天 standard；专业档功能列表新增「早期功能内测」，其余与 09-16 一致 | `/api/billing/plans` | ✅ F-051 持续（核心勘误证据仍成立） |
+| F-073 | O | `/api/turnstile` 仍 `{"enabled":false,"siteKey":"0x4AAAAAAD7LmJfa2KBA4Uab"}`（siteKey 与 09-16 相同）；/guide 步骤 1 仍写「注册会有人机验证，请完成 Cloudflare 验证框」 | `/api/turnstile` + /guide | ⚠️ F-054 脱节持续 |
+| F-074 | O | 博文点名 5 模型 id 当日逐一 EXISTS：`qwen/qwen-coder-plus`、`deepseek/deepseek-v4-flash`、`zhipu-free/glm-4-flash`、`longcat/LongCat-Flash-Chat`、`agnes/agnes-2.5-flash` | `/api/catalog` | ✅ F-049 持续 |
+| F-075 | O | /app 内联 JS 加密链未变：`deriveKeyFromSecret` 仍 PBKDF2 iterations=100000/SHA-256 → AES-GCM length=256；`escrow_pw`（password+userId 盐）/`escrow_rec`（恢复密语+email 盐）POST `/api/escrow`；另观察到 `/api/recover`（邮箱发起、恢复密语解密）、`/api/password`（改密时重加密 escrow_pw）、`/api/me`、`/api/keys`，恢复/改密流程与双 escrow 设计自洽 | /app 前端 JS | ✅ F-052 持续 |
+| F-076 | O | DeepSeek 仍在 catalog `tier=paid`（models：deepseek-v4-flash/deepseek-v4-pro/deepseek-reasoner），/models 付费区卡片保留 | `/api/catalog` + /models | ❌ F-064 持续 |
+| F-077 | O | `/api/catalog` 当日 **428,592 字节**（09-16 约 424KB），provider 仍 46 家；tier 结构 **17 free + 29 paid**，其中 **10 家 paid 为 public:false**：ppio、mock（「Mock Vendor (local test only)」，baseUrl=`http://localhost:3002`，模型 mock-chat）、together、siliconflow（付费通道）、deepinfra、fireworks、hyperbolic、lepton、novita、openai-compatible（通用自定义，baseUrl 占位、模型 `your-model`）；`/api/catalog?all=1` 未鉴权响应与默认接口**字节级相同（SHA-256 一致）**——隐藏条目本就随公开接口下发；`/api/provider-meta` 亦无鉴权返回含全部隐藏 slug 的 websites 映射（38 条 inurl.link 短链、logos 空） | `/api/catalog` 对比分析 + `/api/provider-meta` | ⚠️ 测试/预留条目进入生产公开目录 |
+| F-078 | O | /models 计数牌仍显示「免费模型 17 / 付费模型 19」，正文渲染 17 张免费卡 + 19 张 public:true 付费卡（页面内部自洽，但未反映后台 29 个 tier=paid 条目）；免费 17 家名单与 09-16 完全相同 | /models HTML | ✅/⚠️ F-050 页面口径未变 |
+| F-079 | P | 站点自身目录继续重复已被官方勘误的口径：①Agnes 卡片/summary 称「agnes-2.5-flash 支持百万级上下文」（官方免费档 512K，F-062）；②百度千帆卡片称「新用户每月赠送 100 万 tokens」（官方每模型 100 万/3 个月，F-061）；③LongCat 免费条目含 LongCat-2.0 并宣传「原生 1M 上下文、新用户注册送 1000 万 Tokens」（2.0 现行按量付费、礼包 30 天一次性，F-059） | /models 渲染文本 + catalog summary | ❌ 站点自述 12 天内未修正 |
+| F-080 | O | 免费目录陈旧/轮换信号：siliconflow-free 仍列旧代 `deepseek-ai/DeepSeek-V2.5`；OpenRouter 免费模型已轮换为 `google/gemini-2.5-flash:free`、`meta-llama/llama-3.3-70b-instruct:free`；gemini-free 仍列 gemini-1.5-flash/1.5-pro-002/2.0-flash-exp（落后官方当期）；agnes 目录仍挂已废弃的 agnes-2.0-flash | `/api/catalog` + /models | ⚠️ 目录维护频率不均 |
+| F-081 | O | /guide 仍为五步但内容扩充：启动器跨平台（Windows `byok-launch.bat` + macOS/Linux `byok-launch.sh`，需 **Node.js 18+**，由 /app「本地代理与对话测试」区一键下载、自动检测连接）；FAQ 扩至 6 条（支付宝电脑网站支付付款后自动回调、1–2 分钟到账；模型 id 必须与 /app 下拉一字不差；catalog 更新需重启代理等）；新增「用量与剩余额度」（每厂商卡片手填额度如 1000000，剩余=手填额度−累计已用，教程明示各厂商 API 不提供剩余额度）；新增 OpenAI 兼容 `GET /v1/models` 的客户端识别说明 | /guide 全文 | ✅ 产品持续迭代 |
+| F-082 | O | /guide 承诺 inurl-image/inurl-video/inurl-audio 按能力标签分类路由，且无支持厂商时「明确提示不静默失败」；但 catalog capabilities 映射仅覆盖 12 个模型、标签只有 **text/code/image** 三类（无 video/audio 标签，亦无 audio 模型）——当前 inurl-video/inurl-audio 必然落入「当前没有支持该类别的厂商」空类别提示 | /guide × capabilities 交叉 | ⚠️ 文档承诺超出现行目录数据 |
+| F-083 | P | 首页新增「实时演示」区：不注册即可在 OpenAI/Anthropic/Gemini 三选间发起浏览器内模拟流式调用（明示模拟响应、不触真实密钥、不消耗额度）；hero 更新为「BYOK · 端到端加密 · 永不中转／你的密钥，由你亲自加密托管」；自述统计数字未随目录更新（已托管密钥 6 / 支持厂商 8+ / 明文上云 0，256，100%，8+） | 首页 HTML | ✅（宣传数字仍为站点自选口径，F-045 持续） |
+| F-084 | O | 四个页面均加载主域脚本 `https://inurl.link/track.js`；脚本注释自称「website analytics tracker」、支持 `data-site` 多租户接入，采集 site/session/page/referer/language/url，load 上报、页面可见时心跳 ping、exit 经 sendBeacon 上报 duration，POST 至主域 `/api/track`——属同一运营者第一方统计（非第三方域名），但访问行为回传主域，与其短链/营销体系同域 | track.js 源码 | ⚠️ F-056 信任画像增量 |
+| F-085 | O | 工程信号复核（修订 F-057）：随机不存在路径实际返回 HTTP **401** 裸 JSON `{"error":"unauthorized"}`（非 404；`/api/me`、`/api/keys`、`/api/escrow`、`/api/health`、`/api/stats`、`/api/config` 未鉴权一律 401 裸 JSON）；四页面 HTML 已无 `/@vite/client` HMR 探针残留（静态构建）；/models 底部常驻「暂无模型数据，请刷新页面或稍后重试」空状态占位 | curl + HTML 扫描 | 🔄 F-057 部分修订（裸 JSON 仍在且精确为 401；HMR 项不复现） |
+| F-086 | O | 主域 inurl.link 形态变化：09-28 根路径直接 200 呈现「inurl.link · 互联网精选导航 — 发现 · 连接 · 探索」导航/短链门户（SSR 页面），不再是 F-056 记录时直接呈现的个人站 lixiaoxin.com（个人站追溯保留为历史主体线索）。短链枚举：/models 36 张公开卡的「前往获取 Key」仅 **5 个直连官方域**（aistudio.google.com、yl.163.com、www.huaweicloud.com、dashboard.cohere.com、console.upstage.ai），其余卡片均走 inurl.link/&lt;slug&gt; 短链（免费区顶部另有 1 个机场广告短链 mojie-inurl）；catalog 全量 46 家 website 字段为 38 条 inurl.link 短链 + 8 个其他域（含 mock 的 localhost:3002、隐藏厂商 lepton 的 dashboard.lepton.ai 与 openai-compatible 的 platform.openai.com 占位等） | inurl.link 根页 + /models 链接枚举 + /api/provider-meta | ⚠️ 短链矩阵系统化；主体匿名结论不变 |
+| F-087 | O | 页脚/广告复核：四页页脚仍只有「© 2026 inurl · 聚合 APIToken · 端到端加密密钥库」（models 页加后缀「厂商请求从本机发出」），仍无公司名/ICP/公安备案/邮箱/GitHub；免费区顶部 VPN 机场广告仍在（短链 `inurl.link/mojie-inurl`，文案「稳定、便宜、速度快、节点多的机场」） | 四页页脚/广告位 | ⚠️ F-056 持续 |
+
 ### 裁决
 
-- P0 合计：**✅ 通过 11 项 / ⚠️ 口径差异或风险 7 项 / ❌ 失实或矛盾 4 项（F-060 时间线、F-064 DeepSeek 免费、F-069 型号过时、F-070 0 元口径冲突）**
+- P0 合计（2026-09-16 首轮）：**✅ 通过 11 项 / ⚠️ 口径差异或风险 7 项 / ❌ 失实或矛盾 4 项（F-060 时间线、F-064 DeepSeek 免费、F-069 型号过时、F-070 0 元口径冲突）**
+- **2026-09-28 二次复核（G4，F-071~F-087，✅6 / ⚠️8 / ❌2 / 🔄1）**：4 项 ❌ 的产品侧依据原样成立——DeepSeek 仍在付费区（F-076）、免费档 3 密钥定价未变（F-072），且站点目录继续重复 F-061/F-062/F-059 三处已勘误口径（F-079 ❌）；F-060/F-069 属博文历史事实，不随后续站点变化改变。产品持续迭代属实（跨平台启动器、额度管理、实时演示，F-081/F-083），但新增边界：catalog 公开下发测试/预留厂商（F-077）、video/audio 分类当前空转（F-082）、track.js 行为采集（F-084）、F-057 工程信号部分修订（F-085）。**结论：维持 `status: flagged`，`stale_after: 2026-12-31` 不变。**
 - 个人自述类（F-009 $80、F-010 0 元账单、F-033 三周、F-038 省 90%、F-025 0.1 秒切换）无独立出处，不判真伪，正文一律标注"作者自述/厂商自述"。
 - **bundle 状态：flagged**——失败项命中博文主结论（0 元全免费工作流），按 L3 flagged 状态管理执行。
