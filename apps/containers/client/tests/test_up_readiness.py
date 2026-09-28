@@ -9,6 +9,7 @@
 
 import contextlib
 import http.server
+import re
 import socket
 import threading
 
@@ -120,19 +121,39 @@ def test_timeout_detail_reports_both_addrs_with_ipv4_first():
     """
     ready, detail = u.wait_http_ready(_closed_port(), timeout=0.5)
     assert ready is False
-    assert "127.0.0.1 ConnectionRefusedError" in detail
-    assert "::1 ConnectionRefusedError" in detail
+    # 异常类名是平台实现细节（POSIX: ECONNREFUSED；Winsock 同一操作可能映射
+    # WSAETIMEDOUT → TimeoutError），契约是「逐地址归因 + v4 权威在前」，
+    # 故只断言结构、不断言具体类名。
+    assert re.search(r"127\.0\.0\.1 \w+", detail)
+    assert re.search(r"::1 \w+", detail)
     assert detail.index("127.0.0.1") < detail.index("::1")
     assert "仅绑 IPv4" in detail
     assert "无 HTTP 应答" in detail
 
 
-def test_timeout_detail_preserves_per_addr_error_kinds():
-    """v4 是 rootlessport 零字节窗（连接被对端 reset，ConnectionResetError 系，
-    RemoteDisconnected 为其子类）、v6 拒绝（ConnectionRefusedError）时，两类
-    错误都必须保留——v4 错误才是就绪判据的权威信号，不得被 ::1 覆盖淹没。"""
-    with _silent_tcp_server() as port:
-        ready, detail = u.wait_http_ready(port, timeout=0.5)
+def test_timeout_detail_preserves_per_addr_error_kinds(monkeypatch):
+    """v4/v6 抛两类不同错误时，逐地址各自保留、互不覆盖（平台无关构造）。
+
+    POSIX 栈上「零字节窗→ConnectionReset、拒绝→ConnectionRefused」，而 Winsock
+    映射为 ConnectionAborted/Timeout——具体类名不构成跨平台契约，故用替身显式
+    构造「两类错误并存」场景，锁定真正的回归意图：v4 错误不得被 ::1 覆盖淹没。
+    """
+
+    class _AddrErrorConn:
+        def __init__(self, host, port, timeout=None):
+            self._host = host
+
+        def request(self, *a, **k):
+            if self._host == "127.0.0.1":
+                raise ConnectionResetError("connection reset by peer")
+            raise ConnectionRefusedError("v6 refused")
+
+        def close(self):
+            pass
+
+    monkeypatch.setattr(u.http.client, "HTTPConnection", _AddrErrorConn)
+    monkeypatch.setattr(u, "UP_READY_POLL_S", 0.0)
+    ready, detail = u.wait_http_ready(_closed_port(), timeout=0.05)
     assert ready is False
     assert "127.0.0.1 ConnectionResetError" in detail
     assert "::1 ConnectionRefusedError" in detail
