@@ -114,7 +114,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | - | 更新索引，新增9行删除9行 |
 | Spec定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - | 任务目标与范围定义 |
 | Spec任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | - | 任务步骤拆解 |
-| Spec检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | - | 质量验证清单 |
+| Spec检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/review.md) | - | 质量验证清单 |
 | **总计** | **5个文件** | **774行新增，9行删除** | Commit ID: 9083c788 |
 
 ### 复盘报告产出物（本次闭环）

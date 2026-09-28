@@ -11,6 +11,7 @@ retrospective-action-first-command-bootstrap-20260728/index
 retrospective-agnes-free-api-learning-20260704/index
 retrospective-ai-regulation-analysis-20260708/index
 retrospective-apple-india-leak-china-manufacturing-20260713/index
+retrospective-atomgit-selection-evaluation-20260928/index
 retrospective-audiox-turbo-wiki-20260803/index
 retrospective-claude-code-context-injection-learning-20260704/index
 retrospective-claude-tag-article-learning-20260629/index

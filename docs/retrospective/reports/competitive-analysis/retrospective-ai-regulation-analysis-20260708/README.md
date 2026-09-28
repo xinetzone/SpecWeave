@@ -59,7 +59,7 @@ template_upgrade: "2026-07-06 v1.2"
 |------|------|------|
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | 10个功能需求、6个验收标准 |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 11个任务（全部标记[x]完成） |
-| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 60项检查点（全部通过） |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/review.md) | 60项检查点（全部通过） |
 | 结构化分析报告 | [2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-anthropomorphic-analysis/index.md) | 808行/25634字符（核心产出） |
 
 **复盘报告**：

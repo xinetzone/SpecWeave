@@ -57,7 +57,7 @@ version: "1.1"
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | +9/-9行 |
 | Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - |
 | Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | - |
-| Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | - |
+| Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/review.md) | - |
 
 **复盘报告**：
 

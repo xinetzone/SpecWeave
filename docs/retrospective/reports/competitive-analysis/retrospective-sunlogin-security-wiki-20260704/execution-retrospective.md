@@ -98,7 +98,7 @@ flowchart LR
 |------|------|------|
 | PRD文档 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 产品需求文档 |
 | 任务分解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 11个任务，全部完成 |
-| 验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 30检查点，全部通过 |
+| 验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/review.md) | 30检查点，全部通过 |
 
 ### 3.5 复盘产出（本次）
 

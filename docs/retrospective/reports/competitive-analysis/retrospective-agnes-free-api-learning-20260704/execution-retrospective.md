@@ -125,7 +125,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 |--------|------|-----------|------|
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 106 行 | PRD 格式任务规范 |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 92 行 | 6 个任务含完整字段 |
-| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 13 个检查点 | 覆盖全流程质量验证 |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/review.md) | 13 个检查点 | 覆盖全流程质量验证 |
 | 深度分析报告 | 对话输出（未保存为文件） | 完整 Markdown 报告 | 含核心概念表、章节结构、深度见解 |
 
 ### 复盘报告产出物（本次闭环）

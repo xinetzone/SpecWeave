@@ -159,7 +159,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | - | learning分类新增条目 |
 | Spec PRD | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - | 产品需求文档 |
 | Spec任务清单 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | - | 15个任务拆解 |
-| Spec验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | - | 97项质量检查点 |
+| Spec验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/review.md) | - | 97项质量检查点 |
 | **新增模式** | [multi-product-comparison-structure.md](../../../patterns/methodology-patterns/document-architecture/multi-product-comparison-structure.md) | 251行 | 多产品对比学习四段式结构（L2） |
 | **补充模式** | [file-creation-precheck-pattern.md](../../../patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md) | - | 新增2项Wiki专项检查 |
 | 模式库索引 | [methodology-patterns/README.md](../../../patterns/methodology-patterns/README.md) | - | document-architecture计数27→28 |

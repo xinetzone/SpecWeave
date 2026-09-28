@@ -28,7 +28,7 @@ export_date: "2026-07-08"
 |--------|------|------|
 | Spec 定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | PRD格式，10个功能需求、6个验收标准 |
 | Spec 任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 11个任务，已全部标记为[x]完成 |
-| Spec 检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 60项检查点，全部通过 |
+| Spec 检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/review.md) | 60项检查点，全部通过 |
 | 结构化分析报告 | [2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-anthropomorphic-analysis/index.md) | 808行/25634字符，68个标题，309行表格，核心产出 |
 | 法规对象 | 《人工智能拟人化互动服务管理暂行办法》 | 五部门联合发布的部门规章 |
 | 对比对象 | 涂鸦智能平台合规公告 | 平台合规指引，仅覆盖约30%法规义务 |

@@ -207,7 +207,7 @@ date: "2026-07-08"
 |------|------|------|
 | 产品需求文档 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | 10个FR、6个AC |
 | 任务分解清单 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 11个任务（全部[x]完成） |
-| 验收检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 60项检查点（全部通过） |
+| 验收检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/review.md) | 60项检查点（全部通过） |
 
 ### 2. 分析报告（核心产出）
 

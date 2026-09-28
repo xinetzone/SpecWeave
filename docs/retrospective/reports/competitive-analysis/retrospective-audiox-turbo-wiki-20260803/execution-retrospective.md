@@ -29,7 +29,7 @@ session: "sc-20260803-audiox-turbo-wiki"
 | TOML元数据 | audiox-turbo-audio-generation-wiki.toml | ✅ 已存在 | 9行元数据（原 learning 目录 toml 已随板块迁移移除） |
 | Spec规格书 | [spec.md](../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/spec.md) | ✅ 已完成 | 完整 |
 | 任务分解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/tasks.md) | ✅ 已完成 | 8个任务 |
-| 检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/checklist.md) | ✅ 已完成 | 30项检查点 |
+| 检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/review.md) | ✅ 已完成 | 30项检查点 |
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | ✅ 本文件 | - |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | ✅ 已完成 | R/I/E/V完整 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | ✅ 已完成 | 行动项清单 |

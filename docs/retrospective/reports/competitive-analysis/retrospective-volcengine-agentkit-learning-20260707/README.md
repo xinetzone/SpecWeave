@@ -54,7 +54,7 @@ template_upgrade: "2026-07-06 v1.2"
 |------|------|------|
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/spec.md) | 13个FR、10个AC、10个开放问题 |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/tasks.md) | 11个任务（全部标记[x]完成） |
-| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/checklist.md) | 3大维度50+检查点 |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/review.md) | 3大维度50+检查点 |
 | 结构化学习笔记 | [volcengine-agentkit-platform-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/volcengine-ecosystem/index.md) | 13章 + 6个Mermaid图表（核心产出） |
 
 **复盘报告**：
