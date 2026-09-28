@@ -67,7 +67,7 @@ completed_date: "2026-07-06"
 | TOML元数据（10个） | [.meta/toml/.../papi-jiang-solo-ip-trend-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/papi-jiang-solo-ip/index.md) | - |
 | Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | 129行 |
 | Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 227行 |
-| Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 54行 |
+| Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/review.md) | 54行 |
 
 **复盘报告**：
 

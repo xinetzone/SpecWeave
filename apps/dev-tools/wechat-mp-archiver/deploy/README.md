@@ -133,7 +133,7 @@ mp-archiver fetch -a <公众号> --fetch-metrics
 
 | 现象 | 排查 |
 |---|---|
-| `doctor` 报 `down` | `docker compose ps` 容器是否 healthy；端口是否被占；是否有本地代理拦截 127.0.0.1 |
+| `doctor` 输出「采集服务未响应：无法连接…」告警 | `docker compose ps` 容器是否 healthy；端口是否被占；是否有本地代理拦截 127.0.0.1 |
 | 容器反复重启 | `docker compose logs collector`；确认 `collector.env` 存在且 `SITE_URL` 与端口绑定一致 |
 | 扫码后仍 401 | 确认扫码的是订阅号管理员微信；尝试重启容器后重新扫码 |
 | ARM 设备拉取失败 | 确认 Docker 版本支持多架构清单（manifest list）；镜像已提供 arm64 变体 |
@@ -233,7 +233,7 @@ Register-ScheduledTask -TaskName 'mp-archiver-full-weekly' `
 
 任务默认在当前用户下运行；需要未登录时也执行，可在「任务计划程序」图形界面中改为「不管用户是否登录都要运行」并凭据保存（此时请确保 Docker Desktop/WSL 与 `.venv` 在该会话可用）。查看结果：任务计划程序「历史」选项卡，或项目 `logs/` 目录。
 
-退出码监测语义：`0` 成功；`1` 有文章归档失败（下次自动重试）或参数错误；`2` 登录态失效，需按第 5 节重新扫码；`3` 账号未找到/biz 缺失；`4` 采集服务不可达或环境异常。
+退出码监测语义：`0` 成功；`1` 有文章归档失败（下次自动重试）或参数错误；`2` 登录态失效，需按第 5 节重新扫码；`3` 账号未找到（`sync-official` 路径亦表示 AppID/biz 未配置）；`4` 采集服务不可达、端点发现失败、R2 列表 biz 不可得或正文阶段风控/传输熔断。
 
 ### 12.3 NAS / Linux（cron）
 

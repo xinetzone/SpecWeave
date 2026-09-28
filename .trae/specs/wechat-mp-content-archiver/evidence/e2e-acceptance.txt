@@ -1,0 +1,54 @@
+# TR-14.2 端到端验收命令级证据（Task 14 / AC-4/5/6/7/8）
+
+采集时间：2026-09-28    工作目录：apps/dev-tools/wechat-mp-archiver
+被测文件：tests/test_acceptance_e2e.py（Task 14 新增，6 例）
+
+复现命令（PowerShell，须在应用目录执行）：
+  .venv\Scripts\python.exe -m pytest tests/test_acceptance_e2e.py -v -o addopts="" --no-header -p no:cacheprovider
+  说明：应用 pyproject.toml 的 addopts = "-q" 会抵消 -v，故用 -o addopts="" 还原逐例清单。
+
+被测路径：run_pipeline(conn, settings, "意识食谱", full=True, client_factory=…)，
+即真实 CLI `mp-archiver run --full` 所调用的同一编排入口（列表同步 → 正文/富媒体 → 互动采集），
+仅把 HTTP 传输替换为 httpx.MockTransport（本地 fixture，零真实网络）。
+其中最后一例从 cli.main(["run", "-a", "意识食谱", "--full", "--fetch-metrics"]) 进入，
+经 _run_pipeline_command → get_settings → connect → init_db → 真实 run_pipeline 全链路，
+仅将 cli 命名空间内的 run_pipeline 套一层「只补 client_factory」的转发（原因见该用例 docstring）。
+
+----- 原始输出 -----
+============================= test session starts =============================
+collecting ... collected 6 items
+
+tests/test_acceptance_e2e.py::test_acceptance_full_pipeline_ac4_ac5_ac6 PASSED [ 16%]
+tests/test_acceptance_e2e.py::test_acceptance_ac8_rerun_is_idempotent PASSED [ 33%]
+tests/test_acceptance_e2e.py::test_acceptance_ac7_disabled_switch_writes_nothing PASSED [ 50%]
+tests/test_acceptance_e2e.py::test_acceptance_ac7_missing_credentials_degrades PASSED [ 66%]
+tests/test_acceptance_e2e.py::test_acceptance_ac7_with_credentials_collects PASSED [ 83%]
+tests/test_acceptance_e2e.py::test_acceptance_ac7_cli_run_without_credentials_exits_zero PASSED [100%]
+
+============================== 6 passed in 4.18s ==============================
+
+----- 用例 ↔ 验收条件对照 -----
+
+| 用例 | 覆盖 AC | 覆盖内容 |
+|---|---|---|
+| `test_acceptance_full_pipeline_ac4_ac5_ac6` | AC-4 / AC-5 / AC-6 | 一次全量编排内同时核对：列表 11 条全落库与对账、10 篇四件套与图片 100% 本地化、四类富媒体分类落盘 |
+| `test_acceptance_ac8_rerun_is_idempotent` | AC-8 | 全量后立即重跑：零新增行、`updated=11`、`fetch.total=0`，DB 四表计数与归档文件清单逐项不变 |
+| `test_acceptance_ac7_disabled_switch_writes_nothing` | AC-7 | `fetch_metrics=False`：互动表零写入 |
+| `test_acceptance_ac7_missing_credentials_degrades` | AC-7 | 开关开启但无凭证：`skipped_no_credential`、`failed=0`、整体成功 |
+| `test_acceptance_ac7_with_credentials_collects` | AC-7 | 注入有效凭证：评论入表、五指标快照入表 |
+| `test_acceptance_ac7_cli_run_without_credentials_exits_zero` | AC-7 | 真实 CLI `run --full --fetch-metrics` 无凭证：退出码 0、stdout 含「成功 10 / 失败 0 / 缺凭证跳过 10 篇」、metrics 10 行全为 `skipped_no_credential`、comments 0 行 |
+
+----- 夹具与隔离说明 -----
+
+- 列表页/文章页/评论/指标/媒体均以 httpx.MockTransport 路由到内联 fixture 字符串常量，
+  不依赖 `tests/fixtures/` 外部文件，也不发起任何真实请求（含 mp.weixin.qq.com 与 mmbiz CDN）。
+- 账号「意识食谱」的 biz 用真实编码形态 `MzA4MjA%3D%3D`（`parse_qs` 解码后 `MzA4MjA==`），
+  以锁定 URL 解码链路；媒体体积用最小 PNG/MP3 字节常量，便于逐字节比对。
+- 数据库与归档目录均落 pytest `tmp_path`，用例互不污染；运行无外部副作用。
+- 最后一例经环境变量 `MP_ARCHIVER_DB_PATH` / `MP_ARCHIVER_ARCHIVE_ROOT` 指向 `tmp_path`，
+  并显式 `delenv` 互动凭证（`MP_ARCHIVER_WECHAT_APPMSG_TOKEN` / `MP_ARCHIVER_WECHAT_PASS_TICKET`），
+  确保走「开关开启但无凭证」的降级分支。
+
+----- 结果 -----
+6/6 通过（0 failed / 0 error）。逐条 AC 的断言明细、期望值与实测值见
+[acceptance-evidence.md](acceptance-evidence.md)。

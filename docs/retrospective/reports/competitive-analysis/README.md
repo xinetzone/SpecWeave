@@ -19,6 +19,7 @@ date: "2026-07-15"
 
 | 报告目录 | 简要说明 | 日期 |
 |---|---|---|
+| [retrospective-atomgit-selection-evaluation-20260928/README.md](retrospective-atomgit-selection-evaluation-20260928/) | AtomGit 选型评估报告（七概念 R→I→E→V，场景4 知识沉淀）：对标 GitHub / 极狐 GitLab / Gitee，40 条可追溯事实（F-001~F-040）+ 4 条四元组洞察 + 六维加权评分（AtomGit 71 / GitHub 80 / 极狐 86 / Gitee 80），萃取 `pat-code-hosting-four-filter-001`「代码托管四筛法」；指出 AtomGit 在 CI/CD 生态兼容（`.gitcode/workflows/` 而非 `.github/workflows/`）与私有化部署上的关键缺口 | 2026-09-28 |
 | [research-china-side-income-platforms-20260919/README.md](research-china-side-income-platforms-20260919/) | 中国「赚外快」平台全景调研（2026）：七大类渠道（众包微任务/数据标注、技能自由职业与威客、内容自媒体、电商无货源、出行配送、游戏陪玩、海外远程接单）的门槛、抽成、收益区间、结算与合规风险；含 11 家平台抽成对照表、劳务报酬累计预扣法与增值税口径、招转培与刷单返利骗局识别，44 条可追溯来源 | 2026-09-19 |
 | [zhihu-monetization-path-20260923/README.md](zhihu-monetization-path-20260923/) | 知乎个人变现路径（2026）：三个公开活动页（AI Works 项目广场/创作打卡挑战赛第五十三期/科学季 2026）深度学习 + 67 条 F 编号事实核验（P0 十六条中十条平台页单源，flagged）→ 三角色路径矩阵 + AI/技术创作者主路径 18 条原子化行动项；收益全部挂 F 或标待验证，含防画饼阅读纪律、AI 协作排除条款可操作自检与退出/切换条件 | 2026-09-23 |
 | [retrospective-tts-engine-selection-20260904/README.md](retrospective-tts-engine-selection-20260904/) | 本地/在线 TTS 引擎选型深度报告（七概念F→V→I）：sherpa-onnx+Matcha（中文本地首选，RTF 0.04）/ Edge TTS（逆向端点 2026-08 已大面积 403）/ Gemini TTS / KittenTTS / Piper，含 30 条可追溯事实、9 维决策矩阵与 5 分钟上手命令 | 2026-09-04 |

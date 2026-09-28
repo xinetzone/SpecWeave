@@ -22,7 +22,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 2. **Spec 三件套创建**：
    - [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md)：PRD 格式，14 个验收准则（AC-1 至 AC-14）
    - [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md)：12 个任务分解，涵盖内容提取、产品分析、UX 分析、洞察总结、报告生成
-   - [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md)：验证检查点清单
+   - [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/review.md)：验证检查点清单
 3. **文件路径**：`d:\AI\.trae\specs\retrospectives-insights\analyze-volcengine-searchinfinity\`
 
 ### 阶段三：网页内容提取（遇到问题与修复）
@@ -133,7 +133,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 |--------|------|-----------|------|
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | ~150 行 | PRD 格式，14 个验收准则 |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | ~275 行 | 12 个任务含完整字段 |
-| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | ~50 个检查点 | 全流程质量验证 |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/review.md) | ~50 个检查点 | 全流程质量验证 |
 | Task1 结构化数据 | [task1-output.json](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/task1-output.json) | JSON 格式 | 网页内容结构化提取结果 |
 | 学习笔记终稿 | [volcengine-searchinfinity-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-searchinfinity-analysis.md) | ~950 行 | 10 大章节 + 4 个 Mermaid 图表 |
 

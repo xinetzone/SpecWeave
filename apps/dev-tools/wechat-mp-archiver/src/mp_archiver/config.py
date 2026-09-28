@@ -40,7 +40,12 @@ class Settings(BaseSettings):
     # 派生产物目录（RAG JSONL / 分析报表；已在 .gitignore 忽略）
     export_root: Path = Path("exports")
 
-    # 限速与重试
+    # 限速与重试——以下默认值为 2026-09 核定的保守档（依据见 README「默认限速」与
+    # docs/knowledge/operations/wechat-mp-full-archive-solution.md 3.2 节）：
+    # ① 高频请求会触发验证码/临时封禁（平台已实证的失效模式），2-5 秒/篇的随机间隔
+    #    贴近人工浏览节奏且天然带抖动，不设更快默认值；
+    # ② 登录态经验约 4 天有效，每日一次增量即可追平、全量每周至多一次（deploy 第 12 节）；
+    # ③ 失败按指数退避并配合熔断阈值，异常时空转不猛打。确需下调自担风控风险。
     request_delay_min: float = Field(2.0, ge=0.0)
     request_delay_max: float = Field(5.0, ge=0.0)
     max_retries: int = Field(5, ge=0)

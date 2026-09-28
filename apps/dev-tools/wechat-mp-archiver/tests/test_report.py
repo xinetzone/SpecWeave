@@ -13,6 +13,7 @@
 import csv
 import io
 import sqlite3
+from datetime import datetime, timezone
 
 import pytest
 
@@ -302,7 +303,22 @@ def test_frame_has_one_row_per_article_with_media_flags(populated):
 
 # ---------- 原子性与 CLI ----------
 
-def test_regenerate_is_idempotent_without_tmp_leftover(populated, tmp_path):
+def test_regenerate_is_idempotent_without_tmp_leftover(populated, tmp_path, monkeypatch):
+    """重跑字节稳定：除「生成时间」外两次产物必须逐字节一致。
+
+    HTML 内的 ``generated_at`` 精确到秒，两次调用跨秒即天然不同，属设计内的
+    时间戳而非产物不稳定；此处把时钟钉在固定时刻，消除秒边界的偶发失败，
+    使本用例只验证原子覆盖写与零 .tmp 残留。
+    """
+    import mp_archiver.exporters.report as report_module
+
+    class _FrozenDatetime(report_module.datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return datetime(2024, 3, 1, 12, 0, 0, tzinfo=tz or timezone.utc)
+
+    monkeypatch.setattr(report_module, "datetime", _FrozenDatetime)
+
     out = tmp_path / "report"
     first = generate_report(populated, out)
     html1 = first.html_path.read_bytes()

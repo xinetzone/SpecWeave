@@ -43,7 +43,7 @@ date: "2026-07-06"
 ### 4.2 Spec文档
 - [spec.md](../../../../../.trae/specs/migration-archival/add-sunlogin-cli-wiki/spec.md) — PRD产品需求文档
 - [tasks.md](../../../../../.trae/specs/migration-archival/add-sunlogin-cli-wiki/tasks.md) — 任务分解（5个任务，全部完成[x]）
-- [checklist.md](../../../../../.trae/specs/migration-archival/add-sunlogin-cli-wiki/checklist.md) — 验证清单（47项，全部通过[x]）
+- [checklist.md](../../../../../.trae/specs/migration-archival/add-sunlogin-cli-wiki/review.md) — 验证清单（47项，全部通过[x]）
 
 ### 4.3 复盘文档
 - [README.md](./README.md) — 复盘报告入口

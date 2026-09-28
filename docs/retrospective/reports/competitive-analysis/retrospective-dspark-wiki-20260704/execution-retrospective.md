@@ -110,7 +110,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 |--------|------|------|
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/create-dspark-learning-wiki/spec.md) | 191 行，10 个 Requirements，10 个 AC |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/create-dspark-learning-wiki/tasks.md) | 9 个主任务，35 个子任务 |
-| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/create-dspark-learning-wiki/checklist.md) | 30+ 检查点 |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/create-dspark-learning-wiki/review.md) | 30+ 检查点 |
 
 ### 实施阶段产出物
 

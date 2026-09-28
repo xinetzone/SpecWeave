@@ -180,7 +180,7 @@ date: "2026-07-07"
 |------|------|------|
 | 产品需求文档 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/spec.md) | 13个FR、10个AC、10个开放问题 |
 | 任务分解清单 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/tasks.md) | 11个任务 |
-| 验收检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/checklist.md) | 3大维度50+检查点 |
+| 验收检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/review.md) | 3大维度50+检查点 |
 
 ### 2. 学习笔记（核心产出）
 

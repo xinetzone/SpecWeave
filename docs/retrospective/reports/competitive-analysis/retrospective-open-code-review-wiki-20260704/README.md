@@ -65,7 +65,7 @@ retro_type: "task"
 | 资源 | [10-resources.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) | 73 |
 | Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | - |
 | Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | - |
-| Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | - |
+| Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/review.md) | - |
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 本目录 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 本目录 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 本目录 |

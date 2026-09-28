@@ -97,7 +97,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | 更新索引条目 |
 | Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 任务目标与范围 |
 | Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 执行步骤拆解 |
-| Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 质量验证清单 |
+| Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/review.md) | 质量验证清单 |
 | **小计** | **5个文件** | **868行内容** | Commit: e343cd4f |
 
 ### 原子化阶段产出物（Commit 3bea7b68）

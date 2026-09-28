@@ -55,7 +55,7 @@ scenario: "B-single-day-medium"
 |------|------|-----------|
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/spec.md) | 173 行 |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/tasks.md) | 13 个任务 |
-| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/checklist.md) | 20 个检查点 |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/review.md) | 20 个检查点 |
 | 网页提取内容 | [web-content.md](../../../archives/spec-working-notes/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.md) | 提取的网页原始内容 |
 | 结构化学习笔记 | [viking-ai-search-rec-core-notes.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/viking-ai-search-rec-core-notes.md) | 340 行，12大章节 |
 

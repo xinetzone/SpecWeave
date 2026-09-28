@@ -57,7 +57,7 @@ second_validation_report: "../../../../../../.trae/specs/retrospectives-insights
 |------|------|------|
 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/spec.md) | 140 | PRD：目标/范围/验收标准 |
 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/tasks.md) | 166 | 10个原子任务分解与状态追踪 |
-| [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/checklist.md) | 60 | 验证检查清单（全部通过） |
+| [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/review.md) | 60 | 验证检查清单（全部通过） |
 | [article-content.md](../../../archives/spec-working-notes/retrospectives-insights/analyze-i-have-adhd-article/article-content.md) | 50 | 原文内容提取（含source溯源） |
 | [analysis-report.md](../../../archives/spec-working-notes/retrospectives-insights/analyze-i-have-adhd-article/analysis-report.md) | 946 | 完整分析报告（7章+执行摘要+Changelog，v1.2） |
 | [action-first-output-paradigm.md](../../../patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md) | 164 | 🆕 行动优先输出范式（L2模式入库） |
