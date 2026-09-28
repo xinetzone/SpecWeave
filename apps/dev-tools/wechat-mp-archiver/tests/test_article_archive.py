@@ -130,6 +130,9 @@ def test_fetch_full_pipeline_four_artifacts(env):
     report = fetch_articles(conn, client, "意识食谱", settings.archive_root)
     assert (report.total, report.downloaded, report.skipped,
             report.failed, report.image_failures) == (3, 1, 1, 1, 1)
+    # 风控文章是本批最后一篇：处理后触发熔断（无剩余 pending）
+    assert report.aborted is True
+    assert report.pending_left == 0
 
     base = settings.archive_root / "意识食谱" / "2024" / "2024-03-01_正常图文"
     # 四件套
@@ -168,7 +171,8 @@ def test_fetch_full_pipeline_four_artifacts(env):
     assert del_row["status"] == ArticleStatus.SKIPPED.value
     assert "content_deleted@" in del_row["fail_reason"]
     assert risk_row["status"] == ArticleStatus.FAILED.value
-    assert "PageUnavailableError" in risk_row["fail_reason"]
+    assert "risk_abort" in risk_row["fail_reason"]
+    assert "risk_control" in risk_row["fail_reason"]
 
     # 删除/风控文章不产生归档目录
     assert not (settings.archive_root / "意识食谱" / "2024").joinpath(

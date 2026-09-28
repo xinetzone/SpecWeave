@@ -222,12 +222,36 @@ def _cmd_fetch(args: argparse.Namespace) -> int:
             f"[warn] {report.image_failures} 张正文图片下载失败，"
             "已在各文章 metadata.json 登记例外并保留远程引用，可稍后重跑 fetch 补齐"
         )
+    _print_abort_banner(report)
     for item in report.items:
         if item.state == "failed":
             print(f"  [fail] {item.title}：{item.error}")
         elif item.state == "skipped":
             print(f"  [skip] {item.title}：{item.error}")
+    if report.aborted:
+        return 4  # 环境/风控异常：未处理文章保留 pending，需稍后续跑
     return 1 if report.failed else 0
+
+
+def _print_abort_banner(report) -> None:
+    """风控/传输熔断时输出醒目的现场保留与续跑提示（AC-10）。"""
+    if not report.aborted:
+        return
+    print(f"[abort] 批次提前中止：{report.abort_reason}")
+    print(
+        f"        已处理 {len(report.items)} 篇（成功 {report.downloaded}，"
+        f"跳过 {report.skipped}，失败 {report.failed}），"
+        f"剩余 {report.pending_left} 篇保持 pending 未发请求"
+    )
+    extra_pending = report.pending_in_account - report.pending_left
+    if extra_pending > 0:
+        print(
+            f"        注：受 --limit 限制，账号下另有 {extra_pending} 篇 pending "
+            "本批未选入（库内 pending 共 "
+            f"{report.pending_in_account} 篇）"
+        )
+    print("        现场已保留：稍后直接重跑续采 pending 篇，"
+          "加 --include-failed 可同时重试本篇；若反复触发风控请加大限速/更换网络后再试")
 
 
 def _print_fetch_summary(report, *, metrics_enabled: bool) -> None:
@@ -252,6 +276,7 @@ def _print_fetch_summary(report, *, metrics_enabled: bool) -> None:
             f"[warn] {report.image_failures} 张正文图片下载失败，"
             "已在各文章 metadata.json 登记例外并保留远程引用，可稍后重跑补齐"
         )
+    _print_abort_banner(report)
     for item in report.items:
         if item.state == "failed":
             print(f"  [fail] {item.title}：{item.error}")
@@ -324,6 +349,8 @@ def _run_pipeline_command(args: argparse.Namespace, *, full: bool) -> int:
         print(f"{tag} 元数据完整性（共 {completeness.total} 篇）：{rates}")
 
     _print_fetch_summary(report.fetch, metrics_enabled=settings.fetch_metrics)
+    if report.fetch.aborted:
+        return 4
     return 1 if report.has_fetch_failures else 0
 
 

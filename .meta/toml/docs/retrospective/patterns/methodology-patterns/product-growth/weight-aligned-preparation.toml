@@ -1,0 +1,13 @@
+id = "weight-aligned-preparation"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+source = "docs/knowledge/opensource-contest/os2026-shanghai/concepts/04-policy-and-insights.md"
+
+[bindings]
+rules = []
+references = ["hidden-prize-channel-identification.md", "deadline-breakpoint-first.md"]
+skills = []
