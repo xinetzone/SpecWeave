@@ -57,7 +57,7 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | ai-agents/ | ai-code-assistant | —（遵循根规范） | ❌ 无 | AI 代码助手 Web 应用 |
 | dev-tools/ | camera-power-controller | —（遵循根规范） | ❌ 无 | 摄像头电源控制工具 |
 | dev-tools/ | prompt_extraction | —（遵循根规范） | ❌ 无 | 提示词质量评估与提取工具 |
-| dev-tools/ | wechat-mp-archiver | —（遵循根规范） | ❌ 无 | 微信公众号全量内容归档工具（私有部署采集服务 + Python 薄管线，输出离线归档/RAG 语料/分析报表；scikit-build-core 纯 Python 包，`mp-archiver` CLI） |
+| dev-tools/ | wechat-mp-archiver | [dev-tools/wechat-mp-archiver/AGENTS.md](dev-tools/wechat-mp-archiver/AGENTS.md) | ✅ 有 | 微信公众号全量内容归档工具（私有部署采集服务 + Python 薄管线，输出离线归档/RAG 语料/分析报表；scikit-build-core 纯 Python 包，`mp-archiver` CLI）；应用自治：1 rule（archive-pipeline 归档管线硬约束）+ 6 docs |
 | samples/ | cow-demo | —（遵循根规范） | ❌ 无 | 零拷贝COW读写分离模式C++示例框架 |
 | samples/ | short-video-site | —（遵循根规范） | ❌ 无 | ReelVibe 短视频网站（AI全流程开发Demo） |
 | samples/ | designer-portfolio | —（遵循根规范） | ❌ 无 | 设计师作品集静态网站（纯HTML/CSS/JS + GSAP CDN，零构建Demo，首页+4个项目详情页） |
@@ -90,6 +90,10 @@ SpecWeave 根 AGENTS.md
             └─ caffe-ffi-jupyter/AGENTS.md（caffe-ffi-jupyter 应用入口 · 嵌套优先）
        └─ ai-agents/（AI 应用类分组）
             └─ zhujian-wudao/AGENTS.md（zhujian-wudao 应用入口 · 嵌套优先）
+       └─ dev-tools/（开发工具类分组）
+            └─ wechat-mp-archiver/AGENTS.md（wechat-mp-archiver 应用入口 · 嵌套优先 · 归档管线硬约束）
+                 ├─ .agents/rules/archive-pipeline.md（唯一规则：限速/回环绑定/凭证/幂等续跑/熔断矩阵/结构感知风控/退出码/官方接口/派生产物/合规）
+                 └─ docs/（6 篇原子文档 + 索引：00-overview / 01-quickstart / 02-commands / 03-operations / 04-storage-and-layout / 05-compliance）
 ```
 
 进入任意子目录后，优先读取**离当前工作目录最近**的 AGENTS.md。若应用自身的 AGENTS.md 规则与本文件冲突，以应用的 AGENTS.md 为准（子层覆盖父层）。无自身 AGENTS.md 的应用直接遵循根 .agents/ 规范。
@@ -107,7 +111,7 @@ flowchart TD
     Layer2 --> SubApp{"步骤2：按应用路由表<br/>确定目标应用"}
     SubApp -.->|"❶ 无匹配项"| E1["确认是否为新增应用<br/>走新增应用流程"]
     E1 -.-> Layer2
-    SubApp -->|"有自身 AGENTS.md<br/>（client/offline-delivery/devcontainer-base/devcontainer-win11/docker-ssh-dind/<br/>jupyter-ssh-base/pytorch-base/caffe-ffi-jupyter/zhujian-wudao）"| Layer3["第三层：读取应用自身 AGENTS.md<br/>（嵌套优先）"]
+    SubApp -->|"有自身 AGENTS.md<br/>（client/offline-delivery/devcontainer-base/devcontainer-win11/docker-ssh-dind/<br/>jupyter-ssh-base/pytorch-base/caffe-ffi-jupyter/zhujian-wudao/wechat-mp-archiver）"| Layer3["第三层：读取应用自身 AGENTS.md<br/>（嵌套优先）"]
     SubApp -->|"无自身 AGENTS.md<br/>（ai-code-assistant/camera-power-controller/<br/>prompt_extraction/shared/tests/xmnn-runtime）"| Direct["直接遵循根 .agents/ 规范"]
     Layer3 -.->|"❷ 读取失败"| E2["检查文件是否存在<br/>回退到根规范执行"]
     E2 -.-> Direct
@@ -213,6 +217,16 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | 可迁移方法 | [ai-agents/zhujian-wudao/.agents/docs/knowledge-transfer/2026-06-17-transferable-methods.md](ai-agents/zhujian-wudao/.agents/docs/knowledge-transfer/2026-06-17-transferable-methods.md) | 可迁移方法论 |
 | 可迁移模式 | [ai-agents/zhujian-wudao/.agents/docs/knowledge-transfer/2026-06-17-transferable-patterns.md](ai-agents/zhujian-wudao/.agents/docs/knowledge-transfer/2026-06-17-transferable-patterns.md) | 可复用设计模式 |
 
+### wechat-mp-archiver 应用（dev-tools/分组）
+
+| 资产 | 路径 | 说明 |
+|------|------|------|
+| 应用入口 | [dev-tools/wechat-mp-archiver/AGENTS.md](dev-tools/wechat-mp-archiver/AGENTS.md) | 应用级路由入口（启动协议 + 上下文路由表 + 10 项 P0 约束速览） |
+| 入门指南 | [dev-tools/wechat-mp-archiver/.agents/README.md](dev-tools/wechat-mp-archiver/.agents/README.md) | .agents/ 资产索引 + 核心资产真源 + 父级回退链 |
+| 归档管线规则 | [dev-tools/wechat-mp-archiver/.agents/rules/archive-pipeline.md](dev-tools/wechat-mp-archiver/.agents/rules/archive-pipeline.md) | 唯一规则主题：限速不可下调 / 回环绑定 / 凭证治理 / 幂等续跑 / 熔断矩阵 / 结构感知风控 / 退出码契约 / 官方接口边界 / 派生产物 / 合规落地（§1-§10） |
+| 变更日志 | [dev-tools/wechat-mp-archiver/.agents/CHANGELOG.md](dev-tools/wechat-mp-archiver/.agents/CHANGELOG.md) | wechat-mp-archiver 应用变更记录 |
+| 人类可读文档 | [dev-tools/wechat-mp-archiver/docs/README.md](dev-tools/wechat-mp-archiver/docs/README.md) | 文档索引（定位/快速开始/命令/运维/存储/合规 6 篇） |
+
 ## 边界声明
 
 | 资产 | 归属 | 可直接修改 | 说明 |
@@ -259,7 +273,10 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/ai-agents/eve-minimal-agent/ | 应用自治（遵循根规范） | ✅ 是 | Vercel Eve 最小可运行 Agent 示例 |
 | apps/dev-tools/camera-power-controller/ | 应用自治（遵循根规范） | ✅ 是 | 摄像头电源控制工具 |
 | apps/dev-tools/prompt_extraction/ | 应用自治（遵循根规范） | ✅ 是 | 提示词提取工具 |
-| apps/dev-tools/wechat-mp-archiver/ | 应用自治（遵循根规范） | ✅ 是 | 微信公众号全量内容归档工具（采集适配器分层 + SQLite 五表状态机 + 保守限速；规格见 `.trae/specs/wechat-mp-content-archiver/`，方案见 `docs/knowledge/operations/wechat-mp-full-archive-solution.md`） |
+| apps/dev-tools/wechat-mp-archiver/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | 微信公众号全量内容归档工具（采集适配器分层 + SQLite 五表状态机 + 保守限速；规格见 `.trae/specs/wechat-mp-content-archiver/`，方案见 `docs/knowledge/operations/wechat-mp-full-archive-solution.md`） |
+| apps/dev-tools/wechat-mp-archiver/AGENTS.md | 应用自治 | ✅ 是 | wechat-mp-archiver 入口 |
+| apps/dev-tools/wechat-mp-archiver/.agents/ | 应用自治 | ✅ 是 | wechat-mp-archiver 规范体系（1个rules文件：archive-pipeline） |
+| apps/dev-tools/wechat-mp-archiver/docs/ | 应用自治 | ✅ 是 | wechat-mp-archiver 人类可读文档（6个原子化文档+索引） |
 | apps/samples/cow-demo/ | 应用自治（遵循根规范） | ✅ 是 | 零拷贝COW读写分离模式C++示例框架 |
 | apps/samples/short-video-site/ | 应用自治（遵循根规范） | ✅ 是 | ReelVibe 短视频网站（AI全流程开发Demo） |
 | apps/samples/designer-portfolio/ | 应用自治（遵循根规范） | ✅ 是 | 设计师作品集静态网站（纯HTML/CSS/JS + GSAP CDN，零构建Demo，首页+4个项目详情页） |
