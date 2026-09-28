@@ -52,6 +52,9 @@ class FakeRunner:
         nvidia_smi_ok: bool = True,
         nvidia_smi_out: str = "",
         image_exists_tags: set[str] | None = None,
+        # 按 tag 精确控制 ``inspect -f {{.Id}}`` 返回的镜像 ID；
+        # None = 不注入（返回空 stdout，模拟 ID 读取失败）。
+        image_ids: dict[str, str] | None = None,
         # _own_host_container_running 的 inspect 假输出
         # （``{{.State.Running}} {{.HostConfig.NetworkMode}}`` 渲染值）。
         # 空串 = 双段判据不成立 → helper 判 False，既有 busy 用例 fail-fast 语义不变。
@@ -86,6 +89,7 @@ class FakeRunner:
         self.nvidia_smi_out = nvidia_smi_out
         # 按 tag 精确控制镜像存在性；None = 沿用 image_exists 布尔（历史用例）。
         self.image_exists_tags = image_exists_tags
+        self.image_ids = image_ids
         self.net_mode = net_mode
         # _runtime_probe_session_bus 的显式探测结果；空串时回退为 paths 集合中
         # 形如 /run/user/<uid>/bus 的首个命中（模拟 daemon 侧按 id -u 自动探测）。
@@ -155,6 +159,12 @@ class FakeRunner:
             # C24：凭证回读（podman logs <cid> 2>&1 | head -n N）
             return SimpleNamespace(ok=True, stdout=self.container_logs, return_code=0)
         if "inspect" in cmd:
+            if ".Id" in cmd:
+                tag = cmd.split()[-1]
+                img_id = (self.image_ids or {}).get(tag, "")
+                return SimpleNamespace(
+                    ok=bool(img_id), stdout=img_id, return_code=0 if img_id else 1
+                )
             if "State.Running" in cmd:
                 return SimpleNamespace(ok=True, stdout=self.net_mode, return_code=0)
             if "State.Pid" in cmd:
@@ -2041,6 +2051,46 @@ def test_ensure_passthrough_tag_copied_from_base(harness, capsys):
     assert "打 tag" in capsys.readouterr().out
 
 
+def test_ensure_passthrough_tag_stale_retagged_from_base(harness, capsys):
+    """两 tag 均在但镜像 ID 不一致（重建后透传 tag 陈旧）：重新打 tag 收敛。"""
+    tags = {"localhost/native-dev:latest", "localhost/native-dev:passthrough"}
+    harness.runner.image_exists_tags = tags
+    harness.runner.image_ids = {
+        "localhost/native-dev:latest": "sha256:new",
+        "localhost/native-dev:passthrough": "sha256:old",
+    }
+    tag = oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=True)
+    assert tag == "localhost/native-dev:passthrough"
+    assert "podman tag localhost/native-dev:latest localhost/native-dev:passthrough" in (
+        harness.runner.commands
+    )
+    out = capsys.readouterr().out
+    assert "已过期" in out
+
+
+def test_ensure_passthrough_tag_in_sync_no_action(harness):
+    """两 tag 镜像 ID 一致：零操作（幂等）。"""
+    tags = {"localhost/native-dev:latest", "localhost/native-dev:passthrough"}
+    harness.runner.image_exists_tags = tags
+    harness.runner.image_ids = {
+        "localhost/native-dev:latest": "sha256:same",
+        "localhost/native-dev:passthrough": "sha256:same",
+    }
+    tag = oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=True)
+    assert tag == "localhost/native-dev:passthrough"
+    assert not any(c.startswith("podman tag") for c in harness.runner.commands)
+
+
+def test_ensure_passthrough_tag_id_unreadable_keeps_existing(harness, capsys):
+    """ID 读取失败：警告 + 沿用现有透传 tag，不阻断（保守降级）。"""
+    tags = {"localhost/native-dev:latest", "localhost/native-dev:passthrough"}
+    harness.runner.image_exists_tags = tags
+    tag = oc.ensure_passthrough_tag(None, _NATIVE, {}, offline=True)
+    assert tag == "localhost/native-dev:passthrough"
+    assert not any(c.startswith("podman tag") for c in harness.runner.commands)
+    assert "无法读取透传/基础镜像 ID" in capsys.readouterr().out
+
+
 def test_ensure_passthrough_tag_both_absent_offline_guidance(harness, capsys):
     harness.runner.image_exists_tags = set()
     with pytest.raises(Exit):
@@ -2225,7 +2275,7 @@ def test_resolve_announces_socket_self_heal(harness, monkeypatch, capsys):
     )
     oc.resolve_host_podman_socket(None, _NATIVE, {})
     out = capsys.readouterr().out
-    assert "[B-scheme] 已自动启动用户级 podman.socket" in out
+    assert "[B-scheme] 已自动启动宿主 rootless podman socket 服务" in out
 
 
 def test_resolve_silent_when_socket_already_ready(harness, capsys):

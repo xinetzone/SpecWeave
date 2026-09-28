@@ -137,3 +137,8 @@ apps/devcontainer-base/benchmark-results-ci/
 # CodeArts
 .arts/
 .codeartsdoer/
+
+# WorkBuddy 本地配置（skills 为指向 .agents/skills 的本地目录联接，不可提交）
+.workbuddy/skills
+.workbuddy/cache/
+.workbuddy/logs/

@@ -8,7 +8,8 @@ source: "README.md#运行时组合叠加层opt-in正交维度"
 五维能力中 **torch 是构建期维度**（改镜像内容，须 `native.build`），
 **GPU / 透传 / GUI / USB / 离线是运行期维度**（只改 compose 文件集，零重建）。
 除 torch 外五个运行期维度**全部正交**，可任意组合；组合只叠加覆盖文件，
-镜像内容不变（透传形态仅以 `podman tag` 复制同镜像 ID，零额外空间）。
+镜像内容不变（透传形态以 `podman tag` 复制同镜像 ID，零额外空间；
+镜像重建后透传 tag 由内核比对 ID 自动重新收敛，见组合 B）。
 
 ## 维度速查
 
@@ -92,7 +93,9 @@ invoke native.up --passthrough --usb  # 主层 + USB
 - **端口变化**：host 形态无端口映射——Jupyter **固定 8888**（`ports: !reset []`），
   SSH 经 `HOST_NET_SSHD_PORT`（默认 2223）。
 - **镜像切换**：透传栈用 `NATIVE_PASSTHROUGH_IMAGE_TAG`
-  （`:passthrough` tag），内核以 `podman tag` 确保就位（同镜像 ID 零空间）。
+  （`:passthrough` tag）。内核在每次 up/smoke 时比对透传 tag 与基础 tag 的
+  **镜像 ID**：缺失则 `podman tag` 派生，ID 不一致（镜像重建后透传 tag 陈旧）
+  则重新打 tag 收敛——保证两 tag 永远指向同一镜像（同 ID 零空间）。
 - **门禁**（invoke 已前置为中文 fail-fast）：`test -S` D-Bus socket；
   `ss -lnt` 查 8888/2223 占用；资源缺失即 fail-fast，不会得到启动后诡异的容器。
 - **与 GPU 组合**：`--passthrough --gpu` 正交可用；WSL2 下 GPU 仍自动走
@@ -149,7 +152,15 @@ podman-compose exec native python3 -c "import socket; s=socket.socket(socket.AF_
 podman-compose exec native python3 -c "import socket; s=socket(socket.AF_UNIX); s.connect(\"/tmp/.X11-unix/X0\"); print(\"x11 OK\")"
 ```
 
-真正弹窗体需镜像内有 GUI 客户端（如 `apt install x11-apps` 后 `xeyes`）；
+真正弹窗体需镜像内有 GUI 客户端——**native-dev 已内置 tkinter**（base env
+Tk 8.6 运行时 + X11 客户端库，Layer 4.5 从基底深度清理中恢复），可直接弹窗：
+
+```bash
+podman-compose exec native /opt/conda/bin/python -c \
+  "import tkinter as tk; r=tk.Tk(); r.title('native-dev GUI'); tk.Label(r, text='GUI OK').pack(); r.mainloop()"
+```
+
+其余 GUI 客户端（如 `xeyes`）仍可自行 `apt install x11-apps`；
 JupyterLab 交互绘图（matplotlib 等）不受影响、无需 `--gui`。
 
 - **安全边界**：两个 socket 都允许容器进程接入宿主桌面会话（截屏、输入注入面），
@@ -174,9 +185,10 @@ host 网络 + D-Bus + GPU（WSL2 三 bind）+ GUI（WSLg 双通道）+ USB 一�
 |---|---|
 | `--passthrough` 后浏览器连 8890 无响应 | host 形态 Jupyter **固定 8888**，8890 不发布 |
 | `--passthrough` 起栈报端口占用（exit 125） | `ss -lnt` 查 8888/2223；invoke 门禁已前置，裸 compose 需自查 |
+| 已重建镜像（修复已入 `:latest`）但透传栈行为仍旧（如仍报 `libtk8.6.so` 缺失） | 透传 tag 是独立指针，旧版内核「tag 存在即沿用」导致其停留在重建前镜像。现版 `ensure_passthrough_tag` 每次比对两 tag 镜像 ID、不一致自动重打并由 compose recreate 容器；手动收敛：`podman tag localhost/native-dev:latest localhost/native-dev:passthrough && invoke native.down && invoke native.up --passthrough ...` |
 | 重复 `up --passthrough` 报「端口已被占用：8888, 2223」 | **不是冲突**——占用者就是本栈正在运行的 host 形态容器。invoke 门禁（`resolve_passthrough`）识别此幂等场景后放行，交 podman-compose 处理（文件集无变化=no-op，组合旗标变化=自动 recreate）；强制重建用 `invoke native.down && invoke native.up --passthrough ...`。若仍被拦说明占用者是其他进程，按上一行处理 |
 | D-Bus 挂载报源不存在 / 门禁报「未探测到会话总线 socket」 | invoke 已按 `$DBUS_SESSION_BUS_ADDRESS`(unix:path=) → `$XDG_RUNTIME_DIR/bus` → `/run/user/$(id -u)/bus` 自动探测（**UID 随宿主而变，未必是 1000**）；仍失败时把宿主会话总线实际路径写 `DBUS_SESSION_BUS_PATH`，或改用系统总线 `/run/dbus/system_bus_socket`（socket 类源**绝不自动创建**，`create_host_path: false`） |
-| 容器内 `PodmanClient.from_env()` 报 `FileNotFoundError`（uds.py connect）/ 日志见 `newuidmap: write to uid_map failed` | C-I5：三栈默认直通宿主 rootless podman socket（B-scheme，与 `--passthrough` 无关）。invoke up 已按 `PODMAN_RUNTIME_UID` → `$XDG_RUNTIME_DIR` → `id -u` 自动定位并尝试免提权 `systemctl --user start podman.socket` 自愈。仍失败按三步：① `systemctl --user status podman.socket`（未运行则 `systemctl --user start podman.socket`）；② 路径核对——物理机 UID 随宿主而变（本机 1006，缺省值 1000 只对应 WSL2 惯例），在 `.env` 写 `HOST_PODMAN_SOCK=/run/user/$(id -u)/podman/podman.sock`；③ 重启后失效：`sudo loginctl enable-linger "$USER"`。裸 podman-compose 路径错误会在挂载期硬失败（`create_host_path: false`，有意保护，勿改成自动建路径）。容器内实测：`python3 -c "from podman import PodmanClient; print(len(PodmanClient.from_env().containers.list(all=True)))"`；启动日志应见 `[B-scheme] Host podman socket linked` 与 `[OK] devuser can read/write host podman socket`，且无 DinP 回退行 |
+| 容器内 `PodmanClient.from_env()` 报 `FileNotFoundError`（uds.py connect）/ 日志见 `newuidmap: write to uid_map failed` | C-I5：三栈默认直通宿主 rootless podman socket（B-scheme，与 `--passthrough` 无关）。invoke up 已按 `PODMAN_RUNTIME_UID` → `$XDG_RUNTIME_DIR` → `id -u` 自动定位并**三级自愈**：① WSL 裸启动发行版先拉起嵌套 systemd 用户会话（`ensure_wsl_user_session`，bus + podman.socket 一并就绪，2026-09-27 实证）；② 免提权 `systemctl --user start podman.socket`；③ 兜底 `podman system service` 常驻拉起（socket 补 0660 对齐单元 SocketMode）。仍失败按三步：① `systemctl --user status podman.socket`（未运行则 `systemctl --user start podman.socket`）；② 路径核对——物理机 UID 随宿主而变（本机 1006，缺省值 1000 只对应 WSL2 惯例），在 `.env` 写 `HOST_PODMAN_SOCK=/run/user/$(id -u)/podman/podman.sock`；③ 重启后失效：`sudo loginctl enable-linger "$USER"`。裸 podman-compose 路径错误会在挂载期硬失败（`create_host_path: false`，有意保护，勿改成自动建路径）。容器内实测：`python3 -c "from podman import PodmanClient; print(len(PodmanClient.from_env().containers.list(all=True)))"`；启动日志应见 `[B-scheme] Host podman socket linked` 与 `[OK] devuser can read/write host podman socket`，且无 DinP 回退行 |
 | `--usb` 报 `/dev/bus/usb` 不存在 | WSL2 先 usbipd-win attach（见组合 C）；物理机 `lsusb` 核对 |
 | `--gui` 报「未探测到 Wayland/X11 任一通道」 | WSL2：`wsl -d podman-machine-default -- ls /mnt/wslg/runtime-dir/wayland-0 /mnt/wslg/.X11-unix/X0` 核对；两者皆无说明 WSLg 未运行（Windows 10 不支持；Win11 被禁用时在 `.wslconfig` 开 GUI 支持后 `wsl --shutdown` 重进）。物理 Linux：`HOST_XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR` |
 | 容器内 GUI 客户端报 `cannot open display` / `Connection refused` | socket 已挂但宿主 X server 拒绝连接：物理 Linux 需宿主 `xhost local:root`（WSLg 免认证、不应出现）；`printenv DISPLAY` 与 socket 编号核对（`X1` 对应 `:1`，用 `GUI_DISPLAY=:1`） |

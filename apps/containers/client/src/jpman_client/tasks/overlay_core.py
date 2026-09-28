@@ -59,6 +59,7 @@ from .utils import (
     detect_runtime,
     ensure_workspace_checkpoint_writable,
     ensure_wsl_rootless_runtime,
+    ensure_wsl_user_session,
     find_latest_image_tar,
     run_cmd,
     run_in_wsl_bridge,
@@ -274,11 +275,15 @@ def gate_platform(spec: StackSpec) -> None:
 
     桥接成功时 run_in_wsl_bridge 已在发行版内完整执行任务，本进程 Exit(0)
     收尾（WSL2 内 Python 报 Linux 直接放行，不进入 Windows 分支）。
-    Linux 放行路径先做 WSL rootless 运行时目录自愈（VM 回收后
-    /run/user/<uid> 缺失致 podman exit 125；非 WSL 平台零副作用）。
+    Linux 放行路径先做两级 WSL 幂等自愈（VM 回收后裸启动发行版时）：
+      ① `ensure_wsl_rootless_runtime`：/run/user/<uid> 目录（podman exit 125）；
+      ② `ensure_wsl_user_session`：嵌套 systemd 用户会话（bus + podman.socket，
+         喂给其后的 B-scheme 门禁与 --passthrough D-Bus 门禁）。
+    非 WSL 平台零副作用。
     """
     if platform.system() != "Windows":
         ensure_wsl_rootless_runtime()
+        ensure_wsl_user_session()
         return
     distro = run_in_wsl_bridge(extra_env_keys=spec.bridge_env_keys)
     if distro is not None:
@@ -1679,7 +1684,7 @@ def resolve_host_podman_socket(c: Context, spec: StackSpec, env: dict) -> str:
     os.environ["HOST_PODMAN_SOCK"] = token
     env["HOST_PODMAN_SOCK"] = token
     if started:
-        print(f"[{ns}][B-scheme] 已自动启动用户级 podman.socket: {token}")
+        print(f"[{ns}][B-scheme] 已自动启动宿主 rootless podman socket 服务: {token}")
     return token
 
 
@@ -1889,15 +1894,33 @@ def _local_image_exists(c: Context, img_tag: str) -> bool:
     return r is not None and getattr(r, "ok", False)
 
 
+def _local_image_id(c: Context, img_tag: str) -> str | None:
+    """读取本地镜像 ID（``podman inspect -f {{.Id}}``）；不存在/失败返回 None。"""
+    r = run_cmd(
+        c,
+        f"{detect_runtime()} inspect -f '{{{{.Id}}}}' {img_tag}",
+        hide=True, warn=True, echo=False,
+    )
+    if r is not None and getattr(r, "ok", False):
+        return (getattr(r, "stdout", "") or "").strip() or None
+    return None
+
+
 def ensure_passthrough_tag(
     c: Context, spec: StackSpec, env: dict, *, offline: bool
 ) -> str:
     """确保透传栈镜像 tag 就位，返回该 tag。
 
     host 网络/D-Bus/USB 全是运行期维度（与「GPU 是运行期维度」同理），
-    透传栈与默认栈镜像内容零差异——专用 tag 缺失时直接从基础 tag
-    ``podman tag``（秒级、同镜像 ID、零额外空间）。
-    两个 tag 均不在本地（仅可能出现在 ``--skip-build``/离线路径）：fail-fast。
+    透传栈与默认栈镜像内容零差异——两 tag 的契约是**永远指向同一镜像 ID**：
+
+    - 专用 tag 缺失：从基础 tag ``podman tag``（秒级、零额外空间）；
+    - 两 tag 均在但 ID 不一致（镜像重建后透传 tag 陈旧）：重新打 tag 收敛；
+      否则重建引入的修复对透传栈永远不生效。
+    - 基础 tag 不在本地（``--skip-build``/离线仅透传 tag 存在）：沿用透传 tag。
+
+    ID 读取失败：警告并沿用（保守不阻断）。
+    两个 tag 均不在本地：fail-fast。
     """
     ns = spec.namespace
     pt_tag = str(
@@ -1905,10 +1928,24 @@ def ensure_passthrough_tag(
         or env.get(spec.passthrough_image_env)
         or spec.passthrough_tag_default
     )
-    if _local_image_exists(c, pt_tag):
-        return pt_tag
     base_tag = image_tag(spec, env)
-    if base_tag != pt_tag and _local_image_exists(c, base_tag):
+    pt_exists = _local_image_exists(c, pt_tag)
+    base_exists = base_tag != pt_tag and _local_image_exists(c, base_tag)
+    if pt_exists and base_exists:
+        pt_id = _local_image_id(c, pt_tag)
+        base_id = _local_image_id(c, base_tag)
+        if pt_id and base_id:
+            if pt_id != base_id:
+                print(f"[{ns}] ℹ 透传镜像 {pt_tag} 已过期（与 {base_tag} 镜像 ID "
+                      f"不一致），从 {base_tag} 重新打 tag（镜像内容相同，零额外空间）…")
+                run_cmd(c, f"{detect_runtime()} tag {base_tag} {pt_tag}", hide=True)
+            return pt_tag
+        print(f"[{ns}] ⚠ 无法读取透传/基础镜像 ID，沿用现有 {pt_tag}；如内容过旧"
+              f"可手动执行: {detect_runtime()} tag {base_tag} {pt_tag}")
+        return pt_tag
+    if pt_exists:
+        return pt_tag
+    if base_exists:
         print(f"[{ns}] ℹ 透传镜像 {pt_tag} 缺失，从 {base_tag} 打 tag"
               "（镜像内容相同，零额外构建）…")
         run_cmd(c, f"{detect_runtime()} tag {base_tag} {pt_tag}", hide=True)

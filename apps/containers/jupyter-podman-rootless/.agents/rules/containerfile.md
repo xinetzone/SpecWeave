@@ -151,7 +151,13 @@ RUN sed -i 's/^# *zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && \
 - 使用`--no-install-recommends`减少不必要的依赖
 - conda/pip安装后清理缓存
 - 二进制文件strip（Podman/conda等）
-- 移除tk/tcl等GUI依赖
+- 移除tk/tcl等GUI依赖（**已知遗留**：手工 `rm` 只删文件、不删 `conda-meta`
+  记录，留下「记录说已装、文件已不在」的腐坏态——2026-09-25 由 native-dev
+  Layer 4.5 恢复 tkinter 时实证：常规 `mamba install tk` 被判已装而空转。
+  消费者需恢复 tk 时：先 `rm /opt/conda/conda-meta/tk-*.json`，再装**精确
+  版本** `tk=8.6.13`（latest 为 tk 9.0，soname 不匹配），参考实现
+  [install-gui-libs.sh](../../../client/overlays/native-dev/scripts/install-gui-libs.sh)。
+  彻底治理（清理时同步删记录或改 ARG 开关）留待基底下次重建窗口）
 
 ## 验证清单
 

@@ -265,3 +265,100 @@ def test_ensure_runtime_xdg_fallback_when_empty(linux_wsl, monkeypatch):
     monkeypatch.setattr(os, "access", lambda p, m: True)
     utils.ensure_wsl_rootless_runtime()
     assert os.environ["XDG_RUNTIME_DIR"] == "/mnt/wslg/runtime-dir"
+
+
+# ---------------------------------------------------------------------------
+# ensure_wsl_user_session（嵌套 systemd 会话自愈：bus + podman.socket）
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture
+def session_env(monkeypatch):
+    """WSL2 环境 + 可编程资源存在性/子进程捕获（会话自愈测试用）。
+
+    ``state.bus/state.sock`` 控制两项会话资源是否存在；``fake_run`` 捕获启动
+    命令并在成功时把 bus 置为出现（模拟 setsid+unshare+systemd 拉起效果）。
+    """
+    monkeypatch.setattr(utils.platform, "system", lambda: "Linux")
+    monkeypatch.setattr(os, "getuid", lambda: 1000, raising=False)
+    orig_read_text = utils.Path.read_text
+
+    def fake_read_text(self, *a, **k):
+        if self.as_posix() == "/proc/version":
+            return "Linux version 6.6 (microsoft-standard-WSL2)"
+        return orig_read_text(self, *a, **k)
+
+    monkeypatch.setattr(utils.Path, "read_text", fake_read_text)
+    monkeypatch.setattr(utils.time, "sleep", lambda _s: None)
+    state = {"bus": False, "sock": False}
+    orig_exists = utils.Path.exists
+
+    def fake_exists(self):
+        posix = self.as_posix()
+        if posix == "/run/user/1000/bus":
+            return state["bus"]
+        if posix == "/run/user/1000/podman/podman.sock":
+            return state["sock"]
+        return orig_exists(self)
+
+    monkeypatch.setattr(utils.Path, "exists", fake_exists)
+    calls = []
+
+    def fake_run(cmd, **kwargs):
+        calls.append(cmd)
+        state["bus"] = True  # 拉起成功后资源出现
+        return SimpleNamespace(returncode=0, stderr="")
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    return SimpleNamespace(state=state, calls=calls)
+
+
+def test_ensure_session_non_wsl_noop(monkeypatch):
+    """裸 Linux（无 microsoft 标记）→ 零副作用，不发子进程。"""
+    monkeypatch.setattr(utils.platform, "system", lambda: "Linux")
+    orig_read_text = utils.Path.read_text
+
+    def fake_read_text(self, *a, **k):
+        if self.as_posix() == "/proc/version":
+            return "Linux version 6.6.0-generic (gcc@x86_64)"
+        return orig_read_text(self, *a, **k)
+
+    monkeypatch.setattr(utils.Path, "read_text", fake_read_text)
+    called = []
+    monkeypatch.setattr(subprocess, "run", lambda *a, **k: called.append(a))
+    utils.ensure_wsl_user_session()
+    assert called == []
+
+
+def test_ensure_session_non_linux_noop(monkeypatch):
+    monkeypatch.setattr(utils.platform, "system", lambda: "Windows")
+    utils.ensure_wsl_user_session()  # 不抛、不触达 /proc
+
+
+def test_ensure_session_present_idempotent(session_env):
+    """会话资源已在（bus 存在）→ 不重复拉起。"""
+    session_env.state["bus"] = True
+    utils.ensure_wsl_user_session()
+    assert session_env.calls == []
+
+
+def test_ensure_session_starts_and_waits(session_env, capsys):
+    """两项资源均缺 → 复刻 machine 启动命令拉起会话并等待 bus 出现。"""
+    utils.ensure_wsl_user_session()
+    assert len(session_env.calls) == 1
+    cmd = session_env.calls[0]
+    assert "sudo -n" in cmd and "unshare" in cmd and "systemd" in cmd
+    assert "--propagation shared" in cmd
+    assert "已自动拉起 WSL 用户会话" in capsys.readouterr().out
+
+
+def test_ensure_session_sudo_failure_warns_not_raises(session_env, capsys, monkeypatch):
+    """免密 sudo 不可用 → 仅告警不阻断（后续门禁给 C-I5/D-Bus 指引）。"""
+
+    def fail(cmd, **kwargs):
+        return SimpleNamespace(returncode=1, stderr="sudo: a password is required")
+
+    monkeypatch.setattr(subprocess, "run", fail)
+    utils.ensure_wsl_user_session()  # 不抛
+    out = capsys.readouterr().out
+    assert "自动拉起失败" in out and "C-I5" in out

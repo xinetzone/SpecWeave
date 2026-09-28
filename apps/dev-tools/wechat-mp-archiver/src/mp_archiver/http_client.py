@@ -8,13 +8,17 @@
 时钟、睡眠函数与随机源均可注入，便于确定性测试。
 """
 
+import logging
 import random
 import time
 from collections.abc import Callable
+from urllib.parse import urlsplit
 
 import httpx
 
 from .config import Settings
+
+logger = logging.getLogger(__name__)
 
 RETRY_STATUSES = frozenset({403, 429, 500, 502, 503, 504})
 
@@ -63,11 +67,24 @@ class RateLimitedClient:
                 self._sleep(wait)
         self._last_request_at = self._clock()
 
-    def _backoff(self, attempt: int) -> None:
+    def _backoff(self, attempt: int, *, method: str, url: str, reason: str) -> None:
         delay = min(
             self._settings.backoff_cap,
             self._settings.backoff_base * (2**attempt),
         ) + self._rng(0.0, 1.0)
+        # 退避必须在日志中可见（TR-12.1）：只记录主机名，不记录 query，
+        # 避免把完整文章链接（sn 等参数）写入演练/运行日志。
+        # 畸形 URL 无 netloc 时不回退打印原文（可能含 query/userinfo）。
+        host = urlsplit(url).netloc or "<unknown-host>"
+        logger.warning(
+            "HTTP 重试退避：%s %s 第 %d/%d 次请求失败（%s），%.2f 秒后重试",
+            method.upper(),
+            host,
+            attempt + 1,
+            self._settings.max_retries + 1,
+            reason,
+            delay,
+        )
         self._sleep(delay)
 
     # ---- 请求 -------------------------------------------------------
@@ -83,14 +100,20 @@ class RateLimitedClient:
                 last_exc = exc
                 if attempt >= self._settings.max_retries:
                     raise
-                self._backoff(attempt)
+                self._backoff(
+                    attempt, method=method, url=url,
+                    reason=exc.__class__.__name__,
+                )
                 continue
 
             if (
                 response.status_code in RETRY_STATUSES
                 and attempt < self._settings.max_retries
             ):
-                self._backoff(attempt)
+                self._backoff(
+                    attempt, method=method, url=url,
+                    reason=f"HTTP {response.status_code}",
+                )
                 continue
             return response
 
