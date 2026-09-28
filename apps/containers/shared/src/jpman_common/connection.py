@@ -17,6 +17,7 @@ import platform
 import re
 import shutil
 import subprocess
+import time
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Optional
@@ -59,6 +60,13 @@ _VALID_STRATEGIES = {"auto", "legacy", "wsl", "machine"}
 # 把宿主 `/run/user/<uid>/podman/podman.sock` bind-mount 进容器同一路径，
 # 并设置 `HOST_PODMAN_SOCK`，让容器内 entrypoint 的 B-scheme 分支建立符号链接、
 # 设置 `CONTAINER_HOST`，从而令容器内 podman SDK/CLI 复用宿主 daemon。
+
+# 兜底自愈常量（见 _spawn_podman_system_service）：日志路径 + 轮询节奏（≈8s 上限）
+_SERVICE_LOG_PATH = "/tmp/podman-system-service.log"
+_SERVICE_POLL_INTERVAL = 0.4
+_SERVICE_POLL_ATTEMPTS = 20
+
+
 def host_runtime_uid() -> str:
     """daemon 宿主运行时 UID（B-scheme socket/透传路径推导的**唯一事实源**）。
 
@@ -109,9 +117,10 @@ def bsock_missing_guidance(detail: str = "") -> str:
         "     → 修复（按顺序）：",
         "       1) 核对 UID：本机执行 `id -u`；若与上方 UID 不符，导出 "
         "`PODMAN_RUNTIME_UID=<id -u 的值>`（或写入客户端 .env）后重试",
-        "       2) 启动用户级 API socket：`systemctl --user start podman.socket`"
-        "（本工具在原生 Linux 上会尝试自动执行此步；无 systemd 的环境改手工运行 "
-        "`podman system service --time=0 unix:///run/user/$(id -u)/podman/podman.sock`）",
+        "       2) 启动用户级 API socket：本工具已自动尝试 "
+        "`systemctl --user start podman.socket` → 不可达时兜底拉起 "
+        "`podman system service`（两级详情见下行）；仍失败再手工运行 "
+        "`setsid podman system service --time=0 unix:///run/user/$(id -u)/podman/podman.sock`",
         "       3) 重启后仍丢失则开启 lingering：`sudo loginctl enable-linger $USER`",
     ]
     if detail:
@@ -119,8 +128,87 @@ def bsock_missing_guidance(detail: str = "") -> str:
     return "\n".join(lines)
 
 
+def _spawn_podman_system_service(sock: str) -> tuple[bool, str]:
+    """兜底自愈：直接拉起常驻 rootless podman API 服务（无 systemd 用户会话时）。
+
+    触发场景（2026-09-27 真机实证，session sc-20260927-fix-bscheme-gate）：
+    桥接的非登录 shell 进入 podman machine 发行版时，嵌套 systemd 不可达——
+    ``systemctl --user`` 报 ``Failed to connect to user scope bus``，socket
+    不可能由单元拉起（用户日志实况）。而嵌套 systemd 在跑时 socket 由其
+    linger + ``podman.socket`` 单元开机自动拉起，预检的
+    ``Path(sock).exists()`` 已直接放行——两条路径天然互斥，不争同一拉起点。
+
+    实现要点（与 C-I5 指引的手工命令同款，仅自动化）：
+      - ``start_new_session=True``（等价 setsid）：服务脱离桥接会话，随发行版
+        存活——2026-09-27 跨调用存活实测（socket 与进程均延续）；
+      - ``--time=0``：API 服务不过期；日志追加到 ``/tmp/podman-system-service.log``；
+      - 拉起后 **chmod 0660**：对齐 ``podman.socket`` 单元默认 SocketMode——
+        容器内 entrypoint 的属组衔接（devuser 加入 socket 属组）依赖组位 rw，
+        而 ``podman system service`` 手工拉起默认 0600，会让 devuser 命中
+        C-I2 EACCES（2026-09-27 实测两态置权限差异）；
+      - 进程即死或轮询超时即返回失败；任何异常都在返回里表达，绝不外抛。
+    """
+    podman = shutil.which("podman")
+    if not podman:
+        return False, "未找到 podman 可执行文件（PATH 解析失败）"
+    try:
+        Path(sock).parent.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        pass  # 目录已存在或不可建：交给 Popen/轮询按实际结果判定
+    log_file = None
+    try:
+        log_file = open(_SERVICE_LOG_PATH, "ab")  # noqa: SIM115 - 句柄随 Popen 复制后即关
+    except OSError:
+        log_file = None
+    try:
+        proc = subprocess.Popen(
+            [podman, "system", "service", "--time=0", f"unix://{sock}"],
+            stdout=log_file if log_file is not None else subprocess.DEVNULL,
+            stderr=log_file if log_file is not None else subprocess.DEVNULL,
+            stdin=subprocess.DEVNULL,
+            start_new_session=True,
+        )
+    except OSError as exc:
+        return False, f"podman system service 启动失败：{exc}"
+    finally:
+        if log_file is not None:
+            try:
+                log_file.close()
+            except OSError:
+                pass
+
+    for _ in range(_SERVICE_POLL_ATTEMPTS):
+        time.sleep(_SERVICE_POLL_INTERVAL)
+        if Path(sock).exists():
+            try:
+                os.chmod(sock, 0o660)
+            except OSError:
+                pass  # 属主自建 socket，chmod 失败罕见；组位缺失由容器侧 C-I2 告警兜底
+            return True, ""
+        if proc.poll() is not None:
+            return False, (
+                f"podman system service 进程提前退出（exit={proc.returncode}）"
+                f"{_service_log_tail()}"
+            )
+    return False, (
+        f"podman system service 拉起后 "
+        f"{_SERVICE_POLL_ATTEMPTS * _SERVICE_POLL_INTERVAL:.0f}s 内 socket 未出现"
+        f"{_service_log_tail()}"
+    )
+
+
+def _service_log_tail(limit: int = 200) -> str:
+    """服务日志最后一条非空行（失败详情诊断用）；读不到返回空串。"""
+    try:
+        text = Path(_SERVICE_LOG_PATH).read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return ""
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+    return f"（日志尾：{lines[-1][:limit]}）" if lines else ""
+
+
 def ensure_host_podman_socket() -> tuple[bool, str, bool]:
-    """原生 Linux 上预检并尽力自愈 B-scheme 宿主 socket。
+    """原生 Linux 上预检并尽力自愈 B-scheme 宿主 socket（两级自愈）。
 
     返回 ``(就绪, 诊断明细, 是否本次自动拉起)``。以下场景**直接放行**
     （本机文件系统无法代表 daemon 宿主判断，交给远端 C-I1/C-I3 体系）：
@@ -130,8 +218,12 @@ def ensure_host_podman_socket() -> tuple[bool, str, bool]:
       - 运行时不是 podman；
       - socket 文件已存在。
 
-    自愈仅限用户级 systemd 单元（``systemctl --user start podman.socket``）：
-    无需提权、可逆、带 10s 超时；任何异常都降级为 C-I5 指引，绝不阻断在非预期环境。
+    自愈两级（均免提权、可逆；任何异常都降级为 C-I5 指引，绝不阻断在非预期环境）：
+      ① 用户级 systemd 单元 ``systemctl --user start podman.socket``（10s 超时）；
+      ② 兜底：systemd 路径够不着（无 systemctl / 用户总线不可达 / 单元起不来）时，
+         直接拉起 ``podman system service`` 常驻服务（见
+         :func:`_spawn_podman_system_service`；WSL2 裸启动的 podman machine
+         发行版即典型场景——嵌套 systemd 未运行，只有此路可通）。
     """
     if platform.system() != "Linux" or os.environ.get("HOST_PODMAN_SOCK"):
         return True, "", False
@@ -145,25 +237,34 @@ def ensure_host_podman_socket() -> tuple[bool, str, bool]:
     if Path(sock).exists():
         return True, "", False
 
+    reasons: list[str] = []
     systemctl = shutil.which("systemctl")
-    if not systemctl:
-        return False, "本机无 systemctl（非 systemd 环境），需手工启动 podman system service", False
-    try:
-        result = subprocess.run(
-            [systemctl, "--user", "start", "podman.socket"],
-            capture_output=True,
-            text=True,
-            timeout=10,
-        )
-    except subprocess.TimeoutExpired:
-        return False, "systemctl --user start podman.socket 超时（>10s）", False
-    except OSError as exc:
-        return False, f"systemctl 调用失败：{exc}", False
+    if systemctl:
+        try:
+            result = subprocess.run(
+                [systemctl, "--user", "start", "podman.socket"],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            if Path(sock).exists():
+                return True, "", True
+            reasons.append(
+                (result.stderr or result.stdout
+                 or "systemctl 返回成功但 socket 文件仍不存在").strip()
+            )
+        except subprocess.TimeoutExpired:
+            reasons.append("systemctl --user start podman.socket 超时（>10s）")
+        except OSError as exc:
+            reasons.append(f"systemctl 调用失败：{exc}")
+    else:
+        reasons.append("本机无 systemctl（非 systemd 环境）")
 
-    if Path(sock).exists():
+    ok, fallback_detail = _spawn_podman_system_service(sock)
+    if ok:
         return True, "", True
-    detail = (result.stderr or result.stdout or "systemctl 返回成功但 socket 文件仍不存在").strip()
-    return False, detail, False
+    reasons.append(fallback_detail)
+    return False, "；".join(r for r in reasons if r), False
 
 
 def sdk_available() -> bool:

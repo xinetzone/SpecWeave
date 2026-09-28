@@ -28,6 +28,13 @@
     ② /usr/local/cuda 农场布局（bin/include/lib64/nvvm + libcudart.so 短名）；
     ③ **真编译 + 真链接**一个最小 .cu（唯一能拦住 glibc/crt 头冲突与三包错版
     的判据——「nvcc 存在」不等于「编得过」）。非 cu130 形态反向断言 nvcc 缺席。
+  10. GUI 客户端运行时（tkinter，Layer 4.5 恢复）：基底深度清理删除了 tk/tcl
+     文件但保留 conda-meta 记录（腐坏态），Layer 4.5 以精确版本 tk=8.6.13 恢复
+     （latest 为 tk 9.0，soname 不兼容，见 install-gui-libs.sh 头注）。本守卫
+    **headless 可跑**：`import tkinter` 成功即同时证明 libtk8.6/libtcl8.6 与
+    libX11 客户端库全部可解析（dlopen 任一缺失即 ImportError）；`tkinter.Tcl()`
+    再证 tcl8.6 脚本目录（init.tcl 等）在位。不建 Tk 窗口（构建期无显示，属
+    预期边界；弹窗链路由运行期 `up --gui` + WSLg socket 实测覆盖）。
 
 任何断言失败即以非零退出（构建期 RUN 失败、run --rm 冒烟失败）。
 """
@@ -354,10 +361,29 @@ else:
           nvcc_path is None and not NVCC_MARKER.is_file(),
           f"which={nvcc_path}, marker_exists={NVCC_MARKER.is_file()}")
 
+print("\n== 10. GUI 客户端运行时（tkinter，Layer 4.5 恢复）==")
+# headless 断言（构建期无显示）：`import tkinter` 走 dlopen libtk8.6.so，能成功
+# 即同时证明 libtcl8.6 + libX11 客户端库全部可解析（任一缺失即 ImportError）；
+# `tkinter.Tcl()` 再证 tcl8.6 脚本目录（init.tcl 等）在位。
+for rel in ("lib/libtk8.6.so", "lib/libtcl8.6.so", "lib/libX11.so.6"):
+    check(f"/opt/conda/{rel}", Path("/opt/conda", rel).is_file())
+try:
+    import tkinter as tk  # noqa: PLC0415
+
+    check("tkinter 可导入（libtk/libtcl/X11 客户端库齐备）", True,
+          f"TkVersion={tk.TkVersion}")
+    check("Tk 运行库为 8.6 系（与 _tkinter ABI 匹配）",
+          str(tk.TkVersion) == "8.6", f"TkVersion={tk.TkVersion}")
+    tcl_patchlevel = tk.Tcl().eval("info patchlevel")
+    check("Tcl 脚本库在位（info patchlevel）", tcl_patchlevel.startswith("8.6"),
+          tcl_patchlevel)
+except Exception as exc:  # noqa: BLE001
+    check("tkinter 可导入（libtk/libtcl/X11 客户端库齐备）", False, str(exc))
+
 print("")
 if failures:
     print(f"[FAIL] {len(failures)} 项守卫未通过：{failures}")
     sys.exit(1)
 print("[OK] native-dev toolchain guards all passed "
       "(dual ABI + LLVM 22.1 toolchain + nuitka 4.2.1 + builder assets + SONAME "
-      "+ offline self-sufficiency + torch flavor + cuda nvcc)")
+      "+ offline self-sufficiency + torch flavor + cuda nvcc + tkinter GUI runtime)")

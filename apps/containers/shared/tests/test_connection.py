@@ -458,6 +458,81 @@ def test_ensure_socket_linux_start_failed(monkeypatch, tmp_path):
     assert ready is False and "unit not found" in detail and started is False
 
 
+# ── ensure_host_podman_socket 二级自愈：兜底 podman system service ──────────
+# 2026-09-27 用户实况（WSL 桥接非登录 shell + 嵌套 systemd 未运行）回归锁：
+# systemctl --user 报 user scope bus 不可达时，旧实现只报 C-I5 失败；现应兜底打通。
+
+def test_ensure_socket_fallback_after_bus_unreachable(monkeypatch, tmp_path):
+    sock = _linux_no_socket_env(monkeypatch, tmp_path)
+    monkeypatch.setattr(
+        conn.shutil, "which",
+        lambda name: "/usr/bin/systemctl" if name == "systemctl" else "/usr/bin/podman",
+    )
+    monkeypatch.setattr(
+        conn.subprocess, "run",
+        lambda *a, **k: types.SimpleNamespace(
+            returncode=1,
+            stdout="",
+            stderr="Failed to connect to user scope bus via local transport: "
+                   "No such file or directory",
+        ),
+    )
+    monkeypatch.setattr(conn.time, "sleep", lambda _s: None)  # 免等待
+    chmods: list[tuple[str, int]] = []
+    monkeypatch.setattr(conn.os, "chmod", lambda p, m: chmods.append((str(p), m)))
+
+    class _FakeProc:
+        returncode = None
+
+        def __init__(self, *a, **k):
+            sock.touch()  # 模拟服务拉起后 socket 出现
+
+        def poll(self):
+            return None
+
+    monkeypatch.setattr(conn.subprocess, "Popen", _FakeProc)
+    ready, detail, started = conn.ensure_host_podman_socket()
+    assert (ready, detail, started) == (True, "", True)
+    # 0660 对齐 podman.socket 单元 SocketMode——容器内 devuser 属组衔接依赖组位
+    assert chmods and chmods[-1][1] == 0o660
+
+
+def test_ensure_socket_fallback_service_dies_fast(monkeypatch, tmp_path):
+    """兜底服务启动即退出 → 快速失败，不死等轮询；详情含退出码。"""
+    _linux_no_socket_env(monkeypatch, tmp_path)
+    monkeypatch.setattr(conn.shutil, "which", lambda name: f"/usr/bin/{name}")
+    monkeypatch.setattr(
+        conn.subprocess, "run",
+        lambda *a, **k: types.SimpleNamespace(
+            returncode=1, stdout="", stderr="bus unreachable",
+        ),
+    )
+    monkeypatch.setattr(conn.time, "sleep", lambda _s: None)
+
+    class _DeadProc:
+        returncode = 125
+
+        def __init__(self, *a, **k):
+            pass
+
+        def poll(self):
+            return 125
+
+    monkeypatch.setattr(conn.subprocess, "Popen", _DeadProc)
+    ready, detail, started = conn.ensure_host_podman_socket()
+    assert ready is False and started is False
+    assert "提前退出" in detail and "125" in detail
+
+
+def test_ensure_socket_fallback_no_podman_binary(monkeypatch, tmp_path):
+    """systemctl 与 podman 都不可解析 → 详情同时含两条失败原因（可诊断）。"""
+    _linux_no_socket_env(monkeypatch, tmp_path)
+    monkeypatch.setattr(conn.shutil, "which", lambda name: None)
+    ready, detail, started = conn.ensure_host_podman_socket()
+    assert ready is False and started is False
+    assert "systemctl" in detail and "podman" in detail
+
+
 # ── get_client（假 SDK，零网络）──────────────────────────────────────────
 
 class _FakePodmanClient:
