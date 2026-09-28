@@ -154,7 +154,7 @@ def test_pin_flow(workspace) -> None:
         Draft(slug="pin-1", title="", kind=ContentKind.PIN, body=body, status="ready"),
     )
     bridge = FakeBridge()
-    bridge.eval_queue = [{"bodyLen": len(body)}]
+    bridge.eval_queue = [{"opened": True}, {"bodyLen": len(body)}]
     pub = Publisher(bridge)
     draft = load_draft(workspace, "pin-1")
     pub.begin(draft, gate_at="2026-10-01T21:00:00")
@@ -409,11 +409,28 @@ def test_pin_missing_editor_degrades(workspace) -> None:
     )
     bridge = FakeBridge()
     bridge.fail_selectors.update(publisher_mod._PIN_SELECTORS)
-    bridge.eval_queue = [{"ok": 1}]
+    bridge.eval_queue = [{"opened": True}, {"ok": 1}]
     pub = Publisher(bridge)
     draft = load_draft(workspace, "pin-noedit")
     pub.begin(draft, gate_at="g")
     assert pub.fill(draft).state == PublishState.DEGRADED
+
+
+def test_pin_entry_not_found_degrades(workspace) -> None:
+    body = "今天的想法足足超过二十个字，用于打卡与发布测试。"
+    _save(
+        workspace,
+        Draft(slug="pin-noentry", title="", kind=ContentKind.PIN, body=body, status="ready"),
+    )
+    bridge = FakeBridge()
+    bridge.eval_queue = [{"opened": False}]  # 首页未出现想法入口
+    pub = Publisher(bridge)
+    draft = load_draft(workspace, "pin-noentry")
+    pub.begin(draft, gate_at="g")
+    outcome = pub.fill(draft)
+    assert outcome.state == PublishState.DEGRADED and "想法输入框" in outcome.detail["reason"]
+    # 入口都没打开时不应尝试任何填充
+    assert bridge.fills == []
 
 
 def test_pin_readback_short_degrades(workspace) -> None:
@@ -422,7 +439,9 @@ def test_pin_readback_short_degrades(workspace) -> None:
         workspace,
         Draft(slug="pin-rs", title="", kind=ContentKind.PIN, body=body, status="ready"),
     )
-    bridge = _RawBridge([json.dumps({"bodyLen": 5}), "{}"])
+    bridge = _RawBridge(
+        [json.dumps({"opened": True}), json.dumps({"bodyLen": 5}), "{}"]
+    )
     pub = Publisher(bridge)
     draft = load_draft(workspace, "pin-rs")
     pub.begin(draft, gate_at="g")
@@ -453,6 +472,16 @@ def test_degrade_clipboard_failure_recorded(workspace) -> None:
     outcome = pub.fill(draft)
     assert outcome.state == PublishState.DEGRADED
     assert outcome.detail["clipboard"] is False and "手动复制" in outcome.detail["instruction"]
+
+
+def test_real_daemon_fill_selectors_avoid_quoted_attributes() -> None:
+    # webbridge v1.11.6 真实冒烟：fill 对 [attr='x'] 类选择器抛 SyntaxError，
+    # 首选选择器必须是纯 class，保证真实守护端首轮即可命中。
+    assert publisher_mod._BODY_SELECTORS[0] == ".public-DraftEditor-content"
+    assert publisher_mod._PIN_SELECTORS[0] == ".DraftEditor-root .public-DraftEditor-content"
+    for selectors in (publisher_mod._BODY_SELECTORS, publisher_mod._PIN_SELECTORS):
+        assert "[" not in selectors[0]
+    assert publisher_mod.ARTICLE_WRITE_URL == "https://zhuanlan.zhihu.com/write"
 
 
 def test_no_final_publish_button_click_in_source() -> None:

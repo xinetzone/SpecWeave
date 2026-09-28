@@ -21,7 +21,7 @@ from ..storage.entries import ContentKind, ContentRecord, DayEntry, load_entry, 
 from ..storage.workspace import Workspace
 from .bridge import BridgeClient
 
-ARTICLE_WRITE_URL = "https://zhihu.com/write"
+ARTICLE_WRITE_URL = "https://zhuanlan.zhihu.com/write"
 ZHIHU_HOME_URL = "https://www.zhihu.com/"
 PIN_MIN_CHARS = 20
 
@@ -31,18 +31,43 @@ _TITLE_SELECTORS = [
     ".WriteIndex-titleInput textarea",
     "[data-zop-item='title']",
 ]
+# 注意（真实冒烟记录，webbridge v1.11.6）：fill 动作对含引号属性选择器（如
+# [contenteditable='true']）会在守护端抛 "Unexpected token 'true'" SyntaxError，
+# 因此首选选择器一律用纯 class；带属性的选择器仅作末位兜底（失败会被跳过）。
 _BODY_SELECTORS = [
-    "div.public-DraftEditor-content[contenteditable='true']",
+    ".public-DraftEditor-content",
+    ".DraftEditor-root .public-DraftEditor-content",
+    ".AnswerForm-editor .public-DraftEditor-content",
+    ".Editable-content",
     "div.Editable-content[contenteditable='true']",
     ".AnswerForm-editor [contenteditable='true']",
     "div[contenteditable='true']",
 ]
 _PIN_SELECTORS = [
+    ".DraftEditor-root .public-DraftEditor-content",
+    ".InputLike .public-DraftEditor-content",
+    ".public-DraftEditor-content",
+    ".Editable .public-DraftEditor-content",
     ".Topstory-container [contenteditable='true']",
     ".Input-richInput[contenteditable='true']",
     "textarea.Textarea",
     "div[contenteditable='true']",
 ]
+# 首页想法框默认折叠，需先点开「分享此刻的想法...」入口，轮询等待 DraftEditor 挂载
+_PIN_OPEN_JS = r"""
+(async () => {
+  const entry = [...document.querySelectorAll('div,span,button')]
+    .find(el => (el.textContent || '').trim() === '分享此刻的想法...');
+  if (entry) entry.click();
+  for (let i = 0; i < 20; i++) {
+    if (document.querySelector('.DraftEditor-root [contenteditable="true"]')) {
+      return JSON.stringify({opened: true});
+    }
+    await new Promise(r => setTimeout(r, 150));
+  }
+  return JSON.stringify({opened: false});
+})()
+""".strip()
 # 只允许点「写回答/添加回答/编辑回答」这类编辑入口，绝不匹配最终发布动作
 _ANSWER_ENTRY_JS = r"""
 (() => {
@@ -254,12 +279,15 @@ class Publisher:
         if len(draft.body) < PIN_MIN_CHARS:
             raise PublishError(f"想法正文不足 {PIN_MIN_CHARS} 字")
         self.client.navigate(ZHIHU_HOME_URL, group_title="知乎想法发布")
+        opened = self._readback(_PIN_OPEN_JS)
+        if not opened.get("opened"):
+            raise PublishError("打不开想法输入框（首页未找到「分享此刻的想法...」入口）")
         body_hit = self._fill_any(_PIN_SELECTORS, draft.body)
         if body_hit is None:
             raise PublishError("找不到想法输入框")
         readback = self._readback(
             "(() => { const e=document.querySelector("
-            "'div[contenteditable=true],textarea.Textarea');"
+            "'.DraftEditor-root [contenteditable=true],div[contenteditable=true],textarea.Textarea');"
             " const len = e ? (e.value!==undefined ? e.value.length : e.textContent.length) : 0;"
             " return JSON.stringify({bodyLen: len}); })()"
         )

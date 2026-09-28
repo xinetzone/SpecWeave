@@ -467,7 +467,7 @@ def test_pin_confirm_requires_explicit_image_choice(
         follow_redirects=False,
     )
     assert gated.status_code == 303
-    bridge.eval_queue = [{"bodyLen": 28}]
+    bridge.eval_queue = [{"opened": True}, {"bodyLen": 28}]
     fill = client.post("/publish/fill", data={"_csrf": token, "slug": "pin-web"})
     assert fill.status_code == 200
     assert fill.json()["state"] == "awaiting_human"
