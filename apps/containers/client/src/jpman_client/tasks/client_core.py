@@ -752,13 +752,14 @@ def run_container(c: Context, cfg: ContainerConfig) -> ContainerConfig:
         raise Exit(1, f"运行时未就绪: {hint}")
 
     # B-scheme 预检（仅原生 Linux 本机生效）：socket 挂载源不存在则 podman run 必然
-    # statfs 硬失败 exit=125；先尝试自动拉起用户级 podman.socket，失败即 fail-fast
+    # statfs 硬失败 exit=125；先尝试自动拉起宿主 rootless socket 服务（systemctl
+    # 单元 → podman system service 兜底两级自愈），失败即 fail-fast
     # 给出 C-I5 指引，避免注定失败的 run 与 C-I3 误报（2026-09-12，UID 1006 事故）。
     sock_ready, sock_detail, sock_started = ensure_host_podman_socket()
     if not sock_ready:
         raise Exit(1, bsock_missing_guidance(sock_detail))
     if sock_started:
-        print(f"[Run][B-scheme] 已自动启动用户级 podman.socket: {podman_sock_path()}")
+        print(f"[Run][B-scheme] 已自动启动宿主 rootless podman socket 服务: {podman_sock_path()}")
 
     _ensure_secrets(cfg)
     workspace_path = cfg.resolved_workspace()

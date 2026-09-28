@@ -111,6 +111,33 @@ def test_closed_port_times_out_without_raising():
     assert "无 HTTP 应答" in detail
 
 
+def test_timeout_detail_reports_both_addrs_with_ipv4_first():
+    """超时归因逐地址列出（v4 权威在前），并注明 ::1 拒绝在仅绑 IPv4 时属预期。
+
+    回归 2026-09-24：历史实现用单变量记录末次错误，每轮被最后探测的 ::1
+    覆盖，超时文案只剩 ``ConnectionRefusedError @ ::1``，把「服务尚未 listen」
+    误报成「IPv6 故障」。
+    """
+    ready, detail = u.wait_http_ready(_closed_port(), timeout=0.5)
+    assert ready is False
+    assert "127.0.0.1 ConnectionRefusedError" in detail
+    assert "::1 ConnectionRefusedError" in detail
+    assert detail.index("127.0.0.1") < detail.index("::1")
+    assert "仅绑 IPv4" in detail
+    assert "无 HTTP 应答" in detail
+
+
+def test_timeout_detail_preserves_per_addr_error_kinds():
+    """v4 是 rootlessport 零字节窗（连接被对端 reset，ConnectionResetError 系，
+    RemoteDisconnected 为其子类）、v6 拒绝（ConnectionRefusedError）时，两类
+    错误都必须保留——v4 错误才是就绪判据的权威信号，不得被 ::1 覆盖淹没。"""
+    with _silent_tcp_server() as port:
+        ready, detail = u.wait_http_ready(port, timeout=0.5)
+    assert ready is False
+    assert "127.0.0.1 ConnectionResetError" in detail
+    assert "::1 ConnectionRefusedError" in detail
+
+
 def test_progress_callback_fires_during_long_wait(monkeypatch):
     """长窗口期必须有反馈（否则用户面对的是「卡住」的假象）。"""
     monkeypatch.setattr(u, "UP_READY_PROGRESS_S", 0.0)

@@ -48,6 +48,24 @@ services:
       - "${NATIVE_SSH_PORT:-2223}:22"
       - "${NATIVE_JUPYTER_PORT:-8890}:8888"
     volumes:
+      # ── B-scheme: 直连宿主 rootless podman daemon（绕过嵌套 userns）──
+      # 容器内 Notebook/CLI 的 PodmanClient 经此 socket 复用宿主 daemon。
+      # 契约：source 与 target 必须为【同一路径】且与 environment 的
+      # HOST_PODMAN_SOCK 同值——entrypoint 在容器内按该值 test -S 后建符号
+      # 链接/属组衔接（UID≠1000 亦覆盖）。invoke up 路径预检宿主 socket
+      # 就绪（缺失时免提权 systemctl --user start podman.socket）并注入
+      # 实际路径；下方 1000 缺省仅供裸 podman-compose 在 WSL2 惯例 UID 下
+      # 使用，物理机 UID 不同时在 .env 设 HOST_PODMAN_SOCK /
+      # PODMAN_RUNTIME_UID。create_host_path: false——socket 源缺失必须
+      # podman 硬失败，绝不能 os.makedirs 误建目录冒充 socket。
+      # 无此挂载时 entrypoint 静默回退容器内自建 daemon（DinP），在嵌套
+      # rootless 下被 newuidmap 拒绝（Operation not permitted），Notebook
+      # 运行 from_env() 才报 FileNotFoundError（2026-09-24 实证）。
+      - type: bind
+        source: ${HOST_PODMAN_SOCK:-/run/user/1000/podman/podman.sock}
+        target: ${HOST_PODMAN_SOCK:-/run/user/1000/podman/podman.sock}
+        bind:
+          create_host_path: false
       # 全部长语法 bind：短语法在 podman-compose 下会 os.makedirs 误建源路径。
       # invoke 路径把五个宿主路径解析为绝对 POSIX 路径注入（源码三类存在性硬
       # 校验；temp 类缺省自动 mkdir）；裸 compose 相对路径相对本文件：
@@ -104,6 +122,8 @@ services:
     environment:
       # 凭证四变量（USER_PASSWORD/JUPYTER_TOKEN/SSH_PUBLIC_KEY/GRANT_SUDO）
       # 与 rootless 三必需由 rootless-base 继承，勿在此重复声明。
+      # ── B-scheme：宿主 podman socket 同路径挂载点（见 volumes 首段注释）──
+      HOST_PODMAN_SOCK: "${HOST_PODMAN_SOCK:-/run/user/1000/podman/podman.sock}"
       # ── 源码调试链路（默认变体）：tvm/vta/xmnn 经 PYTHONPATH 直接从挂载树导入 ──
       PYTHONPATH: /workspace/npu_tvm/python:/workspace/npu_tvm/vta/python:/workspace/npuusertools
       TVM_LIBRARY_PATH: /workspace/npu_tvm/build

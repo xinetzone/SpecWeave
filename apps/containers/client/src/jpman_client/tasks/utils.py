@@ -25,6 +25,7 @@ import re
 import shlex
 import subprocess
 import sys
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
@@ -564,6 +565,76 @@ def ensure_wsl_rootless_runtime() -> None:
         )
 
 
+# 会话自愈轮询节奏：~10s 上限（实测 systemd 到位后 bus/socket 7s 内齐备）
+_WSL_SESSION_POLL_INTERVAL = 0.5
+_WSL_SESSION_POLL_ATTEMPTS = 20
+
+
+def ensure_wsl_user_session() -> None:
+    """WSL2 裸启动发行版的 systemd 用户会话幂等自愈（2026-09-27 实证）。
+
+    背景（session sc-20260927-fix-bscheme-gate）：``podman-machine-default``
+    是「嵌套 systemd」发行版——systemd 由 ``unshare -p -m --propagation shared``
+    运行在独立命名空间（PID 非 1），Windows 侧 ``podman machine start`` 开机
+    拉起。该会话产出两项**运行期硬资源**：
+      ① ``/run/user/<uid>/bus``（dbus-broker 用户总线）——`up --passthrough`
+         的 D-Bus 挂载源（compose.passthrough.yaml）；
+      ② ``/run/user/<uid>/podman/podman.sock``（podman.socket 单元）——
+         B-scheme 宿主 rootless daemon 挂载源（三叠加栈 + invoke run）。
+    但桥接平面（run_in_wsl_bridge，非登录 shell；见 windows-wsl.md §8）刻意
+    不经过 enterns 命名空间，且不依赖 Windows 侧 machine 平面；发行版被 WSL
+    回收后由 ``wsl -d`` 裸启动时上述资源全部缺失，两个门禁先后硬失败
+    （2026-09-27 用户实况：先 B-scheme C-I5、再 D-Bus）。
+
+    自愈方式 = 复刻 machine 的启动命令（真机进程树逐字实测）：
+      ``sudo -n setsid nohup unshare --kill-child --fork --pid --mount
+        --mount-proc --propagation shared /lib/systemd/systemd``
+    2026-09-27 实测：裸启动发行版内 7s 内 systemd + bus + podman.sock 齐备
+    （以桥接真实身份 user + sudo -n 验证）。
+
+    仅在 ``bus`` 与 ``podman.sock`` **均缺失**时动作（会话在跑时两者必然
+    存在，避免重复拉起）；``sudo -n`` 免密不可用时仅警告不阻断（标准环境由
+    Windows 侧 machine 管理会话，不越权）；启动后轮询 ``bus`` 出现（~10s），
+    超时仅告警——后续门禁仍会给出 C-I5 / D-Bus 中文指引，保持可诊断。
+    """
+    if platform.system() != "Linux":
+        return
+    try:
+        proc_version = Path("/proc/version").read_text(encoding="utf-8", errors="ignore")
+    except OSError:
+        return
+    if "microsoft" not in proc_version.lower():
+        return
+
+    uid = os.getuid()  # 仅 Linux 分支可达
+    runtime_dir = Path(f"/run/user/{uid}")
+    if (runtime_dir / "bus").exists() or (runtime_dir / "podman" / "podman.sock").exists():
+        return  # 会话已在（两资源同源产出，命中其一即跳过）
+
+    start = (
+        "sudo -n sh -c 'setsid nohup unshare --kill-child --fork --pid "
+        "--mount --mount-proc --propagation shared /lib/systemd/systemd "
+        ">/tmp/wsl-user-session.log 2>&1 &'"
+    )
+    result = subprocess.run(start, shell=True, capture_output=True, text=True)
+    if result.returncode != 0:
+        print(
+            "[compose] ⚠ WSL 用户会话（systemd）缺失且自动拉起失败："
+            f"{(result.stderr or '').strip()[:160]}；后续门禁将给出 C-I5 / D-Bus 指引"
+        )
+        return
+    for _ in range(_WSL_SESSION_POLL_ATTEMPTS):
+        time.sleep(_WSL_SESSION_POLL_INTERVAL)
+        if (runtime_dir / "bus").exists():
+            print("[compose] 已自动拉起 WSL 用户会话（systemd）——bus 与 podman.socket 就绪")
+            return
+    print(
+        f"[compose] ⚠ WSL 用户会话拉起后 bus 未在 "
+        f"{_WSL_SESSION_POLL_ATTEMPTS * _WSL_SESSION_POLL_INTERVAL:.0f}s 内出现"
+        "（日志 /tmp/wsl-user-session.log）；后续门禁将给出指引"
+    )
+
+
 def default_build_cache_dir() -> Path:
     """默认镜像缓存目录。
 
@@ -926,6 +997,12 @@ def wait_http_ready(
 
     探测地址显式覆盖 ``127.0.0.1`` 与 ``::1``（与 :func:`refresh_host_keys`
     同因：``localhost`` 可能优先解析到未监听的 ``::1``，而转发只绑 IPv4）。
+    两地址**各自独立记录末次错误**：IPv4 优先探测且其状态是就绪判据的权威信号；
+    ``::1`` 在服务仅绑 IPv4（Jupyter 默认 ``0.0.0.0``，rootlessport 多数配置亦
+    仅 v4）时会**永久拒绝**——这是预期噪声，绝不能让它独占超时文案（历史实现
+    用单变量 ``last``，每轮被最后探测的 ``::1`` 覆盖，把 v4 侧真实状态——
+    尚未 listen 的 ConnectionRefused 或 rootlessport 零字节窗——淹没，
+    误导成「IPv6 故障」；2026-09-24 native host 形态实证）。
 
     超时**不抛异常、不判失败**：容器确实已 Up，只是服务仍在首次启动；调用方
     应打印可执行指引而非中断（对齐 `up_preflight` 的「自愈优先、指引兜底」）。
@@ -933,19 +1010,21 @@ def wait_http_ready(
     """
     import time as _time
 
+    addrs = ("127.0.0.1", "::1")
     started = _time.monotonic()
     deadline = started + timeout
     next_progress = started + UP_READY_PROGRESS_S
-    last = "无应答"
+    # 各地址末次错误（异常类名）；保留到超时时逐地址归因，不互相覆盖。
+    last_err: dict[str, str] = {}
     while True:
-        for addr in ("127.0.0.1", "::1"):
+        for addr in addrs:
             conn = http.client.HTTPConnection(addr, int(port), timeout=2.0)
             try:
                 conn.request("GET", path)
                 resp = conn.getresponse()
                 return True, f"{addr} → HTTP {resp.status}"
             except (OSError, http.client.HTTPException) as exc:
-                last = f"{type(exc).__name__} @ {addr}:{port}"
+                last_err[addr] = type(exc).__name__
             finally:
                 conn.close()
         now = _time.monotonic()
@@ -954,5 +1033,11 @@ def wait_http_ready(
             on_progress(now - started)
             next_progress = now + UP_READY_PROGRESS_S
         if now >= deadline:
-            return False, f"{last}（{now - started:.0f}s 无 HTTP 应答）"
+            per_addr = "；".join(
+                f"{a} {last_err.get(a, '无应答')}" for a in addrs
+            )
+            return False, (
+                f"{per_addr}（{now - started:.0f}s 无 HTTP 应答；"
+                "::1 拒绝在服务仅绑 IPv4 时属预期，以 127.0.0.1 状态为准）"
+            )
         _time.sleep(UP_READY_POLL_S)

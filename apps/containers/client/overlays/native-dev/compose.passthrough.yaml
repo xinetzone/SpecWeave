@@ -17,9 +17,12 @@
 #   compose.passthrough.usb.yaml      [5] USB /dev/bus/usb
 #
 # 前置条件 —— 挂载源缺失时 podman 硬失败（exit 125）且不自动创建：
-#   test -S "${DBUS_SESSION_BUS_PATH:-/run/user/1000/bus}" && echo "D-Bus OK"
+#   test -S "${DBUS_SESSION_BUS_PATH:-${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/bus}" \
+#     && echo "D-Bus OK"
 #   ss -lnt | grep -E ':(8888|2223) '                                     # 应为空
-# invoke 路径已把上述检查前置为中文 fail-fast。
+# invoke 路径已把上述检查前置为中文 fail-fast；D-Bus 缺省路径由 invoke 按
+# $DBUS_SESSION_BUS_ADDRESS → $XDG_RUNTIME_DIR/bus → /run/user/$(id -u)/bus
+# 动态探测（UID 未必是 1000），下方 compose 插值的 1000 仅为裸 compose 静态兜底。
 #
 # 安全 —— host 网络取消网络隔离，D-Bus 会话总线允许容器进程与宿主桌面会话
 # 通信。仅用于可信镜像。

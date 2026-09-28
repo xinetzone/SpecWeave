@@ -1,0 +1,35 @@
+# wechat-mp-archiver 采集服务私有部署清单
+#
+# 主承载：wechat-download-api（API-first，支持历史列表/时间游标增量/Markdown 导出，
+# 多架构 linux/amd64 + linux/arm64，适合 x86 主机与 ARM 树莓派/NAS）。
+# 备选承载 wechat-article-exporter（Nuxt 全栈、UI 成熟）无官方预构建镜像可核实，
+# 不臆造镜像名；如需启用请按 deploy/README.md 从源码自行构建。
+#
+# 安全约定：
+# - 端口仅绑定回环地址（127.0.0.1），不暴露局域网/公网；
+# - 登录凭证保存在命名卷 collector-data 内，不进项目目录；
+# - 本机自用 MCP_TOKEN 可留空；如启用务必使用长随机串。
+
+services:
+  collector:
+    image: tmwgsicp/wechat-download-api:latest
+    container_name: mp-archiver-collector
+    ports:
+      # 仅本机可访问；如需局域网访问请自行评估风险后改为 "5000:5000"
+      - "127.0.0.1:5000:5000"
+    env_file:
+      - ./collector.env
+    volumes:
+      - collector-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      # FastAPI 应用自带 OpenAPI 文档；以其可访问作为存活判据
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:5000/openapi.json', timeout=5).status==200 else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  collector-data:
+    name: mp_archiver_collector_data

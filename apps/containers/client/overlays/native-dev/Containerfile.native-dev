@@ -26,6 +26,8 @@
 #         --build-arg TORCH_FLAVOR=cu130 \
 #         -t localhost/native-dev:latest .
 #   TORCH_FLAVOR 默认空 = 不装 torch（镜像零 torch，体积与离线契约不变）。
+#   GUI 客户端：base env 内置 Tk 8.6 运行时（tkinter）+ X11 客户端库（Layer 4.5
+#   从基底深度清理中恢复）；显示通道由运行期 `up --gui` 提供，构建期零显示依赖。
 # ------------------------------------------------------------
 
 ARG BASE_IMAGE=localhost/jupyter-podman-rootless:latest
@@ -146,6 +148,23 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
 COPY smoke/ /opt/native-dev-smoke/
 COPY scripts/ /opt/native-scripts/
 RUN chmod -R a+rX /opt/native-dev-smoke /opt/native-scripts
+
+# ------------------------------------------------------------
+# Layer 4.5：GUI 客户端运行时（tkinter）——恢复基底深度清理移除的 Tk/tcl 8.6
+#   运行时并补齐 X11 客户端库（libX11），使 base env 内核/SSH 会话可直接运行
+#   Tk 程序；显示通道由运行期 `up --gui`（Wayland/X11 socket 透传）提供。
+#   - 位置：Layer 4（COPY 已就位）之后、Layer 5 守卫之前——§10 tkinter 守卫
+#     在此层之后才有物可验；
+#   - 只动 base env（内核/SSH 的 python 所在）；main env 不引入 tk，避免扰动
+#     LLVM 工具链求解；
+#   - 本层在缓存链末端附近：重打仅执行本层与 Layer 5，Layer 2.5/2.6/3 大件
+#     （torch/CUDA/nuitka 依赖）不失效；
+#   - 与基底的边界：基底仍按体积优化移除 tk/tcl（服务器镜像不回归）；本层
+#     仅为 native-dev（开发栈）恢复，依据（含腐坏记录/精确版本 tk=8.6.13）
+#     见 scripts/install-gui-libs.sh 头注。
+# ------------------------------------------------------------
+RUN /bin/bash -lc 'set -euo pipefail ; \
+    bash /opt/native-scripts/install-gui-libs.sh'
 
 # ------------------------------------------------------------
 # Layer 5：注册 native-dev 内核（root/devuser 双可见）+ SSH 会话环境注入 +
