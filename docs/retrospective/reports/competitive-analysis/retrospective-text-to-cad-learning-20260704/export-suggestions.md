@@ -29,7 +29,7 @@ export_date: "2026-07-04"
 | 知识库索引更新 | [README.md](../../../../knowledge/README.md) | 新增索引条目 |
 | Spec定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/spec.md) | 任务目标与范围 |
 | Spec任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/tasks.md) | 执行步骤 |
-| Spec检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/checklist.md) | 质量验证 |
+| Spec检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/review.md) | 质量验证 |
 | 原子提交 | Commit 9083c788 | 5文件，774行新增，9行删除 |
 
 ## 是否需要正式导出

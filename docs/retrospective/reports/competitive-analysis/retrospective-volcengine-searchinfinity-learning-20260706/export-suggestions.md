@@ -31,7 +31,7 @@ version: "1.2"
 | 结构化学习笔记 | [volcengine-searchinfinity-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-searchinfinity-analysis.md) | ~950 行，10 大章节 + 4 个 Mermaid 图表 |
 | Spec 定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/spec.md) | PRD 格式，14 个验收准则 |
 | Spec 任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/tasks.md) | 12 个任务含完整字段 |
-| Spec 检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/checklist.md) | 全流程质量验证检查点 |
+| Spec 检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/review.md) | 全流程质量验证检查点 |
 | Task1 结构化数据 | [task1-output.json](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/task1-output.json) | 网页内容结构化提取 JSON |
 | 源产品 URL | https://www.volcengine.com/product/SearchInfinity | 火山引擎豆包搜索（SearchInfinity）产品页 |
 

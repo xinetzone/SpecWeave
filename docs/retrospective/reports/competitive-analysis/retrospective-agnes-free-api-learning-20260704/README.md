@@ -55,7 +55,7 @@ template_upgrade: "2026-07-06 v1.2"
 |------|------|-----------|
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 106 行 |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 92 行（6 个任务） |
-| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 13 个检查点 |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/review.md) | 13 个检查点 |
 | 深度分析报告 | 对话输出（未保存为文件） | 完整 Markdown 报告 |
 
 **复盘报告**：

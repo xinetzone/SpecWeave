@@ -62,7 +62,7 @@ template_upgrade: "2026-07-06 v1.4（行业趋势模式提取：2个L1新建+1�
 | 学习笔记终稿 | [volcengine-searchinfinity-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-searchinfinity-analysis.md) | ~1094 行，10章 + 6 Mermaid + 六大模式 + 六大趋势（v1.1） |
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/spec.md) | ~150 行，14个验收准则 |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/tasks.md) | ~275 行，12个任务 |
-| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/checklist.md) | ~50 个检查点 |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/review.md) | ~50 个检查点 |
 | Task1 结构化数据 | [task1-output.json](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/task1-output.json) | JSON 格式 |
 
 **复盘报告**：

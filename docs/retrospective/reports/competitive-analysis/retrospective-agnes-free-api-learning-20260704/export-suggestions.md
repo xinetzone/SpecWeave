@@ -27,7 +27,7 @@ export_date: "2026-07-04"
 |--------|------|------|
 | Spec 定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-agnes-free-api/spec.md) | 106 行 PRD 格式任务规范 |
 | Spec 任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-agnes-free-api/tasks.md) | 92 行，6 个任务含完整字段 |
-| Spec 检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-agnes-free-api/checklist.md) | 13 个检查点全部通过 |
+| Spec 检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-agnes-free-api/review.md) | 13 个检查点全部通过 |
 | 深度分析报告 | 对话输出（未保存为文件） | 完整 Markdown 报告，含核心概念表、章节结构、5 个深度见解 |
 | 源文章 URL | https://mp.weixin.qq.com/s/dhdI6uAy5P7ZldOpuqEuDQ | 《Agnes AI 免费模型实操指南》（作者：小 G） |
 

@@ -50,7 +50,7 @@ scenario: "knowledge-precipitation"
 | TOML元数据 | audiox-turbo-audio-generation-wiki.toml | 元数据文件（原 learning 目录 toml 已随板块迁移移除） |
 | Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/spec.md) | 需求规格文档 |
 | Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/tasks.md) | 任务分解 |
-| Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/checklist.md) | 验收清单（30项） |
+| Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/review.md) | 验收清单（30项） |
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 本目录 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 本目录 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 本目录 |

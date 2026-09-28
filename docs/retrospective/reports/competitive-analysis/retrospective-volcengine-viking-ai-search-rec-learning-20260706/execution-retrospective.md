@@ -116,7 +116,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 |--------|------|-----------|------|
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/spec.md) | 173 行 | PRD格式任务规范，含14个FR、6个NFR、12个AC |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/tasks.md) | 13 个任务 | 覆盖从提取到笔记整合全流程 |
-| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/checklist.md) | 20 个检查点 | 覆盖内容完整性、分析深度、格式规范 |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/review.md) | 20 个检查点 | 覆盖内容完整性、分析深度、格式规范 |
 | 网页提取内容 | [web-content.md](../../../archives/spec-working-notes/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.md) | - | WebFetch提取的原始网页内容 |
 | 结构化学习笔记 | [viking-ai-search-rec-core-notes.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/viking-ai-search-rec-core-notes.md) | 340 行 | 12大章节完整产品分析笔记 |
 

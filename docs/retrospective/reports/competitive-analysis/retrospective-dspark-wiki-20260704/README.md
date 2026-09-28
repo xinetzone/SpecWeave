@@ -51,7 +51,7 @@ scenario: "B-single-day-medium"
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | learning 类目下追加索引条目 |
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/create-dspark-learning-wiki/spec.md) | 191 行，10 个 Requirements，10 个 AC |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/create-dspark-learning-wiki/tasks.md) | 9 个主任务，35 个子任务 |
-| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/create-dspark-learning-wiki/checklist.md) | 30+ 检查点 |
+| Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/create-dspark-learning-wiki/review.md) | 30+ 检查点 |
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 本目录 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 本目录 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 本目录 |

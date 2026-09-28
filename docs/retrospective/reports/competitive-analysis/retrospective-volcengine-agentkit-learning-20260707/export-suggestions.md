@@ -28,7 +28,7 @@ export_date: "2026-07-07"
 |--------|------|------|
 | Spec 定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/spec.md) | PRD格式，13个功能需求、10个验收标准、10个开放问题 |
 | Spec 任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/tasks.md) | 11个任务，已全部标记为[x]完成 |
-| Spec 检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/checklist.md) | 3大维度50+检查点 |
+| Spec 检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/review.md) | 3大维度50+检查点 |
 | 结构化学习笔记 | [volcengine-agentkit-platform-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/volcengine-ecosystem/index.md) | 13章+6个Mermaid图表，核心产出 |
 | 源产品URL | https://www.volcengine.com/product/agentkit | 火山引擎AgentKit企业级AI Agent平台产品页 |
 

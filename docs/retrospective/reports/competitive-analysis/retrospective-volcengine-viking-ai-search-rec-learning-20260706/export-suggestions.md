@@ -28,7 +28,7 @@ export_date: "2026-07-06"
 |--------|------|------|
 | Spec定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/spec.md) | 173行PRD格式任务规范，含14个FR、6个NFR、12个AC |
 | Spec任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/tasks.md) | 13个任务覆盖全流程 |
-| Spec检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/checklist.md) | 20个检查点全部通过 |
+| Spec检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/review.md) | 20个检查点全部通过 |
 | 网页提取内容 | [web-content.md](../../../archives/spec-working-notes/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.md) | WebFetch提取的原始网页内容 |
 | 结构化学习笔记 | [viking-ai-search-rec-core-notes.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/viking-ai-search-rec-core-notes.md) | 340行，12大章节完整产品分析笔记 |
 | 源产品URL | https://www.volcengine.com/product/AI-Search-Rec | 火山引擎Viking AI搜索推荐产品官网 |

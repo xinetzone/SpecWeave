@@ -131,7 +131,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | learning分类新增条目，总条目数更新 |
 | Spec PRD | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 产品需求文档 |
 | Spec任务清单 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 15个原子任务（全部[x]完成） |
-| Spec验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 55项质量检查点（全部[x]通过） |
+| Spec验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/review.md) | 55项质量检查点（全部[x]通过） |
 | 本次复盘报告 | 4个文件（本目录） | 执行复盘+洞察萃取+导出建议 |
 
 ***
