@@ -10,10 +10,11 @@
 
 import json
 import re
+import time
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from enum import StrEnum
-from typing import Any
+from typing import Any, Callable
 
 from ..errors import BridgeError, PublishError
 from ..storage.drafts import Draft, load_draft, save_draft, transition_status
@@ -66,6 +67,111 @@ _PIN_OPEN_JS = r"""
     await new Promise(r => setTimeout(r, 150));
   }
   return JSON.stringify({opened: false});
+})()
+""".strip()
+# DraftJS（React 受控编辑器）提交式注入（真实冒烟记录，2026-09-28）：
+# webbridge 的 fill 对 contenteditable 只改 DOM 文本，不触发 beforeinput，
+# DraftJS 内部 editorState 仍为空——失焦/自动保存触发 React 重渲染后正文被清空
+# （现象：标题在、正文消失，发布按钮也是禁用态）。必须 focus 后用
+# execCommand('insertText'/'insertParagraph')，DraftJS 才能在 beforeinput 中
+# 真正提交。选择器列表在调用处注入到 __SELECTORS__；文本经 window.__zch_fill__
+# 传递（不在 JS 源码里内嵌用户文本）。
+_DRAFTJS_INJECT_JS = r"""
+(() => {
+  const sels = __SELECTORS__;
+  let el = null, used = '';
+  for (const s of sels) {
+    const nodes = [...document.querySelectorAll(s)];
+    const hit = nodes.find(e => e.offsetWidth || e.offsetHeight || e.getClientRects().length);
+    if (hit) { el = hit; used = s; break; }
+  }
+  if (!el) return JSON.stringify({ok: false, why: 'no-visible-editor'});
+  el.focus();
+  const sel = window.getSelection();
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  sel.removeAllRanges();
+  sel.addRange(range);
+  document.execCommand('delete');
+  const lines = String(window.__zch_fill__ == null ? '' : window.__zch_fill__).split('\n');
+  lines.forEach((ln, i) => {
+    document.execCommand('insertText', false, ln);
+    if (i < lines.length - 1) document.execCommand('insertParagraph');
+  });
+  return JSON.stringify({ok: true, selector: used, len: el.textContent.length});
+})()
+""".strip()
+# ---- CDP 受信输入（真实冒烟定稿，2026-09-28）----
+# 知乎专栏/回答/想法正文都是 DraftJS。真实环境结论：
+#  1) bridge.fill/execCommand 只改 DOM，DraftJS 模型不接收，失焦/自动保存后被
+#     React 回滚（标题在、正文消失）；且一旦被合成注入污染，该草稿模型/DOM 永久脱节；
+#  2) 唯一可靠通道是 CDP（chrome.debugger）受信事件：Page.bringToFront →
+#     Input.dispatchMouseEvent 点入编辑器（需浏览器窗口在 OS 前台）→
+#     Input.insertText 分块上屏（单块 ≤20 字，长文本整块会被截断）；
+#  3) 若点击后 document.activeElement 不是 contenteditable（窗口在后台），
+#     立即降级，绝不做合成兜底，避免「看起来填上了、实际发空文」。
+_CDP_CHUNK = 20
+_CDP_LOCATE_JS = r"""
+(() => {
+  const sels = __SELECTORS__;
+  for (const s of sels) {
+    const nodes = [...document.querySelectorAll(s)];
+    const hit = nodes.find(e => e.offsetWidth || e.offsetHeight || e.getClientRects().length);
+    if (hit) {
+      const r = hit.getBoundingClientRect();
+      return JSON.stringify({
+        ok: true, selector: s,
+        x: Math.round(r.left + 24),
+        y: Math.round(r.top + Math.min(14, Math.max(6, r.height / 2)))
+      });
+    }
+  }
+  return JSON.stringify({ok: false});
+})()
+""".strip()
+_CDP_ACTIVE_JS = r"""
+(() => {
+  const a = document.activeElement;
+  return JSON.stringify({
+    tag: a ? a.tagName.toLowerCase() : '',
+    ce: a ? a.getAttribute('contenteditable') : null,
+    cls: a ? (a.className || '').toString().slice(0, 80) : ''
+  });
+})()
+""".strip()
+_CDP_LEN_JS = r"""
+(() => {
+  const sels = __SELECTORS__;
+  for (const s of sels) {
+    const nodes = [...document.querySelectorAll(s)];
+    const hit = nodes.find(e => e.offsetWidth || e.offsetHeight || e.getClientRects().length);
+    if (hit) return JSON.stringify({len: hit.textContent.length, preview: hit.textContent.slice(0, 40)});
+  }
+  return JSON.stringify({len: 0});
+})()
+""".strip()
+# 想法发布后知乎停在首页（原地刷新 feed），URL 不跳详情。
+# 用正文前缀在当前页/个人主页想法列表中反查刚发布的 pin，匹配上才导航过去读信号，
+# 绝不接受无关 pin。
+_PIN_FIND_JS = r"""
+(() => {
+  const needle = __NEEDLE__;
+  const a = [...document.querySelectorAll('a[href*="/pin/"]').values()].find(x => {
+    // 真实页面卡片类名多变（主页想法列表无统一容器 class）：向上最多找 12 层祖先
+    let node = x;
+    for (let i = 0; i < 12 && node; i++) {
+      if ((node.textContent || '').includes(needle)) return true;
+      node = node.parentElement;
+    }
+    return false;
+  });
+  return JSON.stringify({href: a ? a.href : null});
+})()
+""".strip()
+_PROFILE_HREF_JS = r"""
+(() => {
+  const a = document.querySelector('a[href*="/people/"]');
+  return JSON.stringify({href: a ? a.href : null});
 })()
 """.strip()
 # 只允许点「写回答/添加回答/编辑回答」这类编辑入口，绝不匹配最终发布动作
@@ -187,8 +293,17 @@ class Publisher:
         now = now or self._clock.now()
         kind = ContentKind(session.kind)
 
+        draft = load_draft(ws, session.draft_slug)
         href = str(self.client.evaluate("location.href").get("value", ""))
         match = _PUBLISHED_PATTERNS[kind].match(href)
+        # 想法发布后停在首页：按正文前缀反查刚发布的 pin，再导航到其详情页读信号
+        if not match and kind == ContentKind.PIN:
+            resolved = self._resolve_pin_url(draft.body)
+            if resolved is not None:
+                self.client.navigate(resolved, group_title="知乎想法发布")
+                time.sleep(1.0)
+                href = str(self.client.evaluate("location.href").get("value", ""))
+                match = _PUBLISHED_PATTERNS[kind].match(href)
         if not match:
             raise PublishError(
                 f"当前页面 URL 不像已发布的{kind.value}：{href}。"
@@ -202,7 +317,6 @@ class Publisher:
         )
         self.client.screenshot(path=str(shot))
 
-        draft = load_draft(ws, session.draft_slug)
         draft.status = transition_status(draft.status, "published")
         draft.published_url = published_url
         save_draft(ws, draft)
@@ -224,14 +338,54 @@ class Publisher:
         session.detail["published_url"] = published_url
         return ConfirmResult(session.state, published_url, str(shot), content_id)
 
+    def _find_pin_href(self, body_prefix: str) -> str | None:
+        code = _PIN_FIND_JS.replace("__NEEDLE__", json.dumps(body_prefix, ensure_ascii=False))
+        result = self._readback(code)
+        href = result.get("href")
+        return str(href) if href else None
+
+    def _resolve_pin_url(self, body: str) -> str | None:
+        """想法发布后反查详情 URL。
+
+        真实冒烟（2026-09-28）：点发布后知乎原地刷新 feed，``location.href``
+        仍是首页；发布成功弹窗数秒后自动消失。依次尝试：
+        1) 当前页（弹窗/feed 中的 pin 链接，按正文前缀匹配，轮询数次）；
+        2) 本人主页 ``/people/<token>/pins`` 想法列表（懒加载，最多等约 16s）。
+        只接受卡片文本包含正文前 12 字的 pin，杜绝误认他人内容。
+        """
+        prefix = body[:12]
+        for _ in range(4):
+            href = self._find_pin_href(prefix)
+            if href:
+                return href
+            time.sleep(0.6)
+        profile = self._readback(_PROFILE_HREF_JS)
+        me_url = str(profile.get("href") or "")
+        match = re.search(r"/people/([^/?#]+)", me_url)
+        if match is None:
+            return None
+        pins_url = f"https://www.zhihu.com/people/{match.group(1)}/pins"
+        self.client.navigate(pins_url, group_title="知乎想法发布")
+        # 列表靠 IntersectionObserver 懒渲染：后台标签页会被节流，需前台 + 逐步滚动
+        for step in range(16):
+            time.sleep(1.0)
+            href = self._find_pin_href(prefix)
+            if href:
+                return href
+            self.client.evaluate(f"window.scrollTo(0, {(step + 1) * 600})")
+        return None
+
     # ---------------- 三种类型填充 ----------------
 
     def _fill_article(self, draft: Draft) -> dict[str, Any]:
         self.client.navigate(ARTICLE_WRITE_URL, group_title="知乎文章发布")
+        # 真实 /write 编辑器懒挂载：先等标题框出现，否则 fill 会抢跑失败
+        if self._wait_located(_TITLE_SELECTORS) is None:
+            raise PublishError("找不到文章标题输入框（页面加载超时）")
         title_hit = self._fill_any(_TITLE_SELECTORS, draft.title)
         if title_hit is None:
             raise PublishError("找不到文章标题输入框")
-        body_hit = self._fill_any(_BODY_SELECTORS, draft.body)
+        body_hit = self._fill_body(_BODY_SELECTORS, draft.body)
         if body_hit is None:
             raise PublishError("找不到文章正文编辑器")
         readback = self._readback(
@@ -245,7 +399,12 @@ class Publisher:
             raise PublishError("标题回读不一致，已停止自动操作")
         if int(readback.get("bodyLen", 0)) < len(draft.body) - 2:
             raise PublishError("正文回读字数明显偏少，已停止自动操作")
-        return {"title_selector": title_hit[0], "body_selector": body_hit[0], "readback": readback}
+        return {
+            "title_selector": title_hit[0],
+            "body_selector": body_hit[0],
+            "body_mode": body_hit[1],
+            "readback": readback,
+        }
 
     def _fill_answer(self, draft: Draft) -> dict[str, Any]:
         self.client.navigate(draft.question_url, group_title="知乎回答发布")
@@ -254,7 +413,7 @@ class Publisher:
             entry_signal = json.loads(entry.get("value", "{}"))
         except (ValueError, TypeError):
             entry_signal = {}
-        body_hit = self._fill_any(_BODY_SELECTORS, draft.body)
+        body_hit = self._fill_body(_BODY_SELECTORS, draft.body)
         if body_hit is None:
             raise PublishError("找不到回答正文编辑器（可能未进入编辑态）")
         readback = self._readback(
@@ -273,7 +432,12 @@ class Publisher:
             )
         if int(readback.get("bodyLen", 0)) < len(draft.body) - 2:
             raise PublishError("回答正文回读字数明显偏少，已停止自动操作")
-        return {"entry_signal": entry_signal, "body_selector": body_hit[0], "readback": readback}
+        return {
+            "entry_signal": entry_signal,
+            "body_selector": body_hit[0],
+            "body_mode": body_hit[1],
+            "readback": readback,
+        }
 
     def _fill_pin(self, draft: Draft) -> dict[str, Any]:
         if len(draft.body) < PIN_MIN_CHARS:
@@ -282,7 +446,7 @@ class Publisher:
         opened = self._readback(_PIN_OPEN_JS)
         if not opened.get("opened"):
             raise PublishError("打不开想法输入框（首页未找到「分享此刻的想法...」入口）")
-        body_hit = self._fill_any(_PIN_SELECTORS, draft.body)
+        body_hit = self._fill_body(_PIN_SELECTORS, draft.body)
         if body_hit is None:
             raise PublishError("找不到想法输入框")
         readback = self._readback(
@@ -293,9 +457,14 @@ class Publisher:
         )
         if int(readback.get("bodyLen", 0)) < PIN_MIN_CHARS:
             raise PublishError("想法回读不足 20 字，已停止自动操作")
-        return {"body_selector": body_hit[0], "readback": readback}
+        return {"body_selector": body_hit[0], "body_mode": body_hit[1], "readback": readback}
 
     # ---------------- 辅助与降级 ----------------
+
+    def _note_fill_error(self, message: str) -> None:
+        # 单元直调 _fill_body 等场景可能尚未 begin（session 为 None）
+        if self.session is not None:
+            self.session.detail["last_fill_error"] = message
 
     def _fill_any(self, selectors: list[str], value: str) -> tuple[str, str] | None:
         last: str = ""
@@ -306,8 +475,142 @@ class Publisher:
             except BridgeError as exc:
                 last = str(exc)
                 continue
-        self.session.detail["last_fill_error"] = last
+        self._note_fill_error(last)
         return None
+
+    # ---- CDP 受信输入 ----
+
+    def _wait_located(
+        self, selectors: list[str], *, timeout: float = 10.0, interval: float = 0.3
+    ) -> dict[str, Any] | None:
+        """轮询等待选择器列表中任一元素可见（真实页面编辑器懒挂载，导航即返回）。"""
+        code = _CDP_LOCATE_JS.replace("__SELECTORS__", json.dumps(selectors))
+        deadline = time.monotonic() + timeout
+        while True:
+            located = self._readback(code)
+            if located.get("ok"):
+                return located
+            if time.monotonic() >= deadline:
+                return None
+            time.sleep(interval)
+
+    def _cdp_key(self, cdp: Callable[..., dict[str, Any]], key: str, code: str,
+                 vk: int, *, ctrl: bool = False) -> None:
+        mods = 2 if ctrl else 0
+        if ctrl:
+            cdp("Input.dispatchKeyEvent", {
+                "type": "keyDown", "key": "Control", "code": "ControlLeft",
+                "windowsVirtualKeyCode": 17, "nativeVirtualKeyCode": 17,
+                "modifiers": 0,
+            })
+        cdp("Input.dispatchKeyEvent", {
+            "type": "rawKeyDown", "key": key, "code": code,
+            "windowsVirtualKeyCode": vk, "nativeVirtualKeyCode": vk,
+            "modifiers": mods,
+        })
+        cdp("Input.dispatchKeyEvent", {
+            "type": "keyUp", "key": key, "code": code,
+            "windowsVirtualKeyCode": vk, "nativeVirtualKeyCode": vk,
+            "modifiers": mods,
+        })
+        if ctrl:
+            cdp("Input.dispatchKeyEvent", {
+                "type": "keyUp", "key": "Control", "code": "ControlLeft",
+                "windowsVirtualKeyCode": 17, "nativeVirtualKeyCode": 17,
+            })
+
+    def _cdp_insert(self, selectors: list[str], value: str) -> tuple[str, str] | None:
+        """CDP 受信路径填充 DraftJS 正文。
+
+        * 成功 → ``(selector, "cdp-insert")``；
+        * 页面没有可见编辑器或桥不支持 cdp → ``None``（交回旧兜底路径）；
+        * 焦点未确认/回读字数不足 → 抛 :class:`PublishError`（直接降级，
+          禁止再走只改 DOM 的合成兜底，否则「标题在、正文消失」发空文）。
+        """
+        cdp = getattr(self.client, "cdp", None)
+        if not callable(cdp):
+            return None
+        located = self._wait_located(selectors)
+        if located is None:
+            return None
+        try:
+            x, y = int(located["x"]), int(located["y"])
+            # 前台切换/弹层展开有动画：点击+焦点确认最多重试 3 次
+            active: dict[str, Any] = {}
+            for attempt in range(3):
+                cdp("Page.bringToFront", {})
+                time.sleep(0.2)
+                for evt, buttons in (("mousePressed", 1), ("mouseReleased", 0)):
+                    cdp("Input.dispatchMouseEvent", {
+                        "type": evt, "x": x, "y": y, "button": "left",
+                        "buttons": buttons, "clickCount": 1,
+                    })
+                time.sleep(0.5)
+                active = self._readback(_CDP_ACTIVE_JS)
+                if active.get("ce") == "true":
+                    break
+            if active.get("ce") != "true":
+                raise PublishError(
+                    "正文编辑器未获得真实焦点。请把浏览器窗口切到前台，"
+                    "用鼠标点一下正文区后重试「填充」（草稿与正文已准备好，无需手动粘贴）。"
+                )
+            # 重试场景：先受信清空可能的半截内容（全新空草稿时无副作用）
+            self._cdp_key(cdp, "a", "KeyA", 65, ctrl=True)
+            time.sleep(0.15)
+            self._cdp_key(cdp, "Delete", "Delete", 46)
+            time.sleep(0.2)
+            lines = value.split("\n")
+            for line_index, line in enumerate(lines):
+                for start in range(0, len(line), _CDP_CHUNK):
+                    cdp("Input.insertText", {"text": line[start:start + _CDP_CHUNK]})
+                    time.sleep(0.12)
+                if line_index < len(lines) - 1:
+                    self._cdp_key(cdp, "Enter", "Enter", 13)
+                    time.sleep(0.08)
+            time.sleep(1.0)
+            result = self._readback(
+                _CDP_LEN_JS.replace("__SELECTORS__", json.dumps(selectors))
+            )
+            expected = len(value.replace("\n", ""))
+            if int(result.get("len", 0)) < expected - 2:
+                raise PublishError(
+                    "正文受信上屏后回读字数不足（模型可能未接收），已停止，请勿发布；"
+                    "请把窗口切到前台后重试。"
+                )
+        except PublishError:
+            raise
+        except BridgeError:
+            # 守护端/调试器不支持 cdp：交回旧兜底（不写 session.detail，
+            # 单元直调场景可能尚未 begin）
+            return None
+        return str(located.get("selector") or selectors[0]), "cdp-insert"
+
+    def _fill_body(self, selectors: list[str], value: str) -> tuple[str, str] | None:
+        """正文填充。优先级：CDP 受信输入 > DraftJS execCommand 注入 > bridge fill。
+
+        后两者只改 DOM，真实知乎 DraftJS 不接收（失焦被回滚、字数 0），
+        仅在 cdp 不可用时作为旧守护端兜底保留。焦点未确认类失败直接抛出，
+        由 ``fill()`` 降级，不会静默落到合成兜底。
+        """
+        cdp_hit = self._cdp_insert(selectors, value)
+        if cdp_hit is not None:
+            return cdp_hit
+        try:
+            self.client.evaluate(
+                "window.__zch_fill__ = " + json.dumps(value, ensure_ascii=False) + ";"
+            )
+            code = _DRAFTJS_INJECT_JS.replace("__SELECTORS__", json.dumps(selectors))
+            result = self._readback(code)
+            # 段落分隔符不计入 textContent，故按去换行后的长度核对
+            expected = len(value.replace("\n", ""))
+            if result.get("ok") and int(result.get("len", 0)) >= expected - 2:
+                return str(result.get("selector") or selectors[0]), "draftjs-inject"
+            self._note_fill_error(
+                f"draftjs 注入未确认：{result.get('why') or '回读字数不足'}"
+            )
+        except (BridgeError, PublishError) as exc:
+            self._note_fill_error(f"draftjs 注入异常：{exc}")
+        return self._fill_any(selectors, value)
 
     def _readback(self, code: str) -> dict[str, Any]:
         resp = self.client.evaluate(code)

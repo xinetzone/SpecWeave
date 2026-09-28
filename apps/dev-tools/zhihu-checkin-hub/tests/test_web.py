@@ -38,6 +38,10 @@ class ScriptedBridge:
     def evaluate(self, code):
         if code == "location.href":
             return {"type": "string", "value": self.href}
+        # 标题/编辑器挂载等待探测：自动应答，不消费队列
+        if "getBoundingClientRect" in code:
+            return {"type": "string", "value": json.dumps(
+                {"ok": True, "selector": ".public-DraftEditor-content", "x": 1, "y": 1})}
         if self.eval_queue:
             return {"type": "string", "value": json.dumps(self.eval_queue.pop(0), ensure_ascii=False)}
         return {"type": "string", "value": "{}"}
@@ -343,7 +347,11 @@ def test_full_wizard_flow(client: TestClient, bridge: ScriptedBridge, workbench:
     assert gate.status_code == 303
 
     # ④ 填充（回读队列）
-    bridge.eval_queue = [{"title": "向导文章", "bodyLen": len(body)}]
+    bridge.eval_queue = [
+        {"ignored": True},
+        {"ok": True, "len": len(body)},
+        {"title": "向导文章", "bodyLen": len(body)},
+    ]
     fill = client.post("/publish/fill", data={"_csrf": token, "slug": "art-web"})
     assert fill.status_code == 200
     assert fill.json()["state"] == "awaiting_human"
@@ -467,7 +475,12 @@ def test_pin_confirm_requires_explicit_image_choice(
         follow_redirects=False,
     )
     assert gated.status_code == 303
-    bridge.eval_queue = [{"opened": True}, {"bodyLen": 28}]
+    bridge.eval_queue = [
+        {"opened": True},
+        {"ignored": True},
+        {"ok": True, "len": 28},
+        {"bodyLen": 28},
+    ]
     fill = client.post("/publish/fill", data={"_csrf": token, "slug": "pin-web"})
     assert fill.status_code == 200
     assert fill.json()["state"] == "awaiting_human"

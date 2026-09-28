@@ -87,6 +87,19 @@ def test_action_methods_unwrap_real_envelope() -> None:
     assert transport.calls[1]["args"]["path"] == "x.png"
 
 
+def test_cdp_passthrough_envelope() -> None:
+    # 受信输入通道：cdp(method, params) 透传 chrome.debugger
+    client, transport = make_client({"cdp": ok({"ok": True})})
+    client.cdp("Input.insertText", {"text": "正文"})
+    client.cdp("Page.bringToFront")  # params 缺省为 {}
+    assert transport.calls[0]["action"] == "cdp"
+    assert transport.calls[0]["args"] == {
+        "method": "Input.insertText",
+        "params": {"text": "正文"},
+    }
+    assert transport.calls[1]["args"] == {"method": "Page.bringToFront", "params": {}}
+
+
 def test_transport_and_protocol_errors_normalized() -> None:
     client, _ = make_client(raise_exc=httpx.ConnectError("refused"))
     with pytest.raises(BridgeError):

@@ -158,6 +158,10 @@ class BridgeClient:
     def list_tabs(self) -> dict[str, Any]:
         return self.call("list_tabs")
 
+    def cdp(self, method: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
+        """透传 chrome.debugger CDP（受信输入通道，如 Input.insertText）。"""
+        return self.call("cdp", method=method, params=params or {})
+
     # ---------------- 三态健康 ----------------
 
     def health(self) -> HealthReport:
