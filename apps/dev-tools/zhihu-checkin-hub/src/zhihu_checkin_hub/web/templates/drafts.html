@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>草稿</h1>
+
+<div class="card">
+  <h2>新建草稿</h2>
+  <form class="stack" method="post" action="/drafts/save">
+    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+    <div class="row">
+      <div><label>标题（文章必填）</label><input type="text" name="title"></div>
+      <div>
+        <label>类型</label>
+        <select name="kind">
+          <option value="article">专栏文章</option>
+          <option value="answer">问题回答</option>
+          <option value="pin">想法（≥20 字）</option>
+        </select>
+      </div>
+      <div><label>问题 URL（回答）</label><input type="url" name="question_url"></div>
+    </div>
+    <label>正文</label>
+    <textarea name="body" rows="4" placeholder="内容须本人撰写，本应用不提供 AI 生成/润色"></textarea>
+    <p><button>创建并编辑</button></p>
+  </form>
+</div>
+
+<div class="card">
+  <h2>全部草稿（local/posts）</h2>
+  <table>
+    <tr><th>slug</th><th>标题</th><th>类型</th><th>状态</th><th>已发布</th><th></th></tr>
+    {% for d in drafts %}
+    <tr>
+      <td class="small">{{ d.slug }}</td>
+      <td>{{ d.title }}</td>
+      <td>{{ kind_labels[d.kind] }}</td>
+      <td><span class="badge badge-{{ d.status }}">{{ d.status }}</span></td>
+      <td class="small">{{ d.published_url or '—' }}</td>
+      <td><a class="btn secondary" href="/drafts/{{ d.slug }}">编辑</a></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" class="muted small">还没有草稿</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

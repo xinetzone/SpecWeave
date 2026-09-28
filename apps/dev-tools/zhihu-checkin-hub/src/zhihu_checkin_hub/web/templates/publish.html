@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>发布向导</h1>
+<div class="flash flash-info">内容须本人撰写、应用不含 AI 生成；应用只负责填充，<b>最终发布按钮永远由你本人点击</b>。</div>
+
+<div class="card">
+  <h2>① 选择草稿</h2>
+  <form method="get" action="/publish" class="row">
+    <div>
+      <select name="slug" onchange="this.form.submit()">
+        <option value="">— 请选择 —</option>
+        {% for d in drafts %}
+        <option value="{{ d.slug }}" {{ 'selected' if selected and selected.slug == d.slug }}>
+          [{{ d.status }}] {{ kind_labels[d.kind] }} · {{ d.title or d.slug }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+  </form>
+  {% if selected %}
+  <p class="small">
+    类型 <span class="badge badge-info">{{ kind_labels[selected.kind] }}</span>
+    状态 <span class="badge badge-{{ selected.status }}">{{ selected.status }}</span>
+    {% if selected.kind == 'answer' %}· 问题 <a href="{{ selected.question_url }}">{{ selected.question_url }}</a>{% endif %}
+    · 正文 {{ selected.body|length }} 字
+  </p>
+  {% endif %}
+</div>
+
+{% if selected %}
+<div class="card">
+  <h2>② 发布前固定门（四项全绿才放行）</h2>
+  <form class="stack" id="gate-form" method="post" action="/publish/gate">
+    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+    <input type="hidden" name="slug" value="{{ selected.slug }}">
+
+    <div class="gate-item">
+      <input type="checkbox" name="deletion_tested" value="1" id="g1" onchange="refreshGate()">
+      <div>
+        <label for="g1" style="margin:0">已完成删稿/仅自己可见测试</label>
+        <input type="text" name="deletion_note" placeholder="留痕说明：测试方式与结果" oninput="refreshGate()">
+      </div>
+    </div>
+    <div class="gate-item">
+      <input type="checkbox" name="ratio_selfcheck" value="1" id="g2" onchange="refreshGate()">
+      <div>
+        <label for="g2" style="margin:0">占比自检：本期不依赖活动条款</label>
+        <input type="text" name="ratio_note" placeholder="留痕说明：本期常规创作构成" oninput="refreshGate()">
+      </div>
+    </div>
+    <div class="gate-item">
+      <div>
+        <label style="margin:0">条款留痕（多选；均未用到请只选「无」）</label>
+        <div class="row small">
+          <span><input type="checkbox" name="clauses" value="search" onchange="refreshGate()"> 检索类</span>
+          <span><input type="checkbox" name="clauses" value="edit" onchange="refreshGate()"> 编辑类</span>
+          <span><input type="checkbox" name="clauses" value="debug" onchange="refreshGate()"> 调试类</span>
+          <span><input type="checkbox" name="clauses" value="none" onchange="refreshGate()"> 无</span>
+        </div>
+      </div>
+    </div>
+    <div class="gate-item">
+      <input type="checkbox" name="edge_confirmed" value="1" id="g4" onchange="refreshGate()">
+      <div>
+        <label for="g4" style="margin:0">已主动确认边缘场景（图片/转载/活动边界）</label>
+        <input type="text" name="edge_note" placeholder="说明（可空；想法图片在填充后由你手动插入确认）">
+      </div>
+    </div>
+
+    <p><button type="submit" id="gate-submit" disabled>通过固定门并进入下一步</button></p>
+    <p class="small muted" id="gate-hint">请先勾选四项并补全两项说明。</p>
+  </form>
+</div>
+
+<div class="card">
+  <h2>③ 浏览器通道三态健康</h2>
+  <p class="small muted">daemon 可达 → 浏览器会话可用 → 知乎已登录。应用不读取 cookie 与账号密码。</p>
+  <button class="secondary" onclick="checkHealth()">检测通道</button>
+  <div id="health-result" class="panel-result" style="margin-top:10px">尚未检测</div>
+</div>
+
+<div class="card">
+  <h2>④ 填充 → 本人发布 → 存证</h2>
+  <p class="small">
+    向导状态：
+    <span class="badge badge-info" id="session-state">{{ session.state.value if session else 'idle' }}</span>
+  </p>
+  {% if selected.kind == 'pin' %}
+  <p class="small">想法图片无法自动插入：填充后请自行确认「图片已插入/无需图片」再发布。</p>
+  {% endif %}
+  <p>
+    <button onclick="doFill()">开始自动填充</button>
+  </p>
+  <div id="fill-result" class="panel-result" style="display:none"></div>
+
+  <div id="await-panel" style="display:none; margin-top:12px">
+    <div class="flash flash-warn" style="background:var(--warn-soft);color:var(--warn)">
+      请切到浏览器本人完成最后核对与发布（文章/回答/想法的最终按钮都由你点击），完成后回来：
+    </div>
+    {% if selected.kind == 'pin' %}
+    <div class="gate-item">
+      <label style="margin:0">想法图片（必选）：</label>
+      <label style="margin:0;white-space:nowrap"><input type="radio" name="pin_image" value="inserted"> 图片已插入</label>
+      <label style="margin:0;white-space:nowrap"><input type="radio" name="pin_image" value="none"> 无需图片</label>
+    </div>
+    {% endif %}
+    <button onclick="doConfirm()">我已发布（读取 URL + 截图存证）</button>
+  </div>
+  <div id="confirm-result" class="panel-result" style="display:none; margin-top:10px"></div>
+</div>
+{% endif %}
+
+<script>
+const CSRF = {{ csrf_token|tojson }};
+const SLUG = {{ selected.slug|tojson if selected else '""'|safe }};
+
+function formPayload(form) {
+  return new URLSearchParams(new FormData(form));
+}
+function refreshGate() {
+  const f = document.getElementById('gate-form');
+  const g1 = f.deletion_tested.checked && f.deletion_note.value.trim() !== '';
+  const g2 = f.ratio_selfcheck.checked && f.ratio_note.value.trim() !== '';
+  const clauseBoxes = [...f.querySelectorAll('input[name=clauses]:checked')].map(i => i.value);
+  const clauseOk = clauseBoxes.length > 0 && !(clauseBoxes.includes('none') && clauseBoxes.length > 1);
+  const g4 = f.edge_confirmed.checked;
+  const ok = g1 && g2 && clauseOk && g4;
+  document.getElementById('gate-submit').disabled = !ok;
+  document.getElementById('gate-hint').textContent = ok ? '四项全绿，可以提交固定门。' : '请先勾选四项并补全两项说明；条款选「无」时不可同时选其他级别。';
+}
+
+async function postAction(url, data) {
+  const resp = await fetch(url, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: new URLSearchParams({_csrf: CSRF, slug: SLUG, ...data})
+  });
+  const text = await resp.text();
+  let parsed;
+  try { parsed = JSON.parse(text); } catch { parsed = {raw: text}; }
+  return {ok: resp.ok, status: resp.status, data: parsed};
+}
+
+async function checkHealth() {
+  const r = await postAction('/publish/health', {});
+  const box = document.getElementById('health-result');
+  if (r.ok) {
+    box.textContent = `[${r.data.state}] ${r.data.message}`;
+  } else {
+    box.textContent = `检测失败：${r.data.raw || r.status}`;
+  }
+}
+
+async function doFill() {
+  const r = await postAction('/publish/fill', {});
+  const box = document.getElementById('fill-result');
+  box.style.display = 'block';
+  if (!r.ok) {
+    box.textContent = `无法开始填充：${r.data.raw || r.status}`;
+    return;
+  }
+  document.getElementById('session-state').textContent = r.data.state;
+  box.textContent = JSON.stringify(r.data.detail, null, 2) + '\n\n' + (r.data.instruction || '');
+  if (r.data.state === 'awaiting_human' || r.data.state === 'filled') {
+    document.getElementById('await-panel').style.display = 'block';
+  }
+}
+
+async function doConfirm() {
+  const picked = document.querySelector('input[name=pin_image]:checked');
+  if (document.querySelector('input[name=pin_image]') && !picked) {
+    const box = document.getElementById('confirm-result');
+    box.style.display = 'block';
+    box.textContent = '请先显式确认想法图片「已插入」或「无需图片」。';
+    return;
+  }
+  const extra = picked ? {pin_image: picked.value} : {};
+  const r = await postAction('/publish/confirm', extra);
+  const box = document.getElementById('confirm-result');
+  box.style.display = 'block';
+  if (!r.ok) {
+    box.textContent = `未能确认：${r.data.raw || r.status}`;
+    return;
+  }
+  document.getElementById('session-state').textContent = r.data.state;
+  box.textContent = `发布已确认：${r.data.published_url}\n截图：${r.data.screenshot}\n内容已回填当日 entry，草稿状态已更新为 published。`;
+  document.getElementById('await-panel').style.display = 'none';
+}
+</script>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>每日打卡</h1>
+
+<div class="card">
+  <form class="stack" method="post" action="/checkin/entry" id="entry-form">
+    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+    <div class="row">
+      <div>
+        <label>日期</label>
+        <input type="date" name="day" value="{{ today }}" required>
+      </div>
+    </div>
+
+    <h2>创作记录</h2>
+    <div id="contents">
+      <div class="content-row row">
+        <div>
+          <label>类型</label>
+          <select name="kind">
+            {% for value, label in kinds %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+          </select>
+        </div>
+        <div><label>字数</label><input type="number" name="char_count" min="0" value="0"></div>
+        <div><label>内容 URL</label><input type="url" name="url" placeholder="发布后回填"></div>
+        <div><label>问题 URL（回答）</label><input type="url" name="question_url"></div>
+        <div><label>关联草稿 slug</label><input type="text" name="draft_slug"></div>
+      </div>
+    </div>
+    <p><button type="button" class="secondary" onclick="addContentRow()">再加一条创作</button></p>
+
+    <h2>互动（底盘 3 个）</h2>
+    <div class="row">
+      {% for value, label in interactions %}
+      <div class="gate-item">
+        <input type="checkbox" name="interaction" value="{{ value }}" id="i-{{ value }}">
+        <label for="i-{{ value }}" style="margin:0">{{ label }}</label>
+        <input type="text" name="interaction_target" placeholder="对象（可空）">
+      </div>
+      {% endfor %}
+    </div>
+
+    <label>当日备注</label>
+    <textarea name="note" rows="2">{{ today_entry.note }}</textarea>
+    <p><button type="submit">保存当日打卡</button></p>
+  </form>
+</div>
+
+<div class="card">
+  <h2>tracker 行动项勾选</h2>
+  <p class="small muted">勾选即回写 tracker.md（写前自动备份到 local/backups）。放弃/降频请在备注处理，不删条目。</p>
+  {% for section, items in grouped.items() %}
+  <h3>{{ section }}</h3>
+  {% for item in items %}
+  <div class="check-item {{ 'done' if item.checked }}">
+    <span>[{{ 'x' if item.checked else ' ' }}] {{ item.label }}</span>
+    {% set rid = readiness.get(item.item_id) %}
+    {% if rid and rid.can_check and not item.checked %}
+    <span class="badge badge-ready">可勾选</span>
+    {% endif %}
+    {% if item.checked %}
+    <span class="badge badge-ok">已勾选 {{ item.date_stamp }}</span>
+    {% else %}
+    <form method="post" action="/checkin/checkoff">
+      <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+      <input type="hidden" name="item_id" value="{{ item.item_id }}">
+      <input type="hidden" name="day" value="{{ today }}">
+      <button type="submit" class="secondary small">勾选 + 日期</button>
+    </form>
+    {% endif %}
+  </div>
+  {% endfor %}
+  {% endfor %}
+</div>
+
+<script>
+function addContentRow() {
+  const box = document.getElementById('contents');
+  const first = box.querySelector('.content-row');
+  const clone = first.cloneNode(true);
+  clone.querySelectorAll('input').forEach(i => { if (i.name === 'char_count') i.value = 0; else i.value = ''; });
+  box.appendChild(clone);
+}
+</script>
+{% endblock %}

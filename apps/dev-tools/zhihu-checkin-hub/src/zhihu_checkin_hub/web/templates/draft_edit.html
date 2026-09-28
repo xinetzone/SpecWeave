@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>草稿编辑 · <span class="muted small">{{ draft.slug }}</span></h1>
+
+<div class="card">
+  <p>
+    状态 <span class="badge badge-{{ draft.status }}">{{ draft.status }}</span>
+    {% if draft.published_url %}· 已发布 <a href="{{ draft.published_url }}">{{ draft.published_url }}</a>{% endif %}
+  </p>
+  <form class="stack" method="post" action="/drafts/save">
+    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+    <input type="hidden" name="slug" value="{{ draft.slug }}">
+    <div class="row">
+      <div><label>标题</label><input type="text" id="title" name="title" value="{{ draft.title }}"></div>
+      <div>
+        <label>类型</label>
+        <select name="kind">
+          {% for value, label in kinds %}
+          <option value="{{ value }}" {{ 'selected' if draft.kind == value }}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div><label>问题 URL（回答必填）</label><input type="url" id="qurl" name="question_url" value="{{ draft.question_url }}"></div>
+    </div>
+    <label>正文（本人撰写）</label>
+    <textarea id="body" name="body" rows="16" oninput="updateCount()">{{ draft.body }}</textarea>
+    <div class="small muted">
+      字数 <span id="charcount">{{ draft.body|length }}</span> ·
+      回答门槛 ≥100 字 · 想法门槛 ≥20 字 · 文章建议 ≥300 字
+    </div>
+    <p>
+      <button>保存</button>
+      <button type="button" class="secondary" onclick="togglePreview()">预览 / 编辑</button>
+    </p>
+    <div id="preview" class="panel-result" style="display:none; white-space: pre-wrap;"></div>
+  </form>
+
+  <form method="post" action="/drafts/{{ draft.slug }}/ready" style="margin-top:8px">
+    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+    <button class="secondary" {{ 'disabled' if draft.status != 'draft' }}>标记 ready（准备发布）</button>
+  </form>
+  <p class="small"><a class="btn" href="/publish?slug={{ draft.slug }}">进入发布向导</a></p>
+</div>
+
+<script>
+function updateCount() {
+  document.getElementById('charcount').textContent = document.getElementById('body').value.length;
+}
+function togglePreview() {
+  const ta = document.getElementById('body');
+  const pv = document.getElementById('preview');
+  if (pv.style.display === 'none') {
+    pv.textContent = ta.value;
+    pv.style.display = 'block';
+    ta.style.display = 'none';
+  } else {
+    pv.style.display = 'none';
+    ta.style.display = 'block';
+  }
+}
+</script>
+{% endblock %}

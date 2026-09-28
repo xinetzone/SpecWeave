@@ -1,0 +1,11 @@
+# 知乎打卡工作台 · 应用默认配置
+# 优先级：命令行参数 > 环境变量 ZHIHU_CHECKIN_WORKSPACE > 本文件 > 自动推算
+# workspace 留空（null）时自动定位 <仓库根>/projects/monetize/zhihu-monetization
+workspace: null
+webbridge_endpoint: "http://127.0.0.1:10086/command"
+session: "zhihu-checkin-hub"
+host: "127.0.0.1"
+port: 17253
+daily_reminder_hour: 21
+# 执行周起跑日（W1 周聚合用）
+week_start: "2026-09-25"
