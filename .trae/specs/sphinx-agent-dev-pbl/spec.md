@@ -3,7 +3,7 @@
 >  methodologies applied: TRAE-spec-mode（Specify）→ seven-concepts（F 第一性原理 驱动设计）
 > 自然语言：简体中文（与用户请求一致）
 >
-> 📎 配套文件：`tasks.md`（任务队列与验收标准）、`insight.md`（V 对抗审查与洞察）、`review.md`（独立审查与检查点）、**`decisions.md`（决策记录 — 原 Open Questions 的落定依据）**、`handbook/`（学生操作手册）、`templates/`（Task4/5 代码模板）、`warmup-docs/`（Task0 脚手架）。
+> 📎 配套文件：`tasks.md`（任务队列与验收标准）、`insight.md`（V 对抗审查与洞察）、`review.md`（独立审查与检查点）、**`decisions.md`（决策记录 — 原 Open Questions 的落定依据）**、`handbook/`（学生操作手册）、`templates/`（Task4/5 代码模板）、`warmup-docs/`（Task0 脚手架）、**`teacher/`（教师实施包 — 课时编排 / 可打印评分表 / 机房准备清单 / 课堂应答手册，NFR-1 的落地依据）**。
 
 ## 一、Overview
 
@@ -58,7 +58,7 @@
 
 ## 八、Non-Functional Requirements（质量需求）
 
-- **NFR-1（可操作性）**：教师拿到方案后无需额外查资料即可落地；所有命令行/配置给出可直接复制的片段。
+- **NFR-1（可操作性）**：教师拿到方案后无需额外查资料即可落地；所有命令行/配置给出可直接复制的片段。→ **落地载体：[`teacher/`](teacher/TEACHER-GUIDE.md) 教师实施包**（课时编排、可打印评分表、机房准备清单、课堂应答手册 4 件套），教师侧不再需要外部检索。
 - **NFR-2（安全性）**：方案须强制要求 API Key 通过 `.env` + `python-dotenv` 管理，且 `.env` 必须被 `.gitignore` 排除（不可入库）。
 - **NFR-3（差异化）**：须提供基础 / 进阶（元文档闭环）两档任务，照顾不同水平学生。**元文档闭环须进一步提供"教学化形态"（教师预置草稿样例，零 Token 成本）作为**必做**核心，"全自动形态"（真实调用 API 生成草稿）作为选做加分，另设"无配额降级通道"以保证 AC-6 可达——见 `decisions.md` DQ-3。
 
