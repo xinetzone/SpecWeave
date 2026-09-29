@@ -382,7 +382,7 @@ Wiki化完成后，逐项检查：
 以下原子化Wiki可作为结构参考（已随 learning 板块迁移至 bundles）：
 - [FFI外部函数接口Wiki](../../../projects/awesome-okf-xs/doc/bundles/jishu/comm/ffi/index.md) — 7章标准原子化结构
 - [IDL接口定义语言Wiki](../../../projects/awesome-okf-xs/doc/bundles/jishu/comm/idl/index.md) — 9章教程结构
-- [Harness Engineering Wiki](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/paradigms/harness-engineering-wiki/index.md) — 方法论类Wiki范例
+- [Harness Engineering Wiki](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/ai-engineering-methodology/concepts/paradigms/harness-engineering-wiki/index.md) — 方法论类Wiki范例
 - [向日葵无网远控硬件Wiki](../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-offline-hardware-wiki.md) — 厂商产品类Wiki范例
 
 ---
