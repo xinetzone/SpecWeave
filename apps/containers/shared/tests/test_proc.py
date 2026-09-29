@@ -1,4 +1,5 @@
 """proc（运行时探测 / run_cmd / 随机串）测试，全部打桩无真实子进程。"""
+import os
 import platform
 import types
 
@@ -75,6 +76,25 @@ def test_run_cmd_success_passes_invoke_kwargs():
     assert kwargs["env"]["PYTHONUTF8"] == "1"
     # 默认切断 stdin 转发：invoke 不创建 handle_stdin 线程（FIONREAD 崩溃根因）
     assert kwargs["in_stream"] is False
+
+
+def test_run_cmd_unsets_env_only_for_child(monkeypatch):
+    monkeypatch.setenv("CONTAINER_HOST", "npipe:////./pipe/podman-machine-default")
+    monkeypatch.setenv("KEEP_ME", "ssh://podman-machine")
+    c = FakeContext()
+
+    proc.run_cmd(
+        c,
+        "podman build .",
+        hide=True,
+        echo=False,
+        unset_env=("CONTAINER_HOST",),
+    )
+
+    _, kwargs = c.calls[0]
+    assert "CONTAINER_HOST" not in kwargs["env"]
+    assert kwargs["env"]["KEEP_ME"] == "ssh://podman-machine"
+    assert os.environ["CONTAINER_HOST"].startswith("npipe:")
 
 
 def test_run_cmd_forward_stdin_opt_in_omits_in_stream():

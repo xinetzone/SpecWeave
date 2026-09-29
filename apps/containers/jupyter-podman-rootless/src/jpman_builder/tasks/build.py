@@ -5,6 +5,7 @@ Three-tier backend priority:
   2. podman-py SDK (REST API)
   3. CLI direct calls (fallback)
 """
+import os
 import platform
 from pathlib import Path
 
@@ -105,8 +106,25 @@ def _build_via_cli(c, project_root, tag, apt_mirror, conda_mirror, pip_mirror, n
 
     cmd = " ".join(cmd_parts)
 
+    container_host = os.environ.get("CONTAINER_HOST", "")
+    unset_env = (
+        ("CONTAINER_HOST",)
+        if runtime == "podman" and container_host.lstrip().lower().startswith("npipe:")
+        else ()
+    )
+    if unset_env:
+        print(
+            "[Backend] 忽略 Podman CLI 不支持的 CONTAINER_HOST=npipe，"
+            "改用 Podman 默认连接配置"
+        )
+
     with c.cd(str(project_root)):
-        run_cmd(c, cmd, pty=platform.system() != "Windows")
+        run_cmd(
+            c,
+            cmd,
+            pty=platform.system() != "Windows",
+            unset_env=unset_env,
+        )
 
     print(f"Build complete: {tag}")
 
