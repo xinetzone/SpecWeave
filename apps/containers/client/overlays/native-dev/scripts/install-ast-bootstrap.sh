@@ -19,6 +19,14 @@
 #   语义）；builder 携带的简版满足 py_converter 仅 `from ast import` 的需求。
 # 幂等：重复执行安全；旧版解释器（3.8–3.13）install() 内 hasattr 短路为 no-op。
 # 守卫：smoke/_toolchain_guards.py §11 以「新解释器进程 hasattr」双端断言。
+#
+# 哨兵契约（2026-09-28 实证，sc-20260928-native-build-cu130）：
+#   CPython 3.14 移除的文档全集为 NameConstant/Num/Str/Bytes/Ellipsis 五名，
+#   但本钩子（与生态四份真源 ai/sdk、xmnn-whl-builder、xmtools、docker
+#   preamble 一致）只恢复前四名——Ellipsis 无任何运行时消费者（chaos 全树
+#   grep：仅 doc.py 防御式 getattr；tvm 上游测试反而主动 delattr 五名）。
+#   Index/ExtSlice 在 3.14.7 原生仍存，无哨兵价值，不纳入断言。
+#   故下方安装验证与 smoke §11 一律只断言四名单集；禁止按文档全集"补全"。
 # ==============================================================================
 set -euo pipefail
 
@@ -33,7 +41,8 @@ install_into() {
     sp="$("$py" -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')"
     install -m 644 "$BOOTSTRAP_SRC" "$sp/_xmnn_bootstrap.py"
     printf 'import _xmnn_bootstrap\n' > "$sp/$PTH_NAME"
-    "$py" -c 'import ast; assert all(hasattr(ast, n) for n in ("NameConstant", "Num", "Str", "Bytes", "Ellipsis")), "ast aliases missing"'
+    # 哨兵四名=契约单集（见文件头「哨兵契约」）：stock 3.14 全缺、钩子恢复后全有
+    "$py" -c 'import ast; assert all(hasattr(ast, n) for n in ("NameConstant", "Num", "Str", "Bytes")), "ast aliases missing"'
     echo "[OK] $label: $sp/$PTH_NAME"
 }
 

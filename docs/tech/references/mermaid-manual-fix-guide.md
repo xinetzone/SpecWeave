@@ -122,7 +122,7 @@ OUTPUT --> END("结束")
 
 ---
 
-### 3. [jishu/ai/ai-engineering-methodology/concepts/paradigms/harness-loop-engineering-article-analysis.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/paradigms/harness-loop-engineering-article-analysis.md)
+### 3. [jishu/ai/ai-engineering-methodology/concepts/paradigms/harness-loop-engineering-article-analysis.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/ai-engineering-methodology/concepts/paradigms/harness-loop-engineering-article-analysis.md)
 
 #### subgraph 裸中文ID（2 处）
 
@@ -160,7 +160,7 @@ Emergency --> End["结束"]
 
 ---
 
-### 5. [jishu/ai/mobile-use/](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/mobile-use/index.md)
+### 5. [jishu/ai/mobile-use/](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/products/mobile-use/index.md)
 
 #### end 作节点ID（1 处）
 
@@ -176,7 +176,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 6. [jishu/ai/volcengine/concepts/volcengine-computer-use-agent-analysis.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-computer-use-agent-analysis.md)
+### 6. [jishu/ai/volcengine/concepts/volcengine-computer-use-agent-analysis.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/volcengine/concepts/volcengine-computer-use-agent-analysis.md)
 
 #### subgraph 裸中文ID（12 处）
 
@@ -266,7 +266,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 7. [jishu/ai/volcengine/concepts/volcengine-eip-analysis.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-eip-analysis.md)
+### 7. [jishu/ai/volcengine/concepts/volcengine-eip-analysis.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/volcengine/concepts/volcengine-eip-analysis.md)
 
 #### subgraph 裸中文ID（6 处）
 

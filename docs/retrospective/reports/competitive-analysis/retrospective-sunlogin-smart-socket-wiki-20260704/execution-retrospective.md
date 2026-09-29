@@ -46,7 +46,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 阶段五：Wiki内容创作（S4）
 1. **同类文档参考**：主动参考两个已有同类文档结构：
-   - [text-to-cad-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/text-to-cad/index.md) - wiki结构模板
+   - [text-to-cad-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/products/text-to-cad/index.md) - wiki结构模板
    - [sunlogin-pdu-hardware-learning spec](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) - 向日葵产品分析参考
 2. **主文件创建**：创建`docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-smart-socket-wiki.md`
    - 添加正确的YAML frontmatter（---分隔，title/source/date/tags）

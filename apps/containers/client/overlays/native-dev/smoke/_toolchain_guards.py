@@ -387,10 +387,16 @@ except Exception as exc:  # noqa: BLE001
     check("tkinter 可导入（libtk/libtcl/X11 客户端库齐备）", False, str(exc))
 
 print("\n== 11. AST 启动钩子（xmnn_bootstrap.pth，import tvm 前置条件）==")
-# CPython 3.12+ 移除 ast 遗留节点，tvm 源码树 py_converter.py 在导入期
+# CPython 3.14 移除 ast.NameConstant/Num/Str/Bytes/Ellipsis 五名，但
+# _xmnn_bootstrap.py（与生态四份真源一致）只恢复前四名：Ellipsis 无运行时
+# 消费者（tvm 上游测试主动 delattr 五名仍通过）；Index/ExtSlice 3.14 原生仍存。
+# 故哨兵只用「stock 3.14 全缺、钩子运行后全有」的四名（2026-09-28 实证，
+# sc-20260928-native-build-cu130）。tvm 源码树旧版 py_converter.py 在导入期
 # `from ast import ..., NameConstant, Num, Str`——只有 site 初始化期 .pth 钩子
 # 赶得在导入之前（Layer 5 install-ast-bootstrap.sh 烤入）。本守卫自身就是
-# 「钩子生效后的新解释器进程」：能 import 到钩子模块 + ast 别名齐备即双证。
+# 「钩子生效后的新解释器进程」：能 import 到钩子模块 + 哨兵四名齐备即双证；
+# 端到端 import tvm 由外层冒烟兜底，不在此重复。
+_AST_SENTINELS = ("NameConstant", "Num", "Str", "Bytes")
 try:
     import _xmnn_bootstrap  # noqa: F401,PLC0415
 
@@ -400,12 +406,12 @@ except Exception as exc:  # noqa: BLE001
 import ast as _ast  # noqa: PLC0415
 
 check("base 启动期 ast 别名齐备",
-      all(hasattr(_ast, n) for n in ("NameConstant", "Num", "Str", "Bytes", "Ellipsis")),
+      all(hasattr(_ast, n) for n in _AST_SENTINELS),
       f"ast 来自 {_ast.__file__}")
 main_ast_code = (
     "import ast; "
     "assert all(hasattr(ast, n) for n in "
-    "('NameConstant', 'Num', 'Str', 'Bytes', 'Ellipsis')), 'ast aliases missing'"
+    f"({', '.join(repr(n) for n in _AST_SENTINELS)})), 'ast aliases missing'"
 )
 # 注意不带 -S：-S 跳过 site 处理，恰好绕过被测对象（.pth 不执行）
 main_ast = subprocess.run(

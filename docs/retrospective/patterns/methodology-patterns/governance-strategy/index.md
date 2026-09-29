@@ -83,6 +83,7 @@ module-size-bug-correlation
 mutual-exclusion-composability-precheck
 mvp-unvalidated-code-debt
 net-value-four-questions
+noise-free-container
 no-touch-list
 nonlinear-correction-cost
 orchestration-execution-layering

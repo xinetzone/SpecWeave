@@ -25,7 +25,7 @@ session: "sc-20260803-audiox-turbo-wiki"
 
 | 产出物 | 路径 | 状态 | 规模 |
 |--------|------|------|------|
-| Wiki主文档 | [audiox-turbo-audio-generation-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/audiox-turbo/index.md) | ✅ 已交付 | 514行，11章节 |
+| Wiki主文档 | [audiox-turbo-audio-generation-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/models/audiox-turbo/index.md) | ✅ 已交付 | 514行，11章节 |
 | TOML元数据 | audiox-turbo-audio-generation-wiki.toml | ✅ 已存在 | 9行元数据（原 learning 目录 toml 已随板块迁移移除） |
 | Spec规格书 | [spec.md](../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/spec.md) | ✅ 已完成 | 完整 |
 | 任务分解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/tasks.md) | ✅ 已完成 | 8个任务 |

@@ -46,7 +46,7 @@ VENDOR-INTEGRATION
 
 | 分类 | 说明 | 入门推荐 |
 |------|------|---------|
-| **[Agent 平台与工具知识包（bundles）](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md)** | 主流 AI Agent 开发平台与工具的系统学习知识包（DeepSeek Harness、The Agency、Open Code Review 等 10+ 个包） | [DeepSeek Harness 完全指南](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/deepseek-harness/index.md) |
+| **[Agent 平台与工具知识包（bundles）](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/index.md)** | 主流 AI Agent 开发平台与工具的系统学习知识包（DeepSeek Harness、The Agency、Open Code Review 等 10+ 个包） | [DeepSeek Harness 完全指南](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/deepseek-harness/index.md) |
 | **[OKF（开放知识格式）主题导航](../../projects/awesome-okf-xs/doc/bundles/meta/okf-ecosystem/index.md)** | OKF 格式规范 + OKF 工具链的统一主题索引（横跨协议接口与工具平台） | [OKF 主题导航](../../projects/awesome-okf-xs/doc/bundles/meta/okf-ecosystem/index.md) |
 | **[Python 3.14 标准库知识包](../../projects/awesome-okf-xs/doc/bundles/jishu/python/stdlib/index.md)** | Python 3.14 标准库系统学习（contextlib / contextvars / sys.monitoring / annotationlib / dataclasses / traceback） | [概述](../../projects/awesome-okf-xs/doc/bundles/jishu/python/stdlib/index.md) |
 | **[AI Engineering](ai-engineering/index.md)** | AI Agent 工程化领域知识库（Loop Engineering、Karpathy LLM Wiki 分析等） | [Loop Engineering 知识库](ai-engineering/concepts/loop-engineering-knowledge-base.md) |
@@ -58,7 +58,7 @@ VENDOR-INTEGRATION
 
 ## 🎯 如何使用
 
-- **刚接触 AI Agent 开发？** 从 [Agent 平台与工具知识包](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) 开始，选择一个感兴趣的框架系统学习
+- **刚接触 AI Agent 开发？** 从 [Agent 平台与工具知识包](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/index.md) 开始，选择一个感兴趣的框架系统学习
 - **想了解 AI 工程化方法论？** 阅读 [AI Engineering](ai-engineering/index.md) 下的 Loop Engineering 等知识库
 - **想寻找可复用模式？** 前往 [复盘与模式库](../retrospective/index.md) 获取项目自身沉淀的最佳实践与反模式
 
