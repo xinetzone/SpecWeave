@@ -2,6 +2,8 @@
 
 >  methodologies applied: TRAE-spec-mode（Specify）→ seven-concepts（F 第一性原理 驱动设计）
 > 自然语言：简体中文（与用户请求一致）
+>
+> 📎 配套文件：`tasks.md`（任务队列与验收标准）、`insight.md`（V 对抗审查与洞察）、`review.md`（独立审查与检查点）、**`decisions.md`（决策记录 — 原 Open Questions 的落定依据）**、`handbook/`（学生操作手册）、`templates/`（Task4/5 代码模板）、`warmup-docs/`（Task0 脚手架）。
 
 ## 一、Overview
 
@@ -58,13 +60,13 @@
 
 - **NFR-1（可操作性）**：教师拿到方案后无需额外查资料即可落地；所有命令行/配置给出可直接复制的片段。
 - **NFR-2（安全性）**：方案须强制要求 API Key 通过 `.env` + `python-dotenv` 管理，且 `.env` 必须被 `.gitignore` 排除（不可入库）。
-- **NFR-3（差异化）**：须提供基础 / 进阶（元文档闭环）两档任务，照顾不同水平学生。
+- **NFR-3（差异化）**：须提供基础 / 进阶（元文档闭环）两档任务，照顾不同水平学生。**元文档闭环须进一步提供"教学化形态"（教师预置草稿样例，零 Token 成本）作为**必做**核心，"全自动形态"（真实调用 API 生成草稿）作为选做加分，另设"无配额降级通道"以保证 AC-6 可达——见 `decisions.md` DQ-3。
 
 ## 九、Constraints（约束）
 
-- **Technical**：依赖 Python ≥ 3.10、网络可访问 LLM API、GitHub 账号（用于 CI 部署）。**离线降级**：无外网机房可用本地 `ollama` 模型替代 LLM API；文档站可用内网静态托管（`python -m http.server _build/html` 或自建 Read the Docs）替代 GitHub Pages，不阻断主干闭环。
+- **Technical**：依赖 Python ≥ 3.10、网络可访问 LLM API、**GitHub 个人账号**（用于 CI 部署）。**离线降级**：无外网机房可用本地 `ollama` 模型替代 LLM API（`LLM_BASE_URL=http://localhost:11434/v1`）；文档站可用内网 Git 服务（Gitea/GitLab 自建，或 `git init --bare` + `git daemon`）+ 自托管 runner 部署，或用静态托管（`python -m http.server _build/html`）替代 GitHub Pages，不阻断主干闭环。详见 `decisions.md` DQ-2。
 - **Business/教学**：单项目建议 4–8 周、每周 2 课时；需机房或学生自带设备。
-- **Dependencies**：Sphinx、myst-parser、sphinx-design、sphinx-copybutton、sphinx.ext.autodoc、python-dotenv、LLM SDK（openai 兼容 / 混元 / ollama）。
+- **Dependencies**：Sphinx、myst-parser、sphinx-design、sphinx-copybutton、sphinx.ext.autodoc、python-dotenv、**`openai` Python SDK**（统一依赖；通过 `LLM_BASE_URL` 参数化兼容混元/DeepSeek/通义/ollama 等 OpenAI 兼容端点，不自研 provider 抽象层——见 `decisions.md` DQ-1）。
 
 ## 十、Assumptions（假设）
 
@@ -103,7 +105,8 @@
 - **Scale**: 1–5
 - **Anchors**: 1 = 学科各自孤立；3 = 有融合但偏拼贴；5 = 元文档闭环使三视角自然咬合
 - **Pass Threshold**: ≥ 4
-- **Evidence**: 项目文档中"agent 生成文档草稿"功能实现 + 学生反思提及跨视角理解
+- **Evidence**: 项目文档中"agent 生成文档草稿"功能实现（**教学化形态或全自动形态皆可**，见 `decisions.md` DQ-3）+ 学生反思提及跨视角理解
+- **备注**: 本项对应 Task6 的**核心必做部分**（档 A 教学化形态）——AC-4 为硬门槛，故其载体不可为选做；若使用降级通道（档 C），本项按 anchored rubric 折半计分并须在 `diff-notes.md` 中如实标注草稿来源。
 
 ### AC-5: 密钥安全管理
 - **Type**: `rule`
@@ -122,8 +125,12 @@
 - **Evidence**: 反思报告文本 + Git 提交历史（须多次原子提交，禁止单次大提交）+ 路演现场口头解释任一函数的记录
 - **备注**: 本项经 V 对抗审查 A-6 修正——原标准仅看报告文本，存在"AI 代写"导致评价失真的 P0 风险，故增加过程证据要求。
 
-## 十二、Open Questions（待决问题）
+## 十二、Resolved Decisions（原 Open Questions — 已决）
 
-- [ ] 是否统一使用某一 LLM 厂商 SDK，还是抽象为 provider 接口以兼容多厂商？
-- [ ] CI 部署统一用 GitHub Pages 还是 Read the Docs（取决于学校网络）？
-- [ ] 元文档闭环（agent 生成文档草稿）作为必做还是选做？
+> 三项待决问题已于 session `sc-20260929-open-questions` 落定。**完整论证、被否选项、可证伪信号与回滚条件见 [`decisions.md`](decisions.md)**（该文件为决策的单一事实源）。
+
+- [x] **DQ-1 LLM SDK 形态**：统一使用 `openai` Python SDK，通过 `LLM_BASE_URL` 参数化兼容混元/DeepSeek/通义/ollama。**不自研 provider 抽象层**——各厂商已提供 OpenAI 兼容端点，"多厂商差异"已被上游抹平，自研中间层消解的是已不存在的差异，净增排错负担且偏离 G2「能调用 LLM API」的目标表述。属性：`可覆盖`（教师可覆盖，但须同步回改 `decisions.md`）。
+- [x] **DQ-2 CI 部署平台**：默认 **GitHub Pages（学生个人账号）**；离线用**内网 Git 服务 + 自托管 runner**；Read the Docs 降为"托管替代"（仅当学生不想管 CI 细节时启用）。排序第一键是**"项目结束后资产归属谁"**——学生个人账号使作品在课程结束后仍归学生所有；且零审批，服务 NFR-1。三档均**不豁免** `sphinx-build -W` 一致性硬约束。属性：`可覆盖`。
+- [x] **DQ-3 元文档闭环强制属性**：**三档制**——档 A「教学化形态」（教师预置草稿样例 + 强制差异分析，**零 Token 成本，必做**）／档 B「全自动形态」（真实调用 API，**默认选做、加分**）／档 C「降级通道」（用 Task2 的 `api-draft.md` 与最终代码做差异分析，**保 AC-6 可达**）。原"必做 vs 选做"是假二分：它把"教学价值"与"Token 配额"两个独立维度压成了单一开关；AC-4 为硬门槛，故其载体不可为选做。**诚实性红线**：使用档 A 须如实标注草稿来源，谎报按学术诚信处理、本项判 0。属性：**`不可覆盖`**（涉及 AC-4/AC-6 的评估结构完整性）。
+
+---

@@ -19,6 +19,18 @@ LLM_MODEL=gpt-4o-mini
 ```
 
 > 💡 用国内模型也行（如混元、DeepSeek、通义），把 `LLM_BASE_URL` 和 `LLM_MODEL` 换成对应的即可。老师会告诉你用哪个。
+>
+> 🎁 **换厂商只改 `.env`，代码一个字都不用动。** 这是本项目最重要的一条工程习惯——**配置和代码分离**。
+> 主流厂商和本地模型都提供"OpenAI 兼容端点"，所以同一份代码能连所有家：
+>
+> | 你想用 | `LLM_BASE_URL` | `LLM_MODEL` | 备注 |
+> |---|---|---|---|
+> | OpenAI | `https://api.openai.com/v1` | `gpt-4o-mini` | 需真实 Key |
+> | DeepSeek | `https://api.deepseek.com/v1` | `deepseek-chat` | 老师会给 |
+> | 通义千问 | 阿里云兼容端点 | `qwen-plus` | 老师会给 |
+> | **本地 ollama** | `http://localhost:11434/v1` | `qwen2.5:7b` | **无需真实 Key**，`LLM_API_KEY` 随便填（如 `ollama`） |
+>
+> ⚠️ **不要为了"支持多家"去写一个 provider 抽象类**。厂商之间的差异已经被它们自己抹平了，你再写一层只是多一个出错的地方。**改环境变量就够了。**
 
 **`.env.example`**（模板，**要提交**，给别人看该配哪些变量）：
 ```bash

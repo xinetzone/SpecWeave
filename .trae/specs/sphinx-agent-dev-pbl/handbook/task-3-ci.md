@@ -49,6 +49,51 @@ git push -u origin main
 
 ---
 
+### 🚧 如果学校网络访问不了 GitHub？（先看这节）
+
+**不要跳过 Task3**。文档站必须部署到"能发给别人的网址"，这是验收要求。换一条路就行：
+
+**方案 ②：内网 Git 服务（推荐用于无外网机房）**
+
+机房通常已经有内网的 Git 服务（Gitea、GitLab 或类似）。用它，流程和 GitHub 几乎一模一样：
+
+```bash
+# 在内网 Git 服务上建仓库后
+git branch -M main
+git remote add origin http://内网地址/你的用户名/你的仓库名.git
+git push -u origin main
+```
+
+CI 部分也用同一份 `docs.yml`，只需把最后两个"部署"步骤换成内网 runner 提供的部署方式（问老师要）。**前面那些步骤（装依赖、`sphinx-build -W`、构建产物）完全不变。**
+
+> 📸〔截图位 S3-7〕内网 Git 服务的仓库页面（仅走离线档时需要）
+> 文件名建议：shots/S3-7-内网仓库.png
+> 需要显示：内网 Git 服务（Gitea/GitLab）的仓库首页，文件列表可见
+
+**方案 ③：Read the Docs 托管**
+
+在 readthedocs.org 用你自己的账号导入同一个仓库，它会自动拉取并构建。
+
+> ⚠️ **代价要知道**：用 RTD 你就不用写 `docs.yml` 了——但**那恰好是本任务最重要的东西**。
+> 那个 YAML 文件让你亲眼看到"文档像代码一样被自动构建、自动检查"，这是"文档即代码"这个概念的实物教具。
+> 所以：**能写 `docs.yml` 就尽量写**，RTD 留作实在没条件时的兜底。
+
+**方案 ④：完全离线（本地构建 + 共享盘）**
+
+如果连内网 Git 都没有，退到这一步：
+
+```bash
+sphinx-build -b html docs docs/_build/html
+```
+
+把 `docs/_build/html/` 整个文件夹拷到共享盘或 U 盘，双击 `index.html` 就能看。
+交给老师的"网址"改为"共享盘路径"。**验收依然算通过**——老师会按 TR-3.1 的离线口径核对。
+
+> 🔒 **不论走哪条路，有一条不能让步**：构建必须带 `-W` 参数（把警告当错误）。
+> 这是"你的文档和你的代码必须一致"的硬约束——**换平台不换标准**。
+
+---
+
 ### 步骤 3：写 CI 配置
 
 在项目根目录建 `.github/workflows/docs.yml`：
@@ -147,6 +192,7 @@ git push
 
 | 现象 | 原因 | 解决 |
 |---|---|---|
+| **根本访问不了 github.com** | 机房网络限制 | 见上面"如果学校网络访问不了 GitHub？"——换内网 Git 或本地构建 + 共享盘 |
 | Actions 红色 ✗，日志报 `sphinx-build: command not found` | requirements.txt 里没有 sphinx | 本地 `pip freeze > requirements.txt` 后重新提交 |
 | 报错 `WARNING treated as error` | `-W` 生效，文档里有警告 | **这是好事**——按日志提示修掉那个警告（通常是断链或未引用的文档） |
 | 网站 404 | Pages 没开启 或 部署还在跑 | 检查 Settings→Pages；等 3 分钟再看 |
@@ -161,14 +207,15 @@ git push
 ## 三、完成标志（自检）
 
 - [ ] `git status` 显示干净，**没有** `.env` / `.venv/`
-- [ ] 代码已推送到 GitHub
-- [ ] `.github/workflows/docs.yml` 已提交
-- [ ] Settings → Pages 的 Source 设为 GitHub Actions
-- [ ] Actions 运行成功（绿勾）
-- [ ] 公网网址能打开我的文档站
+- [ ] 代码已推送到 Git 仓库（GitHub 或内网 Git 服务）
+- [ ] `docs.yml` 已提交（**用 RTD 托管的话可跳过此项**）
+- [ ] Settings → Pages 的 Source 设为 GitHub Actions（用内网/RTD 时按对应平台设置）
+- [ ] 构建流水线运行成功（绿勾）
+- [ ] 公网/内网网址能打开我的文档站
 - [ ] 网页源码里搜索不到任何 API Key 明文
+- [ ] 构建命令带 `-W` 参数（**这一条换任何平台都不能少**）
 
-**对应验收标准**：TR-3.1（CI 绿 + URL 可访问）、TR-3.2（无明文密钥）
+**对应验收标准**：TR-3.1（构建成功 + URL 可访问）、TR-3.2（无明文密钥）
 
 ---
 [← 上一个：Task2 文档先行](task-2-docs.md) | [返回手册目录](README.md) | [下一个：Task4 智能体循环 →](task-4-agent-loop.md)
