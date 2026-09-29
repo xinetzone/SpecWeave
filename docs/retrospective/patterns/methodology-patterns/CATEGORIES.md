@@ -2,7 +2,7 @@
 
 基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为8个主题类别，便于按场景快速定位相关模式。
 
-> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md与子目录），由 `generate-categories.py` 自动重建，最后更新：2026-09-24。
+> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md与子目录），由 `generate-categories.py` 自动重建，最后更新：2026-09-29。
 
 ## 分类索引
 
@@ -12,10 +12,10 @@
 | [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 41 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor/跨领域知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、语义漂移防御、知识系统五维根基、B2B AI产品定位、外部产品学习模板 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 54 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 57 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 151 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 152 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 83 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 11 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
-| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 49 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化、垂直场景AI三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA转化 |
+| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 51 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化、垂直场景AI三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA转化 |
 
 ---
 
@@ -340,6 +340,7 @@
 | [mvp-unvalidated-code-debt.md](governance-strategy/mvp-unvalidated-code-debt.md) | MVP未验证代码债务模式（MVP Unvalidated Code Debt） | - |
 | [net-value-four-questions.md](governance-strategy/net-value-four-questions.md) | 净时薪四问 | L1-draft |
 | [no-touch-list.md](governance-strategy/no-touch-list.md) | 不重构清单：明确划定不改动边界防止范围蔓延 | L2 |
+| [noise-free-container.md](governance-strategy/noise-free-container.md) | 去噪容器：固定周期高密度冲刺的双层组织设计 | L1 |
 | [nonlinear-correction-cost.md](governance-strategy/nonlinear-correction-cost.md) | 缺陷放大与非线性纠偏成本模式（Defect Amplification & Nonlinear Correction Cost） | L2 |
 | [orchestration-execution-layering.md](governance-strategy/orchestration-execution-layering.md) | 编排-执行分层法 | L1 |
 | [P-AGENT-SELECT-001-agent-platform-selection-framework.md](governance-strategy/P-AGENT-SELECT-001-agent-platform-selection-framework.md) | 企业级AI Agent平台9维度选型评估框架 | L1 |
@@ -539,6 +540,7 @@
 
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
+| [agent-native-os-capability-ladder.md](product-growth/agent-native-os-capability-ladder.md) | 终端操作系统智能体原生化四级演进（Agent-Native OS Ladder） | L1 |
 | [ai-api-extreme-parameterization.md](product-growth/ai-api-extreme-parameterization.md) | AI API极致参数化模式 | - |
 | [ai-consumption-metadata-design.md](product-growth/ai-consumption-metadata-design.md) | AI消费元数据增强模式 | - |
 | [ai-native-user-reversal-design.md](product-growth/ai-native-user-reversal-design.md) | AI原生用户逆向定位模式 | - |
@@ -573,6 +575,7 @@
 | [progressive-capability-tiering.md](product-growth/progressive-capability-tiering.md) | 渐进式能力分层设计：零门槛入口层（模板/低代码）→高上限能力层（三方模型/代码定制）→企业级管控层（权限/审计/私有化）三层架构，同时满足新手/专家/企业需求 | L1 |
 | [reverse-leverage-rule-constraints.md](product-growth/reverse-leverage-rule-constraints.md) | 反向借势——从规则约束中读出最优解 | L1 |
 | [risk-control-copilot-pre-positioned.md](product-growth/risk-control-copilot-pre-positioned.md) | 风控前置副驾驶模式：规则引擎内嵌创作流程+实时风险提示+一键自动修正+平台规则同步更新，从成本中心变为价值中心 | L2 |
+| [root-community-commercial-distro-flywheel.md](product-growth/root-community-commercial-distro-flywheel.md) | 根社区—商业发行版双轮：基础软件的基金会中立化与商业下游飞轮 | L2 |
 | [saas-hardware-three-layer-funnel.md](product-growth/saas-hardware-three-layer-funnel.md) | SaaS硬件三层漏斗黄金范式：软件引流→硬件变现→服务留存（含AI服务/企业订阅四收入支柱），硬件是生态物理增强器而非独立产品，跨12个产品/场景验证（L3标准化） | L3 |
 | [scenario-driven-parameter-tradeoff.md](product-growth/scenario-driven-parameter-tradeoff.md) | 场景驱动参数取舍：不为参数表堆料，每个参数锚定目标场景回答"是否需要"，保守选择降低成本/功耗/故障率 | L1 |
 | [scenario-naming-user-language.md](product-growth/scenario-naming-user-language.md) | 场景化命名模式（用户语言优先于技术语言） | L2 |

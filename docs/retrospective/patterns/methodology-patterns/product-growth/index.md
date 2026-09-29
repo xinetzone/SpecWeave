@@ -4,6 +4,7 @@
 :maxdepth: 2
 :hidden:
 
+agent-native-os-capability-ladder
 ai-api-extreme-parameterization
 ai-consumption-metadata-design
 ai-native-user-reversal-design
@@ -37,6 +38,7 @@ professional-capability-democratization
 progressive-capability-tiering
 reverse-leverage-rule-constraints
 risk-control-copilot-pre-positioned
+root-community-commercial-distro-flywheel
 saas-hardware-three-layer-funnel
 scenario-driven-parameter-tradeoff
 scenario-naming-user-language

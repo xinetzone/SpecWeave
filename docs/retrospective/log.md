@@ -5,6 +5,7 @@
 - 新增复盘报告 [retrospective-openkylin-wsl-install-sparse-20260929](reports/task-reports/retrospective-openkylin-wsl-install-sparse-20260929/index.md)：openKylin 3.0 WSL 导入四次失败（E_UNEXPECTED×3 / CreateVm E_ABORT×1）的内存因素排障与 8 秒成功路径，及稀疏 VHD 被安全策略拦截后 `--allow-unsafe` 启用的风险决策；七概念复合链路 R→I→E→V→C，29 条事实/4 条洞察/1 个模式文件含 2 个子模式；V 阶段独立审查 18 条意见（P0×1/P1×5 已全修复）
 - 新增代码模式 [wsl-import-memory-triage-sparse-vhd](patterns/code-patterns/wsl-import-memory-triage-sparse-vhd.md)（L1）：非确定性导入失败的内存分诊法 + 稀疏 VHD 双问题决策法；为既有 wsl-distro-install-migration-guide 的排障与磁盘空间维度增量
 - 关联教程 `docs/knowledge/tech/openkylin/wsl-install-sparse-vhd-guide.md` 落知识中心，与 openKylin 调研报告 §7.2/§8 局限 5 建立互链（补上"WSL 试用路径未实测"缺口）
+- openKylin 调研报告 §4 两模式独立化入方法论模式库（product-growth）：[root-community-commercial-distro-flywheel](patterns/methodology-patterns/product-growth/root-community-commercial-distro-flywheel.md)（L2，根社区—商业发行版双轮，四案例证据分级）与 [agent-native-os-capability-ladder](patterns/methodology-patterns/product-growth/agent-native-os-capability-ladder.md)（L1，终端 OS 智能体原生化四级演进）；源报告 §4 降级为摘要+链接，G3 门标注独立化
 
 ## 2026-09-01
 
