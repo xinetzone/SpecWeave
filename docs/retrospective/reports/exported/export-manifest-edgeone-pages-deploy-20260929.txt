@@ -1,0 +1,40 @@
+EXPORT MANIFEST — EdgeOne Pages 静态站点部署里程碑复盘（designer-portfolio）
+================================================================
+
+export_time  : 2026-09-29
+report_type  : retrospective (milestone)
+source_path  : docs/retrospective/reports/2026-09-29-edgeone-pages-deploy-milestone-retro.md
+output_dir   : docs/retrospective/reports/exported
+formats      : md
+version      : 1.0
+
+EXPORTED FILES
+----------------------------------------------------------------
+AKA-1. edgeone-pages-deploy-milestone-retrospective-20260929-v1.0.md  (13063 bytes)
+
+VERIFICATION
+----------------------------------------------------------------
+- source exists              : YES
+- frontmatter(type/date/type): COMPLETE (title=EdgeOne Pages 静态站点部署里程碑复盘（designer-portfolio）, date=2026-09-29, scenario=milestone)
+- content non-empty          : YES (21 facts, 3 insights, 5 actions, 1 pattern)
+- G1-G4 quality gates        : PASSED
+- index updated              : docs/retrospective/reports/exported/index.md (toctree entry added)
+
+KEY ARTIFACTS REFERENCED
+----------------------------------------------------------------
+- Deployed site   : https://designer-portfolio-w1ras6ms.edgeone.cool
+- Console         : https://console.cloud.tencent.com/edgeone/pages/project/makers-kibjgortw1bl/deployment/dpebpaq47jjs
+- Project ID      : makers-kibjgortw1bl
+- Deployment ID   : dpebpaq47jjs
+- OKF tutorial    : docs/knowledge/tech/edgeone-pages-deploy/
+
+NOTES
+----------------------------------------------------------------
+- Export is a byte-identical copy of the source report (md format passthrough).
+- Count assertions independently verified via wc -l: 11 package.json, 11 frontend configs,
+  4 project pages, 6 top-level entries (no eyeballed numbers).
+- Deploy URL in report retains full query string (eo_token / eo_time) as required;
+  link is a preview URL and may 401 after token expiry — bind a filed custom domain
+  for long-term public access.
+- Skill updated with install workaround: ~/.workbuddy/skills/edgeone-pages-deploy/SKILL.md
+  (--ignore-scripts for static-site deployments on Windows managed Node).
