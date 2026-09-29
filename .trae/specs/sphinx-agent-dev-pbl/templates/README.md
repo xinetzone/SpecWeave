@@ -134,6 +134,23 @@ python agent.py
 | `ValueError: 未配置 LLM_API_KEY` | 检查 `.env` 是否存在、密钥是否填了 |
 | `NotImplementedError` 在 `ask()` 里 | 见"步骤 3"的临时方案：先调用 `ask_simple()` |
 | 模型不调用工具、直接瞎编时间 | `build_tools()` 里的 `description` 写得不够明确 |
+| 目录里多了个 `__pycache__/` | **正常，不要提交**——见下方 ⬇️ |
+
+### 关于 `__pycache__/`（学生最常问）
+
+只要你 `import agent` 或运行过 `agent.py`，Python 就会自动生成
+`__pycache__/agent.cpython-3xx.pyc`。它是**编译缓存**，不是你写的代码。
+
+| 问题 | 答案 |
+|---|---|
+| 要不要交？ | **不要**。它每次运行都会重新生成，交它没有意义 |
+| 要删吗？ | 可以删，删了下次运行会再生成，不影响任何东西 |
+| 为什么 `git status` 看不到它？ | 因为 Task1 步骤 5 复制的 [`.gitignore`](../starters/.gitignore) 已排除它 |
+| 我的 `git status` 里出现它了 | 说明 `.gitignore` 没复制成功，回到 Task1 步骤 5 重做 |
+
+> ⚠️ **如果你在 `git status` 里看到 `__pycache__/`，这是一个信号**——
+> 它说明你的 `.gitignore` 没生效。而同一个文件负责排除 **`.env`**（你的 API 密钥），
+> 所以这个问题**必须马上修**，不要拖。先跑 `git status --short` 确认 `.env` 是否也露出来了。
 
 ---
 
