@@ -9,6 +9,13 @@
 
 ## 一、操作步骤
 
+> 📦 **沿着 Task4 的代码继续写，不要重开文件。**
+> 如果你 Task4 用了模板（`templates/agent.py`），现在回去把 `TODO` 逐个实现即可：
+> `get_time` → `calculator` → `build_tools` → `call_tool` → `ask`（共 5 个，13 处标记）。
+> 搜 `TODO` 就能定位全部位置。详见 [`templates/README.md`](../templates/README.md)。
+>
+> 💡 **一次只填一个 TODO，填完就跑一次。** 别全写完再测——出了错你会很难定位是哪个函数的问题。
+
 ### 步骤 1：写工具函数
 
 在 `agent.py` 里加两个工具。**注意每个工具都要有清晰的 docstring**——大模型会读它来决定什么时候调用：

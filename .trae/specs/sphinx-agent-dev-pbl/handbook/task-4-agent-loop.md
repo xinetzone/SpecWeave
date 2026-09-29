@@ -37,6 +37,15 @@ LLM_MODEL=gpt-4o-mini
 
 ### 步骤 2：写最小循环 `agent.py`
 
+> 📦 **不想从空白文件开始？** 可以用模板：把 `templates/agent.py` 和 `templates/.env.example`
+> 复制到项目根目录，然后只实现标了 `TODO` 的函数。
+> 模板把 `get_client()`、`ask_simple()`、`main()` 这些样板代码写好了，
+> 你只需要写**核心逻辑**（Task4 阶段先让 `ask()` 临时调用 `ask_simple()` 跑通流程即可）。
+> 详见 [`templates/README.md`](../templates/README.md)。
+>
+> ⚠️ **用不用模板都不影响评分**——Task7 会现场抽问你代码为什么这么写。
+> 用了模板却讲不清 `ask()` 的循环逻辑，一样拿不到分。
+
 在项目根目录建 `agent.py`：
 
 ```python
