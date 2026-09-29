@@ -6,6 +6,7 @@
 
 analyze-wechat-article-3dnk-20260706/index
 harness-engineering-analysis/index
+research-ai-coding-business-model-evolution-20260929/index
 research-china-side-income-platforms-20260919/index
 retrospective-action-first-command-bootstrap-20260728/index
 retrospective-agnes-free-api-learning-20260704/index
