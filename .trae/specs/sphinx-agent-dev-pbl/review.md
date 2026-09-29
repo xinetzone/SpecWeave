@@ -47,7 +47,7 @@
 ### 视角 1：学生（认知负荷）
 - **攻击**：同时学 Agent Loop + Sphinx + Git/CI + LLM API，初学者极易在前两周被环境劝退。
 - **发现（advisory）**：需在前置微课（FR-B）与 Task1/Task2 之间插入"零代码文档站 30 分钟成功体验"，先建立正反馈再上难度。
-- **缓解**：spec.md Non-Goals 已限制框架深度；建议 Task1 拆出"纯写一篇 MyST 文档并构建"作为 0 号热身任务。
+- **缓解**：spec.md Non-Goals 已限制框架深度；建议 Task1 拆出"纯写一篇 MyST 文档并构建"作为 0 号热身任务。→ **【已落地】** 见 `tasks.md` Task0（含零代码约束、沙盒一键方案、无环境降级路径与"不教配置"纪律）。
 
 ### 视角 2：教师（落地成本）
 - **攻击**：CI 部署依赖 GitHub/外网，部分学校机房无法访问；LLM API 配额与费用不可控。
@@ -142,6 +142,18 @@
   - `rule` TR-I-6.2: Task2 交付物含 `glossary.md`（≥7 术语）；Evidence: TR-2.2。
 - **Completion Evidence**: Task1 已加 `--no-sep -q --language zh_CN` 一键命令；Task2 新增 glossary.md 与 TR-2.2
 
+## Issue I-7: Task0 零代码热身任务
+- **Status**: `completed`
+- **Priority**: medium
+- **Depends On**: None
+- **Discovered By**: 首轮 V（学生视角 A-1，原为 advisory）
+- **Description**: 初学者第一次失败点集中在 Task1 环境搭建，易在前两周劝退。
+- **Acceptance Criteria Addressed**: AC-3（预备性）
+- **Test Requirements**:
+  - `rule` TR-I-7.1: `tasks.md` 新增 Task0，须先于 Task1，且含零代码约束与降级路径；Evidence: Task0 描述。
+  - `rubric` TR-I-7.2: 验收以"正反馈达成度"为准（TR-0.3），不纳入正式评分权重；Evidence: Task0 Notes。
+- **Completion Evidence**: `tasks.md` 已新增 Task0（含 TR-0.1/TR-0.2/TR-0.3、沙盒一键方案、无环境降级、"不教配置"纪律）；依赖图与顺序约束已更新；`review.md` 视角 1 已标注"已落地"
+
 ---
 
 ## 四、Review History
@@ -175,4 +187,22 @@
 - **Findings**: 无遗留 actionable（V 攻击 A-7"过渡形态风险"为部分成立，已作 advisory 处理：明确课程目标上移至信息架构与可解释性设计）
 - **Blocked By**: 无
 
-> 完成判定：I-1~I-6 全部 `completed`，R3 结果 `pass`，所有 CP 达标，无遗留 actionable，**设计框架验收通过**。
+### Review R4（Task0 补丁后复审，session sc-20260929-sphinx-agent-pbl）
+- **Result**: `pass`
+- **Checks Performed**:
+  - 核对 Task0 是否满足原子化（单一职责/可独立验证/可独立交付）→ **达标**
+  - 核对 Task0 前置关系是否写入依赖图 → **已更新**
+  - 核对 AC 覆盖完整性是否受影响 → **未受影响**（Task0 为预备性达成 AC-1/AC-3，不改变原有映射）
+  - 核对是否与 Task1 职责重叠 → **无重叠**（Task0 零代码/不教配置；Task1 才做环境与初始化）
+- **Evidence**:
+  - `tasks.md` 新增 Task0（含 3 条 TR、零代码约束、沙盒一键方案、无环境降级路径、"不教配置"纪律）
+  - 依赖图已插入 `Task0 → Task1` 前置，并新增顺序约束条目
+  - `review.md` 视角 1 的 advisory 已标注"【已落地】"并回指 Task0
+  - Issue I-7 已固化为 `completed`
+- **Checkpoint Results**:
+  - CP-R1~CP-R3 (`rule`): `pass`
+  - CP-U1~CP-U3 (`rubric`): `pass`
+- **Findings**: 无遗留 actionable（首轮 A-1 advisory 已由 Task0 落地，I-7 已完成）
+- **Blocked By**: 无
+
+> 完成判定：I-1~I-7 全部 `completed`，R4 结果 `pass`，所有 CP 达标，无遗留 actionable，**设计框架验收通过（含 Task0 补丁）**。
