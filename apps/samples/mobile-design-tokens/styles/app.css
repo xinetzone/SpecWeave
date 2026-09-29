@@ -756,6 +756,105 @@ button {
   border-color: var(--border-strong);
 }
 
+/* ------------------------------ 06 字体排印 ------------------------------ */
+.grid--fonts {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.type-font {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  background: var(--bg-surface-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  transition: background-color 0.24s ease, border-color 0.24s ease;
+  cursor: pointer;
+}
+
+.type-font:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-2);
+}
+
+.type-font__name {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.type-font__sample {
+  font-size: 28px;
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+
+.type-font__code {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  word-break: break-all;
+}
+
+.type-scale {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.type-row {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.type-row:last-child {
+  border-bottom: 0;
+}
+
+.type-row__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.type-row__name {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.type-row__spec {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.type-row__sample {
+  min-width: 0;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.type-row__specs {
+  display: flex;
+  gap: 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
 /* ------------------------------ 响应式 ------------------------------ */
 @media (max-width: 1400px) {
   .grid {
@@ -831,5 +930,14 @@ button {
 
   .search__input {
     width: 100%;
+  }
+
+  .type-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .type-row__specs {
+    flex-wrap: wrap;
   }
 }

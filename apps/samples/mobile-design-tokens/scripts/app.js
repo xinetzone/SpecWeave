@@ -243,6 +243,81 @@
   renderShadows("shadow-light");
   renderShadows("shadow-dark");
 
+  /* ------------------------- 05 字体排印 ------------------------- */
+
+  function renderTypography() {
+    var typo = T.typography;
+
+    // 字体族
+    var fontsHost = document.getElementById("type-fonts");
+    Object.keys(typo.fontFamily).forEach(function (key) {
+      var card = el("div", "type-font");
+      card.dataset.search = (
+        "typography font family 字体 " + key + " " + typo.fontFamily[key]
+      ).toLowerCase();
+      card.style.fontFamily = "var(--font-" + key + ")";
+
+      card.appendChild(
+        el("span", "type-font__name", key === "sans" ? "Sans 无衬线" : "Mono 等宽")
+      );
+      card.appendChild(
+        el("span", "type-font__sample", "移动端 Design Token 1234567890")
+      );
+      card.appendChild(el("span", "type-font__code", typo.fontFamily[key]));
+
+      card.addEventListener("click", function () {
+        copyText("var(--font-" + key + ")").then(function () {
+          showToast("已复制字体变量", "--font-" + key);
+        });
+      });
+
+      fontsHost.appendChild(card);
+    });
+
+    // 字样阶梯（语义角色）
+    var scaleHost = document.getElementById("type-scale");
+    typo.roles.forEach(function (role) {
+      var sizePx = typo.fontSize[role.size];
+      var weightVal = typo.fontWeight[role.weight];
+      var lhVal = typo.lineHeight[role.lineHeight];
+
+      var row = el("div", "type-row");
+      row.dataset.search = (
+        "typography 字体 font " + role.name + " " + role.label + " " +
+        role.size + " " + role.weight + " " + role.lineHeight + " " +
+        sizePx + " " + weightVal
+      ).toLowerCase();
+
+      var meta = el("div", "type-row__meta");
+      meta.appendChild(el("span", "type-row__name", role.label));
+      meta.appendChild(
+        el(
+          "span",
+          "type-row__spec",
+          role.size + " · " + role.weight + " · /" + role.lineHeight
+        )
+      );
+
+      var sample = el("div", "type-row__sample", role.sample);
+      sample.style.fontWeight = "var(--weight-" + role.weight + ")";
+      sample.style.fontSize = "var(--text-" + role.size + ")";
+      sample.style.lineHeight = "var(--leading-" + role.lineHeight + ")";
+      sample.style.fontFamily = "var(--font-sans)";
+
+      var specs = el("div", "type-row__specs");
+      specs.appendChild(el("span", null, sizePx + "px"));
+      specs.appendChild(el("span", null, "w" + weightVal));
+      specs.appendChild(el("span", null, "lh " + lhVal));
+
+      row.appendChild(meta);
+      row.appendChild(sample);
+      row.appendChild(specs);
+      scaleHost.appendChild(row);
+    });
+  }
+
+  renderTypography();
+
   /* ------------------------- 搜索过滤 ------------------------- */
 
   var searchInput = document.getElementById("search");
@@ -446,6 +521,23 @@
     lines.push("}");
     lines.push("");
 
+    lines.push("");
+    lines.push("/* Typography（主题无关，Light / Dark 同值） */");
+    lines.push(":root {");
+    lines.push("  --font-sans: " + T.typography.fontFamily.sans + ";");
+    lines.push("  --font-mono: " + T.typography.fontFamily.mono + ";");
+    Object.keys(T.typography.fontSize).forEach(function (k) {
+      lines.push("  --text-" + k + ": " + T.typography.fontSize[k] + "px;");
+    });
+    Object.keys(T.typography.fontWeight).forEach(function (k) {
+      lines.push("  --weight-" + k + ": " + T.typography.fontWeight[k] + ";");
+    });
+    Object.keys(T.typography.lineHeight).forEach(function (k) {
+      lines.push("  --leading-" + k + ": " + T.typography.lineHeight[k] + ";");
+    });
+    lines.push("}");
+    lines.push("");
+
     return lines.join("\n");
   }
 
@@ -461,6 +553,7 @@
       semantic: T.semantic,
       radius: T.radius,
       shadow: T.shadow,
+      typography: T.typography,
     };
     download(
       "tokens.json",

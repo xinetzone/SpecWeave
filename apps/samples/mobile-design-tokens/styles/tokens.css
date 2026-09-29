@@ -1,6 +1,6 @@
 /* =============================================================
    Design Tokens —— 源文件：Ardot 画布《移动端 Design Token 体系》
-   4 组变量集合：Primitives / Semantic / Radius / Shadow
+   5 组变量集合：Primitives / Semantic / Radius / Shadow / Typography
    2 套主题模式：Light（默认） / Dark
 
    换肤机制（与设计稿一致）：
@@ -248,4 +248,52 @@
   --ramp-outline: #e4e7ec;
   --ramp-on-dark: #ffffff;
   --ramp-on-light: #1a1f29;
+}
+
+/* ------------------------------------------------------------
+   5) Typography —— 字体族 / 字号 / 字重 / 行高，双主题取值一致
+   对应画布 Typography 变量集合（单 Value 模式，主题无关）
+   ------------------------------------------------------------ */
+.theme-root,
+.theme-light,
+.theme-dark,
+.theme-auto {
+  /* Font Family */
+  --font-sans: "Inter", "Noto Sans SC", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Font Size · 9 级 */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 15px;
+  --text-md: 17px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 30px;
+  --text-3xl: 38px;
+  --text-4xl: 48px;
+
+  /* Font Weight · 4 级 */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Line Height · 4 级（无单位比值） */
+  --leading-tight: 1.15;
+  --leading-snug: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  /* Type Roles · 语义化组合（weight / size / line-height / family） */
+  --type-display: var(--weight-bold) var(--text-4xl) / var(--leading-tight) var(--font-sans);
+  --type-h1: var(--weight-bold) var(--text-3xl) / var(--leading-snug) var(--font-sans);
+  --type-h2: var(--weight-bold) var(--text-2xl) / var(--leading-snug) var(--font-sans);
+  --type-h3: var(--weight-semibold) var(--text-xl) / var(--leading-snug) var(--font-sans);
+  --type-title: var(--weight-semibold) var(--text-lg) / var(--leading-normal) var(--font-sans);
+  --type-body-lg: var(--weight-regular) var(--text-md) / var(--leading-normal) var(--font-sans);
+  --type-body: var(--weight-regular) var(--text-base) / var(--leading-normal) var(--font-sans);
+  --type-body-sm: var(--weight-regular) var(--text-sm) / var(--leading-normal) var(--font-sans);
+  --type-caption: var(--weight-regular) var(--text-xs) / var(--leading-normal) var(--font-sans);
+  --type-label: var(--weight-medium) var(--text-xs) / var(--leading-normal) var(--font-sans);
 }

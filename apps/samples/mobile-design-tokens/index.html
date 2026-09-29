@@ -6,7 +6,7 @@
     <title>移动端 Design Token 体系</title>
     <meta
       name="description"
-      content="从 Ardot 设计稿生成的 Design Token 应用：颜色 / 圆角 / 阴影 完整变量表，支持明暗主题实时切换。"
+      content="从 Ardot 设计稿生成的 Design Token 应用：颜色 / 圆角 / 阴影 / 字体排印 完整变量表，支持明暗主题实时切换。"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -57,8 +57,8 @@
         <span class="page-head__tag">MOBILE APP FOUNDATION</span>
         <h1 class="page-head__title">移动端 Design Token 体系</h1>
         <p class="page-head__sub">
-          颜色 / 圆角 / 阴影 完整变量表 · 明暗主题由 Light、Dark 两套 Mode
-          驱动，组件层只引用语义变量
+          颜色 / 圆角 / 阴影 / 字体排印 完整变量表 · 明暗主题由 Light、Dark 两套
+          Mode 驱动，组件层只引用语义变量
         </p>
         <span class="page-head__meta" id="page-meta"></span>
       </div>
@@ -70,6 +70,7 @@
         <a class="nav__chip" href="#section-radius">03 圆角</a>
         <a class="nav__chip" href="#section-shadow">04 阴影</a>
         <a class="nav__chip" href="#section-preview">05 组件预览</a>
+        <a class="nav__chip" href="#section-typography">06 字体排印</a>
       </nav>
 
       <!-- ================= 01 原始色阶 ================= -->
@@ -233,6 +234,25 @@
               <button class="btn btn--secondary" type="button">稍后再说</button>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- ================= 06 字体排印 ================= -->
+      <section class="section" id="section-typography">
+        <h2 class="section__title">06 字体排印 Typography</h2>
+        <p class="section__desc">
+          字体族 / 字号 / 字重 / 行高 四张量表，双主题取值一致。下方按语义角色
+          (role) 展示从 Display 到 Label 的字样阶梯。
+        </p>
+
+        <div class="panel theme-light">
+          <h3 class="panel__title">FONT FAMILY · 字体族</h3>
+          <div class="grid grid--fonts" id="type-fonts"></div>
+        </div>
+
+        <div class="panel theme-light">
+          <h3 class="panel__title">TYPE SCALE · 字样阶梯（语义角色）</h3>
+          <div class="type-scale" id="type-scale"></div>
         </div>
       </section>
 

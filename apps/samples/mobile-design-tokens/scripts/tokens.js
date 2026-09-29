@@ -1,16 +1,16 @@
 /* =============================================================
    Token 数据源 —— 与 Ardot 画布《移动端 Design Token 体系》一一对应
-   数据来源：画布变量集合导出（Primitives / Semantic / Radius / Shadow）
+   数据来源：画布变量集合导出（Primitives / Semantic / Radius / Shadow / Typography）
    注意：这里只存「值」，视觉层一律通过 CSS 变量在 styles/tokens.css 中消费，
         因此切换 Mode 时组件属性不变、整体自动换肤。
    ============================================================= */
 
 window.DESIGN_TOKENS = {
   meta: {
-    collections: 4,
-    variables: 113,
+    collections: 5,
+    variables: 132,
     modes: 2,
-    summary: "语义层与色阶层分离",
+    summary: "语义层与色阶层分离 · 新增 Typography 字排版印",
   },
 
   /* ---------------- 01 原始色阶 Primitives ---------------- */
@@ -120,7 +120,39 @@ window.DESIGN_TOKENS = {
     { name: "shadow-5", y: 16, blur: 40, spread: -8, alpha: "16%", rgba: "0.16" },
   ],
 
-  /* 预览区文案（对应画布 05 组件预览节点） */
+  /* ---------------- 05 字体排印 Typography ----------------
+     对应画布 Typography 变量集合（单 Value 模式，主题无关）。
+     roles 为语义化组合，size/weight/lineHeight 指向上方三张量表。 */
+  typography: {
+    fontFamily: {
+      sans: 'Inter, "Noto Sans SC", system-ui, -apple-system, sans-serif',
+      mono: "ui-monospace, SFMono-Regular, Menlo, monospace",
+    },
+    fontSize: {
+      xs: 12, sm: 14, base: 15, md: 17, lg: 20,
+      xl: 24, "2xl": 30, "3xl": 38, "4xl": 48,
+    },
+    fontWeight: {
+      regular: 400, medium: 500, semibold: 600, bold: 700,
+    },
+    lineHeight: {
+      tight: 1.15, snug: 1.25, normal: 1.5, relaxed: 1.65,
+    },
+    roles: [
+      { name: "display", label: "Display 大标题", size: "4xl", weight: "bold", lineHeight: "tight", sample: "移动端设计令牌" },
+      { name: "h1", label: "H1 主标题", size: "3xl", weight: "bold", lineHeight: "snug", sample: "Design Token 体系" },
+      { name: "h2", label: "H2 章标题", size: "2xl", weight: "bold", lineHeight: "snug", sample: "颜色 · 圆角 · 阴影" },
+      { name: "h3", label: "H3 小节标题", size: "xl", weight: "semibold", lineHeight: "snug", sample: "语义变量映射" },
+      { name: "title", label: "Title 卡片标题", size: "lg", weight: "semibold", lineHeight: "normal", sample: "本周周报已生成" },
+      { name: "body-lg", label: "Body-LG 正文大", size: "md", weight: "regular", lineHeight: "normal", sample: "共完成 18 个任务，比上周多 3 个。" },
+      { name: "body", label: "Body 正文", size: "base", weight: "regular", lineHeight: "normal", sample: "数据已更新 · 5 分钟前" },
+      { name: "body-sm", label: "Body-SM 辅助文字", size: "sm", weight: "regular", lineHeight: "normal", sample: "查看全部动态" },
+      { name: "caption", label: "Caption 注释", size: "xs", weight: "regular", lineHeight: "normal", sample: "2026 · 09 · 29" },
+      { name: "label", label: "Label 标签", size: "xs", weight: "medium", lineHeight: "normal", sample: "NEW" },
+    ],
+  },
+
+  /* 预览区文案（对应画布组件预览节点） */
   preview: {
     modeLabelLight: "LIGHT MODE",
     modeLabelDark: "DARK MODE",

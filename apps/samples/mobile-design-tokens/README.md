@@ -1,6 +1,6 @@
 # 移动端 Design Token 工作台
 
-由 Ardot 画布《移动端 Design Token 体系》设计稿生成的可运行应用，严格还原设计稿的布局结构、配色、圆角与间距。
+由 Ardot 画布《移动端 Design Token 体系》设计稿生成的可运行应用，严格还原设计稿的布局结构、配色、圆角、间距与字体排印。
 
 ## 运行
 
@@ -19,9 +19,9 @@ python -m http.server 5173
 
 ```
 mobile-design-tokens/
-├── index.html            # 页面骨架 + 05 组件预览（双份同结构 Markup）
+├── index.html            # 页面骨架 + 05 组件预览（双份同结构 Markup）+ 06 字体排印
 ├── styles/
-│   ├── tokens.css        # Token 唯一真源：Primitives / Semantic / Radius / Shadow
+│   ├── tokens.css        # Token 唯一真源：Primitives / Semantic / Radius / Shadow / Typography
 │   └── app.css           # 组件样式，只引用语义变量
 └── scripts/
     ├── tokens.js         # Token 数据源（与画布变量一一对应）
@@ -38,8 +38,8 @@ Semantic（intent 命名，Light / Dark 两套取值）
 组件（Button / Card / List / Progress …）
 ```
 
-- 组件层**只允许**引用 `--bg-*`、`--text-*`、`--border-*`、`--accent-*`、`--radius-*`、`--shadow-*`；
-- 明暗切换 = 切换变量集合的 Mode，**不改任何组件属性**。
+- 组件层**只允许**引用 `--bg-*`、`--text-*`、`--border-*`、`--accent-*`、`--radius-*`、`--shadow-*`、`--font-*`、`--text-<size>`、`--weight-*`、`--leading-*`、`--type-*`；
+- 明暗切换 = 切换变量集合的 Mode，**不改任何组件属性**；Typography 为单 Value 模式、双主题同值，不随换肤变化。
 
 ## 换肤作用域
 
@@ -55,7 +55,7 @@ Semantic（intent 命名，Light / Dark 两套取值）
 ## 应用能力
 
 - **主题切换**：浅色 / 深色 / 跟随系统，选择写入 `localStorage`
-- **变量搜索**：实时过滤色阶、语义变量、圆角、阴影，导航自动收敛
+- **变量搜索**：实时过滤色阶、语义变量、圆角、阴影、字体排印，导航自动收敛
 - **点击复制**：色值 / CSS 变量名一键复制（带 `file://` 兜底）
 - **导出**：一键导出 `tokens.css`、`tokens.json`，供下游项目接入
 
@@ -69,5 +69,6 @@ Semantic（intent 命名，Light / Dark 两套取值）
 | 03 圆角 Radius | `#radius-grid`（示例面 96px，名称 Inter SemiBold 13，用法说明 Noto Sans SC 12） |
 | 04 阴影 Elevation | `#shadow-light` / `#shadow-dark`（演示台 padding 28、卡片 120px、radius-md） |
 | 05 组件预览 | `.preview-row`（双份完全一致 Markup，仅外层 Mode 作用域不同） |
+| 06 字体排印 Typography | `#type-fonts`（字体族卡片）+ `#type-scale`（语义角色字样阶梯） |
 
 > Dark 模式阴影统一换为纯黑 `#000000 @ 30%–60%`，避免深色表面上阴影「消失」——这是设计稿里的关键决策，已在 `tokens.css` 中保留。
