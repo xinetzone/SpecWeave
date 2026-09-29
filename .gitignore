@@ -147,3 +147,10 @@ apps/devcontainer-base/benchmark-results-ci/
 
 # work 视频创作工作目录（含 mov/mkv/webm 等大体积素材与中间产物，本地保留不入库）
 work/ai-agent-kepu/
+
+# 注：work/industry-research-*/ 是有意归档入库的研究产物，不忽略；
+# 仅忽略其中显式列出的本地草稿。新增草稿请在此逐条追加，勿整体忽略 work/。
+work/ai-monetization-doubao-outcome-pricing.md
+
+# WorkBuddy 发布应用状态文件（appId 随会话生成，机器产物，本地保留不入库）
+.wbapp_*.genie
