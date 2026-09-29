@@ -90,5 +90,44 @@ pip install -r requirements.txt
   Task7 现场答辩考的是"你为什么这样设计"，不是"你能不能默写 YAML"。
 - **不要**只发 `docs.yml` 不发 `requirements.txt`：
   CI 里 `pip install -r requirements.txt` 会失败，学生卡在与教学目标无关的地方。
-- `docs-intranet.yml` 里的部署步骤是**示意性的**，各校机房不同，
-  请在开课前替换为 IT 部门确认的实际方式（见 `teacher/SETUP-CHECKLIST.md`）。
+- `docs-intranet.yml` 的默认值**已填好、可直接用**；但有三项参数因校而异，
+  开课前按文件头「教师本地化清单」改写（详见 `teacher/SETUP-CHECKLIST.md`）。
+
+---
+
+## 五、怎么发放（T-F 的执行方式）
+
+> **本节回答的是"怎么把它发出去"**——文件放在仓库里不等于学生拿得到。
+
+### 三种发放方式，按机房条件选
+
+| 方式 | 做法 | 适用 |
+|---|---|---|
+| **A. 打进项目模板**（推荐） | 把本目录内容并入学生项目模板仓库的初始提交，学生 `git clone` 即得 | 有统一的模板仓库 |
+| **B. 共享盘散发给学生** | 把本目录压缩为 `starters.zip`，放共享盘，学生解压到自己项目根目录 | 无模板仓库，但有共享盘 |
+| **C. 随手册附录发** | 打印/导出本目录各文件内容作为手册附录 | 无网络环境 |
+
+### 发放后学生的第一个动作（写进手册即可）
+
+```bash
+# 假设已解压到项目根目录，且当前在项目根目录
+cp starters/requirements.txt .
+cp starters/.gitignore .
+mkdir -p .github/workflows
+cp starters/.github/workflows/docs.yml .github/workflows/
+```
+
+### 发放验收（教师自查，2 分钟）
+
+- [ ] 每位学生手上都有 **4 个文件**（`requirements.txt` / `.gitignore` / `docs.yml` / `docs-intranet.yml`）
+- [ ] 学生已执行上面的 `cp`，且 `git status --short` **不显示** `.env` 与 `.venv/`
+- [ ] 学生 **未手打任何 YAML**——若有人在敲缩进，说明发放没到位
+
+> 🎯 **判据**：发放到位的标志不是"学生拿到了文件"，而是
+> **"学生不在与教学目标无关的地方卡住"**。
+> 学生若还在一格格敲 YAML 缩进，T-F 就没完成。
+
+### 内网档的额外一步
+
+若走内网 Git 档，发放后还需改写 `docs-intranet.yml` 的三项参数
+（`runs-on` / `python-version` / `DEPLOY-MODE`），文件头已内嵌清单。

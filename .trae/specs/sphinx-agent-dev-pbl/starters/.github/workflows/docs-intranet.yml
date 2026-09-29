@@ -9,9 +9,25 @@
 #     前面「装依赖 → sphinx-build -W → 产出静态文件」完全一样——
 #     那才是本任务要教的东西。
 #
-#  🔧 教师注意：最后一步的部署命令由内网 runner 决定，各校不同。
-#     下面给了两种常见写法（A: 拷贝到 Web 根目录 / B: 打包成 artifact），
-#     请按你们机房的实际情况二选一，或替换成 IT 部门指定的方式。
+#  ===================================================================
+#  🔧 教师本地化清单（开课前请逐项确认，共 3 项）
+#  ===================================================================
+#
+#  【1】runs-on 的 runner 标签
+#       下方默认 `self-hosted`。若贵校 runner 打了额外标签
+#       （如 `[self-hosted, linux, x64]`），请按实际填写。
+#
+#  【2】Python 版本
+#       下方默认 '3.11'。若机房 runner 只装了其他版本，
+#       改为实际版本（建议 3.10+，Sphinx 7 及以上要求）。
+#
+#  【3】部署方式（下方 DEPLOY-MODE 处二选一）
+#       默认已启用「方式 B：打包 artifact」——它对环境要求最低，
+#       不需要 runner 有免密 SSH 或 Web 根目录写权限。
+#       若贵校要求直接发布到 Web 服务器，改用「方式 A」的 rsync 写法。
+#
+#  ⚠️ 三项之外的其他内容请勿修改——尤其「Build docs」那一步，
+#     它是本任务的教学目标（见 task-3-ci.md）。
 # ===================================================================
 
 name: Build and Deploy Docs (内网版)
@@ -23,30 +39,47 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted          # 内网自托管 runner
+    runs-on: self-hosted          # 【本地化 1】按贵校 runner 标签填写
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.11'  # 【本地化 2】按机房实际 Python 版本填写
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # ↓↓↓ 这一步与 GitHub 版完全相同——这才是重点 ↓↓↓
+      # ↓↓↓ 这一步与 GitHub 版完全相同——这才是重点，请勿修改 ↓↓↓
       - name: Build docs (warnings as errors)
         run: sphinx-build -b html -W --keep-going docs docs/_build/html
 
-      # ↓↓↓ 只有下面这段部署方式不同，按机房情况选一种 ↓↓↓
+      # ===============================================================
+      #  DEPLOY-MODE：以下二选一，默认启用方式 B
+      #  （取消注释某一方式、注释掉另一方式即可切换）
+      # ===============================================================
 
       # --- 方式 A：直接拷贝到内网 Web 服务器的文档根目录 ---
+      #     适用：runner 有免密 SSH 或本地 Web 根目录写权限
+      #     需本地化：把 /var/www/docs/ 换成贵校实际 Web 根目录
       # - name: Deploy to intranet webroot
       #   run: |
       #     rsync -a --delete docs/_build/html/ /var/www/docs/
 
-      # --- 方式 B：打包成 artifact，交给内网平台发布 ---
+      # --- 方式 B：打包成 artifact，交给内网平台发布（默认启用）---
+      #     适用：任何环境；产物可在 Actions 页面下载后手工发布
       - uses: actions/upload-artifact@v4
         with:
           name: docs-html
           path: docs/_build/html
+
+# ===================================================================
+#  发布后自检（把 artifact 发布到内网 Web 后执行）
+# ===================================================================
+#  在浏览器打开内网站点，确认：
+#    [ ] 首页可访问（不是 404 / 不是目录列表）
+#    [ ] 左侧导航包含 glossary / api 两个页面（Task2、Task5 的产物）
+#    [ ] 点进任一楼层的 "View page source" 能看到静态 HTML
+#
+#  任一项失败时，优先查【1】runner 标签与【2】Python 版本——
+#  这两项写错会让 CI 整个不跑，且报错信息不指向真正原因。

@@ -224,7 +224,24 @@ pip install --no-index --find-links=./pkgs \
 | 内网 Git 服务地址已确认 | `http://____________` |
 | 学生账号已在内网服务上开好 | |
 | 自托管 runner 已部署并在线 | 确认 runner 状态为 idle |
-| 已准备内网版 `docs.yml` | 替换 `upload-pages-artifact` / `deploy-pages` 两个 action |
+| **[本地化] `docs-intranet.yml` 三项已改写** | 见下方 ⬇️ |
+| **[已备好] 内网版 CI 实物** | 直接用 [`../starters/.github/workflows/docs-intranet.yml`](../starters/.github/workflows/docs-intranet.yml)，**无需手写** |
+
+#### ⬇️ `docs-intranet.yml` 本地化三项（开课前必做）
+
+该文件已把**默认值填好**（开箱即用），但三项参数因校而异，请按机房实际改写：
+
+| # | 位置 | 默认值 | 改成 |
+|---|---|---|---|
+| 1 | `runs-on:` | `self-hosted` | 贵校 runner 的实际标签（如 `[self-hosted, linux, x64]`） |
+| 2 | `python-version:` | `'3.11'` | 机房实际 Python 版本（建议 3.10+） |
+| 3 | `DEPLOY-MODE` 段 | 方式 B（打包 artifact） | 二选一；若选方式 A 还要改 `/var/www/docs/` 为实际 Web 根目录 |
+
+> ✅ **文件内已内嵌这份清单**（见文件头注释"教师本地化清单"）——
+> 教师打开文件即可照做，无需回到本页对照。
+>
+> 🚫 **不要修改 `Build docs` 那一步**：`sphinx-build -b html -W --keep-going docs docs/_build/html`
+> 是本任务的教学目标，改了就等于把 Task3 的核心删掉了。
 
 > 💡 **若内网连 Git 服务都没有**：回退到最简方案——
 > 本地 `sphinx-build` + 把 `_build/html` 拷贝到共享盘（学生自己的文件夹）。
