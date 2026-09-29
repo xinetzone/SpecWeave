@@ -3,7 +3,7 @@
 >  methodologies applied: TRAE-spec-mode（Specify）→ seven-concepts（F 第一性原理 驱动设计）
 > 自然语言：简体中文（与用户请求一致）
 >
-> 📎 配套文件：`tasks.md`（任务队列与验收标准）、`insight.md`（V 对抗审查与洞察）、`review.md`（独立审查与检查点）、**`decisions.md`（决策记录 — 原 Open Questions 的落定依据）**、`handbook/`（学生操作手册）、`templates/`（Task4/5 代码模板）、`warmup-docs/`（Task0 脚手架）、**`starters/`（Task1/3 配置类文件实物 — 依赖清单 / .gitignore / CI 工作流，R10 补全）**、**`teacher/`（教师实施包 — 课时编排 / 可打印评分表 / 机房准备清单 / 课堂应答手册，NFR-1 的落地依据）**、**`scripts/`（一致性审计脚本 — NFR-4 的可验证手段）**。
+> 📎 配套文件：`tasks.md`（任务队列与验收标准）、`insight.md`（V 对抗审查与洞察）、`review.md`（独立审查与检查点）、**`retrospective.md`（里程碑复盘报告 — R1–R10 全周期事实/洞察/行动项，R11 新增）**、**`decisions.md`（决策记录 — 原 Open Questions 的落定依据）**、`handbook/`（学生操作手册）、`templates/`（Task4/5 代码模板）、`warmup-docs/`（Task0 脚手架）、**`starters/`（Task1/3 配置类文件实物 — 依赖清单 / .gitignore / CI 工作流，R10 补全）**、**`teacher/`（教师实施包 — 课时编排 / 可打印评分表 / 机房准备清单 / 课堂应答手册，NFR-1 的落地依据）**、**`patterns/`（可迁移模式 — 配置实物化）**、**`scripts/`（一致性审计脚本 — NFR-4 的可验证手段）**。
 
 ## 一、Overview
 

@@ -46,8 +46,11 @@ FUTURE_PATHS = {"drafts/diff-notes.md"}
 # 见 patterns/config-as-artifact.md 的"跨场景迁移示例"。
 CROSS_DOMAIN_EXAMPLES = {"config.yaml", "deployment.yaml", "configs/base.yaml"}
 
-# 无路径前缀的裸文件名——它们在文中通常是"泛指某类文件"而非"引用某具体文件"
-BARE_NAMES = {"conf.py", "index.md", "index.rst", "requirements.txt"}
+# 无路径前缀的裸文件名——它们在文中通常是"泛指某类文件"而非"引用某具体文件"。
+# audit_consistency.py 属于此列：文中常以裸名指代"那个审计脚本"，
+# 其真实位置在 scripts/ 下，已在 bases 中覆盖。
+BARE_NAMES = {"conf.py", "index.md", "index.rst", "requirements.txt",
+              "audit_consistency.py"}
 
 # 模式文档——跨领域迁移示例的来源，其举例文件名不应计入幽灵检查
 PATTERN_FILES = {"config-as-artifact.md"}
