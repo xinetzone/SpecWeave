@@ -1,0 +1,251 @@
+/* =============================================================
+   Design Tokens —— 源文件：Ardot 画布《移动端 Design Token 体系》
+   4 组变量集合：Primitives / Semantic / Radius / Shadow
+   2 套主题模式：Light（默认） / Dark
+
+   换肤机制（与设计稿一致）：
+   所有组件只引用「语义变量」，明暗切换 = 切换变量集合的 Mode，
+   不修改任何组件自身属性。
+     · <html class="theme-root">  → Light
+     · <html class="theme-dark">  → Dark
+     · <html class="theme-auto">  → 跟随系统 prefers-color-scheme
+     · 任意容器加 .theme-light / .theme-dark → 局部强制该模式
+       （自定义属性在元素自身上的声明优先于继承值，因此可用于
+         页面内的「Light / Dark 对照面板」）
+   ============================================================= */
+
+/* ------------------------------------------------------------
+   1) Light 模式（默认）
+   ------------------------------------------------------------ */
+.theme-root,
+.theme-light {
+  /* Primitives · 与主题无关的静态色板（Light / Dark 取值一致） */
+  --neutral-0: #ffffff;
+  --neutral-50: #f7f8fa;
+  --neutral-100: #f1f3f6;
+  --neutral-200: #e4e7ec;
+  --neutral-300: #cfd4dc;
+  --neutral-400: #a6aebb;
+  --neutral-500: #7a8496;
+  --neutral-600: #5a6474;
+  --neutral-700: #414a5a;
+  --neutral-800: #2b3240;
+  --neutral-900: #1a1f29;
+  --neutral-950: #0e1218;
+
+  --brand-50: #eef3ff;
+  --brand-100: #dce6ff;
+  --brand-200: #bcd0ff;
+  --brand-300: #92b2ff;
+  --brand-400: #638cff;
+  --brand-500: #3b62f6;
+  --brand-600: #2b4bd4;
+  --brand-700: #2139ab;
+  --brand-800: #1c2e88;
+  --brand-900: #182670;
+
+  --success-100: #e7f8ef;
+  --success-500: #17b26a;
+  --success-700: #087443;
+  --warning-100: #fef0dc;
+  --warning-500: #f79009;
+  --warning-700: #b54708;
+  --danger-100: #fee4e2;
+  --danger-500: #f04438;
+  --danger-700: #b42318;
+
+  /* Semantic · 背景 */
+  --bg-canvas: #f1f3f6;
+  --bg-surface: #ffffff;
+  --bg-surface-secondary: #f7f8fa;
+  --bg-surface-raised: #ffffff;
+  --bg-surface-inverse: #1a1f29;
+  --bg-overlay: rgba(14, 18, 24, 0.6); /* #0E1218 @ 60% */
+
+  /* Semantic · 文字 */
+  --text-primary: #1a1f29;
+  --text-secondary: #414a5a;
+  --text-tertiary: #7a8496;
+  --text-disabled: #a6aebb;
+  --text-on-accent: #ffffff;
+  --text-link: #2b4bd4;
+
+  /* Semantic · 描边 */
+  --border-subtle: #f1f3f6;
+  --border-default: #e4e7ec;
+  --border-strong: #cfd4dc;
+
+  /* Semantic · 主色 */
+  --accent-primary: #3b62f6;
+  --accent-primary-pressed: #2b4bd4;
+  --accent-disabled: #bcd0ff;
+  --accent-subtle-bg: #eef3ff;
+  --accent-subtle-text: #2b4bd4;
+  --accent-focus-ring: #92b2ff;
+
+  /* Semantic · 功能色 */
+  --success-fg: #087443;
+  --success-bg: #e7f8ef;
+  --warning-fg: #b54708;
+  --warning-bg: #fef0dc;
+  --danger-fg: #b42318;
+  --danger-bg: #fee4e2;
+
+  /* Shadow · Light 用同色系 #0E1218 @ 5%–16% */
+  --shadow-1: 0 1px 2px 0 rgba(14, 18, 24, 0.05);
+  --shadow-2: 0 2px 8px -2px rgba(14, 18, 24, 0.08);
+  --shadow-3: 0 4px 16px -4px rgba(14, 18, 24, 0.1);
+  --shadow-4: 0 8px 24px -6px rgba(14, 18, 24, 0.12);
+  --shadow-5: 0 16px 40px -8px rgba(14, 18, 24, 0.16);
+}
+
+/* ------------------------------------------------------------
+   2) Dark 模式
+   ------------------------------------------------------------ */
+.theme-dark {
+  /* Primitives · 与设计稿一致，两 Mode 取值完全相同 */
+  --neutral-0: #ffffff;
+  --neutral-50: #f7f8fa;
+  --neutral-100: #f1f3f6;
+  --neutral-200: #e4e7ec;
+  --neutral-300: #cfd4dc;
+  --neutral-400: #a6aebb;
+  --neutral-500: #7a8496;
+  --neutral-600: #5a6474;
+  --neutral-700: #414a5a;
+  --neutral-800: #2b3240;
+  --neutral-900: #1a1f29;
+  --neutral-950: #0e1218;
+
+  --brand-50: #eef3ff;
+  --brand-100: #dce6ff;
+  --brand-200: #bcd0ff;
+  --brand-300: #92b2ff;
+  --brand-400: #638cff;
+  --brand-500: #3b62f6;
+  --brand-600: #2b4bd4;
+  --brand-700: #2139ab;
+  --brand-800: #1c2e88;
+  --brand-900: #182670;
+
+  --success-100: #e7f8ef;
+  --success-500: #17b26a;
+  --success-700: #087443;
+  --warning-100: #fef0dc;
+  --warning-500: #f79009;
+  --warning-700: #b54708;
+  --danger-100: #fee4e2;
+  --danger-500: #f04438;
+  --danger-700: #b42318;
+
+  /* Semantic · 背景 */
+  --bg-canvas: #0e1218;
+  --bg-surface: #1a1f29;
+  --bg-surface-secondary: #2b3240;
+  --bg-surface-raised: #2b3240;
+  --bg-surface-inverse: #f1f3f6;
+  --bg-overlay: rgba(14, 18, 24, 0.72); /* #0E1218 @ 72% */
+
+  /* Semantic · 文字 */
+  --text-primary: #f1f3f6;
+  --text-secondary: #a6aebb;
+  --text-tertiary: #7a8496;
+  --text-disabled: #414a5a;
+  --text-on-accent: #ffffff;
+  --text-link: #92b2ff;
+
+  /* Semantic · 描边 */
+  --border-subtle: #2b3240;
+  --border-default: #414a5a;
+  --border-strong: #5a6474;
+
+  /* Semantic · 主色 */
+  --accent-primary: #638cff;
+  --accent-primary-pressed: #3b62f6;
+  --accent-disabled: #2139ab;
+  --accent-subtle-bg: #182670;
+  --accent-subtle-text: #bcd0ff;
+  --accent-focus-ring: #638cff;
+
+  /* Semantic · 功能色 */
+  --success-fg: #17b26a;
+  --success-bg: #10281e;
+  --warning-fg: #fdb022;
+  --warning-bg: #33200a;
+  --danger-fg: #f97066;
+  --danger-bg: #3a1714;
+
+  /* Shadow · Dark 统一切纯黑 @ 30%–60%，避免阴影在深色面上「消失」 */
+  --shadow-1: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-2: 0 2px 8px -2px rgba(0, 0, 0, 0.36);
+  --shadow-3: 0 4px 16px -4px rgba(0, 0, 0, 0.42);
+  --shadow-4: 0 8px 24px -6px rgba(0, 0, 0, 0.5);
+  --shadow-5: 0 16px 40px -8px rgba(0, 0, 0, 0.6);
+}
+
+/* ------------------------------------------------------------
+   3) 跟随系统（theme-auto）
+   ------------------------------------------------------------ */
+@media (prefers-color-scheme: dark) {
+  .theme-auto {
+    --bg-canvas: #0e1218;
+    --bg-surface: #1a1f29;
+    --bg-surface-secondary: #2b3240;
+    --bg-surface-raised: #2b3240;
+    --bg-surface-inverse: #f1f3f6;
+    --bg-overlay: rgba(14, 18, 24, 0.72);
+
+    --text-primary: #f1f3f6;
+    --text-secondary: #a6aebb;
+    --text-tertiary: #7a8496;
+    --text-disabled: #414a5a;
+    --text-on-accent: #ffffff;
+    --text-link: #92b2ff;
+
+    --border-subtle: #2b3240;
+    --border-default: #414a5a;
+    --border-strong: #5a6474;
+
+    --accent-primary: #638cff;
+    --accent-primary-pressed: #3b62f6;
+    --accent-disabled: #2139ab;
+    --accent-subtle-bg: #182670;
+    --accent-subtle-text: #bcd0ff;
+    --accent-focus-ring: #638cff;
+
+    --success-fg: #17b26a;
+    --success-bg: #10281e;
+    --warning-fg: #fdb022;
+    --warning-bg: #33200a;
+    --danger-fg: #f97066;
+    --danger-bg: #3a1714;
+
+    --shadow-1: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-2: 0 2px 8px -2px rgba(0, 0, 0, 0.36);
+    --shadow-3: 0 4px 16px -4px rgba(0, 0, 0, 0.42);
+    --shadow-4: 0 8px 24px -6px rgba(0, 0, 0, 0.5);
+    --shadow-5: 0 16px 40px -8px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* ------------------------------------------------------------
+   4) Radius —— 8 级圆角，双主题取值一致
+   ------------------------------------------------------------ */
+.theme-root,
+.theme-light,
+.theme-dark,
+.theme-auto {
+  --radius-none: 0px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 999px;
+
+  /* 非颜色常量：色阶描边在任何主题下都用 neutral-200 */
+  --ramp-outline: #e4e7ec;
+  --ramp-on-dark: #ffffff;
+  --ramp-on-light: #1a1f29;
+}
