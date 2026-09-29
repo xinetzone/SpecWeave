@@ -7,11 +7,12 @@
 来源：R8 完整性审计（session sc-20260929-pbl-audit）固化。
 对应需求：spec.md NFR-4（跨文档一致性）。
 
-它做四件事——前两件是"完备性"，后两件是"一致性"（真正的缺陷高发区）：
+它做五件事——前两件是"完备性"，后两件是"一致性"（真正的缺陷高发区）：
   1. 相对链接可达性（最弱判据，但成本低，先跑）
   2. 幽灵文件（被引用的文件是否真实存在）
   3. 派生数字（文档声称的行数/张数 vs 实测值）
   4. 可复制命令的逐字一致性（同一命令多处出现是否一致）
+  5. 节号引用可达性（"review.md 3.5 节"里的 3.5 是否真的存在）
 
 退出码：0 = 全部通过；1 = 有失败项。
 用法：python scripts/audit_consistency.py [--root .]
@@ -58,6 +59,11 @@ PATTERN_FILES = {"config-as-artifact.md"}
 # 审计报告类文件——它们会引用（并批判）错误写法，不应计入一致性冲突；
 # 模式文档同理（其举例是"别的领域的文件长这样"）
 AUDIT_FILES = {"insight.md", "review.md"} | PATTERN_FILES
+
+# 按相对路径排除的文件（比按文件名精确，避免误伤同名 README）
+# scripts/README.md 是审计工具自身的说明文档——它必然要为"举例说明某类缺陷"
+# 而引用错误节号，与审计报告同性质。
+AUDIT_FILE_PATHS = {"scripts/README.md"}
 
 # 描述性/警示性语境标记——出现这些词的行是在"提醒不要这么写"，不算真的在用
 WARNING_MARKERS = ("不要写成", "勿写成", "别写成", "错写成", "那会", "会报", "必失败", "错误写法")
@@ -189,6 +195,40 @@ def scan_command_consistency(root: Path) -> list[tuple[str, str]]:
     return issues
 
 
+def scan_section_refs(root: Path) -> list[tuple[str, str, str]]:
+    """
+    扫描"文档 + 节号"形式的引用，验证目标文档中确实存在该节号。
+
+    来源：R12 抓到的真实缺陷——多处写"S7-3 → review.md 3.5 节"，
+    但 review.md 并无 3.5 节（真实位置是 SCORING-SHEET.md §3.5）。
+    这类"指向错文件/错节号"的引用不会被链接检查发现（链接本身可达），
+    也不会被幽灵检查发现（文件名有歧义），属**独立缺陷类型**。
+
+    返回 [(引用所在文件, 被引文档, 节号)]
+    """
+    # 形如 `xxx.md` §3.5 / `xxx.md` 3.5 节 / xxx.md 第 3.5 节
+    pat = re.compile(r"`?([A-Za-z0-9_\-]+\.md)`?\s*(?:§|第)?\s*(\d+\.\d+)\s*(?:节|节「)?")
+    issues: list[tuple[str, str, str]] = []
+    for md in sorted(root.rglob("*.md")):
+        rel = str(md.relative_to(root)).replace("\\", "/")
+        if md.name in AUDIT_FILES or rel in AUDIT_FILE_PATHS:
+            continue  # 审计报告/工具文档会引用（并批判）错误节号
+        for m in pat.finditer(md.read_text(encoding="utf-8")):
+            target, sec = m.group(1), m.group(2)
+            # 定位被引文档
+            cands = list(root.rglob(target))
+            if not cands:
+                continue  # 文件不存在由幽灵检查负责
+            tdoc = cands[0]
+            if tdoc.resolve() == md.resolve():
+                continue
+            tt = tdoc.read_text(encoding="utf-8")
+            # 目标文档中是否存在该节号（标题或表格行开头）
+            if not re.search(rf"(?:^|\n)#{{1,4}}\s*{re.escape(sec)}\b", tt):
+                issues.append((rel, target, sec))
+    return issues
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default=".", help="方案根目录")
@@ -202,7 +242,7 @@ def main() -> int:
 
     # 1. 链接
     checked, bad = scan_links(root)
-    print(f"\n[1/4] 相对链接可达性 … 检查 {checked} 条，断链 {len(bad)} 条")
+    print(f"\n[1/5] 相对链接可达性 … 检查 {checked} 条，断链 {len(bad)} 条")
     for f, u in bad:
         print(f"      ✗ {f} -> {u}")
     if bad:
@@ -210,7 +250,7 @@ def main() -> int:
 
     # 2. 幽灵文件
     ghosts = scan_ghost_files(root)
-    print(f"\n[2/4] 幽灵文件 … 发现 {len(ghosts)} 个")
+    print(f"\n[2/5] 幽灵文件 … 发现 {len(ghosts)} 个")
     for g in ghosts:
         print(f"      ✗ {g}")
     if ghosts:
@@ -219,7 +259,7 @@ def main() -> int:
     # 3. 派生数字
     lines, pngs = scan_derived_counts(root)
     n_bad = 0
-    print(f"\n[3/4] 派生数字（行数 / 张数）")
+    print(f"\n[3/5] 派生数字（行数 / 张数）")
     for fname, claimed, actual in lines:
         ok = abs(claimed - actual) <= 5
         mark = "✓" if ok else "✗"
@@ -238,7 +278,7 @@ def main() -> int:
     cmds = scan_command_consistency(root)
     hard = [c for c in cmds if "必失败" in c[0]]   # 真错误：会跑不起来
     soft = [c for c in cmds if "非错误" in c[0]]   # 提示：等价写法未统一
-    print(f"\n[4/4] 可复制命令的一致性 … 错误写法 {len(hard)} 处 / 等价混用 {len(soft)} 处")
+    print(f"\n[4/5] 可复制命令的一致性 … 错误写法 {len(hard)} 处 / 等价混用 {len(soft)} 处")
     for label, detail in cmds:
         mark = "✗" if "必失败" in label else "⚠"
         print(f"      {mark} {label}")
@@ -246,6 +286,14 @@ def main() -> int:
     if not cmds:
         print("      ✓ 关键命令在各处写法一致")
     if hard:
+        failed = True
+
+    # 5. 节号引用可达性
+    srefs = scan_section_refs(root)
+    print(f"\n[5/5] 节号引用可达性 … 失效 {len(srefs)} 处")
+    for src, tgt, sec in srefs:
+        print(f"      ✗ {src}: 引用 `{tgt}` §{sec} —— 该节号在目标文档中不存在")
+    if srefs:
         failed = True
 
     print("\n" + "=" * 68)

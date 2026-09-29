@@ -1,0 +1,106 @@
+# ===================================================================
+#  PBL 方案一致性审计（Consistency Audit）
+#
+#  背景：.trae/specs/sphinx-agent-dev-pbl/ 是一套多文档套装
+#        （spec / tasks / review / insight / retrospective / handbook / teacher），
+#        跨文档漂移是它的主要缺陷类型——R8/R9/R10 三轮共发现 11 处不一致。
+#
+#  该脚本此前只能在人工记得时手动运行（tasks.md T-E），
+#  本工作流把它从「记得手动跑」变为「推送即拦截」（R11 行动项 A-1）。
+#
+#  脚本位置：.trae/specs/sphinx-agent-dev-pbl/scripts/audit_consistency.py
+#  退出码：  0 = 全部通过；1 = 存在失败项 → 本工作流判定为失败
+#  运行成本：纯标准库，无第三方依赖，秒级完成
+#
+#  ===================================================================
+#  ⚠️ 关于"拒绝合并"——本工作流只能提供 check，不能单独阻断合并
+#  ===================================================================
+#  本工作流失败时会产出一个 failed check，但 GitHub 默认允许合并
+#  "有失败 check"的 PR。要让失败真正阻断合并，**必须**在仓库设置里：
+#
+#     Settings → Branches → Branch protection rules → main
+#       ✅ Require status checks to pass before merging
+#       ✅ 在搜索框中勾选 "跨文档一致性审计"（即本工作流的 job name）
+#
+#  R11 复盘 A-1 的验收标准写的是"退出码 1 时拒绝合并"——
+#  该标准的**一半由本文件承担（产出 check），另一半由仓库设置承担（设为必需）**。
+#  只做前者，审计失败仍可被合并；只做后者而无前者，则没有任何 check 可勾选。
+# ===================================================================
+
+name: PBL Consistency Audit
+
+on:
+  pull_request:
+    branches: [main]
+    # 与 push 保持一致：仅在方案相关路径变动时触发
+    # （此前 PR 未加 paths，导致无关 PR 也会跑，浪费配额且稀释信号价值）
+    paths:
+      - '.trae/specs/sphinx-agent-dev-pbl/**'
+      - '.github/workflows/pbl-consistency-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      # 仅在方案相关路径变动时触发，避免无关提交浪费 CI 配额
+      - '.trae/specs/sphinx-agent-dev-pbl/**'
+      - '.github/workflows/pbl-consistency-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  consistency-audit:
+    # ⚠️ 此 name 会被 GitHub 用于分支保护的 status check 列表，
+    #    改名后需同步更新 Branch protection rules 中的勾选项。
+    name: 跨文档一致性审计 (PBL)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    env:
+      PYTHONIOENCODING: utf-8
+      PYTHONUTF8: "1"
+      PBL_ROOT: .trae/specs/sphinx-agent-dev-pbl
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      # 脚本只用标准库（argparse / re / sys / pathlib），无需 pip install
+
+      - name: 运行一致性审计
+        working-directory: ${{ env.PBL_ROOT }}
+        run: python scripts/audit_consistency.py --root .
+
+      - name: 失败时给出修复指引
+        if: failure()
+        run: |
+          echo "::error title=一致性审计未通过::跨文档存在不一致，详见上方审计输出"
+          cat <<'EOF'
+          ================================================================
+          ❌ 一致性审计未通过
+
+          审计检查五类问题（详见 scripts/README.md）：
+            [1/5] 相对链接可达性
+            [2/5] 幽灵文件（被引用但不存在的文件）
+            [3/5] 派生数字（文档声称的行数/张数 vs 实测值）
+            [4/5] 可复制命令的逐字一致性
+            [5/5] 节号引用可达性（"xxx.md §3.5" 里的 3.5 是否真的存在）
+
+          修复方法：
+            1. 按审计输出逐项修正
+            2. 本地复跑：cd .trae/specs/sphinx-agent-dev-pbl
+                        python scripts/audit_consistency.py --root .
+            3. 若属"已知正确噪声"，加入 audit_consistency.py 顶部的白名单常量
+               （PLANNED_ARTIFACTS / EXTERNAL_SCRIPTS / CROSS_DOMAIN_EXAMPLES /
+                 BARE_NAMES / PATTERN_FILES），切勿直接删除检查项
+
+          注意：留白位点是设计而非缺陷，不要把留白加进白名单来"消错"。
+          ================================================================
+          EOF
