@@ -1,0 +1,2339 @@
+{
+  "providers": [
+    {
+      "id": "zhipu",
+      "name": "智谱 GLM",
+      "protocol": "openai_compat",
+      "base_url": "https://open.bigmodel.cn/api/paas/v4",
+      "tier": "free",
+      "public": true,
+      "capabilities": [
+        "text"
+      ],
+      "models": [
+        "glm-4-flash",
+        "glm-4.5-air"
+      ],
+      "website": "https://bigmodel.cn",
+      "custom": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "longcat",
+      "name": "美团 LongCat",
+      "protocol": "openai_compat",
+      "base_url": "https://api.longcat.chat/openai",
+      "tier": "free",
+      "public": true,
+      "capabilities": [
+        "text"
+      ],
+      "models": [
+        "longcat-flash-chat",
+        "longcat-flash-thinking"
+      ],
+      "website": "https://longcat.chat",
+      "custom": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "agnes",
+      "name": "Agnes",
+      "protocol": "openai_compat",
+      "base_url": "https://apihub.agnes-ai.com/v1",
+      "tier": "free",
+      "public": true,
+      "capabilities": [
+        "text"
+      ],
+      "models": [
+        "agnes-2.5-flash"
+      ],
+      "website": "https://agnes-ai.com",
+      "custom": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "siliconflow",
+      "name": "硅基流动 SiliconFlow",
+      "protocol": "openai_compat",
+      "base_url": "https://api.siliconflow.cn/v1",
+      "tier": "free",
+      "public": true,
+      "capabilities": [
+        "code",
+        "text"
+      ],
+      "models": [
+        "Qwen/Qwen2.5-7B-Instruct",
+        "Qwen/Qwen2.5-72B-Instruct",
+        "Qwen/Qwen2.5-Coder-7B-Instruct"
+      ],
+      "website": "https://siliconflow.cn",
+      "custom": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "groq",
+      "name": "Groq",
+      "protocol": "openai_compat",
+      "base_url": "https://api.groq.com/openai/v1",
+      "tier": "free",
+      "public": true,
+      "capabilities": [
+        "text"
+      ],
+      "models": [
+        "llama-3.3-70b-versatile",
+        "llama-3.1-8b-instant",
+        "mixtral-8x7b-32768"
+      ],
+      "website": "https://groq.com",
+      "custom": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "qianfan",
+      "name": "百度千帆",
+      "protocol": "openai_compat",
+      "base_url": "https://qianfan.baidubce.com/v2",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [
+        "text"
+      ],
+      "models": [
+        "ernie-4.0-8k",
+        "ernie-speed-128k",
+        "ernie-4.5-turbo-128k"
+      ],
+      "website": "https://cloud.baidu.com/product-qianfan.html",
+      "custom": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "openrouter",
+      "name": "OpenRouter",
+      "protocol": "openai_compat",
+      "base_url": "https://openrouter.ai/api/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [
+        "code",
+        "image",
+        "text"
+      ],
+      "models": [
+        "openai/gpt-4o",
+        "anthropic/claude-3.5-sonnet",
+        "google/gemini-2.0-flash-001",
+        "meta-llama/llama-3.3-70b-instruct",
+        "deepseek/deepseek-chat"
+      ],
+      "website": "https://openrouter.ai",
+      "custom": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "protocol": "openai_compat",
+      "base_url": "https://api.deepseek.com/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [
+        "text"
+      ],
+      "models": [
+        "deepseek-chat",
+        "deepseek-reasoner"
+      ],
+      "website": "https://platform.deepseek.com",
+      "custom": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "seed-free-01",
+      "name": "示例免费厂商 01",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-free-01.example.invalid/v1",
+      "tier": "free",
+      "public": true,
+      "capabilities": [
+        "text"
+      ],
+      "models": [
+        "seed-free-01-a",
+        "seed-free-01-b",
+        "seed-free-01-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-02",
+      "name": "示例免费厂商 02",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-free-02.example.invalid/v1",
+      "tier": "free",
+      "public": true,
+      "capabilities": [
+        "text"
+      ],
+      "models": [
+        "seed-free-02-a",
+        "seed-free-02-b",
+        "seed-free-02-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-03",
+      "name": "示例免费厂商 03",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-free-03.example.invalid/v1",
+      "tier": "free",
+      "public": true,
+      "capabilities": [
+        "text"
+      ],
+      "models": [
+        "seed-free-03-a",
+        "seed-free-03-b",
+        "seed-free-03-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-04",
+      "name": "示例免费厂商 04",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-free-04.example.invalid/v1",
+      "tier": "free",
+      "public": true,
+      "capabilities": [
+        "code"
+      ],
+      "models": [
+        "seed-free-04-a",
+        "seed-free-04-b",
+        "seed-free-04-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-05",
+      "name": "示例免费厂商 05",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-free-05.example.invalid/v1",
+      "tier": "free",
+      "public": true,
+      "capabilities": [
+        "image"
+      ],
+      "models": [
+        "seed-free-05-a",
+        "seed-free-05-b",
+        "seed-free-05-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-06",
+      "name": "示例免费厂商 06",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-free-06.example.invalid/v1",
+      "tier": "free",
+      "public": true,
+      "capabilities": [
+        "image"
+      ],
+      "models": [
+        "seed-free-06-a",
+        "seed-free-06-b",
+        "seed-free-06-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-07",
+      "name": "示例免费厂商 07",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-free-07.example.invalid/v1",
+      "tier": "free",
+      "public": true,
+      "capabilities": [],
+      "models": [
+        "seed-free-07-a",
+        "seed-free-07-b",
+        "seed-free-07-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-08",
+      "name": "示例免费厂商 08",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-free-08.example.invalid/v1",
+      "tier": "free",
+      "public": true,
+      "capabilities": [],
+      "models": [
+        "seed-free-08-a",
+        "seed-free-08-b",
+        "seed-free-08-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-09",
+      "name": "示例免费厂商 09",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-free-09.example.invalid/v1",
+      "tier": "free",
+      "public": true,
+      "capabilities": [],
+      "models": [
+        "seed-free-09-a",
+        "seed-free-09-b",
+        "seed-free-09-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-10",
+      "name": "示例免费厂商 10",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-free-10.example.invalid/v1",
+      "tier": "free",
+      "public": true,
+      "capabilities": [],
+      "models": [
+        "seed-free-10-a",
+        "seed-free-10-b",
+        "seed-free-10-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-11",
+      "name": "示例免费厂商 11",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-free-11.example.invalid/v1",
+      "tier": "free",
+      "public": true,
+      "capabilities": [],
+      "models": [
+        "seed-free-11-a",
+        "seed-free-11-b",
+        "seed-free-11-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-12",
+      "name": "示例免费厂商 12",
+      "protocol": "anthropic",
+      "base_url": "https://seed-free-12.example.invalid/v1",
+      "tier": "free",
+      "public": true,
+      "capabilities": [],
+      "models": [
+        "seed-free-12-a",
+        "seed-free-12-b",
+        "seed-free-12-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-01",
+      "name": "示例付费厂商 01",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-01.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [
+        "text"
+      ],
+      "models": [
+        "seed-paid-01-a",
+        "seed-paid-01-b",
+        "seed-paid-01-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-02",
+      "name": "示例付费厂商 02",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-02.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [
+        "code"
+      ],
+      "models": [
+        "seed-paid-02-a",
+        "seed-paid-02-b",
+        "seed-paid-02-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-03",
+      "name": "示例付费厂商 03",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-03.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [
+        "code"
+      ],
+      "models": [
+        "seed-paid-03-a",
+        "seed-paid-03-b",
+        "seed-paid-03-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-04",
+      "name": "示例付费厂商 04",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-04.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [
+        "image"
+      ],
+      "models": [
+        "seed-paid-04-a",
+        "seed-paid-04-b",
+        "seed-paid-04-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-05",
+      "name": "示例付费厂商 05",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-05.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [
+        "image"
+      ],
+      "models": [
+        "seed-paid-05-a",
+        "seed-paid-05-b",
+        "seed-paid-05-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-06",
+      "name": "示例付费厂商 06",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-06.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [
+        "image"
+      ],
+      "models": [
+        "seed-paid-06-a",
+        "seed-paid-06-b",
+        "seed-paid-06-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-07",
+      "name": "示例付费厂商 07",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-07.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [
+        "image"
+      ],
+      "models": [
+        "seed-paid-07-a",
+        "seed-paid-07-b",
+        "seed-paid-07-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-08",
+      "name": "示例付费厂商 08",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-08.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [],
+      "models": [
+        "seed-paid-08-a",
+        "seed-paid-08-b",
+        "seed-paid-08-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-09",
+      "name": "示例付费厂商 09",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-09.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [],
+      "models": [
+        "seed-paid-09-a",
+        "seed-paid-09-b",
+        "seed-paid-09-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-10",
+      "name": "示例付费厂商 10",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-10.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [],
+      "models": [
+        "seed-paid-10-a",
+        "seed-paid-10-b",
+        "seed-paid-10-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-11",
+      "name": "示例付费厂商 11",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-11.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [],
+      "models": [
+        "seed-paid-11-a",
+        "seed-paid-11-b",
+        "seed-paid-11-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-12",
+      "name": "示例付费厂商 12",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-12.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [],
+      "models": [
+        "seed-paid-12-a",
+        "seed-paid-12-b",
+        "seed-paid-12-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-13",
+      "name": "示例付费厂商 13",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-13.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [],
+      "models": [
+        "seed-paid-13-a",
+        "seed-paid-13-b",
+        "seed-paid-13-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-14",
+      "name": "示例付费厂商 14",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-14.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [],
+      "models": [
+        "seed-paid-14-a",
+        "seed-paid-14-b",
+        "seed-paid-14-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-15",
+      "name": "示例付费厂商 15",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-15.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [],
+      "models": [
+        "seed-paid-15-a",
+        "seed-paid-15-b",
+        "seed-paid-15-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-16",
+      "name": "示例付费厂商 16",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-16.example.invalid/v1",
+      "tier": "paid",
+      "public": true,
+      "capabilities": [],
+      "models": [
+        "seed-paid-16-a",
+        "seed-paid-16-b",
+        "seed-paid-16-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-17",
+      "name": "示例付费厂商 17",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-17.example.invalid/v1",
+      "tier": "paid",
+      "public": false,
+      "capabilities": [],
+      "models": [
+        "seed-paid-17-a",
+        "seed-paid-17-b",
+        "seed-paid-17-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-18",
+      "name": "示例付费厂商 18",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-18.example.invalid/v1",
+      "tier": "paid",
+      "public": false,
+      "capabilities": [],
+      "models": [
+        "seed-paid-18-a",
+        "seed-paid-18-b",
+        "seed-paid-18-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-19",
+      "name": "示例付费厂商 19",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-19.example.invalid/v1",
+      "tier": "paid",
+      "public": false,
+      "capabilities": [],
+      "models": [
+        "seed-paid-19-a",
+        "seed-paid-19-b",
+        "seed-paid-19-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-20",
+      "name": "示例付费厂商 20",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-20.example.invalid/v1",
+      "tier": "paid",
+      "public": false,
+      "capabilities": [],
+      "models": [
+        "seed-paid-20-a",
+        "seed-paid-20-b",
+        "seed-paid-20-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-21",
+      "name": "示例付费厂商 21",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-21.example.invalid/v1",
+      "tier": "paid",
+      "public": false,
+      "capabilities": [],
+      "models": [
+        "seed-paid-21-a",
+        "seed-paid-21-b",
+        "seed-paid-21-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-22",
+      "name": "示例付费厂商 22",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-22.example.invalid/v1",
+      "tier": "paid",
+      "public": false,
+      "capabilities": [],
+      "models": [
+        "seed-paid-22-a",
+        "seed-paid-22-b",
+        "seed-paid-22-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-23",
+      "name": "示例付费厂商 23",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-23.example.invalid/v1",
+      "tier": "paid",
+      "public": false,
+      "capabilities": [],
+      "models": [
+        "seed-paid-23-a",
+        "seed-paid-23-b",
+        "seed-paid-23-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-24",
+      "name": "示例付费厂商 24",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-24.example.invalid/v1",
+      "tier": "paid",
+      "public": false,
+      "capabilities": [],
+      "models": [
+        "seed-paid-24-a",
+        "seed-paid-24-b",
+        "seed-paid-24-c"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-25",
+      "name": "示例付费厂商 25",
+      "protocol": "openai_compat",
+      "base_url": "https://seed-paid-25.example.invalid/v1",
+      "tier": "paid",
+      "public": false,
+      "capabilities": [],
+      "models": [
+        "seed-paid-25-a",
+        "seed-paid-25-b"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-26",
+      "name": "示例付费厂商 26",
+      "protocol": "gemini",
+      "base_url": "https://seed-paid-26.example.invalid/v1",
+      "tier": "paid",
+      "public": false,
+      "capabilities": [],
+      "models": [
+        "seed-paid-26-a",
+        "seed-paid-26-b"
+      ],
+      "website": "",
+      "custom": false,
+      "metadata_source": "seed"
+    }
+  ],
+  "models": [
+    {
+      "id": "glm-4-flash",
+      "name": "GLM-4-Flash",
+      "provider_id": "zhipu",
+      "capabilities": [
+        "text"
+      ],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "免费档 128K，共享限速",
+      "behind_flagship": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "glm-4.5-air",
+      "name": "GLM-4.5-Air",
+      "provider_id": "zhipu",
+      "capabilities": [],
+      "context_window": 128000,
+      "free": true,
+      "rate_limit_note": "免费档，共享限速",
+      "behind_flagship": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "longcat-flash-chat",
+      "name": "LongCat-Flash-Chat",
+      "provider_id": "longcat",
+      "capabilities": [
+        "text"
+      ],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "开放期免费，共享限速",
+      "behind_flagship": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "longcat-flash-thinking",
+      "name": "LongCat-Flash-Thinking",
+      "provider_id": "longcat",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "开放期免费，共享限速",
+      "behind_flagship": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "agnes-2.5-flash",
+      "name": "Agnes-2.5-Flash",
+      "provider_id": "agnes",
+      "capabilities": [
+        "text"
+      ],
+      "context_window": 524288,
+      "free": true,
+      "rate_limit_note": "免费档 512K 上下文（非 1M）",
+      "behind_flagship": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "Qwen/Qwen2.5-7B-Instruct",
+      "name": "Qwen/Qwen2.5-7B-Instruct",
+      "provider_id": "siliconflow",
+      "capabilities": [
+        "text"
+      ],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "免费档，共享限速",
+      "behind_flagship": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "Qwen/Qwen2.5-72B-Instruct",
+      "name": "Qwen/Qwen2.5-72B-Instruct",
+      "provider_id": "siliconflow",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "免费档，共享限速",
+      "behind_flagship": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "name": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "provider_id": "siliconflow",
+      "capabilities": [
+        "code"
+      ],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "免费档，共享限速",
+      "behind_flagship": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "llama-3.3-70b-versatile",
+      "name": "llama-3.3-70b-versatile",
+      "provider_id": "groq",
+      "capabilities": [
+        "text"
+      ],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "免费档按 RPM/TPM 限速",
+      "behind_flagship": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "llama-3.1-8b-instant",
+      "name": "llama-3.1-8b-instant",
+      "provider_id": "groq",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "免费档按 RPM/TPM 限速",
+      "behind_flagship": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "mixtral-8x7b-32768",
+      "name": "mixtral-8x7b-32768",
+      "provider_id": "groq",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "免费档按 RPM/TPM 限速",
+      "behind_flagship": false,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "ernie-4.0-8k",
+      "name": "ernie-4.0-8k",
+      "provider_id": "qianfan",
+      "capabilities": [
+        "text"
+      ],
+      "context_window": 8192,
+      "free": false,
+      "rate_limit_note": "按量计费",
+      "behind_flagship": true,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "ernie-speed-128k",
+      "name": "ernie-speed-128k",
+      "provider_id": "qianfan",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "按量计费",
+      "behind_flagship": true,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "ernie-4.5-turbo-128k",
+      "name": "ernie-4.5-turbo-128k",
+      "provider_id": "qianfan",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "按量计费",
+      "behind_flagship": true,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "openai/gpt-4o",
+      "name": "openai/gpt-4o",
+      "provider_id": "openrouter",
+      "capabilities": [
+        "text"
+      ],
+      "context_window": 128000,
+      "free": false,
+      "rate_limit_note": "按上游计费",
+      "behind_flagship": true,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "anthropic/claude-3.5-sonnet",
+      "name": "anthropic/claude-3.5-sonnet",
+      "provider_id": "openrouter",
+      "capabilities": [
+        "code"
+      ],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "按上游计费",
+      "behind_flagship": true,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "google/gemini-2.0-flash-001",
+      "name": "google/gemini-2.0-flash-001",
+      "provider_id": "openrouter",
+      "capabilities": [
+        "image"
+      ],
+      "context_window": 1048576,
+      "free": false,
+      "rate_limit_note": "按上游计费",
+      "behind_flagship": true,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "meta-llama/llama-3.3-70b-instruct",
+      "name": "meta-llama/llama-3.3-70b-instruct",
+      "provider_id": "openrouter",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "按上游计费",
+      "behind_flagship": true,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "deepseek/deepseek-chat",
+      "name": "deepseek/deepseek-chat",
+      "provider_id": "openrouter",
+      "capabilities": [],
+      "context_window": 65536,
+      "free": false,
+      "rate_limit_note": "按上游计费",
+      "behind_flagship": true,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "deepseek-chat",
+      "name": "deepseek-chat",
+      "provider_id": "deepseek",
+      "capabilities": [
+        "text"
+      ],
+      "context_window": 65536,
+      "free": false,
+      "rate_limit_note": "按量计费",
+      "behind_flagship": true,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "deepseek-reasoner",
+      "name": "deepseek-reasoner",
+      "provider_id": "deepseek",
+      "capabilities": [],
+      "context_window": 65536,
+      "free": false,
+      "rate_limit_note": "按量计费",
+      "behind_flagship": true,
+      "metadata_source": "doc"
+    },
+    {
+      "id": "seed-free-01-a",
+      "name": "示例免费厂商 01 模型 A",
+      "provider_id": "seed-free-01",
+      "capabilities": [
+        "text"
+      ],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-01-b",
+      "name": "示例免费厂商 01 模型 B",
+      "provider_id": "seed-free-01",
+      "capabilities": [],
+      "context_window": 65536,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-01-c",
+      "name": "示例免费厂商 01 模型 C",
+      "provider_id": "seed-free-01",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-02-a",
+      "name": "示例免费厂商 02 模型 A",
+      "provider_id": "seed-free-02",
+      "capabilities": [
+        "text"
+      ],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-02-b",
+      "name": "示例免费厂商 02 模型 B",
+      "provider_id": "seed-free-02",
+      "capabilities": [],
+      "context_window": 65536,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-02-c",
+      "name": "示例免费厂商 02 模型 C",
+      "provider_id": "seed-free-02",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-03-a",
+      "name": "示例免费厂商 03 模型 A",
+      "provider_id": "seed-free-03",
+      "capabilities": [
+        "text"
+      ],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-03-b",
+      "name": "示例免费厂商 03 模型 B",
+      "provider_id": "seed-free-03",
+      "capabilities": [],
+      "context_window": 65536,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-03-c",
+      "name": "示例免费厂商 03 模型 C",
+      "provider_id": "seed-free-03",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-04-a",
+      "name": "示例免费厂商 04 模型 A",
+      "provider_id": "seed-free-04",
+      "capabilities": [
+        "code"
+      ],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-04-b",
+      "name": "示例免费厂商 04 模型 B",
+      "provider_id": "seed-free-04",
+      "capabilities": [],
+      "context_window": 65536,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-04-c",
+      "name": "示例免费厂商 04 模型 C",
+      "provider_id": "seed-free-04",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-05-a",
+      "name": "示例免费厂商 05 模型 A",
+      "provider_id": "seed-free-05",
+      "capabilities": [
+        "image"
+      ],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-05-b",
+      "name": "示例免费厂商 05 模型 B",
+      "provider_id": "seed-free-05",
+      "capabilities": [],
+      "context_window": 65536,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-05-c",
+      "name": "示例免费厂商 05 模型 C",
+      "provider_id": "seed-free-05",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-06-a",
+      "name": "示例免费厂商 06 模型 A",
+      "provider_id": "seed-free-06",
+      "capabilities": [
+        "image"
+      ],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-06-b",
+      "name": "示例免费厂商 06 模型 B",
+      "provider_id": "seed-free-06",
+      "capabilities": [],
+      "context_window": 65536,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-06-c",
+      "name": "示例免费厂商 06 模型 C",
+      "provider_id": "seed-free-06",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-07-a",
+      "name": "示例免费厂商 07 模型 A",
+      "provider_id": "seed-free-07",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-07-b",
+      "name": "示例免费厂商 07 模型 B",
+      "provider_id": "seed-free-07",
+      "capabilities": [],
+      "context_window": 65536,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-07-c",
+      "name": "示例免费厂商 07 模型 C",
+      "provider_id": "seed-free-07",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-08-a",
+      "name": "示例免费厂商 08 模型 A",
+      "provider_id": "seed-free-08",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-08-b",
+      "name": "示例免费厂商 08 模型 B",
+      "provider_id": "seed-free-08",
+      "capabilities": [],
+      "context_window": 65536,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-08-c",
+      "name": "示例免费厂商 08 模型 C",
+      "provider_id": "seed-free-08",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-09-a",
+      "name": "示例免费厂商 09 模型 A",
+      "provider_id": "seed-free-09",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-09-b",
+      "name": "示例免费厂商 09 模型 B",
+      "provider_id": "seed-free-09",
+      "capabilities": [],
+      "context_window": 65536,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-09-c",
+      "name": "示例免费厂商 09 模型 C",
+      "provider_id": "seed-free-09",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-10-a",
+      "name": "示例免费厂商 10 模型 A",
+      "provider_id": "seed-free-10",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-10-b",
+      "name": "示例免费厂商 10 模型 B",
+      "provider_id": "seed-free-10",
+      "capabilities": [],
+      "context_window": 65536,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-10-c",
+      "name": "示例免费厂商 10 模型 C",
+      "provider_id": "seed-free-10",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-11-a",
+      "name": "示例免费厂商 11 模型 A",
+      "provider_id": "seed-free-11",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-11-b",
+      "name": "示例免费厂商 11 模型 B",
+      "provider_id": "seed-free-11",
+      "capabilities": [],
+      "context_window": 65536,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-11-c",
+      "name": "示例免费厂商 11 模型 C",
+      "provider_id": "seed-free-11",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-12-a",
+      "name": "示例免费厂商 12 模型 A",
+      "provider_id": "seed-free-12",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-12-b",
+      "name": "示例免费厂商 12 模型 B",
+      "provider_id": "seed-free-12",
+      "capabilities": [],
+      "context_window": 65536,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-free-12-c",
+      "name": "示例免费厂商 12 模型 C",
+      "provider_id": "seed-free-12",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": true,
+      "rate_limit_note": "占位条目，限速以上游为准",
+      "behind_flagship": false,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-01-a",
+      "name": "示例付费厂商 01 模型 A",
+      "provider_id": "seed-paid-01",
+      "capabilities": [
+        "text"
+      ],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-01-b",
+      "name": "示例付费厂商 01 模型 B",
+      "provider_id": "seed-paid-01",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-01-c",
+      "name": "示例付费厂商 01 模型 C",
+      "provider_id": "seed-paid-01",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-02-a",
+      "name": "示例付费厂商 02 模型 A",
+      "provider_id": "seed-paid-02",
+      "capabilities": [
+        "code"
+      ],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-02-b",
+      "name": "示例付费厂商 02 模型 B",
+      "provider_id": "seed-paid-02",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-02-c",
+      "name": "示例付费厂商 02 模型 C",
+      "provider_id": "seed-paid-02",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-03-a",
+      "name": "示例付费厂商 03 模型 A",
+      "provider_id": "seed-paid-03",
+      "capabilities": [
+        "code"
+      ],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-03-b",
+      "name": "示例付费厂商 03 模型 B",
+      "provider_id": "seed-paid-03",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-03-c",
+      "name": "示例付费厂商 03 模型 C",
+      "provider_id": "seed-paid-03",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-04-a",
+      "name": "示例付费厂商 04 模型 A",
+      "provider_id": "seed-paid-04",
+      "capabilities": [
+        "image"
+      ],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-04-b",
+      "name": "示例付费厂商 04 模型 B",
+      "provider_id": "seed-paid-04",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-04-c",
+      "name": "示例付费厂商 04 模型 C",
+      "provider_id": "seed-paid-04",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-05-a",
+      "name": "示例付费厂商 05 模型 A",
+      "provider_id": "seed-paid-05",
+      "capabilities": [
+        "image"
+      ],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-05-b",
+      "name": "示例付费厂商 05 模型 B",
+      "provider_id": "seed-paid-05",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-05-c",
+      "name": "示例付费厂商 05 模型 C",
+      "provider_id": "seed-paid-05",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-06-a",
+      "name": "示例付费厂商 06 模型 A",
+      "provider_id": "seed-paid-06",
+      "capabilities": [
+        "image"
+      ],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-06-b",
+      "name": "示例付费厂商 06 模型 B",
+      "provider_id": "seed-paid-06",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-06-c",
+      "name": "示例付费厂商 06 模型 C",
+      "provider_id": "seed-paid-06",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-07-a",
+      "name": "示例付费厂商 07 模型 A",
+      "provider_id": "seed-paid-07",
+      "capabilities": [
+        "image"
+      ],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-07-b",
+      "name": "示例付费厂商 07 模型 B",
+      "provider_id": "seed-paid-07",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-07-c",
+      "name": "示例付费厂商 07 模型 C",
+      "provider_id": "seed-paid-07",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-08-a",
+      "name": "示例付费厂商 08 模型 A",
+      "provider_id": "seed-paid-08",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-08-b",
+      "name": "示例付费厂商 08 模型 B",
+      "provider_id": "seed-paid-08",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-08-c",
+      "name": "示例付费厂商 08 模型 C",
+      "provider_id": "seed-paid-08",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-09-a",
+      "name": "示例付费厂商 09 模型 A",
+      "provider_id": "seed-paid-09",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-09-b",
+      "name": "示例付费厂商 09 模型 B",
+      "provider_id": "seed-paid-09",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-09-c",
+      "name": "示例付费厂商 09 模型 C",
+      "provider_id": "seed-paid-09",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-10-a",
+      "name": "示例付费厂商 10 模型 A",
+      "provider_id": "seed-paid-10",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-10-b",
+      "name": "示例付费厂商 10 模型 B",
+      "provider_id": "seed-paid-10",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-10-c",
+      "name": "示例付费厂商 10 模型 C",
+      "provider_id": "seed-paid-10",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-11-a",
+      "name": "示例付费厂商 11 模型 A",
+      "provider_id": "seed-paid-11",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-11-b",
+      "name": "示例付费厂商 11 模型 B",
+      "provider_id": "seed-paid-11",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-11-c",
+      "name": "示例付费厂商 11 模型 C",
+      "provider_id": "seed-paid-11",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-12-a",
+      "name": "示例付费厂商 12 模型 A",
+      "provider_id": "seed-paid-12",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-12-b",
+      "name": "示例付费厂商 12 模型 B",
+      "provider_id": "seed-paid-12",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-12-c",
+      "name": "示例付费厂商 12 模型 C",
+      "provider_id": "seed-paid-12",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-13-a",
+      "name": "示例付费厂商 13 模型 A",
+      "provider_id": "seed-paid-13",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-13-b",
+      "name": "示例付费厂商 13 模型 B",
+      "provider_id": "seed-paid-13",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-13-c",
+      "name": "示例付费厂商 13 模型 C",
+      "provider_id": "seed-paid-13",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-14-a",
+      "name": "示例付费厂商 14 模型 A",
+      "provider_id": "seed-paid-14",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-14-b",
+      "name": "示例付费厂商 14 模型 B",
+      "provider_id": "seed-paid-14",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-14-c",
+      "name": "示例付费厂商 14 模型 C",
+      "provider_id": "seed-paid-14",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-15-a",
+      "name": "示例付费厂商 15 模型 A",
+      "provider_id": "seed-paid-15",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-15-b",
+      "name": "示例付费厂商 15 模型 B",
+      "provider_id": "seed-paid-15",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-15-c",
+      "name": "示例付费厂商 15 模型 C",
+      "provider_id": "seed-paid-15",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-16-a",
+      "name": "示例付费厂商 16 模型 A",
+      "provider_id": "seed-paid-16",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-16-b",
+      "name": "示例付费厂商 16 模型 B",
+      "provider_id": "seed-paid-16",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-16-c",
+      "name": "示例付费厂商 16 模型 C",
+      "provider_id": "seed-paid-16",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-17-a",
+      "name": "示例付费厂商 17 模型 A",
+      "provider_id": "seed-paid-17",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-17-b",
+      "name": "示例付费厂商 17 模型 B",
+      "provider_id": "seed-paid-17",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-17-c",
+      "name": "示例付费厂商 17 模型 C",
+      "provider_id": "seed-paid-17",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-18-a",
+      "name": "示例付费厂商 18 模型 A",
+      "provider_id": "seed-paid-18",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-18-b",
+      "name": "示例付费厂商 18 模型 B",
+      "provider_id": "seed-paid-18",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-18-c",
+      "name": "示例付费厂商 18 模型 C",
+      "provider_id": "seed-paid-18",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-19-a",
+      "name": "示例付费厂商 19 模型 A",
+      "provider_id": "seed-paid-19",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-19-b",
+      "name": "示例付费厂商 19 模型 B",
+      "provider_id": "seed-paid-19",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-19-c",
+      "name": "示例付费厂商 19 模型 C",
+      "provider_id": "seed-paid-19",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-20-a",
+      "name": "示例付费厂商 20 模型 A",
+      "provider_id": "seed-paid-20",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-20-b",
+      "name": "示例付费厂商 20 模型 B",
+      "provider_id": "seed-paid-20",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-20-c",
+      "name": "示例付费厂商 20 模型 C",
+      "provider_id": "seed-paid-20",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-21-a",
+      "name": "示例付费厂商 21 模型 A",
+      "provider_id": "seed-paid-21",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-21-b",
+      "name": "示例付费厂商 21 模型 B",
+      "provider_id": "seed-paid-21",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-21-c",
+      "name": "示例付费厂商 21 模型 C",
+      "provider_id": "seed-paid-21",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-22-a",
+      "name": "示例付费厂商 22 模型 A",
+      "provider_id": "seed-paid-22",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-22-b",
+      "name": "示例付费厂商 22 模型 B",
+      "provider_id": "seed-paid-22",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-22-c",
+      "name": "示例付费厂商 22 模型 C",
+      "provider_id": "seed-paid-22",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-23-a",
+      "name": "示例付费厂商 23 模型 A",
+      "provider_id": "seed-paid-23",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-23-b",
+      "name": "示例付费厂商 23 模型 B",
+      "provider_id": "seed-paid-23",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-23-c",
+      "name": "示例付费厂商 23 模型 C",
+      "provider_id": "seed-paid-23",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-24-a",
+      "name": "示例付费厂商 24 模型 A",
+      "provider_id": "seed-paid-24",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-24-b",
+      "name": "示例付费厂商 24 模型 B",
+      "provider_id": "seed-paid-24",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-24-c",
+      "name": "示例付费厂商 24 模型 C",
+      "provider_id": "seed-paid-24",
+      "capabilities": [],
+      "context_window": 32768,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-25-a",
+      "name": "示例付费厂商 25 模型 A",
+      "provider_id": "seed-paid-25",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-25-b",
+      "name": "示例付费厂商 25 模型 B",
+      "provider_id": "seed-paid-25",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-26-a",
+      "name": "示例付费厂商 26 模型 A",
+      "provider_id": "seed-paid-26",
+      "capabilities": [],
+      "context_window": 131072,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    },
+    {
+      "id": "seed-paid-26-b",
+      "name": "示例付费厂商 26 模型 B",
+      "provider_id": "seed-paid-26",
+      "capabilities": [],
+      "context_window": 200000,
+      "free": false,
+      "rate_limit_note": "占位条目，按量计费",
+      "behind_flagship": true,
+      "metadata_source": "seed"
+    }
+  ]
+}
