@@ -19,6 +19,7 @@ source: "../README.md"
 | [03-operations.md](03-operations.md) | 默认限速（保守档与核定依据）、故障处置与断点续跑、故障排查速查 |
 | [04-storage-and-layout.md](04-storage-and-layout.md) | 存储布局（archive/data/exports/logs）与源码结构 |
 | [05-compliance.md](05-compliance.md) | 合规声明六条（含 24 小时删除义务） |
+| [06-credential-probe-2026-09-29.md](06-credential-probe-2026-09-29.md) | 微信凭证联调实测记录：探针分阶段结果、IP 白名单阻塞、环境缺口与绕过版本门槛的跑法 |
 
 ## AI 协作者规范
 
