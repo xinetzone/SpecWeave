@@ -49,6 +49,7 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 | 加入 SIG、理解治理组织、做软硬件适配认证 | [07 社区治理与贡献路径](concepts/07-community-and-contribution.md) |
 | 核查本教程每条结论的出处 | [信源台账](references/source-inventory.md) ／ [237 篇文档完整分类地图](references/full-catalog.md) |
 | 先了解 openKylin 项目本身（版本时间线、版图界定、选型建议） | [项目全面调研](references/project-overview.md) ／ [WSL 本机实测](references/wsl-install-sparse-vhd-guide.md) |
+| 评估产品/硬件/智能体适配 openKylin 3.0 的工作量与风险 | [openKylin 3.0 架构适配评估草案](references/openkylin-v3-adaptation-assessment.md)（v0.1 纸面预评估，待 POC 验证） |
 
 ---
 
