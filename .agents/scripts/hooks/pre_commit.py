@@ -8,7 +8,8 @@ Pre-commit 钩子入口：放置校验 + .temp 生命周期 + 敏感信息检测
   2. .temp/ 临时文件生命周期检查（只读，超 30 天内容阻塞提交）
   3. 敏感信息检测（密码/密钥/Token 等）
   4. 模式文档V2质量检查（创新类模式必须含失败案例+反目标用户分析）
-  5. 并发模块安全八维检查（超时/幂等/边界/防御/配置/国际化/死锁/泄漏）
+  5. Ruff lint（仅扫描启用了 [tool.ruff] 的应用中被暂存的 .py 文件）
+  6. 并发模块安全八维检查（超时/幂等/边界/防御/配置/国际化/死锁/泄漏）
 
 使用方式：
   1. 通过 install-hooks.py 自动安装（推荐）
@@ -28,6 +29,11 @@ Pre-commit 钩子入口：放置校验 + .temp 生命周期 + 敏感信息检测
   模式质量V2检查：
     PATTERN_QUALITY_CHECK_SKIP=1 完全跳过模式V2质量检查
     SKIP=pattern-quality-check   同上
+  Ruff lint：
+    RUFF_CHECK_SKIP=1             完全跳过 Ruff 检查
+    SKIP=ruff-check               同上
+    RUFF_BIN=/path/to/ruff        指定 ruff 可执行文件
+    RUFF_CHECK_REQUIRED=1         本机找不到 ruff 时阻断提交（CI 用）
   并发安全检查：
     CONCURRENT_CHECK_SKIP=1       完全跳过并发安全检查
     CONCURRENT_CHECK_WARN_ONLY=1  检测到错误只警告不阻断
@@ -421,6 +427,126 @@ def _run_pattern_quality_check(project_root: Path, scripts_dir: Path, staged_fil
     return 0
 
 
+def _skip_ruff_check() -> tuple[bool, str]:
+    """Ruff 检查是否被环境变量跳过。"""
+    if _env_truthy("RUFF_CHECK_SKIP"):
+        return True, "RUFF_CHECK_SKIP=1"
+    skip_env = os.environ.get("SKIP", "").strip().lower()
+    if "ruff-check" in skip_env:
+        return True, f"SKIP={os.environ.get('SKIP', '')}"
+    return False, ""
+
+
+def _resolve_ruff_cmd() -> list[str] | None:
+    """解析可用的 ruff 调用：RUFF_BIN > 当前解释器 -m ruff > PATH 上的 ruff。"""
+    candidates: list[list[str]] = []
+    ruff_bin = os.environ.get("RUFF_BIN", "").strip()
+    if ruff_bin:
+        candidates.append([ruff_bin])
+    candidates.append([sys.executable, "-m", "ruff"])
+    candidates.append(["ruff"])
+    for cmd in candidates:
+        try:
+            result = subprocess.run(cmd + ["--version"], capture_output=True, text=True)
+        except OSError:
+            continue
+        if result.returncode == 0:
+            return cmd
+    return None
+
+
+def _ruff_config_roots(project_root: Path, py_files: list[Path]) -> dict[Path, list[Path]]:
+    """按含 [tool.ruff] 的最近 pyproject.toml 对暂存 .py 文件分组。
+
+    未启用 ruff 的项目（无配置）一律不纳入检查，避免对其他应用产生越界红线。
+    """
+    groups: dict[Path, list[Path]] = {}
+    root_cache: dict[Path, Path | None] = {}
+    for rel in py_files:
+        cur = (project_root / rel).parent
+        config_root: Path | None = None
+        cur_key = cur
+        while True:
+            if cur_key in root_cache:
+                cached = root_cache[cur_key]
+                if cached is not None:
+                    config_root = cached
+                break
+            pyproject = cur_key / "pyproject.toml"
+            if pyproject.is_file():
+                try:
+                    if "[tool.ruff]" in pyproject.read_text(encoding="utf-8"):
+                        config_root = cur_key
+                except (OSError, UnicodeDecodeError):
+                    pass
+                root_cache[cur_key] = config_root
+                break
+            if cur_key == project_root or cur_key.parent == cur_key:
+                root_cache[cur_key] = None
+                break
+            cur_key = cur_key.parent
+        if config_root is not None:
+            groups.setdefault(config_root, []).append(rel)
+    return groups
+
+
+def _run_ruff_check(project_root: Path, staged_files: list[Path]) -> int:
+    """Ruff lint：仅检查启用了 [tool.ruff] 的应用中被暂存的 .py 文件。
+
+    只读检查（不加 --fix），ruff 不可用时默认降级为提示，
+    CI 可通过 RUFF_CHECK_REQUIRED=1 改为硬阻断。
+    """
+    skip, skip_reason = _skip_ruff_check()
+    print("=" * 60)
+    print("🐍 Ruff lint (Pre-commit Hook)")
+    print("=" * 60)
+    if skip:
+        print(f"\n⚠️  检测到 {skip_reason}，已跳过 Ruff 检查。\n")
+        return 0
+
+    py_files = [f for f in staged_files if str(f).endswith(".py")]
+    if not py_files:
+        print("\n✅ 本次提交无 Python 文件变更，跳过检查。\n")
+        return 0
+
+    groups = _ruff_config_roots(project_root, py_files)
+    if not groups:
+        print("\n✅ 暂存的 Python 文件均不在启用 [tool.ruff] 的项目内，跳过检查。\n")
+        return 0
+
+    ruff_cmd = _resolve_ruff_cmd()
+    if ruff_cmd is None:
+        msg = (
+            "\n⚠️  未找到 ruff（已尝试 RUFF_BIN、当前解释器 -m ruff、PATH）。\n"
+            "   安装: pip install ruff（或安装对应应用的 dev 依赖）\n"
+        )
+        if _env_truthy("RUFF_CHECK_REQUIRED"):
+            print(msg + "   RUFF_CHECK_REQUIRED=1：提交已阻断！\n")
+            return 1
+        print(msg + "   已降级跳过；设置 RUFF_CHECK_REQUIRED=1 可改为硬阻断。\n")
+        return 0
+
+    failed = False
+    for config_root, files in groups.items():
+        display_root = config_root.relative_to(project_root) if config_root != project_root else Path(".")
+        print(f"\n📋 {display_root}: 检查 {len(files)} 个暂存 .py 文件")
+        cmd = ruff_cmd + ["check"] + [str(project_root / f) for f in files]
+        result = subprocess.run(cmd, cwd=str(config_root))
+        if result.returncode != 0:
+            failed = True
+
+    if failed:
+        print("\n" + "=" * 60)
+        print("❌ Ruff 检测到红线问题，提交已阻断！")
+        print("💡 按上方诊断修复；可自动修复的问题运行 ruff check --fix <文件>")
+        print("🔓 临时跳过（仅限紧急情况）: RUFF_CHECK_SKIP=1 git commit")
+        print("=" * 60)
+        return 1
+
+    print("\n✅ Ruff lint 通过。\n")
+    return 0
+
+
 def main() -> int:
     project_root = find_project_root()
     scripts_dir = project_root / ".agents" / "scripts"
@@ -456,6 +582,10 @@ def main() -> int:
     pat_result = _run_pattern_quality_check(project_root, scripts_dir, staged_files)
     if pat_result != 0:
         return pat_result
+
+    ruff_result = _run_ruff_check(project_root, staged_files)
+    if ruff_result != 0:
+        return ruff_result
 
     try:
         from hooks.concurrent_check import run_concurrent_check

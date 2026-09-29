@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>仪表盘</h1>
+
+<div class="grid grid-3">
+  <div class="card">
+    <div class="kpi-label">当前连续合格打卡</div>
+    <div class="kpi">{{ streak.current }} <span class="small muted">天</span></div>
+    <div class="small muted">最长 {{ streak.longest }} 天</div>
+  </div>
+  <div class="card">
+    <div class="kpi-label">本周执行周</div>
+    {% if week %}
+    <div>回答 {{ week.answers }} / 3 · 想法 {{ week.pins }} / 2</div>
+    <div class="small">
+      <span class="badge {{ 'badge-ok' if week.meets_answer_goal else 'badge-warn' }}">回答目标</span>
+      <span class="badge {{ 'badge-ok' if week.meets_pin_goal else 'badge-warn' }}">想法目标</span>
+    </div>
+    {% else %}<div class="muted small">本周尚无数据</div>{% endif %}
+  </div>
+  <div class="card">
+    <div class="kpi-label">下一关键锚点</div>
+    {% if anchor %}
+    <div>{{ anchor.anchor.event }}</div>
+    <div class="small muted">{{ anchor.on.isoformat() }}（{{ anchor.days_ahead }} 天后）</div>
+    {% else %}<div class="muted small">锚点表中已无未来日期</div>{% endif %}
+  </div>
+</div>
+
+{% if streak.review_required %}
+<div class="flash flash-error">{{ streak.review_message }}</div>
+{% endif %}
+
+<div class="grid grid-2">
+  <div class="card">
+    <h2>今日打卡（{{ today }}）</h2>
+    <div class="small">
+      创作 {{ today_entry.contents|length }} 条 · 互动 {{ today_entry.interactions|length }} 个 ·
+      过门 {{ today_entry.gates|length }} 次
+    </div>
+    <p><a class="btn" href="/checkin">去打卡</a></p>
+    <h2>条目进度</h2>
+    <table>
+      {% for section, counts in progress.items() %}
+      <tr><td>{{ section }}</td><td>{{ counts[0] }} / {{ counts[1] }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>tracker 勾选提示</h2>
+    {% for item_id, r in readiness.items() %}
+    <div class="check-item">
+      <span>{{ item_id }} {{ r.title }}</span>
+      {% if r.can_check %}
+      <span class="badge badge-ready">可勾选</span>
+      {% else %}
+      <span class="badge badge-draft">有缺口</span>
+      {% endif %}
+    </div>
+    {% if not r.can_check %}<div class="small muted">{{ r.gaps|join('；') }}</div>{% endif %}
+    {% else %}
+    <div class="muted small">暂无可判定条目</div>
+    {% endfor %}
+
+    <h2>发布通道</h2>
+    <div class="small">向导状态：<span class="badge badge-info">{{ publish_state }}</span></div>
+    <p class="small muted">健康检测在发布向导页按需触发，不自动连接浏览器。</p>
+    <p><a class="btn secondary" href="/publish">打开发布向导</a></p>
+  </div>
+</div>
+{% endblock %}

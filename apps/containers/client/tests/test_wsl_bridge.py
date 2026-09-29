@@ -342,6 +342,19 @@ def test_ensure_session_present_idempotent(session_env):
     assert session_env.calls == []
 
 
+def test_ensure_session_socket_only_still_starts(session_env):
+    """半会话死锁回归：socket 已由独立 service 产出但 bus 缺失 → 仍须拉起会话。
+
+    旧 OR 判据（bus OR socket）下此场景直接跳过，bus 永久缺失、
+    --passthrough D-Bus 门禁永久失败（2026-09-27 实证）。
+    """
+    session_env.state["sock"] = True
+    session_env.state["bus"] = False
+    utils.ensure_wsl_user_session()
+    assert len(session_env.calls) == 1
+    assert "unshare" in session_env.calls[0] and "systemd" in session_env.calls[0]
+
+
 def test_ensure_session_starts_and_waits(session_env, capsys):
     """两项资源均缺 → 复刻 machine 启动命令拉起会话并等待 bus 出现。"""
     utils.ensure_wsl_user_session()

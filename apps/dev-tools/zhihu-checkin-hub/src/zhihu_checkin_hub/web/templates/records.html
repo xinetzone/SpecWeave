@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>记录台账</h1>
+<p class="small muted">全部数据只落在 <code>local/records/</code>；盐粒照抄官方显示，人民币折算仅按 F-059（100 盐粒=1 元）标注为估算，不作收益承诺。</p>
+
+<div class="grid grid-2">
+  <div class="card">
+    <h2>盐粒到账（照抄录入）</h2>
+    <form class="stack" method="post" action="/records/earning">
+      <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+      <div class="row">
+        <div><label>日期</label><input type="date" name="day" value="{{ today }}" required></div>
+        <div><label>动作</label><input type="text" name="action" placeholder="answer/pin/..." required></div>
+        <div><label>盐粒（整数）</label><input type="number" name="salt_raw" min="0" required></div>
+      </div>
+      <label>备注</label><input type="text" name="note">
+      <p><button>登记</button></p>
+    </form>
+    <table>
+      <tr><th>日期</th><th>动作</th><th>盐粒</th><th>备注</th></tr>
+      {% for r in earnings|reverse %}
+      <tr><td>{{ r.date }}</td><td>{{ r.action }}</td><td>{{ r.salt_raw }}</td><td class="small">{{ r.note }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>周核对（M1-2/M1-3）</h2>
+    <form class="stack" method="post" action="/records/weekly">
+      <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+      <div class="row">
+        <div><label>执行周</label><input type="text" name="week_id" placeholder="W1" required></div>
+        <div><label>起</label><input type="date" name="start" required></div>
+        <div><label>止</label><input type="date" name="end" required></div>
+      </div>
+      <div class="row">
+        <div><label>回答数（目标 3）</label><input type="number" name="answers" min="0" value="0"></div>
+        <div><label>想法数（目标 2）</label><input type="number" name="pins" min="0" value="0"></div>
+        <div><label>官方确认数 0-3</label><input type="number" name="confirmed" min="0" max="3" value="0"></div>
+      </div>
+      <label>备注</label><input type="text" name="note">
+      <p><button>保存/更新本周</button></p>
+    </form>
+    <table>
+      <tr><th>周</th><th>回答</th><th>想法</th><th>确认</th></tr>
+      {% for r in weekly %}
+      <tr><td>{{ r.week_id }}</td><td>{{ r.answers }}</td><td>{{ r.pins }}</td><td>{{ r.confirmed }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>中断登记</h2>
+    <form class="stack" method="post" action="/records/interruption">
+      <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+      <div class="row">
+        <div><label>开始日期</label><input type="date" name="start_day" required></div>
+        <div><label>天数</label><input type="number" name="days" min="1" required></div>
+      </div>
+      <label>原因</label><input type="text" name="reason" required>
+      <p><button>登记中断</button></p>
+    </form>
+    <table>
+      <tr><th>起</th><th>天数</th><th>原因</th></tr>
+      {% for r in interruptions|reverse %}
+      <tr><td>{{ r.start_day }}</td><td>{{ r.days }}</td><td>{{ r.reason }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>周期复核（三选一决定）</h2>
+    <form class="stack" method="post" action="/records/review">
+      <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+      <div class="row">
+        <div><label>日期</label><input type="date" name="day" value="{{ today }}" required></div>
+        <div><label>累计盐粒</label><input type="number" name="salt_total" min="0" required></div>
+        <div>
+          <label>决定</label>
+          <select name="decision">
+            <option value="continue">继续</option>
+            <option value="pause">暂停</option>
+            <option value="stop">退出</option>
+          </select>
+        </div>
+      </div>
+      <label>理由（对照官方规则/退出阈值）</label><input type="text" name="reason" required>
+      <p><button>保存复核</button></p>
+    </form>
+    <table>
+      <tr><th>日期</th><th>盐粒</th><th>折算估算</th><th>决定</th></tr>
+      {% for r in reviews|reverse %}
+      <tr><td>{{ r.date }}</td><td>{{ r.salt_total }}</td><td class="small">≈{{ r.yuan_estimate }} 元（F-059，非承诺）</td><td>{{ r.decision }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

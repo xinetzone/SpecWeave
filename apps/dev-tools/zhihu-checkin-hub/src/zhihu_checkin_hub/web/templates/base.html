@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}知乎打卡工作台{% endblock %}</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">知乎打卡工作台</div>
+  <nav class="nav">
+    <a href="/">仪表盘</a>
+    <a href="/checkin">打卡</a>
+    <a href="/records">记录</a>
+    <a href="/drafts">草稿</a>
+    <a href="/publish">发布向导</a>
+  </nav>
+  <div class="today">{{ today }}</div>
+</header>
+<main class="page">
+  {% if flash and flash[1] %}
+  <div class="flash flash-{{ flash[0] }}">{{ flash[1] }}</div>
+  {% endif %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="foot">
+  本地单机工作台 · 仅监听 127.0.0.1 · 内容须本人撰写（本应用不含 AI 生成，也不接触账号密码）
+</footer>
+</body>
+</html>

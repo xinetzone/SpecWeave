@@ -1,6 +1,6 @@
 # Windows 开发者快速上手指南
 
-> 本文档帮助 Windows 用户在 5 分钟内完成 Git 钩子配置，使 `git commit` 时自动运行敏感信息检测。
+> 本文档帮助 Windows 用户在 5 分钟内完成 Git 钩子配置，使 `git commit` 时自动运行六项提交前检查（放置校验、.temp 生命周期、敏感信息、模式质量、Ruff lint、并发安全）。
 
 ---
 
@@ -9,7 +9,7 @@
 | 软件 | 最低版本 | 检查命令 |
 |------|---------|---------|
 | Git for Windows | 2.9+（推荐 2.30+） | `git --version` |
-| Python | 3.8+ | `python --version` |
+| Python | 3.10+（钩子强制基线） | `python --version` |
 
 ---
 
@@ -76,14 +76,23 @@ git add test_hook.py
 git commit -m "test: verify hook works"
 ```
 
-你应该看到：
+你应该看到（六项检查依次执行，无变更的检查项会显示跳过）：
 ```
+📁 关键配置文件放置校验 (Pre-commit Hook)
+✅ 所有受管关键文件均在正确位置（.agents/scripts/）
+🕒 .temp/ 生命周期检查 (Pre-commit Hook, 只读)
 🔒 敏感信息检测 (Pre-commit Hook)
 ✅ 未检测到敏感信息。
+🔬 模式文档V2质量检查 (Pre-commit Hook)
+✅ 本次提交无模式文档变更，跳过检查。
+🐍 Ruff lint (Pre-commit Hook)
+✅ 暂存的 Python 文件均不在启用 [tool.ruff] 的项目内，跳过检查。
 ⚡ 并发模块安全检查 (Pre-commit Hook)
 ✅ 未检测到并发安全问题，可以提交。
 [master xxxxxxx] test: verify hook works
 ```
+
+> 提示：把 `.py` 文件提交到启用了 `[tool.ruff]` 的应用（如 `apps/dev-tools/zhihu-checkin-hub`）时，第 5 项会实际运行 `ruff check`；详见文末「钩子检查了什么？」。
 
 提交成功后删除测试文件：
 ```powershell
@@ -162,6 +171,17 @@ SENSITIVE_CHECK_WARN_ONLY=1 git commit -m "紧急修复"
 set SENSITIVE_CHECK_SKIP=1 && git commit -m "紧急修复" && set SENSITIVE_CHECK_SKIP=
 ```
 
+### 临时跳过 Ruff 检查
+
+```powershell
+# PowerShell
+$env:RUFF_CHECK_SKIP=1; git commit -m "紧急修复"; $env:RUFF_CHECK_SKIP=""
+# Git Bash
+RUFF_CHECK_SKIP=1 git commit -m "紧急修复"
+```
+
+找不到 ruff 时钩子默认降级为警告；设 `RUFF_CHECK_REQUIRED=1` 可改为硬阻断。
+
 ---
 
 ## 常见问题
@@ -226,12 +246,16 @@ git commit --no-verify -m "跳过所有检查"
 
 ## 钩子检查了什么？
 
-每次 `git commit` 时自动运行两项检查：
+每次 `git commit` 时按顺序运行六项检查，快速失败（前一项阻断则不再执行后续项）：
 
-1. **🔒 敏感信息检测**：检查密码、API密钥、Token、手机号、邮箱、数据库连接串、个人路径、私钥等
-2. **⚡ 并发模块安全检查**（仅Python文件）：超时、幂等、边界、防御、配置、国际化六维检查
+1. **📁 关键配置文件放置校验**：受管文件被错误放置到仓库根目录时阻断
+2. **🕒 .temp/ 生命周期检查**（只读）：临时内容超 30 天阻断
+3. **🔒 敏感信息检测**：密码、API密钥、Token、手机号、邮箱、数据库连接串、个人路径、私钥等
+4. **🔬 模式文档V2质量检查**：`docs/retrospective/patterns/` 下创新类模式须含失败案例与反目标用户分析
+5. **🐍 Ruff lint**：仅检查启用了 `[tool.ruff]` 的项目中被暂存的 `.py` 文件（如 zhihu-checkin-hub 的 TID251 红线）；本机无 ruff 时默认降级警告
+6. **⚡ 并发模块安全检查**（仅 Python 文件）：超时、幂等、边界、防御、配置、国际化、死锁、泄漏八维检查
 
-发现高风险问题会**阻断提交**，中风险问题仅警告不阻断。
+发现高风险问题会**阻断提交**，中风险问题仅警告不阻断。各项检查均支持环境变量临时跳过（见上文「环境变量用法」）。
 
 ---
 
