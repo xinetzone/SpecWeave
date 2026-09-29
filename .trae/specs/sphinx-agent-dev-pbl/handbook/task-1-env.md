@@ -76,6 +76,15 @@ pip install sphinx myst-parser sphinx-design sphinx-copybutton python-dotenv ope
 pip freeze > requirements.txt
 ```
 
+> ⚠️ **但 CI 用的清单不要用 `pip freeze` 的输出**——它会把所有间接依赖和
+> 精确版本号（含你本机特有的 Windows 专用包）都写进去，CI 在 ubuntu 上装会失败。
+>
+> **推荐做法**：直接从 [`../starters/requirements.txt`](../starters/requirements.txt) 复制一份，
+> 它是"直接依赖 + 下限"的手写清单，与手册本节列出的包一一对应。
+> ```bash
+> cp starters/requirements.txt .
+> ```
+
 ---
 
 ### 步骤 3：初始化 Sphinx 项目
@@ -160,6 +169,13 @@ __pycache__/
 ```
 
 > 🔒 **`.env` 那一行是保命的**。Task4 你会把 API Key 写进 `.env`，如果不排除，密钥会被推到公开的 GitHub 上。这是真实世界里最常出的事故之一，现在养成习惯。
+
+> 💡 **懒人做法**：直接复制 [`../starters/.gitignore`](../starters/.gitignore)——
+> 它是上面内容加上 Python 缓存、编辑器目录等常见项，更省心。
+> ```bash
+> cp starters/.gitignore .
+> ```
+> 复制完**立刻验证**：`git status --short` 输出里**不该出现** `.env` 或 `.venv/`。
 
 ---
 

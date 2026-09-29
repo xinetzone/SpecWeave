@@ -207,6 +207,7 @@ Task1(环境) ──┬──> Task2(文档先行+术语表) ──> Task3(CI部
 | **T-C** | 机房准备 | 课前 30 分钟按清单核验环境（软件版本 / 脚手架 / 部署平台 / 素材） | [`teacher/SETUP-CHECKLIST.md`](teacher/SETUP-CHECKLIST.md) |
 | **T-D** | 课堂应答 | 学生质疑与技术故障的即时应答 | [`teacher/FAQ.md`](teacher/FAQ.md) |
 | **T-E** | 一致性复核 | **每次修改本方案后**，跑一遍审计脚本，确认派生数字/命令/文件引用未漂移 | [`scripts/audit_consistency.py`](scripts/audit_consistency.py) |
+| **T-F** | 起步文件包 | 上课前把 `starters/` 中的配置类文件（`requirements.txt` / `.gitignore` / CI 工作流）**随项目模板一并发给学生**，避免学生手打 YAML 出错 | [`starters/README.md`](starters/README.md) |
 
 > **验收（教师侧）**：一位未参与本方案设计的教师，在**仅有 4 份文件**的情况下，
 > 能在开课前完成环境核验、并按课时方案上完第一节——无需任何额外检索。

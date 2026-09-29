@@ -76,6 +76,10 @@ git push -u origin main
 
 CI 部分也用同一份 `docs.yml`，只需把最后两个"部署"步骤换成内网 runner 提供的部署方式（问老师要）。**前面那些步骤（装依赖、`sphinx-build -W`、构建产物）完全不变。**
 
+> 💡 **内网版现成文件**：[`../starters/.github/workflows/docs-intranet.yml`](../starters/.github/workflows/docs-intranet.yml)。
+> 它已把部署步骤改成自托管 runner 的写法，并给了两种常见方式（拷贝到 Web 根目录 / 打包成 artifact）。
+> 里面标注了 `🔧 教师注意` 的那一步，请按你们机房实际情况替换。
+
 > 🖼 **S3-7 · 内网 Git 服务的仓库页面（仅走离线档时需要）—— 本图按设计留白**
 >
 > **为什么没有预置图片**：内网 Git 服务各校不同（Gitea / GitLab / 自建 Kingsoft 等），
@@ -143,9 +147,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install furo
+        run: pip install -r requirements.txt
 
       - name: Build docs (warnings as errors)
         run: sphinx-build -b html -W --keep-going docs docs/_build/html
@@ -168,6 +170,14 @@ jobs:
 > 🔑 **关键设计**：`-W` 参数让 Sphinx 把**警告当错误**。这意味着——如果你的文档和代码对不上（比如 autodoc 引用了不存在的函数），CI 会直接失败。
 >
 > 这是本项目的核心硬约束：**文档与代码必须保持一致，否则不许发布。**
+
+> 💡 **懒人做法（推荐）**：YAML 对缩进极其敏感，**少一个空格整个 CI 就不跑**，
+> 而报错信息往往不指向真正的原因。直接复制 [`../starters/.github/workflows/docs.yml`](../starters/.github/workflows/docs.yml)：
+> ```bash
+> mkdir -p .github/workflows
+> cp starters/.github/workflows/docs.yml .github/workflows/
+> ```
+> 文件内容与本步骤完全一致，可以放心用。**手打一遍也完全可以**——只要你愿意承担缩进风险。
 
 ![docs.yml 文件内容](shots/S3-3-CI配置.png)
 

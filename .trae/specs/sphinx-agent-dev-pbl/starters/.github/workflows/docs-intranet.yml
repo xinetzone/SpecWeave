@@ -1,0 +1,52 @@
+# ===================================================================
+#  Sphinx 文档站 CI 配置（自托管 runner / 内网 Git 服务版）
+#
+#  什么时候用这个文件？
+#    学校机房访问不了 github.com 时用。配合内网 Gitea / GitLab 使用。
+#    见 handbook/task-3-ci.md「如果学校网络访问不了 GitHub？」一节。
+#
+#  ⚠️ 与 GitHub 版的区别只有最后两步（部署方式）。
+#     前面「装依赖 → sphinx-build -W → 产出静态文件」完全一样——
+#     那才是本任务要教的东西。
+#
+#  🔧 教师注意：最后一步的部署命令由内网 runner 决定，各校不同。
+#     下面给了两种常见写法（A: 拷贝到 Web 根目录 / B: 打包成 artifact），
+#     请按你们机房的实际情况二选一，或替换成 IT 部门指定的方式。
+# ===================================================================
+
+name: Build and Deploy Docs (内网版)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted          # 内网自托管 runner
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ↓↓↓ 这一步与 GitHub 版完全相同——这才是重点 ↓↓↓
+      - name: Build docs (warnings as errors)
+        run: sphinx-build -b html -W --keep-going docs docs/_build/html
+
+      # ↓↓↓ 只有下面这段部署方式不同，按机房情况选一种 ↓↓↓
+
+      # --- 方式 A：直接拷贝到内网 Web 服务器的文档根目录 ---
+      # - name: Deploy to intranet webroot
+      #   run: |
+      #     rsync -a --delete docs/_build/html/ /var/www/docs/
+
+      # --- 方式 B：打包成 artifact，交给内网平台发布 ---
+      - uses: actions/upload-artifact@v4
+        with:
+          name: docs-html
+          path: docs/_build/html

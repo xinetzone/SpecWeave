@@ -77,7 +77,8 @@ def scan_ghost_files(root: Path) -> list[str]:
     pat = re.compile(r"`([A-Za-z0-9_\-./]+\.(?:md|py|png|txt|bat|sh|yml|yaml|toml|cfg|example|json))`")
     bases = [root, root / "handbook", root / "teacher",
              root / "warmup-docs", root / "templates", root / "handbook" / "shots",
-             root / "teacher" / "task6-tier-a"]
+             root / "teacher" / "task6-tier-a", root / "starters",
+             root / "starters" / ".github" / "workflows"]
     ghosts = []
     seen = set()
     for md in sorted(root.rglob("*.md")):
