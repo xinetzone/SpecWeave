@@ -39,6 +39,9 @@ ALLOWED_EXTENSIONS = {
 # 约定名：容器构建文件（Containerfile / Dockerfile 及其形态后缀，如 Containerfile.xmnn-dev）。
 # Path.suffix 会把形态后缀（.xmnn-dev）误判为扩展名，故这类文件跳过扩展名检查。
 CONTAINERFILE_STEMS = {"containerfile", "dockerfile"}
+# 子模块 gitlink 的 index mode。gitlink 是「记录 submodule commit 的目录项」而非
+# 文件，名称由上游仓库决定（如 daoapps.github.io），不受文件命名规范约束。
+GITLINK_MODE = "160000"
 ALLOWED_CHARS = re.compile(r'^[a-zA-Z0-9._\-/\\]+$')
 NON_ASCII = re.compile(r'[^\x00-\x7F]')
 CONSECUTIVE_HYPHENS = re.compile(r'--+')
@@ -72,11 +75,29 @@ def _is_valid(filename: str, extension: str | None) -> tuple[bool, str]:
 
 
 def _get_staged(directory: Path) -> list[Path]:
+    """列出暂存区待检查的路径，剔除子模块 gitlink。
+
+    用 `--raw` 而非 `--name-only`：raw 每行携带新旧 mode，据此识别 gitlink
+    （新 mode=160000）。gitlink 指向的是子模块而非普通文件，其名称（如
+    `daoapps.github.io`）不应受文件命名规范约束；否则 Path.suffix 会把
+    `.io` 当扩展名拦下，正常的子模块指针 bump 也提交不了。
+    """
     result = subprocess.run(
-        ["git", "diff", "--cached", "--name-only", "--diff-filter=ACM"],
+        ["git", "diff", "--cached", "--raw", "--diff-filter=ACM"],
         capture_output=True, text=True, cwd=str(directory),
     )
-    return [directory / line for line in result.stdout.strip().split('\n') if line]
+    files: list[Path] = []
+    for line in result.stdout.splitlines():
+        meta, sep, path = line.partition("\t")
+        if not sep or not path.strip():
+            continue
+        # meta 形如 ":100644 100644 0000000 abc1234 M"，第二个字段是暂存后的新 mode
+        fields = meta.split()
+        new_mode = fields[1] if len(fields) > 1 else ""
+        if new_mode == GITLINK_MODE:
+            continue
+        files.append(directory / path)
+    return files
 
 
 def _scan(directory: Path, staged_only: bool) -> list[tuple[Path, str]]:
