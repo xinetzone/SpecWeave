@@ -62,6 +62,7 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | samples/ | cow-demo | —（遵循根规范） | ❌ 无 | 零拷贝COW读写分离模式C++示例框架 |
 | samples/ | short-video-site | —（遵循根规范） | ❌ 无 | ReelVibe 短视频网站（AI全流程开发Demo） |
 | samples/ | designer-portfolio | —（遵循根规范） | ❌ 无 | 设计师作品集静态网站（纯HTML/CSS/JS + GSAP CDN，零构建Demo，首页+4个项目详情页） |
+| samples/ | mobile-design-tokens | —（遵循根规范） | ❌ 无 | 移动端 Design Token 工作台（纯HTML/CSS/JS 零构建；由 Ardot 设计稿生成，Primitives→Semantic 两层 Token + Light/Dark/跟随系统三态换肤，含搜索/复制/导出；Token 真源 `styles/tokens.css`，数据源 `scripts/tokens.js`） |
 | samples/ | zleap-workspace-first-prototype | —（遵循根规范） | ❌ 无 | 工作区首个原型（多模型路由） |
 | samples/ | serial-camera-controller | —（遵循根规范） | ❌ 无 | 串口控制USB摄像头抓图/录像（CH340+OpenCV+pyserial，双协议三线程架构） |
 | 根级 | shared | —（遵循根规范） | ❌ 无 | 跨应用共享资源目录 |
@@ -284,6 +285,7 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/samples/designer-portfolio/ | 应用自治（遵循根规范） | ✅ 是 | 设计师作品集静态网站（纯HTML/CSS/JS + GSAP CDN，零构建Demo，首页+4个项目详情页） |
 | apps/samples/zleap-workspace-first-prototype/ | 应用自治（遵循根规范） | ✅ 是 | 工作区首个原型（多模型路由） |
 | apps/samples/serial-camera-controller/ | 应用自治（遵循根规范） | ✅ 是 | 串口控制USB摄像头抓图/录像（CH340+OpenCV+pyserial，双协议三线程架构） |
+| apps/samples/mobile-design-tokens/ | 应用自治（遵循根规范） | ✅ 是 | 移动端 Design Token 工作台（零构建：index.html + styles/tokens.css（Token 真源）+ styles/app.css + scripts/tokens.js（数据源）+ scripts/app.js；明暗 Mode 切换、搜索、复制、导出） |
 
 > **与 projects/vendor 的本质区别**：apps/ 下的所有资产都标记为「✅ 可直接修改」，因为它们都是主仓库的一部分；而 projects/vendor 是 git submodule，标记为「❌ 不可直接修改」。
 
