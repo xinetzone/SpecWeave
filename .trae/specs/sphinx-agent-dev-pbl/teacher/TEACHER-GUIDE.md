@@ -19,10 +19,10 @@
 
 | 文件 | 什么时候看 | 篇幅 |
 |---|---|---|
-| **本文件** `TEACHER-GUIDE.md` | **先看这个**——课时编排 + 每个任务的教学要点 | 361 行 |
-| [`SETUP-CHECKLIST.md`](SETUP-CHECKLIST.md) | **开课前**——机房环境准备，逐项打勾 | 343 行 |
-| [`SCORING-SHEET.md`](SCORING-SHEET.md) | **评分时**——可直接打印的评分表 + 答辩记录表 | 316 行 |
-| [`FAQ.md`](FAQ.md) | **课上被问到时**——学生质疑 / 技术故障 / 组织问题 | 409 行 |
+| **本文件** `TEACHER-GUIDE.md` | **先看这个**——课时编排 + 每个任务的教学要点 | ≈374 行 |
+| [`SETUP-CHECKLIST.md`](SETUP-CHECKLIST.md) | **开课前**——机房环境准备，逐项打勾 | ≈343 行 |
+| [`SCORING-SHEET.md`](SCORING-SHEET.md) | **评分时**——可直接打印的评分表 + 答辩记录表 | ≈354 行 |
+| [`FAQ.md`](FAQ.md) | **课上被问到时**——学生质疑 / 技术故障 / 组织问题 | ≈409 行 |
 
 > 💡 **最省时的用法**：现在读本文件第二节（课时编排）→ 挑一个排课方案 →
 > 按 `SETUP-CHECKLIST.md` 准备环境 → 把 `SCORING-SHEET.md` 打印出来。

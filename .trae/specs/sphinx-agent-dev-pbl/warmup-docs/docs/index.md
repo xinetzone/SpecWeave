@@ -37,8 +37,9 @@
 ## 写完之后
 
 1. 保存这个文件（`Ctrl+S`）
-2. 打开命令行，执行构建命令（老师会教你，或看手册 Task0 步骤 3）
-3. 用浏览器打开 `_build/html/index.html`
+2. 回到 `warmup-docs\` 文件夹，**双击 `build.bat`**（Mac 用 `bash build.sh`），
+   或执行命令 `python -m sphinx -b html docs docs/_build/html`
+3. 用浏览器打开 `docs/_build/html/index.html`
 
 🎉 你会看到自己写的文字变成网页。
 

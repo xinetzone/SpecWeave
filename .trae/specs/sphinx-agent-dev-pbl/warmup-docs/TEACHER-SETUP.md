@@ -21,15 +21,15 @@
 
 ```
 warmup-docs/
-├── BUILD.md              ← 学生看的构建说明
-├── README-学生.md         ← 学生看的快速指引
+├── README-学生.md         ← 学生看的快速指引（分发时保留）
 ├── TEACHER-SETUP.md      ← 本文件（教师专用，分发时可删）
 ├── requirements.txt      ← 依赖清单（教师安装用）
 ├── build.bat             ← Windows 一键构建
 ├── build.sh              ← macOS/Linux 一键构建
 └── docs/
     ├── conf.py           ← 【教师区】已配好，学生不要动
-    └── index.md          ← 【学生区】学生唯一要改的文件
+    ├── index.md          ← 【学生区】学生唯一要改的文件
+    └── _build/           ← 构建产物（自动生成，分发时删掉）
 ```
 
 ---

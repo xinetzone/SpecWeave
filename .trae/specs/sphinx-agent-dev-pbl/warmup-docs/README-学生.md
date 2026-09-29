@@ -72,8 +72,9 @@ python -m sphinx -b html docs docs/_build/html
 |---|---|
 | 提示找不到 python | 举手找老师（这属于环境问题，不是你的错） |
 | 构建报错了 | 把**完整的红色文字**拍照给老师 |
+| 报 `Configuration error!` | 你没在 `warmup-docs\` 目录里、或命令路径写错了 → 改用双击 `build.bat` |
 | 网页打开了但内容没变 | 按 `Ctrl+F5` 强制刷新 |
-| 网页是空白的 | 确认打开的是 `_build/html/index.html` |
+| 网页是空白的 | 确认打开的是 `docs/_build/html/index.html` |
 
 ---
 

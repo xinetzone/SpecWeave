@@ -201,7 +201,14 @@ Task1(环境) ──┬──> Task2(文档先行+术语表) ──> Task3(CI部
 | **T-B** | 评分表 | 打印、逐格记录、Task7 汇总 | [`teacher/SCORING-SHEET.md`](teacher/SCORING-SHEET.md) |
 | **T-C** | 机房准备 | 课前 30 分钟按清单核验环境（软件版本 / 脚手架 / 部署平台 / 素材） | [`teacher/SETUP-CHECKLIST.md`](teacher/SETUP-CHECKLIST.md) |
 | **T-D** | 课堂应答 | 学生质疑与技术故障的即时应答 | [`teacher/FAQ.md`](teacher/FAQ.md) |
+| **T-E** | 一致性复核 | **每次修改本方案后**，跑一遍审计脚本，确认派生数字/命令/文件引用未漂移 | [`scripts/audit_consistency.py`](scripts/audit_consistency.py) |
 
 > **验收（教师侧）**：一位未参与本方案设计的教师，在**仅有 4 份文件**的情况下，
 > 能在开课前完成环境核验、并按课时方案上完第一节——无需任何额外检索。
 > 该验收由 `review.md` R6 记录（评分表算术自检 + 12 处引用可达性全部通过）。
+>
+> **T-E 的由来（R8 完整性审计）**：R6 的验收只覆盖了"教师包内部"的引用可达性，
+> 未能发现跨文档的命令不一致——`spec.md` AC-1 里的构建命令本身就是错的，
+> 手册忠实抄写后同样错误（详见 `review.md` §九 A-1/A-5）。
+> 因此 T-E 是 R8 之后新增的**持续性**动作：不是"开课前做一次"，而是"每次改动后都做"。
+> 运行方式：`python scripts/audit_consistency.py --root .`（退出码 0 = 通过）。

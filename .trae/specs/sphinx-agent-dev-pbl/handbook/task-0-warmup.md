@@ -19,10 +19,18 @@
 
 ```
 warmup-docs/
-├── conf.py          ← 配置文件（别动它，本任务不碰配置）
-├── index.md         ← 【你唯一要改的文件】
-└── _build/          ← 构建结果（自动生成，别手动改）
+├── README-学生.md    ← 一句话上手说明（就是本手册的简化版）
+├── build.bat         ← Windows 一键构建（双击即用）
+├── build.sh          ← macOS / Linux 一键构建
+├── requirements.txt  ← 依赖清单（老师准备环境时用，你别动）
+└── docs/
+    ├── conf.py       ← 配置文件（别动它，本任务不碰配置）
+    ├── index.md      ← 【你唯一要改的文件】
+    └── _build/       ← 构建结果（自动生成，别手动改）
 ```
+
+> ⚠️ **注意 `index.md` 在 `docs/` 子文件夹里**，不是在 `warmup-docs/` 根目录下。
+> 这一点很重要，后面构建命令的写法跟它有关。
 
 ![热身项目 warmup-docs 的文件夹结构](shots/S0-1-文件夹结构.png)
 
@@ -39,7 +47,7 @@ warmup-docs/
 
 ## 三、操作步骤
 
-### 步骤 1：打开 `index.md`
+### 步骤 1：打开 `docs/index.md`
 
 用任意文本编辑器打开它（VS Code、Notepad++、记事本都行）。
 你会看到里面有一些现成的文字，像这样：
@@ -62,7 +70,7 @@ warmup-docs/
 
 ### 步骤 2：写一页介绍你自己
 
-把 `index.md` 的内容**全部替换**成你自己的版本。要求包含四样东西：
+把 `docs/index.md` 的内容**全部替换**成你自己的版本。要求包含四样东西：
 
 ```markdown
 # 我是张三
@@ -98,11 +106,19 @@ warmup-docs/
 
 ### 步骤 3：构建成网页
 
-打开命令行（Windows：Git Bash 或 PowerShell；Mac：终端），**切到热身项目所在目录**，执行：
+**最简单的方法**：进到 `warmup-docs\` 文件夹，**双击 `build.bat`**（Mac / Linux 执行 `bash build.sh`）。
+脚本会自动找到可用的 Python、构建、然后帮你打开浏览器。**推荐用这个，不用敲命令。**
+
+如果你想自己敲命令（或者脚本没跑起来），打开命令行
+（Windows：Git Bash 或 PowerShell；Mac：终端），**切到 `warmup-docs\` 目录**，执行：
 
 ```bash
-sphinx-build -b html . _build/html
+python -m sphinx -b html docs docs/_build/html
 ```
+
+> ⚠️ **命令里的两个路径别写错**：`docs` 是源文件目录（`index.md` 和 `conf.py` 在那儿），
+> `docs/_build/html` 是输出目录。**不要写成 `sphinx-build -b html . _build/html`**——
+> 那会去根目录找 `conf.py`，而它不在那儿，会报 `Configuration error!`。
 
 ![在命令行中执行构建命令](shots/S0-4-构建命令.png)
 
@@ -126,7 +142,7 @@ sphinx-build -b html . _build/html
 
 ### 步骤 4：打开你的网页
 
-用文件管理器进到 `_build/html/` 目录，**双击 `index.html`**（或右键用浏览器打开）。
+用文件管理器进到 `docs/_build/html/` 目录，**双击 `index.html`**（或右键用浏览器打开）。
 
 🎉 你应该看到自己的名字、爱好列表，`Python` 显示成代码样式。
 
@@ -148,8 +164,9 @@ sphinx-build -b html . _build/html
 | 现象 | 原因 | 怎么办 |
 |---|---|---|
 | `command not found: sphinx-build` | 没在正确的环境里，或依赖没装好 | 告诉老师，让老师检查环境。**这不是你要解决的问题**（本任务零配置） |
+| `Configuration error!` | 命令里的路径写错了，或在错误的目录执行 | 确认在 `warmup-docs\` 里执行，命令是 `python -m sphinx -b html docs docs/_build/html`（两个 `docs` 别漏） |
 | `WARNING: document isn't included in any toctree` | 只是警告，不影响 | 忽略它，网页照样能打开 |
-| 网页打开是空白 / 404 | 打开的文件不对 | 确认打开的是 `_build/html/index.html`，不是 `_build/` 下的其他文件 |
+| 网页打开是空白 / 404 | 打开的文件不对 | 确认打开的是 `docs/_build/html/index.html`，不是 `docs/_build/` 下的其他文件 |
 | 中文显示成方框 | 字体问题 | 告诉老师（属于环境问题） |
 | Rebuild 后网页没变化 | 浏览器缓存 | 按 `Ctrl+F5`（Mac：`Cmd+Shift+R`）强制刷新 |
 
@@ -157,8 +174,8 @@ sphinx-build -b html . _build/html
 
 ## 五、完成标志（自检）
 
-- [ ] `index.md` 里有我写的标题、正文（≥100 字）、列表、行内代码
-- [ ] 我执行了 `sphinx-build` 命令，没有 ERROR
+- [ ] `docs/index.md` 里有我写的标题、正文（≥100 字）、列表、行内代码
+- [ ] 我构建成功了（双击 `build.bat`，或执行 `python -m sphinx -b html docs docs/_build/html`），没有 ERROR
 - [ ] 我在浏览器里看到了自己的网页
 - [ ] 我截图了，能交给老师
 - [ ] **全程我没有装任何软件、没写 Python、没用 Git** ✓

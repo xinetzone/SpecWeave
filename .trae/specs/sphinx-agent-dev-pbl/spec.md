@@ -3,7 +3,7 @@
 >  methodologies applied: TRAE-spec-mode（Specify）→ seven-concepts（F 第一性原理 驱动设计）
 > 自然语言：简体中文（与用户请求一致）
 >
-> 📎 配套文件：`tasks.md`（任务队列与验收标准）、`insight.md`（V 对抗审查与洞察）、`review.md`（独立审查与检查点）、**`decisions.md`（决策记录 — 原 Open Questions 的落定依据）**、`handbook/`（学生操作手册）、`templates/`（Task4/5 代码模板）、`warmup-docs/`（Task0 脚手架）、**`teacher/`（教师实施包 — 课时编排 / 可打印评分表 / 机房准备清单 / 课堂应答手册，NFR-1 的落地依据）**。
+> 📎 配套文件：`tasks.md`（任务队列与验收标准）、`insight.md`（V 对抗审查与洞察）、`review.md`（独立审查与检查点）、**`decisions.md`（决策记录 — 原 Open Questions 的落定依据）**、`handbook/`（学生操作手册）、`templates/`（Task4/5 代码模板）、`warmup-docs/`（Task0 脚手架）、**`teacher/`（教师实施包 — 课时编排 / 可打印评分表 / 机房准备清单 / 课堂应答手册，NFR-1 的落地依据）**、**`scripts/`（一致性审计脚本 — NFR-4 的可验证手段）**。
 
 ## 一、Overview
 
@@ -61,6 +61,7 @@
 - **NFR-1（可操作性）**：教师拿到方案后无需额外查资料即可落地；所有命令行/配置给出可直接复制的片段。→ **落地载体：[`teacher/`](teacher/TEACHER-GUIDE.md) 教师实施包**（课时编排、可打印评分表、机房准备清单、课堂应答手册 4 件套），教师侧不再需要外部检索。
 - **NFR-2（安全性）**：方案须强制要求 API Key 通过 `.env` + `python-dotenv` 管理，且 `.env` 必须被 `.gitignore` 排除（不可入库）。
 - **NFR-3（差异化）**：须提供基础 / 进阶（元文档闭环）两档任务，照顾不同水平学生。**元文档闭环须进一步提供"教学化形态"（教师预置草稿样例，零 Token 成本）作为**必做**核心，"全自动形态"（真实调用 API 生成草稿）作为选做加分，另设"无配额降级通道"以保证 AC-6 可达——见 `decisions.md` DQ-3。
+- **NFR-4（跨文档一致性）**：同一事实在方案的多处出现时，**操作性事实（可复制命令、文件路径）须逐字一致，数值性事实（行数、张数、版本号）须与实测一致**。派生数字必须可被脚本复核；能从实物派生的内容不得手写。审计方式见 [`review.md`](review.md) §九（R8）。→ **该需求由 R8 完整性审计新增**：NFR-1 承诺"教师无需额外查资料即可落地"，而"文件都在但说法互相打架"同样会导致落地失败，故单列为可验收需求。
 
 ## 九、Constraints（约束）
 
@@ -78,10 +79,11 @@
 ### AC-1: 文档站点可成功构建
 - **Type**: `rule`
 - **Given**: 学生按方案完成 Sphinx 初始化与内容编写
-- **When**: 在项目根目录执行 `make html`（或 `sphinx-build -b html . _build/html`）
-- **Then**: 命令退出码为 0，且 `_build/html/index.html` 存在
-- **Pass Condition**: 构建无报错，`_build/html/index.html` 可打开
-- **Evidence**: 构建终端输出 + `_build/html/index.html` 文件存在
+- **When**: 在项目根目录执行 `sphinx-build -b html docs docs/_build/html`（或等价写法 `python -m sphinx -b html docs docs/_build/html`）
+- **Then**: 命令退出码为 0，且 `docs/_build/html/index.html` 存在
+- **Pass Condition**: 构建无报错，`docs/_build/html/index.html` 可打开
+- **Evidence**: 构建终端输出 + `docs/_build/html/index.html` 文件存在
+- **备注**: 源文件目录为 `docs/`（`conf.py` 与 `index.md` 均在其中）；**勿写成 `sphinx-build -b html . _build/html`**——那会在根目录找 `conf.py` 并报 `Configuration error!`（R8 审计修正 A-1/A-5）。
 
 ### AC-2: 智能体可运行且含工具调用
 - **Type**: `rule`
