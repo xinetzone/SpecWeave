@@ -22,6 +22,13 @@
 - 不深入讲授 LangGraph / CrewAI / Claude Agent SDK / AutoGen 等框架源码（仅作概念扫盲与选型对比，避免认知过载）。
 - 不要求训练/微调模型，仅使用现成 LLM API。
 - 不追求生产级多智能体编排或高并发部署。
+- **不产出教师 DOCX 格式文件**（R12 决策，依据 F-33）。理由：教师包 4 份文档为 Markdown 表格 + 勾选框结构，
+  `SCORING-SHEET.md` 标题即为"可直接打印使用"，任何浏览器打印/导出 PDF 均已满足场景。
+  **已有产物若已满足场景，"换一种格式"是零收益变更**，且一份材料维护两种格式会制造内容漂移机会（I-21）。
+  教师实际需要的"怎么打印"指引见 [`teacher/PRINT-GUIDE.md`](teacher/PRINT-GUIDE.md)。
+- **不产出教师侧 PPT**（R12 决策，依据 F-33）。理由：`handbook/task-7-showcase.md` 中
+  "路演 PPT / 演示脚本"属**学生提交清单**，是学生产出物而非教师材料——
+  原行动项将两者并列属概念错位。教师侧无 PPT 使用场景。
 
 ## 四、Background & Context（背景与依据）
 

@@ -7,6 +7,8 @@
 > - [`SCORING-SHEET.md`](SCORING-SHEET.md) — 可直接打印的评分表（含过程性 40% + 终结性 60%）
 > - [`SETUP-CHECKLIST.md`](SETUP-CHECKLIST.md) — 开课前机房准备清单（逐项打勾）
 > - [`FAQ.md`](FAQ.md) — 课堂高频问题与应对
+> - [`PRINT-GUIDE.md`](PRINT-GUIDE.md) — 打印与分发指引（哪几份要打印、怎么转 PDF）
+> - [`S7-FIELD-CAPTURE-SPEC.md`](S7-FIELD-CAPTURE-SPEC.md) — Task7 现场照片采集规格（**阻塞中**，需真实开课一轮后执行）
 > - [`../spec.md`](../spec.md) — 设计规范与验收标准（AC）
 > - [`../tasks.md`](../tasks.md) — 学生任务队列与 TR
 > - [`../decisions.md`](../decisions.md) — 决策单一事实源（**本文件中所有"默认"均可被它覆盖**）
@@ -15,17 +17,19 @@
 
 ## 〇、先读这一节（3 分钟）
 
-### 本目录有什么（4 份文件，各有用途）
+### 本目录有什么（6 份文件，各有用途）
 
 | 文件 | 什么时候看 | 篇幅 |
 |---|---|---|
-| **本文件** `TEACHER-GUIDE.md` | **先看这个**——课时编排 + 每个任务的教学要点 | ≈374 行 |
-| [`SETUP-CHECKLIST.md`](SETUP-CHECKLIST.md) | **开课前**——机房环境准备，逐项打勾 | ≈343 行 |
+| **本文件** `TEACHER-GUIDE.md` | **先看这个**——课时编排 + 每个任务的教学要点 | ≈388 行 |
+| [`SETUP-CHECKLIST.md`](SETUP-CHECKLIST.md) | **开课前**——机房环境准备，逐项打勾 | ≈364 行 |
 | [`SCORING-SHEET.md`](SCORING-SHEET.md) | **评分时**——可直接打印的评分表 + 答辩记录表 | ≈354 行 |
 | [`FAQ.md`](FAQ.md) | **课上被问到时**——学生质疑 / 技术故障 / 组织问题 | ≈409 行 |
+| [`PRINT-GUIDE.md`](PRINT-GUIDE.md) | **打印前**——哪几份要打印、份数、怎么转 PDF | ≈117 行 |
+| [`S7-FIELD-CAPTURE-SPEC.md`](S7-FIELD-CAPTURE-SPEC.md) | **课程跑完一轮后**——采集 S7-1/2/3 现场图 | ≈157 行 |
 
 > 💡 **最省时的用法**：现在读本文件第二节（课时编排）→ 挑一个排课方案 →
-> 按 `SETUP-CHECKLIST.md` 准备环境 → 把 `SCORING-SHEET.md` 打印出来。
+> 按 `SETUP-CHECKLIST.md` 准备环境 → 按 `PRINT-GUIDE.md` 打印评分表。
 > 其余内容可以课上边用边查。
 
 ### 你要做的三件事
