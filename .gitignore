@@ -144,3 +144,6 @@ apps/devcontainer-base/benchmark-results-ci/
 # Tencent Cloud EdgeOne（CLI 本地关联、部署暂存与凭证，机器生成产物）
 .edgeone/
 .tef_dist/
+
+# work 视频创作工作目录（含 mov/mkv/webm 等大体积素材与中间产物，本地保留不入库）
+work/ai-agent-kepu/
