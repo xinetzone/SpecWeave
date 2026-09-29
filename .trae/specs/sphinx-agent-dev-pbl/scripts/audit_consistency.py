@@ -25,12 +25,15 @@ from pathlib import Path
 # 允许的"学生待创建文件"白名单——这些被引用但不存在是正常的
 PLANNED_ARTIFACTS = {
     "api-draft.md", "api.md", "api.py", "architecture.md",
-    "calculator-draft.md", "diff-notes.md", "glossary.md",
+    "diff-notes.md", "glossary.md",
     "index.md", "usage.md", "xxx.md", "docs.yml",
     "drafts/calculator-draft.md", "docs/api-draft.md", "docs/api.md",
     "docs/drafts/diff-notes.md", "docs/snippets.md",
     ".github/workflows/docs.yml",
 }
+# ⚠️ 已移出：calculator-draft.md（R9 之前只是"计划中"，现已真实存在于
+#    teacher/task6-tier-a/。按 I-15——"实物必须真实存在"——它不能再被豁免，
+#    否则"计划中"就成了永不兑现的免死金牌。）
 
 # 演示环境脚本（不在本仓库内，属临时环境）
 EXTERNAL_SCRIPTS = {"make_shots.py", "make_shots2.py", "shells.py", "pyvenv.cfg"}
@@ -73,7 +76,8 @@ def scan_ghost_files(root: Path) -> list[str]:
     """扫描被反引号包起来的文件名，检查是否存在（含多基准解析）。"""
     pat = re.compile(r"`([A-Za-z0-9_\-./]+\.(?:md|py|png|txt|bat|sh|yml|yaml|toml|cfg|example|json))`")
     bases = [root, root / "handbook", root / "teacher",
-             root / "warmup-docs", root / "templates", root / "handbook" / "shots"]
+             root / "warmup-docs", root / "templates", root / "handbook" / "shots",
+             root / "teacher" / "task6-tier-a"]
     ghosts = []
     seen = set()
     for md in sorted(root.rglob("*.md")):

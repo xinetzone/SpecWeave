@@ -259,9 +259,19 @@ Day 5：Task7 路演 + 答辩 + 反思
 
 | 档 | 课堂怎么组织 |
 |---|---|
-| **档 A（必做·零 Token）** | 发预置草稿样例（含 3 处典型误解）→ 学生独立找差异 → **小组讨论"为什么 AI 会这么理解"** |
+| **档 A（必做·零 Token）** | 打印 [`task6-tier-a/calculator-draft.md`](task6-tier-a/calculator-draft.md) 发给学生 → 学生对照自己的 `agent.py` 独立找差异 → **小组讨论"为什么 AI 会这么理解"** → 最后用 [`task6-tier-a/ANSWER-KEY.md`](task6-tier-a/ANSWER-KEY.md) 收口 |
 | **档 B（选做·加分）** | 学生自己调 API 生成草稿 → 审校 → 差异分析 |
 | **档 C（降级）** | 用自己 Task2 的 `api-draft.md` 对比最终代码 |
+
+> 📄 **档 A 的三份教师材料**（都在 [`task6-tier-a/`](task6-tier-a/) 目录）：
+> - `calculator-draft.md` —— **要发的**样例草稿。内含 3 处典型误解 + 2 处加分差异，已按"看起来很像 AI 写的"来构造。
+> - `ANSWER-KEY.md` —— **教师专用，不得发给学生**。列出全部 5 处差异及判分对接。
+> - `README.md` —— 分发纪律与 30 分钟课堂节奏（★ 第 3 步"为什么 AI 会这么理解"是全课重点）。
+>
+> 🚨 **切勿把学生手册当答案发**：`handbook/task-6-meta-doc.md` 里**刻意不写**"会在哪几处出错"，
+> 就是为了保住"自己发现"这个过程。答案只在这里和 `ANSWER-KEY.md`。
+>
+> 详见 [`task6-tier-a/README.md`](task6-tier-a/README.md)。
 
 > 🚨 **必须讲清诚实性红线**：用档 A/C 的学生**必须在 `diff-notes.md` 开头如实标注草稿来源**。
 > 谎报为"我调 AI 生成的" → **本项判 0**。
