@@ -2,8 +2,10 @@
 
 > 触发：用户配置好 `.env` 中的微信相关凭证后，请求验证。
 > 方法：直接运行项目自带官方接口探针 `mp-archiver official-doctor`（TR-8.1 分阶段探针），不写库、不下载正文。
+>
+> 🔒 **脱敏说明**：本文所有公网/内网 IP 均以占位符表示——出口 IPv4 记 `<EGRESS_IPV4>`，内网地址记 `<LAN_IPV4>`，代理端口记 `<PROXY_PORT>`。真实值不落文档、不入库。
 
-## 1. 实测输出（原文）
+## 1. 实测输出（原文，已脱敏）
 
 ```text
 官方接口联调探针（TR-8.1）：配置 → 网络 → token → batchget → biz 一致性
@@ -24,21 +26,23 @@ EXIT=1
 
 **凭证本身正确且有效，唯一阻塞是 IP 白名单。**
 
-判定依据：平台返回 `40164 invalid ip` 而非 `40013 invalid appid` / `40125 invalid appsecret`。若凭证有误，错误码不会是 40164。因此 AppID、AppSecret 均已被平台接纳，仅在"调用方出口 IP 未授权"这一步被拦下。
+判定依据：平台返回 `40164 invalid ip` 而非 `40013 invalid appid` / `40125 invalid appsecret`。若凭证有误，错误码不会是 40164。
 
-该出口 IP 已用独立 `curl` 直调 `cgi-bin/token` 复现（同样返回 `<EGRESS_IPV4> not in whitelist`），**非环境偶发、非本项目代码问题**。
+该出口 IP 已用独立 `curl` 直调 `cgi-bin/token` 复现同一结果，**非环境偶发、非本项目代码问题**。
 
-## 3. 待处置（用户侧操作，二选一或全做）
+## 3. 待处置（用户侧操作）
 
 ### 3.1 解除唯一阻塞：加 IP 白名单
 
-在公众号后台「设置与开发 → 基本配置 → IP 白名单」中新增：
+在公众号后台「设置与开发 → 基本配置 → IP 白名单」中新增当前网络出口 IPv4。
 
-```text
-<EGRESS_IPV4>
-```
-
-> 该 IP 为当前网络出口地址。若出口 IP 为动态（家宽/移动网络常见），IP 变更后需重新添加——这是该能力的固有约束，不是配置错误。
+> 出口 IP 需**现场查询**（不要从任何文档抄）：
+>
+> ```bash
+> curl -4 --noproxy '*' https://ipinfo.io/ip
+> ```
+>
+> 该 IP 为当前网络出口地址。若出口为动态（家宽/移动网络常见），IP 变更后需重新添加——这是该能力的固有约束，不是配置错误。
 
 处置后重跑：
 
@@ -50,7 +54,7 @@ PYTHONPATH=src <python> -m mp_archiver.cli official-doctor
 
 ### 3.2 启动采集服务（R2 主路径，未部署）
 
-**当前状态：127.0.0.1:5000 无进程监听，采集服务未部署。**
+**当前状态：`127.0.0.1:5000` 无进程监听，采集服务未部署。**
 
 R2 是**历史全量归档的主路径**；R1 官方接口只覆盖"发布成功"的图文素材、不含传统群发历史，**仅靠 R1 拿不到全量历史**。因此要真正开始归档，R2 必须起来。
 
@@ -58,7 +62,7 @@ R2 是**历史全量归档的主路径**；R1 官方接口只覆盖"发布成功
 
 | 项 | 状态 |
 |---|---|
-| 容器运行时 | ✗ 无 Docker Desktop / Docker CLI；已装 Podman 但 **machine 未启动**（`podman ps` 拒绝连接 127.0.0.1:60432） |
+| 容器运行时 | ✗ 无 Docker Desktop / Docker CLI；已装 Podman 但 **machine 未启动** |
 | `deploy/collector.env` | ✗ 缺失，需从 `collector.env.example` 复制 |
 | 端口 5000 | ✓ 未被占用 |
 | 专用订阅号 + 可扫码微信 | 待确认（需账号管理员本人扫码） |
@@ -90,7 +94,7 @@ anaconda 环境已装齐运行时依赖（httpx / pydantic / pydantic-settings /
 
 ### 4.2 系统代理会伪造"本地服务故障"假象
 
-**本机 shell 环境设有 `http_proxy=127.0.0.1:<PROXY_PORT>`。**
+**本机 shell 环境设有 HTTP 代理（`http_proxy` / `https_proxy` 指向本机某端口，记 `<PROXY_PORT>`）。**
 
 裸测 localhost 时，curl 会走该代理，得到误导性结果：
 
@@ -110,15 +114,15 @@ anaconda 环境已装齐运行时依赖（httpx / pydantic / pydantic-settings /
 
 `data/archive.db` 五表（articles / media / comments / metrics / sync_state）**全部 0 行**；`archive/`、`exports/` 为空 → 尚未产生任何归档产出，R2 与 R1 均未跑过。
 
-## 5. R1 调用前的业务前提（未验证）
+## 5. R1 调用前的业务前提
 
-`MP_ARCHIVER_WECHAT_OFFICIAL_BIZ=MzcwMzE5NTI5NA==` 对应的自有号须为**认证服务号**（或认证订阅号经实测可调）。
+`MP_ARCHIVER_WECHAT_OFFICIAL_BIZ` 对应的自有号须为**认证服务号**（或认证订阅号经实测可调）。
 
 - 官方文档适用范围表当前仅列认证服务号；
 - 2025-07 平台收紧后，个人主体、未认证主体调用返回 `errcode=48001`，工具会打印降级提示并以退出码 0 结束。
 
-**白名单通过后若见 48001，即为账号主体权限问题，非配置问题。**
+**后续实测确认：该号确实撞上 `48001`，详见 [08-48001-auth-gate-and-path-decision.md](08-48001-auth-gate-and-path-decision.md)。**
 
 ## 6. 合规边界（重申）
 
-本工具限个人学习、研究与本地存档使用；必须使用**采集专用订阅号**（非主力号）并由管理员本人扫码；不得将采集服务暴露公网；不得公开再分发归档内容。详见 [05-compliance.md](05-compliance.md)。
+本工具限个人学习、研究与本地存档使用；必须使用**采集专用订阅号**（非主力号）并由管理员本人扫码；不得将采集服务暴露公网；不得再分发归档内容。详见 [05-compliance.md](05-compliance.md)。
