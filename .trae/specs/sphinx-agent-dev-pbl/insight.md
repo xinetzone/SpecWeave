@@ -153,8 +153,8 @@
 
 **实测证据**：`pyvenv.cfg` 硬编码创建时的绝对路径：
 ```ini
-home = D:\Users\xinzo\anaconda3
-executable = D:\Users\xinzo\anaconda3\python.exe
+home = <原机器的Python安装目录>
+executable = <原机器的Python解释器路径>
 ```
 将 `home` 指向不存在路径后，运行 `.venv/Scripts/python.exe` 报：
 ```
