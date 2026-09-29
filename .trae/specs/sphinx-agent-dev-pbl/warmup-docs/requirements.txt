@@ -1,0 +1,4 @@
+sphinx>=5.0
+myst-parser>=0.18
+sphinx-copybutton>=0.5
+sphinx-design>=0.4
