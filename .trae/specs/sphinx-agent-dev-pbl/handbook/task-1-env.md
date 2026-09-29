@@ -36,9 +36,14 @@ source .venv/bin/activate
 
 **成功的标志**：命令行提示符前面出现 `(.venv)`。
 
-> 📸〔截图位 S1-1〕虚拟环境激活成功（提示符含 .venv）
-> 文件名建议：shots/S1-1-venv激活.png
-> 需要显示：命令行提示符前缀 `(.venv)` 清晰可见
+![虚拟环境激活成功（提示符含 .venv）](shots/S1-1-venv激活.png)
+
+> 🖼 **S1-1 · 虚拟环境激活成功（提示符含 .venv）**
+>
+> ⚠️ 本图为**示意图**（HTML 合成），用于帮助理解画面结构，**不是真实运行截图**。
+> 你的实际界面会与本图有差异（版本号、路径、配色等），以你屏幕上看到的为准。
+>
+> 📖 原画面说明：虚拟环境激活成功（提示符含 .venv）
 
 ---
 
@@ -88,9 +93,14 @@ sphinx-quickstart docs --no-sep -q -p "AI Agent Docs" -a "你的名字" \
 
 **成功的标志**：`docs/` 目录下生成了 `conf.py`、`index.rst`、`Makefile`。
 
-> 📸〔截图位 S1-3〕sphinx-quickstart 生成的文件
-> 文件名建议：shots/S1-3-初始化结果.png
-> 需要显示：docs/ 目录下的 conf.py、index.rst 等文件
+![sphinx-quickstart 生成的文件](shots/S1-3-初始化结果.png)
+
+> 🖼 **S1-3 · sphinx-quickstart 生成的文件**
+>
+> ⚠️ 本图为**示意图**（HTML 合成），用于帮助理解画面结构，**不是真实运行截图**。
+> 你的实际界面会与本图有差异（版本号、路径、配色等），以你屏幕上看到的为准。
+>
+> 📖 原画面说明：sphinx-quickstart 生成的文件
 
 > ⚠️ **如果你的 Sphinx 版本低于 7.0**，`--no-sep` 参数不存在。此时去掉它，改用 `sphinx-quickstart docs` 交互式回答，在"Separate source and build directories"那问选 `y`。
 
@@ -123,9 +133,14 @@ html_theme = "furo"
 
 > 💡 **为什么主题要换？** 默认主题 `alabaster` 比较老旧。`furo` 是现代文档站的常见选择，看起来专业很多。它需要额外安装：`pip install furo`
 
-> 📸〔截图位 S1-4〕修改后的 conf.py
-> 文件名建议：shots/S1-4-conf配置.png
-> 需要显示：编辑器中 extensions 列表与 html_theme 行
+![修改后的 conf.py（高亮处为改动行）](shots/S1-4-conf配置.png)
+
+> 🖼 **S1-4 · 修改后的 conf.py（高亮处为改动行）**
+>
+> ⚠️ 本图为**示意图**（HTML 合成），用于帮助理解画面结构，**不是真实运行截图**。
+> 你的实际界面会与本图有差异（版本号、路径、配色等），以你屏幕上看到的为准。
+>
+> 📖 原画面说明：修改后的 conf.py
 
 ---
 
