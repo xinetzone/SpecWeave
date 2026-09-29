@@ -20,6 +20,7 @@ source: "../README.md"
 | [04-storage-and-layout.md](04-storage-and-layout.md) | 存储布局（archive/data/exports/logs）与源码结构 |
 | [05-compliance.md](05-compliance.md) | 合规声明六条（含 24 小时删除义务） |
 | [06-credential-probe-2026-09-29.md](06-credential-probe-2026-09-29.md) | 微信凭证联调实测记录：探针分阶段结果、IP 白名单阻塞、环境缺口与绕过版本门槛的跑法 |
+| [07-40164-blocker-followup.md](07-40164-blocker-followup.md) | 40164 第二轮排查：IPv6 误判纠正、微信校验顺序实测推导、已排除项与处置顺序 |
 
 ## AI 协作者规范
 
