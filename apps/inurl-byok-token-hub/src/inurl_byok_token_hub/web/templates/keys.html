@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}密钥库 · BYOK 精简控制台{% endblock %}
+{% block content %}
+<h1>密钥库</h1>
+<p class="note">只展示厂商密钥的元数据与额度口径；服务端仅持久化密文，页面永不下发或回显明文 Key。</p>
+
+<div class="cards">
+  <div class="card"><span>当前套餐</span><b>{{ plan.name }}</b></div>
+  <div class="card"><span>密钥上限</span><b>{{ key_limit if key_limit is not none else "无限" }}</b></div>
+  <div class="card hot"><span>已录入</span><b>{{ key_count }}</b></div>
+</div>
+
+<h2>厂商密钥（{{ key_count }} 条）</h2>
+<table>
+  <thead>
+    <tr>
+      <th>厂商</th>
+      <th>显示名</th>
+      <th>协议</th>
+      <th>状态</th>
+      <th class="num">手填额度</th>
+      <th class="num">已用</th>
+      <th class="num">剩余</th>
+      <th>最近错误</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for row in rows %}
+    <tr>
+      <td><code>{{ row.provider_id }}</code></td>
+      <td>{{ row.display_name }}</td>
+      <td>{{ row.protocol.value }}</td>
+      <td>{{ row.status.value }}</td>
+      <td class="num">{{ row.quota_total if row.quota_total is not none else "—" }}</td>
+      <td class="num">{{ row.quota_used }}</td>
+      <td class="num">{{ row.quota_remaining if row.quota_remaining is not none else "—" }}</td>
+      <td>{{ row.last_error or "—" }}</td>
+      <td>
+        <form class="inline" method="post" action="/console/keys/{{ row.id }}/delete">
+          <button class="danger" type="submit">删除</button>
+        </form>
+      </td>
+    </tr>
+  {% else %}
+    <tr class="empty"><td colspan="9">尚未录入任何厂商密钥（精简控制台不提供录入入口，请通过 API 录入）。</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

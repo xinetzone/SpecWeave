@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}路由与压缩 · BYOK 精简控制台{% endblock %}
+{% block content %}
+<h1>路由与压缩偏好</h1>
+<p class="note">共 19 种路由策略；Combo 用 <code>&gt;</code> 分隔成回退链，上一层全失败自动流转下一层。精简控制台只保存偏好，不做实时试跑。</p>
+
+{% if saved %}
+  <div class="flash ok">已保存偏好。</div>
+{% endif %}
+{% if error %}
+  <div class="flash error">{{ error }}</div>
+{% endif %}
+
+<h2>当前偏好</h2>
+<div class="cards">
+  <div class="card"><span>策略</span><b>{{ current.strategy }}</b></div>
+  <div class="card"><span>压缩档</span><b>{{ current.compression.value }}</b></div>
+  <div class="card"><span>Combo 层数</span><b>{{ combo_layers | length }}</b></div>
+</div>
+{% if combo_layers %}
+  <p class="note">回退链：{% for layer in combo_layers %}<span class="tag">{{ loop.index }} · {{ layer }}</span> {% endfor %}</p>
+{% endif %}
+
+<h2>修改偏好</h2>
+<form method="post" action="/console/routes">
+  <label for="strategy">默认路由策略</label>
+  <select id="strategy" name="strategy">
+    {% for item in strategies %}
+      <option value="{{ item.key }}" {% if current.strategy == item.key %}selected{% endif %}>{{ item.label }}（{{ item.key }}）</option>
+    {% endfor %}
+  </select>
+
+  <label for="combo">Combo 回退链</label>
+  <input id="combo" name="combo" type="text" value="{{ current.combo }}" placeholder="延迟优先>轮询">
+
+  <label for="compression">提示词压缩档</label>
+  <select id="compression" name="compression">
+    {% for item in levels %}
+      <option value="{{ item.value }}" {% if current.compression.value == item.value %}selected{% endif %}>{{ item.label }}（{{ item.value }}，压缩率 {{ item.rate }}）</option>
+    {% endfor %}
+  </select>
+
+  <label for="auto_models">候选模型限定（AUTO_MODELS，逗号或换行分隔）</label>
+  <textarea id="auto_models" name="auto_models">{{ current.auto_models | join("\n") }}</textarea>
+
+  <label for="auto_provider_order">厂商优先顺序（AUTO_PROVIDER_ORDER，逗号或换行分隔）</label>
+  <textarea id="auto_provider_order" name="auto_provider_order">{{ current.auto_provider_order | join("\n") }}</textarea>
+
+  <button type="submit">保存</button>
+</form>
+{% endblock %}

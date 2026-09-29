@@ -1,6 +1,8 @@
 """存储层导出。"""
 
 from .repository import (
+    DEFAULT_LOCK_TIMEOUT,
+    LOCK_RETRY_INTERVAL,
     Repository,
     SingleInstanceLock,
     StorageError,
@@ -12,6 +14,8 @@ from .repository import (
 from .store import Store
 
 __all__ = [
+    "DEFAULT_LOCK_TIMEOUT",
+    "LOCK_RETRY_INTERVAL",
     "Repository",
     "SingleInstanceLock",
     "StorageError",

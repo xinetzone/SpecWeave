@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}用量 · BYOK 精简控制台{% endblock %}
+{% block content %}
+<h1>用量</h1>
+<p class="note">按厂商聚合的调用台账与「手填额度 − 已用 = 剩余」口径；用量由代理侧自动记账，控制台只读。</p>
+
+<div class="cards">
+  <div class="card hot"><span>累计调用次数</span><b>{{ total_calls }}</b></div>
+  <div class="card"><span>有记录厂商数</span><b>{{ rows | length }}</b></div>
+</div>
+
+<h2>按厂商聚合</h2>
+<table>
+  <thead>
+    <tr>
+      <th>厂商</th>
+      <th class="num">调用次数</th>
+      <th class="num">Token 合计</th>
+      <th class="num">手填额度</th>
+      <th class="num">已用</th>
+      <th class="num">剩余</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for row in rows %}
+    <tr>
+      <td><code>{{ row.provider_id }}</code></td>
+      <td class="num">{{ row.calls }}</td>
+      <td class="num">{{ row.total_tokens }}</td>
+      <td class="num">{{ row.quota_total if row.quota_total is not none else "—" }}</td>
+      <td class="num">{{ row.quota_used }}</td>
+      <td class="num">{{ row.quota_remaining if row.quota_remaining is not none else "—" }}</td>
+    </tr>
+  {% else %}
+    <tr class="empty"><td colspan="6">暂无调用记录。</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

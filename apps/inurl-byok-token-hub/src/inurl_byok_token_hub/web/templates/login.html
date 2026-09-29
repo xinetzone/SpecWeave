@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}登录 · BYOK 精简控制台{% endblock %}
+{% block content %}
+<h1>登录精简控制台</h1>
+<p class="note">粘贴统一令牌（<code>byok_live_</code> 前缀）即可进入；令牌只写入 httponly 会话 Cookie，不会出现在页面中。</p>
+
+{% if error %}
+  <div class="flash error">{{ error }}</div>
+{% endif %}
+
+<form method="post" action="/console/login">
+  <label for="token">统一令牌</label>
+  <input id="token" name="token" type="password" placeholder="byok_live_..." autocomplete="off">
+  <button type="submit">进入控制台</button>
+</form>
+
+<h2>如何获取</h2>
+<p class="note">在 API 侧完成注册后会一次性返回统一令牌；也可对同一邮箱重新登录签发。令牌本身与 API 调用使用的凭证完全一致。</p>
+{% endblock %}
