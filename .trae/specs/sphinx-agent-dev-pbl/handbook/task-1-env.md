@@ -62,9 +62,13 @@ pip install sphinx myst-parser sphinx-design sphinx-copybutton python-dotenv ope
 | `python-dotenv` | 从 `.env` 文件读环境变量（保护你的 API Key） |
 | `openai` | 调用大模型的 SDK |
 
-> 📸〔截图位 S1-2〕pip install 完成
-> 文件名建议：shots/S1-2-安装完成.png
-> 需要显示：`Successfully installed ...` 字样
+![pip install 完成（出现 Successfully installed）](shots/S1-2-安装完成.png)
+
+> 🖼 **S1-2 · pip install 完成（出现 Successfully installed）**
+>
+> ⚠️ 本图为**示意图**（HTML 合成），用于帮助理解画面结构，**不是真实运行截图**。
+> 你的实际界面会与本图有差异（版本号、路径、配色等），以你屏幕上看到的为准。
+>
 
 **顺手存一份依赖清单**（方便复现）：
 
@@ -167,9 +171,13 @@ sphinx-build -b html docs docs/_build/html
 
 看到 `build succeeded` 之类的输出，且 `docs/_build/html/index.html` 存在，就成功了。
 
-> 📸〔截图位 S1-5〕构建成功输出
-> 文件名建议：shots/S1-5-构建成功.png
-> 需要显示：构建成功的终端输出
+![严格模式构建成功（0 warnings）](shots/S1-5-构建成功.png)
+
+> 🖼 **S1-5 · 严格模式构建成功（0 warnings）**
+>
+> ⚠️ 本图为**示意图**（HTML 合成），用于帮助理解画面结构，**不是真实运行截图**。
+> 你的实际界面会与本图有差异（版本号、路径、配色等），以你屏幕上看到的为准。
+>
 
 ---
 

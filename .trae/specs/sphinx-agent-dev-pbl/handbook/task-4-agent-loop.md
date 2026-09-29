@@ -135,9 +135,13 @@ if __name__ == "__main__":
 - 每个函数都写了 **docstring**（三引号里的说明）。这不是装饰：Task5 的 autodoc 会把它们自动抽成 API 文档，而且验收会检查它非空且有内容
 - `if __name__ == "__main__":` 是 Python 惯例，让这个文件既能被 import，也能直接运行
 
-> 📸〔截图位 S4-2〕agent.py 完整代码
-> 文件名建议：shots/S4-2-agent代码.png
-> 需要显示：编辑器中的 agent.py，含 docstring
+![agent.py 的代码（含 docstring）](shots/S4-2-agent代码.png)
+
+> 🖼 **S4-2 · agent.py 的代码（含 docstring）**
+>
+> ⚠️ 本图为**示意图**（HTML 合成），用于帮助理解画面结构，**不是真实运行截图**。
+> 你的实际界面会与本图有差异（版本号、路径、配色等），以你屏幕上看到的为准。
+>
 
 ---
 

@@ -166,9 +166,13 @@ flowchart LR
 
 > 💡 上面的 `{mermaid}` 需要额外装 `sphinxcontrib-mermaid`：`pip install sphinxcontrib-mermaid`，并在 `conf.py` 的 `extensions` 里加上 `"sphinxcontrib.mermaid"`。如果嫌麻烦，用纯文字流程图也行。
 
-> 📸〔截图位 S2-2〕architecture.md 中的流程图渲染效果
-> 文件名建议：shots/S2-2-流程图.png
-> 需要显示：网页上渲染出的 Agent Loop 流程图
+![architecture.md 中 Agent Loop 流程图的渲染效果](shots/S2-2-流程图.png)
+
+> 🖼 **S2-2 · architecture.md 中 Agent Loop 流程图的渲染效果**
+>
+> ⚠️ 本图为**示意图**（HTML 合成），用于帮助理解画面结构，**不是真实运行截图**。
+> 你的实际界面会与本图有差异（版本号、路径、配色等），以你屏幕上看到的为准。
+>
 
 ---
 
