@@ -41,11 +41,20 @@ EXTERNAL_SCRIPTS = {"make_shots.py", "make_shots2.py", "shells.py", "pyvenv.cfg"
 # 会在学生项目中创建、但当前仓库不存在的路径（占位引用）
 FUTURE_PATHS = {"drafts/diff-notes.md"}
 
+# 跨领域迁移示例里的文件名——它们出现在"别的领域也适用"的举例中，
+# 本仓库刻意不提供这些文件（提供反而是错的）。
+# 见 patterns/config-as-artifact.md 的"跨场景迁移示例"。
+CROSS_DOMAIN_EXAMPLES = {"config.yaml", "deployment.yaml", "configs/base.yaml"}
+
 # 无路径前缀的裸文件名——它们在文中通常是"泛指某类文件"而非"引用某具体文件"
 BARE_NAMES = {"conf.py", "index.md", "index.rst", "requirements.txt"}
 
-# 审计报告类文件——它们会引用（并批判）错误写法，不应计入一致性冲突
-AUDIT_FILES = {"insight.md", "review.md"}
+# 模式文档——跨领域迁移示例的来源，其举例文件名不应计入幽灵检查
+PATTERN_FILES = {"config-as-artifact.md"}
+
+# 审计报告类文件——它们会引用（并批判）错误写法，不应计入一致性冲突；
+# 模式文档同理（其举例是"别的领域的文件长这样"）
+AUDIT_FILES = {"insight.md", "review.md"} | PATTERN_FILES
 
 # 描述性/警示性语境标记——出现这些词的行是在"提醒不要这么写"，不算真的在用
 WARNING_MARKERS = ("不要写成", "勿写成", "别写成", "错写成", "那会", "会报", "必失败", "错误写法")
@@ -90,7 +99,8 @@ def scan_ghost_files(root: Path) -> list[str]:
                 continue
             seen.add(name)
             if (name in PLANNED_ARTIFACTS or name in EXTERNAL_SCRIPTS
-                    or name in BARE_NAMES or name in FUTURE_PATHS):
+                    or name in BARE_NAMES or name in FUTURE_PATHS
+                    or name in CROSS_DOMAIN_EXAMPLES):
                 continue
             if not any((b / name).exists() for b in bases):
                 ghosts.append(name)

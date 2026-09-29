@@ -42,6 +42,8 @@ python scripts/audit_consistency.py --root .
 | 审计报告自身的引用 | `insight.md` / `review.md` 为批判而引用错误命令 | `AUDIT_FILES` 排除 |
 | 警示语境 | "**不要写成** `sphinx-build -b html . _build/html`" | `WARNING_MARKERS` 识别 |
 | 等价写法未统一 | `python -m sphinx ...` vs `sphinx-build ...`（都正确） | 报告为 `⚠` 提示，**不判失败** |
+| **跨领域迁移示例** | 模式文档里的 `config.yaml` / `deployment.yaml`（别的领域的文件长这样） | `CROSS_DOMAIN_EXAMPLES` 白名单 + `PATTERN_FILES` 排除 |
+| **模式文档自身** | `patterns/*.md` 为举例而提及非本项目文件 | `PATTERN_FILES` 并入 `AUDIT_FILES` |
 
 ### 维护提示
 
