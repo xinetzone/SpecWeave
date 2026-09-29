@@ -6,8 +6,7 @@
 
 python-rust-comparison/index
 fedora-coreos/index
-openkylin/index
-openkylin/wsl-install-sparse-vhd-guide
+openkylin-docs-wiki/index
 tvm-ffi-wiki/index
 caffe-ffi-conv-v4-optimization-summary
 free-llm-api-summary

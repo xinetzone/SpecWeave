@@ -196,13 +196,13 @@ flowchart LR
 
 发起企业将重资产基础软件捐赠入中立基金会，以治理与商标中立汇聚竞品、硬件厂商与个人开发者（社区轮）；商业发行版以"社区版上游"的书面显式关系承担认证、SLA 与变现并反哺社区（商业轮）。七步建设、三问检验、四类反模式见独立模式文件；本报告对应证据为 F-003/F-004/F-005/F-007/F-008/F-009/F-033/F-034/F-051/F-055/F-056/F-057/F-058/F-061。
 
-> 独立模式：[根社区—商业发行版双轮](../../../retrospective/patterns/methodology-patterns/product-growth/root-community-commercial-distro-flywheel.md)
+> 独立模式：[根社区—商业发行版双轮](../../../../retrospective/patterns/methodology-patterns/product-growth/root-community-commercial-distro-flywheel.md)
 
 ### 模式 P2：终端操作系统智能体原生化四级演进（L1）
 
 终端 OS 的 AI 化沿"应用插件（L1）→ AI 子系统（L2）→ 模型枢纽（L3）→ 智能体底座（L4）"逐级跃迁；L4 的判据是第三方智能体不经私有 SDK 完成"读屏→调应用→写回"全链路，且与自研智能体权限对等、同审计。跳级营销与私有协议围墙为首要反模式。逐级门槛、检验标准与跨域迁移见独立模式文件；本报告对应证据为 F-022/F-026/F-032/F-042/F-044/F-045/F-046/F-047/F-057。
 
-> 独立模式：[终端操作系统智能体原生化四级演进](../../../retrospective/patterns/methodology-patterns/product-growth/agent-native-os-capability-ladder.md)
+> 独立模式：[终端操作系统智能体原生化四级演进](../../../../retrospective/patterns/methodology-patterns/product-growth/agent-native-os-capability-ladder.md)
 
 ---
 
@@ -233,7 +233,7 @@ flowchart LR
 | V-04 | 魔鬼代言人 | "自主选型"被误读为"自研"的风险：GCC 15、LLVM 22、Linux 7.0 均为上游开源组件，自主在于选型/集成/维护与供应链，不在于原创；不澄清会放大宣传腔 | **采纳** → I-1 行动项增加"区分自主选型与自研组件"；§1 措辞使用"独立构建"而非"自研内核" |
 | V-05 | 魔鬼代言人 | 捐赠后的治理独立性：理事长仍为麒麟体系人选，KylinBot/Token 中心/衍生版均带麒麟品牌，外部企业贡献占比无公开量化数据 | **部分采纳** → I-2 已把健康度指标设为"待核查项"；在局限声明中登记数据缺口，不做"已中立"结论 |
 | V-06 | 新人 | 术语密度过高（UKUI/wlcom/KARE/开明/OSTree/RVA23/RVV/KMRE/AgentOS/磐石），无术语表；"想试用从哪开始"没有答案；"我该装社区版还是买银河麒麟"没有答案 | **采纳** → 新增 §7 术语表、最小试用路径与选型决策 |
-| V-07 | 老板 | 企业生产可用性与合规未回答：社区版无 SLA、安全可靠测评主体是商业版（F-061）；"万亿 Token 免费送"是营销资源而非企业级数据治理安排 | **采纳** → §7.3 给出生产场景建议；模式 P2 反模式 3（[独立模式文件](../../../retrospective/patterns/methodology-patterns/product-growth/agent-native-os-capability-ladder.md)）点明 Token 锁定双面性 |
+| V-07 | 老板 | 企业生产可用性与合规未回答：社区版无 SLA、安全可靠测评主体是商业版（F-061）；"万亿 Token 免费送"是营销资源而非企业级数据治理安排 | **采纳** → §7.3 给出生产场景建议；模式 P2 反模式 3（[独立模式文件](../../../../retrospective/patterns/methodology-patterns/product-growth/agent-native-os-capability-ladder.md)）点明 Token 锁定双面性 |
 | V-08 | 未来 | Linux 7.0 在发布当月即跟进（3.0 镜像 09-05）存在新内核回归窗口；Agent OS 的开放协议可能被国际标准统一或替换，MCP 押注一年后需复查；RISC-V 桌面起量慢则高投入回报周期长 | **采纳** → §8 行动项设置 3.0 首个 LTS/SP 节点与 MCP 生态两个复查触发器；F-024 保留"7.0 为 .0 新内核"事实供风险判断 |
 
 ### 6.2 回归确认
@@ -273,6 +273,7 @@ flowchart LR
 2. **Live USB / 虚拟机**：下载 7.5G 的 X86 Desktop ISO（MD5 校验后）制作启动盘或在虚拟化软件中启动。
 3. **物理机/国产硬件**：参照官方安装指南；ARM/飞腾、LoongArch/龙芯、RISC-V/进迭时空 K3 均有对应镜像（F-031）。
 4. **参与社区**：Gitee openkylin 组织提交 issue/PR，或加入 SIG 邮件列表（F-009/F-021）。
+5. **系统阅读官方文档**：官方文档平台（docs.openkylin.top，Gitee 源仓库 237 篇中文文档）的逆向导读与按问题域重组的学习路径，见同知识包主教程 [openKylin 官方文档平台学习教程](../index.md)——含版本生命周期、五条安装路径、AI 三层体系、OKBS/版本构建平台与社区贡献的完整地图。
 
 ### 7.3 我该用哪一个？
 
@@ -299,9 +300,9 @@ flowchart LR
 |---|---|---|---|
 | A1 | 如需在国产/RISC-V 硬件上选型，下载 3.0 对应镜像实测 RVV 推理与外设兼容，以自采数据替换官方口径 | 选型团队 | 输出可复现 benchmark 记录 |
 | A2 | 跟踪 openKylin 3.0 首个 SP 版本发布说明，核查 Linux 7.0 新内核回归修复情况（V-08 复查触发器） | 读者 | 3.0 SP1 发布后两周内复查本文件 |
-| A3 | 持续跟踪 MCP/ACP 等智能体协议标准化进展，若主流协议更替则修订 I-3 与[模式 P2](../../../retrospective/patterns/methodology-patterns/product-growth/agent-native-os-capability-ladder.md) | 维护者 | 2026-12-31 前完成一次复查 |
+| A3 | 持续跟踪 MCP/ACP 等智能体协议标准化进展，若主流协议更替则修订 I-3 与[模式 P2](../../../../retrospective/patterns/methodology-patterns/product-growth/agent-native-os-capability-ladder.md) | 维护者 | 2026-12-31 前完成一次复查 |
 | A4 | 引用本文数字时遵守 V-01/V-02 裁定：性能数字带"官方口径"、份额数字只作定性 | 引用者 | 引用处可检索到口径标注 |
-| A5 | 本文档为公开知识入库，不触发任何代码/配置变更；不做 git 提交（除非用户明确要求） | — | 文件入 `docs/knowledge/tech/openkylin/`、toctree 已登记、链接检查通过 |
+| A5 | 本文档为公开知识入库，不触发任何代码/配置变更；不做 git 提交（除非用户明确要求） | — | 文件现位于 `docs/knowledge/tech/openkylin-docs-wiki/references/project-overview.md`（2026-09-29 由原 `docs/knowledge/tech/openkylin/` 合并入文档教程知识包）、toctree 经主教程 index 登记、链接检查通过 |
 
 ---
 
@@ -355,5 +356,5 @@ flowchart LR
 | G4 | 行动项单一职责、可独立验证 | PASS（A1~A5，无强制代码变更、不自动提交） |
 
 ```
-[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20260929-openkylin-research | msg=知识沉淀链路完成：62事实/4洞察/2模式/4视角8意见/5行动项 | ctx={"gates":["G1","G2","G3","V","G4"],"deliverable":"docs/knowledge/tech/openkylin/index.md"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20260929-openkylin-research | msg=知识沉淀链路完成：62事实/4洞察/2模式/4视角8意见/5行动项 | ctx={"gates":["G1","G2","G3","V","G4"],"deliverable":"docs/knowledge/tech/openkylin-docs-wiki/references/project-overview.md","note":"2026-09-29 由 docs/knowledge/tech/openkylin/index.md 合并迁入，入链同步更新"}
 ```

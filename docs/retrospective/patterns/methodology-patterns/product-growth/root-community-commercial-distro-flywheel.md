@@ -85,12 +85,12 @@ flowchart LR
 
 | 案例 | 社区轮 | 商业轮 | 证据状态 |
 |---|---|---|---|
-| openKylin—银河麒麟（主案例） | 2024 年捐赠开放原子开源基金会（官方称中国首例央企开源捐赠）；理事会含普华、中科方德、麒麟信安等竞品；158 个 SIG；自建 OKBS/OKIF（现 UKBS/UKIF）编译镜像流水线 | 麒麟软件产品手册明示"openKylin 是银河麒麟商业版的上游社区"，商业版承担安全可靠测评 II 级等资质 | **结构事实已核验**（多源公开材料，F-003/F-004/F-005/F-009/F-033/F-034/F-051/F-061，见[源调研报告](../../../../knowledge/tech/openkylin/index.md)）；**转动证据有缺口**：检验三问中 Q2 书面关系成立（F-051），但 Q1/Q3 所需的外部企业贡献占比、第三方 SIG 主导权无公开量化数据，源报告 V-05 明确不做"已中立"结论 |
+| openKylin—银河麒麟（主案例） | 2024 年捐赠开放原子开源基金会（官方称中国首例央企开源捐赠）；理事会含普华、中科方德、麒麟信安等竞品；158 个 SIG；自建 OKBS/OKIF（现 UKBS/UKIF）编译镜像流水线 | 麒麟软件产品手册明示"openKylin 是银河麒麟商业版的上游社区"，商业版承担安全可靠测评 II 级等资质 | **结构事实已核验**（多源公开材料，F-003/F-004/F-005/F-009/F-033/F-034/F-051/F-061，见[源调研报告](../../../../knowledge/tech/openkylin-docs-wiki/references/project-overview.md)）；**转动证据有缺口**：检验三问中 Q2 书面关系成立（F-051），但 Q1/Q3 所需的外部企业贡献占比、第三方 SIG 主导权无公开量化数据，源报告 V-05 明确不做"已中立"结论 |
 | Fedora—RHEL | 红帽赞助的社区项目，由 Fedora Council（民选成员+红帽任命席位混合）与社区民选的 FESCo 技术委员会治理，未走基金会路径而以治理章程实现中立 | RHEL 官方定义为"Fedora 的商业支持衍生版"；订阅收入反哺（红帽为 Fedora 提供工程、市场与资金）；SLA 与认证留在 RHEL 侧 | **已核验**（官方一手材料，2026-09-29 检索：Fedora Wiki 明确"Fedora is upstream for RHEL"、Council/FESCo 治理结构、红帽赞助关系） |
 | deepin—统信 UOS | deepin 已独立发展为桌面根社区 | 统信 UOS 商业发行版以 deepin 为技术源头 | 结构同构、**待独立核验**（源调研 F-057 单源，来自统信官方发布会材料） |
 | openEuler—多家商业版 | 开放原子基金会托管的服务器侧社区 | 多家发行商基于 openEuler 出商业版，商业轮不唯一 | 结构同构、**待独立核验**（源报告 §5 版图表 + F-058，后者为三级信源科普综述；多下游是本模式的变体） |
 
-> 证据纪律：openKylin 的社区规模、市场份额等数字来自官方口径或商业咨询报告，其中份额报告存在口径矛盾，[源调研报告](../../../../knowledge/tech/openkylin/index.md) §6 已做降级处理；本模式只使用结构性事实（治理关系、上下游关系、资质主体），不引用任何精确份额数字。
+> 证据纪律：openKylin 的社区规模、市场份额等数字来自官方口径或商业咨询报告，其中份额报告存在口径矛盾，[源调研报告](../../../../knowledge/tech/openkylin-docs-wiki/references/project-overview.md) §6 已做降级处理；本模式只使用结构性事实（治理关系、上下游关系、资质主体），不引用任何精确份额数字。
 
 ## 六、反模式
 
@@ -122,7 +122,7 @@ flowchart LR
 
 ## 参考资料
 
-- 一手来源与事实编号：[openKylin 全面调研：从桌面根社区到 Agent OS](../../../../knowledge/tech/openkylin/index.md)（§4 模式 P1、§2 事实 F-003~F-009/F-033/F-034/F-051/F-055~F-058/F-061、§9 信源清单 S05/S09/S13/S14/S27/S28）
+- 一手来源与事实编号：[openKylin 全面调研：从桌面根社区到 Agent OS](../../../../knowledge/tech/openkylin-docs-wiki/references/project-overview.md)（§4 模式 P1、§2 事实 F-003~F-009/F-033/F-034/F-051/F-055~F-058/F-061、§9 信源清单 S05/S09/S13/S14/S27/S28）
 - Fedora 官方材料（2026-09-29 检索）：[Fedora Project Wiki — Red Hat Enterprise Linux](https://www.fedoraproject.org/wiki/Red_Hat_Enterprise_Linux/zh-cn)（"Fedora is upstream for RHEL"、订阅/SLA 主体、红帽赞助关系）、[Fedora Leadership — Council/FESCo](https://www.fedoraproject.org/wiki/Leadership)（民选与任命混合的治理结构）
 
 <!-- changelog -->

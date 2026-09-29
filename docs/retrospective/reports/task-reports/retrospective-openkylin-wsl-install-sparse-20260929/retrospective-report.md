@@ -183,7 +183,7 @@ fresh-context 独立子代理对三份产出物执行四视角对抗审查（魔
 | # | 行动项 | Owner | 验收标准 | 状态 |
 |---|---|---|---|---|
 | A1 | 复盘报告归档至 task-reports 并登记 toctree | 本次会话 | 文件存在、`check-links.py` 对该目录 0 断链 | 已完成 |
-| A2 | 实操教程入 `docs/knowledge/tech/openkylin/`，并在 openKylin 调研报告 §7.2 建立交叉引用 | 本次会话 | toctree 含教程条目；调研报告"未实测"局限与教程互链 | 已完成 |
+| A2 | 实操教程入 `docs/knowledge/tech/openkylin-docs-wiki/references/`（2026-09-29 由原 `docs/knowledge/tech/openkylin/` 合并迁入），并在 openKylin 调研报告 §7.2 建立交叉引用 | 本次会话 | toctree 含教程条目；调研报告"未实测"局限与教程互链 | 已完成 |
 | A3 | 排障模式入库 code-patterns 并登记 toctree | 本次会话 | 模式文件含 frontmatter/id/反模式 ≥3；索引按字母序插入 | 已完成 |
 | A4 | 保留 `.wsl` 源包作为 openKylin-3.0 的重建兜底，暂不删除 | 用户 | 源包 336.1 MB 仍在 `.chaos/envs/` | 持续 |
 | A5 | 后续在发行版内大量删除数据后，若需立即回收 D 盘空间，执行 diskpart 只读压缩（非 sparse） | 用户/未来会话 | 删除后 `compact vdisk` 前后有大小对比取证 | 待触发 |

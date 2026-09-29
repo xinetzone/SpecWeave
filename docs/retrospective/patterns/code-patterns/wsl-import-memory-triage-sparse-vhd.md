@@ -158,7 +158,7 @@ source: "openKylin 3.0 WSL 安装与稀疏 VHD 启用本机实测（session sc-2
 ## 参考资料
 
 - 复盘报告：[openKylin 3.0 WSL 导入排障与稀疏 VHD 启用复盘](../../reports/task-reports/retrospective-openkylin-wsl-install-sparse-20260929/retrospective-report.md)
-- 实操教程：[openKylin 3.0 WSL 安装与稀疏 VHD 实操指南](../../../knowledge/tech/openkylin/wsl-install-sparse-vhd-guide.md)
+- 实操教程：[openKylin 3.0 WSL 安装与稀疏 VHD 实操指南](../../../knowledge/tech/openkylin-docs-wiki/references/wsl-install-sparse-vhd-guide.md)
 - 相邻模式：[WSL 发行版安装、迁移与配置速查手册](wsl-distro-install-migration-guide.md)
 - Microsoft WSL 基本命令：https://learn.microsoft.com/zh-cn/windows/wsl/basic-commands
 
