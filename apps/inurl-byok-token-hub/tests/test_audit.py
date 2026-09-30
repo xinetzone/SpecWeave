@@ -20,6 +20,8 @@ ALLOWED_DEPS = {
     "pydantic",
     "cryptography",
     "jinja2",
+    # FastAPI 表单（Form()）解析的必需配套，控制台登录/设置/下单表单依赖
+    "python-multipart",
     "pytest",
     "pytest-cov",
     "ruff",
@@ -92,6 +94,28 @@ def test_dependencies_within_whitelist():
     names = {re.split(r"[<>=!\[ ;]", d)[0].strip().lower() for d in declared}
     unexpected = names - ALLOWED_DEPS
     assert not unexpected, f"出现白名单外依赖：{sorted(unexpected)}"
+
+
+def test_multipart_declared_when_forms_used():
+    """使用 FastAPI Form/File/UploadFile 时必须声明 python-multipart。
+
+    预防依赖漏声明：FastAPI 在路由注册期即校验 multipart，漏声明会让干净环境的
+    smoke/serve 直接 RuntimeError（2026-09-30 干净环境复现）。
+    """
+    import tomllib
+
+    form_import = re.compile(r"from fastapi import[^\n]*\b(?:Form|File|UploadFile)\b")
+    uses_form = any(
+        form_import.search(path.read_text(encoding="utf-8"))
+        for path in _py_files(SRC)
+    )
+    data = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+    names = {
+        re.split(r"[<>=!\[ ;]", d)[0].strip().lower()
+        for d in data["project"]["dependencies"]
+    }
+    if uses_form:
+        assert "python-multipart" in names, "代码使用表单参数但未声明 python-multipart"
 
 
 def test_layer_boundaries():
