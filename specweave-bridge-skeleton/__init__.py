@@ -40,17 +40,32 @@ from ._constants import (
     PLUGIN_VERSION,
     ROUTES,
     SCRIPTS_DIR_NAME,
+    SIGNAL_AGENTS_DIR,
+    SIGNAL_AGENTS_MD,
     SUBREGIONS,
 )
 
 logger = logging.getLogger(__name__)
 
-_STARTUP_BRIEF = (
+_STARTUP_BRIEF_ROOT = (
     "[SpecWeave 启动协议] 当前处于 SpecWeave 工作区。执行任何任务前请先阅读根目录 "
     "AGENTS.md 的启动协议，并按上下文路由表定位需读取的规范文件；若任务命中 "
     "apps/projects/vendor 子区域，需先读取对应子区域 AGENTS.md。可用 "
     "specweave_route 工具查询任务对应的规范路径。"
 )
+
+_STARTUP_BRIEF_COMPAT = (
+    "[SpecWeave 兼容模式] 当前处于按 .agents/ 目录识别的 SpecWeave 兼容工作区。"
+    "若根目录存在 AGENTS.md，请先阅读并按其路由执行；否则按 .agents/ 下 "
+    "roles/skills/rules 等目录结构推断可用规范并遵循。建议补建含「启动协议」的"
+    "标准 AGENTS.md 以获得完整零安装体验。可用 specweave_route 工具查询规范路径。"
+)
+
+# 识别信号 → 展示标签（/specweave status 与 CLI status 输出用）
+_SIGNAL_LABELS = {
+    SIGNAL_AGENTS_MD: "AGENTS.md（启动协议）",
+    SIGNAL_AGENTS_DIR: ".agents/ 目录（兼容模式）",
+}
 
 
 # ---------------------------------------------------------------------------
@@ -97,11 +112,22 @@ def _on_pre_llm_call(**_: Any) -> Optional[Dict[str, str]]:
     Returns ``None`` when not in a SpecWeave workspace (no injection), and a
     ``{"context": ...}`` dict otherwise.  Context lands in the user message,
     keeping the system prompt byte-identical so the prompt cache is reused.
+
+    The brief itself is selected by the workspace detection signal: the
+    primary ``AGENTS.md`` signal yields the standard 启动协议 brief, while
+    the ``.agents/`` compatibility signal yields a 兼容模式 brief that
+    instructs the agent to infer capabilities from the ``.agents/`` layout.
     """
     root = _resolve_specweave_root(_get_cwd())
     if not root:
         return None
-    return {"context": _STARTUP_BRIEF}
+    signal = detector.detect_workspace_signal(root)
+    brief = (
+        _STARTUP_BRIEF_COMPAT
+        if signal == SIGNAL_AGENTS_DIR
+        else _STARTUP_BRIEF_ROOT
+    )
+    return {"context": brief}
 
 
 # ---------------------------------------------------------------------------
@@ -285,9 +311,13 @@ def _handle_slash(raw_args: str) -> Optional[str]:
         if not root:
             return f"[specweave] 未检测到 SpecWeave 工作区（cwd={cwd}）"
         subregion = detector.detect_subregion(cwd, root)
+        signal_label = _SIGNAL_LABELS.get(
+            detector.detect_workspace_signal(root), "未知"
+        )
         lines = [
             f"[specweave] 工作区: {root}",
             f"  当前 cwd : {cwd}",
+            f"  识别信号 : {signal_label}",
             f"  子区域   : {subregion or '（根区域）'}",
             f"  技能/脚本: {AGENTS_DIR_NAME}/{SCRIPTS_DIR_NAME}/",
         ]
@@ -322,8 +352,12 @@ def _cli_status(args) -> None:
         print(f"[specweave] 未检测到 SpecWeave 工作区（cwd={cwd}）")
         return
     subregion = detector.detect_subregion(cwd, root)
+    signal_label = _SIGNAL_LABELS.get(
+        detector.detect_workspace_signal(root), "未知"
+    )
     print(f"[specweave] 工作区: {root}")
     print(f"  当前 cwd : {cwd}")
+    print(f"  识别信号 : {signal_label}")
     print(f"  子区域   : {subregion or '（根区域）'}")
 
 

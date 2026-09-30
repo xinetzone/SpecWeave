@@ -1,13 +1,23 @@
 """SpecWeave Bridge 插件常量定义。"""
 
 PLUGIN_NAME = "specweave-bridge"
-PLUGIN_VERSION = "0.1.0"
+PLUGIN_VERSION = "0.2.0"
 SPECWEAVE_SIGNATURE_KEYWORD = "启动协议"
 AGENTS_MD_FILENAME = "AGENTS.md"
 SUBREGIONS = ("apps", "projects", "vendor")
 SKILLS_DIR_NAME = "skills"
 SCRIPTS_DIR_NAME = "scripts"
 AGENTS_DIR_NAME = ".agents"
+
+# 工作区识别信号名（detector.detect_workspace_signal 返回值）
+SIGNAL_AGENTS_MD = "agents_md"    # 主信号：AGENTS.md 存在且含「启动协议」关键词
+SIGNAL_AGENTS_DIR = "agents_dir"  # 兼容信号：.agents/ 存在且含特征子目录
+
+# 兼容信号特征子目录（须全部存在才视为 SpecWeave 兼容工作区）。
+# 参照 .agents/protocols/workspace-discovery.md 五步发现流程步骤 3，但刻意更严格：
+# 仅 roles/ 或仅 skills/ 不判定——排除通用技能管理器目录（如仅含 skills/ 的
+# ~/.agents/），避免用户主目录被误判为兼容工作区、污染所有非 SpecWeave 会话。
+AGENTS_DIR_REQUIRED_SUBDIRS = ("roles", "skills")
 
 ROUTES = {
     "skill创建": ".agents/skills/README.md",

@@ -9,6 +9,7 @@
 > - [`FAQ.md`](FAQ.md) — 课堂高频问题与应对
 > - [`PRINT-GUIDE.md`](PRINT-GUIDE.md) — 打印与分发指引（哪几份要打印、怎么转 PDF）
 > - [`S7-FIELD-CAPTURE-SPEC.md`](S7-FIELD-CAPTURE-SPEC.md) — Task7 现场照片采集规格（**阻塞中**，需真实开课一轮后执行）
+> - [`SCREENSHOT-REFRESH.md`](SCREENSHOT-REFRESH.md) — 用真实画面覆盖学生手册示意图（开课前）
 > - [`../spec.md`](../spec.md) — 设计规范与验收标准（AC）
 > - [`../tasks.md`](../tasks.md) — 学生任务队列与 TR
 > - [`../decisions.md`](../decisions.md) — 决策单一事实源（**本文件中所有"默认"均可被它覆盖**）
@@ -17,7 +18,7 @@
 
 ## 〇、先读这一节（3 分钟）
 
-### 本目录有什么（6 份文件，各有用途）
+### 本目录有什么（7 份文件，各有用途）
 
 | 文件 | 什么时候看 | 篇幅 |
 |---|---|---|
@@ -27,6 +28,7 @@
 | [`FAQ.md`](FAQ.md) | **课上被问到时**——学生质疑 / 技术故障 / 组织问题 | ≈409 行 |
 | [`PRINT-GUIDE.md`](PRINT-GUIDE.md) | **打印前**——哪几份要打印、份数、怎么转 PDF | ≈117 行 |
 | [`S7-FIELD-CAPTURE-SPEC.md`](S7-FIELD-CAPTURE-SPEC.md) | **课程跑完一轮后**——采集 S7-1/2/3 现场图 | ≈157 行 |
+| [`SCREENSHOT-REFRESH.md`](SCREENSHOT-REFRESH.md) | **开课前**——用真实画面覆盖学生手册示意图 | ≈44 行 |
 
 > 💡 **最省时的用法**：现在读本文件第二节（课时编排）→ 挑一个排课方案 →
 > 按 `SETUP-CHECKLIST.md` 准备环境 → 按 `PRINT-GUIDE.md` 打印评分表。
