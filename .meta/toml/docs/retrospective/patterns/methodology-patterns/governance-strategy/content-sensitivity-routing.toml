@@ -1,0 +1,23 @@
+id = "content-sensitivity-routing"
+title = "公私域内容分离路由"
+domain = "methodology"
+layer = "governance"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "SpecWeave 100天全面系统性复盘（specweave-seven-concepts-project-review-20260930）洞察3"
+source_report = "docs/retrospective/reports/concepts/milestone/specweave-seven-concepts-project-review-20260930.md"
+date = "2026-09-30"
+version = "1.0"
+maturity_note = "单案例（SpecWeave 全仓，2026-08-31 docs/ 唯一文档中心确立后验证）；规则落地于 .agents/rules/content-sensitivity-precheck.md，本模式为其方法论抽象，待第二个独立工作区验证升级L2"
+
+[bindings]
+related_patterns = [
+  "blog-article-to-okf-bundle",
+  "agent-workspace-template",
+  "bootstrap-driven-self-evolution",
+  "self-contained-build-no-private-dependency",
+]

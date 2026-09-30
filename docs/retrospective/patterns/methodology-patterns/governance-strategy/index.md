@@ -28,6 +28,7 @@ commit-quality-gate-staging-inspection
 compliance-driven-rule-building
 config-cache-separation-backup
 config-persistence-full-chain-coverage
+content-sensitivity-routing
 convention-driven-creation
 credential-copy-minimization
 cross-wiki-reference-directory-first
@@ -160,3 +161,5 @@ version-ripple-grep-sweep
 wiki-dual-track-frontmatter
 wiki-pre-creation-three-checks
 ```
+
+> AI生成
