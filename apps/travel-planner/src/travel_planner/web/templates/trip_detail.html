@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}{{ trip.name }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>{{ trip.name }} {{ m.status_badge(trip.status) }}</h1>
+    <div class="trip-meta">
+      {% if trip.destination %}<span>{{ m.icon("pin") }} {{ trip.destination }}</span>{% endif %}
+      <span>{{ m.icon("calendar") }} {{ m.date_range(trip) }} · {{ days|length }} 天</span>
+      {% if trip.budget_total is not none %}<span>{{ m.icon("wallet") }} 预算 {{ fmt_money(trip.budget_total) }} {{ trip.currency }}</span>{% endif %}
+    </div>
+  </div>
+  <div class="page-actions">
+    {% if llm_configured %}
+    <a class="btn primary" href="/trips/{{ trip.id }}/generate">{{ m.icon("sparkle") }} AI 生成行程草稿</a>
+    {% else %}
+    <a class="btn primary disabled" href="/trips/{{ trip.id }}/generate" title="未配置 LLM，仍可查看配置指引">{{ m.icon("sparkle") }} AI 生成（未配置）</a>
+    {% endif %}
+    <a class="btn ghost" href="/trips/{{ trip.id }}/edit">{{ m.icon("pencil") }} 编辑</a>
+    <a class="btn ghost" href="/trips/{{ trip.id }}/export">{{ m.icon("download") }} 导出</a>
+  </div>
+</div>
+
+{% if trip.notes %}<div class="alert info">{{ trip.notes }}</div>{% endif %}
+
+<div class="detail-grid">
+  <section class="days">
+    {% for day in days %}
+    <div class="day-card {{ 'today' if today == day.day_index }}">
+      <header class="day-head">
+        <h2>Day {{ day.day_index }}{% if today == day.day_index %} · 今天{% endif %}</h2>
+        <span class="day-date">{{ day.date_iso }} {{ day.weekday }}</span>
+        {% if day.cost %}<span class="day-cost">{{ fmt_money(day.cost) }} {{ trip.currency }}</span>{% endif %}
+      </header>
+      {% if day.items %}
+      <ul class="items">
+        {% for item in day.items %}
+        <li class="item {{ 'done' if item.done }} {{ 'ai' if item.source == 'ai' }}">
+          <form method="post" action="/trips/{{ trip.id }}/items/{{ item.id }}/toggle" class="inline">{{ m.csrf() }}<button class="icon-btn {{ 'on' if item.done }}" title="切换完成">{{ m.icon("check") }}</button></form>
+          <div class="item-time">{% if item.start_time %}{{ item.start_time }}{% if item.end_time %}~{{ item.end_time }}{% endif %}{% else %}--:--{% endif %}</div>
+          <div class="item-main">
+            <span class="item-title">{{ item.title }}</span>
+            {{ m.type_badge(item.type) }}
+            {% if item.location %}<span class="item-loc">{{ m.icon("pin", "ic small") }} {{ item.location }}</span>{% endif %}
+            {% if item.cost is not none %}<span class="item-cost">{{ fmt_money(item.cost) }} {{ trip.currency }}</span>{% endif %}
+            {% if item.notes %}<div class="item-notes">{{ item.notes }}</div>{% endif %}
+          </div>
+          <div class="item-actions">
+            <form method="post" action="/trips/{{ trip.id }}/items/{{ item.id }}/move" class="inline">{{ m.csrf() }}<input type="hidden" name="direction" value="up"><button class="icon-btn" title="上移">{{ m.icon("up") }}</button></form>
+            <form method="post" action="/trips/{{ trip.id }}/items/{{ item.id }}/move" class="inline">{{ m.csrf() }}<input type="hidden" name="direction" value="down"><button class="icon-btn" title="下移">{{ m.icon("down") }}</button></form>
+            <a class="icon-btn" href="/trips/{{ trip.id }}/items/{{ item.id }}/edit" title="编辑">{{ m.icon("pencil") }}</a>
+            <form method="post" action="/trips/{{ trip.id }}/items/{{ item.id }}/delete" class="inline" data-confirm="删除条目「{{ item.title }}」？">{{ m.csrf() }}<button class="icon-btn danger" title="删除">{{ m.icon("trash") }}</button></form>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="muted">这一天还没有安排。</p>
+      {% endif %}
+      <button class="btn small ghost add-item" data-dialog="add-item-{{ day.day_index }}">{{ m.icon("plus") }} 添加条目</button>
+      <dialog id="add-item-{{ day.day_index }}" class="glass">
+        <h3>Day {{ day.day_index }} · 添加条目</h3>
+        <form method="post" action="/trips/{{ trip.id }}/items" class="form">
+          {{ m.csrf() }}
+          <input type="hidden" name="day_index" value="{{ day.day_index }}">
+          <div class="field-row">
+            <div class="field"><label>类型</label>
+              <select name="type">
+                {% for t in ITEM_TYPES %}<option value="{{ t }}">{{ ITEM_TYPE_LABELS[t] }}</option>{% endfor %}
+              </select>
+            </div>
+            <div class="field"><label>标题 <em>*</em></label><input name="title" required maxlength="120" placeholder="如：灵隐寺"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>开始时间</label><input type="time" name="start_time"></div>
+            <div class="field"><label>结束时间</label><input type="time" name="end_time"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>地点</label><input name="location" maxlength="200" placeholder="如：西湖区法云弄 1 号"></div>
+            <div class="field"><label>费用（可选）</label><input name="cost" inputmode="decimal" placeholder="如 45"></div>
+          </div>
+          <div class="field"><label>备注</label><textarea name="notes" rows="2" maxlength="2000"></textarea></div>
+          <div class="dialog-actions">
+            <button type="button" class="btn ghost" data-close>取消</button>
+            <button class="btn primary" type="submit">添加</button>
+          </div>
+        </form>
+      </dialog>
+    </div>
+    {% endfor %}
+  </section>
+
+  <aside class="side">
+    <section class="panel budget">
+      <h2>{{ m.icon("wallet") }} 预算</h2>
+      {% if budget.total is not none %}
+      <div class="budget-nums {{ 'over' if budget.over_budget }}">
+        <div><span class="num">{{ fmt_money(budget.planned) }}</span><span class="lbl">已登记 / {{ trip.currency }}</span></div>
+        <div><span class="num">{{ fmt_money(budget.total) }}</span><span class="lbl">总预算</span></div>
+        <div><span class="num">{{ fmt_money(budget.diff) }}</span><span class="lbl">{{ '超支' if budget.over_budget else '剩余' }}</span></div>
+      </div>
+      {% if budget.over_budget %}<div class="alert danger">已超出总预算，请调整安排。</div>{% endif %}
+      {% else %}
+      <p class="muted">未设置总预算，仅展示分类合计（{{ fmt_money(budget.planned) }} {{ trip.currency }}）。</p>
+      {% endif %}
+      <ul class="budget-bars">
+        {% for t, v in budget.by_type.items() %}
+        {% if v %}
+        <li><span class="bar-label">{{ ITEM_TYPE_LABELS[t] }}</span>
+          <div class="bar"><i style="width: {{ (v / budget.planned * 100)|round(0) if budget.planned else 0 }}%"></i></div>
+          <span class="bar-num">{{ fmt_money(v) }}</span></li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="panel packing">
+      <h2>{{ m.icon("box") }} 打包清单 <span class="count">{{ packed[0] }}/{{ packed[1] }}</span></h2>
+      {% if trip.packing %}
+      <ul class="packing-list">
+        {% for p in trip.packing %}
+        <li class="{{ 'done' if p.packed }}">
+          <form method="post" action="/trips/{{ trip.id }}/packing/{{ p.id }}/toggle" class="inline">{{ m.csrf() }}<button class="icon-btn {{ 'on' if p.packed }}">{{ m.icon("check") }}</button></form>
+          <span class="pack-name">{{ p.name }}</span>
+          <span class="pack-qty">×{{ p.quantity }}</span>
+          <form method="post" action="/trips/{{ trip.id }}/packing/{{ p.id }}/delete" class="inline" data-confirm="删除清单项「{{ p.name }}」？">{{ m.csrf() }}<button class="icon-btn danger">{{ m.icon("trash") }}</button></form>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="muted">还没有清单项。</p>
+      {% endif %}
+      <button class="btn small ghost" data-dialog="add-packing">{{ m.icon("plus") }} 添加清单项</button>
+      <dialog id="add-packing" class="glass">
+        <h3>添加清单项</h3>
+        <form method="post" action="/trips/{{ trip.id }}/packing" class="form">
+          {{ m.csrf() }}
+          <div class="field-row">
+            <div class="field"><label>名称 <em>*</em></label><input name="name" required maxlength="200" placeholder="如：身份证"></div>
+            <div class="field"><label>数量</label><input name="quantity" inputmode="numeric" value="1"></div>
+          </div>
+          <div class="dialog-actions">
+            <button type="button" class="btn ghost" data-close>取消</button>
+            <button class="btn primary" type="submit">添加</button>
+          </div>
+        </form>
+      </dialog>
+    </section>
+  </aside>
+</div>
+{% endblock %}

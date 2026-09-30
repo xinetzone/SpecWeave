@@ -1,0 +1,40 @@
+{% import "macros.html" as m %}
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}旅行规划工作台{% endblock %} · Travel Planner</title>
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="/trips"><span class="brand-mark">{{ m.icon("compass") }}</span><span>旅行规划工作台</span></a>
+    <nav class="nav">
+      <a href="/trips">我的行程</a>
+      <a href="/import">{{ m.icon("upload") }} 导入</a>
+      <a href="/export-all">{{ m.icon("download") }} 全量导出</a>
+      <span class="badge {{ 'ok' if llm_configured else 'muted' }}" title="BYOK · OpenAI 兼容端点">
+        {{ m.icon("sparkle") }} AI {{ '已配置' if llm_configured else '未配置' }}
+      </span>
+    </nav>
+  </div>
+</header>
+<main class="container">
+{% block content %}{% endblock %}
+</main>
+<footer class="foot">travel-planner · 本地单用户 · 数据仅存本机数据目录</footer>
+
+<div id="busy" class="busy hidden">{{ m.icon("loader", "ic spin") }}<span>处理中，请稍候…</span></div>
+<dialog id="confirm-dialog" class="glass">
+  <h3>请确认</h3>
+  <p id="confirm-message"></p>
+  <div class="dialog-actions">
+    <button type="button" class="btn ghost" data-close>取消</button>
+    <button type="button" class="btn danger" id="confirm-ok">确认执行</button>
+  </div>
+</dialog>
+<script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}导入数据{% endblock %}
+{% block content %}
+<div class="page-head"><h1>导入数据</h1></div>
+<div class="panel form">
+  <p class="muted">支持三种 JSON：单行程对象、行程数组、或「全量导出」产生的 {"trips": [...]} 包装。导入会先校验并预览，确认后才写入；id 冲突时自动生成新 id。</p>
+  <form method="post" action="/import" enctype="multipart/form-data">
+    {{ m.csrf() }}
+    <div class="field">
+      <label>选择 JSON 文件</label>
+      <input type="file" name="upload" accept=".json,application/json" required>
+    </div>
+    <div class="form-actions">
+      <a class="btn ghost" href="/trips">取消</a>
+      <button class="btn primary" type="submit" data-loading>{{ m.icon("upload") }} 校验并预览</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

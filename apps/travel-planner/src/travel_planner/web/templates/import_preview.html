@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}导入预览{% endblock %}
+{% block content %}
+<div class="page-head"><h1>导入预览</h1></div>
+<div class="alert info">文件 <b>{{ filename }}</b> 校验通过，共 {{ rows|length }} 个行程。确认后写入数据目录。</div>
+<form method="post" action="/import/confirm" class="panel">
+  {{ m.csrf() }}
+  <table class="table">
+    <thead><tr><th>名称</th><th>目的地</th><th>日期</th><th>状态</th><th>条目</th><th>id 处理</th></tr></thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td>{{ r.name }}</td>
+        <td>{{ r.destination or '—' }}</td>
+        <td>{{ r.start_date or '—' }}{% if r.end_date %} ~ {{ r.end_date }}{% endif %}</td>
+        <td>{{ TRIP_STATUS_LABELS.get(r.status, r.status) }}</td>
+        <td>{{ r.items }}</td>
+        <td>{% if r.conflict %}<span class="tag tag-warn">id 已存在，将生成新 id</span>{% else %}<span class="muted">原 id 保留</span>{% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <textarea name="payload" class="payload-hidden" aria-hidden="true">{{ payload }}</textarea>
+  <div class="form-actions">
+    <a class="btn ghost" href="/import">放弃导入</a>
+    <button class="btn primary" type="submit" data-loading>确认导入 {{ rows|length }} 个行程</button>
+  </div>
+</form>
+{% endblock %}

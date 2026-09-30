@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}我的行程{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>我的行程</h1>
+  <div class="page-actions">
+    <a class="btn primary" href="/trips/new">{{ m.icon("plus") }} 新建行程</a>
+  </div>
+</div>
+
+{% if load_errors %}
+<div class="alert warn">
+  {{ load_errors|length }} 个行程文件损坏已忽略，可在数据目录 backups/ 查找备份：
+  <ul>{% for e in load_errors %}<li>{{ e }}</li>{% endfor %}</ul>
+</div>
+{% endif %}
+
+{% set groups = [("ongoing", "进行中"), ("planning", "规划中"), ("completed", "已完成"), ("archived", "已归档")] %}
+{% for status, label in groups %}
+  {% set group_cards = cards|selectattr("trip.status", "equalto", status)|list %}
+  {% if group_cards %}
+  <section class="group">
+    <h2 class="group-title">{{ label }}<span class="count">{{ group_cards|length }}</span></h2>
+    <div class="cards">
+      {% for c in group_cards %}
+      <article class="trip-card {{ 'today' if c.today }}">
+        <div class="trip-card-head">
+          <a class="trip-name" href="/trips/{{ c.trip.id }}">{{ c.trip.name }}</a>
+          {{ m.status_badge(c.trip.status) }}
+        </div>
+        <div class="trip-meta">
+          {% if c.trip.destination %}<span>{{ m.icon("pin") }} {{ c.trip.destination }}</span>{% endif %}
+          <span>{{ m.icon("calendar") }} {{ m.date_range(c.trip) }} · {{ c.days }} 天</span>
+        </div>
+        {% if c.total_items %}
+        <div class="progress-row">
+          <div class="progress"><i style="width: {{ ((c.total_items - c.unfinished) / c.total_items * 100)|round(0) }}%"></i></div>
+          <span class="progress-text">{{ c.total_items - c.unfinished }}/{{ c.total_items }} 项完成</span>
+        </div>
+        {% endif %}
+        {% if c.trip.budget_total is not none %}
+        <div class="trip-meta"><span>{{ m.icon("wallet") }} 预算 {{ fmt_money(c.trip.budget_total) }} {{ c.trip.currency }}</span></div>
+        {% endif %}
+        {% if c.packed[1] %}
+        <div class="trip-meta"><span>{{ m.icon("box") }} 打包 {{ c.packed[0] }}/{{ c.packed[1] }}</span></div>
+        {% endif %}
+        {% if c.today %}
+        <div class="today-flag">{{ m.icon("pin") }} 今天是 Day {{ c.today }}</div>
+        {% endif %}
+        <div class="card-actions">
+          <a class="btn small" href="/trips/{{ c.trip.id }}">打开</a>
+          <form method="post" action="/trips/{{ c.trip.id }}/duplicate" class="inline">{{ m.csrf() }}<button class="btn small ghost">{{ m.icon("copy") }} 复制</button></form>
+          <form method="post" action="/trips/{{ c.trip.id }}/delete" class="inline" data-confirm="删除行程「{{ c.trip.name }}」及其全部条目与清单？此操作不可撤销（可从 backups/ 找回最近备份）。">{{ m.csrf() }}<button class="btn small danger">{{ m.icon("trash") }} 删除</button></form>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+{% endfor %}
+
+{% if not cards %}
+<div class="empty">
+  {{ m.icon("compass", "ic big") }}
+  <p>还没有行程。点「新建行程」开始规划，或从「导入」恢复之前导出的数据。</p>
+</div>
+{% endif %}
+{% endblock %}
