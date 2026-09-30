@@ -5,7 +5,7 @@ type: methodology-pattern
 date: 2026-07-18
 maturity: L1 实验性
 maturity_note: "单案例验证（XMNN/TVM config.cmake + tasks.py + rebuild_tvm_codegenc.sh 三层覆盖），待第二个独立案例验证后升级 L2"
-source: "../../reports/task-reports/retrospective-xmnn-runtime-repackaging-20260718/README.md#模式e配置持久化全链路覆盖"
+source: "../../../reports/task-reports/retrospective-xmnn-runtime-repackaging-20260718/README.md#模式e配置持久化全链路覆盖"
 related_patterns:
   - "../../code-patterns/static-registration-compile-config.md"
   - "../../code-patterns/bulk-replace-zero-omission-verify.md"

@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "demo-to-prod-checklist"
-source: "../../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/patterns.md#模式-3"
+source: "../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/patterns.md#模式-3"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-DEMO-TO-PROD-003-demo-to-prod-checklist.toml"
 maturity: "L1"
 validation_count: 1

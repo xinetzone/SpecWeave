@@ -2,7 +2,7 @@
 type: Pattern
 id: "subagent-responsibility-layering"
 title: "子代理职责分层模式"
-source: "../../../../../../.trae/specs/retrospectives-insights/harness-engineering-seven-concepts-analysis/insights.md"
+source: "../../../../../.trae/specs/retrospectives-insights/harness-engineering-seven-concepts-analysis/insights.md"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

@@ -4,7 +4,7 @@ title: "本地依赖缓存代理体系：多层缓存加速构建"
 type: "process"
 date: "2026-07-17"
 maturity: "L1-draft"
-source: "external/xmhub/npu_tvm/docker/local-cache-proxy-config.md"
+source: "cases/local-dependency-cache-proxy/local-cache-proxy-config.md"
 case_archive: "cases/local-dependency-cache-proxy/"
 related_patterns:
   - "dev-env-dockerfile-optimization"

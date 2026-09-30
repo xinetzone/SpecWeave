@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "agent-platform-selection-framework"
-source: "../../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/patterns.md#模式-1"
+source: "../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/patterns.md#模式-1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-AGENT-SELECT-001-agent-platform-selection-framework.toml"
 maturity: "L1"
 validation_count: 1

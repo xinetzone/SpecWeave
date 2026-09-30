@@ -2,7 +2,7 @@
 type: Pattern
 id: knowledge-dual-layer-architecture
 title: 知识沉淀「中间产物→质量门→最终产出」双层架构模式
-source: "../../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/milestone-patterns.md#模式-1"
+source: "../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/milestone-patterns.md#模式-1"
 domain: methodology
 layer: governance
 maturity: L1

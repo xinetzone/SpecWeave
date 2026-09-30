@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "knowledge-crystallization-second-validation-sop"
-source: "../../../../.trae/specs/retrospectives-insights/retrospective-i-have-adhd-second-round-validation/validation-report.md#四遗漏问题审计与根因分析"
+source: "../../../archives/spec-working-notes/retrospectives-insights/retrospective-i-have-adhd-second-round-validation/validation-report.md#四遗漏问题审计与根因分析"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/knowledge-crystallization-second-validation-sop.toml"
 maturity: "L1"
 validation_count: 1

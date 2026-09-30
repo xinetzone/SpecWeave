@@ -6,7 +6,7 @@ category: "governance-strategy"
 subcategory: "spec-driven-development"
 maturity: "L1.5"
 maturity_note: "同谱系双实现（Spec Kit + SpecWeave），待第三方独立案例验证升级 L2"
-source: "../../../2026-07-06-github-speckit-sdd-seven-concepts.md"
+source: "../../../reports/2026-07-06-github-speckit-sdd-seven-concepts.md"
 date: "2026-07-06"
 archived: "2026-08-05"
 tags: ["sdd", "spec-driven-development", "ai-programming", "markdown-protocol", "constitution", "workflow"]
