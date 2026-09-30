@@ -6,8 +6,8 @@
 
 | 你的情况 | 推荐路径 | 成本 | 官方文档 |
 |---|---|---|---|
-| 只想快速体验命令行、Windows 主力机 | **WSL 基础镜像**（下载体积约 336M，gzip 压缩态，见下） | 最低，不动宿主 | 《openKylin-WSL版本安装》 |
-| Windows 主力机且想体验 UKUI 图形桌面 | **Desktop WSL 镜像**（含 xrdp 桌面，免装虚拟机）；需要完整隔离体验再选虚拟机 | 低 | 《openKylin-WSL版本安装》桌面分支 |
+| 只想快速体验命令行、Windows 主力机 | **WSL 最小镜像**（下载 336 MiB，gzip 压缩态，见下） | 最低，不动宿主；磁盘预留 1.3 GB+（本机实测） | 《openKylin-WSL版本安装》 |
+| Windows 主力机且想体验**完整 UKUI 图形桌面会话** | **Desktop WSL 镜像**（xrdp 桌面预装，免装虚拟机）；仅零散 GUI 应用需求优先 WSLg 搭配最小镜像、不必下桌面镜像；需要完整隔离体验再选虚拟机 | 中：下载 6.14 GiB；磁盘预留 **跨盘 20 GiB 起步、同盘推荐 25～30 GiB**（手动解压排障路径需 ≥45 GiB；分层估算，未落机实测），详见[双镜像对照](../references/wsl-dual-image-selection.md) | 《openKylin-WSL版本安装》桌面分支 |
 | 想体验完整 UKUI 桌面、愿意装虚拟机 | 虚拟机（Hyper-V / virt-manager / KVM） | 低 | 5 篇虚拟机指南 |
 | 要长期日常使用、有空闲 x86 整机 | Live USB 物理安装 | 中 | 《3_openKylin安装指南》等 4 篇 |
 | 使用苹果芯片/Intel Mac | Mac 安装指南 | 中 | 《2_安装指南（MacOS）》 |
@@ -26,7 +26,9 @@
 5. `wsl -d openKylin` 启动，**预置用户名与密码均为 `openkylin`**；
 6. 桌面版另需：启动后 `ip addr show eth0` 取内网 IPv4 → Windows 远程桌面连接 `<IP>:3390` → Session 选 **xorg**，账号密码同为 openkylin。WSL 重启后 IP 可能变。
 
-> **体积预期（本机实测口径，S26）**：基础镜像下载文件约 336M，但它是 **gzip 压缩的 tar**（文件头 `1F 8B`），导入时 WSL 会解压为约 1.1G 量级的 VHD 虚拟磁盘，故磁盘预留应按 1.1G 以上而非 336M 规划；安装额外软件后 VHD 还会增长。336M 为 2026-09-29 时点 3.0 镜像的实测值，具体以官网下载页当时文件大小为准。
+> **体积预期（最小镜像，本机实测口径，S26）**：基础镜像下载文件约 336M，但它是 **gzip 压缩的 tar**（文件头 `1F 8B`），导入时 WSL 会解压为约 1.1G 量级的 VHD 虚拟磁盘，故磁盘预留应按 1.1G 以上而非 336M 规划；安装额外软件后 VHD 还会增长。336M 为 2026-09-29 时点 3.0 镜像的实测值，具体以官网下载页当时文件大小为准。
+
+> **Desktop WSL 镜像（2026-09-30 远程核验，未落机实测，S27–S31）**：下载文件 `openKylin-3.0-desktop-wsl-amd64.wsl` 精确为 6,592,986,686 字节（**6.14 GiB**，官网展示"6.1G"），MD5 `df559de7155ef7c6fe088b2168035c5a`，同为 gzip tar rootfs（魔数 `1F 8B 08 00`），构建日期 2026-08-28。gzip 尾部 ISIZE 已过 4 GiB 回绕点（读数 98.5 MiB），解压 tar 真值落在 8.1～20.1 GiB 候选区间（最小镜像 3.36× 压缩比只提供方向性参考，现有证据不足以在候选间排序、不设点估）；按 VHD≈tar×1.17 推算，**导入后长期占用约 9.5～24 GiB，同盘标准导入峰值约 16～30 GiB，建议跨盘预留 ≥20 GiB 起步、同盘 25～30 GiB**（若走"先手动解压 tar 再导入"排障路径，tar 会额外落盘，需 ≥45～50 GiB；`wsl --import` 直接导入通常流式写入 VHD、不另落完整 tar，但桌面镜像未实测确认）；官方流程的发行版名为 `openKylin-desktop`（与最小镜像并存时名称必须不同）。精确对照表、分层占用矩阵、选型决策、安全红线与待实测验收清单见 [双 WSL 镜像对照与选型参考](../references/wsl-dual-image-selection.md)。
 
 > **安全警告**：预置账号/密码 `openkylin/openkylin` 是公开弱口令，仅适用于本机体验——① 首次进入后应立即用 `passwd` 修改密码；② xrdp 的 3390 端口只用于本机/WSL 内网，**切勿**把该端口映射到公网；③ 不用时可 `wsl --shutdown openKylin` 停止发行版。
 
@@ -38,7 +40,7 @@
 - 低内存环境下导入可能报 `RegisterDistro/E_UNEXPECTED`（解压中途失败）或 `CreateVm/E_ABORT`；处置顺序：`wsl --shutdown` 释放 VM 内存 → 待空闲物理内存充裕再导入 → 必要时用 .NET GzipStream 流式解压为纯 tar 后再 import；
 - 导入后 VHD 位于安装目录，稀疏 VHD（删除文件自动向宿主回收空间）需 `wsl --manage <发行版> --set-sparse true --allow-unsafe`，对含数据的现有 VHD 该开关被安全策略拦截，必须带 `--allow-unsafe`。
 
-完整命令、4 次失败排障记录与验收步骤见同包实测文档：[openKylin 3.0 WSL 安装与稀疏 VHD 实操指南（Windows 10 实测）](../references/wsl-install-sparse-vhd-guide.md)。
+完整命令、4 次失败排障记录与验收步骤见同包实测文档：[openKylin 3.0 WSL 安装与稀疏 VHD 实操指南（Windows 10 实测）](../references/wsl-install-sparse-vhd-guide.md)（仅覆盖最小镜像）；两镜像精确对照、桌面镜像磁盘规划与实测清单见 [双 WSL 镜像对照与选型参考](../references/wsl-dual-image-selection.md)。
 
 ## 3.3 虚拟机路径（x86）
 
