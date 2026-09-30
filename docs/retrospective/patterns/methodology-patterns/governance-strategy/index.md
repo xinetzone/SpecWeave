@@ -79,6 +79,7 @@ meta-review-in-command
 methodology-constructive-validation
 methodology-reflexivity-test
 milestone-breakthrough-assetization-process
+minimal-sufficient-scaffold-selection
 module-size-bug-correlation
 mutual-exclusion-composability-precheck
 mvp-unvalidated-code-debt

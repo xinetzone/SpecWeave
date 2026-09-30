@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "legacy-ai-upgrade-sop"
-source: "../../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/patterns.md#模式-2"
+source: "../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/patterns.md#模式-2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-LEGACY-AI-UPGRADE-002-legacy-ai-upgrade-sop.toml"
 maturity: "L1"
 validation_count: 1

@@ -2,7 +2,7 @@
 type: Pattern
 id: adversarial-perspective-weighting
 title: V阶段对抗审查「用户视角优先」权重分配模式
-source: "../../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/milestone-patterns.md#模式-2"
+source: "../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/milestone-patterns.md#模式-2"
 domain: methodology
 layer: governance
 maturity: L1

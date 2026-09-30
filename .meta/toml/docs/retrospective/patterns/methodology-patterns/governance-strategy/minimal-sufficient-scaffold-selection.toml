@@ -1,0 +1,25 @@
+id = "minimal-sufficient-scaffold-selection"
+title = "最小充分脚手架选型法"
+domain = "methodology"
+layer = "governance"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+maturity = "L1-draft"
+validation_count = 3
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20260930-python-agent-harness)——AI Harness/Agent Python 包全景调研（45条事实）"
+source_report = "docs/knowledge/tech/python-agent-harness/index.md"
+date = "2026-09-30"
+version = "1.0"
+maturity_note = "3个相互独立的外部案例同向支撑（mini-swe-agent vs SWE-agent 量化对照、七框架同任务TTFA实测、AutoGPT退潮复盘）；非同谱系双案例不适用L1.5，尚未在本项目验证不授L2；本团队一次真实选型实战后可升L2-validated"
+
+[bindings]
+related_patterns = [
+  "agent-platform-selection-framework",
+  "harness-architecture-layered-model",
+  "tech-selection-three-checks",
+  "vendor-lifecycle-governance",
+  "bounded-iteration-budget",
+  "prove-usefulness-check",
+]

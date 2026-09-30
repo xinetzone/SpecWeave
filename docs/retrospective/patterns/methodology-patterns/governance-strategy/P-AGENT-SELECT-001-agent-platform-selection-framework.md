@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "agent-platform-selection-framework"
-source: "../../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/patterns.md#模式-1"
+source: "../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/patterns.md#模式-1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-AGENT-SELECT-001-agent-platform-selection-framework.toml"
 maturity: "L1"
 validation_count: 1
@@ -140,3 +140,4 @@ AI Agent平台选型中常见的决策陷阱：
 | [P-DEMO-TO-PROD-003-demo-to-prod-checklist.md](P-DEMO-TO-PROD-003-demo-to-prod-checklist.md) | 姊妹模式：上线前 | 开发完成后上线前的生产化检查清单 |
 | [prove-usefulness-check.md](prove-usefulness-check.md) | 原则支撑 | PoC验证阶段的"证明有用性"自检原则 |
 | [risk-transfer-unintended-consequences.md](risk-transfer-unintended-consequences.md) | 风险预警 | 供应商锁定风险维度的理论基础——风险转移的非意图后果 |
+| [minimal-sufficient-scaffold-selection.md](minimal-sufficient-scaffold-selection.md) | 轻重互补（反向） | 团队/个人为具体任务选开源 agent Python 库的轻量实测法（任务分级+同任务小赛+生命体征检查，半天可完成）；本模式面向企业采购的组织级重量决策，候选不可实测时轻量法让渡为本评分卡 |
