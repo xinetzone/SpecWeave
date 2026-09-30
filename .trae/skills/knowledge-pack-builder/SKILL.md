@@ -5,7 +5,7 @@ description: 把七概念知识沉淀（R→I→E→V→C）的产出落成本�
 
 # knowledge-pack-builder
 
-把一次七概念知识沉淀（场景 4，链路 R→I→E→V→C）的产出，落成符合 SpecWeave 仓库规范、可审计、可复用的**原子化知识包**。本技能沉淀自四次同构交付：openKylin 全面调研（62 事实）、openKylin 文档站导读（44 事实/237 文档）、Python agent harness 全景（45 事实）、openEuler vs openKylin 对比（35 事实+12 跨包锚点）。
+把一次七概念知识沉淀（场景 4，链路 R→I→E→V→C）的产出，落成符合 SpecWeave 仓库规范、可审计、可复用的**原子化知识包**。本技能沉淀自五次同构交付：openKylin 全面调研（62 事实）、openKylin 文档站导读（44 事实/237 文档）、Python agent harness 全景（45 事实）、openEuler vs openKylin 对比（35 事实+12 跨包锚点）、量子密信调研（50 事实/9 文件，含同名异主产品辨析）。
 
 **与 seven-concepts-cmd 的分工**：方法论编排（场景识别、概念链路、质量门顺序、CMD-LOG）由 seven-concepts-cmd 负责；本技能只管一件事——**每个阶段的产出"写成什么文件、放在哪、长什么样、如何校验"**。两者配套使用，不互相替代。
 
@@ -19,7 +19,7 @@ description: 把七概念知识沉淀（R→I→E→V→C）的产出落成本�
 
 1. **读 AGENTS.md 启动协议**：以磁盘 `AGENTS.md` 原文为准（内联副本可能过期），确认文档边界条款：根 `docs/` 是唯一文档中心，`.agents/docs/` 已废止禁止写入。
 2. **内容敏感度判级**：公开内容（公开网页/开源/官方文档）→ 规划可在 `.trae/specs/`，产出入根 `docs/knowledge/<域>/<bundle-id>/`；私域内容（内网、带 token/code 链接、个人笔记、商业培训）→ 跳过公共规划区，入 `playground/` 或用户指定目录。不确定就高判私域或问用户。
-3. **查重与定位**：Glob `docs/knowledge/**/index.md` 与同级目录，确认是否已有同主题包——**优先扩包/合包**（openkylin 包即由独立目录合并而来），其次才新建；新目录名用 kebab-case 纯英文、主题词而非日期。
+3. **查重与定位**：Glob `docs/knowledge/**/index.md` 与同级目录，确认是否已有同主题包——**优先扩包/合包**（openkylin 包即由独立目录合并而来），其次才新建；新目录名用 kebab-case 纯英文、主题词而非日期。**同名异主辨析**：调研对象若存在不同厂商同名产品（如「量子密信」另有深圳科盾量子同名产品），在事实表单列辨析条目，正文一律以运营主体全称指代，禁止凭名称混用两边事实。
 4. **冻结 session 与信源时点**：session 号 `sc-YYYYMMDD-<topic>`；每个包在 frontmatter 与正文标注采集时点；引用既有本地包时写明"事实时点冻结在对方包的日期"。
 
 ## 2. 标准目录骨架（默认形态，按需增减）
@@ -74,20 +74,22 @@ references/source-inventory
 
 ## 6. 落盘后校验（G4，按顺序执行）
 
-1. **文件名规范**（本机 `python` 不在 PATH，用全路径；务必加 `--directory` 限定，否则全仓扫描含 submodule 耗时极长）：
+1. **文件名规范**（本机裸 `python` 不识别，用 Python 全路径或 `py` 启动器，二者等价；务必加 `--directory` 限定，否则全仓扫描含 submodule 耗时极长）：
 
 ```powershell
 & "C:\Users\XMICUser\AppData\Local\Programs\Python\Python314\python.exe" .agents/scripts/check-filename-convention.py --directory docs/knowledge/<域>/<bundle-id>
+# 或：py .agents/scripts/check-filename-convention.py --directory docs/knowledge/<域>/<bundle-id>
 ```
 
 2. **链接检查**（新包首验必跑，修完重跑到"所有链接均有效"）：
 
 ```powershell
 & "<python 全路径>" .agents/scripts/check-links.py --path docs/knowledge/<域>/<bundle-id>
+# 或：py .agents/scripts/check-links.py --path docs/knowledge/<域>/<bundle-id>
 ```
 
 易错点：知识包在 `docs/knowledge/<域>/<bundle>/` 三层深，引用 `docs/retrospective/` 用 `../../../retrospective/...`；references/ 子页引用兄弟知识包要再多一层（`../../<sibling>/...`）。Markdown 内一律相对路径，禁止 `file:///` 与 `.temp/` 引用。
-3. **结构自检**：index 隐藏 toctree 条目数 = 子页数；上层索引已登记；表格改行列数时整表替换；frontmatter 为 YAML（---包裹）。
+3. **结构自检**：index 隐藏 toctree 条目数 = 子页数；上层索引已登记；表格改行列数时整表替换；frontmatter 为 YAML（---包裹）。**计数与引用回核**：index 摘要中的事实数、意见数、采纳数须与事实表及审查全记录逐项一致；人名、信源键、编号在摘要与正文间一致（量子密信包出现过摘要 7 条/全记录 9 条、作者名罗迅/罗俊的偏差，即按此条拦截修正）。
 4. 有 Mermaid 图时跑 `check_mermaid.py`（遵守安全编码六规则）。
 
 ## 7. C 阶段收尾纪律
@@ -107,3 +109,5 @@ references/source-inventory
 6. 新建同主题平行包——先查重，能合入既有包就做原子化合并并入链修复（openkylin 先例 15 处入链同步）。
 7. 凭记忆写相对路径——三层目录深度下数错层级是断链首因，落盘后必须跑链接脚本实证。
 8. 私域内容误落 docs/——阶段 0 判级没做就开工，事后迁移成本高。
+9. 同名产品不辨主体——不同厂商同名产品的事实混入同一条链；引用必须写全运营主体名称，先辨析再登记。
+10. 摘要数字与全记录脱节——index 正文写完后未回核计数，摘要与台账数字不一致；收尾前逐数核对，不靠记忆。
