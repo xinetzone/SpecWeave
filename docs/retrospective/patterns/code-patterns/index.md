@@ -126,6 +126,7 @@ idempotent-shell-config
 invocations-collection-sphinx-build-wrapping
 invoke-layered-namespace-tasks
 invoke-task-dual-backend-load
+large-archive-remote-preflight
 layer-override-patch-drift
 lightweight-multi-dimensional-recommender
 markdown-nested-fence-escalation
