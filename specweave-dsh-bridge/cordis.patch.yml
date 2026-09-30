@@ -1,0 +1,29 @@
+# SpecWeave × DeepSeek Harness 桥接插件装配补丁。
+#
+# 本文件是 bundle 层补丁：`plugin_manager` 的 `install_bundle` 把本包安装进 profile 后，
+# 下面这一行被插入 profile 的组合树；用户可在
+# $DSH_HOME/profiles/<profile>/cordis.patch.yml 中按 id 覆盖 config（后者优先级更高）。
+#
+# 补丁覆盖语义：命中的行会**整体替换** config，而不是合并——覆盖时请写全字段。
+
+- insert:
+    - id: specweave-bridge
+      name: '@specweave/dsh-bridge'
+      config:
+        # 总开关：false 时插件完全静默（不注入 brief、不注册任何能力）。
+        enabled: true
+        # 启动协议 brief 注入（用户消息层）。
+        injectBrief: true
+        # 模型侧工具：specweave_route / specweave_status / specweave_check / specweave_protocol。
+        registerTools: true
+        # 人机命令：/specweave status | route <任务> | skill <触发词> | help。
+        registerCommand: true
+        # 只读协议技能：specweave-protocol。
+        registerSkill: true
+        # 按会话 cwd 提供 .agents/skills 中的门面技能候选（绕开失效的宿主文件系统 provider）。
+        registerWorkspaceSkills: true
+        # routes=只提供路由表引用的门面技能；all=提供目录下全部合格技能。
+        skillSelection: routes
+        workspaceSkillsDir: ".agents/skills"
+        # brief 渲染上限（字节，UTF-8 安全截断）。
+        maxBriefBytes: 4096
