@@ -1,6 +1,6 @@
 name: specweave-bridge
-version: 0.1.0
-description: "SpecWeave工作区规范集成 - 启动协议识别、三层路由、Skill桥接、验证脚本工具"
+version: 0.2.0
+description: "SpecWeave工作区规范集成 - 双信号工作区识别（AGENTS.md启动协议 + .agents/兼容模式）、三层路由、Skill桥接、验证脚本工具"
 author: "SpecWeave Team"
 manifest_version: 1
 kind: standalone
