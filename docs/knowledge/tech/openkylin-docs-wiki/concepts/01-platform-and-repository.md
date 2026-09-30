@@ -4,7 +4,7 @@
 
 ## 1.1 平台形态：docsify 渲染的 Gitee 仓库
 
-openKylin 文档平台（https://docs.openkylin.top/zh/home）没有独立的后台编辑器，它是用 docsify 把 Gitee 仓库 **openkylin/docs**（https://gitee.com/openkylin/docs）里的 Markdown 文件实时渲染成网页：
+openKylin 文档平台（<https://docs.openkylin.top/zh/home>）没有独立的后台编辑器，它是用 docsify 把 Gitee 仓库 **openkylin/docs**（<https://gitee.com/openkylin/docs>）里的 Markdown 文件实时渲染成网页：
 
 - 浏览器地址栏里的 URL 直接对应仓库中的 `.md` 文件路径，例如页面"社区简介"对应仓库 `7关于社区/7_1关于社区/` 下的文件。
 - 首页正文就是仓库根目录的 `home.md`；中文内容在根的 8 个编号目录里，英文内容在 `en/` 目录。

@@ -7,7 +7,10 @@
 python-rust-comparison/index
 fedora-coreos/index
 openkylin-docs-wiki/index
+openeuler-vs-openkylin/index
+public-server-hardening/index
 python-agent-harness/index
+quantum-secret-messaging/index
 tvm-ffi-wiki/index
 edgeone-pages-deploy/index
 caffe-ffi-conv-v4-optimization-summary

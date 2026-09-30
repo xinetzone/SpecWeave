@@ -22,7 +22,7 @@ description: Hermes 使用者接入 specweave-bridge 插件的完整指南（零
 | 交互式 | 人 | `/specweave` 斜杠命令、`hermes specweave` CLI | 查询状态 / 路由 |
 | Agent 自主 | Hermes Agent | `specweave_route` / `specweave_check` 工具 | 规范感知 / CI 校验 |
 
-> **核心机制**：接入是**目录感知**的——取决于当前工作目录（cwd）是否在 SpecWeave 工作区内（存在含「启动协议」关键词的 `AGENTS.md`）。换目录后能力自动切换。
+> **核心机制**：接入是**目录感知**的——取决于当前工作目录（cwd）是否在 SpecWeave 工作区内。工作区采用双信号识别：存在含「启动协议」关键词的 `AGENTS.md`（主信号），或存在 `roles/` 与 `skills/` 同时具备的 `.agents/`（兼容信号）；从 cwd 向上递归，**就近命中即生效**。换目录后能力自动切换。
 
 ## 第 1 步：零配置接入（默认生效）
 
@@ -71,3 +71,5 @@ hermes specweave status                    # 能识别当前工作区与子区�
 ```
 
 `hermes specweave status` 能识别当前工作区 → 接入成功。
+
+> AI生成

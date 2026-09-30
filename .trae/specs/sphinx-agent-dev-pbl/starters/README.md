@@ -91,7 +91,8 @@ pip install -r requirements.txt
 - **不要**只发 `docs.yml` 不发 `requirements.txt`：
   CI 里 `pip install -r requirements.txt` 会失败，学生卡在与教学目标无关的地方。
 - `docs-intranet.yml` 的默认值**已填好、可直接用**；但有三项参数因校而异，
-  开课前按文件头「教师本地化清单」改写（详见 `teacher/SETUP-CHECKLIST.md`）。
+  **教师**开课前须按 `teacher/SETUP-CHECKLIST.md`「docs-intranet.yml 本地化三项」改写。
+  该清单已从本文件正文移出（本目录会整包发放给学生，学生手上不应有教师待办）。
 
 ---
 

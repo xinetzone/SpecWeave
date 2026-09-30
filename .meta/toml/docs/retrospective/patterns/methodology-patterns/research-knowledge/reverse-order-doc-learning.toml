@@ -1,0 +1,25 @@
+id = "reverse-order-doc-learning"
+title = "逆序文档学习法"
+domain = "methodology"
+layer = "research"
+category = "retrospective/patterns/methodology-patterns/research-knowledge"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20260929-openkylin-docs-wiki)——openKylin 官方文档平台 237 篇社区文档逆向导读（44条事实/4洞察/7条V意见）"
+source_report = "docs/knowledge/tech/openkylin-docs-wiki/index.md"
+date = "2026-09-30"
+version = "1.0"
+maturity_note = "单个完整案例首次成型：步骤①—④由44条事实支撑，步骤⑤三方交叉验证有同会话WSL实测提供半个第二案例；跨域迁移仅完成机制推演。升级L1.5：第二个非同谱系文档站（非docsify/Gitee形态）完整应用六步；升级L2-validated：另需本团队一次真实学习任务实战回填"
+
+[bindings]
+related_patterns = [
+  "riev-doc-learning-method",
+  "open-source-repo-four-layer-identification",
+  "vendor-high-level-doc-first-research",
+  "external-tech-doc-wiki-structure",
+  "triangular-source-verification",
+  "knowledge-compilation",
+]

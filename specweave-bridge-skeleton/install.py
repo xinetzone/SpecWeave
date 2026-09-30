@@ -170,6 +170,7 @@ def verify(home: Path, cwd: Optional[str] = None) -> dict:
         "plugin_yaml_exists": (plugin_dir / "plugin.yaml").is_file(),
         "enabled_in_config": False,
         "workspace_root": None,
+        "workspace_signal": None,
         "subregion": None,
         "route_ok": None,
         "hook_injection": None,
@@ -188,6 +189,9 @@ def verify(home: Path, cwd: Optional[str] = None) -> dict:
             mod = _load_plugin(plugin_dir)
             result["workspace_root"] = mod.detector.find_specweave_root(cwd)
             if result["workspace_root"]:
+                result["workspace_signal"] = mod.detector.detect_workspace_signal(
+                    result["workspace_root"]
+                )
                 result["subregion"] = mod.detector.detect_subregion(
                     cwd, result["workspace_root"]
                 )

@@ -169,7 +169,7 @@ stale_after: "2027-08-22"
 
 ## 与现有模式的关系
 
-- **本模式是[子代理标准化指令模式](subagent-standardized-instruction.md)（bp-subagent-std）在"网页→Wiki"垂直场景的具体化**
+- **本模式是[子代理标准化指令模式](../ai-collaboration/subagent-standardized-instruction.md)（bp-subagent-std）在"网页→Wiki"垂直场景的具体化**
 - bp-subagent-std提供子代理指令的通用结构原则，本模式提供Wiki创建场景的具体8步流程和工具链
 - 本模式的"5点强制验收+格式示例+反模式警告"做法是对bp-subagent-std"内嵌验收标准"原则的最佳实践补充
 
@@ -183,8 +183,8 @@ stale_after: "2027-08-22"
 
 ## 关联资源
 
-- [Harness Engineering Wiki里程碑复盘报告](../../../reports/milestone/harness-engineering-wiki-retrospective-20260803.md)
-- [四大工程概念Wiki里程碑复盘](../../../reports/milestone/four-engineering-concepts-wiki-retrospective-20260704.md)
-- [LibTV Wiki知识沉淀报告](../../../reports/knowledge/libtv-wiki-knowledge-precipitation-20260704.md)
-- [子代理分析任务标准化指令模式](subagent-standardized-instruction.md)
+- [Harness Engineering Wiki里程碑复盘报告](../../../reports/concepts/milestone/harness-engineering-wiki-retrospective-20260803.md)
+- [四大工程概念Wiki里程碑复盘](../../../reports/concepts/milestone/four-engineering-concepts-wiki-retrospective-20260704.md)
+- [LibTV Wiki知识沉淀报告](../../../reports/concepts/knowledge/libtv-wiki-knowledge-precipitation-20260704.md)
+- [子代理分析任务标准化指令模式](../ai-collaboration/subagent-standardized-instruction.md)
 - 子代理Wiki交付检查清单：[`.agents/templates/subagent-wiki-delivery-checklist.md`](../../../../../.agents/templates/subagent-wiki-delivery-checklist.md)

@@ -30,7 +30,7 @@ reuse_count: 0
 ## 不适用场景（反目标用户/场景）
 
 - **单目录/小文档集**（<~500 文档）：完整构建本身够快，无需分相测速，本模式过度工程
-- **必须在 read 阶段消除的语法错误（ERROR）**：本模式聚焦警告（WARNING）的加速计量；构建 ERROR（如围栏泄漏）需回到 [markdown-nested-fence-escalation](../../../code-patterns/markdown-nested-fence-escalation.md) 类内容修复
+- **必须在 read 阶段消除的语法错误（ERROR）**：本模式聚焦警告（WARNING）的加速计量；构建 ERROR（如围栏泄漏）需回到 [markdown-nested-fence-escalation](../../code-patterns/markdown-nested-fence-escalation.md) 类内容修复
 - **纯 toctree 结构性问题**：目录树完整性有自己的验证范式，见 [toctree-dynamic-verification](toctree-dynamic-verification.md)
 - **生产部署构建本身**：本模式告诉你"为什么慢 + 如何计量"，不是生产线构建的替代品；生产必须用同一 builder 完整输出
 
@@ -90,7 +90,7 @@ reuse_count: 0
 |---------|---------|---------|
 | [toctree-dynamic-verification.md](toctree-dynamic-verification.md) | 互补 | 该模式管"结构/链接类验证"（轻量可替代），本模式管"高亮类计量必须同源"并给出 read/write 分相分层 |
 | [okf-bundle-toctree-repair-workflow.md](../../process-patterns/okf-bundle-toctree-repair-workflow.md) | 前置案例 | same 大型 OKF 文档集的目录树修复系列，验证了"结构类验证可脚本化门禁"的边界 |
-| [markdown-nested-fence-escalation.md](../../../code-patterns/markdown-nested-fence-escalation.md) | 内容修复 | 本模式识别出的"内容性残余警告"（Unknown 指令/标题跳级）由该类内容修复模式处理 |
+| [markdown-nested-fence-escalation.md](../../code-patterns/markdown-nested-fence-escalation.md) | 内容修复 | 本模式识别出的"内容性残余警告"（Unknown 指令/标题跳级）由该类内容修复模式处理 |
 
 ## 验证状态
 

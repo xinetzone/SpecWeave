@@ -1,6 +1,6 @@
-# 附录 A：信源台账（S01–S26）
+# 附录 A：信源台账（S01–S32）
 
-> 全部信源采集日期：**2026-09-29**。网络请求统一携带 `User-Agent: Mozilla/5.0` 头（Gitee raw/API 对无 UA 请求返回异常）。文档站是 docsify 对 Gitee 仓库 `openkylin/docs` master 分支的实时渲染，故同一文件存在"文档站路径"与"Gitee raw 路径"两种形态，下表一并给出。
+> 信源采集日期：S01–S26 为 **2026-09-29**；S27–S32 为 **2026-09-30** Desktop WSL 专项追加（见 A.7）。网络请求统一携带 `User-Agent: Mozilla/5.0` 头（Gitee raw/API 对无 UA 请求返回异常）。文档站是 docsify 对 Gitee 仓库 `openkylin/docs` master 分支的实时渲染，故同一文件存在"文档站路径"与"Gitee raw 路径"两种形态，下表一并给出。
 >
 > raw URL 构造模式：`https://gitee.com/openkylin/docs/raw/master/<URL 编码后的相对路径>`；文档站路径模式：`https://docs.openkylin.top/zh/#/<相对路径（不带 .md）>`（docsify 哈希路由，以站内实际链接为准）。
 
@@ -49,7 +49,8 @@
 | 键 | 信源 | 位置 | 用途 |
 |---|---|---|---|
 | S25 | openKylin 项目全面调研（同包伴生文档） | [project-overview.md](project-overview.md)（原 `tech/openkylin/index.md`，2026-09-29 合并迁入） | 官网新闻口径 62 条事实：3.0 发布、智能体底座、MCP、openkylin-skills、衍生版等，与文档站口径互证 |
-| S26 | WSL 本机实测指南（同包伴生文档） | [wsl-install-sparse-vhd-guide.md](wsl-install-sparse-vhd-guide.md)（原 `tech/openkylin/wsl-install-sparse-vhd-guide.md`，同日合并迁入） | 本机 Win10.0.19044 + WSL 2.9.3.0 实测：`.wsl` 为 gzip tar、E_UNEXPECTED/E_ABORT 排障、内存门槛、稀疏 VHD 命令 |
+| S26 | WSL 本机实测指南（同包伴生文档） | [wsl-install-sparse-vhd-guide.md](wsl-install-sparse-vhd-guide.md)（原 `tech/openkylin/wsl-install-sparse-vhd-guide.md`，2026-09-29 合并迁入） | 本机 Win10.0.19044 + WSL 2.9.3.0 实测：`.wsl` 为 gzip tar、E_UNEXPECTED/E_ABORT 排障、内存门槛、稀疏 VHD 命令 |
+| S32 | 本机磁盘余量快照（2026-09-30） | PowerShell `Get-PSDrive` 实测：C: 剩 2.3 GB、D: 剩 4.8 GB | Desktop WSL 导入未实测的直接约束（最小候选占用 >20 GiB）；已存在发行版 `openKylin-3.0`（位于 `d:\AI\.chaos\envs\openKylin-3.0`）；`D:\WSL` 为 podman machine 数据目录，不可占用/删除 |
 
 ## A.5 采集过程中的无效/弃用路径（避免后人重复踩坑）
 
@@ -59,10 +60,23 @@
 | Gitee MCP `get_file_content`（README.md、zh/_sidebar.md） | 返回空数组 `[]` | 弃用 MCP，用 S03/S04 + raw URL |
 | WebFetch 访问 gitee API URL | Failed to fetch | PowerShell Invoke-RestMethod + UA 头 |
 
-## A.6 引用可靠性分级
+## A.6 2026-09-30 Desktop WSL 专项远程信源（S27–S31）
+
+> 对应方法论编排 session `sc-20260930-openkylin-desktop-wsl`（R→I→E→V→C，standard），全部产出集中于 [wsl-dual-image-selection.md](wsl-dual-image-selection.md)。受 S32 磁盘约束，本批信源**只覆盖文件级远程事实**，不含导入运行时实测。
+
+| 键 | 信源 | URL / 位置 | 采集方式 | 支撑事实 |
+|---|---|---|---|---|
+| S27 | openKylin 官方下载中心（含页内 `md5ById` 校验值映射） | https://www.openkylin.top/downloads/index-cn.html | curl 抓 HTML，正则提取页内 JS 数据 | 两 WSL 条目（id=126 最小 / id=127 Desktop）、展示体积 336M/6.1G、构建日期 2026-08-28、MD5：最小 `3c5717cf...`、桌面 `df559de7...`；仅 AMD64 |
+| S28 | 下载跳转与 CDN 元数据 | `https://www.openkylin.top/downloads/download-smp.php?id=126\|127`（302）→ `https://cdimage.openkylin.top/3.0/openKylin-3.0[-desktop]-wsl-amd64.wsl` | `curl.exe -sIL` 跟随重定向 | 真实 CDN 文件名、精确 Content-Length（352,431,812 / 6,592,986,686 字节）、支持 Range（Accept-Ranges: bytes） |
+| S29 | CDN Range 二进制核验（未下载全量，流量 <25 MiB） | 同 S28 的两个 CDN URL | `curl -r` 头 4 字节落盘 `Format-Hex`；尾 4 字节读 gzip ISIZE（`BitConverter.ToUInt32`）；前 20 MiB 经 .NET GzipStream 流式解压后 `tar -tf` 列目 | 两镜像魔数同为 `1F 8B 08 00`；桌面 ISIZE=103,258,112（已 4 GiB 回绕）；头部条目同为标准 rootfs（`./dev ./bin ./run/systemd`） |
+| S30 | 官方《openKylin-WSL版本安装》重读（master） | Gitee Contents API：`1入门与参与/1_3系统下载与安装指南/05_openKylin-WSL版本安装.md`（路径 URL 编码） | Gitee API v5 取全文（S08 的 2026-09-30 重读） | 桌面镜像导入名 `openKylin-desktop`、默认账号 `openkylin/openkylin`、`ip addr show eth0` 取 IPv4、mstsc 连 `<IP>:3390`、Session 选 xorg、xrdp 默认自启、WSL 重启 IP 可能变；官方 FAQ 仅 2 条，无磁盘/内存门槛、包数、VHD、稀疏 VHD、导入失败排障 |
+| S31 | 社区实测负证据 | bbs.openkylin.top 站内检索 + 公开搜索引擎（2026-09-30） | 关键词组合检索 | 未见桌面 WSL 镜像用户实测帖（桌面安装讨论为 ISO/虚拟机路径）；官方文档是唯一公开一手操作信源。检索覆盖受限，不等同"全网不存在" |
+
+## A.7 引用可靠性分级
 
 1. **制度级**（S05 版本规划、S17 CLA、S18 角色、S20 AI 守则、SIG 章程）：TC 表决或社区政策文件，最高可信；
-2. **操作手册级**（S06/S07/S08/S12/S13/S15/S23/S24）：平台/操作文档，2026-09 多篇仍有提交，需连同适配版本号一起引用；
+2. **操作手册级**（S06/S07/S08/S12/S13/S15/S23/S24/S30）：平台/操作文档，2026-09 多篇仍有提交，需连同适配版本号一起引用；
 3. **导航/短页级**（版本发布动态、社区项目地图、文档平台使用指南等）：内容短、可能为占位，只作入口不作事实源；
 4. **时效存疑级**：4 篇"（需要更新）"、"失效文档"目录、S09 等 1.0 时代文章、含旧编号路径的链接——引用时必须标注时效风险；
-5. **本仓实测级**（S26）：单机实测，环境明确（Win10.0.19044/WSL 2.9.3.0），换环境结论可能不同。
+5. **本仓实测级**（S26、S32）：单机实测，环境明确（Win10.0.19044/WSL 2.9.3.0），换环境结论可能不同；
+6. **远程核验级**（S27/S28/S29）：仅覆盖文件级属性（URL、字节数、MD5、魔数、ISIZE、头部条目），可复现但**不包含运行时可用性结论**；S31 为负证据，随时间可能失效。

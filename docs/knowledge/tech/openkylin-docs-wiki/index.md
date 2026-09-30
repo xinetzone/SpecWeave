@@ -13,7 +13,7 @@ tags:
   - ai-sdk
   - risc-v
 date: "2026-09-29"
-last_updated: "2026-09-29"
+last_updated: "2026-09-30"
 status: "verified"
 author: "SpecWeave Agent（方法论编排 session sc-20260929-openkylin-docs-wiki）"
 summary: "以七概念方法论（R→I→E→V→C，standard）系统学习 openKylin 官方文档平台 docs.openkylin.top：递归解析 Gitee 源仓库 3181 条目/237 篇中文文档、精读 35 篇代表性文档、提取 44 条客观事实，形成 4 条四元组洞察与 1 个 L1 可迁移模式（逆序文档学习法）。教程按学习者问题域重组为平台地图、版本生命周期、安装路径、桌面使用、AI 三层体系、开发者基础设施、社区治理 7 个概念页，附信源台账与完整文档分类地图。"
@@ -32,7 +32,7 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 - **编排 session**：`sc-20260929-openkylin-docs-wiki`
 - **场景与链路**：场景 4 知识沉淀，`R→I→E→V→C（入库）`，depth=standard
 - **采集时点**：2026-09-29（仓库最近提交为 2026-09-28）
-- **同包伴生文档**：[openKylin 全面调研：从桌面根社区到 Agent OS](references/project-overview.md)（62 条事实，信源为官网新闻）回答"openKylin 是什么"；[WSL 安装与稀疏 VHD 实操指南](references/wsl-install-sparse-vhd-guide.md)（Windows 10 本机实测）回答"最小镜像怎么装、踩坑怎么办"。本教程以**文档平台**为信源回答"官方文档怎么读、怎么用、怎么参与"，三篇事实互证、视角互补（2026-09-29 由原独立目录 `docs/knowledge/tech/openkylin/` 合并入本知识包）。
+- **同包伴生文档**：[openKylin 全面调研：从桌面根社区到 Agent OS](references/project-overview.md)（62 条事实，信源为官网新闻）回答"openKylin 是什么"；[WSL 安装与稀疏 VHD 实操指南](references/wsl-install-sparse-vhd-guide.md)（Windows 10 本机实测）回答"最小镜像怎么装、踩坑怎么办"；[双 WSL 镜像对照与选型参考](references/wsl-dual-image-selection.md)（2026-09-30 追加，远程核验级）回答"6.1G Desktop WSL 镜像与最小镜像差在哪、要占多少盘、怎么选"。本教程以**文档平台**为信源回答"官方文档怎么读、怎么用、怎么参与"，四篇事实互证、视角互补（2026-09-29 由原独立目录 `docs/knowledge/tech/openkylin/` 合并入本知识包）。
 
 ---
 
@@ -49,6 +49,7 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 | 加入 SIG、理解治理组织、做软硬件适配认证 | [07 社区治理与贡献路径](concepts/07-community-and-contribution.md) |
 | 核查本教程每条结论的出处 | [信源台账](references/source-inventory.md) ／ [237 篇文档完整分类地图](references/full-catalog.md) |
 | 先了解 openKylin 项目本身（版本时间线、版图界定、选型建议） | [项目全面调研](references/project-overview.md) ／ [WSL 本机实测](references/wsl-install-sparse-vhd-guide.md) |
+| 比较 336M 最小 WSL 与 6.1G Desktop WSL 两个镜像、规划磁盘 | [双 WSL 镜像对照与选型参考](references/wsl-dual-image-selection.md)（桌面镜像为远程核验+待实测清单） |
 | 评估产品/硬件/智能体适配 openKylin 3.0 的工作量与风险 | [openKylin 3.0 架构适配评估草案](references/openkylin-v3-adaptation-assessment.md)（v0.1 纸面预评估，待 POC 验证） |
 
 ---
@@ -136,6 +137,19 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 | F-043 | 同知识包 references/ 收录两份同会话伴生产出：project-overview.md（openKylin 项目全面调研，62 条事实，信源以 openkylin.top 官网新闻为主；原独立目录 `docs/knowledge/tech/openkylin/index.md`，2026-09-29 C 阶段合并迁入）与 wsl-install-sparse-vhd-guide.md（3.0 WSL 镜像本机安装实测，同日迁入） | [S25][S26] |
 | F-044 | 本机实测环境为 Windows 10.0.19044 + WSL 2.9.3.0，满足官方指南 19041 门槛；实测记录中 `wsl --import`/`--install --from-file` 出现过 `RegisterDistro/E_UNEXPECTED` 与 `CreateVm/E_ABORT` 报错，报错时点空闲物理内存记录值一度为 0.8GB，内存充裕（≥4GB）并解压为纯 tar 后导入成功；官方 WSL 指南的常见问题仅覆盖"WSL2 内核未安装"与"远程桌面连接失败"两项 | [S08][S26] |
 
+### 1.8 H 组：Desktop WSL 双形态远程核验（2026-09-30 追加，F-045 ~ F-050）
+
+> G1 已通过（专项 session `sc-20260930-openkylin-desktop-wsl`，22 条会话内事实的索引级摘要；完整记录与命令见 [双 WSL 镜像对照与选型参考](references/wsl-dual-image-selection.md)）。本组除 F-050 外均为**文件级远程事实**，不含导入运行时结论。
+
+| 编号 | 事实 | 来源 |
+|---|---|---|
+| F-045 | 下载中心 3.0 x86 有两个 WSL 条目（id=126 最小 / id=127 Desktop），构建日期均为 2026-08-28、仅 AMD64；CDN 真实文件分别为 `openKylin-3.0-wsl-amd64.wsl`（352,431,812 字节，MD5 `3c5717cfde5c032c69122fb14fa8e2fa`）与 `openKylin-3.0-desktop-wsl-amd64.wsl`（**6,592,986,686 字节 = 6.14 GiB**，MD5 `df559de7155ef7c6fe088b2168035c5a`，官网展示"6.1G"） | [S27][S28] |
+| F-046 | 两镜像 Range 取头 4 字节魔数均为 `1F 8B 08 00`（gzip）；桌面前 20 MiB 流式解压后 tar 列目为标准 rootfs 结构（`./dev`、`./bin`、`./sbin`、`./run/systemd`），与最小镜像同构，导入机制相同 | [S29] |
+| F-047 | 桌面镜像 gzip 尾部 ISIZE=103,258,112 字节（98.5 MiB），小于压缩体积，已发生 4 GiB 回绕；真实解压 tar 为候选序列 8.1 / 12.1 / 16.1 / 20.1 GiB（k=2~5，k≥6 不排除）；最小镜像实测压缩比 3.36× 仅提供"真值倾向不高于该倍数"的方向性参考，现有证据不足以在候选间排序、不给点估，未消歧；最小镜像 ISIZE=1,182,607,360 字节未回绕，与实测一致 | [S29] |
+| F-048 | 官方文档桌面分支：`wsl --import openKylin-desktop .\openKylin-desktop <镜像> --version 2`；启动后 `ip addr show eth0` 取 IPv4，mstsc 连 `<IP>:3390`，Session 选 **xorg**，账号密码同为 `openkylin`；xrdp 默认自启，WSL 重启 IP 可能变 | [S30] |
+| F-049 | 官方文档对桌面镜像未提供磁盘/内存门槛、软件包数、VHD 实大、稀疏 VHD、导入失败排障（FAQ 仍仅 2 条）；bbs.openkylin.top 站内检索与公开搜索引擎（2026-09-30）未见桌面 WSL 用户实测帖，官方文档是唯一公开一手操作信源（负证据，覆盖受限） | [S30][S31] |
+| F-050 | 2026-09-30 本机 C: 剩 2.3 GB、D: 剩 4.8 GB，任何候选占用下均不具备桌面镜像导入条件；桌面镜像全部运行时项（真实 VHD、包数、导入耗时与内存水位、xrdp 桌面可用性、稀疏 VHD 收益）登记为待实测清单 | [S32] |
+
 ---
 
 ## 2. I 阶段：核心洞察（四元组）
@@ -171,11 +185,15 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 - **反常识**：社区文档站常被定位为"给用户看的说明书"，但这里高密度的开发者文档实际是**供应链能否被外部复现的操作手册**；它从操作层支撑了姊妹篇调研中"根社区实质是供应链三自主"的结论——自主选型不仅是发布稿措辞，仓库里有逐命令的构建流程。
 - **行动**：考察开源社区工程独立性时，在代码仓库之外增加"文档站四查"——是否自含软件包编译平台手册？镜像/版本构建平台手册？成员法律协议（CLA）签署入口？经技术委员会表决的版本制度文本？四项齐全说明第三方可按文档复现其供应链，而非只能接受成品镜像。
 
+> **2026-09-30 专项追加**：Desktop WSL 双形态对照形成另外 3 条四元组洞察——①两按钮机制同源、差异仅在载荷规模，选型回归"要不要完整桌面会话"；②6.1G 是下载体积而非磁盘规划值，且 >4 GiB 后 gzip ISIZE 估算法静默回绕；③文件级事实可远程证伪、运行时事实只能本机证伪，同页两按钮证据等级不同。完整四元组见 [双镜像对照 §8](references/wsl-dual-image-selection.md)。
+
 ---
 
 ## 3. E 阶段：可迁移模式（G3）
 
-### 模式：逆序文档学习法（L1，单案例待验证）
+> 本模式已于 2026-09-30 独立沉淀入方法论模式库，通用版（六步抽象、5 个反模式、跨领域迁移、与 RIEV 等模式的层级关系）见 [逆序文档学习法](../../../retrospective/patterns/methodology-patterns/research-knowledge/reverse-order-doc-learning.md)；本节保留本案例版摘要。
+
+### 模式：逆序文档学习法（L1-draft，单案例待验证）
 
 **一句话**：学习百篇级、多人贡献、时效不均的社区文档站时，不按官方目录顺读，而是先用版本控制接口还原"文档库真实结构与时效地图"，再按自己的问题域重组学习路径，并与外部信源交叉验证。
 
@@ -187,7 +205,7 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 | **检验标准** | 读者不回源站即可完成关键路径决策；每篇教程的事实都能在信源台账定位到具体文件；陈旧内容与最新内容的边界对读者可见 |
 | **反模式** | ① 从首页顺读（首页最可能营销化且最旧，本案例 F-019/F-040 证实）；② 把官方文档当均质权威、不做时效甄别（本案例新旧两层并存）；③ 全文转写式"翻译"（复制官方目录结构等于复制它的结构缺陷）；④ 只读正文不读元信息（文件树与提交记录恰恰暴露真实重心与活跃度） |
 | **跨域迁移** | 可迁移至任意 Git 托管文档体系：学习 Apache/CNCF 项目文档时先拉仓库树统计、读 release 文档定年；厂商文档中心可用 sitemap + 更新日期替代 Git 元信息完成步骤①③ |
-| **成熟度** | **L1（单案例待验证）**：本次 openKylin 文档站为首次完整应用；步骤⑤的"本机实测交叉验证"有姊妹篇 WSL 实测（F-044）提供半个第二案例支撑，待第二个独立文档站案例后升级 L2 |
+| **成熟度** | **L1-draft（单案例待验证）**：本次 openKylin 文档站为首次完整应用；步骤⑤的"本机实测交叉验证"有姊妹篇 WSL 实测（F-044）提供半个第二案例支撑。入库二次校验按模式库等级表维持 L1-draft：升级 L1.5 需第二个非同谱系文档站（非 docsify/Gitee 形态）完整应用，升级 L2-validated 另需本团队一次真实学习任务实战，通用版见[方法论模式库](../../../retrospective/patterns/methodology-patterns/research-knowledge/reverse-order-doc-learning.md) |
 
 ---
 
@@ -203,14 +221,27 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 |---|---|---|
 | G1 | 事实 ≥20、无因果词、可溯源、数字/URL 完整 | PASS（44 条，分 7 组；自我标注内容保留引号） |
 | G2 | 洞察 ≥3 且四元组完整、维度独立、含反常识与行动 | PASS（I-1~I-4：结构/时效/AI/工程治理） |
-| G3 | 模式含适用边界、步骤、≥3 反模式、检验标准、跨域迁移、成熟度标注 | PASS（逆序文档学习法，L1，4 反模式） |
+| G3 | 模式含适用边界、步骤、≥3 反模式、检验标准、跨域迁移、成熟度标注 | PASS（逆序文档学习法，L1-draft，案例版 4 反模式；2026-09-30 入库版扩为 5 反模式并登记[模式库](../../../retrospective/patterns/methodology-patterns/research-knowledge/reverse-order-doc-learning.md)） |
 | V 门 | 4 视角、意见 ≥5 且具体、采纳 ≥2 并回归确认 | PASS（7 条意见，6 条采纳修正，1 条登记为局限） |
 | G4 | 产出原子化：单一职责文件、可独立验证、链接与命名规范 | PASS（14 个原子文件：index + concepts 索引 1 + 概念页 7 + references 5；同日 C 阶段将原 `tech/openkylin/` 两篇伴生文档合并入 references/，toctree 经本 index 统一登记，链接与文件名检查通过） |
+| **2026-09-30 专项**（session `sc-20260930-openkylin-desktop-wsl`，链路 R→I→E→V→C） | | |
+| G1/G2 | 事实客观可溯源 ≥20；洞察四元组 ≥3 | PASS（会话内 22 条事实，索引摘要 F-045~F-050；3 条洞察见双镜像文档 §8） |
+| G3 | 模式含边界/步骤/≥3 反模式/检验/迁移/成熟度 | PASS（[大归档零下载远程预检法](../../../retrospective/patterns/code-patterns/large-archive-remote-preflight.md)，L1 单案例，5 反模式，与 pretrained-model-download-validation 互补） |
+| V 门 | 4 视角、意见 ≥5、采纳 ≥2 | PASS（4 视角 11 条意见全部采纳：候选区间保留 k≥6、包包含关系降级为推断、GiB/GB 双口径、同名冲突、WSLg 替代、弱口令红线、镜像时效） |
+| G4 | 原子化产出 | PASS（新建参考文档 1 + 模式 1；更新 index/03-install-paths/wsl 指南/信源台账/模式 toctree 共 5 处；桌面镜像运行时项明确登记待实测，不伪造实测结论） |
 
-**局限声明**：① 237 篇中精读 35 篇（含全部板块代表性文档与全部短占位页），其余以标题骨架覆盖，可能遗漏个别长尾操作细节；② 文档站内容随社区提交持续变化，本教程事实时点为 2026-09-29；③ 图片型页面（如 27 图版《关于社区》）未做 OCR，其信息以治理组织架构文字版互证；④ 未对 en 英文目录做对照统计；⑤ 本教程定位为"文档平台导读"，不对 openKylin 的生产环境适用性（稳定性、性能、硬件兼容、供应链合规）作独立验证结论——相关表述来自官方文档或姊妹调研口径，实际采用前须自行完成 POC（V 审查 O7 登记）。
+**局限声明**：① 237 篇中精读 35 篇（含全部板块代表性文档与全部短占位页），其余以标题骨架覆盖，可能遗漏个别长尾操作细节；② 文档站内容随社区提交持续变化，本教程事实时点为 2026-09-29；③ 图片型页面（如 27 图版《关于社区》）未做 OCR，其信息以治理组织架构文字版互证；④ 未对 en 英文目录做对照统计；⑤ 本教程定位为"文档平台导读"，不对 openKylin 的生产环境适用性（稳定性、性能、硬件兼容、供应链合规）作独立验证结论——相关表述来自官方文档或姊妹调研口径，实际采用前须自行完成 POC（V 审查 O7 登记）；⑥ 2026-09-30 追加的 Desktop WSL 内容为**远程核验级**：文件级事实（字节数/MD5/魔数/ISIZE/结构）可复现，解压体积为候选区间未消歧，导入与 xrdp 桌面运行时全部待实测（见双镜像文档 §7 清单），引用时不得把规划值与候选区间估算当作实测数据。
 
 ```
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S2 | event=CHAIN_SELECTED | session=sc-20260929-openkylin-docs-wiki | msg=知识沉淀链路R→I→E→V→C | ctx={"chain":"R-I-E-V-C","depth":"standard"}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20260929-openkylin-docs-wiki | msg=44事实/4洞察/1模式(L1)/4视角7意见/14原子文件 | ctx={"gates":["G1","G2","G3","V","G4"],"deliverable":"docs/knowledge/tech/openkylin-docs-wiki/"}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=C2 | event=REFACTOR_MERGE | session=sc-20260929-openkylin-docs-wiki | msg=目录合并：tech/openkylin/ 两篇迁入 references/（project-overview/wsl-guide），包内7处+包外8处入链同步，toctree 收敛，旧目录删除 | ctx={"scenario":"refactor","chain":"A→V→C","inbound_links_fixed":15}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S0 | event=CMD_START | session=sc-20260930-openkylin-wiki-pattern | msg=模式沉淀：逆序文档学习法入库方法论模式库（研究知识区） | ctx={"scenario":"knowledge","chain":"R-I-E-V-C"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20260930-openkylin-wiki-pattern | msg=新建模式文档+TOML，更新3处索引，回写本知识包，L1-draft/5反模式 | ctx={"gates":["G3","V"],"deliverable":"docs/retrospective/patterns/methodology-patterns/research-knowledge/reverse-order-doc-learning.md"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S0 | event=CMD_START | session=sc-20260930-openkylin-desktop-wsl | msg=Desktop WSL 双形态知识沉淀：文档级调研+待实测清单，体积区间+保守规划值 | ctx={"scenario":"knowledge","chain":"R-I-E-V-C","depth":"standard"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=R9 | event=GATE_PASSED | session=sc-20260930-openkylin-desktop-wsl | msg=22事实纯客观：CDN HEAD/Range远程核验+官方文档重读+BBS负证据+本机磁盘快照 | ctx={"sources":"S27-S32","traffic_mib":25}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20260930-openkylin-desktop-wsl | msg=22事实/3洞察/1新模式(L1,5反模式)/4视角11意见/2新建+5更新；桌面运行时待实测 | ctx={"gates":["G1","G2","G3","V","G4"],"new_files":["references/wsl-dual-image-selection.md","../../../../retrospective/patterns/code-patterns/large-archive-remote-preflight.md"]}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=V10 | event=REVISION_USER_DRIVEN | session=sc-20260930-openkylin-desktop-wsl | msg=二轮措辞修正：磁盘规划由≥45GiB单值改为三档分层（跨盘20/同盘25-30/排障45-50），补流式写入未实测假设说明，4文件同步 | ctx={"scope":"storage-planning-wording","files":4}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=V11 | event=REVISION_USER_DRIVEN | session=sc-20260930-openkylin-desktop-wsl | msg=三轮措辞修正：选型倾向显性化，WSLg行改优先、新增「桌面镜像不是更好的WSL而是带桌面会话的WSL」定性，概念页同步 | ctx={"scope":"selection-bias-wording","files":2}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=V12 | event=REVISION_USER_DRIVEN | session=sc-20260930-openkylin-desktop-wsl | msg=四轮措辞修正：候选区间去点估，删除16.1GiB「最可能」定性，§4.1改非概率排序、§4.2建议线改覆盖口径，F-047/概念页/局限⑥同步 | ctx={"scope":"candidate-point-estimate","files":3}
 ```

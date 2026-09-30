@@ -124,7 +124,7 @@ def classify(text):
 
 | 关系模式 | 关系类型 | 说明 |
 |---------|---------|------|
-| [ngram-mixed-language-matching.md](../../../code-patterns/ngram-mixed-language-matching.md) | 子技术 | 步骤5/6 的 N-gram 高频词分析可复用其 n-gram 滑动窗口匹配实现 |
+| [ngram-mixed-language-matching.md](../../code-patterns/ngram-mixed-language-matching.md) | 子技术 | 步骤5/6 的 N-gram 高频词分析可复用其 n-gram 滑动窗口匹配实现 |
 | [precision-over-recall.md](./precision-over-recall.md) | 核心原则 | "宁漏勿错"是选"先强后弱"而非"求全"的理论根据 |
 | [dry-run-first.md](./dry-run-first.md) | 配套流程 | 步骤7 执行前先 dry-run 预览移动结果 |
 | [classification-disposition-decision-tree.md](../document-architecture/classification-disposition-decision-tree.md) | 同域异场景 | 同为"批量分类"但对象不同：本模式分类文本/文件到内容类别，后者分类待治理文档到处置方式 |

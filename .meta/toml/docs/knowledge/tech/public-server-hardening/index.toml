@@ -1,0 +1,6 @@
+id = "public-server-hardening"
+title = "公网服务器安全加固教程"
+category = "tech"
+date = "2026-09-30"
+version = "1.0"
+tags = ["server-security", "hardening", "ssh", "firewall", "ddos", "cdn", "backup", "ip-exposure"]

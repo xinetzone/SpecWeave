@@ -1,0 +1,20 @@
+id = "<kebab-id>"
+title = "<中文模式名>"
+domain = "methodology"
+layer = "<sub-area>"
+category = "retrospective/patterns/methodology-patterns/<sub-area>"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(<上游session号>)——<案例一句话>（<N>条事实/<N>洞察/<N>条V意见）"
+source_report = "docs/knowledge/<域>/<bundle-id>/index.md"
+date = "<YYYY-MM-DD>"
+version = "1.0"
+maturity_note = "<已有案例数与形态。升级L1.5：第二个非同谱系案例完整应用；升级L2-validated：另需本团队一次真实任务实战回填>"
+
+[bindings]
+related_patterns = [
+  "<邻近模式id>",
+]
