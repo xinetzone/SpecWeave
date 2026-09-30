@@ -7,6 +7,7 @@
 python-rust-comparison/index
 fedora-coreos/index
 openkylin-docs-wiki/index
+public-server-hardening/index
 python-agent-harness/index
 tvm-ffi-wiki/index
 edgeone-pages-deploy/index
