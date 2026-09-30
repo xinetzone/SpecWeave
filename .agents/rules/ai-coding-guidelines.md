@@ -140,6 +140,22 @@ x-toml-ref: "../../.meta/toml/.agents/rules/ai-coding-guidelines.toml"
 
 ---
 
+## 🚫 技术红线（Red Lines）
+
+以下为**硬约束**，违反即返工，不以"模板惯性""通用写法"为由豁免：
+
+| 红线 | 说明 | 检测与闭环 |
+|------|------|-----------|
+| **禁止 PEP 563 future import** | Python 项目不得出现 `from __future__ import annotations`：Python 3.14 起 PEP 649 已默认惰性注解，PEP 563 样板冗余且语义有别；3.10-3.13 项目仅当代码**确实依赖延迟求值**（递归类型别名、模块级前置引用且无法前移）且 `requires-python` 明确时方可使用，否则同样禁止 | 新建/修改 Python 项目时**必须**同步 AST 守护测试（参照 `apps/dev-tools/zhihu-checkin-hub/tests/test_no_future_annotations.py` 与 `apps/dev-tools/openkylin-wsl-devkit/tests/test_no_future_annotations.py`：AST 解析 `src`/`tests` 中所有 `.py`，命中真实 `ImportFrom(__future__, annotations)` 节点即红，注释与字符串不误报） |
+
+**生成代码时的自检**：写完 Python 文件先 grep 自身产物是否出现 `from __future__ import annotations`；出现即删，不得靠守护测试兜底后才想起。
+
+**关联规范**：
+- [docs/tech/references/development-standards.md - 代码风格](../../docs/tech/references/development-standards.md)
+- [AGENTS.md - 开发规范](../../AGENTS.md)
+
+---
+
 ## 🔄 工作流整合
 
 这四条原则应该融入日常开发工作流的每个阶段：
