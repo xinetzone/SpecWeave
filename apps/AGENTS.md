@@ -59,6 +59,7 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | dev-tools/ | prompt_extraction | —（遵循根规范） | ❌ 无 | 提示词质量评估与提取工具 |
 | dev-tools/ | wechat-mp-archiver | [dev-tools/wechat-mp-archiver/AGENTS.md](dev-tools/wechat-mp-archiver/AGENTS.md) | ✅ 有 | 微信公众号全量内容归档工具（私有部署采集服务 + Python 薄管线，输出离线归档/RAG 语料/分析报表；scikit-build-core 纯 Python 包，`mp-archiver` CLI）；应用自治：1 rule（archive-pipeline 归档管线硬约束）+ 6 docs |
 | dev-tools/ | zhihu-checkin-hub | —（遵循根规范） | ❌ 无 | 知乎打卡工作台（本地 FastAPI Web：目标追踪/每日打卡/tracker.md 勾选回写 + 发布前固定门 + kimi-webbridge 半自动发布（最终发布人点）；零数据库、无 AI、无凭证、仅 loopback，数据只写 `projects/monetize/zhihu-monetization/local/`；scikit-build-core 纯 Python 包，`zhihu-checkin` CLI，规格 `.trae/specs/zhihu-checkin-hub/`） |
+| dev-tools/ | openkylin-wsl-devkit | —（遵循根规范） | ❌ 无 | openKylin WSL 开发工具包（以 WSL 为切入点：发行版生命周期管理 list/status/import/export/unregister/exec + 五步环境验收 verify + deb 打包骨架/OKBS dput 脚手架 + 知识库快速参考 ref；零第三方运行时依赖，scikit-build-core 纯 Python 包，`okw` CLI，规格 `.trae/specs/openkylin-wsl-devkit/`，知识依据 `docs/knowledge/tech/openkylin-docs-wiki/`） |
 | samples/ | cow-demo | —（遵循根规范） | ❌ 无 | 零拷贝COW读写分离模式C++示例框架 |
 | samples/ | short-video-site | —（遵循根规范） | ❌ 无 | ReelVibe 短视频网站（AI全流程开发Demo） |
 | samples/ | designer-portfolio | —（遵循根规范） | ❌ 无 | 设计师作品集静态网站（纯HTML/CSS/JS + GSAP CDN，零构建Demo，首页+4个项目详情页） |
@@ -282,6 +283,7 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/dev-tools/wechat-mp-archiver/.agents/ | 应用自治 | ✅ 是 | wechat-mp-archiver 规范体系（1个rules文件：archive-pipeline） |
 | apps/dev-tools/wechat-mp-archiver/docs/ | 应用自治 | ✅ 是 | wechat-mp-archiver 人类可读文档（6个原子化文档+索引） |
 | apps/dev-tools/zhihu-checkin-hub/ | 应用自治（遵循根规范） | ✅ 是 | 知乎打卡工作台（FastAPI + Jinja2 本地 Web；tracker/打卡/记录/草稿/固定门/半自动发布；零数据库，运行时数据只写工作区 `local/`；无 AI 生成、无账号凭证、仅监听 127.0.0.1，CSRF + Origin 白名单 + 单实例文件锁；规格 `.trae/specs/zhihu-checkin-hub/`） |
+| apps/dev-tools/openkylin-wsl-devkit/ | 应用自治（遵循根规范） | ✅ 是 | openKylin WSL 开发工具包（`okw` CLI：WSL 发行版管理 + 五步验收 + deb/dput 脚手架 + 知识库参考；零第三方运行时依赖，WSL 调用统一封装、默认星标保护、unregister 二次确认；规格 `.trae/specs/openkylin-wsl-devkit/`） |
 | apps/samples/cow-demo/ | 应用自治（遵循根规范） | ✅ 是 | 零拷贝COW读写分离模式C++示例框架 |
 | apps/samples/short-video-site/ | 应用自治（遵循根规范） | ✅ 是 | ReelVibe 短视频网站（AI全流程开发Demo） |
 | apps/samples/designer-portfolio/ | 应用自治（遵循根规范） | ✅ 是 | 设计师作品集静态网站（纯HTML/CSS/JS + GSAP CDN，零构建Demo，首页+4个项目详情页） |

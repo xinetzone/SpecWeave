@@ -1,0 +1,33 @@
+[build-system]
+requires = ["scikit-build-core>=0.9"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "openkylin-wsl-devkit"
+version = "0.1.0"
+description = "openKylin WSL 开发工具包：以 WSL 为切入点的发行版管理、环境验收、deb/dput 脚手架与知识参考"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "SpecWeave" }]
+keywords = ["openkylin", "wsl", "linux", "deb", "okbs"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: Microsoft :: Windows",
+    "Topic :: Software Development :: Build Tools",
+]
+dependencies = []
+
+[project.scripts]
+okw = "okw.cli:main"
+
+[tool.scikit-build]
+minimum-version = "0.9"
+build-dir = "build/{wheel_tag}"
+wheel.packages = ["src/okw"]
+wheel.cmake = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=okw --cov-report=term-missing"
+pythonpath = ["src"]
