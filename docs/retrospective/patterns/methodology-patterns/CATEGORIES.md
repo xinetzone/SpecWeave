@@ -9,7 +9,7 @@
 | 主题目录 | 中文名称 | 模式数量 | 核心关注点 |
 |---------|---------|---------|-----------|
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 38 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
-| [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 41 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor/跨领域知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、语义漂移防御、知识系统五维根基、B2B AI产品定位、外部产品学习模板 |
+| [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 42 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor/跨领域知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、语义漂移防御、知识系统五维根基、B2B AI产品定位、外部产品学习模板 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 54 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 57 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
 | [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 154 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
@@ -109,6 +109,7 @@
 | [open-source-repo-four-layer-identification.md](research-knowledge/open-source-repo-four-layer-identification.md) | 开源仓库四层架构识别法 | L1 |
 | [platform-gap-filling-base-reuse-model.md](research-knowledge/platform-gap-filling-base-reuse-model.md) | 「断层填补+基座复用」产业平台化模式 | - |
 | [progressive-spec-planning-for-external-content.md](research-knowledge/progressive-spec-planning-for-external-content.md) | 外部内容分析渐进式Spec规划：三阶段时间盒（最小可行Spec 15min→内容获取试错30min→基于样本调整10min），核心原则"最小启动+渐进细化"，避免规划阶段耗时过长 | L1 |
+| [reverse-order-doc-learning.md](research-knowledge/reverse-order-doc-learning.md) | 逆序文档学习法 | L1-draft |
 | [riev-doc-learning-method.md](research-knowledge/riev-doc-learning-method.md) | RIEV文档学习法 | L2-validated |
 | [small-sample-analysis-methodology.md](research-knowledge/small-sample-analysis-methodology.md) | 小样本分析方法论与三层分析框架适用性边界：样本量<5时执行"保留/降级/标注"三规则，三层框架（系统性学习→深度洞察→知识萃取）各层降级映射，解决"分析精度 vs 原始内容信度"根本矛盾 | L1 |
 | [source-pipeline-penetration-method.md](research-knowledge/source-pipeline-penetration-method.md) | 源码学习管线穿透法 | L1 |

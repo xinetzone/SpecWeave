@@ -36,6 +36,7 @@ methodology-overflow-paradigm
 open-source-repo-four-layer-identification
 platform-gap-filling-base-reuse-model
 progressive-spec-planning-for-external-content
+reverse-order-doc-learning
 riev-doc-learning-method
 small-sample-analysis-methodology
 source-pipeline-penetration-method

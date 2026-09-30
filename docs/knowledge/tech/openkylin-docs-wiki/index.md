@@ -175,7 +175,9 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 
 ## 3. E 阶段：可迁移模式（G3）
 
-### 模式：逆序文档学习法（L1，单案例待验证）
+> 本模式已于 2026-09-30 独立沉淀入方法论模式库，通用版（六步抽象、5 个反模式、跨领域迁移、与 RIEV 等模式的层级关系）见 [逆序文档学习法](../../../retrospective/patterns/methodology-patterns/research-knowledge/reverse-order-doc-learning.md)；本节保留本案例版摘要。
+
+### 模式：逆序文档学习法（L1-draft，单案例待验证）
 
 **一句话**：学习百篇级、多人贡献、时效不均的社区文档站时，不按官方目录顺读，而是先用版本控制接口还原"文档库真实结构与时效地图"，再按自己的问题域重组学习路径，并与外部信源交叉验证。
 
@@ -187,7 +189,7 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 | **检验标准** | 读者不回源站即可完成关键路径决策；每篇教程的事实都能在信源台账定位到具体文件；陈旧内容与最新内容的边界对读者可见 |
 | **反模式** | ① 从首页顺读（首页最可能营销化且最旧，本案例 F-019/F-040 证实）；② 把官方文档当均质权威、不做时效甄别（本案例新旧两层并存）；③ 全文转写式"翻译"（复制官方目录结构等于复制它的结构缺陷）；④ 只读正文不读元信息（文件树与提交记录恰恰暴露真实重心与活跃度） |
 | **跨域迁移** | 可迁移至任意 Git 托管文档体系：学习 Apache/CNCF 项目文档时先拉仓库树统计、读 release 文档定年；厂商文档中心可用 sitemap + 更新日期替代 Git 元信息完成步骤①③ |
-| **成熟度** | **L1（单案例待验证）**：本次 openKylin 文档站为首次完整应用；步骤⑤的"本机实测交叉验证"有姊妹篇 WSL 实测（F-044）提供半个第二案例支撑，待第二个独立文档站案例后升级 L2 |
+| **成熟度** | **L1-draft（单案例待验证）**：本次 openKylin 文档站为首次完整应用；步骤⑤的"本机实测交叉验证"有姊妹篇 WSL 实测（F-044）提供半个第二案例支撑。入库二次校验按模式库等级表维持 L1-draft：升级 L1.5 需第二个非同谱系文档站（非 docsify/Gitee 形态）完整应用，升级 L2-validated 另需本团队一次真实学习任务实战，通用版见[方法论模式库](../../../retrospective/patterns/methodology-patterns/research-knowledge/reverse-order-doc-learning.md) |
 
 ---
 
@@ -203,7 +205,7 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 |---|---|---|
 | G1 | 事实 ≥20、无因果词、可溯源、数字/URL 完整 | PASS（44 条，分 7 组；自我标注内容保留引号） |
 | G2 | 洞察 ≥3 且四元组完整、维度独立、含反常识与行动 | PASS（I-1~I-4：结构/时效/AI/工程治理） |
-| G3 | 模式含适用边界、步骤、≥3 反模式、检验标准、跨域迁移、成熟度标注 | PASS（逆序文档学习法，L1，4 反模式） |
+| G3 | 模式含适用边界、步骤、≥3 反模式、检验标准、跨域迁移、成熟度标注 | PASS（逆序文档学习法，L1-draft，案例版 4 反模式；2026-09-30 入库版扩为 5 反模式并登记[模式库](../../../retrospective/patterns/methodology-patterns/research-knowledge/reverse-order-doc-learning.md)） |
 | V 门 | 4 视角、意见 ≥5 且具体、采纳 ≥2 并回归确认 | PASS（7 条意见，6 条采纳修正，1 条登记为局限） |
 | G4 | 产出原子化：单一职责文件、可独立验证、链接与命名规范 | PASS（14 个原子文件：index + concepts 索引 1 + 概念页 7 + references 5；同日 C 阶段将原 `tech/openkylin/` 两篇伴生文档合并入 references/，toctree 经本 index 统一登记，链接与文件名检查通过） |
 
@@ -213,4 +215,6 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S2 | event=CHAIN_SELECTED | session=sc-20260929-openkylin-docs-wiki | msg=知识沉淀链路R→I→E→V→C | ctx={"chain":"R-I-E-V-C","depth":"standard"}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20260929-openkylin-docs-wiki | msg=44事实/4洞察/1模式(L1)/4视角7意见/14原子文件 | ctx={"gates":["G1","G2","G3","V","G4"],"deliverable":"docs/knowledge/tech/openkylin-docs-wiki/"}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=C2 | event=REFACTOR_MERGE | session=sc-20260929-openkylin-docs-wiki | msg=目录合并：tech/openkylin/ 两篇迁入 references/（project-overview/wsl-guide），包内7处+包外8处入链同步，toctree 收敛，旧目录删除 | ctx={"scenario":"refactor","chain":"A→V→C","inbound_links_fixed":15}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S0 | event=CMD_START | session=sc-20260930-openkylin-wiki-pattern | msg=模式沉淀：逆序文档学习法入库方法论模式库（研究知识区） | ctx={"scenario":"knowledge","chain":"R-I-E-V-C"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20260930-openkylin-wiki-pattern | msg=新建模式文档+TOML，更新3处索引，回写本知识包，L1-draft/5反模式 | ctx={"gates":["G3","V"],"deliverable":"docs/retrospective/patterns/methodology-patterns/research-knowledge/reverse-order-doc-learning.md"}
 ```
