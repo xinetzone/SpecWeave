@@ -1,0 +1,25 @@
+id = "scenario-interval-selection"
+title = "场景区间选型法"
+domain = "methodology"
+layer = "governance"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20260930-openeuler-vs-openkylin)——openEuler vs openKylin 后端/桌面双根社区对比（35条新事实+12条本地包锚点/5洞察/8条V意见）"
+source_report = "docs/knowledge/tech/openeuler-vs-openkylin/index.md"
+date = "2026-09-30"
+version = "1.0"
+maturity_note = "单对比主题双侧多信源首次成型：步骤①—④由47条双侧事实支撑，步骤⑤⑥借自最小充分脚手架选型法；跨域迁移仅完成机制推演。升级L1：第二个非同谱系双根社区场景完整应用五问；升级L2-validated：另需本团队一次真实选型实战回填"
+
+[bindings]
+related_patterns = [
+  "minimal-sufficient-scaffold-selection",
+  "tech-selection-three-checks",
+  "availability-heuristic-structural-guard",
+  "root-community-commercial-distro-flywheel",
+  "amphibious-positioning-model",
+  "vendor-lifecycle-governance",
+]

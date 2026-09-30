@@ -189,6 +189,8 @@ source: "openEuler 侧公开网络信源：openeuler.org 官网（下载页/生�
 
 ### 模式：场景区间选型法（L1-draft）
 
+> 本模式已于 2026-09-30 独立沉淀入方法论模式库，通用版（抽象步骤、跨域迁移、与选型类模式关系）见 [场景区间选型法](../../../retrospective/patterns/methodology-patterns/governance-strategy/scenario-interval-selection.md)；本节保留本案例版摘要，完整操作版仍以 [05 概念页](concepts/05-selection-guide.md)为准。
+
 **一句话**：面对同一治理体系内两个相邻根社区（或基础软件分支），不按知名度与总量指标选型，而按"工作负载形态 → 商业下游与合规 → 生命周期偏好 → 包管理与生态存量 → 硬件架构"五问依次收敛，每问把选项推向不同区间，最后以最小实测完成验证。
 
 | 要素 | 内容 |

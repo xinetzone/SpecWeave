@@ -38,6 +38,8 @@
 | net-value-four-questions | [净时薪四问](governance-strategy/net-value-four-questions.md) | L1-draft | 1 | 0 | 在多个外部机会/平台之间做取舍（副业平台、外包供应商、SaaS 工具、开源依赖），且决策依据主要来自对方宣传口径或当期数据时：先用"净时薪—无补贴模型—替代成本—提现闭环—合规三查"五步做三缺口收敛（计量/时点/退出），再进入加权比较。案例：2026 中国副业平台全面调研（73 条事实） |
 | bp-weight-aligned-prep | [权重对位备赛法](product-growth/weight-aligned-preparation.md) | L1-draft | 1 | 0 | 评审标准（维度+权重）完全公开、以"材料包+演示"交付的竞赛/黑客松/政府专项申报/基金答辩：把评分表当公开契约，先判评分模型并清零准入门槛，再按边际得分率与权重对位组织证据物和工时，含评分表版本管理与临赛降级路径。案例：2026上海开源软件应用创新大赛（创新30/落地30/治理20/长期20，F-004~F-065） |
 | minimal-sufficient-scaffold | [最小充分脚手架选型法](governance-strategy/minimal-sufficient-scaffold-selection.md) | L1-draft | 3（外部） | 0 | agent 框架/SDK/harness 选库：功能清单趋同、star 失真、0.x 频变的高速迭代赛道，按"任务分级→最小执行环→同任务小赛（TTFA/LOC/治理缺口）→生命体征检查→最薄栈+治理三件套→锁版本"六步选型。案例：AI Harness Python 包全景调研（mini-swe-agent 131 行/65% 对 SWE-agent 4161 行/67%、七框架实测、AutoGPT 退潮三外部案例），待本项目实战验证升 L2 |
+| scenario-interval-selection | [场景区间选型法](governance-strategy/scenario-interval-selection.md) | L1-draft | 1 | 0 | 同治理体系内两个相邻根社区/基础软件分支（同源、特性表重叠、名称易混但按工作负载分工）选型：不按知名度与总量横评，按"工作负载形态→商业下游与合规→生命周期→生态技能存量→硬件适配"五问固定顺序归区，再以目标环境最小实测收口，生产承诺只给商业下游。案例：openEuler vs openKylin 后端/桌面双根社区（47 条双侧事实、8 条 V 意见），待第二个非同谱系场景验证升 L1 |
+| reverse-order-doc-learning | [逆序文档学习法](research-knowledge/reverse-order-doc-learning.md) | L1-draft | 1 | 0 | 百篇级、多人贡献、时效不均的社区/Git 文档站学习：不按官方目录顺读，先以版本控制接口逆向建图（文件树量化分布、骨架扫描、提交记录定年），再按学习者问题域（选型→安装→使用→开发→贡献）重组路径，三方交叉验证、冲突显式标注。案例：openKylin 文档平台 237 篇逆向导读（44 事实/4 洞察、首页与新手入口最旧），待第二个非同谱系文档站验证升 L1.5 |
 
 ## 成熟度等级说明
 

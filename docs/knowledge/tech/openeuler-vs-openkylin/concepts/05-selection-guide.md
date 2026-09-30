@@ -4,6 +4,8 @@
 
 ## 5.1 模式全文：场景区间选型法（L1-draft）
 
+> 本模式已独立沉淀入方法论模式库，通用表述与跨域迁移（服务器侧双根社区、OLTP/HTAP、K8s 发行版）见 [场景区间选型法](../../../../retrospective/patterns/methodology-patterns/governance-strategy/scenario-interval-selection.md)；本页是 openEuler/openKylin 案例的完整操作版。
+
 面对同一治理体系内两个相邻根社区，不按知名度与总量指标选型，而按五个维度依次提问，把选项推向不同区间，最后以最小实测收口。
 
 **适用于**：存在明确工作负载形态分叉、治理同源、特性表大面积重叠的根社区/基础软件选型（本案例：openEuler 与 openKylin）。

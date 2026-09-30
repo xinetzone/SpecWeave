@@ -110,6 +110,7 @@ responsibility-transfer-governance
 risk-transfer-unintended-consequences
 role-minimization-principle
 root-cause-diagnosis
+scenario-interval-selection
 security-baseline-cross-instance-alignment
 self-referential-spec-system
 session-boundary-commit
