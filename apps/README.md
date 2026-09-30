@@ -113,7 +113,7 @@ apps/<group>/<app-name>/
 | [samples-retrospective](samples/samples-retrospective/README.md) | samples 区复盘与经验沉淀 |
 | zleap-workspace-first-prototype | 工作区首个原型（多模型路由，暂缺 README） |
 
-> **维护约定**：`agent-monetize/` 为根级独立应用（不属上述分组，见下方自动应用清单）；新增/移动应用时同步本小节与下方自动清单（运行 `python .agents/scripts/docgen.py apps` 刷新）。
+> **维护约定**：`agent-monetize/`、`inurl-byok-token-hub/` 为根级独立应用（不属上述分组，见下方自动应用清单）；新增/移动应用时同步本小节与下方自动清单（运行 `python .agents/scripts/docgen.py apps` 刷新）。
 
 ### 2.4 应用清单
 
@@ -126,6 +126,7 @@ apps/<group>/<app-name>/
 | `containers/` | containers/ — Podman rootless 容器工作区分组 | [README.md](containers/README.md) |
 | `dev-tools/` | dev-tools 应用 | `dev-tools/`（暂无 README） |
 | `docker-images/` | docker-images 应用 | `docker-images/`（暂无 README） |
+| `inurl-byok-token-hub/` | BYOK 统一令牌枢纽复刻：E2EE 密钥保险库 + 逻辑别名路由 + 本地三协议代理 + 用量计费。 | [README.md](inurl-byok-token-hub/README.md) |
 | `samples/` | samples 应用 | `samples/`（暂无 README） |
 | `tests/` | tests 应用 | `tests/`（暂无 README） |
 

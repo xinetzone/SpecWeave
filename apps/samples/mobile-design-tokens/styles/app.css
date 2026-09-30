@@ -1,0 +1,943 @@
+/* =============================================================
+   App shell + 组件视觉还原
+   严格对齐设计稿：宽度 1440 / padding 56 / 区块间距 36
+   网格 300px 宽单元 + 16px gap（wrap），色阶 76px chip + 8px gap
+   ============================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: "Inter", "Noto Sans SC", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.24s ease, color 0.24s ease;
+}
+
+::selection {
+  background: var(--accent-subtle-bg);
+  color: var(--accent-subtle-text);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-focus-ring);
+}
+
+/* ------------------------------ 顶栏 ------------------------------ */
+.app-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.24s ease, border-color 0.24s ease;
+}
+
+.app-bar__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 12px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.app-bar__brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+}
+
+.app-bar__title {
+  font-family: "Noto Sans SC", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.app-bar__meta {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-bar__tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 搜索框 */
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search__input {
+  width: 220px;
+  height: 36px;
+  padding: 0 12px;
+  font-family: "Inter", "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  color: var(--text-primary);
+  background: var(--bg-surface-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.search__input::placeholder {
+  color: var(--text-disabled);
+}
+
+.search__input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-focus-ring);
+}
+
+/* 主题分段控件 */
+.switch {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--bg-surface-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.switch__btn {
+  height: 28px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-xs);
+  transition: background-color 0.16s ease, color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.switch__btn:hover {
+  color: var(--text-primary);
+}
+
+.switch__btn[aria-pressed="true"] {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-1);
+}
+
+/* ------------------------------ 页面骨架 ------------------------------ */
+.page {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* 页头（对应设计稿「页头」：gap 10） */
+.page-head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.page-head__tag {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  color: var(--text-link);
+}
+
+.page-head__title {
+  margin: 0;
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 48px;
+  color: var(--text-primary);
+}
+
+.page-head__sub {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 26px;
+  color: var(--text-secondary);
+}
+
+.page-head__meta {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+/* 区块（对应设计稿各区块：gap 14） */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  scroll-margin-top: 96px;
+}
+
+.section__title {
+  margin: 0;
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.section__desc {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 22px;
+  color: var(--text-secondary);
+}
+
+/* ------------------------------ 章节导航 ------------------------------ */
+.nav {
+  position: sticky;
+  top: 61px;
+  z-index: 15;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 12px 0;
+  background: var(--bg-canvas);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.24s ease, border-color 0.24s ease;
+}
+
+.nav__chip {
+  padding: 7px 14px;
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  transition: background-color 0.16s ease, color 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.nav__chip:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.nav__chip[aria-current="true"] {
+  background: var(--accent-subtle-bg);
+  color: var(--accent-subtle-text);
+  border-color: transparent;
+}
+
+.nav__chip.is-hidden {
+  display: none;
+}
+
+/* ------------------------------ 通用网格 ------------------------------ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 300px));
+  gap: 16px;
+  justify-content: start;
+}
+
+/* ------------------------------ 01 原始色阶 ------------------------------ */
+.ramp-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ramp-group__title {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.ramp-row {
+  display: grid;
+  gap: 8px;
+}
+
+.chip {
+  height: 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ramp-outline);
+  border-radius: 10px;
+  padding: 0 2px;
+  overflow: hidden;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.chip:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+}
+
+.chip__label {
+  font-family: "Inter", sans-serif;
+  font-size: 10px;
+  line-height: 14px;
+  text-align: center;
+  white-space: pre-line;
+}
+
+/* ------------------------------ 02 语义色 ------------------------------ */
+.panel {
+  padding: 20px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  transition: background-color 0.24s ease, border-color 0.24s ease;
+}
+
+.panel__title {
+  margin: 0 0 14px;
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.token {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 300px;
+  text-align: left;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: var(--radius-sm);
+}
+
+.token__swatch {
+  height: 56px;
+  background: var(--swatch, transparent);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.token:hover .token__swatch {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+}
+
+.token__name {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.token__value {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+/* ------------------------------ 03 圆角 ------------------------------ */
+.radius-unit {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.radius-unit__preview {
+  height: 96px;
+  background: var(--bg-surface-secondary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--unit-radius);
+  transition: background-color 0.24s ease, border-color 0.24s ease;
+}
+
+.radius-unit__name {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.radius-unit__usage {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+/* ------------------------------ 04 阴影 ------------------------------ */
+.stand {
+  padding: 28px;
+  background: var(--bg-canvas);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: background-color 0.24s ease, border-color 0.24s ease;
+}
+
+.stand__title {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.stand__row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+  align-items: center;
+}
+
+.shadow-card {
+  height: 120px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.24s ease, box-shadow 0.24s ease;
+}
+
+.shadow-card__name {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.shadow-card__params {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+/* ------------------------------ 05 组件预览 ------------------------------ */
+.preview-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.preview {
+  padding: 24px;
+  background: var(--bg-canvas);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: background-color 0.24s ease, border-color 0.24s ease;
+}
+
+.preview__mode {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--text-tertiary);
+}
+
+.preview__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.preview__avatar {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  background: var(--accent-subtle-bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+}
+
+.preview__titles {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.preview__page-title {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.preview__page-sub {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.preview__badge {
+  padding: 6px;
+  background: var(--accent-subtle-bg);
+  border-radius: var(--radius-xs);
+}
+
+.preview__badge span {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-subtle-text);
+}
+
+.card {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2);
+  transition: background-color 0.24s ease, border-color 0.24s ease,
+    box-shadow 0.24s ease;
+}
+
+.card__title {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.card__body {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--text-secondary);
+}
+
+.progress {
+  height: 8px;
+  background: var(--bg-surface-secondary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress__fill {
+  width: 210px;
+  max-width: 100%;
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: var(--radius-full);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.list__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+}
+
+.list__dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: var(--radius-full);
+}
+
+.list__dot--accent {
+  background: var(--accent-primary);
+}
+
+.list__dot--muted {
+  background: var(--text-tertiary);
+}
+
+.list__text {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.list__text--disabled {
+  color: var(--text-disabled);
+}
+
+.list__divider {
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+.preview__link {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-link);
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.btn {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: var(--radius-sm);
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.btn--primary {
+  background: var(--accent-primary);
+  color: var(--text-on-accent);
+}
+
+.btn--primary:hover {
+  box-shadow: var(--shadow-2);
+}
+
+.btn--primary:active {
+  background: var(--accent-primary-pressed);
+}
+
+.btn--secondary {
+  background: var(--bg-surface-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+}
+
+.btn--secondary:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+/* ------------------------------ 搜索命中态 ------------------------------ */
+.is-dimmed {
+  opacity: 0.24;
+  pointer-events: none;
+}
+
+.is-empty-hidden {
+  display: none;
+}
+
+.empty {
+  padding: 24px;
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  color: var(--text-tertiary);
+  background: var(--bg-surface-secondary);
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-md);
+}
+
+/* ------------------------------ 吐司 ------------------------------ */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  z-index: 50;
+  transform: translate(-50%, 12px);
+  padding: 12px 16px;
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  color: var(--text-on-accent);
+  background: var(--bg-surface-inverse);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.toast__code {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+}
+
+/* ------------------------------ 页脚 ------------------------------ */
+.foot {
+  padding: 24px 0 8px;
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.foot__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.foot__btn {
+  height: 32px;
+  padding: 0 12px;
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+}
+
+.foot__btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+/* ------------------------------ 06 字体排印 ------------------------------ */
+.grid--fonts {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.type-font {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  background: var(--bg-surface-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  transition: background-color 0.24s ease, border-color 0.24s ease;
+  cursor: pointer;
+}
+
+.type-font:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-2);
+}
+
+.type-font__name {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.type-font__sample {
+  font-size: 28px;
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+
+.type-font__code {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  word-break: break-all;
+}
+
+.type-scale {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.type-row {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.type-row:last-child {
+  border-bottom: 0;
+}
+
+.type-row__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.type-row__name {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.type-row__spec {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.type-row__sample {
+  min-width: 0;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.type-row__specs {
+  display: flex;
+  gap: 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* ------------------------------ 响应式 ------------------------------ */
+@media (max-width: 1400px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 300px));
+  }
+}
+
+@media (max-width: 1080px) {
+  .page,
+  .app-bar__inner {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 300px));
+  }
+
+  .stand__row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .app-bar__meta {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .ramp-row {
+    grid-template-columns: repeat(auto-fit, minmax(52px, 1fr)) !important;
+  }
+
+  .preview-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 32px 20px;
+    gap: 28px;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    justify-content: stretch;
+  }
+
+  .token,
+  .radius-unit {
+    width: 100%;
+  }
+
+  .page-head__title {
+    font-size: 28px;
+    line-height: 38px;
+  }
+
+  .stand,
+  .preview,
+  .panel {
+    padding: 16px;
+  }
+
+  .stand__row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .app-bar__inner {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .search__input {
+    width: 100%;
+  }
+
+  .type-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .type-row__specs {
+    flex-wrap: wrap;
+  }
+}

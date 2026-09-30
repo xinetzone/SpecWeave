@@ -1,0 +1,48 @@
+# inurl-byok-token-hub 默认配置
+# 优先级：CLI 参数 > 环境变量(BYOK_*) > 本文件 > 内置默认值
+
+host: "127.0.0.1"
+port: 3003
+api_prefix: "/v1"
+
+# 运行期数据目录（密文库/令牌摘要/用量台账）
+data_dir: "data/runtime"
+catalog_path: "data/catalog.json"
+
+# 路由与故障切换
+failover_status_codes: [429, 500, 502, 503, 504]
+max_attempts: 3
+timeout_seconds: 30.0
+default_strategy: "latency_first"
+default_combo: ""
+default_compression: "standard"
+
+# 目录行为（默认保持原产品行为：public:false 厂商仍随公开接口下发）
+hide_hidden_providers: false
+
+# 人机验证（原产品实测 enabled:false）
+turnstile_enabled: false
+
+# 套餐（金额单位：分）
+plans:
+  free:
+    name: "免费版"
+    price_cents: 0
+    key_limit: 3
+  standard:
+    name: "标准版"
+    price_cents: 990
+    key_limit: 10
+  pro:
+    name: "专业版"
+    price_cents: 2990
+    key_limit: null
+
+# 邀请奖励（原文档未给数值，此处为合理默认）
+invite_bonus_per_invite: 1
+invite_bonus_cap: 5
+
+# 初始管理员账户（口令留空 = 首次启动时随机生成并写入运行期 admin.token；
+# 也可由环境变量 BYOK_ADMIN_PASSWORD 覆盖，避免在配置文件中存放明文口令）
+admin_email: "admin@local"
+admin_password: ""

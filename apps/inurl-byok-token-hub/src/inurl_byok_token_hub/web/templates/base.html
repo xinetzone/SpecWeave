@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}BYOK 令牌枢纽 · 精简控制台{% endblock %}</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #171a21;
+      --line: #262b36;
+      --text: #e7eaf0;
+      --muted: #98a1b3;
+      --accent: #4d9fff;
+      --warn: #ffb35c;
+      --danger: #ff6b6b;
+      --ok: #4ad991;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 14px/1.6 -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    }
+    header { border-bottom: 1px solid var(--line); background: var(--panel); }
+    nav { display: flex; gap: 8px; align-items: center; padding: 12px 20px; flex-wrap: wrap; }
+    nav strong { margin-right: 12px; letter-spacing: .5px; }
+    nav a {
+      color: var(--muted); text-decoration: none; padding: 6px 10px; border-radius: 6px;
+    }
+    nav a:hover, nav a.active { background: #1f2531; color: var(--text); }
+    nav form { margin-left: auto; }
+    main { max-width: 1080px; margin: 0 auto; padding: 24px 20px 48px; }
+    h1 { font-size: 20px; margin: 0 0 4px; }
+    h2 { font-size: 15px; margin: 28px 0 10px; color: var(--muted); font-weight: 600; }
+    p.note { color: var(--muted); margin: 0 0 16px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #1b2029; color: var(--muted); font-weight: 600; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    tr.empty td { color: var(--muted); }
+    .cards { display: flex; gap: 12px; flex-wrap: wrap; margin: 8px 0 4px; }
+    .card {
+      border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; background: var(--panel);
+      min-width: 160px;
+    }
+    .card span { display: block; color: var(--muted); font-size: 12px; }
+    .card b { font-size: 18px; }
+    .card.hot b { color: var(--accent); }
+    form.inline { display: inline; }
+    label { display: block; margin: 12px 0 4px; color: var(--muted); }
+    input[type=text], input[type=password], select, textarea {
+      width: 100%; max-width: 560px; padding: 8px 10px; border-radius: 6px;
+      border: 1px solid var(--line); background: #10131a; color: var(--text);
+      font-family: inherit;
+    }
+    textarea { min-height: 76px; resize: vertical; font-family: ui-monospace, Consolas, monospace; }
+    button {
+      margin-top: 14px; padding: 8px 16px; border-radius: 6px; cursor: pointer;
+      border: 1px solid var(--accent); background: var(--accent); color: #08101c; font-weight: 600;
+    }
+    button.ghost { background: transparent; color: var(--muted); border-color: var(--line); margin: 0; }
+    button.danger { background: transparent; color: var(--danger); border-color: #4a2a2e; margin: 0; }
+    .flash { border-radius: 6px; padding: 8px 12px; margin: 12px 0; border: 1px solid; }
+    .flash.ok { color: var(--ok); border-color: #1d4433; background: #12251c; }
+    .flash.error { color: var(--warn); border-color: #4a3a20; background: #241d12; }
+    .tag { padding: 2px 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+    footer {
+      border-top: 1px solid var(--line); color: var(--muted); padding: 14px 20px; font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <nav>
+    <strong>BYOK 令牌枢纽</strong>
+    {% if user %}
+      <a href="/console/keys">密钥库</a>
+      <a href="/console/usage">用量</a>
+      <a href="/console/routes">路由</a>
+      <a href="/console/plans">套餐</a>
+      <form class="inline" method="post" action="/console/logout">
+        <button class="ghost" type="submit">退出</button>
+      </form>
+    {% else %}
+      <a href="/console/login">登录</a>
+    {% endif %}
+  </nav>
+</header>
+<main>
+  {% block content %}{% endblock %}
+</main>
+<footer>
+  精简控制台：仅覆盖密钥库、用量、路由偏好与套餐订单四组页面，不还原原产品全部交互。
+  页面不渲染任何明文厂商 Key 或统一令牌。
+</footer>
+</body>
+</html>

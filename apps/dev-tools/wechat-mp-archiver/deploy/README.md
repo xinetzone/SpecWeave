@@ -9,10 +9,11 @@
 
 ## 1. 前置条件
 
-- 容器运行时（任一）：
-  - Windows：Docker Desktop（启用 WSL2 后端）；
-  - Linux：Docker Engine 24+ 与 Compose 插件；
-  - ARM 设备/NAS：镜像为多架构（linux/amd64、linux/arm64），Docker 运行时即可。
+- 容器运行时（任一，均需带 Compose 能力；下文 `docker compose` 命令对 Podman 等价替换为 `podman compose`）：
+  - Windows：Docker Desktop（启用 WSL2 后端）或 Podman 5.x（WSL2 后端）；
+  - Linux：Docker Engine 24+ 与 Compose 插件，或 Podman 5.x + podman-compose；
+  - ARM 设备/NAS：镜像为多架构（linux/amd64、linux/arm64），Docker/Podman 运行时均可。
+- 若本机网络访问 Docker Hub 不稳定（拉取超时），先按第 13 节配置镜像源再启动。
 - 一个用于采集的**专用微信订阅号**（注册主体个人即可），以及可扫码的微信客户端。
 - 本机端口 5000 未被占用。
 
@@ -136,7 +137,9 @@ mp-archiver fetch -a <公众号> --fetch-metrics
 | `doctor` 输出「采集服务未响应：无法连接…」告警 | `docker compose ps` 容器是否 healthy；端口是否被占；是否有本地代理拦截 127.0.0.1 |
 | 容器反复重启 | `docker compose logs collector`；确认 `collector.env` 存在且 `SITE_URL` 与端口绑定一致 |
 | 扫码后仍 401 | 确认扫码的是订阅号管理员微信；尝试重启容器后重新扫码 |
-| ARM 设备拉取失败 | 确认 Docker 版本支持多架构清单（manifest list）；镜像已提供 arm64 变体 |
+| ARM 设备拉取失败 | 确认容器运行时支持多架构清单（manifest list）；镜像已提供 arm64 变体 |
+| 拉取镜像报 `TLS handshake timeout`、`pinging container registry registry-1.docker.io` 失败或 DNS 解析超时 | 本机到 Docker Hub 不可达，与项目无关；按第 13 节配置 registry mirror 或手动转存镜像 |
+| 容器一直 `unhealthy`（旧版本清单） | 2026-09 已将健康检查端点修正为 `/api/health`；本镜像 API 挂在 `/api` 前缀下，根路径 `/openapi.json` 返回 404 |
 | `sync-official` 报 48001 | 主体无接口权限（2025-07 后个人/未认证号常态）；官方源不可用，历史全量以 R2 采集服务为准 |
 | `sync-official` 报配额触顶 | 当日 batchget 调用达安全阈值（默认 90 次/日），UTC 0 点后重跑；状态见 `data/official_api_quota.json` |
 | `sync-official` 提示无法解析 biz | 先对该账号执行一次 `list`（R2），或在 `.env` 显式配置 `MP_ARCHIVER_WECHAT_OFFICIAL_BIZ` |
@@ -252,3 +255,66 @@ crontab -e
 ```
 
 采集服务容器与归档管线可以同机部署；若分机部署，注意管线需能访问采集服务的回环/内网地址（默认 `MP_ARCHIVER_EXPORTER_URL=http://127.0.0.1:5000`，分机时改为内网地址并设置双方一致的 API Token，仍不得暴露公网）。容器化定时可在 NAS 上用与 cron 等价的「计划任务」功能调用同一命令，或由宿主机 `docker exec` 进入含 Python 环境的辅助容器执行；采集服务容器本身不包含归档管线，不要把同步命令发到采集容器内。
+
+## 13. 网络受限时拉取镜像（Docker Hub 不可达）
+
+症状：`compose up` 在 `Trying to pull docker.io/...` 阶段报 `TLS handshake timeout`、`pinging container registry registry-1.docker.io` 失败或 DNS 解析超时。根因是本机网络到 Docker Hub 的连接被干扰，与本项目无关。下列方案只改「从哪拉」，不改镜像名，compose 文件无需改动。
+
+> **时效声明**：以下镜像源为 **2026-09 实测可用**的第三方公开缓存（同一时段 `registry-1.docker.io` DNS 解析超时）。免费镜像源可用性随网络政策变化，失效时更换 `location` 域名即可；第三方源仅用于拉取公开镜像，不要用于私有镜像。
+
+### 13.1 Podman（Linux 直接配置；Windows 配置在 podman machine 内部）
+
+新增 `/etc/containers/registries.conf.d/995-dockerhub-mirror.conf`：
+
+```toml
+[[registry]]
+location = "docker.io"
+
+  [[registry.mirror]]
+  location = "docker.m.daocloud.io"
+```
+
+Linux 或已进入 `podman machine ssh` 会话时，可直接落盘：
+
+```bash
+sudo tee /etc/containers/registries.conf.d/995-dockerhub-mirror.conf >/dev/null <<'EOF'
+[[registry]]
+location = "docker.io"
+
+  [[registry.mirror]]
+  location = "docker.m.daocloud.io"
+EOF
+```
+
+Windows 上若 `podman machine ssh` 因私钥权限（`UNPROTECTED PRIVATE KEY FILE`）不可用，可先将上面的 TOML 存为本机临时文件，再经 WSL 直连放入：
+
+```powershell
+wsl -d podman-machine-default -u root -- cp /mnt/c/Users/<用户>/AppData/Local/Temp/995-dockerhub-mirror.conf /etc/containers/registries.conf.d/
+```
+
+配置即时生效，无需重启，验证镜像仍以原始名落地：
+
+```bash
+podman pull docker.io/tmwgsicp/wechat-download-api:latest
+podman compose up -d
+```
+
+回滚：删除该文件即恢复直连 Docker Hub。注意重建 podman machine（`podman machine reset`/`rm`）后配置会丢失，需重新放置。
+
+### 13.2 Docker Desktop / Docker Engine
+
+- Docker Desktop：Settings → Docker Engine，在 JSON 中加入 `"registry-mirrors": ["https://docker.m.daocloud.io"]`，Apply & Restart；
+- Linux Docker Engine：向 `/etc/docker/daemon.json` 写入同名键后 `sudo systemctl restart docker`。
+
+### 13.3 无配置权限时的一次性转存
+
+不改全局配置，手动经镜像源拉取后改回原始名，再正常 `compose up`（镜像名与清单一致即被直接使用，不再触发拉取）：
+
+```bash
+# Podman
+podman pull docker.m.daocloud.io/tmwgsicp/wechat-download-api:latest
+podman tag  docker.m.daocloud.io/tmwgsicp/wechat-download-api:latest docker.io/tmwgsicp/wechat-download-api:latest
+# Docker 将 podman 换为 docker 即可
+```
+
+缺点：升级（`compose pull`）时需重复手动操作，长期使用建议走 13.1/13.2。

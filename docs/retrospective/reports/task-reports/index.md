@@ -45,6 +45,7 @@ retrospective-mermaid-funnel-redesign-pdf-export-20260711/index
 retrospective-mermaid-list-fix-first-principles-20260710/index
 retrospective-minitap-wiki-creation-20260707/index
 retrospective-okf-desktop-wiki-tutorial-20260819/index
+retrospective-openkylin-wsl-install-sparse-20260929/index
 retrospective-pickle-sedimentation-20260723/index
 retrospective-report-standardization-20260708/index
 retrospective-risk-interceptor-pattern-v2-20260728/index

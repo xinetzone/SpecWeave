@@ -138,7 +138,19 @@ apps/devcontainer-base/benchmark-results-ci/
 .arts/
 .codeartsdoer/
 
-# WorkBuddy 本地配置（skills 为指向 .agents/skills 的本地目录联接，不可提交）
-.workbuddy/skills
-.workbuddy/cache/
-.workbuddy/logs/
+# WorkBuddy 本地配置（skills 为指向 .agents/skills 的本地目录联接，整体为本地工作产物，不可提交）
+.workbuddy/
+
+# Tencent Cloud EdgeOne（CLI 本地关联、部署暂存与凭证，机器生成产物）
+.edgeone/
+.tef_dist/
+
+# work 视频创作工作目录（含 mov/mkv/webm 等大体积素材与中间产物，本地保留不入库）
+work/ai-agent-kepu/
+
+# 注：work/industry-research-*/ 是有意归档入库的研究产物，不忽略；
+# 仅忽略其中显式列出的本地草稿。新增草稿请在此逐条追加，勿整体忽略 work/。
+work/ai-monetization-doubao-outcome-pricing.md
+
+# WorkBuddy 发布应用状态文件（appId 随会话生成，机器产物，本地保留不入库）
+.wbapp_*.genie

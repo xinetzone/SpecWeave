@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+.venv/
+venv/
+.env
+
+# 运行期数据目录（含密文库与令牌摘要，禁止入库）
+data/runtime/
+runtime/
+tests/.tmpout/
+*.db
+*.sqlite3
+byok.pid

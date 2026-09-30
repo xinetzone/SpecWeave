@@ -1,0 +1,13 @@
+# 热身项目依赖清单（Task0 专用）
+#
+# ⚠️ 学生不用管这个文件——老师准备环境时用。
+#    热身项目刻意只依赖 3 个扩展 + Sphinx 内置主题（alabaster），
+#    不装 furo、不装 openai，以保证「零失败安装」。
+#
+# 下限按实测环境标注（Sphinx 9.1.0 / myst-parser 5.1.0 / 2026-09 验证）。
+# 不锁死上限：学生机器上装到更新的小版本通常也没问题。
+
+sphinx>=7.0
+myst-parser>=2.0
+sphinx-copybutton>=0.5
+sphinx-design>=0.5

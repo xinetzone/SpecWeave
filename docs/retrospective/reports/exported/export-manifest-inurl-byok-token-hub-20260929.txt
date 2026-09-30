@@ -1,0 +1,43 @@
+EXPORT MANIFEST — inurl BYOK Token Hub 复刻里程碑复盘（apps/inurl-byok-token-hub）
+================================================================================
+
+export_time  : 2026-09-29
+report_type  : retrospective (milestone)
+source_path  : docs/retrospective/reports/2026-09-29-inurl-byok-token-hub-milestone-retro.md
+output_dir   : docs/retrospective/reports/exported
+formats      : md
+version      : 1.0
+
+EXPORTED FILES
+--------------------------------------------------------------------------------
+AKA-1. inurl-byok-token-hub-milestone-retrospective-20260929-v1.0.md  (14800 bytes)
+
+VERIFICATION
+--------------------------------------------------------------------------------
+- source exists              : YES
+- frontmatter(type/date/type): COMPLETE (title=inurl BYOK Token Hub 复刻里程碑复盘（apps/inurl-byok-token-hub）, date=2026-09-29, scenario=milestone)
+- content non-empty          : YES (26 facts, 3 insights, 5 actions, 1 pattern)
+- G1-G4 quality gates        : PASSED
+- index updated              : docs/retrospective/reports/exported/index.md (toctree entry added)
+
+KEY ARTIFACTS REFERENCED
+--------------------------------------------------------------------------------
+- App source     : apps/inurl-byok-token-hub/ (71 tracked files, src 6239 lines, tests 2233 lines)
+- Spec trio      : .trae/specs/inurl-byok-token-hub/{spec.md,tasks.md,review.md}
+- Review report  : .trae/specs/inurl-byok-token-hub/review.md (AC-1~AC-11, 9 V opinions)
+- Source bundle  : projects/awesome-okf-xs/doc/bundles/jishu/ai/products/inurl-byok-token-hub (read-only)
+- Test/coverage  : pytest 170 passed, 87.64% coverage, smoke 19/19
+- Commits        : 11 atomic Conventional Commits (byok scope)
+
+NOTES
+--------------------------------------------------------------------------------
+- Export is a byte-identical copy of the source report (md format passthrough).
+- Count assertions independently verified: 71 git-tracked files (git ls-files),
+  src 6239 / tests 2233 lines (find -exec cat | wc -l), pytest 170, coverage 87.64%.
+- review.md recorded "86 files" = includes build artifacts (build/, .egg-info, __pycache__);
+  this report anchors to git-tracked 71 source files (measurement anchored to commit time).
+- Key deviation captured: initial "all-green" build (170 passed) still hid 2 blocking
+  pseudo-capabilities (Combo layering, /api/escrow false claim) + 6 real defects,
+  surfaced only by independent adversarial review (V).
+- Security model difference (server-side escrow generation vs original browser E2EE)
+  is the most essential divergence from the source product; documented in README A21/A22.

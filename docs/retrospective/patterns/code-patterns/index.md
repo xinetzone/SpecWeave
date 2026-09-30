@@ -220,6 +220,7 @@ wsl-distro-install-migration-guide
 wsl-docker-command-safety
 wsl-docker-gpu-triage
 wsl-docker-storage-cleanup-five-step-method
+wsl-import-memory-triage-sparse-vhd
 wsl-podman-build-bridge
 wsl-windows-path-autoconvert
 wsl2-docker-selection-decision

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="theme-root">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>移动端 Design Token 体系</title>
+    <meta
+      name="description"
+      content="从 Ardot 设计稿生成的 Design Token 应用：颜色 / 圆角 / 阴影 / 字体排印 完整变量表，支持明暗主题实时切换。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/tokens.css" />
+    <link rel="stylesheet" href="styles/app.css" />
+  </head>
+  <body>
+    <!-- ================= 顶栏（应用外壳，Token 驱动） ================= -->
+    <header class="app-bar">
+      <div class="app-bar__inner">
+        <div class="app-bar__brand">
+          <span class="app-bar__title">Design Token 工作台</span>
+          <span class="app-bar__meta" id="app-meta"></span>
+        </div>
+        <div class="app-bar__tools">
+          <div class="search">
+            <input
+              id="search"
+              class="search__input"
+              type="search"
+              placeholder="搜索变量名或色值…"
+              autocomplete="off"
+              aria-label="搜索 Design Token"
+            />
+          </div>
+          <div class="switch" role="group" aria-label="主题模式">
+            <button class="switch__btn" type="button" data-theme="light">
+              浅色
+            </button>
+            <button class="switch__btn" type="button" data-theme="dark">
+              深色
+            </button>
+            <button class="switch__btn" type="button" data-theme="auto">
+              跟随系统
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <!-- ================= 页头 ================= -->
+      <div class="page-head">
+        <span class="page-head__tag">MOBILE APP FOUNDATION</span>
+        <h1 class="page-head__title">移动端 Design Token 体系</h1>
+        <p class="page-head__sub">
+          颜色 / 圆角 / 阴影 / 字体排印 完整变量表 · 明暗主题由 Light、Dark 两套
+          Mode 驱动，组件层只引用语义变量
+        </p>
+        <span class="page-head__meta" id="page-meta"></span>
+      </div>
+
+      <!-- ================= 章节导航 ================= -->
+      <nav class="nav" id="nav" aria-label="章节导航">
+        <a class="nav__chip" href="#section-primitives">01 原始色阶</a>
+        <a class="nav__chip" href="#section-semantic">02 语义色</a>
+        <a class="nav__chip" href="#section-radius">03 圆角</a>
+        <a class="nav__chip" href="#section-shadow">04 阴影</a>
+        <a class="nav__chip" href="#section-preview">05 组件预览</a>
+        <a class="nav__chip" href="#section-typography">06 字体排印</a>
+      </nav>
+
+      <!-- ================= 01 原始色阶 ================= -->
+      <section class="section" id="section-primitives">
+        <h2 class="section__title">01 原始色阶 Primitives</h2>
+        <p class="section__desc">
+          与主题无关的静态色板。Light / Dark 两个 Mode
+          取值一致；语义色一律从这里取值，业务层禁止直接引用。
+        </p>
+        <div id="primitives-groups" style="display: flex; flex-direction: column; gap: 20px"></div>
+      </section>
+
+      <!-- ================= 02 语义色 ================= -->
+      <section class="section" id="section-semantic">
+        <h2 class="section__title">02 语义色 Semantic Colors</h2>
+        <p class="section__desc">
+          组件唯一允许引用的颜色层。同名变量在 Light / Dark 两个 Mode
+          下取不同值，切换节点或页面的 Mode 即可整体换肤。
+        </p>
+
+        <div class="panel theme-light">
+          <h3 class="panel__title">LIGHT 模式 · 27 个语义变量</h3>
+          <div class="grid" id="semantic-light"></div>
+        </div>
+
+        <div class="panel theme-dark">
+          <h3 class="panel__title">
+            DARK 模式 · 27 个语义变量（与上方 Light 面板完全同名、同结构，仅
+            Mode 不同）
+          </h3>
+          <div class="grid" id="semantic-dark"></div>
+        </div>
+      </section>
+
+      <!-- ================= 03 圆角 ================= -->
+      <section class="section" id="section-radius">
+        <h2 class="section__title">03 圆角 Radius</h2>
+        <p class="section__desc">
+          8 级圆角，双主题取值一致。inset 按 card 尺寸约束，卡片圆角不小于「内容圆角
+          + 内边距」的一半。
+        </p>
+        <div class="grid" id="radius-grid"></div>
+      </section>
+
+      <!-- ================= 04 阴影 ================= -->
+      <section class="section" id="section-shadow">
+        <h2 class="section__title">04 阴影 Elevation / Shadow</h2>
+        <p class="section__desc">
+          5 级高度。暗色下整体失焦变虚，所以 Dark
+          模式统一切换为纯黑并提高不透明度，避免阴影「消失」。
+        </p>
+
+        <div class="stand theme-light">
+          <span class="stand__title">LIGHT · shadow-N-color = #0E1218 @ 5%–16%</span>
+          <div class="stand__row" id="shadow-light"></div>
+        </div>
+
+        <div class="stand theme-dark">
+          <span class="stand__title">DARK · shadow-N-color = #000000 @ 30%–60%</span>
+          <div class="stand__row" id="shadow-dark"></div>
+        </div>
+      </section>
+
+      <!-- ================= 05 组件预览 ================= -->
+      <section class="section" id="section-preview">
+        <h2 class="section__title">
+          05 明暗主题切换验证 Component Preview
+        </h2>
+        <p class="section__desc">
+          左右两块 UI 结构完全一致、变量名完全一致；右侧只是把 Semantic 集合切到
+          Dark Mode，全部颜色自动换肤，没有改过任何一个节点属性。
+        </p>
+
+        <div class="preview-row">
+          <!-- ---- Light 预览（强制 Light 作用域） ---- -->
+          <div class="preview theme-light">
+            <span class="preview__mode">LIGHT MODE</span>
+
+            <div class="preview__head">
+              <div class="preview__avatar"></div>
+              <div class="preview__titles">
+                <span class="preview__page-title">今日概览</span>
+                <span class="preview__page-sub">数据已更新 · 5 分钟前</span>
+              </div>
+              <div class="preview__badge"><span>NEW</span></div>
+            </div>
+
+            <div class="card">
+              <span class="card__title">本周周报已生成</span>
+              <p class="card__body">
+                共完成 18 个任务，比上周多 3 个。点击查看完整数据看板。
+              </p>
+              <div class="progress">
+                <div class="progress__fill"></div>
+              </div>
+            </div>
+
+            <div class="list">
+              <div class="list__item">
+                <span class="list__dot list__dot--accent"></span>
+                <span class="list__text">09:30 早会纪要已归档</span>
+              </div>
+              <div class="list__divider"></div>
+              <div class="list__item">
+                <span class="list__dot list__dot--muted"></span>
+                <span class="list__text list__text--disabled"
+                  >11:00 设计评审待确认（占位 / disabled 示例）</span
+                >
+              </div>
+            </div>
+
+            <button class="preview__link" type="button">查看全部动态</button>
+
+            <div class="button-row">
+              <button class="btn btn--primary" type="button">立即查看</button>
+              <button class="btn btn--secondary" type="button">稍后再说</button>
+            </div>
+          </div>
+
+          <!-- ---- Dark 预览（强制 Dark 作用域，结构与文案完全相同） ---- -->
+          <div class="preview theme-dark">
+            <span class="preview__mode">DARK MODE</span>
+
+            <div class="preview__head">
+              <div class="preview__avatar"></div>
+              <div class="preview__titles">
+                <span class="preview__page-title">今日概览</span>
+                <span class="preview__page-sub">数据已更新 · 5 分钟前</span>
+              </div>
+              <div class="preview__badge"><span>NEW</span></div>
+            </div>
+
+            <div class="card">
+              <span class="card__title">本周周报已生成</span>
+              <p class="card__body">
+                共完成 18 个任务，比上周多 3 个。点击查看完整数据看板。
+              </p>
+              <div class="progress">
+                <div class="progress__fill"></div>
+              </div>
+            </div>
+
+            <div class="list">
+              <div class="list__item">
+                <span class="list__dot list__dot--accent"></span>
+                <span class="list__text">09:30 早会纪要已归档</span>
+              </div>
+              <div class="list__divider"></div>
+              <div class="list__item">
+                <span class="list__dot list__dot--muted"></span>
+                <span class="list__text list__text--disabled"
+                  >11:00 设计评审待确认（占位 / disabled 示例）</span
+                >
+              </div>
+            </div>
+
+            <button class="preview__link" type="button">查看全部动态</button>
+
+            <div class="button-row">
+              <button class="btn btn--primary" type="button">立即查看</button>
+              <button class="btn btn--secondary" type="button">稍后再说</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 06 字体排印 ================= -->
+      <section class="section" id="section-typography">
+        <h2 class="section__title">06 字体排印 Typography</h2>
+        <p class="section__desc">
+          字体族 / 字号 / 字重 / 行高 四张量表，双主题取值一致。下方按语义角色
+          (role) 展示从 Display 到 Label 的字样阶梯。
+        </p>
+
+        <div class="panel theme-light">
+          <h3 class="panel__title">FONT FAMILY · 字体族</h3>
+          <div class="grid grid--fonts" id="type-fonts"></div>
+        </div>
+
+        <div class="panel theme-light">
+          <h3 class="panel__title">TYPE SCALE · 字样阶梯（语义角色）</h3>
+          <div class="type-scale" id="type-scale"></div>
+        </div>
+      </section>
+
+      <footer class="foot">
+        <span id="foot-meta"></span>
+        <div class="foot__actions">
+          <button class="foot__btn" type="button" id="export-css">
+            导出 tokens.css
+          </button>
+          <button class="foot__btn" type="button" id="export-json">
+            导出 tokens.json
+          </button>
+          <button class="foot__btn" type="button" id="reset-theme">
+            重置为浅色
+          </button>
+        </div>
+      </footer>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="scripts/tokens.js"></script>
+    <script src="scripts/app.js"></script>
+  </body>
+</html>

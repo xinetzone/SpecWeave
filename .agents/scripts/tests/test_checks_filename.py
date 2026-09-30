@@ -134,7 +134,10 @@ class TestGetStaged:
 
     def test_returns_staged_files(self, tmp_path):
         mock_result = MagicMock()
-        mock_result.stdout = "src/main.py\ndocs/README.md\n"
+        mock_result.stdout = (
+            ":100644 100644 00000000 11111111 A\tsrc/main.py\n"
+            ":100644 100644 22222222 33333333 M\tdocs/README.md\n"
+        )
         with patch.object(fn.subprocess, "run", return_value=mock_result):
             files = fn._get_staged(tmp_path)
         assert len(files) == 2
@@ -147,6 +150,66 @@ class TestGetStaged:
         with patch.object(fn.subprocess, "run", return_value=mock_result):
             files = fn._get_staged(tmp_path)
         assert files == []
+
+    def test_skips_submodule_gitlink(self, tmp_path):
+        """子模块 gitlink（mode=160000）不按文件命名规范检查。
+
+        回归：daoapps.github.io 指针 bump 曾被误判为「扩展名 .io 不允许」，
+        导致 chore(submodules) 提交被 pre-commit 拦下。
+        """
+        mock_result = MagicMock()
+        mock_result.stdout = (
+            ":160000 160000 f3095a80e f7726e067 M\tprojects/daoapps.github.io\n"
+            ":100644 100644 22222222 33333333 M\tdocs/index.md\n"
+        )
+        with patch.object(fn.subprocess, "run", return_value=mock_result):
+            files = fn._get_staged(tmp_path)
+        assert files == [tmp_path / "docs/index.md"]
+
+    def test_skips_newly_added_gitlink(self, tmp_path):
+        """新增子模块（旧 mode=000000、新 mode=160000）同样跳过。"""
+        mock_result = MagicMock()
+        mock_result.stdout = ":000000 160000 00000000 aabbccddee A\tprojects/new-repo.io\n"
+        with patch.object(fn.subprocess, "run", return_value=mock_result):
+            assert fn._get_staged(tmp_path) == []
+
+    def test_ignores_malformed_raw_lines(self, tmp_path):
+        """缺制表符或空路径的行不产生结果，也不抛异常。"""
+        mock_result = MagicMock()
+        mock_result.stdout = ":100644 100644 0 0 A\n\n:no-tab-line\n"
+        with patch.object(fn.subprocess, "run", return_value=mock_result):
+            assert fn._get_staged(tmp_path) == []
+
+    def test_uses_raw_diff_format(self, tmp_path):
+        """必须走 --raw：只有 raw 输出携带 mode，才能识别 gitlink。"""
+        mock_result = MagicMock()
+        mock_result.stdout = ""
+        with patch.object(fn.subprocess, "run", return_value=mock_result) as mock_run:
+            fn._get_staged(tmp_path)
+        argv = mock_run.call_args[0][0]
+        assert "--raw" in argv
+        assert "--name-only" not in argv
+
+
+class TestScanStagedGitlink:
+    """_scan(staged_only=True) 对 gitlink 的端到端行为。"""
+
+    def test_gitlink_pointer_bump_has_no_violation(self, tmp_path):
+        raw = ":160000 160000 f3095a80e f7726e067 M\tprojects/daoapps.github.io\n"
+        mock_result = MagicMock()
+        mock_result.stdout = raw
+        with patch.object(fn.subprocess, "run", return_value=mock_result):
+            violations = fn._scan(tmp_path, staged_only=True)
+        assert violations == []
+
+    def test_real_violation_still_caught_in_staged_mode(self, tmp_path):
+        """跳过 gitlink 不影响对真实违规文件名的拦截。"""
+        mock_result = MagicMock()
+        mock_result.stdout = ":100644 100644 0 1 A\tprojects/归档.zip\n"
+        with patch.object(fn.subprocess, "run", return_value=mock_result):
+            violations = fn._scan(tmp_path, staged_only=True)
+        assert len(violations) == 1
+        assert "扩展名" in violations[0][1] or "非 ASCII" in violations[0][1]
 
 
 class TestScan:

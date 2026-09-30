@@ -62,8 +62,10 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | samples/ | cow-demo | —（遵循根规范） | ❌ 无 | 零拷贝COW读写分离模式C++示例框架 |
 | samples/ | short-video-site | —（遵循根规范） | ❌ 无 | ReelVibe 短视频网站（AI全流程开发Demo） |
 | samples/ | designer-portfolio | —（遵循根规范） | ❌ 无 | 设计师作品集静态网站（纯HTML/CSS/JS + GSAP CDN，零构建Demo，首页+4个项目详情页） |
+| samples/ | mobile-design-tokens | —（遵循根规范） | ❌ 无 | 移动端 Design Token 工作台（纯HTML/CSS/JS 零构建；由 Ardot 设计稿生成，Primitives→Semantic 两层 Token + Light/Dark/跟随系统三态换肤，含搜索/复制/导出；Token 真源 `styles/tokens.css`，数据源 `scripts/tokens.js`） |
 | samples/ | zleap-workspace-first-prototype | —（遵循根规范） | ❌ 无 | 工作区首个原型（多模型路由） |
 | samples/ | serial-camera-controller | —（遵循根规范） | ❌ 无 | 串口控制USB摄像头抓图/录像（CH340+OpenCV+pyserial，双协议三线程架构） |
+| 根级 | inurl-byok-token-hub | —（遵循根规范） | ❌ 无 | BYOK 统一令牌枢纽复刻（源：`projects/awesome-okf-xs/doc/bundles/jishu/ai/products/inurl-byok-token-hub`）：E2EE 密钥保险库（PBKDF2+AES-GCM 双 escrow）+ 逻辑别名路由（19 策略 + `>` Combo）+ 5 档上下文压缩 + 三协议本地代理（OpenAI 兼容 / Anthropic / Gemini）+ 健康熔断与用量计费；仅监听 127.0.0.1，scikit-build-core 纯 Python 包，`inurl-byok-token-hub` CLI，规格 `.trae/specs/inurl-byok-token-hub/` |
 | 根级 | shared | —（遵循根规范） | ❌ 无 | 跨应用共享资源目录 |
 | 根级 | tests | —（遵循根规范） | ❌ 无 | 测试用例目录 |
 
@@ -267,6 +269,7 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/docker-images/caffe-ffi-jupyter/AGENTS.md | 应用自治 | ✅ 是 | caffe-ffi-jupyter 入口 |
 | apps/docker-images/caffe-ffi-cross/ | 应用自治（遵循根规范） | ✅ 是 | Caffe-FFI 交叉编译 |
 | apps/docker-images/xmnn-runtime/ | 应用自治（遵循根规范） | ✅ 是 | XMNN 运行时环境 |
+| apps/inurl-byok-token-hub/ | 应用自治（遵循根规范） | ✅ 是 | BYOK 统一令牌枢纽复刻（E2EE 密钥保险库 + 19 策略别名路由 + 5 档压缩 + 三协议本地代理 + 健康熔断/用量计费；仅回环监听、单实例文件锁、落盘无明文密钥；规格 `.trae/specs/inurl-byok-token-hub/`） |
 | apps/ai-agents/zhujian-wudao/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | 竹简悟道项目 |
 | apps/ai-agents/zhujian-wudao/AGENTS.md | 应用自治 | ✅ 是 | zhujian-wudao 入口 |
 | apps/ai-agents/zhujian-wudao/.agents/ | 应用自治 | ✅ 是 | zhujian-wudao 规范体系 |
@@ -282,6 +285,7 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/samples/cow-demo/ | 应用自治（遵循根规范） | ✅ 是 | 零拷贝COW读写分离模式C++示例框架 |
 | apps/samples/short-video-site/ | 应用自治（遵循根规范） | ✅ 是 | ReelVibe 短视频网站（AI全流程开发Demo） |
 | apps/samples/designer-portfolio/ | 应用自治（遵循根规范） | ✅ 是 | 设计师作品集静态网站（纯HTML/CSS/JS + GSAP CDN，零构建Demo，首页+4个项目详情页） |
+| apps/samples/mobile-design-tokens/ | 应用自治（遵循根规范） | ✅ 是 | 移动端 Design Token 工作台（零构建：index.html + styles/tokens.css（Token 真源）+ styles/app.css + scripts/tokens.js（数据源）+ scripts/app.js；明暗 Mode 切换、搜索、复制、导出） |
 | apps/samples/zleap-workspace-first-prototype/ | 应用自治（遵循根规范） | ✅ 是 | 工作区首个原型（多模型路由） |
 | apps/samples/serial-camera-controller/ | 应用自治（遵循根规范） | ✅ 是 | 串口控制USB摄像头抓图/录像（CH340+OpenCV+pyserial，双协议三线程架构） |
 

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}套餐与订单 · BYOK 精简控制台{% endblock %}
+{% block content %}
+<h1>套餐与订单</h1>
+<p class="note">仅状态机演示：下单后由人工核销支付凭证，不含真实资金流转。当前套餐：<b>{% for plan in plans %}{% if plan.current %}{{ plan.name }}{% endif %}{% endfor %}</b></p>
+
+{% if saved %}
+  <div class="flash ok">操作已完成。</div>
+{% endif %}
+{% if error %}
+  <div class="flash error">{{ error }}</div>
+{% endif %}
+
+<h2>价格表</h2>
+<table>
+  <thead>
+    <tr>
+      <th>套餐</th>
+      <th class="num">月费</th>
+      <th class="num">厂商密钥上限</th>
+      <th>状态</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for plan in plans %}
+    <tr>
+      <td>{{ plan.name }} <span class="tag">{{ plan.key }}</span></td>
+      <td class="num">¥{{ plan.price }}</td>
+      <td class="num">{{ plan.limit if plan.limit is not none else "无限" }}</td>
+      <td>{% if plan.current %}使用中{% else %}<form class="inline" method="post" action="/console/plans"><input type="hidden" name="action" value="create"><input type="hidden" name="plan_key" value="{{ plan.key }}"><button class="ghost" type="submit">下单</button></form>{% endif %}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h2>生成订单</h2>
+<form method="post" action="/console/plans">
+  <input type="hidden" name="action" value="create">
+  <label for="plan_key">目标套餐</label>
+  <select id="plan_key" name="plan_key">
+    {% for plan in plans %}
+      <option value="{{ plan.key }}">{{ plan.name }}（¥{{ plan.price }} / {% if plan.limit is not none %}{{ plan.limit }} 个密钥{% else %}无限密钥{% endif %}）</option>
+    {% endfor %}
+  </select>
+  <button type="submit">生成订单</button>
+</form>
+
+<h2>提交支付凭证</h2>
+<form method="post" action="/console/plans">
+  <input type="hidden" name="action" value="proof">
+  <label for="order_id">订单号</label>
+  <input id="order_id" name="order_id" type="text" placeholder="订单 id">
+  <label for="proof">支付凭证（流水号 / 截图说明）</label>
+  <textarea id="proof" name="proof"></textarea>
+  <button type="submit">提交凭证</button>
+</form>
+
+<h2>我的订单（{{ orders | length }} 笔）</h2>
+<table>
+  <thead>
+    <tr>
+      <th>订单号</th>
+      <th>套餐</th>
+      <th class="num">金额</th>
+      <th>状态</th>
+      <th>支付方式</th>
+      <th>凭证</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for order in orders %}
+    <tr>
+      <td><code>{{ order.id }}</code></td>
+      <td>{{ order.plan_key }}</td>
+      <td class="num">¥{{ "%.2f" | format(order.amount_cents / 100) }}</td>
+      <td>{{ order.status.value }}</td>
+      <td>{{ order.method }}</td>
+      <td>{{ order.proof or "—" }}</td>
+    </tr>
+  {% else %}
+    <tr class="empty"><td colspan="6">暂无订单。</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
