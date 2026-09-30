@@ -130,6 +130,7 @@ apps/<group>/<app-name>/
 | `inurl-byok-token-hub/` | BYOK 统一令牌枢纽复刻：E2EE 密钥保险库 + 逻辑别名路由 + 本地三协议代理 + 用量计费。 | [README.md](inurl-byok-token-hub/README.md) |
 | `samples/` | samples 应用 | `samples/`（暂无 README） |
 | `tests/` | tests 应用 | `tests/`（暂无 README） |
+| `travel-planner/` | 本地单用户 Web 应用：多行程管理、每日行程编排、预算跟踪、打包清单、JSON 导入导出，以及可选的 **BYOK AI 行程草稿生成**（任意 Ope... | [README.md](travel-planner/README.md) |
 
 <!-- APPS_TABLE_END -->
 

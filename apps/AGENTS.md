@@ -67,6 +67,7 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | samples/ | zleap-workspace-first-prototype | —（遵循根规范） | ❌ 无 | 工作区首个原型（多模型路由） |
 | samples/ | serial-camera-controller | —（遵循根规范） | ❌ 无 | 串口控制USB摄像头抓图/录像（CH340+OpenCV+pyserial，双协议三线程架构） |
 | 根级 | inurl-byok-token-hub | —（遵循根规范） | ❌ 无 | BYOK 统一令牌枢纽复刻（源：`projects/awesome-okf-xs/doc/bundles/jishu/ai/products/inurl-byok-token-hub`）：E2EE 密钥保险库（PBKDF2+AES-GCM 双 escrow）+ 逻辑别名路由（19 策略 + `>` Combo）+ 5 档上下文压缩 + 三协议本地代理（OpenAI 兼容 / Anthropic / Gemini）+ 健康熔断与用量计费；仅监听 127.0.0.1，scikit-build-core 纯 Python 包，`inurl-byok-token-hub` CLI，规格 `.trae/specs/inurl-byok-token-hub/` |
+| 根级 | travel-planner | —（遵循根规范） | ❌ 无 | 旅行规划工作台（本地 FastAPI Web：多行程管理 + 每日编排（六类条目/时间/费用/勾选）+ 预算分类汇总 + 打包清单 + JSON 导入导出 + BYOK AI 行程草稿（OpenAI 兼容端点，白名单 schema 校验 + 预览确认导入）；零数据库、仅监听 127.0.0.1，CSRF + Origin 校验 + 单实例文件锁，原子写 + 滚动备份，运行时数据落 playground/travel-planner/data/；scikit-build-core 纯 Python 包，`travel-planner` CLI，规格 `.trae/specs/travel-planner/`） |
 | 根级 | shared | —（遵循根规范） | ❌ 无 | 跨应用共享资源目录 |
 | 根级 | tests | —（遵循根规范） | ❌ 无 | 测试用例目录 |
 
@@ -271,6 +272,7 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/docker-images/caffe-ffi-cross/ | 应用自治（遵循根规范） | ✅ 是 | Caffe-FFI 交叉编译 |
 | apps/docker-images/xmnn-runtime/ | 应用自治（遵循根规范） | ✅ 是 | XMNN 运行时环境 |
 | apps/inurl-byok-token-hub/ | 应用自治（遵循根规范） | ✅ 是 | BYOK 统一令牌枢纽复刻（E2EE 密钥保险库 + 19 策略别名路由 + 5 档压缩 + 三协议本地代理 + 健康熔断/用量计费；仅回环监听、单实例文件锁、落盘无明文密钥；规格 `.trae/specs/inurl-byok-token-hub/`） |
+| apps/travel-planner/ | 应用自治（遵循根规范） | ✅ 是 | 旅行规划工作台（多行程编排/预算/打包清单/导入导出 + BYOK AI 行程草稿；零数据库、仅回环监听、CSRF+Origin+单实例锁、原子写+滚动备份；运行时数据只写 playground/travel-planner/data/；规格 `.trae/specs/travel-planner/`） |
 | apps/ai-agents/zhujian-wudao/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | 竹简悟道项目 |
 | apps/ai-agents/zhujian-wudao/AGENTS.md | 应用自治 | ✅ 是 | zhujian-wudao 入口 |
 | apps/ai-agents/zhujian-wudao/.agents/ | 应用自治 | ✅ 是 | zhujian-wudao 规范体系 |
@@ -342,3 +344,5 @@ mkdir apps/<new-app>/.agents
 - [projects/AGENTS.md](../projects/AGENTS.md) — projects 区域入口路由（git submodule 第一方子项目）
 - [vendor/AGENTS.md](../vendor/AGENTS.md) — vendor 区域入口路由（git submodule 第三方依赖）
 - [apps/README.md](README.md) — apps 目录总览
+
+> AI生成
