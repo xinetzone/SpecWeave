@@ -192,7 +192,7 @@ tags:
 | 关系模式 | 关系类型 | 说明 |
 |---------|---------|------|
 | [vendor-neutral-three-layer-learning.md](vendor-neutral-three-layer-learning.md) | 前置依赖 | 四层识别后，用三层剥离法区分开放知识vs厂商绑定 |
-| [external-tech-doc-wiki-structure.md](external-tech-doc-wiki-structure.md) | 互补 | 本模式解决"代码仓库怎么读"，外部文档Wiki模式解决"网站文档怎么转Wiki" |
+| [external-tech-doc-wiki-structure.md](../document-architecture/external-tech-doc-wiki-structure.md) | 互补 | 本模式解决"代码仓库怎么读"，外部文档Wiki模式解决"网站文档怎么转Wiki" |
 | [seven-concepts-wiki-creation-methodology.md](../ai-collaboration/seven-concepts-wiki-creation-methodology.md) | 方法论支撑 | 本模式是R阶段（事实采集）的仓库分析子方法 |
 | [convention-driven-creation.md](../governance-strategy/convention-driven-creation.md) | 原则指导 | 四层结构是开源项目的约定俗成，优先识别约定而非逐文件探索 |
 

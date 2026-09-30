@@ -244,7 +244,7 @@ tags:
 | [cross-vendor-knowledge-fusion.md](cross-vendor-knowledge-fusion.md) | 上位应用 | 跨厂商知识融合需要先对每个厂商产品做三层剥离 |
 | [credibility-dual-track.md](credibility-dual-track.md) | 方法支撑 | 可信度双轨用于评估厂商文档的营销vs技术内容 |
 | [external-tech-article-learning-closed-loop.md](../ai-collaboration/external-tech-article-learning-closed-loop.md) | 流程整合 | 外部技术文章学习中可以应用本模式做批判性阅读 |
-| [knowledge-as-code-paradigm.md](../../../architecture-patterns/knowledge-as-code-paradigm.md) | 互补视角 | 知识即代码是知识管理系统的架构模式，本模式是学习/分析厂商开源项目的方法论，两者正交 |
+| [knowledge-as-code-paradigm.md](../../architecture-patterns/knowledge-as-code-paradigm.md) | 互补视角 | 知识即代码是知识管理系统的架构模式，本模式是学习/分析厂商开源项目的方法论，两者正交 |
 
 ---
 

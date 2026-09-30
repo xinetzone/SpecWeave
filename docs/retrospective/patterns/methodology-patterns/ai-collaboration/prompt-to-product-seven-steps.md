@@ -29,7 +29,7 @@ related_patterns:
   - "constraint-driven-creativity"
   - "progressive-templating"
 ---
-> **提炼自**：[analysis-report.md](../../../../../.trae/specs/retrospectives-insights/analyze-guizang-material-illustration-skill/analysis-report.md) —— 歸藏 guizang-material-illustration Skill 开源文章分析
+> **提炼自**：[spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-guizang-material-illustration-skill/spec.md) —— 歸藏 guizang-material-illustration Skill 开源文章分析
 > **验证次数**：1 次（歸藏材质插画 Skill 完整工程实践验证，待在自有 Skill 开发中验证后升级 L2）
 
 # 提示词到产品七步法（Prompt-to-Product Seven Steps）

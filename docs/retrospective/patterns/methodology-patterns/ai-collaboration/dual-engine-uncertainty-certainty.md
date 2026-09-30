@@ -100,5 +100,5 @@ stale_after: "2027-08-22"
 ## 关联模式
 
 - [评测驱动的自进化闭环模式](evaluation-driven-self-evolution.md)：解决双引擎中程序引擎的人工维护瓶颈
-- [责任转移治理模式](responsibility-transfer-governance.md)：双引擎架构得以推进的组织保障
+- [责任转移治理模式](../governance-strategy/responsibility-transfer-governance.md)：双引擎架构得以推进的组织保障
 - [错误黑名单单调进化模式](error-blacklist-monotonic-evolution.md)：双引擎分歧Case的沉淀机制

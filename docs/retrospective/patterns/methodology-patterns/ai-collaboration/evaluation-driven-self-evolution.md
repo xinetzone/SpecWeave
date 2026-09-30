@@ -102,4 +102,4 @@ stale_after: "2027-08-22"
 
 - [不确定性探索+确定性校验双引擎架构模式](dual-engine-uncertainty-certainty.md)：本模式解决双引擎中程序引擎的人工维护瓶颈
 - [错误黑名单单调进化模式](error-blacklist-monotonic-evolution.md)：本模式的"错误黑名单"机制的深化模式
-- [责任转移治理模式](responsibility-transfer-governance.md)：自进化体系的内在驱动力来自责任转移
+- [责任转移治理模式](../governance-strategy/responsibility-transfer-governance.md)：自进化体系的内在驱动力来自责任转移

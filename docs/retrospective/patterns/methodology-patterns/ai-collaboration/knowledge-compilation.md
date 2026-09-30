@@ -145,7 +145,7 @@ stale_after: "2027-08-22"
 
 ## 与现有模式的关系
 
-- **本模式与[技术文章Wiki化批量生成模式](tech-article-to-wiki-batch-generation.md)（bp-tech-article-to-wiki-batch）的关系**：两者都是知识沉淀模式，但定位不同——Wiki化批量生成解决的是"单篇长文→多文件原子Wiki"的结构转化问题，产出是人类可读的文档；知识编译解决的是"结构化知识→Agent可调用Skill"的效率优化问题，产出是AI可直接推理的结构化技能。两者可以结合：先用Wiki化批量生成整理人类知识库，再对高频使用的核心Wiki进行知识编译供Agent调用。
+- **本模式与[技术文章Wiki化批量生成模式](../document-architecture/tech-article-to-wiki-batch-generation.md)（bp-tech-article-to-wiki-batch）的关系**：两者都是知识沉淀模式，但定位不同——Wiki化批量生成解决的是"单篇长文→多文件原子Wiki"的结构转化问题，产出是人类可读的文档；知识编译解决的是"结构化知识→Agent可调用Skill"的效率优化问题，产出是AI可直接推理的结构化技能。两者可以结合：先用Wiki化批量生成整理人类知识库，再对高频使用的核心Wiki进行知识编译供Agent调用。
 
 - **本模式与[子代理标准化指令模式](subagent-standardized-instruction.md)（bp-subagent-std）的关系**：知识编译的执行（步骤2-4深度编译）可以通过子代理标准化指令模式来实现高质量批处理——子代理在完整prompt约束下一次性完成深度编译，比逐章节分析效果更好。
 
