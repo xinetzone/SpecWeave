@@ -203,3 +203,4 @@ flowchart LR
 **关键原则**：不要只追求其中一方的极致，而要追求两者的协同优化。一个强大的模型配上简陋的Harness，或者一个强大的Harness配上弱小的模型，都无法发挥最大价值。
 
 > 来源验证：本模式从Harness Engineering文章单一案例萃取，maturity=L1。需要在智能体架构设计、测试平台、文档工具等场景中验证和完善。
+- [minimal-sufficient-scaffold-selection.md](minimal-sufficient-scaffold-selection.md) — 最小充分脚手架选型法：本模式回答"自己构建 harness 需要哪五层"，该模式回答"在现成 harness/框架之间怎么选"，其九大部件清单是本模式五层骨架在 2026 年厂商产品上的实证展开

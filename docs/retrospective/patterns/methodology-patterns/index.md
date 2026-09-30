@@ -37,6 +37,7 @@
 | bp-doc-automation-pipeline | [文档自动化生成与验证流水线模式](concepts/doc-automation-pipeline.md)（简称：文档流水线模式） | L1-draft | 1 | 0 | 文档规模扩大后（经验阈值约 500 条目，非测量值），以统一元数据规范+自动化脚本（模板生成/链接验证/索引生成）+质量门禁构成生成-验证流水线，突破人工维护索引的规模瓶颈；含多生产者契约漂移等 5 条反模式。案例：SpecWeave 智能文档系统 1288 条目 |
 | net-value-four-questions | [净时薪四问](governance-strategy/net-value-four-questions.md) | L1-draft | 1 | 0 | 在多个外部机会/平台之间做取舍（副业平台、外包供应商、SaaS 工具、开源依赖），且决策依据主要来自对方宣传口径或当期数据时：先用"净时薪—无补贴模型—替代成本—提现闭环—合规三查"五步做三缺口收敛（计量/时点/退出），再进入加权比较。案例：2026 中国副业平台全面调研（73 条事实） |
 | bp-weight-aligned-prep | [权重对位备赛法](product-growth/weight-aligned-preparation.md) | L1-draft | 1 | 0 | 评审标准（维度+权重）完全公开、以"材料包+演示"交付的竞赛/黑客松/政府专项申报/基金答辩：把评分表当公开契约，先判评分模型并清零准入门槛，再按边际得分率与权重对位组织证据物和工时，含评分表版本管理与临赛降级路径。案例：2026上海开源软件应用创新大赛（创新30/落地30/治理20/长期20，F-004~F-065） |
+| minimal-sufficient-scaffold | [最小充分脚手架选型法](governance-strategy/minimal-sufficient-scaffold-selection.md) | L1-draft | 3（外部） | 0 | agent 框架/SDK/harness 选库：功能清单趋同、star 失真、0.x 频变的高速迭代赛道，按"任务分级→最小执行环→同任务小赛（TTFA/LOC/治理缺口）→生命体征检查→最薄栈+治理三件套→锁版本"六步选型。案例：AI Harness Python 包全景调研（mini-swe-agent 131 行/65% 对 SWE-agent 4161 行/67%、七框架实测、AutoGPT 退潮三外部案例），待本项目实战验证升 L2 |
 
 ## 成熟度等级说明
 
