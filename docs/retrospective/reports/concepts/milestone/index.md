@@ -41,6 +41,7 @@
 | milestone-intelligent-doc-system-20260910 | 智能文档系统里程碑（文档/知识库/复盘体系，2026-07-01~08-31） | 2026-09-10 | ✅ 已完成 | 七概念R→I→E→V→C | 56条客观事实、3条核心洞察（生成→验证→沉淀闭环/自动化工具链支撑规模化/知识库与复盘体系双轮驱动）、1个L1候选模式（文档自动化生成与验证流水线）、V四视角6条意见全部采纳（含F38口径修正）、4项原子行动项，G1-G4+V门全部通过 | [retrospective-intelligent-doc-system-milestone-20260910.md](retrospective-intelligent-doc-system-milestone-20260910.md) |
 | milestone-zhihu-checkin-hub-20260928 | 知乎打卡工作台（零依赖/零凭证本地成品台；真实办公 DraftJS 受信输入攻坚） | 2026-09-28 | 🔶 代码收口/冒烟收尾 | 七概念R→I→V→F→A | 30条事实（157测试/92%、独立审查12 PR pass、文章+想法各1次真实证据）、7条洞察（洞察复刻错/模型心智、Hive舵信号分层、红线结构性不可）、4条V采纳7条（pin反查真实命中）、1个L1模式、7项原子行动项 | [retrospective-zhihu-checkin-hub-milestone-20260928.md](retrospective-zhihu-checkin-hub-milestone-20260928.md) |
 | milestone-specweave-seven-concepts-project-review-20260930 | SpecWeave 七概念方法论全面系统性复盘（100天/3990提交/全项目） | 2026-09-30 | ✅ 已完成 | 七概念R→F→I→E→V→C 深度链路 | 3990提交/100天、2239报告/929模式/10671知识包实测、7成功+7反模式案例、3条四元组洞察（自举规范/门禁反例能力/公私域分离）、6项原子行动项、V四视角自审，G1-G4+V门通过 | [specweave-seven-concepts-project-review-20260930.md](specweave-seven-concepts-project-review-20260930.md) |
+| milestone-real-need-day1-wiki-20261001 | real-need-day1 私域 OKF Wiki 教程任务（Spec Mode+独立审查 PASS 收口） | 2026-10-01 | ✅ 已完成 | 七概念R→I→E→C | 27条客观事实、4条四元组洞察（不落映射表/登记不修闭环/私域同目录治理/生成期脱敏前置）、2个L1模式（单向脱敏四步法+低危登记不修闭环门）、4项原子行动项，G1-G4质量门全部通过 | [real-need-day1-wiki-retrospective-20261001.md](real-need-day1-wiki-retrospective-20261001.md) |
 
 ## 知识沉淀里程碑模式库
 
@@ -83,6 +84,7 @@ sphinx-config-modularization-retrospective-insights-20260903
 okf-ecosystem-milestone-retrospective-20260819
 okf-python314-stdlib-optimization-retrospective-20260818
 okf-wiki-conversion-milestone-20260828
+real-need-day1-wiki-retrospective-20261001
 retrospective-daojia-canon-okf-wiki-20260901
 retrospective-hermes-specweave-integration-20260812
 retrospective-sexology-classics-wiki-20260830

@@ -73,6 +73,7 @@ layered-repair-verification
 learn-validate-adopt
 ledger-stock-consistency-audit
 local-dependency-cache-proxy
+low-risk-wontfix-closure-gate
 meta-bootstrap-action-plan
 meta-methodology-bootstrap
 meta-retrospective-closed-loop
@@ -88,6 +89,7 @@ net-value-four-questions
 noise-free-container
 no-touch-list
 nonlinear-correction-cost
+one-way-anonymization-four-steps
 orchestration-execution-layering
 P-AGENT-SELECT-001-agent-platform-selection-framework
 P-AGENT-SELECT-001-agent-platform-selection-scorecard
