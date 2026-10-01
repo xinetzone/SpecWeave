@@ -13,6 +13,7 @@ source: "TRAE 官方渠道（docs.trae.cn / docs.trae.ai / trae.cn）+ 本地清
 :maxdepth: 1
 :caption: TRAE 特性周报
 
+2026-10-01-trae-feature-watch
 2026-09-21-trae-feature-watch
 ```
 
