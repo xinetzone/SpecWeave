@@ -6,7 +6,7 @@ enforce_python310()
 import re
 from typing import List, Tuple
 
-from ..common import CHINESE_CHARS_RE, text_needs_quotes, strip_inline_comment
+from ..common import CHINESE_CHARS_RE, MermaidIssue, text_needs_quotes, strip_inline_comment
 from .base import BaseDiagramChecker
 
 
@@ -60,8 +60,12 @@ class ClassDiagramChecker(BaseDiagramChecker):
                 rest = cm.group(2)
                 is_quoted = cname.startswith('"') and cname.endswith('"')
                 if not is_quoted and text_needs_quotes(cname):
-                    issues.append((start_line + lb - 1, "error",
-                                  f'类名「{cname[:20]}」含中文/空格/特殊字符但未加双引号'))
+                    issues.append(MermaidIssue(
+                        start_line + lb - 1,
+                        "error",
+                        f'类名「{cname[:20]}」含中文/空格/特殊字符但未加双引号',
+                        rule_id="mermaid.class.unquoted_class_name",
+                    ))
                 if "{" in rest:
                     brace_depth += 1
                     in_class_braces = True
@@ -94,15 +98,22 @@ class ClassDiagramChecker(BaseDiagramChecker):
                             continue
                         is_quoted = side_name.startswith('"') and side_name.endswith('"')
                         if not is_quoted and text_needs_quotes(side_name):
-                            issues.append((start_line + lb - 1, "error",
-                                          f'类名「{side_name[:20]}」含中文/空格/特殊字符但未加双引号'))
+                            issues.append(MermaidIssue(
+                                start_line + lb - 1,
+                                "error",
+                                f'类名「{side_name[:20]}」含中文/空格/特殊字符但未加双引号',
+                                rule_id="mermaid.class.unquoted_class_name",
+                            ))
 
                 if label:
                     is_quoted = label.startswith('"') and label.endswith('"')
                     if not is_quoted and text_needs_quotes(label):
-                        issues.append((start_line + lb - 1, "error",
-                                      f'关系标签「{label[:20]}」含中文/空格但未加双引号'))
+                        issues.append(MermaidIssue(
+                            start_line + lb - 1,
+                            "error",
+                            f'关系标签「{label[:20]}」含中文/空格但未加双引号',
+                            rule_id="mermaid.class.unquoted_relationship_label",
+                        ))
                 continue
 
         return issues
-

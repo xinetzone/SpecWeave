@@ -21,6 +21,7 @@ from lib.mermaid.common import (
     MERMAID_FENCE_RE,
     CHINESE_CHARS_RE,
     LIST_TRIGGER_RE,
+    MermaidIssue,
     SPECIAL_CHARS,
     detect_diagram_type as _new_detect_diagram_type,
     text_needs_quotes as _new_text_needs_quotes,
@@ -62,6 +63,15 @@ from lib.mermaid.fixers import (
 )
 from lib.mermaid.scanner import FileScanner
 from lib.mermaid.runner import MermaidRunner, ConsoleColors, _set_debug as _runner_set_debug
+from lib.mermaid.baseline import (
+    build_baseline_from_revision,
+    collect_diagnostics,
+    collect_findings,
+    compare_findings,
+    load_baseline,
+    prune_baseline,
+    write_baseline,
+)
 
 _DEBUG = False
 _DEBUG_CTX: dict = {}
@@ -193,23 +203,39 @@ def _check_vscode_compat(block_text: str, start_line: int) -> list[tuple[int, st
         if re.match(r'^\s*end\s*$', code_part) and in_subgraph_depth > 0:
             in_subgraph_depth -= 1
         if BR_TAG_RE.search(code_part):
-            issues.append((lb, "error",
-                          'Mermaid 代码块内使用了 <br/> HTML标签，VS Code预览不支持，应移除换行保持单行'))
+            issues.append(MermaidIssue(
+                lb,
+                "error",
+                'Mermaid 代码块内使用了 <br/> HTML标签，VS Code预览不支持，应移除换行保持单行',
+                rule_id="mermaid.vscode.br_tag",
+            ))
         if CIRCLED_NUMBERS_RE.search(code_part):
             ch = CIRCLED_NUMBERS_RE.search(code_part).group()
-            issues.append((lb, "error",
-                          f'Mermaid 代码块内使用了带圈数字 {ch}，VS Code预览解析中断，应使用普通阿拉伯数字'))
+            issues.append(MermaidIssue(
+                lb,
+                "error",
+                f'Mermaid 代码块内使用了带圈数字 {ch}，VS Code预览解析中断，应使用普通阿拉伯数字',
+                rule_id="mermaid.vscode.circled_digit",
+            ))
         if CJK_BRACKET_RE.search(code_part):
             ch = CJK_BRACKET_RE.search(code_part).group()
-            issues.append((lb, "error",
-                          f'Mermaid 代码块内使用了中文方括号 {ch}，VS Code预览误解析为语法边界，应改用()或删除'))
+            issues.append(MermaidIssue(
+                lb,
+                "error",
+                f'Mermaid 代码块内使用了中文方括号 {ch}，VS Code预览误解析为语法边界，应改用()或删除',
+                rule_id="mermaid.vscode.cjk_bracket",
+            ))
         if ARROW_SYMBOL_RE.search(code_part):
             ch = ARROW_SYMBOL_RE.search(code_part).group()
             issues.append((lb, "warning",
                           f'Mermaid 代码块内使用了Unicode箭头符号 {ch}，可能导致VS Code预览兼容性问题，建议改用连字符-'))
         if in_subgraph_depth > 0 and re.match(r'^\s+direction\s+(TB|BT|LR|RL)\b', code_part):
-            issues.append((lb, "error",
-                          'subgraph 内嵌套 direction 语句，VS Code预览布局异常，应仅在顶层定义direction'))
+            issues.append(MermaidIssue(
+                lb,
+                "error",
+                'subgraph 内嵌套 direction 语句，VS Code预览布局异常，应仅在顶层定义direction',
+                rule_id="mermaid.vscode.nested_subgraph_direction",
+            ))
     return issues
 
 
@@ -415,13 +441,124 @@ def _process_file(file_path: Path, root_dir: Path, fix: bool, dry_run: bool
     return all_issues, total_fixes, diffs
 
 
+def _resolve_option_path(project_root: Path, value: str | Path) -> Path:
+    path = Path(value)
+    return path.resolve() if path.is_absolute() else (project_root / path).resolve()
+
+
+def _run_baseline_mode(check_root: Path, project_root: Path, baseline_path: Path,
+                       exclude: set[str]) -> int:
+    try:
+        baseline = load_baseline(baseline_path)
+        md_files = _find_md_files(check_root, exclude)
+        diagnostics = collect_diagnostics(
+            check_root,
+            exclude,
+            md_files,
+            identity_root=project_root,
+        )
+    except ValueError as exc:
+        print(f"[错误] {exc}")
+        return 1
+
+    errors = [
+        {key: value for key, value in item.items() if key not in ("level", "message")}
+        for item in diagnostics
+        if item["level"] == "error"
+    ]
+    warnings = [item for item in diagnostics if item["level"] == "warning"]
+    comparison = compare_findings(errors, baseline)
+    file_count = len(md_files)
+
+    print("[检查] Mermaid 历史基线比较")
+    print(f"   扫描目录: {check_root}")
+    print(f"   基线提交: {baseline.get('revision', '未记录')}")
+    print(f"   扫描文件: {file_count}")
+    print(f"   已知历史债务: {comparison['known_count']}")
+    print(f"   新增: {comparison['new_count']}")
+    print(f"   已消除: {comparison['resolved_count']}")
+    print(f"   警告: {len(warnings)}")
+
+    for finding in comparison["new_findings"]:
+        print(
+            f"   [新增错误] {finding['path']}:L{finding['line']} "
+            f"[{finding['rule_id']}] {finding['source']}"
+        )
+    for warning in warnings:
+        print(
+            f"   [警告] {warning['path']}:L{warning['line']} "
+            f"{warning['message']}"
+        )
+
+    if comparison["new_count"]:
+        print("\n[失败] Mermaid 新增或恶化违规超过历史基线。")
+        return 1
+    print("\n[通过] 未发现超出历史基线的 Mermaid 错误。")
+    return 0
+
+
 def run(project_root: Path, args) -> int:
-    check_root = Path(args.path).resolve() if getattr(args, "path", None) else project_root
+    check_root = (
+        _resolve_option_path(project_root, args.path)
+        if getattr(args, "path", None)
+        else project_root
+    )
     exclude = set(getattr(args, "exclude", []) or [])
     fix = getattr(args, "fix", False)
     dry_run = getattr(args, "dry_run", False)
     debug = getattr(args, "debug", False)
     _set_debug(debug)
+
+    create_baseline_path = getattr(args, "create_baseline", None)
+    prune_baseline_path = getattr(args, "prune_baseline", None)
+    if create_baseline_path:
+        revision = getattr(args, "revision", None)
+        if not revision:
+            print("[错误] --create-baseline 必须同时指定 --revision。")
+            return 1
+        try:
+            baseline = build_baseline_from_revision(project_root, revision, exclude)
+            target = _resolve_option_path(project_root, create_baseline_path)
+            write_baseline(target, baseline)
+        except (OSError, ValueError) as exc:
+            print(f"[错误] 创建 Mermaid 基线失败: {exc}")
+            return 1
+        total = sum(item["count"] for item in baseline["findings"])
+        print(
+            f"[通过] 已从提交 {baseline['revision']} 创建 Mermaid 基线："
+            f"{total} 条历史错误，写入 {target}"
+        )
+        return 0
+
+    if prune_baseline_path:
+        target = _resolve_option_path(project_root, prune_baseline_path)
+        if check_root != Path(project_root).resolve():
+            print("[错误] 只能对仓库根目录执行 Mermaid 基线缩减，避免局部扫描误删基线项。")
+            return 1
+        try:
+            baseline = load_baseline(target)
+            current = collect_findings(check_root, exclude)
+            pruned = prune_baseline(baseline, current)
+            before = sum(item["count"] for item in baseline["findings"])
+            after = sum(item["count"] for item in pruned["findings"])
+            write_baseline(target, pruned)
+        except (OSError, ValueError) as exc:
+            print(f"[错误] 缩减 Mermaid 基线失败: {exc}")
+            return 1
+        print(
+            f"[通过] Mermaid 基线已显式缩减：{before} → {after} 条；"
+            f"新违规未加入基线（{target}）"
+        )
+        return 0
+
+    baseline_path = getattr(args, "baseline", None)
+    if baseline_path:
+        return _run_baseline_mode(
+            check_root,
+            project_root,
+            _resolve_option_path(project_root, baseline_path),
+            exclude,
+        )
 
     md_files = _find_md_files(check_root, exclude)
     total = len(md_files)

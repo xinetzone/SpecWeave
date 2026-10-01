@@ -49,8 +49,8 @@ def test_fix_backslash_n():
     text = 'flowchart TD\n    A["Hello\\nWorld"] --> B'
     fixed = fix_backslash_n(text)
     assert "\\n" not in fixed
-    assert "<br/>" in fixed
-    assert 'Hello<br/>World' in fixed
+    assert "<br/>" not in fixed
+    assert 'Hello World' in fixed
 
 
 def test_fix_backslash_n_with_comment():
@@ -58,6 +58,34 @@ def test_fix_backslash_n_with_comment():
     fixed = fix_backslash_n(text)
     assert '%%' in fixed
     assert 'B' in fixed.split('%%')[0]
+
+
+def test_newline_fixer_summaries_match_space_flattening():
+    cases = [
+        (
+            FlowchartFixer(),
+            'flowchart TD\n    A["one\\ntwo"] --> B',
+        ),
+        (
+            StateDiagramFixer(),
+            'stateDiagram-v2\n    A --> B : one\\ntwo',
+        ),
+        (
+            ClassDiagramFixer(),
+            'classDiagram\n    A["one\\ntwo"] --> B',
+        ),
+        (
+            ErDiagramFixer(),
+            'erDiagram\n    A ||--|| B : one\\ntwo',
+        ),
+    ]
+
+    for fixer, source in cases:
+        fixed, fixes = fixer.fix(source)
+
+        assert "换行符(\\n→空格)" in fixes
+        assert "one two" in fixed
+        assert "<br/>" not in fixed
 
 
 def test_flowchart_fixer_node_quotes():
@@ -202,4 +230,3 @@ def test_fix_then_check_no_errors():
     issues = checker.check(fixed, 1)
     errors = [i for i in issues if i[1] == "error"]
     assert len(errors) == 0
-

@@ -43,7 +43,7 @@ TOTAL=21
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 echo -e "${YELLOW}[1/$TOTAL] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)...${NC}"
-python3 "$ROOT/.agents/scripts/repo-check.py" all
+python3 "$ROOT/.agents/scripts/repo-check.py" all --mermaid-baseline "$ROOT/.agents/scripts/data/mermaid-baseline.json"
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 

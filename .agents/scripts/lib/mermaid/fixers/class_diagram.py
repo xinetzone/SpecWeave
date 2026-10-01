@@ -115,7 +115,6 @@ class ClassDiagramFixer(BaseDiagramFixer):
         text_before = text
         text = fix_backslash_n(text)
         if text != text_before:
-            fixes.append("换行符(\\n→<br/>)")
+            fixes.append("换行符(\\n→空格)")
 
         return text, fixes
-

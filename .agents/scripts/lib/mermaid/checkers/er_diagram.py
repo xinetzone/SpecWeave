@@ -6,7 +6,13 @@ enforce_python310()
 import re
 from typing import List, Tuple
 
-from ..common import CHINESE_CHARS_RE, SPECIAL_CHARS, text_needs_quotes, strip_inline_comment
+from ..common import (
+    CHINESE_CHARS_RE,
+    MermaidIssue,
+    SPECIAL_CHARS,
+    text_needs_quotes,
+    strip_inline_comment,
+)
 from .base import BaseDiagramChecker
 
 
@@ -67,8 +73,12 @@ class ErDiagramChecker(BaseDiagramChecker):
                 is_quoted = ename.startswith('"') and ename.endswith('"')
                 if not is_upper_id and not is_quoted:
                     if CHINESE_CHARS_RE.search(ename) or " " in ename or any(c in ename for c in SPECIAL_CHARS):
-                        issues.append((start_line + lb - 1, "error",
-                                      f'实体名「{ename[:20]}」含中文/空格/特殊字符但未加双引号，或非全大写英文ID格式'))
+                        issues.append(MermaidIssue(
+                            start_line + lb - 1,
+                            "error",
+                            f'实体名「{ename[:20]}」含中文/空格/特殊字符但未加双引号，或非全大写英文ID格式',
+                            rule_id="mermaid.er.unquoted_entity_name",
+                        ))
                 if "{" in rest:
                     brace_depth += 1
                     in_entity_braces = True
@@ -103,15 +113,22 @@ class ErDiagramChecker(BaseDiagramChecker):
                     is_upper = side_name.isupper() and side_name.replace("_", "").isalnum()
                     if not is_upper and not is_quoted:
                         if CHINESE_CHARS_RE.search(side_name) or " " in side_name or any(c in side_name for c in SPECIAL_CHARS):
-                            issues.append((start_line + lb - 1, "error",
-                                          f'实体名「{side_name[:20]}」含中文/空格/特殊字符但未加双引号'))
+                            issues.append(MermaidIssue(
+                                start_line + lb - 1,
+                                "error",
+                                f'实体名「{side_name[:20]}」含中文/空格/特殊字符但未加双引号',
+                                rule_id="mermaid.er.unquoted_entity_name",
+                            ))
 
                 if label:
                     is_quoted = label.startswith('"') and label.endswith('"')
                     if not is_quoted and text_needs_quotes(label):
-                        issues.append((start_line + lb - 1, "error",
-                                      f'关系标签「{label[:20]}」含中文/空格但未加双引号'))
+                        issues.append(MermaidIssue(
+                            start_line + lb - 1,
+                            "error",
+                            f'关系标签「{label[:20]}」含中文/空格但未加双引号',
+                            rule_id="mermaid.er.unquoted_relationship_label",
+                        ))
                 continue
 
         return issues
-

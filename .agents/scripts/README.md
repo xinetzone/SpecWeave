@@ -33,7 +33,7 @@ x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
 | `check-move.py` | 文件移动时链接路径自动调整 | [检查](docs/usage/01-check-scripts.md#check-movepy) |
 | `check-source-traceability.py` | source溯源字段反向索引 | [检查](docs/usage/01-check-scripts.md#check-source-traceabilitypy) |
 | `check-role-permissions.py` | 角色tier/权限声明校验 | [检查](docs/usage/01-check-scripts.md#check-role-permissionspy) |
-| `check-mermaid.py` | Mermaid语法陷阱检测+修复 | [检查](docs/usage/01-check-scripts.md#check-mermaidpy) |
+| `check-mermaid.py` | Mermaid语法陷阱检测+修复（严格扫描；CI增量基线门禁） | [检查](docs/usage/01-check-scripts.md#check-mermaidpy) |
 | `check-action-closure.py` | P-2洞察到行动闭环检查（可行动要素+假闭环风险） | [检查](docs/usage/01-check-scripts.md#check-action-closurepy) |
 | `generate-nav.py` | 自动生成文档导航表 | [生成/构建](docs/usage/02-generate-build-scripts.md#generate-navpy) |
 | `generate-dashboard.py` | 自动聚合Spec执行看板 | [生成/构建](docs/usage/02-generate-build-scripts.md#generate-dashboardpy) |

@@ -6,7 +6,7 @@ enforce_python310()
 import re
 from typing import List, Tuple
 
-from ..common import CHINESE_CHARS_RE, text_needs_quotes, check_list_trigger
+from ..common import CHINESE_CHARS_RE, MermaidIssue, text_needs_quotes, check_list_trigger
 from .base import BaseDiagramChecker
 
 
@@ -38,20 +38,32 @@ class FlowchartChecker(BaseDiagramChecker):
             rest = m.group(3).strip()
             lb = block_text[:m.start()].count("\n") + 1
             if CHINESE_CHARS_RE.search(sid) or "\uff1a" in sid or " " in sid:
-                issues.append((start_line + lb - 1, "error",
-                              f'subgraph 使用裸ID「{sid}」，应使用 subgraph EN_ID ["中文标题"] 格式'))
+                issues.append(MermaidIssue(
+                    start_line + lb - 1,
+                    "error",
+                    f'subgraph 使用裸ID「{sid}」，应使用 subgraph EN_ID ["中文标题"] 格式',
+                    rule_id="mermaid.flowchart.bare_subgraph_id",
+                ))
             if rest and not rest.startswith("["):
                 if CHINESE_CHARS_RE.search(rest) or any(c in rest for c in "：（()"):
-                    issues.append((start_line + lb - 1, "error",
-                                  f'subgraph 标题「{rest[:20]}」缺少方括号，应使用 subgraph EN_ID ["标题"] 格式'))
+                    issues.append(MermaidIssue(
+                        start_line + lb - 1,
+                        "error",
+                        f'subgraph 标题「{rest[:20]}」缺少方括号，应使用 subgraph EN_ID ["标题"] 格式',
+                        rule_id="mermaid.flowchart.unbracketed_subgraph_title",
+                    ))
 
         for pat, shape_name in self.node_pats:
             for m in pat.finditer(block_text):
                 ntxt = m.group(3)
                 lb = block_text[:m.start()].count("\n") + 1
                 if text_needs_quotes(ntxt):
-                    issues.append((start_line + lb - 1, "error",
-                                  f'{shape_name}节点含中文/特殊字符/空格但未加双引号：{ntxt[:20]}'))
+                    issues.append(MermaidIssue(
+                        start_line + lb - 1,
+                        "error",
+                        f'{shape_name}节点含中文/特殊字符/空格但未加双引号：{ntxt[:20]}',
+                        rule_id="mermaid.flowchart.unquoted_node_text",
+                    ))
                 w = check_list_trigger(ntxt, lb - 1, start_line, f'{shape_name}节点')
                 if w:
                     issues.append(w)
@@ -61,8 +73,12 @@ class FlowchartChecker(BaseDiagramChecker):
             lb = block_text[:m.start()].count("\n") + 1
             if not (label.startswith('"') and label.endswith('"')):
                 if text_needs_quotes(label) or label in ("是", "否"):
-                    issues.append((start_line + lb - 1, "error",
-                                  f'边标签「{label[:20]}」含中文/特殊字符但未加双引号'))
+                    issues.append(MermaidIssue(
+                        start_line + lb - 1,
+                        "error",
+                        f'边标签「{label[:20]}」含中文/特殊字符但未加双引号',
+                        rule_id="mermaid.flowchart.unquoted_edge_label",
+                    ))
             w = check_list_trigger(label, lb - 1, start_line, '边标签')
             if w:
                 issues.append(w)
@@ -75,4 +91,3 @@ class FlowchartChecker(BaseDiagramChecker):
                               'style 语句含中文字符，可能导致解析错误'))
 
         return issues
-

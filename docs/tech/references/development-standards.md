@@ -281,14 +281,12 @@ Mermaid 节点/边标签内置 Markdown 解析器，双引号**不能阻止**内
 
 > **关键认知**：`["1. 启动协议"]` 中的双引号仅保证 Mermaid 语法层解析正确，引号内的文本仍会经过 Markdown 渲染器处理。必须从内容层面避免 Markdown 列表语法。
 
-### 节点换行使用 `<br/>`
+### Mermaid 节点文本保持单行
 
-Mermaid 节点文本内的换行统一使用 HTML 的 `<br/>` 标签，**禁止使用** **`\n`** **转义字符**。`\n` 在 flowchart/stateDiagram 节点中不会被解释为换行（部分渲染器显示为字面文本，部分压缩为单行）；虽然 `\n` 在 sequenceDiagram 的 Note 和消息文本中可以换行，但统一使用 `<br/>` 可避免记忆上下文差异。
+面向 VS Code 预览的 Mermaid 节点与标签文本必须保持单行。需要分隔内容时使用空格；禁止使用 `<br/>` 或 `\n` 换行标记。VS Code 内置预览不支持节点内 HTML 换行标签，`\n` 在不同图表和渲染器中的行为也不一致。
 
-**错误示例**：`A["第一行\n第二行"]`
-**正确示例**：`A["第一行<br/>第二行"]`
-
-自动化检查：`python .agents/scripts/check-mermaid.py` 可自动检测并修复 `\n`→`<br/>` 问题。
+**正确示例**：`A["第一行 第二行"]`
+自动化检查：`python .agents/scripts/check-mermaid.py` 可检测 `\n`、`<br/>` 等不兼容写法；`--fix` 会将 `\n` 压平为空格并移除 `<br/>`。
 
 ### Subgraph 格式
 
@@ -476,9 +474,9 @@ python .agents/scripts/check-links.py --path <目标目录> --check-frontmatter-
 
 ```mermaid
 flowchart LR
-    A["1：影响面评估<br/>build-ref-index --query <文件>"] --> B["2：执行移动/重构"]
-    B --> C["3：一键收尾<br/>finalize-atomization"]
-    C --> D["4：链接验证<br/>check-links.py"]
+    A["1：影响面评估 build-ref-index --query <文件>"] --> B["2：执行移动/重构"]
+    B --> C["3：一键收尾 finalize-atomization"]
+    C --> D["4：链接验证 check-links.py"]
     D --> E["✅ 零断链提交"]
 ```
 
@@ -736,4 +734,3 @@ Wiki教程任务完成必须满足以下全部条件，详见wiki-spec-template.
 - 高频点必须升级为强制检查点（写入checklist或验收清单），而非仅写入复盘
 - 同一类型问题出现≥3次，升级为自动化脚本检查（工具改进类低优行动项提升为中优）
 - 每完成3-5个同类任务后，主动回顾反馈记录，识别尚未被用户指出但可能存在的潜在问题
-

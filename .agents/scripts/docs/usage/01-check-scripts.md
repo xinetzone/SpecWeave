@@ -260,6 +260,8 @@ python .agents/scripts/check-role-permissions.py --json
 
 自动修复（--fix）可处理空行、节点引号、边标签引号、数字点格式四类问题；裸中文 subgraph ID 需人工指定英文 ID 后修复。
 
+默认 `check-mermaid.py` 执行严格全量扫描，任何错误都会返回非零退出码。CI 的 `repo-check.py all` 使用版本控制的历史基线，只阻断新增或同一指纹数量增加的错误；历史债务仍会汇总显示，不会自动修改基线。
+
 ```bash
 # 仅检查（不修改文件）
 python .agents/scripts/check-mermaid.py
@@ -275,6 +277,15 @@ python .agents/scripts/check-mermaid.py --path docs/
 
 # 排除指定目录
 python .agents/scripts/check-mermaid.py --exclude docs/templates
+
+# 显式比较历史基线（不改变严格扫描默认行为）
+python .agents/scripts/repo-check.py mermaid --baseline .agents/scripts/data/mermaid-baseline.json
+
+# 仅用于首次建档：从指定 Git 提交的已跟踪 Markdown 创建基线
+python .agents/scripts/repo-check.py mermaid --create-baseline .agents/scripts/data/mermaid-baseline.json --revision <commit>
+
+# 显式缩减已修复的历史债务；新增问题不会写入基线
+python .agents/scripts/repo-check.py mermaid --prune-baseline .agents/scripts/data/mermaid-baseline.json
 ```
 
 ---

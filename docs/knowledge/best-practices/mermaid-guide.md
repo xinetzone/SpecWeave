@@ -19,7 +19,7 @@ summary: "SpecWeave 项目中 Mermaid 图表的一站式操作手册，涵盖起
 
 ```mermaid
 flowchart LR
-    START["①复制起步模板"] --> WRITE["②填写节点和连线<br/>严格遵守六规则"] --> CHECK["③运行自动检查<br/>check-mermaid.py --fix"]
+    START["1：复制起步模板"] --> WRITE["2：填写节点和连线 遵守六规则"] --> CHECK["3：运行自动检查 check-mermaid.py --fix"]
     CHECK --> DONE{"0错误？"}
     DONE -->|"是"| FINISH["完成"]
     DONE -->|"否"| FIX["按报错行号修复"] --> CHECK
@@ -40,17 +40,17 @@ flowchart LR
 %% ① 禁止空行：代码块内严禁空行（含仅空格的行），空行会导致解析中断
 %% ② 文本加引号：含中文/特殊字符/空格的节点/标签/subgraph标题，一律双引号包裹
 %% ②b避免列表：节点文本内禁止 "数字. 空格"、"- 空格"、"* 空格" 开头
-%% ②c换行用<br/>：节点内换行统一用 <br/>，禁止 \n
+%% ②c保持单行：节点与标签文本用空格分隔，不使用 <br/> 或 \n
 %% ③ Subgraph安全格式：subgraph EN_ID ["中文标题"]，ID为纯英文标识符
 %% ④ 边标签格式：-->|"标签"|目标，中文标签双引号包裹，标签与箭头间无空格
 %% ⑤ 完成后运行：python .agents/scripts/check-mermaid.py --fix 自动检测修复
 %% ============================================================
 flowchart TB
-    START("开始<br/>起点标识") --> INPUT["①输入：<br/>接收数据"]
-    INPUT --> CHECK{"②判断：<br/>条件校验"}
-    CHECK -->|"是"| PROCESS_A["③A处理：<br/>正向分支"]
-    CHECK -->|"否"| PROCESS_B["③B处理：<br/>异常分支"]
-    PROCESS_A --> OUTPUT["④输出：<br/>产出结果"]
+    START("开始：起点标识") --> INPUT["1：输入 接收数据"]
+    INPUT --> CHECK{"2：判断 条件校验"}
+    CHECK -->|"是"| PROCESS_A["3A：正向处理"]
+    CHECK -->|"否"| PROCESS_B["3B：异常处理"]
+    PROCESS_A --> OUTPUT["4：输出 产出结果"]
     PROCESS_B --> OUTPUT
     OUTPUT --> FINISH("结束")
     style START fill:#d4edda,stroke:#28a745,color:#000
@@ -72,7 +72,7 @@ flowchart TB
 python .agents/scripts/check-mermaid.py --fix
 ```
 
-- `--fix`：自动修复可修复问题（空行删除、引号补全、`\n`→`<br/>`）
+- `--fix`：自动修复可修复问题（空行删除、引号补全、`\n` 压平为空格）
 - 无 `--fix`：仅检查不修改
 - `--path <目录>`：仅检查指定目录（默认检查全项目）
 - `--dry-run`：预览修复内容但不写入文件
@@ -118,19 +118,19 @@ flowchart LR
 | `["- 项目A"]` | `["-项目A"]` 或 `["·项目A"]` | 去掉空格或改用中点 |
 | `["* 注意"]` | `["⚠ 注意"]` | 改用 emoji |
 
-### 规则 ②c 换行用 `<br/>`
+### 规则 ②c 文本保持单行
 
-节点文本内换行**统一使用 HTML 的 `<br/>` 标签**，禁止使用 `\n`：
+VS Code 兼容策略要求节点与标签文本保持单行；需要分隔时使用空格，不使用 `<br/>` 或 `\n`：
 
-- `\n` 在 flowchart/stateDiagram 节点中不会被解释为换行（部分渲染器显示为字面文本，部分压缩为单行）
-- 虽然 `\n` 在 sequenceDiagram 的 Note 和消息文本中可以换行，但统一使用 `<br/>` 可避免记忆上下文差异
+- `<br/>` 会被 VS Code 预览规则拒绝
+- `\n` 在不同图表类型和渲染器中的行为不一致
 
 ```mermaid
 flowchart LR
-    A["第一行<br/>第二行<br/>第三行"] --> B["单行文本"]
+    A["第一行 第二行 第三行"] --> B["单行文本"]
 ```
 
-记忆口诀：**Mermaid 换行一律 `<br/>`，不要 `\n`**。
+记忆口诀：**节点与标签保持单行，需要分隔时用空格**。
 
 ### 规则 ③ Subgraph 安全格式
 
@@ -188,7 +188,7 @@ flowchart LR
 | 4 | 节点文本列表触发模式（`数字. ` `- ` `* `） | 规则②b | ❌ 需手动修改内容 |
 | 5 | 节点中文/特殊字符未加引号 | 规则② | ✅ 自动补全双引号 |
 | 6 | 边标签中文/特殊字符未加引号 | 规则④ | ✅ 自动补全双引号 |
-| 7 | 节点文本内 `\n` 换行符 | 规则②c | ✅ 自动替换为 `<br/>` |
+| 7 | 节点/标签内 `\n` 或 `<br/>` | 规则②c | ✅ 压平为单行并移除标签 |
 | 8 | sequenceDiagram participant 中文/空格未加引号 | 规则② | ✅ 自动补全 |
 | 9 | stateDiagram 迁移标签/状态描述含空格未加引号 | 规则② | ✅ 自动补全 |
 | 10 | flowchart TD/TB direction 缺失 | 规则① | ✅ 自动补全 |
@@ -212,13 +212,15 @@ python .agents/scripts/check-mermaid.py --fix
 python .agents/scripts/check-mermaid.py --path docs/knowledge/
 # 预览修复（不写入文件）
 python .agents/scripts/check-mermaid.py --fix --dry-run
-# CI模式（通过repo-check.py调用，失败时exit 1阻断）
+# 严格全量扫描（任何存量错误都会返回非零）
 python .agents/scripts/repo-check.py mermaid
+# CI使用历史基线，只阻断新增或恶化错误
+python .agents/scripts/repo-check.py all
 ```
 
 ### CI 集成
 
-[ci-check.ps1](../../../.agents/scripts/ci-check.ps1#L43-L51) / [ci-check.sh](../../../.agents/scripts/ci-check.sh#L44-L52) 第4步已集成 Mermaid 检查，CI 流水线中 Mermaid 检查失败会阻断提交。提交前建议运行完整 CI 检查：
+[ci-check.ps1](../../../.agents/scripts/ci-check.ps1#L43-L51) / [ci-check.sh](../../../.agents/scripts/ci-check.sh#L44-L52) 通过 `repo-check.py all` 运行 Mermaid 历史基线门禁：已知历史债务会汇总显示，新增或同一指纹数量增加时阻断。单独运行 `repo-check.py mermaid` 仍是严格全量扫描。基线创建与显式缩减命令见[检查脚本使用说明](../../../.agents/scripts/docs/usage/01-check-scripts.md)。提交前建议运行完整 CI 检查：
 
 ```powershell
 .\.agents\scripts\ci-check.ps1
@@ -230,19 +232,19 @@ python .agents/scripts/repo-check.py mermaid
 
 ```mermaid
 flowchart TB
-    START["渲染异常"] --> S1{"①代码块内<br/>有空行？"}
-    S1 -->|"是"| FIX1["删除所有空行"] --> RECHECK["重新运行<br/>check-mermaid.py"]
-    S1 -->|"否"| S2{"②Subgraph ID<br/>是纯英文？"}
+    START["渲染异常"] --> S1{"1：代码块内有空行？"}
+    S1 -->|"是"| FIX1["删除所有空行"] --> RECHECK["重新运行 check-mermaid.py"]
+    S1 -->|"否"| S2{"2：Subgraph ID是纯英文？"}
     S2 -->|"否"| FIX2["改为 EN_ID [「中文标题」] 格式"] --> RECHECK
-    S2 -->|"是"| S3{"③节点文本有<br/>列表触发模式？"}
+    S2 -->|"是"| S3{"3：节点文本有列表触发模式？"}
     S3 -->|"是"| FIX3["中文冒号/去空格/改用emoji"] --> RECHECK
-    S3 -->|"否"| S4{"④节点内换行<br/>是否用了反斜杠+n<br/>而非<br/>？"}
-    S4 -->|"是"| FIX4["替换为 <br/>"] --> RECHECK
-    S4 -->|"否"| S5{"⑤边标签中文/特殊字符<br/>加了引号？"}
+    S3 -->|"否"| S4{"4：节点或标签含换行标记？"}
+    S4 -->|"是"| FIX4["压平为单行并用空格分隔"] --> RECHECK
+    S4 -->|"否"| S5{"5：边标签中文或特殊字符加了引号？"}
     S5 -->|"否"| FIX5["改为 -->|"「标签」"| 格式"] --> RECHECK
-    S5 -->|"是"| S6{"⑥Style前<br/>有空行？"}
+    S5 -->|"是"| S6{"6：Style前有空行？"}
     S6 -->|"是"| FIX6["删除空行"] --> RECHECK
-    S6 -->|"否"| AUTO["运行 check-mermaid.py --fix<br/>自动修复"]
+    S6 -->|"否"| AUTO["运行 check-mermaid.py --fix 自动修复"]
     AUTO --> RECHECK
     RECHECK --> DONE{"0错误？"}
     DONE -->|"是"| FINISH["问题解决"]
@@ -258,7 +260,7 @@ Mermaid 渲染错误存在"分层屏蔽"效应——结构层错误会阻止解�
 
 1. **语法结构层**：括号/引号闭合、无空行、direction 正确
 2. **Subgraph 层**：ID 合法（纯英文）、标题格式正确
-3. **节点文本层**：无列表触发模式、换行用 `<br/>`
+3. **节点文本层**：无列表触发模式，文本保持单行
 4. **边标签层**：中文/特殊字符加引号
 5. **Style 层**：颜色值和样式语法正确
 
@@ -270,22 +272,22 @@ Mermaid 渲染错误存在"分层屏蔽"效应——结构层错误会阻止解�
 
 ### flowchart（流程图，最常用）
 
-- ✅ 支持 `<br/>` 换行
+- 节点文本保持单行，需要分隔时用空格
 - ✅ 支持 subgraph 分组
-- ⚠️ 节点内 `\n` 不会换行
+- `<br/>` 与 `\n` 会被 VS Code 兼容检查拒绝
 - ⚠️ 空行严格禁止
 - 起步推荐：使用 [safe-starter.md](../../../.agents/templates/mermaid-templates/safe-starter.md)
 
 ### sequenceDiagram（时序图）
 
-- `\n` 在 Note 和消息文本中可以换行，但统一用 `<br/>` 更安全
+- Note 和消息文本也遵循单行策略，需要分隔时用空格
 - participant 中文别名必须加引号：`participant A as "开发者"`
 - 箭头语法：`->>`（虚线箭头）、`-->>`（虚线响应）
 - 模板：[sequence-diagram.md](../../../.agents/templates/mermaid-templates/sequence-diagram.md)
 
 ### stateDiagram-v2（状态图）
 
-- ✅ 支持 `<br/>` 换行
+- 状态描述保持单行，需要分隔时用空格
 - 状态描述含空格需加引号
 - 迁移标签含空格需加引号
 - 模板：[state-diagram.md](../../../.agents/templates/mermaid-templates/state-diagram.md)
@@ -317,7 +319,7 @@ Mermaid 渲染错误存在"分层屏蔽"效应——结构层错误会阻止解�
 - [ ] 代码块内无任何空行
 - [ ] 含中文/特殊字符/空格的节点文本已用双引号包裹
 - [ ] 节点文本无「数字.空格」「- 空格」「* 空格」等列表触发模式
-- [ ] 节点内换行统一使用 `<br/>`，未使用 `\n`
+- [ ] 节点与标签文本保持单行，未使用 `<br/>` 或 `\n`
 - [ ] Subgraph 使用 `EN_ID ["中文标题"]` 格式，ID 为纯英文
 - [ ] 边标签使用 `-->|"标签"|` 格式（中文/特殊字符加引号）
 - [ ] sequenceDiagram 的 participant 中文别名已加双引号

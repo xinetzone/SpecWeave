@@ -78,10 +78,9 @@ class FlowchartFixer(BaseDiagramFixer):
         text_before = text
         text = fix_backslash_n(text)
         if text != text_before:
-            fixes.append("换行符(\\n→<br/>)")
+            fixes.append("换行符(\\n→空格)")
 
         return text, fixes
 
     def _fix_specific(self, block_text: str) -> Tuple[str, List[str]]:
         return block_text, []
-

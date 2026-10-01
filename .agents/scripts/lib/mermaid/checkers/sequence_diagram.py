@@ -6,7 +6,7 @@ enforce_python310()
 import re
 from typing import List, Tuple
 
-from ..common import CHINESE_CHARS_RE, text_needs_quotes
+from ..common import CHINESE_CHARS_RE, MermaidIssue, text_needs_quotes
 from .base import BaseDiagramChecker
 
 
@@ -26,8 +26,11 @@ class SequenceDiagramChecker(BaseDiagramChecker):
             alias = m.group(2).strip()
             lb = block_text[:m.start()].count("\n") + 1
             if text_needs_quotes(alias) and not (alias.startswith('"') and alias.endswith('"')):
-                issues.append((start_line + lb - 1, "error",
-                              f'participant 别名「{alias[:20]}」含中文/空格但未加双引号'))
+                issues.append(MermaidIssue(
+                    start_line + lb - 1,
+                    "error",
+                    f'participant 别名「{alias[:20]}」含中文/空格但未加双引号',
+                    rule_id="mermaid.sequence.unquoted_participant_alias",
+                ))
 
         return issues
-
