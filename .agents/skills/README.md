@@ -46,13 +46,14 @@ title: ".agents/skills/ 目录索引"
 | collect-api-decouple-cmd | 完整Skill | 硬件/设备采集类 API 的"采集-解析分离 + 日志复用"重构执行卡：副作用边界切分（触网/写盘 vs 纯本地计算）、dataclass 阶段契约、`run_<step>=True` 开关逐层贯通、复用分支纯路径推导并规避 rmtree/unlink 清理型工厂、产物缺失同源报错、缩放参数一致性警示；含 I→F→A→V 步骤模板、安全检查清单、Gotchas 与 npuusertools 双案例 | 推理和后处理分开、采集/推理变成可选、已经推理过了复用日志、跳过设备执行、重放日志、只重新算指标 | [collect-api-decouple-cmd/SKILL.md](collect-api-decouple-cmd/SKILL.md) |
 | classical-festival-video | 完整Skill | 古典底本节日祝福视频生成（三关键帧→10s竖版视频→随片文案+考据弹药；含情感分寸矩阵、画面禁字约束、预览确认门与物理量验收） | 祝福视频、节日贺卡视频、给 TA 做个视频、用老子/庄子/诗词做底本、中秋/春节/元宵祝福 | [classical-festival-video/SKILL.md](classical-festival-video/SKILL.md) |
 
-### 工作流门面（3个）
+### 工作流门面（4个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
 | source-code-to-okf-wiki | 工作流门面 | 源码阅读→OKF Wiki 生成（R→I→E→V→C 五阶段，信源先行、分批生成、Grep级API验证，杜绝虚构API） | 源码学习、读源码、源码阅读、生成Wiki、OKF Wiki、源码转文档、深度学一个库 | [source-code-to-okf-wiki/SKILL.md](source-code-to-okf-wiki/SKILL.md) |
 | blog-article-to-okf-wiki | 工作流门面 | 博文/资讯文章→OKF 知识包转化（七阶段：敏感度预检→骨架两问→归属决策树→F编号事实+P0核验勘误四清单→三层拆分→信源先生成→对抗审查），13篇实战验证 | 博文转化、公众号文章、微信文章、转知识包、OKF bundle、OKF wiki、文章转文档、资讯转知识库 | [blog-article-to-okf-wiki/SKILL.md](blog-article-to-okf-wiki/SKILL.md) |
 | scanned-book-to-okf-wiki | 工作流门面（v2.0.0，L2 双案例验证） | 扫描版版权书籍→OKF Wiki 教程转化（六工序：route决策前置→文本层可信度判定（覆盖纯图像与扫描图+噪声OCR混合型）+逐章通读页码映射→深度摘要→原创改写（含主张分层）→合规声明契约化（含计数口径）→V审查实证对账（含中间摘要回图核验））；案例1财商寓言、案例2《魔力》练习册 | 扫描版书籍转教程、书转Wiki、摘要替代转录、扫描版版权材料、书转知识包、混合型PDF | [scanned-book-to-okf-wiki/SKILL.md](scanned-book-to-okf-wiki/SKILL.md) |
+| ⭐ role-model-methodology | 工作流门面（v1.1.0） | 榜样人物方法论萃取与正面解读（四级事实分层 A权威/B百科/C转述/D推断 → 三框架诊断 → 证据桥接审查（时间线核对 + ★~★★★★★五档强度）→ 六步解读法 → 23条交付门禁）；含伦理四条约束（创伤不是教材/他人不是论据/隐私不评判/幸存者偏差前置）；案例：2026-10-03 三人榜样知识包（陶行知/游本昌/胡歌，61文档/254条四级事实/3框架） | 榜样学习、人物解读、正面解读师、名人方法论、人物关联洞察、榜样学习路径、终身学习者、怎么学名人、人物知识包、向谁学习、以某人为榜样 | [role-model-methodology/SKILL.md](role-model-methodology/SKILL.md) |
 
 ### Trae 内置工作流 Skill（2个，来自 external/doutops）
 
