@@ -18,7 +18,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | collect-api-decouple-cmd | "推理和后处理分开"、"采集/推理变成可选"、"已经推理过了复用日志"、"跳过设备执行"、"重放日志"、"只重新算指标" | 1（副作用边界切分 + dataclass 阶段契约 + run_<step> 开关逐层贯通 + 复用分支规避清理型工厂，I→F→A→V 执行卡） | v1.0.0 | [skills/collect-api-decouple-cmd/SKILL.md](../skills/collect-api-decouple-cmd/SKILL.md) |
 | classical-festival-video | "祝福视频"、"节日贺卡视频"、"给 TA 做个视频"、"用老子/庄子/诗词做底本"、"中秋/春节/元宵祝福" | 1（三关键帧→10s竖版视频→随片文案+考据弹药；含情感分寸矩阵、预览确认门、物理量验收） | v1.0.0 | [skills/classical-festival-video/SKILL.md](../skills/classical-festival-video/SKILL.md) |
 
-### 工作流门面（4个）
+### 工作流门面（5个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -26,6 +26,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | blog-article-to-okf-wiki | "博文转化"、"公众号文章"、"微信文章"、"转知识包"、"OKF bundle"、"OKF wiki"、"文章转文档"、"资讯转知识库" | 1（七阶段工作流，L2为博文转化L3模式文档；13篇实战验证） | v1.0.0 | [skills/blog-article-to-okf-wiki/SKILL.md](../skills/blog-article-to-okf-wiki/SKILL.md) |
 | scanned-book-to-okf-wiki | "扫描版书籍转教程"、"书转Wiki"、"摘要替代转录"、"扫描版版权材料"、"书转知识包"、"混合型PDF" | 1（六工序工作流：route决策前置→文本层可信度判定+逐章通读→深度摘要→原创改写→合规声明契约化（含计数口径）→V实证对账；L2 双案例验证：案例1财商寓言/纯图像、案例2练习册/噪声OCR混合型；两配套模式已入 docs 模式库） | v2.0.0 | [skills/scanned-book-to-okf-wiki/SKILL.md](../skills/scanned-book-to-okf-wiki/SKILL.md) |
 | role-model-methodology | "榜样学习"、"人物解读"、"正面解读师"、"名人方法论"、"人物关联洞察"、"榜样学习路径"、"终身学习者"、"怎么学名人"、"人物知识包"、"向谁学习" | 1（七阶段工作流：四级事实分层→三框架诊断→证据桥接审查→六步解读法；L1门面 + L2 七概念编排；含伦理四条约束与「门禁全绿≠链接都对」双重护栏；实战：2026-10-03 三人榜样知识包 4包/61文档/254事实） | v1.1.0 | [skills/role-model-methodology/SKILL.md](../skills/role-model-methodology/SKILL.md) |
+| mindfulness-positivity | "正念"、"正面"、"积极心态"、"正能量"、"mindfulness"、"positive thinking"、"习得性乐观"、"有毒正能量"、"toxic positivity"、"先接纳后重构"、"正念和积极有什么区别"、"情绪调节" | 1（四场景决策树：概念问答/内容产出/自我调节方案/知识包沉淀；七维度辨析框架+先接纳后重构四步整合法+心理健康安全边界；L1门面 + L2 知识底座 sc-20261003-mindfulness-positivity：22事实/3洞察/1模式） | v1.0.0 | [skills/mindfulness-positivity/SKILL.md](../skills/mindfulness-positivity/SKILL.md) |
 
 ### Trae 内置工作流 Skill（2个，来自 external/doutops）
 
