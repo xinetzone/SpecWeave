@@ -3,7 +3,7 @@ type: Pattern
 id: "source-code-to-okf-wiki-workflow"
 source: "spec:pyinvoke-okf-wiki"
 maturity: "L1"
-validation_count: 5
+validation_count: 6
 ---
 # 源码阅读→OKF Wiki生成工作流
 
@@ -13,7 +13,7 @@ validation_count: 5
 
 ## 成熟度
 
-L1 已验证（5次验证：2026-08-21 PyInvoke v3.0.3 源码Wiki；2026-08-25 tiktoken v0.14.0 双层库源码Wiki；2026-08-28 Protocol Buffers v37.0 超大规模 monorepo 双束；2026-08-29 Tongyi-MAI 多子项目生态归并三束；2026-09-09 网易有道开源生态 6 异质仓六束）
+L1 已验证（6次验证：2026-08-21 PyInvoke v3.0.3 源码Wiki；2026-08-25 tiktoken v0.14.0 双层库源码Wiki；2026-08-28 Protocol Buffers v37.0 超大规模 monorepo 双束；2026-08-29 Tongyi-MAI 多子项目生态归并三束；2026-09-09 网易有道开源生态 6 异质仓六束；2026-10-04 腾讯 CubeSandbox v0.7.2 MicroVM 安全沙箱）
 
 ## 模式概述
 
@@ -162,7 +162,7 @@ sources:
 5. **代码示例检查**：代码示例语法正确、API调用与源码一致
 6. **Index完整性检查**：各级index.md列出所有对应目录的文件
 7. **虚构API检测**：对文档中引用的每个类/方法，用Grep在源码中验证存在性
-8. **计数断言验证**：报告/文档中"X个/Y份/Z处"类数量陈述，必须经 Glob/Grep 独立计数比对一致（如"15个克隆298处引用"须与扫描工具输出一致），禁止凭印象写数
+8. **计数断言复核**：报告/文档/facts.md 中"X个/Y份/Z处"类数量陈述，R 阶段采集时即须对固定 tag blob 脚本计数（人工枚举不得作为唯一来源），V 阶段用独立于 R 的手段复核（换正则/解析/官方 gate 口径），区分原始匹配数与去重名数并注明统计口径（成员≠目录、路由≠页面≠组件）——CubeSandbox 实证人工枚举单会话 3/3 全错（29成员误28漏项、30 RPC误9为子集当总数、18路由误15为口径错位）；禁止凭印象写数
 9. **信源路径稳定性**：运行 `python .agents/scripts/check-source-path-stability.py`（audit 模式），temporary 信源引用零容忍；复盘报告事实表等历史时点快照按"历史记录 vs 活动引用"判据人工分流——工具零漏报，不替代语义裁决
 
 ### C阶段（Commit）：模式萃取与沉淀
@@ -519,6 +519,7 @@ mock = MockContext({Response(status=200, body='ok'): 'result'})
 | spec-driven-subagent-execution | 工具模式 | E阶段分批并行委派使用subagent执行模式 |
 
 <!-- changelog -->
+- 2026-10-04 | pattern | 新增"迁移验证案例：腾讯 CubeSandbox v0.7.2 MicroVM 安全沙箱"（第6次验证，validation_count 5→6）：1 束 22 文件（13 概念/4 示例/3 信源登记）、244 条事实；沉淀计数断言复核规则——R 阶段数量事实必须脚本计数（人工枚举实测 3/3 全错：29 成员误 28、30 RPC 误 9、18 路由误 15），三类错误分型（漏项枚举/子集当总数/计数对象错位），V 阶段复核手段独立于 R、分列原始匹配/去重名数、勘误留审计痕迹；同步 source-code-to-okf-wiki SKILL v1.5.0
 - 2026-09-09 | pattern | 新增"迁移验证案例：网易有道开源生态 6 仓"（第5次验证，validation_count 4→5）：6 异质仓（Python 库/TTS×2/Electron 桌面/RAG 内核/学术 Agent）6 束 60 内容文档 + 25 index；沉淀 4 条经验教训（父级 toctree 同步挂载、验证子代理幂等重跑、内容级修复两级裁决、信源路径漂移以实际为准），新增反模式 15（未挂载父级 toctree）/16（子代理结果丢失凭摘要续做）/17（内容级修复一律再开代理回合）
 - 2026-08-29 | pattern | 同步 source-code-to-okf-wiki SKILL v1.3.0：新增"阶段0（Pre-flight）：信源稳定性门预检"小节（信源分类→临时信源升级为 vendor submodule 固定 release tag+commit hash→路径只指 stable→清理前 GATE-SPS `--target` 扫描→持久性 audit，G0 质量门），由 veadk-python 案例实证（41 文件 800 处临时引用迁移）；V 阶段检查清单增第 8 项计数断言验证、第 9 项信源路径稳定性；新增反模式12"临时克隆直接开读，不固定版本"、反模式13"信源漂移——固定 main/master 或只记 tag 名不记 hash"；早期预警表与检验标准表同步增行；内嵌 V 阶段 Prompt 模板增第 7/8 项
 - 2026-08-29 | pattern | 新增"迁移验证案例：Tongyi-MAI 多子项目生态"（第4次验证，validation_count 1→4）：5 子项目（2 实现仓+基准官网+技术报告站+博客 stub）归并 3 束 45 文件；沉淀 3 条经验教训（先归并决策再采集、网站型子项目负向声明、计数带口径可分解验证），新增反模式 14"Grep匹配行数当成员计数"；反向传播新专项模式 multi-repo-ecosystem-okf-bundle-generation（L1）
