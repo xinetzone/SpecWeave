@@ -15,6 +15,7 @@ ai-engineering/index
 algorithmic-art/index
 best-practices/index
 categories/index
+dao-san-triads/index
 decisions/index
 docs-separation-guide/index
 engineering/index
@@ -56,6 +57,7 @@ VENDOR-INTEGRATION
 | **算法艺术** | 生成式艺术与算法创意探索（Atomic Emergence 等） | [Atomic Emergence 哲学](algorithmic-art/atomic-emergence/concepts/philosophy.md) |
 | **工程化研究** | 深度学习原子化设计等工程方法论研究 | [AI Agent 原子化设计分析](engineering/deep-learning-atomic-design/concepts/ai-agent-atomic-design-analysis.md) |
 | **[正念与正面辨析](mindfulness-positivity/index.md)** | 心智概念知识包：正念（看见）与正面/积极心态（改写）的双教程、联系与区别，及「先接纳后重构」整合模式 | [正念教程](mindfulness-positivity/concepts/01-zheng-nian-mindfulness.md) · [正面教程](mindfulness-positivity/concepts/02-zheng-mian-positivity.md) · [联系与区别](mindfulness-positivity/concepts/03-connection-and-differences.md) |
+| **[三元组探究](dao-san-triads/index.md)** | 心智/行动知识包：从「三」之本体论、时间三分到两组行动三元组，收敛为七条可当场判定的行动原则 | [生存指南](dao-san-triads/concepts/04-survival-guide.md) · [「三」本体论](dao-san-triads/concepts/01-san-yi-birth.md) |
 | **[TRAE 生态特性监测](trae-feature-watch/index.md)** | 每周例行追踪官方更新日志、文档新特性、TraeWork 设计库与本地插件/skills 清单变化 | [最新一期周报（2026-10-01）](trae-feature-watch/2026-10-01-trae-feature-watch.md) |
 
 ## 🎯 如何使用
