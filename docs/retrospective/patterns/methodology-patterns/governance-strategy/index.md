@@ -145,6 +145,7 @@ technical-debt-workaround-tracking
 template-cross-platform-validation
 template-placeholder-granularity-design
 test-coverage-diminishing-returns
+three-as-relation-position
 three-layer-repair-closure
 three-layer-rule-enforcement
 three-layer-spec-constraint
