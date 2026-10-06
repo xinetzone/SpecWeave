@@ -1,6 +1,6 @@
 ---
 name: dao-san-triads
-version: 1.0.0
+version: 1.0.2
 description: "「三」之本体论与三元组诊断工作流。当用户要求解读「道生一，一生二，二生三」或探究「三」的本质、追问过去/现在/未来三元组的哲学根基、要求把「品质·技能·身份」与「真问题·真需求·真目标」两组三元组建立关联、要一份极简可操作的人类生存指南或行动准则、遇到二元对立僵持需要找第三项、做自我诊断（我卡在哪/该做什么/我是谁）、或需要可审计的古典哲学概念探究与知识包沉淀时，必须使用此技能。提供六类「三」解释谱系与第五义「三=关系位」统一模型、奥古斯丁三分法与最强反驳、时态检验诊断法、七条可当场判定的生存指南、「三之位」可迁移模式（5反模式+3问检验）、版本纪律（甲乙本/今本/楚简本不得混称）与哲学概念非医疗非投资边界。触发词：三生万物、道生一、二生三、三之位、三元组、过去现在未来、时间三分、奥古斯丁三分法、记忆注意期待、一分为三、真问题真需求真目标、品质技能身份、生存指南、行动准则、极简原则、我要不要做、二选一怎么办、自我诊断、古典哲学概念。不要直接凭记忆回答「三是什么」——两千年无定论，本Skill封装了六类解释谱系、证据强度评级、不可裁决边界与防止伪因果的类比性关联纪律。"
 argument-hint: "<场景：概念探究/自我诊断/行动准则/知识包沉淀>"
 user-invocable: true
@@ -13,7 +13,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/dao-san-triads/SKILL.toml"
 
 # 「三」之本体论与三元组诊断工作流 Skill
 
-> **渐进式披露**：L0 [ONBOARDING](../../ONBOARDING.md) → L1 本文件（触发词 + 场景决策树 + 六类谱系 + 诊断法 + 七条原则 + 模式 + 门禁 + 安全清单）→ L2 完整探究过程 [知识包 `docs/knowledge/dao-san-triads/`](../../../../docs/knowledge/dao-san-triads/index.md)（50 条事实 / 4 洞察 / 1 模式 / 9 条对抗审查）。
+> **渐进式披露**：L0 [ONBOARDING](../../ONBOARDING.md) → L1 本文件（触发词 + 场景决策树 + 六类谱系 + 诊断法 + 七条原则 + 模式 + 门禁 + 安全清单）→ L2 完整探究过程 [知识包 `projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/`](../../../projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/index.md)（50 条事实 / 4 洞察 / 1 模式 / 9 条对抗审查；2026-10-03 起为唯一可信源）。
 >
 > **术语速查**：三之位（「三」不是第三个实体，而是「一」与「二」之间的关系位）；实体链（三元组三项都是东西）；关系位（让二构成整体的第三项）；时态检验（用过去/现在/未来筛选问题清单）；短路规则（技能清单全无验证时，框架不适用，先做出一件东西）；版本纪律（《老子》引文须标甲本/乙本/今本/郭店楚简本，不得笼统称「帛书本」）。
 
@@ -180,7 +180,7 @@ flowchart TD
 
 ## 8. 「三之位」可迁移模式
 
-> **成熟度 L1-draft**（已在哲学、工程、先秦生物观、现世社群四个语境独立出现；待第五个独立领域验证后升 L2）
+> **成熟度 L2**（2026-10-05 由 L1-draft 升级；已在哲学、工程、先秦生物观、现世社群、现世修行社群五个语境出现结构重现，见知识包 §6 与 examples/02 §5.2）。**⚠️ 五域均为本工作流自行认定，缺外部独立复查**；证据为跨域结构重现而非应用成功统计，待外部复查或他任务复用后再议升级。
 
 **定义**：当任何系统出现「二」的僵持时，**不增加实体，而在二分之间寻找使其成为一个整体的关系位。**
 
@@ -210,7 +210,7 @@ flowchart TD
 2. 是否已识别并规避至少一个反模式？
 3. 连接方式是否已写成具体动作（谁给谁、给什么、什么格式）？
 
-**跨域迁移记录**：庞朴「一分为三」（哲学）｜`vendor/flexloop` Ψ=Ψ(Ψ) → 三=等号（工程）｜《穀梁传》三合而后生（先秦）｜daoapps 四站 → 结伴（现世社群）。**四个领域各自独立得出「三 = 关系/整合位」**——这是本模式最有力的证据。
+**跨域迁移记录**：庞朴「一分为三」（哲学）｜`vendor/flexloop` Ψ=Ψ(Ψ) → 三=等号（工程）｜《穀梁传》三合而后生（先秦）｜daoapps 四站 → 结伴（现世社群·系统层连接）｜「明君翻牌」单点聚焦（现世修行社群·决策层连接；第五域，证据为 AI 会议纪要走查非逐字稿）。**五个领域各自浮现「三 = 关系/整合位」的结构**——这是本模式最有力的证据；但五域均为自行认定，待外部独立复查。**方法论模式库条目**：[three-as-relation-position](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-as-relation-position.md)（L2，2026-10-05 入库）。
 
 ## 9. 知识包沉淀流程（需落盘时）
 
@@ -298,19 +298,21 @@ flowchart TD
 | G8 | **短路规则误用** | 「先做出一件东西」被读成「反对规划」 | 短路只针对**技能清单全无验证**的情形，不是普遍建议 |
 | G9 | **用子模块内容反推设计意图** | 「该站显然是按《老子》设计的」 | `origin.md` 未提哲学框架；**结构相似 ≠ 来源相同** |
 
-## 12. 相关资产
+## 13. 相关资产
 
 | 资产 | 关系 |
 |---|---|
-| [`docs/knowledge/dao-san-triads/`](../../../../docs/knowledge/dao-san-triads/index.md) | L2 知识底座（50 事实 / 4 洞察 / 1 模式 / 9 条审查） |
+| [`projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/`](../../../projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/index.md) | L2 知识底座（50 事实 / 4 洞察 / 1 模式 / 9 条审查；只读 submodule，唯一可信源） |
 | [`.agents/skills/role-model-methodology/SKILL.md`](../role-model-methodology/SKILL.md) | 两组三元组的**定义本体唯一来源**（v1.1.0，471 行） |
 | [`.agents/skills/seven-concepts-cmd/SKILL.md`](../seven-concepts-cmd/SKILL.md) | 本技能 §9 的编排引擎 |
 | `vendor/flexloop/docs/general/philosophy/engineering/three-as-interface.md` | 「三 = 关系」的工程独立印证（只读） |
 | `projects/awesome-okf-xs/doc/bundles/guoxue/laozi/boshu-reading/` | 甲乙本异文对照范式（只读） |
 | `projects/daoapps.github.io/doc/jieban/origin.md` | 四站现世样本（只读） |
 
-## 13. Changelog
+## 14. Changelog
 
 | 版本 | 日期 | 变更 |
 |---|---|---|
+| v1.0.2 | 2026-10-05 | 修复章节重复编号：两个「## 12」改为 §12 Gotchas / §13 相关资产 / §14 Changelog（编号连续，无交叉引用受影响） |
+| v1.0.1 | 2026-10-05 | §8「三之位」随知识包升级 L1-draft→L2（第五迁移域「现世修行社群·单点聚焦」，见 bundle examples/02 §5.2）；跨域迁移记录补第五域、自认定 caveat 与模式库条目回链；模式正式入库 `docs/retrospective/patterns/methodology-patterns/governance-strategy/three-as-relation-position.md` |
 | v1.0.0 | 2026-10-03 | 首次创建。萃取自 `docs/knowledge/dao-san-triads/` 知识包（session sc-20261003-dao-san-yuan）：六类「三」解释谱系 + 第五义关系位模型 + 时态检验 + 两组三元组关联 + 七条生存指南 + 「三之位」模式（L1-draft） |
