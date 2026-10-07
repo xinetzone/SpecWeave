@@ -143,7 +143,7 @@
 
 ## Task 9: C-原子提交——区域登记、校验与交付
 
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 8
 - **Description**:
@@ -153,6 +153,11 @@
 - **Test Requirements**:
   - `rule` TR-9.1: apps/AGENTS.md 与 apps/README.md 两处登记命中；docgen 运行成功；链接检查 0 断链
   - `rule` TR-9.2: 原子提交完成——单次提交单一职责，提交信息为 Conventional Commits 中文格式
+- **Completion Evidence**:
+  - 区域登记 3 处：apps/AGENTS.md 路由表与边界声明、apps/README.md dev-tools 分组清单（grep 命中）
+  - docgen 运行成功（`docgen.py apps` 退出 0，无净变化——APPS_TABLE 仅列 apps/ 一级条目）
+  - 校验：自检脚本 exit 0、全产品 175 条链接 0 断链、starter 40 文件 ≤50
+  - 原子提交 `c8b5114f1`（60 文件 / +3668 insertions）：产品六件套 + spec 目录 + 区域登记；采用部分暂存法保护他人变更——cached diff 中 `dao-survival-guide` 命中 0；提交后他人 3 行变更完好保留为未暂存修改（父代理独立复核：HEAD 快照 dao=0 / aws=2+1，残留 diff 恰为 dao 3 行）
 
 # Task Dependencies
 
