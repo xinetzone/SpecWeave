@@ -13,7 +13,7 @@ tags:
   - ai-sdk
   - risc-v
 date: "2026-09-29"
-last_updated: "2026-09-30"
+last_updated: "2026-10-08"
 status: "verified"
 author: "SpecWeave Agent（方法论编排 session sc-20260929-openkylin-docs-wiki）"
 summary: "以七概念方法论（R→I→E→V→C，standard）系统学习 openKylin 官方文档平台 docs.openkylin.top：递归解析 Gitee 源仓库 3181 条目/237 篇中文文档、精读 35 篇代表性文档、提取 44 条客观事实，形成 4 条四元组洞察与 1 个 L1 可迁移模式（逆序文档学习法）。教程按学习者问题域重组为平台地图、版本生命周期、安装路径、桌面使用、AI 三层体系、开发者基础设施、社区治理 7 个概念页，附信源台账与完整文档分类地图。"
@@ -22,7 +22,7 @@ knowledge_type: "conditional"
 validation_status: "verified"
 reuse_count: "0"
 integrity: "unchecked"
-source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/home 与其 Gitee 源仓库 https://gitee.com/openkylin/docs（master 分支，采集于 2026-09-29，含 Gitee API v5 文件树与提交记录）；精读文档路径见 references/source-inventory.md。本机交叉验证：Windows 10.0.19044 + WSL 2.9.3 上的 openKylin 3.0 WSL 安装实测（见 references/wsl-install-sparse-vhd-guide.md）。"
+source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/home 与其 Gitee 源仓库 https://gitee.com/openkylin/docs（master 分支，采集于 2026-09-29，含 Gitee API v5 文件树与提交记录）；精读文档路径见 references/source-inventory.md。本机交叉验证：Windows 10.0.19044 + WSL 2.9.3 上的 openKylin 3.0 WSL 安装实测（见 references/wsl-install-sparse-vhd-guide.md）。AI SDK 落机 POC：openKylin-3.0-desktop WSL（huanghe）实测 libkylin-ai-base2 2.0.0.0 文字识别能力（session sc-20261008-openkylin-ai-poc，见 references/ai-sdk-ocr-poc.md）。"
 ---
 
 # openKylin 官方文档平台学习教程
@@ -32,7 +32,7 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 - **编排 session**：`sc-20260929-openkylin-docs-wiki`
 - **场景与链路**：场景 4 知识沉淀，`R→I→E→V→C（入库）`，depth=standard
 - **采集时点**：2026-09-29（仓库最近提交为 2026-09-28）
-- **同包伴生文档**：[openKylin 全面调研：从桌面根社区到 Agent OS](references/project-overview.md)（62 条事实，信源为官网新闻）回答"openKylin 是什么"；[WSL 安装与稀疏 VHD 实操指南](references/wsl-install-sparse-vhd-guide.md)（Windows 10 本机实测）回答"最小镜像怎么装、踩坑怎么办"；[双 WSL 镜像对照与选型参考](references/wsl-dual-image-selection.md)（2026-09-30 追加远程核验、**2026-10-08 完成落机实测**）回答"6.1G Desktop WSL 镜像与最小镜像差在哪、要占多少盘、怎么选"。本教程以**文档平台**为信源回答"官方文档怎么读、怎么用、怎么参与"，四篇事实互证、视角互补（2026-09-29 由原独立目录 `docs/knowledge/tech/openkylin/` 合并入本知识包）。
+- **同包伴生文档**：[openKylin 全面调研：从桌面根社区到 Agent OS](references/project-overview.md)（62 条事实，信源为官网新闻）回答"openKylin 是什么"；[WSL 安装与稀疏 VHD 实操指南](references/wsl-install-sparse-vhd-guide.md)（Windows 10 本机实测）回答"最小镜像怎么装、踩坑怎么办"；[双 WSL 镜像对照与选型参考](references/wsl-dual-image-selection.md)（2026-09-30 追加远程核验、**2026-10-08 完成落机实测**）回答"6.1G Desktop WSL 镜像与最小镜像差在哪、要占多少盘、怎么选"。本教程以**文档平台**为信源回答"官方文档怎么读、怎么用、怎么参与"，诸篇事实互证、视角互补（2026-09-29 由原独立目录 `docs/knowledge/tech/openkylin/` 合并入本知识包）；2026-10-08 另增 [Kylin AI SDK 文字识别 OCR 落机 POC](references/ai-sdk-ocr-poc.md)，把本文 I-3 自登记的"最小 POC"缺口由文档级升级为运行时实测（F-058～F-066）。
 
 ---
 
@@ -51,6 +51,7 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 | 先了解 openKylin 项目本身（版本时间线、版图界定、选型建议） | [项目全面调研](references/project-overview.md) ／ [WSL 本机实测](references/wsl-install-sparse-vhd-guide.md) |
 | 比较 336M 最小 WSL 与 6.1G Desktop WSL 两个镜像、规划磁盘 | [双 WSL 镜像对照与选型参考](references/wsl-dual-image-selection.md)（桌面镜像已于 2026-10-08 落机实测：51.6 秒导入、1900 包、VHD 13.0 GiB、同盘峰值 19.2 GiB） |
 | 已装好 Desktop WSL，想知道**每天怎么打开桌面/一键启动器/黑屏怎么办** | [openKylin 桌面启动与日常使用教程](references/wsl-desktop-startup-tutorial.md)（2026-10-08 实测：双击启动器→xorg 登录→关闭语义→FAQ） |
+| 想确认 openKylin 的 **AI SDK 是否真能调通**（而非只有手册） | [Kylin AI SDK 文字识别 OCR 落机 POC](references/ai-sdk-ocr-poc.md)（2026-10-08 实测：装包→g++ 调通 OCR，本地 tesseract CPU 离线，8 域中闭环 1 域） |
 | 评估产品/硬件/智能体适配 openKylin 3.0 的工作量与风险 | [openKylin 3.0 架构适配评估草案](references/openkylin-v3-adaptation-assessment.md)（v0.1 纸面预评估，待 POC 验证） |
 
 ---
@@ -158,6 +159,22 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 | F-056 | systemd 失败面：`systemctl --failed` 全机仅 1 个失败单元 `systemd-binfmt`——WSL 宿主预置 WSLInterop binfmt 注册致重复注册退出 1，单元自带 generator drop-in 在失败后重注册 `:WSLInterop:M::MZ::/init:FP`（良性且有自恢复证据）；未见 acpid/蓝牙/电源等硬件相关服务失败；未执行稀疏化（全新系统逻辑＝真实占用、无洞可回收）与 unregister（用户保留发行版） | [S33] |
 | F-057 | **首登纯黑屏根因与修复（2026-10-08 实测闭环，详见双镜像文档 §5.1）**：openKylin 3.0 UKUI 4.x 的 WM 是 **KWin**（`kwin-x11` 已预装，非旧 ukwm）；`/etc/xrdp/startwm.sh` 里 `unset XDG_RUNTIME_DIR`，ukui-session 经 ukuismserver 在 Xorg ready ~1 秒后拉起 kwin，因运行时目录缺失（回退无效 `/var/tmp/runtime-openkylin`）冷启动不驻留、会话不重试 → 无合成器黑屏（ukui-panel/peony 等其余组件正常）。修复：用户级 `~/.xsession` 补 `export XDG_RUNTIME_DIR=/run/user/$(id -u)` + 前 15 秒幂等 WM 看门狗（原文件备份 `.xsession.bak-20261008`，不改系统文件/不装包）；重登后存活 kwin 父进程链 `kwin_x11←ukuismserver←ukui-session←xrdp-sesexec`、环境变量正确，证明决定性修复是补环境变量、看门狗仅兜底 | [S33] |
 
+### 1.9 I 组：Kylin AI SDK 文字识别（OCR）落机 POC（2026-10-08，F-058 ~ F-066）
+
+> G1 已通过（专项 session `sc-20261008-openkylin-ai-poc`，链路 R→I→F→V→C）。本组闭环主教程 I-3 自登记的"最小 POC"缺口，把 AI 能力从"文档成文"升级一条到"运行时实测可用"；完整过程、代码与证据见 [Kylin AI SDK 文字识别 OCR 落机 POC](references/ai-sdk-ocr-poc.md)。
+
+| 编号 | 事实 | 来源 |
+|---|---|---|
+| F-058 | Desktop 镜像出厂**预装 LLM 推理引擎骨架但无模型无服务**：`kytensor-llm 1.0.0`（描述原文为 llama.cpp "Inference of Meta's LLaMA model ... in pure C/C++"，含 libllama.so 与 libggml-cpu 全套 CPU 后端）、`kytensor-server/-client/-python 2.49.0.6`（`kytensor` 命令即 Triton Inference Server 2.49 定制）、`llm-backend 1.0.1`（`/opt/tritonserver/backends/llamacpp/libtriton_llamacpp.so`）；均无运行进程、无模型仓库；另有开铭 DBus 服务 org.kylin.kaiming 默认 active | [S34] |
+| F-059 | 面向应用的 **Kylin AI SDK 未预装但官方源可装**：`libkylin-ai-base2 2.0.0.0`（运行库）、`libkylin-ai-base-dev 2.0.0.0`（头文件）、`kylin-ai-runtime 1.1.0.1`（含 document-qa-service/opencv4.10/vector-engine-client）；`kylin-ai-model-manager 0.0.0.1` 可装；**ollama 不在 openKylin 官方源**（F-023 三方式仍需 install.sh/网盘） | [S34] |
+| F-060 | OCR 能力依赖链由 Depends 直接揭示：294 KB 的 SDK 薄封装硬依赖 **tesseract 5.3.4-ok4（leptonica 1.82）+ 语言包 chi_sim/eng/osd**；`apt install libkylin-ai-base-dev --no-install-recommends` 实测下载 **39.1 MB**、新增 4 个直接包；VHD 逻辑由 13.01 增至 **14.36 GiB（15,414,067,200 字节，非稀疏非压缩，约 +1.35 GiB）** | [S34] |
+| F-061 | 头文件 `/usr/include/kylin-ai/` 实证 API 形态：`ai-base/ocr.h` 为**同步**三函数（ocr_create_session/ocr_get_text_from_image_file\|data/ocr_destroy_session）；`config.h` 定义三类能力（NLP=0/SPEECH=1/VISION=2）与三部署策略（LOCAL=0/PUBLIC_CLOUD=1/PRIVATE_CLOUD=2）及一组 capability_settings 配置接口；`ai-base/nlp.h` 文本生成为**异步回调**（nlp_create/init_session/set_result_callback/text_chat/_async/set_context_size） | [S34] |
+| F-062 | SDK 头文件 **C++ 友好、纯 C 不可编译**：`config.h` 以 `enum ErrorCode/Capability/DeployPolicy{}` 定义却用裸类型名声明函数、全头文件树无 typedef，`gcc *.c` 报 unknown type name，`g++ *.cpp` 通过（函数本身 extern "C" 为 C ABI）；手册"用 C 开发"的用户需改用 C++ 或自补 typedef | [S34] |
+| F-063 | **OCR 最小 POC 四判据全满足**：g++ 链 `-lkylin-ai-base` 编译通过；`ocr_create_session()` 返回 OCR_SUCCESS(0)、非空会话；对 720×220 中英文图 `ocr_get_text_from_image_file()` 返回非空文本，识别出大部分中英文与数字但带形近误识（Kylin→Kvylin、麒麟→户有）——**可用但精度中等**，非高准确率商用 OCR | [S34] |
+| F-064 | 三源同轴钉死 **OCR 走本地、非云**：①`ldd libkylin-ai-base.so.2` 进程内直链 libtesseract.so.5+liblept.so.5（另链 curl/nghttp2/ssl 供云端能力）；②`gsettings org.openkylin.aisdk.vision` 权威值 deploy-policy=**LOCAL**、model-config/policy-model-map 为空（**无云密钥**）；③强制 LOCAL 后识别成功，输出与 `tesseract -l chi_sim+eng` CLI **同源而误识字不同**（SDK 经 libtesseract 库 API、预处理参数异于 CLI）——CPU 离线、不依赖网络/GPU/大模型 | [S34] |
+| F-065 | **配置接口一致性问题（待官方确认，不强行归因）**：`capability_settings_get_deploy_policy(VISION)` 首读返回 1(PUBLIC_CLOUD)，与 gsettings 权威值 LOCAL 不符；`set_deploy_policy(VISION,LOCAL)` 返回 1（config.h 中 1=CONFIG_FAILED）但读回与 gsettings 均确认已生效为 LOCAL——部署策略应以 dconf/gsettings 为权威，不宜只信运行时查询/返回码 | [S34] |
+| F-066 | **8 能力域仅闭环 OCR 1 域**：speech/embedding/文本生成/图像生成/主体分割/通用分割 6 域与错误码体系仍为**成文未验证**；文本生成本地路径需用预装 kytensor-server(Triton)+llamacpp backend 并自备 GGUF（如 DeepSeek-R1 1.5B/7B-Q4，约 1–5 GB，本机 16GiB/CPU-only 可跑小档），云端路径需百度/讯飞密钥——均登记为后续 POC，未在本轮伪造结论 | [S34] |
+
 ---
 
 ## 2. I 阶段：核心洞察（四元组）
@@ -185,6 +202,7 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 - **反常识**：判断一个操作系统是否"AI 原生"，发布会特性表属于营销叙事；文档站给出的是**别人能否照着做出来的证据**——apt 包名、模型托管站点、会话接口与错误码齐备，意味着能力已进入可复用的平台阶段。新闻里的"智能体底座"是声明，SDK 手册是证据。
 - **行动**：评估任何 OS 的 AI 能力用"三层成文度"清单——有无一键本地工具？有无按版本维护的模型接入文档？有无带错误码的开发者 API 手册？有无配套贡献治理规则？四层齐备可将其能力从"特性宣传"升级为"平台级候选"。
 - **证据边界（V 审查补充）**："成文度"是必要条件而非充分条件：本教程未实机安装 AI SDK 开发包、未逐接口跑通 8 个能力域、未核验各模型文件在 modelscope 的当前可下载性；文档规模与接口形态只能证明"能力被设计并文档化"，不能证明"在任何硬件上当下可用"。最终采信仍需一次最小 POC（装包→调通一个文字识别或文本生成接口）。
+- **证据边界更新（2026-10-08 落机 POC，F-058～F-066，详见 [OCR POC](references/ai-sdk-ocr-poc.md)）**：上述最小 POC **已完成 OCR 一域**——官方源装 `libkylin-ai-base-dev 2.0.0.0` 成功、g++ 调通文字识别、三源证据钉死其为本地 tesseract 5.3.4（chi_sim+eng）CPU 离线路径、无云密钥/GPU/大模型依赖；故 OCR 从"成文"升级为"**本机实测可用，但精度中等、头文件仅 C++ 友好、配置查询接口与 dconf 权威值读数错位**"。**其余 7 域（speech/embedding/文本生成/图像生成/两类分割/错误码）仍为成文未验证**，文本生成本地路径需自备 GGUF（镜像已预装 Triton+llama.cpp 引擎骨架），云端路径需密钥。"必要非充分"判断本身被 POC 强化：手册可得 ≠ 准确率/接口一致性可直接放心生产采用。
 
 ### I-4　开发者板块实为供应链基础设施操作手册，是"根社区"独立性的操作层证据
 
@@ -241,8 +259,12 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 | G1/G2 | 实测事实客观可溯源、洞察四元组对账 | PASS（F-051~F-057 共 7 条运行时事实，信源 S33；双镜像文档 §4 增实测对账，I-2 更新为真值落定） |
 | V 门 | 实测不夸大：服务级 vs 交互桌面级分开；事前推断逐条对账；黑屏先取证后修复 | PASS（五轮回填：4 项推断 3 证实 1 修正；六轮实战：首登黑屏以四类日志+父进程链定位 KWin/XDG_RUNTIME_DIR 根因，用户级修复重登验证，新增 §5.1） |
 | G4 | 原子化产出 | PASS（更新 5 文件：wsl-dual-image-selection、wsl-install-sparse-vhd-guide 范围声明、03-install-paths、本 index、信源台账 S33；未新建文件；修复落在发行版用户家目录 `~/.xsession`，备份可回滚） |
+| **2026-10-08 AI 专项**（session `sc-20261008-openkylin-ai-poc`，AI SDK 落机 POC 链路 R→I→F→V→C） | | |
+| G1/G2 | POC 事实客观可溯源、洞察对账 | PASS（F-058～F-066 共 9 条运行时/包/接口事实，信源 S34；I-3 证据边界由"待 POC"更新为"OCR 已实测、7 域未验证"） |
+| V 门 | POC 不夸大：本地/云三路区分；只声称跑通的能力；测量孤证自我否决 | PASS（ldd+gsettings+tesseract CLI 三源钉死本地后端；`GetCompressedFileSize` 一次 4GB 孤证经非稀疏/非压缩交叉后弃用；C++ 头坑与配置 API 错位如实登记不强行归因） |
+| G4 | 原子化产出 | PASS（新建 [OCR POC 参考文档](references/ai-sdk-ocr-poc.md) 1 篇；更新本 index（事实/导航/I-3/质量门）、05-ai-stack 未实测声明、信源台账 S34；POC 工程留 WSL 挂载目录不入库） |
 
-**局限声明**：① 237 篇中精读 35 篇（含全部板块代表性文档与全部短占位页），其余以标题骨架覆盖，可能遗漏个别长尾操作细节；② 文档站内容随社区提交持续变化，本教程事实时点为 2026-09-29；③ 图片型页面（如 27 图版《关于社区》）未做 OCR，其信息以治理组织架构文字版互证；④ 未对 en 英文目录做对照统计；⑤ 本教程定位为"文档平台导读"，不对 openKylin 的生产环境适用性（稳定性、性能、硬件兼容、供应链合规）作独立验证结论——相关表述来自官方文档或姊妹调研口径，实际采用前须自行完成 POC（V 审查 O7 登记）；⑥ 2026-09-30 追加的 Desktop WSL 文件级事实（字节数/MD5/魔数/ISIZE/结构）为**远程核验级**，2026-10-08 已补充落机实测（F-051~F-057/S33：解压真值 k=3、流式导入 51.6 秒、1900 包、VHD 13.01 GiB、同盘峰值 19.2 GiB、xrdp 服务与交互 UKUI 桌面全链路可用）；首登黑屏（XDG_RUNTIME_DIR 致 KWin 不驻留）已实测定位并用户级修复（F-057，单次首登+一次重登验证，跨版本需重新取证）；引用规划值时须与实测值区分，**残留观察项**仅限：内存失败阈值下界（未测到失败）、整机 `--shutdown` 后 IP 漂移（localhost 接入可规避）、unregister 物理回收验证。
+**局限声明**：① 237 篇中精读 35 篇（含全部板块代表性文档与全部短占位页），其余以标题骨架覆盖，可能遗漏个别长尾操作细节；② 文档站内容随社区提交持续变化，本教程事实时点为 2026-09-29；③ 图片型页面（如 27 图版《关于社区》）未做 OCR，其信息以治理组织架构文字版互证；④ 未对 en 英文目录做对照统计；⑤ 本教程定位为"文档平台导读"，不对 openKylin 的生产环境适用性（稳定性、性能、硬件兼容、供应链合规）作独立验证结论——相关表述来自官方文档或姊妹调研口径，实际采用前须自行完成 POC（V 审查 O7 登记）；⑥ 2026-09-30 追加的 Desktop WSL 文件级事实（字节数/MD5/魔数/ISIZE/结构）为**远程核验级**，2026-10-08 已补充落机实测（F-051~F-057/S33：解压真值 k=3、流式导入 51.6 秒、1900 包、VHD 13.01 GiB、同盘峰值 19.2 GiB、xrdp 服务与交互 UKUI 桌面全链路可用）；首登黑屏（XDG_RUNTIME_DIR 致 KWin 不驻留）已实测定位并用户级修复（F-057，单次首登+一次重登验证，跨版本需重新取证）；引用规划值时须与实测值区分，**残留观察项**仅限：内存失败阈值下界（未测到失败）、整机 `--shutdown` 后 IP 漂移（localhost 接入可规避）、unregister 物理回收验证；⑦ 2026-10-08 AI SDK 落机 POC（F-058～F-066/S34）仅把 **OCR 一域**升级为运行时实测（本地 tesseract、CPU 离线、精度中等），其余 7 能力域仍为成文未验证——文本生成本地需自备 GGUF（镜像预装 Triton+llama.cpp 引擎骨架）、云端需密钥；SDK 头文件仅 C++ 友好、配置查询接口与 dconf 权威值读数错位为待官方确认项，勿据单点现象外推到正式环境。
 
 ```
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S2 | event=CHAIN_SELECTED | session=sc-20260929-openkylin-docs-wiki | msg=知识沉淀链路R→I→E→V→C | ctx={"chain":"R-I-E-V-C","depth":"standard"}
@@ -267,4 +289,6 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=C4 | event=CERT_FIXED | session=sc-20261008-openkylin-desktop-wsl-install | msg=xrdp证书警告根治：重签CN=localhost/SAN覆盖localhost+127.0.0.1(原snakeoil备份)并导入Windows当前用户受信任根，重连直进登录窗；教程§4.1与双镜像§5步骤7同步
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S0 | event=CMD_START | session=sc-20261008-openkylin-wiki-pattern-audit | msg=模式入库质量复核：逆序文档学习法（研究知识区）五步核验（基准重读/覆盖率比对/引用回验/脚本校验/分级清单） | ctx={"scenario":"knowledge","chain":"V-C","sub":"pattern-audit"}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20261008-openkylin-wiki-pattern-audit | msg=复核PASS无P0/P1阻断；修复F-1(模式文档V门补计数裁定:7意见/6采纳/1局限)+F-2(tech.md成熟度标签L1→L1-draft)；F-3/F-4仅报告 | ctx={"gates":["V"],"files":2,"findings":{"P2_fixed":1,"P3_fixed":1,"P3_reported":2}}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S0 | event=CMD_START | session=sc-20261008-openkylin-ai-poc | msg=AI SDK落机POC闭环I-3最小验证缺口 | ctx={"scenario":"problem","chain":"R-I-F-V-C","target":"libkylin-ai-base2 2.0 OCR"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20261008-openkylin-ai-poc | msg=OCR成文→实测可用：装包/g++调通/三源钉死本地tesseract离线；9事实F-058~F-066/S34；新建POC文档1+更新index/05概念页/信源台账 | ctx={"gates":["G1","G2","V","G4"],"capabilities_verified":["ocr"],"capabilities_pending":7}
 ```

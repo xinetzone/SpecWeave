@@ -64,7 +64,7 @@ ollama run deepseek-r1:1.5b
 
 | # | 能力域 | 接口轮廓 |
 |---|---|---|
-| 1 | 文字识别（OCR） | 会话创建/初始化/销毁、结果回调、模型配置（名称+部署类型）、图片路径/图片数据两种入参、带 request_id 变体、内部事件循环开关；结果可解析整行文本、行四角点坐标、整体文本 |
+| 1 | 文字识别（OCR）✅ 已落机实测 | 会话创建/初始化/销毁、结果回调、模型配置（名称+部署类型）、图片路径/图片数据两种入参、带 request_id 变体、内部事件循环开关；结果可解析整行文本、行四角点坐标、整体文本 |
 | 2 | 音频处理 | 语音类会话接口 |
 | 3 | 向量化 | embedding 接口（语义搜索/知识库的基础） |
 | 4 | 文本生成 | 对话/补全类接口 |
@@ -74,6 +74,8 @@ ollama run deepseek-r1:1.5b
 | 8 | 通用错误码 | 全 SDK 错误码对照表 |
 
 接口设计的共同模式：**会话生命周期（create→init→set callback→set model config→invoke→destroy）+ 异步回调取结果 + 模型部署类型可配（本地/云端）**。文字识别章节作为最完整的范例，开发其他能力时可先照它的结构理解。
+
+> **2026-10-08 落机实测补充**（详见 [Kylin AI SDK 文字识别 OCR 落机 POC](../references/ai-sdk-ocr-poc.md)，F-058～F-066/S34）：表中第 1 项 OCR 已在 openKylin-3.0-desktop WSL 经官方源 `libkylin-ai-base-dev 2.0.0.0` 实测调通。实测对本节文档口径有三点细化：① 实际头文件 `ai-base/ocr.h` 比手册描述更简，为**同步**三函数（`ocr_create_session`→`ocr_get_text_from_image_file`→`ocr_destroy_session`），手册所述 init/结果回调/request_id 变体在该版本头文件中未见（异步回调形态主要见于 `nlp.h` 文本生成）；② 默认部署策略经 `ldd` 直链 libtesseract + `gsettings` 权威值 + tesseract CLI 三源钉死为**本地 tesseract 5.3.4（chi_sim+eng）CPU 离线**，无云密钥、不依赖网络/GPU/大模型，识别可用但精度中等（有形近误识）；③ 头文件仅 C++ 友好（裸 enum 类型名无 typedef，`gcc .c` 失败、`g++ .cpp` 通过）。第 2～8 项（音频/向量化/文本生成/图像生成/两类分割/错误码）仍为**成文未验证**。
 
 ### 5.3.2 openKylin SDK 与系统维护接口（4_11 / 4_8）
 
@@ -114,6 +116,6 @@ ollama run deepseek-r1:1.5b
 3. **要开发 AI 应用**：精读 5.3.1 文字识别章节掌握会话模式，再套用到其他能力域，配合第 8 章错误码；
 4. **要贡献**：先读 5.4 守则，再按[07 社区治理](07-community-and-contribution.md)签 CLA、走 PR。
 
-> **未实测声明**：本教程对 5.1–5.3 的内容仅做文档层面的导读与结构化，未在本机安装 `kylin-ai-model-manager`、未跑通 ollama 六档模型、未调用 AI SDK 任一接口。模型规格的硬件门槛（尤其 32b/70b 档）以 ollama 与模型卡说明为准；生产采用前请按主教程 I-3"证据边界"做一次最小 POC。
+> **实测状态声明（2026-10-08 更新）**：本节内容原为纯文档导读，现 **OCR 一域已完成落机 POC**（装官方源 `libkylin-ai-base-dev 2.0.0.0` → g++ 调通 → 三源钉死本地 tesseract CPU 离线，见 [OCR POC](../references/ai-sdk-ocr-poc.md)）；仍**未**在本机安装 `kylin-ai-model-manager`、**未**跑通 ollama 六档模型、**未**调用音频/向量化/文本生成/图像生成/两类分割任一接口（镜像虽预装 Triton+llama.cpp 引擎骨架，但需自备 GGUF 模型或云端密钥）。模型规格的硬件门槛（尤其 32b/70b 档）以 ollama 与模型卡说明为准；其余能力生产采用前仍须按主教程 I-3"证据边界"各自做最小 POC——OCR 实测同时证明了该 POC 的必要性：手册可得不等于接口一致性/识别精度可直接放心采用。
 
 > 上一篇：[04 桌面使用](04-desktop-usage.md) ｜ 下一篇：[06 开发者基础设施](06-developer-infrastructure.md)
