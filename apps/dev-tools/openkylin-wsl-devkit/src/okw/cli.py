@@ -299,17 +299,12 @@ def main(argv: list[str] | None = None) -> int:
         if args.podman_cmd == "preflight":
             return podman.cmd_preflight(args)
         if args.podman_cmd == "install":
-            from okw import podman as podman_mod
-            if hasattr(podman_mod, "cmd_install"):
-                return podman_mod.cmd_install(args)
-            print("podman install 尚未实现，请先使用 preflight 预检，后续升级 okw 版本获取 install 能力。",
-                  file=sys.stderr)
-            return 2
+            return podman.cmd_install(args)
         if args.podman_cmd == "verify":
             from okw import podman as podman_mod
             if hasattr(podman_mod, "cmd_verify"):
                 return podman_mod.cmd_verify(args)
-            print("podman verify 尚未实现，请先使用 preflight 预检，后续升级 okw 版本获取 verify 能力。",
+            print("podman verify 尚未实现，请先使用 preflight 预检或 install 安装后升级 okw 版本获取 verify 能力。",
                   file=sys.stderr)
             return 2
         subparsers_action = next(

@@ -24,6 +24,20 @@ APT_NET_ERROR_LABEL = "APT网络错误"
 APT_HASH_ERROR_LABEL = "APT源哈希校验失败"
 APT_UNKNOWN_LABEL = "APT索引未知"
 
+# 三类 APT 失败各自的中文修复方向（AC-8/TR-2.4）
+APT_PKG_MISSING_HINT = (
+    "修复方向：确认当前软件源是否提供该包；禁止添加第三方源，"
+    "如需启用官方 backports 或 proposed 组件请手动编辑 sources.list"
+)
+APT_NET_ERROR_HINT = "修复方向：检查发行版网络可达性与 DNS（如临时域名解析失败可稍后重试 apt update）"
+APT_HASH_ERROR_HINT = (
+    "修复方向：镜像源校验未通过，可更换官方镜像或在发行版内清理 "
+    "/var/lib/apt/lists 后重新 apt update"
+)
+MAPPING_CONFLICT_HINT = (
+    "请手动编辑 /etc/subuid 与 /etc/subgid，为目标用户选择不冲突的区间段后重跑 install"
+)
+
 
 # ----------------- 判定矩阵：映射区间/重叠 -----------------
 
@@ -42,26 +56,27 @@ class SubordinateMapEntry:
 def parse_subordinate_file(text: str) -> list[SubordinateMapEntry]:
     """解析 /etc/subuid 或 /etc/subgid，返回条目列表。
 
-    三列格式：name:start:count。行格式错误时跳过（由上层判定无效）。
+    三列格式：name:start:count。任何非注释的畸形行都使整个文件无效，
+    避免跳过未知映射后错误判断标准区间可用。
     """
     entries: list[SubordinateMapEntry] = []
-    for raw in text.splitlines():
+    for line_number, raw in enumerate(text.splitlines(), start=1):
         line = raw.strip()
         if not line or line.startswith("#"):
             continue
         parts = line.split(":")
         if len(parts) != 3:
-            continue
+            raise ValueError(f"映射文件第{line_number}行不是 name:start:count 三列")
         name, start_s, count_s = (p.strip() for p in parts)
         if not name or any(c.isspace() for c in name):
-            continue
+            raise ValueError(f"映射文件第{line_number}行用户名为空或含空白")
         try:
             start = int(start_s)
             count = int(count_s)
-        except ValueError:
-            continue
+        except ValueError as exc:
+            raise ValueError(f"映射文件第{line_number}行 start/count 不是整数") from exc
         if start <= 0 or count <= 0:
-            continue
+            raise ValueError(f"映射文件第{line_number}行 start/count 必须为正整数")
         entries.append(SubordinateMapEntry(name=name, start=start, count=count))
     return entries
 
@@ -162,9 +177,9 @@ def _classify_apt_policy(policy_stdout: str, policy_stderr: str, package: str) -
     lowered = stderr.lower()
     # 失败分类优先从 stderr 抓
     if "temporary failure resolving" in lowered or "could not resolve" in lowered or "network is unreachable" in lowered:
-        return ("FAIL", f"{package}: {APT_NET_ERROR_LABEL}")
+        return ("FAIL", f"{package}: {APT_NET_ERROR_LABEL}；{APT_NET_ERROR_HINT}")
     if "hash sum mismatch" in lowered or "hashes of expected file" in lowered:
-        return ("FAIL", f"{package}: {APT_HASH_ERROR_LABEL}")
+        return ("FAIL", f"{package}: {APT_HASH_ERROR_LABEL}；{APT_HASH_ERROR_HINT}")
     # 从 stdout 的 Candidate: 行判断
     candidate = ""
     for line in stdout.splitlines():
@@ -176,7 +191,10 @@ def _classify_apt_policy(policy_stdout: str, policy_stderr: str, package: str) -
         # 没 Candidate 行也没 stderr 分类：判 UNKNOWN（索引过期）
         return ("UNKNOWN", f"{package}: {APT_UNKNOWN_LABEL}; {APT_POLICY_UNKNOWN_HINT}")
     if candidate.lower() in ("(none)", "n/a", ""):
-        return ("FAIL", f"{package}: {APT_PKG_MISSING_LABEL}（当前软件源无可安装候选）")
+        return (
+            "FAIL",
+            f"{package}: {APT_PKG_MISSING_LABEL}（当前软件源无可安装候选）；{APT_PKG_MISSING_HINT}",
+        )
     return ("PASS", f"{package} candidate={candidate}")
 
 
@@ -210,7 +228,7 @@ def preflight_check(distro_name: str) -> PreflightReport:
     # 2. 默认用户非 root
     default_info = _detect_default_user(distro_name)
     if default_info is None:
-        report.add("默认用户非 root", "FAIL", f"无法获取默认用户（命令失败）")
+        report.add("默认用户非 root", "FAIL", "无法获取默认用户（命令失败）")
     else:
         user, uid, _err = default_info
         if user == "root" or uid == 0:
@@ -250,15 +268,19 @@ def preflight_check(distro_name: str) -> PreflightReport:
     elif not default_user_for_map:
         report.add("subuid 映射", "UNKNOWN", "无法定位默认用户，跳过映射有效性判定")
     else:
-        entries = parse_subordinate_file(subuid_text)
-        if has_valid_mapping_for(entries, default_user_for_map):
-            report.add("subuid 映射", "PASS")
+        try:
+            entries = parse_subordinate_file(subuid_text)
+        except ValueError as exc:
+            report.add("subuid 映射", "FAIL", f"映射文件格式异常：{exc}")
         else:
-            conflict_std = any(range_conflicts_with_standard(e) for e in entries if e.name != default_user_for_map)
-            detail = f"默认用户 {default_user_for_map} 无有效映射"
-            if conflict_std:
-                detail += "；其它账户映射与标准 [100000,165536) 存在重叠，install 阶段将拒绝自动追加"
-            report.add("subuid 映射", "FAIL", detail)
+            if has_valid_mapping_for(entries, default_user_for_map):
+                report.add("subuid 映射", "PASS")
+            else:
+                conflict_std = any(range_conflicts_with_standard(e) for e in entries if e.name != default_user_for_map)
+                detail = f"默认用户 {default_user_for_map} 无有效映射"
+                if conflict_std:
+                    detail += "；其它账户映射与标准 [100000,165536) 存在重叠，install 阶段将拒绝自动追加"
+                report.add("subuid 映射", "FAIL", detail)
 
     if not r_subgid.ok:
         subgid_err = r_subgid.stderr.strip() or f"exit={r_subgid.exit_code}"
@@ -266,15 +288,19 @@ def preflight_check(distro_name: str) -> PreflightReport:
     elif not default_user_for_map:
         report.add("subgid 映射", "UNKNOWN", "无法定位默认用户，跳过映射有效性判定")
     else:
-        entries = parse_subordinate_file(subgid_text)
-        if has_valid_mapping_for(entries, default_user_for_map):
-            report.add("subgid 映射", "PASS")
+        try:
+            entries = parse_subordinate_file(subgid_text)
+        except ValueError as exc:
+            report.add("subgid 映射", "FAIL", f"映射文件格式异常：{exc}")
         else:
-            conflict_std = any(range_conflicts_with_standard(e) for e in entries if e.name != default_user_for_map)
-            detail = f"默认用户 {default_user_for_map} 无有效映射"
-            if conflict_std:
-                detail += "；其它账户映射与标准 [100000,165536) 存在重叠，install 阶段将拒绝自动追加"
-            report.add("subgid 映射", "FAIL", detail)
+            if has_valid_mapping_for(entries, default_user_for_map):
+                report.add("subgid 映射", "PASS")
+            else:
+                conflict_std = any(range_conflicts_with_standard(e) for e in entries if e.name != default_user_for_map)
+                detail = f"默认用户 {default_user_for_map} 无有效映射"
+                if conflict_std:
+                    detail += "；其它账户映射与标准 [100000,165536) 存在重叠，install 阶段将拒绝自动追加"
+                report.add("subgid 映射", "FAIL", detail)
 
     return report
 
@@ -313,4 +339,428 @@ def cmd_preflight(args) -> int:
     name = args.name
     report = preflight_check(name)
     print(format_preflight(report))
+    return report.exit_code()
+
+
+# ----------------- 安装 -----------------
+
+YES_SIDEEFFECTS_LINES = (
+    "(1/4) 以 root 身份在发行版内执行 apt update，刷新 APT 索引；",
+    "(2/4) 以 root 身份通过 apt install 安装 4 个包：podman / uidmap / slirp4netns / fuse-overlayfs；",
+    "(3/4) 若默认用户缺少 subuid/subgid 映射，追加标准区间 [100000, 165536) 到 /etc/subuid 与 /etc/subgid；",
+    "(4/4) 调用 rootless 验收检查（okw podman verify 的子集），确认 Podman 可作为默认用户运行。",
+)
+
+
+@dataclass
+class InstallReport:
+    distro_name: str
+    items: list[CheckItem] = field(default_factory=list)
+    missing_yes: bool = False
+
+    def add(self, name: str, status: str, detail: str = "") -> None:
+        self.items.append(CheckItem(name=name, status=status, detail=detail))
+
+    def all_passed(self) -> bool:
+        return all(i.status == "PASS" for i in self.items)
+
+    def exit_code(self) -> int:
+        if self.missing_yes:
+            return 2
+        if self.all_passed():
+            return 0
+        if any(i.status == "FAIL" for i in self.items):
+            return 1
+        return 2
+
+
+def _classify_apt_install_error(stderr: str, package: str, phase: str = "install") -> tuple[str, str]:
+    """从 apt install 的 stderr 分类安装失败。"""
+    lowered = (stderr or "").lower()
+    if "temporary failure resolving" in lowered or "could not resolve" in lowered or "network is unreachable" in lowered:
+        return ("FAIL", f"{package}: {APT_NET_ERROR_LABEL}；{APT_NET_ERROR_HINT}")
+    if "hash sum mismatch" in lowered or "hashes of expected file" in lowered:
+        return ("FAIL", f"{package}: {APT_HASH_ERROR_LABEL}；{APT_HASH_ERROR_HINT}")
+    if "unable to locate package" in lowered or "has no installation candidate" in lowered or "couldn't find any package" in lowered:
+        return ("FAIL", f"{package}: {APT_PKG_MISSING_LABEL}；{APT_PKG_MISSING_HINT}")
+    label = "apt " + phase
+    return ("FAIL", f"{package}: {label} 失败（stderr={stderr.strip()[:200] if stderr else '未知'}）")
+
+
+def _apt_update_and_install(name: str, report: InstallReport) -> None:
+    """执行 apt update → 逐包复查 candidate → apt install 4 直接包。"""
+    update = distro.exec_distro(name, ["apt", "update"], user="root")
+    if not update.ok:
+        stage, detail = _classify_apt_install_error(update.stderr, "apt update", phase="update")
+        report.add("apt update", stage, detail)
+        return
+    report.add("apt update", "PASS")
+
+    for pkg in DIRECT_PACKAGES:
+        policy = distro.exec_distro(name, ["apt-cache", "policy", pkg])
+        status, detail = _classify_apt_policy(policy.stdout, policy.stderr, pkg)
+        if status != "PASS":
+            report.add(f"候选复查 {pkg}", status, detail)
+            return
+        report.add(f"候选复查 {pkg}", "PASS", detail)
+
+    install_cmd = ["apt", "install", "-y", "--no-install-recommends", *DIRECT_PACKAGES]
+    install = distro.exec_distro(name, install_cmd, user="root")
+    if not install.ok:
+        # 安装失败不区分具体哪包，统一用 stderr 分类；注意 apt install 可能一次装多包
+        stage, detail = _classify_apt_install_error(install.stderr, DIRECT_PACKAGES[0])
+        # 细节里标注其他包也可能受影响
+        full_detail = f"4 包批量安装失败：{detail[detail.find(':')+1:] if ':' in detail else detail}"
+        report.add("apt install 4 包", stage, full_detail)
+        return
+    report.add("apt install 4 包", "PASS", ", ".join(DIRECT_PACKAGES))
+
+
+def _mapping_writer_script() -> str:
+    """返回先校验两份映射文件、再协调追加的发行版内脚本。"""
+    return """import os, sys
+try:
+    import fcntl
+except ImportError:
+    fcntl = None
+
+uid_path, gid_path, username, start_text, count_text = sys.argv[1:6]
+start = int(start_text)
+count = int(count_text)
+end = start + count
+advice = "请手动编辑 /etc/subuid 与 /etc/subgid，为目标用户选择不冲突的区间段后重跑 install。"
+
+def fail(code, message):
+    print(message, file=sys.stderr)
+    raise SystemExit(code)
+
+def overlaps(left_start, left_end, right_start, right_end):
+    return left_start < right_end and right_start < left_end
+
+paths = (uid_path, gid_path)
+lock_fds = []
+handles = []
+snapshots = {}
+created_paths = set()
+
+def read_entries(path):
+    try:
+        with open(path, "rb") as stream:
+            original = stream.read()
+        existed = True
+    except FileNotFoundError:
+        original = b""
+        existed = False
+    try:
+        text = original.decode("utf-8")
+    except UnicodeDecodeError:
+        fail(2, "MAPPING_INVALID: " + path + " 不是有效 UTF-8；" + advice)
+
+    entries = []
+    for line_number, raw in enumerate(text.splitlines(), start=1):
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        parts = line.split(":")
+        if len(parts) != 3:
+            fail(2, "MAPPING_INVALID: " + path + " 第" + str(line_number) + "行不是三列；" + advice)
+        name, start_value, count_value = (part.strip() for part in parts)
+        if not name or any(char.isspace() for char in name):
+            fail(2, "MAPPING_INVALID: " + path + " 第" + str(line_number) + "行用户名无效；" + advice)
+        try:
+            entry_start = int(start_value)
+            entry_count = int(count_value)
+        except ValueError:
+            fail(2, "MAPPING_INVALID: " + path + " 第" + str(line_number) + "行 start/count 不是整数；" + advice)
+        if entry_start <= 0 or entry_count <= 0:
+            fail(2, "MAPPING_INVALID: " + path + " 第" + str(line_number) + "行 start/count 必须为正整数；" + advice)
+        entries.append((name, entry_start, entry_start + entry_count, entry_count))
+    return original, existed, entries
+
+def validate(path, entries):
+    user_entries = [entry for entry in entries if entry[0] == username]
+    conflicts = []
+    for index, left in enumerate(user_entries):
+        for right in user_entries[index + 1:]:
+            if overlaps(left[1], left[2], right[1], right[2]):
+                conflicts.extend((left, right))
+    for target in user_entries:
+        for other in entries:
+            if other[0] != username and overlaps(target[1], target[2], other[1], other[2]):
+                conflicts.extend((target, other))
+    if conflicts:
+        details = ", ".join(
+            entry[0] + ":" + str(entry[1]) + ":" + str(entry[2] - entry[1])
+            for entry in dict.fromkeys(conflicts)
+        )
+        fail(2, "MAPPING_CONFLICT: " + path + " 目标用户既有映射冲突：" + details + "；" + advice)
+
+    has_valid = any(
+        entry[3] >= count
+        and all(
+            other[0] == username
+            or not overlaps(entry[1], entry[2], other[1], other[2])
+            for other in entries
+        )
+        for entry in user_entries
+    )
+    if has_valid:
+        return b""
+
+    conflicts = [entry for entry in entries if overlaps(entry[1], entry[2], start, end)]
+    if conflicts:
+        details = ", ".join(
+            entry[0] + ":" + str(entry[1]) + ":" + str(entry[2] - entry[1])
+            for entry in conflicts
+        )
+        fail(2, "MAPPING_CONFLICT: " + path + " 标准区间 [100000, 165536) 冲突：" + details + "；" + advice)
+
+    original = snapshots[path][0]
+    separator = b"" if not original or original.endswith(b"\\n") else b"\\n"
+    return separator + (username + ":" + start_text + ":" + count_text + "\\n").encode("utf-8")
+
+try:
+    directories = sorted({os.path.dirname(os.path.abspath(path)) for path in paths})
+    if fcntl is not None:
+        for directory in directories:
+            lock_fd = os.open(directory, os.O_RDONLY)
+            lock_fds.append(lock_fd)
+            fcntl.flock(lock_fd, fcntl.LOCK_EX)
+
+    for path in paths:
+        snapshots[path] = read_entries(path)
+
+    suffixes = {path: validate(path, snapshots[path][2]) for path in paths}
+    changed = [path for path in paths if suffixes[path]]
+    if not changed:
+        print("ALREADY")
+        sys.exit(0)
+
+    for path in changed:
+        if not snapshots[path][1]:
+            created_paths.add(path)
+        handles.append((path, open(path, "a+b")))
+
+    try:
+        for path, mapping in handles:
+            suffix = suffixes[path]
+            written = mapping.write(suffix)
+            if written != len(suffix):
+                raise OSError("追加字节数不完整：" + path)
+            mapping.flush()
+            os.fsync(mapping.fileno())
+    except Exception as exc:
+        rollback_errors = []
+        for path, mapping in reversed(handles):
+            try:
+                mapping.flush()
+                mapping.truncate(len(snapshots[path][0]))
+                mapping.flush()
+                os.fsync(mapping.fileno())
+            except OSError as rollback_error:
+                rollback_errors.append(str(rollback_error))
+        for path, mapping in handles:
+            try:
+                mapping.close()
+            except OSError as close_error:
+                rollback_errors.append(str(close_error))
+        handles = []
+        for path in created_paths:
+            try:
+                os.unlink(path)
+            except FileNotFoundError:
+                pass
+            except OSError as unlink_error:
+                rollback_errors.append(str(unlink_error))
+        if rollback_errors:
+            fail(1, "MAPPING_WRITE_FAILED: 写入失败且回滚不完整：" + "; ".join(rollback_errors))
+        fail(1, "MAPPING_WRITE_FAILED: 写入失败，原文件已恢复：" + str(exc))
+
+    print("APPENDED")
+except SystemExit:
+    raise
+except OSError as exc:
+    for path, mapping in reversed(handles):
+        try:
+            mapping.flush()
+            mapping.truncate(len(snapshots.get(path, (b"",))[0]))
+            mapping.close()
+        except OSError:
+            pass
+    for path in created_paths:
+        try:
+            os.unlink(path)
+        except OSError:
+            pass
+    fail(1, "MAPPING_WRITE_FAILED: 无法安全更新 subuid/subgid：" + str(exc))
+finally:
+    for path, mapping in handles:
+        try:
+            mapping.close()
+        except OSError:
+            pass
+    for lock_fd in reversed(lock_fds):
+        if fcntl is not None:
+            fcntl.flock(lock_fd, fcntl.LOCK_UN)
+        os.close(lock_fd)
+"""
+
+
+def _ensure_subordinate_files(name: str, default_user: str, report: InstallReport) -> None:
+    """先共同校验 subuid/subgid，再以一次发行版内调用幂等追加。"""
+    res = distro.exec_distro(
+        name,
+        [
+            "python3",
+            "-c",
+            _mapping_writer_script(),
+            "/etc/subuid",
+            "/etc/subgid",
+            default_user,
+            str(STANDARD_SUBUID_START),
+            str(STANDARD_SUBUID_COUNT),
+        ],
+        user="root",
+    )
+    if not res.ok:
+        res_err = res.stderr.strip() or f"exit={res.exit_code}"
+        detail = f"两份原文件均未确认修改：{res_err}"
+        if "MAPPING_CONFLICT" in res_err:
+            detail += f"；{MAPPING_CONFLICT_HINT}"
+        elif "MAPPING_INVALID" in res_err:
+            detail += "；请先修复映射文件的 name:start:count 三列格式后重跑 install"
+        elif "MAPPING_WRITE_FAILED" in res_err:
+            detail += "；请检查映射文件权限与磁盘空间后重跑 install"
+        report.add("subuid/subgid 映射", "FAIL", detail)
+        return
+    result = res.stdout.strip()
+    if result == "ALREADY":
+        report.add("subuid/subgid 映射", "PASS", f"{default_user} 的 UID/GID 映射均有效，未修改文件")
+    elif result == "APPENDED":
+        report.add(
+            "subuid/subgid 映射",
+            "PASS",
+            f"两份文件均已校验，仅追加缺失的 {default_user}:{STANDARD_SUBUID_START}:{STANDARD_SUBUID_COUNT}",
+        )
+    else:
+        report.add("subuid/subgid 映射", "FAIL", f"写入结果无法确认（输出：{result or '空'}）")
+
+
+def install_run(name: str, yes: bool) -> InstallReport:
+    """执行 install 主流程。"""
+    report = InstallReport(distro_name=name)
+    if not yes:
+        report.missing_yes = True
+        return report
+
+    # 包候选可因旧索引暂时不可用，安装会刷新索引后复查；结构性失败则必须先停止。
+    pre = preflight_check(name)
+    structural_checks = {
+        "发行版存在",
+        "WSL 版本",
+        "openKylin 身份",
+        "默认用户非 root",
+        "APT/dpkg 能力",
+    }
+    failed_checks = [
+        item for item in pre.items
+        if item.name in structural_checks and item.status == "FAIL"
+    ]
+    if failed_checks:
+        for item in failed_checks:
+            report.add(item.name, "FAIL", item.detail)
+        return report
+
+    user_result = distro.exec_distro(name, ["id", "-un"])
+    uid_result = distro.exec_distro(name, ["id", "-u"])
+    if not user_result.ok or not uid_result.ok:
+        detail = user_result.stderr.strip() or uid_result.stderr.strip() or "无法读取默认用户身份"
+        report.add("默认用户非 root", "FAIL", detail)
+        return report
+    default_user = user_result.stdout.strip()
+    try:
+        default_uid = int(uid_result.stdout.strip())
+    except ValueError:
+        report.add("默认用户非 root", "FAIL", "默认用户 UID 不是有效整数")
+        return report
+    if not default_user or default_user == "root" or default_uid <= 0:
+        report.add(
+            "默认用户非 root",
+            "FAIL",
+            f"检测到默认用户={default_user or '未知'} uid={default_uid}，要求非 root 用户",
+        )
+        return report
+
+    # APT 流程
+    _apt_update_and_install(name, report)
+    if not report.all_passed():
+        return report
+
+    # 映射幂等追加
+    _ensure_subordinate_files(name, default_user, report)
+    if any(i.status == "FAIL" for i in report.items):
+        return report
+
+    # 子集验收：podman --version + 以默认用户跑 podman info 中 rootless 状态（不跑容器）
+    pv = distro.exec_distro(name, ["podman", "--version"])
+    if not pv.ok:
+        report.add("podman --version", "FAIL",
+            f"{pv.stderr.strip() or f'exit={pv.exit_code}'}（请确认安装成功）")
+        return report
+    report.add("podman --version", "PASS", pv.stdout.strip())
+
+    info = distro.exec_distro(name, ["podman", "info", "--format", "{{.Host.Security.Rootless}}"], user=default_user)
+    if not info.ok:
+        report.add("rootless 验收", "FAIL",
+            f"podman info 失败：{info.stderr.strip() or f'exit={info.exit_code}'}")
+        return report
+    out = info.stdout.strip()
+    if out.lower() == "true":
+        report.add("rootless 验收", "PASS")
+    else:
+        report.add("rootless 验收", "FAIL",
+            f"podman info 返回 Rootless={out!r}，预期 true。请确认 subuid/subgid 已生效并重登")
+    return report
+
+
+def format_install(report: InstallReport) -> str:
+    lines = [f"== okw podman install：{report.distro_name} =="]
+    if report.missing_yes:
+        lines.append("未提供 --yes，为避免以下副作用，任何写入操作均未执行：")
+        lines.extend(f"  {line}" for line in YES_SIDEEFFECTS_LINES)
+        lines.append("")
+        lines.append("请确认副作用可接受后，重跑：okw podman install <发行版> --yes")
+        return "\n".join(lines)
+
+    max_w = max((len(i.name) for i in report.items), default=0)
+    for it in report.items:
+        tag = f"[{it.status:<7}]"
+        lines.append(f"  {tag} {it.name:<{max_w}}  {it.detail}".rstrip())
+    lines.append("")
+    if report.all_passed():
+        lines.append("结论：安装成功，可执行 okw podman verify <发行版> [--smoke-image <本地镜像>] 进行验收")
+    else:
+        lines.append(f"结论：安装未通过（{sum(1 for i in report.items if i.status=='FAIL')} 项 FAIL）")
+        lines.append("  请根据 FAIL 项修复后重试；注意本流程不宣称事务回滚，")
+        lines.append("  apt update / 部分包安装 / 映射写入可能已部分生效。")
+        all_detail = "\n".join(i.detail for i in report.items if i.status == "FAIL")
+        if APT_PKG_MISSING_LABEL in all_detail:
+            lines.append(f"  {APT_PKG_MISSING_HINT}")
+        if APT_NET_ERROR_LABEL in all_detail:
+            lines.append(f"  {APT_NET_ERROR_HINT}")
+        if APT_HASH_ERROR_LABEL in all_detail:
+            lines.append(f"  {APT_HASH_ERROR_HINT}")
+    return "\n".join(lines)
+
+
+def cmd_install(args) -> int:
+    """CLI 入口：okw podman install <发行版> [--yes]。"""
+    name = args.name
+    yes = getattr(args, "yes", False)
+    if not yes:
+        report = InstallReport(distro_name=name, missing_yes=True)
+        print(format_install(report))
+        return report.exit_code()
+    report = install_run(name, yes=True)
+    print(format_install(report))
     return report.exit_code()

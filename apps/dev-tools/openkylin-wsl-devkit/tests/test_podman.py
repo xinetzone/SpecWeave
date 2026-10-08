@@ -6,8 +6,6 @@ fake_run_wsl 按子串命中返回，构造多个发行版共用同一套 script
 
 import re
 
-import pytest
-
 from okw import cli, podman
 
 from conftest import make_result
@@ -303,10 +301,13 @@ class TestPodmanCliPlumbing:
         assert ret == 2
         assert "preflight" in capsys.readouterr().out
 
-    def test_install_not_yet_implemented_exit_2(self, fake_run_wsl, capsys):
+    def test_install_is_connected_returns_fail_on_missing_distro(self, fake_run_wsl, capsys):
+        """install 子命令已实现，直连 podman.cmd_install；默认 fake 环境发行版不存在 → FAIL exit 1。"""
         ret = cli.main(["podman", "install", "openKylin-3.0", "--yes"])
-        assert ret == 2
-        assert "尚未实现" in capsys.readouterr().err
+        assert ret == 1
+        out = capsys.readouterr().out
+        # 不再是"尚未实现"占位，确实调用了真实 install 流程（输出报告头）
+        assert "okw podman install" in out
 
     def test_verify_not_yet_implemented_exit_2(self, fake_run_wsl, capsys):
         ret = cli.main(["podman", "verify", "openKylin-3.0"])

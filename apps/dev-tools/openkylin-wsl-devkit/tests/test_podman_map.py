@@ -143,23 +143,25 @@ class TestParseSubordinateFile:
         )
         assert len(parse_subordinate_file(text)) == 1
 
-    def test_malformed_rows_skipped(self):
-        # 列数不对 / 非 int / 负数 / 0 值 都跳过
+    def test_malformed_rows_reject_entire_file(self):
+        # 畸形行不能被跳过，否则冲突信息会丢失并可能误写映射。
         text = (
             "good:100000:65536\n"
             "bad-columns-only-two:100000\n"
             "bad-columns-four:100:200:300:400\n"
             "non-int-start:abc:65536\n"
             "non-int-count:100000:xyz\n"
-            "zero-start:0:65536\n"               # start<=0 跳过
-            "neg-count:100000:-100\n"            # count<=0 跳过
+            "zero-start:0:65536\n"
+            "neg-count:100000:-100\n"
             "zero-count:100000:0\n"
-            "  whitespace-ok  :  100000 : 65536 \n"  # 前后空白被 strip，依然合法
-            "has space in name:100000:65536\n"    # 用户名含嵌入空格 -> 跳过
+            "has space in name:100000:65536\n"
         )
-        entries = parse_subordinate_file(text)
-        names = [e.name for e in entries]
-        assert names == ["good", "whitespace-ok"]
+        with pytest.raises(ValueError, match="映射"):
+            parse_subordinate_file(text)
+
+    def test_surrounding_whitespace_is_normalized(self):
+        entries = parse_subordinate_file("  whitespace-ok  :  100000 : 65536 \n")
+        assert entries == [_e("whitespace-ok", 100000, 65536)]
 
     def test_empty_file(self):
         assert parse_subordinate_file("") == []
