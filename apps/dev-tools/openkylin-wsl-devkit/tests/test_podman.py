@@ -309,10 +309,14 @@ class TestPodmanCliPlumbing:
         # 不再是"尚未实现"占位，确实调用了真实 install 流程（输出报告头）
         assert "okw podman install" in out
 
-    def test_verify_not_yet_implemented_exit_2(self, fake_run_wsl, capsys):
+    def test_verify_is_connected_returns_fail_on_missing_distro(self, fake_run_wsl, capsys):
+        """verify 子命令已实现，直连 podman.cmd_verify；默认 fake 环境发行版不存在 → FAIL exit 1。"""
         ret = cli.main(["podman", "verify", "openKylin-3.0"])
-        assert ret == 2
-        assert "尚未实现" in capsys.readouterr().err
+        assert ret == 1
+        out = capsys.readouterr().out
+        # 不再是"尚未实现"占位，确实调用了真实 verify 流程（输出报告头）
+        assert "okw podman verify" in out
+        assert "尚未实现" not in out
 
     # — preflight 通过 podman.cmd_preflight 返回，直测 report.exit_code 语义 —
     def test_report_exit_code_semantics(self):

@@ -158,15 +158,16 @@ class TestInstallPreflightGate:
         assert "apt install" not in calls
         assert "python3 -c" not in calls
 
+    @pytest.mark.parametrize("candidate", ["4.9.4", "(none)"])
     def test_failed_policy_command_stops_even_with_candidate_in_stdout(
-        self, fake_run_wsl, capsys
+        self, fake_run_wsl, capsys, candidate
     ):
         TestInstallHelpers._install_env_base(fake_run_wsl)
         fake_run_wsl.script["apt update"] = make_result(stdout="Hit:1 archive ...\n")
         fake_run_wsl.script["apt-cache policy podman"] = make_result(
             ok=False,
             exit_code=100,
-            stdout="Package: podman\n  Candidate: 4.9.4\n",
+            stdout=f"Package: podman\n  Candidate: {candidate}\n",
             stderr="apt-cache returned an error after writing output",
         )
 
@@ -186,6 +187,23 @@ class TestInstallPreflightGate:
         assert "apt-cache policy uidmap" not in post_update_calls
         assert "python3 -c" not in post_update_calls
 
+    def test_preflight_failed_policy_command_does_not_report_candidate_pass(
+        self, fake_run_wsl, capsys
+    ):
+        TestInstallHelpers._install_env_base(fake_run_wsl)
+        fake_run_wsl.script["apt-cache policy podman"] = make_result(
+            ok=False,
+            exit_code=100,
+            stdout="Package: podman\n  Candidate: 4.9.4\n",
+            stderr="apt-cache returned an error after writing output",
+        )
+
+        ret = cli.main(["podman", "preflight", "openKylin-3.0"])
+
+        output = capsys.readouterr().out
+        assert ret != 0
+        assert "apt-cache policy 命令失败" in output
+        assert "[PASS   ] 包候选 podman" not in output
 
 
 
@@ -197,6 +215,7 @@ class TestTR23MappingPaths:
         [
             "broken:row\n",
             "openkylin:not-a-number:65536\n",
+            "openkylin:１０００００:６５５３６\n",
             "openkylin:100000:0\n",
             "open kylin:100000:65536\n",
         ],
@@ -261,10 +280,55 @@ class TestTR23MappingPaths:
         assert uid_path.read_bytes() == uid_expected
         assert gid_path.read_bytes() == gid_expected
 
+    def test_mapping_writer_creates_missing_files_with_private_mode(self, tmp_path):
+        uid_path = tmp_path / "subuid"
+        gid_path = tmp_path / "subgid"
+        runner = """
+import os
+import sys
+
+script, *args = sys.argv[1:]
+sys.argv = ["mapping-writer", *args]
+real_open = os.open
+create_modes = []
+
+def capture_open(path, flags, mode=0o777, *open_args, **open_kwargs):
+    if flags & os.O_CREAT:
+        create_modes.append(mode)
+    return real_open(path, flags, mode, *open_args, **open_kwargs)
+
+os.open = capture_open
+exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
+print("CREATE_MODES=" + ",".join(oct(mode) for mode in create_modes))
+"""
+
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                runner,
+                podman._mapping_writer_script(),
+                str(uid_path),
+                str(gid_path),
+                "openkylin",
+                "100000",
+                "65536",
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        assert result.returncode == 0
+        assert "CREATE_MODES=0o600,0o600" in result.stdout
+        assert uid_path.read_bytes() == b"openkylin:100000:65536\n"
+        assert gid_path.read_bytes() == b"openkylin:100000:65536\n"
+
     @pytest.mark.parametrize(
         "uid_original,gid_original",
         [
             (b"invalid-row\n", b""),
+            ("openkylin:１０００００:６５５３６\n".encode(), b""),
             (b"root:100000:65536\n", b""),
             (b"openkylin:100000:1\n", b""),
             (b"openkylin:200000:1000\n", b""),
@@ -336,14 +400,15 @@ class TestTR23MappingPaths:
         uid_path.write_bytes(uid_original)
         gid_path.write_bytes(gid_original)
         runner = """
-import builtins
 import os
 import sys
 
 script, *args = sys.argv[1:]
 gid_path = os.path.abspath(args[1])
 sys.argv = ["mapping-writer", *args]
-real_open = builtins.open
+real_os_open = os.open
+real_fdopen = os.fdopen
+opened_paths = {}
 
 class PartialWriteFailure:
     def __init__(self, stream):
@@ -361,13 +426,19 @@ class PartialWriteFailure:
     def __getattr__(self, name):
         return getattr(self.stream, name)
 
-def injected_open(path, mode="r", *open_args, **open_kwargs):
-    stream = real_open(path, mode, *open_args, **open_kwargs)
-    if os.path.abspath(os.fspath(path)) == gid_path and mode == "a+b":
+def injected_os_open(path, flags, mode=0o777, *open_args, **open_kwargs):
+    fd = real_os_open(path, flags, mode, *open_args, **open_kwargs)
+    opened_paths[fd] = os.path.abspath(os.fspath(path))
+    return fd
+
+def injected_fdopen(fd, *open_args, **open_kwargs):
+    stream = real_fdopen(fd, *open_args, **open_kwargs)
+    if opened_paths.get(fd) == gid_path:
         return PartialWriteFailure(stream)
     return stream
 
-builtins.open = injected_open
+os.open = injected_os_open
+os.fdopen = injected_fdopen
 exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
 """
 
@@ -402,14 +473,15 @@ exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
         uid_path.write_bytes(uid_original)
         gid_path.write_bytes(gid_original)
         runner = """
-import builtins
 import os
 import sys
 
 script, *args = sys.argv[1:]
 gid_path = os.path.abspath(args[1])
 sys.argv = ["mapping-writer", *args]
-real_open = builtins.open
+real_os_open = os.open
+real_fdopen = os.fdopen
+opened_paths = {}
 
 class FlushFailure:
     def __init__(self, stream):
@@ -421,13 +493,19 @@ class FlushFailure:
     def __getattr__(self, name):
         return getattr(self.stream, name)
 
-def injected_open(path, mode="r", *open_args, **open_kwargs):
-    stream = real_open(path, mode, *open_args, **open_kwargs)
-    if os.path.abspath(os.fspath(path)) == gid_path and mode == "a+b":
+def injected_os_open(path, flags, mode=0o777, *open_args, **open_kwargs):
+    fd = real_os_open(path, flags, mode, *open_args, **open_kwargs)
+    opened_paths[fd] = os.path.abspath(os.fspath(path))
+    return fd
+
+def injected_fdopen(fd, *open_args, **open_kwargs):
+    stream = real_fdopen(fd, *open_args, **open_kwargs)
+    if opened_paths.get(fd) == gid_path:
         return FlushFailure(stream)
     return stream
 
-builtins.open = injected_open
+os.open = injected_os_open
+os.fdopen = injected_fdopen
 exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
 """
 
@@ -463,14 +541,15 @@ exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
         uid_path.write_bytes(uid_original)
         gid_path.write_bytes(gid_original)
         runner = """
-import builtins
 import os
 import sys
 
 script, *args = sys.argv[1:]
 gid_path = os.path.abspath(args[1])
 sys.argv = ["mapping-writer", *args]
-real_open = builtins.open
+real_os_open = os.open
+real_fdopen = os.fdopen
+opened_paths = {}
 
 class CloseFailure:
     def __init__(self, stream):
@@ -483,13 +562,19 @@ class CloseFailure:
     def __getattr__(self, name):
         return getattr(self.stream, name)
 
-def injected_open(path, mode="r", *open_args, **open_kwargs):
-    stream = real_open(path, mode, *open_args, **open_kwargs)
-    if os.path.abspath(os.fspath(path)) == gid_path and mode == "a+b":
+def injected_os_open(path, flags, mode=0o777, *open_args, **open_kwargs):
+    fd = real_os_open(path, flags, mode, *open_args, **open_kwargs)
+    opened_paths[fd] = os.path.abspath(os.fspath(path))
+    return fd
+
+def injected_fdopen(fd, *open_args, **open_kwargs):
+    stream = real_fdopen(fd, *open_args, **open_kwargs)
+    if opened_paths.get(fd) == gid_path:
         return CloseFailure(stream)
     return stream
 
-builtins.open = injected_open
+os.open = injected_os_open
+os.fdopen = injected_fdopen
 exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
 """
 
@@ -513,6 +598,78 @@ exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
         assert result.returncode != 0
         assert "MAPPING_WRITE_FAILED" in result.stderr
         assert uid_path.read_bytes() == uid_original
+        assert gid_path.read_bytes() == gid_original
+
+    def test_mapping_writer_does_not_truncate_concurrent_appends_on_rollback(
+        self, tmp_path
+    ):
+        uid_path = tmp_path / "subuid"
+        gid_path = tmp_path / "subgid"
+        uid_original = b"# uid\n"
+        gid_original = b"# gid\n"
+        uid_path.write_bytes(uid_original)
+        gid_path.write_bytes(gid_original)
+        runner = """
+import builtins
+import os
+import sys
+
+script, *args = sys.argv[1:]
+uid_path = os.path.abspath(args[0])
+gid_path = os.path.abspath(args[1])
+sys.argv = ["mapping-writer", *args]
+real_os_open = os.open
+real_fdopen = os.fdopen
+opened_paths = {}
+
+class ConcurrentAppendFailure:
+    def __init__(self, stream):
+        self.stream = stream
+
+    def write(self, data):
+        with builtins.open(uid_path, "ab") as concurrent:
+            concurrent.write(b"other:300000:1000\\n")
+        raise OSError("injected write failure after concurrent append")
+
+    def __getattr__(self, name):
+        return getattr(self.stream, name)
+
+def injected_os_open(path, flags, mode=0o777, *open_args, **open_kwargs):
+    fd = real_os_open(path, flags, mode, *open_args, **open_kwargs)
+    opened_paths[fd] = os.path.abspath(os.fspath(path))
+    return fd
+
+def injected_fdopen(fd, *open_args, **open_kwargs):
+    stream = real_fdopen(fd, *open_args, **open_kwargs)
+    if opened_paths.get(fd) == gid_path:
+        return ConcurrentAppendFailure(stream)
+    return stream
+
+os.open = injected_os_open
+os.fdopen = injected_fdopen
+exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
+"""
+
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                runner,
+                podman._mapping_writer_script(),
+                str(uid_path),
+                str(gid_path),
+                "openkylin",
+                "100000",
+                "65536",
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        assert result.returncode != 0
+        assert b"other:300000:1000\n" in uid_path.read_bytes()
+        assert b"openkylin:100000:65536\n" in uid_path.read_bytes()
         assert gid_path.read_bytes() == gid_original
 
     def _entries(self, text):
@@ -616,7 +773,8 @@ class TestTR24ThreeAPTErrorLabels:
         out = capsys.readouterr().out
         assert podman.APT_PKG_MISSING_LABEL in out
         # 不出现另外两种标签（PKG_MISSING 早返回，NET/HASH 还没触发）
-        assert podman.APT_NET_ERROR_LABEL not in out or "候选复查" in out
+        assert podman.APT_NET_ERROR_LABEL not in out
+        assert podman.APT_HASH_ERROR_LABEL not in out
 
     @pytest.mark.parametrize(
         "stderr",
