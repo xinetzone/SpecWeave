@@ -8,6 +8,7 @@
 
 code-wiki/index
 concepts/index
+guides/index
 references/index
 standards/index
 test-plans/index
@@ -28,6 +29,7 @@ log
 | `concepts/contributing.md` | PR 流程、代码审查与规范遵循 |
 | `concepts/changelog.md` | 项目级变更日志 |
 | `concepts/four-layer-logging-pattern.md` | 自动化脚本四层日志增强模式 |
+| `guides/index.md` | 开发工具与应用使用指南 |
 | `references/release-onnx-pytorch-v1-1.md` | onnx-pytorch v1.1.0 发布说明 |
 | `references/release-onnx-quantized-v2.md` | onnx-quantized v2.0.0 发布说明 |
 | `references/readme.md` | 自动生成的文档索引 |
