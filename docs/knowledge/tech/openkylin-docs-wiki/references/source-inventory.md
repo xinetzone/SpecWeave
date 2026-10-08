@@ -1,6 +1,6 @@
-# 附录 A：信源台账（S01–S34）
+# 附录 A：信源台账（S01–S35）
 
-> 信源采集日期：S01–S26 为 **2026-09-29**；S27–S32 为 **2026-09-30** Desktop WSL 专项追加；S33 为 **2026-10-08** Desktop WSL 落机实测追加（见 A.7）；S34 为 **2026-10-08** Kylin AI SDK 文字识别落机 POC 追加（见 A.8）。网络请求统一携带 `User-Agent: Mozilla/5.0` 头（Gitee raw/API 对无 UA 请求返回异常）。文档站是 docsify 对 Gitee 仓库 `openkylin/docs` master 分支的实时渲染，故同一文件存在"文档站路径"与"Gitee raw 路径"两种形态，下表一并给出。
+> 信源采集日期：S01–S26 为 **2026-09-29**；S27–S32 为 **2026-09-30** Desktop WSL 专项追加；S33 为 **2026-10-08** Desktop WSL 落机实测追加（见 A.7）；S34 为 **2026-10-08** Kylin AI SDK 文字识别落机 POC 追加（见 A.8）；S35 为 **2026-10-08** AI 子系统与显示双栈源码架构专项追加（本机只读核验＋上游源码审阅，见 A.9）。网络请求统一携带 `User-Agent: Mozilla/5.0` 头（Gitee raw/API 对无 UA 请求返回异常；Gitee tree/raw 网页有反爬验证，S35 改以 `git clone --depth 1` 本地取证）。文档站是 docsify 对 Gitee 仓库 `openkylin/docs` master 分支的实时渲染，故同一文件存在"文档站路径"与"Gitee raw 路径"两种形态，下表一并给出。
 >
 > raw URL 构造模式：`https://gitee.com/openkylin/docs/raw/master/<URL 编码后的相对路径>`；文档站路径模式：`https://docs.openkylin.top/zh/#/<相对路径（不带 .md）>`（docsify 哈希路由，以站内实际链接为准）。
 
@@ -88,11 +88,19 @@
 |---|---|---|---|---|
 | S34 | 本机 POC：镜像 AI 组件盘点 → apt 装 SDK → 读头文件 → g++ 编译 → OCR 识别中英文图 → 本地/云后端三路区分 → 配置 API 一致性核查 | openKylin-3.0-desktop WSL（huanghe，WSL 3.0.2.0/内核 6.18.40，g++ 15.2.0，16 GiB，/dev/dxg 在但 GPU 为 Microsoft Basic Render Driver 半虚拟化，CPU 推理）；开发包 `libkylin-ai-base-dev 2.0.0.0-ok1.0`（sudo 口令 openkylin）；工程目录在 WSL 挂载点 `/mnt/c/Users/xinzo/ai-poc/`（不入库，仅供复现） | 容器内 `dpkg-query -W`/`apt-cache show`/`Depends`、`systemctl status`、`apt-get install --no-install-recommends`；`ls/cat /usr/include/kylin-ai/*.h` 与 `ai-base/*.h`；`g++ *.cpp -lkylin-ai-base` 编译运行；`ldd libkylin-ai-base.so.2`；`gsettings/dconf read org.openkylin.aisdk.vision`；`tesseract --version` 与 CLI 同轴对比；Pillow 造 720×220 中英文测试图；宿主 `fsutil sparse queryflag`/文件 Attributes 复核 VHD（14.36 GiB，非稀疏非压缩） | 预装 kytensor-llm/server/client、llm-backend(llamacpp) 而无模型无服务；SDK/runtime/model-manager 未预装可装、ollama 不在官方源；安装下载 39.1MB/新增 4 包、tesseract 5.3.4-ok4+chi_sim/eng/osd 4.1.0、VHD +约1.35GiB；OCR 同步三函数+NLP 异步回调+三能力三策略枚举；config.h 裸 enum 无 typedef 致 gcc 失败/g++ 通过；四判据全满足、识别可用精度中等（形近误识）；ldd 直链 libtesseract+liblept、gsettings 权威 LOCAL、CLI 同源误识字不同三源钉死本地离线；get/set_deploy_policy 返回值与 dconf 错位（如实登记不强行归因）；8 域仅 OCR 闭环、其余 7 域与错误码成文未验证，NLP 需自备 GGUF 或云密钥 |
 
-## A.9 引用可靠性分级
+## A.9 2026-10-08 AI 子系统与显示双栈源码架构信源（S35）
+
+> 对应方法论编排 session `sc-20261008-openkylin-source-deepdive`（R→I→V→C，depth=deep），在 S33/S34 同一台 openKylin-3.0-desktop WSL（发行版名 `openKylin-3.0-desktop`，huanghe）内实施。范围经用户拍板**严格限定 openKylin 3（huanghe）**：一切结论以本机 huanghe 源已装/候选包与本机文件为准，上游 `openkylin/nile*` 分支仅在其源码被 huanghe 二进制实际采用时作旁证。取证全程只读：**未安装任何新包、未启动服务、未下载模型**；源码探针为浅克隆副本，留本机 `.temp/source-probe/` 不入库。完整证据见 [ai-subsystem-source-architecture.md](ai-subsystem-source-architecture.md)（F-067～F-077）与 [kylin-wayland-compositor-architecture.md](kylin-wayland-compositor-architecture.md)（F-078～F-086）。
+
+| 键 | 信源 | 环境 / 位置 | 采集方式 | 支撑事实（F-067 ~ F-086） |
+|---|---|---|---|---|
+| S35 | 本机只读核验（AI 两代 SDK/运行时/服务面 ＋ kywc/KWin 双栈包/会话/设备面）＋ 8 个 Gitee 上游源码仓浅克隆审阅 | 容器：openKylin-3.0-desktop WSL（huanghe，WSL 3.0.2.0/内核 6.18.40，源 `archive.build.openkylin.top/openkylin huanghe`）；源码仓：`kylin-ai-subsystem`（分支 `openkylin/huanghe` 与 `upstream`）、`kylin-ai-engine`、`kysdk-ai-common`、`libkysdk-genai-nlp`、`libkysdk-genai-vision`、`kylin-ondevice-nlp-engine`（默认 `openkylin/nile`）、`libkylin-ai-base`（`upstream`，无 huanghe 分支）、`kylin-wayland-compositor`（`openkylin/huanghe`，1.3.1-ok33 世代） | 容器内 `dpkg-query -W/-s/-L`、`apt-cache policy/show`（含 Depends）、`ls/cat` 头文件与 `/usr/share/{wayland-sessions,xsessions}`、`systemctl list-unit-files` 与 user 单元、`ls /dev`、`/mnt/wslg/weston.log`、`ldd`；Gitee tree/raw 网页触发反爬验证，改用宿主 `git ls-remote --heads` + `git clone --depth 1 [--branch]` 后本地 Read/Grep 取证（genainlpserver.cpp 第 5-7 行、aiengine.h、nlp/llm.h、backend.c、wrapper.c、docs/PROTOCOLS.md、debian/control） | **AI（F-067～F-077）**：Gen1/Gen2 两代 SDK 同机并存与版本清单；Gen2 per-uid 私有 socket gdbus IPC（源码常量）与纯代理 Depends；AbstractAiEngine 插件 ABI 与 7 引擎头；ondevice-nlp-engine=Triton 客户端（:8000/:8001/llama.cpp 参数）；本地 NLP 包级链路（修正 F-066）；huanghe 源可装未装/无候选矩阵；元包 huanghe control 全栈且不含 Gen1、repos.md 仅 nile-sp2；服务面仅 kytensor enabled；Gen1 源码-二进制分叉。**显示（F-078～F-086）**：kywc 1.3.1-ok33 与 kwin-x11 5.24.4 双栈同装；两个会话描述符与用户单元位置；后端三级策略（嵌套/DRM/fbdev）；wrapper→systemd user target 链路；标准+KDE+UKUI+kywc 协议矩阵；WSL 无 dri/fb 仅 dxg、WSLg weston rdprail-shell、实际 xrdp→Xorg→KWin；嵌套未实测；F-057 修复不可跨栈套用 |
+
+## A.10 引用可靠性分级
 
 1. **制度级**（S05 版本规划、S17 CLA、S18 角色、S20 AI 守则、SIG 章程）：TC 表决或社区政策文件，最高可信；
 2. **操作手册级**（S06/S07/S08/S12/S13/S15/S23/S24/S30）：平台/操作文档，2026-09 多篇仍有提交，需连同适配版本号一起引用；
 3. **导航/短页级**（版本发布动态、社区项目地图、文档平台使用指南等）：内容短、可能为占位，只作入口不作事实源；
 4. **时效存疑级**：4 篇"（需要更新）"、"失效文档"目录、S09 等 1.0 时代文章、含旧编号路径的链接——引用时必须标注时效风险；
-5. **本仓实测级**（S26、S32、S33、S34）：单机实测，环境明确（S26/S32 为 Win10.0.19044/WSL 2.9.3.0；S33/S34 为 Win10 26220/WSL 3.0.2.0），换环境结论可能不同；S33 已覆盖服务级与**交互桌面级**（含一次黑屏故障的根因与用户级修复），跨 openKylin/WSL 版本复用前需按其判别步骤重新取证；S34 覆盖 **AI SDK OCR 一域的运行时 POC**（同机 CPU 离线 tesseract 路径），仅证明该版本包/头文件/本地后端当下可用，其余 7 能力域与识别精度的跨版本表现须各自重新取证；
+5. **本仓实测级**（S26、S32、S33、S34、S35）：单机实测，环境明确（S26/S32 为 Win10.0.19044/WSL 2.9.3.0；S33/S34/S35 为 Win10 26220/WSL 3.0.2.0 上的 openKylin-3.0-desktop），换环境结论可能不同；S33 已覆盖服务级与**交互桌面级**（含一次黑屏故障的根因与用户级修复），跨 openKylin/WSL 版本复用前需按其判别步骤重新取证；S34 覆盖 **AI SDK OCR 一域的运行时 POC**（同机 CPU 离线 tesseract 路径），仅证明该版本包/头文件/本地后端当下可用，其余 7 能力域与识别精度的跨版本表现须各自重新取证；S35 为**本机只读核验＋上游源码审阅级**（未装包/未启服务/未跑运行时链路）：包/版本/设备节点/单元位置为本机事实，socket 地址/接口名、引擎 ABI、后端策略等为**源码级事实**（文件路径与行号已锚定），运行时连通性、kywc 嵌套 WSLg 出图、ABI 与候选二进制逐字一致性均未验证，且结论限定 huanghe、nile 内容仅旁证；
 6. **远程核验级**（S27/S28/S29）：仅覆盖文件级属性（URL、字节数、MD5、魔数、ISIZE、头部条目），可复现但**不包含运行时可用性结论**（该批事实 2026-10-08 经 S33 导入实测间接验证）；S31 为负证据，随时间可能失效。

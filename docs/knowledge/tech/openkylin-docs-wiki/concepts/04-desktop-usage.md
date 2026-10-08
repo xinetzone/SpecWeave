@@ -75,4 +75,20 @@ sudo dpkg -i <文件.deb>     # 安装本地 deb 包
 - 《通过（New_Bing）chatGPT调教openkylin》等早期文章反映的是历史玩法；
 - "失效文档"目录内的页面（如兰州大学镜像源地址）已显式作废——遇到源地址类教程先确认是否在该目录。
 
+## 4.8 显示服务器双栈：物理态 kywc（Wayland）与远程 X11 态 KWin（2026-10-08 源码核验）
+
+> 详见 [openKylin 3 显示服务器双栈：kywc 与 KWin 源码剖析](../references/kylin-wayland-compositor-architecture.md)（F-078～F-086/S35）。
+
+openKylin 3 **同机装了两套显示服务器**，文档站教程未明确区分，使用时按会话类型识别：
+
+| | Wayland 栈 | X11 栈 |
+|---|---|---|
+| 合成器 | kylin-wayland-compositor（kywc，wlroots 0.17，纯 C） | kwin-x11 5.24（KDE KWin） |
+| 登录入口 | 登录器选 "Kylin Wlcom"（`wayland-sessions/kylin-wlcom.desktop`） | ukui.desktop 会话（xrdp xorg 登录即此栈） |
+| 典型场景 | 物理机/虚拟机 DRM 态默认；drm/fbdev/嵌套三后端 | WSL xrdp 远程桌面（无 /dev/dri、/dev/fb*，仅 /dev/dxg） |
+| 进程模型 | wrapper → **systemd 用户单元** kylin-wlcom.target → ukui-session | startwm.sh → ukui-session fork |
+| 排障入口 | `~/.log/kylin-wlcom.log`、user journal | `~/.xsession-errors`、xrdp 日志 |
+
+要点：① 判断应用跑在哪套栈看 `XDG_SESSION_TYPE` / `WAYLAND_DISPLAY` / `DISPLAY`，不要只看 UKUI 版本号；② **WSL 用户实际处于 KWin/X11 路径**（见 [桌面启动教程](../references/wsl-desktop-startup-tutorial.md)），kywc 嵌套 WSLg 仅源码可行、未实测不宣称；③ 两套会话环境契约不同，[F-057](../references/wsl-dual-image-selection.md) 的 X11 黑屏修复（~/.xsession 看门狗）不能搬到 kywc；④ Wayland 下截图/窗口特效必须走 plasma/ukui/portal 协议，没有 X11 式直接抓屏通道，不按 SDK 自绘标题栏的应用会双标题栏。
+
 > 上一篇：[03 安装路径](03-install-paths.md) ｜ 下一篇：[05 AI 三层体系](05-ai-stack.md)
