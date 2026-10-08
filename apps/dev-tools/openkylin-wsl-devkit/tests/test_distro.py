@@ -159,6 +159,37 @@ class TestLifecycle:
         assert res.ok
         assert fake_run.calls[-1][-2:] == ["cat", "/etc/os-release"]
 
+    def test_exec_with_user_injects_wsl_u(self, fake_run):
+        fake_run.script.append(
+            (lambda cmd: "-l" in cmd and "-v" in cmd, make_proc(stdout=TABLE_OUTPUT))
+        )
+        fake_run.script.append(
+            (lambda cmd: "-u root" in " ".join(cmd) and "-d openKylin-3.0" in " ".join(cmd),
+             make_proc(stdout="root-ok"))
+        )
+        res = distro.exec_distro("openKylin-3.0", ["id"], user="root")
+        assert res.ok and res.stdout == "root-ok"
+        last = fake_run.calls[-1]
+        assert "-u" in last and "root" in last
+        u_idx = last.index("-u")
+        assert last[u_idx + 1] == "root"
+        # 顺序：-d <name> [-u <user>] -- <cmd>
+        d_idx = last.index("-d")
+        sep_idx = last.index("--")
+        assert d_idx < u_idx < sep_idx < last.index("id")
+
+    def test_exec_with_user_none_matches_legacy(self, fake_run):
+        # user=None（默认）时 args 里不含 -u，保证向下兼容
+        fake_run.script.append(
+            (lambda cmd: "-l" in cmd and "-v" in cmd, make_proc(stdout=TABLE_OUTPUT))
+        )
+        fake_run.script.append(
+            (lambda cmd: "-d openKylin-3.0" in " ".join(cmd), make_proc(stdout="ok"))
+        )
+        distro.exec_distro("openKylin-3.0", ["id"], user=None)
+        last = fake_run.calls[-1]
+        assert "-u" not in last
+
     def test_exec_unknown_distro(self, fake_run):
         # 列表可读但目标不在列 → distro_missing，不抛异常
         fake_run.script.append(

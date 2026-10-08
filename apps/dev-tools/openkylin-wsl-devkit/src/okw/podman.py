@@ -52,7 +52,9 @@ def parse_subordinate_file(text: str) -> list[SubordinateMapEntry]:
         parts = line.split(":")
         if len(parts) != 3:
             continue
-        name, start_s, count_s = parts
+        name, start_s, count_s = (p.strip() for p in parts)
+        if not name or any(c.isspace() for c in name):
+            continue
         try:
             start = int(start_s)
             count = int(count_s)
@@ -183,7 +185,11 @@ def preflight_check(distro_name: str) -> PreflightReport:
     report = PreflightReport(distro_name=distro_name)
 
     # 1. 发行版存在性 + WSL 版本 + openKylin 身份
-    d = distro.get_distro(distro_name)
+    try:
+        d = distro.get_distro(distro_name)
+    except distro.WslError as exc:
+        report.add("发行版存在", "FAIL", f"{distro_name} 未注册（wsl -l -v 查看：{exc}")
+        return report
     if d is None:
         report.add("发行版存在", "FAIL", f"{distro_name} 未注册（wsl -l -v 查看）")
         return report
@@ -300,3 +306,11 @@ def format_preflight(report: PreflightReport) -> str:
         lines.append("  请修复 FAIL 项后重试；UNKNOWN 项若由 APT 索引过期导致，")
         lines.append("  请在发行版内先手动执行 sudo apt update 后再重跑 preflight。")
     return "\n".join(lines)
+
+
+def cmd_preflight(args) -> int:
+    """CLI 入口：okw podman preflight <发行版>。"""
+    name = args.name
+    report = preflight_check(name)
+    print(format_preflight(report))
+    return report.exit_code()

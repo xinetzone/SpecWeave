@@ -1,12 +1,12 @@
 """okw CLI：argparse 装配。
 
-子命令：list / status / import / export / unregister / exec / verify / scaffold / ref。
+子命令：list / status / import / export / unregister / exec / verify / scaffold / ref / podman。
 """
 
 import argparse
 import sys
 
-from okw import __version__, distro, ref, scaffold, verify
+from okw import __version__, distro, podman, ref, scaffold, verify
 
 def _print(text: str = "") -> None:
     print(text)
@@ -193,6 +193,74 @@ def build_parser() -> argparse.ArgumentParser:
     p_ref = sub.add_parser("ref", help="openKylin 知识库快速参考")
     p_ref.add_argument("topic", nargs="?", help="主题：series/wsl-troubleshoot/okbs/verify")
 
+    # podman 子命令组：preflight / install / verify
+    p_podman = sub.add_parser(
+        "podman",
+        help="openKylin 发行版内 rootless Podman 预检、安装与验收",
+        description=(
+            "三步流程：先 preflight 只读探测风险项与缺失，"
+            "确认无风险后 install --yes 执行安装与 subuid/subgid 映射追加，"
+            "最后 verify 验收 rootless 上下文；--smoke-image 需本地已存在镜像。"
+        ),
+    )
+    p_podman_sub = p_podman.add_subparsers(dest="podman_cmd", metavar="<podman_cmd>")
+
+    p_preflight = p_podman_sub.add_parser(
+        "preflight",
+        help="只读预检：发行版/WSL版本/openKylin身份/APT能力/包候选/subuid+subgid映射",
+        description=(
+            "只读预检，不触发 apt update、不写文件、不改默认发行版星标。"
+            "APT 索引缺失时候选标为 UNKNOWN 并给出行动建议；"
+            "映射已有冲突时 install 阶段将拒绝自动追加。"
+        ),
+    )
+    p_preflight.add_argument("name", help="发行版名称（wsl -l -v 查看）")
+
+    p_install = p_podman_sub.add_parser(
+        "install",
+        help="在目标发行版内安装 4 个直接包 + 追加 subuid/subgid 映射（必须 --yes）",
+        description=(
+            "--yes 后将执行：① root 身份 apt update + 复查候选；"
+            "② 安装 4 个直接包（podman/uidmap/slirp4netns/fuse-overlayfs）；"
+            "③ 为默认用户追加 subuid/subgid 映射（仅在标准区间 [100000, 165536) "
+            "   与其它用户无冲突且畸形文件中止时才写入）；"
+            "④ 最后以默认用户身份运行 rootless verify。"
+            "漏 --yes 时输出三行副作用清单并中止。"
+            "不修改软件源、不修改 wsl.conf、不修改默认发行版星标。"
+        ),
+    )
+    p_install.add_argument("name", help="发行版名称")
+    p_install.add_argument(
+        "--yes",
+        action="store_true",
+        help=(
+            "显式确认后才执行副作用：(1) 触发 apt update 刷新 APT 索引；"
+            "(2) root 安装 4 个直接包（含传递依赖）；"
+            "(3) 向 /etc/subuid 与 /etc/subgid 追加默认用户映射区间 [100000, 165536) "
+            "（仅在文件完好、同名无冲突、与其它用户不重叠时才写）；"
+            "(4) 运行默认用户身份的 rootless verify。"
+        ),
+    )
+
+    p_verify = p_podman_sub.add_parser(
+        "verify",
+        help="验收默认用户下 rootless Podman 上下文（默认只读，不跑容器）",
+        description=(
+            "默认用户身份检查：subuid/subgid 映射、unshare 是否可用、podman info --rootless。"
+            "默认只读不创建/启动容器；--smoke-image 需本地已存在该镜像，不触发隐式拉取。"
+        ),
+    )
+    p_verify.add_argument("name", help="发行版名称")
+    p_verify.add_argument(
+        "--smoke-image",
+        metavar="LOCAL_IMAGE",
+        help=(
+            "存在本地的可用镜像名（REPOSITORY:TAG / 镜像 ID），"
+            "若不存在将直接 FAIL 并提示先在发行版内 podman pull / podman load；"
+            "严禁触发任何隐式 registry 拉取。"
+        ),
+    )
+
     return parser
 
 def main(argv: list[str] | None = None) -> int:
@@ -220,6 +288,36 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_scaffold(args)
     if args.command == "ref":
         return cmd_ref(args)
+    if args.command == "podman":
+        if not args.podman_cmd:
+            subparsers_action = next(
+                a for a in parser._subparsers._group_actions if a.dest == "command"
+            )
+            podman_parser = subparsers_action._name_parser_map["podman"]
+            podman_parser.print_help()
+            return 2
+        if args.podman_cmd == "preflight":
+            return podman.cmd_preflight(args)
+        if args.podman_cmd == "install":
+            from okw import podman as podman_mod
+            if hasattr(podman_mod, "cmd_install"):
+                return podman_mod.cmd_install(args)
+            print("podman install 尚未实现，请先使用 preflight 预检，后续升级 okw 版本获取 install 能力。",
+                  file=sys.stderr)
+            return 2
+        if args.podman_cmd == "verify":
+            from okw import podman as podman_mod
+            if hasattr(podman_mod, "cmd_verify"):
+                return podman_mod.cmd_verify(args)
+            print("podman verify 尚未实现，请先使用 preflight 预检，后续升级 okw 版本获取 verify 能力。",
+                  file=sys.stderr)
+            return 2
+        subparsers_action = next(
+            a for a in parser._subparsers._group_actions if a.dest == "command"
+        )
+        podman_parser = subparsers_action._name_parser_map["podman"]
+        podman_parser.print_help()
+        return 2
     parser.print_help()
     return 2
 
