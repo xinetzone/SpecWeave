@@ -95,6 +95,23 @@ def range_conflicts_with_standard(entry: SubordinateMapEntry) -> bool:
     return ranges_overlap(entry, std)
 
 
+def _is_apt_network_error(stderr: str) -> bool:
+    lowered = (stderr or "").lower()
+    return any(
+        marker in lowered
+        for marker in (
+            "temporary failure resolving",
+            "could not resolve",
+            "network is unreachable",
+            "could not connect",
+            "failed to connect",
+            "connection timed out",
+            "connection refused",
+            "connection reset",
+        )
+    )
+
+
 def has_valid_mapping_for(entries: list[SubordinateMapEntry], username: str) -> bool:
     """目标用户是否存在一条有效映射：长度 >= 65536、且与其它用户条目不冲突。"""
     user_entries = [e for e in entries if e.name == username]
@@ -176,7 +193,7 @@ def _classify_apt_policy(policy_stdout: str, policy_stderr: str, package: str) -
     stderr = policy_stderr or ""
     lowered = stderr.lower()
     # 失败分类优先从 stderr 抓
-    if "temporary failure resolving" in lowered or "could not resolve" in lowered or "network is unreachable" in lowered:
+    if _is_apt_network_error(stderr):
         return ("FAIL", f"{package}: {APT_NET_ERROR_LABEL}；{APT_NET_ERROR_HINT}")
     if "hash sum mismatch" in lowered or "hashes of expected file" in lowered:
         return ("FAIL", f"{package}: {APT_HASH_ERROR_LABEL}；{APT_HASH_ERROR_HINT}")
@@ -377,7 +394,7 @@ class InstallReport:
 def _classify_apt_install_error(stderr: str, package: str, phase: str = "install") -> tuple[str, str]:
     """从 apt install 的 stderr 分类安装失败。"""
     lowered = (stderr or "").lower()
-    if "temporary failure resolving" in lowered or "could not resolve" in lowered or "network is unreachable" in lowered:
+    if _is_apt_network_error(stderr):
         return ("FAIL", f"{package}: {APT_NET_ERROR_LABEL}；{APT_NET_ERROR_HINT}")
     if "hash sum mismatch" in lowered or "hashes of expected file" in lowered:
         return ("FAIL", f"{package}: {APT_HASH_ERROR_LABEL}；{APT_HASH_ERROR_HINT}")
@@ -399,6 +416,10 @@ def _apt_update_and_install(name: str, report: InstallReport) -> None:
     for pkg in DIRECT_PACKAGES:
         policy = distro.exec_distro(name, ["apt-cache", "policy", pkg])
         status, detail = _classify_apt_policy(policy.stdout, policy.stderr, pkg)
+        if not policy.ok and status != "FAIL":
+            error = policy.stderr.strip() or f"exit={policy.exit_code}"
+            status = "FAIL"
+            detail = f"{pkg}: apt-cache policy 命令失败（{error[:200]}）"
         if status != "PASS":
             report.add(f"候选复查 {pkg}", status, detail)
             return
@@ -442,6 +463,34 @@ lock_fds = []
 handles = []
 snapshots = {}
 created_paths = set()
+changed = []
+
+def restore_files(file_paths):
+    errors = []
+    for path in reversed(file_paths):
+        original, existed, unused = snapshots[path]
+        if existed:
+            fd = None
+            try:
+                fd = os.open(path, os.O_WRONLY)
+                os.ftruncate(fd, len(original))
+                os.fsync(fd)
+            except OSError as exc:
+                errors.append(path + ": " + str(exc))
+            finally:
+                if fd is not None:
+                    try:
+                        os.close(fd)
+                    except OSError as exc:
+                        errors.append(path + ": " + str(exc))
+        elif path in created_paths:
+            try:
+                os.unlink(path)
+            except FileNotFoundError:
+                pass
+            except OSError as exc:
+                errors.append(path + ": " + str(exc))
+    return errors
 
 def read_entries(path):
     try:
@@ -506,6 +555,15 @@ def validate(path, entries):
     )
     if has_valid:
         return b""
+    if user_entries:
+        details = ", ".join(
+            entry[0] + ":" + str(entry[1]) + ":" + str(entry[3])
+            for entry in user_entries
+        )
+        fail(
+            2,
+            "MAPPING_INVALID: " + path + " 目标用户已有映射但跨度不足：" + details + "；" + advice,
+        )
 
     conflicts = [entry for entry in entries if overlaps(entry[1], entry[2], start, end)]
     if conflicts:
@@ -539,7 +597,7 @@ try:
     for path in changed:
         if not snapshots[path][1]:
             created_paths.add(path)
-        handles.append((path, open(path, "a+b")))
+        handles.append((path, open(path, "a+b", buffering=0)))
 
     try:
         for path, mapping in handles:
@@ -550,48 +608,58 @@ try:
             mapping.flush()
             os.fsync(mapping.fileno())
     except Exception as exc:
-        rollback_errors = []
-        for path, mapping in reversed(handles):
-            try:
-                mapping.flush()
-                mapping.truncate(len(snapshots[path][0]))
-                mapping.flush()
-                os.fsync(mapping.fileno())
-            except OSError as rollback_error:
-                rollback_errors.append(str(rollback_error))
+        close_errors = []
         for path, mapping in handles:
             try:
                 mapping.close()
             except OSError as close_error:
-                rollback_errors.append(str(close_error))
+                close_errors.append(str(close_error))
         handles = []
-        for path in created_paths:
-            try:
-                os.unlink(path)
-            except FileNotFoundError:
-                pass
-            except OSError as unlink_error:
-                rollback_errors.append(str(unlink_error))
+        rollback_errors = restore_files(changed)
         if rollback_errors:
             fail(1, "MAPPING_WRITE_FAILED: 写入失败且回滚不完整：" + "; ".join(rollback_errors))
-        fail(1, "MAPPING_WRITE_FAILED: 写入失败，原文件已恢复：" + str(exc))
+        close_detail = ("；关闭错误：" + "; ".join(close_errors)) if close_errors else ""
+        fail(1, "MAPPING_WRITE_FAILED: 写入失败，原文件已恢复：" + str(exc) + close_detail)
+
+    close_errors = []
+    for path, mapping in handles:
+        try:
+            mapping.close()
+        except OSError as close_error:
+            close_errors.append(str(close_error))
+    handles = []
+    if close_errors:
+        rollback_errors = restore_files(changed)
+        if rollback_errors:
+            fail(
+                1,
+                "MAPPING_WRITE_FAILED: 关闭失败且回滚不完整："
+                + "; ".join(close_errors + rollback_errors),
+            )
+        fail(
+            1,
+            "MAPPING_WRITE_FAILED: 关闭映射文件失败，原文件已恢复："
+            + "; ".join(close_errors),
+        )
 
     print("APPENDED")
 except SystemExit:
     raise
 except OSError as exc:
-    for path, mapping in reversed(handles):
+    close_errors = []
+    for path, mapping in handles:
         try:
-            mapping.flush()
-            mapping.truncate(len(snapshots.get(path, (b"",))[0]))
             mapping.close()
-        except OSError:
-            pass
-    for path in created_paths:
-        try:
-            os.unlink(path)
-        except OSError:
-            pass
+        except OSError as close_error:
+            close_errors.append(str(close_error))
+    handles = []
+    rollback_errors = restore_files(changed)
+    if rollback_errors:
+        fail(
+            1,
+            "MAPPING_WRITE_FAILED: 无法安全更新且回滚不完整："
+            + "; ".join(close_errors + rollback_errors),
+        )
     fail(1, "MAPPING_WRITE_FAILED: 无法安全更新 subuid/subgid：" + str(exc))
 finally:
     for path, mapping in handles:
@@ -628,7 +696,7 @@ def _ensure_subordinate_files(name: str, default_user: str, report: InstallRepor
         if "MAPPING_CONFLICT" in res_err:
             detail += f"；{MAPPING_CONFLICT_HINT}"
         elif "MAPPING_INVALID" in res_err:
-            detail += "；请先修复映射文件的 name:start:count 三列格式后重跑 install"
+            detail += "；请检查映射文件的三列格式、正整数值及目标用户映射有效性后重跑 install"
         elif "MAPPING_WRITE_FAILED" in res_err:
             detail += "；请检查映射文件权限与磁盘空间后重跑 install"
         report.add("subuid/subgid 映射", "FAIL", detail)

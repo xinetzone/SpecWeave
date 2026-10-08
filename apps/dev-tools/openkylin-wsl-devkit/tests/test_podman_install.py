@@ -158,6 +158,34 @@ class TestInstallPreflightGate:
         assert "apt install" not in calls
         assert "python3 -c" not in calls
 
+    def test_failed_policy_command_stops_even_with_candidate_in_stdout(
+        self, fake_run_wsl, capsys
+    ):
+        TestInstallHelpers._install_env_base(fake_run_wsl)
+        fake_run_wsl.script["apt update"] = make_result(stdout="Hit:1 archive ...\n")
+        fake_run_wsl.script["apt-cache policy podman"] = make_result(
+            ok=False,
+            exit_code=100,
+            stdout="Package: podman\n  Candidate: 4.9.4\n",
+            stderr="apt-cache returned an error after writing output",
+        )
+
+        ret = cli.main(["podman", "install", "openKylin-3.0", "--yes"])
+
+        update_index = next(
+            index
+            for index, call in enumerate(fake_run_wsl.calls)
+            if "apt update" in " ".join(call)
+        )
+        post_update_calls = "\n".join(
+            " ".join(call) for call in fake_run_wsl.calls[update_index + 1 :]
+        )
+        assert ret != 0
+        assert "apt-cache policy 命令失败" in capsys.readouterr().out
+        assert "apt install" not in post_update_calls
+        assert "apt-cache policy uidmap" not in post_update_calls
+        assert "python3 -c" not in post_update_calls
+
 
 
 
@@ -239,6 +267,7 @@ class TestTR23MappingPaths:
             (b"invalid-row\n", b""),
             (b"root:100000:65536\n", b""),
             (b"openkylin:100000:1\n", b""),
+            (b"openkylin:200000:1000\n", b""),
             (b"openkylin:200000:65536\nother:220000:1000\n", b""),
             (b"", b"other:100000:65536\n"),
         ],
@@ -365,6 +394,127 @@ exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
         assert uid_path.read_bytes() == uid_original
         assert gid_path.read_bytes() == gid_original
 
+    def test_mapping_writer_restores_files_when_flush_fails(self, tmp_path):
+        uid_path = tmp_path / "subuid"
+        gid_path = tmp_path / "subgid"
+        uid_original = b"# uid\n"
+        gid_original = b"# gid\n"
+        uid_path.write_bytes(uid_original)
+        gid_path.write_bytes(gid_original)
+        runner = """
+import builtins
+import os
+import sys
+
+script, *args = sys.argv[1:]
+gid_path = os.path.abspath(args[1])
+sys.argv = ["mapping-writer", *args]
+real_open = builtins.open
+
+class FlushFailure:
+    def __init__(self, stream):
+        self.stream = stream
+
+    def flush(self):
+        raise OSError("injected flush failure")
+
+    def __getattr__(self, name):
+        return getattr(self.stream, name)
+
+def injected_open(path, mode="r", *open_args, **open_kwargs):
+    stream = real_open(path, mode, *open_args, **open_kwargs)
+    if os.path.abspath(os.fspath(path)) == gid_path and mode == "a+b":
+        return FlushFailure(stream)
+    return stream
+
+builtins.open = injected_open
+exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
+"""
+
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                runner,
+                podman._mapping_writer_script(),
+                str(uid_path),
+                str(gid_path),
+                "openkylin",
+                "100000",
+                "65536",
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        assert result.returncode != 0
+        assert "MAPPING_WRITE_FAILED" in result.stderr
+        assert uid_path.read_bytes() == uid_original
+        assert gid_path.read_bytes() == gid_original
+
+    def test_mapping_writer_close_failure_is_not_reported_as_success(
+        self, tmp_path
+    ):
+        uid_path = tmp_path / "subuid"
+        gid_path = tmp_path / "subgid"
+        uid_original = b"# uid\n"
+        gid_original = b"# gid\n"
+        uid_path.write_bytes(uid_original)
+        gid_path.write_bytes(gid_original)
+        runner = """
+import builtins
+import os
+import sys
+
+script, *args = sys.argv[1:]
+gid_path = os.path.abspath(args[1])
+sys.argv = ["mapping-writer", *args]
+real_open = builtins.open
+
+class CloseFailure:
+    def __init__(self, stream):
+        self.stream = stream
+
+    def close(self):
+        self.stream.close()
+        raise OSError("injected close failure")
+
+    def __getattr__(self, name):
+        return getattr(self.stream, name)
+
+def injected_open(path, mode="r", *open_args, **open_kwargs):
+    stream = real_open(path, mode, *open_args, **open_kwargs)
+    if os.path.abspath(os.fspath(path)) == gid_path and mode == "a+b":
+        return CloseFailure(stream)
+    return stream
+
+builtins.open = injected_open
+exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
+"""
+
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                runner,
+                podman._mapping_writer_script(),
+                str(uid_path),
+                str(gid_path),
+                "openkylin",
+                "100000",
+                "65536",
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        assert result.returncode != 0
+        assert "MAPPING_WRITE_FAILED" in result.stderr
+        assert uid_path.read_bytes() == uid_original
+        assert gid_path.read_bytes() == gid_original
+
     def _entries(self, text):
         return podman.parse_subordinate_file(text)
 
@@ -468,13 +618,18 @@ class TestTR24ThreeAPTErrorLabels:
         # 不出现另外两种标签（PKG_MISSING 早返回，NET/HASH 还没触发）
         assert podman.APT_NET_ERROR_LABEL not in out or "候选复查" in out
 
-    def test_network_error_label(self, fake_run_wsl, capsys):
+    @pytest.mark.parametrize(
+        "stderr",
+        [
+            "Temporary failure resolving 'archive.openkylin.top'",
+            "Could not connect to archive.openkylin.top: Connection timed out",
+        ],
+    )
+    def test_network_error_label(self, fake_run_wsl, capsys, stderr):
         TestInstallHelpers._install_env_base(fake_run_wsl)
-        # apt update 失败（网络错误）
         fake_run_wsl.script["apt update"] = make_result(
-            ok=False, exit_code=100, stderr=(
-                "Err:1 https://archive.openkylin.top jammy InRelease\n"
-                "  Temporary failure resolving 'archive.openkylin.top'\n"))
+            ok=False, exit_code=100, stderr=stderr
+        )
         ret = cli.main(["podman", "install", "openKylin-3.0", "--yes"])
         assert ret == 1
         out = capsys.readouterr().out
@@ -785,7 +940,7 @@ class TestTR24RepairHints:
         [
             (
                 "MAPPING_INVALID: 映射文件第2行不是三列",
-                "请先修复映射文件的 name:start:count 三列格式",
+                "请检查映射文件的三列格式、正整数值及目标用户映射有效性",
             ),
             (
                 "MAPPING_WRITE_FAILED: 无法读写 /etc/subuid",
