@@ -7,7 +7,7 @@
 | 你的情况 | 推荐路径 | 成本 | 官方文档 |
 |---|---|---|---|
 | 只想快速体验命令行、Windows 主力机 | **WSL 最小镜像**（下载 336 MiB，gzip 压缩态，见下） | 最低，不动宿主；磁盘预留 1.3 GB+（本机实测） | 《openKylin-WSL版本安装》 |
-| Windows 主力机且想体验**完整 UKUI 图形桌面会话** | **Desktop WSL 镜像**（xrdp 桌面预装，免装虚拟机）；仅零散 GUI 应用需求优先 WSLg 搭配最小镜像、不必下桌面镜像；需要完整隔离体验再选虚拟机 | 中：下载 6.14 GiB；磁盘预留 **跨盘 20 GiB 起步、同盘推荐 25～30 GiB**（手动解压排障路径需 ≥45 GiB；分层估算，未落机实测），详见[双镜像对照](../references/wsl-dual-image-selection.md) | 《openKylin-WSL版本安装》桌面分支 |
+| Windows 主力机且想体验**完整 UKUI 图形桌面会话** | **Desktop WSL 镜像**（xrdp 桌面预装，免装虚拟机）；仅零散 GUI 应用需求优先 WSLg 搭配最小镜像、不必下桌面镜像；需要完整隔离体验再选虚拟机 | 中：下载 6.14 GiB（实测约 3 分钟）；**2026-10-08 落机实测：VHD 13.0 GiB、同盘峰值 19.2 GiB、导入 51.6 秒**，事前"跨盘 20／同盘 25～30 GiB"建议线仍推荐作余量，详见[双镜像对照](../references/wsl-dual-image-selection.md) | 《openKylin-WSL版本安装》桌面分支 |
 | 想体验完整 UKUI 桌面、愿意装虚拟机 | 虚拟机（Hyper-V / virt-manager / KVM） | 低 | 5 篇虚拟机指南 |
 | 要长期日常使用、有空闲 x86 整机 | Live USB 物理安装 | 中 | 《3_openKylin安装指南》等 4 篇 |
 | 使用苹果芯片/Intel Mac | Mac 安装指南 | 中 | 《2_安装指南（MacOS）》 |
@@ -28,7 +28,7 @@
 
 > **体积预期（最小镜像，本机实测口径，S26）**：基础镜像下载文件约 336M，但它是 **gzip 压缩的 tar**（文件头 `1F 8B`），导入时 WSL 会解压为约 1.1G 量级的 VHD 虚拟磁盘，故磁盘预留应按 1.1G 以上而非 336M 规划；安装额外软件后 VHD 还会增长。336M 为 2026-09-29 时点 3.0 镜像的实测值，具体以官网下载页当时文件大小为准。
 
-> **Desktop WSL 镜像（2026-09-30 远程核验，未落机实测，S27–S31）**：下载文件 `openKylin-3.0-desktop-wsl-amd64.wsl` 精确为 6,592,986,686 字节（**6.14 GiB**，官网展示"6.1G"），MD5 `df559de7155ef7c6fe088b2168035c5a`，同为 gzip tar rootfs（魔数 `1F 8B 08 00`），构建日期 2026-08-28。gzip 尾部 ISIZE 已过 4 GiB 回绕点（读数 98.5 MiB），解压 tar 真值落在 8.1～20.1 GiB 候选区间（最小镜像 3.36× 压缩比只提供方向性参考，现有证据不足以在候选间排序、不设点估）；按 VHD≈tar×1.17 推算，**导入后长期占用约 9.5～24 GiB，同盘标准导入峰值约 16～30 GiB，建议跨盘预留 ≥20 GiB 起步、同盘 25～30 GiB**（若走"先手动解压 tar 再导入"排障路径，tar 会额外落盘，需 ≥45～50 GiB；`wsl --import` 直接导入通常流式写入 VHD、不另落完整 tar，但桌面镜像未实测确认）；官方流程的发行版名为 `openKylin-desktop`（与最小镜像并存时名称必须不同）。精确对照表、分层占用矩阵、选型决策、安全红线与待实测验收清单见 [双 WSL 镜像对照与选型参考](../references/wsl-dual-image-selection.md)。
+> **Desktop WSL 镜像（2026-09-30 远程核验 S27–S31；2026-10-08 落机实测 S33）**：下载文件 `openKylin-3.0-desktop-wsl-amd64.wsl` 精确为 6,592,986,686 字节（**6.14 GiB**，官网展示"6.1G"），MD5 `df559de7155ef7c6fe088b2168035c5a`，同为 gzip tar rootfs（魔数 `1F 8B 08 00`），构建日期 2026-08-28（2026-10-08 复核未变）。gzip 尾部 ISIZE 已过 4 GiB 回绕点——**落机后以 ext4 有效数据 12.46 GiB 双向夹逼定档 k=3（tar ≈ 12.1 GiB，压缩比 1.97×）**；**实测：直接 `wsl --import` 为流式写入（不落临时 tar）、51.6 秒成功、1900 个软件包（最小镜像 405，+1495）、VHD 13.01 GiB（VHD/ext4 有效数据 1.044，旧推 1.17 系数修正）、同盘标准峰值 19.2 GiB**；xrdp/xrdp-sesman 开箱 enabled+active、3390 监听正常，Windows 侧可用 `mstsc /v:localhost:3390`（localhost 转发实测可用，绕开 IP 漂移），唯一失败单元为良性 `systemd-binfmt`；残留待确认仅交互 UKUI 登录观感。事前"跨盘 20／同盘 25～30 GiB"建议线对真值仍安全、继续推荐（手动解压排障路径才需 ≥45～50 GiB）；本机发行版命名为 `openKylin-3.0-desktop`（与最小镜像并存时名称必须不同）。精确对照表、实测对账、选型决策、安全红线与验收清单见 [双 WSL 镜像对照与选型参考](../references/wsl-dual-image-selection.md)。
 
 > **安全警告**：预置账号/密码 `openkylin/openkylin` 是公开弱口令，仅适用于本机体验——① 首次进入后应立即用 `passwd` 修改密码；② xrdp 的 3390 端口只用于本机/WSL 内网，**切勿**把该端口映射到公网；③ 不用时可 `wsl --shutdown openKylin` 停止发行版。
 

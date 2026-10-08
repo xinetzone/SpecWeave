@@ -32,7 +32,7 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 - **编排 session**：`sc-20260929-openkylin-docs-wiki`
 - **场景与链路**：场景 4 知识沉淀，`R→I→E→V→C（入库）`，depth=standard
 - **采集时点**：2026-09-29（仓库最近提交为 2026-09-28）
-- **同包伴生文档**：[openKylin 全面调研：从桌面根社区到 Agent OS](references/project-overview.md)（62 条事实，信源为官网新闻）回答"openKylin 是什么"；[WSL 安装与稀疏 VHD 实操指南](references/wsl-install-sparse-vhd-guide.md)（Windows 10 本机实测）回答"最小镜像怎么装、踩坑怎么办"；[双 WSL 镜像对照与选型参考](references/wsl-dual-image-selection.md)（2026-09-30 追加，远程核验级）回答"6.1G Desktop WSL 镜像与最小镜像差在哪、要占多少盘、怎么选"。本教程以**文档平台**为信源回答"官方文档怎么读、怎么用、怎么参与"，四篇事实互证、视角互补（2026-09-29 由原独立目录 `docs/knowledge/tech/openkylin/` 合并入本知识包）。
+- **同包伴生文档**：[openKylin 全面调研：从桌面根社区到 Agent OS](references/project-overview.md)（62 条事实，信源为官网新闻）回答"openKylin 是什么"；[WSL 安装与稀疏 VHD 实操指南](references/wsl-install-sparse-vhd-guide.md)（Windows 10 本机实测）回答"最小镜像怎么装、踩坑怎么办"；[双 WSL 镜像对照与选型参考](references/wsl-dual-image-selection.md)（2026-09-30 追加远程核验、**2026-10-08 完成落机实测**）回答"6.1G Desktop WSL 镜像与最小镜像差在哪、要占多少盘、怎么选"。本教程以**文档平台**为信源回答"官方文档怎么读、怎么用、怎么参与"，四篇事实互证、视角互补（2026-09-29 由原独立目录 `docs/knowledge/tech/openkylin/` 合并入本知识包）。
 
 ---
 
@@ -49,7 +49,8 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 | 加入 SIG、理解治理组织、做软硬件适配认证 | [07 社区治理与贡献路径](concepts/07-community-and-contribution.md) |
 | 核查本教程每条结论的出处 | [信源台账](references/source-inventory.md) ／ [237 篇文档完整分类地图](references/full-catalog.md) |
 | 先了解 openKylin 项目本身（版本时间线、版图界定、选型建议） | [项目全面调研](references/project-overview.md) ／ [WSL 本机实测](references/wsl-install-sparse-vhd-guide.md) |
-| 比较 336M 最小 WSL 与 6.1G Desktop WSL 两个镜像、规划磁盘 | [双 WSL 镜像对照与选型参考](references/wsl-dual-image-selection.md)（桌面镜像为远程核验+待实测清单） |
+| 比较 336M 最小 WSL 与 6.1G Desktop WSL 两个镜像、规划磁盘 | [双 WSL 镜像对照与选型参考](references/wsl-dual-image-selection.md)（桌面镜像已于 2026-10-08 落机实测：51.6 秒导入、1900 包、VHD 13.0 GiB、同盘峰值 19.2 GiB） |
+| 已装好 Desktop WSL，想知道**每天怎么打开桌面/一键启动器/黑屏怎么办** | [openKylin 桌面启动与日常使用教程](references/wsl-desktop-startup-tutorial.md)（2026-10-08 实测：双击启动器→xorg 登录→关闭语义→FAQ） |
 | 评估产品/硬件/智能体适配 openKylin 3.0 的工作量与风险 | [openKylin 3.0 架构适配评估草案](references/openkylin-v3-adaptation-assessment.md)（v0.1 纸面预评估，待 POC 验证） |
 
 ---
@@ -137,18 +138,25 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 | F-043 | 同知识包 references/ 收录两份同会话伴生产出：project-overview.md（openKylin 项目全面调研，62 条事实，信源以 openkylin.top 官网新闻为主；原独立目录 `docs/knowledge/tech/openkylin/index.md`，2026-09-29 C 阶段合并迁入）与 wsl-install-sparse-vhd-guide.md（3.0 WSL 镜像本机安装实测，同日迁入） | [S25][S26] |
 | F-044 | 本机实测环境为 Windows 10.0.19044 + WSL 2.9.3.0，满足官方指南 19041 门槛；实测记录中 `wsl --import`/`--install --from-file` 出现过 `RegisterDistro/E_UNEXPECTED` 与 `CreateVm/E_ABORT` 报错，报错时点空闲物理内存记录值一度为 0.8GB，内存充裕（≥4GB）并解压为纯 tar 后导入成功；官方 WSL 指南的常见问题仅覆盖"WSL2 内核未安装"与"远程桌面连接失败"两项 | [S08][S26] |
 
-### 1.8 H 组：Desktop WSL 双形态远程核验（2026-09-30 追加，F-045 ~ F-050）
+### 1.8 H 组：Desktop WSL 双形态远程核验（2026-09-30，F-045 ~ F-050）＋落机实测（2026-10-08，F-051 ~ F-057）
 
-> G1 已通过（专项 session `sc-20260930-openkylin-desktop-wsl`，22 条会话内事实的索引级摘要；完整记录与命令见 [双 WSL 镜像对照与选型参考](references/wsl-dual-image-selection.md)）。本组除 F-050 外均为**文件级远程事实**，不含导入运行时结论。
+> G1 已通过（专项 session `sc-20260930-openkylin-desktop-wsl`，22 条会话内事实的索引级摘要；完整记录与命令见 [双 WSL 镜像对照与选型参考](references/wsl-dual-image-selection.md)）。F-045～F-050 除 F-050 外均为**文件级远程事实**；**F-047/F-050 的运行时未知项已由 2026-10-08 落机 session `sc-20261008-openkylin-desktop-wsl-install`（信源 S33）闭环，新增 F-051～F-057 为运行时实测事实**：导入/容器/VHD/xrdp 服务与**交互 UKUI 桌面全链路**均实测通过，首登黑屏根因与修复见 F-057（仅余 `--shutdown` IP 漂移等长期观察项）。
 
 | 编号 | 事实 | 来源 |
 |---|---|---|
 | F-045 | 下载中心 3.0 x86 有两个 WSL 条目（id=126 最小 / id=127 Desktop），构建日期均为 2026-08-28、仅 AMD64；CDN 真实文件分别为 `openKylin-3.0-wsl-amd64.wsl`（352,431,812 字节，MD5 `3c5717cfde5c032c69122fb14fa8e2fa`）与 `openKylin-3.0-desktop-wsl-amd64.wsl`（**6,592,986,686 字节 = 6.14 GiB**，MD5 `df559de7155ef7c6fe088b2168035c5a`，官网展示"6.1G"） | [S27][S28] |
 | F-046 | 两镜像 Range 取头 4 字节魔数均为 `1F 8B 08 00`（gzip）；桌面前 20 MiB 流式解压后 tar 列目为标准 rootfs 结构（`./dev`、`./bin`、`./sbin`、`./run/systemd`），与最小镜像同构，导入机制相同 | [S29] |
-| F-047 | 桌面镜像 gzip 尾部 ISIZE=103,258,112 字节（98.5 MiB），小于压缩体积，已发生 4 GiB 回绕；真实解压 tar 为候选序列 8.1 / 12.1 / 16.1 / 20.1 GiB（k=2~5，k≥6 不排除）；最小镜像实测压缩比 3.36× 仅提供"真值倾向不高于该倍数"的方向性参考，现有证据不足以在候选间排序、不给点估，未消歧；最小镜像 ISIZE=1,182,607,360 字节未回绕，与实测一致 | [S29] |
+| F-047 | 桌面镜像 gzip 尾部 ISIZE=103,258,112 字节（98.5 MiB），小于压缩体积，已发生 4 GiB 回绕；真实解压 tar 为候选序列 8.1 / 12.1 / 16.1 / 20.1 GiB（k=2~5，k≥6 不排除）；最小镜像实测压缩比 3.36× 仅提供"真值倾向不高于该倍数"的方向性参考，现有证据不足以在候选间排序、不给点估，~~未消歧~~**已于 2026-10-08 经 F-053 落机消歧为 k=3（12.1 GiB，1.97×）**；最小镜像 ISIZE=1,182,607,360 字节未回绕，与实测一致 | [S29][S33] |
 | F-048 | 官方文档桌面分支：`wsl --import openKylin-desktop .\openKylin-desktop <镜像> --version 2`；启动后 `ip addr show eth0` 取 IPv4，mstsc 连 `<IP>:3390`，Session 选 **xorg**，账号密码同为 `openkylin`；xrdp 默认自启，WSL 重启 IP 可能变 | [S30] |
 | F-049 | 官方文档对桌面镜像未提供磁盘/内存门槛、软件包数、VHD 实大、稀疏 VHD、导入失败排障（FAQ 仍仅 2 条）；bbs.openkylin.top 站内检索与公开搜索引擎（2026-09-30）未见桌面 WSL 用户实测帖，官方文档是唯一公开一手操作信源（负证据，覆盖受限） | [S30][S31] |
-| F-050 | 2026-09-30 本机 C: 剩 2.3 GB、D: 剩 4.8 GB，任何候选占用下均不具备桌面镜像导入条件；桌面镜像全部运行时项（真实 VHD、包数、导入耗时与内存水位、xrdp 桌面可用性、稀疏 VHD 收益）登记为待实测清单 | [S32] |
+| F-050 | 2026-09-30 本机 C: 剩 2.3 GB、D: 剩 4.8 GB，任何候选占用下均不具备桌面镜像导入条件，故当时全部运行时项登记为待实测；~~待实测清单~~**已于 2026-10-08（C: 61.2/D: 54.9 GiB 空闲）由 F-051～F-056 闭环 8/9 项**，残留交互桌面观感 | [S32][S33] |
+| F-051 | 2026-10-08 落机下载与校验：curl 断点续传约 3 分钟下完 6.14 GiB；字节数 6,592,986,686 与 MD5 `df559de7155ef7c6fe088b2168035c5a` 精确一致，魔数 `1F 8B 08 00`；镜像自 2026-08-28 构建后至该日未更新 | [S33] |
+| F-052 | 落机导入：Win10 26220 + WSL 3.0.2.0（内核 6.18.40.1-1），`wsl --import openKylin-3.0-desktop` 直接喂 gzip `.wsl`，**51.6 秒一次成功零失败**（导入前空闲内存 11.94 GiB）；磁盘差值对账证实**流式写入、不落临时 tar**；导入不改变默认发行版星标（前后均为 podman-machine-default） | [S33] |
+| F-053 | 容器验收：openKylin 3.0 (huanghe)，默认用户 openkylin UID 1000（sudo 接受 openkylin 口令），wsl.conf 含 default=openkylin 与 systemd=true；软件包 **1900**（最小镜像 405，桌面增量 +1495，逐包包含关系未 diff）；`df -B1 /` 有效数据 13,380,390,912 字节（12.46 GiB），双向夹逼把 F-047 候选定档 **k=3（tar≈12.1 GiB，1.97×）** | [S33] |
+| F-054 | VHD 实测：`ext4.vhdx` 逻辑大小＝真实占用（非稀疏）13,971,226,624 字节＝**13.01 GiB**；VHD/ext4 有效数据=**1.044**、VHD/tar(k=3)≈1.075——修正最小镜像单点外推的 1.17 系数（非常数）；同盘标准路径峰值实测 **19.2 GiB**（D: 54.88→35.73 GiB，＝.wsl 6.14＋VHD 13.01），事前 20/25/30 GiB 建议线全部安全 | [S33] |
+| F-055 | xrdp 服务链路开箱可用：`xrdp`/`xrdp-sesman` 均 enabled+active、`ss -lnt` 见 `*:3390` LISTEN；eth0 IPv4=172.25.189.68，`--terminate` 后未漂移；Windows 侧 `Test-NetConnection 127.0.0.1 -Port 3390` 成功，**`mstsc /v:localhost:3390` 可用、绕开 IP 漂移**（官方文档只给 `<IP>:3390`）；**交互桌面实测：mstsc→xorg→openkylin 可进入完整 UKUI（壁纸/任务栏/开始菜单/图标齐全）**；首登命中纯黑屏，经 F-057 修复后重登验证通过 | [S30][S33] |
+| F-056 | systemd 失败面：`systemctl --failed` 全机仅 1 个失败单元 `systemd-binfmt`——WSL 宿主预置 WSLInterop binfmt 注册致重复注册退出 1，单元自带 generator drop-in 在失败后重注册 `:WSLInterop:M::MZ::/init:FP`（良性且有自恢复证据）；未见 acpid/蓝牙/电源等硬件相关服务失败；未执行稀疏化（全新系统逻辑＝真实占用、无洞可回收）与 unregister（用户保留发行版） | [S33] |
+| F-057 | **首登纯黑屏根因与修复（2026-10-08 实测闭环，详见双镜像文档 §5.1）**：openKylin 3.0 UKUI 4.x 的 WM 是 **KWin**（`kwin-x11` 已预装，非旧 ukwm）；`/etc/xrdp/startwm.sh` 里 `unset XDG_RUNTIME_DIR`，ukui-session 经 ukuismserver 在 Xorg ready ~1 秒后拉起 kwin，因运行时目录缺失（回退无效 `/var/tmp/runtime-openkylin`）冷启动不驻留、会话不重试 → 无合成器黑屏（ukui-panel/peony 等其余组件正常）。修复：用户级 `~/.xsession` 补 `export XDG_RUNTIME_DIR=/run/user/$(id -u)` + 前 15 秒幂等 WM 看门狗（原文件备份 `.xsession.bak-20261008`，不改系统文件/不装包）；重登后存活 kwin 父进程链 `kwin_x11←ukuismserver←ukui-session←xrdp-sesexec`、环境变量正确，证明决定性修复是补环境变量、看门狗仅兜底 | [S33] |
 
 ---
 
@@ -229,8 +237,12 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 | G3 | 模式含边界/步骤/≥3 反模式/检验/迁移/成熟度 | PASS（[大归档零下载远程预检法](../../../retrospective/patterns/code-patterns/large-archive-remote-preflight.md)，L1 单案例，5 反模式，与 pretrained-model-download-validation 互补） |
 | V 门 | 4 视角、意见 ≥5、采纳 ≥2 | PASS（4 视角 11 条意见全部采纳：候选区间保留 k≥6、包包含关系降级为推断、GiB/GB 双口径、同名冲突、WSLg 替代、弱口令红线、镜像时效） |
 | G4 | 原子化产出 | PASS（新建参考文档 1 + 模式 1；更新 index/03-install-paths/wsl 指南/信源台账/模式 toctree 共 5 处；桌面镜像运行时项明确登记待实测，不伪造实测结论） |
+| **2026-10-08 专项**（session `sc-20261008-openkylin-desktop-wsl-install`，落机安装链路 R→I→F→V→C） | | |
+| G1/G2 | 实测事实客观可溯源、洞察四元组对账 | PASS（F-051~F-057 共 7 条运行时事实，信源 S33；双镜像文档 §4 增实测对账，I-2 更新为真值落定） |
+| V 门 | 实测不夸大：服务级 vs 交互桌面级分开；事前推断逐条对账；黑屏先取证后修复 | PASS（五轮回填：4 项推断 3 证实 1 修正；六轮实战：首登黑屏以四类日志+父进程链定位 KWin/XDG_RUNTIME_DIR 根因，用户级修复重登验证，新增 §5.1） |
+| G4 | 原子化产出 | PASS（更新 5 文件：wsl-dual-image-selection、wsl-install-sparse-vhd-guide 范围声明、03-install-paths、本 index、信源台账 S33；未新建文件；修复落在发行版用户家目录 `~/.xsession`，备份可回滚） |
 
-**局限声明**：① 237 篇中精读 35 篇（含全部板块代表性文档与全部短占位页），其余以标题骨架覆盖，可能遗漏个别长尾操作细节；② 文档站内容随社区提交持续变化，本教程事实时点为 2026-09-29；③ 图片型页面（如 27 图版《关于社区》）未做 OCR，其信息以治理组织架构文字版互证；④ 未对 en 英文目录做对照统计；⑤ 本教程定位为"文档平台导读"，不对 openKylin 的生产环境适用性（稳定性、性能、硬件兼容、供应链合规）作独立验证结论——相关表述来自官方文档或姊妹调研口径，实际采用前须自行完成 POC（V 审查 O7 登记）；⑥ 2026-09-30 追加的 Desktop WSL 内容为**远程核验级**：文件级事实（字节数/MD5/魔数/ISIZE/结构）可复现，解压体积为候选区间未消歧，导入与 xrdp 桌面运行时全部待实测（见双镜像文档 §7 清单），引用时不得把规划值与候选区间估算当作实测数据。
+**局限声明**：① 237 篇中精读 35 篇（含全部板块代表性文档与全部短占位页），其余以标题骨架覆盖，可能遗漏个别长尾操作细节；② 文档站内容随社区提交持续变化，本教程事实时点为 2026-09-29；③ 图片型页面（如 27 图版《关于社区》）未做 OCR，其信息以治理组织架构文字版互证；④ 未对 en 英文目录做对照统计；⑤ 本教程定位为"文档平台导读"，不对 openKylin 的生产环境适用性（稳定性、性能、硬件兼容、供应链合规）作独立验证结论——相关表述来自官方文档或姊妹调研口径，实际采用前须自行完成 POC（V 审查 O7 登记）；⑥ 2026-09-30 追加的 Desktop WSL 文件级事实（字节数/MD5/魔数/ISIZE/结构）为**远程核验级**，2026-10-08 已补充落机实测（F-051~F-057/S33：解压真值 k=3、流式导入 51.6 秒、1900 包、VHD 13.01 GiB、同盘峰值 19.2 GiB、xrdp 服务与交互 UKUI 桌面全链路可用）；首登黑屏（XDG_RUNTIME_DIR 致 KWin 不驻留）已实测定位并用户级修复（F-057，单次首登+一次重登验证，跨版本需重新取证）；引用规划值时须与实测值区分，**残留观察项**仅限：内存失败阈值下界（未测到失败）、整机 `--shutdown` 后 IP 漂移（localhost 接入可规避）、unregister 物理回收验证。
 
 ```
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S2 | event=CHAIN_SELECTED | session=sc-20260929-openkylin-docs-wiki | msg=知识沉淀链路R→I→E→V→C | ctx={"chain":"R-I-E-V-C","depth":"standard"}
@@ -244,4 +256,12 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=V10 | event=REVISION_USER_DRIVEN | session=sc-20260930-openkylin-desktop-wsl | msg=二轮措辞修正：磁盘规划由≥45GiB单值改为三档分层（跨盘20/同盘25-30/排障45-50），补流式写入未实测假设说明，4文件同步 | ctx={"scope":"storage-planning-wording","files":4}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=V11 | event=REVISION_USER_DRIVEN | session=sc-20260930-openkylin-desktop-wsl | msg=三轮措辞修正：选型倾向显性化，WSLg行改优先、新增「桌面镜像不是更好的WSL而是带桌面会话的WSL」定性，概念页同步 | ctx={"scope":"selection-bias-wording","files":2}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=V12 | event=REVISION_USER_DRIVEN | session=sc-20260930-openkylin-desktop-wsl | msg=四轮措辞修正：候选区间去点估，删除16.1GiB「最可能」定性，§4.1改非概率排序、§4.2建议线改覆盖口径，F-047/概念页/局限⑥同步 | ctx={"scope":"candidate-point-estimate","files":3}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S0 | event=CMD_START | session=sc-20261008-openkylin-desktop-wsl-install | msg=Desktop WSL 落机安装：执行§7待实测清单 | ctx={"scenario":"problem","chain":"R-I-F-V-C","depth":"standard"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=R9 | event=GATE_PASSED | session=sc-20261008-openkylin-desktop-wsl-install | msg=预检：D:54.88GiB/内存13.05GiB/WSL3.0.2.0；远程事实复核未变 | ctx={"sources":"S27-S28-S33"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=C2 | event=IMPORT_OK | session=sc-20261008-openkylin-desktop-wsl-install | msg=下载约3分钟+MD5精确匹配；流式导入51.6秒零失败；1900包；k=3夹逼；VHD13.01GiB；峰值19.2GiB | ctx={"distro":"openKylin-3.0-desktop"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=V9 | event=GATE_PASSED | session=sc-20261008-openkylin-desktop-wsl-install | msg=五轮回填：4项事前推断对账(3证实1修正)，F-051~F-056入库，5文件同步，唯一待实测=GUI观感
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20261008-openkylin-desktop-wsl-install | msg=§7清单8/9闭环；新增事实6条；零新建文件 | ctx={"gates":["G1","G2","V","G4"],"files_updated":5}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=I1 | event=ROOTCAUSE_FOUND | session=sc-20261008-openkylin-desktop-wsl-install | msg=首登黑屏=XDG_RUNTIME_DIR被unset致KWin冷启动不驻留(非GL/安装) | ctx={"evidence":"4类日志+父进程链","fact":"F-057"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=C3 | event=FIX_VERIFIED | session=sc-20261008-openkylin-desktop-wsl-install | msg=~/.xsession补环境变量+WM看门狗(备份)，重登进入完整UKUI；新增F-057与§5.1
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20261008-openkylin-desktop-wsl-install | msg=桌面链路服务→交互全通，无遗留未决故障；事实7条(F-051~F-057) | ctx={"gates":["G1","G2","V","G4"]}
 ```
