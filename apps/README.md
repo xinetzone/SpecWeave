@@ -100,7 +100,7 @@ apps/<group>/<app-name>/
 | [okf-zhihu-publisher](dev-tools/okf-zhihu-publisher/README.md) | OKF 知乎发布器（内容同步发布工具） |
 | [wechat-mp-archiver](dev-tools/wechat-mp-archiver/README.md) | 微信公众号全量内容归档工具（采集服务 + 离线归档/RAG/报表） |
 | [zhihu-checkin-hub](dev-tools/zhihu-checkin-hub/README.md) | 知乎打卡工作台（本地追踪/打卡 + 发布前固定门 + 浏览器半自动发布；零数据库、无 AI、无凭证） |
-| [openkylin-wsl-devkit](dev-tools/openkylin-wsl-devkit/README.md) | openKylin WSL 开发工具包（以 WSL 为切入点：发行版管理/环境验收/deb+dput 脚手架/知识库参考；零第三方依赖，`okw` CLI） |
+| [openkylin-wsl-devkit](dev-tools/openkylin-wsl-devkit/README.md) | openKylin WSL 开发工具包（以 WSL 为切入点：发行版管理/环境验收/deb+dput 脚手架/知识库参考/rootless Podman 预检安装验收；零第三方依赖，`okw` CLI） |
 | [agent-workspace-starter](dev-tools/agent-workspace-starter/README.md) | 智能体工作区起步套件（对外运营产品）：最小化 .agents 萃取 + 60 分钟教程 + 规格驱动演练 + 零依赖自检脚本 |
 | camera-power-controller | 摄像头电源控制工具（暂缺 README） |
 

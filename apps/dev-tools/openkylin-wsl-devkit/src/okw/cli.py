@@ -194,6 +194,10 @@ def build_parser() -> argparse.ArgumentParser:
     p_ref.add_argument("topic", nargs="?", help="主题：series/wsl-troubleshoot/okbs/verify")
 
     # podman 子命令组：preflight / install / verify
+    podman_epilog = (
+        "退出码：0=全部 PASS；1=存在 FAIL（按报告中的中文指引修复后重试）；"
+        "2=用法错误、preflight/verify 仅 UNKNOWN，或 install 未提供 --yes（零写入）。"
+    )
     p_podman = sub.add_parser(
         "podman",
         help="openKylin 发行版内 rootless Podman 预检、安装与验收",
@@ -202,6 +206,7 @@ def build_parser() -> argparse.ArgumentParser:
             "确认无风险后 install --yes 执行安装与 subuid/subgid 映射追加，"
             "最后 verify 验收 rootless 上下文；--smoke-image 需本地已存在镜像。"
         ),
+        epilog=podman_epilog,
     )
     p_podman_sub = p_podman.add_subparsers(dest="podman_cmd", metavar="<podman_cmd>")
 
@@ -213,6 +218,7 @@ def build_parser() -> argparse.ArgumentParser:
             "APT 索引缺失时候选标为 UNKNOWN 并给出行动建议；"
             "映射已有冲突时 install 阶段将拒绝自动追加。"
         ),
+        epilog=podman_epilog,
     )
     p_preflight.add_argument("name", help="发行版名称（wsl -l -v 查看）")
 
@@ -225,9 +231,10 @@ def build_parser() -> argparse.ArgumentParser:
             "③ 为默认用户追加 subuid/subgid 映射（仅在标准区间 [100000, 165536) "
             "   与其它用户无冲突且畸形文件中止时才写入）；"
             "④ 最后以默认用户身份运行 rootless verify。"
-            "漏 --yes 时输出三行副作用清单并中止。"
+            "漏 --yes 时仅输出 4 条副作用清单并以退出码 2 中止，不做任何写入。"
             "不修改软件源、不修改 wsl.conf、不修改默认发行版星标。"
         ),
+        epilog=podman_epilog,
     )
     p_install.add_argument("name", help="发行版名称")
     p_install.add_argument(
@@ -249,6 +256,7 @@ def build_parser() -> argparse.ArgumentParser:
             "默认用户身份检查：subuid/subgid 映射、unshare 是否可用、podman info --rootless。"
             "默认只读不创建/启动容器；--smoke-image 需本地已存在该镜像，不触发隐式拉取。"
         ),
+        epilog=podman_epilog,
     )
     p_verify.add_argument("name", help="发行版名称")
     p_verify.add_argument(
