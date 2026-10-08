@@ -280,7 +280,7 @@ class TestTR23MappingPaths:
         assert uid_path.read_bytes() == uid_expected
         assert gid_path.read_bytes() == gid_expected
 
-    def test_mapping_writer_creates_missing_files_with_private_mode(self, tmp_path):
+    def test_mapping_writer_creates_missing_files_readable_by_default_user(self, tmp_path):
         uid_path = tmp_path / "subuid"
         gid_path = tmp_path / "subgid"
         runner = """
@@ -290,16 +290,24 @@ import sys
 script, *args = sys.argv[1:]
 sys.argv = ["mapping-writer", *args]
 real_open = os.open
+real_fchmod = os.fchmod
 create_modes = []
+chmod_modes = []
 
 def capture_open(path, flags, mode=0o777, *open_args, **open_kwargs):
     if flags & os.O_CREAT:
         create_modes.append(mode)
     return real_open(path, flags, mode, *open_args, **open_kwargs)
 
+def capture_fchmod(fd, mode):
+    chmod_modes.append(mode)
+    return real_fchmod(fd, mode)
+
 os.open = capture_open
+os.fchmod = capture_fchmod
 exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
 print("CREATE_MODES=" + ",".join(oct(mode) for mode in create_modes))
+print("FCHMOD_MODES=" + ",".join(oct(mode) for mode in chmod_modes))
 """
 
         result = subprocess.run(
@@ -321,6 +329,7 @@ print("CREATE_MODES=" + ",".join(oct(mode) for mode in create_modes))
 
         assert result.returncode == 0
         assert "CREATE_MODES=0o600,0o600" in result.stdout
+        assert "FCHMOD_MODES=0o644,0o644" in result.stdout
         assert uid_path.read_bytes() == b"openkylin:100000:65536\n"
         assert gid_path.read_bytes() == b"openkylin:100000:65536\n"
 
@@ -870,6 +879,15 @@ exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
         entries = self._entries("openkylin:100000:65536\nopenkylin:150000:65536\n")
         assert podman.has_valid_mapping_for(entries, "openkylin") is False
 
+    def test_conflicting_target_mapping_cannot_be_masked_by_another_valid_range(self):
+        entries = self._entries(
+            "openkylin:100000:65536\n"
+            "openkylin:300000:65536\n"
+            "other:100000:65536\n"
+        )
+
+        assert podman.has_valid_mapping_for(entries, "openkylin") is False
+
     # 6. start/count 非正整数 → 无效条目被 parse_subordinate_file 丢弃
     def test_non_positive_start_or_count_rejects_file(self):
         with pytest.raises(ValueError, match="映射"):
@@ -949,6 +967,42 @@ class TestTR24ThreeAPTErrorLabels:
         assert ret == 1
         out = capsys.readouterr().out
         assert podman.APT_NET_ERROR_LABEL in out
+
+    @pytest.mark.parametrize(
+        "warning,label",
+        [
+            (
+                "W: Failed to fetch index: Connection timed out",
+                podman.APT_NET_ERROR_LABEL,
+            ),
+            (
+                "W: Failed to fetch index: Hash Sum mismatch",
+                podman.APT_HASH_ERROR_LABEL,
+            ),
+            (
+                "Err:1 https://archive.openkylin.top stable InRelease\n"
+                "  Could not handshake: TLS connection was non-properly terminated",
+                podman.APT_NET_ERROR_LABEL,
+            ),
+        ],
+    )
+    def test_successful_apt_update_with_fetch_warning_stops_install(
+        self, fake_run_wsl, capsys, warning, label
+    ):
+        TestInstallHelpers._install_env_base(fake_run_wsl)
+        TestInstallHelpers._install_apt_pass(fake_run_wsl)
+        fake_run_wsl.script["apt update"] = make_result(
+            ok=True, exit_code=0, stdout=f"{warning}\n"
+        )
+
+        ret = cli.main(["podman", "install", "openKylin-3.0", "--yes"])
+
+        out = capsys.readouterr().out
+        calls = "\n".join(" ".join(call) for call in fake_run_wsl.calls)
+        assert ret == 1
+        assert label in out
+        assert "apt install" not in calls
+        assert "python3 -c" not in calls
 
     def test_hash_error_label_on_install(self, fake_run_wsl, capsys):
         TestInstallHelpers._install_env_base(fake_run_wsl)

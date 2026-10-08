@@ -216,6 +216,6 @@ class TestHasValidMappingFor:
         entries = [
             _e("openkylin", 100000, 1000),
             _e("openkylin", 1000000, 65536),
-            _e("other", 100000, 65536),
+            _e("other", 200000, 65536),
         ]
         assert has_valid_mapping_for(entries, "openkylin")

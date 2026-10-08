@@ -27,7 +27,7 @@ source: ".trae/specs/infra-env/extend-okw-openkylin-podman/spec.md"
 
 ## Task 2: 安全安装 Podman 并配置 rootless 用户映射
 
-- **Status**: `done`（install --yes + subuid/subgid 单次联合原子脚本；207 测试通过，podman 模块覆盖率 98%）
+- **Status**: `done`（软件实现、回归测试与独立对抗审查闭环；真实安装仍按 Task 5 授权边界未执行）
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -42,6 +42,13 @@ source: ".trae/specs/infra-env/extend-okw-openkylin-podman/spec.md"
   - `rule` TR-2.2：确认安装只针对目标发行版；APT 索引更新发生在 `--yes` 之后；不出现软件源修改、默认发行版变更或 `/etc/wsl.conf` 写入命令。
   - `rule` TR-2.3：映射缺失、有效映射、重复执行两遍幂等、UID/GID 区间重叠（含 off-by-one 边界 A.end == B.start 判不重叠）、同名多行区间冲突、行字段非正整数（无效映射）、畸形三列解析失败、写入只读文件共 8 类路径均有隔离测试；每类测试用前后快照断言不得改动其它账户记录或文件原除目标追加行外的其它字节。
   - `rubric` TR-2.4：三类 APT 失败输出中的阶段标签互不相同，失败文案为中文且分别指向「包候选缺失」「网络可达性」「镜像源校验」三类修复方向。
+- **Completion Evidence**:
+  - 实现：[`podman.py`](../../../../apps/dev-tools/openkylin-wsl-devkit/src/okw/podman.py) 通过 `install --yes` 门禁，仅以 root 操作显式指定发行版；APT 更新后复查四个直接包候选，并分析 update 的 stdout/stderr，非零退出、候选缺失、网络/hash 诊断及索引下载不完整均 fail-closed；映射以左闭右开区间验证，并在写入前联合校验两个文件，支持幂等追加、锁、权限检查和失败回滚。新建映射文件先以 `0600` 创建，再显式 `fchmod(0644)`，保证默认用户可读且组/其他用户不可写；读检查与写入器对任何目标用户区间冲突采取一致的拒绝策略。
+  - 回归：[`test_podman_install.py`](../../../../apps/dev-tools/openkylin-wsl-devkit/tests/test_podman_install.py) 专项 `71/71` 通过，覆盖未确认零副作用、目标发行版/root 调用、候选失败门禁、区间边界、畸形输入及写入/flush/close/fdopen/权限失败回滚；新增回归覆盖默认用户可读权限、APT 成功退出码下的 network/hash/TLS 握手失败、以及目标映射冲突不可被另一有效区间掩盖。Task 2 修复前全量基线 `247` 项，增加 4 项后 `251/251` 通过；总覆盖率 `95%`，`podman.py` 覆盖率 `98%`（Python 3.14.3，mock WSL）。
+  - AC/TR 对应：TR-2.1 由 `--yes`、前置条件和候选失败用例验证；TR-2.2 由目标发行版/root 调用及无默认发行版、软件源、`wsl.conf` 修改断言验证；TR-2.3 由隔离映射矩阵和逐字节快照验证；TR-2.4 由三类不同阶段标签/中文建议测试及 [`README.md`](../../../../apps/dev-tools/openkylin-wsl-devkit/README.md) 的三项 APT FAQ 验证。
+  - 并发边界：目录 advisory lock 只协调使用同一锁的本工具实例；不遵守该锁的外部写入者不在保证范围内，回滚内容检查到后续 unlink/truncate 之间仍有不可消除的竞态窗口，且无法区分与本工具追加字节完全相同的外部追加。发生可检测的意外追加时实现会拒绝截断；本限制不等同于跨任意外部写入者提供事务保证。
+  - 独立审查：首轮 fresh-context 审查发现 P1 1 项、P2 2 项、无 P0；二次 fresh-context 审查发现 P2 1 项（APT TLS 握手失败未归类为网络错误），无 P0/P1。四项发现均已按 TDD 添加回归并修复；TLS 参数化回归 `3/3`、专项 `71/71`、全量 `251/251` 通过，无未处置发现。
+  - 真实环境：未对 openKylin WSL 执行安装，以上为 mock/隔离文件系统证据，不作为真实安装验收；真实发行版分层验收由 Task 5 记录。
 
 ## Task 3: 增加 rootless 验收与本地镜像冒烟
 

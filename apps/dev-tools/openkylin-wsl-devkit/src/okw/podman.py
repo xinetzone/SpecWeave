@@ -115,6 +115,9 @@ def _is_apt_network_error(stderr: str) -> bool:
             "connection timed out",
             "connection refused",
             "connection reset",
+            "could not handshake",
+            "handshake failed",
+            "tls handshake",
         )
     )
 
@@ -130,16 +133,12 @@ def has_valid_mapping_for(entries: list[SubordinateMapEntry], username: str) -> 
         for b in user_entries[i + 1:]:
             if ranges_overlap(a, b):
                 return False
+    if any(ranges_overlap(ue, oe) for ue in user_entries for oe in other_entries):
+        return False
     for ue in user_entries:
         if ue.count < STANDARD_SUBUID_COUNT:
             continue
-        ok = True
-        for oe in other_entries:
-            if ranges_overlap(ue, oe):
-                ok = False
-                break
-        if ok:
-            return True
+        return True
     return False
 
 
@@ -411,8 +410,31 @@ def _classify_apt_install_error(stderr: str, package: str, phase: str = "install
 def _apt_update_and_install(name: str, report: InstallReport) -> None:
     """执行 apt update → 逐包复查 candidate → apt install 4 直接包。"""
     update = distro.exec_distro(name, ["apt", "update"], user="root")
-    if not update.ok:
-        stage, detail = _classify_apt_install_error(update.stderr, "apt update", phase="update")
+    update_output = "\n".join(
+        part for part in (update.stdout, update.stderr) if part
+    )
+    lowered_output = update_output.lower()
+    update_has_fetch_warning = any(
+        marker in lowered_output
+        for marker in (
+            "failed to fetch",
+            "some index files failed to download",
+            "err:",
+        )
+    )
+    update_has_hash_error = (
+        "hash sum mismatch" in lowered_output
+        or "hashes of expected file" in lowered_output
+    )
+    if not update.ok or update_has_fetch_warning or update_has_hash_error:
+        stage, detail = _classify_apt_install_error(
+            update_output, "apt update", phase="update"
+        )
+        if update.ok and APT_NET_ERROR_LABEL not in detail and APT_HASH_ERROR_LABEL not in detail:
+            detail = (
+                "apt update 返回成功但索引下载不完整；请检查发行版网络、DNS 与官方软件源"
+                + (f"（{update_output.strip()[:200]}）" if update_output.strip() else "")
+            )
         report.add("apt update", stage, detail)
         return
     report.add("apt update", "PASS")
@@ -620,6 +642,7 @@ try:
         fd = os.open(path, flags, 0o600)
         if not existed:
             created_paths.add(path)
+            os.fchmod(fd, 0o644)
         if existed and os.name == "posix" and stat.S_IMODE(os.fstat(fd).st_mode) & 0o022:
             os.close(fd)
             raise OSError("MAPPING_INVALID: " + path + " 组或其他用户可写；" + advice)
