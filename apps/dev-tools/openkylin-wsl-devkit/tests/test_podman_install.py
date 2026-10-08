@@ -324,6 +324,100 @@ print("CREATE_MODES=" + ",".join(oct(mode) for mode in create_modes))
         assert uid_path.read_bytes() == b"openkylin:100000:65536\n"
         assert gid_path.read_bytes() == b"openkylin:100000:65536\n"
 
+    def test_mapping_writer_rolls_back_new_file_when_fdopen_fails(self, tmp_path):
+        uid_path = tmp_path / "subuid"
+        gid_path = tmp_path / "subgid"
+        gid_original = b"# gid\n"
+        gid_path.write_bytes(gid_original)
+        runner = """
+import os
+import sys
+
+script, *args = sys.argv[1:]
+uid_path = os.path.abspath(args[0])
+sys.argv = ["mapping-writer", *args]
+real_os_open = os.open
+real_fdopen = os.fdopen
+opened_paths = {}
+
+def injected_os_open(path, flags, mode=0o777, *open_args, **open_kwargs):
+    fd = real_os_open(path, flags, mode, *open_args, **open_kwargs)
+    opened_paths[fd] = os.path.abspath(os.fspath(path))
+    return fd
+
+def injected_fdopen(fd, *open_args, **open_kwargs):
+    if opened_paths.get(fd) == uid_path:
+        raise OSError("injected fdopen failure")
+    return real_fdopen(fd, *open_args, **open_kwargs)
+
+os.open = injected_os_open
+os.fdopen = injected_fdopen
+exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
+"""
+
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                runner,
+                podman._mapping_writer_script(),
+                str(uid_path),
+                str(gid_path),
+                "openkylin",
+                "100000",
+                "65536",
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        assert result.returncode != 0
+        assert not uid_path.exists()
+        assert gid_path.read_bytes() == gid_original
+
+    def test_mapping_writer_rolls_back_new_file_on_existing_file_permission_failure(
+        self, tmp_path
+    ):
+        uid_path = tmp_path / "subuid"
+        gid_path = tmp_path / "subgid"
+        gid_original = b"# gid\n"
+        gid_path.write_bytes(gid_original)
+        runner = """
+import os
+import sys
+from types import SimpleNamespace
+
+script, *args = sys.argv[1:]
+sys.argv = ["mapping-writer", *args]
+real_os_open = os.open
+os.name = "posix"
+os.fstat = lambda _fd: SimpleNamespace(st_mode=0o666)
+os.open = lambda path, flags, mode=0o777, *a, **kw: real_os_open(path, flags, mode, *a, **kw)
+exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
+"""
+
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                runner,
+                podman._mapping_writer_script(),
+                str(uid_path),
+                str(gid_path),
+                "openkylin",
+                "100000",
+                "65536",
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        assert result.returncode != 0
+        assert not uid_path.exists()
+        assert gid_path.read_bytes() == gid_original
+
     @pytest.mark.parametrize(
         "uid_original,gid_original",
         [
@@ -362,6 +456,69 @@ print("CREATE_MODES=" + ",".join(oct(mode) for mode in create_modes))
         assert result.returncode != 0
         assert uid_path.read_bytes() == uid_original
         assert gid_path.read_bytes() == gid_original
+
+    def test_mapping_writer_removes_new_files_after_partial_write_failure(self, tmp_path):
+        uid_path = tmp_path / "subuid"
+        gid_path = tmp_path / "subgid"
+        runner = """
+import os
+import sys
+
+script, *args = sys.argv[1:]
+gid_path = os.path.abspath(args[1])
+sys.argv = ["mapping-writer", *args]
+real_os_open = os.open
+real_fdopen = os.fdopen
+opened_paths = {}
+
+class PartialWriteFailure:
+    def __init__(self, stream):
+        self.stream = stream
+
+    def write(self, data):
+        self.stream.write(data[:3])
+        self.stream.flush()
+        raise OSError("injected partial write failure")
+
+    def __getattr__(self, name):
+        return getattr(self.stream, name)
+
+def injected_os_open(path, flags, mode=0o777, *open_args, **open_kwargs):
+    fd = real_os_open(path, flags, mode, *open_args, **open_kwargs)
+    opened_paths[fd] = os.path.abspath(os.fspath(path))
+    return fd
+
+def injected_fdopen(fd, *open_args, **open_kwargs):
+    stream = real_fdopen(fd, *open_args, **open_kwargs)
+    if opened_paths.get(fd) == gid_path:
+        return PartialWriteFailure(stream)
+    return stream
+
+os.open = injected_os_open
+os.fdopen = injected_fdopen
+exec(compile(script, "<mapping-writer>", "exec"), {"__name__": "__main__"})
+"""
+
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                runner,
+                podman._mapping_writer_script(),
+                str(uid_path),
+                str(gid_path),
+                "openkylin",
+                "100000",
+                "65536",
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        assert result.returncode != 0
+        assert not uid_path.exists()
+        assert not gid_path.exists()
 
     def test_mapping_writer_rejects_invalid_utf8_without_changes(self, tmp_path):
         uid_path = tmp_path / "subuid"

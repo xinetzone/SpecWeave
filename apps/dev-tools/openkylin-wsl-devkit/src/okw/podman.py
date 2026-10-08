@@ -479,6 +479,14 @@ def restore_files(file_paths):
         if appended is None or not expected.startswith(appended):
             errors.append(path + ": 检测到并发修改，未截断文件")
             continue
+        if path in created_paths:
+            try:
+                os.unlink(path)
+            except FileNotFoundError:
+                pass
+            except OSError as exc:
+                errors.append(path + ": " + str(exc))
+            continue
         if existed:
             fd = None
             try:
@@ -493,15 +501,6 @@ def restore_files(file_paths):
                         os.close(fd)
                     except OSError as exc:
                         errors.append(path + ": " + str(exc))
-        elif path in created_paths and appended:
-            errors.append(path + ": 新文件内容发生并发修改，未删除文件")
-        elif path in created_paths:
-            try:
-                os.unlink(path)
-            except FileNotFoundError:
-                pass
-            except OSError as exc:
-                errors.append(path + ": " + str(exc))
     return errors
 
 def read_entries(path):
@@ -619,9 +618,11 @@ try:
         if not existed:
             flags |= os.O_CREAT | os.O_EXCL
         fd = os.open(path, flags, 0o600)
+        if not existed:
+            created_paths.add(path)
         if existed and os.name == "posix" and stat.S_IMODE(os.fstat(fd).st_mode) & 0o022:
             os.close(fd)
-            fail(2, "MAPPING_INVALID: " + path + " 组或其他用户可写；" + advice)
+            raise OSError("MAPPING_INVALID: " + path + " 组或其他用户可写；" + advice)
         try:
             mapping = os.fdopen(fd, "ab", buffering=0)
         except Exception:
@@ -630,8 +631,6 @@ try:
             except OSError:
                 pass
             raise
-        if not existed:
-            created_paths.add(path)
         handles.append((path, mapping))
 
     try:
