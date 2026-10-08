@@ -7,27 +7,30 @@ title: "项目知识库"
 
 项目知识库的统一入口页。详细分类条目与标签检索已拆分到独立索引，避免根 README 持续膨胀。
 
-- **总条目数**：251
-- **分类数**：18
-- **标签数**：535
+- **总条目数**：361
+- **分类数**：21
+- **标签数**：637
 
 ## 快速导航
 
 | 顶层分类 | 条目数 | 入口 |
 |----------|--------|------|
 | architecture | 1 | [architecture](categories/architecture.md) |
-| best-practices | 48 | [best-practices](best-practices/README.md) |
+| best-practices | 49 | [best-practices](best-practices/README.md) |
+| cake-cutting-rule | 7 | [cake-cutting-rule](categories/cake-cutting-rule.md) |
 | decisions | 6 | [decisions](decisions/README.md) |
 | docs | 10 | [docs](categories/docs.md) |
 | examples | 6 | [examples](categories/examples.md) |
 | knowledge | 20 | [knowledge](categories/knowledge.md) |
-| operations | 25 | [operations](operations/README.md) |
+| mindfulness-positivity | 6 | [mindfulness-positivity](categories/mindfulness-positivity.md) |
+| operations | 26 | [operations](operations/README.md) |
 | platform | 1 | [platform](categories/platform.md) |
 | research | 1 | [research](categories/research.md) |
+| social-relations | 1 | [social-relations](categories/social-relations.md) |
 | standards | 1 | [standards](categories/standards.md) |
-| tech | 38 | [tech](tech/README.md) |
+| tech | 48 | [tech](tech/README.md) |
 | troubleshooting | 4 | [troubleshooting](troubleshooting/README.md) |
-| unknown | 90 | [unknown](categories/unknown.md) |
+| unknown | 174 | [unknown](categories/unknown.md) |
 
 ## 辅助索引
 
@@ -38,16 +41,16 @@ title: "项目知识库"
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
-| [书籍转 Web 教程的原创重写与适当引用编写规范](best-practices/book-to-web-tutorial-citation-guide.md) | 2026-09-11 | best-practices |
-| [文档自动化工具链索引：从写文档到过门禁的统一入口](operations/doc-automation-toolchain.md) | 2026-09-11 | operations |
-| [知识库与复盘体系双向引用规范](operations/knowledge-retrospective-cross-reference-spec.md) | 2026-09-11 | operations |
-| [知识库复核日志](operations/knowledge-review-log.md) | 2026-09-11 | operations |
-| [知识库定期复核机制](operations/knowledge-review-mechanism.md) | 2026-09-11 | operations |
-| [free-llm-api-summary](tech/free-llm-api-summary.md) | 2026-09-10 | unknown |
-| [贡献指南](best-practices/contributing.md) | 2026-08-22 | knowledge/best-practices |
-| [自动化脚本四层日志增强模式](best-practices/four-layer-logging-pattern.md) | 2026-08-22 | knowledge/best-practices |
-| [CLI 工具选型二分法：任务编排（invoke）vs 用户接口（typer）](best-practices/cli-task-vs-user-interface-invoke-typer.md) | 2026-08-21 | best-practices |
-| [Git 提交中文乱码排查：显示层 vs 存储层分离验证法](best-practices/git-commit-mojibake-diagnosis.md) | 2026-08-21 | best-practices |
+| [切蛋糕法则：从数学公平分割到机制设计与职场分配（OKF 教程知识包）](cake-cutting-rule/index.md) | 2026-10-07 | cake-cutting-rule |
+| [切蛋糕法则 · 数学公平分割理论：定义、算法谱系与局限](cake-cutting-rule/concepts/01-fair-division-theory.md) | 2026-10-07 | cake-cutting-rule |
+| [切蛋糕法则 · 机制设计解读：为什么'你切我选'不需要监督](cake-cutting-rule/concepts/02-you-cut-i-choose-mechanism.md) | 2026-10-07 | cake-cutting-rule |
+| [切蛋糕法则 · 职场与处世层：做蛋糕的人与切蛋糕的人](cake-cutting-rule/concepts/03-maker-vs-cutter-workplace.md) | 2026-10-07 | cake-cutting-rule |
+| [示例：三人合伙创业的动态股权分配（你切我选思想的完整落地）](cake-cutting-rule/examples/01-worked-example-dynamic-equity.md) | 2026-10-07 | cake-cutting-rule |
+| [V 对抗审查记录：切蛋糕法则知识包](cake-cutting-rule/references/adversarial-review.md) | 2026-10-07 | cake-cutting-rule |
+| [信源台账：切蛋糕法则知识包 S01~S16](cake-cutting-rule/references/source-inventory.md) | 2026-10-07 | cake-cutting-rule |
+| [结伴 × AI 变现行动知识包：三域飞轮——群内零交易、站外去赚钱、回站只讲案例](jieban-ai-monetization/index.md) | 2026-10-07 | social-relations |
+| [正念 vs 正面：双概念知识包（教程、联系与区别、先接纳后重构整合模式）](mindfulness-positivity/index.md) | 2026-10-03 | mindfulness-positivity |
+| [正念教程：觉察、接纳与当下的科学](mindfulness-positivity/concepts/01-zheng-nian-mindfulness.md) | 2026-10-03 | mindfulness-positivity |
 
 ## 相关资源
 
@@ -84,4 +87,4 @@ title: "项目知识库"
 
 ---
 
-*索引自动生成于 2026-09-11 16:52:20*
+*索引自动生成于 2026-10-07 19:07:31*

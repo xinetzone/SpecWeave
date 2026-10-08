@@ -9,7 +9,7 @@ title: "分类索引：operations"
 - [返回知识库首页](../README.md)
 - [按标签检索](../tags/README.md)
 
-> 本分片收录 **1** 个子分类，共 **25** 条条目。
+> 本分片收录 **1** 个子分类，共 **26** 条条目。
 
 ## operations
 
@@ -36,6 +36,7 @@ title: "分类索引：operations"
 | [Tuya IPC 最小闭环跑通路径](../operations/tuya-ipc-minimal-closed-loop.md) | 一条可落地执行、可观测验收的 Tuya IPC（网络摄像机）端-云-手机最小闭环跑通路径：先明确最小假设，再按步骤给出依赖/验收/排查，并附依赖关系图与闭环验收总表。 | 2026-06-30 | tuya、ipc、iot、闭环、配网、音视频、设备绑定、事件上报、联调、排查、验收 |
 | [vendor/flexloop 功能集成方案决策指南](../operations/vendor-flexloop-integration-guide.md) | 当需要在 SpecWeave 中新增或使用 flexloop 相关功能时，基于三区域边界模型和四不原则的5种合规集成路径决策指南 | 2026-06-29 | vendor、flexloop、agentforge、submodule、集成方案、三区域模型、四不原则 |
 | [微信公众号文章内容提取操作指南](../operations/wechat-mp-content-extraction.md) | 微信公众号文章内容提取双路径决策模型：defuddle CLI 与 PowerShell Invoke-WebRequest 互为兜底，含边界标记索引截取法作为正则失败时的兜底方案 | 2026-06-29 | 微信公众号、内容提取、defuddle、powershell、invoke-webrequest、html提取、反爬、降级策略 |
+| [微信公众号全量内容归档技术方案与选型](../operations/wechat-mp-full-archive-solution.md) | 获取指定微信公众号全部历史内容并持续增量更新的四路线技术选型：官方订阅接口（受限）、私有部署开源工具（主路线）、GUI 工具（兜底）、商业 SaaS（本期不采用）。含各路线操作门槛、凭证时效与续期、典型失效模式、合规边界与信源核实记录。 | 2026-09-24 | 微信公众号、内容归档、wechat-article-exporter、wechat-download-api、wechatDownload、docker、增量同步、rag、合规、选型 |
 | [Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南](../operations/windows-platform-compatibility-guide.md) | 系统化记录 Windows 平台执行任务时的10类陷阱（编码、URL解析、路径分隔符、命令链接、引号差异、heredoc、管道、脚本扩展、行尾符、环境变量），整合项目已有4个Windows文档并提供统一索引与快速诊断流程 | 2026-07-06 | windows、powershell、platform-compatibility、url-parsing、encoding、path-separator、shell-differences、quoting、line-ending、ai-agent |
 | [Windows PowerShell 不支持 heredoc 语法](../operations/windows-powershell-heredoc.md) | 记录 Windows PowerShell 环境下 heredoc 语法不可用的替代方案 | 2026-06-23 | windows、powershell、shell、heredoc、git |
 | [Windows PowerShell 文本管道可能污染中文文档输出](../operations/windows-powershell-pipe-utf8.md) | 记录 Windows PowerShell 下将 Python 中文 stdout 通过文本管道写入文件时可能发生的转码污染，以及推荐的安全写回方案 | 2026-06-30 | windows、powershell、encoding、utf-8、pipe、set-content、python、docs |
@@ -43,4 +44,4 @@ title: "分类索引：operations"
 
 ---
 
-*索引自动生成于 2026-09-11 16:52:20*
+*索引自动生成于 2026-10-07 19:07:31*

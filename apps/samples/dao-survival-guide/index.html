@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>大道极简生存指南 · 七条判据</title>
+<meta name="description" content="从「道生一一生二二生三」到两组行动三元组，收敛为七条可当场判定的原则。每条含判据、反例与一条 5 分钟可完成的最小动作。">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <button class="brand" id="brand-btn" type="button" aria-label="回到首页">
+      <span class="brand-seal" aria-hidden="true">
+        <svg viewBox="0 0 24 24" role="img" focusable="false">
+          <rect x="1.5" y="1.5" width="21" height="21" fill="var(--cinnabar)" stroke="var(--cinnabar-deep)" stroke-width="1.2"/>
+          <rect x="4.5" y="4.5" width="15" height="15" fill="none" stroke="var(--paper)" stroke-width="0.9"/>
+          <text x="12" y="16.4" text-anchor="middle" font-family="'Noto Serif SC', 'Songti SC', serif" font-size="11" font-weight="700" fill="var(--paper)">道</text>
+        </svg>
+      </span>
+      <span class="brand-name">大道极简生存指南</span>
+    </button>
+    <div class="topbar-step" id="topbar-step" aria-live="polite">序</div>
+  </div>
+</header>
+
+<main id="app">
+
+  <!-- ============ 序 ============ -->
+  <section id="view-intro" class="view" hidden>
+    <div class="intro-wrap">
+      <p class="eyebrow">老子 · 道三合相 · 收敛产物</p>
+      <h1 class="hero-title">大道极简生存指南</h1>
+      <p class="hero-sub">七条判据 · 每条当场回答是 / 否 · 全文不超过 1200 字</p>
+
+      <div class="intro-rule" aria-hidden="true"><span></span></div>
+
+      <div class="intro-cols">
+        <div class="paper-card intro-card">
+          <h2 class="card-title">本指南是什么</h2>
+          <p>四条概念链探究的收敛产物。7 条原则，每条判据都能当场回答是 / 否；每条含判据、反例，与一条 5 分钟可完成的最小动作。</p>
+        </div>
+        <div class="paper-card intro-card">
+          <h2 class="card-title">本指南不是什么</h2>
+          <p>不是成功学，不是鸡汤，不是修炼建议，不是任何形式的医疗 / 心理 / 投资建议。</p>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-start" id="btn-start" type="button">
+        开始诊断
+        <span class="btn-arrow" aria-hidden="true">→</span>
+      </button>
+
+      <div class="bound-note">
+        <strong>适用于</strong>：个人成长、职业决策、关系处理、协作与系统设计、复盘与自我诊断。
+        <br>
+        <strong>不适用于</strong>：临床心理健康问题（本指南不是治疗，危机情形须转专业干预）；需要即时行动的安全场景（先处理事，再处理问题清单）；医疗、法律、财税、投资的专业判断；「等状态好了再开始」的情形（先做出来，状态在做的过程中形成）。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 判（七问） ============ -->
+  <section id="view-judge" class="view" hidden>
+    <nav class="progress" id="progress" aria-label="七条判据进度"></nav>
+    <div class="judge-card paper-card" id="judge-card"></div>
+    <div class="judge-nav">
+      <button class="btn btn-ghost" id="btn-prev" type="button">上一问</button>
+      <button class="btn btn-primary" id="btn-next" type="button" disabled>下一问 →</button>
+    </div>
+  </section>
+
+  <!-- ============ 状（结果） ============ -->
+  <section id="view-result" class="view" hidden>
+    <div class="doc-head">
+      <h1 class="doc-title">判状</h1>
+      <p class="doc-sub">大道极简生存指南 · 七条判据当场裁定</p>
+    </div>
+    <div class="big-stamp" id="big-stamp" aria-hidden="true">
+      <span class="stamp-line1" id="stamp-line1">已过</span>
+      <span class="stamp-line2" id="stamp-line2">0 / 7</span>
+    </div>
+    <div class="layer-list" id="layer-list"></div>
+    <div class="paper-card warn-card" id="order-warn" hidden>
+      <h2 class="card-title">顺序不可颠倒</h2>
+      <p>诊断在前，能力在后。跳过一、二直接做三、四、五，是空谈。</p>
+    </div>
+    <div class="bound-note">
+      <strong>边界提醒</strong>：本指南不是治疗，临床心理健康问题请转专业干预；需要即时行动的安全场景，先处理事，再处理问题清单；不含医疗、法律、财税、投资的专业建议。
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="btn-retry" type="button">重新诊断</button>
+      <button class="btn btn-ghost" id="btn-table" type="button">查看七条表</button>
+    </div>
+  </section>
+
+  <!-- ============ 表（最短版本） ============ -->
+  <section id="view-table" class="view" hidden>
+    <div class="table-head">
+      <h1 class="doc-title">七条 · 最短版本</h1>
+      <p class="doc-sub">可直接抄走的一句话判据</p>
+    </div>
+    <div class="table-wrap">
+      <table class="seven-table">
+        <thead>
+          <tr><th scope="col">#</th><th scope="col">原则</th><th scope="col">一句话判据</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>一</td><td>切掉不可逆项</td><td>这件事我能改变吗？不能就划掉</td></tr>
+          <tr><td>二</td><td>说不清阻塞就不是问题</td><td>它阻塞了什么具体结果？</td></tr>
+          <tr><td>三</td><td>先做出一件东西</td><td>技能清单里有实际验证的项吗？</td></tr>
+          <tr><td>四</td><td>真需求是能力/状态</td><td>能写成「能 X」或「处于 X 状态」吗？</td></tr>
+          <tr><td>五</td><td>拒绝对你有利的</td><td>上月拒绝过一次诱惑吗？</td></tr>
+          <tr><td>六</td><td>二元对立必有第三项</td><td>找 30 秒，问「有没有第三项」</td></tr>
+          <tr><td>七</td><td>先设计连接</td><td>谁给谁、给什么、什么格式？</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="paper-card note-card">
+      <h2 class="card-title">七条的内在结构</h2>
+      <p><strong>一、二</strong> 属于<strong>诊断层</strong>（真问题 · 真需求 · 真目标），回答「该做什么」；<strong>三、四、五</strong> 属于<strong>能力层</strong>（品质 · 技能 · 身份），回答「我能做什么」；<strong>六</strong> 是「二生三」的行动版，把二元对立整合出第三项；<strong>七</strong> 是「三 = 关系位」的行动版，先设计连接而非两端。</p>
+      <p><strong>顺序不可颠倒</strong>：诊断在前，能力在后。跳过一、二直接做三、四、五，是空谈。</p>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-ghost" id="btn-back-result" type="button">← 返回判状</button>
+      <button class="btn btn-primary" id="btn-restart" type="button">重新诊断</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>源自知识包「04 · 大道极简生存指南」（老子 · 道三合相系列）· 不是成功学，也不是医疗 / 心理 / 投资建议</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

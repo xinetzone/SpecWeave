@@ -9,7 +9,7 @@ title: "分类索引：unknown"
 - [返回知识库首页](../README.md)
 - [按标签检索](../tags/README.md)
 
-> 本分片收录 **1** 个子分类，共 **90** 条条目。
+> 本分片收录 **1** 个子分类，共 **174** 条条目。
 
 ## unknown
 
@@ -79,6 +79,14 @@ title: "分类索引：unknown"
 | [AI Agent 原子化设计要素分析报告](../engineering/deep-learning-atomic-design/concepts/ai-agent-atomic-design-analysis.md) |  | 2026-07-04 | - |
 | [deep-learning-atomic-components](../engineering/deep-learning-atomic-design/concepts/deep-learning-atomic-components.md) |  |  | - |
 | [index](../engineering/deep-learning-atomic-design/concepts/index.md) |  |  | - |
+| [00-overview](../jieban-ai-monetization/concepts/00-overview.md) |  |  | - |
+| [01-first-principles](../jieban-ai-monetization/concepts/01-first-principles.md) |  |  | - |
+| [02-real-problem-need-goal](../jieban-ai-monetization/concepts/02-real-problem-need-goal.md) |  |  | - |
+| [03-three-domain-flywheel](../jieban-ai-monetization/concepts/03-three-domain-flywheel.md) |  |  | - |
+| [04-case-reflow-covenant](../jieban-ai-monetization/concepts/04-case-reflow-covenant.md) |  |  | - |
+| [05-actions](../jieban-ai-monetization/concepts/05-actions.md) |  |  | - |
+| [adversarial-review](../jieban-ai-monetization/references/adversarial-review.md) |  |  | - |
+| [source-inventory](../jieban-ai-monetization/references/source-inventory.md) |  |  | - |
 | [index](../mdi/index.md) |  |  | - |
 | [index](../mdi/examples/index.md) |  |  | - |
 | [index](../mdi/generated/index.md) |  |  | - |
@@ -86,6 +94,19 @@ title: "分类索引：unknown"
 | [index](../mdi/generated/case3/index.md) |  |  | - |
 | [index](../mdi-research/index.md) |  |  | - |
 | [index](../myst-unified-ecosystem/index.md) |  |  | - |
+| [开源赛事知识](../opensource-contest/index.md) |  |  | opensource、contest、index |
+| [2026 上海开源软件应用创新大赛 参赛知识包](../opensource-contest/os2026-shanghai/index.md) |  |  | opensource、contest、shanghai、oschina、ai-industrial-software、ai-cloud、ai-tools、participation-guide |
+| [2026 上海开源软件应用创新大赛知识包 变更日志](../opensource-contest/os2026-shanghai/log.md) |  |  | opensource、contest、changelog |
+| [上海市加强开源体系建设实施方案（沪府办〔2025〕33号）](../opensource-contest/os2026-shanghai/concepts/00-contest-overview.md) |  |  | opensource、contest、shanghai、oschina、overview |
+| [大赛官方专题页](../opensource-contest/os2026-shanghai/concepts/01-tracks-and-challenges.md) |  |  | opensource、contest、tracks、industrial-software、cloud、ai-tools、challenges |
+| [2026-09-22 奖金方案报道](../opensource-contest/os2026-shanghai/concepts/02-awards-schedule.md) |  |  | opensource、contest、awards、schedule、timeline、shanghai |
+| [大赛官方专题页](../opensource-contest/os2026-shanghai/concepts/03-participation-guide.md) |  |  | opensource、contest、guide、submission、review-criteria、faq |
+| [解放日报政策解读报道](../opensource-contest/os2026-shanghai/concepts/04-policy-and-insights.md) |  |  | opensource、contest、policy、insight、pattern、methodology |
+| [openKylin 社区孵化仓库 openkylin-wsl（非参赛环境依据）](../opensource-contest/os2026-shanghai/concepts/05-challenge-briefs-deep-dive.md) |  |  | opensource、contest、challenges、openkylin、baidu-map、xmov、daocloud、matrixhub、benchmark |
+| [index](../opensource-contest/os2026-shanghai/concepts/index.md) |  |  | - |
+| [2026 上海开源软件应用创新大赛 信源与事实清单](../opensource-contest/os2026-shanghai/references/article-source.md) |  |  | opensource、contest、shanghai、oschina、source、facts |
+| [index](../opensource-contest/os2026-shanghai/references/index.md) |  |  | - |
+| [2026 上海开源软件应用创新大赛 P0 核验报告](../opensource-contest/os2026-shanghai/references/verification.md) |  |  | opensource、contest、shanghai、verification、p0 |
 | [Caffe Docker 容器构建与运行 SOP](../operations/caffe-docker-sop.md) |  | 2026-07-22 | caffe、docker、sop、build、runtime、verification |
 | [DevContainer 变体构建与 CI 流水线操作手册](../operations/devcontainer-ci-build-manual.md) |  | 2026-08-07 | devcontainer、docker、ci、github-actions、build、onnx-pytorch、operations |
 | [Discourse论坛自动化方案调研报告](../operations/discourse-api-research.md) |  |  | - |
@@ -99,13 +120,76 @@ title: "分类索引：unknown"
 | [没人帮你杠？四种自己给自己挑错的方法](../quality-assurance/solo-review-methods.md) |  |  | - |
 | [free-llm-api-summary](../tech/free-llm-api-summary.md) |  | 2026-09-10 | 大模型、免费API、Token、LLM、资源汇总 |
 | [index](../tech/index.md) |  |  | - |
+| [llm-unified-api-subscription-guide](../tech/llm-unified-api-subscription-guide.md) |  | 2026-09-22 | 大模型、API、统一管理、订阅、LLM网关、MaaS、合规选型 |
 | [py314t — Python 3.14.6t（free-threading / no-GIL）环境使用说明](../tech/python-314t-conda-env-usage.md) |  |  | - |
+| [EdgeOne Pages 前端部署教程](../tech/edgeone-pages-deploy/index.md) |  |  | edgeone、pages、deploy、frontend、tutorial |
+| [log](../tech/edgeone-pages-deploy/log.md) |  |  | - |
+| [EdgeOne Pages 官方控制台](../tech/edgeone-pages-deploy/concepts/00-overview.md) |  |  | edgeone、pages、hosting、cdn、overview |
+| [edgeone CLI 实测输出（v1.2.30+）](../tech/edgeone-pages-deploy/concepts/01-cli-install.md) |  |  | edgeone、cli、npm、install、troubleshooting、windows |
+| [EdgeOne Pages 国际站控制台](../tech/edgeone-pages-deploy/concepts/02-login-auth.md) |  |  | edgeone、login、auth、token、china、global |
+| [edgeone CLI 实测输出（v1.2.30+）](../tech/edgeone-pages-deploy/concepts/03-deploy-static.md) |  |  | edgeone、deploy、static、html、tutorial |
+| [EdgeOne Pages 官方控制台](../tech/edgeone-pages-deploy/concepts/04-deploy-framework.md) |  |  | edgeone、deploy、framework、vite、next、build |
+| [edgeone CLI 实测输出（v1.2.30+）](../tech/edgeone-pages-deploy/concepts/05-deploy-output.md) |  |  | edgeone、deploy-url、project-id、console、domain |
+| [edgeone CLI 实测输出（v1.2.30+）](../tech/edgeone-pages-deploy/concepts/06-troubleshooting.md) |  |  | edgeone、troubleshooting、faq、errors |
+| [index](../tech/edgeone-pages-deploy/concepts/index.md) |  |  | - |
+| [edgeone CLI 实测输出（v1.2.30+）](../tech/edgeone-pages-deploy/examples/00-static-portfolio-full-flow.md) |  |  | edgeone、example、static-site、portfolio、hands-on |
+| [index](../tech/edgeone-pages-deploy/examples/index.md) |  |  | - |
+| [本文件（信源自登记）](../tech/edgeone-pages-deploy/references/00-sources.md) |  |  | edgeone、pages、sources、reference |
+| [index](../tech/edgeone-pages-deploy/references/index.md) |  |  | - |
+| [00-overview](../tech/openeuler-vs-openkylin/concepts/00-overview.md) |  |  | - |
+| [01-positioning-and-scenarios](../tech/openeuler-vs-openkylin/concepts/01-positioning-and-scenarios.md) |  |  | - |
+| [02-governance-and-ecosystem](../tech/openeuler-vs-openkylin/concepts/02-governance-and-ecosystem.md) |  |  | - |
+| [03-release-lifecycle](../tech/openeuler-vs-openkylin/concepts/03-release-lifecycle.md) |  |  | - |
+| [04-technology-stack](../tech/openeuler-vs-openkylin/concepts/04-technology-stack.md) |  |  | - |
+| [05-selection-guide](../tech/openeuler-vs-openkylin/concepts/05-selection-guide.md) |  |  | - |
+| [adversarial-review](../tech/openeuler-vs-openkylin/references/adversarial-review.md) |  |  | - |
+| [source-inventory](../tech/openeuler-vs-openkylin/references/source-inventory.md) |  |  | - |
+| [01-platform-and-repository](../tech/openkylin-docs-wiki/concepts/01-platform-and-repository.md) |  |  | - |
+| [02-release-lifecycle](../tech/openkylin-docs-wiki/concepts/02-release-lifecycle.md) |  |  | - |
+| [03-install-paths](../tech/openkylin-docs-wiki/concepts/03-install-paths.md) |  |  | - |
+| [04-desktop-usage](../tech/openkylin-docs-wiki/concepts/04-desktop-usage.md) |  |  | - |
+| [05-ai-stack](../tech/openkylin-docs-wiki/concepts/05-ai-stack.md) |  |  | - |
+| [06-developer-infrastructure](../tech/openkylin-docs-wiki/concepts/06-developer-infrastructure.md) |  |  | - |
+| [07-community-and-contribution](../tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md) |  |  | - |
+| [index](../tech/openkylin-docs-wiki/concepts/index.md) |  |  | - |
+| [adversarial-review](../tech/openkylin-docs-wiki/references/adversarial-review.md) |  |  | - |
+| [full-catalog](../tech/openkylin-docs-wiki/references/full-catalog.md) |  |  | - |
+| [source-inventory](../tech/openkylin-docs-wiki/references/source-inventory.md) |  |  | - |
+| [01-ip-exposure-and-risk](../tech/public-server-hardening/concepts/01-ip-exposure-and-risk.md) |  |  | - |
+| [02-exposure-survey-and-firewall](../tech/public-server-hardening/concepts/02-exposure-survey-and-firewall.md) |  |  | - |
+| [03-ssh-and-brute-force-defense](../tech/public-server-hardening/concepts/03-ssh-and-brute-force-defense.md) |  |  | - |
+| [04-patching-and-source-hiding](../tech/public-server-hardening/concepts/04-patching-and-source-hiding.md) |  |  | - |
+| [05-web-service-hardening](../tech/public-server-hardening/concepts/05-web-service-hardening.md) |  |  | - |
+| [06-least-privilege-and-isolation](../tech/public-server-hardening/concepts/06-least-privilege-and-isolation.md) |  |  | - |
+| [07-monitoring-backup-and-resilience](../tech/public-server-hardening/concepts/07-monitoring-backup-and-resilience.md) |  |  | - |
+| [08-executive-briefing](../tech/public-server-hardening/concepts/08-executive-briefing.md) |  |  | - |
+| [index](../tech/public-server-hardening/concepts/index.md) |  |  | - |
+| [adversarial-review](../tech/public-server-hardening/references/adversarial-review.md) |  |  | - |
+| [source-inventory](../tech/public-server-hardening/references/source-inventory.md) |  |  | - |
+| [01-landscape-and-taxonomy](../tech/python-agent-harness/concepts/01-landscape-and-taxonomy.md) |  |  | - |
+| [02-harness-anatomy](../tech/python-agent-harness/concepts/02-harness-anatomy.md) |  |  | - |
+| [03-framework-catalog](../tech/python-agent-harness/concepts/03-framework-catalog.md) |  |  | - |
+| [04-coding-agent-track](../tech/python-agent-harness/concepts/04-coding-agent-track.md) |  |  | - |
+| [05-selection-pattern](../tech/python-agent-harness/concepts/05-selection-pattern.md) |  |  | - |
+| [adversarial-review](../tech/python-agent-harness/references/adversarial-review.md) |  |  | - |
+| [source-inventory](../tech/python-agent-harness/references/source-inventory.md) |  |  | - |
 | [index](../tech/python-rust-comparison/index.md) |  |  | - |
+| [01-product-and-positioning](../tech/quantum-secret-messaging/concepts/01-product-and-positioning.md) |  |  | - |
+| [02-evolution-timeline](../tech/quantum-secret-messaging/concepts/02-evolution-timeline.md) |  |  | - |
+| [03-qkd-pqc-architecture](../tech/quantum-secret-messaging/concepts/03-qkd-pqc-architecture.md) |  |  | - |
+| [04-quantum-infrastructure](../tech/quantum-secret-messaging/concepts/04-quantum-infrastructure.md) |  |  | - |
+| [05-security-boundaries](../tech/quantum-secret-messaging/concepts/05-security-boundaries.md) |  |  | - |
+| [06-adoption-pattern](../tech/quantum-secret-messaging/concepts/06-adoption-pattern.md) |  |  | - |
+| [adversarial-review](../tech/quantum-secret-messaging/references/adversarial-review.md) |  |  | - |
+| [source-inventory](../tech/quantum-secret-messaging/references/source-inventory.md) |  |  | - |
 | [index](../tech/tvm-ffi-wiki/index.md) |  |  | - |
 | [index](../templates/index.md) |  |  | - |
 | [knowledge-entry-template](../templates/knowledge-entry-template.md) |  |  | - |
+| [TRAE 生态特性周报（2026-09-21）](../trae-feature-watch/2026-09-21-trae-feature-watch.md) |  | 2026-09-21 | - |
+| [TRAE 生态特性周报（2026-10-01）](../trae-feature-watch/2026-10-01-trae-feature-watch.md) |  | 2026-10-01 | - |
+| [TRAE 生态特性监测](../trae-feature-watch/index.md) |  |  | - |
 | [index](../troubleshooting/index.md) |  |  | - |
 
 ---
 
-*索引自动生成于 2026-09-11 16:52:20*
+*索引自动生成于 2026-10-07 19:07:31*

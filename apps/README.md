@@ -101,6 +101,7 @@ apps/<group>/<app-name>/
 | [wechat-mp-archiver](dev-tools/wechat-mp-archiver/README.md) | 微信公众号全量内容归档工具（采集服务 + 离线归档/RAG/报表） |
 | [zhihu-checkin-hub](dev-tools/zhihu-checkin-hub/README.md) | 知乎打卡工作台（本地追踪/打卡 + 发布前固定门 + 浏览器半自动发布；零数据库、无 AI、无凭证） |
 | [openkylin-wsl-devkit](dev-tools/openkylin-wsl-devkit/README.md) | openKylin WSL 开发工具包（以 WSL 为切入点：发行版管理/环境验收/deb+dput 脚手架/知识库参考；零第三方依赖，`okw` CLI） |
+| [agent-workspace-starter](dev-tools/agent-workspace-starter/README.md) | 智能体工作区起步套件（对外运营产品）：最小化 .agents 萃取 + 60 分钟教程 + 规格驱动演练 + 零依赖自检脚本 |
 | camera-power-controller | 摄像头电源控制工具（暂缺 README） |
 
 #### samples/ —— 示例/原型类
@@ -110,6 +111,7 @@ apps/<group>/<app-name>/
 | [cow-demo](samples/cow-demo/README.md) | 零拷贝 COW 读写分离模式 C++ 示例框架 |
 | [short-video-site](samples/short-video-site/README.md) | ReelVibe 短视频网站（AI 全流程开发 Demo） |
 | [designer-portfolio](samples/designer-portfolio/README.md) | 设计师作品集静态网站（纯 HTML/CSS/JS + GSAP，零构建 Demo，首页 + 4 个项目详情页） |
+| [dao-survival-guide](samples/dao-survival-guide/README.md) | 大道极简生存指南（七条判据）交互应用（纯 HTML/CSS/JS 零构建：判牍式七问盖印 + 分层判状 + 最短版本表，源自 OKF 知识包 04） |
 | [serial-camera-controller](samples/serial-camera-controller/README.md) | 串口控制 USB 摄像头抓图/录像（CH340+OpenCV+pyserial） |
 | [samples-retrospective](samples/samples-retrospective/README.md) | samples 区复盘与经验沉淀 |
 | zleap-workspace-first-prototype | 工作区首个原型（多模型路由，暂缺 README） |

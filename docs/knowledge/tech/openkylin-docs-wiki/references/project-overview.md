@@ -13,7 +13,7 @@ tags:
   - loongarch
   - china-opensource
 date: "2026-09-29"
-last_updated: "2026-09-29"
+last_updated: "2026-10-08"
 status: "verified"
 author: "SpecWeave Agent（方法论编排 session sc-20260929-openkylin-research）"
 summary: "以七概念方法论（R→I→E→V，standard）全面调研 openKylin：62 条多源事实（2022 社区成立至 2026-09 openKylin 3.0）、4 条四元组洞察、2 个可迁移模式（根社区—商业发行版双轮 / OS 智能体原生化四级演进）、4 视角对抗审查与采纳修正、与优麒麟/银河麒麟/统信 UOS/openEuler 的版图界定。"
@@ -105,7 +105,7 @@ flowchart LR
 | F-029 | 3.0 搭载 UKUI 4.24：隔空手势（握拳截屏、挥手翻页与音量调节）、全局语音输入、触摸板边缘滑动调节亮度/音量/进度、系统级屏幕朗读、任务栏三岛模式（数据岛、应用岛、设置岛）、动态壁纸 | [S03] |
 | F-030 | 3.0 同源支持 X86、ARM、RISC-V、LoongArch 四架构；支持 RVA23 标准；官方口径称经 RVV 指令优化后 RISC-V 平台 AI 推理 FP32 场景提速 2 至 5 倍、FP16 场景最高 36.5 倍 | [S03][S04] |
 | F-031 | 3.0 下载中心提供 Desktop、Server、WSL（最小镜像 336M）、Desktop WSL、Phytium Pro、RISC-V SpacemiT K3 Server（962M）与 Embedded（4.8G）等镜像；历史版本列表含 openkylin3_0_agentos 镜像 | [S01][S02] |
-| F-032 | 3.0 提供 20 余款覆盖 AI、云计算、大数据场景的 Docker 应用镜像；官方列举适配场景含"灵龙"人形机器人、AI 无人小车、AI 机械臂、主流 AI PC、PocketClaw 便携终端、服务器与工作站 | [S03] |
+| F-032 | 3.0 发布新闻列举"20 余款覆盖 AI、云计算、大数据的 Docker 应用镜像"作为全场景能力覆盖的一部分（与"灵龙"人形机器人、AI 无人小车、AI 机械臂、主流 AI PC、PocketClaw 便携终端、服务器与工作站并列），未声明这些镜像基于 3.0 构建；2026-10-08 复核官方镜像仓列表：共 25 款应用镜像，`okVersion` 字段全部为 2.0，Tag 规则为「应用版本-ok20」，最近更新 2026-07-30，均早于 3.0 发布日（2026-09-07） | [S03][S31] |
 
 ### 2.3 C 组：技术架构与工程体系
 
@@ -308,7 +308,7 @@ flowchart LR
 
 ## 9. 信源清单
 
-> 访问日期均为 2026-09-29。
+> 访问日期均为 2026-09-29（S31 为 2026-10-08 复核追加）。
 
 | 键 | 信源 | URL |
 |---|---|---|
@@ -342,6 +342,7 @@ flowchart LR
 | S28 | 湖南开放大学：一文看懂国产操作系统（2025-12-30） | https://www.hnou.edu.cn/sites/html/jszx/2025_12/30_10/content-29271.html |
 | S29 | 博研咨询：2026 年中国桌面操作系统行业报告（豆丁托管，**低可信、口径矛盾，仅定性参考**） | https://www.docin.com/touch_new/preview_new.do?id=4969353483 |
 | S30 | openKylin 论坛：社区携手平头哥打造 RISC-V 新生态（2023-03） | https://bbs.openkylin.top/t/topic/121586 |
+| S31 | openKylin 官方 Docker 应用镜像仓列表（2026-10-08 全量复核）。数据接口 `GET https://id.openkylin.top/prod-api/docker-images?index=&size=&category=`，响应 `total=31`，按 `name` 去重后共 25 款（alertmanager、atomcode、containerd、cubefs、druid、etcd、fastdfs、flannel、flink、gemini-cli、go、hermes-agent、hbase、hive、kafka、libvirt、mariadb、mmx-cli、nginx、node、postgres、pytorch、qemu、qwen-code、spark）；31 条记录 `okVersion` 全部为 2.0，架构全为 amd64/arm64/riscv64，`updatedAt` 区间 2026-03-20 至 2026-07-30；场景分布 ai 9 / bigdata 6 / cloud 6 / others 5 / database 3 / storage 2；详情页「版本列表」表头字段为 Tag/Currently/Architectures，站内自述「Tag 由其版本信息和基础镜像版本信息组成」并以 `2.6.0-ok20` = "PyTorch 2.6.0 on openKylin 2.0" 为示例，即「openKylin版本」列指该应用镜像所基于的 openKylin 基础镜像版本；详情页 URL 模式 `docker_image.html?name=&version=&category=` | https://www.openkylin.top/support/docker_images.html |
 
 ---
 
