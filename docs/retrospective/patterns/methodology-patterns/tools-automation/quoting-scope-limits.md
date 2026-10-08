@@ -56,10 +56,10 @@ L2 已验证（3次验证实例：2026-07-10 Mermaid列表触发修复 + 跨领�
 
 ```mermaid
 flowchart TD
-    IN["输入文本<br/>节点标签含 1. 编号格式"] --> L1["【层1：语法解析】<br/>作用：识别节点边界<br/>双引号在这里有效"]
-    L1 --> UNIT["语法单元<br/>节点标签文本"]
-    UNIT --> L2["【层2：Markdown渲染】<br/>作用：文本格式化<br/>双引号在这里无效"]
-    L2 --> ERR["触发Markdown有序列表<br/>显示 list 错误"]
+    IN["输入文本 节点标签含列表编号格式"] --> L1["层1 语法解析 识别节点边界 双引号在这里有效"]
+    L1 --> UNIT["语法单元 节点标签文本"]
+    UNIT --> L2["层2 Markdown渲染 文本格式化 双引号在这里无效"]
+    L2 --> ERR["触发Markdown有序列表 显示 list 错误"]
     style L1 fill:#d4edda
     style L2 fill:#f8d7da
     style ERR fill:#f8d7da

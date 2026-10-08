@@ -269,7 +269,8 @@ class TestCheckBackslashN:
         assert len(issues) == 1
         assert issues[0][1] == "error"
         assert "\\n" in issues[0][2]
-        assert "<br/>" in issues[0][2]
+        assert "空格" in issues[0][2]
+        assert "<br/>" not in issues[0][2]
 
     def test_finds_multiple_backslash_n(self):
         issues = common.check_backslash_n("A[Hello\\nWorld\\nTest]", 1)
@@ -296,12 +297,12 @@ class TestFixBackslashN:
     def test_replaces_backslash_n(self):
         text = "A[Hello\\nWorld]"
         fixed = common.fix_backslash_n(text)
-        assert fixed == "A[Hello<br/>World]"
+        assert fixed == "A[Hello World]"
 
     def test_replaces_multiple(self):
         text = "A[Hello\\nWorld\\nTest]"
         fixed = common.fix_backslash_n(text)
-        assert fixed == "A[Hello<br/>World<br/>Test]"
+        assert fixed == "A[Hello World Test]"
 
     def test_preserves_comments(self):
         text = "A --> B %% note with \\n"
@@ -322,7 +323,7 @@ class TestFixBackslashN:
     def test_replaces_in_code_before_comment(self):
         text = "A[Hello\\nWorld] %% with comment"
         fixed = common.fix_backslash_n(text)
-        assert fixed == "A[Hello<br/>World] %% with comment"
+        assert fixed == "A[Hello World] %% with comment"
 
 
 class TestFixEmptyLines:
@@ -426,4 +427,3 @@ class TestStripMindmapShape:
 
     def test_whitespace_stripped(self):
         assert common.strip_mindmap_shape("  ((Root))  ") == "Root"
-

@@ -85,39 +85,40 @@ flowchart LR
 **正确示例：**
 ```mermaid
 flowchart TB
-    S1["①语法结构层"] --> S2["②Subgraph层"]
-    S2 --> S3["③节点文本层"]
+    S1["1 语法结构层"] --> S2["2 Subgraph层"]
+    S2 --> S3["3 节点文本层"]
     START("1：开始") --> CHECK{"判断：条件成立？"}
 ```
 
-**根本原则**：Mermaid 节点文本中不要使用 Markdown 列表语法。需要编号时使用中文冒号（`1：`）、全角句点（`1．`）、圈号数字（`①`）等不触发列表的格式。
+**根本原则**：Mermaid 节点文本中不要使用 Markdown 列表语法。需要编号时使用普通阿拉伯数字加中文冒号（`1：`）或全角句点（`1．`）；不要使用带圈数字，VS Code 预览不支持该字符集。
 
-### 规则 2c：节点换行使用 `<br/>`
+### 规则 2c：节点文本保持单行
 
-Mermaid 节点文本内的换行**统一使用 HTML 的 `<br/>` 标签**，禁止使用 `\n` 转义字符。
+面向 VS Code 预览的 Mermaid 节点与标签文本必须保持单行。需要分隔内容时使用空格；禁止使用 `<br/>` 或 `\n` 换行标记。
 
-**为什么？** `\n` 在 flowchart/stateDiagram 节点中不会被解释为换行（部分渲染器显示为字面文本，部分压缩为单行）；虽然 `\n` 在 sequenceDiagram 的 Note 和消息文本中可以换行，但统一使用 `<br/>` 可以避免记忆上下文差异。
+**为什么？** VS Code 内置预览不支持节点内 HTML 换行标签；`\n` 在不同图表和渲染器中的行为也不一致。统一压平为单行，避免生成的图表随后被兼容性检查拒绝。
 
 **错误示例：**
 ```
 flowchart LR
     A["第一行\n第二行\n第三行"]
+    B["第一行<br/>第二行"]
 ```
 
 **正确示例：**
 ```mermaid
 flowchart LR
-    A["第一行<br/>第二行<br/>第三行"]
+    A["第一行 第二行 第三行"]
 ```
 
 ```mermaid
 sequenceDiagram
     participant A as "开发者"
-    Note over A: 第一行<br/>第二行
-    A->>B: "消息文本<br/>可以换行"
+    Note over A: 第一行 第二行
+    A->>B: "消息文本可以保持单行"
 ```
 
-**记忆口诀**：Mermaid 中换行一律用 `<br/>`，不要用 `\n`。
+**记忆口诀**：Mermaid 文本保持单行，需要分隔时用空格。
 
 ### 规则 3：Subgraph 安全格式
 
@@ -186,10 +187,10 @@ Mermaid 渲染错误存在"分层屏蔽"效应——结构层错误会阻止解�
 
 ```mermaid
 flowchart TB
-    S1["①语法结构层<br/>括号闭合/无空行"] --> S2["②Subgraph层<br/>ID合法/标题格式"]
-    S2 --> S3["③节点文本层<br/>Markdown触发检查"]
-    S3 --> S4["④边标签层<br/>特殊字符引号"]
-    S4 --> S5["⑤Style层<br/>颜色值/样式语法"]
+    S1["1：语法结构层 括号闭合/无空行"] --> S2["2：Subgraph层 ID合法/标题格式"]
+    S2 --> S3["3：节点文本层 Markdown触发检查"]
+    S3 --> S4["4：边标签层 特殊字符引号"]
+    S4 --> S5["5：Style层 颜色值/样式语法"]
     style S1 fill:#d4edda
     style S5 fill:#f8d7da
 ```
@@ -298,14 +299,14 @@ flowchart LR
         RELAY["relay IO中继"]
     end
     WSL_EXE -->|COM| WSLSVC
-    WSL_EXE <-->|5 relay IO中继直连优化| RELAY
+    WSL_EXE <-->|"5 relay IO中继直连优化"| RELAY
 ```
 
 **错误示例（VS Code 中会渲染失败）**：
 ```
 flowchart LR
-    A["用户输入<br/>wslc/wsl命令"] --> B["CoreMain 初始化<br/>CoInitialize"]
-    WSLSVC <-->|"hvsocket⑤<br/>直接IO中继<br/>【性能优化】"| RELAY
+    A["用户输入 wslc/wsl命令"] --> B["CoreMain 初始化 CoInitialize"]
+    WSLSVC <-->|"hvsocket 5 直接IO中继 性能优化"| RELAY
 ```
 
 **实践原则**：
@@ -395,7 +396,7 @@ python .agents/scripts/check-links.py --path <产物目录>
 - [ ] 代码块内无任何空行
 - [ ] 含中文/特殊字符/空格的节点文本已用双引号包裹
 - [ ] 节点文本无「数字.空格」「- 空格」「* 空格」等列表触发模式
-- [ ] 节点内换行统一使用 `<br/>`，未使用 `\n`
+- [ ] Mermaid 节点与标签文本保持单行，需要分隔时使用空格
 - [ ] Subgraph 使用 `ID ["标题"]` 格式，ID 为纯英文
 - [ ] 边标签使用 `-->|"标签"|` 格式（中文/特殊字符加引号）
 - [ ] participant 别名含中文/空格已加双引号（sequenceDiagram）

@@ -73,7 +73,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/mermaid.toml"
   - 禁止空行
   - 含中文/空格的文本加双引号
   - 避免列表触发字符（- * + 1.）
-  - 换行使用`<br/>`而非`\n`
+  - 节点与标签文本保持单行；需要分隔时用空格，不使用`<br/>`或`\n`
   - subgraph使用`ID ["标题"]`格式
   - 边标签使用`| "标签" |`格式
 - 记录CMD-LOG: CODE_GENERATED

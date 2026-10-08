@@ -31,7 +31,7 @@ apps/
 ├── tests/                 ← 全局测试用例
 ├── docker-images/         ← 容器镜像类应用（7 个）
 ├── ai-agents/             ← AI 应用类（3 个）
-├── dev-tools/             ← 开发工具类（5 个）
+├── dev-tools/             ← 开发工具类（6 个）
 └── samples/               ← 示例/原型类（5 个）
 ```
 
@@ -100,6 +100,7 @@ apps/<group>/<app-name>/
 | [okf-zhihu-publisher](dev-tools/okf-zhihu-publisher/README.md) | OKF 知乎发布器（内容同步发布工具） |
 | [wechat-mp-archiver](dev-tools/wechat-mp-archiver/README.md) | 微信公众号全量内容归档工具（采集服务 + 离线归档/RAG/报表） |
 | [zhihu-checkin-hub](dev-tools/zhihu-checkin-hub/README.md) | 知乎打卡工作台（本地追踪/打卡 + 发布前固定门 + 浏览器半自动发布；零数据库、无 AI、无凭证） |
+| [openkylin-wsl-devkit](dev-tools/openkylin-wsl-devkit/README.md) | openKylin WSL 开发工具包（以 WSL 为切入点：发行版管理/环境验收/deb+dput 脚手架/知识库参考；零第三方依赖，`okw` CLI） |
 | camera-power-controller | 摄像头电源控制工具（暂缺 README） |
 
 #### samples/ —— 示例/原型类
@@ -129,6 +130,7 @@ apps/<group>/<app-name>/
 | `inurl-byok-token-hub/` | BYOK 统一令牌枢纽复刻：E2EE 密钥保险库 + 逻辑别名路由 + 本地三协议代理 + 用量计费。 | [README.md](inurl-byok-token-hub/README.md) |
 | `samples/` | samples 应用 | `samples/`（暂无 README） |
 | `tests/` | tests 应用 | `tests/`（暂无 README） |
+| `travel-planner/` | 本地单用户 Web 应用：多行程管理、每日行程编排、预算跟踪、打包清单、JSON 导入导出，以及可选的 **BYOK AI 行程草稿生成**（任意 Ope... | [README.md](travel-planner/README.md) |
 
 <!-- APPS_TABLE_END -->
 

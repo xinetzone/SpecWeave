@@ -12,6 +12,7 @@ references/index
 log
 methodology-analysis-report
 reuse-and-generalization
+travel/nanxun-national-day-2026
 ```
 
 :::{note}

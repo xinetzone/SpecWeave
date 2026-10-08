@@ -1,0 +1,5 @@
+id = "low-risk-wontfix-closure-gate"
+title = "审查低危问题「登记不修」闭环门"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+date = "2026-10-01"
+version = "1.0"

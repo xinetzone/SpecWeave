@@ -17,6 +17,8 @@
   python repo-check.py gitignore              # 仅检查 .gitignore
   python repo-check.py vendor --fix           # 修复 vendor 目录缺失文件
   python repo-check.py mermaid --fix          # 自动修复 Mermaid 语法问题
+  python repo-check.py mermaid --baseline <file>  # 与历史基线比较
+  python repo-check.py mermaid --create-baseline <file> --revision HEAD  # 从提交创建基线
   python repo-check.py filename --staged      # 仅检查暂存区文件名
   python repo-check.py roles --json           # JSON 格式输出角色权限
 """
@@ -87,6 +89,11 @@ def build_parser() -> argparse.ArgumentParser:
     p_m.add_argument("--fix", action="store_true", help="自动修复可修复问题")
     p_m.add_argument("--dry-run", action="store_true", help="预览修复效果但不写入文件")
     p_m.add_argument("--debug", action="store_true", help="输出详细调试日志（用于排查边界情况）")
+    mermaid_mode = p_m.add_mutually_exclusive_group()
+    mermaid_mode.add_argument("--baseline", type=str, default=None, help="与指定历史基线比较")
+    mermaid_mode.add_argument("--create-baseline", type=str, default=None, help="从指定提交创建初始基线")
+    mermaid_mode.add_argument("--prune-baseline", type=str, default=None, help="显式移除或缩减已修复的基线项")
+    p_m.add_argument("--revision", type=str, default=None, help="创建基线所依据的 Git 提交")
     _add_json_arg(p_m)
 
     # --- filename ---
@@ -103,6 +110,12 @@ def build_parser() -> argparse.ArgumentParser:
     # --- all ---
     p_all = subparsers.add_parser("all", help="按 CI 顺序执行所有检查")
     p_all.add_argument("--path", type=str, default=None, help="指定项目根目录路径")
+    p_all.add_argument(
+        "--mermaid-baseline",
+        type=str,
+        default=None,
+        help="指定 CI 使用的 Mermaid 历史基线（默认仓库内置基线）",
+    )
 
     return parser
 
@@ -123,6 +136,14 @@ def run_all(project_root: Path, args) -> int:
         sub_args.staged = False
         sub_args.json = False
         sub_args.deep = False
+        sub_args.baseline = None
+        sub_args.create_baseline = None
+        sub_args.prune_baseline = None
+        sub_args.revision = None
+        if cmd_name == "mermaid":
+            sub_args.baseline = getattr(args, "mermaid_baseline", None) or str(
+                project_root / ".agents" / "scripts" / "data" / "mermaid-baseline.json"
+            )
         ret = module.run(project_root, sub_args)
         if ret != 0:
             overall = 1
@@ -142,7 +163,20 @@ def main() -> int:
 
     project_root = resolve_project_root(__file__)
     if getattr(args, "path", None):
-        project_root = Path(args.path).resolve()
+        if args.command == "mermaid":
+            requested_path = Path(args.path)
+            check_root = (
+                requested_path
+                if requested_path.is_absolute()
+                else project_root / requested_path
+            ).resolve()
+            try:
+                check_root.relative_to(project_root)
+            except ValueError:
+                project_root = check_root
+            args.path = str(check_root)
+        else:
+            project_root = Path(args.path).resolve()
 
     if args.command is None or args.command == "all":
         return run_all(project_root, args)
@@ -163,4 +197,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-

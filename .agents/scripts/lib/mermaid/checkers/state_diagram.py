@@ -6,7 +6,14 @@ enforce_python310()
 import re
 from typing import List, Tuple
 
-from ..common import CHINESE_CHARS_RE, state_text_needs_quotes, check_list_trigger, strip_inline_comment, has_list_trigger
+from ..common import (
+    CHINESE_CHARS_RE,
+    MermaidIssue,
+    state_text_needs_quotes,
+    check_list_trigger,
+    strip_inline_comment,
+    has_list_trigger,
+)
 from .base import BaseDiagramChecker
 
 
@@ -38,8 +45,12 @@ class StateDiagramChecker(BaseDiagramChecker):
             lb = block_text[:m.start()].count("\n") + 1
             needs_q = state_text_needs_quotes(label)
             if needs_q:
-                issues.append((start_line + lb - 1, "error",
-                              f'state 描述「{label[:20]}」含空格/特殊字符但未加双引号'))
+                issues.append(MermaidIssue(
+                    start_line + lb - 1,
+                    "error",
+                    f'state 描述「{label[:20]}」含空格/特殊字符但未加双引号',
+                    rule_id="mermaid.state.unquoted_state_description",
+                ))
             w = check_list_trigger(label, lb - 1, start_line, 'state描述')
             if w:
                 issues.append(w)
@@ -49,8 +60,12 @@ class StateDiagramChecker(BaseDiagramChecker):
             lb = block_text[:m.start()].count("\n") + 1
             needs_q = state_text_needs_quotes(note_text)
             if needs_q:
-                issues.append((start_line + lb - 1, "error",
-                              f'note 文本「{note_text[:20]}」含空格/特殊字符但未加双引号'))
+                issues.append(MermaidIssue(
+                    start_line + lb - 1,
+                    "error",
+                    f'note 文本「{note_text[:20]}」含空格/特殊字符但未加双引号',
+                    rule_id="mermaid.state.unquoted_note_text",
+                ))
             w = check_list_trigger(note_text, lb - 1, start_line, 'note文本')
             if w:
                 issues.append(w)
@@ -96,8 +111,12 @@ class StateDiagramChecker(BaseDiagramChecker):
                         if w:
                             issues.append(w)
                 elif needs_q:
-                    issues.append((start_line + lb - 1, "error",
-                                  f'state ID「{sid[:20]}」含空格/特殊字符，应使用 state "名称" as EN_ID 格式'))
+                    issues.append(MermaidIssue(
+                        start_line + lb - 1,
+                        "error",
+                        f'state ID「{sid[:20]}」含空格/特殊字符，应使用 state "名称" as EN_ID 格式',
+                        rule_id="mermaid.state.unquoted_state_id",
+                    ))
                 continue
 
             if self.note_block_pat.match(stripped):
@@ -115,8 +134,12 @@ class StateDiagramChecker(BaseDiagramChecker):
                             continue
                         needs_q = state_text_needs_quotes(stk)
                         if needs_q:
-                            issues.append((start_line + lb - 1, "error",
-                                          f'状态名「{stk[:20]}」含空格/特殊字符但未加双引号'))
+                            issues.append(MermaidIssue(
+                                start_line + lb - 1,
+                                "error",
+                                f'状态名「{stk[:20]}」含空格/特殊字符但未加双引号',
+                                rule_id="mermaid.state.unquoted_transition_state",
+                            ))
                         elif has_list_trigger(stk):
                             w = check_list_trigger(stk, i, start_line, '状态名')
                             if w:
@@ -124,4 +147,3 @@ class StateDiagramChecker(BaseDiagramChecker):
                 continue
 
         return issues
-

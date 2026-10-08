@@ -40,7 +40,7 @@ Mermaid相关资产，包括：
 | **禁空行** | 代码块内禁止空行，空行会导致部分渲染器解析中断 |
 | **文加引** | 含中文、空格、特殊字符（@#≥≤+）的文本必须用双引号包裹 |
 | **避列表** | 文本不要以列表标记（- * + 1.）开头，会触发Markdown列表解析 |
-| **换用br** | 文本内换行使用`<br/>`而非`\n` |
+| **保单行** | 节点与标签文本保持单行，需要分隔时用空格，不使用`<br/>`或`\n` |
 | **sub安格** | subgraph使用`subgraph EN_ID ["中文标题"]`格式，禁止裸中文ID |
 | **边引对** | 边标签使用`-->| "标签" |`格式，中文标签必须加引号 |
 
@@ -60,12 +60,12 @@ Mermaid相关资产，包括：
 
 ```mermaid
 flowchart TD
-    A["步骤1：评估复杂度<br/>节点<10、单图层？"] --> B["步骤2：选择模板<br/>从templates/起步"]
-    B --> C["步骤3：编写代码<br/>遵循安全编码六规则"]
-    C --> D["步骤4：自检<br/>check-mermaid.py"]
+    A["步骤1：评估复杂度 节点少于10且单图层？"] --> B["步骤2：选择模板 从templates起步"]
+    B --> C["步骤3：编写代码 遵循安全编码六规则"]
+    C --> D["步骤4：自检 check-mermaid.py"]
     D --> E{"检查通过?"}
-    E -->|"是"| F["步骤5：交付<br/>插入目标文档"]
-    E -->|"否"| G["步骤4.1：--fix自动修复<br/>+手动修复"]
+    E -->|"是"| F["步骤5：交付 插入目标文档"]
+    E -->|"否"| G["步骤4.1：--fix自动修复并手动修复"]
     G --> D
 ```
 
@@ -77,15 +77,15 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A["S0：orchestrator触发协作<br/>评估复杂度→确认需团队协作"] --> B["S1：architect设计<br/>图表类型选择→结构设计→节点关系梳理"]
-    B --> C["S2：developer编码<br/>基于模板→编写代码→--fix自动修复"]
-    C --> D["S3：reviewer审查<br/>语法规范→安全编码规则→引用链接"]
+    A["S0：orchestrator触发协作 评估复杂度并确认团队协作"] --> B["S1：architect设计 图表类型与节点关系"]
+    B --> C["S2：developer编码 基于模板编写并自动修复"]
+    C --> D["S3：reviewer审查 语法规范 安全规则与链接"]
     D --> E{"审查通过?"}
     E -->|"否"| C
-    E -->|"是"| F["S4：tester渲染验证<br/>IDE/GitHub/飞书多环境测试"]
+    E -->|"是"| F["S4：tester渲染验证 IDE/GitHub/飞书"]
     F --> G{"渲染正确?"}
     G -->|"否"| C
-    G -->|"是"| H["S5：orchestrator交付<br/>插入文档→更新索引"]
+    G -->|"是"| H["S5：orchestrator交付 插入文档并更新索引"]
 ```
 
 参与角色：全团队4角色+orchestrator协调
@@ -96,12 +96,12 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A["步骤1：developer执行扫描<br/>check-mermaid.py --path . --fix"] --> B["步骤2：reviewer审核<br/>检查修复结果，确认无过度修复"]
+    A["步骤1：developer执行扫描 check-mermaid.py --path . --fix"] --> B["步骤2：reviewer审核修复结果并确认无过度修复"]
     B --> C{"有手动修复?"}
-    C -->|"是"| D["步骤2.1：developer手动修复<br/>无法自动修复的error级问题"]
+    C -->|"是"| D["步骤2.1：developer手动修复剩余错误"]
     D --> B
-    C -->|"否"| E["步骤3：tester验证<br/>抽样验证修复后渲染正确"]
-    E --> F["步骤4：提交修复<br/>原子提交，记录修复统计"]
+    C -->|"否"| E["步骤3：tester验证修复后渲染"]
+    E --> F["步骤4：提交修复 原子提交并记录统计"]
 ```
 
 ## 合规检查
@@ -109,7 +109,7 @@ flowchart TD
 | 工具 | 命令 | 检查内容 |
 |---|---|---|
 | Mermaid语法检查 | `python .agents/scripts/check-mermaid.py` | 空行、引号、列表触发、换行符等 |
-| Mermaid自动修复 | `python .agents/scripts/check-mermaid.py --fix` | 空行删除、引号补全、\n→<br/> |
+| Mermaid自动修复 | `python .agents/scripts/check-mermaid.py --fix` | 空行删除、引号补全、`\n` 压平为空格 |
 | 链接有效性检查 | `python .agents/scripts/check-links.py` | 文档间引用链接有效性 |
 | Skill质量检查 | `python .agents/scripts/check-skill-quality.py --path .agents/skills/mermaid-cmd/` | mermaid-cmd Skill五要素合规 |
 

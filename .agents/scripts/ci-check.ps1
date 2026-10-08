@@ -111,7 +111,7 @@ $totalSteps = 22
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 Write-Host "[1/$totalSteps] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)..." -ForegroundColor Yellow
-python "$root\.agents\scripts\repo-check.py" all
+python "$root\.agents\scripts\repo-check.py" all --mermaid-baseline "$root\.agents\scripts\data\mermaid-baseline.json"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: repo compliance check failed" -ForegroundColor Red
     exit 1

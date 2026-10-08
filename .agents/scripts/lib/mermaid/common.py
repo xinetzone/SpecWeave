@@ -18,6 +18,15 @@ SPECIAL_CHARS = "@#≥≤+"
 LIST_TRIGGER_RE = re.compile(r'^[-*+]\s|^\d+[.．、]\s')
 
 
+class MermaidIssue(tuple):
+    """Three-field issue tuple carrying a stable rule ID for baseline tracking."""
+
+    def __new__(cls, line: int, level: str, message: str, *, rule_id: str):
+        issue = super().__new__(cls, (line, level, message))
+        issue.rule_id = rule_id
+        return issue
+
+
 def detect_diagram_type(block_text: str) -> str:
     """检测 Mermaid 代码块的图表类型。"""
     first_line = block_text.strip().split("\n")[0].strip()
@@ -89,7 +98,12 @@ def check_empty_lines(block_text: str, start_line: int) -> List[Tuple[int, str, 
     """检查代码块中的空行问题。"""
     issues = []
     if "\n\n" in block_text or "\n \n" in block_text:
-        issues.append((start_line, "error", "Mermaid 代码块内存在空行，可能导致解析中断"))
+        issues.append(MermaidIssue(
+            start_line,
+            "error",
+            "Mermaid 代码块内存在空行，可能导致解析中断",
+            rule_id="mermaid.core.blank_line",
+        ))
     return issues
 
 
@@ -105,14 +119,18 @@ def check_backslash_n(block_text: str, start_line: int) -> List[Tuple[int, str, 
             idx = code_part.find("\\n", j)
             if idx == -1:
                 break
-            issues.append((start_line + i, "error",
-                          f'节点/标签文本中使用了 \\n 换行符，应使用 <br/> 而非 \\n'))
+            issues.append(MermaidIssue(
+                start_line + i,
+                "error",
+                '节点/标签文本中使用了 \\n 换行符，应替换为空格以保持单行',
+                rule_id="mermaid.core.backslash_newline",
+            ))
             j = idx + 2
     return issues
 
 
 def fix_backslash_n(text: str) -> str:
-    """修复代码块中的 \\n 换行符为 <br/>。"""
+    """将代码块中的 \\n 换行符压平为空格。"""
     lines = text.split("\n")
     result = []
     for line in lines:
@@ -122,9 +140,9 @@ def fix_backslash_n(text: str) -> str:
             continue
         if "%%" in line:
             code, comment = line.split("%%", 1)
-            result.append(code.replace("\\n", "<br/>") + "%%" + comment)
+            result.append(code.replace("\\n", " ") + "%%" + comment)
         else:
-            result.append(line.replace("\\n", "<br/>"))
+            result.append(line.replace("\\n", " "))
     return "\n".join(result)
 
 
@@ -173,4 +191,3 @@ def strip_mindmap_shape(text: str) -> str:
         if m:
             return m.group(grp)
     return t
-

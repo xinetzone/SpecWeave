@@ -14,11 +14,23 @@ from python310_version_check import enforce_python310
 enforce_python310()
 
 import argparse
+import importlib.util
+import json
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
 
 from lib.checks import mermaid as mm
+from lib.mermaid.baseline import _aggregate_findings, collect_findings, write_baseline
+
+_repo_check_path = Path(__file__).resolve().parents[1] / "repo-check.py"
+_repo_check_spec = importlib.util.spec_from_file_location(
+    "repo_check_cli", _repo_check_path
+)
+repo_check_cli = importlib.util.module_from_spec(_repo_check_spec)
+_repo_check_spec.loader.exec_module(repo_check_cli)
 
 
 @pytest.fixture
@@ -71,6 +83,33 @@ class TestFindMdFiles:
         assert "lib.md" not in names
         assert "cache.md" not in names
 
+    def test_prunes_excluded_directories_before_inspecting_markdown(
+        self, tmp_path, monkeypatch
+    ):
+        from lib.mermaid.scanner import FileScanner
+
+        excluded_file = tmp_path / "vendor" / "lib.md"
+        excluded_file.parent.mkdir()
+        excluded_file.write_text("excluded", encoding="utf-8")
+        visible_file = tmp_path / "docs" / "guide.md"
+        visible_file.parent.mkdir()
+        visible_file.write_text("visible", encoding="utf-8")
+
+        scanner = FileScanner(tmp_path, set())
+        inspected = []
+        original_should_include = scanner._should_include
+
+        def record_inspected(path):
+            inspected.append(path)
+            return original_should_include(path)
+
+        monkeypatch.setattr(scanner, "_should_include", record_inspected)
+
+        files = scanner.scan()
+
+        assert visible_file in files
+        assert excluded_file not in inspected
+
     def test_excludes_custom_dirs(self, tmp_path):
         (tmp_path / "doc.md").write_text("a", encoding="utf-8")
         (tmp_path / "build").mkdir()
@@ -96,6 +135,20 @@ class TestFindMdFiles:
 
         names = sorted(f.name for f in files)
         assert names == ["doc.md"]
+
+    def test_excludes_git_ignored_markdown_but_keeps_untracked_files(self, tmp_path):
+        subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+        (tmp_path / ".gitignore").write_text("ignored/\n", encoding="utf-8")
+        (tmp_path / "ignored").mkdir()
+        (tmp_path / "visible").mkdir()
+        (tmp_path / "ignored" / "local.md").write_text("ignored", encoding="utf-8")
+        (tmp_path / "visible" / "new.md").write_text("untracked", encoding="utf-8")
+
+        files = mm._find_md_files(tmp_path, set())
+
+        assert [path.relative_to(tmp_path).as_posix() for path in files] == [
+            "visible/new.md"
+        ]
 
 
 class TestFixFlowchart:
@@ -167,6 +220,65 @@ class TestCheckFlowchart:
         block = "graph TD\n\n    A --> B\n"
         issues = mm._check_flowchart(block, 10)
         assert issues[0][0] == 10
+
+
+class TestVscodeCompatibility:
+    """VS Code 兼容规则的正反例与边界测试。"""
+
+    def test_accepts_compatible_block_and_top_level_direction(self):
+        block = (
+            'flowchart TD\n'
+            '    direction LR\n'
+            '    subgraph group ["模块"]\n'
+            '        A["开始"] --> B["结束"]\n'
+            '    end\n'
+        )
+
+        assert mm._check_vscode_compat(block, 1) == []
+
+    @pytest.mark.parametrize(
+        ("line", "expected_severity", "message"),
+        [
+            ('A["one<br/>two"] --> B', "error", "<br/>"),
+            ('A["① first"] --> B', "error", "带圈数字"),
+            ('A["【first】"] --> B', "error", "中文方括号"),
+            ('A["first"] -->|"→"| B', "warning", "Unicode箭头符号"),
+        ],
+    )
+    def test_reports_vscode_incompatible_syntax(
+        self, line, expected_severity, message
+    ):
+        issues = mm._check_vscode_compat(f"flowchart TD\n    {line}\n", 1)
+
+        assert len(issues) == 1
+        assert issues[0][1] == expected_severity
+        assert message in issues[0][2]
+
+    def test_ignores_vscode_markers_inside_comments(self):
+        block = (
+            'flowchart TD\n'
+            '    %% <br/> ①【 →\n'
+            '    A["clean"] --> B %% <br/> ①【 →\n'
+        )
+
+        assert mm._check_vscode_compat(block, 1) == []
+
+    def test_only_flags_direction_inside_subgraph(self):
+        block = (
+            'flowchart TD\n'
+            '    direction LR\n'
+            '    subgraph group ["模块"]\n'
+            '        direction TB\n'
+            '        A --> B\n'
+            '    end\n'
+            '    direction RL\n'
+        )
+
+        issues = mm._check_vscode_compat(block, 20)
+
+        assert len(issues) == 1
+        assert issues[0][0] == 23
+        assert "subgraph 内嵌套 direction" in issues[0][2]
 
 
 class TestClassDiagram:
@@ -361,6 +473,406 @@ class TestRun:
         out = capsys.readouterr().out
         assert "错误: 1" in out
 
+    def test_baseline_mode_scans_markdown_file_list_once(self, tmp_path, monkeypatch, capsys):
+        (tmp_path / "doc.md").write_text("# No Mermaid diagrams\n", encoding="utf-8")
+        baseline_path = tmp_path / "baseline.json"
+        write_baseline(
+            baseline_path,
+            {"schema_version": 1, "revision": "abc123", "findings": []},
+        )
+        original_find_md_files = mm._find_md_files
+        scan_calls = []
+
+        def count_scans(root, exclude_dirs):
+            scan_calls.append((root, exclude_dirs))
+            return original_find_md_files(root, exclude_dirs)
+
+        monkeypatch.setattr(mm, "_find_md_files", count_scans)
+        args = argparse.Namespace(
+            path=None,
+            exclude=[],
+            fix=False,
+            dry_run=False,
+            json=False,
+            baseline=str(baseline_path),
+        )
+
+        assert mm.run(tmp_path, args) == 0
+        capsys.readouterr()
+        assert len(scan_calls) == 1
+
+    def test_baseline_mode_reports_historical_findings_without_blocking(self, tmp_path, capsys):
+        (tmp_path / "doc.md").write_text(
+            '```mermaid\nflowchart TD\n    A["one<br/>two"] --> B\n```\n',
+            encoding="utf-8",
+        )
+        baseline_path = tmp_path / "baseline.json"
+        write_baseline(
+            baseline_path,
+            {
+                "schema_version": 1,
+                "revision": "abc123",
+                "findings": [
+                    {
+                        "path": "doc.md",
+                        "rule_id": collect_findings(tmp_path)[0]["rule_id"],
+                        "source": 'A["one<br/>two"] --> B',
+                        "count": 1,
+                    }
+                ],
+            },
+        )
+        original_baseline = baseline_path.read_bytes()
+        args = argparse.Namespace(
+            path=None,
+            exclude=[],
+            fix=False,
+            dry_run=False,
+            json=False,
+            baseline=str(baseline_path),
+        )
+
+        result = mm.run(tmp_path, args)
+
+        assert result == 0
+        assert baseline_path.read_bytes() == original_baseline
+        output = capsys.readouterr().out
+        assert "历史债务" in output
+        assert "新增: 0" in output
+
+    def test_baseline_mode_uses_repository_relative_paths_for_scoped_scan(
+        self, tmp_path, capsys
+    ):
+        docs_root = tmp_path / "docs"
+        docs_root.mkdir()
+        doc = docs_root / "guide.md"
+        doc.write_text(
+            '```mermaid\nflowchart TD\n    A["one<br/>two"] --> B\n```\n',
+            encoding="utf-8",
+        )
+        baseline_path = tmp_path / "baseline.json"
+        write_baseline(
+            baseline_path,
+            {
+                "schema_version": 1,
+                "revision": "abc123",
+                "findings": _aggregate_findings(collect_findings(tmp_path)),
+            },
+        )
+        args = argparse.Namespace(
+            path=str(docs_root),
+            exclude=[],
+            fix=False,
+            dry_run=False,
+            json=False,
+            baseline=str(baseline_path),
+        )
+
+        result = mm.run(tmp_path, args)
+
+        assert result == 0
+        output = capsys.readouterr().out
+        assert "已知历史债务: 1" in output
+        assert "新增: 0" in output
+        assert "已消除: 0" in output
+
+    def test_repo_check_main_keeps_repository_relative_path_for_scoped_scan(
+        self, tmp_path, monkeypatch, capsys
+    ):
+        docs_root = tmp_path / "docs"
+        docs_root.mkdir()
+        (docs_root / "guide.md").write_text(
+            '```mermaid\nflowchart TD\n    A["one<br/>two"] --> B\n```\n',
+            encoding="utf-8",
+        )
+        baseline_path = tmp_path / "baseline.json"
+        write_baseline(
+            baseline_path,
+            {
+                "schema_version": 1,
+                "revision": "abc123",
+                "findings": _aggregate_findings(collect_findings(tmp_path)),
+            },
+        )
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.setattr(
+            repo_check_cli, "resolve_project_root", lambda _path: tmp_path
+        )
+        monkeypatch.setattr(
+            sys,
+            "argv",
+            [
+                "repo-check.py",
+                "mermaid",
+                "--path",
+                "docs",
+                "--baseline",
+                str(baseline_path),
+            ],
+        )
+
+        result = repo_check_cli.main()
+        output = capsys.readouterr().out
+
+        assert result == 0
+        assert "已知历史债务: 1" in output
+        assert "新增: 0" in output
+        assert "已消除: 0" in output
+
+    def test_scoped_baseline_scan_only_reports_excess_occurrences(
+        self, tmp_path, capsys
+    ):
+        docs_root = tmp_path / "docs"
+        docs_root.mkdir()
+        doc = docs_root / "guide.md"
+        single_finding = '    A["one<br/>two"] --> B'
+        doc.write_text(
+            f"```mermaid\nflowchart TD\n{single_finding}\n```\n",
+            encoding="utf-8",
+        )
+        baseline_path = tmp_path / "baseline.json"
+        write_baseline(
+            baseline_path,
+            {
+                "schema_version": 1,
+                "revision": "abc123",
+                "findings": _aggregate_findings(collect_findings(tmp_path)),
+            },
+        )
+        doc.write_text(
+            f"```mermaid\nflowchart TD\n{single_finding}\n"
+            f"{single_finding}\n```\n",
+            encoding="utf-8",
+        )
+        args = argparse.Namespace(
+            path=str(docs_root),
+            exclude=[],
+            fix=False,
+            dry_run=False,
+            json=False,
+            baseline=str(baseline_path),
+        )
+
+        result = mm.run(tmp_path, args)
+
+        assert result == 1
+        output = capsys.readouterr().out
+        assert "已知历史债务: 1" in output
+        assert "新增: 1" in output
+        assert "已消除: 0" in output
+
+    def test_baseline_mode_blocks_added_occurrence(self, tmp_path, capsys):
+        (tmp_path / "doc.md").write_text(
+            '```mermaid\nflowchart TD\n    A["one<br/>two"] --> B\n```\n',
+            encoding="utf-8",
+        )
+        baseline_path = tmp_path / "baseline.json"
+        write_baseline(
+            baseline_path,
+            {
+                "schema_version": 1,
+                "revision": "abc123",
+                "findings": [
+                    {
+                        "path": "doc.md",
+                        "rule_id": collect_findings(tmp_path)[0]["rule_id"],
+                        "source": 'A["one<br/>two"] --> B',
+                        "count": 1,
+                    }
+                ],
+            },
+        )
+        (tmp_path / "doc.md").write_text(
+            '```mermaid\nflowchart TD\n'
+            '    A["one<br/>two"] --> B\n'
+            '    A["one<br/>two"] --> C\n'
+            '```\n',
+            encoding="utf-8",
+        )
+        args = argparse.Namespace(
+            path=None,
+            exclude=[],
+            fix=False,
+            dry_run=False,
+            json=False,
+            baseline=str(baseline_path),
+        )
+
+        result = mm.run(tmp_path, args)
+
+        assert result == 1
+        output = capsys.readouterr().out
+        assert "新增: 1" in output
+        assert "doc.md" in output
+
+    def test_baseline_mode_blocks_finding_in_new_markdown_file(self, tmp_path, capsys):
+        (tmp_path / "docs").mkdir()
+        (tmp_path / "docs" / "new.md").write_text(
+            '```mermaid\nflowchart TD\n    A["new<br/>finding"] --> B\n```\n',
+            encoding="utf-8",
+        )
+        baseline_path = tmp_path / "baseline.json"
+        write_baseline(
+            baseline_path,
+            {"schema_version": 1, "revision": "abc123", "findings": []},
+        )
+        args = argparse.Namespace(
+            path=None,
+            exclude=[],
+            fix=False,
+            dry_run=False,
+            json=False,
+            baseline=str(baseline_path),
+        )
+
+        assert mm.run(tmp_path, args) == 1
+        output = capsys.readouterr().out
+        assert "新增: 1" in output
+        assert "docs/new.md" in output
+
+    def test_prune_baseline_cli_only_reduces_registered_findings(self, tmp_path, capsys):
+        current_source = 'A["one<br/>two"] --> B'
+        (tmp_path / "doc.md").write_text(
+            f"```mermaid\nflowchart TD\n    {current_source}\n```\n",
+            encoding="utf-8",
+        )
+        (tmp_path / "new.md").write_text(
+            '```mermaid\nflowchart TD\n    C["new<br/>finding"] --> D\n```\n',
+            encoding="utf-8",
+        )
+        baseline_path = tmp_path / "baseline.json"
+        baseline = {
+            "schema_version": 1,
+            "revision": "abc123",
+            "findings": [
+                {
+                    "path": "doc.md",
+                    "rule_id": collect_findings(tmp_path)[0]["rule_id"],
+                    "source": current_source,
+                    "count": 2,
+                },
+                {
+                    "path": "old.md",
+                    "rule_id": "vscode.br_tag",
+                    "source": 'Z["removed<br/>finding"] --> Y',
+                    "count": 1,
+                },
+            ],
+        }
+        write_baseline(baseline_path, baseline)
+        args = argparse.Namespace(
+            path=None,
+            exclude=[],
+            fix=False,
+            dry_run=False,
+            json=False,
+            prune_baseline=str(baseline_path),
+        )
+
+        result = mm.run(tmp_path, args)
+
+        assert result == 0
+        pruned = json.loads(baseline_path.read_text(encoding="utf-8"))
+        assert pruned["findings"] == [
+            {
+                "path": "doc.md",
+                "rule_id": baseline["findings"][0]["rule_id"],
+                "source": current_source,
+                "count": 1,
+            }
+        ]
+        assert "新违规未加入基线" in capsys.readouterr().out
+
+    def test_prune_baseline_rejects_scoped_scan_without_modifying_baseline(
+        self, tmp_path, capsys
+    ):
+        scoped_root = tmp_path / "subset"
+        scoped_root.mkdir()
+        (scoped_root / "doc.md").write_text(
+            '```mermaid\nflowchart TD\n    A["current<br/>finding"] --> B\n```\n',
+            encoding="utf-8",
+        )
+        baseline_path = tmp_path / "baseline.json"
+        write_baseline(
+            baseline_path,
+            {
+                "schema_version": 1,
+                "revision": "abc123",
+                "findings": [
+                    {
+                        "path": "doc.md",
+                        "rule_id": collect_findings(scoped_root)[0]["rule_id"],
+                        "source": 'A["current<br/>finding"] --> B',
+                        "count": 1,
+                    },
+                    {
+                        "path": "other.md",
+                        "rule_id": "mermaid.known",
+                        "source": "B --> C",
+                        "count": 1,
+                    },
+                ],
+            },
+        )
+        original_baseline = baseline_path.read_bytes()
+        args = argparse.Namespace(
+            path=str(scoped_root),
+            exclude=[],
+            fix=False,
+            dry_run=False,
+            json=False,
+            prune_baseline=str(baseline_path),
+        )
+
+        result = mm.run(tmp_path, args)
+
+        assert result == 1
+        assert baseline_path.read_bytes() == original_baseline
+        assert "只能对仓库根目录执行" in capsys.readouterr().out
+
+    def test_fix_flattens_backslash_newline_without_reintroducing_br(self, tmp_path):
+        md = tmp_path / "doc.md"
+        md.write_text(
+            '```mermaid\nflowchart TD\n    A["one\\ntwo"] --> B\n```\n',
+            encoding="utf-8",
+        )
+
+        issues, fixes, _ = mm._process_file(md, tmp_path, fix=True, dry_run=False)
+
+        assert fixes == 1
+        assert not [issue for issue in issues if issue[1] == "error"]
+        assert 'A["one two"] --> B' in md.read_text(encoding="utf-8")
+        assert "<br/>" not in md.read_text(encoding="utf-8")
+
+    def test_check_mermaid_cli_fixes_backslash_newline_end_to_end(self, tmp_path):
+        md = tmp_path / "doc.md"
+        md.write_text(
+            '```mermaid\nflowchart TD\n    A["one\\ntwo"] --> B\n```\n',
+            encoding="utf-8",
+        )
+        check_mermaid_cli = _repo_check_path.with_name("check-mermaid.py")
+
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(check_mermaid_cli),
+                "--path",
+                str(tmp_path),
+                "--fix",
+            ],
+            cwd=_repo_check_path.parents[2],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            check=False,
+        )
+
+        fixed_content = md.read_text(encoding="utf-8")
+        assert result.returncode == 0, result.stdout + result.stderr
+        assert "所有 Mermaid 代码块检查通过" in result.stdout
+        assert 'A["one two"] --> B' in fixed_content
+        assert "<br/>" not in fixed_content
+
     def test_dry_run_mode(self, tmp_path, args_dryrun, capsys):
         (tmp_path / "doc.md").write_text(
             "# Doc\n\n```mermaid\ngraph TD\n    A --> B\n\n    B --> C\n```\n", encoding="utf-8"
@@ -369,4 +881,3 @@ class TestRun:
         out = capsys.readouterr().out
         assert "dry-run" in out
         assert "预览" in out
-

@@ -6,7 +6,7 @@ enforce_python310()
 import re
 from typing import List, Tuple
 
-from ..common import strip_inline_comment
+from ..common import MermaidIssue, strip_inline_comment
 
 
 class SecurityChecker:
@@ -27,25 +27,44 @@ class SecurityChecker:
             lb = start_line + i
 
             if self.click_pat.match(code_part):
-                issues.append((lb, "error",
-                              "禁止使用 click 事件绑定，存在 JavaScript 回调注入风险"))
+                issues.append(MermaidIssue(
+                    lb,
+                    "error",
+                    "禁止使用 click 事件绑定，存在 JavaScript 回调注入风险",
+                    rule_id="mermaid.security.click_event",
+                ))
 
             tag_m = self.dangerous_tags.search(code_part)
             if tag_m:
-                issues.append((lb, "error",
-                              f"禁止使用危险 HTML 标签 <{tag_m.group(1)}>，存在安全风险"))
+                issues.append(MermaidIssue(
+                    lb,
+                    "error",
+                    f"禁止使用危险 HTML 标签 <{tag_m.group(1)}>，存在安全风险",
+                    rule_id="mermaid.security.dangerous_html_tag",
+                ))
 
             if self.event_handler.search(code_part):
-                issues.append((lb, "error",
-                              "禁止使用 HTML 事件处理器属性（on*），存在 XSS 风险"))
+                issues.append(MermaidIssue(
+                    lb,
+                    "error",
+                    "禁止使用 HTML 事件处理器属性（on*），存在 XSS 风险",
+                    rule_id="mermaid.security.html_event_handler",
+                ))
 
             if self.js_url_pat.search(code_part):
-                issues.append((lb, "error",
-                              '禁止使用 javascript: 协议 URL，存在 XSS 风险'))
+                issues.append(MermaidIssue(
+                    lb,
+                    "error",
+                    '禁止使用 javascript: 协议 URL，存在 XSS 风险',
+                    rule_id="mermaid.security.javascript_url",
+                ))
 
             if self.end_as_node.search(code_part):
-                issues.append((lb, "error",
-                              '禁止使用 "end" 作为节点 ID，与 Mermaid 保留字冲突'))
+                issues.append(MermaidIssue(
+                    lb,
+                    "error",
+                    '禁止使用 "end" 作为节点 ID，与 Mermaid 保留字冲突',
+                    rule_id="mermaid.security.end_reserved_word",
+                ))
 
         return issues
-

@@ -73,6 +73,7 @@ Windows 必需：
 | 原子化收尾 | atomization-finalize-cmd | 导航/看板更新 | docgen-cmd |
 | 主权区治理落盘 | sovereign-rollout-cmd | | |
 | 扫描版书转教程 | scanned-book-to-okf-wiki | | |
+| 榜样人物解读 | role-model-methodology | 人物关联洞察 | role-model-methodology |
 
 > 完整能力索引见 [capability-registry.md](capability-registry.md)（含脚本/协议/工作流/规则/知识库入口）
 

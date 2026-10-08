@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}AI 生成行程草稿{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>{{ m.icon("sparkle") }} AI 生成行程草稿</h1>
+    <div class="trip-meta"><a href="/trips/{{ trip.id }}">« {{ trip.name }}</a></div>
+  </div>
+</div>
+
+{% if not llm_configured %}
+<div class="alert warn">
+  LLM 尚未配置，无法生成。配置方法：编辑数据目录下 <code>config.yaml</code> 的 <code>llm.base_url</code> 与 <code>llm.model</code>，
+  并用环境变量 <code>TRAVEL_PLANNER_API_KEY</code>（或配置文件）提供密钥；任意 OpenAI 兼容端点均可（含本机代理）。
+  配置后重启应用即可，其余功能不受影响。
+</div>
+{% endif %}
+
+<form method="post" action="/trips/{{ trip.id }}/generate" class="panel form" data-loading>
+  {{ m.csrf() }}
+  <div class="field">
+    <label>目的地 <em>*</em></label>
+    <input name="destination" required maxlength="200" value="{{ trip.destination }}">
+  </div>
+  <div class="field-row">
+    <div class="field"><label>开始日期 <em>*</em></label><input type="date" name="start_date" required value="{{ trip.start_date }}"></div>
+    <div class="field"><label>结束日期 <em>*</em></label><input type="date" name="end_date" required value="{{ trip.end_date }}"></div>
+  </div>
+  <div class="field-row">
+    <div class="field"><label>同行人数</label><input name="people" inputmode="numeric" value="2"></div>
+    <div class="field"><label>预算档位</label>
+      <select name="budget_tier">
+        <option value="">不限</option>
+        <option value="经济">经济</option>
+        <option value="舒适" selected>舒适</option>
+        <option value="高端">高端</option>
+      </select>
+    </div>
+  </div>
+  <div class="field">
+    <label>偏好与要求</label>
+    <textarea name="preferences" rows="4" maxlength="2000" placeholder="如：喜欢博物馆与小众巷弄，不吃辣，带老人节奏放缓，Day 3 想看夜景…"></textarea>
+  </div>
+  <div class="form-actions">
+    <a class="btn ghost" href="/trips/{{ trip.id }}">取消</a>
+    <button class="btn primary" type="submit" {{ 'disabled' if not llm_configured }}>{{ m.icon("sparkle") }} 生成草稿（约 30~120 秒）</button>
+  </div>
+  <p class="muted">生成结果仅为草稿：先预览、可剔除微调，点「导入」后才会写入行程。</p>
+</form>
+{% endblock %}

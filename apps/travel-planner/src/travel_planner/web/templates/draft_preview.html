@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}草稿预览{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>{{ m.icon("sparkle") }} 行程草稿预览</h1>
+    <div class="trip-meta"><a href="/trips/{{ trip.id }}">« {{ trip.name }}</a> · 共 {{ draft|length }} 条</div>
+  </div>
+</div>
+<div class="alert info">这是 AI 生成的草稿，<b>尚未写入</b>。取消勾选要剔除的条目、可直接微调字段；点「导入所选条目」后才写入行程（来源标记为 AI）。</div>
+
+<form method="post" action="/trips/{{ trip.id }}/import-draft" class="panel">
+  {{ m.csrf() }}
+  <input type="hidden" name="draft_count" value="{{ draft|length }}">
+  <table class="table draft-table">
+    <thead><tr><th>保留</th><th>Day</th><th>类型</th><th>时间</th><th>标题</th><th>地点</th><th>费用</th><th>备注</th></tr></thead>
+    <tbody>
+      {% for d in draft %}
+      {% set i = loop.index0 %}
+      <tr>
+        <td><input type="checkbox" name="di_{{ i }}_keep" value="1" checked></td>
+        <td><input name="di_{{ i }}_day" value="{{ d.day_index }}" size="3" inputmode="numeric" class="cell-input"></td>
+        <td>
+          <select name="di_{{ i }}_type">
+            {% for t in ITEM_TYPES %}
+            <option value="{{ t }}" {{ 'selected' if d.type == t }}>{{ ITEM_TYPE_LABELS[t] }}</option>
+            {% endfor %}
+          </select>
+        </td>
+        <td>
+          <input name="di_{{ i }}_start_time" value="{{ d.start_time }}" size="6" class="cell-input" placeholder="HH:MM">
+          <span class="time-sep">至</span>
+          <input name="di_{{ i }}_end_time" value="{{ d.end_time }}" size="6" class="cell-input" placeholder="HH:MM">
+        </td>
+        <td><input name="di_{{ i }}_title" value="{{ d.title }}" size="18" class="cell-input"></td>
+        <td><input name="di_{{ i }}_location" value="{{ d.location }}" size="14" class="cell-input"></td>
+        <td><input name="di_{{ i }}_cost" value="{{ fmt_money(d.cost) if d.cost is not none else '' }}" size="7" class="cell-input" inputmode="decimal"></td>
+        <td><input name="di_{{ i }}_notes" value="{{ d.notes }}" size="20" class="cell-input"></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="form-actions">
+    <a class="btn ghost" href="/trips/{{ trip.id }}">取消并丢弃草稿</a>
+    <button class="btn primary" type="submit">导入所选条目</button>
+  </div>
+</form>
+{% endblock %}

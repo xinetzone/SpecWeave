@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}出错了{% endblock %}
+{% block content %}
+<div class="panel error-panel">
+  <h1>{{ m.icon("x", "ic big danger") }} {{ status_code_label|default('出错了') }}</h1>
+  <p class="message">{{ message }}</p>
+  <div class="form-actions">
+    <a class="btn ghost" href="{{ back_url or '/trips' }}">返回</a>
+    {% if retry %}<a class="btn primary" href="{{ back_url or '/trips' }}">返回后重试</a>{% endif %}
+  </div>
+</div>
+{% endblock %}

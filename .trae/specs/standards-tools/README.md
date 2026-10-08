@@ -23,6 +23,7 @@
 | [adjust-vendor-flexloop-governance](adjust-vendor-flexloop-governance/spec.md) | ✅ 完成 | 100% | [.gitmodules](../../../.gitmodules) [.agents/scripts/lib/checks/vendor.py](../../../.agents/scripts/lib/checks/vendor.py) `vendor_sandbox.py` [vendor/VERSION.md](../../../vendor/VERSION.md) | flexloop子模块治理模式调整：从第三方只读转为自有协作子模块，支持main分支跟踪、双模式检查、条件导入沙箱、反向依赖检测、运行时隔离 |
 | [fix-windows-terminal-chinese-encoding](fix-windows-terminal-chinese-encoding/spec.md) | ✅ 完成 | 100% | [.agents/scripts/setup-utf8-env.ps1](../../../.agents/scripts/setup-utf8-env.ps1) [.agents/scripts/check-encoding.ps1](../../../.agents/scripts/check-encoding.ps1) [.agents/scripts/verify-encoding.ps1](../../../.agents/scripts/verify-encoding.ps1) [.agents/scripts/sitecustomize.py](../../../.agents/scripts/sitecustomize.py) [docs/knowledge/operations/windows-terminal-utf8-complete-guide.md](../../../docs/knowledge/operations/windows-terminal-utf8-complete-guide.md) | Windows终端中文编码彻底修复：一键配置脚本、编码诊断/验证工具、PowerShell Profile、CMD AutoRun、Python UTF-8默认配置（sitecustomize.py）、四层防护体系、完整知识库文档 |
 | [establish-mermaid-management-system](establish-mermaid-management-system/spec.md) | ✅ 完成 | 100% | [.agents/commands/mermaid.md](../../../.agents/commands/mermaid.md) [.agents/teams/mermaid-team.md](../../../.agents/teams/mermaid-team.md) [.agents/teams/data/team-mermaid.yaml](../../../.agents/teams/data/team-mermaid.yaml) [.agents/scripts/lib/checks/mermaid.py](../../../.agents/scripts/lib/checks/mermaid.py) | Mermaid图表管理体系：指令集+命令门面Skill+角色能力增强+专项团队，支持classDiagram/erDiagram检查修复，遵循渐进式披露三层架构 |
+| [ratchet-mermaid-ci-historical-debt](ratchet-mermaid-ci-historical-debt/spec.md) | 🔧 进行中 | 0% | [.agents/scripts/lib/mermaid/baseline.py](../../../.agents/scripts/lib/mermaid/baseline.py) [.agents/scripts/data/mermaid-baseline.json](../../../.agents/scripts/data/mermaid-baseline.json) | Mermaid历史债务基线与CI增量门禁：保留严格扫描，CI只阻断新增或恶化违规，支持显式缩减基线 |
 | [markdown-as-interface-research](markdown-as-interface-research/spec.md) | 🔧 进行中 | 56% | [.agents/scripts/mdi/](../../../.agents/scripts/mdi/README.md) [docs/knowledge/mdi-spec-v1.0.md](../../../docs/knowledge/mdi-spec-v1.0.md) | Markdown即接口深度研究：解析器/验证器/代码生成器（Python/TS/OpenAPI/MCP）已完成，测试生成器/版本工具/验证案例/研究报告待完成，支持MyST directives与传统格式双模式 |
 | [add-tuya-ipc-minimal-closed-loop-guide](add-tuya-ipc-minimal-closed-loop-guide/spec.md) | ✅ 完成 | 100% | [docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md](../../../docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md) | 涂鸦Tuya IPC最小闭环跑通路径：端-云-手机全流程步骤、可观测验收标准、依赖关系图、常见问题排查方向 |
 | [migrate-toml-frontmatter-to-yaml](migrate-toml-frontmatter-to-yaml/spec.md) | 📋 待启动 | 0% | [.agents/scripts/migrate-frontmatter.py](../../../.agents/scripts/migrate-frontmatter.py) [.meta/toml/](../../../.meta/toml/README.md) | TOML→YAML frontmatter全面迁移：将833个`+++`TOML文件统一迁移为`---`YAML格式+`x-toml-ref`外部引用，更新frontmatter.py解析库支持x-toml-ref，更新所有依赖脚本，建立备份回滚机制 |
@@ -363,13 +364,14 @@ standards-tools/
 | 39 | [myst-unified-interface-ecosystem](myst-unified-interface-ecosystem/spec.md) | ✓ 完成 | ✓/✗ |
 | 40 | [optimize-trae-project-adaptation](optimize-trae-project-adaptation/spec.md) | ✓ 完成 | ✓/✗ |
 | 41 | [ps1-syntax-crossplatform](ps1-syntax-crossplatform/spec.md) | ✓ 完成 | ✓/✗ |
-| 42 | [refactor-scripts-shared-lib](refactor-scripts-shared-lib/spec.md) | ✓ 完成 | ✓/✗ |
-| 43 | [sensitive-info-sanitization-audit](sensitive-info-sanitization-audit/spec.md) | ✓ 完成 | ✓/✗ |
-| 44 | [setup-npu-tvm-build-env](setup-npu-tvm-build-env/spec.md) | ✓ 完成 | ✓/✗ |
-| 45 | [spec-standards-enhancement](spec-standards-enhancement/spec.md) | ✓ 完成 | ✓/✗ |
-| 46 | [sphinx-config-mystx-extraction](sphinx-config-mystx-extraction/spec.md) | ✓ 完成 | ✓/✗ |
-| 47 | [standardize-file-naming-convention](standardize-file-naming-convention/spec.md) | ✓ 完成 | ✓/✗ |
-| 48 | [update-frontmatter-scripts-compat](update-frontmatter-scripts-compat/spec.md) | ? 待启动 | ✓/✗ |
-| 49 | [update-sunlogin-wiki-mobile-control](update-sunlogin-wiki-mobile-control/spec.md) | ✓ 完成 | ✓/✗ |
+| 42 | [ratchet-mermaid-ci-historical-debt](ratchet-mermaid-ci-historical-debt/spec.md) | ✓ 完成 | ✓✗✗ |
+| 43 | [refactor-scripts-shared-lib](refactor-scripts-shared-lib/spec.md) | ✓ 完成 | ✓/✗ |
+| 44 | [sensitive-info-sanitization-audit](sensitive-info-sanitization-audit/spec.md) | ✓ 完成 | ✓/✗ |
+| 45 | [setup-npu-tvm-build-env](setup-npu-tvm-build-env/spec.md) | ✓ 完成 | ✓/✗ |
+| 46 | [spec-standards-enhancement](spec-standards-enhancement/spec.md) | ✓ 完成 | ✓/✗ |
+| 47 | [sphinx-config-mystx-extraction](sphinx-config-mystx-extraction/spec.md) | ✓ 完成 | ✓/✗ |
+| 48 | [standardize-file-naming-convention](standardize-file-naming-convention/spec.md) | ✓ 完成 | ✓/✗ |
+| 49 | [update-frontmatter-scripts-compat](update-frontmatter-scripts-compat/spec.md) | ? 待启动 | ✓/✗ |
+| 50 | [update-sunlogin-wiki-mobile-control](update-sunlogin-wiki-mobile-control/spec.md) | ✓ 完成 | ✓/✗ |
 
 <!-- THEME_DASHBOARD_END -->

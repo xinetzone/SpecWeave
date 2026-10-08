@@ -1,0 +1,17 @@
+id = "three-as-relation-position"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 5
+reuse_count = 0
+documentation_level = "standard"
+source = "projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/index.md; .agents/skills/dao-san-triads/SKILL.md §8"
+
+[bindings]
+rules = []
+references = [
+  "projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/index.md",
+  "projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/examples/02-zhen-xu-qiu-day5.md",
+  "vendor/flexloop/docs/general/philosophy/engineering/three-as-interface.md",
+]
+skills = [".agents/skills/dao-san-triads/SKILL.md"]
