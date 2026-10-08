@@ -9,7 +9,7 @@ title: "分类索引：best-practices"
 - [返回知识库首页](../README.md)
 - [按标签检索](../tags/README.md)
 
-> 本分片收录 **1** 个子分类，共 **48** 条条目。
+> 本分片收录 **1** 个子分类，共 **49** 条条目。
 
 ## best-practices
 
@@ -35,7 +35,7 @@ title: "分类索引：best-practices"
 | [编译型Python包数据文件生命周期管理](../best-practices/compiled-package-data-file-lifecycle.md) | 基于TVM .rly数据文件缺失修复实战复盘，提炼编译型Python包数据文件的完整生命周期管理方法：编译阶段显式复制、打包阶段完整性验证、运行阶段环境变量设置与文件校验。 | 2026-07-23 | Python、Nuitka、Cython、wheel、data-files、packaging、TVM、relay |
 | [并发代码安全审查与Bug修复闭环指南](../best-practices/concurrent-code-safety-review.md) | 基于多智能体冲突解决机制实现与死锁修复实战复盘，提炼并发模块安全审查六维检查法、调度类模块N-scaling测试矩阵、Bug修复1+N+1闭环公式等5个可复用洞察，提供原子提交前的完整Checklist模板。 | 2026-07-08 | concurrency、deadlock-prevention、code-review、defensive-programming、bug-fix、checklist、tdd |
 | [conda-forge 交叉编译配置完整指南](../best-practices/conda-forge-cross-compilation-guide.md) | conda-forge 交叉编译配置完整调研报告，覆盖从 linux-64 构建 osx-64/osx-arm64/win-64 平台包的完整方案：平台三元组、工具链包名清单、conda_build_config.yaml模板、meta.yaml依赖分离、build.sh交叉编译检测、CMAKE_ARGS变量传递、scikit-build-core适配、Wine运行时测试、常见陷阱与解决方案。 | 2026-07-30 | conda-forge、cross-compilation、conda-build、CMake、scikit-build-core、Docker、Wine、macOS、Windows、toolchain、RPATH |
-| [配置文件放置治理与 .temp/ 临时文件约定](../best-practices/config-file-placement-convention.md) | SpecWeave 项目关键配置文件的标准存放路径、放置决策树、Python 自动加载约定（sitecustomize.py / .pth / PYTHONPATH 关系）、sitecustomize.py 曾被错放根目录的根因分析，以及 .temp/ 临时文件的用途分类、命名规则、保留期与清理机制。 | 2026-07-18 | - |
+| [配置文件放置治理与 .temp/ 临时文件约定](../best-practices/config-file-placement-convention.md) | SpecWeave 项目关键配置文件的标准存放路径、放置决策树、Python 自动加载约定（sitecustomize.py / .pth / PYTHONPATH 关系）、sitecustomize.py 曾被错放根目录的根因分析，以及 .temp/ 临时文件的用途分类、命名规则、保留期、清理机制（含清理死锁说明）与写入自检。 | 2026-09-23 | - |
 | [DAG图变换算法验证最佳实践](../best-practices/dag-graph-transform-verification.md) |  | 2026-08-01 | dag、graph-transform、visualization、verification、caffe、insert-splits、in-place |
 | [DataLoader Pickle 序列化问题诊断 SOP](../best-practices/dataloader-pickle-diagnosis-sop.md) | DataLoader pickle 序列化问题诊断标准流程，整合诊断指南与检查清单精华。5 步流程 + 6 种不可序列化模式 + 3 种修复方案 + 跨启动模式验证矩阵，适用于 Python 3.14 forkserver 兼容性排查。 | 2026-07-23 | Python、pickle、serialization、multiprocessing、DataLoader、diagnosis、SOP、checklist |
 | [目录迁移五步法检查清单](../best-practices/directory-migration-checklist.md) |  | 2026-07-18 | - |
@@ -48,6 +48,7 @@ title: "分类索引：best-practices"
 | [链式pre-commit钩子架构实践指南](../best-practices/git-hook-chain-architecture.md) | 基于敏感信息检测和并发安全检查两个pre-commit钩子的实战经验，总结链式pre-commit钩子架构模式——单Shell入口+Python链式主入口+独立检查模块，解决跨平台维护、检查顺序控制和扩展成本问题。 | 2026-07-08 | git-hooks、pre-commit、architecture、cross-platform、automation |
 | [Git推送被拒绝（fetch first）问题解决指南](../best-practices/git-push-rejected-resolution.md) | 基于SpecWeave项目实际遇到的git push被拒绝问题（远端有本地没有的提交+本地有目录大重构），总结系统化的解决流程——诊断→安全备份→选择合并策略→执行→验证，特别涵盖目录重构场景下rebase失败的处理方案。 | 2026-08-14 | git、push、conflict、merge、rebase、directory-restructure、troubleshooting |
 | [手算梯度已知值验证：Backward测试L1层方法论](../best-practices/hand-computed-gradient-verification.md) |  | 2026-08-03 | testing、backward、gradient、verification、known-values、hand-computed、numpy、test-pattern、caffe-ffi |
+| [英特尔驱动程序和支持助理（Intel DSA）使用指南与老旧电脑驱动升级方案](../best-practices/intel-dsa-driver-update-guide.md) | 系统讲解 Intel DSA 的功能边界、安装使用、故障排查，萃取「生命周期优先诊断」与「分层驱动更新法」两个模式，并给出老旧电脑驱动升级的完整分流方案。 | 2026-09-24 | - |
 | [Mermaid 图表操作指南](../best-practices/mermaid-guide.md) | SpecWeave 项目中 Mermaid 图表的一站式操作手册，涵盖起步模板、安全编码六规则、自动化检查工具详解、渲染问题排查流程和不同图表类型注意事项。 | 2026-06-29 | mermaid、图表、可视化、check-mermaid、安全编码、六规则、模板、ci |
 | [模型编译 config 输入布局核验与修正规范（NCHW/NHWC）](../best-practices/model-config-input-layout-convention.md) | 从 palmDet 模型编译失败修复沉淀的规范：工具链强制按 NCHW 解包输入 shape，config 输入布局必须与模型（Caffe/ONNX）实际布局一致；提供布局判定、修正方案、新模型接入核验检查清单与配套算子转换修复。 | 2026-08-12 | model-compile、config、input-layout、NCHW、NHWC、NV12、onnx2pytorch、tvm、adaround、checklist、caffe、onnx |
 | [模型调用环境变量脱敏模板（.env 字段清单）](../best-practices/model-env-template.md) | 从 chaos/flexloop/models/.env 沉淀的脱敏环境变量模板：列出字段名与用途说明，所有值一律使用占位符，绝不含真实密钥或个人路径。 | 2026-08-07 | env、environment-variable、desensitization、glm、huggingface、zai |
@@ -66,4 +67,4 @@ title: "分类索引：best-practices"
 
 ---
 
-*索引自动生成于 2026-09-11 16:52:20*
+*索引自动生成于 2026-10-07 19:07:31*

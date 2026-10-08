@@ -13,13 +13,16 @@ title: "Categories"
 
 architecture
 best-practices
+cake-cutting-rule
 decisions
 docs
 examples
 knowledge
+mindfulness-positivity
 operations
 platform
 research
+social-relations
 standards
 tech
 troubleshooting
