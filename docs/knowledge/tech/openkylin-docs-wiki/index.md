@@ -264,4 +264,7 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=I1 | event=ROOTCAUSE_FOUND | session=sc-20261008-openkylin-desktop-wsl-install | msg=首登黑屏=XDG_RUNTIME_DIR被unset致KWin冷启动不驻留(非GL/安装) | ctx={"evidence":"4类日志+父进程链","fact":"F-057"}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=C3 | event=FIX_VERIFIED | session=sc-20261008-openkylin-desktop-wsl-install | msg=~/.xsession补环境变量+WM看门狗(备份)，重登进入完整UKUI；新增F-057与§5.1
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20261008-openkylin-desktop-wsl-install | msg=桌面链路服务→交互全通，无遗留未决故障；事实7条(F-051~F-057) | ctx={"gates":["G1","G2","V","G4"]}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=C4 | event=CERT_FIXED | session=sc-20261008-openkylin-desktop-wsl-install | msg=xrdp证书警告根治：重签CN=localhost/SAN覆盖localhost+127.0.0.1(原snakeoil备份)并导入Windows当前用户受信任根，重连直进登录窗；教程§4.1与双镜像§5步骤7同步
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S0 | event=CMD_START | session=sc-20261008-openkylin-wiki-pattern-audit | msg=模式入库质量复核：逆序文档学习法（研究知识区）五步核验（基准重读/覆盖率比对/引用回验/脚本校验/分级清单） | ctx={"scenario":"knowledge","chain":"V-C","sub":"pattern-audit"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20261008-openkylin-wiki-pattern-audit | msg=复核PASS无P0/P1阻断；修复F-1(模式文档V门补计数裁定:7意见/6采纳/1局限)+F-2(tech.md成熟度标签L1→L1-draft)；F-3/F-4仅报告 | ctx={"gates":["V"],"files":2,"findings":{"P2_fixed":1,"P3_fixed":1,"P3_reported":2}}
 ```

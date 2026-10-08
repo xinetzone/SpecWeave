@@ -64,7 +64,7 @@
 | Desktop WSL 镜像 | WSL 内图形桌面 | xrdp 端口 3390 |
 | RISC-V 镜像 | SpacemiT K3 Server/Embedded 等及统一镜像 | 配套烧录工具 |
 | Phytium Pro | 飞腾平台专用 | — |
-| Docker 应用镜像 | AI/云计算/大数据场景 | 3.0 提供 20 余款 |
+| Docker 应用镜像 | AI/云计算/大数据场景 | 官方列举 20 余款（见[同包项目调研 F-032](../references/project-overview.md)）；[镜像仓列表](https://www.openkylin.top/support/docker_images.html)（2026-10-08 复核：共 25 款，全部基于 openKylin 2.0 基础镜像构建，Tag 规则为「应用版本-ok20」，最近更新 2026-07-30；「20 余款」系 3.0 发布新闻对场景能力覆盖的列举，非指基于 3.0 构建） |
 | 衍生版（AgentOS / Claw Box OS / 行业定制） | 智能体与创新硬件形态 | 见[同包项目调研 F-048](../references/project-overview.md) |
 
 > 文档站《版本发布动态》页目前为短索引页，历史发布仅存 SP1 一篇——**版本细节以官网新闻与下载页为准，文档站该板块不完整**。

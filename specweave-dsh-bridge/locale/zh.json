@@ -1,0 +1,4 @@
+{
+  "title": "SpecWeave 工作区入口桥",
+  "description": "进入 SpecWeave 工作区时注入启动协议提醒，并提供任务路由、状态查询与提交前校验能力。"
+}

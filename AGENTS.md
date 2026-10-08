@@ -81,6 +81,7 @@
 | ⚙️ 工具配置 | [.agents/config/](.agents/config/README.md) | discourse 等外部工具配置文件 |
 | 🏗️ 系统架构 | [.agents/systems/](.agents/systems/README.md) | 提示词萃取系统等系统级架构定义 |
 | 📦 复用案例 | [.agents/cases/](.agents/cases/README.md) | agentforge-adoption 等项目复用案例 |
+| 🌉 DeepSeek Harness 入口桥 | [specweave-dsh-bridge/](specweave-dsh-bridge/README.md) | 把 `AGENTS.md` + `.agents/` 接入 dsh 会话入口（启动协议 brief 注入、任务路由、校验命令、`/specweave` 命令）；Host 侧 Cordis 插件，安装走 `plugin_manager install_bundle`，接入说明见 [ACCESS.md](specweave-dsh-bridge/ACCESS.md) |
 
 ## 快速开始：一句话装载
 

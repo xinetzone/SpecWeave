@@ -101,6 +101,7 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | CMD-LOG命令集执行日志规范（5大命令集结构化日志/事件枚举/解析正则） | [rules/cmd-log-specification.md](rules/cmd-log-specification.md) |
 | 能力边界声明 | [capability-boundaries.md](capability-boundaries.md) |
 | 完整开发规范 | [docs/development-standards.md](../docs/tech/references/development-standards.md) |
+| DeepSeek Harness 宿主入口桥（启动协议注入/任务路由/校验命令） | [specweave-dsh-bridge/README.md](../specweave-dsh-bridge/README.md)（dsh Host 侧 Cordis 插件：工作区内按用户消息层注入启动协议 brief，提供 `specweave_route`/`specweave_status`/`specweave_check`/`specweave_protocol` 工具与 `/specweave` 命令；接入指南见 [ACCESS.md](../specweave-dsh-bridge/ACCESS.md)，安装走 `plugin_manager install_bundle`） |
 
 ## 🆕 新增顶层区域标准操作流程（SOP）
 
