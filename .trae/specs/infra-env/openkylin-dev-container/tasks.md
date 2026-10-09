@@ -100,3 +100,20 @@ created: 2026-10-08
 - `localhost/openkylin:3.0`（基底，ID `e828c412099a`）：`.docker-cache/wsl-exports/openKylin-3.0-podman-docker-amd64.tar(.gz)`（gz 351,873,468 B，3.36x）
 - `localhost/openkylin-dev:3.0`（开发容器，ID `fe7b1bb318a6`，openKylin WSL rootful 构建）：`.docker-cache/wsl-exports/openKylin-dev-3.0-podman-docker-amd64.tar(.gz)`（gz 535,665,521 B，3.1x）；manifest RepoTags/Config 校验一致，gzip 解压回读字节数匹配（1,662,016,000 B）
 - 模式复用：wsl-rootfs-oci-image-export（docker-archive + gzip，podman 层未压缩）
+
+## 后续落地（2026-10-09，OQ-1 关闭）
+
+### Task 7: `okw image build/verify` 子命令（OQ-1 后续候选落地）
+- **Status**: `completed`
+- **Priority**: medium
+- **Depends On**: Task 5（规范基线）
+- **Description**:
+  - 新增 `src/okw/image.py`：`build_run`（发行版/WSL/podman 门 → 基镜像本地 exists 或 `--pull-base` → 上下文 Windows 盘符→发行版内 `/tmp/okw-build-<ts>/ctx` 同步 → `podman build --format docker`，OCI 丢 SHELL/HEALTHCHECK 教训）+ `verify_run`（镜像 exists 禁拉 → 静态探针 P1-P8 `--entrypoint /bin/bash` → 后台 `run -d` 等 HEALTHCHECK → 服务探针 SSH/Jupyter/端口/Jupyter HTTP 200 → `rm -f` 清理；`--no-boot` 只做静态）；退出码 0/1/2 对齐 podman 组。
+  - `src/okw/cli.py` 注册 `image` 子命令组（build/verify）；`src/okw/distro.py` 的 `exec_distro` 增 `timeout` 参数（构建长超时 900s）。
+  - **关键实践（wsl.exe argv 透传破坏）**：多行/含引号/$ 探针脚本经 Windows wsl.exe 透传会被重建（假性失败：`id: "devuser": 无此用户`）；定型为 **base64 单 token**（`echo <b64> | base64 -d | bash`）无损传递，静态与服务探针统一采用。
+- **Acceptance Criteria Addressed**: OQ-1（spec Open Questions，非 AC）
+- **Test Requirements**:
+  - `rule` TR-7.1: `python -m pytest tests/test_image.py` 22 用例全过——**PASS**（22 passed；全量 279 passed，总覆盖率 94%，image.py 94%）
+  - `rule` TR-7.2: openKylin WSL 发行版内真实 `okw image verify` 8 项全 PASS——**PASS**（WSL/podman 可用/后端/镜像存在/静态探针 P1-P8/容器健康/服务探针含 Jupyter HTTP 200/清理）
+  - `rule` TR-7.3: 真实 `okw image build --tag smoke-test` 成功——**PASS**（25 步缓存命中 exit 0，产出 ID fe7b1bb318a6 与主镜像同 ID；上下文自动同步 `/mnt/d` → 发行版内 `/tmp/okw-build-*/ctx`）
+- **Notes**: 镜像本身无缺陷——透传破坏导致探针假性失败，经诊断实验（四条调用形态对比 + 手动容器内验证）定位并闭环；与「脚本文件优先」实践等价。ruff 新增文件 0 告警（全项目基线 25 处既有告警未动，遵循原子提交单一职责）。

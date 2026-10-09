@@ -43,6 +43,15 @@ source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#openKylin-开
 
 构建要点：`--format docker`（OCI 格式会静默丢弃 `SHELL`/`HEALTHCHECK` 指令，docker 格式二者生效）；构建日志输出至 `.trae/specs/infra-env/openkylin-dev-container/evidence/`。双环境均已实测通过（2026-10-09）：Windows Podman Machine（podman 5.7.0-rc3）与 openKylin WSL 发行版（rootful podman 5.7.0，首次需 `apt install nftables` 提供 netavark 的 `nft`）均 25 步构建 exit 0。
 
+**okw image 一键封装（推荐，2026-10-09）**：`okw image build` 在发行版内完成构建（默认基镜像 `localhost/openkylin:3.0` 本地 exists 禁拉、上下文自动同步发行版内 `/tmp/okw-build-*/ctx`、`--format docker`），`okw image verify` 完成静态探针 + 全量启动服务/HTTP 验收：
+
+```powershell
+okw image build openKylin-3.0-desktop --tag my-dev
+okw image verify openKylin-3.0-desktop
+```
+
+命令参考见 [02-command-reference.md](02-command-reference.md)「开发容器镜像」。
+
 ## 运行
 
 容器启动必须携带容器契约参数（apps/containers G3 组级契约，**严禁 `--privileged`**）：
@@ -68,9 +77,10 @@ ssh devuser@localhost -p 2222     # 密码：DEV_PASSWORD 或启动日志中的�
 ```powershell
 ./scripts/smoke.ps1    # Windows Podman Machine
 ./scripts/smoke.sh     # Linux / openKylin WSL
+okw image verify openKylin-3.0-desktop    # okw 一键验收（含 Jupyter HTTP 200）
 ```
 
-探针清单：`sshd -t`、jupyter 版本、supervisord 版本、locale `zh_CN.UTF-8`、时区 Asia/Shanghai、devuser uid=1000、subuid 映射、podman 二进制就绪；随后全量启动容器并等待 HEALTHCHECK healthy，检查 sshd/jupyter 进程与 22/8888 端口。
+探针清单：`sshd -t`、jupyter 版本、supervisord 版本、locale `zh_CN.UTF-8`、时区 Asia/Shanghai、devuser uid=1000、subuid 映射、podman 二进制就绪；随后全量启动容器并等待 HEALTHCHECK healthy，检查 sshd/jupyter 进程与 22/8888 端口，并验证 Jupyter HTTP 200（`okw image verify` 全量探针实测通过，2026-10-09）。
 
 ## 已知边界
 

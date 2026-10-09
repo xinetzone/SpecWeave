@@ -48,6 +48,28 @@ okw scaffold dput --openkylin-id <你的ID> [--output ~/.dput.cf]
 
 默认只打印配置；指定 `--output` 才写入文件。上传由开发者自行执行，命令会提示 `dput okbs:~<你的ID>/ppa <source.changes>`；上传需要自行安装 `paramiko` 或 `dput-ng`。
 
+## 开发容器镜像
+
+`okw image` 接管 openKylin 开发容器镜像（`openkylin-dev-container`）的构建与验收，在发行版内以 root 身份执行：
+
+```text
+okw image build <name> [--tag <tag>] [--base-image <镜像>] [--pull-base] [--no-cache] [--context <路径>]
+okw image verify <name> [--image <镜像>] [--no-boot]
+```
+
+`build`：默认基镜像 `localhost/openkylin:3.0` 仅接受本地 exists（禁隐式拉取，`--pull-base` 显式放行）；构建上下文自动同步 Windows 路径→发行版内 `/tmp/okw-build-*/ctx`；`--format docker` 必须（OCI 格式会静默丢弃 `SHELL`/`HEALTHCHECK`）。
+
+`verify`：镜像 exists 禁拉 → 静态探针 P1-P8（sshd/jupyter/supervisord/locale/时区/devuser/subuid/podman 二进制）→ 全量启动等 HEALTHCHECK → 服务探针（SSH/Jupyter 进程、22/8888 端口、Jupyter HTTP 200）→ 清理；`--no-boot` 只做静态。退出码 0 成功 / 1 失败 / 2 前置条件不满足，对齐 podman 组纪律。
+
+示例：
+
+```powershell
+okw image build openKylin-3.0-desktop --tag my-dev
+okw image verify openKylin-3.0-desktop
+```
+
+容器运行契约与镜像详情见 [openKylin 开发容器指南](05-openkylin-dev-container.md)。
+
 ## 知识库参考
 
 ```text
