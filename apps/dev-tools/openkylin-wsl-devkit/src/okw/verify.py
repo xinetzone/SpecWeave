@@ -42,6 +42,22 @@ def _exec_in(name: str, cmd: str) -> distro.CmdResult:
     """在发行版内执行单条命令（wsl -d name -- bash -lc 'cmd'）。"""
     return distro.run_wsl(["-d", name, "--", "/bin/bash", "-lc", cmd])
 
+def _fail_evidence(res: distro.CmdResult, limit: int = 80) -> str:
+    """把发行版内执行失败归一为可判读证据：exit/kind + stderr/stdout 摘录。
+
+    背景：实测故障中 stderr 为空，原实现拼出"读取失败: "空串，零证据无法排障；
+    故优先取 stderr，回退 stdout（WSL 部分错误路径只写一侧），两者皆空则明示"无输出"。
+    """
+    detail = res.stderr.strip() or res.stdout.strip()
+    if detail:
+        return f"exit={res.exit_code} kind={res.kind} {detail[:limit]}"
+    return f"exit={res.exit_code} kind={res.kind} 无输出"
+
+_EXEC_FAIL_NOTE = (
+    "发行版可能未启动或启动失败（Stopped 首启失败常见于 WSL 内存不足 E_UNEXPECTED，"
+    "见 okw ref wsl-troubleshoot）；先手动 wsl -d <name> -- /bin/bash -lc '<本条命令>' 探活"
+)
+
 def verify(name: str, default_before: str | None = None) -> VerifyReport:
     """执行五步验收；单项失败不中断，汇总 PASS/FAIL。"""
     report = VerifyReport(name=name)
@@ -83,7 +99,8 @@ def verify(name: str, default_before: str | None = None) -> VerifyReport:
         ))
     else:
         report.checks.append(CheckResult("os-release", "/etc/os-release 版本与 ID", "cat /etc/os-release",
-                                         "openkylin 发行版且有 VERSION", f"读取失败: {res2.stderr.strip()[:60]}", False))
+                                         "openkylin 发行版且有 VERSION", f"读取失败: {_fail_evidence(res2)}", False,
+                                         note=_EXEC_FAIL_NOTE))
 
     # ③ 默认用户 / UID
     res3 = _exec_in(name, 'echo "user=$(whoami) uid=$(id -u)"')
@@ -102,20 +119,31 @@ def verify(name: str, default_before: str | None = None) -> VerifyReport:
                                              "user=openkylin uid=1000", f"无法解析输出: {res3.stdout.strip()[:60]}", False))
     else:
         report.checks.append(CheckResult("user", "默认用户 / UID", 'echo "user=$(whoami) uid=$(id -u)"',
-                                         "user=openkylin uid=1000", f"执行失败: {res3.stderr.strip()[:60]}", False))
+                                         "user=openkylin uid=1000", f"执行失败: {_fail_evidence(res3)}", False,
+                                         note=_EXEC_FAIL_NOTE))
 
     # ④ wsl.conf：systemd 与默认用户
     res4 = _exec_in(name, "cat /etc/wsl.conf")
-    conf_text = res4.stdout if res4.ok else ""
-    has_user_default = bool(re.search(r"\[user\]", conf_text) and re.search(r"default\s*=", conf_text))
-    has_systemd = bool(re.search(r"\[boot\]", conf_text) and re.search(r"systemd\s*=\s*true", conf_text))
-    report.checks.append(CheckResult(
-        "wsl.conf", "wsl.conf 的 systemd 与默认用户", "cat /etc/wsl.conf",
-        "[boot] systemd=true 且 [user] default= 存在",
-        f"[boot] systemd={'true' if has_systemd else '未启用'} / [user] default={'存在' if has_user_default else '缺失'}",
-        has_systemd and has_user_default,
-        note="systemd 未启用时桌面栈（xrdp 等）可能异常；无 [user] 段则默认 root，需注意",
-    ))
+    if res4.ok:
+        conf_text = res4.stdout
+        has_user_default = bool(re.search(r"\[user\]", conf_text) and re.search(r"default\s*=", conf_text))
+        has_systemd = bool(re.search(r"\[boot\]", conf_text) and re.search(r"systemd\s*=\s*true", conf_text))
+        report.checks.append(CheckResult(
+            "wsl.conf", "wsl.conf 的 systemd 与默认用户", "cat /etc/wsl.conf",
+            "[boot] systemd=true 且 [user] default= 存在",
+            f"[boot] systemd={'true' if has_systemd else '未启用'} / [user] default={'存在' if has_user_default else '缺失'}",
+            has_systemd and has_user_default,
+            note="systemd 未启用时桌面栈（xrdp 等）可能异常；无 [user] 段则默认 root，需注意",
+        ))
+    else:
+        # 读取失败≠配置缺失：原实现在读失败时把解析空串当成"systemd 未启用 / default=缺失"，
+        # 产出假结论；此处如实报读失败并附证据。
+        report.checks.append(CheckResult(
+            "wsl.conf", "wsl.conf 的 systemd 与默认用户", "cat /etc/wsl.conf",
+            "[boot] systemd=true 且 [user] default= 存在",
+            f"wsl.conf 读取失败: {_fail_evidence(res4)}", False,
+            note=_EXEC_FAIL_NOTE,
+        ))
 
     # ⑤ 软件包计数
     res5 = _exec_in(name, "dpkg-query -W | wc -l")
@@ -135,7 +163,8 @@ def verify(name: str, default_before: str | None = None) -> VerifyReport:
         ))
     else:
         report.checks.append(CheckResult("packages", "软件包计数", "dpkg-query -W | wc -l",
-                                         "约 405", f"执行失败: {res5.stderr.strip()[:60]}", False))
+                                         "约 405", f"执行失败: {_fail_evidence(res5)}", False,
+                                         note=_EXEC_FAIL_NOTE))
 
     return report
 

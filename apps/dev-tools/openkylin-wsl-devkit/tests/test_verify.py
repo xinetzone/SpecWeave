@@ -87,3 +87,45 @@ class TestVerify:
         text = verify.format_report(report)
         assert "PASS" in text and "全部通过" in text
         assert "openKylin WSL 环境验收：openKylin-3.0" in text
+
+    def test_exec_failure_reports_evidence(self, fake_run_wsl):
+        # 实测故障：stderr 为空时原实现拼出"读取失败: "空串，零证据；
+        # 修复后必须带 exit/kind 与"无输出"占位，且附探活指引
+        _seed_ok(fake_run_wsl.script)
+        fake_run_wsl.script["cat /etc/os-release"] = make_result(
+            ok=False, exit_code=1, stdout="", stderr="", kind="failed")
+        report = verify.verify("openKylin-3.0")
+        osr = next(c for c in report.checks if c.key == "os-release")
+        assert not osr.passed
+        assert "exit=1" in osr.actual and "kind=failed" in osr.actual
+        assert "无输出" in osr.actual
+        assert "探活" in osr.note
+
+    def test_exec_failure_prefers_stderr_then_stdout(self, fake_run_wsl):
+        _seed_ok(fake_run_wsl.script)
+        fake_run_wsl.script["dpkg-query -W | wc -l"] = make_result(
+            ok=False, exit_code=-1, stdout="boot failed", stderr="", kind="failed")
+        report = verify.verify("openKylin-3.0")
+        pkg = next(c for c in report.checks if c.key == "packages")
+        assert "exit=-1" in pkg.actual and "boot failed" in pkg.actual
+
+    def test_wsl_conf_read_failure_not_reported_as_config_absent(self, fake_run_wsl):
+        # 读取失败≠配置缺失：原实现把读失败解析成"systemd 未启用 / default=缺失"假结论
+        _seed_ok(fake_run_wsl.script)
+        fake_run_wsl.script["cat /etc/wsl.conf"] = make_result(
+            ok=False, exit_code=1, stdout="", stderr="", kind="failed")
+        report = verify.verify("openKylin-3.0")
+        conf = next(c for c in report.checks if c.key == "wsl.conf")
+        assert not conf.passed
+        assert "读取失败" in conf.actual
+        assert "未启用" not in conf.actual and "缺失" not in conf.actual
+        assert "exit=1" in conf.actual
+
+    def test_wsl_conf_empty_file_reports_config_absent(self, fake_run_wsl):
+        # 对照：读成功但文件无配置 → 仍如实报缺失（读失败分支不掩盖真缺失）
+        _seed_ok(fake_run_wsl.script)
+        fake_run_wsl.script["cat /etc/wsl.conf"] = make_result(stdout="")
+        report = verify.verify("openKylin-3.0")
+        conf = next(c for c in report.checks if c.key == "wsl.conf")
+        assert not conf.passed
+        assert "未启用" in conf.actual and "缺失" in conf.actual
