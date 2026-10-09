@@ -72,7 +72,7 @@ created: 2026-10-08
   - openKylin WSL 内补构建：未执行（WSL 发行版内 podman 状态未查；留作环境边界，Task 5/6 可补）
 
 ## Task 5: 文档（应用 README + docs 指南）
-- **Status**: `pending`
+- **Status**: `completed`（2026-10-09）
 - **Priority**: medium
 - **Depends On**: Task 4
 - **Description**:
@@ -80,12 +80,12 @@ created: 2026-10-08
   - 新建 `docs/tech/guides/openkylin-wsl-devkit/05-openkylin-dev-container.md`：用途/构建（双环境）/运行（G3 三必需参数）/验证（冒烟）/边界（不做什么、后续候选）；更新 `index.md` toctree 加入 05 与任务表。
 - **Acceptance Criteria Addressed**: AC-6
 - **Test Requirements**:
-  - `rubric` TR-5.1: 文档质量 1-5，阈值 >= 4（维度与锚点见 spec AC-6）
-  - `rule` TR-5.2: docs 指南文件存在且 index.md toctree 已接入
+  - `rubric` TR-5.1: 文档质量 1-5，阈值 >= 4（维度与锚点见 spec AC-6）——**PASS，得分 5**：五要素齐备（用途/构建双环境/运行 G3 三必需/验证冒烟/已知边界），含冒烟探针清单、构建期故障排查表、与 okw `03-podman-rootless` 指南及模式文档 `wsl-rootfs-oci-image-export` 互链；README 镜像章节同步可复现构建
+  - `rule` TR-5.2: docs 指南文件存在且 index.md toctree 已接入——**PASS**（`05-openkylin-dev-container.md` 已创建；index.md「按任务阅读」表新增行 + toctree 加入 `05-openkylin-dev-container`）
 - **Notes**: 对外可读文档入根 `docs/`，遵循 AGENTS 文档边界。
 
 ## Task 6: 独立审查（review.md）
-- **Status**: `pending`
+- **Status**: `completed`（2026-10-09）
 - **Priority**: high
 - **Depends On**: Task 5
 - **Description**:
@@ -93,5 +93,5 @@ created: 2026-10-08
   - 发现可行动问题固化为 pending issue 回 Implement；全部通过后记 `pass` 并交付。
 - **Acceptance Criteria Addressed**: 全部 AC
 - **Test Requirements**:
-  - `rule` TR-6.1: 每条 AC 有独立证据且 Review 结果 pass
-- **Notes**: 实施者自验不作为最终验收；Review 检查点与发现按 TRAE-spec-mode 模板记录。
+  - `rule` TR-6.1: 每条 AC 有独立证据且 Review 结果 pass——**PASS**：Review R1 全部 6 检查点通过（CP-R1~R6 独立重跑 + CP-U1 得 5），可行动发现 0，advisory 3 条（F-1 AC-4 字面与 ENV-LIMIT、F-2 WSL 内构建未执行、F-3 端口暴露加固，均不阻塞）
+- **Notes**: 实施者自验不作为最终验收；Review 检查点与发现按 TRAE-spec-mode 模板记录。advisory 见 review.md「Review History R1」。
