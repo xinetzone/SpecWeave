@@ -1,0 +1,121 @@
+# openKylin full-featured development container
+# Base: locally imported openKylin 3.0 WSL rootfs (localhost/openkylin:3.0).
+#       NOTE: the official registry tag 'latest' resolves to 2.0 SP1 (nile) LTS,
+#       not 3.0; the WSL import carries the genuine 3.0 innovation release.
+# Services: SSH (22) + Jupyter (8888) + rootless Podman (devuser) managed by supervisord under tini
+#
+# Build notes: keep comments in English to avoid encoding issues.
+# No third-party apt sources are added; only the official openKylin repositories are used.
+
+FROM localhost/openkylin:3.0
+
+ARG DEVUSER=devuser
+ARG DEVUID=1000
+ARG TZ=Asia/Shanghai
+ARG LOCALE=zh_CN.UTF-8
+
+ENV TZ=${TZ} \
+    LANG=${LOCALE} \
+    LANGUAGE=zh_CN:zh \
+    LC_ALL=${LOCALE} \
+    SHELL=/bin/bash \
+    DEVUSER=${DEVUSER} \
+    DEVUID=${DEVUID} \
+    PATH="/usr/local/bin:${PATH}"
+
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+# ---------------------------------------------------------------------------
+# Layer 1: system packages + locale/timezone (lowest change frequency)
+# ---------------------------------------------------------------------------
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        openssh-server \
+        supervisor \
+        tini \
+        procps \
+        locales \
+        ca-certificates \
+        curl \
+        git \
+        vim-tiny \
+        sudo \
+        python3 \
+        python3-pip \
+        python3-venv \
+        podman \
+        uidmap \
+        slirp4netns \
+        fuse-overlayfs \
+        crun \
+        libcap2-bin \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN sed -i "s/^# *${LOCALE} UTF-8/${LOCALE} UTF-8/" /etc/locale.gen \
+    && locale-gen ${LOCALE} \
+    && update-locale LANG=${LOCALE} \
+    && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
+    && echo "${TZ}" > /etc/timezone
+
+# ---------------------------------------------------------------------------
+# Layer 2: JupyterLab + Notebook via pip (openKylin repos do not ship jupyter)
+# NOTE: openKylin 3.0 base ships PEP 668 (externally-managed-environment);
+#       --break-system-packages is required for system-wide pip installs
+#       (container-scoped image; no host Python management concerns).
+# ---------------------------------------------------------------------------
+RUN python3 -m pip install --break-system-packages --no-cache-dir \
+        "jupyterlab>=4" \
+        "notebook>=7"
+
+# ---------------------------------------------------------------------------
+# Layer 3: devuser + subuid/subgid + workspace (medium change frequency)
+# NOTE: the WSL-imported base carries a desktop default user 'openkylin'
+#       (uid 1000); remove it (container needs no desktop account) so devuser
+#       can own uid 1000 as specified. 2>/dev/null tolerates bases without it.
+# NOTE: subuid/subgid must START ABOVE the user's own UID (100000 standard);
+#       a range including the invoking UID is rejected by containers/storage.
+#       Rootless podman storage roots must be writable by devuser.
+# ---------------------------------------------------------------------------
+RUN (userdel -r openkylin 2>/dev/null || true) \
+    && useradd -u ${DEVUID} -m -s /bin/bash ${DEVUSER} \
+    && echo "${DEVUSER}:100000:65536" >> /etc/subuid \
+    && echo "${DEVUSER}:100000:65536" >> /etc/subgid \
+    && usermod -aG sudo ${DEVUSER} \
+    && printf '%s ALL=(ALL) NOPASSWD:ALL\n' "${DEVUSER}" > /etc/sudoers.d/${DEVUSER} \
+    && mkdir -p /run/sshd /var/run/sshd /run/host /workspace /var/lib/containers/storage /run/containers/storage \
+    && chown -R ${DEVUSER}:${DEVUSER} /workspace /var/lib/containers/storage /run/containers/storage
+
+# Container-internal rootless Podman: fuse-overlayfs storage + cgroupfs manager
+# (storage.conf / containers.conf are copied in Layer 4; fuse-overlayfs requires
+#  the host to pass /dev/fuse when running the container, see G3 contract)
+
+# ---------------------------------------------------------------------------
+# Layer 4: config files + entrypoint + validation (highest change frequency)
+# ---------------------------------------------------------------------------
+COPY conf/sshd_config /etc/ssh/sshd_config
+COPY conf/supervisord.conf /etc/supervisor/supervisord.conf
+COPY conf/jupyter_notebook_config.py /home/${DEVUSER}/.jupyter/jupyter_notebook_config.py
+COPY conf/storage.conf /etc/containers/storage.conf
+COPY conf/containers.conf /etc/containers/containers.conf
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY healthcheck.sh /usr/local/bin/healthcheck.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh \
+    && chown -R ${DEVUSER}:${DEVUSER} /home/${DEVUSER}/.jupyter \
+    && bash -n /usr/local/bin/entrypoint.sh \
+    && bash -n /usr/local/bin/healthcheck.sh \
+    && sshd -t \
+    && python3 -m py_compile /home/${DEVUSER}/.jupyter/jupyter_notebook_config.py
+
+# ---------------------------------------------------------------------------
+# Layer 5: metadata (no image layers)
+# ---------------------------------------------------------------------------
+WORKDIR /workspace
+VOLUME ["/workspace"]
+EXPOSE 22 8888
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
+    CMD ["/usr/local/bin/healthcheck.sh"]
+
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/entrypoint.sh"]
+CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]

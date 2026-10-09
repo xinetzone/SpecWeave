@@ -1,0 +1,18 @@
+# sshd_config — openKylin dev container (minimal, password auth enabled)
+# Password is set at container startup by entrypoint.sh (DEV_PASSWORD or random).
+Port 22
+ListenAddress 0.0.0.0
+
+PermitRootLogin no
+PasswordAuthentication yes
+KbdInteractiveAuthentication no
+UsePAM no
+
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+
+X11Forwarding no
+PrintMotd no
+
+AcceptEnv LANG LC_*
+Subsystem sftp internal-sftp
