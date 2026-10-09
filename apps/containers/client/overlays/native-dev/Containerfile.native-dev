@@ -43,7 +43,7 @@ LABEL org.specweave.component="native-dev" \
       org.specweave.layer="native-dev-toolchain" \
       org.specweave.python-abis="base:cp314-gil,main:cp314t" \
       org.specweave.llvm="22.1.8" \
-      org.specweave.nuitka="4.2.1" \
+      org.specweave.nuitka="4.2.2" \
       org.specweave.torch-flavor="${TORCH_FLAVOR}" \
       org.specweave.torch="${TORCH_VERSION}" \
       org.specweave.base-image="${BASE_IMAGE}"
@@ -191,7 +191,7 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
     find /opt/native-builder /opt/native-dev-smoke /opt/native-scripts -type f -name "*.pyc" -delete 2>/dev/null ; \
     echo "########################################################################" ; \
     echo "# NATIVE-DEV OVERLAY BUILD COMPLETE" ; \
-    echo "# toolchain : LLVM/Clang 22.1.8 (main env) + Nuitka 4.2.1 (base cp314 GIL)" ; \
+    echo "# toolchain : LLVM/Clang 22.1.8 (main env) + Nuitka 4.2.2 (base cp314 GIL)" ; \
     echo "# sources   : /workspace/npu_tvm + /workspace/npuusertools (runtime bind, 可剥离)" ; \
     echo "# packaging : inv native.build-tvm -> inv native.wheel -> verify-wheel.sh" ; \
     echo "# torch     : flavor=$(cat /opt/native-torch-flavor)（空=未装；cpu|cu130 见 LABEL）" ; \

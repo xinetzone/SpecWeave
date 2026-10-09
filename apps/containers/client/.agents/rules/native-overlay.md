@@ -60,7 +60,7 @@
 | 角色 | env | Python | 内容 |
 |---|---|---|---|
 | Jupyter 服务 | `/opt/conda/envs/main` | 3.14.x **cp314t**（GIL off） | 基底 jupyterlab（supervisord，devuser） |
-| 编译/打包/内核 | `/opt/conda`（base） | 3.14.x **cp314 GIL enabled** | nuitka==4.2.1、scikit-build-core、build、invoke、ipykernel、wheel 19 依赖 |
+| 编译/打包/内核 | `/opt/conda`（base） | 3.14.x **cp314 GIL enabled** | nuitka==4.2.2、scikit-build-core、build、invoke、ipykernel、wheel 19 依赖 |
 | 原生工具链 | main env | — | llvmdev/clangdev/clang/lld **22.1.8**、cmake、ninja、make、ccache、libgcc、libstdcxx-ng |
 | **编译前端（npu_tvm）** | 系统层（apt） | — | **gcc/g++**（系统包；2026-09-15 起作默认 CC/CXX） |
 

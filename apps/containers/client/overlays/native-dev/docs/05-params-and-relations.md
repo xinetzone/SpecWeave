@@ -39,6 +39,6 @@ source: "README.md#参数表compose-插值-env-键"
 |---|---|---|---|---|
 | 定位 | **源码开发 + wheel 打包** | ONNX 量化分析 | wheel 消费型 Notebook | 旧一体化参考工程 |
 | 源码 | 运行时 bind 挂载（可调试、零修改） | 不挂载 | 不挂载 | BuildKit rw bind + chaos 根构建上下文 |
-| 工具链 | 镜像内 LLVM 22 + Nuitka 4.2.1 | ONNX 五包 | 仅 wheel 运行依赖 | Docker 多阶段 + DinD，privileged |
+| 工具链 | 镜像内 LLVM 22 + Nuitka 4.2.2 | ONNX 五包 | 仅 wheel 运行依赖 | Docker 多阶段 + DinD，privileged |
 | 对 ai 依赖 | **无（打包内核自包含，仅事实参考）** | 无 | 依赖预构建镜像标签 | — |
 | 驱动 | `invoke native.*` / 裸 compose | `invoke quant.*` / 裸 compose | 裸 compose（scratch） | docker compose + 自建 build.sh |

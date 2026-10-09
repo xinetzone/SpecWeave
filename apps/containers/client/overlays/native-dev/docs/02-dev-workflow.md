@@ -61,5 +61,5 @@ Nuitka 打包内存占用随 `--jobs` 近似线性（jobs=8 约 15GB 峰值）�
 
 | 脚本 | 何时跑 | 内容 |
 |---|---|---|
-| `smoke/_toolchain_guards.py` | 镜像构建期（root+devuser）/ `native.smoke` / `podman run --rm` | 双 ABI（base GIL on、main cp314t）、LLVM 22.1/clang/cmake/ninja/ccache/patchelf/gdb、nuitka 4.2.1 且运行解释器在 `getSupportedPythonVersions()` 内、builder 资产、7 个 LLVM 依赖库 SONAME 实测、**§7 离线完备性**（编译/打包前端可解析 + pyproject 声明的 19 依赖全部已装，守卫自身不联网） |
+| `smoke/_toolchain_guards.py` | 镜像构建期（root+devuser）/ `native.smoke` / `podman run --rm` | 双 ABI（base GIL on、main cp314t）、LLVM 22.1/clang/cmake/ninja/ccache/patchelf/gdb、nuitka 4.2.2 且运行解释器在 `getSupportedPythonVersions()` 内、builder 资产、7 个 LLVM 依赖库 SONAME 实测、**§7 离线完备性**（编译/打包前端可解析 + pyproject 声明的 19 依赖全部已装，守卫自身不联网） |
 | `smoke/smoke_mounts.py` | 栈运行时（`native.smoke`/compose exec） | 三挂载点可见；libtvm 存在时 import tvm/vta/xmnn 来自 /workspace + tvm.build('llvm') 向量加；缺席时跳过并 exit 0 |

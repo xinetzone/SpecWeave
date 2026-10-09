@@ -6,7 +6,7 @@ source: "README.md#13-工作负载叠加层native-devnative-命令opt-in"
 # 工作负载叠加层：native-dev（native.* 命令，opt-in）
 
 第二个声明式工作负载栈：XMNN **源码调试 + wheel 打包**开发环境。容器内具备
-LLVM/Clang 22.1.8 + CMake/Ninja/ccache + Nuitka 4.2.1 工具链；运行时把
+LLVM/Clang 22.1.8 + CMake/Ninja/ccache + Nuitka 4.2.2 工具链；运行时把
 `npu_tvm`、`npuusertools`、`models` 三个宿主源码目录 bind 挂载进容器，
 SSH/Jupyter（`Python 3.14 (native dev)` 内核，cp314 GIL）即可直接调试挂载源码，
 并能一键编译 TVM、用 Nuitka 打出 `xmnn-*.whl`（产物落 workspace/dist）。

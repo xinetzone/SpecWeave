@@ -25,7 +25,7 @@ native.* 原生开发/打包栈命名空间（10 个命令，opt-in，podman-com
   invoke native.build / up / down / ps / logs / smoke / build-tvm / wheel
   invoke native.save / load     导出/导入镜像归档（无网机器离线通道，up --offline）
   驱动 overlays/native-dev 原生开发打包栈（运行时挂载 npu_tvm/npuusertools 源码，
-  LLVM 22 + Nuitka 4.2.1 工具链）；Windows 原生门禁，详见 native.py
+  LLVM 22 + Nuitka 4.2.2 工具链）；Windows 原生门禁，详见 native.py
 """
 from invoke import Collection
 

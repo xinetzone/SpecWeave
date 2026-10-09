@@ -8,7 +8,7 @@
      时 pin python=*=*cp314t，若被求解互换此处立即失败）；
   2. main env 工具链：llvm-config 22.1.x、clang、cmake>=3.18、ninja、
      ccache、patchelf、gdb 均可执行；
-  3. base env 打包栈：nuitka==4.2.1、scikit-build-core、build、invoke；
+  3. base env 打包栈：nuitka==4.2.2、scikit-build-core、build、invoke；
      并断言运行解释器版本在 Nuitka 的 getSupportedPythonVersions() 内——
      Nuitka 对未列入版本的 python 会打 "only experimentally supported"
      警告，该警告是升级 python 后最易遗漏的构建期噪声；
@@ -131,7 +131,7 @@ print("\n== 3. base env 打包栈 ==")
 # Nuitka 不在包对象上暴露 __version__，以 `python -m nuitka --version` 为准
 rc, out = run_version(sys.executable, "-m", "nuitka", "--version")
 nuitka_ver = out.splitlines()[0] if out else ""
-check("nuitka 4.2.1", rc == 0 and "4.2.1" in nuitka_ver, nuitka_ver[:80])
+check("nuitka 4.2.2", rc == 0 and "4.2.2" in nuitka_ver, nuitka_ver[:80])
 
 # 运行解释器必须落在 Nuitka 的支持列表内，否则每次打包都会打
 # "The Python version '3.x' is only experimentally supported" 警告。
@@ -427,5 +427,5 @@ if failures:
     print(f"[FAIL] {len(failures)} 项守卫未通过：{failures}")
     sys.exit(1)
 print("[OK] native-dev toolchain guards all passed "
-      "(dual ABI + LLVM 22.1 toolchain + nuitka 4.2.1 + builder assets + SONAME "
+      "(dual ABI + LLVM 22.1 toolchain + nuitka 4.2.2 + builder assets + SONAME "
       "+ offline self-sufficiency + torch flavor + cuda nvcc + tkinter GUI runtime)")

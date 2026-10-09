@@ -3,7 +3,7 @@
 > 一句话：在 `localhost/jupyter-podman-rootless:latest` 之上做一层工具链叠加，
 > 运行时把 **npu_tvm / npuusertools / models 源码 + 根工作区临时目录 .temp**
 > bind 挂载进容器，提供 tvm/vta/xmnn 的源码调试环境（SSH + JupyterLab +
-> native-dev 内核），并在容器内用 **LLVM/Clang 22 + Nuitka 4.2.1** 一键打出
+> native-dev 内核），并在容器内用 **LLVM/Clang 22 + Nuitka 4.2.2** 一键打出
 > cp314 的 `xmnn-1.2.1.dev0-cp314-cp314-linux_x86_64.whl`。
 
 - **镜像**：`localhost/native-dev:latest`（薄叠加；含完整编译工具链，体积大于量化栈）
@@ -25,7 +25,7 @@
 |---|---|
 | C/C++ 工具链 | LLVM/Clang/lld 22.1.8、cmake、ninja、make、ccache（main env，conda-forge） |
 | 系统工具 | patchelf（wheel RPATH）、gdb（源码调试） |
-| Nuitka 打包栈（base env） | nuitka==4.2.1、scikit-build-core、build、wheel、invoke、ipykernel + pyproject 声明的全部 xmnn 运行时依赖 |
+| Nuitka 打包栈（base env） | nuitka==4.2.2、scikit-build-core、build、wheel、invoke、ipykernel + pyproject 声明的全部 xmnn 运行时依赖 |
 | 打包内核 | `/opt/native-builder/`：pyproject.toml、CMakeLists.txt、bootstrap、build-wheel/build-tvm/verify-wheel 脚本（**自包含，不依赖 external/chaos/ai**） |
 | Jupyter 内核 | `Python 3.14 (native dev)`（argv=/opt/conda/bin/python，env 内嵌源码 PYTHONPATH） |
 | 构建期守卫 | `/opt/native-dev-smoke/_toolchain_guards.py`（双 ABI + 工具链 + LLVM 库 SONAME 实测 + §7 离线完备性） |

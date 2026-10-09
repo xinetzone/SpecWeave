@@ -17,7 +17,7 @@
 #       （默认 /workspace/dist，宿主可见的 bind 挂载目录）
 #
 # 双 ABI 事实（rootless 基底 2026-09-14 实证）：
-#   /opt/conda            = Python 3.14 cp314 GIL enabled（Nuitka 4.2.1 打包）
+#   /opt/conda            = Python 3.14 cp314 GIL enabled（Nuitka 4.2.2 打包）
 #   /opt/conda/envs/main  = Python 3.14 cp314t free-threading（Nuitka 不兼容）
 # 故本脚本固定以 /opt/conda/bin/python 为编译解释器；clang/LLVM/cmake 工具链
 # 位于 main env（PATH 第二段，CC/CXX/LLVM_CONFIG 绝对指向）。
@@ -105,6 +105,15 @@ fi
 # ── Nuitka 选项 ─────────────────────────────────────────────────────────
 NUITKA_JOBS="${NUITKA_JOBS:-8}"
 NUITKA_PLUGINS="${NUITKA_PLUGINS:-dill-compat}"
+# 运行期更新检查统一关闭。Nuitka 版本由镜像构建期 install-build-deps.py 精确钉
+# 版（nuitka==X.Y.Z），本打包链路要求可复现/离线一致：不得让构建日志随构建时
+# 网络出现 pypi.org 的 "older than latest stable" WARNING。该检查是独立子系统，
+# --quiet 不抑制，tvm/vta/xmnn 三次调用（含并行子 shell）各打印一次，且缓存
+# /root/.cache/Nuitka 位于容器易失层、重建后必然复发。此处 export 一次即覆盖
+# 全部调用点；容器内手工 `python -m nuitka` 的交互式调试不经过本脚本，更新
+# 提醒在该场景刻意保留（维护者升级 pin 的知情渠道）。版本跟进走「pin → smoke
+# 守卫 → LABEL/文档 → 镜像重建 → wheel 验证」原子变更，不在打包运行期决策。
+export NUITKA_UPDATE_CHECK=never
 # 模式旗标必须写 --mode=module，禁用遗留别名 --module：4.x 里 --module 只置
 # module_mode，而「module-mode 专属选项」告警的判据是 compilation_mode（仅
 # --mode= 才赋值），故 --module 配 --no-pyi-file 会误报 "has no effect"。
@@ -143,7 +152,7 @@ log_kv "LLVM" "$($LLVM_CONFIG --version) @ $LLVM_LIB_DIR"
 # "Update status: ... (cached, N seconds old)."（联网/时间相关，非确定性），
 # 塞进日志行即为噪声。
 log_kv "nuitka" "$("$BASE_PYTHON" -m nuitka --version 2>/dev/null \
-    | awk 'NR==1{v=$0} /^Commercial:/{c=$0} END{printf "%s%s", v, (c ? " (" c ")" : "")}')"
+    | awk 'NR==1{v=$0} /^Commercial:/ && $0 !~ /None/{c=$0} END{printf "%s (pinned, update-check off)%s", v, (c ? " (" c ")" : "")}')"
 
 if [ "$NATIVE_OFFLINE" = "1" ]; then
     log_info "offline mode: pip 镜像配置跳过 / Nuitka 下载旗标已禁用（NUITKA_DL_FLAG 置空）"

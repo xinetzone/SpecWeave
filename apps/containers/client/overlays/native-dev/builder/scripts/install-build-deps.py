@@ -15,7 +15,7 @@ PYPROJECT = Path("/opt/native-builder/pyproject.toml")
 
 # 打包工具链（不进入 wheel 元数据，仅镜像内需要）
 BUILD_TOOLS = [
-    "nuitka==4.2.1",
+    "nuitka==4.2.2",
     "scikit-build-core>=0.10",
     "build>=1.0",
     "wheel",

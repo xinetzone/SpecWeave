@@ -3,7 +3,7 @@
 工厂生成，栈内 exec 长任务（build-tvm/wheel）用内核 helper 薄封装（形态 B）。
 驱动 ``overlays/native-dev``：运行时 bind 挂载 npu_tvm / npuusertools / models
 源码（锚定 external/chaos）与 .temp（容器内 /workspace/temp，
-``NATIVE_TEMP_PATH`` 可覆盖），容器内 LLVM 22 + Nuitka 4.2.1 工具链。
+``NATIVE_TEMP_PATH`` 可覆盖），容器内 LLVM 22 + Nuitka 4.2.2 工具链。
 
 栈本质是通用原生编译/wheel 打包平台：TVM 与 npuusertools 均为可改绑/可剥离
 的默认挂载变体，命名不绑定任何可插拔依赖；当前默认产品为 xmnn wheel。
