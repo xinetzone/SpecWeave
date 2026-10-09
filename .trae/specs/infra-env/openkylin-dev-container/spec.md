@@ -119,5 +119,5 @@ created: 2026-10-08
 ## Open Questions
 
 - [ ] 是否需要在后续为 okw 增加 `okw image build/verify` 子命令以接管镜像构建？（本 spec 不实现，标记为后续候选）
-- [ ] openKylin WSL 发行版内 podman 是否已安装（`okw podman verify` 可查）？若已安装则补一条 WSL 内真实构建证据；否则以脚本语法检查 + dry-run 覆盖并记录。
+- [x] openKylin WSL 发行版内 podman 是否已安装（`okw podman verify` 可查）？若已安装则补一条 WSL 内真实构建证据；否则以脚本语法检查 + dry-run 覆盖并记录。（2026-10-09 关闭：发行版预装 podman 5.7.0；已在发行版内 rootful 真实构建 + 冒烟全绿，见 review.md R1 F-2 闭合证据 `evidence/build-20261009-openkylin-wsl.log`、`evidence/smoke-20261009-openkylin-wsl.log`）
 - [x] 官方 registry 是否存在 3.0 容器 tag？（2026-10-09 关闭：官方 `latest` 实测 2.0 SP1 LTS；已按用户裁定改用本地导入 WSL 3.0 rootfs 作基底，见 Background）

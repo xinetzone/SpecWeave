@@ -95,3 +95,8 @@ created: 2026-10-08
 - **Test Requirements**:
   - `rule` TR-6.1: 每条 AC 有独立证据且 Review 结果 pass——**PASS**：Review R1 全部 6 检查点通过（CP-R1~R6 独立重跑 + CP-U1 得 5），可行动发现 0，advisory 3 条（F-1 AC-4 字面与 ENV-LIMIT、F-2 WSL 内构建未执行、F-3 端口暴露加固，均不阻塞）
 - **Notes**: 实施者自验不作为最终验收；Review 检查点与发现按 TRAE-spec-mode 模板记录。advisory 见 review.md「Review History R1」。
+
+## 交付归档（2026-10-09，spec 外收尾）
+- `localhost/openkylin:3.0`（基底，ID `e828c412099a`）：`.docker-cache/wsl-exports/openKylin-3.0-podman-docker-amd64.tar(.gz)`（gz 351,873,468 B，3.36x）
+- `localhost/openkylin-dev:3.0`（开发容器，ID `fe7b1bb318a6`，openKylin WSL rootful 构建）：`.docker-cache/wsl-exports/openKylin-dev-3.0-podman-docker-amd64.tar(.gz)`（gz 535,665,521 B，3.1x）；manifest RepoTags/Config 校验一致，gzip 解压回读字节数匹配（1,662,016,000 B）
+- 模式复用：wsl-rootfs-oci-image-export（docker-archive + gzip，podman 层未压缩）
