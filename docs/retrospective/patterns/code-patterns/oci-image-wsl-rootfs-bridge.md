@@ -13,6 +13,7 @@ related_patterns:
   - "wsl2-docker-selection-decision.md"
   - "powershell-wsl-cross-shell-wrapper.md"
   - "wsl-docker-command-safety.md"
+  - "wsl-rootfs-oci-image-export.md"
 tags: ["oci", "docker", "podman", "wsl2", "wsl-import", "rootfs", "image-conversion", "whiteout", "overlayfs", "container-runtime"]
 validation_count: 1
 reuse_count: 0
@@ -212,7 +213,7 @@ wsl -d <distro-name> -- sh -l -c "echo OK && whoami && which python3 || which py
 - **场景2（跨领域）**：Photoshop PSD（含调整图层、蒙版、智能对象）导出为PNG——用Photoshop/GIMP渲染图层效果，而非手动提取像素数据和应用混合模式
 - **场景3（领域内变体）**：将多阶段Docker镜像（multi-stage build中的中间stage）导出为WSL发行版——`podman create`指向中间stage的镜像ID（`<image>:<tag>@<digest>`或build时`--target`后保存），后续步骤相同
 - **场景4（领域内变体）**：从Docker Hub直接拉取镜像并转为WSL发行版——跳过docker save步骤，直接`podman pull <image>:<tag>`然后从Step 3开始
-- **场景5（反向操作）**：将WSL发行版打包为Docker镜像——`wsl --export`得到flat rootfs，然后`podman import`转成镜像（反向转换相对简单，因为flat→layered是导入而非合并）
+- **场景5（反向操作）**：将WSL发行版打包为Docker镜像——`wsl --export`得到flat rootfs，然后`podman import`转成镜像（反向转换相对简单，因为flat→layered是导入而非合并）；完整实现细节见 [wsl-rootfs-oci-image-export.md](wsl-rootfs-oci-image-export.md)（含 keep-alive 存活性对策、三层验证与归档压缩）
 
 ## 已知限制与待验证
 

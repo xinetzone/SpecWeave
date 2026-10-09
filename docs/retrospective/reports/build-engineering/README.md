@@ -9,10 +9,11 @@ type: "index"
 
 > 本目录收录构建系统、编译工具链、打包发布、Docker镜像、依赖管理等构建工程相关的复盘报告。
 
-## 报告清单（30份）
+## 报告清单（31份）
 
 | 报告名称 | 简要说明 | 日期 |
 |---|---|---|
+| `retrospective-openkylin-wsl-to-podman-20261009/` | openKylin 3.0 WSL 导出转 podman 镜像里程碑复盘（R→I→E→V→C链路）：gzip 魔数判定、podman machine WSL 空闲回收根因定位（keep-alive 对照实验证实）、VM 内通道导入（/mnt/d）、三层验证闭环（manifest+os-release 冒烟）、docker-archive 归档 + 3.36x gzip 压缩；萃取"WSL镜像化导出"L1 模式 | 2026-10-09 |
 | `retrospective-xmnn-py314-rebuild-20260828/` | XMNN Python 3.14 Wheel & Docker 镜像重构里程碑复盘（R→I→E→V链路）：Nuitka 4.1.3 cp314t free-threading 编译失败（allocator.h:606），回退到 cp314 GIL 模式；base env 升级 Python 3.14.0 cp314，main env 提供 clang/LLVM 工具链跨环境编译；三阶段 Docker（py314-base→builder→final）+ conda build string 锁定 `*_cp314`；Podman 适配（cgroupfs/format docker/localhost 前缀/.dockerignore 无行内注释）；5 模型精度验证全通过（余弦相似度 > 0.99）；10 项 AC + 独立审查 pass；萃取"SVF 编译器迁移"和"跨 conda 环境工具链引用"两个可复用模式 | 2026-08-28 |
 | `retrospective-jupyter-podman-rootless-seven-rounds-20260827/` | Jupyter Podman Rootless 七轮优化里程碑复盘（R→I→E→C链路）：8个提交/7轮迭代/19文件+2859行，从基础setuptools框架到scikit-build-core+CMake+Ninja现代化构建；覆盖七层能力栈（基础镜像→SDK→编排→ML模型分发→ModelCar→Toolbx透传→构建系统）；萃取3个可复用模式（容器开发工具七层能力栈、scikit-build-core纯Python最小配置、invoke任务分层命名空间）；记录6个构建迁移陷阱与修复方案 | 2026-08-27 |
 | `retrospective-llama-cpp-python-cuda-build-20260820/` | llama-cpp-python CUDA编译部署里程碑复盘（R-I-E-C链路）：Windows 11 + RTX 5050(SM 120) + Python 3.14.3 环境下完成0.3.35 CUDA版源码编译（436编译单元/15分钟/90MB wheel/ggml-cuda.dll 49.7MB）；解决MSVC版本兼容（14.44而非默认14.51）、PATH超长、conda run子进程隔离、pip缓存权限、site-packages/bin目录缺失6类问题；萃取"Windows CUDA扩展源码编译三板斧"模式（L1） | 2026-08-20 |
