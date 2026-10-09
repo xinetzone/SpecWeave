@@ -17,6 +17,7 @@ source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#定位"
 | 查找 WSL、脚手架和知识参考命令 | [命令参考](02-command-reference.md) |
 | 配置并验收 rootless Podman | [rootless Podman 指南](03-podman-rootless.md) |
 | 了解设计、安全边界、开发和测试 | [开发与边界](04-development-and-boundaries.md) |
+| 构建并使用 openKylin 开发容器镜像 | [openKylin 开发容器镜像指南](05-openkylin-dev-container.md) |
 
 ## 能力概览
 
@@ -43,4 +44,5 @@ source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#定位"
 02-command-reference
 03-podman-rootless
 04-development-and-boundaries
+05-openkylin-dev-container
 ```
