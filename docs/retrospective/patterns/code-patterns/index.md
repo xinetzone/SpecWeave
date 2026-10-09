@@ -225,6 +225,7 @@ wsl-import-memory-triage-sparse-vhd
 wsl-podman-build-bridge
 wsl-windows-path-autoconvert
 wsl2-docker-selection-decision
+xrdp-black-screen-window-manager-triage
 zero-copy-batch-inference-defense
 zero-copy-tensor-verification
 ```

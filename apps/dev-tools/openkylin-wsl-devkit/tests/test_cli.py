@@ -31,6 +31,8 @@ class TestVersionAndHelp:
         ["export", "x", "--output", "o"], ["unregister", "x"],
         ["verify", "x"],
         ["scaffold", "deb"], ["scaffold", "dput"], ["ref"],
+        ["podman"],
+        ["podman", "preflight"], ["podman", "install"], ["podman", "verify"],
     ])
     def test_subcommand_help(self, argv):
         # argparse 的 -h 触发 SystemExit(0)

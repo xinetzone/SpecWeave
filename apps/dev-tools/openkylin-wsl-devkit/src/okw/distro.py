@@ -177,15 +177,18 @@ def get_distro(name: str) -> Distro | None:
             return d
     return None
 
-def exec_distro(name: str, cmd: list[str]) -> CmdResult:
-    """在指定发行版内执行命令（参数透传）。"""
+def exec_distro(name: str, cmd: list[str], user: str | None = None) -> CmdResult:
+    """在指定发行版内执行命令（参数透传）。可选 -u 指定用户。"""
     try:
         if get_distro(name) is None:
             return CmdResult(False, 1, "", f"发行版 {name} 不存在", "distro_missing")
     except WslError:
-        # 列表不可读（wsl 异常）时不让异常外泄，交由上层统一提示
         return CmdResult(False, 1, "", f"无法确认发行版 {name} 状态（wsl -l -v 读取失败）", "distro_missing")
-    return run_wsl(["-d", name, "--", *cmd])
+    args = ["-d", name]
+    if user:
+        args.extend(["-u", user])
+    args.extend(["--", *cmd])
+    return run_wsl(args)
 
 def import_distro(image: str, name: str, location: str, version: str = DEFAULT_IMPORT_VERSION) -> CmdResult:
     """构造并执行 wsl --import；校验镜像 gzip 头。"""

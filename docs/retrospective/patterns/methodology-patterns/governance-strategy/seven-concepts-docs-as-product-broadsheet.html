@@ -1,0 +1,1525 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="canvas:aspect-ratio" content="16:10" />
+<meta name="description" content="Docs as Product on Sphinx · Python — 用七概念方法论 R/F/I/E/V/A/C 编排的文档产品化主张页。" />
+<meta name="source" content="QwenWork Canvas Design Mode · session muysfqgy8b4pgm1f · 2026-10-08 · plan-approved execution" />
+<meta name="derived-from" content=".agents/commands/seven-concepts.md; docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-{methodology-index,core-workflows,positioning-model,quality-standards,trigger-decision-tree,adversarial-review}.md" />
+<meta name="methodology-flow" content="Seven-Concepts F→V→I→C (innovation) + design-reviewer 深度评审后应用 P0/P1/P2 修复" />
+<meta name="companion-assets" content="单文件高保真稿，内联 CSS/JS/SVG，无外部依赖；可通过浏览器直接打开预览" />
+<meta name="qw-pages:url" content="https://6z7hzvgt.qwenwork.host/" />
+<meta name="qw-pages:domain" content="6z7hzvgt.qwenwork.host" />
+<meta name="qw-pages:version" content="V5" />
+<meta name="qw-pages:deployment-id" content="cf20028f-bb0a-4bee-ad6d-19fe1a073436" />
+<meta name="qw-pages:published-at" content="2026-10-08" />
+<link rel="canonical" href="https://6z7hzvgt.qwenwork.host/" />
+<title>文档即产品 · Docs as Product on Sphinx / Python</title>
+<style>
+  :root {
+    --seed-bg: #FBF8F1;
+    --seed-fg: #1F2A44;
+    --seed-primary: #1F2A44;
+    --seed-accent: #9B2C2C;
+    --seed-surface: #F2EDE1;
+    --seed-radius: 2px;
+    --seed-density: 1;
+    --seed-type-scale: 1;
+    --seed-ornament: 1;
+
+    --bg: var(--seed-bg);
+    --surface: var(--seed-surface);
+    --fg: var(--seed-fg);
+    --primary: var(--seed-primary);
+    --ink-soft: color-mix(in srgb, var(--seed-fg) 84%, var(--seed-bg));
+    --muted: color-mix(in srgb, var(--seed-fg) 74%, var(--seed-bg));
+    --rule: color-mix(in srgb, var(--seed-fg) 20%, var(--seed-bg));
+    --rule-soft: color-mix(in srgb, var(--seed-fg) 12%, var(--seed-bg));
+    --accent: var(--seed-accent);
+    --success: color-mix(in srgb, hsl(146 42% 28%) 88%, var(--seed-fg));
+    --warn: color-mix(in srgb, hsl(30 62% 34%) 88%, var(--seed-fg));
+
+    --font-display: "Source Serif Pro","Source Serif 4","Noto Serif SC","Songti SC","SimSun","Times New Roman",Georgia,serif;
+    --font-body: "Inter","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --font-mono: "JetBrains Mono","Fira Code","IBM Plex Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+    --t-cap: calc(11px * var(--seed-type-scale));
+    --t-small: calc(13px * var(--seed-type-scale));
+    --t-body: calc(15.5px * var(--seed-type-scale));
+    --t-lead: calc(18px * var(--seed-type-scale));
+    --t-h3: calc(20px * var(--seed-type-scale));
+    --t-h2: calc(28px * var(--seed-type-scale));
+    --t-h1: calc(40px * var(--seed-type-scale));
+    --t-display: calc(64px * var(--seed-type-scale));
+    --t-numeral: calc(56px * var(--seed-type-scale));
+    /* Micro sizes for chips, roles, code, labels — all follow Type scale nudge */
+    --t-micro: calc(10.5px * var(--seed-type-scale));
+    --t-chip: calc(11px * var(--seed-type-scale));
+    --t-code-sm: calc(11.5px * var(--seed-type-scale));
+    --t-code: calc(12px * var(--seed-type-scale));
+    --t-code-lg: calc(12.5px * var(--seed-type-scale));
+    /* Radius scale — small elements follow Corner radius nudge */
+    --radius-sm: calc(var(--seed-radius) * 0.5);
+    --radius-pill: 999px;
+
+    --sp-2: calc(8px * var(--seed-density));
+    --sp-3: calc(12px * var(--seed-density));
+    --sp-4: calc(16px * var(--seed-density));
+    --sp-5: calc(24px * var(--seed-density));
+    --sp-6: calc(32px * var(--seed-density));
+    --sp-7: calc(48px * var(--seed-density));
+    --sp-8: calc(72px * var(--seed-density));
+
+    --page-max: 1320px;
+    --article-max: 74ch;
+    --hair: 1px;
+
+    /* Extended palette — all derived from seed tokens so Appearance nudges cascade */
+    --tan: color-mix(in srgb, hsl(24 48% 34%) 82%, var(--seed-fg));
+    --tan-soft: color-mix(in srgb, var(--tan) 22%, var(--seed-bg));
+    --code-string: color-mix(in srgb, hsl(146 42% 30%) 85%, var(--seed-fg));
+    --code-name: var(--tan);
+    --code-fn: var(--seed-fg);
+    --svg-caption: var(--muted);
+    --shadow-soft: color-mix(in srgb, var(--seed-fg) 18%, transparent);
+  }
+
+  /* SVG utility classes — tokenized fills and strokes so illustrations follow Appearance nudges */
+  .fi-bg { fill: var(--bg); }
+  .fi-surface { fill: var(--surface); }
+  .fi-fg { fill: var(--fg); }
+  .fi-ink-soft { fill: var(--ink-soft); }
+  .fi-muted { fill: var(--muted); }
+  .fi-accent { fill: var(--accent); }
+  .fi-success { fill: var(--success); }
+  .fi-caption { fill: var(--svg-caption); }
+  .si-fg { stroke: var(--fg); }
+  .si-accent { stroke: var(--accent); }
+  .si-rule { stroke: var(--rule); }
+  .si-success { stroke: var(--success); }
+  .fi-none { fill: none; }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: var(--font-body); font-size: var(--t-body); line-height: 1.75;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.36 0 0 0 0 0.24 0 0 0 0.055 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 240px 240px; background-attachment: fixed;
+  }
+  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--radius-sm); }
+  ::selection { background: color-mix(in srgb, var(--accent) 24%, transparent); color: var(--fg); }
+
+  .page { display: grid; grid-template-columns: minmax(0,1fr); max-width: var(--page-max); margin: 0 auto; padding: 0 var(--sp-6); }
+  @media (min-width: 1180px) {
+    .page { grid-template-columns: minmax(0,1fr) 220px; column-gap: var(--sp-7); }
+    .page > .content { grid-column: 1; min-width: 0; }
+    .page > .toc-rail { grid-column: 2; }
+  }
+  .content { min-width: 0; }
+
+  .site-header { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: saturate(140%) blur(6px); -webkit-backdrop-filter: saturate(140%) blur(6px); border-bottom: var(--hair) solid transparent; transition: border-color 200ms ease; }
+  .site-header.is-scrolled { border-bottom-color: var(--rule); }
+  .header-inner { max-width: var(--page-max); margin: 0 auto; padding: var(--sp-4) var(--sp-6); display: flex; align-items: center; gap: var(--sp-5); transition: padding 200ms ease; }
+  .site-header.is-scrolled .header-inner { padding-top: var(--sp-3); padding-bottom: var(--sp-3); }
+  .brand { display: flex; align-items: baseline; gap: var(--sp-2); font-family: var(--font-display); font-size: var(--t-lead); letter-spacing: -0.01em; white-space: nowrap; }
+  .brand .sep { color: var(--muted); font-family: var(--font-mono); font-size: var(--t-small); }
+  .brand .tag { font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 2px 6px; border: var(--hair) solid var(--rule); border-radius: var(--radius-sm); }
+  .main-nav { margin-left: auto; }
+  .main-nav ul { display: flex; gap: var(--sp-5); list-style: none; margin: 0; padding: 0; font-size: var(--t-small); }
+  .main-nav a { text-decoration: none; color: var(--muted); padding-bottom: 2px; border-bottom: 1px solid transparent; transition: color 160ms ease, border-color 160ms ease; }
+  .main-nav a:hover { color: var(--fg); border-bottom-color: var(--rule); }
+  .main-nav a.is-active { color: var(--fg); border-bottom-color: var(--accent); }
+  .header-cta { font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 12px; border: var(--hair) solid var(--rule); background: transparent; color: var(--fg); border-radius: var(--seed-radius); text-decoration: none; transition: background 160ms ease, border-color 160ms ease; white-space: nowrap; }
+  .header-cta:hover { background: var(--surface); border-color: var(--muted); }
+  .progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: transparent; }
+  .progress > span { display: block; height: 100%; width: 0%; background: var(--accent); transition: width 60ms linear; }
+  @media (max-width: 900px) {
+    .header-inner { flex-wrap: wrap; padding: var(--sp-3) var(--sp-4); gap: var(--sp-3); row-gap: var(--sp-2); }
+    .brand { font-size: var(--t-body); order: 1; }
+    .brand .tag { display: none; }
+    .header-cta { display: none; }
+    .main-nav { display: block; margin-left: 0; order: 3; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: thin; padding-bottom: 2px; }
+    .main-nav ul { gap: var(--sp-4); flex-wrap: nowrap; }
+    .main-nav a { white-space: nowrap; display: inline-block; padding: 4px 0; }
+  }
+
+  .toc-rail { display: none; }
+  @media (min-width: 1180px) {
+    .toc-rail { display: block; position: sticky; top: 96px; align-self: start; height: calc(100vh - 120px); padding-top: var(--sp-6); border-left: var(--hair) solid var(--rule-soft); padding-left: var(--sp-5); }
+  }
+  .toc-title { font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: var(--sp-4); }
+  .toc-list { list-style: none; padding: 0; margin: 0; font-size: var(--t-small); }
+  .toc-list li { margin-bottom: var(--sp-3); }
+  .toc-list a { display: grid; grid-template-columns: 28px 1fr; gap: var(--sp-2); text-decoration: none; color: var(--muted); border-left: 2px solid transparent; padding: 2px 0 2px 8px; margin-left: -10px; transition: color 160ms ease, border-color 160ms ease; }
+  .toc-list a .num { font-family: var(--font-mono); font-size: var(--t-chip); color: var(--muted); letter-spacing: 0.06em; }
+  .toc-list a:hover { color: var(--fg); }
+  .toc-list a.is-active { color: var(--fg); border-left-color: var(--accent); }
+  .toc-list a.is-active .num { color: var(--accent); }
+
+  section.chapter { padding: var(--sp-8) 0; border-top: var(--hair) solid var(--rule-soft); scroll-margin-top: 84px; }
+  section.chapter:first-of-type { border-top: none; }
+  .chapter-head { display: grid; grid-template-columns: 88px minmax(0,1fr); gap: var(--sp-5); align-items: baseline; margin-bottom: var(--sp-6); }
+  .numeral { font-family: var(--font-display); font-size: var(--t-numeral); line-height: 0.9; color: var(--accent); letter-spacing: -0.03em; font-variant-numeric: oldstyle-nums; }
+  .chapter-title { font-family: var(--font-display); font-size: var(--t-h1); line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 var(--sp-3); font-weight: 550; }
+  .chapter-motto { font-family: var(--font-display); font-style: italic; color: var(--muted); font-size: var(--t-lead); letter-spacing: 0.005em; opacity: var(--seed-ornament); transition: opacity 200ms ease; margin: 0; }
+  .fleuron { display: block; margin: var(--sp-7) auto 0; color: var(--rule); opacity: var(--seed-ornament); transition: opacity 200ms ease; }
+  /* Skip link — visible only on keyboard focus */
+  .skip-link { position: absolute; left: -9999px; top: 0; background: var(--fg); color: var(--bg); padding: 8px 14px; font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; z-index: 100; border-radius: 0 0 var(--seed-radius) 0; }
+  .skip-link:focus { left: 0; }
+  .chapter-lede { max-width: var(--article-max); font-size: var(--t-lead); line-height: 1.7; color: var(--ink-soft); margin: 0 0 var(--sp-6); }
+  @media (max-width: 720px) {
+    .chapter-head { grid-template-columns: 56px minmax(0,1fr); gap: var(--sp-3); }
+    .numeral { font-size: calc(40px * var(--seed-type-scale)); }
+    .chapter-title { font-size: calc(28px * var(--seed-type-scale)); }
+    section.chapter { padding: var(--sp-7) 0; }
+  }
+  .eyebrow { font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .pull { margin: var(--sp-5) 0; padding: var(--sp-4) var(--sp-5); border-left: 2px solid var(--accent); background: var(--surface); font-family: var(--font-display); font-size: var(--t-lead); line-height: 1.65; color: var(--fg); max-width: var(--article-max); }
+  .pull cite { display: block; margin-top: var(--sp-3); font-family: var(--font-body); font-style: normal; font-size: var(--t-small); color: var(--muted); }
+  .fnref { font-family: var(--font-mono); font-size: 0.78em; color: var(--accent); vertical-align: super; line-height: 0; text-decoration: none; padding: 0 1px; }
+  .fnref:hover { text-decoration: underline; }
+  .term { border-bottom: 1px dashed color-mix(in srgb, var(--fg) 40%, transparent); cursor: help; position: relative; }
+  .term::after { content: attr(data-def); position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translate(-50%, 4px); background: var(--fg); color: var(--bg); font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; padding: 8px 10px; border-radius: var(--seed-radius); width: max-content; max-width: 280px; opacity: 0; pointer-events: none; transition: opacity 140ms ease, transform 140ms ease; z-index: 20; box-shadow: 0 6px 24px var(--shadow-soft); }
+  .term:hover::after, .term:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
+  .chip { display: inline-flex; align-items: center; padding: 2px 8px; border: var(--hair) solid var(--rule); border-radius: var(--radius-pill); font-family: var(--font-mono); font-size: var(--t-chip); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: transparent; white-space: nowrap; }
+  .chip.is-warn { border-color: color-mix(in srgb, var(--warn) 55%, transparent); color: var(--warn); }
+  .role { display: inline-block; font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.08em; text-transform: uppercase; padding: 1px 6px; border: var(--hair) solid var(--rule); color: var(--muted); background: color-mix(in srgb, var(--surface) 60%, transparent); border-radius: var(--radius-sm); margin-right: 4px; }
+  .role[data-role="orchestrator"] { color: var(--fg); border-color: color-mix(in srgb, var(--fg) 40%, transparent); }
+  .role[data-role="architect"] { color: var(--tan); border-color: color-mix(in srgb, var(--tan) 40%, transparent); }
+  .role[data-role="developer"] { color: var(--success); border-color: color-mix(in srgb, var(--success) 40%, transparent); }
+  .role[data-role="reviewer"] { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+
+  .hero { padding-top: var(--sp-8); padding-bottom: var(--sp-7); border-bottom: var(--hair) solid var(--rule); }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: var(--sp-4); font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding-bottom: var(--sp-4); border-bottom: var(--hair) solid var(--rule-soft); margin-bottom: var(--sp-6); }
+  .hero-meta .dot { color: var(--rule); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,1fr); gap: var(--sp-7); align-items: end; }
+  @media (max-width: 960px) { .hero-grid { grid-template-columns: minmax(0,1fr); gap: var(--sp-6); } }
+  .hero-title { font-family: var(--font-display); font-size: var(--t-display); line-height: 0.98; letter-spacing: -0.035em; margin: 0 0 var(--sp-4); font-weight: 550; color: var(--fg); }
+  .hero-title .en { display: block; font-family: var(--font-display); font-style: italic; font-size: calc(var(--t-h1) * 0.86); line-height: 1.15; letter-spacing: -0.015em; color: var(--muted); font-weight: 400; margin-top: var(--sp-3); }
+  .hero-lede { max-width: 60ch; font-size: var(--t-lead); line-height: 1.7; color: var(--ink-soft); margin: var(--sp-5) 0 var(--sp-6); }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; }
+  .btn { display: inline-flex; align-items: center; gap: var(--sp-2); font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 14px; border: var(--hair) solid var(--primary); background: var(--primary); color: var(--bg); border-radius: var(--seed-radius); text-decoration: none; transition: transform 120ms ease, background 160ms ease, color 160ms ease; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn.ghost { background: transparent; color: var(--fg); border-color: var(--rule); }
+  .btn.ghost:hover { border-color: var(--fg); }
+  .hero-figure { display: grid; grid-template-columns: 1fr; gap: var(--sp-4); align-items: end; justify-items: end; }
+  .pipeline-wrap { width: 100%; border: var(--hair) solid var(--rule); background: color-mix(in srgb, var(--surface) 55%, var(--bg)); padding: var(--sp-4); border-radius: var(--seed-radius); }
+  .pipeline-caption { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: var(--sp-3); gap: var(--sp-3); flex-wrap: wrap; }
+  .badge-row { display: flex; gap: var(--sp-4); align-items: center; justify-content: flex-end; width: 100%; }
+  .badge-caption { font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-align: right; max-width: 22ch; line-height: 1.5; }
+
+  .why-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: var(--sp-6); }
+  @media (max-width: 960px) { .why-grid { grid-template-columns: minmax(0,1fr); gap: var(--sp-5); } }
+  .why-col h3 { font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 var(--sp-3); font-weight: 500; padding-bottom: var(--sp-2); border-bottom: var(--hair) solid var(--rule); }
+  .why-col p { margin: 0 0 var(--sp-3); color: var(--ink-soft); }
+  .readers { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--sp-3); }
+  .readers li { display: grid; grid-template-columns: 36px minmax(0,1fr); gap: var(--sp-3); align-items: start; padding-bottom: var(--sp-3); border-bottom: var(--hair) dotted var(--rule); }
+  .readers li:last-child { border-bottom: none; }
+  .readers .r-name { font-family: var(--font-display); font-size: var(--t-body); font-weight: 550; letter-spacing: -0.005em; }
+  .readers .r-role { display: block; font-size: var(--t-small); color: var(--muted); margin-top: 2px; line-height: 1.55; }
+  .metrics-list { list-style: none; padding: 0; margin: 0; }
+  .metrics-list li { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: var(--sp-3); padding: var(--sp-3) 0; border-bottom: var(--hair) dotted var(--rule); font-size: var(--t-body); align-items: baseline; }
+  .metrics-list li:last-child { border-bottom: none; }
+  .metrics-list .m-name { color: var(--fg); }
+  .metrics-list .m-def { display: block; font-size: var(--t-small); color: var(--muted); margin-top: 2px; line-height: 1.55; }
+  .metrics-list .m-src { font-family: var(--font-mono); font-size: var(--t-chip); color: var(--muted); letter-spacing: 0.06em; white-space: nowrap; }
+
+  .stack-wrap { display: grid; gap: var(--sp-6); }
+  .table-scroll { overflow-x: auto; border: var(--hair) solid var(--rule); border-radius: var(--seed-radius); background: var(--bg); }
+  table.matrix { width: 100%; border-collapse: collapse; font-size: var(--t-small); min-width: 900px; }
+  table.matrix caption { text-align: left; padding: var(--sp-3) var(--sp-4); font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border-bottom: var(--hair) solid var(--rule); background: color-mix(in srgb, var(--surface) 60%, var(--bg)); }
+  table.matrix th, table.matrix td { padding: var(--sp-3) var(--sp-4); text-align: left; vertical-align: top; border-bottom: var(--hair) solid var(--rule-soft); line-height: 1.6; }
+  table.matrix thead th { font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); background: color-mix(in srgb, var(--surface) 40%, var(--bg)); border-bottom: var(--hair) solid var(--rule); font-weight: 500; white-space: nowrap; }
+  table.matrix tbody tr { transition: background 120ms ease; }
+  table.matrix tbody tr:hover { background: color-mix(in srgb, var(--surface) 55%, transparent); }
+  table.matrix tbody tr:last-child td { border-bottom: none; }
+  table.matrix td.domain { font-family: var(--font-display); font-size: var(--t-body); font-weight: 550; letter-spacing: -0.005em; color: var(--fg); white-space: nowrap; position: sticky; left: 0; background: var(--bg); box-shadow: 1px 0 0 var(--rule-soft); }
+  table.matrix thead th:first-child { position: sticky; left: 0; background: color-mix(in srgb, var(--surface) 40%, var(--bg)); z-index: 1; box-shadow: 1px 0 0 var(--rule); }
+  table.matrix tbody tr:hover td.domain { background: color-mix(in srgb, var(--surface) 55%, var(--bg)); }
+  table.matrix td.domain small { display: block; font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; font-weight: 400; margin-top: 2px; }
+  table.matrix code { font-family: var(--font-mono); font-size: var(--t-code); background: color-mix(in srgb, var(--surface) 70%, transparent); padding: 1px 4px; border-radius: var(--radius-sm); color: var(--fg); }
+  table.matrix .concept-cell { font-family: var(--font-mono); letter-spacing: 0.06em; color: var(--accent); font-size: var(--t-code); white-space: nowrap; }
+
+  .code-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--sp-5); }
+  @media (max-width: 900px) { .code-grid { grid-template-columns: minmax(0,1fr); } }
+  figure.code { margin: 0; border: var(--hair) solid var(--rule); background: var(--surface); border-radius: var(--seed-radius); display: flex; flex-direction: column; min-width: 0; }
+  figure.code figcaption { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-3); padding: var(--sp-3) var(--sp-4); border-bottom: var(--hair) solid var(--rule); background: color-mix(in srgb, var(--surface) 70%, var(--bg)); font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  figure.code figcaption .path { color: var(--fg); text-transform: none; letter-spacing: 0.02em; font-size: var(--t-code); font-family: var(--font-mono); }
+  .copy-btn { background: transparent; border: var(--hair) solid var(--rule); color: var(--muted); font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; cursor: pointer; border-radius: var(--radius-sm); transition: color 140ms ease, border-color 140ms ease, background 140ms ease; }
+  .copy-btn:hover { color: var(--fg); border-color: var(--muted); background: var(--bg); }
+  .copy-btn.is-copied { color: var(--success); border-color: color-mix(in srgb, var(--success) 50%, transparent); }
+  figure.code pre { margin: 0; padding: var(--sp-4); overflow-x: auto; font-family: var(--font-mono); font-size: var(--t-code-lg); line-height: 1.65; color: var(--fg); background: transparent; tab-size: 2; }
+  figure.code pre code { font: inherit; color: inherit; background: transparent; padding: 0; }
+  .k { color: var(--accent); }
+  .s { color: var(--code-string); }
+  .c { color: var(--muted); font-style: italic; }
+  .n { color: var(--code-name); }
+  .f { color: var(--code-fn); font-weight: 550; }
+
+  .stage-band { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); border: var(--hair) solid var(--rule); background: color-mix(in srgb, var(--surface) 50%, var(--bg)); margin-bottom: var(--sp-5); border-radius: var(--seed-radius); overflow: hidden; }
+  .stage-band .stage { padding: var(--sp-3) var(--sp-4); border-right: var(--hair) solid var(--rule); font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: var(--sp-2); }
+  .stage-band .stage:last-child { border-right: none; }
+  .stage-band .stage .idx { display: inline-block; width: 18px; height: 18px; border-radius: 50%; background: var(--fg); color: var(--bg); font-size: calc(10px * var(--seed-type-scale)); text-align: center; line-height: 18px; letter-spacing: 0; font-family: var(--font-mono); }
+  @media (max-width: 900px) {
+    .stage-band { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .stage-band .stage { border-bottom: var(--hair) solid var(--rule); border-right: var(--hair) solid var(--rule); }
+  }
+  .timeline-scroll { overflow-x: auto; padding-bottom: var(--sp-3); position: relative; scrollbar-width: thin; }
+  .timeline-scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .timeline-scroll::after {
+    content: "";
+    position: sticky; right: 0; top: 0; bottom: 0;
+    display: block; width: 24px; height: 1px;
+    pointer-events: none;
+  }
+  .timeline-wrap { position: relative; }
+  .timeline-wrap::after {
+    content: "";
+    position: absolute; top: 0; bottom: var(--sp-3); right: 0; width: 40px;
+    background: linear-gradient(to right, transparent, color-mix(in srgb, var(--bg) 90%, transparent));
+    pointer-events: none;
+  }
+  .timeline-hint {
+    display: flex; align-items: center; gap: var(--sp-2);
+    font-family: var(--font-mono);
+    font-size: var(--t-cap);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: var(--sp-3);
+  }
+  .timeline-hint .arrow { color: var(--accent); font-family: var(--font-body); font-size: calc(15px * var(--seed-type-scale)); letter-spacing: 0; }
+  .timeline { display: grid; grid-template-columns: repeat(7, minmax(170px, 1fr)); min-width: 1200px; border-top: var(--hair) solid var(--rule); border-bottom: var(--hair) solid var(--rule); position: relative; }
+  .concept { padding: var(--sp-4) var(--sp-4) var(--sp-5); border-right: var(--hair) solid var(--rule-soft); display: grid; grid-template-rows: auto auto 1fr; gap: var(--sp-3); transition: opacity 200ms ease, background 200ms ease; position: relative; }
+  .concept:last-child { border-right: none; }
+  .concept .c-head { display: flex; align-items: baseline; gap: var(--sp-3); }
+  .concept .c-letter { font-family: var(--font-display); font-size: calc(38px * var(--seed-type-scale)); line-height: 1; color: var(--accent); letter-spacing: -0.02em; font-weight: 550; }
+  .concept .c-name { font-family: var(--font-display); font-size: var(--t-body); font-weight: 550; letter-spacing: -0.005em; color: var(--fg); line-height: 1.25; }
+  .concept .c-name small { display: block; font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 400; margin-top: 2px; }
+  .concept .c-block { border-top: var(--hair) dotted var(--rule); padding-top: var(--sp-3); }
+  .concept .c-block:first-of-type { border-top: none; padding-top: 0; }
+  .concept .c-label { font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: var(--sp-2); display: block; }
+  .concept .c-body { font-size: var(--t-small); line-height: 1.65; color: var(--ink-soft); margin: 0; }
+  .concept .c-body code { font-family: var(--font-mono); font-size: var(--t-code-sm); background: color-mix(in srgb, var(--surface) 80%, transparent); padding: 1px 4px; border-radius: var(--radius-sm); }
+  .concept .c-gate { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); border: var(--hair) solid color-mix(in srgb, var(--accent) 45%, transparent); padding: 2px 6px; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--accent) 6%, transparent); }
+  .concept.is-dim { opacity: 0.62; }
+  .concept.is-dim .c-body, .concept.is-dim .c-label { color: var(--muted); }
+  .concept.is-dim .c-letter, .concept.is-dim .c-name { color: var(--muted); }
+  .concept.is-hot { background: color-mix(in srgb, var(--accent) 6%, transparent); box-shadow: inset 0 2px 0 var(--accent); }
+  .flow-picker { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-5); padding-top: var(--sp-5); border-top: var(--hair) solid var(--rule-soft); }
+  .flow-btn { display: inline-flex; align-items: center; gap: var(--sp-2); background: transparent; border: var(--hair) solid var(--rule); color: var(--muted); padding: 6px 10px; border-radius: var(--radius-pill); font-family: var(--font-mono); font-size: var(--t-chip); letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: color 140ms ease, border-color 140ms ease, background 140ms ease; }
+  .flow-btn:hover { color: var(--fg); border-color: var(--muted); }
+  .flow-btn[aria-pressed="true"] { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 55%, transparent); background: color-mix(in srgb, var(--accent) 6%, transparent); }
+  .flow-btn .chain { font-family: var(--font-mono); color: inherit; letter-spacing: 0.06em; text-transform: none; font-size: var(--t-code-sm); opacity: 0.75; }
+  .flow-hint { font-size: var(--t-small); color: var(--muted); margin-top: var(--sp-3); max-width: 78ch; line-height: 1.65; }
+
+  .diataxis-layout { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.35fr); gap: var(--sp-6); align-items: start; }
+  @media (max-width: 1000px) { .diataxis-layout { grid-template-columns: minmax(0,1fr); } }
+  .matrix-fig { margin: 0; border: var(--hair) solid var(--rule); padding: var(--sp-4); background: color-mix(in srgb, var(--surface) 40%, var(--bg)); border-radius: var(--seed-radius); position: sticky; top: 96px; }
+  @media (max-width: 1000px) { .matrix-fig { position: static; } }
+  .matrix-fig figcaption { font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: var(--sp-3); text-align: center; }
+  .quadrants { display: grid; gap: var(--sp-4); }
+  .quad { border: var(--hair) solid var(--rule); padding: var(--sp-4) var(--sp-5); background: var(--bg); border-radius: var(--seed-radius); display: grid; grid-template-columns: 44px minmax(0,1fr); gap: var(--sp-4); align-items: start; }
+  .quad .q-mark { font-family: var(--font-display); font-size: calc(32px * var(--seed-type-scale)); line-height: 1; color: var(--accent); letter-spacing: -0.02em; font-weight: 550; }
+  .quad h3 { font-family: var(--font-display); font-size: var(--t-h3); margin: 0 0 var(--sp-2); letter-spacing: -0.01em; font-weight: 550; }
+  .quad h3 small { display: block; font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); font-weight: 400; margin-top: 3px; }
+  .quad .q-def { margin: var(--sp-2) 0 var(--sp-3); color: var(--ink-soft); font-size: var(--t-body); }
+  .quad dl { margin: 0; display: grid; grid-template-columns: 96px minmax(0,1fr); gap: var(--sp-2) var(--sp-3); font-size: var(--t-small); }
+  .quad dt { font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+  .quad dd { margin: 0; color: var(--ink-soft); line-height: 1.6; }
+  .quad dd code { font-family: var(--font-mono); font-size: var(--t-code-sm); background: color-mix(in srgb, var(--surface) 80%, transparent); padding: 1px 4px; border-radius: var(--radius-sm); }
+  @media (max-width: 620px) {
+    .quad { grid-template-columns: minmax(0,1fr); }
+    .quad dl { grid-template-columns: minmax(0,1fr); }
+    .quad dt { padding-top: 0; margin-top: var(--sp-2); }
+  }
+
+  .qg-layout { display: grid; grid-template-columns: minmax(0,1.25fr) minmax(0,1fr); gap: var(--sp-6); align-items: start; }
+  @media (max-width: 1000px) { .qg-layout { grid-template-columns: minmax(0,1fr); } }
+  .qg-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--sp-4); }
+  @media (max-width: 700px) { .qg-grid { grid-template-columns: minmax(0,1fr); } }
+  .qg-card { border: var(--hair) solid var(--rule); padding: var(--sp-4) var(--sp-4) var(--sp-4) var(--sp-5); background: var(--bg); border-radius: var(--seed-radius); display: grid; gap: var(--sp-2); position: relative; overflow: hidden; }
+  .qg-card::before { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: var(--accent); opacity: 0.85; }
+  .qg-card .qg-id { font-family: var(--font-display); font-size: calc(24px * var(--seed-type-scale)); color: var(--accent); letter-spacing: -0.02em; font-weight: 550; line-height: 1; }
+  .qg-card h3 { font-family: var(--font-display); font-size: var(--t-h3); margin: 0; letter-spacing: -0.01em; font-weight: 550; }
+  .qg-card .qg-row { display: grid; grid-template-columns: 76px minmax(0,1fr); gap: var(--sp-2); font-size: var(--t-small); padding-top: var(--sp-2); border-top: var(--hair) dotted var(--rule); margin: var(--sp-2) 0 0; }
+  .qg-card .qg-row dt { font-family: var(--font-mono); font-size: var(--t-micro); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 2px; }
+  .qg-card .qg-row dd { margin: 0; color: var(--ink-soft); line-height: 1.6; }
+  .qg-card .qg-row dd code { font-family: var(--font-mono); font-size: var(--t-code-sm); background: color-mix(in srgb, var(--surface) 80%, transparent); padding: 1px 4px; border-radius: var(--radius-sm); }
+  .metrics-panel { border: var(--hair) solid var(--rule); padding: var(--sp-5); background: color-mix(in srgb, var(--surface) 45%, var(--bg)); border-radius: var(--seed-radius); display: grid; gap: var(--sp-4); }
+  .metrics-panel h3 { font-family: var(--font-display); font-size: var(--t-h3); margin: 0; letter-spacing: -0.01em; font-weight: 550; }
+  .metrics-panel .panel-head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-3); padding-bottom: var(--sp-2); border-bottom: var(--hair) solid var(--rule); flex-wrap: wrap; }
+  .metric-item { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: var(--sp-3); align-items: center; padding: var(--sp-2) 0; border-bottom: var(--hair) dotted var(--rule); }
+  .metric-item:last-of-type { border-bottom: none; }
+  .metric-item .m-label { font-size: var(--t-small); color: var(--fg); display: flex; flex-direction: column; gap: 2px; }
+  .metric-item .m-label small { color: var(--muted); font-size: var(--t-code-sm); font-family: var(--font-mono); letter-spacing: 0.04em; }
+  .metric-item svg { display: block; }
+  .v-band { margin-top: var(--sp-6); border: var(--hair) solid var(--rule); background: color-mix(in srgb, var(--accent) 5%, var(--bg)); padding: var(--sp-4) var(--sp-5); display: grid; grid-template-columns: 88px minmax(0,1fr); gap: var(--sp-4); align-items: baseline; border-radius: var(--seed-radius); }
+  .v-band .v-mark { font-family: var(--font-display); font-size: calc(40px * var(--seed-type-scale)); color: var(--accent); letter-spacing: -0.02em; line-height: 1; font-weight: 550; }
+  .v-band p { margin: 0; color: var(--ink-soft); font-size: var(--t-body); }
+  @media (max-width: 620px) { .v-band { grid-template-columns: minmax(0,1fr); gap: var(--sp-2); } }
+
+  .phase { padding-bottom: var(--sp-6); display: grid; grid-template-columns: 40px minmax(0,1fr); gap: var(--sp-5); position: relative; }
+  .phase:last-of-type { padding-bottom: 0; }
+  .phase-marker { display: grid; place-items: start center; position: relative; padding-top: 6px; }
+  .phase-marker::before { content: ""; position: absolute; left: 15px; top: 34px; bottom: -24px; width: 1px; background: var(--rule); }
+  .phase:last-of-type .phase-marker::before { display: none; }
+  .phase-marker .dot { width: 30px; height: 30px; border-radius: 50%; background: var(--bg); border: var(--hair) solid var(--accent); color: var(--accent); display: grid; place-items: center; font-family: var(--font-mono); font-size: var(--t-code); letter-spacing: 0.06em; z-index: 1; position: relative; }
+  .phase-body { border: var(--hair) solid var(--rule); padding: var(--sp-5); background: var(--bg); border-radius: var(--seed-radius); display: grid; gap: var(--sp-4); }
+  .phase-body header { display: grid; gap: var(--sp-2); }
+  .phase-body h3 { font-family: var(--font-display); font-size: var(--t-h2); margin: 0; letter-spacing: -0.015em; font-weight: 550; line-height: 1.2; }
+  .phase-body .p-meta { display: flex; gap: var(--sp-3); flex-wrap: wrap; font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .phase-cols { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: var(--sp-4); padding-top: var(--sp-3); border-top: var(--hair) dotted var(--rule); }
+  @media (max-width: 900px) { .phase-cols { grid-template-columns: minmax(0,1fr); } }
+  .phase-cols h4 { font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 var(--sp-2); font-weight: 500; }
+  .phase-cols ul, .phase-cols ol { margin: 0; padding-left: 1.2em; font-size: var(--t-small); color: var(--ink-soft); line-height: 1.65; }
+  .phase-cols li { margin-bottom: var(--sp-2); }
+  .phase-cols li:last-child { margin-bottom: 0; }
+  .deliverable { display: inline-block; font-family: var(--font-mono); font-size: var(--t-code-sm); padding: 1px 6px; background: color-mix(in srgb, var(--surface) 80%, transparent); border: var(--hair) solid var(--rule); color: var(--fg); border-radius: var(--radius-sm); margin: 2px 4px 2px 0; }
+
+  .footer-grid { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); gap: var(--sp-6); align-items: start; }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: minmax(0,1fr); } }
+  .glossary { list-style: none; margin: 0; padding: 0; }
+  .glossary li { display: grid; grid-template-columns: 170px minmax(0,1fr); gap: var(--sp-4); padding: var(--sp-3) 0; border-bottom: var(--hair) dotted var(--rule); font-size: var(--t-small); align-items: baseline; }
+  .glossary li:last-child { border-bottom: none; }
+  .glossary .g-term { font-family: var(--font-display); font-size: var(--t-body); font-weight: 550; letter-spacing: -0.005em; color: var(--fg); }
+  .glossary .g-def { color: var(--ink-soft); line-height: 1.65; }
+  .glossary .g-def code { font-family: var(--font-mono); font-size: var(--t-code-sm); background: color-mix(in srgb, var(--surface) 80%, transparent); padding: 1px 4px; border-radius: var(--radius-sm); }
+  @media (max-width: 620px) { .glossary li { grid-template-columns: minmax(0,1fr); gap: 2px; } }
+  .eco-card { border: var(--hair) solid var(--rule); padding: var(--sp-5); background: color-mix(in srgb, var(--surface) 45%, var(--bg)); border-radius: var(--seed-radius); display: grid; gap: var(--sp-3); }
+  .eco-card h3 { font-family: var(--font-display); font-size: var(--t-h3); margin: 0; letter-spacing: -0.01em; font-weight: 550; }
+  .eco-card p { margin: 0; color: var(--ink-soft); font-size: var(--t-small); line-height: 1.7; }
+  .eco-card ul { margin: 0; padding-left: 1.1em; color: var(--ink-soft); font-size: var(--t-small); line-height: 1.7; }
+  .eco-card code { font-family: var(--font-mono); font-size: var(--t-code-sm); background: color-mix(in srgb, var(--bg) 80%, transparent); padding: 1px 4px; border-radius: var(--radius-sm); color: var(--fg); }
+  .footnotes { margin-top: var(--sp-6); padding-top: var(--sp-4); border-top: var(--hair) solid var(--rule-soft); font-size: var(--t-small); color: var(--muted); }
+  .footnotes h3 { font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 var(--sp-3); font-weight: 500; }
+  .footnotes ol { margin: 0; padding-left: 0; list-style: none; }
+  .footnotes li { margin-bottom: var(--sp-2); line-height: 1.65; padding-left: 2.2em; text-indent: -2.2em; }
+  .footnotes .fn-num { font-family: var(--font-mono); color: var(--accent); margin-right: 6px; }
+  .colophon { margin-top: var(--sp-7); padding-top: var(--sp-5); border-top: var(--hair) solid var(--rule); display: flex; flex-wrap: wrap; gap: var(--sp-4); justify-content: space-between; align-items: baseline; font-family: var(--font-mono); font-size: var(--t-cap); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .fleuron { display: block; margin: var(--sp-7) auto 0; color: var(--rule); opacity: var(--seed-ornament); transition: opacity 200ms ease; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="site-header" id="siteHeader" data-component="site-header" data-od-id="header">
+  <div class="header-inner">
+    <div class="brand">
+      <span>Docs&nbsp;as&nbsp;Product</span>
+      <span class="sep">/</span>
+      <span class="tag">Sphinx · Python</span>
+    </div>
+    <nav class="main-nav" aria-label="章节导航" data-component="main-nav" data-od-id="main-nav">
+      <ul>
+        <li><a href="#why" data-nav="why">Why</a></li>
+        <li><a href="#stack" data-nav="stack">Stack</a></li>
+        <li><a href="#seven-concepts" data-nav="seven-concepts">七概念</a></li>
+        <li><a href="#diataxis" data-nav="diataxis">Diátaxis</a></li>
+        <li><a href="#quality-gates" data-nav="quality-gates">质量门</a></li>
+        <li><a href="#roadmap" data-nav="roadmap">路线图</a></li>
+      </ul>
+    </nav>
+    <a class="header-cta" href="#footer">方法论索引</a>
+  </div>
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+</header>
+
+<div class="page">
+  <main class="content" id="main">
+    <section class="hero" id="hero" aria-labelledby="heroTitle" data-component="hero" data-od-id="hero">
+      <div class="hero-meta" aria-label="版本信息">
+        <span>Volume 01</span><span class="dot">·</span>
+        <span>Issue 07</span><span class="dot">·</span>
+        <span>2026 · 10</span><span class="dot">·</span>
+        <span>zh-CN</span><span class="dot">·</span>
+        <span>For engineering teams</span>
+      </div>
+
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow" style="margin:0 0 var(--sp-4);">A methodology broadsheet</p>
+          <h1 class="hero-title" id="heroTitle">
+            文档即产品
+            <span class="en">Docs as Product on Sphinx · Python</span>
+          </h1>
+          <p class="hero-lede">
+            把文档当作产品的第&nbsp;N&nbsp;个界面来经营——有读者画像、有可衡量指标、有版本节奏、有质量门；
+            用&nbsp;<span class="term" tabindex="0" data-def="Python 生态的文档生成器：把 reStructuredText / Markdown 编译为多格式站点，支持扩展、主题化、交叉引用与搜索索引。">Sphinx</span>&nbsp;+&nbsp;Python&nbsp;承载构建、扩展、搜索、国际化与 CI，
+            用七概念&nbsp;<span class="term" tabindex="0" data-def="R 复盘 / F 第一性原理 / I 洞察 / E 萃取 / V 对抗性审查 / A 原子化 / C 原子提交。SpecWeave 方法论体系。">R&nbsp;F&nbsp;I&nbsp;E&nbsp;V&nbsp;A&nbsp;C</span>&nbsp;编排规划—生产—验证—沉淀—发布的全生命周期。
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="#seven-concepts">进入方法论主线</a>
+            <a class="btn ghost" href="#stack">查看能力矩阵</a>
+            <span class="chip" style="margin-left:var(--sp-2);">7 concepts · 5 workflows · 4 gates</span>
+          </div>
+        </div>
+
+        <div class="hero-figure">
+          <div class="pipeline-wrap" data-component="pipeline-figure" data-od-id="pipeline">
+            <div class="pipeline-caption">
+              <span>Fig. 00 — Sphinx build pipeline</span>
+              <span>source → conf.py → builder → site</span>
+            </div>
+            <svg viewBox="0 0 520 230" role="img" aria-labelledby="pipelineTitle pipelineDesc" style="width:100%; height:auto; display:block;">
+              <title id="pipelineTitle">Sphinx 构建管线示意图</title>
+              <desc id="pipelineDesc">从 rst/md 源文件与 conf.py 配置出发，经 docutils 解析生成 doctree，再由 builder 输出静态站点、搜索索引、国际化包、链接检查报告与 objects.inv。</desc>
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" class="fi-fg"></path>
+                </marker>
+                <pattern id="hatch" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                  <line x1="0" y1="0" x2="0" y2="4" class="si-fg" stroke-width="0.6" opacity="0.22"></line>
+                </pattern>
+              </defs>
+              <g font-family="JetBrains Mono, monospace" font-size="12" class="fi-ink-soft">
+                <rect x="6" y="26" width="112" height="26" class="fi-surface si-fg" stroke-width="1"></rect>
+                <text x="16" y="44">docs/*.rst</text>
+                <rect x="6" y="58" width="112" height="26" class="fi-surface si-fg" stroke-width="1"></rect>
+                <text x="16" y="76">docs/*.md</text>
+                <rect x="6" y="90" width="112" height="26" class="fi-surface si-fg" stroke-width="1"></rect>
+                <text x="16" y="108">api/*.py</text>
+                <rect x="6" y="122" width="112" height="26" class="fi-surface si-accent" stroke-width="1"></rect>
+                <text x="16" y="140" class="fi-accent">conf.py</text>
+                <rect x="6" y="154" width="112" height="26" class="fi-surface si-fg" stroke-width="1"></rect>
+                <text x="16" y="172">_static/_ext</text>
+              </g>
+              <g>
+                <rect x="152" y="66" width="106" height="88" class="fi-bg si-fg" stroke-width="1.25"></rect>
+                <rect x="152" y="66" width="106" height="88" fill="url(#hatch)"></rect>
+                <text x="205" y="100" text-anchor="middle" font-family="Source Serif Pro, Georgia, serif" font-size="17" class="fi-fg" font-weight="600">Parser</text>
+                <text x="205" y="122" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" class="fi-ink-soft">docutils</text>
+                <text x="205" y="140" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" class="fi-ink-soft">→ doctree</text>
+              </g>
+              <g>
+                <rect x="290" y="48" width="118" height="124" class="fi-bg si-accent" stroke-width="1.25"></rect>
+                <text x="349" y="76" text-anchor="middle" font-family="Source Serif Pro, Georgia, serif" font-size="17" class="fi-fg" font-weight="600">Builder</text>
+                <text x="349" y="98" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11.5" class="fi-ink-soft">html · dirhtml</text>
+                <text x="349" y="115" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11.5" class="fi-ink-soft">latex · epub</text>
+                <text x="349" y="132" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11.5" class="fi-ink-soft">linkcheck</text>
+                <text x="349" y="149" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11.5" class="fi-ink-soft">gettext · spell</text>
+                <text x="349" y="166" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" class="fi-accent">-W  warnings→err</text>
+              </g>
+              <g font-family="JetBrains Mono, monospace" font-size="12" class="fi-ink-soft">
+                <rect x="440" y="26" width="76" height="26" class="fi-surface si-fg" stroke-width="1"></rect>
+                <text x="450" y="44">site/</text>
+                <rect x="440" y="58" width="76" height="26" class="fi-surface si-fg" stroke-width="1"></rect>
+                <text x="450" y="76">search</text>
+                <rect x="440" y="90" width="76" height="26" class="fi-surface si-fg" stroke-width="1"></rect>
+                <text x="450" y="108">locale</text>
+                <rect x="440" y="122" width="76" height="26" class="fi-surface si-fg" stroke-width="1"></rect>
+                <text x="450" y="140">links</text>
+                <rect x="440" y="154" width="76" height="26" class="fi-surface si-fg" stroke-width="1"></rect>
+                <text x="450" y="172">objects</text>
+              </g>
+              <g class="si-fg" stroke-width="1" fill="none" marker-end="url(#arrow)">
+                <path d="M118,39 C136,39 136,86 150,86"></path>
+                <path d="M118,71 C136,71 136,98 150,98"></path>
+                <path d="M118,103 C136,103 136,110 150,110"></path>
+                <path d="M118,135 C136,135 136,122 150,122"></path>
+                <path d="M118,167 C136,167 136,134 150,134"></path>
+                <path d="M258,110 L288,110"></path>
+                <path d="M408,60 C426,60 426,39 438,39"></path>
+                <path d="M408,90 C426,90 426,71 438,71"></path>
+                <path d="M408,110 C426,110 426,103 438,103"></path>
+                <path d="M408,138 C426,138 426,135 438,135"></path>
+                <path d="M408,160 C426,160 426,167 438,167"></path>
+              </g>
+              <text x="260" y="215" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" class="fi-caption" letter-spacing="1.2">5 builders · 3 strict flags · 1 doctree</text>
+            </svg>
+          </div>
+
+          <div class="badge-row" data-component="seven-badge" data-od-id="seven-badge">
+            <div class="badge-caption">
+              Methodology imprint<br/>
+              <span style="color:var(--accent);">R · F · I · E · V · A · C</span>
+            </div>
+            <svg viewBox="0 0 140 140" width="120" height="120" role="img" aria-labelledby="ringTitle">
+              <title id="ringTitle">七概念环形徽章</title>
+              <circle cx="70" cy="70" r="58" class="fi-none si-fg" stroke-width="1" opacity="0.4"></circle>
+              <circle cx="70" cy="70" r="46" class="fi-none si-accent" stroke-width="0.75" stroke-dasharray="2 3"></circle>
+              <circle cx="70" cy="70" r="26" class="fi-bg si-fg" stroke-width="1"></circle>
+              <text x="70" y="66" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" class="fi-ink-soft" letter-spacing="1.4">SEVEN</text>
+              <text x="70" y="80" text-anchor="middle" font-family="Source Serif Pro, Georgia, serif" font-size="12" class="fi-accent" font-weight="600" letter-spacing="0.4">CONCEPTS</text>
+              <g font-family="Source Serif Pro, Georgia, serif" font-size="16" font-weight="600" class="fi-fg" text-anchor="middle">
+                <text x="70" y="18">R</text>
+                <text x="112" y="42">F</text>
+                <text x="128" y="82">I</text>
+                <text x="106" y="122">E</text>
+                <text x="70" y="136">V</text>
+                <text x="34" y="122">A</text>
+                <text x="12" y="82">C</text>
+              </g>
+              <g class="fi-accent">
+                <circle cx="70" cy="12" r="2"></circle>
+                <circle cx="112" cy="36" r="2"></circle>
+                <circle cx="128" cy="76" r="2"></circle>
+                <circle cx="106" cy="116" r="2"></circle>
+                <circle cx="70" cy="130" r="2"></circle>
+                <circle cx="34" cy="116" r="2"></circle>
+                <circle cx="12" cy="76" r="2"></circle>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="chapter" id="why" aria-labelledby="whyTitle" data-component="chapter-why" data-od-id="why">
+      <div class="chapter-head">
+        <div class="numeral">01</div>
+        <div>
+          <h2 class="chapter-title" id="whyTitle">为什么文档即产品</h2>
+          <p class="chapter-motto">Docere, delectare, movere — 教之、悦之、动之。</p>
+        </div>
+      </div>
+
+      <p class="chapter-lede">
+        文档不是代码的副产品，而是产品对外的第&nbsp;N&nbsp;个界面。它承担与前端、API、命令行同等的用户职责，
+        因此需要与产品同一套经营方式：读者画像、可衡量指标、发布节奏、质量门与复盘。
+      </p>
+
+      <div class="why-grid">
+        <div class="why-col">
+          <h3>价值论断</h3>
+          <p><strong>文档是产品最便宜的一次交付、最昂贵的一次失误。</strong>一次写作可以服务成千上万次任务；一次错误引导也可以被放大成千上万倍。</p>
+          <div class="pull" style="margin-top: var(--sp-4);">
+            文档的读者不只是人。<br/>
+            还有 IDE、AI Agent、搜索爬虫、下游集成方——<br/>
+            他们都在以你无法看见的方式引用你的文字。
+            <cite>— 本页主张；参照 Write the Docs 社区「Docs as Product」议题<a class="fnref" href="#fn-1" id="fnref-1">[1]</a>，以及 <span style="font-family:var(--font-mono); font-size: 12px;">docs.python.org</span> 由 Sphinx 自证构建的公开范例<a class="fnref" href="#fn-4" id="fnref-4">[4]</a></cite>
+          </div>
+          <p style="margin-top: var(--sp-4);">
+            因此文档产品化不是「多写点文档」，而是把
+            <span class="term" tabindex="0" data-def="Docs-as-Product：把文档视为独立产品线，配备读者画像、指标、路线图与质量门的运营方式。">Docs-as-Product</span>
+            作为一等公民纳入工程治理。写作一次可服务成千上万次任务，成本 O(1)；一次错误引导可沿下游集成方 × AI Agent 引用 × 搜索排名放大成千上万倍，成本 O(N·M)。这一不对称性是把文档当产品经营的经济学理由。
+          </p>
+        </div>
+
+        <div class="why-col">
+          <h3>四类读者</h3>
+          <ul class="readers">
+            <li>
+              <svg width="36" height="36" viewBox="0 0 36 36" role="img" aria-label="终端用户图标"><circle cx="18" cy="18" r="17" class="fi-surface si-fg" stroke-width="1"></circle><circle cx="18" cy="14" r="5" class="fi-none si-fg" stroke-width="1.25"></circle><path d="M8,30 C10,22 26,22 28,30" class="fi-none si-fg" stroke-width="1.25"></path></svg>
+              <div><span class="r-name">终端用户</span><span class="r-role">带着一个具体任务而来，需要在 5 分钟内完成 install / auth / query 之一。</span></div>
+            </li>
+            <li>
+              <svg width="36" height="36" viewBox="0 0 36 36" role="img" aria-label="集成方图标"><circle cx="18" cy="18" r="17" class="fi-surface si-fg" stroke-width="1"></circle><path d="M10,18 L15,18 M21,18 L26,18 M18,10 L18,15 M18,21 L18,26" class="si-fg" stroke-width="1.25" fill="none"></path><rect x="14" y="14" width="8" height="8" class="fi-none si-accent" stroke-width="1.25"></rect></svg>
+              <div><span class="r-name">集成方 / SDK 消费者</span><span class="r-role">读 Reference 与 Changelog，关心兼容性、SLA 与 objects.inv 交叉引用。</span></div>
+            </li>
+            <li>
+              <svg width="36" height="36" viewBox="0 0 36 36" role="img" aria-label="内部工程师图标"><circle cx="18" cy="18" r="17" class="fi-surface si-fg" stroke-width="1"></circle><path d="M12,14 L16,18 L12,22 M20,22 L25,22" class="si-fg" stroke-width="1.4" fill="none" stroke-linecap="round"></path></svg>
+              <div><span class="r-name">内部工程师</span><span class="r-role">读 Explanation 与 ADR，需要理解「为什么这样做」，而不只是「怎么用」。</span></div>
+            </li>
+            <li>
+              <svg width="36" height="36" viewBox="0 0 36 36" role="img" aria-label="AI Agent 图标"><circle cx="18" cy="18" r="17" class="fi-surface si-fg" stroke-width="1"></circle><rect x="11" y="12" width="14" height="12" class="fi-none si-fg" stroke-width="1.25"></rect><circle cx="15" cy="18" r="1.4" class="fi-accent"></circle><circle cx="21" cy="18" r="1.4" class="fi-accent"></circle><path d="M18,10 L18,12 M14,26 L14,28 M22,26 L22,28" class="si-fg" stroke-width="1.25"></path></svg>
+              <div><span class="r-name">AI Agent / 检索系统</span><span class="r-role">通过语义分块、锚点稳定与结构化 metadata 引用你的文档，是新一代沉默读者。</span></div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="why-col">
+          <h3>五项可衡量指标</h3>
+          <ul class="metrics-list">
+            <li><span><span class="m-name">任务完成率</span><span class="m-def">读者进入 How-to 页后是否完成目标任务。<br/><span style="font-family:var(--font-mono); font-size: 11px; letter-spacing: 0.04em;">采集：页脚反馈组件 + GA4 事件</span></span></span><span class="m-src">M1<a class="fnref" href="#fn-2" id="fnref-2">[2]</a></span></li>
+            <li><span><span class="m-name">首次响应时间</span><span class="m-def">从读者进入站点到第一个可执行片段被复制的时长。<br/><span style="font-family:var(--font-mono); font-size: 11px; letter-spacing: 0.04em;">采集：sphinx-copybutton 事件埋点</span></span></span><span class="m-src">M2</span></li>
+            <li><span><span class="m-name">搜索命中率</span><span class="m-def">Sphinx 内置 search 或 Algolia 的 zero-result 比例与 top-3 点击率。<br/><span style="font-family:var(--font-mono); font-size: 11px; letter-spacing: 0.04em;">采集：DocSearch analytics / 自建搜索日志</span></span></span><span class="m-src">M3</span></li>
+            <li><span><span class="m-name">文档回滚率</span><span class="m-def">合入后 7 天内被 revert / 更正的文档提交占比，反映 V 门是否失效。<br/><span style="font-family:var(--font-mono); font-size: 11px; letter-spacing: 0.04em;">采集：<code>git log --grep='^Revert.*docs'</code> 计数</span></span></span><span class="m-src">M4</span></li>
+            <li><span><span class="m-name">AI 引用命中率</span><span class="m-def">文档被 LLM 检索/引用时的锚点稳定性与语义完整度。<br/><span style="font-family:var(--font-mono); font-size: 11px; letter-spacing: 0.04em;">采集：<code>/llms.txt</code> 访问日志 + 引用抽样审计</span></span></span><span class="m-src">M5</span></li>
+          </ul>
+          <p style="margin-top: var(--sp-4); font-size: var(--t-small); color: var(--muted);">
+            指标不是 KPI，而是「读者是否被服务」的信号。任何数字都必须有采集方式与解读边界，否则不如不写。
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="chapter" id="stack" aria-labelledby="stackTitle" data-component="chapter-stack" data-od-id="stack">
+      <div class="chapter-head">
+        <div class="numeral">02</div>
+        <div>
+          <h2 class="chapter-title" id="stackTitle">Sphinx + Python 能力矩阵</h2>
+          <p class="chapter-motto">Nulla dies sine linea — 一日不写，一日无功。</p>
+        </div>
+      </div>
+
+      <p class="chapter-lede">
+        Sphinx 不是一个静态站点生成器，而是一整套「以&nbsp;<code>doctree</code>&nbsp;为中心的文档操作系统」：
+        Python 扩展点、可插拔 builder、跨项目 objects.inv、内建搜索与国际化。以下矩阵把能力域、原生支持、生态、
+        我们的取舍、质量门与关联的七概念一次性摆清。
+      </p>
+
+      <div class="stack-wrap">
+        <div class="table-scroll" data-component="capability-matrix" data-od-id="capability-matrix">
+          <table class="matrix">
+            <caption>Tab. 02 — Sphinx + Python 能力矩阵（5 能力域 × 6 维度）</caption>
+            <thead>
+              <tr>
+                <th scope="col">能力域</th>
+                <th scope="col">Sphinx 原生</th>
+                <th scope="col">Python 生态</th>
+                <th scope="col">我们的取舍</th>
+                <th scope="col">质量门</th>
+                <th scope="col">关联概念</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="domain">Build &amp; Extensions<small>构建与扩展</small></td>
+                <td><code>doctree</code>、<code>directive</code>、<code>role</code>、事件钩子、<code>nitpicky</code> 严格模式</td>
+                <td><code>myst-parser</code>、<code>sphinx-copybutton</code>、<code>sphinx-design</code>、<code>sphinxcontrib-mermaid</code></td>
+                <td>Markdown 走 MyST 兼容；扩展优先选可维护 &lt;500 行者；自研 directive 收进 <code>_ext/</code> 并单元测试</td>
+                <td>G3 模式可迁移</td>
+                <td class="concept-cell">E · A</td>
+              </tr>
+              <tr>
+                <td class="domain">Themes &amp; IA<small>主题与信息架构</small></td>
+                <td><code>furo</code> / <code>pydata-sphinx-theme</code>、<code>toctree</code> 层级、侧栏与右栏 ToC</td>
+                <td><code>sphinx-immaterial</code>、<code>sphinx-book-theme</code>、自定义 CSS/JS 注入</td>
+                <td>主题固定一个；层级不超过 3 层；Diátaxis 四型作为顶层 toctree 分区</td>
+                <td>G4 toctree 深度 ≤3 lint</td>
+                <td class="concept-cell">A · I</td>
+              </tr>
+              <tr>
+                <td class="domain">Search &amp; Discovery<small>搜索与可发现</small></td>
+                <td>内置 <code>searchindex.js</code>、<code>objects.inv</code> 交叉引用、<code>intersphinx</code></td>
+                <td>Algolia DocSearch、Typesense、语义分块导出至向量库</td>
+                <td>默认内置搜索 + DocSearch；为 AI Agent 额外导出 <code>/llms.txt</code> 与语义分块 JSON</td>
+                <td>M3 搜索命中率</td>
+                <td class="concept-cell">I · R</td>
+              </tr>
+              <tr>
+                <td class="domain">i18n &amp; Versioning<small>国际化与版本化</small></td>
+                <td><code>gettext</code> builder、<code>locale/</code> 目录、<code>language</code> 配置</td>
+                <td><code>sphinx-intl</code>、<code>transifex-client</code>、Read the Docs 多版本</td>
+                <td>中文为主 + 英文摘要；版本随 release 分支冻结；旧版归档不删除</td>
+                <td>术语一致性 + <code>sphinx-intl</code> 漂移 diff</td>
+                <td class="concept-cell">R · C</td>
+              </tr>
+              <tr>
+                <td class="domain">CI · Preview · Observability<small>构建、预览与可观测</small></td>
+                <td><code>-W --keep-going</code>、<code>linkcheck</code>、<code>doctest</code>、<code>coverage</code> builder</td>
+                <td>GitHub Actions、Netlify/Vercel Preview、<code>sphinx-lint</code>、<code>vale</code> 风格检查</td>
+                <td>PR 必须通过 <code>-W</code> 构建 + linkcheck；每 PR 生成独立预览链接；每周出可观测报告</td>
+                <td>V 门（对抗审查）</td>
+                <td class="concept-cell">V · C</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-grid">
+          <figure class="code" data-component="code-conf" data-od-id="code-conf">
+            <figcaption><span class="path">docs/conf.py</span><button class="copy-btn" type="button" data-copy-target="code-conf-src">复制</button></figcaption>
+<pre><code id="code-conf-src"><span class="c"># 文档产品的最小公理集合（对应 F 第一性原理）</span>
+<span class="k">import</span> os, sys
+sys.path.insert(<span class="n">0</span>, os.path.abspath(<span class="s">"."</span>))  <span class="c"># 让 Sphinx 找到 _ext/</span>
+
+<span class="n">project</span> = <span class="s">"SpecWeave"</span>
+<span class="n">author</span> = <span class="s">"SpecWeave Council"</span>
+<span class="n">release</span> = <span class="s">"2026.10"</span>
+<span class="n">language</span> = <span class="s">"zh_CN"</span>
+
+<span class="n">extensions</span> = [
+    <span class="s">"sphinx.ext.autodoc"</span>,       <span class="c"># Reference 由源码生成</span>
+    <span class="s">"sphinx.ext.napoleon"</span>,      <span class="c"># 兼容 Google / NumPy docstring</span>
+    <span class="s">"sphinx.ext.intersphinx"</span>,   <span class="c"># 跨项目 objects.inv 引用</span>
+    <span class="s">"sphinx.ext.viewcode"</span>,
+    <span class="s">"myst_parser"</span>,              <span class="c"># Markdown 一等公民</span>
+    <span class="s">"sphinx_copybutton"</span>,
+    <span class="s">"sphinxcontrib.mermaid"</span>,
+    <span class="s">"_ext.quality_gate"</span>,         <span class="c"># 自研：把 G1-G4 编码为 directive</span>
+]
+
+<span class="c"># V 门：把警告当错误 + 严格引用解析，坏文档不许流入 main</span>
+<span class="c"># （G1 事实无因果词由 vale 规则在 CI 层拦截，见 workflows/docs.yml）</span>
+<span class="n">nitpicky</span> = <span class="k">True</span>
+<span class="n">nitpick_ignore</span> = [(<span class="s">"py:class"</span>, <span class="s">"_io.TextIOWrapper"</span>)]
+
+<span class="n">html_theme</span> = <span class="s">"furo"</span>
+<span class="n">html_baseurl</span> = <span class="s">"https://docs.specweave.example/"</span>
+</code></pre>
+          </figure>
+
+          <figure class="code" data-component="code-directive" data-od-id="code-directive">
+            <figcaption><span class="path">docs/_ext/quality_gate.py</span><button class="copy-btn" type="button" data-copy-target="code-dir-src">复制</button></figcaption>
+<pre><code id="code-dir-src"><span class="c">"""把 G1-G4 编码为一等公民（对应 E 萃取）"""</span>
+<span class="k">from</span> docutils <span class="k">import</span> nodes
+<span class="k">from</span> sphinx.util.docutils <span class="k">import</span> SphinxDirective
+
+
+<span class="k">class</span> <span class="f">QualityGateDirective</span>(SphinxDirective):
+    <span class="s">""".. quality_gate:: G1
+          :gate: 事实无因果词
+          :on_fail: 返回 R 阶段重写
+    """</span>
+    required_arguments = <span class="n">1</span>
+    option_spec = {<span class="s">"gate"</span>: <span class="f">str</span>, <span class="s">"on_fail"</span>: <span class="f">str</span>}
+    has_content = <span class="k">True</span>
+
+    <span class="k">def</span> <span class="f">run</span>(self):
+        node = nodes.container(classes=[<span class="s">"quality-gate"</span>])
+        node += nodes.strong(
+            text=<span class="s">f"[{self.arguments[0]}] {self.options['gate']}"</span>
+        )
+        self.state.nested_parse(self.content, self.content_offset, node)
+        <span class="k">return</span> [node]
+
+
+<span class="k">def</span> <span class="f">setup</span>(app):
+    app.add_directive(<span class="s">"quality_gate"</span>, QualityGateDirective)
+    <span class="k">return</span> {<span class="s">"version"</span>: <span class="s">"1.0"</span>, <span class="s">"parallel_read_safe"</span>: <span class="k">True</span>}
+</code></pre>
+          </figure>
+
+          <figure class="code" data-component="code-ci" data-od-id="code-ci">
+            <figcaption><span class="path">.github/workflows/docs.yml</span><button class="copy-btn" type="button" data-copy-target="code-ci-src">复制</button></figcaption>
+<pre><code id="code-ci-src"><span class="c"># 每个 PR = 一次 V 门（对抗审查）+ C 门（原子提交）</span>
+<span class="n">name</span>: docs
+<span class="n">on</span>: [push, pull_request]
+
+<span class="n">jobs</span>:
+  <span class="n">build</span>:
+    <span class="n">runs-on</span>: ubuntu-latest
+    <span class="n">steps</span>:
+      - <span class="n">uses</span>: actions/checkout@v4
+      - <span class="n">uses</span>: actions/setup-python@v5
+        <span class="n">with</span>: { <span class="n">python-version</span>: <span class="s">"3.12"</span> }
+      - <span class="n">run</span>: pip install -e <span class="s">".[docs]"</span>
+
+      <span class="c"># V 门：-W 把 warning 当 error，nitpicky 严格解析引用</span>
+      - <span class="n">run</span>: sphinx-build -W --keep-going docs docs/_build/html
+
+      <span class="c"># G1 门：vale 规则拦截「因为/所以/导致」等因果词</span>
+      - <span class="n">uses</span>: errata-ai/vale-action@v2
+        <span class="n">with</span>: { <span class="n">files</span>: docs, <span class="n">minAlertLevel</span>: warning }
+
+      <span class="c"># 死链巡检：进入 V 门证据链</span>
+      - <span class="n">run</span>: sphinx-build -b linkcheck docs docs/_build/linkcheck
+
+      <span class="c"># 每 PR 一个独立预览 URL（Netlify Deploy Previews）</span>
+      - <span class="n">uses</span>: nwtgck/actions-netlify@v3
+        <span class="n">with</span>:
+          <span class="n">publish-dir</span>: docs/_build/html
+          <span class="n">production-deploy</span>: false
+        <span class="n">env</span>:
+          <span class="n">NETLIFY_AUTH_TOKEN</span>: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          <span class="n">NETLIFY_SITE_ID</span>: ${{ secrets.NETLIFY_SITE_ID }}
+</code></pre>
+          </figure>
+
+          <figure class="code" data-component="code-linkcheck" data-od-id="code-linkcheck">
+            <figcaption><span class="path">scripts/linkcheck_triage.py</span><button class="copy-btn" type="button" data-copy-target="code-lc-src">复制</button></figcaption>
+<pre><code id="code-lc-src"><span class="c">"""每日巡检：把死链当作生产事故（对应 R 复盘）"""</span>
+<span class="k">import</span> json, pathlib, sys
+
+REPORT = pathlib.Path(<span class="s">"docs/_build/linkcheck/output.json"</span>)
+broken, redirected = [], []
+
+<span class="k">with</span> REPORT.open(encoding=<span class="s">"utf-8"</span>) <span class="k">as</span> fh:
+    <span class="k">for</span> line <span class="k">in</span> fh:
+        row = json.loads(line)
+        <span class="k">if</span> row[<span class="s">"status"</span>] == <span class="s">"broken"</span>:     broken.append(row)
+        <span class="k">elif</span> row[<span class="s">"status"</span>] == <span class="s">"redirected"</span>: redirected.append(row)
+
+<span class="c"># SLA：broken 24h 内修复或显式 :linkcheck_ignore:</span>
+<span class="k">for</span> r <span class="k">in</span> broken:
+    <span class="f">print</span>(<span class="s">f"BROKEN  {r['filename']}:{r['lineno']}  {r['uri']}"</span>)
+
+<span class="c"># redirected 进入周报，评估是否更新引用</span>
+sys.exit(<span class="n">1</span> <span class="k">if</span> broken <span class="k">else</span> <span class="n">0</span>)
+</code></pre>
+          </figure>
+        </div>
+      </div>
+    </section>
+    <section class="chapter" id="seven-concepts" aria-labelledby="scTitle" data-component="chapter-seven-concepts" data-od-id="seven-concepts">
+      <div class="chapter-head">
+        <div class="numeral">03</div>
+        <div>
+          <h2 class="chapter-title" id="scTitle">七概念 × 文档产品全生命周期</h2>
+          <p class="chapter-motto">Festina lente — 缓步疾行，慢即是快。</p>
+        </div>
+      </div>
+
+      <p class="chapter-lede">
+        七概念不是七种「姿势」，而是七个不可颠倒的层级：<strong>R</strong>&nbsp;感知事实、<strong>F</strong>&nbsp;追问公理、<strong>I</strong>&nbsp;形成洞察、
+        <strong>E</strong>&nbsp;萃取模式、<strong>V</strong>&nbsp;对抗验证、<strong>A</strong>&nbsp;原子拆分、<strong>C</strong>&nbsp;原子提交。
+        下方时间线把每一个概念都锚定到具体的 Sphinx / Python 落点与质量门；点击底部流程徽章可切换高亮。
+      </p>
+
+      <div class="stage-band" aria-label="文档产品生命周期阶段">
+        <div class="stage"><span class="idx">1</span>规划 Plan</div>
+        <div class="stage"><span class="idx">2</span>生产 Produce</div>
+        <div class="stage"><span class="idx">3</span>验证 Verify</div>
+        <div class="stage"><span class="idx">4</span>沉淀 Sediment</div>
+        <div class="stage"><span class="idx">5</span>发布 Ship</div>
+      </div>
+
+      <div class="timeline-hint" aria-hidden="true">
+        <span>横向滚动查看完整七概念时间线</span>
+        <span class="arrow">→</span>
+        <span>R · F · I · E · V · A · C</span>
+      </div>
+      <div class="timeline-wrap">
+      <div class="timeline-scroll" tabindex="0" role="region" aria-label="七概念时间线（可横向滚动，包含 R F I E V A C 七个节点）">
+        <div class="timeline" id="timeline" data-component="seven-timeline" data-od-id="seven-timeline">
+
+          <article class="concept" data-concept="R">
+            <div class="c-head"><div class="c-letter">R</div><div class="c-name">复盘<small>Retrospective</small></div></div>
+            <div class="c-block"><span class="c-label">在文档产品中做什么</span><p class="c-body">以事实清单驱动：过去一个周期内，哪些页面被高频访问、哪些搜索无结果、哪些 issue 反复出现。剥离因果词，只记录发生了什么。</p></div>
+            <div class="c-block"><span class="c-label">Sphinx / Python 落点</span><p class="c-body"><code>CHANGELOG.md</code> + <code>git log docs/</code> + <code>linkcheck</code> 报告 + 站点分析（Plausible / GA4）导出的 CSV。</p></div>
+            <div class="c-block"><span class="c-label">质量门</span><span class="c-gate">G1 事实无因果词</span></div>
+          </article>
+
+          <article class="concept" data-concept="F">
+            <div class="c-head"><div class="c-letter">F</div><div class="c-name">第一性原理<small>First Principles</small></div></div>
+            <div class="c-block"><span class="c-label">在文档产品中做什么</span><p class="c-body">追问：这份文档存在的不可再分理由是什么？如果读者只能读一句，那一句是什么？5 Why 直到抵达读者任务本身。</p></div>
+            <div class="c-block"><span class="c-label">Sphinx / Python 落点</span><p class="c-body"><code>conf.py</code> 中的最小公理集合：<code>project</code> / <code>language</code> / <code>extensions</code>；每一顶层 <code>index.rst</code> 首段一句话使命陈述。</p></div>
+            <div class="c-block"><span class="c-label">质量门</span><span class="c-gate">G2 洞察四元组</span></div>
+          </article>
+
+          <article class="concept" data-concept="I">
+            <div class="c-head"><div class="c-letter">I</div><div class="c-name">洞察<small>Insight</small></div></div>
+            <div class="c-block"><span class="c-label">在文档产品中做什么</span><p class="c-body">从事实中发现反常识规律：例如「搜索无结果 top-10 中 7 条是同义词缺失」——洞察 = 陈述 + 证据 + 反常识 + 下次行动。</p></div>
+            <div class="c-block"><span class="c-label">Sphinx / Python 落点</span><p class="c-body">搜索日志 + <code>searchindex.js</code> 命中率分析；<code>htmlhelp</code> 索引 diff；DocSearch analytics 的 zero-result 报表。</p></div>
+            <div class="c-block"><span class="c-label">质量门</span><span class="c-gate">G2 洞察四元组</span></div>
+          </article>
+
+          <article class="concept" data-concept="E">
+            <div class="c-head"><div class="c-letter">E</div><div class="c-name">萃取<small>Extraction</small></div></div>
+            <div class="c-block"><span class="c-label">在文档产品中做什么</span><p class="c-body">把重复出现的写作模式沉淀为可复用资产：一个 directive、一个模板、一段 macro、一份 style guide。</p></div>
+            <div class="c-block"><span class="c-label">Sphinx / Python 落点</span><p class="c-body"><code>docs/_ext/</code> 自定义 directive；<code>docs/_templates/</code> 页面模板；<code>sphinx-design</code> 的 card / tab / dropdown 作为可复用组件库。</p></div>
+            <div class="c-block"><span class="c-label">质量门</span><span class="c-gate">G3 模式可迁移</span></div>
+          </article>
+
+          <article class="concept" data-concept="V">
+            <div class="c-head"><div class="c-letter">V</div><div class="c-name">对抗审查<small>Adversarial Review</small></div></div>
+            <div class="c-block"><span class="c-label">在文档产品中做什么</span><p class="c-body">魔鬼代言人视角：一个从未使用过本产品的读者，会在这一页的哪一步卡住？哪一句会被误读？哪个代码片段会失败？</p></div>
+            <div class="c-block"><span class="c-label">Sphinx / Python 落点</span><p class="c-body"><code>sphinx-build -W --keep-going</code> 把 warning 当 error；<code>doctest</code> builder 执行文档中的代码；<code>vale</code> / <code>sphinx-lint</code> 风格检查。</p></div>
+            <div class="c-block"><span class="c-label">质量门</span><span class="c-gate">V 门 ≥5 条实质意见</span></div>
+          </article>
+
+          <article class="concept" data-concept="A">
+            <div class="c-head"><div class="c-letter">A</div><div class="c-name">原子化<small>Atomization</small></div></div>
+            <div class="c-block"><span class="c-label">在文档产品中做什么</span><p class="c-body">把文档拆到单一职责的最小可交付单元。Diátaxis 四型（Tutorial / How-to / Reference / Explanation）即为原子类型的落地。</p></div>
+            <div class="c-block"><span class="c-label">Sphinx / Python 落点</span><p class="c-body">每个 <code>.rst</code> / <code>.md</code> 文件对应一个原子单元；<code>toctree</code> 按 Diátaxis 分区；<code>:orphan:</code> 严格禁止。</p></div>
+            <div class="c-block"><span class="c-label">质量门</span><span class="c-gate">G4 行动项原子化</span></div>
+          </article>
+
+          <article class="concept" data-concept="C">
+            <div class="c-head"><div class="c-letter">C</div><div class="c-name">原子提交<small>Atomic Commit</small></div></div>
+            <div class="c-block"><span class="c-label">在文档产品中做什么</span><p class="c-body">一次提交 = 一个意图 = 一次可回滚。文档变更同步索引、交叉引用与 changelog，禁止混合无关改动。</p></div>
+            <div class="c-block"><span class="c-label">Sphinx / Python 落点</span><p class="c-body">Conventional Commits <code>docs(scope): subject</code>；每 PR 独立预览 URL；发布走 <code>release/2026.10</code> 分支冻结。</p></div>
+            <div class="c-block"><span class="c-label">质量门</span><span class="c-gate">CI 全绿 + reviewer 批准</span></div>
+          </article>
+
+        </div>
+      </div>
+      </div>
+
+      <div class="flow-picker" role="group" aria-label="选择标准流程以高亮对应概念" data-component="flow-picker" data-od-id="flow-picker">
+        <button class="flow-btn" type="button" data-flow="milestone" data-concepts="R,I,E,C" aria-pressed="false"><span>里程碑复盘</span><span class="chain">R→I→E→C</span></button>
+        <button class="flow-btn" type="button" data-flow="incident" data-concepts="F,V,C,R,I,E" aria-pressed="false"><span>问题解决</span><span class="chain">F→V→C→R→I→E</span></button>
+        <button class="flow-btn" type="button" data-flow="refactor" data-concepts="A,V,C,R" aria-pressed="false"><span>重构优化</span><span class="chain">A→V→C→R</span></button>
+        <button class="flow-btn" type="button" data-flow="knowledge" data-concepts="R,I,E,V" aria-pressed="false"><span>知识沉淀</span><span class="chain">R→I→E→V</span></button>
+        <button class="flow-btn" type="button" data-flow="innovation" data-concepts="F,V,I,C" aria-pressed="false"><span>创新突破</span><span class="chain">F→V→I→C</span></button>
+        <button class="flow-btn" type="button" data-flow="all" data-concepts="R,F,I,E,V,A,C" aria-pressed="true"><span>显示全部</span><span class="chain">R·F·I·E·V·A·C</span></button>
+      </div>
+      <p class="flow-hint" id="flowHint" aria-live="polite" data-flow-label="all">
+        当前显示：<strong>全部七个概念</strong>。点击任一流程徽章可切换到对应的标准组合，观察哪些节点在该流程中被激活、哪些被跳过。本页自身即用「创新突破 F→V→I→C」链路设计：先追问公理（文档为什么存在），再用对抗审查压力测试主张，然后形成洞察，最后以一份可交付的高保真稿完成原子提交。
+      </p>
+    </section>
+    <section class="chapter" id="diataxis" aria-labelledby="dxTitle" data-component="chapter-diataxis" data-od-id="diataxis">
+      <div class="chapter-head">
+        <div class="numeral">04</div>
+        <div>
+          <h2 class="chapter-title" id="dxTitle">Diátaxis 四型 × A 原子化</h2>
+          <p class="chapter-motto">Divide ut regnas — 分而治之。</p>
+        </div>
+      </div>
+
+      <p class="chapter-lede">
+        「原子化」不是把长文切短，而是按<strong>读者意图</strong>切分。Diátaxis 用两个正交维度（学习 / 工作 × 获取 / 应用）
+        把文档分成四种不可混合的类型——这正是七概念中&nbsp;<strong>A</strong>&nbsp;在文档产品里的落地框架<a class="fnref" href="#fn-3" id="fnref-3">[3]</a>。
+      </p>
+
+      <div class="diataxis-layout">
+        <figure class="matrix-fig" data-component="diataxis-matrix" data-od-id="diataxis-matrix">
+          <svg viewBox="0 0 420 420" role="img" aria-labelledby="dxSvgTitle dxSvgDesc" style="width:100%; height:auto; display:block;">
+            <title id="dxSvgTitle">Diátaxis 2×2 矩阵</title>
+            <desc id="dxSvgDesc">纵轴从上到下是 Acquisition 学习 / Application 工作，横轴从左到右是 Action 行动 / Cognition 认知。四象限：左上 Tutorial（学习 × 行动）、右上 Explanation（学习 × 认知）、左下 How-to（工作 × 行动）、右下 Reference（工作 × 认知）。中心是单一职责罗盘。</desc>
+            <rect x="30" y="30" width="180" height="180" class="fi-surface" opacity="0.55"></rect>
+            <rect x="210" y="30" width="180" height="180" class="fi-surface" opacity="0.28"></rect>
+            <rect x="30" y="210" width="180" height="180" class="fi-surface" opacity="0.28"></rect>
+            <rect x="210" y="210" width="180" height="180" class="fi-surface" opacity="0.55"></rect>
+            <line x1="30" y1="210" x2="390" y2="210" class="si-fg" stroke-width="1.25"></line>
+            <line x1="210" y1="30" x2="210" y2="390" class="si-fg" stroke-width="1.25"></line>
+            <g font-family="JetBrains Mono, monospace" font-size="11" class="fi-ink-soft" letter-spacing="1.4">
+              <text x="30" y="20">ACQUISITION 学习 ↑</text>
+              <text x="30" y="410">APPLICATION 工作 ↓</text>
+              <text x="28" y="205">← ACTION 行动</text>
+              <text x="392" y="205" text-anchor="end">COGNITION 认知 →</text>
+            </g>
+            <g font-family="Source Serif Pro, Georgia, serif">
+              <text x="120" y="70" text-anchor="middle" font-size="22" font-weight="600" class="fi-fg">Tutorial</text>
+              <text x="120" y="92" text-anchor="middle" font-size="10.5" class="fi-ink-soft" font-family="JetBrains Mono, monospace" letter-spacing="1">学习 × 行动 · 手把手</text>
+              <text x="300" y="70" text-anchor="middle" font-size="22" font-weight="600" class="fi-fg">Explanation</text>
+              <text x="300" y="92" text-anchor="middle" font-size="10.5" class="fi-ink-soft" font-family="JetBrains Mono, monospace" letter-spacing="1">学习 × 认知 · 长文</text>
+              <text x="120" y="345" text-anchor="middle" font-size="22" font-weight="600" class="fi-fg">How-to</text>
+              <text x="120" y="367" text-anchor="middle" font-size="10.5" class="fi-ink-soft" font-family="JetBrains Mono, monospace" letter-spacing="1">工作 × 行动 · 步骤化</text>
+              <text x="300" y="345" text-anchor="middle" font-size="22" font-weight="600" class="fi-fg">Reference</text>
+              <text x="300" y="367" text-anchor="middle" font-size="10.5" class="fi-ink-soft" font-family="JetBrains Mono, monospace" letter-spacing="1">工作 × 认知 · 结构化</text>
+            </g>
+            <g class="fi-accent">
+              <circle cx="120" cy="120" r="4"></circle>
+              <circle cx="300" cy="120" r="4"></circle>
+              <circle cx="120" cy="300" r="4"></circle>
+              <circle cx="300" cy="300" r="4"></circle>
+            </g>
+            <g transform="translate(210,210)">
+              <circle r="34" class="fi-bg si-accent" stroke-width="1"></circle>
+              <circle r="26" class="fi-none si-fg" stroke-width="0.5" stroke-dasharray="1 3"></circle>
+              <path d="M0,-22 L4,0 L0,22 L-4,0 Z" class="fi-accent" opacity="0.85"></path>
+              <path d="M-22,0 L0,-4 L22,0 L0,4 Z" class="fi-fg" opacity="0.55"></path>
+              <circle r="3" class="fi-bg si-fg" stroke-width="1"></circle>
+              <text y="-42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" class="fi-ink-soft" letter-spacing="1.2">SINGLE RESPONSIBILITY</text>
+            </g>
+          </svg>
+          <figcaption>Fig. 04 — Diátaxis 2×2；中心罗盘指向「单一职责」</figcaption>
+        </figure>
+
+        <div class="quadrants">
+          <article class="quad" data-component="quad-tutorial" data-od-id="quad-tutorial">
+            <div class="q-mark">Tu</div>
+            <div>
+              <h3>Tutorial <small>入门导引 · 学习 × 行动</small></h3>
+              <p class="q-def">带读者完成一次真实的成功体验，重点在「让他能走完」，不在「解释原理」。</p>
+              <dl>
+                <dt>Sphinx 承载</dt><dd>有序 <code>toctree</code> 章节；<code>sphinx-design</code> 的 <code>tab-set</code> / <code>dropdown</code> 分步组织；每步一个可复制代码块。</dd>
+                <dt>验收标准</dt><dd>陌生读者 &lt; 15 分钟内可完成；每一步都有可验证输出；不掺杂 Explanation。</dd>
+                <dt>A → C 映射</dt><dd>一个 Tutorial = 一个原子文件 = 一次 <code>docs(tutorial):</code> 提交。</dd>
+              </dl>
+            </div>
+          </article>
+          <article class="quad" data-component="quad-howto" data-od-id="quad-howto">
+            <div class="q-mark">Ho</div>
+            <div>
+              <h3>How-to Guide <small>任务指南 · 工作 × 行动</small></h3>
+              <p class="q-def">面向已入门的读者，解决一个具体问题；标题即任务：「How to rotate API keys without downtime」。</p>
+              <dl>
+                <dt>Sphinx 承载</dt><dd>编号列表 + <code>.. admonition::</code> 提示框（note / warning / tip）；末尾 <code>seealso</code> 指向 Reference。</dd>
+                <dt>验收标准</dt><dd>标题以动词开头；每一 How-to 只解决一个问题；给出「不适用场景」的边界说明。</dd>
+                <dt>A → C 映射</dt><dd>How-to 是最适合原子提交的单元——一次 PR 一篇，独立预览，独立回滚。</dd>
+              </dl>
+            </div>
+          </article>
+          <article class="quad" data-component="quad-reference" data-od-id="quad-reference">
+            <div class="q-mark">Re</div>
+            <div>
+              <h3>Reference <small>参考手册 · 工作 × 认知</small></h3>
+              <p class="q-def">结构一致、可预测、可查询；由源码生成，不与源码分离维护。</p>
+              <dl>
+                <dt>Sphinx 承载</dt><dd><code>autodoc</code> + <code>napoleon</code> 从 docstring 生成；<code>intersphinx</code> 引用外部 <code>objects.inv</code>；<code>viewcode</code> 提供源码链接。</dd>
+                <dt>验收标准</dt><dd>docstring 覆盖率 ≥ 90%；每个公开符号必须有返回类型与异常说明；结构在所有页面一致。</dd>
+                <dt>A → C 映射</dt><dd>Reference 的原子性由代码模块天然提供；<code>docs(api):</code> 提交必须与代码变更同批。</dd>
+              </dl>
+            </div>
+          </article>
+          <article class="quad" data-component="quad-explanation" data-od-id="quad-explanation">
+            <div class="q-mark">Ex</div>
+            <div>
+              <h3>Explanation <small>解释说明 · 学习 × 认知</small></h3>
+              <p class="q-def">回答「为什么这样设计」；允许离题、允许讨论替代方案、允许表达观点。</p>
+              <dl>
+                <dt>Sphinx 承载</dt><dd>长文 + 边注 + <code>footnote</code>；<code>mermaid</code> 画架构决策图；ADR 目录独立编号。</dd>
+                <dt>验收标准</dt><dd>不出现操作步骤；引用具体决策记录（ADR / RFC 编号）；作者与日期显式可见。</dd>
+                <dt>A → C 映射</dt><dd>Explanation 最难原子化——按「一个决策 = 一篇 ADR」拆分，避免长文漫谈。</dd>
+              </dl>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="chapter" id="quality-gates" aria-labelledby="qgTitle" data-component="chapter-quality-gates" data-od-id="quality-gates">
+      <div class="chapter-head">
+        <div class="numeral">05</div>
+        <div>
+          <h2 class="chapter-title" id="qgTitle">指标与质量门 G1–G4</h2>
+          <p class="chapter-motto">Pondere, non numero — 以分量计，不以数目计。</p>
+        </div>
+      </div>
+
+      <p class="chapter-lede">
+        质量门是文档产品的免疫系统。它们不是「检查清单」，而是<strong>不合格必须返工</strong>的强制约束——
+        G1 拦事实污染，G2 拦空洞洞察，G3 拦无效模式，G4 拦不可执行行动，V 门拦客套式评审。
+      </p>
+
+      <div class="qg-layout">
+        <div class="qg-grid">
+          <article class="qg-card" data-component="qg-g1" data-od-id="qg-g1">
+            <div class="qg-id">G1</div><h3>事实无因果词</h3>
+            <dl class="qg-row"><dt>检查</dt><dd>事实清单中是否出现「因为 / 所以 / 导致 / 错误 / 失误」等判断词。</dd></dl>
+            <dl class="qg-row"><dt>不合格</dt><dd>返回 R 阶段重写事实，把判断剥离到 I 阶段处理。</dd></dl>
+            <dl class="qg-row"><dt>落地</dt><dd><code>CHANGELOG.md</code> 与 retrospective 页只写「发生了什么」，不写「因为某人失误」。</dd></dl>
+          </article>
+          <article class="qg-card" data-component="qg-g2" data-od-id="qg-g2">
+            <div class="qg-id">G2</div><h3>洞察四元组完整</h3>
+            <dl class="qg-row"><dt>检查</dt><dd>每条洞察是否包含：陈述 / 证据（引用事实编号）/ 反常识 / 下次行动。</dd></dl>
+            <dl class="qg-row"><dt>不合格</dt><dd>返回 I 或 F 阶段补充缺失部分；无证据的洞察直接删除。</dd></dl>
+            <dl class="qg-row"><dt>落地</dt><dd>Explanation 类文档中的每一条论断都必须有脚注或 ADR 编号支撑。</dd></dl>
+          </article>
+          <article class="qg-card" data-component="qg-g3" data-od-id="qg-g3">
+            <div class="qg-id">G3</div><h3>模式可迁移</h3>
+            <dl class="qg-row"><dt>检查</dt><dd>模式是否能迁移到 ≥ 1 个非当前领域场景；否则抽象层级不够。</dd></dl>
+            <dl class="qg-row"><dt>不合格</dt><dd>返回 E 阶段重新抽象，剥离领域特定语言，提炼通用结构。</dd></dl>
+            <dl class="qg-row"><dt>落地</dt><dd>自研 Sphinx directive 必须在 ≥ 2 个不同项目中被验证过，才允许进入 <code>_ext/</code> 共享库。</dd></dl>
+          </article>
+          <article class="qg-card" data-component="qg-g4" data-od-id="qg-g4">
+            <div class="qg-id">G4</div><h3>行动项原子化</h3>
+            <dl class="qg-row"><dt>检查</dt><dd>行动项是否符合：单一职责 / 可验证 / 有 owner / 有时间 / 可独立交付。</dd></dl>
+            <dl class="qg-row"><dt>不合格</dt><dd>返回 A 阶段重写；「优化文档」不是行动项，「为 auth 模块补 5 篇 How-to」才是。</dd></dl>
+            <dl class="qg-row"><dt>落地</dt><dd>GitHub issue 拆分标准：每个 issue 对应一个原子文件变更，可独立 PR。</dd></dl>
+          </article>
+        </div>
+
+        <aside class="metrics-panel" data-component="metrics-panel" data-od-id="metrics-panel" aria-labelledby="metricsPanelTitle">
+          <div class="panel-head">
+            <h3 id="metricsPanelTitle">文档产品运行指标</h3>
+            <span class="chip is-warn">示例数据 · illustrative</span>
+          </div>
+
+          <div class="metric-item">
+            <div class="m-label"><span>M1 任务完成率</span><small>How-to 页 · 30 天滚动</small></div>
+            <svg width="130" height="34" viewBox="0 0 130 34" role="img" aria-label="任务完成率示例趋势：总体上升">
+              <polyline class="fi-none si-fg" stroke-width="1.25" points="0,26 15,24 30,22 45,20 60,17 75,15 90,12 105,10 120,8 130,7"></polyline>
+              <line x1="0" y1="30" x2="130" y2="30" class="si-rule" stroke-width="0.75"></line>
+              <circle cx="130" cy="7" r="2.5" class="fi-accent"></circle>
+            </svg>
+          </div>
+          <div class="metric-item">
+            <div class="m-label"><span>M2 首次响应时间</span><small>进入 → 首次代码复制</small></div>
+            <svg width="130" height="34" viewBox="0 0 130 34" role="img" aria-label="首次响应时间示例柱状图：逐周下降">
+              <g class="fi-fg">
+                <rect x="2" y="8" width="12" height="22"></rect>
+                <rect x="18" y="11" width="12" height="19"></rect>
+                <rect x="34" y="14" width="12" height="16"></rect>
+                <rect x="50" y="16" width="12" height="14"></rect>
+                <rect x="66" y="18" width="12" height="12"></rect>
+                <rect x="82" y="20" width="12" height="10"></rect>
+                <rect x="98" y="22" width="12" height="8" class="fi-accent"></rect>
+                <rect x="114" y="23" width="12" height="7" class="fi-accent"></rect>
+              </g>
+              <line x1="0" y1="30" x2="130" y2="30" class="si-rule" stroke-width="0.75"></line>
+            </svg>
+          </div>
+          <div class="metric-item">
+            <div class="m-label"><span>M3 搜索命中率</span><small>1 − zero-result 比例</small></div>
+            <svg width="130" height="34" viewBox="0 0 130 34" role="img" aria-label="搜索命中率示例折线：稳步上升">
+              <polyline class="fi-none si-fg" stroke-width="1.25" points="0,22 18,20 36,18 54,14 72,13 90,10 108,9 130,6"></polyline>
+              <line x1="0" y1="30" x2="130" y2="30" class="si-rule" stroke-width="0.75"></line>
+              <circle cx="130" cy="6" r="2.5" class="fi-accent"></circle>
+            </svg>
+          </div>
+          <div class="metric-item">
+            <div class="m-label"><span>M4 文档回滚率</span><small>合入 7 天内被 revert 的占比</small></div>
+            <svg width="130" height="34" viewBox="0 0 130 34" role="img" aria-label="文档回滚率示例柱状图：显著下降">
+              <g class="fi-fg">
+                <rect x="2" y="12" width="12" height="18"></rect>
+                <rect x="18" y="16" width="12" height="14"></rect>
+                <rect x="34" y="18" width="12" height="12"></rect>
+                <rect x="50" y="22" width="12" height="8"></rect>
+                <rect x="66" y="24" width="12" height="6"></rect>
+                <rect x="82" y="26" width="12" height="4" class="fi-success"></rect>
+                <rect x="98" y="27" width="12" height="3" class="fi-success"></rect>
+                <rect x="114" y="27" width="12" height="3" class="fi-success"></rect>
+              </g>
+              <line x1="0" y1="30" x2="130" y2="30" class="si-rule" stroke-width="0.75"></line>
+            </svg>
+          </div>
+          <div class="metric-item">
+            <div class="m-label"><span>M5 AI 引用命中率</span><small>锚点稳定 + 语义完整度</small></div>
+            <svg width="130" height="34" viewBox="0 0 130 34" role="img" aria-label="AI 引用命中率示例折线：缓慢上升">
+              <polyline class="fi-none si-fg" stroke-width="1.25" points="0,24 20,22 40,21 60,18 80,15 100,13 120,11 130,10"></polyline>
+              <line x1="0" y1="30" x2="130" y2="30" class="si-rule" stroke-width="0.75"></line>
+              <circle cx="130" cy="10" r="2.5" class="fi-accent"></circle>
+            </svg>
+          </div>
+
+          <p style="margin:0; font-size: var(--t-small); color: var(--muted); line-height:1.6;">
+            以上曲线为形态示意，不代表任何真实产品数据；采集方式与解读边界必须与指标一同定义<a class="fnref" href="#fn-2">[2]</a>。
+          </p>
+        </aside>
+      </div>
+
+      <div class="v-band" data-component="v-band" data-od-id="v-band">
+        <div class="v-mark">V</div>
+        <p>
+          <strong>V 门（对抗审查）最低门槛：</strong>审查意见 ≥ 5 条且具体，至少采纳 2 条修正。
+          「写得很好」「没有问题」类客套话不计入。对文档产品，V 门的具体形式是：
+          <code>sphinx-build -W</code> 把 warning 当 error、<code>doctest</code> 让文档中的代码真的跑起来、
+          <code>vale</code> / <code>sphinx-lint</code> 拦风格漂移，加上一位未参与写作的 reviewer 走一遍新手路径。
+        </p>
+      </div>
+    </section>
+    <section class="chapter" id="roadmap" aria-labelledby="rmTitle" data-component="chapter-roadmap" data-od-id="roadmap">
+      <div class="chapter-head">
+        <div class="numeral">06</div>
+        <div>
+          <h2 class="chapter-title" id="rmTitle">三阶段落地路线图</h2>
+          <p class="chapter-motto">Paulatim sed firmiter — 一步一步，稳稳当当。</p>
+        </div>
+      </div>
+
+      <p class="chapter-lede">
+        从零到「文档即产品」不需要一次性重写。三个阶段、24 周节奏，每一阶段有明确的入口条件、
+        原子行动项与退出条件；每一阶段都产出可运行的 Sphinx / Python 交付物，而不是 PPT。
+      </p>
+
+      <div class="phase" data-component="phase-1" data-od-id="phase-1">
+        <div class="phase-marker"><div class="dot">P1</div></div>
+        <div class="phase-body">
+          <header>
+            <h3>Phase 1 · 治理修复</h3>
+            <div class="p-meta"><span>0–4 周</span><span>·</span><span>Focus: 让文档能可信地构建</span></div>
+          </header>
+          <div class="phase-cols">
+            <div>
+              <h4>入口条件</h4>
+              <ul>
+                <li>存在 <code>docs/</code> 目录但构建常失败或缺少 CI</li>
+                <li>死链、孤儿页、混合风格并存</li>
+                <li>没有统一的 <code>conf.py</code> 与主题</li>
+              </ul>
+            </div>
+            <div>
+              <h4>原子行动项</h4>
+              <ol>
+                <li><span class="role" data-role="orchestrator">ORCH</span>建立 <code>docs/</code> 边界与 owner 名单</li>
+                <li><span class="role" data-role="architect">ARCH</span>统一 <code>conf.py</code>、主题、扩展清单</li>
+                <li><span class="role" data-role="developer">DEV</span>接入 <code>sphinx-build -W</code> + <code>linkcheck</code> 到 CI</li>
+                <li><span class="role" data-role="developer">DEV</span>清理孤儿页与死链（首批 &lt; 20 处）</li>
+                <li><span class="role" data-role="reviewer">REV</span>制定文档 style guide 初版（1 页 A4）</li>
+              </ol>
+            </div>
+            <div>
+              <h4>退出条件 &amp; 交付物</h4>
+              <ul>
+                <li>CI 全绿 ≥ 5 个工作日</li>
+                <li>Broken link 数量 = 0</li>
+              </ul>
+              <div style="margin-top: var(--sp-2);">
+                <span class="deliverable">docs/conf.py</span>
+                <span class="deliverable">.github/workflows/docs.yml</span>
+                <span class="deliverable">STYLE.md</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase" data-component="phase-2" data-od-id="phase-2">
+        <div class="phase-marker"><div class="dot">P2</div></div>
+        <div class="phase-body">
+          <header>
+            <h3>Phase 2 · 结构化沉淀</h3>
+            <div class="p-meta"><span>5–12 周</span><span>·</span><span>Focus: 把文档拆成 Diátaxis 四型原子单元</span></div>
+          </header>
+          <div class="phase-cols">
+            <div>
+              <h4>入口条件</h4>
+              <ul>
+                <li>Phase 1 完成，CI 稳定</li>
+                <li>已识别 top-10 高频任务与 top-10 搜索无结果词</li>
+                <li>有 ≥ 1 位文档 owner 与 reviewer</li>
+              </ul>
+            </div>
+            <div>
+              <h4>原子行动项</h4>
+              <ol>
+                <li><span class="role" data-role="architect">ARCH</span>按 Diátaxis 重构 <code>toctree</code>：tutorial / howto / reference / explanation 四分区</li>
+                <li><span class="role" data-role="developer">DEV</span>为 top-10 任务补 How-to（1 PR 1 篇）</li>
+                <li><span class="role" data-role="developer">DEV</span>接入 <code>autodoc</code> + <code>napoleon</code>，docstring 覆盖率 ≥ 90%</li>
+                <li><span class="role" data-role="developer">DEV</span>抽取 2–3 个自研 directive 进 <code>_ext/</code>（含单测）</li>
+                <li><span class="role" data-role="reviewer">REV</span>建立 V 门流程：每 PR 一位非作者 reviewer</li>
+              </ol>
+            </div>
+            <div>
+              <h4>退出条件 &amp; 交付物</h4>
+              <ul>
+                <li>四型分区完成，无 <code>:orphan:</code> 页面</li>
+                <li>搜索 zero-result 率 &lt; 15%（示例阈值）</li>
+                <li>文档回滚率相对 Phase 1 基线下降</li>
+              </ul>
+              <div style="margin-top: var(--sp-2);">
+                <span class="deliverable">docs/_ext/*.py</span>
+                <span class="deliverable">docs/{tutorial,howto,reference,explanation}/</span>
+                <span class="deliverable">REVIEW_CHECKLIST.md</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase" data-component="phase-3" data-od-id="phase-3">
+        <div class="phase-marker"><div class="dot">P3</div></div>
+        <div class="phase-body">
+          <header>
+            <h3>Phase 3 · 产品化与外化</h3>
+            <div class="p-meta"><span>13–24 周</span><span>·</span><span>Focus: 让文档像产品一样被度量、被版本化、被 AI 消费</span></div>
+          </header>
+          <div class="phase-cols">
+            <div>
+              <h4>入口条件</h4>
+              <ul>
+                <li>Phase 2 完成，四型骨架稳定</li>
+                <li>已具备指标采集能力（M1–M5 至少 3 项）</li>
+                <li>产品 / 工程 / 文档三方对路线图达成共识</li>
+              </ul>
+            </div>
+            <div>
+              <h4>原子行动项</h4>
+              <ol>
+                <li><span class="role" data-role="orchestrator">ORCH</span>发布文档版本化策略（随 release 冻结）</li>
+                <li><span class="role" data-role="architect">ARCH</span>接入 DocSearch + 导出 <code>/llms.txt</code> 与语义分块 JSON</li>
+                <li><span class="role" data-role="developer">DEV</span>搭建可观测面板：M1–M5 周报自动生成</li>
+                <li><span class="role" data-role="reviewer">REV</span>启动季度 retrospective：R→I→E→C 完整闭环</li>
+                <li><span class="role" data-role="developer">DEV</span>把可复用 directive 抽为独立 Python 包发布</li>
+              </ol>
+            </div>
+            <div>
+              <h4>退出条件 &amp; 交付物</h4>
+              <ul>
+                <li>文档站独立域名 + 版本切换器上线</li>
+                <li>AI Agent 可通过稳定锚点引用文档</li>
+                <li>季度复盘形成 ≥ 2 个可复用模式入库</li>
+              </ul>
+              <div style="margin-top: var(--sp-2);">
+                <span class="deliverable">docs/_build/observability/</span>
+                <span class="deliverable">llms.txt + chunks.json</span>
+                <span class="deliverable">specweave-sphinx-ext (PyPI)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="chapter" id="footer" role="contentinfo" aria-labelledby="ftTitle" data-component="chapter-footer" data-od-id="footer">
+      <div class="chapter-head">
+        <div class="numeral">07</div>
+        <div>
+          <h2 class="chapter-title" id="ftTitle">术语表与生态关系</h2>
+          <p class="chapter-motto">Verba volant, scripta manent — 言语飞逝，文字长存。</p>
+        </div>
+      </div>
+
+      <div class="footer-grid">
+        <div>
+          <h3 class="eyebrow" style="margin:0 0 var(--sp-4); padding-bottom: var(--sp-2); border-bottom: var(--hair) solid var(--rule);">Glossary · 术语表</h3>
+          <ul class="glossary">
+            <li><span class="g-term">Docs-as-Product</span><span class="g-def">把文档视为独立产品线来经营的方式：有读者画像、指标、路线图、质量门与发布节奏。</span></li>
+            <li><span class="g-term">Sphinx</span><span class="g-def">Python 生态的文档生成器，将 reStructuredText / Markdown 编译为多格式站点，核心是 <code>doctree</code> 中间表示。</span></li>
+            <li><span class="g-term">doctree</span><span class="g-def">Sphinx 内部的文档对象树，由 docutils 解析源文件后生成，是所有 builder 的公共输入。</span></li>
+            <li><span class="g-term">toctree</span><span class="g-def">Sphinx 的目录树指令，定义章节层级与导航顺序，是信息架构的一等公民。</span></li>
+            <li><span class="g-term">Diátaxis</span><span class="g-def">按读者意图划分文档的四型框架：Tutorial / How-to / Reference / Explanation，作为 A 原子化的落地。</span></li>
+            <li><span class="g-term">Seven-Concepts</span><span class="g-def">R 复盘 / F 第一性原理 / I 洞察 / E 萃取 / V 对抗审查 / A 原子化 / C 原子提交，SpecWeave 方法论体系。</span></li>
+            <li><span class="g-term">G1–G4</span><span class="g-def">七概念的四道质量门：事实无因果词 / 洞察四元组完整 / 模式可迁移 / 行动项原子化。</span></li>
+            <li><span class="g-term">autodoc</span><span class="g-def">Sphinx 扩展，从 Python 源码的 docstring 自动生成 Reference 文档；配合 <code>napoleon</code> 支持 Google / NumPy 风格。</span></li>
+            <li><span class="g-term">linkcheck</span><span class="g-def">Sphinx builder 之一，扫描所有外链并输出 broken / redirected / unchecked 报告，是文档 SLA 的核心工具。</span></li>
+            <li><span class="g-term">objects.inv</span><span class="g-def">Sphinx 生成的对象清单文件，供 <code>intersphinx</code> 跨项目引用；文档产品对外 API 的稳定锚点。</span></li>
+            <li><span class="g-term">Adversarial Review</span><span class="g-def">对抗性审查：以魔鬼代言人视角攻击自己的产出，最低门槛是 ≥ 5 条实质意见且至少采纳 2 条。</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="eyebrow" style="margin:0 0 var(--sp-4); padding-bottom: var(--sp-2); border-bottom: var(--hair) solid var(--rule);">Ecosystem · 与 SpecWeave 的边界</h3>
+          <div class="eco-card" data-component="eco-card" data-od-id="eco-card">
+            <h3>文档产品在 SpecWeave 中的位置</h3>
+            <p>
+              本页所述「文档即产品」是 SpecWeave 治理体系中「对外可读层」的具体实践。SpecWeave 用两条清晰的边界承载它：
+            </p>
+            <ul>
+              <li><code>docs/</code> 是<strong>唯一对外文档中心</strong>（OKF v0.2，Sphinx 构建）：Wiki 教程、知识包、复盘报告、模式库与最佳实践。</li>
+              <li><code>.agents/</code> 是<strong>智能体规范容器</strong>：角色、规则、协议、工作流、脚本与模板等规范与执行资产。</li>
+              <li>边界规则：<code>.agents/</code> 引用 <code>docs/</code> 时使用 <code>../docs/...</code> 相对路径；对外可读文档一律入 <code>docs/</code>；<code>.agents/docs/</code> 已废止。</li>
+              <li>七概念方法论源自 <code>.agents/commands/seven-concepts.md</code>；模式库落地在 <code>docs/retrospective/patterns/methodology-patterns/</code>。</li>
+            </ul>
+            <p style="margin-top: var(--sp-2);">
+              本页作为「方法论主张」，是 <code>docs/</code> 层的对外入口；具体规范与可执行脚本仍以 <code>.agents/</code> 为准。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footnotes" data-component="footnotes" data-od-id="footnotes">
+        <h3>Notes &amp; References</h3>
+        <ol>
+          <li id="fn-1"><span class="fn-num">[1]</span> Write the Docs 社区自 2013 年起持续讨论「Docs as Product / Docs as Code」的实践边界；本页把该立场与 SpecWeave 七概念方法论对齐，形成可执行的工程主张。</li>
+          <li id="fn-2"><span class="fn-num">[2]</span> M1–M5 指标为形态示意。任何具体阈值必须在项目内以「采集方式 + 解读边界」共同定义，避免直接跨项目套用；本页已在每一项指标下标注推荐的采集手段。</li>
+          <li id="fn-3"><span class="fn-num">[3]</span> Diátaxis 框架由 Daniele Procida 提出，参见 <span style="font-family: var(--font-mono); font-size: 12px;">diataxis.fr</span>；本页把它作为七概念中 A（原子化）在文档产品中的落地框架，四象限的轴定义严格遵循原框架（纵轴 acquisition/application，横轴 action/cognition）。</li>
+          <li id="fn-4"><span class="fn-num">[4]</span> Python 官方文档 <span style="font-family: var(--font-mono); font-size: 12px;">docs.python.org</span> 本身即由 Sphinx 构建，是「Sphinx 承载文档产品化能力」的最强公开自证；其 <code>objects.inv</code> 被大量下游项目通过 <code>intersphinx</code> 引用。</li>
+        </ol>
+      </div>
+
+      <svg class="fleuron" width="120" height="24" viewBox="0 0 120 24" role="img" aria-label="章节花饰">
+        <path d="M0,12 L44,12" stroke="currentColor" stroke-width="1"></path>
+        <path d="M76,12 L120,12" stroke="currentColor" stroke-width="1"></path>
+        <g transform="translate(60,12)" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M-12,0 C-8,-6 -4,-6 0,0 C4,-6 8,-6 12,0 C8,6 4,6 0,0 C-4,6 -8,6 -12,0 Z"></path>
+          <circle r="1.6" fill="currentColor" stroke="none"></circle>
+        </g>
+      </svg>
+
+      <div class="colophon">
+        <span>© 2026 SpecWeave Council · Docs-as-Product broadsheet</span>
+        <span>Volume 01 · Issue 07 · Set in Source Serif Pro &amp; JetBrains Mono</span>
+        <span>Live: <a href="https://6z7hzvgt.qwenwork.host/" rel="bookmark" style="color:var(--accent); text-decoration:underline;">https://6z7hzvgt.qwenwork.host/</a> · V5 · 2026-10-08</span>
+        <span>Built with Sphinx-minded HTML · No tracking · No cookies</span>
+      </div>
+    </section>
+  </main>
+
+  <aside class="toc-rail" aria-label="页面目录" data-component="toc-rail" data-od-id="toc-rail">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list" id="tocList">
+      <li><a href="#hero" data-toc="hero"><span class="num">00</span><span>报头 · Hero</span></a></li>
+      <li><a href="#why" data-toc="why"><span class="num">01</span><span>为什么文档即产品</span></a></li>
+      <li><a href="#stack" data-toc="stack"><span class="num">02</span><span>Sphinx + Python 能力矩阵</span></a></li>
+      <li><a href="#seven-concepts" data-toc="seven-concepts"><span class="num">03</span><span>七概念 × 生命周期</span></a></li>
+      <li><a href="#diataxis" data-toc="diataxis"><span class="num">04</span><span>Diátaxis × A 原子化</span></a></li>
+      <li><a href="#quality-gates" data-toc="quality-gates"><span class="num">05</span><span>指标与质量门</span></a></li>
+      <li><a href="#roadmap" data-toc="roadmap"><span class="num">06</span><span>三阶段路线图</span></a></li>
+      <li><a href="#footer" data-toc="footer"><span class="num">07</span><span>术语表与生态</span></a></li>
+    </ul>
+  </aside>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var header = document.getElementById('siteHeader');
+  var bar = document.getElementById('progressBar');
+
+  function onScroll() {
+    var y = window.scrollY || document.documentElement.scrollTop;
+    if (header) header.classList.toggle('is-scrolled', y > 8);
+    if (bar) {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      var p = h > 0 ? Math.min(1, Math.max(0, y / h)) : 0;
+      bar.style.width = (p * 100).toFixed(2) + '%';
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Intersection-based active section for TOC + top nav
+  var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
+  var tocLinks = {};
+  document.querySelectorAll('.toc-list a[data-toc]').forEach(function (a) { tocLinks[a.getAttribute('data-toc')] = a; });
+  var navLinks = {};
+  document.querySelectorAll('.main-nav a[data-nav]').forEach(function (a) { navLinks[a.getAttribute('data-nav')] = a; });
+
+  if ('IntersectionObserver' in window && sections.length) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          var id = e.target.id;
+          if (id === current) return;
+          current = id;
+          Object.keys(tocLinks).forEach(function (k) { tocLinks[k].classList.toggle('is-active', k === id); });
+          Object.keys(navLinks).forEach(function (k) { navLinks[k].classList.toggle('is-active', k === id); });
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+    sections.forEach(function (s) { io.observe(s); });
+  }
+
+  // Copy buttons on code blocks
+  document.querySelectorAll('.copy-btn[data-copy-target]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-copy-target');
+      var el = document.getElementById(id);
+      if (!el) return;
+      var text = el.innerText;
+      var done = function () {
+        var old = btn.textContent;
+        btn.textContent = '已复制';
+        btn.classList.add('is-copied');
+        window.setTimeout(function () {
+          btn.textContent = old;
+          btn.classList.remove('is-copied');
+        }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, done);
+      } else {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+          document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+          document.body.removeChild(ta); done();
+        } catch (_) { done(); }
+      }
+    });
+  });
+
+  // Seven-concepts flow picker
+  var flowHint = document.getElementById('flowHint');
+  var concepts = Array.prototype.slice.call(document.querySelectorAll('.concept[data-concept]'));
+  var flowMeta = {
+    milestone: { label: '里程碑复盘 R→I→E→C', text: '当前高亮：<strong>里程碑复盘 R→I→E→C</strong> — 用于 Sprint / 版本发布结束。先复盘事实（R）、再形成洞察（I）、萃取模式（E），最后以原子提交（C）落地行动项。跳过 V 时需在报告里显式声明。' },
+    incident: { label: '问题解决 F→V→C→R→I→E', text: '当前高亮：<strong>问题解决 F→V→C→R→I→E</strong> — 用于线上故障或文档事故。5 Why 追根因（F），对抗审查验证根因（V），修复原子提交（C），事后复盘（R），沉淀预防模式（I→E）。V 环节不可跳过。' },
+    refactor: { label: '重构优化 A→V→C→R', text: '当前高亮：<strong>重构优化 A→V→C→R</strong> — 用于文档信息架构重构或大文件拆分。先原子化拆分（A），对抗审查等价性（V），按拆分点逐一原子提交（C），最后可选小复盘（R）。' },
+    knowledge: { label: '知识沉淀 R→I→E→V', text: '当前高亮：<strong>知识沉淀 R→I→E→V</strong> — 用于把 ≥ 2 个独立案例提炼为可复用模式。案例复盘（R）→ 共性洞察（I）→ 模式萃取（E）→ 跨领域迁移对抗验证（V）→ 入库。' },
+    innovation: { label: '创新突破 F→V→I→C', text: '当前高亮：<strong>创新突破 F→V→I→C</strong> — 本页正是用这条链路设计出来的：先追问公理（文档为什么存在），再用对抗审查压力测试主张，然后形成洞察（Docs-as-Product 的三条论断），最后以一份可交付的高保真稿完成原子提交。' },
+    all: { label: '显示全部 R·F·I·E·V·A·C', text: '当前显示：<strong>全部七个概念</strong>。点击任一流程徽章可切换到对应的标准组合，观察哪些节点在该流程中被激活、哪些被跳过。' }
+  };
+
+  function applyFlow(key) {
+    var btn = document.querySelector('.flow-btn[data-flow="' + key + '"]');
+    if (!btn) return;
+    var list = (btn.getAttribute('data-concepts') || '').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+    document.querySelectorAll('.flow-btn').forEach(function (b) {
+      b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+    });
+    concepts.forEach(function (c) {
+      var k = c.getAttribute('data-concept');
+      var inFlow = list.indexOf(k) !== -1;
+      c.classList.toggle('is-hot', inFlow && key !== 'all');
+      c.classList.toggle('is-dim', !inFlow);
+    });
+    if (flowHint && flowMeta[key]) {
+      flowHint.innerHTML = flowMeta[key].text;
+      flowHint.setAttribute('data-flow-label', key);
+    }
+  }
+
+  document.querySelectorAll('.flow-btn[data-flow]').forEach(function (btn) {
+    btn.addEventListener('click', function () { applyFlow(btn.getAttribute('data-flow')); });
+  });
+  // initial state: show all concepts; user picks a specific flow to focus
+  applyFlow('all');
+
+  // Term tooltips — inject hidden description nodes so screen readers can access them
+  document.querySelectorAll('.term[data-def]').forEach(function (el, i) {
+    var id = 'term-def-' + (i + 1);
+    var hidden = document.createElement('span');
+    hidden.id = id;
+    hidden.hidden = true;
+    hidden.textContent = el.getAttribute('data-def');
+    el.parentNode.insertBefore(hidden, el.nextSibling);
+    el.setAttribute('aria-describedby', id);
+    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+  });
+})();
+</script>
+</body>
+</html>

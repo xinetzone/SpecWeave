@@ -1,0 +1,4 @@
+{
+  "title": "SpecWeave workspace entry bridge",
+  "description": "Injects the SpecWeave startup protocol brief inside a SpecWeave workspace and exposes task routing, workspace status, and pre-commit check capabilities."
+}

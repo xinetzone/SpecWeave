@@ -58,13 +58,15 @@ ollama run deepseek-r1:1.5b
 
 ## 5.3 第三层：开发者 SDK（接口手册）
 
-### 5.3.1 麒麟 AI SDK（4_10，137K 字符 / 4929 行）
+> **两代 SDK 消歧（2026-10-08 源码核验，F-067～F-077）**：openKylin 3 上应用侧 SDK 实际有**两代互不从属的供给线**——本文 5.3.1 的《OpenKylin AI SDK 开发手册》对应 **Gen1 `libkylin-ai-base2 2.0`**（OCR 已落机实测）；出厂还预装了**第二代 kysdk 1.1 运行库**（genai/coreai/advanced-ai/mcp），它没有对应中文长手册、全面 IPC 异步化。读到"Kylin AI SDK / openKylin AI SDK"时先按包名与头文件根区分世代，详见 5.3.4。
+
+### 5.3.1 麒麟 AI SDK（Gen1，4_10，137K 字符 / 4929 行）
 
 文档站最大单篇《OpenKylin AI SDK 开发手册》，8 个能力域：
 
 | # | 能力域 | 接口轮廓 |
 |---|---|---|
-| 1 | 文字识别（OCR） | 会话创建/初始化/销毁、结果回调、模型配置（名称+部署类型）、图片路径/图片数据两种入参、带 request_id 变体、内部事件循环开关；结果可解析整行文本、行四角点坐标、整体文本 |
+| 1 | 文字识别（OCR）✅ 已落机实测 | 会话创建/初始化/销毁、结果回调、模型配置（名称+部署类型）、图片路径/图片数据两种入参、带 request_id 变体、内部事件循环开关；结果可解析整行文本、行四角点坐标、整体文本 |
 | 2 | 音频处理 | 语音类会话接口 |
 | 3 | 向量化 | embedding 接口（语义搜索/知识库的基础） |
 | 4 | 文本生成 | 对话/补全类接口 |
@@ -74,6 +76,8 @@ ollama run deepseek-r1:1.5b
 | 8 | 通用错误码 | 全 SDK 错误码对照表 |
 
 接口设计的共同模式：**会话生命周期（create→init→set callback→set model config→invoke→destroy）+ 异步回调取结果 + 模型部署类型可配（本地/云端）**。文字识别章节作为最完整的范例，开发其他能力时可先照它的结构理解。
+
+> **2026-10-08 落机实测补充**（详见 [Kylin AI SDK 文字识别 OCR 落机 POC](../references/ai-sdk-ocr-poc.md)，F-058～F-066/S34）：表中第 1 项 OCR 已在 openKylin-3.0-desktop WSL 经官方源 `libkylin-ai-base-dev 2.0.0.0` 实测调通。实测对本节文档口径有三点细化：① 实际头文件 `ai-base/ocr.h` 比手册描述更简，为**同步**三函数（`ocr_create_session`→`ocr_get_text_from_image_file`→`ocr_destroy_session`），手册所述 init/结果回调/request_id 变体在该版本头文件中未见（异步回调形态主要见于 `nlp.h` 文本生成）；② 默认部署策略经 `ldd` 直链 libtesseract + `gsettings` 权威值 + tesseract CLI 三源钉死为**本地 tesseract 5.3.4（chi_sim+eng）CPU 离线**，无云密钥、不依赖网络/GPU/大模型，识别可用但精度中等（有形近误识）；③ 头文件仅 C++ 友好（裸 enum 类型名无 typedef，`gcc .c` 失败、`g++ .cpp` 通过）。第 2～8 项（音频/向量化/文本生成/图像生成/两类分割/错误码）仍为**成文未验证**。
 
 ### 5.3.2 openKylin SDK 与系统维护接口（4_11 / 4_8）
 
@@ -85,6 +89,16 @@ ollama run deepseek-r1:1.5b
 ### 5.3.3 与 3.0 智能体底座的关系
 
 文档站 SDK 手册描述的是**应用调用 AI 能力**的接口层；3.0 发布的智能体开放底座（模型/记忆/工具/系统权限/桌面能力统一架构、智能体经 MCP 调桌面能力、openkylin-skills 技能仓库）属于更新的平台层，其权威事实以 3.0 发布新闻与后续更新的 SDK 文档为准。读到两代接口并存时，按文档日期与子系统版本区分。
+
+### 5.3.4 源码层补充：Gen2 kysdk 栈与引擎插件层（2026-10-08，huanghe 只读核验）
+
+> 详见 [openKylin 3 AI 子系统源码架构剖析](../references/ai-subsystem-source-architecture.md)（F-067～F-077/S35）。本节是导读，证据以该文为准；本轮为只读核验，**未装包、未启服务、未跑端到端推理**。
+
+- **Gen2 客户端出厂已装但只是薄代理**：`libkysdk-genai-nlp0/-vision0`、`libkysdk-coreai-speech0/-vision0`、`libkysdk-advanced-ai0`、`libkysdk-mcp` 等运行库随系统安装，但包 Depends/`ldd` 不含任何推理库；调用经 **per-uid 私有 unix socket 上的 D-Bus**（`/tmp/.kylin-ai-runtime-unix/<uid>/genai-nlp.sock`，源码常量、运行时未验证）转发给 `kylin-ai-runtime`，全异步、信号回传（如 `ChatNlpResult`）。
+- **能力在引擎插件层**：上游 `kylin-ai-engine` 仓定义 C++ `AbstractAiEngine` 插件 ABI（7 个能力引擎头，与手册 8 域对应；区分云引擎/内置引擎/OpenAI 兼容自定义引擎）；云厂商引擎与 ondevice 本地引擎都是该 ABI 的实现插件。
+- **本地文本生成 = Triton 客户端链路**：`kylin-ondevice-nlp-engine` 本身只连本机 Triton（HTTP :8000/gRPC :8001，llama.cpp 采样参数）；完整链路为 genai-nlp0 → kylin-ai-runtime → engine-plugins → ondevice-nlp-engine → kytensor-server(Triton 2.49) → llm-backend/libllama → GGUF。镜像**预装的只是最后三行推理底座**，打通还需引擎插件 2 包（huanghe 源可装未装）＋ 模型仓库 ＋ 自备 GGUF——5.3.1 表中第 4 项"文本生成"的本地路径由此从 F-066 的粗略登记升级为包级精确链路。
+- **不要据包名过度宣称**：`libkysdk-mcp` 仅提供 client/server **共享库**，镜像里没有可调用的 MCP 服务或技能市场；"源中无候选"（6 家云厂商引擎、ondevice-vision/embedding 等）仅是 2026-10-08 huanghe 源快照。
+- **源码引用纪律**：一切以 `openkylin/huanghe` 分支的 `debian/control` 与本机二进制为准；47 仓 `repos.md` 只存在于 nile/nile-sp2 分支；Gen1 源仓无 huanghe 分支且公开源码与 2.0.0.0 二进制存在已证实的分叉——引用上游代码前先核分支与代号。
 
 ## 5.4 治理层：AI 辅助贡献守则（使用者也应了解）
 
@@ -114,6 +128,6 @@ ollama run deepseek-r1:1.5b
 3. **要开发 AI 应用**：精读 5.3.1 文字识别章节掌握会话模式，再套用到其他能力域，配合第 8 章错误码；
 4. **要贡献**：先读 5.4 守则，再按[07 社区治理](07-community-and-contribution.md)签 CLA、走 PR。
 
-> **未实测声明**：本教程对 5.1–5.3 的内容仅做文档层面的导读与结构化，未在本机安装 `kylin-ai-model-manager`、未跑通 ollama 六档模型、未调用 AI SDK 任一接口。模型规格的硬件门槛（尤其 32b/70b 档）以 ollama 与模型卡说明为准；生产采用前请按主教程 I-3"证据边界"做一次最小 POC。
+> **实测状态声明（2026-10-08 更新）**：本节内容原为纯文档导读，现 **OCR 一域已完成落机 POC**（装官方源 `libkylin-ai-base-dev 2.0.0.0` → g++ 调通 → 三源钉死本地 tesseract CPU 离线，见 [OCR POC](../references/ai-sdk-ocr-poc.md)）；仍**未**在本机安装 `kylin-ai-model-manager`、**未**跑通 ollama 六档模型、**未**调用音频/向量化/文本生成/图像生成/两类分割任一接口（镜像虽预装 Triton+llama.cpp 引擎骨架，但需自备 GGUF 模型或云端密钥）。模型规格的硬件门槛（尤其 32b/70b 档）以 ollama 与模型卡说明为准；其余能力生产采用前仍须按主教程 I-3"证据边界"各自做最小 POC——OCR 实测同时证明了该 POC 的必要性：手册可得不等于接口一致性/识别精度可直接放心采用。同日另完成 **AI 子系统源码级架构核验**（F-067～F-077，只读未装包）：两代 SDK 均为 IPC 薄代理、Gen2 客户端出厂齐备而引擎插件/模型缺省、本地 NLP 包级链路已精确到 Triton+GGUF（见 5.3.4 与[源码架构剖析](../references/ai-subsystem-source-architecture.md)），但端到端 NLP 仍属下一阶段 POC。
 
 > 上一篇：[04 桌面使用](04-desktop-usage.md) ｜ 下一篇：[06 开发者基础设施](06-developer-infrastructure.md)

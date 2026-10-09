@@ -14,7 +14,7 @@ import shutil
 import string
 import struct
 import subprocess
-from typing import Optional
+from typing import Iterable, Optional
 
 from invoke import Context, Result
 from invoke.exceptions import Exit, UnexpectedExit
@@ -167,6 +167,7 @@ def run_cmd(
     warn: bool = False,
     echo: bool = True,
     forward_stdin: bool = False,
+    unset_env: Optional[Iterable[str]] = None,
 ) -> Optional[Result]:
     """命令执行包装（Windows UTF-8 / 宿主编码双路径，防止乱码/沙箱清空 PATH）。
 
@@ -178,6 +179,7 @@ def run_cmd(
         （``podman exec/run -it ... bash``）才传 ``True`` opt-in；其崩溃面
         已由 :func:`apply_invoke_stdin_compat` 兜住。非交互命令无需 stdin，
         Ctrl+C 仍经 invoke 的 KeyboardInterrupt→send_interrupt 信号路径传播。
+    :param unset_env: 仅从子进程环境中移除的变量名；不修改当前 Python 进程环境。
     """
     subproc_encoding, is_tty_console = _ensure_win32_stdout_transcode()
     if echo and not hide:
@@ -187,6 +189,8 @@ def run_cmd(
     env = os.environ.copy()
     env.setdefault("PYTHONIOENCODING", "utf-8")
     env.setdefault("PYTHONUTF8", "1")
+    for name in unset_env or ():
+        env.pop(name, None)
 
     # ── 原生 TTY Console（非 hide / 非 warn）：绕过 invoke c.run PIPE 捕获层
     #   invoke c.run(pty=False) 内部 subprocess.Popen(stdout=PIPE) → 按 locale cp936 decode
