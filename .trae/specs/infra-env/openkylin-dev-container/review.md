@@ -50,7 +50,7 @@
 - **Result**: `pass`
 - **Evidence**: 全部 6 个检查点通过（5 rule + 1 rubric 得 5）；每条 AC/TR 有独立重跑证据；可行动发现 0 条，建议性发现 3 条（见下，不阻塞验收）。
 - **Findings**:
-  - **F-1**（advisory，低）：AC-4 字面「Rootless 为 true」在 rootless 外层宿主（Windows Podman Machine）路径未完全达成，实测降级为 `ENV-LIMIT`；spec Assumptions 与 tasks.md TR-4.2 已授权该降级。建议后续在 rootful 外层宿主（openKylin WSL 发行版内 podman）补 live rootless 全量验证，以完全满足字面 AC；无需改 spec（假设条款即治理依据）。
-  - **F-2**（advisory，低）：WSL 发行版内真实构建未执行（spec 开放问题 OQ-2）。当前覆盖：Windows Podman Machine 真实验证 + `bash -n`/dry-run 静态覆盖。建议 Task 6 之后在 openKylin WSL 内补跑 `build.sh` 留存证据。
+  - **F-1**（advisory，低 → **2026-10-09 已实证闭合**）：AC-4 字面「Rootless 为 true」在容器内 live rootless 实测为**平台级限制**：openKylin WSL 发行版（rootful 外层宿主，podman 5.7.0，`--cap-add all` + `--security-opt seccomp=unconfined`，均非 `--privileged`）下，devuser `unshare -U` 成功（RC=0、uid=65534），镜像内 `/usr/bin/newuidmap` setuid 位完好，但 `newuidmap: write to uid_map failed: Invalid argument`（WSL2 嵌套 userns 映射限制）。结论：live rootless 需 `--privileged`（契约禁止），**ENV-LIMIT 为普适设计结论**，与 rootful/rootless 外层宿主无关；P8b 就绪检查 + 全量启动 healthy 即 AC-4 证据。证据：`evidence/live-rootless-probe-20261009-openkylin-wsl.log`。
+  - **F-2**（advisory，低 → **2026-10-09 已解决**）：openKylin WSL 发行版内真实构建完成：`bash build.sh` 25 步全过、BUILD_EXIT=0、镜像 `localhost/openkylin-dev:3.0`（ID `fe7b1bb318a6`）；同环境 `bash smoke.sh` 全探针通过、全量启动 healthy、SSH_OK/JUPYTER_OK/PORTS_OK（22/8888）、SMOKE_EXIT=0。证据：`evidence/build-20261009-openkylin-wsl.log`、`evidence/smoke-20261009-openkylin-wsl.log`、`evidence/import-20261009-openkylin-wsl.log`。
   - **F-3**（advisory，低）：Jupyter 默认无 token、SSH 密码认证，仅限本地开发；已文档化于指南「安全边界」与 README。禁止对外暴露 22/8888 端口；如需公网使用应先加固（密钥认证 + token/密码）。
-- **Recommended Issues**: 无（全部 advisory，不产生 pending issue）。
+- **Recommended Issues**: 无（F-1/F-2 已实证闭合；F-3 保持文档化建议，全部不产生 pending issue）。

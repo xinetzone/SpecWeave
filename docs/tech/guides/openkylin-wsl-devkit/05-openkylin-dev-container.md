@@ -41,7 +41,7 @@ source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#openKylin-开
 ./scripts/build.sh
 ```
 
-构建要点：`--format docker`（OCI 格式会静默丢弃 `SHELL`/`HEALTHCHECK` 指令，docker 格式二者生效）；构建日志输出至 `.trae/specs/infra-env/openkylin-dev-container/evidence/`。
+构建要点：`--format docker`（OCI 格式会静默丢弃 `SHELL`/`HEALTHCHECK` 指令，docker 格式二者生效）；构建日志输出至 `.trae/specs/infra-env/openkylin-dev-container/evidence/`。双环境均已实测通过（2026-10-09）：Windows Podman Machine（podman 5.7.0-rc3）与 openKylin WSL 发行版（rootful podman 5.7.0，首次需 `apt install nftables` 提供 netavark 的 `nft`）均 25 步构建 exit 0。
 
 ## 运行
 
@@ -74,7 +74,7 @@ ssh devuser@localhost -p 2222     # 密码：DEV_PASSWORD 或启动日志中的�
 
 ## 已知边界
 
-- **live rootless Podman 依赖外层宿主 rootful 能力**：devuser 在容器内建立嵌套用户命名空间，rootless 外层宿主（如 Windows Podman Machine）会遇 `newuidmap: write to uid_map ... Operation not permitted`；此时冒烟 P8 降级为「镜像内配置与二进制就绪检查」并记录 ENV-LIMIT（符合 spec 假设）。在 rootful 外层宿主（如 openKylin WSL 发行版内 podman）上可完整验证 live rootless。
+- **live rootless Podman 为平台级限制（与 rootful/rootless 外层宿主无关）**：容器内 devuser 的 rootless 初始化需嵌套用户命名空间映射。Windows Podman Machine（rootless 外层）实测遇 `Operation not permitted`；openKylin WSL 发行版（rootful 外层、`--cap-add all` + `--security-opt seccomp=unconfined`，均非 `--privileged`）实测 `unshare -U` 成功但 `newuidmap: write to uid_map failed: Invalid argument`（WSL2 嵌套 userns 映射限制，2026-10-09 实测，证据见 spec `evidence/live-rootless-probe-20261009-openkylin-wsl.log`）。实现 live rootless 需 `--privileged`（契约禁止）；冒烟 P8b 统一记录 ENV-LIMIT（镜像就绪已验证），为普适结论。
 - 仅 amd64 真实验证；`--platform` 透传保留但不承诺多架构验收。
 - 不含 conda/OMLMD/OLOT/Toolbx 等 jupyter-podman-rootless 特色部件（openKylin 场景无对应资产）。
 - 不修改 openKylin 软件源、不添加第三方 apt 源；不硬编码密码/密钥（SSH host key 启动时生成）。
@@ -88,6 +88,7 @@ ssh devuser@localhost -p 2222     # 密码：DEV_PASSWORD 或启动日志中的�
 | `specified mapping 1000:65536 includes the user UID` | subuid 起点含自身 UID | 使用 `100000:65536` 起点 |
 | `HEALTHCHECK is not supported for OCI image format` | 基底为 OCI 格式 | 构建加 `--format docker` |
 | locale 探针失败但 `locale -a` 含 `zh_CN.utf8` | Debian 兼容模式小写/无连字符拼写 | 探针使用大小写与连字符兼容匹配 |
+| `newuidmap: write to uid_map failed: Invalid argument` | WSL2 嵌套 userns 映射限制（live rootless 初始化） | 平台限制：冒烟 P8b 按 ENV-LIMIT 记录；live rootless 需 `--privileged`（契约禁止），不得绕过 |
 
 ## 相关知识
 
