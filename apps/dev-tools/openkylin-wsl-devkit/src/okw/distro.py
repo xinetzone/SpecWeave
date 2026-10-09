@@ -177,8 +177,8 @@ def get_distro(name: str) -> Distro | None:
             return d
     return None
 
-def exec_distro(name: str, cmd: list[str], user: str | None = None) -> CmdResult:
-    """在指定发行版内执行命令（参数透传）。可选 -u 指定用户。"""
+def exec_distro(name: str, cmd: list[str], user: str | None = None, timeout: int = 60) -> CmdResult:
+    """在指定发行版内执行命令（参数透传）。可选 -u 指定用户与超时秒数。"""
     try:
         if get_distro(name) is None:
             return CmdResult(False, 1, "", f"发行版 {name} 不存在", "distro_missing")
@@ -188,7 +188,7 @@ def exec_distro(name: str, cmd: list[str], user: str | None = None) -> CmdResult
     if user:
         args.extend(["-u", user])
     args.extend(["--", *cmd])
-    return run_wsl(args)
+    return run_wsl(args, timeout=timeout)
 
 def import_distro(image: str, name: str, location: str, version: str = DEFAULT_IMPORT_VERSION) -> CmdResult:
     """构造并执行 wsl --import；校验镜像 gzip 头。"""

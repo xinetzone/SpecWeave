@@ -25,7 +25,14 @@ openKylin WSL 开发工具包：通过 `okw` 管理 WSL 发行版、验收 openK
 ./openkylin-dev-container/scripts/smoke.ps1
 ```
 
-镜像不依赖 okw Python 包（零第三方运行时依赖，沿用 bash+pwsh 双环境模式）；构建/冒烟脚本与 `okw podman verify` 语义一致：不修改软件源、不隐式拉取。
+**okw image 一键构建/验收**（在 openKylin WSL 发行版内以 root 身份执行，2026-10-09 实测通过）：
+
+```text
+okw image build openKylin-3.0-desktop --tag my-dev   # 基镜像本地 exists 禁拉；--format docker
+okw image verify openKylin-3.0-desktop               # 静态探针 P1-P8 + 健康 + 服务/HTTP 200
+```
+
+镜像不依赖 okw Python 包（零第三方运行时依赖，沿用 bash+pwsh 双环境模式）；构建/冒烟脚本与 `okw podman verify` 语义一致：不修改软件源、不隐式拉取。`okw image` 子命令完整说明见[命令参考](../../../docs/tech/guides/openkylin-wsl-devkit/02-command-reference.md)与[开发容器指南](../../../docs/tech/guides/openkylin-wsl-devkit/05-openkylin-dev-container.md)。
 
 ## 快速安装
 

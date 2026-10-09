@@ -1,12 +1,13 @@
 """okw CLI：argparse 装配。
 
-子命令：list / status / import / export / unregister / exec / verify / scaffold / ref / podman。
+子命令：list / status / import / export / unregister / exec / verify / scaffold / ref / podman / image。
 """
 
 import argparse
 import sys
 
-from okw import __version__, distro, podman, ref, scaffold, verify
+from okw import __version__, distro, image, podman, ref, scaffold, verify
+
 
 def _print(text: str = "") -> None:
     print(text)
@@ -193,6 +194,67 @@ def build_parser() -> argparse.ArgumentParser:
     p_ref = sub.add_parser("ref", help="openKylin 知识库快速参考")
     p_ref.add_argument("topic", nargs="?", help="主题：series/wsl-troubleshoot/okbs/verify")
 
+    # image 子命令组：build / verify（对齐 podman 组的禁拉取与退出码纪律）
+    image_epilog = (
+        "退出码：0=全部 PASS；1=存在 FAIL（按报告中的中文指引修复后重试）；"
+        "2=用法错误或仅 UNKNOWN。全程禁止隐式拉取（仅 build 的 --pull-base 显式放行基底）。"
+    )
+    p_image = sub.add_parser(
+        "image",
+        help="openKylin 开发容器镜像：在发行版内构建与验收",
+        description=(
+            "两步流程：build 在指定发行版内（root 身份）构建 localhost/openkylin-dev:<tag>"
+            "（基镜像默认仅本地，构建上下文自动同步到发行版内 /tmp）；"
+            "verify 验收镜像——本地存在 + 静态探针 + 全量启动健康 + 服务/HTTP，"
+            "容器操作全程 --pull=never 且使用 G3 运行契约参数。"
+        ),
+        epilog=image_epilog,
+    )
+    p_image_sub = p_image.add_subparsers(dest="image_cmd", metavar="<image_cmd>")
+
+    p_img_build = p_image_sub.add_parser(
+        "build",
+        help="在发行版内构建 localhost/openkylin-dev:<tag>（root 身份）",
+        description=(
+            "发行版内 root 身份执行：podman 可用性 → 基镜像本地存在（默认禁拉；"
+            "--pull-base 显式放行）→ 上下文同步（Windows 路径转发行版内 /tmp，"
+            "或 --context 指定发行版内已有目录）→ podman build --format docker。"
+        ),
+        epilog=image_epilog,
+    )
+    p_img_build.add_argument("name", help="发行版名称（wsl -l -v 查看）")
+    p_img_build.add_argument("--tag", default=image.DEFAULT_TAG, help=f"镜像标签（默认 {image.DEFAULT_TAG}）")
+    p_img_build.add_argument(
+        "--base-image",
+        default=image.DEFAULT_BASE_IMAGE,
+        help=f"基底镜像（默认 {image.DEFAULT_BASE_IMAGE}，本地导入的 3.0 rootfs）",
+    )
+    p_img_build.add_argument(
+        "--pull-base",
+        action="store_true",
+        help="基底镜像本地缺失时显式允许拉取（默认禁止任何隐式拉取）",
+    )
+    p_img_build.add_argument("--no-cache", action="store_true", help="构建时禁用层缓存")
+    p_img_build.add_argument(
+        "--context",
+        help="构建上下文目录（Windows 绝对路径或发行版内绝对路径；默认包内 openkylin-dev-container/）",
+    )
+
+    p_img_verify = p_image_sub.add_parser(
+        "verify",
+        help="验收镜像：本地存在 + 静态探针 + 全量启动健康 + 服务/HTTP",
+        description=(
+            "发行版内 root 身份执行：podman 可用性 → 镜像本地存在（禁拉）→ "
+            "静态探针（P1-P8，--entrypoint /bin/bash）→ 后台启动等待 HEALTHCHECK → "
+            "服务探针（SSH/Jupyter 进程、22/8888 端口、Jupyter HTTP 200）→ 清理临时容器。"
+            "--no-boot 时只做静态探针。"
+        ),
+        epilog=image_epilog,
+    )
+    p_img_verify.add_argument("name", help="发行版名称")
+    p_img_verify.add_argument("--image", default=image.DEFAULT_IMAGE, help=f"待验收镜像（默认 {image.DEFAULT_IMAGE}）")
+    p_img_verify.add_argument("--no-boot", action="store_true", help="只做静态探针，不启动服务栈")
+
     # podman 子命令组：preflight / install / verify
     podman_epilog = (
         "退出码：0=全部 PASS；1=存在 FAIL（按报告中的中文指引修复后重试）；"
@@ -315,6 +377,24 @@ def main(argv: list[str] | None = None) -> int:
         )
         podman_parser = subparsers_action._name_parser_map["podman"]
         podman_parser.print_help()
+        return 2
+    if args.command == "image":
+        if not args.image_cmd:
+            subparsers_action = next(
+                a for a in parser._subparsers._group_actions if a.dest == "command"
+            )
+            image_parser = subparsers_action._name_parser_map["image"]
+            image_parser.print_help()
+            return 2
+        if args.image_cmd == "build":
+            return image.cmd_build(args)
+        if args.image_cmd == "verify":
+            return image.cmd_verify(args)
+        subparsers_action = next(
+            a for a in parser._subparsers._group_actions if a.dest == "command"
+        )
+        image_parser = subparsers_action._name_parser_map["image"]
+        image_parser.print_help()
         return 2
     parser.print_help()
     return 2
