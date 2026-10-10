@@ -1,0 +1,81 @@
+# 手帐贴纸风格照片生成流水线 —— xuan-compose 声明式编排
+#
+# 教学配套文件（Wiki《xuan-compose 实战：手帐贴纸风格照片生成》）。
+# 由 xuan-compose（Compose 规范引擎，podman-compose v1.6.0 翻译重构）解析执行。
+# 先用 `xuan-compose config` 校验合并结果，再用 `--dry-run up` 预演，最后真正 up。
+name: sticker-studio
+
+services:
+  # ① 生图服务：长驻形态是 HTTP API；同一镜像也可用 `run --rm --entrypoint ...`
+  #    做一次性批处理（见 Wiki 06 章）。
+  generator:
+    build:
+      context: ./generator
+    command: ["uvicorn", "generate:app", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      # 插值语法：${VAR:-默认值}；端点/模型全部可配置，不把供应商细节焊死在编排里
+      ARK_BASE_URL: ${ARK_BASE_URL:-https://ark.cn-beijing.volces.com/api/v3}
+      ARK_MODEL: ${ARK_MODEL:-doubao-seedream-5-0-pro-260628}
+      OUTPUT_SIZE: ${OUTPUT_SIZE:-1248x832}   # 3:2（1K 档 1248x832）
+      # 色幕色必须与 keychroma 去底任务保持一致（绿植多的场景一起改 #ff00ff）
+      CHROMA_KEY: ${CHROMA_KEY:-#00ff00}
+    # 文件 secret：运行时以只读 bind 挂载到容器内 /run/secrets/ark_key
+    secrets:
+      - ark_key
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./photos:/work/photos          # 输入照片（bind）
+      - ./out:/work/out                # 双产物输出（bind）
+      - ./prompts:/work/prompts:ro     # 提示词模板（只读 bind）
+      - gen-cache:/root/.cache         # 模型/HTTP 缓存（命名卷）
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health').status==200 else 1)"
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+  # ② 成品画廊：可选长驻服务（profile=web），只读托管 ./out。
+  #    depends_on 的 service_healthy 会被翻译为 podman 的 healthy 等待条件。
+  #    注意：默认 in_pod=true，同 Pod 内容器共享网络命名空间，
+  #    因此画廊必须监听与 generator（8000）不同的容器端口，这里用 8080。
+  gallery:
+    profiles: ["web"]
+    image: docker.io/library/python:3.12-alpine
+    working_dir: /srv
+    command: ["python", "-m", "http.server", "8080", "--bind", "0.0.0.0"]
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./out:/srv:ro
+    depends_on:
+      generator:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ③ 色幕去底任务：设计为一次性容器，用 `xuan-compose run --rm keychroma -- ...` 触发。
+  #    run 会自动先构建本服务镜像；--rm 让容器退出即删，产物只落在 ./out。
+  keychroma:
+    build:
+      context: ./keychroma
+    entrypoint: ["python", "remove_chroma_key.py"]
+    environment:
+      # 绿植多的场景改用 #ff00ff（品红），其余场景默认 #00ff00（绿幕）
+      CHROMA_KEY: ${CHROMA_KEY:-#00ff00}
+    volumes:
+      - ./out:/work/out
+
+# 命名卷必须在顶层声明，否则 xuan-compose 解析期即报 RuntimeError
+volumes:
+  gen-cache:
+
+# 文件 secret 声明：源文件相对本 compose.yaml 解析，切勿提交真实密钥
+secrets:
+  ark_key:
+    file: ./secrets/ark_key.txt

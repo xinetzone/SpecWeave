@@ -56,6 +56,7 @@ VENDOR-INTEGRATION
 | **AI 教育** | AI 教育智能体与教育科技学习成果（OpenMAIC 知识包等） | [OpenMAIC 知识包](ai-education/openmaic/index.md) |
 | **[开源赛事](opensource-contest/index.md)** | 开源竞赛与政策型开发者大赛的参赛知识包（规则、赛程、评审机制、备赛方法论） | [2026 上海开源软件应用创新大赛知识包](opensource-contest/os2026-shanghai/index.md) |
 | **算法艺术** | 生成式艺术与算法创意探索（Atomic Emergence 等） | [Atomic Emergence 哲学](algorithmic-art/atomic-emergence/concepts/philosophy.md) |
+| **[xuan-compose 实战：手帐贴纸照片生成](tech/xuan-compose-sticker-wiki/index.md)** | 以「照片→手帐记忆卡+透明底贴纸双产物」为案例的 Compose 声明式容器编排 Wiki（podman-compose 翻译重构版 xuan-compose，含可运行配套工程） | [教程总览](tech/xuan-compose-sticker-wiki/00-overview.md) · [模式与验收清单](tech/xuan-compose-sticker-wiki/10-pattern-checklist.md) |
 | **工程化研究** | 深度学习原子化设计等工程方法论研究 | [AI Agent 原子化设计分析](engineering/deep-learning-atomic-design/concepts/ai-agent-atomic-design-analysis.md) |
 | **[正念与正面辨析](mindfulness-positivity/index.md)** | 心智概念知识包：正念（看见）与正面/积极心态（改写）的双教程、联系与区别，及「先接纳后重构」整合模式 | [正念教程](mindfulness-positivity/concepts/01-zheng-nian-mindfulness.md) · [正面教程](mindfulness-positivity/concepts/02-zheng-mian-positivity.md) · [联系与区别](mindfulness-positivity/concepts/03-connection-and-differences.md) |
 | **[切蛋糕法则](cake-cutting-rule/index.md)** | 公平分割方法论知识包：数学公平分割理论（你切我选/修剪法/移动刀/无嫉妒）、机制设计解读（切选分离与利益对齐）、职场处世应用（做蛋糕 vs 切蛋糕、动态股权），附实战示例与信源台账 | [01 数学公平分割理论](cake-cutting-rule/concepts/01-fair-division-theory.md) · [02 机制设计解读](cake-cutting-rule/concepts/02-you-cut-i-choose-mechanism.md) · [03 职场与处世应用](cake-cutting-rule/concepts/03-maker-vs-cutter-workplace.md) |
