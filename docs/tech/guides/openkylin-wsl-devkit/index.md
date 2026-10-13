@@ -7,7 +7,7 @@ source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#定位"
 
 # openKylin WSL 开发工具包（okw）
 
-`okw` 是面向 Windows + WSL2 的 openKylin 开发工具包，提供 WSL 发行版管理、环境验收、deb/dput 脚手架、知识库快速参考，以及 rootless Podman 预检、安装与验收。工具以 WSL 为切入点，将已验证的操作经验封装为 CLI。
+`okw` 是面向 Windows + WSL2 的 openKylin 开发工具包，提供 WSL 发行版管理、环境验收、deb/dput 脚手架、知识库快速参考、rootless Podman 预检/安装/验收，以及 AI 栈中已验证的本地离线 OCR 预检/安装/验收。工具以 WSL 为切入点，将已验证的操作经验封装为 CLI。
 
 ## 按任务阅读
 
@@ -19,6 +19,7 @@ source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#定位"
 | 了解设计、安全边界、开发和测试 | [开发与边界](04-development-and-boundaries.md) |
 | 构建并使用 openKylin 开发容器镜像 | [openKylin 开发容器镜像指南](05-openkylin-dev-container.md) |
 | 在 rootless Podman 之上引导 xuan-compose（xc） | [xuan-compose（xc）引导指南](06-xuan-compose.md) |
+| 安装并验收本地离线 OCR（AI 栈） | [AI 栈：本地 OCR 指南](07-ai-stack.md) |
 
 ## 能力概览
 
@@ -30,6 +31,7 @@ source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#定位"
 | 知识库快速参考 | `okw ref <主题>` |
 | rootless Podman 工作流 | `okw podman preflight`、`install`、`verify` |
 | xuan-compose（xc）下游引导 | `okw compose preflight`、`install`、`verify`（GPL-2.0-only 第三方，需 `--source` 与 `--yes`） |
+| AI 栈本地 OCR | `okw ai preflight`、`install --yes`、`verify [--smoke-ocr]`（仅已验证 tesseract 离线 OCR） |
 
 本工具不替代系统级 WSL 安装、不自动下载发行版镜像、不调用 OKBS/factory API，也不修改 openKylin 知识库。Desktop WSL 的运行时结论仍以对应实测资料为准；本工具不固化未验证建议。
 
@@ -48,4 +50,5 @@ source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#定位"
 04-development-and-boundaries
 05-openkylin-dev-container
 06-xuan-compose
+07-ai-stack
 ```

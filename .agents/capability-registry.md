@@ -1,8 +1,8 @@
 ---
 id: "capability-registry"
 title: "SpecWeave 能力注册中心"
-version: "1.8"
-last_updated: "2026-07-01"
+version: "1.9"
+last_updated: "2026-10-13"
 generator: "manual"
 schema: "specweave-capability-registry-v1"
 note: "初始版本手动维护，后续由 generate-capability-registry.py 自动生成"

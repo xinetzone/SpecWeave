@@ -22,6 +22,9 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/03-commands-workflows-
 | 文件创建 | file-creation | 文件创建标准化流程，包含三步前置检查（必要性/重复/命名） | "创建文件"、"新建文件"、"文件创建" | 自我管理 (self-management) | [commands/file-creation.md](../commands/file-creation.md) |
 | Mermaid图表管理 | mermaid | Mermaid图表生成、解析、检查、修复与协作管理 | "mermaid"、"流程图"、"时序图"、"画个图"、"架构图" | 自我管理 (self-management) | [commands/mermaid.md](../commands/mermaid.md) |
 | Home Assistant集成 | home-assistant | Home Assistant智能家居系统集成，设备控制与状态查询（可选模块） | "智能家居"、"Home Assistant"、"控制设备"、"查询设备状态" | 可选集成模块 | [commands/home-assistant.md](../commands/home-assistant.md) |
+| 知识沉淀 | knowledge-sedimentation | 从实践中沉淀知识与模式的标准流程 | "知识沉淀"、"沉淀经验"、"knowledge sedimentation" | 自我萃取 (self-extraction) | [commands/knowledge-sedimentation.md](../commands/knowledge-sedimentation.md) |
+| 行动优先 | action-first | 以行动为先导的执行原则 | "行动优先"、"先行动"、"action first" | 自我管理 (self-management) | [commands/action-first.md](../commands/action-first.md) |
+| Token优化 | token-optimize | Token 成本优化、上下文压缩与缓存命中率提升 | "Token优化"、"降本"、"token optimize" | 自我迭代 (self-iteration) | [commands/token-optimize.md](../commands/token-optimize.md) |
 
 完整设计理念和执行流程见 [commands/README.md](../commands/README.md)。
 

@@ -87,6 +87,24 @@ okw compose verify   <name> [--smoke]
 
 > 许可证边界：xuan-compose 为 **GPL-2.0-only** 第三方软件，okw（MIT）不 import、不复制、不分发，仅在你显式授权后按你指定来源在本机引导安装。完整机制、镜像环境变量与常见问题见 [xuan-compose（xc）引导指南](06-xuan-compose.md)。
 
+## AI 栈（仅已验证的本地 OCR 路径）
+
+`okw ai` 与 podman 组同构，按「只读预检 → 显式安装 → 只读验收」推进。本期范围刻意收敛到知识库里**唯一完成落机 POC** 的能力——Gen1 Kylin AI SDK 的文字识别（OCR），其本地后端为 tesseract，CPU、离线、无云密钥、不下载大模型：
+
+```text
+okw ai preflight <name>
+okw ai install  <name> --yes
+okw ai verify   <name> [--smoke-ocr <图片路径>]
+```
+
+- `preflight`（只读）：盘点 WSL2/openKylin/dpkg/apt 结构，再以**单条批量** `apt-cache policy` 查询 11 个 AI 组件的已装/候选版本。5 个 OCR 必选项（`libkylin-ai-base-dev`、`libkylin-ai-base2`、`tesseract-ocr`、`tesseract-ocr-chi-sim`、`tesseract-ocr-eng`）决定门控；6 个可选层（模型管理器、Gen2 引擎插件、本地 NLP 引擎、kytensor、ollama 等）仅信息展示，其 UNKNOWN **不阻断**退出码。
+- `install`（必须 `--yes`）：以 root 执行 `apt update` 刷新索引 → 复查直接包候选 → `apt install -y --no-install-recommends libkylin-ai-base-dev`，由 APT 经 Depends 解析 OCR 运行库、tesseract 与 `chi_sim/eng` 语言包 → 事后只读 OCR 验收。漏 `--yes` 仅打印副作用清单（退出码 2，零写入）。
+- `verify`（只读）：`dpkg-query` 确认 SDK/运行库已装，`tesseract --version/--list-langs` 权威确认引擎与语言；可选层缺失仅 UNKNOWN。`--smoke-ocr` 对一张**本地图片**执行一次离线识别（`tesseract <图片> stdout -l chi_sim+eng`），图片不存在或结果为空记 FAIL；默认不识别。
+- 图片路径：发行版内绝对路径（`/tmp/a.png`）原样使用；Windows 盘符路径（`C:\...\a.png`）自动转 `/mnt/c/.../a.png`。
+- 退出码 `0` 全通过 / `1` 有 FAIL / `2` 用法错误、必选项仅 UNKNOWN，或 install 缺 `--yes`。
+
+> 边界：okw 不配置 API Key、不下载模型、不安装 ollama/Gen2 全栈、不启动推理服务。Gen2 `libkysdk` 客户端虽出厂预装，但只是 IPC 薄代理，引擎插件与模型缺省、端到端未验证。完整背景见 [AI 栈指南](07-ai-stack.md) 与知识库 [05 AI 三层体系](../../../knowledge/tech/openkylin-docs-wiki/concepts/05-ai-stack.md)。
+
 ## 知识库参考
 
 ```text
@@ -95,6 +113,7 @@ okw ref series
 okw ref wsl-troubleshoot
 okw ref okbs
 okw ref verify
+okw ref ai-stack
 ```
 
-`okw ref` 不修改知识库。openKylin 版本代号和开发流程见[知识库对应页面](../../../knowledge/tech/openkylin-docs-wiki/concepts/02-release-lifecycle.md)与[开发者基础设施](../../../knowledge/tech/openkylin-docs-wiki/concepts/06-developer-infrastructure.md)。
+`okw ref` 不修改知识库。`ai-stack` 主题导读 AI 三层体系、Gen1/Gen2 SDK 消歧与本地 OCR 红线。openKylin 版本代号和开发流程见[知识库对应页面](../../../knowledge/tech/openkylin-docs-wiki/concepts/02-release-lifecycle.md)与[开发者基础设施](../../../knowledge/tech/openkylin-docs-wiki/concepts/06-developer-infrastructure.md)。

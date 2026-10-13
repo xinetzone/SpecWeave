@@ -71,6 +71,24 @@ _TOPICS: dict[str, RefTopic] = {
         ],
         sources=[f"{KB_ROOT}/references/wsl-install-sparse-vhd-guide.md"],
     ),
+    "ai-stack": RefTopic(
+        name="ai-stack",
+        title="openKylin AI 三层体系 + 贡献治理",
+        lines=[
+            "成文分层：用户使用 / 模型接入配置 / 开发者 SDK，外加贡献治理",
+            "用户层：kylin-ai-model-manager（apt，上游自述不完善）、ollama（不在官方源）跑 DeepSeek-R1、KylinCode",
+            "模型接入三类来源：云端 API Key / 局域网端点 / 本地模型包；先确认 AI 子系统版本",
+            "Gen1 SDK：libkylin-ai-base-dev（手册 8 能力域；OCR 已实测，其余多为 D-Bus 代理）",
+            "Gen2 SDK：libkysdk-* 全 IPC 薄代理；客户端预装但引擎插件/模型缺省",
+            "OCR 实测：本地 tesseract 5.3.4（chi_sim+eng）CPU 离线，精度中等、有形近误识",
+            "红线：API Key/Token 禁入仓库、禁传外部 AI；okw 不配置密钥、不下载模型、不装 ollama",
+        ],
+        sources=[
+            f"{KB_ROOT}/concepts/05-ai-stack.md",
+            f"{KB_ROOT}/references/ai-sdk-ocr-poc.md",
+            f"{KB_ROOT}/references/ai-subsystem-source-architecture.md",
+        ],
+    ),
 }
 
 def list_topics() -> list[str]:

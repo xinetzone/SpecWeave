@@ -13,6 +13,7 @@ openKylin WSL 开发工具包：通过 `okw` 管理 WSL 发行版、验收 openK
 - [开发、测试与边界](../../../docs/tech/guides/openkylin-wsl-devkit/04-development-and-boundaries.md)
 - [openKylin 开发容器镜像指南](../../../docs/tech/guides/openkylin-wsl-devkit/05-openkylin-dev-container.md)
 - [xuan-compose（xc）引导指南](../../../docs/tech/guides/openkylin-wsl-devkit/06-xuan-compose.md)
+- [AI 栈：本地 OCR 指南](../../../docs/tech/guides/openkylin-wsl-devkit/07-ai-stack.md)
 
 ## openKylin 开发容器镜像
 
@@ -54,6 +55,21 @@ okw podman verify <name>
 ```
 
 `okw podman verify --smoke-image` 仅使用发行版内已存在的镜像，不会隐式拉取。完整约束与操作说明见[工具包指南](../../../docs/tech/guides/openkylin-wsl-devkit/index.md)。
+
+## AI 栈（本地离线 OCR）
+
+`okw ai` 仅封装 AI 栈中唯一完成落机 POC 的能力——Gen1 Kylin AI SDK 的文字识别（本地 tesseract、CPU、离线、无密钥、不下载模型）：
+
+```text
+okw ai preflight <name>
+okw ai install  <name> --yes
+okw ai verify   <name>
+okw ai verify   <name> --smoke-ocr /tmp/sample.png   # 对发行版内本地图片离线识别
+```
+
+`<name>` 为目标 WSL 发行版名称，先在 PowerShell 运行 `wsl -l -v` 查看（如 `openKylin-3.0-desktop`）。`--smoke-ocr` 的图片可给发行版内路径（如 `/tmp/sample.png`），也支持 Windows 盘符路径（如 `C:\Users\me\sample.png`，自动转换为 `/mnt/c/Users/me/sample.png`、经 drvfs 访问）。
+
+`install` 以 root 执行 `apt install -y --no-install-recommends libkylin-ai-base-dev`，由 APT 解析 tesseract 与 `chi_sim/eng` 语言包；必须 `--yes`，漏确认零写入。可选层（Gen2 引擎、模型管理器、ollama 等）仅在 preflight/verify 中只读盘点、UNKNOWN 不阻断。okw 不配置密钥、不下载模型、不装 ollama/Gen2 全栈。完整背景与边界见[AI 栈指南](../../../docs/tech/guides/openkylin-wsl-devkit/07-ai-stack.md)。
 
 ## xuan-compose（xc）引导
 

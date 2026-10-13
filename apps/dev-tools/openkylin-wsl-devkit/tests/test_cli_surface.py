@@ -20,6 +20,9 @@ EXPECTED_LEAVES = sorted(
         "verify",
         "scaffold",
         "ref",
+        "ai preflight",
+        "ai install",
+        "ai verify",
         "podman preflight",
         "podman install",
         "podman verify",
@@ -36,7 +39,7 @@ def load_snapshot() -> dict:
     return json.loads(SNAPSHOT_PATH.read_text(encoding="utf-8"))
 
 
-def test_snapshot_covers_all_seventeen_leaves():
+def test_snapshot_covers_all_twenty_leaves():
     leaves = sorted(collect_leaf_commands(build_parser()))
     assert leaves == EXPECTED_LEAVES
 

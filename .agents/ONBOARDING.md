@@ -1,6 +1,6 @@
 ---
-version: "2.5"
-last_updated: "2026-07-29"
+version: "2.6"
+last_updated: "2026-10-13"
 schema: "l0-onboarding-v1"
 layer: "L0"
 max_lines: 100
@@ -36,7 +36,7 @@ Windows 必需：
 
 ---
 
-## 核心实践（800+次提交验证·17条）
+## 核心实践（4200+次提交验证·17条）
 
 | # | 实践 | 一句话说明 |
 |---|------|-----------|
@@ -95,10 +95,9 @@ Windows 必需：
 
 ---
 
-<!-- TODO: 待确认事项占位符
-  - [ ] CI集成时间线：是否设置2周过渡期（2026-08-12后strict），与pwsh7保持一致？
-  - [ ] global-core-rules.md同步更新：新增Python 3.10+强制规范条款
-  - [ ] development-standards.md更新：Python编码规范章节补充版本要求
-  - [ ] 版本范围确认：.agents/scripts治理脚本3.10+，业务代码3.14+，划分是否合理？
-  - [ ] 迁移批量执行：确认后运行 migrate-to-python310.py --apply 批量迁移现有脚本
+<!-- TODO: 2026-10-13 全面复盘登记的待办（sc-20261013-specweave-review）
+  - [ ] 入口徽章计数接入 docgen stats 自动生成，CI 校验 README 与 docs/index 数字一致
+  - [ ] .agents/skills 自研门面区与技能库素材区做二级分区或加清晰边界
+  - [ ] projects 区域补「普通目录 vs 子模块」对称校验
+  - [ ] capability-registry/02-skills 补登记 openkylin-wsl-devkit 等最近迁入技能
 -->

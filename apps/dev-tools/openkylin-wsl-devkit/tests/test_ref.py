@@ -32,12 +32,21 @@ class TestTopics:
         assert "dpkg-query -W" in text
         assert "systemd" in text
 
+    def test_ai_stack_content(self):
+        t = ref.get_topic("ai-stack")
+        assert t is not None
+        text = ref.format_topic(t)
+        assert "Gen1" in text and "Gen2" in text
+        assert "tesseract" in text and "红线" in text
+
     def test_unknown_topic(self):
         assert ref.get_topic("nope") is None
 
     def test_list_topics(self):
         names = ref.list_topics()
-        assert set(names) == {"series", "wsl-troubleshoot", "okbs", "verify"}
+        assert set(names) == {
+            "series", "wsl-troubleshoot", "okbs", "verify", "ai-stack"
+        }
 
     def test_source_paths_exist(self):
         """每条相对路径在仓库内真实存在。"""

@@ -45,9 +45,9 @@ okf_version: "0.2"
 [pr-link]: CONTRIBUTING.md
 [python-badge]: https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white
 [python-link]: tech/references/tech-stack.md
-[scripts-badge]: https://img.shields.io/badge/脚本-401%2B-blue?style=flat
-[skills-badge]: https://img.shields.io/badge/Skills-21-success?style=flat
-[rules-badge]: https://img.shields.io/badge/规则-133%2B-orange?style=flat
+[scripts-badge]: https://img.shields.io/badge/脚本-650%2B-blue?style=flat
+[skills-badge]: https://img.shields.io/badge/Skills-169-success?style=flat
+[rules-badge]: https://img.shields.io/badge/规则-136-orange?style=flat
 [commands-badge]: https://img.shields.io/badge/指令集-15-purple?style=flat
 [gitcode-badge]: https://img.shields.io/badge/GitCode-镜像-blue?logo=gitee
 [gitcode-link]: https://gitcode.com/daoCollective/SpecWeave

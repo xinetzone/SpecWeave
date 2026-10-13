@@ -20,6 +20,9 @@ from okw.commands.distro_cmds import (
     cmd_status,
     cmd_unregister,
 )
+from okw.commands.ai_cmds import cmd_install as cmd_ai_install
+from okw.commands.ai_cmds import cmd_preflight as cmd_ai_preflight
+from okw.commands.ai_cmds import cmd_verify as cmd_ai_verify
 from okw.commands.compose_cmds import cmd_install as cmd_compose_install
 from okw.commands.compose_cmds import cmd_preflight as cmd_compose_preflight
 from okw.commands.compose_cmds import cmd_verify as cmd_compose_verify
@@ -45,6 +48,9 @@ COMMAND_HANDLERS: dict[str, Handler] = {
     "verify": cmd_verify,
     "scaffold": cmd_scaffold,
     "ref": cmd_ref,
+    "ai preflight": cmd_ai_preflight,
+    "ai install": cmd_ai_install,
+    "ai verify": cmd_ai_verify,
     "podman preflight": cmd_podman_preflight,
     "podman install": cmd_podman_install,
     "podman verify": cmd_podman_verify,

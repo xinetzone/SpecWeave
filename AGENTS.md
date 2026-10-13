@@ -44,7 +44,7 @@
 |---|---|---|---|---|---|
 | `.agents/` | AI 智能体规范容器（roles/rules/workflows/protocols等） | 主权区直接维护 | 直接纳入版本控制 | ✅ 可修改 | [.agents/README.md](.agents/README.md) |
 | `apps/` | 主仓库内置应用开发工作空间 | 同仓库直接管理（非 git submodule） | 直接纳入版本控制 | ✅ 可修改 | [apps/AGENTS.md](apps/AGENTS.md) |
-| `projects/` | 第一方自有子项目（git submodules） | git submodule 管理 | 通过 gitlink 追踪 | ❌ 不可直接修改（走子项目流程） | [projects/AGENTS.md](projects/AGENTS.md) |
+| `projects/` | 第一方子项目区（以 git submodules 为主，另含 monetize/tvm-ffi 等主仓直接追踪的工作目录） | 子模块 git submodule 管理；工作目录主仓直接管理 | 子模块通过 gitlink 追踪；工作目录直接纳入版本控制 | 子模块 ❌ 不可直接修改（走子项目流程）；工作目录 ✅ 可修改 | [projects/AGENTS.md](projects/AGENTS.md) |
 | `vendor/` | 第三方依赖（git submodules） | git submodule 管理 | 通过 gitlink 追踪 | ❌ 禁止本地修改 | [vendor/AGENTS.md](vendor/AGENTS.md) |
 
 > **注意**：`apps/` 与 `projects/`/`vendor/` 有本质区别——`apps/` 是主仓库直接管理的普通目录，所有文件直接纳入版本控制；而 `projects/` 和 `vendor/` 是 git submodule，通过 gitlink 追踪外部仓库引用，本地修改无法直接提交到主仓库。

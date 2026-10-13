@@ -27,17 +27,17 @@ x-toml-ref: "../.meta/toml/.agents/README.toml"
 ├── prompts/                  # [Core] 系统提示词与 few-shot 示例
 ├── tools/                    # [Core] 工具调用规范（如何使用工具）
 ├── protocols/                # [Core] 协作协议（含PDR前置阅读、三层路由、阶段守卫等）
-├── rules/                    # [Core] 规则体系（阶段守卫/硬编码/数据安全/AI编码/元文档优先等133+规则文件）
+├── rules/                    # [Core] 规则体系（阶段守卫/硬编码/数据安全/AI编码/元文档优先等136个规则文件）
 ├── workflows/                # [Core] 标准工作流
 ├── templates/                # [Core] 任务与交接模板
 ├── teams/                    # [Core] 团队管理功能模块（含4个专项团队）
 ├── systems/                  # [Core] 系统级架构定义
 ├── cases/                    # [Core] 项目复用案例
-├── commands/                 # [Core] 标准化指令集（13个：复盘/洞察/第一性原理/萃取/原子化/原子提交/Mermaid/对抗审查/导出报告/方法论编排等）
+├── commands/                 # [Core] 标准化指令集（15个：复盘/洞察/第一性原理/萃取/原子化/原子提交/Mermaid/对抗审查/导出报告/方法论编排/行动优先/Token优化/知识沉淀/文件创建/Home Assistant）
 ├── worlds/                   # [Core] 团队协作执行与环境管理
 ├── checklists/               # [Core] 标准化检查清单（风险评分等）
-├── scripts/                  # [Tools] 验证与自动化脚本（341+Python脚本，含tests/lib/mdi/sg_dashboard/forum_bot）
-├── skills/                   # [Tools] Skill 技能门面（19个：ci-check/docgen/insight/mermaid/forum-posting/link-check/atomization/atomic-commit/seven-concepts等）
+├── scripts/                  # [Tools] 验证与自动化脚本（650+Python脚本，含tests/lib/mdi/sg_dashboard/forum_bot）
+├── skills/                   # [Tools] Skill 技能库（169个技能目录：约40个自研门面、37个IDE内置/设计库镜像，其余为技能库素材）
 └── config/                   # [Tools] 工具配置文件（discourse等）
 ```
 
@@ -84,7 +84,7 @@ flowchart TD
 - `AGENTS.md` 是精简入口文件（约100行），定义启动协议（4步骤+自检清单，含内容敏感度预检步骤2.3）、22项核心规范入口导航表、开发规范概要与知识库索引，是智能体启动时首先读取的最高优先级契约。
 - `.agents/global-core-rules.md` 承载全局核心规则（启动协议优先、内容敏感度分流、沟通语言、按需读取、上下文节省、Mermaid优先、代码修改、歧义澄清、Spec目录规范、禁止临时依赖、三阶段递进、元文档优先、修复即闭环、查阅知识库、简单任务验证等，持续演进），从 AGENTS.md 拆分后持续演进。
 - `.agents/context-routing.md` 承载从 AGENTS.md 拆分出的完整上下文路由表（vendor方法论资产预检+常规任务路由，90+路由项）。
-- `.agents/` 是详细规范容器，承载各角色、提示词、工具规范、协议、工作流、模板与脚本的具体内容（341+脚本、133+规则文件、526+可复用模式）。
+- `.agents/` 是详细规范容器，承载各角色、提示词、工具规范、协议、工作流、模板与脚本的具体内容（650+脚本、136个规则文件、900+可复用模式、169个技能目录）。
 - 两者关系为"入口 ↔ 容器"：`AGENTS.md` 负责路由与全局约束，`.agents/` 负责具体规范与可执行细节。智能体应先读 `AGENTS.md`，再按需进入 `.agents/` 加载相关规范。
 - 信息架构遵循 L0/L1/L2 渐进式披露：AGENTS.md+ONBOARDING.md(L0) → capability-registry.md+context-routing.md+skills/(L1) → 详细规范文档(L2)。
 

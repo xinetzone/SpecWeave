@@ -43,9 +43,9 @@
 [pr-link]: CONTRIBUTING.md
 [python-badge]: https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white
 [python-link]: docs/tech/references/tech-stack.md
-[scripts-badge]: https://img.shields.io/badge/脚本-419%2B-blue?style=flat
-[skills-badge]: https://img.shields.io/badge/Skills-28-success?style=flat
-[rules-badge]: https://img.shields.io/badge/规则-133%2B-orange?style=flat
+[scripts-badge]: https://img.shields.io/badge/脚本-650%2B-blue?style=flat
+[skills-badge]: https://img.shields.io/badge/Skills-169-success?style=flat
+[rules-badge]: https://img.shields.io/badge/规则-136-orange?style=flat
 [commands-badge]: https://img.shields.io/badge/指令集-15-purple?style=flat
 [gitcode-badge]: https://img.shields.io/badge/GitCode-镜像-blue?logo=gitee
 [gitcode-link]: https://gitcode.com/daoCollective/SpecWeave
@@ -132,8 +132,10 @@ flowchart TB
 | **角色体系** | 定义 7 种 AI 角色（协调员、架构师、开发者、审查员、测试员等），每种角色有自己的职责说明书 | 公司的岗位职责表 |
 | **协作协议** | 规定 AI 之间怎么沟通、怎么交接任务、怎么解决冲突 | 公司的工作流程制度 |
 | **开发规范** | 代码怎么写、提交信息怎么标注、文档怎么组织 | 公司的质量标准手册 |
-| **自动检查** | 300 多个自动化脚本，自动检查工作质量，不合规的会被拦住 | 质检流水线 |
-| **模板库** | 标准化的文档模板和 440 多个可复用方案 | 公司的标准表格和经验库 |
+| **自动检查** | 600 多个 Python 脚本（含共享库与测试），自动检查工作质量，不合规的会被拦住 | 质检流水线 |
+| **模板与模式库** | 标准化文档模板，以及 900 多个经过验证的可复用模式 | 公司的标准表格和经验库 |
+
+> **关于「169 个 Skill」的口径**：`.agents/skills/` 下 169 个技能目录并非全部自研——约 40 个为本项目自研的命令集 / 脚本 / 工作流门面，37 个为 Trae IDE 内置技能与设计系统库的完整镜像，其余为跨来源收集的技能库素材。想确认"本项目正式维护哪些能力"，以 [能力注册中心](.agents/capability-registry.md) 为权威口径。
 
 ---
 
@@ -206,7 +208,7 @@ flowchart LR
 | **统一入口，不混乱** | AI 一进项目就知道该读什么规则，不会加载无关信息造成混乱 |
 | **7 种角色，分工明确** | 像真实团队一样有协调员、开发者、审查员、测试员等角色，各干各的活 |
 | **规则 + 工具，双保险** | 不仅告诉 AI "该怎么做"，还有自动检查工具确保"真的做到了" |
-| **经过实战验证** | 经过 1300 多次真实使用和迭代优化，不是纸上谈兵 |
+| **经过实战验证** | 经过 4200 多次提交的真实迭代优化，不是纸上谈兵 |
 | **按需加载，不浪费** | AI 不会一次性读完所有文档，用到什么才读什么，效率高 |
 | **开放标准，不锁定** | 基于公开的 AGENTS.md 标准，任何 AI 工具都能用，不绑定特定平台 |
 
@@ -231,8 +233,8 @@ flowchart LR
 | [项目结构](docs/tech/references/project-structure.md) | 想了解文件组织 | 完整目录树与职责说明 |
 | [技术栈与环境](docs/tech/references/tech-stack.md) | 技术人员 | 技术选型与环境依赖 |
 | [验证与自动化](docs/tech/references/verification-automation.md) | 技术人员 | 自动检查和验证机制 |
-| [可复用模式库](docs/retrospective/patterns/index.md) | 架构师/开发者 | 380+经过验证的架构模式、代码模式、方法论模式 |
-| [架构模式索引](docs/retrospective/patterns/architecture-patterns/README.md) | 架构师 | 42个系统架构设计可复用模式（含Caffe现代化改造4个新ADR） |
+| [可复用模式库](docs/retrospective/patterns/index.md) | 架构师/开发者 | 900+经过验证的架构模式、代码模式、方法论模式 |
+| [架构模式索引](docs/retrospective/patterns/architecture-patterns/README.md) | 架构师 | 97个系统架构设计可复用模式（含Caffe现代化改造4个新ADR） |
 | [泛化与资产复用](docs/topics/reuse-and-generalization.md) | 想迁移到其他项目 | 如何把规范用到自己的项目中 |
 | [项目蓝图](docs/tech/references/roadmap.md) | 想了解未来规划 | 短期目标与中长期战略 |
 | [贡献指南](CONTRIBUTING.md) | 想参与贡献 | 如何提建议、报问题、提交代码 |

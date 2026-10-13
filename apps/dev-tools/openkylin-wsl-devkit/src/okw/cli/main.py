@@ -19,7 +19,12 @@ def main(argv: list[str] | None = None) -> int:
         parser.print_help()
         return 2
 
-    if args.command == "podman":
+    if args.command == "ai":
+        if not args.ai_cmd:
+            args._group_help()
+            return 2
+        key = f"ai {args.ai_cmd}"
+    elif args.command == "podman":
         if not args.podman_cmd:
             args._group_help()
             return 2

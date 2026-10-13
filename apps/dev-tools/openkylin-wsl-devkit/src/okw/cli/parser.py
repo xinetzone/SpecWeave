@@ -55,7 +55,76 @@ def build_parser() -> argparse.ArgumentParser:
     p_scaff.add_argument("--output", help="dput：输出文件路径（默认打印片段）")
 
     p_ref = sub.add_parser("ref", help="openKylin 知识库快速参考")
-    p_ref.add_argument("topic", nargs="?", help="主题：series/wsl-troubleshoot/okbs/verify")
+    p_ref.add_argument(
+        "topic", nargs="?", help="主题：series/wsl-troubleshoot/okbs/verify/ai-stack"
+    )
+
+    # ai 子命令组：preflight / install / verify（本期仅 OCR 已验证路径）
+    ai_epilog = (
+        "退出码：0=全部 PASS；1=存在 FAIL（按报告中的中文指引修复后重试）；"
+        "2=用法错误、preflight/verify 仅 UNKNOWN，或 install 未提供 --yes（零写入）。\n"
+        "边界：okw 不配置 API Key/Token、不下载模型、不安装 ollama；Gen2 全栈仅只读盘点。"
+    )
+    p_ai = sub.add_parser(
+        "ai",
+        help="openKylin AI 栈：只读盘点、显式安装已验证 OCR 路径并验收",
+        description=(
+            "三步流程：preflight 单批 apt-cache policy 只读盘点 AI 分层组件；"
+            "install --yes 仅安装已验证直接包 libkylin-ai-base-dev（APT 解析 tesseract 与 "
+            "chi_sim/eng 语言包）；verify 只读确认本地 OCR 可用，--smoke-ocr 对本地图片离线识别。"
+        ),
+        epilog=ai_epilog,
+    )
+    # 装配期闭包：`okw ai` 无子命令时回打本子组帮助（退出码在 main 中给 2）。
+    p_ai.set_defaults(_group_help=p_ai.print_help)
+    p_ai_sub = p_ai.add_subparsers(dest="ai_cmd", metavar="<ai_cmd>")
+
+    p_ai_preflight = p_ai_sub.add_parser(
+        "preflight",
+        help="只读盘点：发行版/WSL版本/openKylin身份/APT能力/AI 分层组件候选",
+        description=(
+            "只读预检，单条 apt-cache policy 批量盘点；不触发 apt update、不写文件、"
+            "不改默认发行版。OCR 必选组件有候选标 PASS；可选层缺失标 UNKNOWN 不阻断；"
+            "索引过期给出手动 apt update 建议，网络错误给出排查方向。"
+        ),
+        epilog=ai_epilog,
+    )
+    p_ai_preflight.add_argument("name", help="发行版名称（wsl -l -v 查看）")
+
+    p_ai_install = p_ai_sub.add_parser(
+        "install",
+        help="安装已验证 OCR 路径 libkylin-ai-base-dev（必须 --yes）",
+        description=(
+            "--yes 后：① root apt update 刷新索引；② root apt install -y "
+            "--no-install-recommends libkylin-ai-base-dev（APT 解析 OCR 运行库、tesseract、"
+            "chi_sim/eng 语言包）；③ 默认用户只读 OCR 验收。漏 --yes 仅打印 3 条副作用清单、"
+            "退出码 2、零写入。不改软件源/wsl.conf/默认发行版，不装可选层、模型或 ollama。"
+        ),
+        epilog=ai_epilog,
+    )
+    p_ai_install.add_argument("name", help="发行版名称（wsl -l -v 查看）")
+    p_ai_install.add_argument(
+        "--yes",
+        action="store_true",
+        help="显式确认 apt update、安装 libkylin-ai-base-dev 及依赖、事后只读 OCR 验收",
+    )
+
+    p_ai_verify = p_ai_sub.add_parser(
+        "verify",
+        help="只读验收本地 OCR（默认不识别；--smoke-ocr 对本地图片离线识别）",
+        description=(
+            "只读检查 Gen1 SDK/运行库已装、tesseract --version 与 --list-langs 含 chi_sim+eng；"
+            "可选层缺失仅 UNKNOWN 不阻断。--smoke-ocr 仅对发行版内本地图片执行一次离线识别，"
+            "不访问网络、不下载模型。"
+        ),
+        epilog=ai_epilog,
+    )
+    p_ai_verify.add_argument("name", help="发行版名称（wsl -l -v 查看）")
+    p_ai_verify.add_argument(
+        "--smoke-ocr",
+        metavar="IMAGE",
+        help="发行版内可访问的本地图片路径；仅对其离线识别，失败报错且不触网",
+    )
 
     # image 子命令组：build / verify（对齐 podman 组的禁拉取与退出码纪律）
     image_epilog = (
