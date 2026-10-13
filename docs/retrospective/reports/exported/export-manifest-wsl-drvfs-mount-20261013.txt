@@ -1,0 +1,50 @@
+EXPORT MANIFEST — WSL DrvFs 挂载「教程沉淀→实战挂载→fstab 持久化」一日闭环里程碑复盘
+================================================================
+
+export_time  : 2026-10-13
+report_type  : retrospective (milestone)
+source_path  : docs/retrospective/reports/concepts/milestone/wsl-drvfs-mount-wiki-milestone-20261013.md
+output_dir   : docs/retrospective/reports/exported
+formats      : md
+version      : 1.0
+
+EXPORTED FILES
+----------------------------------------------------------------
+AKA-1. wsl-drvfs-mount-wiki-milestone-retrospective-20261013-v1.0.md
+
+VERIFICATION
+----------------------------------------------------------------
+- source exists              : YES
+- frontmatter                : COMPLETE (type=Report, date=2026-10-13, scenario=milestone,
+                               methodology=seven-concepts R→I→E→V→A→C, version=v1.0)
+- content non-empty          : YES (30 facts, 4 insights, 7 V-review items/5 adopted,
+                               4 actions, 1 pattern L1-draft)
+- G1-G4 + V quality gates    : PASSED
+- link depth re-based        : YES (exported/ → patterns = ../../patterns,
+                               → knowledge = ../../../knowledge)
+- index updated              : docs/retrospective/reports/exported/index.md (toctree + table row)
+
+KEY ARTIFACTS REFERENCED
+----------------------------------------------------------------
+- Tutorial commit  : 13715e5c065333a003ea5845b272e0c5b3edc343 (14 files, +994 lines)
+- OKF tutorial     : docs/knowledge/tech/wsl-drvfs-mount-wiki/ (13 md, 750 lines)
+- Pattern card     : docs/retrospective/patterns/methodology-patterns/tools-automation/
+                     wsl-network-share-drvfs-mount.md (WSL-DRVFS-MOUNT-001, L1-draft)
+- Project skill    : .trae/skills/wsl-drvfs-mount/ (SKILL.md + references/command-map.md)
+- Live target      : \\10.16.11.3\ai (Samba on Ubuntu) via drive S: → openKylin-3.0:/mnt/ai
+- Persistence      : /etc/fstab "S: /mnt/ai drvfs defaults,nofail 0 0"
+                     + /etc/wsl.conf [automount] mountFsTab=true (inside distro vhdx)
+
+NOTES
+----------------------------------------------------------------
+- Export is a self-contained reader edition: facts/insights/V-table retained verbatim from the
+  archived milestone report; internal-registration sections replaced by relative artifact links.
+- findmnt --verify reports 0 parse errors / 0 errors / 4 warnings for the drvfs fstab line;
+  warnings are an expected abstraction-layer mismatch (block-device validator vs WSL-init
+  userspace drvfs source). Final authority is the post-terminate cold-boot probe, which passed
+  (auto mount present, /mnt/c and /mnt/d intact, default-user write probe OK, 13 entries).
+- fstab/wsl.conf changes live inside the openKylin-3.0 ext4.vhdx and produce no host-repo diff;
+  backups /etc/fstab.bak.20261013 and /etc/wsl.conf.bak.20261013 are scheduled for removal after
+  one stable month (action A-3).
+- Credentials were never entered in WSL: the share reused an existing authenticated Windows
+  session (persistent drive mapping S:). No secrets are recorded in any artifact.
