@@ -77,10 +77,13 @@ okw ai verify   <name> --smoke-ocr /tmp/sample.png   # 对发行版内本地图�
 `okw desktop` 针对**已预装**桌面的 openKylin Desktop WSL 镜像（如 `openKylin-3.0-desktop`）做只读预检、显式补齐与只读验收：发行版内 UKUI 桌面经 xrdp（默认端口 **3390**）供 Windows 侧 `mstsc` 连接。它**不安装桌面套件**，只启用 xrdp 并补齐首登黑屏看门狗：
 
 ```text
+okw desktop launch    <name>
 okw desktop preflight <name>
 okw desktop install   <name> --yes
 okw desktop verify    <name>
 ```
+
+`launch` 一键启动：启动发行版 → 等 `localhost:3390` 就绪 → 拉起 `mstsc`（「连不上」多为发行版 `Stopped`）。
 
 首登黑屏（KWin 窗口管理器冷启动不驻留）的根因与可逆修复（`~/.xsession` 看门狗）已在镜像上实测闭环；`install` 落地该脚本（先备份）。最小镜像（无 xrdp）请改用 Desktop WSL 镜像。完整说明见[桌面指南](../../../docs/tech/guides/openkylin-wsl-devkit/08-desktop.md)。
 

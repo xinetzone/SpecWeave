@@ -26,17 +26,19 @@ openKylin-3.0-desktop（WSL2，未用时为 Stopped）
 
 连接地址统一用 **`localhost:3390`**：WSL 重启后内网 IP 会漂移，`localhost` 转发稳定（2026-10-08 实测）。登录窗 **Session 下拉务必选 `xorg`**，用户名 `openkylin`，初始密码 `openkylin`（首登后立即 `passwd` 修改）。
 
-## 三步流程
+## 命令流程
 
 ```text
+okw desktop launch   <name>
 okw desktop preflight <name>
 okw desktop install  <name> --yes
 okw desktop verify   <name>
 ```
 
-1. `preflight`（只读）检查结构项（发行版/WSL2/openKylin 身份/systemd）与运行时项（xrdp 与 xrdp-sesman 服务、发行版内 `:3390` 监听、默认用户 UID、`~/.xsession` 看门狗补丁）；不写文件、不改服务。
-2. `install` 必须显式提供 `--yes`。省略时仅打印副作用清单，以退出码 2 中止，不做写入。
-3. `verify`（只读）在 preflight 同一批检查之上，附加**Windows 侧 `localhost:<port>` 回环可达性**。
+1. `launch` **一键启动**：启动发行版（幂等）→ 等 `localhost:<port>` 就绪 → 拉起 `mstsc`。这是最常用的命令——因为「连不上」的首要原因通常就是发行版处于 `Stopped`（见下节 FAQ）。
+2. `preflight`（只读）检查结构项（发行版/WSL2/openKylin 身份/systemd）与运行时项（xrdp 与 xrdp-sesman 服务、发行版内 `:3390` 监听、默认用户 UID、`~/.xsession` 看门狗补丁）；不写文件、不改服务。
+3. `install` 必须显式提供 `--yes`。省略时仅打印副作用清单，以退出码 2 中止，不做写入。
+4. `verify`（只读）在 preflight 同一批检查之上，附加**Windows 侧 `localhost:<port>` 回环可达性**。
 
 退出码：`0` 全通过 / `1` 有 FAIL（按中文指引修复后重试）/ `2` 用法错误或 `install` 缺 `--yes`。
 

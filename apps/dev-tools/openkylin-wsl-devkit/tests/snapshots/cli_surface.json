@@ -1015,7 +1015,7 @@
           "name": "desktop",
           "parser": {
             "prog": "okw desktop",
-            "description": "针对已预装桌面的 openKylin Desktop WSL 镜像：preflight 只读预检桌面链路（结构项/服务/端口/默认用户/首登黑屏看门狗）；install --yes 以 root 幂等启用 xrdp 与 xrdp-sesman，并以默认用户补齐 ~/.xsession 看门狗（含备份）；verify 只读验收并附加 Windows 侧回环端口可达性。okw 不安装桌面套件。",
+            "description": "针对已预装桌面的 openKylin Desktop WSL 镜像：preflight 只读预检桌面链路（结构项/服务/端口/默认用户/首登黑屏看门狗）；install --yes 以 root 幂等启用 xrdp 与 xrdp-sesman，并以默认用户补齐 ~/.xsession 看门狗（含备份）；verify 只读验收并附加 Windows 侧回环端口可达性；launch 启动发行版、等端口就绪并拉起 mstsc。okw 不安装桌面套件。",
             "epilog": "退出码：0=PASS；1=FAIL（按中文指引修复后重试）；2=用法错误或 install 未提供 --yes（零写入）。桌面由发行版内 xrdp 提供，Windows 侧用 mstsc 连接 localhost:<port>（默认 3390）。",
             "actions": [
               {
@@ -1047,6 +1047,12 @@
                     "dest": "verify",
                     "metavar": "verify",
                     "help": "只读验收桌面链路与 Windows 侧端口"
+                  },
+                  {
+                    "option_strings": [],
+                    "dest": "launch",
+                    "metavar": "launch",
+                    "help": "启动发行版、等端口就绪并拉起 mstsc"
                   }
                 ],
                 "choices": [
@@ -1130,6 +1136,38 @@
                     "name": "verify",
                     "parser": {
                       "prog": "okw desktop verify",
+                      "description": null,
+                      "epilog": "退出码：0=PASS；1=FAIL（按中文指引修复后重试）；2=用法错误或 install 未提供 --yes（零写入）。桌面由发行版内 xrdp 提供，Windows 侧用 mstsc 连接 localhost:<port>（默认 3390）。",
+                      "actions": [
+                        {
+                          "kind": "_StoreAction",
+                          "option_strings": [],
+                          "dest": "name",
+                          "nargs": null,
+                          "required": true,
+                          "metavar": null,
+                          "help": "发行版名称",
+                          "default": "None"
+                        },
+                        {
+                          "kind": "_StoreAction",
+                          "option_strings": [
+                            "--port"
+                          ],
+                          "dest": "port",
+                          "nargs": null,
+                          "required": false,
+                          "metavar": null,
+                          "help": "远程桌面端口（默认 3390）",
+                          "default": "3390"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "launch",
+                    "parser": {
+                      "prog": "okw desktop launch",
                       "description": null,
                       "epilog": "退出码：0=PASS；1=FAIL（按中文指引修复后重试）；2=用法错误或 install 未提供 --yes（零写入）。桌面由发行版内 xrdp 提供，Windows 侧用 mstsc 连接 localhost:<port>（默认 3390）。",
                       "actions": [

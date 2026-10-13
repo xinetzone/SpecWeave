@@ -33,7 +33,7 @@ source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#定位"
 | rootless Podman 工作流 | `okw podman preflight`、`install`、`verify` |
 | xuan-compose（xc）下游引导 | `okw compose preflight`、`install`、`verify`（GPL-2.0-only 第三方，需 `--source` 与 `--yes`） |
 | AI 栈本地 OCR | `okw ai preflight`、`install --yes`、`verify [--smoke-ocr]`（仅已验证 tesseract 离线 OCR） |
-| UKUI 桌面（xrdp） | `okw desktop preflight`、`install --yes`、`verify`（仅已预装桌面的 Desktop WSL 镜像） |
+| UKUI 桌面（xrdp） | `okw desktop launch`、`preflight`、`install --yes`、`verify`（仅已预装桌面的 Desktop WSL 镜像） |
 
 本工具不替代系统级 WSL 安装、不自动下载发行版镜像、不调用 OKBS/factory API，也不修改 openKylin 知识库。Desktop WSL 的运行时结论仍以对应实测资料为准；本工具不固化未验证建议。
 

@@ -16,7 +16,8 @@ source: "docs/knowledge/tech/openkylin-docs-wiki/concepts/04-desktop-usage.md; d
 
 ## Goals
 
-- G1：新增 `okw desktop preflight <name> [--port]`、`okw desktop install <name> --yes [--port]`、`okw desktop verify <name> [--port]` 三个叶子命令，并在 `cli/main.py` 完成子组分发。
+- G1：新增 `okw desktop launch <name> [--port]`、`okw desktop preflight <name> [--port]`、`okw desktop install <name> --yes [--port]`、`okw desktop verify <name> [--port]` 四个叶子命令，并在 `cli/main.py` 完成子组分发。
+- G1b：`launch` 一键启动：启动发行版（幂等）→ 等 Windows 侧 `localhost:<port>` 就绪（默认 ≤45s）→ 拉起 `mstsc`，直接解决「连不上」的首要原因（发行版 `Stopped`）。
 - G2：`preflight` 只读检查结构项（发行版存在/WSL2/openKylin 身份/systemd）与运行时项（xrdp 与 xrdp-sesman 服务、发行版内 `:<port>` 监听、默认用户 UID、`~/.xsession` 看门狗标记），逐项 PASS/FAIL/UNKNOWN。
 - G3：`install --yes` 以 root 幂等 `systemctl enable --now xrdp xrdp-sesman`，并以默认用户备份并补齐 `~/.xsession` 看门狗（已含标记则跳过），最后只读复验；不漏 `--yes` 零写入。
 - G4：`verify` 只读复验桌面链路，并附加 Windows 侧 `localhost:<port>` 回环可达性；`--port` 默认 3390。
@@ -76,6 +77,20 @@ source: "docs/knowledge/tech/openkylin-docs-wiki/concepts/04-desktop-usage.md; d
 
 - **WHEN** 运行时项全部 PASS 且 Windows 侧 `localhost:<port>` 可连
 - **THEN** SHALL 逐项 PASS 并以 0 结束；任一项 FAIL 或端口不可达 SHALL 以 1 结束并说明修复方向
+
+### Requirement: 一键启动桌面
+
+`okw desktop launch <name>` SHALL 启动发行版、等待 Windows 侧回环端口就绪后拉起 `mstsc`；SHALL NOT 改源/`wsl.conf`/默认发行版。
+
+#### Scenario: 启动并连接
+
+- **WHEN** 结构项通过且发行版可启动
+- **THEN** SHALL 触发开机（幂等）、等待 `localhost:<port>` 就绪、拉起 `mstsc`；全 PASS 以 0 结束
+
+#### Scenario: 启动失败或端口超时
+
+- **WHEN** 发行版启动失败，或端口在超时（默认 45s）内未就绪
+- **THEN** SHALL 标 FAIL、给出修复方向、以非零结束，且 SHALL NOT 拉起 `mstsc`
 
 ### Requirement: 完成 CLI 装配与文档一致性
 

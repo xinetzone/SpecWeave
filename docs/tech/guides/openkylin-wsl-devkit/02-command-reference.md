@@ -110,11 +110,13 @@ okw ai verify   <name> [--smoke-ocr <图片路径>]
 `okw desktop` 针对**已预装**桌面的 openKylin Desktop WSL 镜像（如 `openKylin-3.0-desktop`），按「只读预检 → 显式补齐 → 只读验收」推进；它不安装桌面套件，只在已有镜像上启用 xrdp 并补齐首登黑屏看门狗：
 
 ```text
+okw desktop launch    <name> [--port <端口>]
 okw desktop preflight <name> [--port <端口>]
 okw desktop install   <name> --yes [--port <端口>]
 okw desktop verify    <name> [--port <端口>]
 ```
 
+- `launch`：启动发行版（幂等）→ 等 `localhost:<port>` 就绪（默认最多 45 秒）→ 拉起 `mstsc /v:localhost:<port>`。最常用命令：「连不上」多为发行版 `Stopped`（WSL2 按需启动）。
 - `preflight`（只读）：检查结构项（发行版/WSL2/openKylin 身份/`wsl.conf` 的 systemd）与运行时项（`xrdp`、`xrdp-sesman` 服务、发行版内 `:<port>` 监听、默认用户 UID、`~/.xsession` 看门狗标记）；不写文件、不改服务。
 - `install`（必须 `--yes`）：以 root 幂等 `systemctl enable --now xrdp xrdp-sesman`，并以默认用户补齐 `~/.xsession`（先备份为 `~/.xsession.bak-<时间戳>`，已含标记则跳过），最后只读复验。漏 `--yes` 仅打印副作用清单（退出码 2，零写入）。
 - `verify`（只读）：在 preflight 同批检查之上，附加 Windows 侧 `localhost:<port>` 回环可达性。

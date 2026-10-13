@@ -19,6 +19,8 @@ sc-20261008-openkylin-desktop-wsl-install）落机的三条契约：
 
 import re
 import socket
+import subprocess
+import time
 
 from okw import distro, podman
 
@@ -45,7 +47,15 @@ class DesktopVerifyReport(podman.VerifyReport):
         self.port = port
 
 
+class DesktopLaunchReport(podman.VerifyReport):
+    def __init__(self, distro_name: str, port: int = 3390):
+        super().__init__(distro_name=distro_name)
+        self.port = port
+
+
 DEFAULT_PORT = 3390
+DEFAULT_WAIT_SECONDS = 45.0
+DEFAULT_POLL_INTERVAL = 0.8
 XRDP_SERVICE = "xrdp"
 XRDP_SESMAN_SERVICE = "xrdp-sesman"
 
@@ -393,4 +403,72 @@ def format_verify(report) -> str:
     else:
         fails = sum(1 for i in report.items if i.status == "FAIL")
         lines.append(f"结论：验收未通过（{fails} 项 FAIL）；本命令只读，修复方向见各项说明。")
+    return "\n".join(lines)
+
+
+# ----------------- 启动（启动发行版→等端口→拉起 mstsc） -----------------
+
+def open_mstsc(port: int) -> None:
+    """在 Windows 侧拉起 mstsc 连接 localhost:<port>（独立函数便于测试注入）。"""
+    subprocess.Popen(["mstsc", f"/v:localhost:{port}"])
+
+
+def _wait_port(port: int, wait_seconds: float, poll_interval: float) -> bool:
+    """轮询 Windows 侧回环端口直到就绪或超时。"""
+    deadline = time.monotonic() + wait_seconds
+    while True:
+        if probe_windows_port(port):
+            return True
+        if time.monotonic() >= deadline:
+            return False
+        time.sleep(poll_interval)
+
+
+def launch_run(
+    name: str,
+    port: int = DEFAULT_PORT,
+    wait_seconds: float = DEFAULT_WAIT_SECONDS,
+    poll_interval: float = DEFAULT_POLL_INTERVAL,
+) -> DesktopLaunchReport:
+    """启动发行版（幂等）→ 等回环端口就绪 → 拉起 mstsc。"""
+    report = DesktopLaunchReport(name, port=port)
+    if not add_structural_checks(report, name):
+        return report
+
+    start = distro.exec_distro(name, ["/bin/true"], timeout=120)
+    if not start.ok:
+        report.add("启动发行版", "FAIL", f"启动失败：{_fail_evidence(start)}")
+        return report
+    report.add("启动发行版", "PASS", "已触发开机（幂等）")
+
+    if not _wait_port(port, wait_seconds, poll_interval):
+        report.add(
+            f"等待端口 {port}", "FAIL",
+            f"{int(wait_seconds)} 秒内 localhost:{port} 未就绪；"
+            "在发行版内 systemctl status xrdp 后重试，或确认端口与 --port 一致",
+        )
+        return report
+    report.add(f"等待端口 {port}", "PASS", f"localhost:{port} 已就绪")
+
+    try:
+        open_mstsc(port)
+        report.add("拉起 mstsc", "PASS", f"已启动 mstsc /v:localhost:{port}")
+    except OSError as exc:
+        report.add("拉起 mstsc", "FAIL", f"无法启动 mstsc：{exc}")
+    return report
+
+
+def format_launch(report) -> str:
+    """格式化启动报告。"""
+    lines = [f"== okw desktop launch：{report.distro_name} =="]
+    max_w = max((len(i.name) for i in report.items), default=0)
+    for it in report.items:
+        lines.append(f"  [{it.status:<7}] {it.name:<{max_w}}  {it.detail}".rstrip())
+    lines.append("")
+    if report.all_passed():
+        lines.append(f"结论：已启动并拉起远程桌面 localhost:{report.port}（登录窗 Session 选 xorg）")
+        lines.append("  用完想释放内存：wsl --terminate " + report.distro_name)
+    else:
+        fails = sum(1 for i in report.items if i.status == "FAIL")
+        lines.append(f"结论：启动未完成（{fails} 项 FAIL）；修复方向见各项说明。")
     return "\n".join(lines)

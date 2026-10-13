@@ -29,6 +29,7 @@ EXPECTED_KEYS = sorted(
         "desktop preflight",
         "desktop install",
         "desktop verify",
+        "desktop launch",
         "image build",
         "image verify",
     ]
@@ -37,9 +38,9 @@ EXPECTED_KEYS = sorted(
 SRC_ROOT = Path(__file__).resolve().parents[1] / "src"
 
 
-def test_registry_has_exactly_twenty_three_leaves():
+def test_registry_has_exactly_twenty_four_leaves():
     assert sorted(COMMAND_HANDLERS) == EXPECTED_KEYS
-    assert len(COMMAND_HANDLERS) == 23
+    assert len(COMMAND_HANDLERS) == 24
 
 
 def test_every_registry_value_is_callable():
@@ -63,7 +64,7 @@ def test_import_commands_has_no_subprocess_side_effects():
         "d.run_wsl = _boom\n"
         "import okw.commands\n"
         "from okw.commands import COMMAND_HANDLERS\n"
-        "assert len(COMMAND_HANDLERS) == 23\n"
+        "assert len(COMMAND_HANDLERS) == 24\n"
     )
     result = subprocess.run(
         [sys.executable, "-c", script],

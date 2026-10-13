@@ -32,3 +32,10 @@ def cmd_verify(args: argparse.Namespace) -> int:
     report = desktop.verify_run(args.name, port=getattr(args, "port", desktop.DEFAULT_PORT))
     print(desktop.format_verify(report))
     return report.exit_code()
+
+
+def cmd_launch(args: argparse.Namespace) -> int:
+    """CLI 入口：okw desktop launch <发行版> [--port]。"""
+    report = desktop.launch_run(args.name, port=getattr(args, "port", desktop.DEFAULT_PORT))
+    print(desktop.format_launch(report))
+    return report.exit_code()

@@ -32,6 +32,7 @@ EXPECTED_LEAVES = sorted(
         "desktop preflight",
         "desktop install",
         "desktop verify",
+        "desktop launch",
         "image build",
         "image verify",
     ]
@@ -42,7 +43,7 @@ def load_snapshot() -> dict:
     return json.loads(SNAPSHOT_PATH.read_text(encoding="utf-8"))
 
 
-def test_snapshot_covers_all_twenty_three_leaves():
+def test_snapshot_covers_all_twenty_four_leaves():
     leaves = sorted(collect_leaf_commands(build_parser()))
     assert leaves == EXPECTED_LEAVES
 

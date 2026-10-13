@@ -367,7 +367,8 @@ def build_parser() -> argparse.ArgumentParser:
             "针对已预装桌面的 openKylin Desktop WSL 镜像：preflight 只读预检桌面链路"
             "（结构项/服务/端口/默认用户/首登黑屏看门狗）；install --yes 以 root 幂等启用 "
             "xrdp 与 xrdp-sesman，并以默认用户补齐 ~/.xsession 看门狗（含备份）；verify "
-            "只读验收并附加 Windows 侧回环端口可达性。okw 不安装桌面套件。"
+            "只读验收并附加 Windows 侧回环端口可达性；launch 启动发行版、等端口就绪并拉起 mstsc。"
+            "okw 不安装桌面套件。"
         ),
         epilog=desktop_epilog,
     )
@@ -386,5 +387,9 @@ def build_parser() -> argparse.ArgumentParser:
     p_desk_ver = p_desktop_sub.add_parser("verify", help="只读验收桌面链路与 Windows 侧端口", epilog=desktop_epilog)
     p_desk_ver.add_argument("name", help="发行版名称")
     p_desk_ver.add_argument("--port", type=int, default=desktop.DEFAULT_PORT, help="远程桌面端口（默认 3390）")
+
+    p_desk_lau = p_desktop_sub.add_parser("launch", help="启动发行版、等端口就绪并拉起 mstsc", epilog=desktop_epilog)
+    p_desk_lau.add_argument("name", help="发行版名称")
+    p_desk_lau.add_argument("--port", type=int, default=desktop.DEFAULT_PORT, help="远程桌面端口（默认 3390）")
 
     return parser

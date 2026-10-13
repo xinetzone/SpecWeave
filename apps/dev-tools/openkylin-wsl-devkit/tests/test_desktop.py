@@ -154,6 +154,67 @@ class TestDesktopVerify:
         assert "localhost:3389" in capsys.readouterr().out
 
 
+# ----------------- CLI：launch -----------------
+
+class TestDesktopLaunch:
+    def test_launch_pass(self, fake_run_wsl, monkeypatch, capsys):
+        _prime_ok(fake_run_wsl)
+        fake_run_wsl.script["/bin/true"] = make_result()
+        monkeypatch.setattr(desktop, "probe_windows_port", lambda port, timeout=2.0: True)
+        seen = {}
+        monkeypatch.setattr(desktop, "open_mstsc", lambda port: seen.setdefault("port", port))
+        assert cli.main(["desktop", "launch", DESKTOP]) == 0
+        assert seen["port"] == 3390
+        out = capsys.readouterr().out
+        assert "已启动 mstsc" in out and "已启动并拉起远程桌面" in out
+
+    def test_launch_structural_fail(self, fake_run_wsl, monkeypatch, capsys):
+        fake_run_wsl.script["-l -v"] = make_result(stdout="  NAME STATE VERSION\n* other Running 2\n")
+        launched = []
+        monkeypatch.setattr(desktop, "open_mstsc", lambda port: launched.append(port))
+        assert cli.main(["desktop", "launch", DESKTOP]) == 1
+        assert launched == []  # 结构失败不启动、不拉 mstsc
+
+    def test_launch_start_failure(self, fake_run_wsl, monkeypatch, capsys):
+        _prime_ok(fake_run_wsl)
+        fake_run_wsl.script["/bin/true"] = make_result(False, 1, "", "boot boom", "failed")
+        monkeypatch.setattr(desktop, "open_mstsc", lambda port: None)
+        assert cli.main(["desktop", "launch", DESKTOP]) == 1
+        assert "启动失败" in capsys.readouterr().out
+
+    def test_launch_port_timeout(self, fake_run_wsl, monkeypatch, capsys):
+        _prime_ok(fake_run_wsl)
+        fake_run_wsl.script["/bin/true"] = make_result()
+        monkeypatch.setattr(desktop, "_wait_port", lambda port, wait_seconds, poll_interval: False)
+        monkeypatch.setattr(desktop, "open_mstsc", lambda port: None)
+        assert cli.main(["desktop", "launch", DESKTOP]) == 1
+        assert "未就绪" in capsys.readouterr().out
+
+    def test_launch_mstsc_failure(self, fake_run_wsl, monkeypatch, capsys):
+        _prime_ok(fake_run_wsl)
+        fake_run_wsl.script["/bin/true"] = make_result()
+        monkeypatch.setattr(desktop, "_wait_port", lambda port, wait_seconds, poll_interval: True)
+
+        def boom(port):
+            raise OSError("no mstsc")
+
+        monkeypatch.setattr(desktop, "open_mstsc", boom)
+        assert cli.main(["desktop", "launch", DESKTOP]) == 1
+        assert "无法启动 mstsc" in capsys.readouterr().out
+
+    def test_wait_port_branches(self, monkeypatch):
+        monkeypatch.setattr(desktop, "probe_windows_port", lambda port, timeout=2.0: True)
+        assert desktop._wait_port(3390, 1.0, 0.01) is True
+        monkeypatch.setattr(desktop, "probe_windows_port", lambda port, timeout=2.0: False)
+        assert desktop._wait_port(3390, 0.02, 0.01) is False
+
+    def test_open_mstsc_spawns_argv(self, monkeypatch):
+        calls = []
+        monkeypatch.setattr(desktop.subprocess, "Popen", lambda argv: calls.append(argv))
+        desktop.open_mstsc(3390)
+        assert calls and calls[0][0] == "mstsc" and calls[0][1] == "/v:localhost:3390"
+
+
 # ----------------- 分支覆盖：结构/运行时/端口/IP 幂等 -----------------
 
 PROBE_ALL_BAD = "\n".join([

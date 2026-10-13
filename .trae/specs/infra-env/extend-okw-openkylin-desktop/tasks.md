@@ -118,6 +118,24 @@ source: ".trae/specs/infra-env/extend-okw-openkylin-desktop/spec.md"
   - 补齐脚本经 `"$HOME"`→`/tmp/okwtest` 安全等价改写后在真实 WSL 运行：run1 `patched`（生成 `.xsession.bak-<时间戳>`、标记命中 3 处、末行 `exec ukui-session`），run2 `unchanged`（幂等）；全程未触真实家目录。
   - 复跑 `preflight`/`verify` 均退出 0（10/11 项 PASS）；`tests/test_desktop.py` 新增守卫，全量 **532 passed**，`desktop.py` 覆盖 **100%**。
 
+## Task 6: 增加 desktop launch（启动→等端口→拉起 mstsc）
+
+- **Status**: `completed`
+- **Priority**: medium
+- **Depends On**: Task 4
+- **Description**:
+  - 在 `desktop.py`/`desktop_cmds.py` 实现 `okw desktop launch <发行版> [--port]`：结构门 → `wsl -d name -- /bin/true` 触发开机（幂等）→ 轮询 Windows 侧 `localhost:<port>` 就绪（默认 ≤45s，间隔 0.8s）→ `mstsc /v:localhost:<port>`。
+  - 启动失败或端口超时非零退出且不拉起 `mstsc`；`open_mstsc`/`_wait_port` 可注入以隔离测试。
+  - 命令面 23→24 叶子；同步注册表/架构/快照守卫（parser 395/400、main 57/300）。
+- **Acceptance Criteria Addressed**: AC-1, AC-4, AC-5, AC-6
+- **Test Requirements**:
+  - `rule` TR-6.1：全成功、结构失败（不拉起）、启动失败、端口超时、mstsc 失败、`_wait_port` 两分支、`open_mstsc` argv 均被覆盖；退出码正确。
+  - `rule` TR-6.2：注册表键集、parser 叶子集与快照逐字一致（含 launch）。
+- **Completion Evidence**（2026-10-13）:
+  - 真实运行 `okw desktop launch openKylin-3.0-desktop` → 退出 **0**：发行版由 Stopped 启动、`localhost:3390` 就绪、`已启动 mstsc /v:localhost:3390`。
+  - `desktop.launch_run`/`_wait_port`/`open_mstsc`/`format_launch` 落地；`tests/test_desktop.py::TestDesktopLaunch` 全通过；全量 **539 passed**，`desktop.py` 覆盖 **100%**。
+  - 文档：08-desktop.md（命令流程 + launch）、02-command-reference.md、app README、index 能力表、apps/AGENTS.md（两处）、apps/README.md 同步。
+
 ## Task Dependencies
 
 - Task 1 是只读预检基础；Task 2 与 Task 3 依赖 Task 1，可在其完成后并行实施。
