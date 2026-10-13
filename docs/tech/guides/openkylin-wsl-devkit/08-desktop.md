@@ -71,6 +71,18 @@ openKylin 3.0 Desktop WSL 镜像**首次登录会纯黑屏**（xrdp 登录窗认
 exec ukui-session
 ```
 
+## 常见问题：mstsc 提示「无法连接到远程计算机」
+
+**首要原因：发行版处于 `Stopped`。** WSL2 发行版是**按需启动**的（无运行进程/闲置后会停），发行版一停，xrdp 随之停止，`localhost:3390` 自然没有监听——这与「没装好」无关。
+
+处置顺序：
+
+1. 先启动发行版（任何命令都会触发开机）：`wsl -d <name> -- /bin/true`，或双击你自己的一键启动器。
+2. 等 `:3390` 就绪（首次约数秒）后再连；`okw desktop verify <name>` 会**连带 Windows 侧回环端口**一起检查，全 PASS 即代表已可连。
+3. 仍连不上时：若改过 `/etc/xrdp/xrdp.ini` 的端口，用 `okw desktop verify <name> --port <端口>` 复核；服务异常可在发行版内 `systemctl status xrdp`，重启 `sudo systemctl restart xrdp`。
+
+> 根因与完整启动/关闭语义见 [Desktop WSL 桌面启动教程](../../../knowledge/tech/openkylin-docs-wiki/references/wsl-desktop-startup-tutorial.md)（§1 为什么不能「直接点图标」、§3 日常启动、§6 用完怎么关）。
+
 ## 边界
 
 - `okw desktop` **不安装桌面套件**、不改软件源、不改 `wsl.conf`、不推送凭据；只作用于**已预装**桌面的 Desktop WSL 镜像。
