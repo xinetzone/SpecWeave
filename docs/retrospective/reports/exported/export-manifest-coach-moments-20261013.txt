@@ -1,0 +1,41 @@
+EXPORT MANIFEST — 商业教练朋友圈 AI 增长系统里程碑复盘（apps/coach-moments-growth）
+================================================================================
+
+export_time  : 2026-10-13
+report_type  : retrospective (milestone)
+source_path  : docs/retrospective/reports/2026-10-13-coach-moments-milestone-retro.md
+output_dir   : docs/retrospective/reports/exported
+formats      : md
+version      : 1.0
+
+EXPORTED FILES
+--------------------------------------------------------------------------------
+AKA-1. coach-moments-milestone-retrospective-20261013-v1.0.md  (17893 bytes)
+
+VERIFICATION
+--------------------------------------------------------------------------------
+- source exists              : YES
+- frontmatter(type/date/scenario): COMPLETE (title=商业教练朋友圈 AI 增长系统里程碑复盘, date=2026-10-13, scenario=milestone)
+- content non-empty          : YES (25 facts, 3 insights, 5 actions, 1 pattern)
+- G1-G4 quality gates        : PASSED
+- index updated              : docs/retrospective/reports/exported/index.md (toctree + table entry added)
+
+KEY ARTIFACTS REFERENCED
+--------------------------------------------------------------------------------
+- App source     : apps/coach-moments-growth/ (14 tracked md, 1203 lines)
+- Spec trio      : .trae/specs/coach-moments-growth/{spec.md,tasks.md,review.md} (641 lines)
+- Review report  : .trae/specs/coach-moments-growth/review.md (R1/R2/R3, 12+6 findings, final pass)
+- Commits        : 28ad3baf8 / f12f19ff2 / dd186ab61 (3 atomic Conventional Commits, not pushed)
+- Verification   : repo-check.py mermaid => 0 errors for this deliverable; 14 files 0 broken links, 0 file:///
+
+NOTES
+--------------------------------------------------------------------------------
+- Export is a byte-identical copy of the source report (md format passthrough).
+- Count assertions independently verified: 14 app files / 1203 lines, 3 spec files / 641 lines
+  (git ls-files + line counts).
+- Key deviations captured: (1) Mermaid blocks passed a lightweight self-check but failed the
+  repo CI checker (VS Code compat: <br/> and circled digits) -> 20 new errors, fixed to 0;
+  (2) review.md "Review R2" was pre-filled as pass (pseudo-evidence), exposed by round-2
+  independent review; rewritten to record R2=fail and let R3 confirm pass.
+- Content-sensitivity deviation (private default vs user-chosen standard Spec Mode + apps
+  placement) recorded in spec.md and README for audit.

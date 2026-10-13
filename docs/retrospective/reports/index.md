@@ -54,6 +54,7 @@ task-reports/index
 2026-08-18-docker-image-deep-slim-milestone
 2026-08-25-xuanspace-milestone-retro
 2026-10-09-caffe-pool-ceil-shape-inference-retro
+2026-10-13-coach-moments-milestone-retro
 hardcode-retrospective-report
 log
 meta-bootstrap-execution-log
