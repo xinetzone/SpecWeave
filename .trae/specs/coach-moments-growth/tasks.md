@@ -200,7 +200,7 @@ AC 达成情况摘要：AC-1 骨架齐备（14 文件）✅ ｜ AC-2 定位完�
 
 ## 提交证据（Task 11）
 
-> 见提交后补记（提交哈希与 `git log` 验证）。
+提交 `28ad3baf8`（`feat(coach-moments): 新增商业教练朋友圈 AI 增长系统（apps 根级应用 + spec 三件套 + 索引登记）`）：**19 files changed, 1848 insertions(+)**；仅本地未 push（`main...origin/main` 无新增推送记录）；`docs/` 与 `vendor/` 零 diff；提交文件清单 = 本次交付 19 项（无基线遗留文件混入，如 `projects/awesome-okf-xs` 子模块、`apps/dev-tools/openkylin-wsl-devkit/*` 均未触碰）。
 
 ## Task Dependencies
 
