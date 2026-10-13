@@ -39,6 +39,11 @@ def main(argv: list[str] | None = None) -> int:
             args._group_help()
             return 2
         key = f"image {args.image_cmd}"
+    elif args.command == "desktop":
+        if not args.desktop_cmd:
+            args._group_help()
+            return 2
+        key = f"desktop {args.desktop_cmd}"
     else:
         key = args.command
 

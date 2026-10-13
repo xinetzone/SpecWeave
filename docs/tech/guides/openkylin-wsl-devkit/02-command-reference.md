@@ -105,6 +105,24 @@ okw ai verify   <name> [--smoke-ocr <图片路径>]
 
 > 边界：okw 不配置 API Key、不下载模型、不安装 ollama/Gen2 全栈、不启动推理服务。Gen2 `libkysdk` 客户端虽出厂预装，但只是 IPC 薄代理，引擎插件与模型缺省、端到端未验证。完整背景见 [AI 栈指南](07-ai-stack.md) 与知识库 [05 AI 三层体系](../../../knowledge/tech/openkylin-docs-wiki/concepts/05-ai-stack.md)。
 
+## 桌面（UKUI / xrdp）
+
+`okw desktop` 针对**已预装**桌面的 openKylin Desktop WSL 镜像（如 `openKylin-3.0-desktop`），按「只读预检 → 显式补齐 → 只读验收」推进；它不安装桌面套件，只在已有镜像上启用 xrdp 并补齐首登黑屏看门狗：
+
+```text
+okw desktop preflight <name> [--port <端口>]
+okw desktop install   <name> --yes [--port <端口>]
+okw desktop verify    <name> [--port <端口>]
+```
+
+- `preflight`（只读）：检查结构项（发行版/WSL2/openKylin 身份/`wsl.conf` 的 systemd）与运行时项（`xrdp`、`xrdp-sesman` 服务、发行版内 `:<port>` 监听、默认用户 UID、`~/.xsession` 看门狗标记）；不写文件、不改服务。
+- `install`（必须 `--yes`）：以 root 幂等 `systemctl enable --now xrdp xrdp-sesman`，并以默认用户补齐 `~/.xsession`（先备份为 `~/.xsession.bak-<时间戳>`，已含标记则跳过），最后只读复验。漏 `--yes` 仅打印副作用清单（退出码 2，零写入）。
+- `verify`（只读）：在 preflight 同批检查之上，附加 Windows 侧 `localhost:<port>` 回环可达性。
+- `--port` 默认 **3390**（xrdp 默认端口，非标准 RDP 3389）；改了 `/etc/xrdp/xrdp.ini` 的 `port=` 后需同步传入。
+- 退出码 `0` 全通过 / `1` 有 FAIL / `2` 用法错误或 install 缺 `--yes`。
+
+首登黑屏（KWin 冷启动不驻留）的根因、`~/.xsession` 看门狗与登录/证书/FAQ 见 [桌面指南](08-desktop.md) 与知识库[桌面环境与基础使用](../../../knowledge/tech/openkylin-docs-wiki/concepts/04-desktop-usage.md)。
+
 ## 知识库参考
 
 ```text

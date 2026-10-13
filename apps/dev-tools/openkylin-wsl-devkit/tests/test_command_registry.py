@@ -26,6 +26,9 @@ EXPECTED_KEYS = sorted(
         "compose preflight",
         "compose install",
         "compose verify",
+        "desktop preflight",
+        "desktop install",
+        "desktop verify",
         "image build",
         "image verify",
     ]
@@ -34,9 +37,9 @@ EXPECTED_KEYS = sorted(
 SRC_ROOT = Path(__file__).resolve().parents[1] / "src"
 
 
-def test_registry_has_exactly_twenty_leaves():
+def test_registry_has_exactly_twenty_three_leaves():
     assert sorted(COMMAND_HANDLERS) == EXPECTED_KEYS
-    assert len(COMMAND_HANDLERS) == 20
+    assert len(COMMAND_HANDLERS) == 23
 
 
 def test_every_registry_value_is_callable():
@@ -60,7 +63,7 @@ def test_import_commands_has_no_subprocess_side_effects():
         "d.run_wsl = _boom\n"
         "import okw.commands\n"
         "from okw.commands import COMMAND_HANDLERS\n"
-        "assert len(COMMAND_HANDLERS) == 20\n"
+        "assert len(COMMAND_HANDLERS) == 23\n"
     )
     result = subprocess.run(
         [sys.executable, "-c", script],

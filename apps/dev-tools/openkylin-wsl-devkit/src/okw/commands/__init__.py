@@ -26,6 +26,9 @@ from okw.commands.ai_cmds import cmd_verify as cmd_ai_verify
 from okw.commands.compose_cmds import cmd_install as cmd_compose_install
 from okw.commands.compose_cmds import cmd_preflight as cmd_compose_preflight
 from okw.commands.compose_cmds import cmd_verify as cmd_compose_verify
+from okw.commands.desktop_cmds import cmd_install as cmd_desktop_install
+from okw.commands.desktop_cmds import cmd_preflight as cmd_desktop_preflight
+from okw.commands.desktop_cmds import cmd_verify as cmd_desktop_verify
 from okw.commands.image_cmds import cmd_build as cmd_image_build
 from okw.commands.image_cmds import cmd_verify as cmd_image_verify
 from okw.commands.podman_cmds import cmd_install as cmd_podman_install
@@ -57,6 +60,9 @@ COMMAND_HANDLERS: dict[str, Handler] = {
     "compose preflight": cmd_compose_preflight,
     "compose install": cmd_compose_install,
     "compose verify": cmd_compose_verify,
+    "desktop preflight": cmd_desktop_preflight,
+    "desktop install": cmd_desktop_install,
+    "desktop verify": cmd_desktop_verify,
     "image build": cmd_image_build,
     "image verify": cmd_image_verify,
 }

@@ -14,6 +14,7 @@ openKylin WSL 开发工具包：通过 `okw` 管理 WSL 发行版、验收 openK
 - [openKylin 开发容器镜像指南](../../../docs/tech/guides/openkylin-wsl-devkit/05-openkylin-dev-container.md)
 - [xuan-compose（xc）引导指南](../../../docs/tech/guides/openkylin-wsl-devkit/06-xuan-compose.md)
 - [AI 栈：本地 OCR 指南](../../../docs/tech/guides/openkylin-wsl-devkit/07-ai-stack.md)
+- [桌面：UKUI（xrdp/WSL）指南](../../../docs/tech/guides/openkylin-wsl-devkit/08-desktop.md)
 
 ## openKylin 开发容器镜像
 
@@ -70,6 +71,18 @@ okw ai verify   <name> --smoke-ocr /tmp/sample.png   # 对发行版内本地图�
 `<name>` 为目标 WSL 发行版名称，先在 PowerShell 运行 `wsl -l -v` 查看（如 `openKylin-3.0-desktop`）。`--smoke-ocr` 的图片可给发行版内路径（如 `/tmp/sample.png`），也支持 Windows 盘符路径（如 `C:\Users\me\sample.png`，自动转换为 `/mnt/c/Users/me/sample.png`、经 drvfs 访问）。
 
 `install` 以 root 执行 `apt install -y --no-install-recommends libkylin-ai-base-dev`，由 APT 解析 tesseract 与 `chi_sim/eng` 语言包；必须 `--yes`，漏确认零写入。可选层（Gen2 引擎、模型管理器、ollama 等）仅在 preflight/verify 中只读盘点、UNKNOWN 不阻断。okw 不配置密钥、不下载模型、不装 ollama/Gen2 全栈。完整背景与边界见[AI 栈指南](../../../docs/tech/guides/openkylin-wsl-devkit/07-ai-stack.md)。
+
+## 桌面（UKUI / xrdp）
+
+`okw desktop` 针对**已预装**桌面的 openKylin Desktop WSL 镜像（如 `openKylin-3.0-desktop`）做只读预检、显式补齐与只读验收：发行版内 UKUI 桌面经 xrdp（默认端口 **3390**）供 Windows 侧 `mstsc` 连接。它**不安装桌面套件**，只启用 xrdp 并补齐首登黑屏看门狗：
+
+```text
+okw desktop preflight <name>
+okw desktop install   <name> --yes
+okw desktop verify    <name>
+```
+
+首登黑屏（KWin 窗口管理器冷启动不驻留）的根因与可逆修复（`~/.xsession` 看门狗）已在镜像上实测闭环；`install` 落地该脚本（先备份）。最小镜像（无 xrdp）请改用 Desktop WSL 镜像。完整说明见[桌面指南](../../../docs/tech/guides/openkylin-wsl-devkit/08-desktop.md)。
 
 ## xuan-compose（xc）引导
 

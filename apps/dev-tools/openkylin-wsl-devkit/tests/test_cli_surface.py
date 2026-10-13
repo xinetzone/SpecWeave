@@ -29,6 +29,9 @@ EXPECTED_LEAVES = sorted(
         "compose preflight",
         "compose install",
         "compose verify",
+        "desktop preflight",
+        "desktop install",
+        "desktop verify",
         "image build",
         "image verify",
     ]
@@ -39,7 +42,7 @@ def load_snapshot() -> dict:
     return json.loads(SNAPSHOT_PATH.read_text(encoding="utf-8"))
 
 
-def test_snapshot_covers_all_twenty_leaves():
+def test_snapshot_covers_all_twenty_three_leaves():
     leaves = sorted(collect_leaf_commands(build_parser()))
     assert leaves == EXPECTED_LEAVES
 

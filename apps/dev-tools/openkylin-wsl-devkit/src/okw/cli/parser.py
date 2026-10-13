@@ -9,7 +9,7 @@
 
 import argparse
 
-from okw import __version__, compose, distro, image
+from okw import __version__, compose, desktop, distro, image
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -354,5 +354,37 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="执行隔离临时目录内的 xc config --quiet 端到端探活（非容器冒烟）",
     )
+
+    # desktop 子命令组：preflight / install / verify（openKylin UKUI 桌面 / xrdp）
+    desktop_epilog = (
+        "退出码：0=PASS；1=FAIL（按中文指引修复后重试）；2=用法错误或 install 未提供 --yes（零写入）。"
+        "桌面由发行版内 xrdp 提供，Windows 侧用 mstsc 连接 localhost:<port>（默认 3390）。"
+    )
+    p_desktop = sub.add_parser(
+        "desktop",
+        help="openKylin UKUI 桌面（xrdp/WSL）预检、补齐与验收",
+        description=(
+            "针对已预装桌面的 openKylin Desktop WSL 镜像：preflight 只读预检桌面链路"
+            "（结构项/服务/端口/默认用户/首登黑屏看门狗）；install --yes 以 root 幂等启用 "
+            "xrdp 与 xrdp-sesman，并以默认用户补齐 ~/.xsession 看门狗（含备份）；verify "
+            "只读验收并附加 Windows 侧回环端口可达性。okw 不安装桌面套件。"
+        ),
+        epilog=desktop_epilog,
+    )
+    p_desktop.set_defaults(_group_help=p_desktop.print_help)
+    p_desktop_sub = p_desktop.add_subparsers(dest="desktop_cmd", metavar="<desktop_cmd>")
+
+    p_desk_pre = p_desktop_sub.add_parser("preflight", help="只读预检桌面链路", epilog=desktop_epilog)
+    p_desk_pre.add_argument("name", help="发行版名称（wsl -l -v 查看）")
+    p_desk_pre.add_argument("--port", type=int, default=desktop.DEFAULT_PORT, help="远程桌面端口（默认 3390）")
+
+    p_desk_ins = p_desktop_sub.add_parser("install", help="启用 xrdp 并补齐首登黑屏看门狗（必须 --yes）", epilog=desktop_epilog)
+    p_desk_ins.add_argument("name", help="发行版名称")
+    p_desk_ins.add_argument("--yes", action="store_true", help="显式确认启用服务与改写 ~/.xsession 的副作用")
+    p_desk_ins.add_argument("--port", type=int, default=desktop.DEFAULT_PORT, help="远程桌面端口（默认 3390）")
+
+    p_desk_ver = p_desktop_sub.add_parser("verify", help="只读验收桌面链路与 Windows 侧端口", epilog=desktop_epilog)
+    p_desk_ver.add_argument("name", help="发行版名称")
+    p_desk_ver.add_argument("--port", type=int, default=desktop.DEFAULT_PORT, help="远程桌面端口（默认 3390）")
 
     return parser

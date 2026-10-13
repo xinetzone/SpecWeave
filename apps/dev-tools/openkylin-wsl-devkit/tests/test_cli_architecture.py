@@ -32,7 +32,7 @@ def test_parser_leaves_match_registry_keys_exactly():
     assert sorted(collect_leaf_commands(build_parser())) == sorted(COMMAND_HANDLERS)
 
 
-@pytest.mark.parametrize("group", ["ai", "podman", "compose", "image"])
+@pytest.mark.parametrize("group", ["ai", "podman", "compose", "image", "desktop"])
 def test_group_without_subcommand_prints_help_and_returns_2(group, capsys):
     ret = cli.main([group])
     captured = capsys.readouterr()
