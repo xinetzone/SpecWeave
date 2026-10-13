@@ -1,0 +1,13 @@
+id = "wsl-network-share-drvfs-mount"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "detailed"
+source = "docs/retrospective/reports/concepts/milestone/wsl-drvfs-mount-wiki-milestone-20261013.md"
+
+[bindings]
+rules = []
+references = ["docs/knowledge/tech/wsl-drvfs-mount-wiki/"]
+skills = [".trae/skills/wsl-drvfs-mount/"]
