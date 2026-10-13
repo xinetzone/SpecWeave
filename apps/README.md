@@ -118,6 +118,8 @@ apps/<group>/<app-name>/
 | zleap-workspace-first-prototype | 工作区首个原型（多模型路由，暂缺 README） |
 
 > **维护约定**：`agent-monetize/`、`inurl-byok-token-hub/` 为根级独立应用（不属上述分组，见下方自动应用清单）；新增/移动应用时同步本小节与下方自动清单（运行 `python .agents/scripts/docgen.py apps` 刷新）。
+>
+> 根级独立应用补充：`guard-quality-life-site/`、`travel-planner/`、`coach-moments-growth/`（商业教练朋友圈 AI 增长系统——面向高净值客群的私域内容运营方案：定位/内容/转化/度量/合规五模块，含 AI 提示词与文案模板；规格 `.trae/specs/coach-moments-growth/`）。
 
 ### 2.4 应用清单
 
