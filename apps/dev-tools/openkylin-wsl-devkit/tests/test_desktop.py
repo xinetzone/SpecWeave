@@ -54,6 +54,14 @@ def test_default_port_is_documented_3390():
     assert desktop.DEFAULT_PORT == 3390
 
 
+def test_generated_scripts_avoid_nested_quotes_in_substitution():
+    # Windows wsl.exe 桥接会把 $() 内的双引号转义吞掉（2026-10-13 实测）；
+    # 探针与补齐脚本均须避免在命令替换内嵌双引号。
+    for script in (desktop._RUNTIME_PROBE, desktop._xsession_patch_script()):
+        assert '"$HOME' not in script
+        assert '$(test -f "' not in script
+
+
 # ----------------- CLI：preflight -----------------
 
 class TestDesktopPreflight:

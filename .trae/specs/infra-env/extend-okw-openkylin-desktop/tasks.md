@@ -84,18 +84,39 @@ source: ".trae/specs/infra-env/extend-okw-openkylin-desktop/spec.md"
 
 ## Task 5: 在可用 openKylin Desktop WSL2 环境执行真实验收
 
-- **Status**: `blocked`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 4
 - **Description**:
-  - 需人工交互的桌面联通（Windows 侧 `mstsc` 进入 UKUI），且依赖本机已导入运行 `openKylin-3.0-desktop` 发行版。
-  - 优先只读运行 `okw desktop preflight/verify <name>`；仅在用户明确授权时对指定发行版运行 `install --yes`（会写 `~/.xsession` 并启用服务）。
-- **Blocked Reason**: 本次变更在**无 WSL 交互授权/无可确认桌面发行版**的环境完成；真实 `mstsc` 联通属人工步骤。静态与 mock 证据齐全，真实项记 `blocked`，不得伪造实测。
+  - 只读运行 `okw desktop preflight/verify openKylin-3.0-desktop`，真实记录结构项、服务/端口、看门狗与 Windows 侧回环端口。
+  - `mstsc` 进入 UKUI 属人工步骤，本次不代操作；`install --yes` 本机无需执行（`~/.xsession` 已含看门狗，`install` 仅在缺失时写入）。
 - **Acceptance Criteria Addressed**: AC-1, AC-2, AC-4
 - **Test Requirements**:
-  - `rule` TR-5.1：在可用环境真实记录发行版身份、结构项、服务/端口、看门狗、（如授权）补齐结果；未执行步骤注明 blocked 及原因。
+  - `rule` TR-5.1：真实记录发行版身份、结构项、服务/端口、看门狗状态；未执行步骤注明原因。
   - `rule` TR-5.2：真实验证不改默认发行版/软件源/`wsl.conf`；不触其他发行版。
-- **Completion Evidence**: 待有可用 Desktop WSL2 发行版与授权后补录。
+- **Completion Evidence**（2026-10-13，真实 openKylin-3.0-desktop WSL2，只读）:
+  - `okw desktop preflight openKylin-3.0-desktop` → 退出 **0**；10 项全 PASS（WSL2/openKylin 身份/systemd/xrdp+xrdp-sesman active/发行版内 :3390 监听/uid 1000/~/.xsession 含 XDG_RUNTIME_DIR 与 kwin_x11）。
+  - `okw desktop verify openKylin-3.0-desktop` → 退出 **0**；在 preflight 之上附加「Windows 侧 localhost:3390 回环端口可达」PASS。
+  - 全程只读：未改默认发行版/软件源/`wsl.conf`、未触其他发行版；默认发行版星标保持 `podman-machine-default`。
+  - 未代操作 `mstsc`（人工步骤）；`install --yes` 未执行（真实 `~/.xsession` 已含看门狗），其写入路径改以 `/tmp` 安全等价验证（见 Issue I-1）。
+
+## Issue I-1: 修复 Windows wsl.exe 桥接下 `$()` 内嵌双引号导致看门狗误判
+
+- **Status**: `completed`
+- **Priority**: high
+- **Source**: Task 5 真实只读验收（`preflight` 首跑误报「首登黑屏看门狗 FAIL」）→ 直接命中 AC-1/AC-4
+- **Description**:
+  - 现象：真实发行版 `~/.xsession` 明明含 `XDG_RUNTIME_DIR` 与 `kwin_x11`，探针却恒报 `missing`。
+  - 根因（实测定位）：探针把脚本作为**单个 argv** 经 Windows `wsl.exe` 桥接传递，`"$(test -f "$HOME/.xsession" …)"` 中 `$()` 内的双引号被桥接转义吞掉，`test -f`/`grep` 恒为假。对照实验：同语句去掉内层引号（`$HOME/.xsession` 未加引号）后立即返回 `ok`。
+  - 修复：探针与 `~/.xsession` 补齐脚本一律**不在 `$()` 内嵌双引号**（家目录无空格，用未加引号的 `$HOME` 路径）；探针加静态回归守卫断言 `"$HOME` 与 `$(test -f "` 不出现。
+- **Acceptance Criteria Addressed**: AC-1, AC-3, AC-4
+- **Test Requirements**:
+  - `rule` TR-I1.1：生成的探针与补齐脚本不含 `$()` 内嵌双引号；补齐脚本在真实桥接下 `patched`→`unchanged` 幂等、备份落盘、写入含标记、以 `exec ukui-session` 收尾。
+  - `rule` TR-I1.2：真实 `okw desktop preflight/verify` 对含看门狗的发行版返回全 PASS / 退出 0。
+- **Completion Evidence**（2026-10-13）:
+  - 对照实验：`A`（嵌套引号）→`missing`；`B`（未加引号）→`ok`。
+  - 补齐脚本经 `"$HOME"`→`/tmp/okwtest` 安全等价改写后在真实 WSL 运行：run1 `patched`（生成 `.xsession.bak-<时间戳>`、标记命中 3 处、末行 `exec ukui-session`），run2 `unchanged`（幂等）；全程未触真实家目录。
+  - 复跑 `preflight`/`verify` 均退出 0（10/11 项 PASS）；`tests/test_desktop.py` 新增守卫，全量 **532 passed**，`desktop.py` 覆盖 **100%**。
 
 ## Task Dependencies
 

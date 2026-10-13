@@ -165,4 +165,5 @@ source: "docs/knowledge/tech/openkylin-docs-wiki/concepts/04-desktop-usage.md; d
 ## Open Questions
 
 - 产品范围无待决项。目标发行版是否为已预装桌面的镜像，是安装前/运行时的门禁。
-- 真实桌面联通（`mstsc` 进入 UKUI）需人工交互与本机发行版运行，若未执行则如实记 `blocked`，不得用 mock 替代。
+- 真实桌面联通（`mstsc` 进入 UKUI）需人工交互；2026-10-13 已在 `openKylin-3.0-desktop` 完成只读真实验收（preflight/verify 全 PASS），`mstsc` 人工步骤不代操作、如实标注。
+- 真实验收发现并修复一处 Windows `wsl.exe` 桥接问题（`$()` 内嵌双引号被吞）：见 tasks.md Issue I-1。

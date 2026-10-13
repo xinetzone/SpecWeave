@@ -153,7 +153,7 @@ printf 'okw_sesman_active=%s\\n' "$(systemctl is-active __SESMAN__ 2>/dev/null |
 printf 'okw_port_listen=%s\\n' "$(ss -ltn 2>/dev/null | grep -c ':__PORT__ ')"
 printf 'okw_user=%s\\n' "$(id -un)"
 printf 'okw_uid=%s\\n' "$(id -u)"
-printf 'okw_xsession=%s\\n' "$(test -f "$HOME/.xsession" && grep -q __M1__ "$HOME/.xsession" && grep -q __M2__ "$HOME/.xsession" && echo ok || echo missing)"
+printf 'okw_xsession=%s\\n' "$(test -f $HOME/.xsession && grep -q __M1__ $HOME/.xsession && grep -q __M2__ $HOME/.xsession && echo ok || echo missing)"
 """
 
 
@@ -321,16 +321,19 @@ def install_run(name: str, yes: bool, port: int = DEFAULT_PORT) -> DesktopInstal
 
 def _xsession_patch_script() -> str:
     """构造幂等的 ~/.xsession 补齐脚本（含备份，追加 unchanged 标记行）。"""
+    # 注意：脚本经 Windows wsl.exe 桥接（整段为一个 argv），$() 内不得再嵌双引号——
+    # 嵌套双引号会被桥接转义吞掉（2026-10-13 实测：嵌套引号使 test 恒为假）。
+    # 故这里一律用未加引号的 $HOME 路径（家目录无空格）。
     return (
         'set +e\n'
-        f'if [ -f "$HOME/.xsession" ] && grep -q {WATCHDOG_MARKERS[0]} "$HOME/.xsession" '
-        f'&& grep -q {WATCHDOG_MARKERS[1]} "$HOME/.xsession"; then echo unchanged; exit 0; fi\n'
-        'if [ -f "$HOME/.xsession" ]; then '
-        'cp -a "$HOME/.xsession" "$HOME/.xsession.bak-$(date +%Y%m%d%H%M%S)"; fi\n'
-        'cat > "$HOME/.xsession" <<\'OKW_XSESSION_EOF\'\n'
+        f'if [ -f $HOME/.xsession ] && grep -q {WATCHDOG_MARKERS[0]} $HOME/.xsession '
+        f'&& grep -q {WATCHDOG_MARKERS[1]} $HOME/.xsession; then echo unchanged; exit 0; fi\n'
+        'if [ -f $HOME/.xsession ]; then '
+        'cp -a $HOME/.xsession $HOME/.xsession.bak-$(date +%Y%m%d%H%M%S); fi\n'
+        'cat > $HOME/.xsession <<\'OKW_XSESSION_EOF\'\n'
         f'{XSESSION_WATCHDOG}'
         "OKW_XSESSION_EOF\n"
-        'chmod 755 "$HOME/.xsession"\n'
+        'chmod 755 $HOME/.xsession\n'
         'echo patched\n'
     )
 
