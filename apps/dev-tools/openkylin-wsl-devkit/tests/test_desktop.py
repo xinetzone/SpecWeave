@@ -1,6 +1,6 @@
 """desktop 子组：领域判定 + CLI 编排（假 wsl 输出注入，不触真实 WSL）。"""
 
-import pytest
+from pathlib import Path
 
 from okw import cli, desktop
 
@@ -52,6 +52,21 @@ def test_patch_script_backs_up_and_marks_unchanged():
 
 def test_default_port_is_documented_3390():
     assert desktop.DEFAULT_PORT == 3390
+
+
+def test_build_rdp_content_pins_address_and_username():
+    # 用户名由 .rdp 显式托管，规避 mstsc 历史 UsernameHint 驼峰污染
+    content = desktop.build_rdp_content("localhost:3390", "openkylin")
+    assert "full address:s:localhost:3390\r\n" in content
+    assert "username:s:openkylin\r\n" in content
+
+
+def test_login_user_probes_id_un_and_falls_back(fake_run_wsl):
+    _prime_ok(fake_run_wsl)
+    fake_run_wsl.script["id -un"] = make_result(stdout="openkylin\n")
+    assert desktop._login_user(DESKTOP) == "openkylin"
+    # 探测失败（发行版瞬态不可执行等）回退镜像契约账号，不阻断 launch
+    assert desktop._login_user("ghost-distro") == desktop.DEFAULT_LOGIN_USER
 
 
 def test_generated_scripts_avoid_nested_quotes_in_substitution():
@@ -157,28 +172,51 @@ class TestDesktopVerify:
 # ----------------- CLI：launch -----------------
 
 class TestDesktopLaunch:
-    def test_launch_pass(self, fake_run_wsl, monkeypatch, capsys):
+    def test_launch_pass_prefills_login_user(self, fake_run_wsl, monkeypatch, capsys):
+        _prime_ok(fake_run_wsl)
+        fake_run_wsl.script["/bin/true"] = make_result()
+        fake_run_wsl.script["id -un"] = make_result(stdout="openkylin\n")
+        monkeypatch.setattr(desktop, "probe_windows_port", lambda port, timeout=2.0: True)
+        seen = {}
+
+        def fake_open(port, username, rdp_dir=None):
+            seen.update(port=port, username=username)
+            return Path("okw-desktop-localhost-3390.rdp")
+
+        monkeypatch.setattr(desktop, "open_mstsc", fake_open)
+        assert cli.main(["desktop", "launch", DESKTOP]) == 0
+        assert seen["port"] == 3390
+        assert seen["username"] == "openkylin"
+        out = capsys.readouterr().out
+        assert "已启动 mstsc" in out and "预填用户名 openkylin" in out
+        assert "已启动并拉起远程桌面" in out
+
+    def test_launch_login_user_probe_fail_still_launches(self, fake_run_wsl, monkeypatch, capsys):
+        # id -un 未注入脚本 → 假 wsl 返回失败；launch 回退契约账号，不阻断
         _prime_ok(fake_run_wsl)
         fake_run_wsl.script["/bin/true"] = make_result()
         monkeypatch.setattr(desktop, "probe_windows_port", lambda port, timeout=2.0: True)
         seen = {}
-        monkeypatch.setattr(desktop, "open_mstsc", lambda port: seen.setdefault("port", port))
+
+        def fake_open(port, username, rdp_dir=None):
+            seen.update(username=username)
+            return Path("okw-desktop-localhost-3390.rdp")
+
+        monkeypatch.setattr(desktop, "open_mstsc", fake_open)
         assert cli.main(["desktop", "launch", DESKTOP]) == 0
-        assert seen["port"] == 3390
-        out = capsys.readouterr().out
-        assert "已启动 mstsc" in out and "已启动并拉起远程桌面" in out
+        assert seen["username"] == desktop.DEFAULT_LOGIN_USER
 
     def test_launch_structural_fail(self, fake_run_wsl, monkeypatch, capsys):
         fake_run_wsl.script["-l -v"] = make_result(stdout="  NAME STATE VERSION\n* other Running 2\n")
         launched = []
-        monkeypatch.setattr(desktop, "open_mstsc", lambda port: launched.append(port))
+        monkeypatch.setattr(desktop, "open_mstsc", lambda *a, **k: launched.append(a))
         assert cli.main(["desktop", "launch", DESKTOP]) == 1
         assert launched == []  # 结构失败不启动、不拉 mstsc
 
     def test_launch_start_failure(self, fake_run_wsl, monkeypatch, capsys):
         _prime_ok(fake_run_wsl)
         fake_run_wsl.script["/bin/true"] = make_result(False, 1, "", "boot boom", "failed")
-        monkeypatch.setattr(desktop, "open_mstsc", lambda port: None)
+        monkeypatch.setattr(desktop, "open_mstsc", lambda *a, **k: None)
         assert cli.main(["desktop", "launch", DESKTOP]) == 1
         assert "启动失败" in capsys.readouterr().out
 
@@ -186,16 +224,17 @@ class TestDesktopLaunch:
         _prime_ok(fake_run_wsl)
         fake_run_wsl.script["/bin/true"] = make_result()
         monkeypatch.setattr(desktop, "_wait_port", lambda port, wait_seconds, poll_interval: False)
-        monkeypatch.setattr(desktop, "open_mstsc", lambda port: None)
+        monkeypatch.setattr(desktop, "open_mstsc", lambda *a, **k: None)
         assert cli.main(["desktop", "launch", DESKTOP]) == 1
         assert "未就绪" in capsys.readouterr().out
 
     def test_launch_mstsc_failure(self, fake_run_wsl, monkeypatch, capsys):
         _prime_ok(fake_run_wsl)
         fake_run_wsl.script["/bin/true"] = make_result()
+        fake_run_wsl.script["id -un"] = make_result(stdout="openkylin\n")
         monkeypatch.setattr(desktop, "_wait_port", lambda port, wait_seconds, poll_interval: True)
 
-        def boom(port):
+        def boom(*a, **k):
             raise OSError("no mstsc")
 
         monkeypatch.setattr(desktop, "open_mstsc", boom)
@@ -208,11 +247,23 @@ class TestDesktopLaunch:
         monkeypatch.setattr(desktop, "probe_windows_port", lambda port, timeout=2.0: False)
         assert desktop._wait_port(3390, 0.02, 0.01) is False
 
-    def test_open_mstsc_spawns_argv(self, monkeypatch):
+    def test_open_mstsc_writes_rdp_and_spawns_file(self, tmp_path, monkeypatch):
         calls = []
         monkeypatch.setattr(desktop.subprocess, "Popen", lambda argv: calls.append(argv))
-        desktop.open_mstsc(3390)
-        assert calls and calls[0][0] == "mstsc" and calls[0][1] == "/v:localhost:3390"
+        path = desktop.open_mstsc(3390, "openkylin", rdp_dir=tmp_path)
+        assert path == tmp_path / "okw-desktop-localhost-3390.rdp"
+        # newline="" 原样读回，锁定 CRLF 契约（mstsc 兼容）
+        text = path.read_text(encoding="utf-8", newline="")
+        assert text == "full address:s:localhost:3390\r\nusername:s:openkylin\r\n"
+        assert calls == [["mstsc", str(path)]]
+
+    def test_open_mstsc_rdp_path_is_deterministic_no_litter(self, tmp_path, monkeypatch):
+        # 固定文件名幂等覆盖：多次 launch 不堆积临时 .rdp
+        monkeypatch.setattr(desktop.subprocess, "Popen", lambda argv: None)
+        p1 = desktop.open_mstsc(3390, "openkylin", rdp_dir=tmp_path)
+        p2 = desktop.open_mstsc(3390, "openkylin", rdp_dir=tmp_path)
+        assert p1 == p2
+        assert list(tmp_path.glob("*.rdp")) == [p1]
 
 
 # ----------------- 分支覆盖：结构/运行时/端口/IP 幂等 -----------------

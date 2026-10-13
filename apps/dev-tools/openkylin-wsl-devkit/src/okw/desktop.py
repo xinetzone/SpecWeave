@@ -20,7 +20,9 @@ sc-20261008-openkylin-desktop-wsl-install）落机的三条契约：
 import re
 import socket
 import subprocess
+import tempfile
 import time
+from pathlib import Path
 
 from okw import distro, podman
 
@@ -56,6 +58,8 @@ class DesktopLaunchReport(podman.VerifyReport):
 DEFAULT_PORT = 3390
 DEFAULT_WAIT_SECONDS = 45.0
 DEFAULT_POLL_INTERVAL = 0.8
+# Desktop 镜像契约账号（uid 1000，全小写；探测失败时回退，不阻断 launch）
+DEFAULT_LOGIN_USER = "openkylin"
 XRDP_SERVICE = "xrdp"
 XRDP_SESMAN_SERVICE = "xrdp-sesman"
 
@@ -408,9 +412,44 @@ def format_verify(report) -> str:
 
 # ----------------- 启动（启动发行版→等端口→拉起 mstsc） -----------------
 
-def open_mstsc(port: int) -> None:
-    """在 Windows 侧拉起 mstsc 连接 localhost:<port>（独立函数便于测试注入）。"""
-    subprocess.Popen(["mstsc", f"/v:localhost:{port}"])
+def build_rdp_content(address: str, username: str) -> str:
+    """构造 .rdp 连接文件内容（CRLF，ASCII 键值）。
+
+    显式托管 full address + username：``mstsc /v:`` 不接受用户名参数，连接框
+    预填值来自注册表 ``HKCU\\...\\Terminal Server Client\\Servers\\<host>\\
+    UsernameHint``，用户手输错一次大小写（openKylin）会被持续记忆并导致 xrdp
+    ``Can't get UID`` 认证失败（2026-10-13 实测）。改由工具下发 .rdp 后，预填
+    用户名不再受历史输入污染。
+    """
+    return f"full address:s:{address}\r\nusername:s:{username}\r\n"
+
+
+def _login_user(name: str) -> str:
+    """探测发行版默认登录用户名（默认用户身份执行 id -un）；失败回退契约账号。"""
+    res = _sh(name, "id -un")
+    user = res.stdout.strip() if res.ok else ""
+    return user or DEFAULT_LOGIN_USER
+
+
+def open_mstsc(
+    port: int,
+    username: str = DEFAULT_LOGIN_USER,
+    rdp_dir: str | Path | None = None,
+) -> Path:
+    """写一份确定性临时 .rdp（幂等覆盖）并拉起 mstsc 打开它。
+
+    返回 .rdp 路径；固定文件名使重复 launch 不堆积临时文件。rdp_dir 仅测试注入。
+    """
+    directory = Path(rdp_dir) if rdp_dir is not None else Path(tempfile.gettempdir())
+    rdp_path = directory / f"okw-desktop-localhost-{port}.rdp"
+    # newline="" 关闭 Windows 文本模式换行转换，保证 CRLF 不被翻倍
+    rdp_path.write_text(
+        build_rdp_content(f"localhost:{port}", username),
+        encoding="utf-8",
+        newline="",
+    )
+    subprocess.Popen(["mstsc", str(rdp_path)])
+    return rdp_path
 
 
 def _wait_port(port: int, wait_seconds: float, poll_interval: float) -> bool:
@@ -450,9 +489,13 @@ def launch_run(
         return report
     report.add(f"等待端口 {port}", "PASS", f"localhost:{port} 已就绪")
 
+    user = _login_user(name)
     try:
-        open_mstsc(port)
-        report.add("拉起 mstsc", "PASS", f"已启动 mstsc /v:localhost:{port}")
+        rdp_path = open_mstsc(port, user)
+        report.add(
+            "拉起 mstsc", "PASS",
+            f"已启动 mstsc {rdp_path.name}（预填用户名 {user}）",
+        )
     except OSError as exc:
         report.add("拉起 mstsc", "FAIL", f"无法启动 mstsc：{exc}")
     return report
