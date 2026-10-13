@@ -129,6 +129,7 @@ apps/<group>/<app-name>/
 |---|---|---|
 | `agent-monetize/` | **Python 3.14+ 智能体自动变现平台** —— 自主循环 + 道家门控 + 沙箱通道 + tvm-ffi 桥接。 | [README.md](agent-monetize/README.md) |
 | `ai-agents/` | ai-agents 应用 | `ai-agents/`（暂无 README） |
+| `coach-moments-growth/` | 商业教练朋友圈 AI 增长系统（coach-moments-growth） | [README.md](coach-moments-growth/README.md) |
 | `containers/` | containers/ — Podman rootless 容器工作区分组 | [README.md](containers/README.md) |
 | `dev-tools/` | dev-tools 应用 | `dev-tools/`（暂无 README） |
 | `docker-images/` | docker-images 应用 | `docker-images/`（暂无 README） |
