@@ -19,11 +19,31 @@ CANDIDATES = {
     "tesseract-ocr": "5.3.4-1",
     "tesseract-ocr-chi-sim": "1:5.3.4-1",
     "tesseract-ocr-eng": "1:5.3.4-1",
+    # 引擎与子系统层
+    "kylin-ai-runtime": "1.1.0.1-ok0.21",
+    "kylin-ai-subsystem": "1.3.0.0-ok0.4",
+    "kylin-ai-subsystem-plugin": "1.0.0.2-ok1.13",
+    "kylin-ai-subsystem-modelconfig": "1.0.0.1-ok1.11",
     "kylin-ai-model-manager": "0.0.0.1-ok7",
-    "libkysdk-genai-nlp0": "1.1.0.1-ok1.6",
     "kylin-ai-engine-plugins": "1.1.0.1-ok1.5",
     "kylin-ondevice-nlp-engine": "1.0.0.0-ok0.2",
+    # Gen2 SDK 客户端层
+    "libkysdk-ai-common": "1.1.0.1-ok0.5",
+    "libkysdk-genai-nlp0": "1.1.0.1-ok1.6",
+    "libkysdk-genai-vision0": "1.1.0.1-ok1.5",
+    "libkysdk-coreai-speech0": "1.1.0.1-ok1.5",
+    "libkysdk-coreai-vision0": "1.1.0.1-ok1.3",
+    "libkysdk-advanced-ai0": "1.0.0.1-ok0.10",
+    "libkysdk-mcp": "1.0.0.0-ok0.1",
+    "libkyai-assistant0": "1.0.0.1-ok2.5",
+    "libkyai-config0": "1.1.0.1-ok2.6",
+    # 推理底座与知识服务
     "kytensor-server": "2.49.0.6-0ok11",
+    "libkyai-business-framework": "1.2.0.0-ok0.5",
+    "libkylin-ai-document-qa-service": "1.2.0.0-ok0.7",
+    "libkysdk-vector-engine-client": "1.2.0.0-ok0.7",
+    "kylin-ai-vector-engine": "1.2.0.1-ok0.3",
+    "libkyai-data-management-client": "1.2.0.0-ok0.5",
 }
 INSTALLED = {"libkysdk-genai-nlp0": "1.1.0.1-ok1.6"}
 
@@ -150,6 +170,82 @@ class TestComponentPolicyItem:
         assert item.status == "UNKNOWN" and "curl|sh" in item.detail
 
 
+# --------------------------- 分层清单模型 ---------------------------
+
+class TestComponentManifest:
+    def test_packages_and_keys_unique(self):
+        packages = [c.package for c in ai.COMPONENTS]
+        keys = [c.key for c in ai.COMPONENTS]
+        assert len(packages) == len(set(packages))
+        assert len(keys) == len(set(keys))
+
+    def test_ocr_layer_first_and_is_the_only_required_layer(self):
+        required = [c for c in ai.COMPONENTS if c.required]
+        assert [c.package for c in required] == [
+            "libkylin-ai-base-dev", "libkylin-ai-base2",
+            "tesseract-ocr", "tesseract-ocr-chi-sim", "tesseract-ocr-eng",
+        ]
+        assert {c.layer for c in required} == {ai.LAYER_OCR}
+        # 门控锚点包须在 ALL_PACKAGES 最前两位（批量 policy 子串契约依赖）
+        assert ai.ALL_PACKAGES[:2] == ("libkylin-ai-base-dev", "libkylin-ai-base2")
+
+    def test_layers_cover_all_components_in_order(self):
+        layers_in_order = []
+        for c in ai.COMPONENTS:
+            assert c.layer in ai.LAYER_ORDER
+            if not layers_in_order or layers_in_order[-1] != c.layer:
+                layers_in_order.append(c.layer)
+        assert layers_in_order == list(ai.LAYER_ORDER)
+
+    def test_every_optional_carries_missing_note(self):
+        missing = [c.package for c in ai.COMPONENTS if not c.required and not c.missing_note]
+        assert missing == []
+
+    def test_legacy_packages_retained_and_mcp_boundary(self):
+        # 重构前的 11 项包名一个不丢
+        legacy = {
+            "libkylin-ai-base-dev", "libkylin-ai-base2",
+            "tesseract-ocr", "tesseract-ocr-chi-sim", "tesseract-ocr-eng",
+            "kylin-ai-model-manager", "libkysdk-genai-nlp0",
+            "kylin-ai-engine-plugins", "kylin-ondevice-nlp-engine",
+            "kytensor-server", "ollama",
+        }
+        assert legacy <= set(ai.ALL_PACKAGES)
+        assert len(ai.COMPONENTS) == 28
+        # MCP 仅库级底座：缺失措辞必须防止误读为"自带 MCP 服务"
+        mcp = ai._BY_PACKAGE["libkysdk-mcp"]
+        assert mcp.layer == ai.LAYER_SDK and not mcp.required
+        assert "库级底座" in mcp.missing_note and "MCP 服务" in mcp.missing_note
+
+    def test_by_package_and_display_name(self):
+        c = ai._BY_PACKAGE["libkysdk-genai-nlp0"]
+        assert c.layer == ai.LAYER_SDK
+        assert ai._display_name(c).endswith("（libkysdk-genai-nlp0）")
+
+    def test_add_component_item_registers_layer_and_gating(self):
+        report = ai.PreflightReport(distro_name=NAME)
+        req = ai._BY_PACKAGE["libkylin-ai-base-dev"]
+        opt = ai._BY_PACKAGE["ollama"]
+        report.add_component_item(req, ai.CheckItem(ai._display_name(req), "PASS"))
+        report.add_component_item(opt, ai.CheckItem(ai._display_name(opt), "UNKNOWN"))
+        assert [layer for layer, _ in report.component_layers] == [
+            ai.LAYER_OCR, ai.LAYER_EXTERNAL
+        ]
+        assert ai._display_name(opt) in report.optional_names
+        assert report.all_passed() and report.exit_code() == 0
+
+    def test_optional_unknown_counts_but_does_not_gate(self):
+        report = ai.VerifyReport(distro_name=NAME)
+        opt = ai._BY_PACKAGE["kytensor-server"]
+        report.add_component_item(opt, ai.CheckItem(ai._display_name(opt), "UNKNOWN"))
+        assert report.exit_code() == 0
+
+    def test_upstream_footer_marks_generation_boundary(self):
+        footer = ai.UPSTREAM_SOURCE_FOOTER
+        assert "nile-sp2" in footer and "repos.md" in footer and "47 项" in footer
+        assert "deb 包" in footer and "okw ref ai-stack" in footer
+
+
 # --------------------------- preflight 场景 ---------------------------
 
 class TestPreflight:
@@ -158,6 +254,7 @@ class TestPreflight:
         assert ret == 1
         out = capsys.readouterr().out
         assert "ghost 未注册" in out
+        assert "repos.md" not in out  # 结构早退时不渲染分层与上游脚注
         calls = joined_calls(fake_run_wsl)
         assert not any("/etc/os-release" in c for c in calls)
 
@@ -215,6 +312,12 @@ class TestPreflight:
         assert "预检全部通过" in out
         assert "[UNKNOWN]" in out  # ollama 仍如实显示
         assert "curl|sh" in out
+        # 分层渲染：五个层标题齐全，新增 Gen2/引擎组件可见，脚注标明世代边界
+        assert "已验证 OCR 路径（门控项" in out
+        assert "引擎与子系统层" in out and "Gen2 SDK 客户端层" in out
+        assert "推理底座与知识服务" in out and "外部组件" in out
+        assert "kylin-ai-runtime" in out and "libkysdk-coreai-speech0" in out
+        assert "repos.md" in out and "nile-sp2" in out
 
     def test_required_missing_section_exit2(self, fake_run_wsl, capsys):
         # 安装目标整段缺失（索引过期）→ UNKNOWN → exit 2 + apt update 建议
@@ -429,6 +532,12 @@ class TestVerify:
         out = capsys.readouterr().out
         assert "OCR 验收通过" in out
         assert "[UNKNOWN]" in out
+        # tesseract 探针归入 OCR 门控层；新增可选组件按层呈现；脚注存在
+        assert "[已验证 OCR 路径（门控项" in out
+        assert "tesseract 版本" in out and "tesseract 语言包" in out
+        assert "Gen2 IPC 服务端" in out and "kylin-ai-runtime" in out
+        assert "Gen2 SDK 客户端层" in out and "libkysdk-genai-vision0" in out
+        assert "repos.md" in out
 
     def test_missing_runtime_fail_hint(self, fake_run_wsl, capsys):
         installed = OCR_FULL - {"libkylin-ai-base2"}
