@@ -12,6 +12,10 @@ _test_out/
 external/
 playground/
 
+# auto-arch-tournament：FeSens/auto-arch-tournament 外部仓库的根目录本地克隆（自带 .git），
+# 供 hwe-bench-okf-wiki 固定 commit 静态精读，非主仓内容
+auto-arch-tournament/
+
 # Python 缓存与编译文件
 __pycache__/
 *.pyc
@@ -145,6 +149,9 @@ apps/devcontainer-base/benchmark-results-ci/
 # Tencent Cloud EdgeOne（CLI 本地关联、部署暂存与凭证，机器生成产物）
 .edgeone/
 .tef_dist/
+
+# Tencent CloudBase（CLI 本地调试产物，容器调试配置，机器生成）
+.cloudbase/
 
 # work 视频创作工作目录（含 mov/mkv/webm 等大体积素材与中间产物，本地保留不入库）
 work/ai-agent-kepu/
