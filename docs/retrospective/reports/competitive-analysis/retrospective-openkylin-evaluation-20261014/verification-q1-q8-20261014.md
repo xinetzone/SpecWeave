@@ -19,15 +19,15 @@ tags: [openkylin, verification, q-gate, lts-eol, distrowatch, openrank, gitee, s
 | Q | 待验证项 | 本轮结论 | 关键新事实 | 复核窗口变化 |
 |---|---|---|---|---|
 | Q-1 | 社区版 LTS/EOL 与补丁政策 | **部分推翻原报告**：成文政策存在（2024 版 1+1；2026-04-09 TC 改为 LTS 2+3），但无逐版本 EOL 日期表、1.0 已无公告停维、新旧口径互相冲突 | VF-01~VF-11 | 90 天窗口保留（观察 3.0 维护节奏与 2029 口径是否修正） |
-| Q-2 | 2.0/SP1→SP2/3.0 原地升级 | **定性完成、实测未做**：升级器在仓；官方明示 SP1 及更早→SP2「暂时无法妥善升级」；3.0 公告只提供全新安装/Beta 更新，无 2.0→3.0 路径 | VF-41~VF-45 | 待导入 2.0 SPx WSL 镜像后实测 |
+| Q-2 | 2.0/SP1→SP2/3.0 原地升级 | **三重坐实、闭环**：①官方公告明示断裂；②服务端升级通道 JSON 自 2024-08-26 冻结、唯一目标为 Beta1→2.0；③客户端 1.0.3.0 为 2023-12 构建的物理机 ISO/initramfs 流程；且官方从未发布 2.0 WSL 镜像，WSL 副本实测路径在制品层不存在 | VF-41~VF-45、VF-50~VF-52 | 关闭（如未来 upgrade-config 更新出新通道再复核） |
 | Q-3 | DistroWatch 排名与独立横评 | DistroWatch **已取得**（6 个月 #107、HPD 132；3 个月 #64）；独立第三方性能横评经 7 条路径仍未找到 | VF-20~VF-23 | 横评维持持续检索 |
 | Q-4 | 2400 万套/用户数独立审计 | **结论强化为「仅厂商单源、外部全部转引」**：引用链追到 2025-06 CCF 鉴定自报材料；基金会 2025 年报刻意不列该数；另取得独立行为指标（OpenRank 3,180.90） | VF-24~VF-30 | 关闭（再开放需新审计源出现） |
 | Q-5 | Gitee Star/OpenRank/下载量/第三方贡献占比 | 三项取得/部分取得、一项确认不存在：官方看板 5,112 仓/440 万提交/29,870 贡献者；麒麟占单位归属 PR **85.2%**、Issue 96.1%；镜像下载量确认无公开口径 | VF-31~VF-37 | 全量 Star 待 Gitee API 恢复或带凭证；OpenRank 2026 数据待 OpenDigger 更新 |
 | Q-6 | 社区版等保/安可记录 | **证伪**：2023-2026 共 9 份安可公告零「openKylin/开放麒麟」在列；等保对象在制度上不含发行版产品 | VF-38~VF-40 | 关闭（季度抽查新公告即可） |
 | Q-7 | 3.0 四个日期的事件指代 | **已闭环**：08-29 基金会公告／09-05 首批正式 ISO／09-18 ISO 刷新＋中文页更新；**08-22 查无任何官方事件**（Beta 实为 08-07 构建、08-10 起公测） | VF-12~VF-19 | 关闭 |
-| Q-8 | Gen2 Kylin AI SDK 与 MCP 桌面能力 | **包级证实、功能待实测**：huanghe 仓库含 27 个 kylin-ai 包（libkylin-ai-base2 2.0、runtime、subsystem、aiassistant 5.0）；MCP 为 3.0 官方特性但无同名包，GUI/账号/硬件链路未验证 | VF-46~VF-49 | 下一迭代：GUI 切片内装 kylin-ai-subsystem 实测 |
+| Q-8 | Gen2 Kylin AI SDK 与 MCP 桌面能力 | **架构级实测闭环、端到端推理待 GUI**：零安装解包+直接运行证实 MCP 实现在 kylin-bot 0.7.5（Rust，mcp_client/transport，stdio+SSE，tools/call）、桌面能力经 12 个内置技能 gdbus 调 org.ukui.Framework、66 家模型供应商 BYO Key、模型运行时从 ModelScope 匿名下载；未验证项仅剩真实推理与 GUI/音频链路 | VF-46~VF-49、VF-53~VF-61 | GUI 切片端到端推理（需用户在 onboard 填 Key 或先下 GB 级模型） |
 
-## 二、核验事实（VF-01~VF-49）
+## 二、核验事实（VF-01~VF-61）
 
 ### Q-1：LTS/EOL 与补丁政策
 
@@ -118,6 +118,28 @@ tags: [openkylin, verification, q-gate, lts-eol, distrowatch, openrank, gitee, s
 | VF-48 | 【官方】MCP 为 3.0 正式特性：公告称「智能体通过 MCP 协议直接调用桌面能力，无需模拟点击」，KylinBot、WorkBuddy、OpenClaw、Raccoon Work 均可完整运行；开发者经统一 AI SDK 开发智能技能并提交至 openKylin-skills 仓库；系统预装「Token 中心」（签到领额度）。MCP 能力随 kylin-ai 栈交付而非独立包，其功能链路（智能体连接、桌面调用、模型/Token 账号）需 GUI 与网络账号实测。 | https://www.openkylin.top/news/4098-cn.html | 2026-10-14 |
 | VF-49 | 【一手实测】原 LOC-05 关于 Gen1 的结论维持：okw ai 走 Gen1 libkylin-ai-base-dev＋tesseract 薄 IPC 代理路径；本轮新增结论为 Gen2 SDK 在 3.0 仓库**包级已可得但默认未装、功能未验证**，7.6 节「Gen2 在切片内不可得」的表述据此收窄为「Gen2 功能链路在切片内未验证」。 | 同 VF-46/47 | 2026-10-14 |
 
+### Q-2 补充实测：升级通道服务端与客户端（功能级，2026-10-14 傍晚）
+
+| 编号 | 事实（含口径） | 来源 | 访问日期 |
+|---|---|---|---|
+| VF-50 | 【一手实测】官方镜像目录实证：2.0、2.0-SP1、2.0-SP2 三个目录**均无 WSL/rootfs 镜像**（SP2 目录仅 ISO 与嵌入式镜像）；官方 WSL 镜像仅 3.0 双形态（openKylin-3.0-wsl-amd64.wsl 基础版、openKylin-3.0-desktop-wsl-amd64.wsl 桌面版）。「导入 2.0 SPx 官方 WSL 副本实测升级」在官方制品层无路径，只能自行从 4.8GB ISO 制作 rootfs。 | https://cdimage.openkylin.top/2.0-SP2/、/2.0/、/2.0-SP1/、/3.0/ | 2026-10-14 |
+| VF-51 | 【官方服务端·关键】升级器在线通道配置 `https://cdimage.openkylin.top/upgrade-config/kylin-revision-manager-sources.json` 的 sources 数组**仅 1 条**：arch=amd64、isopath 指向 factory.openkylin.top 的 openKylin-Desktop-V2.0-Release-x86_64.iso（isosize 4.8、md5 3cba68…）、version="Beta1"——唯一用途是 1.0/Beta1→2.0 Release；无 SP1/SP2/3.0 任何条目。HTTP Last-Modified=Mon, 26 Aug 2024 01:50:57 GMT（同目录 display.json 为 2024-06-06），**自 2.0 发布月起冻结两年多未更新**。 | cdimage upgrade-config（S51/S52） | 2026-10-14 |
+| VF-52 | 【一手实测】3.0 仓内 kylin-revision-manager 1.0.3.0-1ok3 解包：changelog 最新条目 2023-12-12（nile＝2.0 系列）；架构为 Python3 D-Bus 系统服务（RevisionsManagerDaemon，systemd Before=lightdm.service）+ Qt 前端 /usr/bin/Revision；升级机制是下载 ISO 后进入 initramfs-upgrade 重启环境，包内自带双架构 docker.io/containerd/runc/KARE 依赖执行迁移，postinstall 含把 sources.list 重置为 yangtze(1.0)/2.0 仓的逻辑——属物理机/完整系统流程，WSL 容器无 lightdm/grub/initramfs，该 GUI 流程结构性不可运行。 | 包级实测（命令见第六节） | 2026-10-14 |
+
+### Q-8 补充实测：Gen2 架构级验证（功能级，2026-10-14 傍晚，零系统变更）
+
+| 编号 | 事实（含口径） | 来源 | 访问日期 |
+|---|---|---|---|
+| VF-53 | 【一手实测】安装规模模拟（apt-get install -s）：kylin-ai-subsystem 1.3.0.0 元包将拉入 **267 包**（含 kytensor-server/kytensor-llm/llm-backend/onnxruntime-backend 推理栈）；最小 SDK 层 libkylin-ai-base2 拉入 88 包、Installed-Size 合计约 330MB；两套方案模拟均会替换移除 libcurl3-gnutls（git 依赖）。为不污染发行版，本轮采用私有目录下载解包，实测前后 `dpkg -l` 与根分区占用（3.0G）一致。 | apt 模拟安装（第六节） | 2026-10-14 |
+| VF-54 | 【一手实测】libkylin-ai-base2 2.0.0.0 实际内容仅 1 个共享库 libkylin-ai-base.so.2.0.0 + gsettings schema org.openkylin.aisdk：部署策略三枚举 LOCAL/PUBLICCLOUD/PRIVATECLOUD（text 与 speech 默认 PUBLICCLOUD）；导出符号为 GLib/GObject 风格 aisdk_data_management_processor_call_*（add_text_files/add_image_files/similarity_search/delete/get_feature_status 等 RAG 数据管理接口，异步 *_finish 与 *_sync 双套）；全库无 MCP 字样（唯一 "mcp" 命中为 memcpy）。**MCP 不在 SDK 层**。 | 包级实测 | 2026-10-14 |
+| VF-55 | 【一手实测】kylin-ai-runtime 1.1.0.1 含 /usr/bin/kylin-ai-runtime（7.3MB，stripped ELF）与 /etc/kylin-ai/intents 槽位提取 Python 脚本；kylin-ai-engine-plugins 为元包，云引擎共 8 个插件：百度/讯飞/通义/DeepSeek/custom/freetrial＋ondevice/ondevice-traditional；解包 qwen、custom、freetrial 三个插件 .so **均无硬编码 URL**，端点与密钥走运行时配置（对应设置/Token 中心）。 | 包级实测 | 2026-10-14 |
+| VF-56 | 【一手实测】默认预装的 kylin-ai-model-manager 0.0.0.1：模型清单 /usr/share/kylin-ai/ondevice/modelsmd5 列 **47 个文件**，含 qwen1_5-7b-chat-q5_k_m.gguf、Paraformer online/offline、offline-tts、keyword-spotter、speaker-identification、offline-punc、bge-m3-onnx、cn-clip-onnx；下载器 /usr/bin/download.py 经 **ModelScope**（modelscope.hub snapshot_download/file_download）匿名拉取，缓存 /yds/models/modelscope；download-in-venv 在 ~/.cache/pythonvenv/modelenv 建 venv、从清华 TUNA 镜像装 modelscope。模型不随 deb 分发、脚本无 token 逻辑（首用按 GB 级现下载、无需登录）。 | 包级实测 | 2026-10-14 |
+| VF-57 | 【一手实测·可执行】kylin-bot 0.7.5-ok1.9（deb 8.5MB）零安装直接运行成功：`--version` 输出 kylinbot 0.7.5；`--help` 列 27 个子命令（onboard/agent/gateway/acp/daemon/service/skills/auth/providers/models/memory/cron/migrate…）；`providers` 实跑输出 **"Supported providers (66 total)"**（openrouter/anthropic/openai/gemini/glm/zai/qwen/doubao/qianfan/deepseek/moonshot/ollama 等，含 OAuth 与 API Key 两类）；随包默认 config.toml 的 [providers] 为空——**不捆绑任何 Token**，需 onboard 自填或 `kylinbot auth login --provider`。 | 免安装运行实测 | 2026-10-14 |
+| VF-58 | 【一手实测·MCP 定位】kylin-bot 为 Rust 二进制，内嵌 crate 路径 crates/kylinbot-tools/src/mcp_client.rs、mcp_transport.rs、mcp_tool.rs、mcp_deferred.rs；字符串含 JSON-RPC、tools/call、sessionCapabilities、配置键 mcp.enabled、mcp.servers.{name,command,args,url,transport,tool-timeout-secs}、mcp.deferred-loading、报错串 "MCP registry failed to initialize"——KylinBot 是 **MCP host/client**（stdio 与 URL/SSE 两类 transport，可挂任意外部 MCP server）；另有 `acp` 子命令＝JSON-RPC 2.0 over stdio（initialize、session/new、session/prompt、session/stop）供 IDE 接入；gateway 提供 websocket/webhook＋pairing code，默认仅 localhost，公网暴露须显式 KYLINBOT_ALLOW_PUBLIC_BIND 并配对（KYSEC 围栏之外的工程侧安全开关）。 | 二进制字符串+CLI 实测 | 2026-10-14 |
+| VF-59 | 【一手实测·桌面调用机制】包内 /usr/share/kylinbot/.kylinbot/workspace/skills/ 预置 **12 个内置技能**：audio、bluetooth、keyboard、mouse、navigations、network-manager、osdserver、panel、power、shortcut-navigations、srceen、touchpad；SKILL.md 直接给 `gdbus call --session --dest org.ukui.Framework` 调 UKUI 会话总线接口（示例 OsdServer.ShowVolumeBar 60 100），bluetooth 技能另带 ukui-bluetooth-cli.py——官宣「无需模拟点击直接调用桌面能力」的工程实质＝LLM 经技能文档调 D-Bus 桌面框架接口，而非 OS 级注入点击。 | 包内文件实测 | 2026-10-14 |
+| VF-60 | 【一手实测·平台化形态】kylin-bot 配置面还含 channels（feishu/lark/qq/wechat/discord/slack/signal/matrix/mattermost 等十余）、tools（browser/composer/http_request/web_search）、memory（SQLite＋向量/FTS，可选 Qdrant）、peripherals（Arduino/STM32/GPIO）、cost 美元预算、SOP/cron/estop、以及从 **OpenClaw 工作区迁移记忆**的内置命令；IDENTITY.md 自称「小K」。与官宣「KylinBot、WorkBuddy、OpenClaw、Raccoon Work 可在 3.0 运行」互证：3.0 交付物定位是 agent host＋MCP/ACP 接入面，而非单一助手 App。 | 二进制/config 实测；官宣 VF-48 | 2026-10-14 |
+| VF-61 | 【边界·未验证】本轮明确未执行、不做功能通过宣称的三项：①模型实际推理（需 GUI onboard 配 provider Key，或先经模型管理器匿名下载 GB 级 GGUF/ONNX；WSL 基础镜像无 UKUI 会话与音频输入设备）；②外部 MCP server 的真实 tools/call 往返；③中文语音识别/合成端到端链路。 | 实测边界声明 | 2026-10-14 |
+
 ## 三、对原 12 缺口 / 12 冲突的核销对照
 
 | 原编号 | 原内容 | 本轮处置 | 替代事实 |
@@ -148,7 +170,7 @@ tags: [openkylin, verification, q-gate, lts-eol, distrowatch, openrank, gitee, s
 - **7.2 生命周期与升级保障：2 → 3**。上调依据：成文 LTS 政策客观存在（VF-01~VF-05，2026-04 起 LTS 总窗口 5 年、2.0 在维护至 2026-05 仍有安全补丁、有 OKSA 响应规范）；不上调至 4 的依据：政策 2026-04 才成文且三文本冲突（NC-01）、1.0 已无公告事实停维（VF-07）、3.0 仅 12 个月被动维护、跨版本升级连续两次断裂（VF-42/VF-43）、无版本完整走完过生命周期。
 - **加权总分：70 → 73/100**（仅 7.2 维度 +1：4×0.20＋3×0.15＋4×0.20＋3×0.20＋4×0.15＋4×0.10＝3.65/5）。
 - 7.4 治理分维持 3：负分被硬数据坐实（85.2%/96.1%、OpenRank 同比 −922.31），同时新增公开数据看板、14.8% 非麒麟单位 PR 与 DistroWatch 短期上行等正反证据，两相抵消。
-- 7.6 本地可落地性维持 4：Gen2 由「不可得」更正为「包级可得、功能未验证」（VF-46~VF-49），不构成加分实测。
+- 7.6 本地可落地性维持 4（二轮实测后仍不上调）：Gen2 已从「包级可得」推进到「架构级实测」——MCP/ACP/技能/模型分发链路均在二进制与免安装运行层面验证（VF-53~VF-60），但端到端推理、GUI 与音频链路仍未验证（VF-61），按 V 门纪律不把架构证据计为功能通过。
 
 ## 六、本地实测命令记录（Q-2/Q-8，一手证据）
 
@@ -166,7 +188,38 @@ apt-cache search kylin | grep -iE 'upgrade|update-manager|release'
 dpkg -L kylin-ai-model-manager # /usr/bin/kylin-ai-model-manager、download.py；/usr/share/kylin-ai/ondevice/
 ```
 
-下一步实测（需用户授权写入与镜像下载）：①导入 openKylin 2.0 SP2 WSL rootfs 为独立发行版副本；②副本内 apt 安装/运行 kylin-revision-manager 观察 3.0 升级通道是否开放；③3.0 内 apt install kylin-ai-subsystem 后经 GUI（xrdp 3390）验证 AI 助手、MCP 智能体连接与 Token 中心。
+第二轮（功能级，2026-10-14 傍晚；零系统变更，全程 apt-get download 私有解包，结束后删除全部临时文件，dpkg/磁盘前后一致）：
+
+```bash
+# —— Q-2 升级通道（Windows 侧直接抓服务端配置）——
+curl https://cdimage.openkylin.top/upgrade-config/kylin-revision-manager-sources.json
+#   sources[] 仅 1 条：Beta1 -> openKylin-Desktop-V2.0-Release-x86_64.iso（4.8G），无 SPx/3.0
+curl -I https://cdimage.openkylin.top/upgrade-config/kylin-revision-manager-sources.json
+#   Last-Modified: Mon, 26 Aug 2024 01:50:57 GMT（冻结于 2.0 发布月）
+# —— Q-2 升级器客户端（WSL 内解包）——
+apt-get download kylin-revision-manager           # 1.0.3.0-1ok3，115MB，changelog 止于 2023-12-12
+dpkg-deb -x *.deb x && cat x/etc/RevisionsManager/RevisionsManager.conf
+cat x/lib/systemd/system/RevisionsManager.service # Before=lightdm；Daemon=Python3+D-Bus
+find x/usr/share/revisions-manager -name "*.py"   # RMVersionManager 走 initramfs-upgrade 重启升级
+ls x/usr/share/revisions-manager/data/depends/x86_64/  # docker/containerd/runc/KARE
+# —— Q-8 Gen2（WSL 内私有解包 + 免安装运行）——
+apt-get install -s --no-install-recommends kylin-ai-subsystem | tail -1  # 267 包
+apt-get install -s --no-install-recommends libkylin-ai-base2   | tail -1  # 88 包 / 约 330MB
+mkdir d && cd d && for p in $(模拟清单); do apt-get download $p; done      # 落大盘 /mnt/ai
+dpkg-deb -x libkylin-ai-base2_*.deb xb && nm -D xb/usr/lib/*/libkylin-ai-base.so.2.0.0 | grep aisdk
+cat xb/usr/share/glib-2.0/schemas/org.openkylin.aisdk.gschema.xml          # LOCAL/PUBLICCLOUD/PRIVATECLOUD
+dpkg-deb -x kylin-bot_*.deb xbot
+strings xbot/usr/bin/kylin-bot | grep -E "mcp_client.rs|tools/call|mcp.servers"  # MCP host 实证
+B=$(pwd)/xbot/usr/bin/kylin-bot
+$B --version        # kylinbot 0.7.5（免安装可执行，ldd 无缺失）
+$B --help | head    # 27 子命令
+$B providers        # Supported providers (66 total)
+ls xbot/usr/share/kylinbot/.kylinbot/workspace/skills/   # 12 技能；SKILL.md 内 gdbus org.ukui.Framework
+cat /usr/share/kylin-ai/ondevice/modelsmd5               # 47 文件（qwen1.5-7b gguf/paraformer/bge-m3…）
+sed -n 1,20p /usr/bin/download.py                        # ModelScope snapshot_download，匿名
+```
+
+Q-2 收尾说明：官方从未发布 2.0 系列 WSL 镜像（VF-50），原计划「2.0 副本内跑升级器」在制品层不可行；叠加服务端通道冻结（VF-51）与客户端机制证据（VF-52），Q-2 已达证据饱和，不再以自制 ISO rootfs 方式补测（收益低、写入大）。Q-8 剩余唯一项＝GUI/账号下的端到端推理（VF-61），需用户经 xrdp（3390，xorg）完成 onboard 填 Key 或先下载端侧模型，属人工交互环节，不适合无人值守执行。
 
 ## 七、本轮新增信源（S36 起，接续附录 A/B 编号）
 
@@ -187,7 +240,11 @@ dpkg -L kylin-ai-model-manager # /usr/bin/kylin-ai-model-manager、download.py�
 | S48 | 科技日报/中国高新技术产业导报/界面新闻（2400 万转引链样本） | 媒体（转引/商讯） | 见 VF-25 |
 | S49 | 阿里云 openKylin 镜像（套件 Release 元数据） | 第三方镜像 | https://mirrors.aliyun.com/openkylin/ |
 | S50 | 本机 okw 发行版 openKylin-3.0（apt-cache/dpkg 只读实测） | 一手实测 | 本附录第六节 |
+| S51 | cdimage 升级器通道配置 kylin-revision-manager-sources.json（HTTP 200，Last-Modified 2024-08-26，仅 Beta1→2.0 一条通道） | 官方服务端 | https://cdimage.openkylin.top/upgrade-config/kylin-revision-manager-sources.json |
+| S52 | cdimage 升级器界面配置 kylin-revision-manager-display.json（Last-Modified 2024-06-06） | 官方服务端 | https://cdimage.openkylin.top/upgrade-config/kylin-revision-manager-display.json |
+| S53 | cdimage 官方镜像目录（2.0/SP1/SP2 无 WSL 镜像；3.0 双 WSL 镜像） | 官方 | https://cdimage.openkylin.top/2.0-SP2/ |
+| S54 | 人民邮电报（cnii.com.cn）《内核跃迁、智能原生，openKylin 3.0正式发布》（MCP/多智能体表述的媒体旁证，非独立验证） | 权威行业媒体 | https://www.cnii.com.cn/gxxww/rmydb/202608/t20260831_757512.html |
 
 ---
 
-*核验执行：4 路并行公开信源调研（Q-1/Q-7、Q-3/Q-6、Q-4、Q-5）＋本机 okw 只读实测（Q-2/Q-8）。所有网络事实访问日期 2026-10-14；负证据均附检索路径。本轮不新增对外强结论，评分修正仅 7.2 一个维度（70→73）。*
+*核验执行：4 路并行公开信源调研（Q-1/Q-7、Q-3/Q-6、Q-4、Q-5）＋本机 okw 两轮实测（首轮包级、傍晚功能级，Q-2/Q-8）。所有网络事实访问日期 2026-10-14；负证据均附检索路径。总分维持 73（7.2 维 3、7.6 维 4）；本轮变化为 Q-2 转闭环、Q-8 证据等级由「包级」推进至「架构级、推理链路未验证」（VF-50~VF-61）。*

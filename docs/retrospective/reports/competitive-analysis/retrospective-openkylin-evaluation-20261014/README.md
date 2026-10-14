@@ -3,13 +3,13 @@ title: "openKylin 全面评估调研报告：技术栈、国内外发行版对�
 date: 2026-10-14
 updated: 2026-10-14
 source: "openKylin/开放原子开源基金会/麒麟软件官网与公开新闻、openEuler/龙蜥/统信/Ubuntu/Fedora/Debian 官方文档、中国信息安全测评中心公告、Similarweb/os.watch 第三方平台、本工作区 okw 项目文档（均为公开信源，访问日期 2026-10-14）"
-method: "七概念方法论编排（场景4 知识沉淀：R→I→E→V→Q 门复核），新增事实 CMP-01~CMP-75 + ECO-01~ECO-70 共 145 条，复用既有知识包事实约 148 条；萃取模式 community-metric-triple-check（L1-draft）；2026-10-14 Q 门首轮核验 VF-01~VF-49（附录 C），总分修正 70→73；session=sc-20261014-openkylin-evaluation"
+method: "七概念方法论编排（场景4 知识沉淀：R→I→E→V→Q 门复核），新增事实 CMP-01~CMP-75 + ECO-01~ECO-70 共 145 条，复用既有知识包事实约 148 条；萃取模式 community-metric-triple-check（L1-draft）；2026-10-14 Q 门首轮核验 VF-01~VF-61（附录 C），总分修正 70→73；同日傍晚功能级二轮实测 Q-2 闭环/Q-8 架构级验证；session=sc-20261014-openkylin-evaluation"
 tags: [openkylin, 麒麟软件, 开放原子, 操作系统, 信创, UKUI, RISC-V, 竞品分析, 七概念, okw]
 ---
 
 # openKylin 全面评估调研报告：技术栈、国内外发行版对比、生态商业与本地落地
 
-> **方法论**：七概念编排 **R（事实）→ I（洞察）→ E（萃取）→ V（对抗审查）→ Q 门（缺口复核）**。R 阶段采集可验证公开事实 145 条（CMP-01~CMP-75、ECO-01~ECO-70，见附录 A/B），并复用既有知识包事实约 148 条；I 阶段形成 4 条四元组洞察；E 阶段沉淀 [社区指标三查法](../../../patterns/methodology-patterns/governance-strategy/community-metric-triple-check.md)；V 阶段 4 视角 7 条意见全部处置；Q 门首轮复核新增 VF-01~VF-49 共 49 条事实（见附录 C），修正评分 70→73。
+> **方法论**：七概念编排 **R（事实）→ I（洞察）→ E（萃取）→ V（对抗审查）→ Q 门（缺口复核）**。R 阶段采集可验证公开事实 145 条（CMP-01~CMP-75、ECO-01~ECO-70，见附录 A/B），并复用既有知识包事实约 148 条；I 阶段形成 4 条四元组洞察；E 阶段沉淀 [社区指标三查法](../../../patterns/methodology-patterns/governance-strategy/community-metric-triple-check.md)；V 阶段 4 视角 7 条意见全部处置；Q 门首轮复核新增 VF-01~VF-49，同日傍晚二轮实测再加 VF-50~VF-61（共 61 条，见附录 C）；评分修正 70→73（二轮实测后维持）。
 > **评估范围**：openKylin（开放麒麟）桌面根社区的技术栈与版本策略、与 6 个国内外发行版的横向对比、生态与商业模式、以及在本工作区经 okw 工具链的本地可落地性。
 > **非评估范围**：安全渗透测试、商业版银河麒麟的合同报价与 SLA、未经实测的性能跑分。
 > **证据分级**：官方/政府来源 > 权威媒体 > 第三方聚合；凡仅见于厂商/项目方自述的数据，全文标注「厂商口径」；第三方流量与收录数据仅作**旁证**，不与官宣做等权对冲。
@@ -179,7 +179,7 @@ file: ../../../patterns/methodology-patterns/governance-strategy/community-metri
 
 ### 7.6 本地可落地性（4/5）
 
-官方提供 WSL 镜像（CMP-07）；本工作区 okw 已形成从导入、验收、rootless 容器、compose、AI OCR 到 UKUI 远程桌面的完整切片（LOC-01~LOC-08，详见第十一章）。扣分点：WSL 不是社区主力交付场景，KMRE/完整 UKUI 形态仍需物理机；Gen2 AI 栈（libkylin-ai-base2 2.0/kylin-ai-runtime/subsystem/aiassistant 5.0 共 27 包）在 3.0 仓库**包级已可得但默认未装、功能链路未验证**（附录 C VF-46~VF-49）；Gen1 AI SDK 经实证为薄 IPC 代理（与既有知识包洞察一致）。
+官方提供 WSL 镜像（CMP-07）；本工作区 okw 已形成从导入、验收、rootless 容器、compose、AI OCR 到 UKUI 远程桌面的完整切片（LOC-01~LOC-08，详见第十一章）。扣分点：WSL 不是社区主力交付场景，KMRE/完整 UKUI 形态仍需物理机；Gen2 AI 栈（27 包）经二轮零安装实测完成**架构级验证**：MCP 实现在 kylin-bot（Rust MCP host，stdio+SSE，tools/call）、12 个内置技能经 gdbus 调 org.ukui.Framework 操作桌面、66 家供应商 BYO Key、端侧模型经 ModelScope 匿名分发；但端到端推理/GUI/音频链路未验证（附录 C VF-53~VF-61）；Gen1 AI SDK 经实证为薄 IPC 代理（与既有知识包洞察一致）。
 
 ---
 
@@ -218,7 +218,7 @@ file: ../../../patterns/methodology-patterns/governance-strategy/community-metri
 | R-1 | 生命周期承诺弱：政策 2026-04 才成文且新旧冲突、无逐版本 EOL 日期表、1.0 已无公告事实停维 | 中高（Q 门下调，原高） | 7.2；VF-01~VF-10/NC-01 | 生产负载走商业合同；版本规划不押注 2029 具体日期；90 天复核政策口径 |
 | R-2 | 贡献与商业下游集中于麒麟软件单一主体 | 中高 | CMP-66~68/ECO-52 | 跟踪独立捐赠人结构与外部 SIG Owner 比例；关键资产留自建镜像 |
 | R-3 | 规模数字不可审计，外溢到尽调/投标材料造成失真 | 中 | ECO-50/ECO-57 | 强制三查法标注口径；引用附时点与来源 |
-| R-4 | 大版本升级连续断裂：官方明示 SP1 及更早→SP2「暂时无法妥善升级」，3.0 公告无 2.0→3.0 路径 | 中高（Q 门上调，原中） | VF-42/VF-43/CMP C-05 | 大版本按重装迁移规划；升级前在 okw 副本实测 kylin-revision-manager；依赖 OSTree 回滚 |
+| R-4 | 大版本升级连续断裂：官方明示 SP1 及更早→SP2「暂时无法妥善升级」，3.0 公告无 2.0→3.0 路径；二轮实测坐实升级通道服务端自 2024-08 冻结、无 SPx/3.0 目标，且 2.0 系列无 WSL 镜像 | 中高（Q 门上调，原中） | VF-42/VF-43/VF-50~VF-52/CMP C-05 | 大版本按重装迁移规划；不要预期升级器推送 3.0；依赖 OSTree 回滚；关注 upgrade-config 是否更新 |
 | R-5 | 跨内核大版本（6.6→7.0）带来的第三方 ABI/闭源驱动风险 | 中 | CMP-06/CMP-54 | 关键行业软件先做兼容清单；生产滞后一个大版本观察 |
 | R-6 | 公开互联网生态信号弱，国际化社区协作受限 | 低中 | ECO-53~ECO-56 | 国际协作项目 canonical 仍放国际平台；openKylin 用于信创/本地化侧 |
 | R-7 | WSL 为非主力场景，本地切片能力不完整（KMRE、Gen2 SDK） | 低 | LOC-01~LOC-08 | 完整形态评估用物理机/专用设备；okw 仅承担开发与接口验证 |
@@ -249,7 +249,7 @@ file: ../../../patterns/methodology-patterns/governance-strategy/community-metri
 | LOC-02 | openKylin 3.0 rootfs 构建为 `localhost/openkylin:3.0`，image build/verify 2026-10-09 实测通过 | 3.0 组件可导入、可容器化 | 构建在本机环境，非 CI 多机矩阵 |
 | LOC-03 | `okw podman preflight/install --yes/verify` 提供发行版内 rootless Podman；`--smoke-image` 不隐式拉取 | 开源容器栈可在 openKylin 内运行 | 写入类操作一律 `--yes` 显式授权，verify 不产生副作用 |
 | LOC-04 | `okw compose` 以 uv 托管独立 CPython 3.14 引导 xuan-compose | 可作为云原生 compose 工作负载宿主 | xuan-compose 为 GPL-2.0-only，**未作为 MIT 项目的依赖引入**，许可证边界显式隔离 |
-| LOC-05 | `okw ai` 仅封装 Gen1 Kylin AI SDK 文字识别（apt 安装 libkylin-ai-base-dev），本地经 tesseract 离线完成；Q 门实测 3.0 仓库另有 Gen2 栈 27 包（libkylin-ai-base2 2.0 等） | CMP-62/VF-46 AI SDK 包级可得 | 反向印证 Gen1 为薄 IPC 代理；Gen2 包级可得但默认未装、GUI/模型/Token 链路未验证（VF-47~VF-49） |
+| LOC-05 | `okw ai` 仅封装 Gen1 Kylin AI SDK 文字识别（apt 安装 libkylin-ai-base-dev），本地经 tesseract 离线完成；二轮实测另解包 Gen2：libkylin-ai-base2 为 GLib RAG/数据管理库（无 MCP）、MCP 在 kylin-bot 0.7.5 且二进制免安装可运行（66 供应商/12 技能/ACP） | CMP-62/VF-46/VF-54/VF-57~60 | 反向印证 Gen1 为薄 IPC 代理；Gen2 架构级实测通过、端到端推理未验证（VF-61） |
 | LOC-06 | `okw desktop` 经 xrdp 暴露 UKUI（端口 3390），不在 WSL 内安装完整桌面套件 | UKUI 可运行、可远程访问 | KMRE/完整硬件加速桌面形态需物理机 |
 | LOC-07 | openkylin-dev-container 基于 localhost/openkylin:3.0，SSH 22 + JupyterLab 8888 + 容器内 rootless Podman（supervisord+tini） | 开发环境可标准化复制 | 属工作区自建配方，非社区官方镜像 |
 | LOC-08 | okw 提供 deb-dput 脚手架与知识库查询，写入与联网行为受 `--yes`/verify 纪律约束 | 原生开发 SDK 3.0 的工程化邻接能力 | 仅脚手架，不代表官方打包流水线全貌 |
@@ -263,15 +263,15 @@ file: ../../../patterns/methodology-patterns/governance-strategy/community-metri
 | # | 待验证项 | 首轮核验结论（2026-10-14，证据见附录 C） | 状态/下一窗口 |
 |---|---|---|---|
 | Q-1 | openKylin 社区版的 LTS/EOL 与补丁支持政策 | 成文政策存在：2024 版创新版 1 年/LTS 1+1，2026-04-09 TC 改为 LTS 2+3、2.0 文字「约 2029-08」；但新旧三文本冲突（NC-01）、无逐版本 EOL 日期表、1.0 已无公告事实停维；有 OKSA 补丁响应规范 | 部分闭环；90 天复核口径是否统一（VF-01~11） |
-| Q-2 | 2.0/2.0 SP1 → 2.0 SP2/3.0 的原地升级路径 | 升级器 kylin-revision-manager 在仓且官方有 1.0→2.0 教程；SP2 公告明示 SP1 及更早「暂时无法妥善升级」；3.0 公告无 2.0→3.0 路径（仅全新安装/Beta 更新） | 定性闭环、实测待做：导入 2.0 SPx 副本演练（VF-41~45） |
+| Q-2 | 2.0/2.0 SP1 → 2.0 SP2/3.0 的原地升级路径 | 二轮实测三重坐实：升级器通道 JSON 自 2024-08-26 冻结、唯一目标 Beta1→2.0（无 SPx/3.0）；客户端 1.0.3.0 为 2023-12 构建的 ISO/initramfs 物理机流程；官方从未发布 2.0 WSL 镜像 | **闭环**：无新通道即不再复核（VF-50~52） |
 | Q-3 | DistroWatch 排名与独立第三方性能横评 | DistroWatch 条目可达：6 个月 #107/HPD 132、3 个月 #64；独立横评经 Phoronix/OpenBenchmarking/Geekbench 等 7 路径未找到（高强度负证据，非穷尽） | 排名已取得；横评持续检索（VF-20~23） |
 | Q-4 | 用户数/2400 万套部署量的独立审计口径 | 引用链追到 2025-06 CCF 鉴定自报材料→两篇获奖特稿→麒麟官网/界面（含标注「商讯」付费稿）；基金会 2025 年报刻意不列该数；信通院评估不含用户量；无任何独立统计 | 闭环（确认为仅厂商单源），新审计源出现再开（VF-24~30） |
 | Q-5 | Gitee Star、OpenRank、镜像下载量、第三方贡献占比 | 看板 5,112 仓/440 万提交/29,870 贡献者；麒麟占单位归属 PR 85.2%/Issue 96.1%；Gitee 枚举子集 6,952★（API 500 阻塞全量）；无组织级 OpenRank 单值（X-lab 组织值 3,180.90/#14）；镜像下载量确认无公开口径 | 大部分闭环；全量 Star 待 API 恢复/带凭证（VF-31~37） |
 | Q-6 | 社区版（非银河麒麟商业版）等保与安全可靠测评记录 | 2023-2026 共 9 份安可公告零「openKylin/开放麒麟」在列（仅银河麒麟商业版与海思麒麟芯片）；等保对象在制度上为信息系统而非发行版产品 | 闭环（证伪），季度抽查新公告（VF-38~40） |
 | Q-7 | 3.0 四个发布日期各自指代的事件 | 08-29 基金会正式发布公告／09-05 首批正式 ISO 构建＋Timeline／09-18 ISO 刷新＋中文页更新（非独立发布）；**08-22 查无任何官方事件**（Beta 实为 08-07 构建、08-10 起公测）；官网新闻时间戳存在批量重导（NC-02） | 闭环（VF-12~19） |
-| Q-8 | Gen2 Kylin AI SDK 与 MCP 桌面能力在本地切片的可用性 | 3.0 仓库含 27 个 kylin-ai 包（libkylin-ai-base2 2.0/runtime/subsystem/aiassistant 5.0），包级可得、默认仅装 model-manager；无 MCP 同名包，MCP 为 3.0 官方特性随 AI 栈交付；GUI/模型/Token 链路未验证 | 下一迭代：GUI 切片装 kylin-ai-subsystem 实测（VF-46~49） |
+| Q-8 | Gen2 Kylin AI SDK 与 MCP 桌面能力在本地切片的可用性 | 二轮零安装实测：kylin-bot 0.7.5 为 Rust MCP host（mcp_client.rs、stdio+SSE、tools/call、ACP JSON-RPC），12 技能 gdbus 调 org.ukui.Framework，providers 实跑 66 家、默认无捆绑 Key；模型经 ModelScope 运行时匿名下载（47 文件清单，Qwen1.5-7B/Paraformer/bge-m3） | 架构级闭环；仅剩 GUI 端到端推理需用户 onboard 交互（VF-53~61） |
 
-> 完整核验过程、49 条新事实（VF-01~VF-49）、原 12 缺口/12 冲突核销对照、新冲突 NC-01/NC-02 与评分修正依据，见 [附录 C：Q-1~Q-8 首轮核验记录](verification-q1-q8-20261014.md)。
+> 完整核验过程、61 条事实（VF-01~VF-61，含同日傍晚功能级二轮实测）、原 12 缺口/12 冲突核销对照、新冲突 NC-01/NC-02 与评分修正依据，见 [附录 C：Q-1~Q-8 首轮核验记录](verification-q1-q8-20261014.md)。
 
 ---
 
@@ -299,7 +299,7 @@ file: ../../../patterns/methodology-patterns/governance-strategy/community-metri
 | V 门 | 通过 | 4 视角全覆盖，7 条意见，采纳 6 条、部分采纳 1 条（≥2），修正已回写各章 |
 | G4 提交门 | 通过 | 模式入库与报告登记拆为两个原子提交；Conventional Commits 中文主体；仅暂存本任务路径；不推送 |
 | 落盘前三查 | 通过 | 目标目录在根 `docs/` 下（retrospective/reports/competitive-analysis）；同类产出物为「一报告一子目录 + index.md/README.md + 附录」；路径规则取自磁盘原文 AGENTS Manifest；事实底稿由会被自动回收的 `.temp/` 永久化迁入 |
-| Q 门（首轮复核） | 通过 | 2026-10-14 提前执行 Q-1~Q-8：核销/部分核销 9 项原缺口、坐实 2 项日期冲突的事件定性、证伪社区版等保/安可记录、新登记 NC-01/02；Q-1 部分推翻「无 EOL 政策」原判断，7.2 维度 2→3、总分 70→73；49 条新事实 VF-01~VF-49 见附录 C |
+| Q 门（首轮复核） | 通过 | 2026-10-14 提前执行 Q-1~Q-8：核销/部分核销 9 项原缺口、坐实 2 项日期冲突的事件定性、证伪社区版等保/安可记录、新登记 NC-01/02；Q-1 部分推翻「无 EOL 政策」原判断，7.2 维度 2→3、总分 70→73；61 条事实 VF-01~VF-61 见附录 C；同日傍晚二轮实测 Q-2 转闭环、Q-8 架构级验证（评分维持 73） |
 
 > **一句话结论**：openKylin 适合作为**信创桌面与多架构（尤其 RISC-V）创新的快渠道根社区**来跟踪、试验与行业定制；社区版**已有成文生命周期政策（LTS 2+3）但成文晚、新旧口径冲突、无逐版本 EOL 日期表，仍不应被当作承诺可规划的长期生产底座**；规模叙事已被 Q 门坐实为「仅厂商单源、外部全部转引」，一律降级使用；个人/团队的第一步投入建议是用 okw 在 WSL 内跑通半日最小切片，再决定物理机或商业版评估。（Q 门首轮复核后 73/100）
 
