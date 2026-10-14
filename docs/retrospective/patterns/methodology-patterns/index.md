@@ -45,6 +45,7 @@
 | migration-triggered-convention-alignment | [迁移窗口的结构约定对齐法（迁入即治理）](governance-strategy/migration-triggered-convention-alignment.md) | L1 | 1 | 0 | 外部单体或新包迁入已存在公共约定的统一仓库（monorepo）、迁入动作一次性暴露被迁包隐性私有约定时：在同一迁移窗口内完成私有约定→公共约束对齐（构建后端与参数/语言版本/版本来源/目录文档形态），以未解释偏离数替代功能提交计数，并将可机械判定项纳入自动核验。案例：xuan-compose 迁入玄境 monorepo（2026-08-26 后 38 次增量；同期上游怪癖分级并入 behavior-characterization-freeze），待跨项目验证升 L2 |
 | unified-contract-tool-orchestration-layer | [统一契约工具编排层](product-growth/unified-contract-tool-orchestration-layer.md) | L1-draft | 1 | 0 | 一个消费者需统一使用多个异构外部工具（AI agent/上层服务），且工具为用户自备不可改造时：不逐工具接入，而是在消费者与工具间插入统一契约适配层——每个工具经 Provider 适配器接入，把"工具结果+元数据+运行时观测"规整为契约化工具与证据，能力以契约为单一事实源、CLI/前端只是契约投影，本地优先有界证据。案例：REA rea-agents v6.4.0 统一 MCP 契约编排（66 条源码事实） |
 | wsl-network-share-drvfs-mount | [WSL 网络共享 drvfs 挂载三段验证与幂等持久化法](tools-automation/wsl-network-share-drvfs-mount.md) | L1-draft | 1 | 0 | 在 WSL 中挂载 Windows 盘或 SMB 共享时：先在 Windows 侧只读探测既有认证会话（盘符映射/凭据）再以 drvfs 复用，按「挂载表→目录非空→业务用户写探针」三层证据验收，持久化走「备份→grep 幂等守卫→nofail fstab→terminate 冷启动实证」。案例：\\10.16.11.3\ai 经 S: 映射挂入 openKylin-3.0（2026-10-13） |
+| community-metric-triple-check | [社区指标三查法（口径-时点-独立性）](governance-strategy/community-metric-triple-check.md) | L1-draft | 1 | 0 | 引用开源社区/厂商生态规模指标（用户数/开发者数/成员单位/SIG/部署量）撰写评估或尽调时：按「查口径→查时点→查独立性」三查强制核验，再以「冲突并陈不裁决、引用降级标口径」两道收口对齐结论强度与证据等级；含 6 条反模式与三问检验标准。案例：openKylin 全面评估（145 条事实、12 项冲突/12 项缺口），待非同谱系第二案例验证升 L1.5 |
 
 ## 成熟度等级说明
 
