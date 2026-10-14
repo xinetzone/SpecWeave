@@ -154,6 +154,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/openkylin-wsl-devkit/SKILL.toml"
 - **导入 E_ABORT/E_UNEXPECTED 先查内存**：实测空闲内存约 0.8GB 失败、4GB+ 成功；`wsl --shutdown` 释放后重试，okw 不会（也不应）自动解压 tar。
 - **ref 主题枚举与 help 文本不一致**：parser help 写作 `wsl-troubles`，实际接受的 key 是 `wsl-troubleshoot`；命令事实以 parser.py 为准。
 - **相对链接层数别套用**：本 Skill 内到仓库根是三级（`../../../docs/`），而 `docs/` 内 wiki 文档之间是四级；移动/复制链接时按实际位置重算。
+- **跨命令 GUI 验证的发行版"自动关机"不是空闲超时**：工具宿主每条 Shell 命令以 Job Object 托管进程树，命令结束回收 `wsl.exe`/`wslhost.exe`，最后一个 console attach 消失即触发 WSL 干净 poweroff（实测 `vmIdleTimeout=-1` 也挡不住），快速重启还会连累 localhost relay（guest 内自测通、Windows 侧不通）。跨命令 GUI/浸泡验证前先用 WMI 起脱离 Job 的有界 holder：`Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{CommandLine='wsl.exe -d <D> -u root sleep 600'}`（必须非沙箱），以「holder 进程在 / 服务 PID 不变 / 端口可达」三重判据验收，收尾必 `Stop-Process`；relay 已失活则先告知用户影响后 `wsl --shutdown` 冷启。完整 SOP 见 [cases/wsl-distro-holder-keepalive](../../cases/wsl-distro-holder-keepalive.md)。
 
 ## 12. 关键参考
 
@@ -168,4 +169,5 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/openkylin-wsl-devkit/SKILL.toml"
 
 ## Changelog
 
+- **v1.1.0** (2026-10-13): §11 新增「跨命令保活」Gotcha，双向引用 [cases/wsl-distro-holder-keepalive](../../cases/wsl-distro-holder-keepalive.md)；事实底座为当日 okw desktop 零注册表基线端到端验证实测（WMI detached holder 三重存活判据通过）。
 - **v1.0.0** (2026-10-13): 按 skill-migration-position-governance 五步 SOP 从 `.trae/skills/openkylin-wsl-devkit/` 迁入主权区并升级为五要素形制（任务路由决策树、4 处 Why 解释、8 项安全检查清单、Gotchas 章节、references/command-map.md 按需加载）；事实底座为 442 passed / 覆盖率 96% 实跑基线与 parser.py 实证签名。

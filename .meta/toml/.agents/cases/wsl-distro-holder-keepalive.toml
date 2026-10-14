@@ -1,0 +1,5 @@
+id = "cases-wsl-distro-holder-keepalive"
+title = "WSL2 发行版跨命令保活：WMI detached holder 绕过工具宿主 Job 回收"
+category = "cases"
+date = "2026-10-13"
+version = "1.0"
