@@ -92,7 +92,7 @@ source: "公开信源（官网/官方文档/基金会新闻/政府评测机构/�
 | ECO-53 | 第三方聚合平台 os.watch 显示：openKylin 首个收录版本日期为 2026-08-31，页面浏览量为 144（对比同页 XeroLinux 首个收录版本 2022-09-21、浏览量 17.7K）。（第三方口径） | https://os.watch/compare/openkylin/xerolinux | 2026-10-14 |
 | ECO-54 | 第三方流量分析平台 Similarweb 显示：openkylin.top 全球排名 #843,228，过去三个月全球排名从 797,045 变化至 843,228（页面标注为 2026 年 7 月数据）。（第三方口径） | https://www.similarweb.com/zh/website/openkylin.top/ | 2026-10-14 |
 | ECO-55 | 第三方（墨天轮）载 deepin（深度）社区对比数据：全球用户超 800 万，贡献开源代码超 2500 万行，操作系统累计下载量超 8000 万次，支持 34 种语言，位列 DistroWatch 网站的 Linux 排行榜 Top 10。（第三方口径，用于横向参照） | https://www.modb.pro/db/1933425537653944320 | 2026-10-14 |
-| ECO-56 | openKylin 官网「International Ranking」入口指向 DistroWatch 的 openKylin 专属页（https://distrowatch.com/table.php?distribution=openKylin）；该页面于 2026-10-14 直接访问被拒绝（HTTP 403），未能获取其排名数值。（官方指向的第三方来源，访问受限） | https://distrowatch.com/table.php?distribution=openKylin | 2026-10-14 |
+| ECO-56 | openKylin 官网「International Ranking」入口指向 DistroWatch 的 openKylin 专属页（https://distrowatch.com/table.php?distribution=openKylin）；该页面于 2026-10-14 直接访问被拒绝（HTTP 403），未能获取其排名数值。（官方指向的第三方来源，访问受限） | https://distrowatch.com/table.php?distribution=openKylin | 2026-10-14 （Q 门更新：换浏览器 UA 后 HTTP 200，取得 6 个月 #107/HPD 132，见附录 C VF-20/VF-21；本格保留 R 时点原始访问结果。） |
 | ECO-57 | openKylin「部署量突破 2400 万套」为麒麟软件官网自述口径；本次检索未获得对该数字的独立第三方审计或统计来源。（厂商口径，缺独立审计） | https://www.kylinos.cn/about/news/2090241862057168898.html | 2026-10-14 |
 
 ## F. 最新动态（2026 年）
@@ -155,6 +155,8 @@ source: "公开信源（官网/官方文档/基金会新闻/政府评测机构/�
 | S36 | os.watch（openKylin 收录数据，第三方） | 第三方聚合 | https://os.watch/compare/openkylin/xerolinux |
 
 ## 未获取项 / 数据冲突登记
+
+> **状态更新**：Q 门首轮（2026-10-14）已复核本表全部条目，核销/部分核销/证伪情况见 [附录 C「三、对原 12 缺口/12 冲突的核销对照」](verification-q1-q8-20261014.md)；下表保留为 R 阶段原始登记留痕。
 
 ### 一、未获取项（尝试过的来源与失败原因）
 
