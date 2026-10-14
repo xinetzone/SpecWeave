@@ -12,10 +12,6 @@ _test_out/
 external/
 playground/
 
-# auto-arch-tournament：FeSens/auto-arch-tournament 外部仓库的根目录本地克隆（自带 .git），
-# 供 hwe-bench-okf-wiki 固定 commit 静态精读，非主仓内容
-auto-arch-tournament/
-
 # Python 缓存与编译文件
 __pycache__/
 *.pyc
