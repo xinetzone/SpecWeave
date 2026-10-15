@@ -188,3 +188,50 @@ def test_probe_contract_is_documented():
     api = (DOC / "guide" / "api.md").read_text(encoding="utf-8")
     assert "/api/llm/test" in api
     assert "永远返回 200" in api, "「验证结论在响应体里」这件事必须写进契约"
+
+
+# -- 搜索入口契约 ------------------------------------------------------------
+
+
+def test_search_field_has_exactly_one_home():
+    """同一屏只能有一个字段型搜索框。
+
+    sphinx-book-theme 的 theme.conf 把 ``search-button-field.html`` 列进主侧边栏
+    （顺序即阅读动线：品牌 → 搜索 → 导航），并把 ``navbar_persistent`` 留空。但底层
+    pydata 主题按「键在不在」判断，该键缺失时会补上默认值 ``["search-button-field"]``
+    ——于是导航栏与侧边栏各长出一个搜索框：长得一样、开的也是同一个对话框。冗余的
+    代价不是像素而是**歧义**（用户会以为一个搜文档、一个搜自己的条目）。
+    """
+    import ast
+
+    module = ast.parse((DOC / "conf.py").read_text(encoding="utf-8"))
+    options = None
+    for node in module.body:
+        if isinstance(node, ast.Assign) and any(
+            isinstance(target, ast.Name) and target.id == "html_theme_options"
+            for target in node.targets
+        ):
+            options = ast.literal_eval(node.value)
+    assert options is not None, "未能在 doc/conf.py 中找到 html_theme_options"
+    assert options.get("navbar_persistent") == [], (
+        "必须显式把导航栏持久位置空：pydata 按「键在不在」判断，"
+        "省略或留空都会让默认的导航栏搜索框回来"
+    )
+
+
+def test_sidebar_still_owns_the_only_search_field():
+    """置空导航栏的前提是「侧边栏仍是搜索的归宿」——上游改掉这个前提必须立刻可见。
+
+    去掉导航栏那个之后，侧边栏这一处就是全站唯一的字段型搜索入口。上游哪天把
+    ``search-button-field.html`` 从主侧边栏移走，页面上就一个字段型搜索框都不剩了。
+    """
+    import sphinx_book_theme
+
+    theme_conf = (
+        Path(sphinx_book_theme.__file__).parent / "theme" / "sphinx_book_theme" / "theme.conf"
+    )
+    match = re.search(r"^sidebars\s*=\s*(.+)$", theme_conf.read_text(encoding="utf-8"), flags=re.M)
+    assert match, "未能在 sphinx-book-theme 的 theme.conf 中找到 sidebars"
+    assert "search-button-field.html" in match.group(1), (
+        "上游已把搜索移出主侧边栏：必须重新安排搜索入口，否则页面上一个都没有"
+    )
