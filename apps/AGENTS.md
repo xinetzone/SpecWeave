@@ -55,6 +55,7 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | ai-agents/ | zhujian-wudao | [ai-agents/zhujian-wudao/AGENTS.md](ai-agents/zhujian-wudao/AGENTS.md) | ✅ 有 | 竹简悟道——道家哲学AI洞察项目 |
 | ai-agents/ | eve-minimal-agent | —（遵循根规范） | ❌ 无 | Vercel Eve 最小可运行 Agent 示例 |
 | ai-agents/ | ai-code-assistant | —（遵循根规范） | ❌ 无 | AI 代码助手 Web 应用 |
+| ai-agents/ | personal-info-butler | —（遵循根规范） | ❌ 无 | 个人信息管家 Agent（Serverless Web 应用：随手录入想法/资料/待办 → 自动分类、摘要、打标签、建立关联；支持关键词检索、智能问答（带引用）、重点信息提取、待办整理、阶段总结与后续行动建议；数据存 Supabase 云端，大模型走 OpenAI 兼容协议并支持页面 BYOK；零构建前端 + Vercel 一键发布，线上 https://personal-info-butler.vercel.app） |
 | dev-tools/ | camera-power-controller | —（遵循根规范） | ❌ 无 | 摄像头电源控制工具 |
 | dev-tools/ | prompt_extraction | —（遵循根规范） | ❌ 无 | 提示词质量评估与提取工具 |
 | dev-tools/ | wechat-mp-archiver | [dev-tools/wechat-mp-archiver/AGENTS.md](dev-tools/wechat-mp-archiver/AGENTS.md) | ✅ 有 | 微信公众号全量内容归档工具（私有部署采集服务 + Python 薄管线，输出离线归档/RAG 语料/分析报表；scikit-build-core 纯 Python 包，`mp-archiver` CLI）；应用自治：1 rule（archive-pipeline 归档管线硬约束）+ 6 docs |
@@ -283,6 +284,7 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/ai-agents/zhujian-wudao/AGENTS.md | 应用自治 | ✅ 是 | zhujian-wudao 入口 |
 | apps/ai-agents/zhujian-wudao/.agents/ | 应用自治 | ✅ 是 | zhujian-wudao 规范体系 |
 | apps/ai-agents/ai-code-assistant/ | 应用自治（遵循根规范） | ✅ 是 | AI 代码助手应用 |
+| apps/ai-agents/personal-info-butler/ | 应用自治（遵循根规范） | ✅ 是 | 个人信息管家 Agent（`api/` Serverless 函数 + 零构建静态前端；Supabase 云端存储 + OpenAI 兼容大模型，未配置时自动降级；`schema.sql` 定义 items/item_links/summaries 三表；Vercel 部署，部署前在控制台配置环境变量） |
 | apps/ai-agents/eve-minimal-agent/ | 应用自治（遵循根规范） | ✅ 是 | Vercel Eve 最小可运行 Agent 示例 |
 | apps/dev-tools/camera-power-controller/ | 应用自治（遵循根规范） | ✅ 是 | 摄像头电源控制工具 |
 | apps/dev-tools/prompt_extraction/ | 应用自治（遵循根规范） | ✅ 是 | 提示词提取工具 |
