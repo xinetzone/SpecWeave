@@ -25,7 +25,6 @@ def test_no_args_prints_help_exit_zero(capsys):
         ("render", ["render", "-i", "x.md"]),
         ("serve", ["serve"]),
         ("upload", ["upload", "--provider", "local", "--file", "x.png"]),
-        ("mcp", ["mcp"]),
     ],
 )
 def test_placeholder_subcommands_exit_two(name, argv, capsys):

@@ -78,6 +78,13 @@ def _handle_migrate(args: argparse.Namespace) -> int:
     return 0
 
 
+def _handle_mcp(_args: argparse.Namespace) -> int:
+    """启动 stdio MCP Server（upstream: packages/mcp-server/src/index.ts:433-437）。"""
+    from .mcp_server import main as mcp_main
+
+    return mcp_main()
+
+
 def _pkg_version() -> str:
     """延迟读取包版本，避免 argparse 构造期硬依赖。"""
     try:
@@ -97,4 +104,6 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
     if args.command == "migrate":
         return _handle_migrate(args)
+    if args.command == "mcp":
+        return _handle_mcp(args)
     return _not_implemented(args.command)

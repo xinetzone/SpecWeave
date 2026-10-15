@@ -395,17 +395,32 @@
 
 ## Task 18: MCP Server（stdio，13 工具）
 
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: T9
 - **Description**:
   - 实测官方 `mcp` SDK 的 3.14 兼容性（Q2/A6）；可用则用，不可用则按 MCP 规范手写 stdio JSON-RPC 2.0（initialize/notifications/tools/list/tools/ccall）最小传输。
-  - 13 工具同名注册：render_markdown（19 入参 zod 等价校验：hex 正则、px 正则、无单位数字正则、枚举、headingStyles 对象、默认值）、list_themes/colors/fonts/font_sizes/legend_formats/heading_styles/spacing_options/color_options/code_block_themes/ai_services（字面值从 config-options.ts 与 shared/configs/ai-service-options.ts 原样转录为 Python 数据资产）、explain_extensions（说明文案逐字）、get_renderer_options（选项表逐字）。
+  - 13 工具同名注册：render_markdown（**20 入参** zod 等价校验：hex 正则、px 正则、无单位数字正则、枚举、headingStyles 对象、默认值）、list_themes/colors/fonts/font_sizes/legend_formats/heading_styles/spacing_options/color_options/code_block_themes/ai_services（字面值从 config-options.ts 与 shared/configs/ai-service-options.ts 原样转录为 Python 数据资产）、explain_extensions（说明文案逐字）、get_renderer_options（选项表逐字）。
   - 输出 JSON 形状 `{content:[{type:'text',text: JSON.stringify(payload)}]}`；stderr 启动行/fatal 行等价。
 - **Acceptance Criteria Addressed**: AC-13
 - **Test Requirements**:
-  - `rule` TR-18.1: initialize→tools/list 断言 13 工具名与 render_markdown 入参 19 个、默认值、非法 hex/px 拒绝；证据：test_mcp_server.py。
+  - `rule` TR-18.1: initialize→tools/list 断言 13 工具名与 render_markdown 入参 **20** 个、默认值、非法 hex/px 拒绝；证据：test_mcp_server.py。
   - `rule` TR-18.2: 12 清单工具快照与上游字面值 diff 为空（转录资产与 TS 源提取结果做比对脚本，或评审快照）；证据：test_mcp_option_snapshots.py + 数据资产文件。
+
+- **Evidence（2026-10-15 完成，session sc-20261014-md-py-replica）**:
+  - **实现路径决策（I 阶段，依据 spec A6 回退条款）**：venv 实测 `mcp` 为 2.3.0，v2 已删除上游 1:1 复刻所需入口——`mcp.server.fastmcp` 导入即抛 ModuleNotFoundError 并提示改名 `mcp.server.mcpserver.MCPServer`，v1 内存直连测试助手 `create_connected_server_and_client_session` 亦已不存在；pyproject 的 `mcp>=1.2` 上下界无法表达「必须是 v1 形态」。故按 MCP 规范手写最小 stdio JSON-RPC 2.0 传输层，收益：零新增运行时依赖（NFR-2）、payload 字面值与键序可逐字控制、可在进程内以真实 JSON-RPC 帧断言 initialize/tools/list/tools/call。
+  - 新增 `src/doocs_md_py/mcp_server/` 六个模块：`options.py`（15 组字面值常量：COLOR_OPTIONS 11 / THEME_OPTIONS 3 / FONT_FAMILY_OPTIONS 3 / FONT_SIZE_OPTIONS 5 / LINE_HEIGHT_OPTIONS 5 / BLOCK_SPACING_OPTIONS 5 / LINK_COLOR_OPTIONS 3 / BLOCKQUOTE_BACKGROUND_OPTIONS 3 / LEGEND_OPTIONS 6 / HEADING_STYLE_OPTIONS 5 / HEADING_LEVELS 6 / AI_SERVICE_OPTIONS 21 / EXTENSION_DOCS 11 / RENDERER_OPTION_DOCS 19 / DEFAULT_SERVICE_ENDPOINT，逐条 `# upstream:` 标注行号）、`schema.py`（RENDER_MARKDOWN_INPUT_SCHEMA 20 properties + `required:["markdown"]` + 10 个 default + 4 条 pattern + 4 组 enum；`parse_render_input` 实现 zod `.parse` 等价）、`tools.py`（13 个 ToolSpec 注册表 + `RENDER_INPUT_FIELDS` + `call_tool`/`list_tools_payload`）、`stdio.py`（JSONRPC_VERSION/四个错误码/SUPPORTED_PROTOCOL_VERSIONS/`json_dumps`/`_content_result`/`McpStdioServer` 的 `_result`/`_error`/`_negotiate`/`handle_message`/`_handle_call_tool`/`handle_line`/`serve`/`main`）、`__init__.py`（导出面）、`__main__.py`（`python -m doocs_md_py.mcp_server`）。
+  - zod 语义等价四条：① strip 未知键；② `.optional().default(x)` → 缺省填默认值且不入 required；③ 显式 `null` 视为类型错误（`.optional()` 只放宽 `undefined`）；④ 报错文案逐字复刻上游第二实参（`Must be a valid 6-digit hex color` / `Must be a pixel size like 16px` / `Must be a unitless number like 1.75` / `Must be a unitless number like 1`）与 zod v3 枚举句式 `Invalid enum value. Expected 'a' | 'b', received 'x'`。TS→Python 去偏两条（不改变接受集）：JS `\d` 仅 ASCII、Python `re` 默认 Unicode → 一律写 `[0-9]`；JSON Schema 无 `/i` 标志 → hex 正则展开为 `[0-9A-Fa-f]`。
+  - 协议边界（本仓契约，测试固化）：`initialize` 回显命中值否则回退 `2025-06-18`（SUPPORTED 含 2025-06-18/2025-03-26/2024-11-05）、capabilities 固定 `{"tools":{"listChanged":false}}`、支持 `ping`、通知（无 id）静默、坏 JSON -32700、非法请求形状 -32600、未知方法 -32601、未知工具/arguments 非对象/缺 name -32602、工具执行异常以 `isError:true` 结果返回（不抛回传输层）。
+  - **本任务实测发现并修复的实现缺陷**：`_render_markdown` 原把 `parse_render_input` 输出的 camelCase 键直传 `RenderArticleInput(**parsed)`（snake_case 字段），实际抛 `TypeError: unexpected keyword argument 'primaryColor'` 并被 isError 兜底掩盖；已在 `tools.py` 新增 `RENDER_INPUT_FIELDS`（20 项 JSON 键 → dataclass 字段显式映射，因 `customCSS`→`custom_css` 无法由驼峰转换机械推导）并逐项映射后构造入参；配套 `test_render_input_field_mapping_is_total` 双向锁定（键集 == schema.properties、值集 == dataclasses.fields），防同类漂移再犯。
+  - 新增 `scripts/mcp_options_snapshot_regen.py`（约 550 行，不 import 本包）：内建模板字面量/注释/正则感知的词法跳过器（`_skip_span`/`find_closer`/`iter_objects`/`parse_object`/`split_commas`/`eval_expr`），从上游 `packages/mcp-server/src/index.ts`、`config-options.ts`、`packages/shared/src/configs/ai-service-options.ts`、`packages/shared/src/constants/ai-config.ts` **机械提取**字面值，生成 `tests/golden/mcp_options_snapshot.json`（57.9KB，含四源 sha256、tool_order 13、tool_descriptions、schema{fields/required/defaults/enums/patterns}、raw 17 组、12 工具 payload）；脚本内置 `_EXPECTED_COUNTS` 断言（20 zod 字段/13 注册工具/各表条数）防止提取漂移。上游目录默认 `<repo>/.chaos/libs/md`，可经 `MD_UPSTREAM_DIR` 覆盖；输出 `regenerated: tests/golden/mcp_options_snapshot.json (tools=12, schema_fields=20, extensions=11, renderer_options=19)`。
+  - TR-18.2 双向对拍结论：黄金快照与 Python 转录 **22 类比对 0 处不一致**（10 组选项表 + 代码块前缀/10 主题 URL + default_service_endpoint + service_options 21 + heading_levels + extensions 11 + renderer_options 19 + tool_order + 13 条描述 + schema 五段 + 12 工具 payload 按 `json_dumps` 逐字节）。
+  - 新增测试 `tests/mcp/__init__.py`、`tests/mcp/test_mcp_server.py`（TR-18.1）、`tests/mcp/test_mcp_option_snapshots.py`（TR-18.2），共 **72 例**：13 工具注册序与 tools/list 载荷、仅 render_markdown 声明非空 schema、20 字段名序/required/10 默认值/类型、`parse_render_input` 三语义、15 例非法入参逐字文案（含 hex/px/无单位/4 组枚举/布尔与字符串类型错/显式 null/数组传入对象字段）、多错并列按行拼接、10 个候选 URL 枚举文案、`tools/call` 往返形状、注入 `code_css_fetcher` 实证（断言收到主题 URL 且 CSS 进入 html，避免真实联网）、省略 arguments、handler 异常转 isError、initialize 版本协商三分支、ping、通知静默、-32600/-32700/-32601/-32602 四类错误、serve 循环（stderr 启动行、空行与空白行跳过、应答计数与 id 序）、空 stdin 退出 0、fatal 分支、`mdpy mcp` CLI 接线（monkeypatch stdin/stdout 驱动真实帧）。
+  - 修改 `src/doocs_md_py/cli.py`：`_handle_mcp` 接线（`mdpy mcp` → `mcp_server.main()`）并从 `main()` 分发；`tests/test_cli.py` 断言同步（mcp 从「占位退出码 2」参数集中移除）。
+  - 修改 `pyproject.toml`：移除 `mcp>=1.2` 运行时依赖声明（全仓 grep 确认零 `import mcp`，手写传输层不消费该包；保留未使用的运行时依赖违反 NFR-2 最小化）。
+  - 回归：`ruff check src tests scripts` 全通过；pytest 全量 **1153 例全绿**（基线 1082 + 新增 72 − 移除 1 例 mcp 占位断言）；AST 守护（`tests/test_no_future_annotations.py`）随全量通过；零新增运行时依赖（stdlib json/sys/dataclasses）。
+  - spec 更正（A1：与磁盘冲突以磁盘为准）：spec.md 与 tasks.md 原文记 `render_markdown` 为「19 个入参」，实测上游 `index.ts:26-137` 的 zod 顶层字段为 **20 个**（含 `markdown`）；「19」源自 `get_renderer_options` 的 19 行选项表，二者被混算。已在 spec.md 背景事实（MCP 段）与 tasks.md 本任务 Description/TR-18.1 就地更正并注明更正理由。
+  - 契约差异（T21 contract-differences 汇总）：① 传输层由官方 TS SDK（`McpServer` + `StdioServerTransport`）改为手写 stdio JSON-RPC 2.0（mcp 2.3.0 不兼容实证见上）；② `initialize` result 形状与 capabilities 取值由本仓实现定义（SDK 版本间会追加字段），非上游可对拍项；③ 入参校验失败文案直接以 `content[0].text` 承载（SDK 会再包一层 `MCP error -32602: Input validation error: ...` 前缀），故文案逐字对齐的是 zod 原始 message；④ JSON Schema 两条去偏（`\d`→`[0-9]`、hex 大小写敏感展开 `[0-9A-Fa-f]`）不改变接受集但使 pattern 字面与上游 zod 正则不同；⑤ 协议协商候选集与缺省版本（`2025-06-18`）取自本仓当时规范版本，SDK 内部协商策略不逐字复刻；⑥ `pyproject.toml` 删除 `mcp` 依赖声明。
 
 ## Task 19: mdpy CLI 与同源静态托管
 
