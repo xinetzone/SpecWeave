@@ -68,6 +68,7 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | samples/ | designer-portfolio | —（遵循根规范） | ❌ 无 | 设计师作品集静态网站（纯HTML/CSS/JS + GSAP CDN，零构建Demo，首页+4个项目详情页） |
 | samples/ | dao-survival-guide | —（遵循根规范） | ❌ 无 | 大道极简生存指南（七条判据）交互应用：纯HTML/CSS/JS 零构建，判牍式七问盖印 + 分层判状 + 最短版本表；源 `projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/concepts/04-survival-guide.md` |
 | samples/ | maitian-bakehouse | —（遵循根规范） | ❌ 无 | 麦田烘焙 · 烘焙工作室展示网页：纯HTML/CSS/JS 零构建静态落地页（首屏大图 + 6 款招牌产品卡片 + 品牌故事 + 3 条顾客好评 + 联系地址/地图占位；手写体标题 + 奶油棕配色 + 内联 SVG 插画占位） |
+| samples/ | worker-ledger | —（遵循根规范） | ❌ 无 | 打工人小账本 · 离线个人工作台（`apps/samples/worker-ledger/`）：单文件 `index.html` 全内联零构建（真实时薪计算器含公式展开 / 10 秒记账 / 首页最近 4 笔 / 月度收入与固定弹性支出总结 / 自由基金与安全垫 / 原生 SVG 存款曲线 / 通勤加班涨薪情景模拟；localStorage 持久化 + JSON 导入导出 + 四档安全清理；奶油薄荷手账风 + 统一内联 SVG 图标库 + 小猪存钱罐插画；桌面侧栏 / 移动底部 Tab） |
 | samples/ | mobile-design-tokens | —（遵循根规范） | ❌ 无 | 移动端 Design Token 工作台（纯HTML/CSS/JS 零构建；由 Ardot 设计稿生成，Primitives→Semantic 两层 Token + Light/Dark/跟随系统三态换肤，含搜索/复制/导出；Token 真源 `styles/tokens.css`，数据源 `scripts/tokens.js`） |
 | samples/ | zleap-workspace-first-prototype | —（遵循根规范） | ❌ 无 | 工作区首个原型（多模型路由） |
 | samples/ | serial-camera-controller | —（遵循根规范） | ❌ 无 | 串口控制USB摄像头抓图/录像（CH340+OpenCV+pyserial，双协议三线程架构） |
@@ -303,6 +304,7 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/samples/mobile-design-tokens/ | 应用自治（遵循根规范） | ✅ 是 | 移动端 Design Token 工作台（零构建：index.html + styles/tokens.css（Token 真源）+ styles/app.css + scripts/tokens.js（数据源）+ scripts/app.js；明暗 Mode 切换、搜索、复制、导出） |
 | apps/samples/dao-survival-guide/ | 应用自治（遵循根规范） | ✅ 是 | 大道极简生存指南（七条判据）交互应用（零构建：index.html + styles.css + app.js；判牍式七问盖印 + 分层判状 + 最短版本表；源 `projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/concepts/04-survival-guide.md`） |
 | apps/samples/maitian-bakehouse/ | 应用自治（遵循根规范） | ✅ 是 | 麦田烘焙 · 烘焙工作室展示网页（零构建：index.html + styles.css + script.js + README.md；温馨文艺落地页，首屏大图/招牌产品/品牌故事/顾客好评/联系地址，手写体标题 + 奶油棕配色 + 内联 SVG 插画占位） |
+| apps/samples/worker-ledger/ | 应用自治（遵循根规范） | ✅ 是 | 打工人小账本 · 离线个人工作台（零构建单文件：index.html + README.md；真实时薪/10秒记账/月度总结/自由基金/SVG 存款曲线/情景模拟，localStorage + JSON 导入导出，奶油薄荷手账风） |
 | apps/samples/zleap-workspace-first-prototype/ | 应用自治（遵循根规范） | ✅ 是 | 工作区首个原型（多模型路由） |
 | apps/samples/serial-camera-controller/ | 应用自治（遵循根规范） | ✅ 是 | 串口控制USB摄像头抓图/录像（CH340+OpenCV+pyserial，双协议三线程架构） |
 
