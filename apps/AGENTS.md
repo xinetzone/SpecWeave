@@ -55,8 +55,9 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | ai-agents/ | zhujian-wudao | [ai-agents/zhujian-wudao/AGENTS.md](ai-agents/zhujian-wudao/AGENTS.md) | ✅ 有 | 竹简悟道——道家哲学AI洞察项目 |
 | ai-agents/ | eve-minimal-agent | —（遵循根规范） | ❌ 无 | Vercel Eve 最小可运行 Agent 示例 |
 | ai-agents/ | ai-code-assistant | —（遵循根规范） | ❌ 无 | AI 代码助手 Web 应用 |
-| ai-agents/ | personal-info-butler | —（遵循根规范） | ❌ 无 | 个人信息管家 Agent（Serverless Web 应用：随手录入想法/资料/待办 → 自动分类、摘要、打标签、建立关联；支持关键词检索、智能问答（带引用）、重点信息提取、待办整理、阶段总结与后续行动建议；数据存 Supabase 云端，大模型走 OpenAI 兼容协议并支持页面 BYOK；零构建前端 + Vercel 一键发布，线上 https://personal-info-butler.vercel.app） |
+| ai-agents/ | personal-info-butler | —（遵循根规范） | ❌ 无 | 个人信息管家 Agent（**Sphinx 静态站 + Python 3.14 云端 API**：随手录入想法/资料/待办 → 自动分类、摘要、打标签、建立关联；支持关键词检索、智能问答（带引用）、重点信息提取、待办整理、阶段总结与后续行动建议；数据存 Supabase 云端，大模型走 OpenAI 兼容协议并支持页面 BYOK；`doc/` 为前端与文档唯一事实来源（`app.md` 即工作台界面），`src/info_butler/` 为 FastAPI 服务（scikit-build-core 纯 Python 包 `info-butler`）；站点经 GitHub Actions 发布 GitHub Pages、后端经 Docker 发布云端；无密钥时全部能力降级为启发式/统计直出） |
 | ai-agents/ | support-agent | —（遵循根规范） | ❌ 无 | 智能客服 Agent（Python 3.14 / 零第三方依赖 ASGI：多轮对话 + FAQ 知识库检索 + 意图识别（退款/订单查询/技术支持）+ 自动转人工 + 对话历史云端持久化 + 管理后台对话记录与满意度统计；Supabase 五表（cs_sessions/cs_messages/cs_feedback/cs_tickets/cs_faq）+ 内存降级，大模型走 OpenAI 兼容协议并支持页面 BYOK；scikit-build-core 纯 Python 包，`support-agent` CLI（serve/doctor/seed-faq），Vercel 部署线上 https://support-agent-eta-swart.vercel.app，规格见 [README](ai-agents/support-agent/README.md)） |
+| ai-agents/ | okf-knowledge-qa | —（遵循根规范） | ❌ 无 | OKF 知识库问答 Agent（**Python 3.14 + FastAPI + SQLite FTS5**：对 SpecWeave OKF 知识包 1307 束 / 73188 片段做中文检索增强问答，答案带 `[编号]` 可跳转引用；`src/okfqa/` 为服务层（scikit-build-core 纯 Python 包），`static/` 零构建前端，`scripts/build_index.py` 构建索引且为筛选逻辑的唯一事实来源；语料来自 submodule `projects/awesome-okf-xs`，部署前由 `prepare_corpus.py` 复制到 `.corpus/`；Vercel 云端 `buildCommand` 现场构建 158MB 索引；大模型走 OpenAI 兼容协议，未配置 Key 时降级为原文片段直出；线上 https://okf-knowledge-qa.vercel.app，规格见 [README](ai-agents/okf-knowledge-qa/README.md)） |
 | dev-tools/ | camera-power-controller | —（遵循根规范） | ❌ 无 | 摄像头电源控制工具 |
 | dev-tools/ | prompt_extraction | —（遵循根规范） | ❌ 无 | 提示词质量评估与提取工具 |
 | dev-tools/ | wechat-mp-archiver | [dev-tools/wechat-mp-archiver/AGENTS.md](dev-tools/wechat-mp-archiver/AGENTS.md) | ✅ 有 | 微信公众号全量内容归档工具（私有部署采集服务 + Python 薄管线，输出离线归档/RAG 语料/分析报表；scikit-build-core 纯 Python 包，`mp-archiver` CLI）；应用自治：1 rule（archive-pipeline 归档管线硬约束）+ 6 docs |
@@ -72,8 +73,10 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | samples/ | mobile-design-tokens | —（遵循根规范） | ❌ 无 | 移动端 Design Token 工作台（纯HTML/CSS/JS 零构建；由 Ardot 设计稿生成，Primitives→Semantic 两层 Token + Light/Dark/跟随系统三态换肤，含搜索/复制/导出；Token 真源 `styles/tokens.css`，数据源 `scripts/tokens.js`） |
 | samples/ | zleap-workspace-first-prototype | —（遵循根规范） | ❌ 无 | 工作区首个原型（多模型路由） |
 | samples/ | serial-camera-controller | —（遵循根规范） | ❌ 无 | 串口控制USB摄像头抓图/录像（CH340+OpenCV+pyserial，双协议三线程架构） |
+| samples/ | study-goal-hub | —（遵循根规范） | ❌ 无 | 学习目标管理台（单文件零构建 `index.html` + README：管理有终点/有总量的学习目标；今日建议量=剩余量÷剩余天数、每周1个休息日容错的连续天数、近7天速度外推的预计完成日（样本不足显示「暂无推算」）、补记最近6天按真实日期参与计算、四Tab（今日/看板/周报/我的）+手写SVG堆叠柱状图+周报环比与四栏复盘；localStorage `study-goal-hub.v3`，支持 v1→v3 迁移；无外部库、断网可用） |
 | 根级 | inurl-byok-token-hub | —（遵循根规范） | ❌ 无 | BYOK 统一令牌枢纽复刻（源：`projects/awesome-okf-xs/doc/bundles/jishu/ai/products/inurl-byok-token-hub`）：E2EE 密钥保险库（PBKDF2+AES-GCM 双 escrow）+ 逻辑别名路由（19 策略 + `>` Combo）+ 5 档上下文压缩 + 三协议本地代理（OpenAI 兼容 / Anthropic / Gemini）+ 健康熔断与用量计费；仅监听 127.0.0.1，scikit-build-core 纯 Python 包，`inurl-byok-token-hub` CLI，规格 `.trae/specs/inurl-byok-token-hub/` |
 | 根级 | travel-planner | —（遵循根规范） | ❌ 无 | 旅行规划工作台（本地 FastAPI Web：多行程管理 + 每日编排（六类条目/时间/费用/勾选）+ 预算分类汇总 + 打包清单 + JSON 导入导出 + BYOK AI 行程草稿（OpenAI 兼容端点，白名单 schema 校验 + 预览确认导入）；零数据库、仅监听 127.0.0.1，CSRF + Origin 校验 + 单实例文件锁，原子写 + 滚动备份，运行时数据落 playground/travel-planner/data/；scikit-build-core 纯 Python 包，`travel-planner` CLI，规格 `.trae/specs/travel-planner/`） |
+| 根级 | admin-console | —（遵循根规范） | ❌ 无 | 通用内容管理后台（Python 3.14 / 零第三方依赖 ASGI：登录认证（PBKDF2 + HS256 会话 Cookie + CSRF 双提交 + Origin 校验）+ 数据看板（指标卡/14 天趋势/分类分布/操作日志）+ 列表管理（搜索/筛选/排序/分页/批量）+ 抽屉表单编辑（分类/标签/云端附件）；Supabase Postgres 七表 `ac_*` 持久化 + Storage 桶 `ac-uploads` 文件存储，未配置时内存降级并标记 `degraded`；零构建响应式前端（≥1200 三区 / <900 侧栏抽屉 + 表格转卡片）；scikit-build-core 纯 Python 包，`admin-console` CLI（serve/doctor/seed-admin），Vercel 部署 `api/index.py`，规格 `.trae/specs/admin-console/`） |
 | 根级 | guard-quality-life-site | —（遵循根规范） | ❌ 无 | 《守护品质生活》生活方式方案库可变现 MVP 网站（Python 3.14+ / FastAPI 动态 Web：11 域知识树按域浏览/搜索 + 订阅兴趣登记 + 推荐位占位 + 访问埋点三验证信号；暖灰纸感 UI；scikit-build-core 纯 Python 包 `gqlsite`，pytest 37 用例全绿/覆盖 96%；知识本源 `projects/awesome-okf-xs/doc/bundles/sheke/personal-growth/guard-quality-life/`，规格 `.trae/specs/okf-wiki-ecosystem/guard-quality-life-okf-wiki-site/`） |
 | 根级 | coach-moments-growth | —（遵循根规范） | ❌ 无 | 商业教练朋友圈 AI 增长系统（私域内容运营方案：定位/内容/转化/度量/合规五模块，含可直接调用的 AI 提示词与五大品类文案模板；规格 `.trae/specs/coach-moments-growth/`） |
 | 根级 | shared | —（遵循根规范） | ❌ 无 | 跨应用共享资源目录 |
@@ -281,13 +284,15 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/docker-images/caffe-ffi-cross/ | 应用自治（遵循根规范） | ✅ 是 | Caffe-FFI 交叉编译 |
 | apps/docker-images/xmnn-runtime/ | 应用自治（遵循根规范） | ✅ 是 | XMNN 运行时环境 |
 | apps/inurl-byok-token-hub/ | 应用自治（遵循根规范） | ✅ 是 | BYOK 统一令牌枢纽复刻（E2EE 密钥保险库 + 19 策略别名路由 + 5 档压缩 + 三协议本地代理 + 健康熔断/用量计费；仅回环监听、单实例文件锁、落盘无明文密钥；规格 `.trae/specs/inurl-byok-token-hub/`） |
+| apps/admin-console/ | 应用自治（遵循根规范） | ✅ 是 | 通用内容管理后台（Supabase Postgres 七表 + Storage；Python 3.14 零第三方依赖 ASGI；零构建响应式前端；Vercel 部署；规格 `.trae/specs/admin-console/`） |
 | apps/travel-planner/ | 应用自治（遵循根规范） | ✅ 是 | 旅行规划工作台（多行程编排/预算/打包清单/导入导出 + BYOK AI 行程草稿；零数据库、仅回环监听、CSRF+Origin+单实例锁、原子写+滚动备份；运行时数据只写 playground/travel-planner/data/；规格 `.trae/specs/travel-planner/`） |
 | apps/ai-agents/zhujian-wudao/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | 竹简悟道项目 |
 | apps/ai-agents/zhujian-wudao/AGENTS.md | 应用自治 | ✅ 是 | zhujian-wudao 入口 |
 | apps/ai-agents/zhujian-wudao/.agents/ | 应用自治 | ✅ 是 | zhujian-wudao 规范体系 |
 | apps/ai-agents/ai-code-assistant/ | 应用自治（遵循根规范） | ✅ 是 | AI 代码助手应用 |
-| apps/ai-agents/personal-info-butler/ | 应用自治（遵循根规范） | ✅ 是 | 个人信息管家 Agent（`api/` Serverless 函数 + 零构建静态前端；Supabase 云端存储 + OpenAI 兼容大模型，未配置时自动降级；`schema.sql` 定义 items/item_links/summaries 三表；Vercel 部署，部署前在控制台配置环境变量） |
+| apps/ai-agents/personal-info-butler/ | 应用自治（遵循根规范） | ✅ 是 | 个人信息管家 Agent（`doc/` Sphinx 静态站（GitHub Pages）+ `src/info_butler/` Python 3.14 FastAPI 云端 API（Docker）；Supabase 云端存储 + OpenAI 兼容大模型，未配置时自动降级为启发式/统计直出；`schema.sql` 定义 items/item_links/summaries 三表；发布链路 `.github/workflows/personal-info-butler-pages.yml`（gates→build→deploy） |
 | apps/ai-agents/support-agent/ | 应用自治（遵循根规范） | ✅ 是 | 智能客服 Agent（`api/index.py` 导出 ASGI 应用 + `web/` 零构建前端（客服端/管理后台）；Supabase 云端五表持久化 + 内存降级，大模型走 OpenAI 兼容协议并支持页面 BYOK；意图识别规则快判 + 大模型兜底，无法解决自动建工单转人工；`schema.sql` 定义 cs_sessions/cs_messages/cs_feedback/cs_tickets/cs_faq；Vercel 部署，`.python-version` 固定 Python 3.14，部署前在控制台配置 `SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY`/`LLM_API_KEY`/`ADMIN_TOKEN`） |
+| apps/ai-agents/okf-knowledge-qa/ | 应用自治（遵循根规范） | ✅ 是 | OKF 知识库问答 Agent（`app.py` 导出 ASGI 应用 + `static/` 零构建前端；SQLite FTS5 trigram 中文检索，索引 `data/knowledge.db` 由部署时 `buildCommand` 现场构建、不入版本库；大模型走 OpenAI 兼容协议（`LLM_BASE_URL`/`LLM_API_KEY`/`LLM_MODEL`），未配置时降级为原文片段直出；`.python-version` 固定 Python 3.14；Spec Mode 产物见 `.trae/specs/okf-wiki-ecosystem/okf-knowledge-qa/`；部署命令 `vercel deploy --prod --yes --archive=tgz`——tgz 用于绕开免费版 5000 文件数上限） |
 | apps/ai-agents/eve-minimal-agent/ | 应用自治（遵循根规范） | ✅ 是 | Vercel Eve 最小可运行 Agent 示例 |
 | apps/dev-tools/camera-power-controller/ | 应用自治（遵循根规范） | ✅ 是 | 摄像头电源控制工具 |
 | apps/dev-tools/prompt_extraction/ | 应用自治（遵循根规范） | ✅ 是 | 提示词提取工具 |
@@ -307,6 +312,7 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/samples/worker-ledger/ | 应用自治（遵循根规范） | ✅ 是 | 打工人小账本 · 离线个人工作台（零构建单文件：index.html + README.md；真实时薪/10秒记账/月度总结/自由基金/SVG 存款曲线/情景模拟，localStorage + JSON 导入导出，奶油薄荷手账风） |
 | apps/samples/zleap-workspace-first-prototype/ | 应用自治（遵循根规范） | ✅ 是 | 工作区首个原型（多模型路由） |
 | apps/samples/serial-camera-controller/ | 应用自治（遵循根规范） | ✅ 是 | 串口控制USB摄像头抓图/录像（CH340+OpenCV+pyserial，双协议三线程架构） |
+| apps/samples/study-goal-hub/ | 应用自治（遵循根规范） | ✅ 是 | 学习目标管理台（零构建单文件 `index.html` + README；纯前端，数据只落 `localStorage['study-goal-hub.v3']`，无外部库、无网络请求、断网可用） |
 
 > **与 projects/vendor 的本质区别**：apps/ 下的所有资产都标记为「✅ 可直接修改」，因为它们都是主仓库的一部分；而 projects/vendor 是 git submodule，标记为「❌ 不可直接修改」。
 
