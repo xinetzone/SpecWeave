@@ -136,3 +136,20 @@
 | Task 10 登记收尾 | `apps/AGENTS.md` 路由表与边界声明已登记 `admin-console` |
 
 **回归**：`python -m pytest -q` 75 passed；`python scripts/smoke.py` 退出码 0。
+
+## 原子提交记录（C 阶段）
+
+| # | 提交 | 主题 | 文件数 |
+|---|---|---|---:|
+| 1 | `74340da30` | docs(spec): 新增 admin-console 通用内容管理后台规格三件套 | 3 |
+| 2 | `314948ba2` | chore(apps/admin-console): 建立 Python 3.14 零第三方依赖工程骨架 | 8 |
+| 3 | `bedfc09d5` | feat(apps/admin-console): 新增安全内核与服务端输入校验层 | 2 |
+| 4 | `6a7cf0372` | feat(apps/admin-console): 新增 Supabase 云端仓储与文件存储层 | 3 |
+| 5 | `e5c513774` | feat(apps/admin-console): 新增 ASGI 路由层与命令行入口 | 2 |
+| 6 | `260ef0ef9` | test(apps/admin-console): 新增 75 项测试与离线冒烟脚本 | 8 |
+| 7 | `9482de1e6` | feat(apps/admin-console): 新增零构建响应式后台前端 | 4 |
+| 8 | `041e812ac` | docs(apps/admin-console): 新增五步上线文档、建表脚本与环境变量模板 | 3 |
+
+> 路由表与边界声明登记（`apps/AGENTS.md` 第 79 / 287 行）随并发会话提交 `3b9d5505d` 一并入库，内容已核验正确。
+>
+> 提交过程实测两点并发风险：① 并行会话占用索引导致 `git-commit-utf8` 中止，按 [commit-staging-integrity](../../../.agents/rules/commit-staging-integrity.md) R1/R3 等待索引释放后重提；② 路径级提交不清索引残留，需在每枚提交后 `git restore --staged` 自清。另按敏感信息钩子要求为测试桩值补 `# nosec`（与命中同行）。
