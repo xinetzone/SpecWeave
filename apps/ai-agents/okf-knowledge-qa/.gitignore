@@ -1,0 +1,15 @@
+# 索引与语料副本均为构建产物，不入版本库（体积 161MB / 48MB）
+data/
+.corpus/
+
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.vercel/
+build/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+.vercel
