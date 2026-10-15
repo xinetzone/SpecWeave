@@ -13,7 +13,7 @@ tags:
   - ai-sdk
   - risc-v
 date: "2026-09-29"
-last_updated: "2026-10-08"
+last_updated: "2026-10-14"
 status: "verified"
 author: "SpecWeave Agent（方法论编排 session sc-20260929-openkylin-docs-wiki）"
 summary: "以七概念方法论（R→I→E→V→C，standard）系统学习 openKylin 官方文档平台 docs.openkylin.top：递归解析 Gitee 源仓库 3181 条目/237 篇中文文档、精读 35 篇代表性文档、提取 44 条客观事实，形成 4 条四元组洞察与 1 个 L1 可迁移模式（逆序文档学习法）。教程按学习者问题域重组为平台地图、版本生命周期、安装路径、桌面使用、AI 三层体系、开发者基础设施、社区治理 7 个概念页，附信源台账与完整文档分类地图。"
@@ -22,7 +22,7 @@ knowledge_type: "conditional"
 validation_status: "verified"
 reuse_count: "0"
 integrity: "unchecked"
-source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/home 与其 Gitee 源仓库 https://gitee.com/openkylin/docs（master 分支，采集于 2026-09-29，含 Gitee API v5 文件树与提交记录）；精读文档路径见 references/source-inventory.md。本机交叉验证：Windows 10.0.19044 + WSL 2.9.3 上的 openKylin 3.0 WSL 安装实测（见 references/wsl-install-sparse-vhd-guide.md）。AI SDK 落机 POC：openKylin-3.0-desktop WSL（huanghe）实测 libkylin-ai-base2 2.0.0.0 文字识别能力（session sc-20261008-openkylin-ai-poc，见 references/ai-sdk-ocr-poc.md）。AI 子系统与显示双栈源码架构：2026-10-08 本机只读核验（不装包/不启服务）+ Gitee 8 个上游源码仓浅克隆审阅（一切以 openkylin/huanghe 分支与本机二进制为准，session sc-20261008-openkylin-source-deepdive，见 references/ai-subsystem-source-architecture.md 与 references/kylin-wayland-compositor-architecture.md）。"
+source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/home 与其 Gitee 源仓库 https://gitee.com/openkylin/docs（master 分支，采集于 2026-09-29，含 Gitee API v5 文件树与提交记录）；精读文档路径见 references/source-inventory.md。本机交叉验证：Windows 10.0.19044 + WSL 2.9.3 上的 openKylin 3.0 WSL 安装实测（见 references/wsl-install-sparse-vhd-guide.md）。AI SDK 落机 POC：openKylin-3.0-desktop WSL（huanghe）实测 libkylin-ai-base2 2.0.0.0 文字识别能力（session sc-20261008-openkylin-ai-poc，见 references/ai-sdk-ocr-poc.md）。AI 子系统与显示双栈源码架构：2026-10-08 本机只读核验（不装包/不启服务）+ Gitee 8 个上游源码仓浅克隆审阅（一切以 openkylin/huanghe 分支与本机二进制为准，session sc-20261008-openkylin-source-deepdive，见 references/ai-subsystem-source-architecture.md 与 references/kylin-wayland-compositor-architecture.md）。环境复验：2026-10-14 本机重跑 openKylin-3.0 WSL 实例核心事实探测（宿主升级至 Windows 10.0.19044.7725 + WSL 3.0.3.0 + 内核 6.18.54.1-1；镜像源文件字节数 352,431,812 未变，运行实例包数/内核/VHD 体积已就地更新，见 K 组 F-087~F-090，session sc-20261014-openkylin-wsl-verify，见 references/wsl-install-sparse-vhd-guide.md）。"
 ---
 
 # openKylin 官方文档平台学习教程
@@ -204,6 +204,17 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 | F-085 | kywc 以嵌套客户端接入 WSLg wayland-0 在**源码层可行**（F-080 嵌套优先分支存在）但**未实测、不宣称可用**：父合成器是为 Windows 窗口托盘化设计的 rdprail-shell，能否托管完整嵌套桌面（全屏 surface/输入/portal）未知；且本机 /dev/dxg + Microsoft Basic Render Driver 下 Linux GL 仅能按 WSLg 软件/半虚拟路径预期，vulkan/gles2 表现不可按物理 GPU 估计 | [S35] |
 | F-086 | **F-057 的 X11 黑屏修复不可跨栈套用**：X11 侧根因是 startwm.sh `unset XDG_RUNTIME_DIR` 致 KWin 冷启动不驻留；kywc 侧由 wrapper+systemd user 管理，wrapper 本身就主动清理继承环境并依赖 user manager 提供 XDG_RUNTIME_DIR——两套会话环境契约不同，Wayland 侧黑屏须按 kywc 链路（`~/.log/kylin-wlcom.log`、user journal）重新取证，不能照搬 `~/.xsession` 看门狗 | [S35] |
 
+### 1.11 K 组：环境复验（2026-10-14，F-087 ~ F-090）
+
+> 本组为 `openKylin-3.0` WSL 最小镜像实例在宿主环境升级后的**点时复验**，用于核对前序事实（尤其 F-044 的包数/VHD、F-001 的宿主环境）是否仍成立。核心结论：**发行版身份与镜像身份锚点不变，宿主版本号与运行实例体积已漂移**。
+
+| 编号 | 事实陈述 | 信源 |
+|---|---|---|
+| F-087 | 宿主环境已升级：`wsl --version` 报 **WSL 3.0.3.0、内核 6.18.54.1-1、WSLg 1.0.79、MSRDC 1.2.7391、Direct3D 1.611.1-81528511、DXCore 10.0.26100.1、Windows 10.0.19044.7725**（首次实测为 WSL 2.9.3.0／内核 6.18.35.2-1／Windows 10.0.19044）；`openKylin-3.0` 仍为**默认发行版**（`wsl -l -v` 带 `*`）且状态 **Running**；`podman-machine-default` 为 Stopped | [S36] |
+| F-088 | **镜像身份锚点未变**：源文件 `D:\AI\.chaos\envs\openKylin-3.0-wsl-amd64.wsl` 仍为 **352,431,812 字节**、LastWriteTime `2026-09-29 11:05:13`，与首次安装所依据的镜像完全一致；注册表 `HKCU\...\Lxss` 中 `openKylin-3.0` 的 BasePath 仍为 `d:\AI\.chaos\envs\openKylin-3.0`、Version 2——{"镜像文件字节数 + 安装目录双重比对 ⇒ 同一对象"} | [S36] |
+| F-089 | **运行实例已就地更新**：发行版内部 `PRETTY_NAME="openKylin 3.0"`、`VERSION_CODENAME=huanghe` 不变；默认用户 `openkylin`（UID 1000，组 sudo/users）不变；`uname -r` 随宿主升至 **6.18.54.1-microsoft-standard-WSL2**；`dpkg-query -W` 计数 = **436**（全新导入约 405）；`df -B1 /` 已用 **2,544,750,592 字节（≈2.37 GiB）**；`systemctl --failed` = **0 个失败单元**；`ext4.vhdx` 逻辑大小 **2,620,391,424 字节（≈2.44 GiB）**、LastWriteTime `2026-10-14 11:05:25` | [S36] |
+| F-090 | 组件实测快照对照 F-014 的 3.0 规划值：`gcc-15-base 15.2.0-16ok8`（规划 GCC 15.2 ✔）、`libc-bin 2.43-ok2`（规划 glibc 2.42，实测已至 2.43）、`libgl1-mesa-dri`/`mesa-libgallium 26.0.3-ok3`（规划 Mesa 26.0 ✔）、`openssl`/`libssl3t64 3.5.5-ok8`（规划 OpenSSL 3.5 ✔）；**LLVM 全系未安装（规划值 22 无法就地核验）**；另有 `gcc-16-base 16-20260322-ok2`、`podman 5.7.0+ds2-ok3`、`systemd 259.5-ok1.5` | [S36] |
+
 ---
 
 ## 2. I 阶段：核心洞察（四元组）
@@ -312,8 +323,31 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 | G1/G2 | 事实客观可溯源（源码文件/行号+包版本双锚）、洞察四元组完整 | PASS（F-067～F-086 共 20 条：AI 子系统 11 + 显示双栈 9，信源 S35；I-5 两代 SDK 薄代理/引擎模型缺省、I-6 双显示栈按会话分态） |
 | V 门 | 源码事实与运行时事实分级；范围锁定 huanghe；未实测项不宣称；自我修正如实登记 | PASS（socket 路径标注"源码常量未抓包"、kywc 嵌套 WSLg 标注"未实测不宣称"、nile/nile-sp2 降级旁证、"无候选"限定源快照、Gen1 源码-二进制分叉只证实不归因；初判"huanghe kywc 无嵌套后端"经 backend.c 源码读后自我修正） |
 | G4 | 原子化产出 | PASS（新建参考文档 2 篇：[AI 子系统源码架构](references/ai-subsystem-source-architecture.md)、[kywc 显示栈](references/kylin-wayland-compositor-architecture.md)；更新本 index（J 组事实/导航/I-5/I-6/质量门/局限）、04/05 概念页、信源台账 S35；全程只读核验：未装包、未启服务、未下载模型，源码探针留 .temp 不入库） |
+| **2026-10-14 环境复验专项**（session `sc-20261014-openkylin-wsl-verify`，场景 4 知识沉淀，链路 R→I→E→V→C） | | |
+| G1/G2 | 事实 ≥20、无因果词；洞察四元组 ≥3 | PASS（K 组 4 条新增事实 F-087~F-090，信源 S36；3 条洞察 I-7~I-9 见本节下方"环境复验洞察"，逐条含证据/反常识/行动） |
+| G3 | 模式含边界/步骤/≥3 反模式/检验/迁移/成熟度 | PASS（模式候选「知识包实测记录的对账三锚法」，L1-draft，触发条件 + 三锚步骤 + 反模式 + 检验标准） |
+| V 门 | 4 视角、意见 ≥5、采纳 ≥2 | PASS（4 视角 5 条意见、4 条采纳：组件"命中"口径收严为"包名+版本双锚"、漂移需标注阈值口径、结论须收敛为单句、版本号易过期应改以镜像字节数为身份锚） |
+| G4 | 原子化产出 | PASS（更新 3 文件：wsl-install-sparse-vhd-guide（9 处分层标注）、本 index（K 组/质量门/CMD-LOG/局限⑨）、信源台账 S36；未新建文件；包数/VHD 按"全新导入口径"与"运行实例口径"分层，事实采追加 F-087+ 而非覆写 F-044） |
 
-**局限声明**：① 237 篇中精读 35 篇（含全部板块代表性文档与全部短占位页），其余以标题骨架覆盖，可能遗漏个别长尾操作细节；② 文档站内容随社区提交持续变化，本教程事实时点为 2026-09-29；③ 图片型页面（如 27 图版《关于社区》）未做 OCR，其信息以治理组织架构文字版互证；④ 未对 en 英文目录做对照统计；⑤ 本教程定位为"文档平台导读"，不对 openKylin 的生产环境适用性（稳定性、性能、硬件兼容、供应链合规）作独立验证结论——相关表述来自官方文档或姊妹调研口径，实际采用前须自行完成 POC（V 审查 O7 登记）；⑥ 2026-09-30 追加的 Desktop WSL 文件级事实（字节数/MD5/魔数/ISIZE/结构）为**远程核验级**，2026-10-08 已补充落机实测（F-051~F-057/S33：解压真值 k=3、流式导入 51.6 秒、1900 包、VHD 13.01 GiB、同盘峰值 19.2 GiB、xrdp 服务与交互 UKUI 桌面全链路可用）；首登黑屏（XDG_RUNTIME_DIR 致 KWin 不驻留）已实测定位并用户级修复（F-057，单次首登+一次重登验证，跨版本需重新取证）；引用规划值时须与实测值区分，**残留观察项**仅限：内存失败阈值下界（未测到失败）、整机 `--shutdown` 后 IP 漂移（localhost 接入可规避）、unregister 物理回收验证；⑦ 2026-10-08 AI SDK 落机 POC（F-058～F-066/S34）仅把 **OCR 一域**升级为运行时实测（本地 tesseract、CPU 离线、精度中等），其余 7 能力域仍为成文未验证——文本生成本地需自备 GGUF（镜像预装 Triton+llama.cpp 引擎骨架）、云端需密钥；SDK 头文件仅 C++ 友好、配置查询接口与 dconf 权威值读数错位为待官方确认项，勿据单点现象外推到正式环境；⑧ 2026-10-08 源码架构专项（F-067～F-086/S35）为**本机只读核验＋上游源码审阅级**，证据强度低于运行时实测：未安装 `kylin-ai-subsystem` 元包做端到端 NLP、Gen2 socket 连通性未在运行时验证（地址为源码常量）、kywc 嵌套 WSLg 出图未实测、upstream ABI 与 huanghe 候选二进制未做字节级比对；Gen1 存在公开源码-发行版二进制分叉（源仓无 huanghe 分支），"源中无候选"仅为 2026-10-08 huanghe 源快照、不意味永久不发布；全部结论严格限定 openKylin 3（huanghe），nile/nile-sp2 仅作旁证。
+### 环境复验洞察（2026-10-14，I-7 ~ I-9）
+
+- **I-7　"镜像身份锚点"比"宿主版本号"更耐久**
+  - **陈述**：判断"当前 WSL 实例是否就是知识包记录的那个实例"，用**镜像源文件字节数（352,431,812）＋安装目录**双重比对即可确证同一对象；而宿主的 WSL/内核/Windows 版本号会随 `wsl --update` 与系统补丁独立漂移（本次即 2.9.3.0→3.0.3.0）。
+  - **证据**：F-088（字节数与 BasePath 均未变）、F-087（宿主三项版本均已变）。
+  - **反常识**：直觉上"环境版本对不上就说明知识包过期了"；实际**同一实例的身份与环境是两条正交的轴**——身份锚点稳稳不动，环境标签却在漂。
+  - **行动**：知识包描述实例身份时优先登记**镜像字节数/哈希 + 安装路径**；描述环境时显式标注"实测日期 + 版本号"，并在复验时分层更新，不因版本号变化就改写身份结论。
+- **I-8　"导入态快照"与"运行态实例"必须分开记账**
+  - **陈述**：全新导入瞬间的包数（约 405）与 VHD 体积（约 1.3 GB）是**一次性快照**；实例一旦运行就会因就地 `apt` 更新与写入而漂移（本次 436 包、2.44 GiB），二者不可混为一谈。
+  - **证据**：F-089（436 包 / 2.44 GiB / 0 失败单元）、F-044（首装 405 包记录）与 F-088（镜像未变 ⇒ 全新导入仍应得 405）交叉。
+  - **反常识**："包数变多=镜像换了新版"是常见误判；实际是**同一镜像的同一实例在就地演进**。
+  - **行动**：凡记录包数/体积，一律注明口径（"全新导入"或"运行实例·日期"）；复验发现差异时先查镜像锚点，锚点未变则判为就地漂移而非重装。
+- **I-9　3.0 组件规划表可作就地核验的可靠锚**
+  - **陈述**：概念页 §2.3 的 3.0 组件规划值（GCC 15.2 / Mesa 26.0 / OpenSSL 3.5）在本机实例中按**包名+版本双锚**基本命中，可直接用于"规划 vs 实测"的收敛核对；而 LLVM 22 因未安装升级为"暂不可就地核验"。
+  - **证据**：F-090（gcc-15-base 15.2.0-16ok8、mesa 26.0.3-ok3、openssl 3.5.5-ok8 命中；LLVM 全系缺）、[02-release-lifecycle.md](concepts/02-release-lifecycle.md) §2.3。
+  - **反常识**：规划页常被视为"宣传口径、仅供参考"；实测表明其版本号在发行版内**可直接落地核验**，是判断发行版真实组件基线的低成本锚点。
+  - **行动**：后续版本核验以"规划表列参照 → 按包名+版本双锚实测 → 逐项标 ✔/漂移/未装"三步执行；对未安装组件明确标"暂不可核验"，不据规划值反向宣称已实现。
+
+**局限声明**：① 237 篇中精读 35 篇（含全部板块代表性文档与全部短占位页），其余以标题骨架覆盖，可能遗漏个别长尾操作细节；② 文档站内容随社区提交持续变化，本教程事实时点为 2026-09-29；③ 图片型页面（如 27 图版《关于社区》）未做 OCR，其信息以治理组织架构文字版互证；④ 未对 en 英文目录做对照统计；⑤ 本教程定位为"文档平台导读"，不对 openKylin 的生产环境适用性（稳定性、性能、硬件兼容、供应链合规）作独立验证结论——相关表述来自官方文档或姊妹调研口径，实际采用前须自行完成 POC（V 审查 O7 登记）；⑥ 2026-09-30 追加的 Desktop WSL 文件级事实（字节数/MD5/魔数/ISIZE/结构）为**远程核验级**，2026-10-08 已补充落机实测（F-051~F-057/S33：解压真值 k=3、流式导入 51.6 秒、1900 包、VHD 13.01 GiB、同盘峰值 19.2 GiB、xrdp 服务与交互 UKUI 桌面全链路可用）；首登黑屏（XDG_RUNTIME_DIR 致 KWin 不驻留）已实测定位并用户级修复（F-057，单次首登+一次重登验证，跨版本需重新取证）；引用规划值时须与实测值区分，**残留观察项**仅限：内存失败阈值下界（未测到失败）、整机 `--shutdown` 后 IP 漂移（localhost 接入可规避）、unregister 物理回收验证；⑦ 2026-10-08 AI SDK 落机 POC（F-058～F-066/S34）仅把 **OCR 一域**升级为运行时实测（本地 tesseract、CPU 离线、精度中等），其余 7 能力域仍为成文未验证——文本生成本地需自备 GGUF（镜像预装 Triton+llama.cpp 引擎骨架）、云端需密钥；SDK 头文件仅 C++ 友好、配置查询接口与 dconf 权威值读数错位为待官方确认项，勿据单点现象外推到正式环境；⑧ 2026-10-08 源码架构专项（F-067～F-086/S35）为**本机只读核验＋上游源码审阅级**，证据强度低于运行时实测：未安装 `kylin-ai-subsystem` 元包做端到端 NLP、Gen2 socket 连通性未在运行时验证（地址为源码常量）、kywc 嵌套 WSLg 出图未实测、upstream ABI 与 huanghe 候选二进制未做字节级比对；Gen1 存在公开源码-发行版二进制分叉（源仓无 huanghe 分支），"源中无候选"仅为 2026-10-08 huanghe 源快照、不意味永久不发布；全部结论严格限定 openKylin 3（huanghe），nile/nile-sp2 仅作旁证；⑨ 2026-10-14 环境复验（F-087～F-090/S36）为**本机点时快照**：宿主 WSL/内核/Windows 版本号与实例包数/VHD 体积均会随后续更新继续漂移，复验值仅代表该时点；实例身份以**镜像源文件字节数（352,431,812）+ 安装目录**为稳定锚，环境版本号为易变标签；K 组事实采追加登记（F-087+）而不覆写 F-044，包数/VHD 依"全新导入口径"与"运行实例口径"分层阅读。
 
 ```
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S2 | event=CHAIN_SELECTED | session=sc-20260929-openkylin-docs-wiki | msg=知识沉淀链路R→I→E→V→C | ctx={"chain":"R-I-E-V-C","depth":"standard"}
@@ -347,4 +381,9 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=R3 | event=CONCEPT_COMPLETED | session=sc-20261008-openkylin-source-deepdive | msg=显示栈R完成：kywc/KWin双栈/三后端策略/wrapper用户systemd/协议矩阵/WSL设备边界；F-078~F-086
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=V9 | event=GATE_PASSED | session=sc-20261008-openkylin-source-deepdive | msg=源码事实与运行时事实分级：socket标注源码常量、嵌套WSLg未实测、无候选限源快照、分叉只证实不归因；自我修正1处（嵌套优先分支） | ctx={"facts":"F-067~F-086","source":"S35"}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20261008-openkylin-source-deepdive | msg=20事实/2洞察(I-5薄代理引擎缺省,I-6双栈按会话分态)/2新建参考文档+4更新；零安装零服务零模型 | ctx={"gates":["G1","G2","V","G4"],"files_new":2,"files_updated":4}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S0 | event=CMD_START | session=sc-20261014-openkylin-wsl-verify | msg=验证本机 WSL openKylin-3.0 实例：核对知识包记录在宿主升级后是否仍成立 | ctx={"scenario":"knowledge","chain":"R-I-E-V-C"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S2 | event=CHAIN_SELECTED | session=sc-20261014-openkylin-wsl-verify | msg=场景4知识沉淀：R→I→E→V→C | ctx={"chain":"R-I-E-V-C","depth":"standard"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=R9 | event=GATE_PASSED | session=sc-20261014-openkylin-wsl-verify | msg=4事实纯客观：宿主WSL3.0.3.0/内核6.18.54.1-1/镜像字节352431812未变/实例436包2.44GiB；信源S36 | ctx={"facts":"F-087~F-090","source":"S36"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=V9 | event=GATE_PASSED | session=sc-20261014-openkylin-wsl-verify | msg=4视角5意见4采纳：组件命中口径收严、漂移标注阈值口径、结论收敛单句、身份锚改字节数
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20261014-openkylin-wsl-verify | msg=4事实/3洞察(I-7镜像锚,I-8导入态vs运行态,I-9规划表可核验)/1模式候选(L1-draft)/更新3文件；零新建 | ctx={"gates":["G1","G2","G3","V","G4"],"files_updated":3,"distro":"openKylin-3.0"}
 ```

@@ -11,7 +11,7 @@ tags:
   - troubleshooting
 status: "verified"
 security_level: "public"
-source: "2026-09-29 本机实测（Windows 10.0.19044 + WSL 2.9.3.0 + openKylin 3.0 huanghe amd64），方法论 session sc-20260929-openkylin-wsl-install-sparse"
+source: "2026-09-29 本机实测（Windows 10.0.19044 + WSL 2.9.3.0 + openKylin 3.0 huanghe amd64），方法论 session sc-20260929-openkylin-wsl-install-sparse；2026-10-14 环境复验（Windows 10.0.19044.7725 + WSL 3.0.3.0 + 内核 6.18.54.1-1），session sc-20261014-openkylin-wsl-verify"
 ---
 
 # openKylin 3.0 WSL 安装与稀疏 VHD 实操指南
@@ -21,16 +21,18 @@ source: "2026-09-29 本机实测（Windows 10.0.19044 + WSL 2.9.3.0 + openKylin 
 > 本指南指导你在 Windows 10/11 上用官方 **336 MB 最小 WSL 镜像**离线安装 openKylin 3.0，完成发行版验收，并在理解风险的前提下决定是否启用稀疏 VHD。
 >
 > 这是 [openKylin 全面调研报告](project-overview.md) §7.2"最小试用路径"第 1 条的**实测落地篇**——调研报告编写时该路径标注为"未实测"，本文补上完整命令、排障过程与验收记录。
+>
+> **环境复验（2026-10-14）**：宿主环境已从 WSL 2.9.3.0 升级到 **WSL 3.0.3.0／内核 6.18.54.1-1／Windows 10.0.19044.7725**，本机 `openKylin-3.0` 实例复检**可用且健康**（Running、带默认发行版星标、`systemctl --failed` 为 0 个失败单元）。复验要点：**镜像身份锚点未变**——源文件 `openKylin-3.0-wsl-amd64.wsl` 仍为 **352,431,812 字节**（落盘时间 2026-09-29 11:05:13），与首次安装所依据的镜像逐字节一致；而**运行实例已就地更新**——软件包由全新导入时的约 405 增至 **436**，`ext4.vhdx` 由约 1.3 GB 增至 **2.44 GiB**。故本文凡涉及"包数 / VHD 体积"处一律按**全新导入口径**与**当前运行实例口径**分层标注，环境版本号则更新为本次实测值。完整对账见 [知识包主索引](../index.md) K 组（F-087 ~ F-090）。
 
 ---
 
 ## 1. 你会得到什么
 
-- 一个名为 `openKylin-3.0` 的 WSL2 发行版：openKylin 3.0（代号 huanghe）、默认普通用户 `openkylin`（UID 1000）、systemd 已启用、约 405 个预装软件包。
-- 一个位于非系统盘的 `ext4.vhdx`（安装后约 1.3 GB），可选择启用稀疏标志。
+- 一个名为 `openKylin-3.0` 的 WSL2 发行版：openKylin 3.0（代号 huanghe）、默认普通用户 `openkylin`（UID 1000）、systemd 已启用、约 405 个预装软件包（**全新导入口径**；2026-10-14 复验的现有运行实例已就地更新至 436 个，见上文"环境复验"）。
+- 一个位于非系统盘的 `ext4.vhdx`（**全新导入后约 1.3 GB**；2026-10-14 复验的现有实例为 2.44 GiB），可选择启用稀疏标志。
 - 一套对 `E_UNEXPECTED` / `E_ABORT` 导入失败的排障流程（本机实测 4 次失败后的成功路径）。
 
-**环境基线（实测机）**：Windows 10.0.19044、WSL 2.9.3.0、内核 6.18.35.2-1、x86_64。镜像来源为 openKylin 官网下载中心的 openKylin 3.0 WSL 最小镜像（`openKylin-3.0-wsl-amd64.wsl`，352,431,812 字节 / 336.1 MB）。
+**环境基线（实测机）**：Windows 10.0.19044.7725、WSL 3.0.3.0、内核 6.18.54.1-1、x86_64（**2026-10-14 复验值**；2026-09-29 首次实测为 Windows 10.0.19044、WSL 2.9.3.0、内核 6.18.35.2-1）。镜像来源为 openKylin 官网下载中心的 openKylin 3.0 WSL 最小镜像（`openKylin-3.0-wsl-amd64.wsl`，352,431,812 字节 / 336.1 MB；**2026-10-14 复验字节数未变**）。
 
 > 前置知识：`.wsl` 文件本质是 **gzip 压缩的 tar 归档**（文件头魔数 `1F 8B`），不是 APPX/ZIP，无需安装器，通过 `wsl --import` 或 `wsl --install --from-file` 注册。
 
@@ -49,7 +51,7 @@ $env:WSL_UTF8 = 1   # 避免中文输出乱码
 
 | 检查项 | 期望 | 不满足时 |
 |---|---|---|
-| WSL 版本 | 2.x（本机 2.9.3.0） | `wsl --update` |
+| WSL 版本 | 2.x（本机首次实测 2.9.3.0；2026-10-14 复验 3.0.3.0） | `wsl --update` |
 | 默认版本 | WSL2 | `wsl --set-default-version 2` |
 | 目标盘剩余空间 | ≥ 3 GB（镜像 336 MB + VHD 约 1.3 GB + 解压临时文件约 1.1 GB） | 换盘或先清理 |
 | 空闲物理内存 | 建议 ≥ 3 GB（**经验启发值**：仅来自本机 0.8 GB 失败 / 4.5 GB 成功两点观测，非官方阈值，下界未测定） | 关闭重型程序后 `wsl --shutdown` 再查 |
@@ -93,8 +95,9 @@ Format-Hex $wslFile -Count 2
 & $wsl -l -v
 # ② 系统版本：VERSION="3.0 (huanghe)"
 & $wsl -d openKylin-3.0 -- cat /etc/os-release
-# ③ 用户/UID/根分区/软件包计数（注意 405 的口径是 dpkg-query，
-#    `dpkg -l | wc -l` 含 5 行表头会输出 410，勿据此误判）
+# ③ 用户/UID/根分区/软件包计数（全新导入约 405；2026-10-14 复验的现有
+#    运行实例已就地更新至 436。计数口径是 dpkg-query，
+#    `dpkg -l | wc -l` 含 5 行表头会各多出 5，勿据此误判）
 & $wsl -d openKylin-3.0 -- /bin/bash -lc 'echo "user=$(whoami) uid=$(id -u)"; df -h / | tail -1; echo "pkgs=$(dpkg-query -W | wc -l)"'
 # ④ 默认用户与 systemd 配置
 & $wsl -d openKylin-3.0 -- cat /etc/wsl.conf
@@ -103,6 +106,8 @@ Format-Hex $wslFile -Count 2
 ```
 
 本镜像验收记录：默认用户 `openkylin`（UID 1000，无需手动建用户）、内核 `6.18.35.2-microsoft-standard-WSL2`、软件包 405（`dpkg-query -W | wc -l`）；`/etc/wsl.conf` 已含 `[user] default=openkylin` 与 `[boot] systemd=true`；注册前后默认发行版均未改变。
+
+**2026-10-14 复验**：同一实例默认用户 `openkylin` 与 UID 1000 不变；内核随宿主升级为 `6.18.54.1-microsoft-standard-WSL2`；软件包增至 436（就地更新所致，非重新导入）；`systemctl --failed` 为 **0 个失败单元**。
 
 > 若你导入的是其他社区 WSL 镜像、登录后是 root，请按 [WSL 发行版安装、迁移与配置速查手册](../../../../retrospective/patterns/code-patterns/wsl-distro-install-migration-guide.md) 模式三配置 `/etc/wsl.conf` 的 `[user] default=`，并在 PowerShell 侧 `wsl --terminate` 使其生效。
 
@@ -166,7 +171,7 @@ VHDX 虚拟磁盘**只增不减**：在 WSL 里删除文件后，宿主看到的
 
 ### 5.1 启用稀疏标志（含官方拦截处理）
 
-WSL 2.9.3 对**已有数据的现有 VHD** 直接设置会被拒绝：
+WSL 2.9.3 对**已有数据的现有 VHD** 直接设置会被拒绝（2026-10-14 复验时宿主已升为 WSL 3.0.3.0，本节命令与拦截语义**未逐条重测**，仍按首次实测记录保留）：
 
 ```text
 由于潜在的数据损坏，目前已禁用稀疏 VHD 支持。
@@ -193,6 +198,8 @@ Get-CimInstance Win32_OperatingSystem |
 ```
 
 **预期管理**：本机设置后逻辑 1,317 MB、实际占用 1,293.4 MB，仅差约 24 MB——全新系统内部全是有效数据，当下本就没有空间可回收。稀疏标志的价值在**以后**删除大文件时自动归还 D 盘空间。
+
+> **2026-10-14 复验**：该实例已就地更新，`ext4.vhdx` 逻辑大小增至 **2,620,391,424 字节（≈2.44 GiB）**；稀疏标志下的后续回收行为本轮未重测。逻辑大小与稀疏洞的差异仍须以 `GetCompressedFileSizeW` 实测为准。
 
 > 注意：`(Get-Item).Length` 是逻辑大小，不反映稀疏洞；查真实占用要用 `GetCompressedFileSizeW`，完整脚本见[沉淀模式](../../../../retrospective/patterns/code-patterns/wsl-import-memory-triage-sparse-vhd.md) §模式二。
 
