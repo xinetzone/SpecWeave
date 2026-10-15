@@ -85,6 +85,35 @@ class TestIsValid:
         ok, msg = fn._is_valid("001-overview-architecture.md", ".md")
         assert ok, f"Three-digit prefix should be allowed: {msg}"
 
+    def test_sequential_migration_prefix_allowed(self):
+        """顺序迁移编号（NNNN_name，下划线分隔）允许以数字开头。
+
+        迁移加载器按文件名字典序应用，编号前缀是功能硬约束，且需与
+        上游 doocs/md 的 0001-0008 迁移文件同名。
+        """
+        for name, ext in [
+            ("0001_init.sql", ".sql"),
+            ("0008_default_emoji_pack.sql", ".sql"),
+        ]:
+            ok, msg = fn._is_valid(name, ext)
+            assert ok, f"Migration prefix should be allowed: {name} -> {msg}"
+
+    def test_single_digit_underscore_prefix_still_blocked(self):
+        """下划线豁免要求至少两位数字，单个数字开头仍拦截。"""
+        ok, msg = fn._is_valid("1_tmp.py", ".py")
+        assert not ok
+        assert "数字开头" in msg
+
+    def test_py_typed_marker_allowed(self):
+        """PEP 561 的 py.typed 标记文件名被标准固定，必须放行。"""
+        ok, msg = fn._is_valid("py.typed", ".typed")
+        assert ok, f"py.typed should be allowed: {msg}"
+
+    def test_sha256_manifest_allowed(self):
+        """校验和清单（MANIFEST.sha256）为纯文本指纹资产，应放行。"""
+        ok, msg = fn._is_valid("MANIFEST.sha256", ".sha256")
+        assert ok, f"MANIFEST.sha256 should be allowed: {msg}"
+
     def test_consecutive_hyphens(self):
         ok, msg = fn._is_valid("my--file.py", ".py")
         assert not ok

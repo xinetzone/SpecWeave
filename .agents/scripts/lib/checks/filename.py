@@ -28,6 +28,13 @@ ALLOWED_EXTENSIONS = {
     ".tag", ".example", ".template",
     ".ini", ".conf", ".cfg", ".log", ".lock", ".env", ".env.example",
     ".ttf", ".pth",
+    # 白名单含 ".typed" 的理由：py.typed 是 PEP 561 规定的包类型标记文件，
+    # 文件名被标准强制固定（空标记文件，置于包根声明内联类型），无法改名；
+    # 该后缀不对应任何可执行/密钥形态，放行无安全损失。
+    # 白名单含 ".sha256" 的理由：MANIFEST.sha256 等校验和清单是纯文本指纹
+    # 资产（每行「哈希 文件名」），构建产物完整性核验依赖该约定名；哈希公开
+    # 非秘密，与 .lock/.txt 同属可入库文本。
+    ".typed", ".sha256",
 }
 # 白名单含 ".sql" 的理由：apps/dev-tools/wechat-mp-archiver 引入运行时按路径
 # 加载的 SQLite 建表脚本（db/schema.sql），SQL 是仓库新增的一类纯文本声明式
@@ -45,7 +52,12 @@ GITLINK_MODE = "160000"
 ALLOWED_CHARS = re.compile(r'^[a-zA-Z0-9._\-/\\]+$')
 NON_ASCII = re.compile(r'[^\x00-\x7F]')
 CONSECUTIVE_HYPHENS = re.compile(r'--+')
-STARTS_WITH_NUMBER = re.compile(r'^[/\\]?(?!(?:\d{4}-\d{2}-\d{2}-|\d{2,}[a-z]?-))\d')
+# 数字开头豁免形态：
+# - \d{4}-\d{2}-\d{2}-：日期前缀（如 2026-10-15-notes.md）
+# - \d{2,}[a-z]?-    ：连字符编号前缀（如 01-intro、08b-appendix、001-overview）
+# - \d{2,}_          ：下划线顺序迁移编号（如 0001_init.sql），迁移加载器按
+#                      文件名字典序应用，编号前缀是功能硬约束且需与上游同名
+STARTS_WITH_NUMBER = re.compile(r'^[/\\]?(?!(?:\d{4}-\d{2}-\d{2}-|\d{2,}[a-z]?-|\d{2,}_))\d')
 EXCLUDED_DIRS = BASE_EXCLUDED | {"venv", ".chaos", "logs"}
 EXCLUDED_FILES = {"报名帖_竹简悟道.md", "竹简悟道_完整版.html"}
 
