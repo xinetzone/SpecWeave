@@ -7,9 +7,7 @@ source: apps/AGENTS.md#应用路由表
 # 个人信息管家 Agent
 
 > 记录零散想法、资料与待办 → 自动分类、摘要、打标签、建立关联 → 支持检索、问答、重点提取、待办整理与阶段总结。
-> 数据存云端（Supabase），大模型可插拔（任何 OpenAI 兼容端点），已发布到 Vercel。
-
-**线上地址**：https://personal-info-butler.vercel.app
+> **Sphinx 静态站（GitHub Pages）+ Python 3.14 云端 API**，数据存 Supabase，大模型走 OpenAI 兼容协议并支持页面 BYOK。
 
 ## 项目定位
 
@@ -17,124 +15,124 @@ source: apps/AGENTS.md#应用路由表
 
 | 痛点 | 本应用的解法 |
 |---|---|
-| 想法/资料/待办混在一起 | 录入即自动判定类型（想法 / 资料 / 待办），并生成标题、摘要、标签 |
-| 记完就忘、彼此孤立 | 录入时自动计算与已有条目的关联度并写入关联关系（可解释的关联理由） |
-| 想不起记在哪 | 关键词检索（中文二元组 + 英文词元混合打分）+ 智能问答（带来源引用） |
-| 一堆记录看不过来 | 重点信息提取（观点/决策/风险/待确认/实体）+ 待办整理（去重合并 + 优先级） |
+| 想法/资料/待办混在一起 | 录入即自动判定类型，并生成标题、摘要、标签 |
+| 记完就忘、彼此孤立 | 自动计算与已有条目的关联度，写入关联关系并给出**可解释**的理由 |
+| 想不起记在哪 | 关键词检索（中文二元组 + 英文词元混合打分）+ 智能问答（带引用） |
+| 一堆记录看不过来 | 重点信息提取 + 待办整理（去重、分组、优先级） |
 | 不知道这段时间干了啥 | 阶段总结：概览 → 主题分布 → 进展 → 风险 → 后续行动建议，并自动存档 |
+
+## 架构
+
+```text
+浏览器（Sphinx 静态站 · GitHub Pages）
+        │  HTTPS /api/*
+        ▼
+Python 3.14 + FastAPI（云端常驻 · Docker）
+        ├── PostgREST ──► Supabase / PostgreSQL（items / item_links / summaries）
+        └── OpenAI 兼容 ──► 大模型（服务端配置 或 页面 BYOK）
+```
+
+- **前端**：Sphinx + MyST 构建静态站，`doc/app.md` 就是工作台界面，零框架、零打包；
+- **后端**：`src/info_butler/`，FastAPI，无状态，可跑在任何最小规格实例；
+- **降级**：没有 Supabase → 内存存储；没有模型 Key → 全部能力退化为启发式/统计直出。
+  **应用在任何配置下都能跑通**，只是没那么聪明。
+
+设计推导过程（第一性原理 → 对抗审查 → 洞察定型）见 `doc/guide/design.md`。
 
 ## 目录结构
 
-```
+```text
 personal-info-butler/
-├── index.html             # 单页前端入口
-├── styles.css             # 设计系统（亮/暗双主题、响应式）
-├── app.js                 # 前端逻辑（零构建，原生 ES Module）
-├── api/                   # Serverless API（Vercel 直接托管）
-│   ├── _lib/
-│   │   ├── config.js      # 环境变量 + 请求级 BYOK 覆盖
-│   │   ├── http.js        # CORS / 鉴权 / 统一异常（双运行时兼容）
-│   │   ├── store.js       # Supabase PostgREST 驱动 + 内存回退
-│   │   ├── llm.js         # OpenAI 兼容 /chat/completions 封装
-│   │   ├── prompts.js     # 全部 system prompt 资产
-│   │   ├── similarity.js  # 中英混合相似度（免向量）
-│   │   └── pipeline.js    # 录入归类 → 派生待办 → 关联分析
-│   ├── items.js           # GET 列表/检索 · POST 录入
-│   ├── item.js            # GET/PATCH/DELETE 单条目
-│   ├── ask.js             # 智能问答（带引用）
-│   ├── extract.js         # 重点信息提取
-│   ├── todos.js           # 待办整理
-│   ├── summary.js         # 阶段总结 + 历史存档
-│   ├── tags.js            # 标签云与概览统计
-│   └── health.js          # 健康检查
-├── scripts/dev-server.mjs # 零依赖本地开发服务器（复用 api/ 处理函数）
-├── schema.sql             # 云端数据库 DDL（Supabase / PostgreSQL）
-├── vercel.json            # 部署配置
-└── .env.example           # 环境变量模板
+├── doc/                     Sphinx 站点源（前端 + 文档的唯一事实来源）
+│   ├── conf.py              Sphinx 配置 + 构建期守卫 + API 基址注入
+│   ├── index.md             首页：定位、能力矩阵、架构
+│   ├── app.md               工作台界面（产品主界面）
+│   ├── guide/               design / quickstart / deploy / api 四篇
+│   └── _static/             butler.css · butler.js（零依赖前端行为层）
+├── src/info_butler/         Python 3.14 后端
+│   ├── config.py            环境变量 → 配置，缺项即降级
+│   ├── similarity.py        中英混合相似度（免向量）
+│   ├── llm.py               OpenAI 兼容封装 + 请求级 BYOK
+│   ├── store.py             Supabase / 内存 双实现（行为等价）
+│   ├── prompts.py           全部提示词资产
+│   ├── pipeline.py          归类 / 关联 / 检索 / 问答 / 提取 / 待办 / 总结
+│   ├── api.py               FastAPI 路由与鉴权
+│   └── cli.py               info-butler serve
+├── tests/                   pytest（含 AST 红线守护与站点契约）
+├── schema.sql               云端数据库 DDL（Supabase / PostgreSQL）
+├── Dockerfile               后端镜像（python:3.14-slim，非 root）
+├── pyproject.toml           scikit-build-core 纯 Python 包
+├── requirements.txt         Sphinx 构建依赖
+└── .env.example             环境变量模板
 ```
 
 ## 功能矩阵
 
-| 能力 | 入口 | 是否依赖大模型 |
+| 能力 | 入口 | 无大模型时 |
 |---|---|---|
-| 随手录入 + 自动分类/摘要/标签 | `POST /api/items` | 可选（无 Key 时启发式降级） |
-| 自动关联已有内容 | `POST /api/items` | 可选（无 Key 时相似度降级） |
-| 关键词检索 | `GET /api/items?q=` | 否 |
-| 智能问答（带引用） | `POST /api/ask` | 是 |
-| 重点信息提取 | `POST /api/extract` | 是 |
-| 待办整理（去重/优先级/下一步） | `GET /api/todos` | 可选 |
-| 阶段总结 + 后续行动建议 | `POST /api/summary` | 是 |
-
-未配置大模型密钥时，所有接口自动降级为「统计直出 / 相似度检索」，应用仍然可用。
+| 随手录入 + 分类/摘要/标签 | `POST /api/items` | 启发式判定，仍派生待办 |
+| 自动关联已有内容 | `POST /api/items` | 相似度 + 标签重合，理由为统计口径 |
+| 关键词检索 | `GET /api/items?q=` | 不受影响（本就不走模型） |
+| 智能问答（带引用） | `POST /api/ask` | 返回相关度最高的原文片段 |
+| 重点信息提取 | `POST /api/extract` | 统计摘要，章节结构一致 |
+| 待办整理 | `GET /api/todos` | 按标签分组 + 优先级排序 |
+| 阶段总结 | `POST /api/summary` | 统计总结 + 未完成待办转行动建议 |
 
 ## 快速开始
 
-### 1. 本地运行（内存模式，零配置）
-
 ```bash
-npm run dev      # 等价于 node scripts/dev-server.mjs
-# 打开 http://localhost:3000
+cd apps/ai-agents/personal-info-butler
+
+# 后端（零配置也能跑：内存存储 + 启发式）
+python -m pip install -e .
+info-butler serve                       # http://127.0.0.1:8787
+
+# 前端站点
+python -m pip install -r requirements.txt
+BUTLER_API_BASE=http://127.0.0.1:8787 \
+  python -m sphinx -b html -d _build/doctrees --keep-going -W doc _build/html
+python -m http.server -d _build/html 8931   # http://localhost:8931/app.html
+
+# 门禁
+python -m pytest tests -q
 ```
 
-此模式数据存在进程内存中，重启即失，用于体验与开发。
+## 配置
 
-### 2. 接入云端存储（Supabase）
+复制 `.env.example` 为 `.env` 后填写：
 
-1. 在 [Supabase](https://supabase.com) 创建项目；
-2. 打开 SQL Editor，执行本目录下 `schema.sql`；
-3. 在项目根目录创建 `.env`（参考 `.env.example`）：
+| 变量 | 必填 | 说明 |
+|---|:---:|---|
+| `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | 可选 | **成对**配置才上云，否则内存存储 |
+| `LLM_BASE_URL` / `LLM_API_KEY` / `LLM_MODEL` | 可选 | 任何 OpenAI 兼容端点 |
+| `APP_TOKEN` | **上线必填** | 设置后 `/api/*` 需 `X-App-Token` |
+| `CORS_ORIGINS` | 上线必填 | 收窄到站点域名，勿留 `*` |
+| `BUTLER_API_BASE` | 构建期 | 注入静态页，读者免配置直连后端 |
 
-```bash
-SUPABASE_URL=https://xxxxxx.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOi...
-LLM_BASE_URL=https://api.deepseek.com/v1
-LLM_API_KEY=sk-xxxxxx
-LLM_MODEL=deepseek-chat
-APP_TOKEN=自定义一个强口令
-```
+页面 BYOK：工作台「设置」里填 Base URL / API Key / 模型，存本机 localStorage，
+随 `X-LLM-*` 请求头发送，**后端不落盘**。
 
-重启服务，侧栏徽标会显示「存储：云端」。
+## 发布上线
 
-### 3. 接入大模型
+两条独立链路：
 
-支持任何 OpenAI 兼容端点（DeepSeek / 通义千问 / 腾讯混元 / Moonshot / OpenAI …），两种方式二选一：
+1. **静态站 → GitHub Pages**：推送 `main` 触发 `.github/workflows/personal-info-butler-pages.yml`
+   （仓库根），gates（pytest）→ build（`sphinx -W`）→ deploy。首次需在仓库
+   Settings → Pages 把 Source 设为 **GitHub Actions**。
+2. **后端 → 云端容器**：`docker build -t info-butler-api .` 后推到任意容器平台，
+   注入环境变量，健康检查 `GET /api/health`。
 
-- **服务端配置**：`LLM_BASE_URL` + `LLM_API_KEY` + `LLM_MODEL`；
-- **页面 BYOK**：打开「设置」，填写 Base URL / API Key / 模型，凭据只存在本机浏览器，随请求头发给本应用后端转发，服务端不落盘。
-
-## 发布上线（Vercel）
-
-```bash
-npm i -g vercel
-vercel login
-vercel --prod                # 首次按提示关联项目
-# 随后在 Vercel 控制台 → Settings → Environment Variables 填入 .env 中的变量
-vercel deploy --prod         # 重新部署使环境变量生效
-```
-
-部署产物：`api/*.js` 自动成为 Serverless 函数，根目录静态文件自动托管。
-`.vercelignore` 已排除 `scripts/`、`schema.sql` 与 `.env*`。
-
-## API 一览
-
-| 方法 | 路径 | 说明 |
-|---|---|---|
-| GET | `/api/health` | 存储模式、大模型就绪状态 |
-| GET | `/api/items?q=&kind=&tag=&status=&limit=` | 列表与关键词检索 |
-| POST | `/api/items` | 录入（自动分类/摘要/标签/关联/派生待办） |
-| GET/PATCH/DELETE | `/api/item?id=` | 单条目读写删 |
-| POST | `/api/ask` | 智能问答，返回答案与引用 |
-| POST | `/api/extract` | 重点信息提取（Markdown） |
-| GET | `/api/todos` | 待办整理（去重、分组、建议） |
-| GET/POST | `/api/summary` | 历史总结 / 生成阶段总结 |
-| GET | `/api/tags` | 标签云与统计 |
+完整步骤与上线前检查清单见 `doc/guide/deploy.md`。
 
 ## 安全说明
 
-- `SUPABASE_SERVICE_ROLE_KEY` 只在服务端环境变量中使用，不下发前端；
-- 建议设置 `APP_TOKEN`，缺失令牌的请求将被 401 拦截；
-- `schema.sql` 末尾给出多用户隔离方案（`user_id` + RLS 策略），MVP 默认单用户。
+- `SUPABASE_SERVICE_ROLE_KEY` 与 `LLM_API_KEY` 只存在于服务端环境变量，不下发前端；
+- 页面 BYOK 凭据只在本机浏览器，随请求头透传，服务端不落盘、不写日志；
+- 上线必须设置 `APP_TOKEN` 并收窄 `CORS_ORIGINS`；
+- `schema.sql` 末尾给出 `user_id` + RLS 的多用户隔离方案，MVP 默认单用户。
 
-## 来源
+## 参考
 
-遵循 [应用开发生命周期规范](../../../.agents/protocols/app-development-workflow.md) 在 `apps/ai-agents/` 下直接新建；技术栈选择依据「零构建、可一键部署」原则。
+- 站点结构与技术选型参考 [projects/daoapps.github.io](../../../projects/daoapps.github.io)（Sphinx + MyST + GitHub Actions 发布）；
+- 遵循 [应用开发生命周期规范](../../../.agents/protocols/app-development-workflow.md)，在 `apps/ai-agents/` 下原地演进；
+- 设计推导遵循 [七概念方法论](../../../.agents/commands/seven-concepts.md) 流程 5（F→V→I→C）。
