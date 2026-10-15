@@ -119,7 +119,7 @@ apps/<group>/<app-name>/
 
 > **维护约定**：`agent-monetize/`、`inurl-byok-token-hub/` 为根级独立应用（不属上述分组，见下方自动应用清单）；新增/移动应用时同步本小节与下方自动清单（运行 `python .agents/scripts/docgen.py apps` 刷新）。
 >
-> 根级独立应用补充：`guard-quality-life-site/`、`travel-planner/`、`coach-moments-growth/`（商业教练朋友圈 AI 增长系统——面向高净值客群的私域内容运营方案：定位/内容/转化/度量/合规五模块，含 AI 提示词与文案模板；规格 `.trae/specs/coach-moments-growth/`）。
+> 根级独立应用补充：`guard-quality-life-site/`、`travel-planner/`、`coach-moments-growth/`（商业教练朋友圈 AI 增长系统——面向高净值客群的私域内容运营方案：定位/内容/转化/度量/合规五模块，含 AI 提示词与文案模板；规格 `.trae/specs/coach-moments-growth/`）、`life-workbench/`（一页生活 · 集成式生活工作台——零构建单文件 `index.html` 全内联的本地生活工作台，数据只落浏览器 localStorage；规格 `.trae/specs/life-workbench/`）。
 
 ### 2.4 应用清单
 
@@ -133,8 +133,9 @@ apps/<group>/<app-name>/
 | `containers/` | containers/ — Podman rootless 容器工作区分组 | [README.md](containers/README.md) |
 | `dev-tools/` | dev-tools 应用 | `dev-tools/`（暂无 README） |
 | `docker-images/` | docker-images 应用 | `docker-images/`（暂无 README） |
+| `guard-quality-life-site/` | 守护品质生活（guard-quality-life-site） | [README.md](guard-quality-life-site/README.md) |
 | `inurl-byok-token-hub/` | BYOK 统一令牌枢纽复刻：E2EE 密钥保险库 + 逻辑别名路由 + 本地三协议代理 + 用量计费。 | [README.md](inurl-byok-token-hub/README.md) |
-| `guard-quality-life-site/` | 《守护品质生活》生活方式方案库可变现 MVP 网站：Python 3.14+ / FastAPI 动态 Web，11 域知识树浏览/搜索 + 订阅兴趣登记 + 推荐位占位 + 访问埋点三验证信号，暖灰纸感 UI（gqlsite）。 | [README.md](guard-quality-life-site/README.md) |
+| `life-workbench/` | 面向泛生活人群的本地生活工作台：**一个 `index.html` 文件，双击即用**。全部 CSS、JavaScript、图标与演示数据内联，不依赖任何... | [README.md](life-workbench/README.md) |
 | `samples/` | samples 应用 | `samples/`（暂无 README） |
 | `tests/` | tests 应用 | `tests/`（暂无 README） |
 | `travel-planner/` | 本地单用户 Web 应用：多行程管理、每日行程编排、预算跟踪、打包清单、JSON 导入导出，以及可选的 **BYOK AI 行程草稿生成**（任意 Ope... | [README.md](travel-planner/README.md) |
