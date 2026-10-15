@@ -1,0 +1,9 @@
+.env
+.env.*
+# 部署期不需要构建 Python 包（Vercel 的 uv sync 会尝试 build backend），
+# 仅保留 requirements.txt 触发零依赖的 Python 运行时
+pyproject.toml
+tests/
+build/
+*.egg-info/
+__pycache__/
