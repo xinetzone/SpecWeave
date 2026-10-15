@@ -15,11 +15,15 @@
 设计原则:
     1. 安全优先：不绕过任何Git钩子或权限检查
     2. 自动检测：非ASCII字符自动走bytes通道，纯ASCII走普通路径（零开销）
-    3. 文件隔离：指定files时只提交这些文件，不混入其他已暂存变更
-    4. 向后兼容：支持所有git commit的常见参数(-a, --amend等透传)
+    3. 文件隔离：指定files时以**路径级提交**（`git commit -- <files>`）落地，把「提交集」
+       从「索引快照」钉成点名路径——既在add前后各校验一次暂存集，也不受「校验→提交」
+       之间第三方写入索引的影响（暂存区是共享可变状态，见 .agents/rules/commit-staging-integrity.md）
+    4. 向后兼容：支持所有git commit的常见参数(-a, --amend等透传)；其中 `-a/--all` 与
+       「只提交点名路径」互斥（git 会直接报错），指定files时会被剥离并显式告知
     5. 诊断友好：错误时输出详细的编码诊断信息
 
 相关规范:
+    .agents/rules/commit-staging-integrity.md（提交暂存区完整性规则：本工具是其默认入口）
     docs/retrospective/patterns/methodology-patterns/development/git-utf8-commit.md
 """
 
@@ -246,6 +250,8 @@ def main():
         display_subject += '...'
     print(f"  主题: {display_subject}")
 
+    extra_args = list(unknown_args)
+
     if args.files:
         pre_staged = get_staged_files()
         if pre_staged:
@@ -264,6 +270,17 @@ def main():
         if not check_staged_matches(args.files):
             print_error("git add后暂存区文件与指定列表不一致，请检查")
             return 1
+
+        # 路径级指定：把「提交集」从「索引快照」钉成点名路径。上面的两次校验都只证明
+        # 「那一刻」干净，校验与提交之间第三方仍可能写入索引（见该规则 §一 的时间窗）。
+        # `-a/--all` 与路径级互斥（git 报 "paths with -a does not make sense"，实测 rc=128），
+        # 且本工具已 git add 过这些文件，`-a` 只会放宽提交集——正是本规则要防的，故剥离。
+        dropped = [a for a in extra_args if a in ("-a", "--all")]
+        if dropped:
+            print_warn(f"已忽略 {'/'.join(dropped)}：与「只提交点名路径」互斥，提交集须等于指定文件")
+        extra_args = [a for a in extra_args if a not in ("-a", "--all")] + ["--"] + list(args.files)
+        # 注：`--amend` 会以整个索引重建提交，路径级对它不设限（实测仍受暂存区影响），
+        # 该场景由上面的暂存集校验兜底。
 
         print(f"  指定文件: {len(args.files)} 个")
         for f in args.files[:5]:
@@ -291,10 +308,10 @@ def main():
 
     if use_bytes:
         print_pass("使用UTF-8 bytes通道提交（安全模式）")
-        rc = commit_via_bytes(message, unknown_args)
+        rc = commit_via_bytes(message, extra_args)
     else:
         print_pass("纯ASCII message，使用快速路径提交")
-        rc = commit_via_normal(message, unknown_args)
+        rc = commit_via_normal(message, extra_args)
 
     if rc == 0:
         changed = get_commit_changed_files()
