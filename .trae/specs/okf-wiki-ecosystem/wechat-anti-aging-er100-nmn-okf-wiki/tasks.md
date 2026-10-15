@@ -156,8 +156,15 @@
   - `rule` TR-7.3: 总索引计数行、域节标题数字、分组表束数列、toctree 五面一致；证据为 `check-bundles-index.py` 输出。
 
 ## Task 8: C 阶段双层原子提交
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
+- **Depends On**: T6, T7
+- **Completion Evidence**:
+  - TR-8.1 `rule` ✅：三笔提交，信息均符合 `type(scope): 中文描述`——① 子模块 `ee201d31`「docs(okf-wiki): 新增美因逆龄基因药博文 OKF 知识包并接入三级索引」（15 files changed, 1078 insertions, 9 deletions）② 主仓库 `85da9a9c8`「docs(spec): 新增 wechat-anti-aging-er100-nmn-okf-wiki 规格与事实核验产物」（5 files changed, 1231 insertions）③ 主仓库 `0daa3fb9a`「chore(submodule): 更新 awesome-okf-xs 指针至知识包提交」（1 file changed）。
+  - TR-8.2 `rule` ✅：使用 `.agents/scripts/git-commit-utf8.py`（UTF-8 bytes 通道）并**逐个显式列出全部文件**，脚本回显「指定文件: 15 个」「指定文件: 5 个」「指定文件: 1 个」，与暂存区一致，零遗漏/零多余。
+  - TR-8.3 `rule` ✅：主仓库子模块指针已更新——提交后 `git status --short -- projects/awesome-okf-xs` 显示 `?`（仅剩**他会话**遗留的未跟踪目录 `doc/bundles/jishu/ai/ecosystems/tencent/workbuddy-open-platform-sharing-and-promotion/`，非本 spec 产物，已按「不回滚无关变更」原则**未触碰**）。
+  - TR-8.4 `rule` ✅：**未执行 push**——三笔提交均为本地提交。
+  - **提交范围隔离**：主仓库存在大量**并行会话的无关变更**（`.agents/`、`apps/`、其他 `.trae/specs/` 目录等），本次仅提交本 spec 目录（5 文件）与 `projects/awesome-okf-xs` 指针，未使用 `git add -A`；`projects/daoapps.github.io` 的同批未跟踪状态亦未触碰。
 - **Depends On**: T6, T7
 - **Description**:
   - 提交顺序：① 在子模块 `projects/awesome-okf-xs` 内提交（bundle 全部文件 + `personal-growth/index.md` + `sheke/index.md` + `bundles/index.md`）→ ② 主仓库提交 spec（`.trae/specs/okf-wiki-ecosystem/wechat-anti-aging-er100-nmn-okf-wiki/`）→ ③ 主仓库更新子模块指针。
