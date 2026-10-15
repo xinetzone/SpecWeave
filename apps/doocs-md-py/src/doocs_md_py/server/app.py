@@ -2,10 +2,15 @@
 
 含：全局 CORS（origin.ts 语义）、健康检查、统一 ApiError 处理器；业务路由由
 T10-T18 按上游挂载点逐步注册（/auth 已挂载；后续 /upload、/sync、/share、
-/marketplace、/emojis、/notifications、/webhooks/afdian），静态前端托管在 T19 挂载。
+/marketplace、/emojis、/notifications、/webhooks/afdian）；静态前端托管见
+``web_dist`` 模块（T19，经 ``create_app(web_dist=...)`` 启用）。
 """
 
+import socket
 import sqlite3
+import sys
+from collections.abc import Callable
+from pathlib import Path
 
 import httpx
 from fastapi import FastAPI, Request
@@ -24,6 +29,12 @@ from .routers import share as share_router
 from .routers import sync as sync_router
 from .routers import upload as upload_router
 from .routers import webhooks as webhooks_router
+from .web_dist import (
+    WEB_DIST_DIR,
+    register_web_dist,
+    web_dist_missing_message,
+    web_dist_ready,
+)
 
 # upstream: index.ts:22-25
 _CORS_METHODS = "GET, POST, PATCH, DELETE, OPTIONS"
@@ -42,8 +53,13 @@ def create_app(
     *,
     conn: sqlite3.Connection | None = None,
     http_client: httpx.Client | None = None,
+    web_dist: Path | None = None,
 ) -> FastAPI:
-    """构造 ASGI app；测试可注入 Config、内存 SQLite 连接与 MockTransport httpx 客户端。"""
+    """构造 ASGI app；测试可注入 Config、内存 SQLite 连接与 MockTransport httpx 客户端。
+
+    ``web_dist`` 非空时启用同源静态托管（T19 / ``mdpy serve``）：``/`` 让位于 dist
+    首页、未命中路由回退 index.html；缺省 ``None`` 保持上游 ``GET /`` 健康检查语义。
+    """
     config = config or load_config()
 
     app = FastAPI(
@@ -116,16 +132,87 @@ def create_app(
             response.headers.setdefault("Vary", "Origin")
         return response
 
-    @app.get("/")
-    async def health() -> dict[str, str | bool]:
-        # upstream: index.ts:30
-        return {"name": "md-api", "ok": True}
+    if web_dist is None:
+        @app.get("/")
+        async def health() -> dict[str, str | bool]:
+            # upstream: index.ts:30（API-only 模式；自托管模式下 ``/`` 由 dist 首页接管）
+            return {"name": "md-api", "ok": True}
+    else:
+        # 兜底静态路由必须最后注册（AC-14），否则会遮蔽上面全部 API 路由
+        register_web_dist(app, web_dist)
 
     return app
 
 
-def serve(host: str = "127.0.0.1", port: int = 8800, config: Config | None = None) -> None:
-    """uvicorn 启动入口（mdpy serve，T19 完整化静态托管）。"""
+def resolve_free_port(
+    host: str,
+    start: int,
+    *,
+    probe: Callable[[str, int], bool] | None = None,
+    max_attempts: int = 64,
+) -> int:
+    """从 ``start`` 起递增寻找首个可绑定端口（tasks.md T19「端口占用自动递增」）。
+
+    upstream: ``md-cli`` 用 ``get-port``（首选端口被占时取随机空闲端口，index.js:20）；
+    本仓比其更确定——严格递增，便于同源调试与自动化断言（差异登记 T21）。
+    ``probe`` 可注入，便于不依赖真实 socket 的单测。
+
+    upstream: packages/md-cli/index.js:19-23
+    """
+    check = probe or _port_bindable
+    for candidate in range(start, start + max_attempts):
+        if check(host, candidate):
+            return candidate
+    raise OSError(f"{host} 上 {start}-{start + max_attempts - 1} 范围内无可用端口")
+
+
+def _port_bindable(host: str, port: int) -> bool:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
+        try:
+            probe.bind((host, port))
+        except OSError:
+            return False
+        return True
+
+
+def _is_loopback(host: str) -> bool:
+    return host in ("127.0.0.1", "localhost", "::1")
+
+
+def _uvicorn_run(app: FastAPI, host: str, port: int) -> None:  # pragma: no cover
     import uvicorn
 
-    uvicorn.run(create_app(config), host=host, port=port)
+    uvicorn.run(app, host=host, port=port)
+
+
+def serve(
+    host: str = "127.0.0.1",
+    port: int = 8800,
+    config: Config | None = None,
+    *,
+    web_dist: Path | None = None,
+    runner: Callable[[FastAPI, str, int], None] | None = None,
+) -> int:
+    """``mdpy serve`` 编排：静态托管 + 端口避让 + uvicorn 启动，返回进程退出码。
+
+    upstream: packages/md-cli/index.js:15-54（127.0.0.1 固定、8800 默认、启动日志）；
+    本仓新增：dist 就绪校验与同源静态托管（AC-14）。
+    """
+    dist = Path(web_dist) if web_dist is not None else WEB_DIST_DIR
+    if not web_dist_ready(dist):
+        print(web_dist_missing_message(dist), file=sys.stderr)
+        return 1
+
+    if not _is_loopback(host):
+        print(f"警告：服务将监听非回环地址 {host}，请确认网络环境安全。", file=sys.stderr)
+
+    actual_port = resolve_free_port(host, port)
+    if actual_port != port:
+        # upstream: index.js:21 文案逐字保留
+        print(f"端口 {port} 被占用，正在寻找可用端口...")
+
+    print("doocs/md-py 服务启动中...")
+    app = create_app(config, web_dist=dist)
+    print(f"服务已启动：打开链接 http://{host}:{actual_port} 即刻使用吧~")
+    (runner or _uvicorn_run)(app, host, actual_port)
+    return 0

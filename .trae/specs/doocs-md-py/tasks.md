@@ -424,7 +424,7 @@
 
 ## Task 19: mdpy CLI 与同源静态托管
 
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: T2, T9, T11, T12, T13, T14
 - **Description**:
@@ -434,6 +434,14 @@
 - **Test Requirements**:
   - `rule` TR-19.1: CLI 五子命令退出码/输出契约测试；render 与库调用结果一致；端口占用自动递增；证据：test_cli.py。
   - `rule` TR-19.2: TestClient E2E：首页 200、资产 200 缓存头、未知路径回退 index、同源 API 完成 token→push→pull→share 创建→GET /s/<id> 全链路；证据：test_serve_e2e.py。
+- **Evidence**（session: sc-20261014-md-py-replica）:
+  - 新增 `src/doocs_md_py/server/web_dist.py`：`WEB_DIST_DIR`（`Path(__file__).resolve().parents[1]/assets/web-dist`）与三条缓存常量（`HASHED_ASSET_CACHE_CONTROL="public, max-age=31536000, immutable"`、`STATIC_ASSET_CACHE_CONTROL="public, max-age=3600"`、`INDEX_CACHE_CONTROL="no-cache"`）、`web_dist_ready`/`web_dist_missing_message`（落地 T2 约定的启动报错文案）、`register_web_dist`（兜底路由 `@app.api_route("/{path:path}", methods=["GET","HEAD"])`：`/`→index.html；`static/` 前缀→1 年 immutable；其余静态文件→1 小时；无扩展名未命中→回退 index.html；带扩展名未命中→404；`resolve()+is_relative_to(root)` 防路径穿越）。
+  - 新增 `src/doocs_md_py/user_config.py`：`config_dir`（尊重 `XDG_CONFIG_HOME`，否则 `~/.config`）→ `~/.config/doocs-md-py/config`；`load_user_config`（`MD_CONFIG_FILE` 可覆盖，文件缺失返回 `{}`，解析失败/顶层非映射抛 `UserConfigError`）；按后缀分派解析（`.yaml/.yml`→pyyaml、`.json`→json、无扩展名/`.toml`→stdlib `tomllib`，即 TOML 为无扩展名默认格式）。零新增运行时依赖。
+  - 修改 `src/doocs_md_py/server/app.py`：① `create_app(..., web_dist: Path | None = None)`——`web_dist is None` 时保持上游 `GET /` 健康 JSON（现有 `tests/server/test_app.py` 零改动全绿），非空时才在**全部 API 路由之后**注册兜底静态路由（注册在前会遮蔽 `/s/<id>`、`/sync/pull` 等真实语义）；② 新增 `resolve_free_port(host, start, *, probe=None, max_attempts=64)`（`probe` 可注入以便无 socket 单测）与 `_port_bindable`/`_is_loopback`/`_uvicorn_run`；③ 重写 `serve(host="127.0.0.1", port=8800, config=None, *, web_dist=None, runner=None)`——dist 未就绪→stderr 打印 T2 文案并返回 **1**；非回环 `--host`→stderr 告警；端口占用→打印上游逐字文案「端口 N 被占用，正在寻找可用端口...」并按 `resolve_free_port` **严格递增**取端口；打印「doocs/md-py 服务启动中...」（上游为「doocs/md-cli v…」）与「服务已启动：打开链接 http://<host>:<port> 即刻使用吧~」；`runner` 可注入（单测不真起 uvicorn）。
+  - 重写 `src/doocs_md_py/cli.py`：五子命令全部接线。`render` 新增 21 个渲染选项 flag（`--theme/--primary-color/--font-family/--font-size/--line-height/--block-spacing/--link-color/--blockquote-background/--legend/--code-block-theme/--theme-mode(light|dark)/--heading-styles/--custom-css/--mac-code-block/--show-line-number/--cite-status/--count-status/--use-indent/--use-justify/--full-document`），经 `RenderArticleInput` 组装后调用 `build_rendered_output(payload, code_css_fetcher=_code_css_fetcher)`——`store_true` 缺省 False 转 `None` 以落回库默认（上游 `?? default` 语义）；缺省输出**库返回的片段**，`--full-document` 才包 DOCTYPE 外壳；模块级 `_code_css_fetcher` 供测试 monkeypatch（隔离真实 CDN 抓取）。`upload` 的 `--provider/--file` 改为非 required 以支持 `MD_UPLOAD_PROVIDER`/`MD_UPLOAD_FILE` 环境变量回退（缺参仍走 `parser.error` → SystemExit(2)），新增 `--config`，按 `provider.config_key` 取配置段、`mimetypes` 推断 content_type、成功时 `print(url)`。`serve`→`server.app.serve`；`mcp`/`migrate` 保持 T18/T3 语义。新增 `CliUsageError`（→ stderr `mdpy: error: ...` 且退出码 **2**）。
+  - 契约差异（登记 T21 汇总）：① 本仓 `serve` **同源托管本地 dist**（上游 `md-cli/server.js:48,83-93` 仅 `express.static(public)` 且其余路径反代 `md.doocs.org`）；② 缓存头/SPA 回退/防穿越为**本仓新增契约**（上游无）；③ 端口避让为**严格递增**（上游 `get-port` 为「首选端口被占则取随机空闲端口」）；④ 自托管模式下 `GET /` 由 dist 首页接管而非上游健康 JSON（`upstream: index.ts:30`），API-only 模式（`web_dist=None`）保持上游语义；⑤ 未知 `--provider` **显式报错**（上游 `resolve_upload_provider` 静默回退 `default`）；⑥ 配置文件位置 `~/.config/doocs-md-py/config` 与 `MD_CONFIG_FILE`/`MD_UPLOAD_PROVIDER`/`MD_UPLOAD_FILE` 为本仓新增（上游 md-cli 无配置文件）。
+  - 测试：`tests/test_cli.py` 由 68 行骨架改写为 24 例（保留 6 例，移除 3 例 render/serve/upload 占位断言——其中 `main(["serve"])` 在本机 dist 已构建时会真起 uvicorn 阻塞不返回，是 V 阶段前多次 pytest 无输出的根因；新增 18 例：render 文件/stdin→文件/选项透传/完整文档/与库调用逐字一致×2/非法 JSON/缺输入、serve dist 缺失退出 1/回环默认/非回环告警/端口占用递增（真实 socket 占位 + 上游文案逐字）/`resolve_free_port` 注入 probe 与耗尽抛错、upload 未知图床/缺文件/env 回退/缺配置段/读配置段并打印 URL、migrate 幂等）；新建 `tests/test_serve_e2e.py` 9 例（`tmp_path` 合成 dist + `create_app(..., web_dist=dist)`：首页 no-cache 与 text/html、哈希资产 1 年 immutable、favicon 1 小时、未命中无扩展名回退 index、缺失 `.js` 返 404、`%2e%2e` 穿越拦截、`/sync/pull` 未被遮蔽（401→200 JSON）、`GET /` 让位首页、同源全链路 token→push→pull→share(`/share` 返回 `id`/`url`)→`GET /s/<id>` 200 且含快照正文）。
+  - 回归：`ruff check src tests` → **All checks passed!**；pytest 全量 **1177 例全绿**（基线 1153，净增 24 = 移除 3 例占位 − 新增 27 例）；AST 守护随全量通过；**零新增运行时依赖**（新增 import 均为 stdlib：`argparse/html/json/mimetypes/os/sys/socket/tomllib/pathlib/collections.abc`，pyyaml 与 httpx 已在白名单）。
 
 ## Task 20: 综合契约测试、覆盖率门禁与性能基准
 
