@@ -77,6 +77,7 @@ flowchart TD
 | [three-stage-universal-principle.md](./three-stage-universal-principle.md) | 三阶段普遍规律：治理/知识库/抽象都遵循三阶段递进（修复→预防→闭环、生成→重组→精确化、具体→通用→元方法），顺序不可颠倒、中间阶段不可跳过 | 全阶段（治理/建设/抽象） | 全部角色 |
 | [meta-document-priority-principle.md](./meta-document-priority-principle.md) | 元文档优先原则：资源有限时优先优化入口/索引/L1门面（<20%篇幅贡献>50%采纳率）；入口<100行、Skill门面<500行、新增模块先更新索引 | 文档编写、体系建设 | 全部角色 |
 | [content-sensitivity-precheck.md](./content-sensitivity-precheck.md) | 内容敏感度预检规范：公开/私域两级判定、信号清单、工作流分流决策树、私域工作流执行规范、私域转公开流程；启动协议步骤2.3的详细规范 | 任务启动（启动协议步骤2.3） | 全部角色 |
+| [commit-staging-integrity.md](./commit-staging-integrity.md) | 提交暂存区完整性规则：暂存区是共享可变状态（核对过≠提交时仍干净），提交集必须路径级点名；含既有守卫（`git-commit-utf8.py` 带文件清单）盘点、索引被污染时的软回退处置、6 条反模式 | 执行提交时 | 全部角色 |
 
 ## 快速导航
 
@@ -118,6 +119,8 @@ flowchart TD
 | 分析的网页/内容是私域/内部/需要权限访问的？ | [content-sensitivity-precheck.md](./content-sensitivity-precheck.md)（内容敏感度预检，私域内容直接到playground/） |
 | 我要处理扫描版版权书籍/材料（OCR 转录还是摘要）？ | [content-sensitivity-precheck.md](./content-sensitivity-precheck.md)（route 决策前置条款：默认摘要路线，frontmatter 显式记录 `route` 字段，禁止隐式执行） |
 | 不确定内容是公开还是私域怎么办？ | [content-sensitivity-precheck.md](./content-sensitivity-precheck.md)（就高不就低原则，默认私域或询问用户） |
+| 提交时怎么保证不裹进别人的改动？ | [commit-staging-integrity.md](./commit-staging-integrity.md)（提交集路径级点名 + 既有守卫盘点；用了工具 ≠ 走了守卫） |
+| 暂存区里有其它会话暂存的文件怎么办？ | [commit-staging-integrity.md](./commit-staging-integrity.md)（R3/R4：核对紧邻提交、软回退 + 摘出，不丢他人工作） |
 
 ### 按角色导航
 
