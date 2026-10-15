@@ -1,0 +1,27 @@
+doocs-md-py
+
+本项目是 doocs/md（https://github.com/doocs/md）的 Python 3.14 复刻，
+以学习与自托管为目的。上游项目依据 WTFPL v2 许可发布：
+
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                    Version 2, December 2004
+
+ Copyright (C) 2025 Doocs <admin@doocs.org>
+
+ Everyone is permitted to copy and distribute verbatim or modified
+ copies of this license document, and changing it is allowed as long
+ as the name is changed.
+
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+ 0. You just DO WHAT THE FUCK YOU WANT TO.
+
+归属声明：
+- 渲染管线、主题 CSS（base/default/grace/simple）、emoji 数据、AI 服务选项清单、
+  前端构建产物等移植资产的原始版权归 doocs/md 上游贡献者所有。
+- Python 实现代码（src/doocs_md_py 下除 assets/ 原样移植资产外的部分）为本复刻新增。
+- 本项目与 doocs 官方无隶属关系，不使用 doocs 官方名义分发，不内置任何官方运营凭证。
+
+上游版本锚点：见 docs/architecture.md 中的提交哈希记录（构建脚本会自动提取
+git -C <源树> rev-parse HEAD 并写入资产清单）。

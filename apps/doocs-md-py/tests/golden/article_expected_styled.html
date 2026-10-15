@@ -1,0 +1,315 @@
+<style>
+:root {
+  /* Theme config */
+  --md-primary-color: #009874;
+  --md-font-family: Menlo, Monaco, 'Courier New', monospace;
+  --md-font-size: 15px;
+  --md-line-height: 1.65;
+  --md-block-spacing: 0.9;
+  --md-link-color: #009874;
+  --md-blockquote-background: transparent;
+}
+
+/* Paragraph indent & justify */
+#output p {
+  text-indent: 2em;
+  text-align: justify;
+}
+
+/**
+ * MD base theme styles
+ * Base element styles and CSS variable definitions
+ */
+
+/* ==================== Container ==================== */
+section,
+#output .container {
+  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-size: 15px;
+  line-height: 1.65;
+  text-align: left;
+}
+
+#output {
+  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-size: 15px;
+  line-height: 1.65;
+  text-align: left;
+}
+
+#output section > :first-child {
+  margin-top: 0 !important;
+}
+
+/*
+ * Reset for exported HTML / share pages / VSCode preview (no Tailwind preflight).
+ * Browser defaults leak in (e.g. blockquote 40px side margins, table border-collapse: separate).
+ * Reset horizontal (and top) margins so export matches in-app preview.
+ * Vertical spacing comes from theme blockquote { margin-bottom }; do not zero all margins here.
+ * section selector covers VSCode preview (no #output; content in section.container).
+ */
+#output blockquote,
+section blockquote {
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+}
+
+#output table,
+section table {
+  border-collapse: collapse;
+  min-width: 100%;
+}
+
+.mermaid-diagram .nodeLabel p {
+  color: unset !important;
+  letter-spacing: unset !important;
+}
+
+/* ==================== Inline emoji ====================
+ * `<img class="md-emoji">` comes from `<Emoji id="…">` (and legacy
+ * `{{emoji:id}}`). Native pixel sizing makes the image dwarf the surrounding
+ * text; constrain to the line box so it reads as an inline character.
+ */
+#output img.md-emoji,
+section img.md-emoji {
+  max-height: 1.4em;
+  width: auto;
+  vertical-align: text-bottom;
+  margin: 0 0.1em;
+  display: inline;
+}
+
+/*
+ * Original-size stickers (`width="N%"`) use a separate class so the line-box
+ * cap above does not shrink them. Keep aspect ratio and stay inside the article.
+ */
+#output img.md-asset-img,
+section img.md-asset-img {
+  height: auto;
+  max-width: 100%;
+  vertical-align: text-bottom;
+  display: inline;
+}
+
+
+/**
+ * MD grace theme (@brzhang) — refinements on default
+ */
+
+/* Headings */
+h1 {
+  padding: 0.5em 1em;
+  border-bottom: 2px solid #009874;
+  font-size: 21px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  padding: 0.3em 1em;
+  border-radius: 8px;
+  font-size: 19.5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+  padding-left: 12px;
+  font-size: 18px;
+  border-left: 4px solid #009874;
+  border-bottom: 1px dashed #009874;
+}
+
+h4 {
+  font-size: 16.5px;
+}
+
+h5 {
+  font-size: 15px;
+}
+
+h6 {
+  font-size: 15px;
+}
+
+/* Blockquote */
+blockquote {
+  font-style: italic;
+  padding: 1em 1em 1em 2em;
+  border-left: 4px solid #009874;
+  border-radius: 6px;
+  color: rgba(0, 0, 0, 0.6);
+  background: transparent;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 0.9em;
+}
+
+.markdown-alert {
+  font-style: italic;
+}
+
+/* Inline code */
+.codespan {
+  font-family: 'Fira Code', Menlo, Operator Mono, Consolas, Monaco, monospace;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Code blocks */
+pre.code__pre,
+.hljs.code__pre {
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+pre.code__pre > code,
+.hljs.code__pre > code {
+  font-family: 'Fira Code', Menlo, Operator Mono, Consolas, Monaco, monospace;
+}
+
+/* Images */
+img {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+figcaption,
+.md-figcaption {
+  text-align: center;
+  color: #888;
+  font-size: 0.8em;
+}
+
+/* Lists */
+ol {
+  padding-left: 1.5em;
+}
+
+ul {
+  list-style: none;
+  padding-left: 1.5em;
+}
+
+li {
+  margin: 0.45em 8px;
+}
+
+/* Horizontal rules */
+hr {
+  height: 1px;
+  border: none;
+  margin: 1.8em 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+}
+
+/* Tables */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  margin: 0.9em 8px;
+  color: hsl(var(--foreground));
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+thead {
+  color: #fff;
+}
+
+td {
+  padding: 0.5em 1em;
+}
+
+/* Emphasis */
+em {
+  font-style: italic;
+  font-size: inherit;
+}
+
+/* Links */
+a {
+  color: #009874;
+  text-decoration: none;
+}
+
+
+#output h1 {
+  color: #009874;
+  background: transparent;
+}
+
+#output h2 {
+  display: block;
+  text-align: left;
+  background: transparent;
+  padding-bottom: 0.3em;
+  border-bottom: 2px solid #009874;
+  color: #009874;
+}
+
+#output h3 {
+  display: block;
+  text-align: left;
+  background: transparent;
+  margin-left: 0;
+  padding-left: 10px;
+  border-left: 4px solid #009874;
+  color: #009874;
+}
+
+.x { color: red }
+<\/style break>
+</style>
+<section class="container">
+      <blockquote class="md-blockquote">
+        <p class="md-blockquote-p">86 words, about 1 min read</p>
+      </blockquote>
+    <h1 class="h1" data-heading="true">一级标题</h1><h2 class="h2" data-heading="true">二级标题</h2><h3 class="h3" data-heading="true">三级标题</h3><p class="p">正文段落，<strong class="strong">加粗</strong>与<a href="https://example.com" title="链接">链接<sup>[1]</sup></a>，并验证缩进与两端对齐。</p><blockquote class="blockquote"><p class="p">引用块测试</p></blockquote><ul class="ul"><li class="listitem">• 列表一</li><li class="listitem">• 列表二</li></ul><ol class="ol"><li class="listitem">1. 有序一</li><li class="listitem">2. 有序二</li></ol><p class="p"><code class="codespan">行内代码</code> 与 <span class="markup-highlight">标记</span>。</p><pre class="hljs code__pre"><span class="mac-sign" style="padding: 10px 14px 0;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="45px" height="13px" viewBox="0 0 450 130">
+    <ellipse cx="50" cy="65" rx="50" ry="52" stroke="rgb(220,60,54)" stroke-width="2" fill="rgb(237,108,96)"></ellipse>
+    <ellipse cx="225" cy="65" rx="50" ry="52" stroke="rgb(218,151,33)" stroke-width="2" fill="rgb(247,193,81)"></ellipse>
+    <ellipse cx="400" cy="65" rx="50" ry="52" stroke="rgb(27,161,37)" stroke-width="2" fill="rgb(100,200,86)"></ellipse>
+  </svg></span><code class="language-python" data-language-pending="python" data-raw-code="print(&quot;代码块&quot;)" data-show-line-number="true">
+      <section style="display:flex;align-items:flex-start;overflow-x:hidden;overflow-y:auto;width:100%;max-width:100%;padding:0;box-sizing:border-box">
+        <section class="line-numbers" style="text-align:right;padding:8px 0;border-right:1px solid rgba(0,0,0,0.04);user-select:none;background:var(--code-bg,transparent);"><section style="padding:0 10px 0 0;line-height:1.75">1</section></section>
+        <section class="code-scroll" style="flex:1 1 auto;overflow-x:auto;overflow-y:visible;padding:8px;min-width:0;box-sizing:border-box"><div style="white-space:pre;min-width:max-content;line-height:1.75">print("代码块")</div></section>
+      </section>
+    </code></pre>
+        <section style="max-width: 100%; overflow: auto; -webkit-overflow-scrolling: touch">
+          <table class="preview-table">
+            <thead><tr><th class="th" style="text-align: left">左</th><th class="th" style="text-align: left">右</th></tr></thead>
+            <tbody><tr class="tr"><td class="td" style="text-align: left">a</td><td class="td" style="text-align: left">b</td></tr></tbody>
+          </table>
+        </section>
+      <figure><img src="https://example.com/x.png" title="标题" alt="图"><figcaption class="figcaption">图</figcaption></figure><p class="p">脚注参考<sup style="color: var(--md-primary-color);">
+                    <a href="#fnDef-1" id="fnRef-1">[1]</a>
+                </sup>。</p>
+            <p style="font-size: 80%;margin: 0.5em 8px;word-break:break-all;">
+                <code>1.</code> 
+                <span> 脚注内容。</span> 
+                    <a id="fnDef-1" href="#fnRef-1" style="color: var(--md-primary-color);">↩︎</a>
+                <br></p><h4 class="h4" data-heading="true">References</h4><p class="footnotes"><code style="font-size: 90%; opacity: 0.6;">[1]</code> 链接: <i style="word-break: break-all">https://example.com</i><br/></p>
+    <style>
+      .preview-wrapper pre::before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #ccc;
+        text-align: center;
+        font-size: 0.8em;
+        padding: 5px 10px 0;
+        line-height: 15px;
+        height: 15px;
+        font-weight: 600;
+      }
+    </style>
+  
+    <style>
+      .hljs.code__pre > .mac-sign {
+        display: flex;
+      }
+    </style>
+  
+    <style>
+      h2 strong {
+        color: inherit !important;
+      }
+    </style>
+  </section>

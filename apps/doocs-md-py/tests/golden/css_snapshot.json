@@ -1,0 +1,166 @@
+{
+  "generated_by": "Node 22 + upstream cssVariables.ts/cssProcessor.ts @ 1bdad48",
+  "variables": [
+    {
+      "name": "defaults",
+      "input": {
+        "primaryColor": "#0F4C81",
+        "fontFamily": "Sans, serif",
+        "fontSize": "16px",
+        "lineHeight": "1.75",
+        "blockSpacing": "1",
+        "linkColor": "#576b95",
+        "blockquoteBackground": "default",
+        "isUseIndent": false,
+        "isUseJustify": false
+      },
+      "expected": ":root {\n  /* Theme config */\n  --md-primary-color: #0F4C81;\n  --md-font-family: Sans, serif;\n  --md-font-size: 16px;\n  --md-line-height: 1.75;\n  --md-block-spacing: 1;\n  --md-link-color: #576b95;\n}\n\n/* Paragraph indent & justify */\n#output p {\n  \n  \n}"
+    },
+    {
+      "name": "fallbacks-when-empty",
+      "input": {
+        "primaryColor": "#333",
+        "fontFamily": "Mono",
+        "fontSize": "14px"
+      },
+      "expected": ":root {\n  /* Theme config */\n  --md-primary-color: #333;\n  --md-font-family: Mono;\n  --md-font-size: 14px;\n  --md-line-height: 1.75;\n  --md-block-spacing: 1;\n  --md-link-color: #576b95;\n}\n\n/* Paragraph indent & justify */\n#output p {\n  \n  \n}"
+    },
+    {
+      "name": "custom-blockquote-indent-justify",
+      "input": {
+        "primaryColor": "#abc",
+        "fontFamily": "Serif",
+        "fontSize": "17px",
+        "lineHeight": "2",
+        "blockSpacing": "1.2",
+        "linkColor": "inherit",
+        "blockquoteBackground": "#f5f5f5",
+        "isUseIndent": true,
+        "isUseJustify": true
+      },
+      "expected": ":root {\n  /* Theme config */\n  --md-primary-color: #abc;\n  --md-font-family: Serif;\n  --md-font-size: 17px;\n  --md-line-height: 2;\n  --md-block-spacing: 1.2;\n  --md-link-color: inherit;\n  --md-blockquote-background: #f5f5f5;\n}\n\n/* Paragraph indent & justify */\n#output p {\n  text-indent: 2em;\n  text-align: justify;\n}"
+    },
+    {
+      "name": "empty-blockquote-bg",
+      "input": {
+        "primaryColor": "#000",
+        "fontFamily": "X",
+        "fontSize": "16px",
+        "blockquoteBackground": ""
+      },
+      "expected": ":root {\n  /* Theme config */\n  --md-primary-color: #000;\n  --md-font-family: X;\n  --md-font-size: 16px;\n  --md-line-height: 1.75;\n  --md-block-spacing: 1;\n  --md-link-color: #576b95;\n}\n\n/* Paragraph indent & justify */\n#output p {\n  \n  \n}"
+    }
+  ],
+  "headings": [
+    {
+      "name": "presets",
+      "input": {
+        "h1": "color-only",
+        "h2": "border-bottom",
+        "h3": "border-left"
+      },
+      "expected": "#output h1 {\n  color: var(--md-primary-color);\n  background: transparent;\n}\n\n#output h2 {\n  display: block;\n  text-align: left;\n  background: transparent;\n  padding-bottom: 0.3em;\n  border-bottom: 2px solid var(--md-primary-color);\n  color: var(--md-primary-color);\n}\n\n#output h3 {\n  display: block;\n  text-align: left;\n  background: transparent;\n  margin-left: 0;\n  padding-left: 10px;\n  border-left: 4px solid var(--md-primary-color);\n  color: var(--md-primary-color);\n}"
+    },
+    {
+      "name": "default-and-custom-skipped",
+      "input": {
+        "h1": "default",
+        "h2": "custom",
+        "h3": "color-only"
+      },
+      "expected": "#output h3 {\n  color: var(--md-primary-color);\n  background: transparent;\n}"
+    },
+    {
+      "name": "empty-string-skipped",
+      "input": {
+        "h1": "",
+        "h4": "border-left"
+      },
+      "expected": "#output h4 {\n  display: block;\n  text-align: left;\n  background: transparent;\n  margin-left: 0;\n  padding-left: 10px;\n  border-left: 4px solid var(--md-primary-color);\n  color: var(--md-primary-color);\n}"
+    },
+    {
+      "name": "all-default",
+      "input": {
+        "h1": "default",
+        "h2": "default"
+      },
+      "expected": ""
+    },
+    {
+      "name": "undefined",
+      "expected": ""
+    }
+  ],
+  "process": [
+    {
+      "name": "var-basic",
+      "input": ":root{--a:red}x{color:var(--a)}",
+      "expected": ":root{--a:red}x{color:red}"
+    },
+    {
+      "name": "var-fallback-used",
+      "input": "x{color:var(--missing, blue)}",
+      "expected": "x{color:blue}"
+    },
+    {
+      "name": "var-fallback-nested-parens",
+      "input": "x{color:var(--miss, rgb(1, 2, 3))}",
+      "expected": "x{color:rgb(1, 2, 3)}"
+    },
+    {
+      "name": "var-resolved-wins-over-fallback",
+      "input": ":root{--a:red}x{color:var(--a, blue)}",
+      "expected": ":root{--a:red}x{color:red}"
+    },
+    {
+      "name": "var-nested-resolution",
+      "input": ":root{--a:var(--b);--b:green}x{color:var(--a)}",
+      "expected": ":root{--a:green;--b:green}x{color:green}"
+    },
+    {
+      "name": "var-unresolved-kept",
+      "input": "x{color:var(--never-defined)}",
+      "expected": "x{color:var(--never-defined)}"
+    },
+    {
+      "name": "calc-add",
+      "input": "x{width:calc(10px + 2px)}",
+      "expected": "x{width:12px}"
+    },
+    {
+      "name": "calc-sub",
+      "input": "x{width:calc(10px - 3px)}",
+      "expected": "x{width:7px}"
+    },
+    {
+      "name": "calc-mul-unit",
+      "input": "x{width:calc(2 * 4px)}",
+      "expected": "x{width:8px}"
+    },
+    {
+      "name": "calc-div-upstream-nan",
+      "input": "x{width:calc(8px / 2)}",
+      "expected": "x{width:NaNpx}"
+    },
+    {
+      "name": "calc-rounding",
+      "input": "x{width:calc(1px / 3)}",
+      "expected": "x{width:NaNpx}"
+    },
+    {
+      "name": "calc-unitless-add",
+      "input": "x{width:calc(1 + 2)}",
+      "expected": "x{width:3}"
+    },
+    {
+      "name": "calc-unmatched-kept",
+      "input": "x{width:calc(10px + 2em)}",
+      "expected": "x{width:calc(10px + 2em)}"
+    },
+    {
+      "name": "default-theme-full",
+      "input": "/**\n * MD default theme (classic).\n * Format with Alt/Option + Shift + F.\n * Use var(--md-primary-color) for theme color instead of hard-coded values.\n * Vertical block margins are scaled by var(--md-block-spacing) so the theme's\n * own rhythm is preserved while the user tightens or loosens the whole page.\n */\n\n/* ==================== H1 ==================== */\nh1 {\n  display: table;\n  padding: 0 1em;\n  border-bottom: 2px solid var(--md-primary-color);\n  margin: calc(2em * var(--md-block-spacing)) auto calc(1em * var(--md-block-spacing));\n  color: hsl(var(--foreground));\n  font-size: calc(var(--md-font-size) * 1.2);\n  font-weight: bold;\n  text-align: center;\n}\n\n/* ==================== H2 ==================== */\nh2 {\n  display: table;\n  padding: 0 0.2em;\n  margin: calc(4em * var(--md-block-spacing)) auto calc(2em * var(--md-block-spacing));\n  color: #fff;\n  background: var(--md-primary-color);\n  font-size: calc(var(--md-font-size) * 1.2);\n  font-weight: bold;\n  text-align: center;\n}\n\n/* ==================== H3 ==================== */\nh3 {\n  padding-left: 8px;\n  border-left: 3px solid var(--md-primary-color);\n  margin: calc(2em * var(--md-block-spacing)) 8px calc(0.75em * var(--md-block-spacing)) 0;\n  color: hsl(var(--foreground));\n  font-size: calc(var(--md-font-size) * 1.1);\n  font-weight: bold;\n  line-height: 1.2;\n}\n\n/* ==================== H4 ==================== */\nh4 {\n  margin: calc(2em * var(--md-block-spacing)) 8px calc(0.5em * var(--md-block-spacing));\n  color: var(--md-primary-color);\n  font-size: calc(var(--md-font-size) * 1);\n  font-weight: bold;\n}\n\n/* ==================== H5 ==================== */\nh5 {\n  margin: calc(1.5em * var(--md-block-spacing)) 8px calc(0.5em * var(--md-block-spacing));\n  color: var(--md-primary-color);\n  font-size: calc(var(--md-font-size) * 1);\n  font-weight: bold;\n}\n\n/* ==================== H6 ==================== */\nh6 {\n  margin: calc(1.5em * var(--md-block-spacing)) 8px calc(0.5em * var(--md-block-spacing));\n  font-size: calc(var(--md-font-size) * 1);\n  color: var(--md-primary-color);\n}\n\n/* ==================== Paragraph ==================== */\np {\n  margin: calc(1.5em * var(--md-block-spacing)) 8px;\n  letter-spacing: 0.1em;\n  color: hsl(var(--foreground));\n}\n\n/* ==================== Blockquote ==================== */\nblockquote {\n  font-style: normal;\n  padding: 1em;\n  border-left: 4px solid var(--md-primary-color);\n  border-radius: 6px;\n  color: hsl(var(--foreground));\n  background: var(--md-blockquote-background, var(--blockquote-background));\n  margin-bottom: calc(1em * var(--md-block-spacing));\n}\n\nblockquote > p {\n  display: block;\n  font-size: 1em;\n  letter-spacing: 0.1em;\n  color: hsl(var(--foreground));\n  margin: 0;\n}\n\n/* ==================== GFM alerts ==================== */\n.alert-title-note,\n.alert-title-tip,\n.alert-title-info,\n.alert-title-important,\n.alert-title-warning,\n.alert-title-caution,\n.alert-title-abstract,\n.alert-title-summary,\n.alert-title-tldr,\n.alert-title-todo,\n.alert-title-success,\n.alert-title-done,\n.alert-title-question,\n.alert-title-help,\n.alert-title-faq,\n.alert-title-failure,\n.alert-title-fail,\n.alert-title-missing,\n.alert-title-danger,\n.alert-title-error,\n.alert-title-bug,\n.alert-title-example,\n.alert-title-quote,\n.alert-title-cite,\n.alert-title-theorem,\n.alert-title-lemma,\n.alert-title-corollary,\n.alert-title-proposition,\n.alert-title-definition,\n.alert-title-axiom,\n.alert-title-postulate,\n.alert-title-assumption,\n.alert-title-proof,\n.alert-title-remark,\n.alert-title-custom {\n  display: flex;\n  align-items: center;\n  gap: 0.5em;\n  margin-bottom: 0.5em;\n}\n\n.alert-title-note {\n  color: #478be6;\n}\n\n.alert-title-tip {\n  color: #57ab5a;\n}\n\n.alert-title-info {\n  color: #93c5fd;\n}\n\n.alert-title-important {\n  color: #986ee2;\n}\n\n.alert-title-warning {\n  color: #c69026;\n}\n\n.alert-title-caution {\n  color: #e5534b;\n}\n\n/* Obsidian-style callout colors */\n.alert-title-abstract,\n.alert-title-summary,\n.alert-title-tldr {\n  color: #00bfff;\n}\n\n.alert-title-todo {\n  color: #478be6;\n}\n\n.alert-title-success,\n.alert-title-done {\n  color: #57ab5a;\n}\n\n.alert-title-question,\n.alert-title-help,\n.alert-title-faq {\n  color: #c69026;\n}\n\n.alert-title-failure,\n.alert-title-fail,\n.alert-title-missing {\n  color: #e5534b;\n}\n\n.alert-title-danger,\n.alert-title-error {\n  color: #e5534b;\n}\n\n.alert-title-bug {\n  color: #e5534b;\n}\n\n.alert-title-example {\n  color: #986ee2;\n}\n\n.alert-title-quote,\n.alert-title-cite {\n  color: #9ca3af;\n}\n\n/* GFM alert SVG icon colors */\n.alert-icon-note {\n  fill: #478be6;\n}\n\n.alert-icon-tip {\n  fill: #57ab5a;\n}\n\n.alert-icon-info {\n  fill: #93c5fd;\n}\n\n.alert-icon-important {\n  fill: #986ee2;\n}\n\n.alert-icon-warning {\n  fill: #c69026;\n}\n\n.alert-icon-caution {\n  fill: #e5534b;\n}\n\n/* Obsidian-style callout icon colors */\n.alert-icon-abstract,\n.alert-icon-summary,\n.alert-icon-tldr {\n  fill: #00bfff;\n}\n\n.alert-icon-todo {\n  fill: #478be6;\n}\n\n.alert-icon-success,\n.alert-icon-done {\n  fill: #57ab5a;\n}\n\n.alert-icon-question,\n.alert-icon-help,\n.alert-icon-faq {\n  fill: #c69026;\n}\n\n.alert-icon-failure,\n.alert-icon-fail,\n.alert-icon-missing {\n  fill: #e5534b;\n}\n\n.alert-icon-danger,\n.alert-icon-error {\n  fill: #e5534b;\n}\n\n.alert-icon-bug {\n  fill: #e5534b;\n}\n\n.alert-icon-example {\n  fill: #986ee2;\n}\n\n.alert-icon-quote,\n.alert-icon-cite {\n  fill: #9ca3af;\n}\n\n/* ==================== Academic environments (theorem, lemma, definition, …) ==================== */\n/* Title colors */\n.alert-title-theorem,\n.alert-title-lemma,\n.alert-title-corollary,\n.alert-title-proposition {\n  color: #986ee2;\n}\n\n.alert-title-definition {\n  color: #57ab5a;\n}\n\n.alert-title-axiom,\n.alert-title-postulate,\n.alert-title-assumption {\n  color: #478be6;\n}\n\n.alert-title-proof {\n  color: #9ca3af;\n}\n\n.alert-title-remark {\n  color: #c69026;\n}\n\n/* Icon colors */\n.alert-icon-theorem,\n.alert-icon-lemma,\n.alert-icon-corollary,\n.alert-icon-proposition {\n  fill: #986ee2;\n}\n\n.alert-icon-definition {\n  fill: #57ab5a;\n}\n\n.alert-icon-axiom,\n.alert-icon-postulate,\n.alert-icon-assumption {\n  fill: #478be6;\n}\n\n.alert-icon-proof {\n  fill: #9ca3af;\n}\n\n.alert-icon-remark {\n  fill: #c69026;\n}\n\n/* Full border on academic boxes (theorem-style appearance) */\n.markdown-alert-theorem,\n.markdown-alert-lemma,\n.markdown-alert-corollary,\n.markdown-alert-proposition {\n  border: 1px solid rgba(152, 110, 226, 0.35);\n  border-left: 4px solid #986ee2;\n}\n\n.markdown-alert-definition {\n  border: 1px solid rgba(87, 171, 90, 0.35);\n  border-left: 4px solid #57ab5a;\n}\n\n.markdown-alert-axiom,\n.markdown-alert-postulate,\n.markdown-alert-assumption {\n  border: 1px solid rgba(71, 139, 230, 0.35);\n  border-left: 4px solid #478be6;\n}\n\n.markdown-alert-proof {\n  border: 1px solid rgba(156, 163, 175, 0.35);\n  border-left: 4px solid #9ca3af;\n}\n\n.markdown-alert-remark {\n  border: 1px solid rgba(198, 144, 38, 0.35);\n  border-left: 4px solid #c69026;\n}\n\n/* Fallback for custom/unknown names: no icon, theme primary color */\n.alert-title-custom {\n  color: var(--md-primary-color);\n}\n\n.markdown-alert-custom {\n  border-left: 4px solid var(--md-primary-color);\n}\n\n/* Italic body text in academic environments (math convention) */\n.markdown-alert-theorem > :not(.markdown-alert-title),\n.markdown-alert-lemma > :not(.markdown-alert-title),\n.markdown-alert-corollary > :not(.markdown-alert-title),\n.markdown-alert-proposition > :not(.markdown-alert-title),\n.markdown-alert-definition > :not(.markdown-alert-title),\n.markdown-alert-axiom > :not(.markdown-alert-title),\n.markdown-alert-postulate > :not(.markdown-alert-title),\n.markdown-alert-assumption > :not(.markdown-alert-title) {\n  font-style: italic;\n}\n\n/* ==================== Code blocks ==================== */\npre.code__pre,\n.hljs.code__pre {\n  font-size: 90%;\n  overflow-x: auto;\n  border-radius: 8px;\n  padding: 0 !important;\n  line-height: 1.5;\n  margin: calc(10px * var(--md-block-spacing)) 8px;\n}\n\n/* ==================== Images ==================== */\nimg {\n  display: block;\n  max-width: 100%;\n  margin: calc(0.1em * var(--md-block-spacing)) auto calc(0.5em * var(--md-block-spacing));\n  border-radius: 4px;\n}\n\n/* ==================== Lists ==================== */\nol {\n  padding-left: 1em;\n  margin-left: 0;\n  color: hsl(var(--foreground));\n}\n\nul {\n  list-style: circle;\n  padding-left: 1em;\n  margin-left: 0;\n  color: hsl(var(--foreground));\n}\n\nli {\n  display: block;\n  margin: calc(0.2em * var(--md-block-spacing)) 8px;\n  color: hsl(var(--foreground));\n}\n\n/* Footnotes */\n/* footnotes rendered as <p> in buildFootnotes() */\np.footnotes {\n  margin: calc(0.5em * var(--md-block-spacing)) 8px;\n  font-size: 80%;\n  color: hsl(var(--foreground));\n}\n\n/* Diagrams */\nfigure {\n  margin: calc(1.5em * var(--md-block-spacing)) 8px;\n  color: hsl(var(--foreground));\n}\n\nfigcaption,\n.md-figcaption {\n  text-align: center;\n  color: color-mix(in srgb, hsl(var(--foreground)) 50%, transparent);\n  font-size: 0.8em;\n}\n\n/* ==================== Horizontal rules ==================== */\nhr {\n  border-style: solid;\n  border-width: 2px 0 0;\n  border-color: rgba(0, 0, 0, 0.1);\n  -webkit-transform-origin: 0 0;\n  -webkit-transform: scale(1, 0.5);\n  transform-origin: 0 0;\n  transform: scale(1, 0.5);\n  height: 0.4em;\n  margin: calc(1.5em * var(--md-block-spacing)) 0;\n}\n\n/* Inline code */\n.codespan {\n  font-size: 90%;\n  color: var(--md-primary-color);\n  background: color-mix(in srgb, var(--md-primary-color) 8%, transparent);\n  padding: 3px 5px;\n  border-radius: 4px;\n  border: 1px solid color-mix(in srgb, var(--md-primary-color) 20%, transparent);\n}\n\n/* code inside pre (override inline code) */\npre.code__pre > code,\n.hljs.code__pre > code {\n  display: -webkit-box;\n  padding: 0.5em 1em 1em;\n  overflow-x: auto;\n  text-indent: 0;\n  color: inherit;\n  background: none;\n  white-space: nowrap;\n  margin: 0;\n}\n\n/* Emphasis */\nem {\n  font-style: italic;\n  font-size: inherit;\n}\n\n/* ==================== Links ==================== */\na {\n  color: var(--md-link-color);\n  text-decoration: none;\n}\n\n/* ==================== Bold ==================== */\nstrong {\n  color: var(--md-primary-color);\n  font-weight: bold;\n  font-size: inherit;\n}\n\n/* ==================== Strikethrough ==================== */\n.del {\n  color: color-mix(in srgb, hsl(var(--foreground)) 55%, transparent);\n  text-decoration: line-through;\n}\n\n/* ==================== Tables ==================== */\ntable {\n  color: hsl(var(--foreground));\n}\n\nthead {\n  font-weight: bold;\n  color: hsl(var(--foreground));\n}\n\nth {\n  border: 1px solid color-mix(in srgb, hsl(var(--foreground)) 15%, transparent);\n  padding: 0.25em 0.5em;\n  color: hsl(var(--foreground));\n  word-break: keep-all;\n  background: color-mix(in srgb, hsl(var(--foreground)) 5%, transparent);\n}\n\ntd {\n  border: 1px solid color-mix(in srgb, hsl(var(--foreground)) 15%, transparent);\n  padding: 0.25em 0.5em;\n  color: hsl(var(--foreground));\n  word-break: keep-all;\n}\n\n/* ==================== KaTeX ==================== */\n.katex-inline {\n  max-width: 100%;\n  overflow-x: auto;\n  cursor: pointer;\n}\n\n.katex-block {\n  max-width: 100%;\n  overflow-x: auto;\n  -webkit-overflow-scrolling: touch;\n  cursor: pointer;\n  padding: 0.5em 0;\n  text-align: center;\n}\n\n.katex-pending {\n  color: hsl(var(--muted-foreground, 0 0% 45%));\n  font-size: 0.875em;\n}\n\n.katex-block.katex-pending {\n  padding: 0.75em 0;\n}\n\n.katex-inline.katex-pending {\n  opacity: 0.75;\n}\n\n/* ==================== Markup highlight ==================== */\n.markup-highlight {\n  background-color: var(--md-primary-color);\n  padding: 2px 4px;\n  border-radius: 2px;\n  color: #fff;\n}\n\n.markup-underline {\n  text-decoration: underline;\n  text-decoration-color: var(--md-primary-color);\n}\n\n.markup-wavyline {\n  text-decoration: underline wavy;\n  text-decoration-color: var(--md-primary-color);\n  text-decoration-thickness: 2px;\n}\n\n/* line-height: 0 keeps the raised glyph from stretching the line box */\n.markup-superscript {\n  font-size: 0.75em;\n  line-height: 0;\n  vertical-align: super;\n}\n",
+      "expected": "/**\n * MD default theme (classic).\n * Format with Alt/Option + Shift + F.\n * Use var(--md-primary-color) for theme color instead of hard-coded values.\n * Vertical block margins are scaled by var(--md-block-spacing) so the theme's\n * own rhythm is preserved while the user tightens or loosens the whole page.\n */\n\n/* ==================== H1 ==================== */\nh1 {\n  display: table;\n  padding: 0 1em;\n  border-bottom: 2px solid var(--md-primary-color);\n  margin: calc(2em * var(--md-block-spacing)) auto calc(1em * var(--md-block-spacing));\n  color: hsl(var(--foreground));\n  font-size: calc(var(--md-font-size) * 1.2);\n  font-weight: bold;\n  text-align: center;\n}\n\n/* ==================== H2 ==================== */\nh2 {\n  display: table;\n  padding: 0 0.2em;\n  margin: calc(4em * var(--md-block-spacing)) auto calc(2em * var(--md-block-spacing));\n  color: #fff;\n  background: var(--md-primary-color);\n  font-size: calc(var(--md-font-size) * 1.2);\n  font-weight: bold;\n  text-align: center;\n}\n\n/* ==================== H3 ==================== */\nh3 {\n  padding-left: 8px;\n  border-left: 3px solid var(--md-primary-color);\n  margin: calc(2em * var(--md-block-spacing)) 8px calc(0.75em * var(--md-block-spacing)) 0;\n  color: hsl(var(--foreground));\n  font-size: calc(var(--md-font-size) * 1.1);\n  font-weight: bold;\n  line-height: 1.2;\n}\n\n/* ==================== H4 ==================== */\nh4 {\n  margin: calc(2em * var(--md-block-spacing)) 8px calc(0.5em * var(--md-block-spacing));\n  color: var(--md-primary-color);\n  font-size: calc(var(--md-font-size) * 1);\n  font-weight: bold;\n}\n\n/* ==================== H5 ==================== */\nh5 {\n  margin: calc(1.5em * var(--md-block-spacing)) 8px calc(0.5em * var(--md-block-spacing));\n  color: var(--md-primary-color);\n  font-size: calc(var(--md-font-size) * 1);\n  font-weight: bold;\n}\n\n/* ==================== H6 ==================== */\nh6 {\n  margin: calc(1.5em * var(--md-block-spacing)) 8px calc(0.5em * var(--md-block-spacing));\n  font-size: calc(var(--md-font-size) * 1);\n  color: var(--md-primary-color);\n}\n\n/* ==================== Paragraph ==================== */\np {\n  margin: calc(1.5em * var(--md-block-spacing)) 8px;\n  letter-spacing: 0.1em;\n  color: hsl(var(--foreground));\n}\n\n/* ==================== Blockquote ==================== */\nblockquote {\n  font-style: normal;\n  padding: 1em;\n  border-left: 4px solid var(--md-primary-color);\n  border-radius: 6px;\n  color: hsl(var(--foreground));\n  background: var(--blockquote-background);\n  margin-bottom: calc(1em * var(--md-block-spacing));\n}\n\nblockquote > p {\n  display: block;\n  font-size: 1em;\n  letter-spacing: 0.1em;\n  color: hsl(var(--foreground));\n  margin: 0;\n}\n\n/* ==================== GFM alerts ==================== */\n.alert-title-note,\n.alert-title-tip,\n.alert-title-info,\n.alert-title-important,\n.alert-title-warning,\n.alert-title-caution,\n.alert-title-abstract,\n.alert-title-summary,\n.alert-title-tldr,\n.alert-title-todo,\n.alert-title-success,\n.alert-title-done,\n.alert-title-question,\n.alert-title-help,\n.alert-title-faq,\n.alert-title-failure,\n.alert-title-fail,\n.alert-title-missing,\n.alert-title-danger,\n.alert-title-error,\n.alert-title-bug,\n.alert-title-example,\n.alert-title-quote,\n.alert-title-cite,\n.alert-title-theorem,\n.alert-title-lemma,\n.alert-title-corollary,\n.alert-title-proposition,\n.alert-title-definition,\n.alert-title-axiom,\n.alert-title-postulate,\n.alert-title-assumption,\n.alert-title-proof,\n.alert-title-remark,\n.alert-title-custom {\n  display: flex;\n  align-items: center;\n  gap: 0.5em;\n  margin-bottom: 0.5em;\n}\n\n.alert-title-note {\n  color: #478be6;\n}\n\n.alert-title-tip {\n  color: #57ab5a;\n}\n\n.alert-title-info {\n  color: #93c5fd;\n}\n\n.alert-title-important {\n  color: #986ee2;\n}\n\n.alert-title-warning {\n  color: #c69026;\n}\n\n.alert-title-caution {\n  color: #e5534b;\n}\n\n/* Obsidian-style callout colors */\n.alert-title-abstract,\n.alert-title-summary,\n.alert-title-tldr {\n  color: #00bfff;\n}\n\n.alert-title-todo {\n  color: #478be6;\n}\n\n.alert-title-success,\n.alert-title-done {\n  color: #57ab5a;\n}\n\n.alert-title-question,\n.alert-title-help,\n.alert-title-faq {\n  color: #c69026;\n}\n\n.alert-title-failure,\n.alert-title-fail,\n.alert-title-missing {\n  color: #e5534b;\n}\n\n.alert-title-danger,\n.alert-title-error {\n  color: #e5534b;\n}\n\n.alert-title-bug {\n  color: #e5534b;\n}\n\n.alert-title-example {\n  color: #986ee2;\n}\n\n.alert-title-quote,\n.alert-title-cite {\n  color: #9ca3af;\n}\n\n/* GFM alert SVG icon colors */\n.alert-icon-note {\n  fill: #478be6;\n}\n\n.alert-icon-tip {\n  fill: #57ab5a;\n}\n\n.alert-icon-info {\n  fill: #93c5fd;\n}\n\n.alert-icon-important {\n  fill: #986ee2;\n}\n\n.alert-icon-warning {\n  fill: #c69026;\n}\n\n.alert-icon-caution {\n  fill: #e5534b;\n}\n\n/* Obsidian-style callout icon colors */\n.alert-icon-abstract,\n.alert-icon-summary,\n.alert-icon-tldr {\n  fill: #00bfff;\n}\n\n.alert-icon-todo {\n  fill: #478be6;\n}\n\n.alert-icon-success,\n.alert-icon-done {\n  fill: #57ab5a;\n}\n\n.alert-icon-question,\n.alert-icon-help,\n.alert-icon-faq {\n  fill: #c69026;\n}\n\n.alert-icon-failure,\n.alert-icon-fail,\n.alert-icon-missing {\n  fill: #e5534b;\n}\n\n.alert-icon-danger,\n.alert-icon-error {\n  fill: #e5534b;\n}\n\n.alert-icon-bug {\n  fill: #e5534b;\n}\n\n.alert-icon-example {\n  fill: #986ee2;\n}\n\n.alert-icon-quote,\n.alert-icon-cite {\n  fill: #9ca3af;\n}\n\n/* ==================== Academic environments (theorem, lemma, definition, …) ==================== */\n/* Title colors */\n.alert-title-theorem,\n.alert-title-lemma,\n.alert-title-corollary,\n.alert-title-proposition {\n  color: #986ee2;\n}\n\n.alert-title-definition {\n  color: #57ab5a;\n}\n\n.alert-title-axiom,\n.alert-title-postulate,\n.alert-title-assumption {\n  color: #478be6;\n}\n\n.alert-title-proof {\n  color: #9ca3af;\n}\n\n.alert-title-remark {\n  color: #c69026;\n}\n\n/* Icon colors */\n.alert-icon-theorem,\n.alert-icon-lemma,\n.alert-icon-corollary,\n.alert-icon-proposition {\n  fill: #986ee2;\n}\n\n.alert-icon-definition {\n  fill: #57ab5a;\n}\n\n.alert-icon-axiom,\n.alert-icon-postulate,\n.alert-icon-assumption {\n  fill: #478be6;\n}\n\n.alert-icon-proof {\n  fill: #9ca3af;\n}\n\n.alert-icon-remark {\n  fill: #c69026;\n}\n\n/* Full border on academic boxes (theorem-style appearance) */\n.markdown-alert-theorem,\n.markdown-alert-lemma,\n.markdown-alert-corollary,\n.markdown-alert-proposition {\n  border: 1px solid rgba(152, 110, 226, 0.35);\n  border-left: 4px solid #986ee2;\n}\n\n.markdown-alert-definition {\n  border: 1px solid rgba(87, 171, 90, 0.35);\n  border-left: 4px solid #57ab5a;\n}\n\n.markdown-alert-axiom,\n.markdown-alert-postulate,\n.markdown-alert-assumption {\n  border: 1px solid rgba(71, 139, 230, 0.35);\n  border-left: 4px solid #478be6;\n}\n\n.markdown-alert-proof {\n  border: 1px solid rgba(156, 163, 175, 0.35);\n  border-left: 4px solid #9ca3af;\n}\n\n.markdown-alert-remark {\n  border: 1px solid rgba(198, 144, 38, 0.35);\n  border-left: 4px solid #c69026;\n}\n\n/* Fallback for custom/unknown names: no icon, theme primary color */\n.alert-title-custom {\n  color: var(--md-primary-color);\n}\n\n.markdown-alert-custom {\n  border-left: 4px solid var(--md-primary-color);\n}\n\n/* Italic body text in academic environments (math convention) */\n.markdown-alert-theorem > :not(.markdown-alert-title),\n.markdown-alert-lemma > :not(.markdown-alert-title),\n.markdown-alert-corollary > :not(.markdown-alert-title),\n.markdown-alert-proposition > :not(.markdown-alert-title),\n.markdown-alert-definition > :not(.markdown-alert-title),\n.markdown-alert-axiom > :not(.markdown-alert-title),\n.markdown-alert-postulate > :not(.markdown-alert-title),\n.markdown-alert-assumption > :not(.markdown-alert-title) {\n  font-style: italic;\n}\n\n/* ==================== Code blocks ==================== */\npre.code__pre,\n.hljs.code__pre {\n  font-size: 90%;\n  overflow-x: auto;\n  border-radius: 8px;\n  padding: 0 !important;\n  line-height: 1.5;\n  margin: calc(10px * var(--md-block-spacing)) 8px;\n}\n\n/* ==================== Images ==================== */\nimg {\n  display: block;\n  max-width: 100%;\n  margin: calc(0.1em * var(--md-block-spacing)) auto calc(0.5em * var(--md-block-spacing));\n  border-radius: 4px;\n}\n\n/* ==================== Lists ==================== */\nol {\n  padding-left: 1em;\n  margin-left: 0;\n  color: hsl(var(--foreground));\n}\n\nul {\n  list-style: circle;\n  padding-left: 1em;\n  margin-left: 0;\n  color: hsl(var(--foreground));\n}\n\nli {\n  display: block;\n  margin: calc(0.2em * var(--md-block-spacing)) 8px;\n  color: hsl(var(--foreground));\n}\n\n/* Footnotes */\n/* footnotes rendered as <p> in buildFootnotes() */\np.footnotes {\n  margin: calc(0.5em * var(--md-block-spacing)) 8px;\n  font-size: 80%;\n  color: hsl(var(--foreground));\n}\n\n/* Diagrams */\nfigure {\n  margin: calc(1.5em * var(--md-block-spacing)) 8px;\n  color: hsl(var(--foreground));\n}\n\nfigcaption,\n.md-figcaption {\n  text-align: center;\n  color: color-mix(in srgb, hsl(var(--foreground)) 50%, transparent);\n  font-size: 0.8em;\n}\n\n/* ==================== Horizontal rules ==================== */\nhr {\n  border-style: solid;\n  border-width: 2px 0 0;\n  border-color: rgba(0, 0, 0, 0.1);\n  -webkit-transform-origin: 0 0;\n  -webkit-transform: scale(1, 0.5);\n  transform-origin: 0 0;\n  transform: scale(1, 0.5);\n  height: 0.4em;\n  margin: calc(1.5em * var(--md-block-spacing)) 0;\n}\n\n/* Inline code */\n.codespan {\n  font-size: 90%;\n  color: var(--md-primary-color);\n  background: color-mix(in srgb, var(--md-primary-color) 8%, transparent);\n  padding: 3px 5px;\n  border-radius: 4px;\n  border: 1px solid color-mix(in srgb, var(--md-primary-color) 20%, transparent);\n}\n\n/* code inside pre (override inline code) */\npre.code__pre > code,\n.hljs.code__pre > code {\n  display: -webkit-box;\n  padding: 0.5em 1em 1em;\n  overflow-x: auto;\n  text-indent: 0;\n  color: inherit;\n  background: none;\n  white-space: nowrap;\n  margin: 0;\n}\n\n/* Emphasis */\nem {\n  font-style: italic;\n  font-size: inherit;\n}\n\n/* ==================== Links ==================== */\na {\n  color: var(--md-link-color);\n  text-decoration: none;\n}\n\n/* ==================== Bold ==================== */\nstrong {\n  color: var(--md-primary-color);\n  font-weight: bold;\n  font-size: inherit;\n}\n\n/* ==================== Strikethrough ==================== */\n.del {\n  color: color-mix(in srgb, hsl(var(--foreground)) 55%, transparent);\n  text-decoration: line-through;\n}\n\n/* ==================== Tables ==================== */\ntable {\n  color: hsl(var(--foreground));\n}\n\nthead {\n  font-weight: bold;\n  color: hsl(var(--foreground));\n}\n\nth {\n  border: 1px solid color-mix(in srgb, hsl(var(--foreground)) 15%, transparent);\n  padding: 0.25em 0.5em;\n  color: hsl(var(--foreground));\n  word-break: keep-all;\n  background: color-mix(in srgb, hsl(var(--foreground)) 5%, transparent);\n}\n\ntd {\n  border: 1px solid color-mix(in srgb, hsl(var(--foreground)) 15%, transparent);\n  padding: 0.25em 0.5em;\n  color: hsl(var(--foreground));\n  word-break: keep-all;\n}\n\n/* ==================== KaTeX ==================== */\n.katex-inline {\n  max-width: 100%;\n  overflow-x: auto;\n  cursor: pointer;\n}\n\n.katex-block {\n  max-width: 100%;\n  overflow-x: auto;\n  -webkit-overflow-scrolling: touch;\n  cursor: pointer;\n  padding: 0.5em 0;\n  text-align: center;\n}\n\n.katex-pending {\n  color: hsl(0 0% 45%);\n  font-size: 0.875em;\n}\n\n.katex-block.katex-pending {\n  padding: 0.75em 0;\n}\n\n.katex-inline.katex-pending {\n  opacity: 0.75;\n}\n\n/* ==================== Markup highlight ==================== */\n.markup-highlight {\n  background-color: var(--md-primary-color);\n  padding: 2px 4px;\n  border-radius: 2px;\n  color: #fff;\n}\n\n.markup-underline {\n  text-decoration: underline;\n  text-decoration-color: var(--md-primary-color);\n}\n\n.markup-wavyline {\n  text-decoration: underline wavy;\n  text-decoration-color: var(--md-primary-color);\n  text-decoration-thickness: 2px;\n}\n\n/* line-height: 0 keeps the raised glyph from stretching the line box */\n.markup-superscript {\n  font-size: 0.75em;\n  line-height: 0;\n  vertical-align: super;\n}\n"
+    }
+  ]
+}

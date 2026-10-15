@@ -1,0 +1,5 @@
+此目录存放由 scripts/build-web-dist 从 doocs/md 上游 apps/web 构建出的前端静态资产。
+
+- 资产依据 WTFPL v2 许可（版权归 doocs/md 上游贡献者）随本项目再分发。
+- 资产不入库（见 .gitignore），由构建脚本生成；MANIFEST.sha256 记录可复现指纹。
+- 构建方式、环境变量、上游提交哈希见 docs/build-web-dist.md（T2/T21 产出）。

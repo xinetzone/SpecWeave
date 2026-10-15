@@ -1,0 +1,41 @@
+{
+  "hljs_fixture": "/* code-theme-fixture */",
+  "cases": [
+    {
+      "name": "complex-default",
+      "file": "complex_doc.md",
+      "options": {}
+    },
+    {
+      "name": "styled",
+      "markdown": "---\ntitle: 样式对拍\nauthor: tester\n---\n\n# 一级标题\n\n## 二级标题\n\n### 三级标题\n\n正文段落，**加粗**与[链接](https://example.com)，并验证缩进与两端对齐。\n\n> 引用块测试\n\n- 列表一\n- 列表二\n\n1. 有序一\n2. 有序二\n\n`行内代码` 与 ==标记==。\n\n```python\nprint(\"代码块\")\n```\n\n| 左 | 右 |\n|---|---|\n| a | b |\n\n![图](https://example.com/x.png \"标题\")\n\n脚注参考[^1]。\n\n[^1]: 脚注内容。\n",
+      "options": {
+        "theme": "grace",
+        "primaryColor": "#009874",
+        "fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+        "fontSize": "15px",
+        "lineHeight": "1.65",
+        "blockSpacing": "0.9",
+        "linkColor": "var(--md-primary-color)",
+        "blockquoteBackground": "transparent",
+        "legend": "alt-title",
+        "isMacCodeBlock": true,
+        "isShowLineNumber": true,
+        "citeStatus": true,
+        "countStatus": true,
+        "themeMode": "dark",
+        "isUseIndent": true,
+        "isUseJustify": true,
+        "headingStyles": {
+          "h1": "color-only",
+          "h2": "border-bottom",
+          "h3": "border-left",
+          "h4": "default",
+          "h5": "custom"
+        },
+        "codeBlockTheme": "",
+        "customCSS": ".x { color: red }\n</style break>"
+      }
+    }
+  ]
+}

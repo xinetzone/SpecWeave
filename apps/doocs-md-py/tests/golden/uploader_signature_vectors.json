@@ -1,0 +1,46 @@
+{
+  "source": {
+    "reference_implementation": "crypto-es@3.1.3 (apps/web 锁版) + node:crypto (md-cli 真实环境) on Node.js v22 (podman node:22-alpine)",
+    "note": "qiniu safe64 保留 Base64 padding；HMAC 密钥与消息一律 UTF-8；upyun 的 HMAC 密钥为 MD5 密码的 32 位 hex 字符串（非摘要字节）。"
+  },
+  "vectors": {
+    "qiniu": {
+      "access_key": "qiniu-ak-中文",
+      "secret_key": "qiniu-secret-密钥/+==",
+      "put_policy": {
+        "scope": "test-bucket",
+        "deadline": 1760503600,
+        "isPrefixalScope": 1
+      },
+      "encoded": "eyJzY29wZSI6InRlc3QtYnVja2V0IiwiZGVhZGxpbmUiOjE3NjA1MDM2MDAsImlzUHJlZml4YWxTY29wZSI6MX0=",
+      "token": "qiniu-ak-中文:pidLCM81e5uC3qsfsp1PXRy5zeY=:eyJzY29wZSI6InRlc3QtYnVja2V0IiwiZGVhZGxpbmUiOjE3NjA1MDM2MDAsImlzUHJlZml4YWxTY29wZSI6MX0="
+    },
+    "upyun": {
+      "password": "upyun-pw-密码",
+      "uri": "/upyun-bucket/图床/2026/a.png",
+      "date": "Wed, 15 Oct 2025 03:46:40 GMT",
+      "password_md5": "3493f684087696c7f1103b51d67cd4ed",
+      "signature": "Dn2Ucgy7mCcUg/0hgvpPFOFhkBk="
+    },
+    "cloudinary": {
+      "params": {
+        "folder": "f/中文 目录",
+        "timestamp": "1760503600",
+        "upload_preset": "preset-01"
+      },
+      "api_secret": "cloud-secret/+=中文",
+      "signature": "295188d6f0ccb4e5f2f4578fa4728bf9abc923bf"
+    },
+    "dcloud": {
+      "data": {
+        "method": "serverless.auth.user.anonymousAuthorize",
+        "params": "{}",
+        "spaceId": "sp-空间-id",
+        "timestamp": 1760503600
+      },
+      "secret": "dcloud-client-secret-中文",
+      "string_to_sign": "method=serverless.auth.user.anonymousAuthorize&params={}&spaceId=sp-空间-id&timestamp=1760503600",
+      "signature": "7d06fea2f3c9e00f6b9b652da662a344"
+    }
+  }
+}

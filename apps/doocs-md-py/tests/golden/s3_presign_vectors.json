@@ -1,0 +1,98 @@
+{
+  "source": {
+    "reference_implementation": "@aws-sdk/client-s3@3.1147.0 + @aws-sdk/s3-request-presigner@3.1147.0 on Node.js v22 (podman node:22-alpine)",
+    "note": "PutObject presigned URL（query 签名），expiresIn=300，签名注入时间 2026-10-15T03:46:40Z；最终 URL 与 SDK 输出逐字节一致。"
+  },
+  "credentials": {
+    "accessKeyId": "AKIDTEST1234567890EXAMPLE",
+    "secretAccessKey": "SECRETSIGNINGKEY-For-Golden-Vectors-0123"
+  },
+  "amzDate": "20261015T034640Z",
+  "expiresIn": 300,
+  "cases": [
+    {
+      "name": "aws-vhost",
+      "region": "us-east-1",
+      "endpoint": null,
+      "force_path_style": false,
+      "bucket": "demo-bucket",
+      "key": "2026/10/15/100-shot.png",
+      "content_type": "image/png",
+      "host": "demo-bucket.s3.us-east-1.amazonaws.com",
+      "raw_path": "/2026/10/15/100-shot.png",
+      "scheme": "https",
+      "sdk_url": "https://demo-bucket.s3.us-east-1.amazonaws.com/2026/10/15/100-shot.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIDTEST1234567890EXAMPLE%2F20261015%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261015T034640Z&X-Amz-Expires=300&X-Amz-Signature=7478078967db23630d55a90282cb32bce7eb2b1472c45034b768eb687e05e055&X-Amz-SignedHeaders=host&x-amz-checksum-crc32=AAAAAA%3D%3D&x-amz-sdk-checksum-algorithm=CRC32&x-id=PutObject",
+      "canonical_request": "PUT\n/2026/10/15/100-shot.png\nX-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIDTEST1234567890EXAMPLE%2F20261015%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261015T034640Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&x-amz-checksum-crc32=AAAAAA%3D%3D&x-amz-sdk-checksum-algorithm=CRC32&x-id=PutObject\nhost:demo-bucket.s3.us-east-1.amazonaws.com\n\nhost\nUNSIGNED-PAYLOAD"
+    },
+    {
+      "name": "custom-vhost-https",
+      "region": "auto",
+      "endpoint": "https://acc1234.r2.cloudflarestorage.com",
+      "force_path_style": false,
+      "bucket": "mybucket",
+      "key": "dir/a.png",
+      "content_type": "image/png",
+      "host": "mybucket.acc1234.r2.cloudflarestorage.com",
+      "raw_path": "/dir/a.png",
+      "scheme": "https",
+      "sdk_url": "https://mybucket.acc1234.r2.cloudflarestorage.com/dir/a.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIDTEST1234567890EXAMPLE%2F20261015%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261015T034640Z&X-Amz-Expires=300&X-Amz-Signature=5029b13a091d81036cb4f94cb56f8394ea37abb3e3790bc027ebccd805563db6&X-Amz-SignedHeaders=host&x-amz-checksum-crc32=AAAAAA%3D%3D&x-amz-sdk-checksum-algorithm=CRC32&x-id=PutObject",
+      "canonical_request": "PUT\n/dir/a.png\nX-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIDTEST1234567890EXAMPLE%2F20261015%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261015T034640Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&x-amz-checksum-crc32=AAAAAA%3D%3D&x-amz-sdk-checksum-algorithm=CRC32&x-id=PutObject\nhost:mybucket.acc1234.r2.cloudflarestorage.com\n\nhost\nUNSIGNED-PAYLOAD"
+    },
+    {
+      "name": "custom-path-https",
+      "region": "auto",
+      "endpoint": "https://minio.example.com",
+      "force_path_style": true,
+      "bucket": "mybucket",
+      "key": "dir/a.png",
+      "content_type": "image/png",
+      "host": "minio.example.com",
+      "raw_path": "/mybucket/dir/a.png",
+      "scheme": "https",
+      "sdk_url": "https://minio.example.com/mybucket/dir/a.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIDTEST1234567890EXAMPLE%2F20261015%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261015T034640Z&X-Amz-Expires=300&X-Amz-Signature=133b0c36e71a5d1219c9b0fa37ca6d308c487bd7d11c0a2aebbe6d817a0ca335&X-Amz-SignedHeaders=host&x-amz-checksum-crc32=AAAAAA%3D%3D&x-amz-sdk-checksum-algorithm=CRC32&x-id=PutObject",
+      "canonical_request": "PUT\n/mybucket/dir/a.png\nX-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIDTEST1234567890EXAMPLE%2F20261015%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261015T034640Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&x-amz-checksum-crc32=AAAAAA%3D%3D&x-amz-sdk-checksum-algorithm=CRC32&x-id=PutObject\nhost:minio.example.com\n\nhost\nUNSIGNED-PAYLOAD"
+    },
+    {
+      "name": "minio-http-path",
+      "region": "auto",
+      "endpoint": "http://10.0.0.1:9000",
+      "force_path_style": true,
+      "bucket": "imgs",
+      "key": "2026/10/15/x.png",
+      "content_type": "image/png",
+      "host": "10.0.0.1:9000",
+      "raw_path": "/imgs/2026/10/15/x.png",
+      "scheme": "http",
+      "sdk_url": "http://10.0.0.1:9000/imgs/2026/10/15/x.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIDTEST1234567890EXAMPLE%2F20261015%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261015T034640Z&X-Amz-Expires=300&X-Amz-Signature=87560ca770fe3dd73bb4ca30b8fee57f4d19527995c9b6c4ba1a0b432623b2ff&X-Amz-SignedHeaders=host&x-amz-checksum-crc32=AAAAAA%3D%3D&x-amz-sdk-checksum-algorithm=CRC32&x-id=PutObject",
+      "canonical_request": "PUT\n/imgs/2026/10/15/x.png\nX-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIDTEST1234567890EXAMPLE%2F20261015%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261015T034640Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&x-amz-checksum-crc32=AAAAAA%3D%3D&x-amz-sdk-checksum-algorithm=CRC32&x-id=PutObject\nhost:10.0.0.1:9000\n\nhost\nUNSIGNED-PAYLOAD"
+    },
+    {
+      "name": "alioss-vhost",
+      "region": "oss-cn-hangzhou",
+      "endpoint": "https://oss-cn-hangzhou.aliyuncs.com",
+      "force_path_style": false,
+      "bucket": "ali-bucket",
+      "key": "p/a$b c.png",
+      "content_type": "image/png",
+      "host": "ali-bucket.oss-cn-hangzhou.aliyuncs.com",
+      "raw_path": "/p/a$b c.png",
+      "scheme": "https",
+      "sdk_url": "https://ali-bucket.oss-cn-hangzhou.aliyuncs.com/p/a%24b%20c.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIDTEST1234567890EXAMPLE%2F20261015%2Foss-cn-hangzhou%2Fs3%2Faws4_request&X-Amz-Date=20261015T034640Z&X-Amz-Expires=300&X-Amz-Signature=679e1479589da9081e06cb1cb2996ccd250b85d9b91be479a23d7dbf20ba1fc8&X-Amz-SignedHeaders=host&x-amz-checksum-crc32=AAAAAA%3D%3D&x-amz-sdk-checksum-algorithm=CRC32&x-id=PutObject",
+      "canonical_request": "PUT\n/p/a%24b%20c.png\nX-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIDTEST1234567890EXAMPLE%2F20261015%2Foss-cn-hangzhou%2Fs3%2Faws4_request&X-Amz-Date=20261015T034640Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&x-amz-checksum-crc32=AAAAAA%3D%3D&x-amz-sdk-checksum-algorithm=CRC32&x-id=PutObject\nhost:ali-bucket.oss-cn-hangzhou.aliyuncs.com\n\nhost\nUNSIGNED-PAYLOAD"
+    },
+    {
+      "name": "cos-vhost",
+      "region": "ap-guangzhou",
+      "endpoint": "https://cos.ap-guangzhou.myqcloud.com",
+      "force_path_style": false,
+      "bucket": "cos-bucket-1234567890",
+      "key": "p/a.png",
+      "content_type": "image/png",
+      "host": "cos-bucket-1234567890.cos.ap-guangzhou.myqcloud.com",
+      "raw_path": "/p/a.png",
+      "scheme": "https",
+      "sdk_url": "https://cos-bucket-1234567890.cos.ap-guangzhou.myqcloud.com/p/a.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIDTEST1234567890EXAMPLE%2F20261015%2Fap-guangzhou%2Fs3%2Faws4_request&X-Amz-Date=20261015T034640Z&X-Amz-Expires=300&X-Amz-Signature=76181ecfdfc7c4975cbc9e88aef925214bf7c7a8679598d68a81fd34d7bad63e&X-Amz-SignedHeaders=host&x-amz-checksum-crc32=AAAAAA%3D%3D&x-amz-sdk-checksum-algorithm=CRC32&x-id=PutObject",
+      "canonical_request": "PUT\n/p/a.png\nX-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIDTEST1234567890EXAMPLE%2F20261015%2Fap-guangzhou%2Fs3%2Faws4_request&X-Amz-Date=20261015T034640Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&x-amz-checksum-crc32=AAAAAA%3D%3D&x-amz-sdk-checksum-algorithm=CRC32&x-id=PutObject\nhost:cos-bucket-1234567890.cos.ap-guangzhou.myqcloud.com\n\nhost\nUNSIGNED-PAYLOAD"
+    }
+  ]
+}
