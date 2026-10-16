@@ -5,7 +5,7 @@ build-backend = "scikit_build_core.build"
 [project]
 name = "doocs-md-py"
 version = "0.1.0"
-description = "doocs/md 的 Python 3.14 复刻：微信兼容 Markdown 渲染库 + 自托管 API + 13 图床上传器 + MCP/CLI"
+description = "doocs/md 的 Python 3.14 复刻：微信兼容 Markdown 渲染库 + 自托管 API + 14 家图床上传器 + MCP/CLI"
 requires-python = ">=3.14"
 license = { text = "WTFPL" }
 authors = [{ name = "doocs-md-py contributors" }]
