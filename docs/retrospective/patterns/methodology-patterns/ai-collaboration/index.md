@@ -69,6 +69,7 @@ source-anchor-verification-protocol
 source-code-to-okf-adversarial-update
 source-code-to-okf-wiki-workflow
 source-stability-gate
+sovereign-spec-bridge
 spec-driven-batch-doc-generation
 spec-driven-subagent-execution
 spec-mode-doc-creation-workflow
