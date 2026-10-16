@@ -28,6 +28,7 @@ def _reset_cache():
     code_themes.clear_hljs_css_cache()
     yield
     code_themes.clear_hljs_css_cache()
+    code_themes._reset_default_client()
 
 
 def test_ten_preset_urls():
@@ -115,3 +116,37 @@ def test_clear_cache_forces_refetch():
     code_themes.clear_hljs_css_cache()
     assert code_themes.fetch_code_block_css(url, client=client) == "/*v2*/"
     assert calls == 2
+
+
+# ---- 模块级默认 client（render-article.ts:67-94 模块级 fetch 环境）----
+
+
+def test_default_client_created_once_and_reused_across_calls():
+    seen = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.append(str(request.url))
+        return httpx.Response(200, text=".hljs{color:#000}")
+
+    created = httpx.Client(transport=httpx.MockTransport(handler))
+    code_themes._default_client = created
+
+    first = code_themes.fetch_code_block_css(f"{PREFIX}atom-one-light.min.css")
+    second = code_themes.fetch_code_block_css(f"{PREFIX}atom-one-dark.min.css")
+
+    assert first == second == ".hljs{color:#000}"
+    assert len(seen) == 2  # 两次均复用同一 client，未重建
+    assert code_themes._default_client is created
+
+
+def test_reset_default_client_closes_and_clears():
+    client = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(200)))
+    code_themes._default_client = client
+
+    code_themes._reset_default_client()
+
+    assert client.is_closed
+    assert code_themes._default_client is None
+    # 未创建过默认 client 时为幂等空操作
+    code_themes._reset_default_client()
+    assert code_themes._default_client is None

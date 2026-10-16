@@ -41,7 +41,12 @@ from doocs_md_py.uploaders import github as github_mod
 from doocs_md_py.uploaders import mp as mp_mod
 from doocs_md_py.uploaders import s3 as s3_mod
 from doocs_md_py.uploaders import telegram as telegram_mod
-from doocs_md_py.uploaders.base import get_date_filename, get_dir, trim_trailing_slash
+from doocs_md_py.uploaders.base import (
+    get_date_filename,
+    get_dir,
+    require_config,
+    trim_trailing_slash,
+)
 from doocs_md_py.uploaders.cloudinary import cloudinary_signature, cloudinary_upload
 from doocs_md_py.uploaders.dcloud import dcloud_sign, dcloud_upload_file
 from doocs_md_py.uploaders.form_custom import (
@@ -104,6 +109,20 @@ def test_get_date_filename_keeps_extension_verbatim_and_empty_tail():
 def test_trim_trailing_slash():
     assert trim_trailing_slash("https://a.com/") == "https://a.com"
     assert trim_trailing_slash("https://a.com") == "https://a.com"
+
+
+def test_require_config_passes_through_present_values():
+    marker = {"cdnHost": "https://a.com/"}
+    assert require_config(marker, "cdnHost") is marker
+    assert require_config("", "cdnHost") == ""  # 空串是「已配置为空」，不算缺失
+    assert require_config(0, "chunkSize") == 0
+
+
+def test_require_config_raises_with_field_context():
+    with pytest.raises(ValueError, match="cdnHost is missing or empty"):
+        require_config(None, "cdnHost")
+    with pytest.raises(ValueError, match="token is missing or empty"):
+        require_config(None, "token")
 
 
 # --------------------------------------------------------------------------

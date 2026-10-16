@@ -16,7 +16,7 @@ from doocs_md_py.server.config import Config
 from doocs_md_py.server.storage import LocalBackend, S3Backend
 from doocs_md_py.server.upload_config import GithubUploadConfig
 from doocs_md_py.server.upload_github import UploadPayload, upload_to_github
-from doocs_md_py.server.upload_r2 import build_r2_backend
+from doocs_md_py.server.upload_r2 import build_r2_backend, upload_to_r2
 
 PNG = b"\x89PNG\r\n\x1a\n-binary-"
 
@@ -355,3 +355,58 @@ def test_build_r2_backend_from_config():
     backend = build_r2_backend(config)
     assert backend._force_path_style is True
     assert backend._region == "auto"
+
+
+def test_upload_to_r2_requires_bucket_and_public_url():
+    payload = UploadPayload("a.png", "image/png", PNG)
+    client = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(200)))
+
+    # 缺 bucket
+    with pytest.raises(RuntimeError, match="R2 upload is not configured"):
+        upload_to_r2(Config(), payload, client)
+    # 有 bucket 但 public_url 仅空白（strip 后为空）
+    with pytest.raises(RuntimeError, match="R2 upload is not configured"):
+        upload_to_r2(
+            Config(upload_s3_bucket="img", upload_s3_public_url="   "), payload, client
+        )
+
+
+def test_upload_to_r2_recording_uses_dated_key_and_public_url():
+    recorded = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        recorded["url"] = str(request.url)
+        recorded["ct"] = request.headers.get("content-type", "")
+        recorded["auth"] = request.headers.get("authorization", "")
+        assert request.content == PNG
+        return httpx.Response(200)
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    config = Config(
+        upload_backend="s3",
+        upload_s3_endpoint="https://acct.r2.cloudflarestorage.com",
+        upload_s3_bucket="img",
+        upload_s3_access_key_id="AK",
+        upload_s3_secret_access_key="SK",
+        upload_s3_public_url="https://pub.example.com/",
+    )
+    url = upload_to_r2(
+        config,
+        UploadPayload("shot.png", "image/png", PNG),
+        client,
+        now_sec=1_760_500_000,
+        clock_ms=lambda: 1_760_500_000_123,
+    )
+
+    # 对象键 = 日期目录 + <epoch_ms>-<uuid4>.png（upload_filename 契约）
+    assert re.fullmatch(
+        r"https://img\.acct\.r2\.cloudflarestorage\.com/2025/10/15/"
+        r"1760500000123-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.png",
+        recorded["url"],
+    )
+    assert recorded["ct"] == "image/png"
+    assert recorded["auth"].startswith("AWS4-HMAC-SHA256 ")
+    # 返回 public_url 拼接的对象键（前缀与请求 URL 一致）
+    assert url == recorded["url"].replace(
+        "https://img.acct.r2.cloudflarestorage.com/", "https://pub.example.com/"
+    )

@@ -445,9 +445,17 @@
 
 ## Task 20: 综合契约测试、覆盖率门禁与性能基准
 
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: T19, T15, T16, T17, T18
+- **Completion Evidence**（2026-10-15）:
+  - TR-20.1 ✅ `pytest --cov --cov-report=json:coverage.json` → `Required test coverage of 80.0% reached. Total coverage: 95.91%`、`1309 passed`；`python scripts/check_coverage.py` → `关键模块 83/83 达标（门槛 90%）`（最低 `render/extensions/alert.py` 90.30%）；`ruff check .` 零告警。报告归档：`apps/doocs-md-py/docs/coverage-report-t20.md`。门禁双落点：`pyproject.toml` `[tool.coverage.report] fail_under = 80`（总覆盖快速拦截）+ `scripts/check_coverage.py`（关键模块 per-module ≥90%，前缀口径 `render/`、`server/`、`uploaders/`、`mcp_server/`，入口 shim 除外）。
+  - TR-20.2 ✅ 映射表 `apps/doocs-md-py/docs/contract-mapping.md`：13 个上游 `apps/api/src/*.test.ts`（60 条 `it`）逐条映射到 Python 测试函数，差异登记 D-1..D-4（uuid 回退分支、未命中路由响应体、`upload_max_bytes` 死配置、marked→markdown-it-py 归一化 DOM 对拍）；§4 交叉引用错误体全表。
+  - TR-20.3 ✅ rubric 4/5：复杂文档渲染保真度由 `tests/golden/test_complex_doc.py`（归一化 DOM 对拍，D-4）+ `tests/render/*` 全套扩展分支测试承载，本轮新增 `test_extensions_component.py` 12 例与 `test_highlight.py` 等补齐可触达契约分支；扣分项为 WSL 侧 Python 3.12 低于 `requires-python >=3.14`，未能双平台跑全量对拍（仅跑与包无关的 `check_coverage.py`）。
+  - TR-20.4 ✅ rubric 5/5：全仓抽查——契约模块均带 `# upstream: 文件:行号` 锚点（如 `routers/share.py` 顶部 `upstream: share.ts 1:1`）、魔数集中为模块常量（`MAX_SNAPSHOT_BYTES`、`SYNC_PUSH_LIMITS`、`UPLOAD_MAX_BYTES`、NFR-6 阈值与 AC-16 门槛均集中于模块顶部）、凭证仅来自 `Config`/环境变量（`tests/server/test_config_report.py` 以显式凭据常量做日志泄露机械断言）。
+  - 本轮交付物：`tests/server/test_error_contract.py`（错误体字段一致性全表，26 例）、`tests/server/test_config_report.py`（FR-15 启动配置体检 + 密钥不入日志，8 例）、`src/doocs_md_py/server/config_report.py`（新增）、`server/app.py` `serve()` 接线启动体检日志、`scripts/bench_render.py`（NFR-6）、`scripts/check_coverage.py`（AC-16）、`docs/{contract-mapping,coverage-report-t20}.md`。
+  - NFR-6 ✅（非 CI 门槛，留档）：`python scripts/bench_render.py` → 102431 字节样张（含全部扩展短样例）P95 355.7ms < 500ms；100 篇 2KB 文档 `db.push_changes` 批处理 P95 22.9ms < 1s。
+  - 已知不可达分支（未硬凑）：`render/extensions/katex.py:143`、`render/extensions/component.py:376`，均为防御性守卫，已在覆盖报告登记。
 - **Description**:
   - 补齐 cross-cutting 测试：上游 `*.test.ts` 中被断言的边界逐条映射核对（sync-limits/share/marketplace/emoji/notifications/origin/plan/db）；错误体字段一致性全表；配置体检端点/启动日志；密钥不入日志断言。
   - 覆盖率配置（cov 源 src/doocs_md_py，门槛 80/90 per- module）；性能基准脚本（NFR-6）留档但不进 CI 红门。

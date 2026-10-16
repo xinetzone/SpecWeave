@@ -8,6 +8,8 @@ import json
 
 import pytest
 
+from doocs_md_py.server.config import Config
+from doocs_md_py.server.marketplace_admin import get_admin_logins, is_admin
 from doocs_md_py.server.marketplace_validate import (
     MAX_COMPONENT_JSON_BYTES,
     MAX_REJECT_REASON_LENGTH,
@@ -336,3 +338,25 @@ def test_parse_sample_markdown_tri_state():
     assert parse_sample_markdown(None).value is None
     assert parse_sample_markdown("   ").value is None
     assert parse_sample_markdown(" a ").value == "a"
+
+
+# ---- 管理员白名单（upstream: marketplace-admin.ts）----
+
+
+def test_admin_logins_normalized_and_blanks_dropped():
+    cfg = Config(admin_github_logins=(" OctoCat ", "", "   ", "HUBber"))
+    assert get_admin_logins(cfg) == {"octocat", "hubber"}
+
+
+def test_admin_logins_empty_when_unconfigured():
+    assert get_admin_logins(Config()) == set()
+
+
+def test_is_admin_normalizes_login_and_rejects_falsy():
+    cfg = Config(admin_github_logins=("octocat",))
+    assert is_admin(cfg, "OCTOCAT") is True
+    assert is_admin(cfg, " someone ") is False
+    # 空 / None 一律非管理员；未配置白名单时任何登录名均非管理员
+    assert is_admin(cfg, None) is False
+    assert is_admin(cfg, "") is False
+    assert is_admin(Config(), "octocat") is False

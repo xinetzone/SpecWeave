@@ -64,6 +64,9 @@ source = ["doocs_md_py"]
 branch = true
 
 [tool.coverage.report]
+# AC-16 总覆盖率门槛（pytest 内快速拦截）；关键模块 per-module ≥90% 由
+# scripts/check_coverage.py 消费 --cov-report=json 产物做机械判定。
+fail_under = 80
 show_missing = true
 exclude_lines = [
     "pragma: no cover",

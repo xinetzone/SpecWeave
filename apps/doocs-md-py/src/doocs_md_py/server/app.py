@@ -18,6 +18,7 @@ from fastapi.responses import Response
 
 from .. import __version__
 from .config import Config, load_config
+from .config_report import log_config_report
 from .emoji_storage import build_emoji_backend
 from .httputil import ApiError, error_response
 from .origin import is_allowed_origin, is_browser_extension_origin
@@ -213,6 +214,8 @@ def serve(
 
     print("doocs/md-py 服务启动中...")
     app = create_app(config, web_dist=dist)
+    # FR-15 启动时配置体检（只报功能启用状态与计数，密钥不入日志）
+    log_config_report(app.state.config)
     print(f"服务已启动：打开链接 http://{host}:{actual_port} 即刻使用吧~")
     (runner or _uvicorn_run)(app, host, actual_port)
     return 0

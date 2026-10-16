@@ -10,10 +10,13 @@ from doocs_md_py.render import IOpts, RenderMessages, init_renderer
 from doocs_md_py.render.extensions.component import (
     ComponentDef,
     PropDef,
+    _js_string,
     get_built_in_registry,
     parse_props,
     parse_tag,
     preview_component,
+    process_template,
+    render_info_grid,
 )
 
 
@@ -264,6 +267,73 @@ def test_unknown_registry_replaces_builtins():
     assert "<b>only</b>" in out
     out2 = render('<QRCodeBlock url="x" />', opts)
     assert "[Unknown component: QRCodeBlock]" in out2
+
+
+# ---- T20 覆盖率补齐：可触达的契约分支 ----
+
+
+def test_js_string_integer_float_uses_int_form():
+    # 等价 JS String(value)：整值浮点去 .0，非整值保留
+    assert _js_string(2.0) == "2"
+    assert _js_string(2.5) == "2.5"
+    assert _js_string(True) == "true"
+
+
+def test_info_grid_rejects_bad_json_and_non_list_items():
+    assert "table-cell" not in render_info_grid({"items": "notjson"})
+    assert "table-cell" not in render_info_grid({"items": '{"a":1}'})
+
+
+def test_info_grid_nan_cols_falls_back_to_two():
+    html = render_info_grid({"items": '[{"label":"a","value":"1"}]', "cols": "nan"})
+    assert "width: 50%" in html
+
+
+def test_each_non_list_prop_renders_empty_body():
+    out = process_template('<div>{{#each rows}}<i>{{item}}</i>{{/each}}</div>', {"rows": '{"a":1}'})
+    assert out == "<div></div>"
+
+
+def test_each_dict_items_substitute_item_keys():
+    template = "{{#each rows}}<i>{{item.name}}:{{item.missing}}</i>{{/each}}"
+    assert process_template(template, {"rows": '[{"name":"a"}]'}) == "<i>a:</i>"
+
+
+def test_if_else_selects_branch_by_prop_truthiness():
+    template = "{{#if k}}yes{{#else}}no{{/if}}"
+    assert process_template(template, {"k": "1"}) == "yes"
+    assert process_template(template, {}) == "no"
+
+
+def test_find_closing_tag_ignores_closing_tag_inside_fence():
+    tag = parse_tag('<NoSuch>\n```\n</NoSuch>\n```\n</NoSuch>\n')
+    assert tag is not None
+    # 围栏内的 </NoSuch> 不闭合组件，children 含且仅含一处闭合标记
+    assert tag.children.count("</NoSuch>") == 1
+    assert tag.children.endswith("```\n")
+
+
+def test_unterminated_component_is_rejected():
+    # 扫描到源尾仍未闭合 → 拒绝
+    assert parse_tag("<NoSuch>\nno close here") is None
+
+
+def test_inline_close_with_trailing_junk_is_rejected():
+    assert parse_tag("<NoSuch>x</NoSuch>junk\n") is None
+
+
+def test_open_tag_with_trailing_content_and_no_pair_is_rejected():
+    assert parse_tag("<NoSuch>tail\nno close") is None
+
+
+def test_missing_angle_close_terminates_scan():
+    # 无 ">" 结束标签：扫描到源尾返回 None
+    assert parse_tag("<AB") is None
+
+
+def test_component_inside_indented_code_block_is_literal():
+    out = render('    <QRCodeBlock url="x" />\n')
+    assert "api.qrserver.com" not in out
 
 
 if __name__ == "__main__":

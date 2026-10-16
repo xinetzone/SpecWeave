@@ -217,6 +217,93 @@ class TestStripBreakBeforeInlineKatex:
         assert 'class="katex-inline' in html
 
 
+# ---- 规则守卫（katex.ts:129-184 各 early-return 分支）----
+def test_unclosed_dollar_stays_literal():
+    # INLINE_NONSTD_RE 要求配对的闭合 $；未配对 → 行内规则放弃，交回文本规则
+    html = init_renderer().render_markdown_to_html("价格 $unclosed 说明")
+    assert "katex-pending" not in html
+    assert "$unclosed" in html
+
+
+def test_lone_backslash_not_latex_delimiter():
+    # 既非 \( 也非 \[ → inline_latex 两条正则均不命中而放弃
+    html = init_renderer().render_markdown_to_html(r"C:\temp 目录")
+    assert "katex-pending" not in html
+    assert "temp" in html
+
+
+def test_paragraph_absorbs_indented_formula_line_as_lazy_continuation():
+    # 段落续行缩进 ≥4 → lazy continuation 吸收该行，不由块规则起块，公式退化为行内
+    html = init_renderer().render_markdown_to_html("text\n    $$x$$")
+    assert re.search(r'<p[^>]*>[\s\S]*data-math-raw="\$\$x\$\$"', html)
+    assert re.search(r'<p[^>]*>[\s\S]*</p>', html)
+
+
+def test_block_rules_reject_indented_code_block_line():
+    # 嵌套调用：缩进 ≥4 的行（缩进代码块）在块规则入口即被拒绝，不产 token
+    from markdown_it import MarkdownIt
+    from markdown_it.rules_block import StateBlock
+
+    from doocs_md_py.render.extensions.katex import block_katex, block_latex, register_katex
+
+    md = MarkdownIt()
+    register_katex(md)
+
+    dollar = StateBlock("    $$x$$", md, {}, [])
+    assert dollar.is_code_block(0) is True
+    assert block_katex(dollar, 0, 1, False) is False
+    assert dollar.tokens == []
+
+    latex = StateBlock("    \\[x\\]", md, {}, [])
+    assert block_latex(latex, 0, 1, False) is False
+    assert latex.tokens == []
+
+
+def test_block_latex_allows_up_to_three_space_indent():
+    html = init_renderer().render_markdown_to_html("text\n\n  \\[x^2\\]")
+    assert 'class="katex-block katex-pending"' in html
+    assert 'data-math-raw="\\[x^2\\]"' in html
+
+
+def test_block_latex_with_trailing_text_falls_back_to_inline():
+    # 匹配未延伸到行尾（同行有残余文本）→ 块规则让位，行内兜底产出段内 section
+    html = init_renderer().render_markdown_to_html(r"\[x\] 尾随文本")
+    assert re.search(r'<p[^>]*>\s*<section class="katex-block', html)
+    assert "尾随文本" in html
+    assert 'data-math-display="true"' in html
+
+
+@pytest.mark.parametrize("formula", ["$$x$$", r"\[x\]"])
+def test_block_formula_interrupts_paragraph(formula):
+    # 段落续行的 silent 探测命中 → 段落终止，块公式独占段外容器
+    html = init_renderer().render_markdown_to_html(f"说明文字\n{formula}")
+    assert 'class="katex-block katex-pending"' in html
+    assert "说明文字" in html
+    assert not re.search(r'<p[^>]*>\s*<section class="katex-block"', html)
+
+
+def test_inline_rules_silent_probe_advances_without_tokens():
+    # markdown-it 规则协议：silent（skipToken）只探测并推进 pos，不产 token
+    from markdown_it import MarkdownIt
+    from markdown_it.rules_inline import StateInline
+
+    from doocs_md_py.render.extensions.katex import inline_katex, inline_latex
+
+    md = MarkdownIt()
+    md.inline.ruler.before("escape", "katex_inline", inline_katex)
+    md.inline.ruler.before("escape", "katex_latex_inline", inline_latex)
+
+    dollar = StateInline("$x$", md, {}, [])
+    assert inline_katex(dollar, True) is True
+    assert dollar.pos == 3
+    assert dollar.tokens == []
+
+    latex = StateInline(r"\(x\)", md, {}, [])
+    assert inline_latex(latex, True) is True
+    assert latex.pos == 5
+    assert latex.tokens == []
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
 
