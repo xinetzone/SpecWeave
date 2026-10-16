@@ -127,6 +127,7 @@ apps/<group>/<app-name>/
 
 | 应用 | 说明 | 入口 |
 |---|---|---|
+| `admin-console/` | 一个可直接上线的**通用内容管理骨架**：登录认证 → 数据看板 → 内容列表（搜索/筛选/排序/分页/批量）→ 表单编辑（正文/分类/标签/云端附件）。... | [README.md](admin-console/README.md) |
 | `agent-monetize/` | **Python 3.14+ 智能体自动变现平台** —— 自主循环 + 道家门控 + 沙箱通道 + tvm-ffi 桥接。 | [README.md](agent-monetize/README.md) |
 | `ai-agents/` | ai-agents 应用 | `ai-agents/`（暂无 README） |
 | `coach-moments-growth/` | 商业教练朋友圈 AI 增长系统（coach-moments-growth） | [README.md](coach-moments-growth/README.md) |
