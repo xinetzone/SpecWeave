@@ -163,3 +163,6 @@ work/ai-monetization-doubao-outcome-pricing.md
 # QwenWork Canvas Design Mode 工作目录（含 .vite/deps 构建缓存与 .design-state.json 机器状态，
 # 属本地工作产物；画布交付物已抽取为 docs/retrospective/patterns/.../seven-concepts-docs-as-product-broadsheet.html）
 qwenwork/
+
+# CodeBuddy 本地配置（settings.local.json 等为本机工作产物，不入库）
+.codebuddy/
