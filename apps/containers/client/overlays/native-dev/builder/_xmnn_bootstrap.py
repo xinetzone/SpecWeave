@@ -1,6 +1,13 @@
 """XMNN bootstrap: sets up TVM environment before any tvm imports.
 Installed to site-packages and activated via xmnn_bootstrap.pth.
 """
+# ── 副本治理标注（方案 α：跨模块可追溯性）─────────────────────────────
+# SOURCE : notebook/libs/npuusertools/_xmnn_bootstrap.py（语义真源）
+# 适用   : CPython 3.14 ast 遗留别名 + Nuitka 4.2.x PEP 649 类体注解闭包缺陷
+# 本副本 : 自包含拷贝·全量版（构建上下文隔离，不能 import 真源）；含 install()
+#          封装、Nuitka 4.2.1/4.2.2 兜底与 libtvm 预加载；哨兵与真源共用
+# 校验   : 真源仓库内运行 python scripts/verify_bootstrap_copies.py
+# ──────────────────────────────────────────────────────────────────────
 import os
 import ctypes
 import sys
