@@ -79,7 +79,7 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | 根级 | admin-console | —（遵循根规范） | ❌ 无 | 通用内容管理后台（Python 3.14 / 零第三方依赖 ASGI：登录认证（PBKDF2 + HS256 会话 Cookie + CSRF 双提交 + Origin 校验）+ 数据看板（指标卡/14 天趋势/分类分布/操作日志）+ 列表管理（搜索/筛选/排序/分页/批量）+ 抽屉表单编辑（分类/标签/云端附件）；Supabase Postgres 七表 `ac_*` 持久化 + Storage 桶 `ac-uploads` 文件存储，未配置时内存降级并标记 `degraded`；零构建响应式前端（≥1200 三区 / <900 侧栏抽屉 + 表格转卡片）；scikit-build-core 纯 Python 包，`admin-console` CLI（serve/doctor/seed-admin），Vercel 部署 `api/index.py`，规格 `.trae/specs/admin-console/`） |
 | 根级 | guard-quality-life-site | —（遵循根规范） | ❌ 无 | 《守护品质生活》生活方式方案库可变现 MVP 网站（Python 3.14+ / FastAPI 动态 Web：11 域知识树按域浏览/搜索 + 订阅兴趣登记 + 推荐位占位 + 访问埋点三验证信号；暖灰纸感 UI；scikit-build-core 纯 Python 包 `gqlsite`，pytest 37 用例全绿/覆盖 96%；知识本源 `projects/awesome-okf-xs/doc/bundles/sheke/personal-growth/guard-quality-life/`，规格 `.trae/specs/okf-wiki-ecosystem/guard-quality-life-okf-wiki-site/`） |
 | 根级 | coach-moments-growth | —（遵循根规范） | ❌ 无 | 商业教练朋友圈 AI 增长系统（私域内容运营方案：定位/内容/转化/度量/合规五模块，含可直接调用的 AI 提示词与五大品类文案模板；规格 `.trae/specs/coach-moments-growth/`） |
-| 根级 | doocs-md-py | —（遵循根规范） | ❌ 无 | doocs/md 的 Python 3.14 复刻（上游 v2.1.0 @ 1bdad48d）：markdown-it-py 渲染库 + 自托管 FastAPI API（SQLite 替代 D1、手写 SigV4 对象存储替代 R2 绑定）+ 14 家图床上传器 + MCP stdio Server（13 工具）+ `mdpy` CLI（render/serve/upload/mcp/migrate 5 子命令）；scikit-build-core 纯 Python 包，前端产物 `assets/web-dist/` 不入库；文档见 `docs/`（architecture / contract-mapping / contract-differences / build-web-dist），规格 `.trae/specs/doocs-md-py/` |
+| 根级 | doocs-md-py | [doocs-md-py/AGENTS.md](doocs-md-py/AGENTS.md) | ✅ 有 | doocs/md 的 Python 3.14 复刻（上游 v2.1.0 @ 1bdad48d）：markdown-it-py 渲染库 + 自托管 FastAPI API（SQLite 替代 D1、手写 SigV4 对象存储替代 R2 绑定）+ 14 家图床上传器 + MCP stdio Server（13 工具）+ `mdpy` CLI（render/serve/upload/mcp/migrate 5 子命令）；scikit-build-core 纯 Python 包，前端产物 `assets/web-dist/` 不入库；文档见 `docs/`（architecture / contract-mapping / contract-differences / build-web-dist），规格 `.trae/specs/doocs-md-py/`；应用自治：6 rules（upstream-reconstruction / engineering-redlines / render-and-theme-contract / server-api-and-security / uploaders-dual-path / cli-and-mcp-contract）+ 5 docs |
 | 根级 | shared | —（遵循根规范） | ❌ 无 | 跨应用共享资源目录 |
 | 根级 | tests | —（遵循根规范） | ❌ 无 | 测试用例目录 |
 
@@ -111,6 +111,10 @@ SpecWeave 根 AGENTS.md
             └─ wechat-mp-archiver/AGENTS.md（wechat-mp-archiver 应用入口 · 嵌套优先 · 归档管线硬约束）
                  ├─ .agents/rules/archive-pipeline.md（唯一规则：限速/回环绑定/凭证/幂等续跑/熔断矩阵/结构感知风控/退出码/官方接口/派生产物/合规）
                  └─ docs/（6 篇原子文档 + 索引：00-overview / 01-quickstart / 02-commands / 03-operations / 04-storage-and-layout / 05-compliance）
+       └─ 根级应用（apps/ 直属子目录 · 无分组层）
+            └─ doocs-md-py/AGENTS.md（doocs-md-py 应用入口 · 嵌套优先 · 上游复刻契约）
+                 ├─ .agents/rules/（6 个规范文件：upstream-reconstruction / engineering-redlines / render-and-theme-contract / server-api-and-security / uploaders-dual-path / cli-and-mcp-contract）
+                 └─ docs/（5 篇工程向文档：architecture / contract-mapping / contract-differences / build-web-dist / coverage-report-t20）
 ```
 
 进入任意子目录后，优先读取**离当前工作目录最近**的 AGENTS.md。若应用自身的 AGENTS.md 规则与本文件冲突，以应用的 AGENTS.md 为准（子层覆盖父层）。无自身 AGENTS.md 的应用直接遵循根 .agents/ 规范。
@@ -128,7 +132,7 @@ flowchart TD
     Layer2 --> SubApp{"步骤2：按应用路由表<br/>确定目标应用"}
     SubApp -.->|"❶ 无匹配项"| E1["确认是否为新增应用<br/>走新增应用流程"]
     E1 -.-> Layer2
-    SubApp -->|"有自身 AGENTS.md<br/>（client/offline-delivery/devcontainer-base/devcontainer-win11/docker-ssh-dind/<br/>jupyter-ssh-base/pytorch-base/caffe-ffi-jupyter/zhujian-wudao/wechat-mp-archiver）"| Layer3["第三层：读取应用自身 AGENTS.md<br/>（嵌套优先）"]
+    SubApp -->|"有自身 AGENTS.md<br/>（client/offline-delivery/devcontainer-base/devcontainer-win11/docker-ssh-dind/<br/>jupyter-ssh-base/pytorch-base/caffe-ffi-jupyter/zhujian-wudao/wechat-mp-archiver/doocs-md-py）"| Layer3["第三层：读取应用自身 AGENTS.md<br/>（嵌套优先）"]
     SubApp -->|"无自身 AGENTS.md<br/>（ai-code-assistant/camera-power-controller/<br/>prompt_extraction/shared/tests/xmnn-runtime）"| Direct["直接遵循根 .agents/ 规范"]
     Layer3 -.->|"❷ 读取失败"| E2["检查文件是否存在<br/>回退到根规范执行"]
     E2 -.-> Direct
@@ -244,6 +248,21 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | 变更日志 | [dev-tools/wechat-mp-archiver/.agents/CHANGELOG.md](dev-tools/wechat-mp-archiver/.agents/CHANGELOG.md) | wechat-mp-archiver 应用变更记录 |
 | 人类可读文档 | [dev-tools/wechat-mp-archiver/docs/README.md](dev-tools/wechat-mp-archiver/docs/README.md) | 文档索引（定位/快速开始/命令/运维/存储/合规 6 篇） |
 
+### doocs-md-py 应用（根级）
+
+| 资产 | 路径 | 说明 |
+|------|------|------|
+| 应用入口 | [doocs-md-py/AGENTS.md](doocs-md-py/AGENTS.md) | 应用级路由入口（启动协议 + 上下文路由表 + 12 项 P0 约束速览） |
+| 入门指南 | [doocs-md-py/.agents/README.md](doocs-md-py/.agents/README.md) | .agents/ 资产索引 + 22 项核心资产真源 + 父级回退链 |
+| 上游复刻纪律 | [doocs-md-py/.agents/rules/upstream-reconstruction.md](doocs-md-py/.agents/rules/upstream-reconstruction.md) | 上游基线唯一化 / 锚点注释强制 / 复刻口径三分类 / 差异台账 `D-`·`CD-` 登记 / 归一化 DOM 等价验收 / NG1-NG6 冻结（§1-§7） |
+| 工程红线 | [doocs-md-py/.agents/rules/engineering-redlines.md](doocs-md-py/.agents/rules/engineering-redlines.md) | Python ≥3.14 与禁 `__future__` annotations / 8 项依赖白名单（不含 `mcp`，手写 stdio JSON-RPC 2.0）/ scikit-build-core / 命名与溯源 / 覆盖率双门禁 80·90 / 平台与落盘约束（§1-§7） |
+| 渲染契约 | [doocs-md-py/.agents/rules/render-and-theme-contract.md](doocs-md-py/.agents/rules/render-and-theme-contract.md) | 无副作用与三入口共享 / 管线顺序 / 12 扩展 / 特色行为不可回退 / 主题 CSS 装配 / 黄金样例 DOM 对拍 / NFR-6 性能（§1-§8） |
+| 服务端与安全 | [doocs-md-py/.agents/rules/server-api-and-security.md](doocs-md-py/.agents/rules/server-api-and-security.md) | 契约 1:1 与装配顺序 / SQLite-LWW-游标-配额 / JWT-OAuth-Origin / 分享净化与 CSP / 密钥治理与配置体检 / 上传后端门控 / 爱发电只信订单号回查（§1-§8） |
+| 图床双路径 | [doocs-md-py/.agents/rules/uploaders-dual-path.md](doocs-md-py/.agents/rules/uploaders-dual-path.md) | 服务端 `/upload` 与 Web 图床两套路径辨识 / provider 注册表为数量权威 / 签名手写与测试向量 / 凭证零内置 / `formCustom` 边界（§1-§7） |
+| CLI 与 MCP 契约 | [doocs-md-py/.agents/rules/cli-and-mcp-contract.md](doocs-md-py/.agents/rules/cli-and-mcp-contract.md) | `mdpy` 五子命令 / 退出码与 stdout-stderr 契约 / MCP 13 工具 1:1 / `render_markdown` 显式入参映射与双向锁定 / 选项字面值 / 数量口径更正纪律（§1-§7） |
+| 变更日志 | [doocs-md-py/.agents/CHANGELOG.md](doocs-md-py/.agents/CHANGELOG.md) | doocs-md-py 应用变更记录 |
+| 人类可读文档 | [doocs-md-py/docs/architecture.md](doocs-md-py/docs/architecture.md) | 工程向文档 5 篇（architecture / contract-mapping / contract-differences / build-web-dist / coverage-report-t20），暂无索引页 |
+
 ## 边界声明
 
 | 资产 | 归属 | 可直接修改 | 说明 |
@@ -260,9 +279,11 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/ai-agents/ | SpecWeave 主权区 | ✅ 是 | AI 应用类分组 |
 | apps/dev-tools/ | SpecWeave 主权区 | ✅ 是 | 开发工具类分组 |
 | apps/coach-moments-growth/ | 应用自治（遵循根规范） | ✅ 是 | 商业教练朋友圈 AI 增长系统（根级独立应用；AI 生成朋友圈内容 + 转化漏斗 + 数据追踪 + 合规保障；规格 `.trae/specs/coach-moments-growth/`） |
-| apps/doocs-md-py/ | 应用自治（遵循根规范） | ✅ 是 | doocs/md 的 Python 3.14 复刻（根级独立应用；markdown-it-py 渲染库 + 自托管 FastAPI API + 14 家图床 + MCP Server 13 工具 + `mdpy` CLI；scikit-build-core 纯 Python 包，前端产物不入库；规格 `.trae/specs/doocs-md-py/`） |
-| apps/doocs-md-py/README.md | 应用自治（遵循根规范） | ✅ 是 | doocs-md-py 应用说明书（功能矩阵/快速开始/CLI/配置全表/图床/MCP/许可与来源） |
-| apps/doocs-md-py/docs/ | 应用自治（遵循根规范） | ✅ 是 | doocs-md-py 工程向文档（architecture / contract-mapping / contract-differences / build-web-dist / coverage-report-t20 五篇） |
+| apps/doocs-md-py/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | doocs/md 的 Python 3.14 复刻（根级独立应用；markdown-it-py 渲染库 + 自托管 FastAPI API + 14 家图床 + MCP Server 13 工具 + `mdpy` CLI；scikit-build-core 纯 Python 包，前端产物不入库；规格 `.trae/specs/doocs-md-py/`） |
+| apps/doocs-md-py/AGENTS.md | 应用自治 | ✅ 是 | doocs-md-py 入口 |
+| apps/doocs-md-py/.agents/ | 应用自治 | ✅ 是 | doocs-md-py 规范体系（6个rules文件：upstream-reconstruction/engineering-redlines/render-and-theme-contract/server-api-and-security/uploaders-dual-path/cli-and-mcp-contract） |
+| apps/doocs-md-py/README.md | 应用自治 | ✅ 是 | doocs-md-py 应用说明书（功能矩阵/快速开始/CLI/配置全表/图床/MCP/许可与来源） |
+| apps/doocs-md-py/docs/ | 应用自治 | ✅ 是 | doocs-md-py 工程向文档（architecture / contract-mapping / contract-differences / build-web-dist / coverage-report-t20 五篇） |
 | apps/samples/ | SpecWeave 主权区 | ✅ 是 | 示例/原型类分组 |
 | apps/containers/jupyter-podman-rootless/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | Podman rootless Jupyter开发容器（Python 3.14t + Miniforge3 + SSH + rootless Podman + OMLMD/OLOT + Toolbx透传，invoke管理，三层后端自动降级） |
 | apps/containers/jupyter-podman-rootless/AGENTS.md | 应用自治 | ✅ 是 | jupyter-podman-rootless 入口 |
