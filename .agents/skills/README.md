@@ -139,7 +139,7 @@ Trae IDE 内置设计系统库完整归档（2026-09-03 导入），来源目录
 | Skill名称 | 类型 | 对应脚本 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
 | compose-overlay-ops | 应用CLI门面 | invoke quant.*/native.*/monetize.*（apps/containers/client，podman-compose 子进程层） | 启动/重建 native-dev、onnx-quantized、agent-monetize 叠加栈、native.up/build/smoke、容器 Exited(0)、netavark nft、Jupyter 保存 Errno 13、WSL 发行版回收、tuna 构建叠加镜像 | [compose-overlay-ops/SKILL.md](compose-overlay-ops/SKILL.md) |
-| jpman-podman-ops | 应用CLI门面 | jpman（apps/containers/jupyter-podman-rootless/bin，bash/cmd/ps1 三版本） | jpman、启动jupyter容器、podman machine、工作区挂载、容器WARN分诊、fuse device、rootless排障、WSL保活、rebuild | [jpman-podman-ops/SKILL.md](jpman-podman-ops/SKILL.md) |
+| jpman-podman-ops | 应用CLI门面 | jpman（apps/containers/jupyter-podman-rootless/bin，bash/cmd/ps1 三版本） | jpman、启动jupyter容器、podman machine、工作区挂载、容器WARN分诊、fuse device、rootless排障、WSL保活、rebuild、crun pids not available、non-systemd cgroup、WSL3 systemd=true+argv0 shim 修复 | [jpman-podman-ops/SKILL.md](jpman-podman-ops/SKILL.md) |
 | openkylin-wsl-devkit | 应用CLI门面 | okw（apps/dev-tools/openkylin-wsl-devkit，Python 零运行时依赖 CLI，七组命令） | okw、openKylin WSL 导入/验收、openKylin 发行版内装 podman、okw podman/compose/image 排错、xuan-compose/xc 引导、openKylin 开发容器镜像、deb/dput 脚手架、okw ref、修改 openkylin-wsl-devkit 源码 | [openkylin-wsl-devkit/SKILL.md](openkylin-wsl-devkit/SKILL.md) |
 | docker-cache-cmd | 脚本门面 | docker-cache（bash） | 保存镜像、缓存Docker镜像、docker缓存、镜像缓存、加载镜像、WSL重置恢复、docker save/load、镜像本地缓存 | [docker-cache-cmd/SKILL.md](docker-cache-cmd/SKILL.md) |
 | docker-wsl-bridge-cmd | 跨Shell编排 | wsl+podman命令编排 | 镜像转WSL、docker镜像导入WSL、镜像转rootfs、podman export转wsl、WSL重置后恢复开发环境、docker-wsl-bridge | [docker-wsl-bridge-cmd/SKILL.md](docker-wsl-bridge-cmd/SKILL.md) |

@@ -1,0 +1,18 @@
+# 部署排除清单。注意：.corpus/ 与 scripts/ 必须保留——
+# 前者是构建索引的语料来源，后者含 build_index.py，二者都在 buildCommand 阶段被使用。
+# data/ 必须排除：索引由云端 buildCommand 现场构建，上传本地 161MB 副本纯属浪费。
+data/
+tests/
+.git/
+.github/
+.venv/
+.env
+.env.*
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+build/
+*.egg-info/
+.coverage
+README.md

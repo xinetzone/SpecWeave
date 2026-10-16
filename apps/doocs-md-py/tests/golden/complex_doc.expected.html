@@ -1,0 +1,167 @@
+<h1 class="h1" data-heading="true">Doocs MD 全功能综合对拍文档</h1><blockquote class="blockquote"><p class="p">本文档用于 TR-7.2 渲染等价性黄金对拍，覆盖 T6/T7 全部扩展的交互场景。</p></blockquote><h2 class="h2" data-heading="true">目录</h2><nav class="markdown-toc"><ul class="toc-ul toc-level-2 pl-4 border-l ml-2"><li class="toc-li toc-level-2 mb-1"><a class="text-gray-700 hover:text-blue-600 underline transition-colors" href="#1">目录</a></li><li class="toc-li toc-level-2 mb-1"><a class="text-gray-700 hover:text-blue-600 underline transition-colors" href="#2">一、基础排版与标记语法</a></li><li class="toc-li toc-level-2 mb-1"><a class="text-gray-700 hover:text-blue-600 underline transition-colors" href="#3">二、列表、引用与表格</a></li><ul class="toc-ul toc-level-3 pl-4 border-l ml-2"><li class="toc-li toc-level-3 mb-1"><a class="text-gray-700 hover:text-blue-600 underline transition-colors" href="#4">无序列表</a></li><li class="toc-li toc-level-3 mb-1"><a class="text-gray-700 hover:text-blue-600 underline transition-colors" href="#5">有序列表</a></li><li class="toc-li toc-level-3 mb-1"><a class="text-gray-700 hover:text-blue-600 underline transition-colors" href="#6">引用块</a></li><li class="toc-li toc-level-3 mb-1"><a class="text-gray-700 hover:text-blue-600 underline transition-colors" href="#7">GFM 表格</a></li></ul><li class="toc-li toc-level-2 mb-1"><a class="text-gray-700 hover:text-blue-600 underline transition-colors" href="#8">三、提示框全集</a></li><li class="toc-li toc-level-2 mb-1"><a class="text-gray-700 hover:text-blue-600 underline transition-colors" href="#9">四、图表占位</a></li><li class="toc-li toc-level-2 mb-1"><a class="text-gray-700 hover:text-blue-600 underline transition-colors" href="#10">五、注音与表情贴纸</a></li><li class="toc-li toc-level-2 mb-1"><a class="text-gray-700 hover:text-blue-600 underline transition-colors" href="#11">六、自定义组件</a></li><li class="toc-li toc-level-2 mb-1"><a class="text-gray-700 hover:text-blue-600 underline transition-colors" href="#12">七、脚注与收尾</a></li></ul></ul></nav><h2 class="h2" data-heading="true">一、基础排版与标记语法</h2><p class="p">这一段落包含 <strong class="strong">加粗</strong>、<em class="em">斜体</em>、<del class="del">删除线</del>、<span class="markup-highlight">高亮标记</span>、<span class="markup-underline">下划线</span>、<span class="markup-wavyline">波浪线</span> 与 <sup class="markup-superscript">上标</sup>，<br>以及行内代码 <code class="codespan">const x = 42</code> 和<a href="https://github.com/doocs/md" title="标题">普通链接</a>。<br>自动链接 https://md.doocs.org 与表情短码 👍 😄 ❤️ 🎉 混合出现。</p><p class="p">软换行后紧跟公式（#1743）：<br>取<span class="katex-inline katex-pending" data-math-display="false" data-math-raw="$y_1 = y_2 = \cdots = y_n = -y$"><span>…</span></span>，就退化为二元的情形。<br>金额守卫 20$ 不应当作公式，而 <span class="katex-inline katex-pending" data-math-display="false" data-math-raw="$E=mc^2$"><span>…</span></span> 是行内公式，<section class="katex-block katex-pending" data-math-display="true" data-math-raw="$$\sum_{i=1}^{n} i$$"><span>Loading formula…</span></section> 是块公式。</p><p class="p">LaTeX 行内 <span class="katex-inline katex-pending" data-math-display="false" data-math-raw="\(a^2+b^2=c^2\)"><span>…</span></span> 与块级：</p><section class="katex-block katex-pending" data-math-display="true" data-math-raw="\[
+\int_0^\infty e^{-x^2}\,dx=\frac{\sqrt{\pi}}{2}
+\]"><span>Loading formula…</span></section><p class="p">分隔线三种：</p><hr class="hr hr-dash"><hr class="hr hr-star"><hr class="hr hr-underscore"><h2 class="h2" data-heading="true">二、列表、引用与表格</h2><h3 class="h3" data-heading="true">无序列表</h3><ul class="ul"><li class="listitem">• 第一项，含行内公式 <span class="katex-inline katex-pending" data-math-display="false" data-math-raw="$x+y$"><span>…</span></span></li><li class="listitem">• 第二项，含脚注引用<sup style="color: var(--md-primary-color);">
+                    <a href="#fnDef-first" id="fnRef-first">[1]</a>
+                </sup><ul class="ul"><li class="listitem">• 嵌套项 A</li><li class="listitem">• 嵌套项 B，含 <code class="codespan">code</code></li></ul></li><li class="listitem">• 第三项，回到顶层</li></ul><h3 class="h3" data-heading="true">有序列表</h3><ol class="ol"><li class="listitem">1. 步骤一：读取配置</li><li class="listitem">2. 步骤二：初始化渲染器</li><li class="listitem">3. 步骤三：输出 HTML<sup style="color: var(--md-primary-color);">
+                    <a href="#fnDef-second" id="fnRef-second">[2]</a>
+                </sup></li></ol><h3 class="h3" data-heading="true">引用块</h3><blockquote class="blockquote"><p class="p">这是一段引用，包含 <strong class="strong">强调</strong> 与 <a href="https://doocs.github.io/md" title="链接">链接</a>。</p><p class="p">第二段引用，嵌套行内公式 <span class="katex-inline katex-pending" data-math-display="false" data-math-raw="$\alpha+\beta$"><span>…</span></span>。</p></blockquote><h3 class="h3" data-heading="true">GFM 表格</h3>
+        <section style="max-width: 100%; overflow: auto; -webkit-overflow-scrolling: touch">
+          <table class="preview-table">
+            <thead><th class="th" style="text-align: left">名称</th><th class="th" style="text-align: center">版本</th><th class="th" style="text-align: right">状态</th><th class="th" style="text-align: center">占比</th></thead>
+            <tbody><tr class="tr"><td class="td" style="text-align: left">Vue</td><td class="td" style="text-align: center">3.x</td><td class="td" style="text-align: right">稳定</td><td class="td" style="text-align: center">80%</td></tr><tr class="tr"><td class="td" style="text-align: left">Vite</td><td class="td" style="text-align: center">8.x</td><td class="td" style="text-align: right">稳定</td><td class="td" style="text-align: center">95%</td></tr><tr class="tr"><td class="td" style="text-align: left">pnpm</td><td class="td" style="text-align: center">10.x</td><td class="td" style="text-align: right">稳定</td><td class="td" style="text-align: center">70%</td></tr></tbody>
+          </table>
+        </section>
+      <h2 class="h2" data-heading="true">三、提示框全集</h2><blockquote class="markdown-alert markdown-alert-note">
+<p class="markdown-alert-title alert-title-note"><svg class="alert-icon-note" class="octicon octicon-info" style="margin-right: 0.25em;" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
+<p class="p">这是 GFM 笔记提示，含 <strong class="strong">加粗</strong> 文本。</p></blockquote>
+<blockquote class="markdown-alert markdown-alert-tip">
+<p class="markdown-alert-title alert-title-tip"><svg class="alert-icon-tip" class="octicon octicon-light-bulb" style="margin-right: 0.25em;" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p>
+<p class="p">这是小贴士。</p></blockquote>
+<blockquote class="markdown-alert markdown-alert-important">
+<p class="markdown-alert-title alert-title-important"><svg class="alert-icon-important" class="octicon octicon-report" style="margin-right: 0.25em;" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p>
+<p class="p">这是重要信息。</p></blockquote>
+<blockquote class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title alert-title-warning"><svg class="alert-icon-warning" class="octicon octicon-alert" style="margin-right: 0.25em;" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p>
+<p class="p">这是警告，含公式 <span class="katex-inline katex-pending" data-math-display="false" data-math-raw="$p&lt;0.05$"><span>…</span></span>。</p></blockquote>
+<blockquote class="markdown-alert markdown-alert-caution">
+<p class="markdown-alert-title alert-title-caution"><svg class="alert-icon-caution" class="octicon octicon-stop" style="margin-right: 0.25em;" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Caution</p>
+<p class="p">这是注意事项。</p></blockquote>
+<blockquote class="markdown-alert markdown-alert-abstract">
+<p class="markdown-alert-title alert-title-abstract"><svg class="alert-icon-abstract" class="octicon octicon-clipboard" style="margin-right: 0.25em;" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M5.75 1a.75.75 0 0 0-.75.75v.5c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.5a.75.75 0 0 0-.75-.75Zm4.5-1.5a2.25 2.25 0 0 1 2.122 1.5H13a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h.628A2.25 2.25 0 0 1 5.75-.5ZM3.5 3v10a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5Z"></path></svg>Abstract</p>
+<p class="p">Obsidian 风格摘要，支持折叠。</p></blockquote>
+<blockquote class="markdown-alert markdown-alert-faq">
+<p class="markdown-alert-title alert-title-faq"><svg class="alert-icon-faq" class="octicon octicon-question" style="margin-right: 0.25em;" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.756 2.756 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6.24 6.24 0 0 0-.26.16.952.952 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661.103-.067.207-.132.313-.195l.007-.004c.1-.061.182-.11.258-.161a.969.969 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.612.612 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1.01 1.01 0 0 0-.34.398ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>- 自定义标题</p>
+<p class="p">折叠的常见问题解答内容，这里有多行文本，<br>还包含换行情景与行内代码 <code class="codespan">npm run dev</code>。</p></blockquote>
+<blockquote class="markdown-alert markdown-alert-theorem">
+<p class="markdown-alert-title alert-title-theorem"><svg class="alert-icon-theorem" class="octicon octicon-light-bulb" style="margin-right: 0.25em;" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Theorem</p>
+<p class="p">学术定理提示：费马大定理，<span class="katex-inline katex-pending" data-math-display="false" data-math-raw="$n&gt;2$"><span>…</span></span> 时 <span class="katex-inline katex-pending" data-math-display="false" data-math-raw="$x^n+y^n=z^n$"><span>…</span></span> 无正整数解。</p></blockquote>
+<h2 class="h2" data-heading="true">四、图表占位</h2><!--mermaid-start--><div id="mermaid-mx2my4" class="mermaid-diagram" data-md-diagram-state="loading">Loading Mermaid…</div><!--mermaid-end--><div class="plantuml-diagram" style="text-align: center; margin: 16px 8px; overflow-x: auto" data-placeholder="plantuml-qm5ygt" data-md-diagram-state="loading">
+      <div style="color: #666; font-style: italic;">Loading PlantUML diagram…</div>
+    </div><!--infographic-start--><div id="infographic-vc5gpf" class="infographic-diagram" style="width: 100%;" data-md-diagram-state="loading">Loading infographic…</div><!--infographic-end--><h2 class="h2" data-heading="true">五、注音与表情贴纸</h2><p class="p">基础注音 <ruby data-text="漢字" data-ruby="かんじ" data-format="basic">漢字<rp>(</rp><rt>かんじ</rt><rp>)</rp></ruby>，帽注 <ruby data-text="拼" data-ruby="pīn" data-format="basic-hat">拼<rp>(</rp><rt>pīn</rt><rp>)</rp></ruby><ruby data-text="音" data-ruby="yīn" data-format="basic-hat">音<rp>(</rp><rt>yīn</rt><rp>)</rp></ruby>，<br>分隔拆分 <ruby data-text="上" data-ruby="shàng" data-format="basic">上<rp>(</rp><rt>shàng</rt><rp>)</rp></ruby><ruby data-text="海" data-ruby="hǎi" data-format="basic">海<rp>(</rp><rt>hǎi</rt><rp>)</rp></ruby> 与多字 <ruby data-text="甲" data-ruby="a" data-format="basic">甲<rp>(</rp><rt>a</rt><rp>)</rp></ruby><ruby data-text="乙丙丁" data-ruby="b" data-format="basic">乙丙丁<rp>(</rp><rt>b</rt><rp>)</rp></ruby>，<br>行内表情贴纸：</p><p><img class="md-emoji" data-emoji-id="liulei" src="about:blank" alt="流泪" /></p>
+<p class="p">横向滑动图组：</p>
+            <section style="box-sizing: border-box; font-size: 16px;">
+              <section data-role="outer" style="font-family: 微软雅黑; font-size: 16px;">
+                <section data-role="paragraph" style="margin: 0px auto; box-sizing: border-box; width: 100%;">
+                  <section style="margin: 0px auto; text-align: center;">
+                    <section style="display: inline-block; width: 100%;">
+                      <!-- WeChat-compatible horizontal scroll image container -->
+                      <section style="overflow-x: scroll; -webkit-overflow-scrolling: touch; white-space: nowrap; width: 100%; text-align: center;">
+                        <section style="display: inline-block; width: 100%; margin-right: 0; vertical-align: top;">
+                          <img src="https://example.com/a.png" alt="图一" title="图一" style="width: 100%; height: auto; border-radius: 4px; vertical-align: top;"/>
+                          <p style="margin-top: 5px; font-size: 14px; color: #666; text-align: center; white-space: normal;">图一</p>
+                        </section><section style="display: inline-block; width: 100%; margin-right: 0; vertical-align: top;">
+                          <img src="https://example.com/b.png" alt="图二" title="图二" style="width: 100%; height: auto; border-radius: 4px; vertical-align: top;"/>
+                          <p style="margin-top: 5px; font-size: 14px; color: #666; text-align: center; white-space: normal;">图二</p>
+                        </section>
+                      </section>
+                    </section>
+                  </section>
+                </section>
+              </section>
+              <p style="font-size: 14px; color: #999; text-align: center; margin-top: 5px;"><<< 左右滑动看更多 >>></p>
+            </section>
+          <h2 class="h2" data-heading="true">六、自定义组件</h2><section style="text-align: center; margin: 20px auto; padding: 16px 0;">
+  <img
+    src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://md.doocs.org"
+    alt="QR Code"
+    style="width: 120px; height: 120px; display: block; margin: 0 auto; border-radius: 4px;"
+  />
+  <p style="text-align: center; font-size: 14px; color: var(--md-comp-text-tertiary, #999); margin-top: 8px; margin-bottom: 0;">扫码访问</p>
+</section>
+<section style="display: table; width: 100%; padding: 16px 0; margin: 16px 0; box-sizing: border-box;">
+  <section style="display: table-cell; vertical-align: middle; width: 64px;">
+    <img src="https://avatars.githubusercontent.com/u/21008209?v=4" alt="yanglbme" style="width: 56px; height: 56px; border-radius: 50%; display: block;" />
+  </section>
+  <section style="display: table-cell; vertical-align: middle; padding-left: 12px;">
+    <p style="margin: 0 0 4px; font-size: 15px; font-weight: bold; color: var(--md-comp-text-primary, #333);">yanglbme</p>
+    <p style="margin: 0; font-size: 13px; color: var(--md-comp-text-tertiary, #999); line-height: 1.5;">Creator of Doocs</p>
+  </section>
+</section>
+<section class="mp_profile_iframe_wrp custom_select_card_wrp" nodeleaf="">
+  <mp-common-profile class="mpprofile js_uneditable custom_select_card mp_profile_iframe" data-pluginname="mpprofile" data-id="MzIxNjA5ODQ0OQ==" data-nickname="Doocs" data-headimg="https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/md/images/mp-logo.png" data-signature="GitHub 开源组织" data-service_type="1" data-verify_status="1"></mp-common-profile>
+  <br class="ProseMirror-trailingBreak">
+</section>
+<section style="border-left: 4px solid #52c41a; background: #f6ffed; padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0;">
+  <p style="margin: 0 0 6px; font-size: 14px; font-weight: bold; color: #135200;">完成</p>
+  <p style="margin: 0; font-size: 14px; color: #135200; line-height: 1.6;">全部扩展渲染正常。</p>
+</section>
+<section style="overflow-x: auto; margin: 16px 0;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+    <caption style="font-size: 13px; color: var(--md-comp-text-secondary, #666); margin-bottom: 8px; text-align: left; caption-side: top;">T6/T7 进度表</caption>
+    <thead>
+      <tr>
+        <th style="padding: 8px 12px; text-align: left; font-weight: 600; font-size: 13px; color: var(--md-comp-text-secondary, #666); background: var(--md-comp-bg-secondary, #f5f5f5); border-bottom: 2px solid var(--md-comp-border-default, #e0e0e0);">模块</th>
+        <th style="padding: 8px 12px; text-align: left; font-weight: 600; font-size: 13px; color: var(--md-comp-text-secondary, #666); background: var(--md-comp-bg-secondary, #f5f5f5); border-bottom: 2px solid var(--md-comp-border-default, #e0e0e0);">状态</th>
+        <th style="padding: 8px 12px; text-align: left; font-weight: 600; font-size: 13px; color: var(--md-comp-text-secondary, #666); background: var(--md-comp-bg-secondary, #f5f5f5); border-bottom: 2px solid var(--md-comp-border-default, #e0e0e0);">用例数</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 8px 12px; font-size: 13px; color: var(--md-comp-text-primary, #333); border-bottom: 1px solid var(--md-comp-border-light, #eee);">markup</td>
+        <td style="padding: 8px 12px; font-size: 13px; color: var(--md-comp-text-primary, #333); border-bottom: 1px solid var(--md-comp-border-light, #eee);">完成</td>
+        <td style="padding: 8px 12px; font-size: 13px; color: var(--md-comp-text-primary, #333); border-bottom: 1px solid var(--md-comp-border-light, #eee);">18</td>
+      </tr>
+      <tr style="background: var(--md-comp-bg-stripe, #fafafa);">
+        <td style="padding: 8px 12px; font-size: 13px; color: var(--md-comp-text-primary, #333); border-bottom: 1px solid var(--md-comp-border-light, #eee);">emoji</td>
+        <td style="padding: 8px 12px; font-size: 13px; color: var(--md-comp-text-primary, #333); border-bottom: 1px solid var(--md-comp-border-light, #eee);">完成</td>
+        <td style="padding: 8px 12px; font-size: 13px; color: var(--md-comp-text-primary, #333); border-bottom: 1px solid var(--md-comp-border-light, #eee);">86</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 12px; font-size: 13px; color: var(--md-comp-text-primary, #333); border-bottom: 1px solid var(--md-comp-border-light, #eee);">alert</td>
+        <td style="padding: 8px 12px; font-size: 13px; color: var(--md-comp-text-primary, #333); border-bottom: 1px solid var(--md-comp-border-light, #eee);">完成</td>
+        <td style="padding: 8px 12px; font-size: 13px; color: var(--md-comp-text-primary, #333); border-bottom: 1px solid var(--md-comp-border-light, #eee);">60</td>
+      </tr>
+      <tr style="background: var(--md-comp-bg-stripe, #fafafa);">
+        <td style="padding: 8px 12px; font-size: 13px; color: var(--md-comp-text-primary, #333); border-bottom: 1px solid var(--md-comp-border-light, #eee);">component</td>
+        <td style="padding: 8px 12px; font-size: 13px; color: var(--md-comp-text-primary, #333); border-bottom: 1px solid var(--md-comp-border-light, #eee);">完成</td>
+        <td style="padding: 8px 12px; font-size: 13px; color: var(--md-comp-text-primary, #333); border-bottom: 1px solid var(--md-comp-border-light, #eee);">31</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<section style="margin: 16px 0; border: 1px solid var(--md-comp-border-light, #eee); border-radius: 8px; overflow: hidden; background: var(--md-comp-bg, #fff);">
+  <section style="display: table; width: 100%; border-collapse: collapse;">
+    <section style="display: table-row;">
+      <section style="display: table-cell; width: 50%; padding: 10px 14px; border-bottom: 1px solid var(--md-comp-border-light, #eee); border-right: 1px solid var(--md-comp-border-light, #eee); vertical-align: top; box-sizing: border-box;">
+        <p style="margin: 0 0 2px; font-size: 11px; color: var(--md-comp-text-tertiary, #999); text-transform: uppercase; letter-spacing: 0.5px;">语言</p>
+        <p style="margin: 0; font-size: 14px; font-weight: 500; color: var(--md-comp-text-primary, #333);">Python 3.14</p>
+      </section>
+      <section style="display: table-cell; width: 50%; padding: 10px 14px; border-bottom: 1px solid var(--md-comp-border-light, #eee); border-right: none; vertical-align: top; box-sizing: border-box;">
+        <p style="margin: 0 0 2px; font-size: 11px; color: var(--md-comp-text-tertiary, #999); text-transform: uppercase; letter-spacing: 0.5px;">解析器</p>
+        <p style="margin: 0; font-size: 14px; font-weight: 500; color: var(--md-comp-text-primary, #333);">markdown-it-py</p>
+      </section>
+    </section>
+    <section style="display: table-row;">
+      <section style="display: table-cell; width: 50%; padding: 10px 14px; border-bottom: none; border-right: 1px solid var(--md-comp-border-light, #eee); vertical-align: top; box-sizing: border-box;">
+        <p style="margin: 0 0 2px; font-size: 11px; color: var(--md-comp-text-tertiary, #999); text-transform: uppercase; letter-spacing: 0.5px;">净化</p>
+        <p style="margin: 0; font-size: 14px; font-weight: 500; color: var(--md-comp-text-primary, #333);">nh3</p>
+      </section>
+      <section style="display: table-cell; width: 50%; padding: 10px 14px; border-bottom: none; border-right: none; vertical-align: top; box-sizing: border-box;">
+        <p style="margin: 0 0 2px; font-size: 11px; color: var(--md-comp-text-tertiary, #999); text-transform: uppercase; letter-spacing: 0.5px;">协议</p>
+        <p style="margin: 0; font-size: 14px; font-weight: 500; color: var(--md-comp-text-primary, #333);">WTFPL</p>
+      </section>
+    </section>
+  </section>
+</section>
+<section style="display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0;">
+<span style="display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 13px; font-weight: 500; background: #07c1601a; color: #07c160; border: 1px solid #07c16040;">Vue 3</span><span style="display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 13px; font-weight: 500; background: #07c1601a; color: #07c160; border: 1px solid #07c16040;">TypeScript</span><span style="display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 13px; font-weight: 500; background: #07c1601a; color: #07c160; border: 1px solid #07c16040;">FastAPI</span><span style="display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 13px; font-weight: 500; background: #07c1601a; color: #07c160; border: 1px solid #07c16040;">SQLite</span><span style="display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 13px; font-weight: 500; background: #07c1601a; color: #07c160; border: 1px solid #07c16040;">markdown-it</span>
+</section>
+<p style="color:#f00;font-size:12px;">[Unknown component: UnknownBlock]</p>
+<h2 class="h2" data-heading="true">七、脚注与收尾</h2><p class="p">脚注定义集中在此：<br>重复引用<sup style="color: var(--md-primary-color);">
+                    <a href="#fnDef-first" id="fnRef-first">[1]</a>
+                </sup>同一条脚注，再引用<sup style="color: var(--md-primary-color);">
+                    <a href="#fnDef-third" id="fnRef-third">[3]</a>
+                </sup>。</p>
+            <p style="font-size: 80%;margin: 0.5em 8px;word-break:break-all;">
+                <code>1.</code> 
+                <span> 第一条脚注，包含 [链接](https://example.com) 与 $x^2$。</span> 
+                    <a id="fnDef-first" href="#fnRef-first" style="color: var(--md-primary-color);">↩︎</a>
+                <br>
+                <code>2.</code> 
+                <span> 第二条脚注，包含行内代码 `code`。</span> 
+                    <a id="fnDef-second" href="#fnRef-second" style="color: var(--md-primary-color);">↩︎</a>
+                <br>
+                <code>3.</code> 
+                <span> 第三条脚注，中文编号语义按定义顺序。</span> 
+                    <a id="fnDef-third" href="#fnRef-third" style="color: var(--md-primary-color);">↩︎</a>
+                <br></p><p class="p">这是文档的最后一段，包含 🔥 表情、<span class="markup-highlight">标记</span> 与 <ruby data-text="漢字" data-ruby="かんじ" data-format="basic">漢字<rp>(</rp><rt>かんじ</rt><rp>)</rp></ruby> 注音，<br>用于验证扩展并存时的段落收尾行为。</p>

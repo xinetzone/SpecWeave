@@ -1,0 +1,25 @@
+{
+  "generated_by": "podman node:22 + hono/jwt (hono 精确版本见下) 与 PyJWT 互认",
+  "node_pkg": "hono@4.13.13",
+  "algorithm": "HS256",
+  "secret": "interop-secret-0123456789-abcdef-ghijkl",
+  "claims": {
+    "sub": "fixed-user-001",
+    "login": "octocat",
+    "exp": 2000000000
+  },
+  "expired_claims": {
+    "sub": "fixed-user-001",
+    "login": "octocat",
+    "exp": 1000000000
+  },
+  "py_token_generated_by": "PyJWT (本仓库 venv 锁定版本)",
+  "node_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmaXhlZC11c2VyLTAwMSIsImxvZ2luIjoib2N0b2NhdCIsImV4cCI6MjAwMDAwMDAwMH0.wOe1sJnEIzS-PPtR2X_VgggLwurbTajmJ717czecvZ8",
+  "checks": {
+    "py_token_verified_by_node": true,
+    "node_token_self_verified": true,
+    "py_expired_rejected_by_node": true,
+    "wrong_secret_rejected": true,
+    "tampered_rejected": true
+  }
+}

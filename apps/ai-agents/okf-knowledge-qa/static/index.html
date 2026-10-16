@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OKF 知识库问答 · SpecWeave</title>
+  <meta name="description" content="基于 SpecWeave OKF 知识包的检索增强问答助手，答案带出处引用。" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <div class="brand">
+        <span class="brand__mark">知</span>
+        <div class="brand__text">
+          <h1>OKF 知识库问答</h1>
+          <p>基于 SpecWeave 知识包 · 答案带出处引用</p>
+        </div>
+      </div>
+      <div class="status" id="status">
+        <span class="pill pill--muted" id="pill-kb">知识库检测中…</span>
+        <span class="pill pill--muted" id="pill-llm">模型检测中…</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="asker">
+      <form id="ask-form" autocomplete="off">
+        <div class="asker__field">
+          <textarea
+            id="question"
+            name="question"
+            rows="3"
+            maxlength="500"
+            placeholder="向知识库提问，例如：OKF 知识包的三层结构是什么？"
+          ></textarea>
+          <div class="asker__actions">
+            <span class="asker__hint">Ctrl / ⌘ + Enter 发送</span>
+            <button type="submit" id="submit-btn" class="btn btn--primary">提问</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="examples" id="examples">
+        <span class="examples__label">试试这些：</span>
+        <div class="examples__chips" id="example-chips"></div>
+      </div>
+    </section>
+
+    <div id="alert" class="alert" hidden></div>
+
+    <section class="result" id="result" hidden>
+      <div class="result__main">
+        <article class="card answer">
+          <header class="card__head">
+            <h2 class="card__title">回答</h2>
+            <span class="badge" id="degraded-badge" hidden>降级输出</span>
+          </header>
+          <div class="answer__body markdown" id="answer-body"></div>
+        </article>
+      </div>
+
+      <aside class="result__side">
+        <article class="card sources">
+          <header class="card__head">
+            <h2 class="card__title">参考出处</h2>
+            <span class="badge badge--quiet" id="hit-count"></span>
+          </header>
+          <ol class="sources__list" id="sources-list"></ol>
+        </article>
+      </aside>
+    </section>
+
+    <section class="empty" id="empty">
+      <div class="empty__inner">
+        <div class="empty__icon">📚</div>
+        <h2>知识库已就绪</h2>
+        <p>问题会先在知识包中检索相关片段，再由大模型归纳作答，并标注每一处引用来源。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>语料来源：SpecWeave · <code>projects/awesome-okf-xs/doc/bundles</code></span>
+    <span id="footer-stats"></span>
+  </footer>
+
+  <script type="module" src="/static/app.js"></script>
+</body>
+</html>

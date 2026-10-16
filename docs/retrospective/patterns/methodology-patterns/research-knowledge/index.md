@@ -28,6 +28,7 @@ external-website-analysis-fallback-strategy
 falsifiable-claim-evaluation
 first-principles-feature-analysis
 five-layer-progressive-analysis
+gap-two-round-verification
 knowledge-archive-four-layer
 knowledge-system-construction-template
 knowledge-system-evolution-three-stages

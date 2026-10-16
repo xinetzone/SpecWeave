@@ -1,0 +1,16 @@
+# 前端构建产物（由 scripts/build-web-dist 生成，体积大，不入库；哈希清单入库）
+src/doocs_md_py/assets/web-dist/*
+!src/doocs_md_py/assets/web-dist/.gitkeep
+!src/doocs_md_py/assets/web-dist/MANIFEST.sha256
+!src/doocs_md_py/assets/web-dist/NOTICE
+
+# 本地运行数据（SQLite 数据库、本地上传存储）
+data/
+
+# 前端构建临时产物
+web-dist-build/
+
+# 覆盖率产物（pytest --cov 生成，仅供 scripts/check_coverage.py 消费后归档）
+.coverage
+coverage.json
+htmlcov/

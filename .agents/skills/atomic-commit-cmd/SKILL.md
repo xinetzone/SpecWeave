@@ -1,6 +1,6 @@
 ---
 name: atomic-commit-cmd
-version: 1.7.0
+version: 1.9.0
 description: "当用户提到'提交'、'commit'、'原子提交'、'代码提交'、'提交代码'、'提交变更'、'git commit'、'保存更改'时，必须使用此技能。提供Git原子化提交规范执行能力：检查变更（三查暂存法）→预提交验证→构建提交信息→执行提交→验证结果。遵循Conventional Commits规范，确保单次提交单一职责。不要直接git commit——本Skill封装了预检查、三查暂存验证、提交信息格式和验证流程。"
 argument-hint: "<提交类型：feat/fix/refactor/test/docs/chore/perf> [scope] <提交信息>"
 user-invocable: true
@@ -84,7 +84,10 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/atomic-commit-cmd/SKILL.toml"
 步骤3：执行预提交验证（check-links.py、相关检查脚本、单元测试，重要提交运行ci-check.ps1）
 步骤4：构建提交信息（格式：type(scope): subject，中文描述"为什么"）
 步骤5：执行提交（显式git add <每个文件> — 禁止git add .）
-   - **Windows平台含中文**：优先使用 `python .agents/scripts/git-commit-utf8.py -m "msg" <files>` 自动处理编码
+   - **提交集必须点名钉死**（暂存区是共享可变状态，核对过≠提交时仍干净，详见 [commit-staging-integrity.md](../../rules/commit-staging-integrity.md)）：
+     · 首选带文件清单：`python .agents/scripts/git-commit-utf8.py -m "<msg>" <路径…>` —— 该工具在 add 前检测清单外的已暂存文件即中止、add 后校验暂存集必须等于指定集；同时自动处理中文编码
+     · 直连 git（无中文 / 子模块 gitlink / 工具不可用）：`git commit -F <msg文件> -- <路径…>`
+     · 禁止裸 `git commit`：它提交的是「此刻索引里的一切」，会把并发会话的在途工作一并带上
 步骤6：验证结果（git log -1确认信息正确无乱码，git status确认无遗漏）
    - **批量提交场景**：全部提交完成后必须重新执行 `git status --short`，若仍有残留变更，回到步骤1分析是否需要追加提交（禁止假设残留是已处理的）
 ```
@@ -101,6 +104,9 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/atomic-commit-cmd/SKILL.toml"
   - [ ] 查修改(M)：所有修改文件都属于本次提交范围
   - [ ] 查删除(D)：所有删除记录都已显式git add（注意：git add新目录不会自动暂存旧文件删除）
 - [ ] 没有无关文件混入提交（明确指定文件，禁止 `git add .`）
+- [ ] **提交集已点名钉死**：走了带文件清单的提交入口，或直连 git 时用了 `-- <路径…>`；没有裸 `git commit`
+- [ ] **点名路径自身无混入**：`git diff <路径>` 过一遍，确认该路径内没有不属于本次的改动（路径级只挡别的路径，不挡同一路径内的无关改动）
+- [ ] **索引含他人暂存文件时**：已与文件主人确认并摘出（`git restore --staged`），**未使用 `--no-verify` 绕过钩子**
 - [ ] 提交信息遵循Conventional Commits格式（type(scope): subject）
 - [ ] 提交信息用中文描述"为什么"而非"做了什么"
 - [ ] 预提交检查已执行（链接/格式/测试，适用时）
@@ -153,6 +159,9 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/atomic-commit-cmd/SKILL.toml"
 - **amend只会修改最后一次提交**：`git commit --amend` 只能修改最近一次提交，无法amend更早的commit。如果需要修改更早的提交，必须使用交互式rebase（`git rebase -i`），操作复杂度显著增加，因此提交前务必通过三查验证确认信息正确。
 - **Conventional Commits type必须小写**：提交类型必须使用小写（`feat`/`fix`/`docs`/`refactor`/`test`/`chore`/`perf`），大写开头（`Feat`/`Fix`/`Docs`）不符合规范，会被CI检查拦截。
 - **空提交需要--allow-empty**：触发CI流水线但无代码变更时（如重新运行失败的CI），需要创建空提交，此时必须添加 `--allow-empty` 参数（`git commit --allow-empty -m "ci: 触发流水线重跑"`），否则Git会拒绝提交。
+- **暂存区是共享可变状态**：核对 `git diff --cached` 与提交之间存在时间窗，期间其它 IDE 窗口、其它智能体会话或自动化脚本都可能往索引里写。**核对过 ≠ 提交时干净**，故提交集必须路径级点名（详见 [commit-staging-integrity.md](../../rules/commit-staging-integrity.md)）；核对与提交要**紧邻**，中间不要插入长等待或切去别的会话干活。
+- **「用了工具」不等于「走了守卫」**：`git-commit-utf8.py` 的「暂存集 == 指定集」守卫**只在带文件清单时生效**——省略清单它只做编码处理，把当前暂存区原样提交。且它的守卫也只在「校验那一刻」成立（提交调用本身不带路径级指定），因此索引可能被并发写入的仓库里仍需 R2 的路径级点名兜底。
+- **索引被污染时不得用 `reset --hard` 清场**：那会连工作区一起回滚，销毁并发会话尚未提交的在途工作（比误提交严重得多）。正确处置：`git reset --soft HEAD~1` → `git restore --staged <他人路径>` → 路径级重提交。
 
 ## 10. 关键参考
 
@@ -164,9 +173,11 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/atomic-commit-cmd/SKILL.toml"
 | 开发规范（提交规范章节） | L2 | [docs/development-standards.md](../../../docs/tech/references/development-standards.md) | 确认提交规范 |
 | CI检查脚本 | L1工具 | [ci-check.ps1](../../scripts/ci-check.ps1) | 重要提交前验证 |
 | Git忽略验证 | L1工具 | [check-gitignore.py](../../scripts/check-gitignore.py) | 怀疑有不该提交的文件时 |
+| 提交暂存区完整性规则 | L1规则 | [commit-staging-integrity.md](../../rules/commit-staging-integrity.md) | 每次提交前：确认提交集已点名钉死、核对与提交紧邻、索引污染时的处置 |
 
 ## 11. Changelog
 
+- **v1.9.0** (2026-10-15): 接入「提交暂存区完整性」规则（[commit-staging-integrity.md](../../rules/commit-staging-integrity.md)）——§5 步骤5 改为「提交集必须点名钉死」（首选带文件清单的工具入口，直连 git 用 `-- <路径…>`，禁止裸 `git commit`）；§6 安全检查清单新增 3 项（提交集点名、点名路径自身无混入、索引含他人暂存文件时的处置）；§9 Gotchas 新增 3 条（暂存区是共享可变状态、「用了工具 ≠ 走了守卫」、禁用 `reset --hard` 清场）。基于 sc-20261015 会话两次实测：一次裸 `git commit -F` 被并行会话暂存污染（多出 4 个文件）、一次路径级提交成功拦下 1700 行在途改动。
 - **v1.8.0** (2026-09-20): 对齐 spec 白名单口径至现行标准——检查脚本白名单补入 review.md（TRAE-spec-mode 规划三件套）与 facts.md/insights.md（工作流声明的过程件），checklist.md 降级为存量兼容命名。清除了 553 次 review.md 类误报（492 项历史告警中 414 项为白名单漂移误报，真实债务 78 项）。基于 492 项历史遗留告警的根因复盘。
 - **v1.7.0** (2026-07-13): 新增"spec目录白名单检查"安全项，强制产出物归档至docs/而非遗留在spec规划目录中。配套check-spec-output-archive.py自动化检查脚本（19种产出物命名模式匹配），已集成至ci-check流水线Step 7（当前warn-only，待历史51个遗留spec清理后升级为error）。基于文章分析任务产出物路径错误问题的第一性原理复盘萃取。
 - **v1.6.0** (2026-07-06): 新增"批量提交场景重扫描"检查项，解决批量原子提交后工作区残留变更被误判为已处理的隐患。三处同步增强：§5步骤6新增重扫描提示、§6安全检查清单新增批量提交项、L2文档atomic-commit.md步骤5新增第5项验证。基于5次批量原子提交复盘中"4个文件未显示在初始扫描"问题萃取。

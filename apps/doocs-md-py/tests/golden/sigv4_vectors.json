@@ -1,0 +1,54 @@
+{
+  "source": {
+    "spec": "Amazon S3 API Reference — Signature Calculations for the Authorization Header: Transferring Payload in a Single Chunk (AWS Signature Version 4)",
+    "spec_url": "https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html",
+    "reference_implementation": "@aws-sdk/signature-v4@3.374.0 + @aws-crypto/sha256-js@5.x on Node.js v22 (podman node:22-alpine)",
+    "note": "GET 例 canonical_request 逐字摘自官方文档；两组签名由 AWS 官方 JS SDK 复算，GET 签名同时与文档公布值 f0e8bdb8... 一致"
+  },
+  "credentials": {
+    "accessKeyId": "AKIAIOSFODNN7EXAMPLE",
+    "secretAccessKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+  },
+  "region": "us-east-1",
+  "service": "s3",
+  "amzDate": "20130524T000000Z",
+  "cases": [
+    {
+      "name": "get-object",
+      "method": "GET",
+      "raw_path": "/test.txt",
+      "path": "/test.txt",
+      "headers": {
+        "host": "examplebucket.s3.amazonaws.com",
+        "range": "bytes=0-9",
+        "x-amz-content-sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "x-amz-date": "20130524T000000Z"
+      },
+      "payload": "",
+      "canonical_request": "GET\n/test.txt\n\nhost:examplebucket.s3.amazonaws.com\nrange:bytes=0-9\nx-amz-content-sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nx-amz-date:20130524T000000Z\n\nhost;range;x-amz-content-sha256;x-amz-date\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "string_to_sign_hash": "7344ae5b7ee6c3e7e6b0fe0640412a37625d1fbfff95c48bbb2dc43964946972",
+      "expected_authorization": "AWS4-HMAC-SHA256 Credential=AKIAIOSFODNN7EXAMPLE/20130524/us-east-1/s3/aws4_request, SignedHeaders=host;range;x-amz-content-sha256;x-amz-date, Signature=f0e8bdb87c964420e857bd35b5d6ed310bd44f0170aba48dd91039c6036bdb41",
+      "expected_signature": "f0e8bdb87c964420e857bd35b5d6ed310bd44f0170aba48dd91039c6036bdb41",
+      "cross_checked_with": "@aws-sdk/signature-v4"
+    },
+    {
+      "name": "put-object",
+      "method": "PUT",
+      "raw_path": "/test$file.text",
+      "path": "/test%24file.text",
+      "headers": {
+        "host": "examplebucket.s3.amazonaws.com",
+        "date": "Fri, 24 May 2013 00:00:00 GMT",
+        "x-amz-content-sha256": "44ce7dd67c959e0d3524ffac1771dfbba87d2b6b4b4e99e42034a8b803f8b072",
+        "x-amz-date": "20130524T000000Z",
+        "x-amz-storage-class": "REDUCED_REDUNDANCY"
+      },
+      "payload": "Welcome to Amazon S3.",
+      "canonical_request": "PUT\n/test%24file.text\n\ndate:Fri, 24 May 2013 00:00:00 GMT\nhost:examplebucket.s3.amazonaws.com\nx-amz-content-sha256:44ce7dd67c959e0d3524ffac1771dfbba87d2b6b4b4e99e42034a8b803f8b072\nx-amz-date:20130524T000000Z\nx-amz-storage-class:REDUCED_REDUNDANCY\n\ndate;host;x-amz-content-sha256;x-amz-date;x-amz-storage-class\n44ce7dd67c959e0d3524ffac1771dfbba87d2b6b4b4e99e42034a8b803f8b072",
+      "string_to_sign_hash": "9e0e90d9c76de8fa5b200d8c849cd5b8dc7a3be3951ddb7f6a76b4158342019d",
+      "expected_authorization": "AWS4-HMAC-SHA256 Credential=AKIAIOSFODNN7EXAMPLE/20130524/us-east-1/s3/aws4_request, SignedHeaders=date;host;x-amz-content-sha256;x-amz-date;x-amz-storage-class, Signature=98ad721746da40c64f1a55b78f14c238d841ea1380cd77a1b5971af0ece108bd",
+      "expected_signature": "98ad721746da40c64f1a55b78f14c238d841ea1380cd77a1b5971af0ece108bd",
+      "cross_checked_with": "official documentation only (SDK v3 strips Date header)"
+    }
+  ]
+}

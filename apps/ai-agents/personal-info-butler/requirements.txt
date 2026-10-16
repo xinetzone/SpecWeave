@@ -1,0 +1,19 @@
+# 个人信息管家 Agent —— Sphinx 站点构建依赖
+# 用法：pip install -r requirements.txt
+#
+# 注意：API 运行时的依赖（fastapi / uvicorn / httpx / pydantic）由
+# pyproject.toml 的 [project.dependencies] 声明，不在此处重复。
+
+sphinx>=8.2
+myst-parser>=5.1
+sphinx-book-theme>=1.1
+sphinx-copybutton>=0.5
+sphinx-design>=0.6
+sphinxcontrib-mermaid>=1.0
+
+# 中文站内搜索的分词依赖：SearchChinese 未装 jieba 时切词返回空集，
+# 中文内容不会进入搜索索引——构建期不报错，只是搜不到（见 doc/conf.py 搜索节）。
+jieba>=0.42
+
+# 站点契约测试（本地与 CI 均用）
+pytest>=8.0

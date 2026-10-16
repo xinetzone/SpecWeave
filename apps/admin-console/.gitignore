@@ -1,0 +1,10 @@
+# 环境变量（含真实密钥）
+.env
+.env.local
+
+# 构建与测试产物
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+__pycache__/

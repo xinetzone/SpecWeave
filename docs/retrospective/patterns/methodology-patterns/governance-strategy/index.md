@@ -26,6 +26,7 @@ combination-value-triple-test
 command-knowledge-link
 command-vs-skill-boundary
 commit-quality-gate-staging-inspection
+community-metric-triple-check
 compliance-driven-rule-building
 config-cache-separation-backup
 config-persistence-full-chain-coverage

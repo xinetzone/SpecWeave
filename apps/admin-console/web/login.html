@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>登录 · admin-console</title>
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body class="login-body">
+  <main class="login-card">
+    <div class="login-brand">
+      <span class="brand-mark">AC</span>
+      <div>
+        <h1>内容管理后台</h1>
+        <p class="muted">admin-console · 通用内容骨架</p>
+      </div>
+    </div>
+
+    <div id="banner" class="banner hidden"></div>
+
+    <form id="login-form" autocomplete="on" novalidate>
+      <label class="field">
+        <span>邮箱</span>
+        <input id="email" name="email" type="email" placeholder="admin@example.com" required autofocus>
+      </label>
+      <label class="field">
+        <span>口令</span>
+        <input id="password" name="password" type="password" placeholder="请输入口令" required>
+      </label>
+      <p id="error" class="form-error hidden"></p>
+      <button id="submit" class="btn primary block" type="submit">登录</button>
+    </form>
+
+    <p class="login-hint muted" id="demo-hint"></p>
+  </main>
+  <script>
+    (function () {
+      var form = document.getElementById('login-form');
+      var error = document.getElementById('error');
+      var submit = document.getElementById('submit');
+      var banner = document.getElementById('banner');
+
+      function showError(message) {
+        error.textContent = message;
+        error.classList.remove('hidden');
+      }
+
+      fetch('/api/health', { credentials: 'same-origin' })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data && data.degraded) {
+            banner.textContent = '云端未配置，当前为内存降级模式：登录可用，但数据不会持久化。';
+            banner.classList.remove('hidden');
+          }
+          if (data && data.demo_login) {
+            document.getElementById('demo-hint').textContent =
+              '本地演示账号：' + (data.demo_email || 'admin@example.com') + ' / 见 .env 的 ADMIN_PASSWORD';
+          }
+        })
+        .catch(function () { /* 健康检查失败不影响登录 */ });
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        error.classList.add('hidden');
+        submit.disabled = true;
+        submit.textContent = '登录中…';
+        fetch('/api/auth/login', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value
+          })
+        })
+          .then(function (response) {
+            return response.json().then(function (data) { return { status: response.status, data: data }; });
+          })
+          .then(function (result) {
+            if (result.status !== 200) {
+              showError((result.data && result.data.message) || '登录失败');
+              submit.disabled = false;
+              submit.textContent = '登录';
+              return;
+            }
+            window.location.href = '/app';
+          })
+          .catch(function () {
+            showError('网络异常，请稍后重试');
+            submit.disabled = false;
+            submit.textContent = '登录';
+          });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 ---
 name: jpman-podman-ops
-version: 1.2.0
-description: "jupyter-podman-rootless（jpman）容器日常运维与 Podman on WSL2 驾驶纪律。当用户提到 jpman、启动/重启/停止 Jupyter 容器、jupyter 容器起不来、podman machine、podman 机器未运行、工作区挂载(-w)、挂载目录不对、容器警告/WARN 分诊、fuse device not found、Jupyter 隐藏文件不显示、rootless podman 排障、jpman start/restart/status/logs/shell、WSL 保活(keepalive)、镜像构建慢/构建卡住/miniforge 下载慢/GitHub 限速/镜像源加速、容器内 podman/podman-compose 报错/newuidmap write to uid_map failed/Operation not permitted/嵌套容器起容器/SSH 终端与 podman exec 行为不一致 等场景时，必须使用此技能。封装日常驾驶 SOP（machine 就绪预检→幂等 start→Mounting 行核对→healthcheck 验证→WARN 警告先验分诊）、rootless 三必需参数、容器内 root 运行模型、.env 与工作区路径优先级、rebuild 增量/全量构建选择、invoke 全量构建加速分诊（tuna 三镜像源+本地安装包预灌+9p 规避）、容器内嵌套 Podman 分诊（newuidmap EPERM 结构性根因 + B-scheme 宿主 socket 五通道桥接 + SSH/podman exec 环境模型差异），并与 docker-cache-cmd（镜像灾备缓存）、docker-wsl-bridge-cmd（镜像转 WSL 发行版）形成边界路由。不要手动拼接 podman 命令或套用 Docker 经验排障——本 Skill 已封装 podman machine ssh 纪律、禁止 systemd=true、hello-world 最小验证、禁止在嵌套容器内自建 rootless daemon 等实战教训。"
+version: 1.3.0
+description: "jupyter-podman-rootless（jpman）容器日常运维与 Podman on WSL2 驾驶纪律。当用户提到 jpman、启动/重启/停止 Jupyter 容器、容器起不来、podman machine、机器未运行、工作区挂载(-w)、挂载目录不对、容器 WARN 分诊、fuse device not found、Jupyter 隐藏文件不显示、rootless podman 排障、jpman start/restart/status/logs/shell、WSL 保活、镜像构建慢/卡住/miniforge 下载慢/镜像源加速、容器内 podman 报 newuidmap EPERM/嵌套容器/SSH 与 podman exec 行为不一致，以及 WSL 3.0 后 crun pids not available/non-systemd cgroup 未委托/--pids-limit 不生效/start 报 machine not in running state 但实例实际 Running 等场景时必须使用。封装日常驾驶 SOP（就绪预检→幂等 start→Mounting 核对→healthcheck→WARN 先验分诊）、rootless 三必需参数、.env 与工作区路径优先级、rebuild 增量/全量选择、invoke 构建加速（tuna 三镜像源+预灌+9p 规避）、嵌套 Podman 分诊（newuidmap 结构性根因+B-scheme 宿主 socket 五通道桥接）、WSL3 cgroup pids 委托缺失修复（systemd=true+/sbin/init argv[0] shim 两步，§7.3，仅限四条件齐备）；与 docker-cache-cmd（镜像灾备缓存）、docker-wsl-bridge-cmd（镜像转 WSL 发行版）、wsl-vhdx-compact-cmd（VHDX 压缩迁移）边界路由。不要手动拼 podman 命令或套 Docker 经验——已封装 machine ssh 纪律、hello-world 最小验证、systemd=true 唯一合法使用边界（禁止为消普通 WARN 单独开启）、禁嵌套自建 rootless daemon 等实战教训。"
 argument-hint: "<日常操作> [start|stop|restart|status|info|logs|shell|rebuild...] [选项]"
 disable-model-invocation: false
 user-invocable: true
@@ -54,6 +54,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/jpman-podman-ops/SKILL.toml"
 - "rebuild"、"增量重建"、"改了配置怎么生效"
 - "构建慢"、"镜像构建卡住"、"构建一直不动"、"miniforge 下载慢/超时"、"GitHub 限速"、"镜像源加速"、"tuna 镜像构建"
 - "容器里跑 podman 报错"、"podman-compose up 失败"、"newuidmap"、"write to uid_map failed"、"Operation not permitted"、"嵌套容器/DinP 起不来"、"SSH 连进去 podman 不能用"、"podman exec 可以但 SSH 不行"
+- "crun controller pids is not available"、"non-systemd cgroup"、"cgroup.controllers 为空"、"--pids-limit 不生效/被忽略"、"WSL 升级到 3.0 后容器起不来"、"start 报 machine not in running state 但 wsl -l -v 显示 Running"
 
 > **关于触发**：即使没有明确说"用 skill"，只要涉及 jupyter-podman-rootless 容器的日常操作与排障，就应使用本技能，不要手动拼接 `podman create` 参数或凭 Docker 经验操作——rootless/WSL2 的约束与 Docker Desktop 完全不同。
 
@@ -63,6 +64,8 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/jpman-podman-ops/SKILL.toml"
 用户要对 jupyter-podman-rootless 做什么？
 ├─ 日常启停/进入/日志/查访问地址？            → §6 日常驾驶 SOP
 ├─ podman machine 连不上/报连接错误/启动有 WARN？ → §7 machine 就绪与警告分诊
+│   └─ 普通容器直接报 crun pids not available（non-systemd 路径）？
+│       四条件齐备 → §7.3 WSL 3.0 cgroup 委托修复（systemd=true+argv0 shim）
 ├─ 改了配置/装了包要固化进镜像？               → §8 构建场景（rebuild 增量 vs rebuild-all 全量）
 ├─ invoke build 很慢/卡在下载/疑似构建挂起？   → §8.5 构建加速分诊速查
 ├─ 容器内 podman/podman-compose 报 newuidmap EPERM？
@@ -203,9 +206,23 @@ WSL 内运行 jpman 时另有会话层保活：jpman start 会自动调用 keepa
    ```
 4. 以上均无效，再深入排查（日志、复现、查上游 Issue）
 
-> **为什么默认动作是"验证"而不是"修复"？** rootless/WSL2 环境的大部分 WARN 是自动降级提示（如 cgroup v1→cgroupfs 回退、shared mount 建议），功能不受影响。为"消除警告"而改配置，极易引入真故障——典型如给 podman-machine-default 的 `/etc/wsl.conf` 设 `systemd=true`，这是 Podman 官方 Issue [containers/podman#28341](https://github.com/containers/podman/issues/28341) 明确不支持的配置。
+> **为什么默认动作是"验证"而不是"修复"？** rootless/WSL2 环境的大部分 WARN 是自动降级提示（如 cgroup v1→cgroupfs 回退、shared mount 建议），功能不受影响。为"消除警告"而改配置，极易引入真故障——典型如给 podman-machine-default 的 `/etc/wsl.conf` 设 `systemd=true`，这是 Podman 官方 Issue [containers/podman#28341](https://github.com/containers/podman/issues/28341) 在常规场景下明确不支持的配置。
+>
+> **唯一合法例外（2026-10-14 WSL 3.0.3 实测）**：WSL 3.0 下 podman machine 的嵌套 systemd 布局导致 cgroup 控制器完全未委托，**连 hello-world 这类普通容器都无法启动**（不是 WARN，是 crun 直接报错）时，按 §7.3 启用 `systemd=true` 并**必须同时**部署 `/sbin/init` argv[0] shim——单独开 systemd=true 会让 podman start 永远误判机器未运行。判据不满足（容器其实能跑、只是有 WARN）时，本节旧纪律原样有效，禁止动 wsl.conf。
 
 **rootless 容器三必需参数**（jpman 与 compose.yaml 均已内置，手动建容器时不可遗漏）：`--device /dev/fuse`、`--security-opt label=disable`、`--cgroupns=host`。**不需要也不应该加 `--privileged`**。
+
+### 7.3 WSL 3.0 cgroup pids 委托缺失修复（systemd=true + argv[0] shim）
+
+**判据（四条全部满足才走本节；任一不满足回 §7.2，禁止为消 WARN 动 wsl.conf）**：宿主 `wsl --version` 为 3.0.x；任意普通容器（含 hello-world）报 `crun ... pids is not available` 且 cgroup 路径含 `/non-systemd/`；`--cgroups=disabled` 能跑（证明非存储/镜像问题）；machine 内 `/proc/1/cgroup` 在 `/non-systemd/` 且该子树 `cgroup.controllers` 为空。
+
+**根因一句话**：podman machine 不用 WSL 原生 systemd（`/root/bootstrap` 以 unshare 手搓嵌套 systemd），WSL3 将其挂入 `/non-systemd` 子树；层内 9 个跨 PID 命名空间隐藏进程使 `subtree_control` 委托恒 EBUSY，根级旁路 cgroup 跨树迁移恒 EPERM——逐级委托、旁路 cgroup、重启 `user@1000.service`（会终止整个 VM）三条弯路均已实证堵死，源码级根因与证伪记录见参考文档。
+
+**修复（两步缺一不可，machine 内 root 执行）**：① `/etc/wsl.conf` 加 `[boot] systemd=true`，PID1 回到根 `/init.scope`，cpu/io/memory/pids 自动委托；② `/sbin/init` 换成 `exec -a /lib/systemd/systemd /usr/lib/systemd/systemd "$@"` 的 shim——podman 5.8.x 就绪探针（`pkg/machine/wsl/declares.go` 的 `sysdpid`，硬编码 `grep ^/lib/systemd/systemd`）按 argv[0] 字面量匹配，只做①会导致 start 30~50s 后误报 not running（实例实际健康、API 可用）。
+
+**验收口径**：`wsl --shutdown` 冷启动 start 11~15s 成功；`/proc/1/cmdline`=/lib/systemd/systemd 且 user@1000.service 的 controllers 含 `cpu io memory pids`；宿主侧容器 cgroup 路径 `pids.max`=设定值（容器内视图显示 max 是命名空间假象，不足为据）；ssh/API 双路容器正常、映射端口 Windows 侧 HTTP 200。
+
+完整修复/冷启动/验证/回滚命令、`machine rm/init` 后重做要求、podman 升级后去 shim 评估、`cgroups=disabled`/rootful 两个降级退路、PowerShell base64 传参手法见 [references/wsl3-cgroup-fix.md](references/wsl3-cgroup-fix.md)。
 
 ## 8. 构建、缓存与导出场景
 
@@ -392,7 +409,7 @@ grep -E 'SetEnv CONTAINER_HOST' /etc/ssh/sshd_config     # ssh cmd 形态通道
 - [ ] 启动后已核对 `Mounting` 输出行与 info 的 Mount 字段指向预期工作区
 - [ ] 已运行 `jpman status` 确认 healthcheck healthy，或已验证浏览器可打开 Jupyter
 - [ ] 出现 WARN 时已先执行 hello-world 最小验证，未直接改配置
-- [ ] 已确认未给 podman-machine-default 设置 systemd=true、未给容器加 --privileged
+- [ ] 未为消除普通 WARN 给 podman-machine-default 设置 systemd=true（§7.2 旧纪律）；若已按 §7.3 启用，确认四条件齐备且 `/sbin/init` argv[0] shim 同步部署、wsl --shutdown 冷启动后 start/ssh/pids 三项验证全过；未给容器加 --privileged
 - [ ] rebuild / wsl-export 等写操作前，已确认工作区数据与镜像缓存状态
 - [ ] 排查权限问题时，已确认未误用 Docker 变体的 JUPYTER_ROOT_CHOWN 经验
 - [ ] 容器内 podman 报 newuidmap EPERM 时，未尝试 subuid/特权修复，已按 §9.1 走 B-scheme，并经真实 SSH（非 podman exec）验证、确认容器为修复后新建
@@ -405,6 +422,8 @@ grep -E 'SetEnv CONTAINER_HOST' /etc/ssh/sshd_config     # ssh cmd 形态通道
 | `fuse device not found` | 建容器/容器内挂载 | 确认三必需参数齐全（jpman/compose 已内置）；machine 异常则 `podman machine ssh` 后重查 |
 | `Cannot connect to Podman` / 提示 run podman machine start | Windows 机器未起 | `podman machine start` + sleep infinity 保活（§7.1） |
 | shared mount / cgroup 类 WARN | 交互会话 | 先 hello-world 验证；检查是否 wsl -d 误进入；三板斧（§7.2） |
+| 任意容器报 `crun: controller 'pids' is not available under /sys/fs/cgroup/non-systemd/...` | WSL 3.0.x machine 嵌套 systemd 未委托 cgroup | 核对 §7.3 四条件（含 `--cgroups=disabled` 能跑）；systemd=true + /sbin/init argv[0] shim 两步修复后 wsl --shutdown 冷启动 |
+| `podman machine start` 等 30~50s 报 `machine not in running state: ssh error`，但 `wsl -l -v` 显示 Running、gvproxy API 可用 | 已开 systemd=true 但缺 argv[0] shim，podman 就绪探针 grep `^/lib/systemd/systemd` 失配 | 按 §7.3 步骤 2 部署 /sbin/init shim（原符号链接备份 .orig-symlink），wsl --shutdown 后重启 |
 | 容器里"数据不见了" | 挂载错误 | 核对 Mounting 行与 WORKSPACE 优先级（§6 步骤3），数据在另一个挂载目录 |
 | Jupyter 看不到 .temp/.gitignore | 隐藏文件 | 服务端已配 allow_hidden；UI 勾选 View → Show Hidden Files |
 | 忘记 token / 密码 | 访问 | `jpman info` 或 `jpman logs`；默认见 §5 |
@@ -451,6 +470,9 @@ grep -E 'SetEnv CONTAINER_HOST' /etc/ssh/sshd_config     # ssh cmd 形态通道
 - **PowerShell `Select-Object -Last N` 会伪装构建"卡死"**：它必须等上游进程结束才输出最后 N 行，长时间构建期间日志文件为 0 字节属观察方式问题而非挂起；用 `Tee-Object` 流式落盘（§8.5）
 - **两套镜像缓存互不相通**：应用内 `.image-cache/`（jpman save/load）与 .agents 体系 `.docker-cache/`（docker-cache-cmd）是独立机制，不要互相找文件
 - **jpman vs invoke 分工**：jpman 零 Python 依赖、管日常驾驶/缓存/导出；invoke 管 ML 模型、三层后端（podman-compose→podman-py→CLI）、13 个任务。日常驾驶不要绕去 invoke
+- **WSL 3.0 的 `/non-systemd` 是委托死区**：podman machine 用 bootstrap+unshare 手搓的 systemd 挂在该子树，层内 9 个跨 PID 命名空间进程在发行版里只显示为 PID 0；对其写 `cgroup.subtree_control` 恒 EBUSY、根级旁路 cgroup 迁进程恒 EPERM（cgroup v2 跨树迁移需写公共祖先 cgroup.procs）。guest 内任何"逐级 echo 控制器"脚本都不要试，正解是 §7.3 改用 WSL 原生 systemd
+- **podman 5.8.x 就绪探针按 argv[0] 字面量匹配**：探针 `ps -eo cmd,pid | grep -m 1 ^/lib/systemd/systemd` 不识别符号链接形态的 `/sbin/init`；WSL3 原生 systemd 经 /sbin/init 拉起时实例健康但 start 误判 not running。症状是"wsl -l -v=Running、TCP 59047 可连、手动密钥 SSH 正常，唯独 podman start/ssh 拒绝"——这是客户端状态机误判，别去查 sshd 或防火墙
+- **WSL3 原生 systemd 下的两个观察假象**：`wsl --terminate <distro>` 可能不重启 systemd（`journalctl --list-boots` boot id 不变），排障以 `/proc/1/cmdline` 与 boot 列表为准、勿信单次 `wsl -l -v` 的瞬时 Stopped；machine 空闲约 60s 被 vmIdleTimeout 回收是正常现象，重新 start 即可，不是故障
 
 ## 13. 关键参考速查表
 
@@ -463,10 +485,13 @@ grep -E 'SetEnv CONTAINER_HOST' /etc/ssh/sshd_config     # ssh cmd 形态通道
 | 2026-08-27 警告复盘（21 事实/5-Why/警告先验法） | [retrospective-podman-wsl-rootless-warnings-20260827.md](../../../docs/retrospective/reports/task-reports/retrospective-podman-wsl-rootless-warnings-20260827.md) |
 | 镜像灾备缓存 | [docker-cache-cmd/SKILL.md](../docker-cache-cmd/SKILL.md) |
 | 镜像转 WSL 发行版（通用桥接） | [docker-wsl-bridge-cmd/SKILL.md](../docker-wsl-bridge-cmd/SKILL.md) |
-| systemd 不支持上游依据 | [Podman Issue #28341](https://github.com/containers/podman/issues/28341) |
+| systemd 不支持上游依据（常规场景） | [Podman Issue #28341](https://github.com/containers/podman/issues/28341) |
+| podman 5.8.1 就绪探针源码（argv[0] 硬匹配依据） | `pkg/machine/wsl/declares.go` 的 `sysdpid` 常量（github.com/podman-container-tools/podman v5.8.1） |
+| WSL 发行版跨盘迁移 / VHDX 压缩与稀疏化 | [wsl-vhdx-compact-cmd/SKILL.md](../wsl-vhdx-compact-cmd/SKILL.md)（`wsl --manage --move/--compact`、junction 收尾） |
 
 ## 14. Changelog
 
+- **v1.3.0** (2026-10-14): 新增 §7.3 WSL 3.0 cgroup pids 委托缺失修复。源于 WSL 2.9.3→3.0.3 升级后 podman machine 普通容器全部报 `crun controller pids is not available`（/non-systemd 路径）的实战排障（七概念 I→F→V→C）：① 源码级根因——podman 5.8.x machine 靠 /root/bootstrap 以 unshare 手搓嵌套 systemd，WSL3 将其挂入 /non-systemd 子树，层内 9 个跨 PID 命名空间进程（cgroup.procs 显示 PID 0）使 subtree_control 恒 EBUSY；② 两条内部修复路径对照实验证伪（逐级委托 EBUSY、根级旁路 cgroup 跨树迁移 EPERM），重启 user@1000.service 会杀整个 VM 立为禁令；③ 正解两步——wsl.conf 启用 WSL 原生 systemd=true（PID1 回根 /init.scope，cpu/io/memory/pids 自动委托）+ /sbin/init argv[0] shim（`exec -a /lib/systemd/systemd`，绕过 declares.go sysdpid 探针 `grep ^/lib/systemd/systemd` 的字面量失配，单独开 systemd=true 会导致 start 30~50s 误报 not running）；④ 验证含宿主侧 pids.max=42 实证（容器内命名空间视图显示 max 不足为据）、nginx -p 18080 Windows HTTP 200、wsl --shutdown 冷启动 11~15s、ssh/API 双路；⑤ 同步修正"禁止 systemd=true"旧纪律为唯一例外边界（四条件判据），决策树、§3 触发词、§10 安全清单、§11 错误表（2 行）、§12.3 Gotchas（3 条：non-systemd 死区/argv[0] 探针/terminate 与 vmIdleTimeout 观察假象）、frontmatter description 同步；完整修复手册（命令块、回滚、降级退路、base64 传参手法）按渐进式披露抽到 references/wsl3-cgroup-fix.md，正文 §7.3 保留判据与决策摘要，质量门禁 34 项全 PASS。
 - **v1.2.0** (2026-09-12): 新增 §9.1 嵌套 Podman 分诊。源于两轮"SSH 终端 podman-compose up 报 newuidmap EPERM"实战（七概念 F→V→C 链路）：① 根因实证为结构性能力缺失（中间 userns root 能力集 `0x800405fb` 无 CAP_SYS_ADMIN，setuid newuidmap 写多行 uid_map 必被拒），改 /etc/subuid 区间（100000→524288）、容器内 root single-map（lchown/devpts/cgroup 三墙）两个假设均被对照实验证伪，正解为 B-scheme 宿主 socket 直连；② 沉淀 SSH 五通道桥接矩阵（profile.d/.bashrc/ENV BASH_ENV/pam_env 版 /etc/environment/sshd SetEnv），关键反直觉点：sshd+PAM 清洗容器 config env（podman exec 与 SSH 环境模型不同）、bash 仅脚本文件形态读 BASH_ENV；③ 桥接脚本四级解析顺序（显式 CONTAINER_HOST＞env＞事实文件＞标准路径自探测）；④ 三条验证纪律（真实 SSH/env -i 复核、printenv 读变量防引号展开假象、修复需重建叠加层+容器+重新登录）。决策树、触发词、§10 安全清单、§11 错误表（4 行）、§12.3 Gotchas（5 条）、frontmatter description 同步。
 - **v1.1.0** (2026-09-12): 新增 §8.5 构建加速分诊速查。源于一次"构建疑似卡死"排障的实证：裸 `invoke build` 默认只走 GitHub 单源（实测 Miniforge 下载 221 KB/s、ETA ~11 分钟），取证后确认非挂起；tuna 三镜像源参数 + 本地安装包预灌（`local-cache/miniforge/`，解析顺序本地→镜像源→官方）使 Stage 2 conda-builder 降至 148 秒、全镜像约 5 分钟。同步沉淀 4 条反模式（裸 build 不带镜像参数、无输出即杀进程、`Select-Object -Last` 缓冲伪装卡死、安装包 `--help` 自检假阳性须用 `-h`）；决策树、触发词、§11 错误表、§12.3 Gotchas 同步；顺带修复 §2/§6/§13 共 7 条既有断链（apps 相对路径少一层 `../`）。
 - **v1.0.0** (2026-08-29): 初始版本。基于 jupyter-podman-rootless 日常运维实践与 2026-08-27 podman/WSL rootless 警告复盘萃取（42 条事实、4 条跨案例洞察、4 视角对抗审查）。覆盖 machine 就绪纪律、jpman 幂等驾驶 SOP、警告先验法分诊、rootless 运行模型、构建/缓存/导出路由；含 15 条反模式、9 项安全检查清单、12 条 Gotchas；与 docker-cache-cmd、docker-wsl-bridge-cmd 建立边界路由。

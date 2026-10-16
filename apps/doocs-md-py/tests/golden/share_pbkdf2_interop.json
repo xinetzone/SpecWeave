@@ -1,0 +1,17 @@
+{
+  "generated_by": "podman node:22 WebCrypto crypto.subtle（上游 share-password.ts 同 API） 与 Python hashlib.pbkdf2_hmac 互认",
+  "node": "v22.23.3",
+  "algorithm": "PBKDF2-HMAC-SHA256",
+  "iterations": 100000,
+  "password": "abcd1234",
+  "fixed_salt_b64": "Zml4ZWQtc2FsdC0xNmJ5IQ==",
+  "fixed_hash_b64": "9nLzB9dUCgu32YSVMKLs9zgc+OhzDYeoLrBl1i2vMIQ=",
+  "node_stored": "pbkdf2:100000:OjSaDEkLevojNpcWP1a71Q==:5TA8FOb1TbsFpn74VknKnKIKEx4CaPzh3skbV276hoA=",
+  "checks": {
+    "fixed_vector_matches": true,
+    "py_stored_verified_by_node": true,
+    "py_stored_rejects_wrong_by_node": true,
+    "node_stored_verified_by_python": true,
+    "node_stored_rejects_wrong_by_python": true
+  }
+}
