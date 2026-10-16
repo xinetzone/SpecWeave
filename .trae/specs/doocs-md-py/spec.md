@@ -281,7 +281,7 @@
 
 ## Open Questions
 
-- [ ] Q1：前端构建期 env 是否能做到零源码补丁同源指向（A3）——实现 T2 时核实 web 的 `.env*` 与 vite/config 源码后定论；若需补丁，补丁方案在实施前以 tasks.md 备注披露（不再中断用户，除非必须改前端业务代码）。
-- [ ] Q2：Python `mcp` 官方 SDK 对 3.14 的兼容性（A6）——T18 开工时用 pip 实测，不可用则回退手写最小传输层。
-- [ ] Q3：dist 分发方式（入库 or 脚本构建产物 gitignore）——实施时结合产物大小与 .gitignore 规范决定，倾向不入库、脚本一键构建。
-- [ ] Q4：md-cli 的 dcloud（uniCloud）上传是否在 Python CLI 中复刻——默认复刻（签名算法已完全逆向，成本低）；若实现期发现该服务已不可用则保留代码与测试、CLI 中标注实验性。
+- [x] Q1：前端构建期 env 是否能做到零源码补丁同源指向（A3）——**已定论：可零补丁实现**。T2 核实 vite `loadEnv` 以进程环境变量优先于 `.env` 文件，故以 `SERVER_ENV=NETLIFY` + 清空 `VITE_MD_API_URL`/`VITE_SYNC_API_URL` 构建即得同源指向，未改任何前端源码（TR-2.2 证据；构建脚本与依据见 [build-web-dist.md](../../../apps/doocs-md-py/docs/build-web-dist.md)）。
+- [x] Q2：Python `mcp` 官方 SDK 对 3.14 的兼容性（A6）——**已定论：不兼容，改手写最小传输层**。T18 实测 `mcp` 2.3.0 不可用于 Python 3.14，遂以手写 stdio JSON-RPC 2.0 替代，并从依赖中删除 `mcp`（登记为差异 CD-21）。
+- [x] Q3：dist 分发方式（入库 or 脚本构建产物 gitignore）——**已定论：不入库**。产物落 `src/doocs_md_py/assets/web-dist/` 且被 `.gitignore` 排除，仅 `.gitkeep`/`MANIFEST.sha256`/`NOTICE` 入库；fresh clone 后按脚本一键构建（见 [build-web-dist.md](../../../apps/doocs-md-py/docs/build-web-dist.md)）。
+- [x] Q4：md-cli 的 dcloud（uniCloud）上传是否在 Python CLI 中复刻——**已定论：已复刻并登记**。签名算法完成逆向，`dcloud` 上传器入库，图床总数记为 14 家（上游 13 家 + dcloud，见 [contract-differences.md](../../../apps/doocs-md-py/docs/contract-differences.md) §4.3），未发现该服务不可用。

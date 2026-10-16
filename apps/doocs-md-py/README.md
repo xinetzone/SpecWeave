@@ -76,6 +76,8 @@ mdpy serve
 - 默认**只绑定本机**；需要外部访问时必须显式 `--host 0.0.0.0`，并同步配置 `APP_URL` 与来源白名单。
 - 首次启动会打印**配置体检报告**（哪些能力已启用、哪些密钥已配置），报告**不含任何密钥值**（FR-15）。
 - 数据落在 `data/`（SQLite 与 `data/uploads`），已被 `.gitignore` 排除。
+- **部署约束**：以**单 worker** 运行。SQLite 连接以 `check_same_thread=False` 跨线程复用（FastAPI 同步路由在线程池执行），多 worker 部署须**各持独立文件连接**，不可共享同一连接（见 [docs/contract-differences.md](docs/contract-differences.md) 的 CD-13）。
+- **前端遥测提示**：构建产物 `index.html` 由上游零补丁产出，沿带上游 Google Analytics `gtag`（`G-7NZL3PZ0NK`），已登记为差异 CD-10；如需剥离见 [docs/build-web-dist.md](docs/build-web-dist.md) 第七节（部署侧后处理，非默认行为）。
 
 ## 三、CLI 命令
 

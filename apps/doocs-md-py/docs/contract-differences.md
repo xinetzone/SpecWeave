@@ -26,6 +26,18 @@ date: 2026-10-16
 | CD-7 | CLI 层 | `get-port` 随机空闲端口 → 严格递增端口 | **改进**（确定性更强、可断言） | [app.py](../src/doocs_md_py/server/app.py) |
 | CD-8 | 配置层 | 用户级配置文件为 Python 新增 | **规格新增**（凭证仍只入本地文件/环境变量，不入库） | [user_config.py](../src/doocs_md_py/user_config.py) |
 | CD-9 | 扩展层 | 自定义图床（formCustom）执行用户 JS | **不复刻**（NG2：仓库内无任何执行用户 JS 的代码路径） | `packages/web/src/services/upload/providers.ts` formCustom |
+| CD-10 | 前端产物 | NETLIFY 变体 `index.html` 内置上游 Google Analytics `gtag`（`G-7NZL3PZ0NK`） | **接受**（零源码补丁同源构建的必然产物；提供可选移除策略） | 见 §7.1 与 [build-web-dist.md](build-web-dist.md) |
+| CD-11 | 配置层 | 缺省 `UPLOAD_ENABLED`：上游 `false`（仅 `"true"`/`"1"` 开启）vs 本仓 `true` | **接受差异**（自托管 local 后端零配置可用；`UPLOAD_ENABLED=false` 可关） | [config.py](../src/doocs_md_py/server/config.py) |
+| CD-12 | 网络层 | 上游 Workers `fetch` 无超时概念；本仓注入 `httpx.Client` **15s 默认超时** | **规格新增**（自托管必须有超时，否则挂死） | [deps.py](../src/doocs_md_py/server/deps.py) |
+| CD-13 | 部署约束 | SQLite 单连接 `check_same_thread=False`；自托管**单 worker**；多 worker 须各持文件连接 | **部署约束登记**（见 §7.4 与 [README](../README.md)） | [db.py](../src/doocs_md_py/server/db.py)、`routers/sync.py` |
+| CD-14 | CLI 层 | 未知 `--provider` **显式报错**（退出码 2）；上游 `resolve_upload_provider` 静默回退 `default` | **改进**（拼写错误不再被静默吞掉） | [cli.py](../src/doocs_md_py/cli.py) |
+| CD-15 | 分享层 | `title` 按 `trim` + `slice(200)` 截断：JS 以 **UTF-16 码元** 计长，Python 以**码点**计长 | **接受差异**（BMP 外字符截断位置可能不同） | [share.py](../src/doocs_md_py/server/routers/share.py) |
+| CD-16 | 分享层 | 上游埋点正则 `[^"'>\s]*` 不消费危险 URL 属性的闭合引号，残留 `<a">` | **对齐**（逐字复现；分享页 CSP `script-src 'none'` 兜底） | [share.py](../src/doocs_md_py/server/routers/share.py) |
+| CD-17 | 上传器 | qiniu-js 浏览器 SDK 的 region 对象模型 → **HTTP multipart 直传**（仅在显式 URL 时用 region，否则默认上传域） | **接受差异**（去掉浏览器 SDK 依赖） | [qiniu.py](../src/doocs_md_py/uploaders/qiniu.py) |
+| CD-18 | 上传器 | dcloud 保留上游 `X-OSS-server-side-encrpytion` **原拼写**；OSS 响应不校验状态码 | **对齐**（逐字复现上游笔误与宽容行为） | [dcloud.py](../src/doocs_md_py/uploaders/dcloud.py) |
+| CD-19 | 表情层 | 本地后端 ETag 用**对象 MD5 hex（带引号）**；`Content-Type` 不持久化，以 DB 记录的 mime 为准；`Content-Length` 取 DB 记录的 size | **等价**（对 R2 `httpEtag` 的等价替代） | [emojis.py](../src/doocs_md_py/server/routers/emojis.py) |
+| CD-20 | 爱发电 | `AFDIAN_*` 环境变量**无前缀逐字保留**；webhook 应答体用平台约定 `{ec,em}` 而非统一 `{error}` | **对齐**（平台协议不可改） | [webhooks.py](../src/doocs_md_py/server/routers/webhooks.py) |
+| CD-21 | MCP 层 | 官方 TS SDK（`McpServer`+`StdioServerTransport`）→ **手写 stdio JSON-RPC 2.0**；`initialize` 形状本仓定义；schema 去偏（`\d`→`[0-9]`、hex 大小写展开）；协议版本取本仓规范版；删除 `mcp` 依赖 | **规格新增**（`mcp` 2.3.0 对 Python 3.14 不兼容实证） | [stdio.py](../src/doocs_md_py/mcp_server/stdio.py) |
 
 ## 二、渲染层差异（NG6 裁决口径）
 
@@ -105,8 +117,58 @@ T20 已在上游 `apps/api/src/*.test.ts`（13 个测试文件、60 条 `it`）�
 | Cloudflare R2 绑定 | S3 兼容后端（手写 SigV4；`UPLOAD_S3_*` 展开自上游 R2 绑定语义） | 见 [storage.py](../src/doocs_md_py/server/storage.py) |
 | 云服务侧反代取客户端 IP | 本地自托管下取 `X-Forwarded-For` 首项，退化时取对端地址 | NG4 |
 | Cloudflare Emoji / 市场等线上资源 | 本地 emoji 资产后端 + 可选 S3 后端 | `DOOCS_MD_PY_EMOJI_*` |
+| Cloudflare D1（市场发布限流计数） | SQLite 表 `marketplace_rate_limits(scope_key, day_key, count)` | 持久化替代；UTC 日界经核对逐字一致（无行为差异） |
+| D1 `batch` 双语句 | SQLite `with conn:` 单事务（失败整体回滚） | 等价事务语义（[爱发电激活](../src/doocs_md_py/server/routers/webhooks.py)） |
 
-## 七、差异维护约定
+## 七、补登差异明细（CD-10..CD-21）
+
+本节为 T22 补登：以下条目在实现期各任务的证据行中已声明，但未及时落盘到本台账（违反 §八第 1 条「未登记的差异一律按缺陷处理」）。逐条补录裁决与锚点。
+
+### 7.1 CD-10 前端产物内置上游遥测脚本
+
+T2 构建的 NETLIFY 变体 `index.html` 由上游源码零补丁产出，**必然包含**上游的 Google Analytics `gtag` 片段（测量 ID `G-7NZL3PZ0NK`）。裁决：**接受**——移除需修改产物或加构建期后处理，与「零源码补丁」的 TR-2.2 证据冲突，故不做默认移除。**可选移除策略**（部署方按需）：见 [build-web-dist.md](build-web-dist.md) 的分析脚本一节（产物构建后可对 `index.html` 做一次性 `gtag` 剥离，属部署侧后处理，不影响源码零补丁属性）。
+
+### 7.2 CD-11 缺省 `UPLOAD_ENABLED`
+
+上游缺省 `false`（仅显式 `"true"`/`"1"` 开启）；本仓缺省 `true`，与 `UPLOAD_BACKEND=local` 组合可零配置可用。裁决：**接受差异**，`UPLOAD_ENABLED=false` 可显式关闭。
+
+### 7.3 CD-12 HTTP 客户端超时
+
+上游 Workers `fetch` 无超时概念；本仓 `get_http_client` 用模块级 `httpx.Client` 并显式设 **15s** 默认超时（httpx 自身默认仅 5s，对图床/接口偏紧）。裁决：**规格新增**，自托管进程必须有超时以免请求挂死。该超时对爱发电 API、GitHub、各图床与表情后端一致生效。
+
+### 7.4 CD-13 部署约束（单 worker / SQLite 连接）
+
+`db.connect` 以 `check_same_thread=False` 建连：FastAPI 同步路由在线程池执行，单服务连接需跨线程复用；配套 **WAL** 与**单 worker** 自托管形态。**多 worker 部署须各持独立文件连接**（不可共享同一 `sqlite3.Connection`）。裁决：**部署约束登记**，同步路由因此以 `async def` 仅用于读取 JSON body，SQLite 调用在线程池直接执行。
+
+### 7.5 CD-14 未知图床显式报错
+
+上游 `resolve_upload_provider` 对未知值**静默回退** `default`；本仓 `mdpy upload` 对未知 `--provider` **显式报错**并置退出码 2。裁决：**改进**（避免拼写错误静默走错通道）。注意：库内 `resolve_upload_provider` 仍保留上游的回退语义（供服务端路由复用），差异仅在 CLI 边界。
+
+### 7.6 CD-15 / CD-16 分享层补充
+
+- **CD-15**：`title` 经 `trim` 后 `slice(200)` 截断——JS 按 **UTF-16 码元** 计长，Python 按 **码点** 计长，故含 BMP 外字符（如 emoji）时截断位置可能不同。裁决：**接受差异**（不影响功能，仅标题长度边界）。
+- **CD-16**：上游分享页埋点正则 `[^"'>\s]*` 不消费危险 URL 属性的闭合引号，产物残留 `<a">` 形态。裁决：**对齐**（逐字复现，不自作修正）；安全性由分享页 `Content-Security-Policy: script-src 'none'` 兜底。
+
+### 7.7 CD-17 / CD-18 上传器补充
+
+- **CD-17**：上游用 qiniu-js 浏览器 SDK 的 region 对象模型；本仓收敛为 **HTTP multipart 直传**（`region` 仅在配置为显式上传 URL 时生效，否则用默认上传域）。裁决：**接受差异**（去浏览器 SDK 依赖）。
+- **CD-18**：dcloud 通道逐字保留上游 `X-OSS-server-side-encrpytion` 的**原拼写**（上游笔误），且 OSS 响应**不校验状态码**（宽容行为）。裁决：**对齐**。
+
+### 7.8 CD-19 表情资产 ETag 与响应头
+
+本地/ S3 后端：ETag 用**对象 MD5 的 hex（带引号）**（对 R2 `httpEtag` 的等价物）；`Content-Type` 不持久化、以 DB 记录的 mime 为准；`Content-Length` 取 DB 记录的 size（逐字上游）。裁决：**等价**。另：静态文件与 DB 均不内置系统表情 items（上游同样靠外部灌桶，`0007`/`0008` 无 items 种子）。
+
+### 7.9 CD-20 爱发电平台约定
+
+- `AFDIAN_*` 环境变量名**逐字保留上游无前缀命名**（区别于本项目 `DOOCS_MD_PY_` 前缀的新增变量）。
+- webhook 的成功/错误应答体为平台约定的 `{ec, em}`，**非**本服务统一的 `{error}` 形态（直接返回 `JSONResponse`）。
+裁决：**对齐**（平台协议不可改）。
+
+### 7.10 CD-21 MCP 传输与形状
+
+① 传输层由官方 TS SDK（`McpServer` + `StdioServerTransport`）改为**手写 stdio JSON-RPC 2.0**（`mcp` 2.3.0 对 Python 3.14 不兼容的实证见 T18）；② `initialize` result 形状与 capabilities 取值由本仓实现定义（SDK 版本间会追加字段），**非可对拍项**；③ 入参校验失败文案直接以 `content[0].text` 承载，对齐的是 zod 原始 message（SDK 会再加 `MCP error -32602:` 前缀）；④ JSON Schema 两条去偏（`\d`→`[0-9]`、hex 大小写展开）不改变接受集，但使 pattern 字面与上游 zod 正则不同；⑤ 协议协商候选集与缺省版本（`2025-06-18`）取自本仓当时的规范版本；⑥ `pyproject.toml` 删除 `mcp` 依赖声明。裁决：**规格新增**。
+
+## 八、差异维护约定
 
 1. 新增差异必须先在本文件登记并给出裁决与锚点，再进入实现；未登记的差异一律按缺陷处理。
 2. 上游升级（版本/commit 变更）时，本文件与 [contract-mapping.md](contract-mapping.md) 必须同步复核。

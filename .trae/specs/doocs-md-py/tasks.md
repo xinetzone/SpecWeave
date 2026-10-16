@@ -487,3 +487,24 @@
 - **Test Requirements**:
   - `rule` TR-21.1: 链接检查（check-links.py 对变更目录）通过；apps/AGENTS.md 含新应用条目且路由字段完整；证据：脚本输出与 diff。
   - `rubric` TR-21.2: 新人按 README 从零到可访问（含 dist 构建）实操 ≤ 30 分钟无卡点；scale 1-5；anchors 1=无法完成/3=需口头补充/5=一次通过；threshold ≥4；证据：评审者实操记录入 review.md。
+
+## Task 22: 契约差异台账补登与规格收尾
+
+- **Status**: `completed`
+- **Priority**: high
+- **Depends On**: T21
+- **Completion Evidence**（2026-10-16）:
+  - TR-22.1 ✅ rule：`check-links.py --path apps/doocs-md-py` → **8 个 Markdown 文件、151 个本地引用全部有效、0 断链 0 警告**（首轮报告的 4 处目录链接警告已修复：`docs/contract-differences.md` L38/L39/L40/L121 由「目录链接」改为具体文件 `routers/emojis.py`、`routers/webhooks.py`、`mcp_server/stdio.py`、`routers/webhooks.py`，与 T21 对 `architecture.md:117` 的处置口径一致）；`--path .trae/specs/doocs-md-py` → 3 个文件、3 个引用全部有效。**机械对拍**：tasks.md 全量 **16 条**「T21 登记 / 待写入 contract-differences」指令逐条映射到台账落点，**零遗漏**（映射表见 `.trae/specs/doocs-md-py/review.md` 的 TR-22.1）。
+  - TR-22.2 ✅ rubric **5/5**（阈值 ≥4）：差异可追溯性——差异总表由 CD-1..CD-9 扩至 **CD-1..CD-21**（新增 12 条，每条含「层 / 差异要点 / 裁决 / 证据锚点」四要素，锚点均为**经 check-links 机械验证可达**的文件）；§六平台替代表新增 2 行；新增 §七逐条明细（7.1–7.10 十个子节）。任一差异均可经台账定位到上游锚点与本仓文件，满足 AC-U3「差异可追溯、有裁决」。
+  - 交付物：`apps/doocs-md-py/docs/contract-differences.md`（CD-10..CD-21 补登 + §六新增 2 行平台替代 + §七逐条明细 + 原 §七顺延为 §八）、`apps/doocs-md-py/docs/build-web-dist.md`（新增 §七「分析脚本（遥测）说明与可选移除策略」）、`apps/doocs-md-py/README.md`（§2.1 新增「部署约束」与「前端遥测提示」两条 bullet）、`.trae/specs/doocs-md-py/spec.md`（Open Questions Q1–Q4 全部核销并附定论）、`.trae/specs/doocs-md-py/review.md`（TR-22.1 / TR-22.2 证据）。
+  - 触发依据：台账 §八第 1 条「**未登记的差异一律按缺陷处理**」——补登前 12 项 CD 级差异仅存在于 tasks.md 各任务证据行，台账未落盘，构成登记义务未兑现。
+  - 范围界定：T22 为**收尾型任务**（补登 + 核销），不新增功能、不改生产代码、不新登记 AC。
+- **Description**:
+  - 把 tasks.md 各任务 Completion Evidence 中已声明「T21 登记 / 待写入 contract-differences.md」但实际未落盘的差异逐条补录入 `docs/contract-differences.md`，含 CD-10（前端产物内置上游 gtag）、CD-11（缺省 `UPLOAD_ENABLED`）、CD-12（httpx 15s 超时）、CD-13（单 worker / SQLite 连接约束）、CD-14（未知图床显式报错）、CD-15（title UTF-16 vs 码点）、CD-16（分享页埋点正则残留）、CD-17（qiniu region→multipart）、CD-18（dcloud 原拼写保留）、CD-19（表情 ETag / Content-Type / Content-Length）、CD-20（爱发电变量与应答体）、CD-21（手写 stdio 替代官方 SDK）。
+  - 在台账 §六「平台替代」补齐市场限流 D1→SQLite 表与 D1 `batch`→`with conn:` 单事务两行。
+  - 部署约束（CD-13）与前端遥测提示（CD-10）同步进入面向运维的 `README.md`；gtag 可选剥离策略落在构建侧 `docs/build-web-dist.md`。
+  - 核销 `spec.md` 的 Open Questions Q1–Q4（零补丁同源 / mcp 3.14 兼容 / dist 不入库 / dcloud 复刻）。
+- **Acceptance Criteria Addressed**: AC-U3（差异可追溯、有裁决）, AC-U4（文档与可运维性）
+- **Test Requirements**:
+  - `rule` TR-22.1: `check-links.py` 对 `apps/doocs-md-py` 与 `.trae/specs/doocs-md-py` 全部通过（0 断链 0 警告）；tasks.md 每条「T21 登记」指令与台账条目一一对应且零遗漏；证据：脚本输出与映射表入 review.md。
+  - `rubric` TR-22.2: 差异可追溯性（能否由台账定位上游锚点与本仓文件、裁决是否明确）；scale 1-5；anchors 1=条目缺锚点或裁决含糊/3=条目完整但部分锚点不可达/5=每条四要素齐全且锚点经机械验证可达；threshold ≥4；证据：台账逐条抽查记录。

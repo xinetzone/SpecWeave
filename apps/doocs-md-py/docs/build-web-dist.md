@@ -97,3 +97,34 @@ $env:MD_SRC='/mnt/d/path/to/md'; pwsh ./scripts/build-web-dist.ps1
 - `mdpy serve` 通过 [web_dist.py](../src/doocs_md_py/server/web_dist.py) 同源托管该目录：命中哈希资产给长缓存，其余路径回退 `index.html`（SPA）（见 [contract-differences.md](contract-differences.md) 的 CD-6）。
 - 前端以同源模式构建后，账密/同步/上传等能力直接打到本应用 API，无需额外反代配置。
 - 产物目录只读消费，**运行时不得写入**；应用自身的本地数据落在 `data/`（SQLite 与 `data/uploads`）。
+
+## 七、分析脚本（遥测）说明与可选移除策略
+
+构建产物 `index.html` 由上游源码**零补丁**产出（见 T2 的 TR-2.2 证据），因此**沿带上游内置的 Google Analytics `gtag` 片段**，测量 ID 为 `G-7NZL3PZ0NK`。该事实已登记为契约差异 **CD-10**（见 [contract-differences.md](contract-differences.md) 第 7.1 节）。
+
+### 7.1 检测方法
+
+```bash
+grep -r "gtag\|G-7NZL3PZ0NK\|googletagmanager" src/doocs_md_py/assets/web-dist/index.html
+```
+
+命中即说明产物含遥测脚本（默认构建必然命中）。
+
+### 7.2 可选移除策略（部署方按需，非默认行为）
+
+保留零源码补丁属性是构建承诺，故**不在构建脚本内做移除**。若部署环境不允许对外发送遥测，可在**产物构建完成后**对 `index.html` 做一次性后处理（属部署侧运维动作，不改变源码、不影响 MANIFEST 的源码溯源字段）：
+
+```bash
+# 例：剥离 gtag 内外联脚本与 googletagmanager 引用（按实际产物形态调整）
+python - <<'PY'
+from pathlib import Path
+p = Path("src/doocs_md_py/assets/web-dist/index.html")
+html = p.read_text(encoding="utf-8")
+import re
+html = re.sub(r'<script[^>]*googletagmanager[^>]*></script>', '', html)
+html = re.sub(r'<script>\s*window\.dataLayer.*?</script>', '', html, flags=re.S)
+p.write_text(html, encoding="utf-8")
+PY
+```
+
+> 后处理会改变产物字节，若同时维护 `MANIFEST.sha256` 校验，请在剥离后重新生成哈希，或在校验流程中豁免 `index.html`。
