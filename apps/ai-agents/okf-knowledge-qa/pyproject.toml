@@ -1,0 +1,50 @@
+[build-system]
+requires = ["scikit-build-core>=0.9"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "okf-knowledge-qa"
+version = "0.1.0"
+description = "OKF 知识库问答 Agent：基于 SpecWeave OKF 知识包的检索增强问答服务（FastAPI + SQLite FTS5 + OpenAI 兼容协议）"
+requires-python = ">=3.14"
+license = { text = "MIT" }
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.30",
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.8",
+]
+
+[tool.scikit-build]
+wheel.packages = ["src/okfqa"]
+wheel.cmake = false
+build.verbose = false
+build-dir = "build/{wheel_tag}"
+minimum-version = "0.9"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+# 覆盖率门禁内建：否则 NFR-2（整体 ≥80%、关键模块 ≥90%）只是一句无法自证的声明。
+addopts = "-q --cov=okfqa --cov-report=term-missing --cov-fail-under=80"
+
+# 编辑器即时红线：禁止 __future__ 导入（Python 3.14 起 PEP 649 已默认惰性注解，
+# PEP 563 样板冗余且语义有别）。运行期硬兜底见 tests/test_no_future_annotations.py。
+[tool.ruff]
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["TID251"]
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"__future__" = { msg = "Python 3.14 已默认 PEP 649 惰性注解，禁止 __future__ 导入（PEP 563 样板冗余）" }
+
+# Vercel Python 运行时入口（与根级 app.py 等价，二者留一是冗余保险）
+[tool.vercel]
+entrypoint = "app:app"

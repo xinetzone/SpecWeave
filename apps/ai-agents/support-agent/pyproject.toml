@@ -1,0 +1,29 @@
+[build-system]
+requires = ["scikit-build-core>=0.9"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "support-agent"
+version = "0.1.0"
+description = "智能客服 Agent Web 应用：多轮对话 / FAQ 知识库检索 / 意图识别 / 自动转人工 / 云端持久化 / 管理后台统计"
+readme = "README.md"
+requires-python = ">=3.14"
+license = { text = "Proprietary" }
+dependencies = []
+
+[project.scripts]
+support-agent = "support_agent.cli:main"
+
+[tool.scikit-build]
+wheel.packages = ["src/support_agent"]
+build-dir = "build/{wheel_tag}"
+minimum-version = "0.9"
+sdist.exclude = ["tests", "web", "api", ".venv"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110

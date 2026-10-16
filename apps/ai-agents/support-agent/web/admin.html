@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>智能客服 Agent · 管理后台</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">管</div>
+    <div>
+      <div class="brand-title">客服管理后台</div>
+      <div class="brand-sub">对话记录追溯 · 满意度统计 · 知识库维护</div>
+    </div>
+    <div class="spacer"></div>
+    <span class="badge" id="status-badge">未登录</span>
+    <a class="btn ghost" href="/" style="display:inline-flex;align-items:center;text-decoration:none;">返回对话</a>
+  </header>
+
+  <main class="admin-wrap">
+    <div class="card" id="login-card">
+      <h3>管理员登录</h3>
+      <div class="row">
+        <input type="password" id="token" class="grow" placeholder="ADMIN_TOKEN" />
+        <button class="btn" id="btn-login">登录</button>
+      </div>
+      <div class="hint" style="margin-top:8px">令牌保存在本机 localStorage；服务端需配置环境变量 ADMIN_TOKEN。</div>
+      <div class="error" id="login-error"></div>
+    </div>
+
+    <section id="dash" style="display:none">
+      <div class="card">
+        <h3>运营总览</h3>
+        <div class="kpis" id="kpis"></div>
+        <div class="hint" id="storage-hint" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card">
+        <h3>意图分布</h3>
+        <div class="bars" id="bars"></div>
+      </div>
+
+      <div class="card">
+        <h3>对话记录</h3>
+        <div class="row" style="margin-bottom:10px">
+          <input type="text" id="q" class="grow" placeholder="按会话 ID 或意图筛选" />
+          <button class="btn ghost" id="btn-search">搜索</button>
+          <button class="btn ghost" id="btn-refresh">刷新</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead>
+              <tr><th>会话 ID</th><th>最后意图</th><th>状态</th><th>转人工</th><th>更新时间</th></tr>
+            </thead>
+            <tbody id="sessions"></tbody>
+          </table>
+        </div>
+        <div class="empty" id="sessions-empty" style="display:none">暂无会话记录</div>
+      </div>
+
+      <div class="card">
+        <h3>知识库维护</h3>
+        <div class="row" style="margin-bottom:10px">
+          <input type="text" id="faq-q" class="grow" placeholder="问题" />
+          <input type="text" id="faq-a" class="grow" placeholder="答案" />
+          <input type="text" id="faq-k" placeholder="关键词（逗号分隔）" />
+          <select id="faq-c">
+            <option value="other">通用</option>
+            <option value="refund">退款退货</option>
+            <option value="order_query">订单查询</option>
+            <option value="tech_support">技术支持</option>
+          </select>
+          <button class="btn" id="btn-faq">新增</button>
+        </div>
+        <div style="overflow-x:auto;max-height:320px;overflow-y:auto">
+          <table>
+            <thead><tr><th>分类</th><th>问题</th><th>答案</th></tr></thead>
+            <tbody id="faq-list"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="detail" id="detail">
+    <div class="detail-body">
+      <div class="row" style="justify-content:space-between">
+        <h3 style="margin:0">会话明细</h3>
+        <button class="btn ghost" id="btn-close-detail">关闭</button>
+      </div>
+      <div class="hint mono" id="detail-id"></div>
+      <div class="transcript" id="detail-lines"></div>
+      <div id="detail-feedback"></div>
+    </div>
+  </div>
+
+  <script src="/static/admin.js"></script>
+</body>
+</html>

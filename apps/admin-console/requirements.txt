@@ -1,0 +1,3 @@
+# 运行时零第三方依赖（仅标准库）。
+# 本文件仅用于触发 Vercel Python Runtime 判定，请勿添加内容。
+# 开发期测试依赖见 pyproject.toml 的 [project.optional-dependencies].dev。

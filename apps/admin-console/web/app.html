@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>内容管理后台 · admin-console</title>
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-mark">AC</span>
+      <div>
+        <strong>内容管理后台</strong>
+        <small>admin-console</small>
+      </div>
+    </div>
+
+    <button class="nav-item active" data-view="dashboard"><span class="icon">▤</span>数据看板</button>
+    <button class="nav-item" data-view="items"><span class="icon">▦</span>内容列表</button>
+    <button class="nav-item" data-view="categories"><span class="icon">◈</span>分类管理</button>
+    <button class="nav-item" data-view="tags"><span class="icon">◇</span>标签管理</button>
+    <button class="nav-item" data-view="attachments"><span class="icon">▣</span>云端附件</button>
+    <button class="nav-item" data-view="logs"><span class="icon">≡</span>操作日志</button>
+
+    <div class="sidebar-foot">
+      <div class="who" id="who">—</div>
+      <button class="btn sm block" id="logout">退出登录</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="btn sm ghost menu-toggle" id="menu-toggle" aria-label="菜单">☰</button>
+      <h2 id="view-title">数据看板</h2>
+      <div class="spacer"></div>
+      <button class="btn sm" id="refresh">刷新</button>
+      <button class="btn sm primary" id="new-item">新建内容</button>
+    </header>
+
+    <main class="content">
+      <div id="banner" class="banner hidden"></div>
+
+      <!-- 看板 -->
+      <section id="view-dashboard">
+        <div class="grid-metrics" id="metrics"></div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><h3>近 14 天新增</h3><span class="muted" style="font-size:12px">按创建日聚合</span></div>
+            <svg class="chart" id="trend-chart" viewBox="0 0 560 168" preserveAspectRatio="none" role="img" aria-label="近 14 天新增趋势"></svg>
+          </div>
+          <div class="card">
+            <div class="card-head"><h3>分类分布</h3></div>
+            <div id="dist"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>最近操作</h3></div>
+          <div id="recent-logs"></div>
+        </div>
+      </section>
+
+      <!-- 内容列表 -->
+      <section id="view-items" class="hidden">
+        <div class="toolbar">
+          <input class="grow" type="search" id="q" placeholder="搜索标题 / 摘要 / 正文 / 别名">
+          <select id="filter-status"><option value="">全部状态</option></select>
+          <select id="filter-category"><option value="">全部分类</option></select>
+          <select id="filter-tag"><option value="">全部标签</option></select>
+          <select id="sort">
+            <option value="updated_at:desc">最近更新</option>
+            <option value="created_at:desc">最新创建</option>
+            <option value="title:asc">标题 A→Z</option>
+            <option value="published_at:desc">最近发布</option>
+          </select>
+          <button class="btn" id="search">搜索</button>
+        </div>
+
+        <div class="bulkbar hidden" id="bulkbar">
+          <span id="bulk-count">已选 0 条</span>
+          <div class="spacer"></div>
+          <button class="btn sm" data-bulk="published">标为已发布</button>
+          <button class="btn sm" data-bulk="draft">转为草稿</button>
+          <button class="btn sm" data-bulk="archived">归档</button>
+          <button class="btn sm danger" data-bulk="delete">删除</button>
+        </div>
+
+        <div class="card">
+          <div class="table-wrap">
+            <table class="data">
+              <thead>
+                <tr>
+                  <th class="col-check"><input type="checkbox" id="check-all"></th>
+                  <th>标题</th>
+                  <th>分类</th>
+                  <th>状态</th>
+                  <th>更新时间</th>
+                  <th class="col-actions">操作</th>
+                </tr>
+              </thead>
+              <tbody id="items-body"></tbody>
+            </table>
+          </div>
+          <div id="items-empty" class="empty hidden">暂无内容，点击右上角「新建内容」开始。</div>
+          <div class="pager">
+            <span class="info" id="pager-info"></span>
+            <button class="btn sm" id="prev">上一页</button>
+            <button class="btn sm" id="next">下一页</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 分类 -->
+      <section id="view-categories" class="hidden">
+        <div class="card">
+          <div class="card-head">
+            <h3>分类</h3>
+            <div class="toolbar" style="margin:0">
+              <input type="text" id="cat-name" placeholder="新分类名称" style="width:180px">
+              <button class="btn primary sm" id="cat-add">添加</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="data">
+              <thead><tr><th>名称</th><th>别名</th><th>排序</th><th class="col-actions">操作</th></tr></thead>
+              <tbody id="cat-body"></tbody>
+            </table>
+          </div>
+          <div id="cat-empty" class="empty hidden">暂无分类。</div>
+        </div>
+      </section>
+
+      <!-- 标签 -->
+      <section id="view-tags" class="hidden">
+        <div class="card">
+          <div class="card-head">
+            <h3>标签</h3>
+            <div class="toolbar" style="margin:0">
+              <input type="text" id="tag-name" placeholder="新标签名称" style="width:180px">
+              <button class="btn primary sm" id="tag-add">添加</button>
+            </div>
+          </div>
+          <div id="tag-list" style="margin-top:6px"></div>
+          <div id="tag-empty" class="empty hidden">暂无标签。</div>
+        </div>
+      </section>
+
+      <!-- 附件 -->
+      <section id="view-attachments" class="hidden">
+        <div class="card">
+          <div class="card-head"><h3>云端附件</h3><span class="muted" id="upload-limit" style="font-size:12px"></span></div>
+          <div class="dropzone" id="dropzone">拖拽文件到此处，或点击选择（服务端校验类型与大小）</div>
+          <input type="file" id="file-input" class="hidden" multiple>
+          <div class="attachment-grid" id="attachment-grid" style="margin-top:14px"></div>
+          <div id="att-empty" class="empty hidden">暂无附件。</div>
+        </div>
+      </section>
+
+      <!-- 日志 -->
+      <section id="view-logs" class="hidden">
+        <div class="card">
+          <div class="card-head"><h3>操作日志</h3></div>
+          <div class="table-wrap">
+            <table class="data">
+              <thead><tr><th>时间</th><th>操作者</th><th>动作</th><th>说明</th></tr></thead>
+              <tbody id="logs-body"></tbody>
+            </table>
+          </div>
+          <div id="logs-empty" class="empty hidden">暂无日志。</div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<!-- 抽屉表单 -->
+<div class="drawer-mask" id="drawer-mask"></div>
+<aside class="drawer" id="drawer" aria-label="内容编辑">
+  <div class="drawer-head">
+    <h3 id="drawer-title">新建内容</h3>
+    <button class="btn sm ghost" id="drawer-close">✕</button>
+  </div>
+  <div class="drawer-body">
+    <div class="form-grid">
+      <label class="field full"><span>标题 *</span><input type="text" id="f-title" maxlength="200"></label>
+      <label class="field"><span>别名 slug</span><input type="text" id="f-slug" placeholder="留空自动生成"></label>
+      <label class="field"><span>状态</span><select id="f-status"></select></label>
+      <label class="field full"><span>分类</span><select id="f-category"></select></label>
+      <label class="field full"><span>摘要</span><input type="text" id="f-summary" maxlength="500"></label>
+      <label class="field full"><span>正文</span><textarea id="f-body"></textarea></label>
+      <label class="field full">
+        <span>标签（回车或逗号分隔）</span>
+        <input type="text" id="f-tags" placeholder="例如：产品, 公告">
+        <div class="chips" id="f-tag-chips"></div>
+      </label>
+      <div class="field full">
+        <span>封面 / 附件</span>
+        <div class="dropzone" id="form-dropzone">拖拽或点击上传（上传后自动填入封面）</div>
+        <input type="file" id="form-file" class="hidden" multiple>
+        <div class="thumb-row hidden" id="cover-row">
+          <img class="thumb" id="cover-preview" alt="封面预览">
+          <div>
+            <div class="mono" id="cover-url" style="word-break:break-all"></div>
+            <button class="btn sm ghost" id="cover-clear">清除封面</button>
+          </div>
+        </div>
+        <div class="file-list" id="form-files"></div>
+      </div>
+    </div>
+  </div>
+  <div class="drawer-foot">
+    <button class="btn" id="drawer-cancel">取消</button>
+    <button class="btn primary" id="drawer-save">保存</button>
+  </div>
+</aside>
+
+<div class="toasts" id="toasts"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

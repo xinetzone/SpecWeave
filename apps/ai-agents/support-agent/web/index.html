@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>智能客服 Agent · 在线客服</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">智</div>
+    <div>
+      <div class="brand-title">智能客服 Agent</div>
+      <div class="brand-sub">多轮对话 · 知识库检索 · 意图识别 · 自动转人工</div>
+    </div>
+    <div class="spacer"></div>
+    <span class="badge" id="status-badge">检测中…</span>
+    <button class="btn ghost" id="btn-settings">设置</button>
+    <a class="btn ghost" href="/admin" style="display:inline-flex;align-items:center;text-decoration:none;">管理后台</a>
+  </header>
+
+  <main class="chat-wrap">
+    <section class="chat-panel">
+      <div class="stream" id="stream">
+        <div class="msg">
+          <div class="avatar bot">AI</div>
+          <div>
+            <div class="bubble">您好，我是智能客服「小织」。可以问我退款政策、订单物流、技术故障等问题，需要人工时直接说「转人工」。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick">
+        <button class="chip" data-q="我要申请退款">我要申请退款</button>
+        <button class="chip" data-q="帮我查一下订单物流">查订单物流</button>
+        <button class="chip" data-q="App 一直闪退怎么办">App 闪退</button>
+        <button class="chip" data-q="转人工">转人工</button>
+      </div>
+
+      <div class="composer">
+        <textarea id="input" placeholder="输入您的问题，Enter 发送 / Shift+Enter 换行"></textarea>
+        <button class="btn" id="btn-send">发送</button>
+        <button class="btn danger" id="btn-human">转人工</button>
+      </div>
+    </section>
+
+    <section class="rate-bar">
+      <span>本次服务满意度：</span>
+      <div class="stars" id="stars">
+        <button class="star" data-v="1">★</button>
+        <button class="star" data-v="2">★</button>
+        <button class="star" data-v="3">★</button>
+        <button class="star" data-v="4">★</button>
+        <button class="star" data-v="5">★</button>
+      </div>
+      <input type="text" id="comment" class="grow" placeholder="补充建议（可选）" />
+      <button class="btn ghost" id="btn-rate">提交评价</button>
+      <span class="hint" id="rate-hint">评价将写入云端，用于后台满意度统计</span>
+    </section>
+  </main>
+
+  <div class="modal hidden" id="settings">
+    <div class="modal-card">
+      <h3 style="margin-top:0">大模型设置（BYOK，可选）</h3>
+      <div class="stack">
+        <input type="text" id="set-base" placeholder="Base URL，如 https://api.deepseek.com/v1" />
+        <input type="password" id="set-key" placeholder="API Key（sk-...）" />
+        <input type="text" id="set-model" placeholder="模型名，如 deepseek-chat" />
+        <div class="row">
+          <button class="btn" id="btn-save">保存</button>
+          <button class="btn ghost" id="btn-clear">清除</button>
+          <button class="btn ghost" id="btn-close">关闭</button>
+        </div>
+        <div class="hint">密钥仅保存在本机浏览器 localStorage，随请求头发送，不落库。</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/chat.js"></script>
+</body>
+</html>

@@ -1,0 +1,383 @@
+/* 个人信息管家 —— 工作台样式。
+ *
+ * 全部规则限定在 .butler 内，并用 article.bd-article 前缀抬高特异性：
+ * sphinx-design 自带 Bootstrap 的 .card / .btn / .lead，pydata 系主题把
+ * --pst-color-* 定义在 html[data-theme="light"] 上，不抬特异性就会被整块盖掉。
+ */
+
+article.bd-article .butler {
+  --bk-paper: #f6f4ef;
+  --bk-card: #fffdf8;
+  --bk-ink: #33302b;
+  --bk-muted: #7b746a;
+  --bk-line: #e2ddd2;
+  --bk-accent: #a8443a;
+  --bk-accent-soft: #f3e3df;
+  --bk-ok: #3f6b4f;
+
+  color: var(--bk-ink);
+  max-width: 100%;
+}
+
+/* 顶栏：状态徽标 + 设置入口 ------------------------------------------------ */
+
+article.bd-article .butler .butler-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+article.bd-article .butler .butler-chip {
+  font-size: 0.8rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--bk-card);
+  border: 1px solid var(--bk-line);
+  color: var(--bk-muted);
+}
+
+article.bd-article .butler .butler-chip.is-ok {
+  color: var(--bk-ok);
+  border-color: #cfe0d4;
+  background: #eef5ef;
+}
+
+article.bd-article .butler .butler-chip.is-warn {
+  color: var(--bk-accent);
+  border-color: var(--bk-accent-soft);
+  background: #fbf1ef;
+}
+
+/* 面板 -------------------------------------------------------------------- */
+
+article.bd-article .butler .butler-panel {
+  background: var(--bk-card);
+  border: 1px solid var(--bk-line);
+  border-radius: 10px;
+  padding: 1rem 1.1rem 1.2rem;
+  margin-bottom: 1rem;
+}
+
+article.bd-article .butler .butler-h {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.7rem;
+  letter-spacing: 0.02em;
+}
+
+article.bd-article .butler .butler-hint {
+  font-size: 0.82rem;
+  color: var(--bk-muted);
+}
+
+/* 表单控件 ---------------------------------------------------------------- */
+
+article.bd-article .butler .butler-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.7rem;
+}
+
+article.bd-article .butler .butler-textarea,
+article.bd-article .butler .butler-input {
+  flex: 1 1 16rem;
+  min-width: 12rem;
+  font: inherit;
+  color: var(--bk-ink);
+  background: var(--bk-paper);
+  border: 1px solid var(--bk-line);
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+}
+
+article.bd-article .butler .butler-textarea {
+  width: 100%;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+article.bd-article .butler .butler-textarea:focus,
+article.bd-article .butler .butler-input:focus {
+  outline: 2px solid var(--bk-accent-soft);
+  border-color: var(--bk-accent);
+}
+
+/* 按钮 -------------------------------------------------------------------- */
+
+article.bd-article .butler .butler-btn {
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--bk-accent);
+  background: var(--bk-accent);
+  color: #fffdf8;
+  white-space: nowrap;
+}
+
+article.bd-article .butler .butler-btn:hover {
+  filter: brightness(1.06);
+}
+
+article.bd-article .butler .butler-btn:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+article.bd-article .butler .butler-btn-ghost {
+  background: transparent;
+  color: var(--bk-accent);
+  border-color: var(--bk-line);
+}
+
+article.bd-article .butler .butler-filters .butler-tag {
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--bk-line);
+  background: var(--bk-paper);
+  color: var(--bk-muted);
+}
+
+article.bd-article .butler .butler-filters .butler-tag.is-on {
+  background: var(--bk-accent-soft);
+  border-color: var(--bk-accent);
+  color: var(--bk-accent);
+}
+
+/* 结果区 ------------------------------------------------------------------ */
+
+article.bd-article .butler .butler-result:empty,
+article.bd-article .butler .butler-list:empty {
+  display: none;
+}
+
+article.bd-article .butler .butler-result {
+  margin-top: 0.8rem;
+  padding: 0.7rem 0.85rem;
+  border-left: 3px solid var(--bk-accent-soft);
+  background: var(--bk-paper);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+article.bd-article .butler .butler-result h4 {
+  font-size: 0.95rem;
+  margin: 0.6rem 0 0.3rem;
+}
+
+article.bd-article .butler .butler-result ul {
+  margin: 0.2rem 0 0.5rem;
+  padding-left: 1.2rem;
+}
+
+article.bd-article .butler .butler-result p {
+  margin: 0.3rem 0;
+}
+
+article.bd-article .butler .butler-error {
+  color: var(--bk-accent);
+}
+
+article.bd-article .butler .butler-muted {
+  color: var(--bk-muted);
+}
+
+/* 条目列表 ---------------------------------------------------------------- */
+
+article.bd-article .butler .butler-list {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+article.bd-article .butler .butler-item {
+  border: 1px solid var(--bk-line);
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  background: var(--bk-paper);
+}
+
+article.bd-article .butler .butler-item-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+article.bd-article .butler .butler-item-title {
+  font-weight: 600;
+}
+
+article.bd-article .butler .butler-badge {
+  font-size: 0.72rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--bk-line);
+  background: var(--bk-card);
+  color: var(--bk-muted);
+}
+
+article.bd-article .butler .butler-item-summary {
+  margin: 0.3rem 0 0;
+  font-size: 0.88rem;
+  color: var(--bk-muted);
+  line-height: 1.6;
+}
+
+article.bd-article .butler .butler-tags {
+  margin-top: 0.35rem;
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  color: var(--bk-muted);
+}
+
+/* 设置面板 ---------------------------------------------------------------- */
+
+article.bd-article .butler .butler-grid {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+article.bd-article .butler .butler-grid label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.82rem;
+  color: var(--bk-muted);
+}
+
+@media (min-width: 800px) {
+  article.bd-article .butler .butler-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* 页面级：工作台是操作界面，不是阅读页面。
+ * 右侧目录栏（secondary sidebar）在窄视口会与内容抢宽，且它的切换按钮会压在
+ * 标题上——本页用 html_theme.sidebar_secondary.remove 请求主题不渲染它，
+ * 下面这段是兜底（主题版本差异时不至于又冒出来）。 */
+body.butler-page .bd-sidebar-secondary,
+body.butler-page .secondary-toggle {
+  display: none !important;
+}
+
+body.butler-page .bd-article-container {
+  max-width: 100%;
+}
+
+article.bd-article .butler .butler-bar-spacer {
+  flex: 1 1 auto;
+}
+
+/* 连接横幅 ------------------------------------------------------------------
+ * 连接状态是全局事实，只在这里出现一次。
+ * 之前它被塞进「① 随手录入」的结果区，用户会以为入库失败了——把基础设施
+ * 问题伪装成业务问题，是本产品最需要避免的误导。 */
+
+article.bd-article .butler .butler-banner {
+  display: block;
+  border-radius: 10px;
+  padding: 0.75rem 0.95rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  border: 1px solid var(--bk-line);
+  background: var(--bk-paper);
+}
+
+article.bd-article .butler .butler-banner > strong {
+  display: block;
+  margin-bottom: 0.15rem;
+}
+
+article.bd-article .butler .butler-banner.is-info {
+  border-color: #d8e2dc;
+  background: #f2f7f3;
+}
+
+article.bd-article .butler .butler-banner.is-error {
+  border-color: var(--bk-accent);
+  background: var(--bk-accent-soft);
+}
+
+article.bd-article .butler .butler-banner-msg {
+  margin: 0.2rem 0 0;
+  color: var(--bk-ink);
+}
+
+article.bd-article .butler .butler-banner-hint {
+  margin: 0.35rem 0 0;
+  font-size: 0.84rem;
+  color: var(--bk-muted);
+}
+
+article.bd-article .butler .butler-banner code {
+  font-size: 0.82em;
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+article.bd-article .butler .butler-banner .butler-row {
+  margin-top: 0.6rem;
+}
+
+/* 原始响应折叠块：归一化后的文案给人看，原文留给排障 */
+article.bd-article .butler .butler-details {
+  margin-top: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--bk-muted);
+}
+
+article.bd-article .butler .butler-details summary {
+  cursor: pointer;
+}
+
+article.bd-article .butler .butler-details pre {
+  margin: 0.4rem 0 0;
+  padding: 0.5rem 0.6rem;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--bk-ink);
+  font-size: 0.78rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 14rem;
+  overflow: auto;
+}
+
+/* 大模型卡片：三个输入 + 一次验证，宽屏下排成一行 ------------------------- */
+article.bd-article .butler #llm-card {
+  border-left: 3px solid var(--bk-accent-soft);
+}
+
+@media (min-width: 900px) {
+  article.bd-article .butler #llm-card .butler-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 窄视口：按钮不吃满整行的空白，动作始终可见 */
+@media (max-width: 560px) {
+  article.bd-article .butler .butler-bar {
+    flex-wrap: wrap;
+  }
+
+  article.bd-article .butler .butler-bar-spacer {
+    display: none;
+  }
+
+  article.bd-article .butler .butler-btn {
+    flex: 1 1 auto;
+  }
+}

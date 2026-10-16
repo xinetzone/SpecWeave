@@ -113,6 +113,7 @@ examples/*/output/
 
 # 第三方依赖（vendor/ 目录不忽略，子模块通过 gitlink 跟踪，手动管理的依赖需自行配置忽略规则）
 .chaos/
+chaos/
 
 # CI 诊断产物目录
 ci-artifacts/
@@ -146,6 +147,9 @@ apps/devcontainer-base/benchmark-results-ci/
 .edgeone/
 .tef_dist/
 
+# Tencent CloudBase（CLI 本地调试产物，容器调试配置，机器生成）
+.cloudbase/
+
 # work 视频创作工作目录（含 mov/mkv/webm 等大体积素材与中间产物，本地保留不入库）
 work/ai-agent-kepu/
 
@@ -159,3 +163,6 @@ work/ai-monetization-doubao-outcome-pricing.md
 # QwenWork Canvas Design Mode 工作目录（含 .vite/deps 构建缓存与 .design-state.json 机器状态，
 # 属本地工作产物；画布交付物已抽取为 docs/retrospective/patterns/.../seven-concepts-docs-as-product-broadsheet.html）
 qwenwork/
+
+# CodeBuddy 本地配置（settings.local.json 等为本机工作产物，不入库）
+.codebuddy/

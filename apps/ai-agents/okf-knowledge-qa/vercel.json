@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "buildCommand": "python scripts/build_index.py",
+  "functions": {
+    "app.py": {
+      "maxDuration": 60,
+      "excludeFiles": "{tests/**,.corpus/**,scripts/check_fts5.py,**/__pycache__/**,**/*.pyc,build/**}"
+    }
+  }
+}

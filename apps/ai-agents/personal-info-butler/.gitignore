@@ -1,0 +1,15 @@
+# Sphinx 构建产物：由 CI 每次重建，不入库
+_build/
+build/
+
+# Python 运行时噪声
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 本地环境
+.env
+.env.local
