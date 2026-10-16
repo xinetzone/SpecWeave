@@ -469,9 +469,15 @@
 
 ## Task 21: 应用文档、登记与交付说明
 
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: T20
+- **Completion Evidence**（2026-10-16）:
+  - TR-21.1 ✅ rule：`check-links.py --path apps/doocs-md-py` → 8 个 Markdown 文件、133 个本地引用**全部有效**（首轮修复 2 处后复跑通过：① `README.md:37` 相对层级 `../../../`→`../../`，原解析错位到 `D:\.trae\...`；② `docs/architecture.md:117` 目录链接改为具体文件 `0001_init.sql`）。`apps/AGENTS.md` 新增「根级 | doocs-md-py | —（遵循根规范） | ❌ 无 | …」路由行（5 字段完整）并补齐边界声明表 3 行（`apps/doocs-md-py/`、`/README.md`、`/docs/`），`apps/README.md` §2.3 根级独立应用补充段落同步登记。apps 整目录 84 处断链经关键词过滤确认**均属其他应用历史遗留**（如 `caffe-ffi-jupyter` 指向 `file:///d:/spaces/SpecWeave/...`），与本次变更无关。
+  - TR-21.2 ✅ rubric **5/5**（阈值 ≥4）：在仓库外临时目录**从零新建 venv**，严格按 `README.md` 第二节步骤 1–6 实操——`python -m venv` 9.7s → `pip install -e "apps/doocs-md-py[dev]"` 52.4s（exit 0）→ `mdpy migrate` 0.5s（应用迁移 1–8，产出 `check.db` 176128B）→ `mdpy render`（产出 `out.html` 65520B）→ `mdpy serve --port 8877` → `GET /` **200**（16323B）、`GET /api/config` **200**。库/CLI/MCP 路径全程约 **1.2 分钟**、零卡点；Web UI 路径以仓库内已构建 `web-dist` 验证 serve 与首页可达。完整记录见 `.trae/specs/doocs-md-py/review.md`。
+  - 交付物：`apps/doocs-md-py/README.md`（九节：功能矩阵含非目标渠道与非目标渠道语义/双线快速开始/CLI 5 命令参数表/配置项全表 4 分组逐条对齐 `.env.example` 并标注上游同名变量/14 家图床配置与用法/MCP 客户端 JSON 示例 + 13 工具表/文档地图/开发验证/WTFPL 许可与来源版本 commit）、`docs/architecture.md`（模块↔上游文件映射 6 张总表 + ASCII 数据流图，AC-U2/AC-U3 审计依据）、`docs/contract-differences.md`（CD-1..CD-9 逐条裁决 + D-1..D-4 索引 + markdown-it-py↔marked 差异三分类清单）、`docs/build-web-dist.md`（WSL+podman 主路线 + 回退预案 A/B + MANIFEST 字段说明）、`review.md`。
+  - 任务第④条决策：根 `docs/tech/guides/` **不增补**发布向使用手册——应用文档留在应用内 `docs/`（仓库双轨制，与 apps 既有先例一致，不主动扩写）。
+  - 归属层级实测：`doocs-md-py` 位于 apps **根级**（`Test-Path apps/dev-tools/doocs-md-py` = False），非 dev-tools 分组。
 - **Description**:
   - 应用 `README.md`：功能矩阵（含非目标渠道说明）、快速开始（venv→pip install→构建 dist→mdpy serve/migrate）、配置项全表（对齐 .env.example 并标注上游同名变量）、13 上传器用法、MCP 客户端配置示例、WTFPL 许可与上游版本/commit。
   - `docs/architecture.md`：模块 ↔ 上游文件映射总表（AC-U2/AC-U3 审计依据）；`docs/build-web-dist.md` 构建与回退预案；`docs/contract-differences.md`（所有发现的 JS/Python 行为差异及裁决，含 markdown-it vs marked 差异清单）。
