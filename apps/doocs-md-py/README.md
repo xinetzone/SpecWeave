@@ -59,6 +59,8 @@ mdpy render -i README.md -o out.html
 
 以上四步完成后，**库 / CLI / MCP 三条路径已完全可用**（渲染、图床上传、MCP 工具调用，均不依赖前端产物）。
 
+> **MCP 零外部依赖**：stdio MCP Server 为**本仓手写实现**——按 MCP 规范实现 JSON-RPC 2.0 传输层（[mcp_server/stdio.py](src/doocs_md_py/mcp_server/stdio.py)）与 13 工具注册表（[mcp_server/tools.py](src/doocs_md_py/mcp_server/tools.py)），**不经由任何第三方 `mcp` 包**。故 [pyproject.toml](pyproject.toml) 的运行期依赖白名单为 fastapi / uvicorn / python-multipart / markdown-it-py / nh3 / PyJWT / httpx / pyyaml 共 **8 项，不含 `mcp`**，与上游 `packages/mcp-server` 的契约仍保持 1:1（同名、同入参 schema、同输出形状）。
+
 ### 2.1 启用 Web UI（`mdpy serve`）
 
 Web UI 由上游前端构建产物驱动，而**产物不入库**（见 [.gitignore](.gitignore)）：fresh clone 后 `src/doocs_md_py/assets/web-dist/` 内**没有 `index.html`**，此时直接 `mdpy serve` 会以启动错误提示 dist 缺失。启用步骤如下：

@@ -72,7 +72,8 @@
 ## Non-Functional Requirements
 
 - **NFR-1 运行时**：CPython 3.14（`requires-python = ">=3.14"`），纯 Python 包（scikit-build-core 声明 wheel.packages/build-dir/minimum-version，不写 cmake 段）；Windows 10 与 Linux（WSL）双平台可运行，测试不硬编码路径分隔符。
-- **NFR-2 依赖克制**：运行期依赖限定为 fastapi、uvicorn、python-multipart、markdown-it-py、nh3、PyJWT、httpx、pyyaml、mcp（官方 Python SDK）；S3/七牛/又拍/Cloudinary 签名全部标准库手写，不引入 boto3/cryptography；开发依赖 pytest/pytest-cov/ruff/build。新增依赖须在 tasks.md 对应任务中说明理由。
+- **NFR-2 依赖克制**：运行期依赖限定为 fastapi、uvicorn、python-multipart、markdown-it-py、nh3、PyJWT、httpx、pyyaml（共 **8 项**，**不含 `mcp`**）；S3/七牛/又拍/Cloudinary 签名全部标准库手写，不引入 boto3/cryptography；开发依赖 pytest/pytest-cov/ruff/build。新增依赖须在 tasks.md 对应任务中说明理由。
+  - **就地更正（2026-10-16，A1：与磁盘冲突以磁盘为准）**：原文列有 `mcp（官方 Python SDK）`，与磁盘事实不符已更正。依据 T18 决策：venv 实测 `mcp` 为 2.3.0，v2 已删除 1:1 复刻所依赖的 `mcp.server.fastmcp`，且该包会拖入白名单外的 `cryptography` 等依赖，故 stdio JSON-RPC 2.0 传输层与 13 工具注册表改为**本仓手写**、`pyproject.toml` 移除该依赖；已登记为契约差异 `CD-21`（见 [contract-differences.md](../../../apps/doocs-md-py/docs/contract-differences.md) §7.10 第 ⑥ 条）。
 - **NFR-3 测试覆盖**：单元测试覆盖率整体 ≥80%，渲染核心、同步 LWW、限流、签名、分享密码/净化等关键模块 ≥90%；全部用例通过无回归；黄金样例以源仓库 TS 测试与手工特征文档为基准。
 - **NFR-4 契约可审计**：每个模块在 docstring 或模块注释中标注对拍的上游文件路径（如 `# upstream: apps/api/src/db.ts`）；关键魔数集中为常量并注释来源行号；关键算法附已知答案测试向量。
 - **NFR-5 可移植资产**：主题 CSS 等静态资产原样复制（不重写），随包安装；前端 dist 不强制入库（由脚本构建到应用内资产目录，`.gitignore` 规则在实施时确定），README 写清一键构建步骤。

@@ -25,13 +25,6 @@ source: "../AGENTS.md#变更日志"
 - 2026-10-16 | fix | **规则事实性错误更正（数量口径）**：`engineering-redlines.md` §2 与 [../AGENTS.md](../AGENTS.md)「P0 约束速览」#6 的「运行期依赖白名单」由「9 项（含 `mcp`）」更正为「**8 项（不含 `mcp`）**」。依据：`pyproject.toml` `[project].dependencies` 实为 8 项，且 `src/` 全量检索无任何 `import mcp`；`mcp` 已按 [../docs/contract-differences.md](../docs/contract-differences.md) 的 `CD-21` 删除（`mcp` 2.3.0 对 Python 3.14 不兼容，stdio JSON-RPC 2.0 传输层与工具注册表改本仓手写）。同步更正 [apps/AGENTS.md](../../AGENTS.md) 可用资产索引中的「9 项依赖白名单」表述
   - **预防措施**：依赖口径的陈述一律以 `pyproject.toml` 为唯一事实源并显式标注；凡涉及「依赖数量 / 清单」的规则表述，须与手写实现边界（如 MCP 传输层）区分开，避免将「本仓手写能力」误计入第三方白名单
 
-- 2026-10-16 | fix | **依赖白名单口径更正（9 → 8 项，移除 `mcp`）**：`mcp` 已于 T18 决策移出运行期依赖（证据见 [Task 18「移除 `mcp>=1.2` 运行时依赖声明」](../../../.trae/specs/doocs-md-py/tasks.md)），stdio 传输层改为仓内手写零依赖实现；但 [../AGENTS.md](../AGENTS.md) P0 约束速览第 6 项、[rules/engineering-redlines.md](rules/engineering-redlines.md) §2 与 [../../src/doocs_md_py/mcp_server/stdio.py](../../src/doocs_md_py/mcp_server/stdio.py) 模块 docstring 仍按「9 项含 `mcp`」表述，本次一并更正
-  - [../AGENTS.md](../AGENTS.md) P0 约束速览第 6 项：白名单改为 8 项，并显式标注「不含 `mcp`（MCP 传输层为仓内手写实现）」
-  - [rules/engineering-redlines.md](rules/engineering-redlines.md) §2：白名单改为 8 项；新增「`mcp` 不在白名单」说明条（含排除理由与对上游 `packages/mcp-server` 的 1:1 契约关系），防止后续被误加回
-  - [../../src/doocs_md_py/mcp_server/stdio.py](../../src/doocs_md_py/mcp_server/stdio.py)：模块 docstring 将旧述「pyproject 的 `mcp>=1.2`」更正为历史时态，并新增「依赖状态」段
-  - 已对齐、本次无需改动：[../../pyproject.toml](../../pyproject.toml) 与 [../../README.md](../../README.md) 的白名单本即为 8 项（README 快速开始处同步补注「MCP 零外部依赖」）
-  - 未处理的同类残留（待裁决）：`spec.md` NFR-2 仍列「9 项含 `mcp`」，属需求层表述，就地更正需用户批准
-
 ## 约定（后续条目遵循）
 
 - 任何 `AGENTS.md` / `.agents/` 变更**必须**同步：①本文件新增条目；②受影响规则文件的 `§` 与 [../AGENTS.md](../AGENTS.md) 的「上下文路由表」「P0 约束速览」；③若涉及应用自治状态变化，同步 [apps/AGENTS.md](../../AGENTS.md) 路由表与边界声明

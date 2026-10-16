@@ -3,10 +3,15 @@
 实现路径决策（T18 I 阶段，依据 spec A6 回退条款）：venv 实测 ``mcp`` 为 2.3.0，
 v2 已删除上游 1:1 复刻所依赖的 ``mcp.server.fastmcp``（导入即抛 ModuleNotFoundError
 并提示改名 ``mcp.server.mcpserver.MCPServer``），且 v1 的内存直连测试助手
-``create_connected_server_and_client_session`` 亦已不存在；pyproject 的 ``mcp>=1.2``
-上下界无法表达「必须是 v1 形态」。故按 MCP 规范手写最小传输层：零新增运行时依赖、
+``create_connected_server_and_client_session`` 亦已不存在；而原先声明的 ``mcp>=1.2``
+上下界既无法表达「必须是 v1 形态」，该包又会拖入 ``cryptography`` 等白名单外依赖。
+故按 MCP 规范手写最小传输层：零新增运行时依赖、
 入参校验与 payload 字面值可逐字控制、可在进程内以真实 JSON-RPC 帧断言
 initialize/tools/list/tools/call。
+
+依赖状态：``mcp`` 已从 ``pyproject.toml`` 运行期依赖中移除（T18 决策），本次替换登记为
+行为差异 ``CD-21``（见 ``docs/contract-differences.md`` §7.10 第 ⑥ 条）；运行期白名单为
+8 项、不含 ``mcp``（见 ``.agents/rules/engineering-redlines.md`` §2）。
 
 upstream: packages/mcp-server/src/index.ts:139-441（McpServer + StdioServerTransport）
 """
