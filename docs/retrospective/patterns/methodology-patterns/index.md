@@ -47,6 +47,7 @@
 | wsl-network-share-drvfs-mount | [WSL 网络共享 drvfs 挂载三段验证与幂等持久化法](tools-automation/wsl-network-share-drvfs-mount.md) | L1-draft | 1 | 0 | 在 WSL 中挂载 Windows 盘或 SMB 共享时：先在 Windows 侧只读探测既有认证会话（盘符映射/凭据）再以 drvfs 复用，按「挂载表→目录非空→业务用户写探针」三层证据验收，持久化走「备份→grep 幂等守卫→nofail fstab→terminate 冷启动实证」。案例：\\10.16.11.3\ai 经 S: 映射挂入 openKylin-3.0（2026-10-13） |
 | community-metric-triple-check | [社区指标三查法（口径-时点-独立性）](governance-strategy/community-metric-triple-check.md) | L1-draft | 1 | 0 | 引用开源社区/厂商生态规模指标（用户数/开发者数/成员单位/SIG/部署量）撰写评估或尽调时：按「查口径→查时点→查独立性」三查强制核验，再以「冲突并陈不裁决、引用降级标口径」两道收口对齐结论强度与证据等级；含 6 条反模式与三问检验标准。案例：openKylin 全面评估（145 条事实、12 项冲突/12 项缺口），待非同谱系第二案例验证升 L1.5 |
 | gap-two-round-verification | [缺口双轮核验法（公开信源轮+零变更功能轮）](research-knowledge/gap-two-round-verification.md) | L1-draft | 1 | 0 | 评估/尽调报告交付时仍挂「未获取/待验证」缺口清单，或完整复现用户路径成本过高（GB 级镜像/账号/GUI）时：第一轮公开信源轮（换环境复述+服务端配置/目录枚举/包元数据等供给侧观测点优先+负证据强制留痕），第二轮零变更功能轮（模拟安装/下载解包/strings 静态取证/免安装冒烟/总线只读探测），结论锚定 L0~L3 四档证据等级，三道收口（评分解耦/未验证留痕/前后对账）；含 7 条反模式与 6 条检验标准。案例：openKylin 评估 Q-1~Q-8 双轮核验（61 条 VF 事实），待非同谱系第二案例验证升 L1.5 |
+| citation-evidence-reconciliation | [引文回证对账](ai-collaboration/citation-evidence-reconciliation.md) | L1-draft | 1 | 0 | 成稿含成批带出处直接引用且原始证据可第三方独立打开时：判定口径先脚本化冻结，机械枚举全部引号样式（含覆盖率交叉核验）后按漏斗分流回证（存在性/逐字性/跨度），核验与修复分波分代理，收口毛=净+排除复算闭环；含非引号事实抽样回证位与复查触发器。单案例萃取（扫描版权书转多代理Wiki生产线，证据留私域溯源），待非同谱系第二案例升L1.5 |
 
 ## 成熟度等级说明
 

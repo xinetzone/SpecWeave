@@ -1,0 +1,25 @@
+id = "citation-evidence-reconciliation"
+title = "引文回证对账"
+domain = "methodology"
+layer = "ai-collaboration"
+category = "retrospective/patterns/methodology-patterns/ai-collaboration"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20261016-realneed-wiki)——扫描版版权书转Wiki成稿的引文合规验收（37条事实/3洞察/21条首轮V意见＋三轮回归）"
+source_report = "playground/books/tests/real-need/retro/2026-10-16-milestone/report.md"
+date = "2026-10-16"
+version = "1.0"
+maturity_note = "单案例（扫描版版权书转Wiki，37条事实支撑；项目内经3个核验卷、2轮修复重复验证，机械枚举＋人工排除＋漏斗回证三件套均有直接证据），跨行业迁移（学术/法律/审计/新闻）为同构推演待实测。升级L1.5：第二个非同谱系案例完整应用；升级L2-validated：另需本团队一次真实任务实战回填"
+
+[bindings]
+related_patterns = [
+  "pattern-compliance-contracting",
+  "pattern-declaration-reconciliation",
+  "external-content-fact-verification",
+  "batched-creation-independent-review",
+  "pattern-summary-over-transcription",
+  "source-anchor-verification-protocol",
+]

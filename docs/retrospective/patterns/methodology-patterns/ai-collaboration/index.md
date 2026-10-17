@@ -13,6 +13,7 @@ ai-transparency-over-cleverness
 ambient-proactive-agent
 batched-creation-independent-review
 bilingual-prompt-engineering
+citation-evidence-reconciliation
 context-lifecycle-layering
 context-recovery-protocol
 dialog-agent-four-layer-evaluation
