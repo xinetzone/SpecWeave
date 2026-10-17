@@ -145,7 +145,7 @@ diff {宿主扫描目录}/{某技能}/SKILL.md {主权区}/skills/{某技能}/SK
 
 ## 参考
 
-- 工作区发现协议：[../../../../.agents/protocols/workspace-discovery.md](../../../../.agents/protocols/workspace-discovery.md)（五步发现、双信号判定）
-- DSH 桥：[../../../../specweave-dsh-bridge/README.md](../../../../specweave-dsh-bridge/README.md)
-- Hermes 桥骨架：[../../../../specweave-bridge-skeleton/README.md](../../../../specweave-bridge-skeleton/README.md)
-- 本地桥说明：[../../../../.workbuddy/README.md](../../../../.workbuddy/README.md)
+- 工作区发现协议：[../../../../../.agents/protocols/workspace-discovery.md](../../../../../.agents/protocols/workspace-discovery.md)（五步发现、双信号判定）
+- DSH 桥：[../../../../../specweave-dsh-bridge/README.md](../../../../../specweave-dsh-bridge/README.md)
+- Hermes 桥骨架：[../../../../../specweave-bridge-skeleton/README.md](../../../../../specweave-bridge-skeleton/README.md)
+- 本地桥说明：`~/.workbuddy/`（用户级装载目录，不在本仓库内，故不提供仓库内链接）
