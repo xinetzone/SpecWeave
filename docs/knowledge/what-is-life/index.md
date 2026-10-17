@@ -51,6 +51,7 @@ source: "references/source-inventory.md + session sc-20261017-what-is-life 联�
 | 拿到可直接执行的"生命多维坐标法"五步流程 | [02 生命维度框架 §3](concepts/02-life-dimensions.md) |
 | 核查每条事实出处、URL 与口径分级 | [信源台账](references/source-inventory.md) |
 | 了解本知识包经受了哪些攻击、哪些结论被修正 | [V 对抗审查记录](references/adversarial-review.md) |
+| 把"生命多维坐标法"沉淀为可复用 Skill，供日常问答自动触发 | [life-dimensions Skill](../../../.agents/skills/life-dimensions/SKILL.md) |
 
 ---
 
