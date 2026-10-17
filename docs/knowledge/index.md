@@ -34,6 +34,7 @@ tech/index
 templates/index
 trae-feature-watch/index
 troubleshooting/index
+what-is-life/index
 anti-crawler-strategy-playbook
 caffe-ffi-perf-instrumentation-template
 category-index
@@ -63,6 +64,7 @@ VENDOR-INTEGRATION
 | **[结伴 × AI 变现](jieban-ai-monetization/index.md)** | 行动知识包：高信任社群如何让成员在不消耗信任的前提下获得 AI 变现能力——双主体三元组诊断（真问题/真需求/真目标）、三域飞轮模式（群内零交易、站外赚钱、回站只讲含失败字段的案例）、可直接贴群公告的《愈多案例回流公约》与 90 天核对指标 | [三元组诊断](jieban-ai-monetization/concepts/02-real-problem-need-goal.md) · [案例回流公约](jieban-ai-monetization/concepts/04-case-reflow-covenant.md) |
 | **[三元组探究（OKF bundle）](../../projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/index.md)** | 心智/行动知识包：从「三」之本体论、时间三分到两组行动三元组，收敛为七条可当场判定的行动原则（2026-10-03 起归档于 OKF bundles，单一可信源） | [生存指南](../../projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/concepts/04-survival-guide.md) · [「三」本体论](../../projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/concepts/01-san-yi-birth.md) |
 | **[TRAE 生态特性监测](trae-feature-watch/index.md)** | 每周例行追踪官方更新日志、文档新特性、TraeWork 设计库与本地插件/skills 清单变化 | [最新一期周报（2026-10-01）](trae-feature-watch/2026-10-01-trae-feature-watch.md) |
+| **[什么是生命：多维坐标知识包](what-is-life/index.md)** | 概念性知识包：生命定义的多元宇宙（8 类定义）、生命维度框架（组织层次×学科视角×定义目的×来源轴）、边界案例（病毒/合成细胞/地外生命）与生命起源；附「生命多维坐标法」可迁移模式 | [01 定义全景](what-is-life/concepts/01-life-definitions.md) · [02 维度框架](what-is-life/concepts/02-life-dimensions.md) · [03 边界与未来](what-is-life/concepts/03-life-boundaries-origin-future.md) |
 
 ## 🎯 如何使用
 
