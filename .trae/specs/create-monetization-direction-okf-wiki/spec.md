@@ -9,7 +9,7 @@
 ## What Changes
 
 - 新增 OKF v0.2 知识包 `sheke/industry/monetization-direction/`（暂定名，实施时按命名三查定稿），三层结构：事实层（权威框架事实登记）/ 方法层（自评→候选生成→需求验证→决策）/ 路径层（路径矩阵与决策清单）。
-- 新增 spec 区 `.trae/specs/create-monetization-direction-okf-wiki/`（spec.md / tasks.md / checklist.md / facts.md / sources.md / knowledge-map.md）。
+- 新增 spec 区 `.trae/specs/create-monetization-direction-okf-wiki/`（spec.md / tasks.md / review.md / facts.md / sources.md / knowledge-map.md）。
 - 接入 `sheke/industry/index.md`：导航表 +1 行、toctree +1 条、束数 26→27；同步 `sheke/index.md` 域内分组表 industry 26→27 与描述、`bundles/index.md` total_bundles 641→642 与 sheke 域计数 69→70（**所有计数以执行时读取现值为基准，不凭记忆写数字**）。
 - 新增 bundle 与既有同主题 bundle（ai-monetization / monetization-essence / zhihu-monetization / overseas-freelance-night-work / ai-one-person-micro-product）的"主题关联互链"段。
 - **BREAKING**：无（纯新增，既有 bundle 正文零改动）。

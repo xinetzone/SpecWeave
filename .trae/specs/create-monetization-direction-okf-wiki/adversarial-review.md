@@ -11,9 +11,9 @@ sources:
   - id: facts
     resource: "./facts.md"
     title: "F 编号事实基准（唯一事实来源）"
-  - id: checklist
-    resource: "./checklist.md"
-    title: "验证清单（CP-1~CP-22）"
+  - id: review
+    resource: "./review.md"
+    title: "独立审查记录（CP-1~CP-22）"
   - id: knowledge-map
     resource: "./knowledge-map.md"
     title: "骨架判定与三层知识地图（蓝图）"
@@ -21,7 +21,7 @@ sources:
 
 # V 阶段对抗审查记录
 
-> **审查立场**：不预设作者做对了——逐篇通读被审查 bundle 全部 **22 个 `.md`**，主动攻击、设法证伪。对照基准为 `spec.md` 的 **AC-1 ~ AC-10** 与 `checklist.md` 的 **CP-1 ~ CP-22**。
+> **审查立场**：不预设作者做对了——逐篇通读被审查 bundle 全部 **22 个 `.md`**，主动攻击、设法证伪。对照基准为 `spec.md` 的 **AC-1 ~ AC-10** 与 `review.md` 的 **CP-1 ~ CP-22**。
 > **被审查对象**：`projects/awesome-okf-xs/doc/bundles/sheke/industry/monetization-direction/`（根 index/log + concepts 12 + examples 5 + references 3 = 22）。
 > **核验时点**：2026-10-17。
 > 行号引用均为**修复前**行号（若修复涉及该行，另注修复后位置）。
