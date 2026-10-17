@@ -1,7 +1,7 @@
 ---
 type: Sources
 title: "个人变现方向发现方法论 · 信源候选清单"
-description: "四类权威信源（C1 职业匹配/设计人生、C2 优势/兴趣/天赋识别、C3 个人商业模式与变现模式、C4 需求验证/最小验证）的实检索候选清单，含信源距离标注、采用与降级理由、检索缺口记录。"
+description: "四类权威信源（C1 职业匹配/设计人生、C2 优势/兴趣/天赋识别、C3 个人商业模式与变现模式、C4 需求验证/最小验证）的实检索候选清单，含信源距离标注、采用与降级理由、检索缺口记录；第 7 节为 2026-10-17 深入研究增量的 C5 实证机制补证信源（S-C5-01~S-C5-16）。"
 generated: { by: "reference_agent/okf-writer", at: "2026-10-17T00:00:00Z" }
 status: draft
 sources:
@@ -158,3 +158,40 @@ sources:
 | 刻意练习「10000 小时法则」 | 未在本次检索中定位 Gladwell 原著页 | **不采用**「一万小时」表述；只登记 Ericsson 定义与 Macnamara 元分析（S-C2-14/15），避免常见误传 |
 
 > **原则**：缺口与版本差异一律如实登记并给替代来源，不以记忆或营销内容补位。
+
+---
+
+## 7. C5 实证机制补证信源（2026-10-17 深入研究增量）
+
+> 本节为 bundle `references/article-source.md` 第五节与 `facts.md` 第 9 节 F-083~F-099 提供 S 编号出处，S-C5-01 ~ S-C5-16 共 16 条（F-085 与 F-084 共用 S-C5-02）。
+> **红线**：均为本次实际检索 / 直读来源；**反面证据强制并列**；预印本与二手合成显式降级。
+
+| 信源名 | 类别 | 形态（信源距离） | 可访问 URL | 采用理由 | 弃用或降级理由 |
+|---|---|---|---|---|---|
+| S-C5-01 人-环境匹配（P-E fit）元分析 | C5.1 | 一手元分析 | https://doi.org/10.1111/j.1744-6570.2005.00672.x | Kristof-Brown, Zimmerman & Johnson (2005)《Personnel Psychology》58(2): 281–342；172 项研究 / 836 效应量；作者授权公开 PDF 另经本方直读 | 合成对象全为相关设计，**不可作因果**；DOI 页另附版本记录 |
+| S-C5-02 P-O fit 综述与效应量 | C5.1 | 权威综述（作者本人） | https://ceo.usc.edu/wp-content/uploads/2024/11/G24-03704.pdf | Kristof-Brown, Schneider & Su (2023)《Personnel Psychology》76(2): 375–412；载 P-O fit 效应量与两项 caveat；**本方已直读复核摘要与 caveat 段** | 作者自撰综述属二次合成；公开版为非排版稿（USC CEO Working Paper G24-03(704)） |
+| S-C5-03 P-J fit 伞形综述 | C5.1 | 二手伞形综述（二次合成） | https://digitalcommons.unl.edu/qicwdumbrella/7/ | QIC-WD（Stepanek & Paul, 2022）汇总 Kristof-Brown 等 2005：**P-J fit 与实际绩效、与实际离职无关**——G1 的**直接反面限定** | 二次合成，非一手元分析，标降级 |
+| S-C5-04 人格—职业错配与**实际**离开职业（纵向） | C5.1 | 一手纵向面板 | https://onlinelibrary.wiley.com/doi/10.1002/job.2873 | Rossetti, Biemann & Dlouhy (2025)《Journal of Organizational Behavior》46(8): 1139–1157；德国 SOEP 2005–2017 | 观测数据非实验；单一国别；人格维度不等于价值 / 技能匹配 |
+| S-C5-05 匹配与离职意向**无显著**（反面） | C5.1 | 一手横断面 | https://pmc.ncbi.nlm.nih.gov/articles/PMC6419133/ | Atitsogbui & Amponsah-Tawiah (2019)《Nursing Open》6(2): 546–557；322 名加纳护士 | 横断面、单一职业与国别；提示中介变量（心理氛围）可能吞噬直接效应 |
+| S-C5-06 Schein 职业锚演化专节（作者本人） | C5.2 | 一手（作者本人手稿全文） | https://scispace.com/pdf/career-anchors-revisited-implications-for-career-development-3tunpgou4p.pdf | Schein (1996)《Academy of Management Executive》10(4): 80–88「Career Anchors: Some Speculations on their Evolution」；**本方已直读并逐字核验关键句** | 可访问者为作者手稿版（SoL 站点），**无印刷页码**；正式版付费；期刊条目 https://journals.aom.org/doi/10.5465/ame.1996.3145321 |
+| S-C5-07 职业锚三分维度与多锚共存（理论命题） | C5.2 | 一手理论命题 | https://doi.org/10.1016/S1053-4822(96)90015-7 | Feldman & Bolino (1996)《Human Resource Management Review》6(2): 89–112 | **未获全文**，经 MDPI《Encyclopedia》综述转引并载页码（p.105），标降级 |
+| S-C5-08 环形职业价值结构解释多锚共存 + 发生率 | C5.2 | 一手实证 | https://www.erudit.org/en/journals/ri/2014-v69-n4-ri01666/1028113ar.pdf | Wils, Wils & Tremblay (2014)《Relations industrielles》69(4): 813–838 | 发生率（69.7%）**系转引** Martineau 等 (2005)，非本文实测；样本为医疗行业雇员与管理者 |
+| S-C5-09 挑战—技能平衡对体验质量的正向独立作用 | C5.3 | 一手实证 | https://onlinelibrary.wiley.com/doi/10.1111/j.1467-6494.1996.tb00512.x | Moneta & Csikszentmihalyi (1996)《Journal of Personality》64(2): 275–310；ESM，208 名青少年 | 仅获摘要级；作者自认效应跨维度 / 情境异质，模型需改进 |
+| S-C5-10 挑战—技能平衡**仅部分支持** | C5.3 | 一手实证 | https://www.uni-trier.de/fileadmin/fb1/prof/PSY/PGA/bilder/Engeser___Rheinberg_2008.pdf | Engeser & Rheinberg (2008) 三项研究；给出调节变量（活动重要性、成就动机） | 单一研究组，样本有限 |
+| S-C5-11 客观难度—技能比对享受 / 投入**无显著**（反面，预注册） | C5.3 | 一手预注册实验 | https://royalsocietypublishing.org/doi/10.1098/rsos.220274 | Cutting 等 (2023)《Royal Society Open Science》10(2): 220274；n = 311；并指出同源测量导致的虚假相关问题 | 单一游戏情境与单一操控范式，不构成对心流理论的一般性否定 |
+| S-C5-12 元分析中的「任务环境可预测性」调节变量 | C5.4 | 一手元分析 | https://gwern.net/doc/psychology/2014-macnamara.pdf | Macnamara, Hambrick & Oswald (2014)《Psychological Science》25(8): 1608–1618；**本方已直读复核**「理论调节变量含领域与任务环境可预测性（低 / 中 / 高三级）」段与 26/21/18/4/<1% | **作者未断言因果**，该归因为推论；2018 年有勘误（作者称结论不变） |
+| S-C5-13 自雇者中位收益低于受雇（10 年约 −35%） | C5.5 | 一手同行评议（顶刊） | https://www.journals.uchicago.edu/doi/abs/10.1086/262131 | Hamilton (2000)《Journal of Political Economy》108(3): 604–631 | 题录页（未获全文）；美国数据、特定年代；为**中位数**层证据，不否定右尾高收益者 |
+| S-C5-14 OECD 范围内自雇者中位收益低 16% | C5.5 | 官方统计（跨国汇总） | https://www.oecd-ilibrary.org/en/publications/pensions-at-a-glance-2019_b6d3dcfc-en/full-report/non-standard-forms-of-work-and-pensions_24ade868.html | OECD《Pensions at a Glance 2019》相关章；**部分国家自雇者收益反超** | 经 OECD 2020 版复述核对，非原始表；口径为全职工作者 |
+| S-C5-15 独资申报营收 ≤ $10 万者占 88.7% / 利润占 30.1% | C5.5 | 官方行政税务统计 | https://www.irs.gov/pub/irs-soi/soi-a-insp-id2502.pdf | IRS 统计司《Sole Proprietorship Returns, Tax Year 2022》（SOI Bulletin, Spring 2025）；**本方已直读并逐字核验该句** | 仅美国、仅独资（Schedule C），不含合伙与公司；未给自雇者人均中位数 |
+| S-C5-16 创作者收益帕累托指数 α ≈ 2 | C5.5 | **预印本（未经同行评议）** | https://arxiv.org/pdf/2509.26523v2 | Strauss, Yang & Mazzucato (2025)（arXiv:2509.26523v2）基于 Patreon 支付数据 | **预印本**；作者自陈样本仅覆盖创作者总收入一小部分，标降级 |
+
+### 7.1 本轮仍未获可靠来源（如实登记）
+
+| 缺口 | 检索发现 | 处理 |
+|---|---|---|
+| 个人变现路径的**实证分类**（对应 `concepts/09 §6` / `§7`） | 未检索到针对「个体变现起点」的同行评议分类学研究 | **缺口保留**：路径划分维持「BMY 要素命名（F-049）下的启发式分类」定性 |
+| 单次验证信号外推的**量化归因模型**（对应 `concepts/07 §9` / `08 §9`） | 未检索到可直接量化「实验信号 → 整体市场需求」的模型 | **缺口保留**：正文维持「本包未给出量化归因模型」 |
+| Business Model Generation「470 位共创者 / 500 万册」一手页 | 本轮复检仍未获 | **维持待核验、不作结论**（F-052） |
+| 心流「三 / 八通道模型」划分的唯一性 | 仅获二手转述（指其划分为任意），未获原始文献全文 | **不登记为事实**，仅在核验报告第 9 节如实说明 |
+
+> **原则（本轮同适用）**：未获可靠来源者一律如实登记，**不用相似文献凑数、不编造 URL、不把推论写成结论**。
