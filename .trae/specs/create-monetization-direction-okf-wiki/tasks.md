@@ -136,8 +136,14 @@
   - `rule` TR-7.2: gates 全绿或手动等效清单已执行且 `log.md` 注明（未谎报）；证据为 gates 输出或清单。
 
 ## Task 8: 原子提交（C）
-- [ ] 完成
-- **Status**: `pending`
+- [x] 完成
+- **Status**: `completed`
+- **Completion Evidence**:
+  - 子模块提交 **`54a94f66`**（`docs(bundle): 新增「个人变现方向发现」OKF 知识包并接入三级索引`）——25 文件 / +2292 行；显式 `git add` 列出 bundle 目录 + 3 个共享索引文件，**未暂存**并行会话的 `digital-economy/`（`git status` 复核其仍为 untracked）。
+  - 主仓库提交 **`aa7e87261`**（`docs(specs): 新增「个人变现方向发现」OKF 知识包规格全链路闭环记录`）——spec 区 7 文件，pre-commit 钩子（放置校验 / 敏感信息 / 模式质量 / Ruff / 并发安全）全部通过。
+  - 主仓库提交 **`672964f65`**（`chore(submodule): 更新 awesome-okf-xs 指针至 54a94f66`）——仅 gitlink 1 行变更。
+  - `git log origin/main..HEAD` 显示三个提交均在本地未推送区间 → **未 push**（TR-8.1 通过）。
+  - 备注：按用户裁定「只提交本 spec 产物」执行；三个共享索引文件同时含并行会话在途 digital-economy 的索引行（同一文件无法拆分），该目录本体未纳入提交。
 - **Priority**: high
 - **Depends On**: Task 7
 - **Description**:
@@ -146,6 +152,29 @@
 - **Acceptance Criteria Addressed**: AC-7
 - **Test Requirements**:
   - `rule` TR-8.1: 三个提交按序完成，`git log` 显示提交信息符合 Conventional Commits 中文描述且未 push；证据为 `git log` / `git status`。
+
+## Task 9: 洞察四元组与可迁移模式补强（AC-9 · 验证阶段发现）
+- [x] 完成
+- **Status**: `completed`
+- **Completion Evidence**:
+  - **G2（A-5）**：`concepts 05~10` 的 **8 条** `〔洞察〕`（`05 §2.1`、`05 §2.2`、`07 §9`、`08 §9`、`09 §6`、`09 §7`、`10 §3`、`10 §4`）与 `00` 篇三类误区第 3 条的因果表述**全部改写为四要素**（现象 / 根因 / 影响 / 建议），共 **9 条**；保留「非实证结论 / 方法前提假设 / 非承诺」口径；**无根因者 6 条**（`00`、`05 §2.1`、`05 §2.2`、`09 §6`、`09 §7`、`10 §3`）**显式标注**「根因：本包未给出，属待研究方法问题」，未编造；`09 §6` 因位于表格单元格以同行内四要素标签呈现。
+  - **G3（A-6）**：`concepts/00-overview.md` 新增 **§六「可迁移模式：变现方向发现四步法」**，触发场景 / 核心步骤（链 `05~08`）/ 反模式（链 `05 §5`、`06 §10`、`07 §6`、`08 §5`、`10 §3`）/ 迁移验证（`09 §4` P1~P4 主干复用且无需改动 + 5 个同簇 bundle 互链，声明非实证检验）**4/4 齐备**。
+  - **纪律复核**：事实层 `01~04` **零改动**、因果词命中仍 0；新增文本无 `facts.md` 之外的数字 / 年份 / 提出者（仅引用既有 F-003/006/011/012/031/033/034/035/045/049/052/056/065/066）；内容层因果词命中 **0**；新增相对链接 6 条全部可达、`file:///` 命中 0；未新增任何文件。
+  - **AC-9 复评**：G1 ✔ / G2 9/9 ✔ / G3 4/4 ✔ / G4 ✔ → **5 分顶锚，≥4 阈值通过**（补救前未达阈值）。
+  - **门禁（exit 0，全绿）**：`scripts/check-utf8.py` **通过**（11751 文件）、`scripts/check-toctrees.py` **通过**、`scripts/check-bundles-index.py` **通过**（9 域 / 62 组 / 644 束五面一致）。记录已同步至 `verification.md` §8.6、`log.md` 2026-10-17 Task 9 条目、`adversarial-review.md` 第六节。**未执行 git 提交**。
+- **Priority**: high
+- **Depends On**: Task 8
+- **Description**:
+  - **验证阶段发现**：AC-9 的顶锚（5 分）要求 G2「洞察四元组完整（现象+根因+影响+建议）」与 G3「模式含触发场景+核心步骤+反模式+迁移验证」；实测 concepts 05~10 的 `〔洞察〕` 为单句表述、未呈四元组，且无 G3 可迁移模式条目 → AC-9 未达阈值 ≥4，须修复后重验。
+  - 在 concepts 05~10 将 `〔洞察〕` 改写为四元组结构（**现象 / 根因 / 影响 / 建议**）；确无根因者**显式说明缺失**，不得编造；
+  - 在 `concepts/00-overview.md` 增补紧凑「可迁移模式：四步法」段（触发场景 / 核心步骤 / 反模式 / 迁移验证）；**迁移验证**以「四步法已适配四条起点路径（`09` §4 P1~P4）与 5 个同簇场景互链、主干无需改动」为证据；
+  - 同步更新 `references/verification.md` §8 与 `log.md`（新日期条目），并重跑门禁。
+- **Acceptance Criteria Addressed**: AC-9
+- **Test Requirements**:
+  - `rule` TR-9.1: 05~10 中每条 `〔洞察〕` 均以「现象 / 根因 / 影响 / 建议」四要素呈现（缺根因须显式说明）；证据为文档内容 + 复核检索输出。
+  - `rule` TR-9.2: `00-overview.md` 含「可迁移模式」及其四要素（触发场景 / 核心步骤 / 反模式 / 迁移验证）；证据为文档内容。
+  - `rule` TR-9.3: 重跑 `check-utf8.py` / `check-toctrees.py` / `check-bundles-index.py` 三脚本全绿；证据为脚本输出。
+- **Notes**: 采用「既有页面增补」而非新增 concepts 篇——新增文件会级联牵动 concepts/index、bundle index、组索引文档数与三级计数，代价高于收益。
 
 # Task Dependencies
 
