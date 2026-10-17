@@ -23,6 +23,7 @@ jieban-ai-monetization/index
 mdi/index
 mdi-research/index
 mindfulness-positivity/index
+monetization-direction-judgment/index
 myst-unified-ecosystem/index
 operations/index
 opensource-contest/index
@@ -63,6 +64,7 @@ VENDOR-INTEGRATION
 | **[切蛋糕法则](cake-cutting-rule/index.md)** | 公平分割方法论知识包：数学公平分割理论（你切我选/修剪法/移动刀/无嫉妒）、机制设计解读（切选分离与利益对齐）、职场处世应用（做蛋糕 vs 切蛋糕、动态股权），附实战示例与信源台账 | [01 数学公平分割理论](cake-cutting-rule/concepts/01-fair-division-theory.md) · [02 机制设计解读](cake-cutting-rule/concepts/02-you-cut-i-choose-mechanism.md) · [03 职场与处世应用](cake-cutting-rule/concepts/03-maker-vs-cutter-workplace.md) |
 | **[结伴 × AI 变现](jieban-ai-monetization/index.md)** | 行动知识包：高信任社群如何让成员在不消耗信任的前提下获得 AI 变现能力——双主体三元组诊断（真问题/真需求/真目标）、三域飞轮模式（群内零交易、站外赚钱、回站只讲含失败字段的案例）、可直接贴群公告的《愈多案例回流公约》与 90 天核对指标 | [三元组诊断](jieban-ai-monetization/concepts/02-real-problem-need-goal.md) · [案例回流公约](jieban-ai-monetization/concepts/04-case-reflow-covenant.md) |
 | **[三元组探究（OKF bundle）](../../projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/index.md)** | 心智/行动知识包：从「三」之本体论、时间三分到两组行动三元组，收敛为七条可当场判定的行动原则（2026-10-03 起归档于 OKF bundles，单一可信源） | [生存指南](../../projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/concepts/04-survival-guide.md) · [「三」本体论](../../projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/concepts/01-san-yi-birth.md) |
+| **[变现方向判断模型](monetization-direction-judgment/index.md)** | 判断方法论知识包：把「帮别人判断变现方向」做成五门判据外置链（判据采集 → 准入 → 路径 → 方向成立性 → 退出/迭代），含 14 条误判红线、判断者提问脚本与被帮者自填工具；核心结论是「判据不齐时合法输出为『不可判』，判断者只做判据审核与信号分级、不做方向背书」 | [五门链总览](monetization-direction-judgment/concepts/00-overview.md) · [误判红线](monetization-direction-judgment/concepts/06-misjudgment-redlines.md) |
 | **[TRAE 生态特性监测](trae-feature-watch/index.md)** | 每周例行追踪官方更新日志、文档新特性、TraeWork 设计库与本地插件/skills 清单变化 | [最新一期周报（2026-10-01）](trae-feature-watch/2026-10-01-trae-feature-watch.md) |
 | **[什么是生命：多维坐标知识包](what-is-life/index.md)** | 概念性知识包：生命定义的多元宇宙（8 类定义）、生命维度框架（组织层次×学科视角×定义目的×来源轴）、边界案例（病毒/合成细胞/地外生命）与生命起源；附「生命多维坐标法」可迁移模式 | [01 定义全景](what-is-life/concepts/01-life-definitions.md) · [02 维度框架](what-is-life/concepts/02-life-dimensions.md) · [03 边界与未来](what-is-life/concepts/03-life-boundaries-origin-future.md) |
 
