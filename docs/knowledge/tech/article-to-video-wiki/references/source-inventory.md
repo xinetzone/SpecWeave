@@ -176,14 +176,16 @@ source: "采集时点 2026-10-18，session sc-20261018-article-to-anime-video；
 
 ## 本机 Skill 来源（L1–L6，本机文件）
 
+> 路径已脱敏：`%USERPROFILE%` 为当前操作系统用户主目录占位符，实际位置即 Windows 环境变量 `%USERPROFILE%`（典型形态为 `C:\Users\<用户名>`），TRAE 全局 Skill 统一安装于其下 `.trae-cn\skills\`。
+
 | 键 | 来源 | 分级 | 路径 |
 |---|---|---|---|
-| L1 | byted-seedance-video-generate SKILL.md（Seedance 1.0/1.5 CLI 签名） | 本机 | c:\Users\xinzo\.trae-cn\skills\byted-seedance-video-generate\SKILL.md |
-| L2 | byted-seedream-image-generate SKILL.md（4.0/4.5/5.0-lite） | 本机 | c:\Users\xinzo\.trae-cn\skills\byted-seedream-image-generate\SKILL.md |
-| L3 | hyperframes SKILL.md（HTML 视频合成/CLI） | 本机 | c:\Users\xinzo\.trae-cn\skills\hyperframes\SKILL.md |
-| L4 | explainer SKILL.md（listenhub storybook API） | 本机 | c:\Users\xinzo\.trae-cn\skills\explainer\SKILL.md |
-| L5 | tts SKILL.md（/v1/tts 与 /v1/speech） | 本机 | c:\Users\xinzo\.trae-cn\skills\tts\SKILL.md |
-| L6 | classical-festival-video SKILL.md（3 关键帧→10 秒范式） | 本机 | c:\Users\xinzo\.trae-cn\skills\classical-festival-video\SKILL.md |
+| L1 | byted-seedance-video-generate SKILL.md（Seedance 1.0/1.5 CLI 签名） | 本机 | %USERPROFILE%\.trae-cn\skills\byted-seedance-video-generate\SKILL.md |
+| L2 | byted-seedream-image-generate SKILL.md（4.0/4.5/5.0-lite） | 本机 | %USERPROFILE%\.trae-cn\skills\byted-seedream-image-generate\SKILL.md |
+| L3 | hyperframes SKILL.md（HTML 视频合成/CLI） | 本机 | %USERPROFILE%\.trae-cn\skills\hyperframes\SKILL.md |
+| L4 | explainer SKILL.md（listenhub storybook API） | 本机 | %USERPROFILE%\.trae-cn\skills\explainer\SKILL.md |
+| L5 | tts SKILL.md（/v1/tts 与 /v1/speech） | 本机 | %USERPROFILE%\.trae-cn\skills\tts\SKILL.md |
+| L6 | classical-festival-video SKILL.md（3 关键帧→10 秒范式） | 本机 | %USERPROFILE%\.trae-cn\skills\classical-festival-video\SKILL.md |
 
 ## 未证实/已排除项（不得写入结论）
 
