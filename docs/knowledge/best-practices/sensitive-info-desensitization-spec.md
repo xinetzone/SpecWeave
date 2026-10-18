@@ -20,7 +20,10 @@ title: "敏感信息脱敏规范与误报防控指南"
 - 误报分类与白名单机制
 - Shell命令语法保护规则
 - Dockerfile容器路径保护规则
+- **公开文档上下文中的个人路径升级阻断（v1.1）**
 - 测试验证标准
+
+> **v1.1 上下文升级规则（2026-10-18）**：个人路径类发现（`personal_path_win` / `personal_path_unix`）默认级别为 MEDIUM（警告、退出码 2，不阻断提交）；但当文件位于**对外公开发布的 `docs/` 文档目录**内时升级为 **HIGH（阻断、退出码 1）**——公开文档随仓库外发，真实个人路径即泄露。豁免：`playground/`（私域工作区）、`vendor/`（第三方只读子模块）不升级；Sphinx 构建产物 `_build/` 不扫描。行尾 `# nosec` / `sensitive-ignore` 标记在 `docs/` 内仍然有效。pre-commit 钩子只阻断 HIGH，可用 `--only-severity high` 复现钩子行为。
 
 ---
 
@@ -77,12 +80,12 @@ Dockerfile 中的容器内固定用户路径不应被脱敏（这些路径在构
 
 | 误报模式 | 示例 | 防控机制 |
 |----------|------|----------|
-| 通用第二人称 | `/home/you/`, `C:\Users\you\` | 白名单: `you`, `yourname`, `your_name` |
+| 通用第二人称/泛指 | `/home/you/`, `C:\Users\you\`, `C:\Users\someone\` | 白名单: `you`, `yourname`, `your_name`, `me`, `someone`（`me`/`someone` 目前仅 Windows 侧） |
 | 英文占位名 | `/home/john/`, `C:\Users\John Doe\` | 白名单: `john`, `jane`, `john doe`, `jane doe` |
 | 中文占位名 | `C:\Users\用户名\Documents` | 白名单: `用户名`, `你的用户名`, `用户名目录` |
 | 示例用户 | `/home/dev/`, `/home/otheruser/` | 白名单: `dev`, `otheruser` |
-| 拼音示例名 | `/home/zhangsan/`, `/home/lisi/` | 白名单: `zhangsan`, `lisi`, `wangwu`, `zhaoliu` |
-| 容器固定用户 | `/home/ai/`, `/home/conda_user/` | 白名单: `ai`, `conda_user`, `conda` |
+| 拼音示例名（双平台） | `/home/zhangsan/`, `/home/lisi/`, `C:\Users\zhangsan\` | 白名单（Win/Unix 对称）: `zhangsan`, `lisi`, `wangwu`, `zhaoliu`（张三/李四=中文教材代称，不指向真人） |
+| 容器/CI 固定用户 | `/home/ai/`, `/home/conda_user/`, `/home/node/`, `/home/jovyan/` | 白名单: `ai`, `conda_user`, `conda`, `appuser`, `devuser`, `builder`, `jupyteruser`, `runner`, `openkylin`, `node`, `jovyan` |
 | 模板变量 | `${user}`, `<user>`, `{username}` | 正则模式: `^[<${].*[>}]$` |
 
 ### 3.4 系统目录误报（2类）
@@ -112,6 +115,10 @@ SYSTEM_WIN_USERS = {
     # 文档占位符（教程/示例通用用户名）
     "you", "yourname", "your_name", "otheruser", "john doe", "john",
     "jane", "jane doe", "用户名", "你的用户名", "用户名目录",
+    # 泛指占位（v1.1）
+    "me", "someone",
+    # 中文教材通用代称（v1.1 起与 Unix 侧对称）
+    "zhangsan", "lisi", "wangwu", "zhaoliu",
 }
 ```
 
@@ -128,6 +135,9 @@ SYSTEM_UNIX_USERS = {
     "lisi", "wangwu", "zhaoliu", "john", "jane", "john doe",
     # Docker/CI 容器内固定用户
     "ai", "conda_user", "conda",
+    # 容器镜像 / CI 固定账户（v1.1 扩充）
+    "appuser", "devuser", "builder", "jupyteruser", "runner",
+    "openkylin", "node", "jovyan",
 }
 ```
 
@@ -267,3 +277,4 @@ Dockerfile上下文检测仅对文件名为 `Dockerfile` 或 `*.dockerfile` 的�
 | 版本 | 日期 | 变更内容 |
 |------|------|----------|
 | v1.0 | 2026-06-02 | 初始版本：定义5处修复标准、16类误报防控规则、白名单清单、测试标准 |
+| v1.1 | 2026-10-18 | ① `docs/` 公开文档内个人路径 MEDIUM→HIGH 阻断（`playground/`、`vendor/` 豁免，`_build/` 不扫描）；② PERSONAL_PATH_WIN 覆盖 WSL `/mnt/c/Users/...` 形态；③ 教材代称白名单双平台对称（补入 Windows 侧），扩充容器账户 `appuser/devuser/builder/jupyteruser/runner/openkylin/node/jovyan` 与泛指占位 `me/someone`；④ 修复白名单政策与测试夹具契约漂移（夹具统一为 `realuser`） |
