@@ -26,6 +26,8 @@ source: d:\spaces\SpecWeave\.trae\specs\create-miaowu-skill-navigator\
 | AC-6（rule） | ✅ 通过 | `meoo releases list` 可见发布记录；公网 `https://yzv5eq2kp2uc.meoo.run/` Document **200**，title 命中 |
 | AC-7（rubric，阈值 ≥4） | ✅ 4/5 | 首屏一句可判、痛点卡第一人称口语、卡片含 solve + 折叠 fit/notFor、演示三段可懂；`h1,h2,h3,button,.pain-card` 正则 `Skill\|Agent\|Prompt` = **0 命中**。扣分项：`<title>` 曾含「Skill」、次级文字对比度曾为 3.3:1（均已修复，见 §三 Round 1 修复） |
 | AC-8（rubric，阈值 ≥4） | ⚠️ 修复后达标 | **审查前 3.5/5 未达标**：event 13/13 `desc` 逐字一致 ✅；market 25/26 一致，**SignalMine 被截断** ❌；**3 条 `usage` 与来源页不符** ❌。修复后复评见 §四 |
+| AC-9（rule，2026-10-18 追加） | ✅ 通过 | `data.js` 39 条中 **37 条带 `url`**（94.9% ≥ 75%），全部匹配 `^https://meoo\.com/skills/\d+$`，非法 0；**35 个唯一 id 逐条真实打开核对**渲染出的技能名与贡献者（见 §三 Round 3） |
+| AC-10（rule，2026-10-18 追加） | ✅ 通过 | 11 条带 `marketName` 且与 `name` 不同；公网实测第二张卡渲染出「打开后会看到它在技能市场页里的名字是「AI变现诊断」。」；`app.js` 仅在两者不同时渲染 |
 
 ## 二、任务级 TR 对账（tasks.md）
 
@@ -72,6 +74,22 @@ source: d:\spaces\SpecWeave\.trae\specs\create-miaowu-skill-navigator\
   - `app.js` 含「匹配分」= True。
 - `meoo releases list`：`v4 active 5377ab56 2026/10/18 20:07:51`（v1/v2/v3 success）。
 
+### Round 3 — 用户实测反馈触发的缺陷修复（2026-10-18）
+
+- **触发**：用户实测反馈——「去市场找他这个按钮没有链接到已经找到 skill」。属 Round 1 未覆盖的场景（Round 1 审的是「有没有」，没审「点了去哪」）。
+- **复现**：卡片出口按钮与演示面板出口按钮的 `href` 均为写死的 `D.marketUrl`；`data.js` 无 `url` 字段 → 实证复现，非偶发。
+- **根因（I）**：见 `tasks.md` Task 8——上一轮把「列表页 DOM 无 `<a>`、原始 HTML 无 `/skills/\d+`」直接当成「拿不到 ID」的结论，且**写进了交付物的「已知边界」**，等于用文档把缺陷正当化。
+- **V 阶段的两条独立发现（本轮最重要的方法论产出）**：
+  1. **HTTP 状态码不可用作可达性证据**：伪 ID `/skills/999999999` 同样返回 200，且响应体与真实详情页同为 40,138 字节的 SPA 外壳；`/skills/abc` 亦然。
+  2. **单次浏览器检查会出假阴性**：`/skills/103525`、`/skills/104019`、`/skills/103493` 各出现过 1 次「跳回首页」报告，**复测均正常渲染** → 判为瞬态导航失败。**若按首轮结果处置，会误删 3 条本来正确的链接**——这条教训已写入 README。
+- **修复后公网实测**（fresh context 子代理，逐字回抄）：
+  - 场景 1（直达）：p1 首卡按钮文案 **「打开这个技能」**、`href = https://meoo.com/skills/103630`；**实际点击后**落地页显示技能名 **「产品第一版」** ✅
+  - 场景 2（别名披露）：p9 第二张卡（「产品增长诊断」）渲染出 **「打开后会看到它在技能市场页里的名字是「AI变现诊断」。」** ✅
+  - 场景 3（回退）：候选列表里「真需求验证器」卡片按钮 **「去市场里搜它」**、`href = https://meoo.com/skills` ✅
+  - 场景 4（演示面板）：左侧按钮 **「打开这个技能」**、`href = https://meoo.com/skills/103630`；右侧 **「回到刚才的结果」** 为无链接普通按钮 ✅
+- **数据侧**：39 条中 37 条带 `url`（94.9%），35 个唯一 id 逐条实开核对通过；11 条登记 `marketName` 别名。
+- **结论**：用户所报缺陷闭环；剩余 2 条（真需求验证器 / 内容选题咨询顾问）走显式回退，已登记于 §六。
+
 ## 四、AC-8 修复后复评
 
 | 分项 | 结论 |
@@ -86,20 +104,21 @@ source: d:\spaces\SpecWeave\.trae\specs\create-miaowu-skill-navigator\
 ## 五、最终结论（Completion）
 
 ```
-所有任务 ∈ {completed}                               ✓（Task 1–7）
-所有必需审查检查点已勾选                            ✓（AC-1–8 + TR 全覆盖）
+所有任务 ∈ {completed}                               ✓（Task 1–8）
+所有必需审查检查点已勾选                            ✓（AC-1–10 + TR 全覆盖）
 每条 rule 均有通过的独立证据                        ✓（审查员实测命令/真机点击/公网访问）
 每条 rubric 达阈值并有理由与证据                     ✓（AC-7 = 4/5；AC-8 修复后 4/5）
 最新 Review 结果 == pass                            ✓（Round 1 pass with findings → 9 条全部闭环）
 无遗留可行动发现                                    ✓（发现 7 为已披露的策展集边界，非缺陷）
 ```
 
-**结果：`pass`**。交付物位于 `apps/samples/skill-navigator/`（`mise.toml` + `README.md` + `site/` 4 文件），已部署到 Meoo CDN：**<https://yzv5eq2kp2uc.meoo.run>**（项目「Skill 导航台」，URL ID `yzv5eq2kp2uc`，当前 v4 active）。
+**结果：`pass`**。交付物位于 `apps/samples/skill-navigator/`（`mise.toml` + `README.md` + `site/` 4 文件），已部署到 Meoo CDN：**<https://yzv5eq2kp2uc.meoo.run>**（项目「Skill 导航台」，URL ID `yzv5eq2kp2uc`；首版 v2，Round 3 缺陷修复后重新发布 **v5 active**，Commit `46f3fbca`）。
 
 ## 六、遗留说明（非阻塞）
 
-- **策展集边界**：无第二个图表/地图类技能（发现 7）；`p7` 第二名以卡片自述方式披露错配。
-- **无逐条技能详情页链接**：受平台限制（列表页无 `<a>`、原始 HTML 无 `/skills/\d+`），出口只能落市场页首页；若平台后续暴露 ID，可低成本补齐。
+- **2 条走回退**：赏金广场页的「真需求验证器」「内容选题咨询顾问」未取到市场详情页地址（三次点击尝试均因浏览器轨迹截断未完成），按钮显示「去市场里搜它」并回退到市场首页——**回退状态在文案上可识别**，不是静默降级。
+- **同技能两页两名的重复登记**：`hunt-user-research`（市场「AI产品调研」）与 `ev-need-validate`（广场「产品需求验证判断」）指向同一 id 103539；`hunt-caitou-surf`（市场「菜菜的冲浪Skill」）与 `ev-hotspot-surf`（广场「热点自传播网感冲浪」）指向同一 id 103814。按 spec 的 A3「两来源页条目各自登记、不判同一性」保留两条，并通过 `marketName` 向用户披露它们在市场上叫什么。
+- **策展集边界**：无第二个图表/地图类技能（Round 1 发现 7）；`p7` 第二名以卡片自述方式披露错配。
 - **宿主注入**：部署后页面含 2 个托管方注入的外部引用（baxia 安全脚本、Meoo logo），已如实声明。
 - **数据时效**：快照 2026-10-18；使用量计数实时变动，页面已声明以来源页实时为准。
 - **Task 7 已闭环**：`apps/AGENTS.md` 路由表登记与两个原子提交（`fbb8e5daa` 规格三件套 / `d771e2af0` 应用 + 路由表）均已完成；提交信息中文经回验无乱码，本任务路径零残留。

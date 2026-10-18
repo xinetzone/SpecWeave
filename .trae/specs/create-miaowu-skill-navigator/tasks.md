@@ -161,7 +161,32 @@
   - 提交经 `git-commit-utf8.py` 走 UTF-8 bytes 通道（带文件清单，暂存集 == 指定集）；提交后 `git cat-file -p HEAD` 回验中文**无乱码**；`git status --short` 本任务路径**零残留**（其余 `M`/`??` 条目属他会话在途工作，未纳入本次提交）。
   - 按仓库约定 `.trae/specs/.gitignore` 第 3 行忽略 `raw/`，故 R/F/V 原始证据（`raw/source-capture.md`、`raw/design-f.md`）**仅本地保留、不入库**，README 已就此显式说明、不再做链接引用。
 
+## Task 8: 缺陷修复——「去技能市场找它」未直达该技能（用户实测反馈触发）
+
+- **Status**: `completed`
+- **Priority**: high
+- **Depends On**: Task 7
+- **Description**（链路：seven-concepts 场景 2 = I → F → V → C）：
+  - **I（根因）**：用户实测发现按钮只落到市场首页。5 Whys 下溯：写死 `D.marketUrl` → `data.js` 无 `url` 字段 → 采集只抓列表页渲染文本、未点开卡片记录落地 URL → 把「列表页 DOM 无 `<a>`、原始 HTML 无 `/skills/\d+`」直接当成「拿不到 ID」结论，**一次未穷尽的探测被外推为结论**，并写进交付物的「已知边界」，等于用文档把缺陷正当化。
+  - **F（方案）**：①优先找平台**数据接口**而非逐个手点（实测发现 `/api/v1/skills/market/floors` 返回 `skill.id`，一次拿到 502 条 id）；②`url` 字段下沉到 `data.js`；③按钮 `href = s.url || D.marketUrl`，二态文案；④**别名披露**（同一技能两页显示名不同）；⑤对每条 url 做真实渲染核对，不以 HTTP 状态码为依据。
+  - **V（验证）**：抽样 ≥6 条详情页实开核对「技能名 + 贡献者」；实测伪 ID `999999999` 也返回 200 + 同一 40,138 字节 SPA 外壳 → 确立「状态码不可用作可达性证据」。
+  - **C（提交）**：重新部署 + 公网抽验 + 原子提交。
+- **Acceptance Criteria Addressed**: AC-9, AC-10, AC-7
+- **Test Requirements**:
+  - `rule` TR-8.1: `data.js` 所有 `url` 匹配 `^https://meoo\.com/skills/\d+$`；带 `url` 条目 ≥75%（39 条 → ≥30 条）。
+  - `rule` TR-8.2: ≥6 条 url 实开核对渲染出的技能名与贡献者（与 `data.js` 一致）。
+  - `rule` TR-8.3: 存在别名（`marketName`）的条目在卡片上渲染披露文案；无别名的条目不渲染。
+  - `rule` TR-8.4: 无 `url` 条目的按钮文案为「去市场里搜它」且 `href == D.marketUrl`；有 `url` 的为「打开这个技能」且 `href == s.url`。
+- **Completion Evidence**:
+  - **TR-8.1 满足**：`data.js` 39 条中 **37 条带 `url`**（**94.9% ≥ 75%**），全部匹配 `^https://meoo\.com/skills/\d+$`，唯一 id **35** 个，非法 url **0**；机械校验脚本 `ERRORS=0 / VERDICT=PASS`。
+  - **TR-8.2 满足**：35 个唯一 id **逐条**真实打开渲染核对（分 5 批：12 + 4 + 13 + 5 + 1），渲染出的技能名与贡献者与 `data.js` 一致。其中 `/skills/103525`、`/skills/104019`、`/skills/103493` **各出现过 1 次「跳回首页」报告，复测均正常渲染** → 判为瞬态导航失败（假阴性），非链接失效。
+  - **TR-8.3 满足**：**11 条**带 `marketName` 且与 `name` 不同（首批 4 条 + 广场点击新得 7 条）；`app.js` 仅在 `s.marketName && s.marketName !== s.name` 时渲染披露文案，无别名者不渲染。
+  - **TR-8.4 满足**：有 `url` → 按钮「打开这个技能」、`href = s.url`；无 `url`（2 条：真需求验证器 / 内容选题咨询顾问）→「去市场里搜它」、`href = D.marketUrl`；演示面板按钮同构（「打开这个技能」/「去 Meoo 技能市场搜它」）。
+  - **采源方法（可复用）**：①市场侧走平台自身公开接口 `/api/v1/skills/market/floors`（`select` 全量、按 floor 聚合），一次拿到 502 条 `id ↔ skill_name_for_user ↔ owner`；②匹配规则两条——**名称精确 + 作者 `owner.nickname` 一致**、**点击实证**；③广场侧条目（市场无同名同作者）走**浏览器逐条点击读地址栏**（本轮取回 8 条）；④平台两页显示名不同者一律登记 `marketName` 披露。
+  - **本轮确立的两条方法教训（已写入 README 与 review.md）**：①**「静态文件里没有」≠「拿不到」**——上一轮把「列表页 DOM 无 `<a>`、原始 HTML 无 `/skills/\d+`」当成结论，实际接口一次就能给全量 id；②**HTTP 状态码不可用作可达性证据**——伪 ID `999999999` 同样 200 + 同一 40,138 字节 SPA 外壳，且单次浏览器检查会出假阴性。
+  - **返工留痕**：补丁脚本首版在行尾追加时多写一个逗号，产出 30 处 `',,` 使 `data.js` 语法损坏；已即时修复（`repair.cjs`）并加双重防护（补丁脚本回读解析 + 双逗号残留检查），修复后回验 39 条 / 37 url / 0 非法。
+
 ## Task Dependencies
 
-- Task 1 → Task 2 → Task 3 → Task 4 → Task 5 → Task 6 → Task 7
+- Task 1 → Task 2 → Task 3 → Task 4 → Task 5 → Task 6 → Task 7 → Task 8（Task 8 为用户实测反馈触发的缺陷修复）
 - Task 3 与 Task 4 有数据契约依赖（`data.js` 结构为 Task 4 的输入），顺序不可颠倒。
