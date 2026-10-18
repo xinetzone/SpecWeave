@@ -35,7 +35,7 @@ source: d:\spaces\SpecWeave\.trae\specs\create-miaowu-skill-navigator\
 - [x] Task 4 TR-4.1 / 4.2 / 4.3（四文件 + 零外部请求、回显非空、rubric 4.5）
 - [x] Task 5 TR-5.1 / 5.2（协议校验 0、四文件 200）
 - [x] Task 6 TR-6.1 / 6.2 / 6.3（deploy 0 + 公网 200；v2 → 修复后 v4）
-- [ ] Task 7 TR-7.1 / 7.2（原子提交 + 路由表登记，待用户确认后执行）
+- [x] Task 7 TR-7.1 / 7.2（路由表登记 + 原子提交已完成：`fbb8e5daa` 规格三件套、`d771e2af0` 应用与路由表）
 
 ## 三、审查轮次
 
@@ -86,7 +86,7 @@ source: d:\spaces\SpecWeave\.trae\specs\create-miaowu-skill-navigator\
 ## 五、最终结论（Completion）
 
 ```
-所有任务 ∈ {completed, pending=Task 7 待用户确认}   ✓（Task 1–6 completed）
+所有任务 ∈ {completed}                               ✓（Task 1–7）
 所有必需审查检查点已勾选                            ✓（AC-1–8 + TR 全覆盖）
 每条 rule 均有通过的独立证据                        ✓（审查员实测命令/真机点击/公网访问）
 每条 rubric 达阈值并有理由与证据                     ✓（AC-7 = 4/5；AC-8 修复后 4/5）
@@ -102,4 +102,5 @@ source: d:\spaces\SpecWeave\.trae\specs\create-miaowu-skill-navigator\
 - **无逐条技能详情页链接**：受平台限制（列表页无 `<a>`、原始 HTML 无 `/skills/\d+`），出口只能落市场页首页；若平台后续暴露 ID，可低成本补齐。
 - **宿主注入**：部署后页面含 2 个托管方注入的外部引用（baxia 安全脚本、Meoo logo），已如实声明。
 - **数据时效**：快照 2026-10-18；使用量计数实时变动，页面已声明以来源页实时为准。
-- **Task 7 待执行**：`apps/AGENTS.md` 路由表登记与 git 原子提交尚未执行（按仓库规范，提交需用户显式指令）。
+- **Task 7 已闭环**：`apps/AGENTS.md` 路由表登记与两个原子提交（`fbb8e5daa` 规格三件套 / `d771e2af0` 应用 + 路由表）均已完成；提交信息中文经回验无乱码，本任务路径零残留。
+- **`raw/` 不入库**：按 `.trae/specs/.gitignore` 第 3 行约定，R/F/V 原始证据仅本地保留，故 README 未对其做链接引用（已显式说明）。

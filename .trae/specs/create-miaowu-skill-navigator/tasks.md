@@ -140,7 +140,7 @@
 
 ## Task 7: 原子提交与 apps 路由表登记
 
-- **Status**: `pending`（路由表登记已完成；原子提交按仓库规范**待用户显式指令**，未执行）
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 6
 - **Description**:
@@ -155,7 +155,11 @@
   - **已完成部分**：按 `apps/AGENTS.md`「新增应用说明」第 4 条，在应用路由表 `samples/` 组 `study-goal-hub` 行后追加 `skill-navigator` 行（含定位、文件结构、数据规模、线上地址与规格路径）。
   - **已跑预检**：`python .agents/scripts/check-links.py --path apps/samples/skill-navigator` → `校验通过: 所有链接均有效`，`EXIT=0`；`python .agents/scripts/check-links.py --path .trae/specs/create-miaowu-skill-navigator` → `校验通过: 所有链接均有效`，`EXIT=0` → TR-7.2 满足。
   - **工作区实况**：`git status --short` 恰为 ` M apps/AGENTS.md`、`?? apps/samples/skill-navigator/`、`?? .trae/specs/create-miaowu-skill-navigator/` 三项，**无他会话变更混入**；项目目录内的 `.env`（Meoo 项目绑定）被 `.gitignore` 第 54–55 行忽略，不会入库 → TR-7.1 满足。
-  - **待执行部分**：原子提交（`feat(skill-navigator): …`）尚未执行——仓库规范要求提交需用户显式指令，本任务在提交前保持 `pending`。
+  - **原子提交已执行**（2026-10-18，用户显式指令「提交」），拆为两个单一职责提交：
+    - `fbb8e5daa docs(spec): 新增秒悟赏金 IDEA·026「技能导航台」规格三件套` —— 3 文件 / 353 insertions（`spec.md`、`tasks.md`、`review.md`）；
+    - `d771e2af0 feat(skill-navigator): 新增技能导航台静态引导页并登记 apps 路由表` —— 7 文件 / 1708 insertions（`apps/AGENTS.md` 路由表 1 行 + 应用 6 文件）。
+  - 提交经 `git-commit-utf8.py` 走 UTF-8 bytes 通道（带文件清单，暂存集 == 指定集）；提交后 `git cat-file -p HEAD` 回验中文**无乱码**；`git status --short` 本任务路径**零残留**（其余 `M`/`??` 条目属他会话在途工作，未纳入本次提交）。
+  - 按仓库约定 `.trae/specs/.gitignore` 第 3 行忽略 `raw/`，故 R/F/V 原始证据（`raw/source-capture.md`、`raw/design-f.md`）**仅本地保留、不入库**，README 已就此显式说明、不再做链接引用。
 
 ## Task Dependencies
 
