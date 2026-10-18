@@ -287,6 +287,14 @@ section { padding: 20px 0 8px; }
   margin-top: auto; padding-top: 4px;
 }
 
+.card-alias {
+  margin: 0 0 12px;
+  padding: 9px 12px;
+  font-size: 13px; line-height: 1.65;
+  color: var(--ink-2); background: var(--warm-bg);
+  border-radius: var(--radius-s);
+}
+
 .card-details { margin: 0 0 16px; border-top: 1px solid var(--line-2); padding-top: 14px; }
 
 .card-details summary {

@@ -213,16 +213,21 @@
 
     card.appendChild(det);
 
+    if (s.marketName && s.marketName !== s.name) {
+      card.appendChild(el('p', 'card-alias', '打开后会看到它在技能市场页里的名字是「' + s.marketName + '」。'));
+    }
+
     var actions = el('div', 'card-actions');
     var b1 = el('button', 'btn btn-primary btn-mini', '先看看结果');
     b1.type = 'button';
     b1.addEventListener('click', function () { openDemo(s, rec.matched); });
     actions.appendChild(b1);
 
-    var b2 = el('a', 'btn btn-ghost btn-mini', '去技能市场找它');
-    b2.href = D.marketUrl;
+    var b2 = el('a', 'btn btn-ghost btn-mini', s.url ? '打开这个技能' : '去市场里搜它');
+    b2.href = s.url || D.marketUrl;
     b2.target = '_blank';
     b2.rel = 'noopener';
+    if (!s.url) b2.title = '这一条没拿到详情页地址，先到技能市场里搜它的名字';
     actions.appendChild(b2);
 
     card.appendChild(actions);
@@ -305,8 +310,10 @@
   function openDemo(s, matched) {
     lastFocus = document.activeElement;
     demoTitle.textContent = s.name;
-    demoSub.textContent = '作者 ' + s.author + ' · ' + usageText(s) + ' · ' + sourceText(s);
-    demoMarket.href = D.marketUrl;
+    demoSub.textContent = '作者 ' + s.author + ' · ' + usageText(s) + ' · ' + sourceText(s)
+      + (s.marketName && s.marketName !== s.name ? ' · 市场页里叫「' + s.marketName + '」' : '');
+    demoMarket.textContent = s.url ? '打开这个技能' : '去 Meoo 技能市场搜它';
+    demoMarket.href = s.url || D.marketUrl;
 
     demoBody.innerHTML = '';
 

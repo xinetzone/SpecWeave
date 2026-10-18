@@ -54,7 +54,7 @@ window.SKILL_DATA = {
   skills: [
     // ---------------- 市场页（market，含使用量） ----------------
     {
-      id: 'hunt-brainstorm', name: '头脑风暴（Superpower）', author: 'Meoo开源收录', usage: 25445, source: 'market',
+      id: 'hunt-brainstorm', name: '头脑风暴（Superpower）', author: 'Meoo开源收录', usage: 25445, source: 'market', url: 'https://meoo.com/skills/23',
       desc: `任何创造性工作前必须使用。通过自然对话深入探索用户意图、需求和设计方案，确保在实施前完全理解需求。适用于创建功能、构建组件、添加功能或修改行为。`,
       solve: '在你动手之前，用对话把你的真实意图、需求和方案聊清楚。',
       fit: '想法还很模糊、说不清要做什么的人；要在开工前把需求问透的人。',
@@ -67,7 +67,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-ui-ux', name: '【Meoo】高级UI/UX 设计智能系统', author: 'Meoo编辑部', usage: 37115, source: 'market',
+      id: 'hunt-ui-ux', name: '【Meoo】高级UI/UX 设计智能系统', author: 'Meoo编辑部', usage: 37115, source: 'market', url: 'https://meoo.com/skills/21',
       desc: `Meoo UI UX，基于 140+ 精选设计方案，为你推荐最佳视觉风格。适用于 SaaS、电商、金融科技等项目场景，并产出可直接落地的 shadcn/ui + Tailwind CSS 代码。 核心能力包括：风格推荐、设计令牌生成、组件搭配方案、响应式布局指导、调色板构建以及风格评分系统。`,
       solve: '说清你的项目是什么，它从 140+ 种设计方案里挑出最合适的视觉风格并给出代码。',
       fit: '要搭 SaaS / 电商 / 金融科技类界面、又定不下视觉风格的人。',
@@ -80,7 +80,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-ui-specialist', name: '秒悟UI设计专家', author: '行休', usage: 7652, source: 'market',
+      id: 'hunt-ui-specialist', name: '秒悟UI设计专家', author: '行休', usage: 7652, source: 'market', url: 'https://meoo.com/skills/152',
       desc: `秒悟智能设计推荐助手 - 只需描述您的 Web 应用需求，AI 就能从 130+ 种设计风格中为您推荐最合适的方案，并提供完整的设计系统和 shadcn/ui 开发指南，帮助快速落地项目。`,
       solve: '描述你的 Web 应用要做什么，它从 130+ 种设计风格里给出推荐与开发指南。',
       fit: '第一次做 Web 应用、完全没有设计方向的人。',
@@ -93,7 +93,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-frontend-design', name: '前端设计SKILL', author: '厚钧德扑', usage: 3765, source: 'market',
+      id: 'hunt-frontend-design', name: '前端设计SKILL', author: '厚钧德扑', usage: 3765, source: 'market', url: 'https://meoo.com/skills/1103',
       desc: `为你打造独具特色的精美网页界面。无论是单个组件还是完整应用，都能呈现专业级的设计水准。代码风格独特，拒绝千篇一律的“AI味”，让你的产品拥有令人眼前一亮的视觉体验。`,
       solve: '把网页界面做得有辨识度，而不是一眼看出是套模板。',
       fit: '在意「一眼看上去不像 AI 批量生成」的人；需要单组件或整页设计的人。',
@@ -106,7 +106,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-glass-ui', name: '玻璃拟态UI', author: '不周山', usage: 2477, source: 'market',
+      id: 'hunt-glass-ui', name: '玻璃拟态UI', author: '不周山', usage: 2477, source: 'market', url: 'https://meoo.com/skills/253',
       desc: `打造清新透亮的现代界面设计，模拟真实玻璃的质感与光影效果。通过模糊背景营造层次感，配合简约字体和卡片布局，让界面既现代又富有质感。适合需要通透、轻盈视觉体验的项目，如移动端应用、数据仪表盘或个人作品集展示。`,
       solve: '做出通透、有质感的界面风格（毛玻璃质感 + 光影层次）。',
       fit: '做仪表盘、作品集、移动端应用，想要轻盈现代观感的人。',
@@ -119,7 +119,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-ui-restore', name: 'UI精准还原', author: 'ioo_pro', usage: 191, source: 'market',
+      id: 'hunt-ui-restore', name: 'UI精准还原', author: 'ioo_pro', usage: 191, source: 'market', url: 'https://meoo.com/skills/103466',
       desc: `上传设计图，智能识别技术栈并生成像素级还原方案。涵盖组件选型、样式参数及交互逻辑，助您一键实现从 Figma 或截图到代码的精准转换，高效完成 UI 复刻与页面开发。`,
       solve: '上传设计图或截图，给出像素级还原的实现方案（组件选型 + 样式参数 + 交互）。',
       fit: '有 Figma 稿或参考截图、要照着做出来的人。',
@@ -132,7 +132,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-high-end-frontend', name: '高质前端设计', author: '妮可miku', usage: 134, source: 'market',
+      id: 'hunt-high-end-frontend', name: '高质前端设计', author: '妮可miku', usage: 134, source: 'market', url: 'https://meoo.com/skills/104100',
       desc: `专为打造高质感网页而生，涵盖落地页、作品集及界面重设计。智能匹配官方设计系统，拒绝模板化“AI味”，呈现如Linear般精致的专业视觉效果。助您轻松构建独具匠心的高端前端界面，让设计脱颖而出。`,
       solve: '把落地页 / 作品集 / 旧界面重做成精致的高端观感。',
       fit: '要给产品做对外落地页、或想把现有界面整体提质感的人。',
@@ -145,7 +145,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-product-site', name: '高审美产品官网', author: '郑建勋', usage: 141, source: 'market',
+      id: 'hunt-product-site', name: '高审美产品官网', author: '郑建勋', usage: 141, source: 'market', url: 'https://meoo.com/skills/103553',
       desc: `提供产品资料，完成设计参考选择、Logo与图片准备、响应式页面、品牌化液态金属交互和检查修复。结合自动检查与人工截图复核，适用于产品官网、品牌展示页和发布页。zebrazjx × 秒悟 Meoo 共创。本地已有案例验证，Meoo 端完整运行仍待验收；浏览器检查需宿主提供相应工具。`,
       solve: '从产品资料出发，把产品官网 / 发布页整站做出来并做检查修复。',
       fit: '要上线产品官网、品牌展示页、发布页的人。',
@@ -158,7 +158,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-diagram-map', name: '中国全域地图展示', author: '一格', usage: 127, source: 'market',
+      id: 'hunt-diagram-map', name: '中国全域地图展示', author: '一格', usage: 127, source: 'market', url: 'https://meoo.com/skills/100284',
       desc: `1分钟让你的地图成为标准地图！ 阿里云地图数据源获取，快速获取中国省市区行政区划地图数据，一键集成到 ECharts 实现数据可视化。适合制作数据地图、区域分析图表，让地图展示更加直观专业。`,
       solve: '拿到中国省市区行政区划数据，并把它接进 ECharts 做成可用的数据地图。',
       fit: '要做区域分布图、地区业务分析看板的人。',
@@ -171,7 +171,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-map-ppt', name: 'PPT精编', author: '朱鹮', usage: 99, source: 'market',
+      id: 'hunt-map-ppt', name: 'PPT精编', author: '朱鹮', usage: 99, source: 'market', url: 'https://meoo.com/skills/103507',
       desc: `一键生成专业级可编辑网页PPT，告别AI模板的廉价感。支持逐页定制命题与排版，完美适配汇报、课件及演示场景。内容灵活可调，助您轻松打造独具匠心、逻辑清晰的高质量幻灯片，让每一次展示都脱颖而出。`,
       solve: '生成可逐页编辑的网页版 PPT，而不是套模板的廉价感稿子。',
       fit: '要做汇报、课件、路演的人；需要事后逐页改内容的人。',
@@ -184,7 +184,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-frontend-slides', name: 'Frontend-Slides 幻灯片生成', author: '山间14', usage: 85, source: 'market',
+      id: 'hunt-frontend-slides', name: 'Frontend-Slides 幻灯片生成', author: '山间14', usage: 85, source: 'market', url: 'https://meoo.com/skills/103029',
       desc: `轻松创建精美网页幻灯片，支持从零设计或一键转换 PPT。无需复杂依赖，通过直观视觉预览，助非设计师快速锁定美学风格。无论是演讲、路演还是日常汇报，都能高效打造专业且动感的演示体验。技能来自开源项目：https://github.com/zarazhangrui/frontend-slides?tab=readme-ov-file`,
       solve: '把已有 PPT 或一个主题，转成带视觉预览的网页幻灯片。',
       fit: '手上已有一份 PPT、想换成网页形态的人；非设计师。',
@@ -197,7 +197,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-code-quality', name: '代码质控', author: '无心低语gd', usage: 3251, source: 'market',
+      id: 'hunt-code-quality', name: '代码质控', author: '无心低语gd', usage: 3251, source: 'market', url: 'https://meoo.com/skills/156',
       desc: `代码质量守护者 - 每次代码提交后自动进行全面"体检"，快速发现代码规范问题、安全隐患、性能瓶颈和测试盲区，帮助团队持续保持高质量代码输出。`,
       solve: '每次提交后自动体检代码：规范问题、安全隐患、性能瓶颈、测试盲区。',
       fit: '有人协作的代码仓库；要长期保持质量的项目。',
@@ -210,7 +210,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-code-reviewer', name: '代码审查专家', author: 'liping', usage: 198, source: 'market',
+      id: 'hunt-code-reviewer', name: '代码审查专家', author: 'liping', usage: 198, source: 'market', url: 'https://meoo.com/skills/103031',
       desc: `智能审查代码与日志，精准识别安全、性能及逻辑隐患。无论是日常 Code Review 还是排查 Bug，它都能提供按严重程度排序的最小化修复建议，助您高效评估风险，轻松提升代码质量与维护效率。`,
       solve: '审代码和日志，按严重程度排序给出「最小改动」的修复建议。',
       fit: '要代码走查的人；手里有报错日志想定位隐患的人。',
@@ -223,7 +223,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-test-agent', name: '超级牛马测试员', author: '文行九知', usage: 1377, source: 'market',
+      id: 'hunt-test-agent', name: '超级牛马测试员', author: '文行九知', usage: 1377, source: 'market', url: 'https://meoo.com/skills/431',
       desc: `智能代码测试助手 - 自动检测代码问题、定位bug根源、修复常见错误，并提供性能分析报告。适合开发者在编码过程中快速验证代码质量、排查故障、提升性能。`,
       solve: '边写边测：自动查出问题、定位 bug 根源、顺手修掉常见错误。',
       fit: '个人开发者；编码过程中想快速自检的人。',
@@ -236,7 +236,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-user-research', name: 'AI产品调研', author: '北峰Agent', usage: 55, source: 'market',
+      id: 'hunt-user-research', name: 'AI产品调研', author: '北峰Agent', usage: 55, source: 'market', url: 'https://meoo.com/skills/103539',
       desc: `专为数字产品打造的结构化调研助手，助您快速验证AI工具、小程序等创意需求。无论是判断是否上线还是优化迭代，都能提供清晰的数据反馈，帮您精准决策，避免盲目开发，让产品打磨更高效。`,
       solve: '给 AI 工具、小程序这类创意做结构化调研，回答「该不该做、做得对不对」。',
       fit: '要判断是否上线、或要决定下一步迭代方向的人。',
@@ -249,7 +249,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-first-users', name: '首批用户获取', author: 'anyu1888888', usage: 20, source: 'market',
+      id: 'hunt-first-users', name: '首批用户获取', author: 'anyu1888888', usage: 20, source: 'market', url: 'https://meoo.com/skills/103525',
       desc: `专为已有产品的创作者设计，助您精准锁定首批用户，明确画像与动机。一键生成发布文案、沟通话术及七天冷启动计划，解决从0到1的获客难题。适合急需真实反馈与试用的场景，非付费投放或群发工具。`,
       solve: '已有产品、要第一批真实用户：定位人群，给发布文案与 7 天冷启动计划。',
       fit: '产品刚做完、急需真实反馈和试用的人。',
@@ -262,7 +262,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-github-stars', name: 'GitHub星标增长器', author: '常成', usage: 16, source: 'market',
+      id: 'hunt-github-stars', name: 'GitHub星标增长器', author: '常成', usage: 16, source: 'market', url: 'https://meoo.com/skills/103701',
       desc: `帮助你的 GitHub 项目，大大增加获取更多星标的可能！ 具体方式是判断你说的用户、场景、需求的真伪程度。 用四个关键问题帮你找到真正会用它的"那群人"，然后把仓库名、简介、README 按真用户、真需求、真场景来重写/优化。 让你的GitHub项目获取更多Stars！`,
       solve: '用四个关键问题检验你的开源项目「谁真的会用」，再据此重写仓库名、简介与 README。',
       fit: '有 GitHub 开源项目、想涨星的人。',
@@ -275,7 +275,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-launch-kit', name: '应用首发包助手', author: '桃子_0616', usage: 12, source: 'market',
+      id: 'hunt-launch-kit', name: '应用首发包助手', author: '桃子_0616', usage: 12, source: 'market', url: 'https://meoo.com/skills/103620',
       desc: `刚完成应用或教程却不知如何推广？本技能为您一键生成首发文案与数据解读指南。从第一条内容发布到关键指标分析，助您轻松搞定冷启动，让好产品迅速获得市场关注与反馈。`,
       solve: '产品刚做完不知怎么推：一键出首发文案 + 关键数据怎么看。',
       fit: '第一次做推广、不懂该看什么指标的人。',
@@ -288,7 +288,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-caitou-launch', name: '菜头应用首发素材包', author: '菜头Prompt', usage: 16, source: 'market',
+      id: 'hunt-caitou-launch', name: '菜头应用首发素材包', author: '菜头Prompt', usage: 16, source: 'market', url: 'https://meoo.com/skills/103535',
       desc: `一键为您的应用生成首发宣传素材！只需提供产品链接或截图，即可自动提炼核心卖点，产出精美图文、宣传海报及演示脚本。完美适配新品上线、公测招募等场景，助您轻松完成首次亮相，专注内容创作，无需操心发布与推广。`,
       solve: '给产品链接或截图，产出核心卖点、图文、海报与演示脚本一套首发素材。',
       fit: '新品上线、公测招募，需要一整套宣传物料的人。',
@@ -301,7 +301,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-caitou-surf', name: '菜菜的冲浪Skill', author: 'caibucai', usage: 30, source: 'market',
+      id: 'hunt-caitou-surf', name: '菜菜的冲浪Skill', author: 'caibucai', usage: 30, source: 'market', url: 'https://meoo.com/skills/103814',
       desc: `专注小红书营销，基于真实热帖挖掘传播机会。通过对比选题，为您生成可执行的推广内容。适用于寻找产品热点、制定冲浪策略或撰写传播报告。虽不保证爆款且需手动发布，但能助您精准捕捉流量，高效规划内容。`,
       solve: '在小红书上找传播机会：从真实热帖里对选题，产出可执行的推广内容。',
       fit: '要规划小红书内容、找产品热点的人。',
@@ -314,7 +314,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-xigua-productize', name: '西瓜业务产品化｜xigua-service-productization', author: '西瓜🍉', usage: 25, source: 'market',
+      id: 'hunt-xigua-productize', name: '西瓜业务产品化｜xigua-service-productization', author: '西瓜🍉', usage: 25, source: 'market', url: 'https://meoo.com/skills/103671',
       desc: `将你的业务文档、案例等专业内容转化为内容型产品。它不仅能提升客户参与度，还能自动生成建站提示词，帮您快速搭建专属网站，让专业知识轻松变现，高效连接潜在客户。`,
       solve: '把你的业务文档、案例变成内容型产品，并给出建站提示词。',
       fit: '手里有专业资料、课程笔记，想变成产品的人。',
@@ -327,7 +327,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-chinese-book', name: '语文书籍模板', author: '一格', usage: 373, source: 'market',
+      id: 'hunt-chinese-book', name: '语文书籍模板', author: '一格', usage: 373, source: 'market', url: 'https://meoo.com/skills/104019',
       desc: `轻松打造语文整本书阅读应用！基于高效模板，支持动态加载书籍内容与导航。无论是定制教材、切换书目，还是按教学约束生成内容，都能快速实现。让阅读体验更灵活，助力师生畅享沉浸式语文学习之旅。`,
       solve: '用模板快速做一个整本书阅读应用，支持换书目、按教学约束生成内容。',
       fit: '语文老师、做阅读类教学产品的人。',
@@ -340,7 +340,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-plan-superpower', name: '计划编写（Superpower）', author: 'Meoo开源收录', usage: 2654, source: 'market',
+      id: 'hunt-plan-superpower', name: '计划编写（Superpower）', author: 'Meoo开源收录', usage: 2654, source: 'market', url: 'https://meoo.com/skills/25',
       desc: `编写全面的实施计划文档。针对多步骤任务，提供详细的文件修改清单、代码示例、测试方案和文档需求，遵循 DRY、YAGNI、TDD 原则，适合零上下文的工程师执行。`,
       solve: '把多步骤任务写成一份「换个人也能照着做」的实施计划文档。',
       fit: '要交接给他人执行、或自己隔几天再回来做的事。',
@@ -353,7 +353,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-haiming-monetize', name: '海明 App 商业化｜haiming-app-monetization', author: '黄明远', usage: 14, source: 'market',
+      id: 'hunt-haiming-monetize', name: '海明 App 商业化｜haiming-app-monetization', author: '黄明远', usage: 14, source: 'market', url: 'https://meoo.com/skills/103552',
       desc: `海明Dev与秒悟Meoo联手，深度评估App引导、付费墙及定价策略。结合代码与竞品分析，提供定制化转化方案。专注优化试用与购买体验，助力开发中或已上线App提升商业化效率，非单纯获客工具。`,
       solve: '评估 App 的引导流程、付费墙与定价，给出提高付费转化的具体方案。',
       fit: '已经上线或开发中、想把付费转化做起来的 App 作者。',
@@ -366,7 +366,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-signalmine', name: 'SignalMine｜用户反馈转增长实验', author: 'Z_wk', usage: 12, source: 'market',
+      id: 'hunt-signalmine', name: 'SignalMine｜用户反馈转增长实验', author: 'Z_wk', usage: 12, source: 'market', url: 'https://meoo.com/skills/103536',
       desc: `SignalMine（中文名：用户反馈转增长实验）。把用户评论、客服记录、问卷和访谈，整理成有原话依据的痛点优先级、最多 3 条待验证增长假设，以及 1 个可执行的最小实验。支持文件时生成可点击的结果看板和空白实验记录表；只能聊天时提供 Markdown 卡片。 使用方法：添加技能后，说明产品用途、目标用户、希望改善的动作与可改范围，再粘贴反馈或上传平台可读取的附件。无需提前编号或分类；未读内容与未知信息会明确说明。 首次体验可发送：“请读取本技能 examples/quick-demo.txt，运行短示例，输出优先级、原话依据、增长假设和一个最小实验，并展示结果。”包内附使用指南、匿名真实短示例与明确标记的模拟测试数据。生成的是待执行方案，增长效果需通过真实实验验证。`,
       solve: '把一堆用户反馈整理成「痛点优先级 + 增长假设 + 一个最小实验」。',
       fit: '手里有评论 / 客服记录 / 问卷，不知道先改哪个的人。',
@@ -379,7 +379,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'hunt-ai-image', name: 'AI图像生成', author: '尤达大师love', usage: 1608, source: 'market',
+      id: 'hunt-ai-image', name: 'AI图像生成', author: '尤达大师love', usage: 1608, source: 'market', url: 'https://meoo.com/skills/299',
       desc: `这款AI图像工具可以帮你用文字描述生成图片，或上传现有图片进行修改。支持多种分辨率(1K/2K/4K)，无论是创作新作品还是编辑现有图片都能轻松搞定。`,
       solve: '用文字生成图片，或上传已有图片修改，支持 1K / 2K / 4K。',
       fit: '做文章配图、海报底图、概念图的人。',
@@ -394,7 +394,7 @@ window.SKILL_DATA = {
 
     // ---------------- 赏金广场共创计划页（event，无使用量） ----------------
     {
-      id: 'ev-need-validate', name: '产品需求验证判断', author: '北峰Agent', usage: null, source: 'event',
+      id: 'ev-need-validate', name: '产品需求验证判断', author: '北峰Agent', usage: null, source: 'event', url: 'https://meoo.com/skills/103539', marketName: 'AI产品调研',
       desc: `把「我觉得有人需要」变成看得懂、查得到的产品判断`,
       solve: '把「我觉得有人需要」变成一份看得懂、查得到的判断。',
       fit: '只有一个直觉、说不出证据的人。',
@@ -407,7 +407,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'ev-true-need', name: 'AI 产品真需求诊断', author: 'yan（ai赚钱版）', usage: null, source: 'event',
+      id: 'ev-true-need', name: 'AI 产品真需求诊断', author: 'yan（ai赚钱版）', usage: null, source: 'event', url: 'https://meoo.com/skills/103493', marketName: '真实需求诊断',
       desc: `判断产品没人用是增长问题还是需求本身不成立`,
       solve: '回答「没人用」到底是推广没做到位，还是这件事本来就没需求。',
       fit: '已经做出产品、用的人很少的人。',
@@ -420,7 +420,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'ev-need-sim', name: 'AI 应用需求模拟调研', author: '阿东玩AI', usage: null, source: 'event',
+      id: 'ev-need-sim', name: 'AI 应用需求模拟调研', author: '阿东玩AI', usage: null, source: 'event', url: 'https://meoo.com/skills/104018', marketName: '需求先验｜模拟用户调研',
       desc: `动手前检索近30天用户抱怨与付费线索 结合有来源的模拟访谈给出需求判断与7天验证计划`,
       solve: '开工前先检索近 30 天用户抱怨与付费线索，给出需求判断和 7 天验证计划。',
       fit: '准备动手、但想先花一周验证需求的人。',
@@ -446,7 +446,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'ev-design-to-app', name: '一键设计稿转应用', author: '职场懒人', usage: null, source: 'event',
+      id: 'ev-design-to-app', name: '一键设计稿转应用', author: '职场懒人', usage: null, source: 'event', url: 'https://meoo.com/skills/103630', marketName: '产品第一版',
       desc: `把设计稿或截图直接变成能跑的应用并比对还原度`,
       solve: '把设计稿或截图直接变成能跑的应用，并比对还原度。',
       fit: '有设计稿、想跳过手写界面的人；不会写代码的人。',
@@ -459,7 +459,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'ev-cost-pricing', name: 'AI 应用成本核算与定价', author: '古希腊掌管代码的神', usage: null, source: 'event',
+      id: 'ev-cost-pricing', name: 'AI 应用成本核算与定价', author: '古希腊掌管代码的神', usage: null, source: 'event', url: 'https://meoo.com/skills/103742', marketName: 'AI应用定价算盘',
       desc: `为 AI 应用做成本核算与定价变现方案`,
       solve: '算清 AI 应用的成本（含模型调用消耗），并给出定价与变现方案。',
       fit: '用到大模型、担心越用越亏的人。',
@@ -472,7 +472,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'ev-growth-diag', name: '产品增长诊断', author: '小E爱学习（AI提效）', usage: null, source: 'event',
+      id: 'ev-growth-diag', name: '产品增长诊断', author: '小E爱学习（AI提效）', usage: null, source: 'event', url: 'https://meoo.com/skills/103530', marketName: 'AI变现诊断',
       desc: `在一堆增长建议里判断当前最该先解决哪一个`,
       solve: '在一堆增长建议里，判断现在最该先做哪一个。',
       fit: '手里攒了一堆增长建议、不知道从哪下手的人。',
@@ -485,7 +485,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'ev-growth-lead', name: '产品增长负责人诊断', author: '花叔（只工作不上班版）', usage: null, source: 'event',
+      id: 'ev-growth-lead', name: '产品增长负责人诊断', author: '花叔（只工作不上班版）', usage: null, source: 'event', url: 'https://meoo.com/skills/103705', marketName: '产品增长负责人',
       desc: `把数据丢进来判断增长卡在哪一段 只给当前该做的三件事和哪些事做还太早`,
       solve: '把数据丢进去，判断增长卡在哪一段，只给「现在该做的三件事」和哪些还太早。',
       fit: '有基础数据、要做取舍的小团队 / 独立开发者。',
@@ -498,7 +498,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'ev-script-to-animation', name: '文字脚本转可视化白板动画', author: '李叔聊AI', usage: null, source: 'event',
+      id: 'ev-script-to-animation', name: '文字脚本转可视化白板动画', author: '李叔聊AI', usage: null, source: 'event', url: 'https://meoo.com/skills/103546', marketName: '白板工作室Skill',
       desc: `上传脚本自动生成教程口播用的白板动画`,
       solve: '上传文字脚本，自动生成教程口播用的白板动画。',
       fit: '做教程、讲解类视频、需要口播配画面的人。',
@@ -511,7 +511,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'ev-multi-platform-video', name: '多平台推广视频生成', author: '一起Vibe', usage: null, source: 'event',
+      id: 'ev-multi-platform-video', name: '多平台推广视频生成', author: '一起Vibe', usage: null, source: 'event', url: 'https://meoo.com/skills/103639', marketName: '一键 VibeCoding 作品转爆款短视频',
       desc: `一份素材产出多平台尺寸的推广视频与封面图`,
       solve: '一份素材，产出适配多个平台的尺寸的推广视频与封面图。',
       fit: '要在多个平台同时发推广视频的人。',
@@ -524,7 +524,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'ev-note-cover', name: '笔记封面设计', author: '是树小姐', usage: null, source: 'event',
+      id: 'ev-note-cover', name: '笔记封面设计', author: '是树小姐', usage: null, source: 'event', url: 'https://meoo.com/skills/103652', marketName: '视频封面设计',
       desc: `输入封面设计技巧与参考 解决主副标题设计与从视频提取关键帧的封面设计`,
       solve: '解决笔记封面的主副标题设计，并能从视频里提取关键帧做封面。',
       fit: '发小红书 / 视频、封面总是差点意思的人。',
@@ -550,7 +550,7 @@ window.SKILL_DATA = {
       }
     },
     {
-      id: 'ev-hotspot-surf', name: '热点自传播网感冲浪', author: '蔡不菜（AI版）', usage: null, source: 'event',
+      id: 'ev-hotspot-surf', name: '热点自传播网感冲浪', author: '蔡不菜（AI版）', usage: null, source: 'event', url: 'https://meoo.com/skills/103814', marketName: '菜菜的冲浪Skill',
       desc: `输入产品输出本周可蹭热点的冲浪图与蹭法避雷 一键生成蹭热点发布帖`,
       solve: '输入产品，输出本周可蹭的热点、蹭法与避雷提示，并生成发布帖。',
       fit: '要借热点给产品做曝光的人。',
