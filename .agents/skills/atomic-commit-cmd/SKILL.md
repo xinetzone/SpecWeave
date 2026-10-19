@@ -114,7 +114,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/atomic-commit-cmd/SKILL.toml"
 - [ ] vendor/目录变更符合子模块管理规范（不直接提交vendor内容）
 - [ ] **spec目录白名单检查**：
   - [ ] 若变更涉及 `.trae/specs/` 下已完成/归档状态的spec目录，确认没有将分析报告(analysis-report.md)、任务输出(task*-*.md)、文章内容(article-content.md)等产出物文件遗留在spec目录中
-  - [ ] 产出物文件必须归档至 `docs/` 对应目录，spec目录仅保留 spec.md/tasks.md/review.md（及 facts.md/insights.md 过程件）与 README.md/.gitkeep
+  - [ ] 产出物文件必须归档至 `docs/` 对应目录，spec目录仅保留过程件与索引：spec.md/tasks.md/review.md（规划三件套）、facts.md/insights.md、e-stage-pattern.md/v-adversarial-review.md（seven-concepts-comprehensive-retro 复盘流程过程件）、README.md/.gitkeep
   - [ ] 可运行 `python .agents/scripts/check-spec-output-archive.py` 快速验证
 - [ ] **fix类型提交专项检查**：
   - [ ] 若本次提交包含Bug修复（type=fix），是否包含预防措施（检查脚本/测试用例/规则更新/反模式清单）？
@@ -177,6 +177,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/atomic-commit-cmd/SKILL.toml"
 
 ## 11. Changelog
 
+- **v1.10.0** (2026-10-19): §6 spec目录白名单检查同步复盘流程过程件口径——检查脚本白名单已补入 `e-stage-pattern.md`/`v-adversarial-review.md`（seven-concepts-comprehensive-retro 声明的 E 阶段模式萃取与 V 对抗审查过程件，见该 Skill 的 `references/repo-conventions.md`「2. Spec 目录与产物」），本清单与脚本修复指引随之同步，消除文档与实现的口径漂移。基于 xuanspace 复盘目录（已完成态）因白名单滞后被误判 exit 1 的根因修复。
 - **v1.9.0** (2026-10-15): 接入「提交暂存区完整性」规则（[commit-staging-integrity.md](../../rules/commit-staging-integrity.md)）——§5 步骤5 改为「提交集必须点名钉死」（首选带文件清单的工具入口，直连 git 用 `-- <路径…>`，禁止裸 `git commit`）；§6 安全检查清单新增 3 项（提交集点名、点名路径自身无混入、索引含他人暂存文件时的处置）；§9 Gotchas 新增 3 条（暂存区是共享可变状态、「用了工具 ≠ 走了守卫」、禁用 `reset --hard` 清场）。基于 sc-20261015 会话两次实测：一次裸 `git commit -F` 被并行会话暂存污染（多出 4 个文件）、一次路径级提交成功拦下 1700 行在途改动。
 - **v1.8.0** (2026-09-20): 对齐 spec 白名单口径至现行标准——检查脚本白名单补入 review.md（TRAE-spec-mode 规划三件套）与 facts.md/insights.md（工作流声明的过程件），checklist.md 降级为存量兼容命名。清除了 553 次 review.md 类误报（492 项历史告警中 414 项为白名单漂移误报，真实债务 78 项）。基于 492 项历史遗留告警的根因复盘。
 - **v1.7.0** (2026-07-13): 新增"spec目录白名单检查"安全项，强制产出物归档至docs/而非遗留在spec规划目录中。配套check-spec-output-archive.py自动化检查脚本（19种产出物命名模式匹配），已集成至ci-check流水线Step 7（当前warn-only，待历史51个遗留spec清理后升级为error）。基于文章分析任务产出物路径错误问题的第一性原理复盘萃取。

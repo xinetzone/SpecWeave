@@ -235,7 +235,8 @@ def main() -> None:
             print(f"    2. 使用 git mv 将产出物移至归档目录")
             print(f"    3. 创建归档README.md（含frontmatter、核心指标、文件索引）")
             print(f"    4. 更新主题README.md中的交付物链接指向归档目录")
-            print(f"    5. 验证spec目录仅保留 spec.md/tasks.md/review.md（及 facts.md/insights.md 过程件）")
+            print("    5. 验证spec目录仅保留过程件 spec.md/tasks.md/review.md、facts.md/insights.md、")
+            print("       e-stage-pattern.md/v-adversarial-review.md 与 README.md/.gitkeep")
             print()
         if in_progress_with_output:
             print(f"  注：{len(in_progress_with_output)}个进行中的spec包含产出物文件，")
