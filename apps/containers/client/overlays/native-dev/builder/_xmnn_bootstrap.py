@@ -2,11 +2,11 @@
 Installed to site-packages and activated via xmnn_bootstrap.pth.
 """
 # ── 副本治理标注（方案 α：跨模块可追溯性）─────────────────────────────
-# SOURCE : notebook/libs/npuusertools/_xmnn_bootstrap.py（语义真源）
+# SOURCE : notebook/libs/npu_tvm/_xmnn_bootstrap.py（语义真源；2026-10-16 由 npuusertools 迁入）
 # 适用   : CPython 3.14 ast 遗留别名 + Nuitka 4.2.x PEP 649 类体注解闭包缺陷
 # 本副本 : 自包含拷贝·全量版（构建上下文隔离，不能 import 真源）；含 install()
 #          封装、Nuitka 4.2.1/4.2.2 兜底与 libtvm 预加载；哨兵与真源共用
-# 校验   : 真源仓库内运行 python scripts/verify_bootstrap_copies.py
+# 校验   : 在 npuusertools 仓库内运行 python scripts/verify_bootstrap_copies.py（跨子模块指向本真源）
 # ──────────────────────────────────────────────────────────────────────
 import os
 import ctypes
@@ -72,7 +72,7 @@ if sys.platform.startswith("linux"):
 
 import ast
 
-# 与 npuusertools/_xmnn_bootstrap.py 的同名哨兵共用 ast 模块属性：任一副本先
+# 与 npu_tvm/_xmnn_bootstrap.py 的同名哨兵共用 ast 模块属性：任一副本先
 # 安装，另一副本的 install() 即为 no-op，杜绝双重包装/语义漂移。
 _AST_ALIAS_FLAG = "_xmnn_ast_compat_applied"
 
@@ -80,7 +80,7 @@ _AST_ALIAS_FLAG = "_xmnn_ast_compat_applied"
 def install():
     """幂等补回 CPython 3.12+ 移除的 ast 遗留节点别名。
 
-    与语义真源 npuusertools/_xmnn_bootstrap.py 的 ``install()`` 同名同契约
+    与语义真源 npu_tvm/_xmnn_bootstrap.py 的 ``install()`` 同名同契约
     （``xmnn.vta_compat.apply_ast_compat`` 直接 ``from _xmnn_bootstrap
     import install`` 复用）；本简版补丁集覆盖 tvm py_converter 的
     ``from ast import`` 需求并额外恢复 Index/ExtSlice。
@@ -131,7 +131,7 @@ def install():
 install()
 
 # ── PEP 649 × Nuitka 类体注解闭包缺陷兜底（2026-10-08 实证）──────────────────
-# 本块与 npuusertools/_xmnn_bootstrap.py 同名函数保持逐字一致（双副本契约）。
+# 本块与 npu_tvm/_xmnn_bootstrap.py 同名函数保持逐字一致（双副本契约）。
 # Nuitka 4.2.1/4.2.2 编译「类体内定义类型别名、又被同类方法注解引用」的模块时，
 # 为函数生成的 PEP 649 __annotate__ 闭包不捕获类命名空间中的该别名，
 # 模块导入期 tvm 的 @type_checked → inspect.signature → annotationlib 按
