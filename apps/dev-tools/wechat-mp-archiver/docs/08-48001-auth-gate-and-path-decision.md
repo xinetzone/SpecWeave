@@ -39,7 +39,7 @@
 
 ## 4. 结论
 
-当前 `.env` 中的 `wx4c620ec6cd51a2d6` 该号**未满足发布能力接口的认证门槛**（个人主体 / 未认证 / 不支持认证三者之一）。
+当前 `.env` 中的 `wx4c62…` 该号**未满足发布能力接口的认证门槛**（个人主体 / 未认证 / 不支持认证三者之一）。
 
 **这是账号主体资质问题，不是配置问题** —— 继续调参、重加白名单、改 AppSecret 都不会改变结果。
 
@@ -95,7 +95,7 @@ podman compose up -d
 `.env` 中 R1 四项均已正确配置，**无需改动**：
 
 ```dotenv
-MP_ARCHIVER_WECHAT_APP_ID=wx4c62…        # 19 位，形态正常
+MP_ARCHIVER_WECHAT_APP_ID=wx4c62…        # 18 位，形态正常
 MP_ARCHIVER_WECHAT_APP_SECRET=<已配置>    # 33 位，实测有效
 MP_ARCHIVER_WECHAT_OFFICIAL_BIZ=MzcwMzE5NTI5NA==
 MP_ARCHIVER_OFFICIAL_DAILY_CALL_CAP=90

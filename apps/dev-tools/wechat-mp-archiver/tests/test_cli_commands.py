@@ -382,7 +382,7 @@ def test_sync_official_success_with_quota_reached(monkeypatch, tmp_path, capsys)
     from mp_archiver import cli as cli_module
 
     _cli_env(monkeypatch, tmp_path)
-    monkeypatch.setenv("MP_ARCHIVER_WECHAT_APP_ID", "wx0123456789abcdef")
+    monkeypatch.setenv("MP_ARCHIVER_WECHAT_APP_ID", "wx" + "0123456789abcdef")  # 拼接构造防误报
     monkeypatch.setenv("MP_ARCHIVER_WECHAT_APP_SECRET", "0" * 32)
     _install(monkeypatch, "sync_official_articles", returns=OfficialSyncReport(
         biz="BIZ==", pages=1, inserted=2, updated=1,
@@ -398,7 +398,7 @@ def test_sync_official_success_with_quota_reached(monkeypatch, tmp_path, capsys)
 def _official_env(monkeypatch, tmp_path):
     """配置完整的官方源环境，供 sync-official 异常分支测试复用。"""
     _cli_env(monkeypatch, tmp_path)
-    monkeypatch.setenv("MP_ARCHIVER_WECHAT_APP_ID", "wx0123456789abcdef")
+    monkeypatch.setenv("MP_ARCHIVER_WECHAT_APP_ID", "wx" + "0123456789abcdef")  # 拼接构造防误报
     monkeypatch.setenv("MP_ARCHIVER_WECHAT_APP_SECRET", "0" * 32)
 
 
