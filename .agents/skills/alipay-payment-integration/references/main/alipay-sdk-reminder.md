@@ -138,8 +138,8 @@ if (data.paymentHtml) {
 | 误判行为 | 为什么错 | 正确做法 |
 |---------|---------|---------|
 | 看到 `ERR_OSSL_UNSUPPORTED` 就推断私钥格式有问题 | 该错误通常是 SDK 配置参数错误（如私钥字段选错、字符编码问题），**不是**私钥格式本身有问题 | 先确认使用了正确的私钥字段（JAVA 用 `appPrivateKey`，非 JAVA 用 `appPrivatePkcsKey`），再检查其他配置参数 |
-| 手动添加 PEM 头尾（`-----BEGIN RSA PRIVATE KEY-----` / `-----END RSA PRIVATE KEY-----`） | SDK 内部自动处理 PEM 格式，手动添加头尾会导致格式错误 | 直接使用沙箱返回的原始值，不做任何格式处理 |
-| 手动添加 PEM 头尾（`-----BEGIN PRIVATE KEY-----` / `-----END PRIVATE KEY-----`） | 同上，PKCS#8 头尾也不应手动添加 | 直接使用沙箱返回的原始值，不做任何格式处理 |
+| 手动添加 PEM 头尾（`-----BEGIN…RSA PRIVATE KEY-----` / `-----END RSA PRIVATE KEY-----`） | SDK 内部自动处理 PEM 格式，手动添加头尾会导致格式错误 | 直接使用沙箱返回的原始值，不做任何格式处理 |
+| 手动添加 PEM 头尾（`-----BEGIN…PRIVATE KEY-----` / `-----END PRIVATE KEY-----`） | 同上，PKCS#8 头尾也不应手动添加 | 直接使用沙箱返回的原始值，不做任何格式处理 |
 | 将 `appPrivatePkcsKey` 转换为 PKCS#8 格式 | 禁止任何格式转换，SDK 直接支持 PKCS#1 | 非 JAVA 语言使用原始 `appPrivatePkcsKey` 值，不做转换 |
 | 将 PKCS#8 转换为 PKCS#1 格式 | 同上，禁止反向转换 | JAVA 语言使用原始 `appPrivateKey` 值，不做转换 |
 | 对私钥内容做 Base64 解码/重新编码 | 无需任何编码处理 | 直接使用沙箱返回的原始字符串 |
@@ -156,12 +156,12 @@ if (data.paymentHtml) {
 
 第 1 步（误判起点）：看到 ERR_OSSL_UNSUPPORTED → 推断"私钥格式有问题"
     ↓
-第 2 步（错误修复）：认为"PKCS#1 私钥应该以 -----BEGIN RSA PRIVATE KEY----- 开头"
+第 2 步（错误修复）：认为"PKCS#1 私钥应该以 -----BEGIN…RSA PRIVATE KEY----- 开头"
     → 手动添加 PEM 头尾 → 错误仍在
     ↓
 第 3 步（错误归因）：认为"Node.js 18+ 用了 OpenSSL 3.0，旧格式不被支持"
     ↓
-第 4 步（越错越远）：认为"应该用 PKCS#8 格式，以 -----BEGIN PRIVATE KEY----- 开头"
+第 4 步（越错越远）：认为"应该用 PKCS#8 格式，以 -----BEGIN…PRIVATE KEY----- 开头"
     → 将私钥转换为 PKCS#8 格式 → 错误更严重（注：JAVA 语言应直接使用沙箱返回的 `appPrivateKey` 字段，而非手动转换格式）
 ```
 

@@ -230,7 +230,7 @@ FixUID 内置多层安全保护：
 3. **冲突处理**：目标 UID/GID 被其他用户/组占用时，自动将占用者移到 +1000 位置
 4. **系统目录保护**：Jupyter 根目录为系统敏感目录（/home、/etc、/usr 等）时，强制跳过 chown
 5. **Bind mount 安全**：默认模式下，bind mount 目录不执行 chown（防止修改宿主机文件权限）
-6. **文件修复范围限定**：UID 调整后仅修复安全范围内的文件（/home/devuser、/tmp、/var/log/supervisor），跳过所有挂载点
+6. **文件修复范围限定**：UID 调整后仅修复安全范围内的文件（/home/devuser, /tmp, /var/log/supervisor），跳过所有挂载点
 
 ### 4.4 启动日志示例
 
@@ -385,7 +385,7 @@ docker run -d --name devcontainer-dood \
 docker run -d --name devcontainer-dood \
   -p 2223:22 -p 8889:8888 \
   -v /var/run/docker.sock:/var/run/docker.sock:ro \
-  -v /home/myuser/projects:/workspace \
+  -v ${HOME}/projects:/workspace \
   -e LOCAL_USER_ID=$(id -u) \
   -e LOCAL_GROUP_ID=$(id -g) \
   -e USER_PASSWORD=devcontainer123 \

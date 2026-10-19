@@ -269,7 +269,7 @@ def test_create_update_reuses_id_and_consumes_quota(ctx):
     first = create(ctx["client"], ctx["free_h"], postId="dup", title="v1")
     second = create(
         ctx["client"], ctx["free_h"], postId="dup",
-        title="v2", passwordMode="custom", password="abcd1234",
+        title="v2", passwordMode="custom", password="abcd1234",  # mock share password fixture
     )
     assert first.json()["id"] == second.json()["id"]
     assert second.json()["updated"] is True

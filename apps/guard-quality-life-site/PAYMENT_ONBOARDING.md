@@ -33,7 +33,7 @@
    - 沙箱网关地址（形如 `https://openapi-sandbox.dl.alipaydev.com`）
    - 沙箱**商家账号**（收款方测试号）
    - 沙箱**买家账号**（付款方测试号，含付款密码）
-4. **保存密钥**：把 `appPrivatePkcsKey` 存成文件，例如放在应用目录以外的 `%USERPROFILE%\.gqlsite\app_private_pkcs1.pem`，文件首尾应是 `-----BEGIN RSA PRIVATE KEY-----` / `-----END RSA PRIVATE KEY-----`（**保持原样，禁止格式转换/拼接**）。
+4. **保存密钥**：把 `appPrivatePkcsKey` 存成文件，例如放在应用目录以外的 `%USERPROFILE%\.gqlsite\app_private_pkcs1.pem`，文件首尾应是 `-----BEGIN…RSA PRIVATE KEY-----` / `-----END RSA PRIVATE KEY-----`（**保持原样，禁止格式转换/拼接**）。
 
 **本步完成条件**：你手里有 `AppId / 应用私钥(PKCS#1) / 支付宝公钥 / 沙箱网关 / 沙箱商家号 / 沙箱买家号` 六项真实值。
 
@@ -49,7 +49,7 @@
 2. 编辑 `.env`，逐项粘贴真实值：
    ```
    GQLSITE_PAY_APP_ID=2021xxxxxxxxxxxx
-   GQLSITE_PAY_APP_PRIVATE_KEY=-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----
+   GQLSITE_PAY_APP_PRIVATE_KEY=-----BEGIN…RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----
    GQLSITE_PAY_ALIPAY_PUBLIC_KEY=-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----
    GQLSITE_PAY_SERVER_URL=https://openapi-sandbox.dl.alipaydev.com
    ```

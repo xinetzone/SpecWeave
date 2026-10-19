@@ -23,7 +23,7 @@ Windows 用户请前往 "支付宝开放平台（https://open.alipay.com）- 控
 | 非 JAVA（Python、Node.js、PHP、.NET 等） | PKCS#1 | `appPrivatePkcsKey` |
 
 **⚠️ 防误判提醒**：
-- **禁止手动添加 PEM 头尾**（`-----BEGIN RSA PRIVATE KEY-----` 等），SDK 自动处理格式
+- **禁止手动添加 PEM 头尾**（`-----BEGIN…RSA PRIVATE KEY-----` 等），SDK 自动处理格式
 - **禁止因 `ERR_OSSL_UNSUPPORTED` 错误而推断私钥格式有问题**，该错误通常是 SDK 配置参数错误，不是格式问题
 - **禁止对私钥值做任何格式处理**（格式转换、编码处理、换行符调整）
 - 详见 [SDK 说明文档 - 私钥格式](../main/alipay-sdk-reminder.md)

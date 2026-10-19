@@ -51,7 +51,7 @@ const state = {
     client_secret: "xxx",
     redirect_uri: "http://localhost:3000/api/auth/callback",
     redirect_uris: [...],
-    database_url: "postgresql://...",
+    database_url: "postgresql://localhost:5432/app",
     allowed_scopes: [...]
   },
   api: {

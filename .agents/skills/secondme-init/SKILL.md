@@ -52,7 +52,7 @@ user-invocable: true
    📋 已有配置：
    - App Name: secondme-tinder
    - Client ID: 71658da7-***
-   - 数据库: postgresql://***
+   - 数据库: （连接串已脱敏）
    - 已选模块: auth, chat, profile
    - 当前阶段: init
    ```

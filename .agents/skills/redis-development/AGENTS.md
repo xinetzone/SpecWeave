@@ -1970,7 +1970,7 @@ Never run Redis without authentication in production environments.
 r = redis.Redis(
     host='localhost',
     port=6379,
-    password='your-strong-password',
+    password='your-password',
     ssl=True,
     ssl_cert_reqs='required'
 )

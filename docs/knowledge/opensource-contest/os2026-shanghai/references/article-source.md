@@ -163,7 +163,7 @@ sources:
 
 | 编号 | 事实 | 信源 |
 |------|------|------|
-| F-062 | 联系方式：商务合作栾春岩 15801253940 / luanchunyan@oschina.cn；媒体合作陈筱冬 13148866250 / chenxiaodong@oschina.cn；赛事会务 oscc@oschina.cn；页面声明"本赛事解释权归大赛组委会所有"。合作生态栏列示 39 家社区/企业标识（含 FastGPT、Dify、DaoCloud、中国商飞、百度地图、RT-Thread、openKylin、deepin、TiDB community、DolphinScheduler、地瓜机器人等）；"赛事动态"栏目含奖金细则、3 篇赛道解读、5 篇企业命题解读等文章入口 | S-001 |
+| F-062 | 联系方式：商务合作栾春岩 158****3940 / luanchunyan@oschina.cn；媒体合作陈筱冬 131****6250 / chenxiaodong@oschina.cn；赛事会务 oscc@oschina.cn；页面声明"本赛事解释权归大赛组委会所有"。合作生态栏列示 39 家社区/企业标识（含 FastGPT、Dify、DaoCloud、中国商飞、百度地图、RT-Thread、openKylin、deepin、TiDB community、DolphinScheduler、地瓜机器人等）；"赛事动态"栏目含奖金细则、3 篇赛道解读、5 篇企业命题解读等文章入口 | S-001 |
 
 ### H. 赛事方案版本演进（采集时发现，非源文错误）
 

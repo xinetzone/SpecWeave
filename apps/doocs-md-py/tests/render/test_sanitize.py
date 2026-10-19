@@ -62,7 +62,7 @@ def test_xss_vectors_neutralized(name: str, payload: str) -> None:
 
 def test_script_content_removed_entirely() -> None:
     # script 为 CLEAN_CONTENT_TAGS：连内部文本一并移除
-    out = sanitize_html("<p>keep</p><script>secret = 'SHOWN'</script>")
+    out = sanitize_html("<p>keep</p><script>secret = 'SHOWN'</script>")  # example: 脚本内容应被整体移除
     assert "SHOWN" not in out
     assert "keep" in out
 

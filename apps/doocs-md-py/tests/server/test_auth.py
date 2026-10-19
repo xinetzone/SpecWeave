@@ -53,7 +53,7 @@ def make_client(conn, *, mock=None, https=False, app_url="http://editor.test", a
         app_url=app_url,
         jwt_secret=JWT_SECRET,
         github_client_id="cid-123",
-        github_client_secret="secret-xyz",
+        github_client_secret="secret-xyz",  # mock github oauth fixture
         admin_github_logins=admins,
     )
     http_client = httpx.Client(transport=httpx.MockTransport(mock.handler)) if mock else None
