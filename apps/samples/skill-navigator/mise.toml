@@ -1,0 +1,15 @@
+# Skill 导航台 · Meoo 静态部署协议
+# 规范来源：.agents/skills/meoo-cli/references/mise-import.md
+#   - 根 mise.toml 必须有可执行 tasks.dev，并真实监听 0.0.0.0:3015
+#   - 静态模式：[meoo.deploy] mode = "static" + 相对 output；不得声明 port 或 tasks.start
+#   - 纯静态项目不引入框架或 package.json；输出根须含 index.html
+
+[tools]
+python = "3.13"
+
+[tasks.dev]
+run = "python -m http.server 3015 --bind 0.0.0.0 --directory site"
+
+[meoo.deploy]
+mode = "static"
+output = "site"

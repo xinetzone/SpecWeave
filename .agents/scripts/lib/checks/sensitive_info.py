@@ -6,6 +6,13 @@
 支持自动脱敏：手机号、邮箱、Windows/Unix 个人路径
 高风险不自动修复：API_KEY、PASSWORD、DB_CONN、SESSION_ID、PRIVATE_KEY
 
+风险分级上下文规则：
+- 对外发布文档目录（docs/，Sphinx/Read the Docs 公开发布）中出现真实
+  Windows/Unix 个人目录路径时，MEDIUM 升级为 HIGH（提交阻断），因为文档
+  会随公开渠道外发；playground/（私域）与 vendor/（第三方子模块）不升级。
+- Windows 路径同时覆盖 WSL 挂载形态 /mnt/<drive>/Users/<user>/，该形态
+  归为 personal_path_win，且不再重复报 personal_path_unix。
+
 CLI 用法:
     python -m lib.checks.sensitive_info          # 扫描当前目录
     python check-sensitive-info.py              # 顶层入口脚本
@@ -79,7 +86,20 @@ DEFAULT_EXCLUDE_DIRS = {
     "vendor", "external", "playground", "__pycache__", ".git",
     ".venv", "node_modules", ".pytest_cache", ".mypy_cache",
     ".meta", "reports", ".trae", ".temp", ".cache",
+    # Sphinx 等文档构建产物目录（docs/_build 已 gitignore，不参与检测）
+    "_build",
 }
+
+# 对外公开发布的文档目录名：其中真实个人路径升级为 HIGH（随公开渠道外发即泄露）
+PUBLIC_DOC_DIR_NAMES = {"docs"}
+
+# 即使位于公开文档目录也不升级的区域：私域工作区 / 第三方只读子模块
+DOC_ESCALATION_EXEMPT_DIR_NAMES = {"playground", "vendor"}
+
+# 中文教材通用代称（张三/李四/王五/赵六 = 中文 John/Jane Doe，不指向真人，
+# 政策见 docs/knowledge/best-practices/sensitive-info-desensitization-spec.md）
+# Win/Unix 两个白名单共用，保持双平台检测对称；测试中"真实用户"夹具请用 realuser
+TEXTBOOK_CN_USERNAMES = {"zhangsan", "lisi", "wangwu", "zhaoliu"}
 
 SYSTEM_WIN_USERS = {
     "public", "default", "all users", "default user", "defaultuser0",
@@ -88,15 +108,26 @@ SYSTEM_WIN_USERS = {
     # 文档占位符用户名（通用示例，非真实个人路径）
     "you", "yourname", "your_name", "otheruser", "john doe", "john",
     "jane", "jane doe", "用户名", "你的用户名", "用户名目录",
+    # 文档中常见的泛指占位
+    "me", "someone",
+    # 中文教材通用代称
+    *TEXTBOOK_CN_USERNAMES,
 }
 
 SYSTEM_UNIX_USERS = {
     "user", "admin", "xxx", "test", "demo", "shared", "root",
     "$user", "{username}", "<user>",
     # 文档占位符用户名（通用示例，非真实个人路径）
-    "you", "yourname", "your_name", "otheruser", "dev", "zhangsan",
-    "lisi", "wangwu", "zhaoliu", "john", "jane", "john doe",
+    "you", "yourname", "your_name", "otheruser", "dev",
+    "john", "jane", "john doe",
+    # 中文教材通用代称
+    *TEXTBOOK_CN_USERNAMES,
     "ai", "conda_user", "conda", # Dockerfile中常见容器内固定用户
+    # 容器镜像 / CI 中的固定账户（非开发者宿主机个人路径）
+    "appuser", "devuser", "builder", "jupyteruser", "runner", "openkylin",
+    # 官方基础镜像中的固定账户：node:* 镜像的 node(uid 1000)、
+    # jupyter/docker-stacks 的 jovyan(uid 1000)
+    "node", "jovyan",
     # shell命令语法误匹配保护：当/home/后直接跟shell语法时（ls /home/ && ...），正则会错误匹配
     # 这些由_is_shell_command_context()函数处理
 }
@@ -120,6 +151,12 @@ PUBLIC_ROLE_EMAIL_PREFIXES = {
 }
 
 CONTEXT_AWARE_TYPES = {PHONE, EMAIL, API_KEY, PASSWORD, INTERNAL_IP, DB_CONN}
+
+# docs/ 内个人路径升级为 HIGH 时的定向建议
+DOC_PERSONAL_PATH_SUGGESTION = (
+    "对外发布文档（docs/）中禁止出现真实本机用户目录路径，"
+    "请替换为 %USERPROFILE%、<用户名>、$HOME 等占位符后再提交"
+)
 
 EXAMPLE_CODE_BLOCK_KEYWORDS = re.compile(
     r'(?<![非不无])(?:正例|反例|示例|例子|用法|演示)|'
@@ -180,7 +217,14 @@ def _fix_email(m: Match[str]) -> str:
 
 
 def _fix_personal_path_win(m: Match[str]) -> str:
-    """Windows个人路径脱敏：替换为 <USER_HOME>\。"""
+    """Windows个人路径脱敏：替换为 <USER_HOME>\\。
+
+    WSL 挂载形态（/mnt/c/Users/<user>/）保留挂载前缀，避免把 /mnt/c
+    上下文抹掉后产生不可读路径。
+    """
+    prefix = m.group(1) or ""
+    if prefix.startswith("/mnt/"):
+        return f"{prefix}Users/<USER_HOME>/"
     return "<USER_HOME>\\"
 
 
@@ -310,7 +354,7 @@ def _is_valid_path_username(username: str) -> bool:
         return False
     if _is_all_dots(username):
         return False
-    if username in ("...", "..", "."):
+    if username in ("...", "..", ".", "…", "···"):
         return False
     if re.match(r'^[<${].*[>}]$', username):
         return False
@@ -389,6 +433,22 @@ def _is_dockerfile_context(file_path: Path, line: str) -> bool:
     return False
 
 
+def _is_public_doc_file(file_path: Path) -> bool:
+    """判断文件是否位于对外公开发布的文档目录（docs/）。
+
+    docs/ 是仓库唯一对外文档中心（Sphinx 构建、Read the Docs 公开发布），
+    其中出现真实本机用户目录路径等同于随公开渠道泄露，个人路径告警升级为
+    HIGH 阻断。playground/（私域产出物）与 vendor/（第三方只读子模块）内
+    即使路径含 docs 段也不升级。
+    """
+    parts_lower = {p.lower() for p in file_path.parts}
+    if parts_lower.isdisjoint(PUBLIC_DOC_DIR_NAMES):
+        return False
+    if not parts_lower.isdisjoint(DOC_ESCALATION_EXEMPT_DIR_NAMES):
+        return False
+    return True
+
+
 RULES: list[Rule] = [
     Rule(
         name="中国大陆手机号",
@@ -431,12 +491,13 @@ RULES: list[Rule] = [
         type=PERSONAL_PATH_WIN,
         severity=SEVERITY_MEDIUM,
         pattern=re.compile(
-            r"([A-Za-z]:[\\/])Users[\\/](?!(?:" + "|".join(re.escape(u) for u in SYSTEM_WIN_USERS) + r")(?:[\\/]|$))([^\\/<>\"|?*\n\r\t]+)[\\/]",
+            # group(1)=路径前缀：盘符形态 C:\ 或 WSL 挂载形态 /mnt/c/；group(2)=用户名
+            r"((?:[A-Za-z]:[\\/])|(?:/mnt/[A-Za-z]/))Users[\\/](?!(?:" + "|".join(re.escape(u) for u in SYSTEM_WIN_USERS) + r")(?:[\\/]|$))([^\\/<>\"|?*\n\r\t]+)[\\/]",
             re.IGNORECASE
         ),
         placeholder_patterns=[],
         fix_func=_fix_personal_path_win,
-        suggestion="Windows用户路径包含本地用户名，可能泄露个人信息，请替换为 <USER_HOME>\\",
+        suggestion="Windows用户路径包含本地用户名，可能泄露个人信息，请替换为 <USER_HOME>\\ 或 %USERPROFILE%\\",
     ),
     Rule(
         name="Unix个人目录路径",
@@ -640,6 +701,7 @@ def scan_file(file_path: Path) -> list[Finding]:
     findings: list[Finding] = []
     in_code_block = False
     code_block_is_example = False
+    is_public_doc = _is_public_doc_file(file_path)
 
     for line_no, line in enumerate(lines, 1):
         stripped = line.strip()
@@ -694,6 +756,12 @@ def scan_file(file_path: Path) -> list[Finding]:
                         if username.lower() in SYSTEM_WIN_USERS:
                             continue
                     elif rule.type == PERSONAL_PATH_UNIX and len(m.groups()) >= 1:
+                        # WSL 挂载形态 /mnt/c/Users/<user>/ 已归 personal_path_win
+                        # （同一路径不得同时报 Win 与 Unix 两条）
+                        if match_str.startswith("/Users") and re.search(
+                            r"/mnt/[A-Za-z]$", line[:match_start], re.IGNORECASE
+                        ):
+                            continue
                         username = m.group(1)
                         if not _is_valid_path_username(username):
                             continue
@@ -745,6 +813,7 @@ def scan_file(file_path: Path) -> list[Finding]:
                     continue
 
                 current_severity = rule.severity
+                current_suggestion = rule.suggestion
                 if in_code_block and code_block_is_example and rule.type == PRIVATE_KEY:
                     current_severity = SEVERITY_LOW
                 elif rule.type == PRIVATE_KEY and is_example:
@@ -758,6 +827,11 @@ def scan_file(file_path: Path) -> list[Finding]:
                 if rule.type == EMAIL and override_severity is not None:
                     current_severity = override_severity
 
+                # 对外文档中的真实个人路径随公开渠道外发，升级为高风险阻断
+                if is_public_doc and rule.type in (PERSONAL_PATH_WIN, PERSONAL_PATH_UNIX):
+                    current_severity = SEVERITY_HIGH
+                    current_suggestion = DOC_PERSONAL_PATH_SUGGESTION
+
                 if rule.type == INTERNAL_IP and match_str in ("127.0.0.1", "localhost"):
                     continue
 
@@ -769,7 +843,7 @@ def scan_file(file_path: Path) -> list[Finding]:
                     severity=current_severity,
                     match=match_str,
                     rule_name=rule.name,
-                    suggestion=rule.suggestion,
+                    suggestion=current_suggestion,
                     fixable=is_fixable,
                 ))
 
@@ -1031,7 +1105,7 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--version",
         action="version",
-        version="sensitive-info-check 1.0.0",
+        version="sensitive-info-check 1.1.0",
     )
     return parser
 
@@ -1118,7 +1192,7 @@ def run(project_root: Path, args: argparse.Namespace) -> int:
     if use_json:
         result = {
             "tool": "sensitive-info-check",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "project_root": str(project_root),
             "summary": {
                 "total": total_count,

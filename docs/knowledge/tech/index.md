@@ -14,6 +14,7 @@ quantum-secret-messaging/index
 tvm-ffi-wiki/index
 edgeone-pages-deploy/index
 pinedrama/index
+article-to-video-wiki/index
 xuan-compose-sticker-wiki/index
 wsl-drvfs-mount-wiki/index
 caffe-ffi-conv-v4-optimization-summary

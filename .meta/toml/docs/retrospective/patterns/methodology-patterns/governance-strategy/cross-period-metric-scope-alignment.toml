@@ -1,0 +1,13 @@
+id = "cross-period-metric-scope-alignment"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/patterns/methodology-patterns/governance-strategy/cross-period-metric-scope-alignment.md"
+
+[bindings]
+rules = []
+references = ["community-metric-triple-check", "synthetic-stats-source-of-truth", "automated-stats-three-defense-lines"]
+skills = []

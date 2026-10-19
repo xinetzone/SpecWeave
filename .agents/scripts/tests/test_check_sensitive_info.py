@@ -29,6 +29,7 @@ from lib.checks.sensitive_info import (
     SEVERITY_HIGH, SEVERITY_MEDIUM, SEVERITY_LOW,
     Finding, scan_file, scan_directory, fix_file,
     SUPPORTED_EXTENSIONS, DEFAULT_EXCLUDE_DIRS, FILE_EXCLUDE_PATTERNS,
+    _is_public_doc_file, DOC_PERSONAL_PATH_SUGGESTION,
 )
 
 
@@ -98,7 +99,7 @@ class TestEmailDetection:
 
     def test_real_email_detected(self):
         """真实邮箱应被检测到。"""
-        content = "联系我：" + "zhangsan" + "@" + "company.com" + "\n"
+        content = "联系我：" + "realuser" + "@" + "company.com" + "\n"
         f = _write_temp_file(content, suffix=".md")
         try:
             findings = scan_file(f)
@@ -131,15 +132,15 @@ class TestEmailDetection:
 
     def test_email_fix_works(self):
         """邮箱修复验证：首字符+***+尾字符格式。"""
-        content = "邮箱：" + "zhangsan" + "@" + "company.com" + "\n"
+        content = "邮箱：" + "realuser" + "@" + "company.com" + "\n"
         f = _write_temp_file(content, suffix=".md")
         try:
             findings = scan_file(f)
             fixed_count = fix_file(f, findings)
             assert fixed_count >= 1
             fixed_content = f.read_text(encoding="utf-8")
-            assert ("z***n@" + "company.com") in fixed_content
-            assert ("zhangsan" + "@" + "company.com") not in fixed_content
+            assert ("r***r@" + "company.com") in fixed_content
+            assert ("realuser" + "@" + "company.com") not in fixed_content
         finally:
             f.unlink()
 
@@ -243,7 +244,7 @@ class TestWindowsPathDetection:
 
     def test_win_path_detected(self):
         """Windows用户目录路径应被检测到。"""
-        content = "C:" + "\\Users\\" + "zhangsan" + "\\Documents\n"
+        content = "C:" + "\\Users\\" + "realuser" + "\\Documents\n"
         f = _write_temp_file(content, suffix=".txt")
         try:
             findings = scan_file(f)
@@ -265,7 +266,7 @@ class TestWindowsPathDetection:
 
     def test_win_path_fix_works(self):
         """Windows路径修复验证：替换为<USER_HOME>\\。"""
-        content = "config = C:" + "\\Users\\" + "zhangsan" + "\\.config\n"
+        content = "config = C:" + "\\Users\\" + "realuser" + "\\.config\n"
         f = _write_temp_file(content, suffix=".txt")
         try:
             findings = scan_file(f)
@@ -273,7 +274,7 @@ class TestWindowsPathDetection:
             assert fixed_count >= 1
             fixed_content = f.read_text(encoding="utf-8")
             assert "<USER_HOME>\\" in fixed_content
-            assert "zhangsan" not in fixed_content
+            assert "realuser" not in fixed_content
         finally:
             f.unlink()
 
@@ -330,7 +331,7 @@ class TestUnixPathDetection:
 
     def test_unix_home_path_detected(self):
         """/home/ 目录路径应被检测到。"""
-        content = "/home" + "/" + "zhangsan" + "/project\n"
+        content = "/home" + "/" + "realuser" + "/project\n"
         f = _write_temp_file(content, suffix=".sh")
         try:
             findings = scan_file(f)
@@ -341,7 +342,7 @@ class TestUnixPathDetection:
 
     def test_unix_users_path_detected(self):
         """/Users/ 目录路径应被检测到（macOS）。"""
-        content = "/Users" + "/" + "zhangsan" + "/project\n"
+        content = "/Users" + "/" + "realuser" + "/project\n"
         f = _write_temp_file(content, suffix=".sh")
         try:
             findings = scan_file(f)
@@ -352,7 +353,7 @@ class TestUnixPathDetection:
 
     def test_unix_path_fix_works(self):
         """Unix路径修复验证：替换为 ~/。"""
-        content = "cd /home" + "/" + "zhangsan" + "/project\n"
+        content = "cd /home" + "/" + "realuser" + "/project\n"
         f = _write_temp_file(content, suffix=".sh")
         try:
             findings = scan_file(f)
@@ -360,7 +361,7 @@ class TestUnixPathDetection:
             assert fixed_count >= 1
             fixed_content = f.read_text(encoding="utf-8")
             assert "~/" in fixed_content
-            assert "zhangsan" not in fixed_content
+            assert "realuser" not in fixed_content
         finally:
             f.unlink()
 
@@ -571,7 +572,7 @@ class TestNosecMarker:
 
     def test_sensitive_ignore_python_comment_skips_line(self):
         """# sensitive-ignore 注释应跳过该行所有检测。"""
-        content = "email = " + '"' + "zhangsan" + "@" + "company.com" + '"  # sensitive-ignore\n'
+        content = "email = " + '"' + "realuser" + "@" + "company.com" + '"  # sensitive-ignore\n'
         f = _write_temp_file(content, suffix=".py")
         try:
             findings = scan_file(f)
@@ -724,10 +725,10 @@ class TestFindingDataclass:
         non_fixable_types = {API_KEY, PASSWORD, DB_CONN, PRIVATE_KEY, INTERNAL_IP}
 
         phone_num = "138" + "1234" + "5678"
-        email_user = "zhangsan"
+        email_user = "realuser"
         email_domain = "company.com"
-        win_user = "zhangsan"
-        unix_user = "zhangsan"
+        win_user = "realuser"
+        unix_user = "realuser"
         sk_val = "sk-" + "1234567890abcdef1234567890abcdef"
         pwd_val = "secret123"
         db_scheme = "mysql" + "://"
@@ -763,4 +764,211 @@ class TestFindingDataclass:
                     assert findings_by_type[t].fixable is False, f"{t} should not be fixable"
         finally:
             f.unlink()
+
+
+class TestPublicDocsPathEscalation:
+    """docs/ 对外文档目录中真实个人路径升级为 HIGH（提交阻断）。"""
+
+    def test_win_path_in_docs_escalated_to_high(self, tmp_path):
+        """docs/ 内真实 Windows 用户路径应为 HIGH。"""
+        f = tmp_path / "docs" / "guide.md"
+        f.parent.mkdir(parents=True)
+        f.write_text("路径：" + "C:" + "\\Users\\" + "realuser" + "\\Documents\n", encoding="utf-8")
+        findings = scan_file(f)
+        path_findings = [i for i in findings if i.type == PERSONAL_PATH_WIN]
+        assert len(path_findings) == 1
+        assert path_findings[0].severity == SEVERITY_HIGH
+        assert path_findings[0].suggestion == DOC_PERSONAL_PATH_SUGGESTION
+
+    def test_unix_path_in_docs_escalated_to_high(self, tmp_path):
+        """docs/ 内真实 Unix 用户路径应为 HIGH。"""
+        f = tmp_path / "docs" / "guide.md"
+        f.parent.mkdir(parents=True)
+        f.write_text("cd /home" + "/" + "realuser" + "/project\n", encoding="utf-8")
+        findings = scan_file(f)
+        path_findings = [i for i in findings if i.type == PERSONAL_PATH_UNIX]
+        assert len(path_findings) == 1
+        assert path_findings[0].severity == SEVERITY_HIGH
+
+    def test_wsl_mnt_path_in_docs_escalated_to_high(self, tmp_path):
+        """docs/ 内 WSL 挂载形态 /mnt/c/Users/<user>/ 应为 HIGH 且归类 Win。"""
+        f = tmp_path / "docs" / "wsl.md"
+        f.parent.mkdir(parents=True)
+        f.write_text("/mnt/c/Users/" + "realuser" + "/ai-poc/\n", encoding="utf-8")
+        findings = scan_file(f)
+        assert len(findings) == 1
+        assert findings[0].type == PERSONAL_PATH_WIN
+        assert findings[0].severity == SEVERITY_HIGH
+
+    def test_angle_placeholder_in_docs_not_flagged(self, tmp_path):
+        """docs/ 内尖括号占位路径不应检测（Windows 与 Unix 双形态）。"""
+        f = tmp_path / "docs" / "guide.md"
+        f.parent.mkdir(parents=True)
+        f.write_text(
+            "D:\\Users\\<用户名>\\anaconda3\n"
+            "WORKSPACE=/home/<your-user>/specweave\n",
+            encoding="utf-8",
+        )
+        findings = scan_file(f)
+        assert not [i for i in findings if i.type in (PERSONAL_PATH_WIN, PERSONAL_PATH_UNIX)]
+
+    def test_env_var_placeholder_in_docs_not_flagged(self, tmp_path):
+        """docs/ 内 %USERPROFILE% 环境变量占位路径不应检测。"""
+        f = tmp_path / "docs" / "guide.md"
+        f.parent.mkdir(parents=True)
+        f.write_text("%USERPROFILE%" + "\\.trae-cn\\skills\\tts\\SKILL.md\n", encoding="utf-8")
+        findings = scan_file(f)
+        assert not [i for i in findings if i.type in (PERSONAL_PATH_WIN, PERSONAL_PATH_UNIX)]
+
+    def test_generic_placeholders_in_docs_not_flagged(self, tmp_path):
+        """docs/ 内泛指占位用户名（me/someone/yourname）不应检测。"""
+        f = tmp_path / "docs" / "guide.md"
+        f.parent.mkdir(parents=True)
+        f.write_text(
+            "C:\\Users\\me\\sample.png\n"
+            "C:\\Users\\someone\\downloads\n"
+            "C:\\Users\\yourname\\.config\n",
+            encoding="utf-8",
+        )
+        findings = scan_file(f)
+        assert not [i for i in findings if i.type == PERSONAL_PATH_WIN]
+
+    def test_unicode_ellipsis_in_docs_not_flagged(self, tmp_path):
+        """docs/ 内省略号掩码 C:\\Users\\…\\ 不应检测。"""
+        f = tmp_path / "docs" / "guide.md"
+        f.parent.mkdir(parents=True)
+        f.write_text("C:\\Users\\…\\AppData\\Local\\Temp\n", encoding="utf-8")
+        findings = scan_file(f)
+        assert not [i for i in findings if i.type == PERSONAL_PATH_WIN]
+
+    def test_container_accounts_in_docs_not_flagged(self, tmp_path):
+        """docs/ 内容器/CI 固定账户（devuser/runner 等）不应检测。"""
+        f = tmp_path / "docs" / "container.md"
+        f.parent.mkdir(parents=True)
+        accounts = ["devuser", "appuser", "builder", "jupyteruser", "runner", "openkylin"]
+        f.write_text("".join(f"/home/{u}/app\n" for u in accounts), encoding="utf-8")
+        findings = scan_file(f)
+        assert not [i for i in findings if i.type == PERSONAL_PATH_UNIX]
+
+    def test_path_in_playground_not_escalated(self, tmp_path):
+        """playground/ 私域内真实个人路径保持 MEDIUM，不升级。"""
+        f = tmp_path / "playground" / "u" / "notes.md"
+        f.parent.mkdir(parents=True)
+        f.write_text("C:" + "\\Users\\" + "realuser" + "\\Notes\n", encoding="utf-8")
+        findings = scan_file(f)
+        path_findings = [i for i in findings if i.type == PERSONAL_PATH_WIN]
+        assert len(path_findings) == 1
+        assert path_findings[0].severity == SEVERITY_MEDIUM
+
+    def test_path_in_vendor_docs_not_escalated(self, tmp_path):
+        """vendor/ 第三方子模块内即使含 docs 段也不升级。"""
+        f = tmp_path / "vendor" / "libx" / "docs" / "page.md"
+        f.parent.mkdir(parents=True)
+        f.write_text("/home/" + "realuser" + "/project\n", encoding="utf-8")
+        findings = scan_file(f)
+        path_findings = [i for i in findings if i.type == PERSONAL_PATH_UNIX]
+        assert len(path_findings) == 1
+        assert path_findings[0].severity == SEVERITY_MEDIUM
+
+    def test_path_outside_docs_stays_medium(self, tmp_path):
+        """docs/ 之外的真实个人路径保持 MEDIUM（脚本/配置不升级）。"""
+        f = tmp_path / "scripts" / "run.ps1"
+        f.parent.mkdir(parents=True)
+        f.write_text("Set-Location C:" + "\\Users\\" + "realuser" + "\\work\n", encoding="utf-8")
+        findings = scan_file(f)
+        path_findings = [i for i in findings if i.type == PERSONAL_PATH_WIN]
+        assert len(path_findings) == 1
+        assert path_findings[0].severity == SEVERITY_MEDIUM
+
+    def test_nosec_marker_in_docs_skips_escalation(self, tmp_path):
+        """docs/ 内行尾 nosec 标记仍可豁免（仅限示例/测试数据的逃生口）。"""
+        f = tmp_path / "docs" / "demo.md"
+        f.parent.mkdir(parents=True)
+        f.write_text("C:" + "\\Users\\" + "realuser" + "\\demo  # nosec\n", encoding="utf-8")
+        findings = scan_file(f)
+        assert len(findings) == 0
+
+    def test_is_public_doc_file_predicate(self, tmp_path):
+        """目录谓词边界：docs 命中、私域/第三方豁免、非文档不命中。"""
+        assert _is_public_doc_file(tmp_path / "docs" / "a.md")
+        assert _is_public_doc_file(tmp_path / "apps" / "x" / "docs" / "a.md")
+        assert not _is_public_doc_file(tmp_path / "playground" / "u" / "docs" / "a.md")
+        assert not _is_public_doc_file(tmp_path / "vendor" / "x" / "docs" / "a.md")
+        assert not _is_public_doc_file(tmp_path / "scripts" / "a.py")
+        # 子模块文档目录使用单数 doc，不命中
+        assert not _is_public_doc_file(tmp_path / "projects" / "x" / "doc" / "a.md")
+
+
+class TestWslMntPathDetection:
+    """WSL 挂载形态 /mnt/<drive>/Users/<user>/ 检测归类与去重。"""
+
+    def test_wsl_mnt_path_detected_as_win(self):
+        """/mnt/c/Users/<user>/ 应归 personal_path_win。"""
+        content = "/mnt/c/Users/" + "realuser" + "/ai-poc/\n"
+        f = _write_temp_file(content, suffix=".sh")
+        try:
+            findings = scan_file(f)
+            assert any(i.type == PERSONAL_PATH_WIN for i in findings)
+        finally:
+            f.unlink()
+
+    def test_wsl_mnt_path_no_unix_duplicate(self):
+        """同一 WSL 路径不得同时报 win 与 unix 两条。"""
+        content = "/mnt/c/Users/" + "realuser" + "/ai-poc/\n"
+        f = _write_temp_file(content, suffix=".sh")
+        try:
+            findings = scan_file(f)
+            assert len(findings) == 1
+            assert findings[0].type == PERSONAL_PATH_WIN
+        finally:
+            f.unlink()
+
+    def test_wsl_mnt_fix_preserves_mount_prefix(self):
+        """WSL 形态自动脱敏应保留 /mnt/c/Users 前缀。"""
+        content = "/mnt/c/Users/" + "realuser" + "/ai-poc/\n"
+        f = _write_temp_file(content, suffix=".sh")
+        try:
+            findings = scan_file(f)
+            fixed_count = fix_file(f, findings)
+            assert fixed_count == 1
+            fixed_content = f.read_text(encoding="utf-8")
+            assert "/mnt/c/Users/<USER_HOME>/" in fixed_content
+            assert "realuser" not in fixed_content
+        finally:
+            f.unlink()
+
+    def test_classic_drive_path_fix_unchanged(self):
+        """盘符形态脱敏行为保持 <USER_HOME>\\ 不变（回归保护）。"""
+        content = "C:" + "\\Users\\" + "realuser" + "\\Documents\n"
+        f = _write_temp_file(content, suffix=".txt")
+        try:
+            findings = scan_file(f)
+            fixed_count = fix_file(f, findings)
+            assert fixed_count >= 1
+            fixed_content = f.read_text(encoding="utf-8")
+            assert "<USER_HOME>\\" in fixed_content
+        finally:
+            f.unlink()
+
+
+class TestBuildDirExclusion:
+    """文档构建产物目录 _build 应在目录扫描时排除。"""
+
+    def test_scan_directory_excludes_build(self, tmp_path):
+        """_build/ 内的文件不应扫描（与 node_modules 等构建产物同类）。"""
+        build_dir = tmp_path / "docs" / "_build"
+        build_dir.mkdir(parents=True)
+        build_file = build_dir / "page.html.txt"
+        build_file.write_text("C:" + "\\Users\\" + "realuser" + "\\file\n", encoding="utf-8")
+
+        normal_file = tmp_path / "docs" / "page.md"
+        normal_file.write_text("正常文档\n", encoding="utf-8")
+
+        findings = scan_directory(tmp_path)
+        finding_files = {f.file.name for f in findings}
+        assert "page.html.txt" not in finding_files
+
+    def test_build_in_default_excludes(self):
+        """_build 应登记在默认排除集合中。"""
+        assert "_build" in DEFAULT_EXCLUDE_DIRS
 

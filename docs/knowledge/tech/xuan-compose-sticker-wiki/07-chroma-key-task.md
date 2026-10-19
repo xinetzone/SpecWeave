@@ -25,7 +25,9 @@ summary: "用 Pillow/numpy 实现均匀色幕抠除（边框取色、RMS 色差�
 
 把它从"模型一次画成"中拆出来，好处是：纯本地、零 API 费用、同一张色幕稿永远得到同一张 PNG、失败有明确非零退出码。
 
-## 算法五步（[remove_chroma_key.py](examples/keychroma/remove_chroma_key.py)）
+## 算法五步
+
+实现见 [remove_chroma_key.py](examples/keychroma/remove_chroma_key.py)（该文件随本教程一并提供，可下载）。
 
 1. **取色幕色**：`--auto-key border`（默认）取四边 2px 边框像素的中位数（抗 JPEG/压缩噪点）；`corners` 只取四角；`none` + `--key #RRGGBB` 显式指定（默认取环境变量 `CHROMA_KEY`）。
 2. **算色差**：每像素 RGB 与幕色的 **RMS 距离**（0–255），对幕布轻微不均比单次欧氏距离更稳。

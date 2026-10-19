@@ -5,6 +5,8 @@
 > **适用对象**：开发容器维护者、CI 门禁维护者、在 py314t 环境跑测试的团队成员。
 >
 > 📌 本版为团队 Wiki 粘贴版（绝对 URL），可直接复制到团队 Wiki 的「已知问题」板块。
+>
+> 🔖 **更新（2026-10-18）**：B2–B5 已处理——真实根因是敏感检查"教材代称白名单"政策（`zhangsan/lisi/wangwu/zhaoliu` 属占位符，见脱敏规范）与早期测试夹具（用 `zhangsan` 模拟真实用户）之间的契约漂移，**与宿主平台无关**；已将测试夹具统一改为 `realuser`，详见第 4 节。其余 10 个仍为当时的时点记录。
 
 ---
 
@@ -12,7 +14,7 @@
 
 | 项 | 值 |
 |----|----|
-| 运行环境 | `D:\Users\xinzo\anaconda3\envs\py314t\python.exe` |
+| 运行环境 | `D:\Users\<用户名>\anaconda3\envs\py314t\python.exe` |
 | Python | 3.14.6 free-threading（`Py_GIL_DISABLED=1`，`_is_gil_enabled()=False`） |
 | pytest | 9.1.1 |
 | 测试套件 | [.agents/scripts/tests](https://github.com/xinetzone/SpecWeave/tree/main/.agents/scripts/tests)（pytest.ini `testpaths`） |
@@ -36,10 +38,10 @@ python -m pytest -q
 | 6 | Free-threading API 差异 | `TestAsyncioFreeThreadingSupport::test_events_run_coroutine_threadsafe` | KeyError（线程安全协程超时） | 适配/标注 |
 | 7 | Free-threading / spawn 序列化 | `TestProcessPoolExecutorNewMethods::test_terminate_workers_callable` | PicklingError（本地函数不可序列化） | 测试写法修正 |
 | 8 | Windows 平台 | `test_check_academic_sources.py::TestCacheOperations::test_save_and_load_cache` | PermissionError（临时文件改名失败） | 环境稳定化 |
-| 9 | Windows 平台 | `test_check_sensitive_info.py::TestUnixPathDetection::test_unix_home_path_detected` | 断言失败（Unix 路径未识别） | 平台相关 |
-| 10 | Windows 平台 | `test_check_sensitive_info.py::TestUnixPathDetection::test_unix_users_path_detected` | 断言失败（Unix 路径未识别） | 平台相关 |
-| 11 | Windows 平台 | `test_check_sensitive_info.py::TestUnixPathDetection::test_unix_path_fix_works` | 断言失败（修复数 0） | 平台相关 |
-| 12 | Windows 平台 | `test_check_sensitive_info.py::TestFindingDataclass::test_fixable_flag` | 断言失败（unix 路径缺失） | 平台相关 |
+| 9 | ✅ 已修复（2026-10-18） | `test_check_sensitive_info.py::TestUnixPathDetection::test_unix_home_path_detected` | 断言失败（Unix 路径未识别） | 已修复（白名单污染，非平台问题） |
+| 10 | ✅ 已修复（2026-10-18） | `test_check_sensitive_info.py::TestUnixPathDetection::test_unix_users_path_detected` | 断言失败（Unix 路径未识别） | 已修复（白名单污染，非平台问题） |
+| 11 | ✅ 已修复（2026-10-18） | `test_check_sensitive_info.py::TestUnixPathDetection::test_unix_path_fix_works` | 断言失败（修复数 0） | 已修复（白名单污染，非平台问题） |
+| 12 | ✅ 已修复（2026-10-18） | `test_check_sensitive_info.py::TestFindingDataclass::test_fixable_flag` | 断言失败（unix 路径缺失） | 已修复（白名单污染，非平台问题） |
 | 13 | 内容规范（MDI） | `test_mdi_validator/test_batch_cli.py::TestExistingSkills::test_all_existing_skills_have_zero_errors` | 断言失败（2 个 SKILL.md 缺 E003） | 修 Skill 内容 |
 | 14 | 脚本特性未实现 | `test_quality_utils.py::test_lib_init_can_run_as_script` | 断言失败（相对导入报错） | 修脚本或调整测试 |
 
@@ -93,7 +95,7 @@ python -m pytest -q
 
 ---
 
-## 4. 类别 B：Windows 平台特有（5 个）
+## 4. 类别 B：Windows 平台特有（1 个；B2–B5 共 4 个已修复迁出）
 
 ### B1. `test_check_academic_sources.py::TestCacheOperations::test_save_and_load_cache`
 
@@ -101,12 +103,12 @@ python -m pytest -q
 - **根因**：Windows 下临时文件被占用（文件锁/杀软/句柄未释放）导致 `os.rename` 失败，属平台环境不稳定问题。
 - **处置**：可在 CI 或本地重试；不影响功能逻辑。
 
-### B2–B5. `test_check_sensitive_info.py` Unix 路径检测（4 个）
+### B2–B5. `test_check_sensitive_info.py` Unix 路径检测（4 个）— ✅ 已处理（2026-10-18）
 
-- **错误**：`assert 'personal_path_unix' in []`（及变体）——内容中的 `/home/zhangsan/...` 未被识别为 `personal_path_unix`。
-- **根因**：在 **Windows 宿主**上运行扫描时，Unix 路径检测规则未命中（只识别出 `personal_path_win` 等），导致 3 个路径检测用例 + 1 个 fixable 标记用例失败。
-- **影响**：敏感信息扫描的 Unix 路径能力仅在类 Unix 平台验证；Windows 上为**预期失败**，应标记 `skipif` 平台条件。
-- **处置**：建议给该组用例加 Windows 平台 skip 标记，或调整测试以匹配宿主平台。
+- **历史错误**：`assert 'personal_path_unix' in []`（及变体）——内容中的 `/home/<示例用户>/...` 未被识别为 `personal_path_unix`。
+- **真实根因**：**与宿主平台无关**（原诊断"Windows 平台特有/预期失败、应加 skipif"有误）。`zhangsan/lisi/wangwu/zhaoliu` 作为中文教材通用代称（张三/李四，等同英文 John/Jane Doe）被有意纳入 `SYSTEM_UNIX_USERS` 占位白名单（政策依据：脱敏规范的白名单表），但早期测试用 `zhangsan` 充当"真实用户"夹具，白名单落地后夹具未同步更新，造成契约漂移。
+- **处置（2026-10-18）**：确认白名单政策合理（教材代称不指向真人），将测试夹具统一改为语义明确的 `realuser`，并将四个教材代称对称补入 `SYSTEM_WIN_USERS`（原先仅 Unix 侧白名单，双平台行为不对称）；4 个用例在 Windows 宿主同样通过，无需平台 skip。
+- **教训**：白名单语义变更必须同步审查以该名称为夹具的测试；以"环境问题"名义记录的失败需要复核断言而非直接 skip。
 
 ---
 

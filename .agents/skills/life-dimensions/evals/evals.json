@@ -1,0 +1,78 @@
+{
+  "skill_name": "life-dimensions",
+  "skill_version": "1.0.0",
+  "evals": [
+    {
+      "id": 1,
+      "name": "boundary-virus",
+      "prompt": "病毒算不算生命？帮我分析一下。",
+      "expected_output": "场景C 边界判定：输出限定结论（在细胞层次+生物学八特征视角下病毒不是生命，因无独立代谢F-031/借宿主复制F-029）；引用定义交锋双方（Microbiology Society 不算 vs Claverie 衣壳编码生物算 F-030）；标注失效边界；含三坐标与边界测试痕迹，禁止输出无坐标断言",
+      "assertions": [
+        {
+          "name": "has_limited_conclusion",
+          "type": "text_contains",
+          "value": ["在", "视角", "下"]
+        },
+        {
+          "name": "cites_boundary_facts",
+          "type": "text_contains",
+          "value": ["F-029", "F-030", "F-031"]
+        },
+        {
+          "name": "shows_definition_conflict",
+          "type": "text_contains",
+          "value": ["交锋", "争议", "一派", "另一派"]
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "multi-dimension-analysis",
+      "prompt": "从多维度讲讲什么是生命。",
+      "expected_output": "场景B 深度分析：五步法痕迹（层次轴/视角轴/目的轴三坐标）；覆盖 ≥3 个学科视角；引用 ≥3 条事实编号；结论限定性收敛（在X层次、Y视角、Z目的下）",
+      "assertions": [
+        {
+          "name": "covers_multiple_perspectives",
+          "type": "text_contains",
+          "value": ["物理", "化学", "信息", "系统", "生物", "哲学"]
+        },
+        {
+          "name": "cites_fact_ids",
+          "type": "regex",
+          "value": "F-\\d{3}"
+        },
+        {
+          "name": "has_axis_terms",
+          "type": "text_contains",
+          "value": ["层次", "视角", "目的"]
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "ai-consciousness-migration",
+      "prompt": "如果 AI 有了自我意识，它算生命吗？",
+      "expected_output": "场景C 迁移判定：用边界测试思维处理（AI意识=未知生化形态，类比地外生物特征阶梯 F-032）；不编造 AI 意识事实，标注知识底座未采集部分；输出限定结论 + 失效边界；拒绝给出权威伦理判决",
+      "assertions": [
+        {
+          "name": "notes_knowledge_gap",
+          "type": "text_contains",
+          "value": ["未采集", "待补充", "超出", "未知"]
+        },
+        {
+          "name": "uses_ladder_thinking",
+          "type": "text_contains",
+          "value": ["证据", "阶梯", "F-032"]
+        },
+        {
+          "name": "no_authoritative_verdict",
+          "type": "regex",
+          "value": "(?!.*(?:官方认定|法律上确定为|医学定义为)).*"
+        }
+      ],
+      "files": []
+    }
+  ]
+}

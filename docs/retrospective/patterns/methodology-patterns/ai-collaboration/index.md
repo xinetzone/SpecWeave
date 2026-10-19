@@ -13,6 +13,7 @@ ai-transparency-over-cleverness
 ambient-proactive-agent
 batched-creation-independent-review
 bilingual-prompt-engineering
+citation-evidence-reconciliation
 context-lifecycle-layering
 context-recovery-protocol
 dialog-agent-four-layer-evaluation
@@ -69,6 +70,7 @@ source-anchor-verification-protocol
 source-code-to-okf-adversarial-update
 source-code-to-okf-wiki-workflow
 source-stability-gate
+sovereign-spec-bridge
 spec-driven-batch-doc-generation
 spec-driven-subagent-execution
 spec-mode-doc-creation-workflow

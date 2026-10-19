@@ -15,6 +15,7 @@ retrospective-openkylin-evaluation-qgate-20261014/index
 retrospective-scikit-build-core-wiki-20260705/index
 retrospective-seven-concepts-refactor-20260723/index
 retrospective-spec-adoption-tools-frontmatter-governance-20260702/index
+retrospective-specweave-and-subprojects-comprehensive-20261018/index
 retrospective-specweave-full-project-20260719/index
 retrospective-tvm-ffi-wiki-tutorial-20260705/index
 retrospective-volcengine-eip-learning-20260706/index

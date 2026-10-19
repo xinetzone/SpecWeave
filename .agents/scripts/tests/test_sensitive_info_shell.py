@@ -127,7 +127,7 @@ def test_end_to_end_scan():
         ("RUN bash miniconda.sh -b -p /home/conda_user/miniconda3\n", ".dockerfile", False, "docker: RUN安装到容器路径"),
         # 文档占位符用户名 - 不应报警
         ("硬编码 `/home/dev/project` 导致不可移植\n", ".md", False, "placeholder: /home/dev/"),
-        ("TVM_SRC = Path(\"/home/zhangsan/projects/npu\")\n", ".md", False, "placeholder: /home/zhangsan/"),
+        ("TVM_SRC = Path(\"/home/zhangsan/projects/npu\")\n", ".md", False, "placeholder: /home/zhangsan/ (教材代称)"),
         ("C:\\Users\\John Doe\\ 路径含空格\n", ".md", False, "placeholder: John Doe带空格示例"),
         ("/home/otheruser/ 跨用户目录边界\n", ".md", False, "placeholder: otheruser边界示例"),
         ("C:\\Users\\YourName\\.ssh\n", ".md", False, "placeholder: YourName教程占位符"),

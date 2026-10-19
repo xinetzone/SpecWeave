@@ -433,6 +433,9 @@ spec 文档位于 `.trae/specs/<change-id>/spec.md`，引用项目根目录下�
 - ❌ **禁止**在 frontmatter 路径字段中使用 `docs/` 开头的项目根绝对路径（必须使用相对路径）
 - ❌ **禁止**引用临时目录内的路径（如 `.temp/...`）——临时内容按保留期自动清理（3/7/14 天），引用必然失效；确需引用时先把产物迁出至正式位置（2026-09-23 实证：3 处已提交文档引用随 `.temp` 生命周期整理失效）
 - ❌ **禁止**在代码示例模板中使用真实文件路径（使用 `{占位符}` 语法，避免链接检查器误判）
+- ❌ **禁止在章节标题内链到「可下载文件」**（仓库内非 `.md`/`.rst` 的文件，如 `.py`/`.yaml`/`.toml`/`.txt`/图片）——MyST 会把这类链接渲染为 `download_reference` 节点：它既无 `refuri`（因此不会被 `SphinxContentsFilter` 过滤掉），又无 `anchorname`（因此不是合法的目录项）。该节点会被带入文档本地目录树，使 Sphinx `document_toc()` 在 `node['anchorname']` 处抛 `KeyError: 'anchorname'`，**整个 `sphinx-build` 直接中断（exit 2），且只输出 Python 栈、不报出问题文档名**（2026-10-17 实证：`docs/knowledge/tech/xuan-compose-sticker-wiki/07-chroma-key-task.md` 的 `## 算法五步（[remove_chroma_key.py](examples/keychroma/remove_chroma_key.py)）` 致全量构建失败；修复方式为把链接移到标题下方的正文首句）
+- ⚠️ **目标是否属于「可下载文件」无从判断时**（目标文件不存在、或位于 docs 源码树之外），一律把链接移出标题——无法预判时按危险处理
+- ✅ **标题文本保持为纯文本**，链接写在标题下方的正文里；即便标题内链的是 `.md` 文档或外部 URL（经核实不触发该崩溃），也不推荐如此书写
 - ✅ **建议**行号引用精确到行范围（`#L起始-L结束`），便于定位上下文
 
 ### 验证方式
