@@ -1,0 +1,32 @@
+# 本地预提交钩子（凭据外泄 L0 层拦截，2026-10-19 随密钥扫描治理入册）
+#
+# 前置依赖（二选一或全装）：
+#   pip install pre-commit
+#   gitleaks        # https://github.com/gitleaks/gitleaks（Windows 可 scoop install gitleaks）
+# 启用：仓库根目录执行  pre-commit install
+# 手动全量跑：pre-commit run --all-files
+#
+# 分层说明：L0 本地预提交（本文件）→ L1 push protection + CI 门禁（GitHub）
+#           → L2 季度 gitleaks 全历史深扫。详见 playground 私域审查报告。
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: detect-private-key
+
+  - repo: local
+    hooks:
+      - id: gitleaks-staged
+        name: gitleaks（暂存区密钥检测）
+        description: 检测暂存变更中的硬编码密钥（需已安装 gitleaks）
+        entry: gitleaks protect --staged --redact --verbose
+        language: system
+        pass_filenames: false
+
+      - id: sensitive-info-high
+        name: sensitive-info（high 等级门禁）
+        description: 与 CI 阻断门禁同规则的本地镜像
+        entry: python .agents/scripts/check-sensitive-info.py --only-severity high
+        language: system
+        pass_filenames: false
