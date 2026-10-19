@@ -8,6 +8,7 @@ four-file-atomic-retrospective-v2/index
 checklist-template
 directory-readme-template
 edit-verify-workflow-template
+okr-quarterly-retrospective-template
 release-gate-summary-template
 retrospective-report-template
 role-marker-design-template
