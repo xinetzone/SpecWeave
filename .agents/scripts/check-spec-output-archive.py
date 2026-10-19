@@ -11,7 +11,10 @@ reports/ 对应目录）。
   规范的唯一权威（checklist.md 为已废止的历史命名，仅作存量兼容保留，
   不视为违规，也不应在新增 spec 中使用）；
 - facts.md —— blog-article-to-okf-wiki 等工作流声明的「spec facts.md」F 编号事实登记；
-- insights.md —— source-code-to-okf-wiki 等工作流声明的「洞察写入 <spec-dir>/insights.md」。
+- insights.md —— source-code-to-okf-wiki 等工作流声明的「洞察写入 <spec-dir>/insights.md」；
+- e-stage-pattern.md / v-adversarial-review.md —— seven-concepts-comprehensive-retro
+  复盘流程声明的 E 阶段模式萃取与 V 对抗性审查过程件（见该 Skill 的
+  references/repo-conventions.md「2. Spec 目录与产物」）。
 
 扫描 `.trae/specs/` 下所有spec目录，检测：
   1. spec目录中是否存在产出物文件（analysis-report.md、article-content.md、task*-*.md等）
@@ -50,6 +53,8 @@ SPEC_ALLOWED_FILES = {
     "review.md",  # Spec Mode 规划三件套（以 TRAE-spec-mode 为唯一权威）
     "facts.md",  # 事实登记过程件（blog-article-to-okf-wiki 等工作流声明）
     "insights.md",  # 洞察过程件（source-code-to-okf-wiki 等工作流声明）
+    "e-stage-pattern.md",  # E 阶段模式萃取过程件（seven-concepts-comprehensive-retro）
+    "v-adversarial-review.md",  # V 对抗性审查过程件（seven-concepts-comprehensive-retro）
     "checklist.md",  # 历史命名：标准已废止，仅兼容存量，不视为违规
     "README.md",
     ".gitkeep",
