@@ -230,7 +230,7 @@
 - **F-244**（来源：65dc83219330.md，https://www.jianshu.com/p/65dc83219330，时点：2020）：文章场景2以"发布上线版本代号 0.0.1"为例，演示 `git flow release start v0.0.1` 创建 release/v0.0.1 分支、`git flow release publish v0.0.1` 提交到服务器、`git flow release track v0.0.1` 追踪远端 release 分支、`git flow release finish v0.0.1 -m "发布 v0.0.1"` 完成发布。
 - **F-245**（来源：65dc83219330.md，https://www.jianshu.com/p/65dc83219330，时点：2020）：文章说明 `git flow release finish` 完成的工作：归并 release 分支到 master 并用 release 分支名打 Tag、归并到 develop 并移除 release 分支与远端分支 remotes/origin/release/v0.0.1、切换到 develop 分支。
 - **F-246**（来源：65dc83219330.md，https://www.jianshu.com/p/65dc83219330，时点：2020）：文章场景3介绍命令 `git flow hotfix start VERSION [BASENAME]`，其中 VERSION 参数标记修正版本，可自 `[BASENAME]`（finish release 时填写的版本号）开始；`git flow hotfix finish VERSION` 将代码归并回 develop 和 master，master 分支打上修正版本的 TAG。
-- **F-247**（来源：65dc83219330.md，https://www.jianshu.com/p/65dc83219330，时点：2020）：文章给出的局域网克隆命令格式为 `git clone lxw@192.168.20.57:/home/lxw/utils/sdk.git`，其中 @ 前为用户名、中间为 IP 地址、最后为裸库绝对路径；文章还列出参考资料《git-flow 备忘清单》（danielkummer.github.io/git-flow-cheatsheet）。
+- **F-247**（来源：65dc83219330.md，https://www.jianshu.com/p/65dc83219330，时点：2020）：文章给出的局域网克隆命令格式为 `git clone user@192.168.20.57:/home/user/utils/sdk.git`，其中 @ 前为用户名、中间为 IP 地址、最后为裸库绝对路径；文章还列出参考资料《git-flow 备忘清单》（danielkummer.github.io/git-flow-cheatsheet）。
 
 ## 6f3a66b1a491.md《1.2 开启一个开源项目》
 

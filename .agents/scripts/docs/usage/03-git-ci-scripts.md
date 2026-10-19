@@ -53,6 +53,30 @@ python .agents/scripts/git-commit-utf8.py -m "fix bug" --force-bytes
 
 ---
 
+## scan-git-index-view.sh
+
+并行会话共享工作区时的**只读**诊断工具：高频采样同一路径的 `git status --porcelain`、
+`git ls-files` 计数与 `.git/index` 的 mtime，判定工作视图是否振荡（同一路径在两套视图下
+是否出现不一致），并列出同时在跑的 git 进程辅助归因。配套规则见
+[commit-staging-integrity.md](../../../rules/commit-staging-integrity.md)。
+
+**纯只读**：不写入工作区、不修改索引、不创建文件。
+
+```bash
+# 采样仓库根 12 次（间隔 0.5s）
+bash .agents/scripts/scan-git-index-view.sh
+
+# 只采样某个目录，3 次、间隔 0.2s
+bash .agents/scripts/scan-git-index-view.sh .trae/specs/okf-wiki-ecosystem -n 3 -i 0.2
+```
+
+退出码：`0` 视图稳定；`1` 观察到振荡；`2` 参数或环境错误（不在 git 仓库内 / 非法参数）。
+
+> 由 `.temp/experiments/poll-index-20260917.sh`（2026-09-17 loopx OKF wiki 任务诊断探针）
+> 泛化而来：路径/次数/间隔参数化、仓库根自动解析；采样三轴逻辑原样保留。
+
+---
+
 ## 相关模式
 
 - [工具工作流组合](../../../../docs/retrospective/patterns/methodology-patterns/tools-automation/tool-workflow-composition.md)

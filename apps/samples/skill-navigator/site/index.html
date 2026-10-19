@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>技能导航台 · 先说你的问题，再给你 1–2 个能用的技能</title>
+<meta name="description" content="第一次用 Meoo 不用翻完整页技能市场。点一下你的处境，3 秒找到 1–2 个最对得上的技能，并且先看到结果长什么样。">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+
+<a class="skip-link" href="#pick">跳到选择区</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <p class="eyebrow">Meoo 技能太多了，不用一个个看</p>
+    <h1>先说你的问题，<br>再给你 1–2 个能用的技能</h1>
+    <p class="lede">
+      不用读完整个技能市场。点一下最像你现在的处境，或者用自己的话写一句，
+      下面会给出 <strong>1–2 个最对得上</strong>的技能，讲清它到底能帮你做什么、什么时候不该用它，
+      并且<strong>先给你看一眼结果长什么样</strong>，再决定要不要用。
+    </p>
+    <p class="snapshot" id="snapshot-line"></p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ 第一步：选处境 ============ -->
+  <section id="pick" aria-labelledby="pick-title">
+    <h2 id="pick-title" class="step-title"><span class="step-no">1</span>你现在是哪种情况？</h2>
+
+    <div id="pain-groups" class="pain-groups"></div>
+
+    <div class="freeform">
+      <label for="free-text">或者，用自己的话写一句</label>
+      <div class="freeform-row">
+        <input id="free-text" type="text" autocomplete="off"
+               placeholder="例如：我做了个小工具，但没人用，不知道怎么推"
+               aria-describedby="free-hint">
+        <button id="free-go" class="btn btn-primary" type="button">帮我找</button>
+      </div>
+      <p id="free-hint" class="hint">不用讲究措辞，写你实际卡住的那一句就行。</p>
+    </div>
+  </section>
+
+  <!-- ============ 第二步：结果 ============ -->
+  <section id="result" hidden aria-labelledby="result-title">
+    <h2 id="result-title" class="step-title"><span class="step-no">2</span>这些最对得上</h2>
+    <p class="result-basis" id="result-basis"></p>
+    <div id="cards" class="cards"></div>
+
+    <div class="result-actions">
+      <button id="show-more" class="btn btn-ghost" type="button" hidden></button>
+      <button id="none-fit" class="btn btn-ghost" type="button">都不太对，看全部候选</button>
+      <button id="restart" class="btn btn-ghost" type="button">重新选</button>
+    </div>
+  </section>
+
+  <!-- ============ 兜底：全部候选 ============ -->
+  <section id="fallback" hidden aria-labelledby="fallback-title">
+    <h2 id="fallback-title" class="step-title"><span class="step-no">·</span>这一类下的全部候选</h2>
+    <p class="result-basis" id="fallback-basis"></p>
+    <ul id="fallback-list" class="fallback-list"></ul>
+    <div class="result-actions">
+      <a class="btn btn-primary" id="fallback-market" href="https://meoo.com/skills" target="_blank" rel="noopener">去 Meoo 技能市场自己逛</a>
+      <button id="fallback-back" class="btn btn-ghost" type="button">回到上一步</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ 演示面板 ============ -->
+<div id="demo" class="demo-layer" hidden>
+  <div class="demo-backdrop" data-close-demo></div>
+  <div class="demo-panel" role="dialog" aria-modal="true" aria-labelledby="demo-title">
+    <div class="demo-head">
+      <span class="demo-flag">示意演示 · 不是这个技能的真实运行结果</span>
+      <button class="btn-close" type="button" data-close-demo aria-label="关闭">✕</button>
+    </div>
+    <h3 id="demo-title"></h3>
+    <p class="demo-sub" id="demo-sub"></p>
+
+    <div class="demo-body" id="demo-body"></div>
+
+    <p class="demo-note">
+      上面三步和产出物，是根据该技能<strong>在 Meoo 上的公开简介</strong>整理出来的示意，
+      用来让你先看清「大概会拿到什么」，<strong>不等于真实运行结果</strong>；
+      它的官方简介原文在卡片里可以展开对照。
+    </p>
+
+    <div class="demo-foot">
+      <a class="btn btn-primary" id="demo-market" href="https://meoo.com/skills" target="_blank" rel="noopener">去 Meoo 技能市场找它</a>
+      <button class="btn btn-ghost" type="button" data-close-demo>回到刚才的结果</button>
+    </div>
+  </div>
+</div>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>
+      <strong>数据来源与快照</strong>：技能名称、作者、累计使用量、简介文字取自
+      <a id="src-market" href="https://meoo.com/skills" target="_blank" rel="noopener">Meoo 技能市场页</a> 与
+      <a id="src-event" href="https://ahhap1kka804.events.meoo.com/#/skills" target="_blank" rel="noopener">应用赏金广场「AI Builder Growth 共创计划」页</a>，
+      快照日期 <span id="src-date"></span>；「事件页未提供」表示该条目的使用量在来源页上没有。
+      使用量是当天的<strong>快照值</strong>，平台计数实时变动（复核时个别条目已比快照多 1–2 次），以来源页实时显示为准。
+    </p>
+    <p>
+      <strong>哪些是官方口径、哪些是本页整理</strong>：卡片里的「官方简介原文」与使用量来自平台页面（逐字保留）；
+      「它能帮你解决什么」「适合谁」「什么时候不该用它」「它会怎么做」「你会拿到什么」都是<strong>本页整理</strong>，
+      不是技能作者的承诺。演示为示意，不是真实运行结果。
+    </p>
+    <p>
+      <strong>本页不做的事</strong>：不评测、不背书任何技能或创作者；<strong>页面先后顺序只表示「与你这句描述的匹配程度」</strong>
+      （按命中你所述要点的数量算，同分时参考平台使用量），<strong>不代表质量、口碑或收益的排名</strong>；
+      不承诺任何收益；不收集你的输入、不做统计埋点。
+    </p>
+    <p>
+      <strong>关于网络请求</strong>：本页<strong>源码自身</strong>不发起任何网络请求——没有 fetch/XHR、没有外链字体或图片，断网也能用。
+      部署到 Meoo 之后，托管方会在返回的 HTML 里注入平台自带的安全脚本（<code>g.alicdn.com</code> 上的 baxia）与 Meoo logo 图片；
+      那是托管方行为，不在本页代码内。
+    </p>
+    <p class="foot-meta">
+      本页是秒悟应用赏金广场赏金 <strong>IDEA · 026</strong>「帮新手快速找到最合适的 Skill，并直接体验结果」的交付物。
+    </p>
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

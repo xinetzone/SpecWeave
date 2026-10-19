@@ -132,7 +132,7 @@ CONTAINER_NAME="${JUPYTER_CONTAINER_NAME:-jupyter-default}"  # 永远读不到 .
 WORKSPACE="${JUPYTER_WORKSPACE:-$PROJECT_ROOT/../../..}"      # 默认值硬编码开发者目录
 
 # 反模式2：默认值硬编码开发者个人路径
-WORKSPACE="${WORKSPACE:-/home/xinzo/specweave}"  # 其他用户直接报错
+WORKSPACE="${WORKSPACE:-/home/<your-user>/specweave}"  # 硬编码他人主目录，其他用户直接报错
 
 # 反模式3：有 fallback 但顺序错误（旧名优先于新名，导致新名无法覆盖）
 WORKSPACE="${JUPYTER_WORKSPACE:-${WORKSPACE:-./workspace}}"  # 旧名优先，新名被忽略

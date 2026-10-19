@@ -34,7 +34,7 @@ title: ".agents/skills/ 目录索引"
 | token-optimize-cmd | 命令门面 | Token优化 | Token优化、降本、成本优化、缓存命中率、上下文压缩、Prompt优化、LLM成本 | [token-optimize-cmd/SKILL.md](token-optimize-cmd/SKILL.md) |
 | sovereign-rollout-cmd | 命令门面 | 主权区治理资产落盘 | 提案、批准落盘、主权区变更、治理资产落盘、先提案后批准 | [sovereign-rollout-cmd/SKILL.md](sovereign-rollout-cmd/SKILL.md) |
 
-### 完整Skill（7个）
+### 完整Skill（9个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -45,6 +45,8 @@ title: ".agents/skills/ 目录索引"
 | client-overlay-scaffold | 完整Skill | apps/containers/client/overlays/ 工作负载叠加栈脚手架（v1.1）：形态 A/B 决策树 + 声明式 StackSpec（make_stack_tasks 六任务工厂，栈模块零生命周期代码）+ compose extends `_shared/base-rootless.yaml` 基段（三必需/凭证/bridge 单一事实源）；compose/namespace/.env 三套骨架模板 + 12 件套清单 + 7 接线登记点（含 test_tasks_surface/test_compose_merge 两张黄金表）+ G1~G15 实测踩坑 + 四级验证链；源自 quant/native/monetize 三栈与两轮独立审查 | 新增 client 叠加层、工作负载栈、新 compose invoke 命名空间、照 onnx/native/monetize 栈再做一个、overlay 脚手架 | [client-overlay-scaffold/SKILL.md](client-overlay-scaffold/SKILL.md) |
 | collect-api-decouple-cmd | 完整Skill | 硬件/设备采集类 API 的"采集-解析分离 + 日志复用"重构执行卡：副作用边界切分（触网/写盘 vs 纯本地计算）、dataclass 阶段契约、`run_<step>=True` 开关逐层贯通、复用分支纯路径推导并规避 rmtree/unlink 清理型工厂、产物缺失同源报错、缩放参数一致性警示；含 I→F→A→V 步骤模板、安全检查清单、Gotchas 与 npuusertools 双案例 | 推理和后处理分开、采集/推理变成可选、已经推理过了复用日志、跳过设备执行、重放日志、只重新算指标 | [collect-api-decouple-cmd/SKILL.md](collect-api-decouple-cmd/SKILL.md) |
 | classical-festival-video | 完整Skill | 古典底本节日祝福视频生成（三关键帧→10s竖版视频→随片文案+考据弹药；含情感分寸矩阵、画面禁字约束、预览确认门与物理量验收） | 祝福视频、节日贺卡视频、给 TA 做个视频、用老子/庄子/诗词做底本、中秋/春节/元宵祝福 | [classical-festival-video/SKILL.md](classical-festival-video/SKILL.md) |
+| meoo-cli | 完整Skill | 秒悟（Meoo）全栈应用构建与部署（阿里云官方第三方技能，随 CLI 包安装）：static（SPA→CDN）与 server（全栈→容器）双模式，Supabase 数据库/Auth/Storage + Deno 边缘函数 + AI 模型接入；覆盖初始化→云服务→部署全生命周期，含 Mise 发布协议 BLOCKING 门禁与阿里云自托管部署分支 | 秒悟、Meoo、meoo cli、用秒悟建应用、部署到秒悟、部署全栈应用 | [meoo-cli/SKILL.md](meoo-cli/SKILL.md) |
+| meoo-skill-publish | 完整Skill（v1.0.0，L1） | 本地 Skill→自包含 ZIP→Meoo 技能市场（meoo.com/skills）发布/版本更新与字节级回验：P1 根级合规打包（YAML 头/name 一致/零包外引用，确定性 ZIP+b64+清单）→ P2 官方 `POST /api/v1/skills/publish`（带 skill_id 即版本更新，tags 取 v2_* key）→ P3 线上版本下载逐文件 SHA256 比对；含 127.0.0.1 中继脚本、浏览器 evaluate 两步法与 7 条 Gotchas；萃取自 104319 v1 耦合版→v2 独立版实战 | 上传技能、发布技能到 Meoo/技能市场、更新技能版本、技能市场上架、meoo.com/skills 发布 | [meoo-skill-publish/SKILL.md](meoo-skill-publish/SKILL.md) |
 
 ### 工作流门面（6个）
 

@@ -33,6 +33,7 @@ config-persistence-full-chain-coverage
 content-sensitivity-routing
 convention-driven-creation
 credential-copy-minimization
+cross-period-metric-scope-alignment
 cross-platform-gate-authority
 cross-wiki-reference-directory-first
 data-validation-four-checks

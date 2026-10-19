@@ -224,7 +224,7 @@ Hello 2026 银河户有12345
 2. **云端路径**：需申请百度/讯飞等平台密钥（`capability_settings_set_model_config` 的 JSON 形态见 `config.h` 注释），属账号与网络行为，本环境不做。
 3. **其余能力域**：speech（含实时/流式）、embedding 向量化、图像生成、两类图像分割均未测；它们对模型文件/硬件的要求各异。
 4. **接口一致性**：§5.5 的部署策略读数/返回码错位，建议在正式环境或向社区 issue 复核后再定性。
-5. 本 POC 工程（`ocr_poc.cpp`、`make_image.py`、`ocr_test.png`）位于 WSL 挂载的 Windows 工作目录 `C:\Users\xinzo\ai-poc\`（非本仓文件，仅用于复现）。
+5. 本 POC 工程（`ocr_poc.cpp`、`make_image.py`、`ocr_test.png`）位于 WSL 挂载的 Windows 工作目录 `%USERPROFILE%\ai-poc\`（即 WSL 内 `/mnt/c/Users/<用户名>/ai-poc/`，非本仓文件，仅用于复现）。
 
 ---
 

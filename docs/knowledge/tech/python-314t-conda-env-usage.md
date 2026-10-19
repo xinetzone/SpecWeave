@@ -66,7 +66,7 @@ conda deactivate
 ## 常见问题
 
 - **`conda activate py314t` 找不到环境？** → 先按「方式 A」设置 `CONDA_ENVS_DIRS`，或改用「方式 B」直接引用前缀。
-- **想把环境移到标准位置？** → 在非沙箱终端（有 `D:\Users\xinzo\anaconda3\envs` 写权限）运行。
+- **想把环境移到标准位置？** → 在非沙箱终端（有 `D:\Users\<用户名>\anaconda3\envs` 写权限）运行。
 
   第一步先导出（注意：文件名必须是支持的模式，如 `environment.yml`；且需先设 `CONDA_ENVS_DIRS` 才能找到本环境）：
   ```powershell

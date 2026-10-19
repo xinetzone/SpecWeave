@@ -11,7 +11,10 @@ reports/ 对应目录）。
   规范的唯一权威（checklist.md 为已废止的历史命名，仅作存量兼容保留，
   不视为违规，也不应在新增 spec 中使用）；
 - facts.md —— blog-article-to-okf-wiki 等工作流声明的「spec facts.md」F 编号事实登记；
-- insights.md —— source-code-to-okf-wiki 等工作流声明的「洞察写入 <spec-dir>/insights.md」。
+- insights.md —— source-code-to-okf-wiki 等工作流声明的「洞察写入 <spec-dir>/insights.md」；
+- e-stage-pattern.md / v-adversarial-review.md —— seven-concepts-comprehensive-retro
+  复盘流程声明的 E 阶段模式萃取与 V 对抗性审查过程件（见该 Skill 的
+  references/repo-conventions.md「2. Spec 目录与产物」）。
 
 扫描 `.trae/specs/` 下所有spec目录，检测：
   1. spec目录中是否存在产出物文件（analysis-report.md、article-content.md、task*-*.md等）
@@ -50,6 +53,8 @@ SPEC_ALLOWED_FILES = {
     "review.md",  # Spec Mode 规划三件套（以 TRAE-spec-mode 为唯一权威）
     "facts.md",  # 事实登记过程件（blog-article-to-okf-wiki 等工作流声明）
     "insights.md",  # 洞察过程件（source-code-to-okf-wiki 等工作流声明）
+    "e-stage-pattern.md",  # E 阶段模式萃取过程件（seven-concepts-comprehensive-retro）
+    "v-adversarial-review.md",  # V 对抗性审查过程件（seven-concepts-comprehensive-retro）
     "checklist.md",  # 历史命名：标准已废止，仅兼容存量，不视为违规
     "README.md",
     ".gitkeep",
@@ -230,7 +235,8 @@ def main() -> None:
             print(f"    2. 使用 git mv 将产出物移至归档目录")
             print(f"    3. 创建归档README.md（含frontmatter、核心指标、文件索引）")
             print(f"    4. 更新主题README.md中的交付物链接指向归档目录")
-            print(f"    5. 验证spec目录仅保留 spec.md/tasks.md/review.md（及 facts.md/insights.md 过程件）")
+            print("    5. 验证spec目录仅保留过程件 spec.md/tasks.md/review.md、facts.md/insights.md、")
+            print("       e-stage-pattern.md/v-adversarial-review.md 与 README.md/.gitkeep")
             print()
         if in_progress_with_output:
             print(f"  注：{len(in_progress_with_output)}个进行中的spec包含产出物文件，")

@@ -15,7 +15,7 @@ x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
 |------|------|-----------|
 | [docs/usage/01-check-scripts.md](docs/usage/01-check-scripts.md) | 检查类脚本 | 10个 |
 | [docs/usage/02-generate-build-scripts.md](docs/usage/02-generate-build-scripts.md) | 生成与构建脚本 | 5个 |
-| [docs/usage/03-git-ci-scripts.md](docs/usage/03-git-ci-scripts.md) | Git与CI脚本 | 2个 |
+| [docs/usage/03-git-ci-scripts.md](docs/usage/03-git-ci-scripts.md) | Git与CI脚本 | 3个 |
 | [docs/usage/04-fix-scripts.md](docs/usage/04-fix-scripts.md) | 批量修复与分析脚本 | 8个 |
 | [docs/maintenance/01-generate-readme-testing.md](docs/maintenance/01-generate-readme-testing.md) | generate-readme.py维护与验证 | 1个维护手册 |
 | [mdi/PATTERN-APPLICATION.md](mdi/PATTERN-APPLICATION.md) | MDI模式应用指南 | 3个代码模式 |
@@ -42,6 +42,7 @@ x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
 | `generate-readme.py` | 目录README自动生成与索引增量更新 | [生成/构建](docs/usage/02-generate-build-scripts.md#generate-readmepy) · [维护验证](docs/maintenance/01-generate-readme-testing.md) |
 | `git-commit-utf8.py` | Windows Git UTF-8中文提交 | [Git/CI](docs/usage/03-git-ci-scripts.md#git-commit-utf8py) |
 | `ci-check.ps1` | CI流水线全量检查 | [Git/CI](docs/usage/03-git-ci-scripts.md#ci-checkps1) |
+| `scan-git-index-view.sh` | Git 视图振荡只读诊断（status/ls-files/index 采样） | [Git/CI](docs/usage/03-git-ci-scripts.md#scan-git-index-viewsh) |
 | `fix_remaining_frontmatter.py` | 修复模板引用/绝对路径/跨项目路径 frontmatter source | [修复](docs/usage/04-fix-scripts.md#fix_remaining_frontmatterpy) |
 | `fix_docs_prefix_paths.py` | 修复 docs/ 前缀 source 路径为相对路径 | [修复](docs/usage/04-fix-scripts.md#fix_docs_prefix_pathspy) |
 | `fix_directory_and_missing.py` | 修复目录链接和缺失文件 source 路径 | [修复](docs/usage/04-fix-scripts.md#fix_directory_and_missingpy) |

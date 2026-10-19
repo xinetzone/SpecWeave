@@ -80,7 +80,7 @@ $wsl = "$env:WINDIR\System32\wsl.exe"
 
 启动器 = 一个 PowerShell 脚本 + 一个双击包装。它会自动完成：启动发行版 → 等 3390 端口就绪 → 弹出远程桌面。
 
-**第 1 步**：新建文件 `C:\Users\xinzo\openKylin桌面\启动openKylin桌面.ps1`（目录随意），内容：
+**第 1 步**：新建文件 `%USERPROFILE%\openKylin桌面\启动openKylin桌面.ps1`（即 `C:\Users\<你的用户名>\openKylin桌面\`，目录随意），内容：
 
 ```powershell
 # openKylin Desktop WSL 一键启动器（2026-10-08 实测）
@@ -167,7 +167,7 @@ $wsl -d openKylin-3.0-desktop -u root -e bash -c '
 set -e
 PEM=/etc/ssl/certs/ssl-cert-snakeoil.pem
 KEY=/etc/ssl/private/ssl-cert-snakeoil.key
-CER_DIR=/mnt/c/Users/xinzo/openKylin桌面
+CER_DIR=/mnt/c/Users/<你的用户名>/openKylin桌面
 cp -a "$PEM" "${PEM}.bak-$(date +%Y%m%d)"; cp -a "$KEY" "${KEY}.bak-$(date +%Y%m%d)"
 # 重签：CN=localhost，SAN 覆盖本机回环全部名字 + IPv4，有效期 10 年
 openssl req -x509 -newkey rsa:2048 -nodes -days 3650 \
@@ -185,7 +185,7 @@ openssl x509 -in "$PEM" -outform DER -out "$CER_DIR/xrdp-localhost.cer"
 然后在 Windows PowerShell（普通权限即可，导入的是**当前用户**存储，不需要管理员）：
 
 ```powershell
-certutil -user -addstore -f Root "C:\Users\xinzo\openKylin桌面\xrdp-localhost.cer"
+certutil -user -addstore -f Root "$env:USERPROFILE\openKylin桌面\xrdp-localhost.cer"
 # 会弹"安全性警告"确认框 → 核对颁发者是 CN=localhost → 点【是】
 ```
 

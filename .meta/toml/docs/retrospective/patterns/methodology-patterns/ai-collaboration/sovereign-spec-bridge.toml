@@ -1,0 +1,17 @@
+id = "sovereign-spec-bridge"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 4
+reuse_count = 0
+documentation_level = "Pattern"
+source = ".workbuddy/skills→.agents/skills 联接（2026-09-25） | specweave-dsh-bridge（DSH Cordis 插件桥，提交 11d0773ce） | specweave-bridge-skeleton（Hermes 插件骨架，提交 feeba0cf0） | ~/.workbuddy/skills/seven-concepts-cmd 符号链接 | 根目录 CLAUDE.md（提交 80fcd01ed）"
+
+[bindings]
+rules = ["workspace-discovery.md"]
+references = ["multi-signal-detection.md", "three-tier-tool-fallback.md", "path-discipline.md", "derived-file-auto-generation.md"]
+skills = []
+
+[applicability]
+bridge_levels = ["B0-文件系统链接", "B1-入口门面文件", "B2-插件桥"]
+hosts = ["WorkBuddy", "DeepSeek Harness", "Hermes", "Claude Code"]

@@ -1,5 +1,9 @@
 id = "development-standards"
 title = "开发规范"
 category = "tech/references"
-date = "2026-07-02"
-version = "1.0"
+date = "2026-10-17"
+version = "1.1"
+changelog = [
+  "2026-07-02 | initial | 初始版本",
+  "2026-10-17 | enhance | 「Markdown 文档交叉引用规范·禁止事项」新增硬规则：禁止在章节标题内链到可下载文件（防 Sphinx document_toc 的 KeyError: 'anchorname' 中断全量构建）"
+]

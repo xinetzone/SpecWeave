@@ -66,8 +66,8 @@ title: "古典底本节日祝福视频生成 Skill"
 
 在 SpecWeave 工作区优先检索本地资料库再引经据典：
 
-- 帛书老子及历代注本：`playground/books/帛书版道德经资料/`
-- 庄子资料：`playground/books/庄子资料/`
+- 帛书老子及历代注本：`playground/study/books/帛书版道德经资料/`
+- 庄子资料：`playground/study/books/庄子资料/`
 - 最高可信度知识包（只读）：`projects/awesome-okf-xs/doc/bundles/`
 
 选句标准：① 意象与节日物候同构（如中秋配"甘露"/"水"/"月"）；② 句子脱离哲学语境仍是美好祝愿；③ 避开被用滥的段子句。优先选可"生活化转译"的句子——引文后必须用一句白话讲明白，禁止裸掉书袋。
