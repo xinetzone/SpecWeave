@@ -80,10 +80,11 @@ invoke native.down                       # 停止清理（ccache / Jupyter 登�
   **不补装依赖**，缺项一律回过程一。无网**从零构建镜像**仍不支持（构建期
   apt/mamba/pip 均需联网）。
 - **对 external/chaos/ai 零依赖**：打包脚本与元数据自包含于叠加层；
-  外部源码树只读挂载且**全程只读**（2026-09-21 起 `build-wheel.sh` 不再向任何
-  `__init__.py` 注入/还原 AST 兼容层：ast 遗留节点改由运行期补丁兜底——
-  `_xmnn_bootstrap.py` 经 `.pth` 启动钩子 + `xmnn/vta_compat.apply_ast_compat()`，
-  故无 `.bak_*`、无「注入态」中间态，SIGKILL/OOM 不污染工作树）。
+  外部源码树只读挂载且**全程只读**（`build-wheel.sh` 不向任何
+  `__init__.py` 注入/还原 AST 兼容层，故无 `.bak_*`、无「注入态」中间态，
+  SIGKILL/OOM 不污染工作树；npu_tvm 源码已原生使用 `ast.Constant`，镜像
+  解释器的 ast 启动钩子烤入已于 2026-10-19 拆除，仅交付 wheel 内置 `.pth`
+  暂留以兜底 Nuitka 4.2.x 的 PEP 649 类体注解缺陷）。
 - **GPU 与 torch 可选能力（C18·C19·C20·C25，默认全关）**：两者**分属两个正交维度**——
   **运行期维度（设备透传）只由 `up --gpu` 决定，构建期维度（torch 形态）只由
   `build --torch` 决定**，因此**没有也不该有 `build --gpu`**：透传只改 compose

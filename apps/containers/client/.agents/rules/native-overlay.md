@@ -180,14 +180,14 @@
   build-tvm.sh,verify-wheel.sh,install-build-deps.py,lib/logging.sh}。
   **禁止**从 external/chaos/ai 跨目录 COPY 或 source（lib 必须 vendor）。
 - **源码树只读纪律（2026-09-21 起，取代原「AST 注入/还原」纪律）**：
-  build-wheel.sh **不再改写任何包的 `__init__.py`**。Python 3.12+ 移除的
-  ast 遗留节点（NameConstant/Num/Str/Bytes/Index/ExtSlice）改由**运行期
-  补丁**兜底：`_xmnn_bootstrap.py` 经 `xmnn_bootstrap.pth` 在解释器启动时
-  执行（早于任何 tvm import，覆盖 wheel 安装态），`xmnn/vta_compat.
-  apply_ast_compat()` 幂等覆盖源码树/显式调用路径。由此取消
-  `lib/ast_inject.sh`、`.bak_<tag>` 备份、`_restore_all` EXIT trap 与四态
-  自愈矩阵——不存在「注入态」这一非法中间态，SIGKILL/OOM 不再污染外部
-  工作树（旧机制下「marker 在 + 备份丢失」是不可判定的停机分支）。
+  build-wheel.sh **不改写任何包的 `__init__.py`**，无 `lib/ast_inject.sh`、
+  `.bak_<tag>` 备份、`_restore_all` EXIT trap 与四态自愈矩阵——不存在
+  「注入态」这一非法中间态，SIGKILL/OOM 不再污染外部工作树（旧机制下
+  「marker 在 + 备份丢失」是不可判定的停机分支）。npu_tvm 源码已原生使用
+  `ast.Constant`：镜像解释器的 ast 启动钩子烤入已于 2026-10-19 拆除；
+  `/opt/native-builder` 内保留的 `_xmnn_bootstrap.py`/`xmnn_bootstrap.pth`
+  仅随 wheel 分发，兜底在役 Nuitka 4.2.x 的 PEP 649 类体注解闭包缺陷，
+  待打包工具链升级重打后随 wheel 链一并拆除。
   历史禁令仍在 CMake 组装侧生效：autolibs 用 `cp -R` 不用 `cp -a`
   ——rootless userns 只映射启动用户单个宿主 UID，外部同步树文件的 POSIX
   ACL 含未映射 UID（如多机 pc=1000/ai=1006）时 cp 复制 ACL 的内核

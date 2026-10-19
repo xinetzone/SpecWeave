@@ -9,9 +9,10 @@
 # 流程：环境自检 → libtvm.so 前置检查 → Nuitka 串行编译 tvm → 并行 vta/xmnn
 #       → python -m build 组装 wheel。
 #
-# 源码树全程只读：Python 3.12+ 移除的 ast 遗留节点由运行期兼容层兜底
-# （_xmnn_bootstrap.py 的 .pth 启动钩子 + xmnn/vta_compat.apply_ast_compat()），
-# 不再向任何包的 __init__.py 注入/还原代码，故无「注入态」残留风险。
+# 源码树全程只读：不向任何包的 __init__.py 注入/还原代码，故无「注入态」
+# 残留风险。tvm 源码已原生使用 ast.Constant；wheel 内置的
+# _xmnn_bootstrap.py/.pth 仅兜底在役 Nuitka 4.2.x 的 PEP 649 类体注解缺陷，
+# 待打包工具链升级后随 wheel 链拆除。
 #
 # 产物：$DIST_DIR/xmnn-1.2.1.dev0-cp314-cp314-linux_x86_64.whl
 #       （默认 /workspace/dist，宿主可见的 bind 挂载目录）
