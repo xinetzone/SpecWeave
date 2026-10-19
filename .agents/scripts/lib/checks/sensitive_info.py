@@ -178,6 +178,7 @@ class Rule:
     placeholder_patterns: list[Pattern[str]] = field(default_factory=list)
     fix_func: Callable[[Match[str]], str] | None = None
     suggestion: str = ""
+    skip_sequential_placeholder: bool = False
 
 
 @dataclass
@@ -301,6 +302,46 @@ def _is_shell_variable_reference(value: str) -> bool:
 def _is_all_dots(s: str) -> bool:
     """检查字符串是否全是点号。"""
     return bool(s) and all(c == '.' for c in s)
+
+
+_HEX_ASCENDING = "0123456789abcdef"
+
+
+def _longest_ascending_run(s: str, order: str) -> int:
+    """计算 s 中最长的逐位递增连续段长度（按 order 字符序）。"""
+    idx = {c: i for i, c in enumerate(order)}
+    best = cur = 0
+    prev_i = -2
+    for c in s:
+        i = idx.get(c, -1)
+        if i >= 0 and i == prev_i + 1:
+            cur += 1
+        elif i >= 0:
+            cur = 1
+        else:
+            cur = 0
+            prev_i = -2
+            continue
+        prev_i = i
+        best = max(best, cur)
+    return best
+
+
+def _is_sequential_or_dummy_value(value: str) -> bool:
+    """检查是否为显而易见的顺序/重复占位值（非真实凭据）。
+
+    覆盖三类形态：① 全同字符重复（0000…、xxxx…）；② 连续递增 hex 序列
+    （0123456789abcdef 等）；③ 连续递增十进制序列（1234567890 等）。
+    递增段 ≥8 位判命中——真实随机凭据包含如此长递增序列的概率可忽略
+    （<10⁻⁷），用于抑制测试夹具中顺序占位符（wx0123456789abcdef、
+    0123456789abcdef0123456789abcdef）的误报。
+    """
+    if not value or len(value) < 8:
+        return False
+    v = value.lower()
+    if len(set(v)) == 1:
+        return True
+    return _longest_ascending_run(v, _HEX_ASCENDING) >= 8
 
 
 def _should_skip_email(match_str: str) -> tuple[bool, str | None, bool]:
@@ -449,6 +490,16 @@ def _is_public_doc_file(file_path: Path) -> bool:
     return True
 
 
+_VENDOR_PLACEHOLDER_PATTERNS = [
+    re.compile(r"your[-_]?", re.IGNORECASE),
+    re.compile(r"<[a-z0-9_-]+>", re.IGNORECASE),
+    re.compile(r"x{6,}", re.IGNORECASE),
+    re.compile(r"example", re.IGNORECASE),
+    re.compile(r"invalid", re.IGNORECASE),
+    re.compile(r"not-a-real", re.IGNORECASE),
+]
+
+
 RULES: list[Rule] = [
     Rule(
         name="中国大陆手机号",
@@ -542,6 +593,7 @@ RULES: list[Rule] = [
             re.compile(r"sk-[A-Za-z0-9]{0,19}$"),
             re.compile(r"['\"]sk-", re.IGNORECASE),
             re.compile(r"AKIA[0-9A-Z]{0,10}$"),
+            re.compile(r"AKIAIOSFODNN7EXAMPLE"),
         ],
         fix_func=None,
         suggestion="API密钥泄露可能导致资产损失，请立即轮换密钥并从历史记录中清除",
@@ -601,6 +653,66 @@ RULES: list[Rule] = [
         placeholder_patterns=[],
         fix_func=None,
         suggestion="私钥泄露会导致身份伪造，请立即吊销对应公钥并轮换密钥对",
+    ),
+    Rule(
+        name="微信AppID",
+        type=API_KEY,
+        severity=SEVERITY_MEDIUM,
+        pattern=re.compile(r"\bwx[0-9a-f]{16}\b"),
+        placeholder_patterns=_VENDOR_PLACEHOLDER_PATTERNS,
+        skip_sequential_placeholder=True,
+        suggestion="微信 AppID 属半公开标识符，文档中请保留脱敏形式（如 wx4c62…），真实值只放 .env（已 gitignore）",
+    ),
+    Rule(
+        name="微信AppSecret",
+        type=API_KEY,
+        severity=SEVERITY_HIGH,
+        pattern=re.compile(
+            r"(?i)(?:wechat[_-]?app[_-]?secret|app[_-]?secret)\s*[:=]\s*['\"]?([0-9a-f]{32})\b"
+        ),
+        placeholder_patterns=_VENDOR_PLACEHOLDER_PATTERNS,
+        skip_sequential_placeholder=True,
+        suggestion="微信 AppSecret 属高价值凭据，禁止入库；请改用环境变量注入",
+    ),
+    Rule(
+        name="腾讯云SecretId",
+        type=API_KEY,
+        severity=SEVERITY_HIGH,
+        pattern=re.compile(r"\bAKID[0-9A-Za-z]{32}\b"),
+        placeholder_patterns=_VENDOR_PLACEHOLDER_PATTERNS,
+        skip_sequential_placeholder=True,
+        suggestion="腾讯云 SecretId/SecretKey 禁止入库，请使用临时密钥或环境变量",
+    ),
+    Rule(
+        name="GitHubToken",
+        type=API_KEY,
+        severity=SEVERITY_HIGH,
+        pattern=re.compile(
+            r"\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{22,}|github_pat_[A-Za-z0-9_]{22,}"
+        ),
+        placeholder_patterns=_VENDOR_PLACEHOLDER_PATTERNS,
+        skip_sequential_placeholder=True,
+        suggestion="GitHub Token 禁止入库，请使用环境变量或 GitHub Actions secrets",
+    ),
+    Rule(
+        name="SlackToken",
+        type=API_KEY,
+        severity=SEVERITY_HIGH,
+        pattern=re.compile(r"\bxox[baprs]-[A-Za-z0-9-]{10,}"),
+        placeholder_patterns=_VENDOR_PLACEHOLDER_PATTERNS,
+        skip_sequential_placeholder=True,
+        suggestion="Slack Token 禁止入库，请使用环境变量或密钥管理服务",
+    ),
+    Rule(
+        name="通用SecretKey上下文",
+        type=API_KEY,
+        severity=SEVERITY_HIGH,
+        pattern=re.compile(
+            r"(?i)(?:secret[_-]?key)\s*[:=]\s*['\"]?([A-Za-z0-9]{32})\b"
+        ),
+        placeholder_patterns=_VENDOR_PLACEHOLDER_PATTERNS,
+        skip_sequential_placeholder=True,
+        suggestion="32 位随机 SecretKey 属高价值凭据，禁止入库；请使用环境变量注入",
     ),
 ]
 
@@ -734,6 +846,12 @@ def scan_file(file_path: Path) -> list[Finding]:
 
                 if _is_placeholder(match_str, rule):
                     continue
+
+                if rule.skip_sequential_placeholder:
+                    rule_groups = m.groups()
+                    rule_value = rule_groups[-1] if rule_groups else match_str
+                    if _is_sequential_or_dummy_value(rule_value):
+                        continue
 
                 if rule.type == EMAIL:
                     skip_email, override_severity, is_public_role_email = _should_skip_email(match_str)

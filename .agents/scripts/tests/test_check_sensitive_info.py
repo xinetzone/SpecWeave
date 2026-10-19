@@ -972,3 +972,168 @@ class TestBuildDirExclusion:
         """_build 应登记在默认排除集合中。"""
         assert "_build" in DEFAULT_EXCLUDE_DIRS
 
+
+class TestVendorCredentialDetection:
+    """供应商特定凭据检测测试（微信/腾讯云/GitHub/Slack，2026-10-19 新增）。"""
+
+    # 检测夹具一律拼接构造：运行期值完整、源码中不出现连续匹配串，
+    # 避免测试文件自身被扫描器命中（与既有手机号测试同款约定）
+    FAKE_WX_ID = "wx" + "4c629ec6cd51a2d6"
+    FAKE_WX_SECRET = "5f4dcc3b" + "5aa765d61d8327deb882cf99"
+    FAKE_AKID = "AKID" + "A1b2C3d4E5f6G7h8I9j0K1l2M3n4O5p6"
+    FAKE_GH = "ghp_" + "A1b2C3d4E5f6G7h8I9j0K1l2M3n4O5p6Q7r8"
+    FAKE_SLACK = "xoxb-" + "2498137-0aBcDeFgHiJk"
+    FAKE_SK = "sk-" + "abc123def456ghi789jkl012mno345"
+    FAKE_SECRET_KEY = "Zp9Kq2Xm4" + "Rt7Vb1Wy8Uc3Dz6Ha5Jf0Gk"
+
+    def test_wechat_app_id_detected(self):
+        """真实形态微信 AppID 应被检测到。"""
+        content = f'MP_ARCHIVER_WECHAT_APP_ID = "{self.FAKE_WX_ID}"\n'
+        f = _write_temp_file(content, suffix=".py")
+        try:
+            findings = scan_file(f)
+            assert any(i.rule_name == "微信AppID" for i in findings)
+        finally:
+            f.unlink()
+
+    def test_wechat_app_id_redacted_form_skipped(self):
+        """脱敏形态 wx4c62… 不应检测。"""
+        content = "AppID=wx4c62…\n"
+        f = _write_temp_file(content, suffix=".md")
+        try:
+            findings = scan_file(f)
+            assert not any(i.rule_name == "微信AppID" for i in findings)
+        finally:
+            f.unlink()
+
+    def test_wechat_app_id_sequential_placeholder_skipped(self):
+        """顺序占位 wx0123456789abcdef 不应检测。"""
+        content = 'APP_ID = "wx0123456789abcdef"\n'
+        f = _write_temp_file(content, suffix=".py")
+        try:
+            findings = scan_file(f)
+            assert not any(i.rule_name == "微信AppID" for i in findings)
+        finally:
+            f.unlink()
+
+    def test_wechat_app_id_explicit_dummy_skipped(self):
+        """显式无效值 wx-not-a-real-id 不应检测。"""
+        content = 'APP_ID = "wx-not-a-real-id"\n'
+        f = _write_temp_file(content, suffix=".py")
+        try:
+            findings = scan_file(f)
+            assert not any(i.rule_name == "微信AppID" for i in findings)
+        finally:
+            f.unlink()
+
+    def test_wechat_app_secret_detected(self):
+        """真实形态 AppSecret（32 位 hex）应被检测到。"""
+        content = f'MP_ARCHIVER_WECHAT_APP_SECRET={self.FAKE_WX_SECRET}\n'
+        f = _write_temp_file(content, suffix=".env")
+        try:
+            findings = scan_file(f)
+            assert any(i.rule_name == "微信AppSecret" for i in findings)
+        finally:
+            f.unlink()
+
+    def test_wechat_app_secret_sequential_skipped(self):
+        """顺序占位 0123456789abcdef×2 不应检测。"""
+        content = 'APP_SECRET = "0123456789abcdef0123456789abcdef"\n'
+        f = _write_temp_file(content, suffix=".py")
+        try:
+            findings = scan_file(f)
+            assert not any(i.rule_name == "微信AppSecret" for i in findings)
+        finally:
+            f.unlink()
+
+    def test_wechat_app_secret_empty_value_skipped(self):
+        """空占位（.env.example 形态）不应检测。"""
+        content = "MP_ARCHIVER_WECHAT_APP_SECRET=\n"
+        f = _write_temp_file(content, suffix=".env")
+        try:
+            findings = scan_file(f)
+            assert not any(i.rule_name == "微信AppSecret" for i in findings)
+        finally:
+            f.unlink()
+
+    def test_tencent_akid_detected(self):
+        """腾讯云 SecretId（AKID 前缀）应被检测到。"""
+        content = f'secret_id = "{self.FAKE_AKID}"\n'
+        f = _write_temp_file(content, suffix=".py")
+        try:
+            findings = scan_file(f)
+            assert any(i.rule_name == "腾讯云SecretId" for i in findings)
+        finally:
+            f.unlink()
+
+    def test_github_token_detected(self):
+        """GitHub Token（ghp_ 前缀）应被检测到。"""
+        content = f'token = "{self.FAKE_GH}"\n'
+        f = _write_temp_file(content, suffix=".py")
+        try:
+            findings = scan_file(f)
+            assert any(i.rule_name == "GitHubToken" for i in findings)
+        finally:
+            f.unlink()
+
+    def test_github_token_placeholder_skipped(self):
+        """your_ 前缀占位 Token 不应检测。"""
+        content = 'token = "ghp_your_token_here"\n'
+        f = _write_temp_file(content, suffix=".py")
+        try:
+            findings = scan_file(f)
+            assert not any(i.rule_name == "GitHubToken" for i in findings)
+        finally:
+            f.unlink()
+
+    def test_slack_token_detected(self):
+        """Slack Token（xoxb- 前缀）应被检测到。"""
+        content = f'slack = "{self.FAKE_SLACK}"\n'
+        f = _write_temp_file(content, suffix=".py")
+        try:
+            findings = scan_file(f)
+            assert any(i.rule_name == "SlackToken" for i in findings)
+        finally:
+            f.unlink()
+
+    def test_secret_key_context_detected(self):
+        """32 位随机 SecretKey 赋值应被检测到。"""
+        content = f'SECRET_KEY = "{self.FAKE_SECRET_KEY}"\n'
+        f = _write_temp_file(content, suffix=".py")
+        try:
+            findings = scan_file(f)
+            assert any(i.rule_name == "通用SecretKey上下文" for i in findings)
+        finally:
+            f.unlink()
+
+    def test_jwt_style_secret_with_dashes_skipped(self):
+        """带连字符的 JWT 测试密钥不应被新规则误报。"""
+        content = 'SECRET = "interop-secret-0123456789-abcdef-ghijkl"\n'
+        f = _write_temp_file(content, suffix=".py")
+        try:
+            findings = scan_file(f)
+            assert not any(i.rule_name == "通用SecretKey上下文" for i in findings)
+        finally:
+            f.unlink()
+
+    def test_existing_sk_rule_unaffected(self):
+        """既有 sk- 规则行为不受新增规则影响。"""
+        content = f'key = "{self.FAKE_SK}"\n'
+        f = _write_temp_file(content, suffix=".py")
+        try:
+            findings = scan_file(f)
+            assert any(i.type == API_KEY for i in findings)
+        finally:
+            f.unlink()
+
+    def test_sequential_value_helper(self):
+        """顺序/重复值判定函数边界。"""
+        from lib.checks.sensitive_info import _is_sequential_or_dummy_value as is_dummy
+        assert is_dummy("0123456789abcdef0123456789abcdef")
+        assert is_dummy("0000000000000000")
+        assert is_dummy("xxxxxxxxxxxxxxxx")
+        assert is_dummy("1234567890abcdef")
+        assert not is_dummy("5f4dcc3b5aa765d61d8327deb882cf99")
+        assert not is_dummy("Zp9Kq2Xm4Rt7Vb1Wy8Uc3Dz6Ha5Jf0Gk")
+        assert not is_dummy("short")
+
