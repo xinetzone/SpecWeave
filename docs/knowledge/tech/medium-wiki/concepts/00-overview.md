@@ -2,7 +2,7 @@
 type: Concept
 category: tech
 okf_version: "0.2"
-title: "Medium 平台总览：从"思想之地"到注意力订阅平台"
+title: 'Medium 平台总览：从"思想之地"到注意力订阅平台'
 description: "Medium 的产品身份、创始人基因、一句话商业模式模型与历史定位；回答 Medium 是什么、为什么它区别于一般博客平台。"
 tags: [medium, publishing-platform, social-journalism, evan-williams, content-platform]
 date: "2026-10-20"

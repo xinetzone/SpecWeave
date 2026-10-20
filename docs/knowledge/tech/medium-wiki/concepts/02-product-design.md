@@ -2,8 +2,8 @@
 type: Concept
 category: tech
 okf_version: "0.2"
-title: "Medium 产品形态与设计理念：为"深读"而生的交互系统"
-description: "Medium 的产品功能全景：极简编辑器、Claps、Tag 体系、Publications、高亮、阅读指标——以及这些功能如何共同服务于"注意力质量"目标。"
+title: 'Medium 产品形态与设计理念：为"深读"而生的交互系统'
+description: 'Medium 的产品功能全景：极简编辑器、Claps、Tag 体系、Publications、高亮、阅读指标——以及这些功能如何共同服务于"注意力质量"目标。'
 tags: [medium, product-design, claps, tags, publications, reading-metrics, ui-ux]
 date: "2026-10-20"
 last_verified: "2026-10-20"

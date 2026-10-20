@@ -1,7 +1,7 @@
 ---
 okf_version: "0.2"
 category: tech
-title: "Medium 平台知识包：从"思想之地"到注意力订阅平台"
+title: 'Medium 平台知识包：从"思想之地"到注意力订阅平台'
 description: "基于公开资料多源调研的 Medium.com 知识束：平台总览、历史时间线、产品设计、商业模式（会员+Partner Program）、技术架构、生态治理、竞争格局（Substack/Ghost）与 2022-2025 扭亏复盘；全部数量陈述带机构口径，冲突口径并列"
 tags: [medium, publishing-platform, business-model, partner-program, substack, creator-economy, turnaround, product-research]
 status: stable

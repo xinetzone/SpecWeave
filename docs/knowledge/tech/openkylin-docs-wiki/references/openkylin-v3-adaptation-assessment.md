@@ -22,7 +22,7 @@ knowledge_type: "conditional"
 validation_status: "pending-poc"
 reuse_count: "0"
 integrity: "unchecked"
-source: "派生产物，未引入新外部事实：事实与口径全部来自同知识包 [项目全面调研](project-overview.md)（F-001~F-062，2026-09-29 采集）、[官方文档平台导读](../index.md)（F-001~F-044）与[3.0 WSL 本机实测](wsl-install-sparse-vhd-guide.md)；官方性能数字沿用源报告的"官方口径待复测"裁定。"
+source: '派生产物，未引入新外部事实：事实与口径全部来自同知识包 [项目全面调研](project-overview.md)（F-001~F-062，2026-09-29 采集）、[官方文档平台导读](../index.md)（F-001~F-044）与[3.0 WSL 本机实测](wsl-install-sparse-vhd-guide.md)；官方性能数字沿用源报告的"官方口径待复测"裁定。'
 ---
 
 # openKylin 3.0 架构适配评估草案
