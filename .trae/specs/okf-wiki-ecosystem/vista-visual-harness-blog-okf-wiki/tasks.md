@@ -127,9 +127,82 @@
   - `rule` TR-9.2: 提交信息符合 Conventional Commits，中文主体，无乱码；evidence 为提交记录。
 - **Completion Evidence**: 子模块提交仅含 `doc/bundles/jishu/ai/models/vista-visual-harness/` 13 个文件与四级索引的追加行；并行 WIP `doc/bundles/jishu/iac/sst/` 的既有改动未被纳入。主仓提交仅含本 spec 三件套与子模块指针。
 
+## Task 10: 源码轮阶段 0——信源稳定性门预检（G0）
+- **Status**: `completed`
+- **Priority**: high
+- **Depends On**: Task 9
+- **Description**:
+  - 识别新信源：`github.com/joshhhhhan/VISTA`（MIT License）。GitHub API 查询确认**无任何 release tag** → 按 Skill 规范固定到 commit hash，禁止浮动 `main`。
+  - 固定坐标 `c97c354f0a8948256545a3e8850a1848f8e5b8c1`（2026-10-04）；本地只读检出置 `external/libs/joshhhhhan/VISTA/`（`external/` 已被根 `.gitignore` 忽略）。
+  - 引用规则：bundle 内一律使用 GitHub `blob/<commit>/<path>#Lx-Ly` 形式；**不写入任何本机绝对路径**、不使用 file 协议绝对路径。
+  - 清理前扫描与持久性 audit：`check-source-path-stability.py --target`（零引用放行）与 audit 模式（本次用于确认本束零命中）。
+- **Acceptance Criteria Addressed**: AC-2
+- **Test Requirements**:
+  - `rule` TR-10.1: 信源固定到不可变 commit 且记录 tag 查询结论；evidence 为 GitHub API 查询与 `git rev-parse HEAD`。
+  - `rule` TR-10.2: bundle 内零本机路径、零 file 协议引用；evidence 为全量路径扫描脚本输出。
+- **Completion Evidence**: F-086 登记无 tag 事实与 commit 坐标；本地检出 HEAD 一致；GATE-SPS audit 全库扫描 24,227 个 Markdown，**本束零命中**（红项均为他目录既有欠债）；机械扫描 `sensitive path hits: none`。
+
+## Task 11: 源码轮 R 阶段——源码事实采集与脚本计数
+- **Status**: `completed`
+- **Priority**: high
+- **Depends On**: Task 10
+- **Description**:
+  - 全量盘点目录结构、模块、符号、工具、CLI 参数、环境变量、入口点；**数量类事实一律脚本计数**，不以人工枚举为唯一依据。
+  - 登记源码事实 F-086~F-130，并补登 F-131~F-140（为计数类声明补独立背书）。
+  - 记录两处口径差（ARC 动作空间、上下文窗口）与三处论文未述细节（像素量化、history 粒度、压缩分叉）。
+- **Acceptance Criteria Addressed**: AC-2, AC-3, AC-6
+- **Test Requirements**:
+  - `rule` TR-11.1: 每条源码事实指向 `文件:行` 或固定 commit 坐标；evidence 为逐条来源映射。
+  - `rule` TR-11.2: 数量事实附计数口径（原始匹配数 vs 去重名数；递归 vs 非递归）；evidence 为计数脚本与独立复算。
+- **Completion Evidence**: F-086~F-140 共 **55** 条源码/论文事实；双份登记与 Spec `facts.md` 集合完全相等（140 = 140，无跳号、无未登记引用）。
+
+## Task 12: 源码轮 I/E 阶段——三层拆分与增量生成
+- **Status**: `completed`
+- **Priority**: high
+- **Depends On**: Task 11
+- **Description**:
+  - I 阶段：新增 M6（工具即文件、文件即接口）与 M7（论文是机制层、源码是复现层）两项洞察，均含四元组。
+  - E 阶段：按 source-code-to-okf-wiki §6.5 做**增量扩展**——新增信源登记 2 份、concepts 续编号 06~10、新增 examples 3 篇；**不改写第一轮已通过 V 阶段的结论**。
+  - 骨架变更：仓库 README 提供完整可复现路径，故由"无 examples"改为设立 `examples/`（3 篇）。
+  - 每批不超过 7 个文件；索引最后写。
+- **Acceptance Criteria Addressed**: AC-1, AC-3, AC-4, AC-6
+- **Test Requirements**:
+  - `rule` TR-12.1: 新文档编号续接既有最大序号，既有文档结论未被改写；evidence 为 diff 与目录清单。
+  - `rule` TR-12.2: references 先于 concepts 生成；evidence 为文件创建顺序与 sources 解析。
+- **Completion Evidence**: 新增 references 2 份、concepts 5 篇（06~10）、examples 3 篇 + 索引；concepts 现共 11 篇；`examples/index.md` 记录骨架变更理由。
+
+## Task 13: 源码轮 V 阶段——独立复核与闭环
+- **Status**: `completed`
+- **Priority**: high
+- **Depends On**: Task 12
+- **Description**:
+  - 由全新上下文的独立代理用**自写脚本**复算 13 项计数、Grep 验证约 120 个符号/常量/参数/环境变量/入口点、逐字比对 17 段引文、逐条比对 18 条命令。
+  - 按 P0~P3 分级处理；P0（无）、P1、P2、P3 在同轮修订中闭环。
+- **Acceptance Criteria Addressed**: AC-2, AC-3, AC-4, AC-6
+- **Test Requirements**:
+  - `rule` TR-13.1: 独立复核的 P1 及以上发现全部闭环；evidence 为修订 diff 与复测记录。
+  - `rule` TR-13.2: 计数与引用精度类发现均有独立 F 编号背书；evidence 为 F-131~F-140 与正文挂接清单。
+- **Completion Evidence**: 独立复核结论 **PASS-WITH-FINDINGS**：0 项 P0、2 项 P1、9 项 P2、6 项 P3，全部属引用精度而非事实错误。闭环内容：E-15（`history` 两套语义分述）、E-16（按键数 11）、F-131~F-140 补齐 9 类计数声明背书、6 项 P3 精度修正（引文近失、实现指针、同构性表述、参数名、提交数核验口径）。
+
+## Task 14: 源码轮 C 阶段交付核对
+- **Status**: `completed`
+- **Priority**: medium
+- **Depends On**: Task 13
+- **Description**:
+  - 核对子模块与主仓两处 status/diff，确认不含并行 WIP（`jishu/iac/sst`）与他任务文件。
+  - 按显式文件列表执行原子提交：① 子模块内 bundle 新增/修改文件与索引追加行；② 主仓 spec 文件与子模块指针。
+  - 不 push。
+- **Acceptance Criteria Addressed**: AC-1, AC-5
+- **Test Requirements**:
+  - `rule` TR-14.1: 交付清单仅含本任务文件；evidence 为两仓库 status/diff。
+  - `rule` TR-14.2: 提交信息符合 Conventional Commits 且中文无乱码；evidence 为提交记录。
+- **Completion Evidence**: 子模块提交仅含本 bundle 的新增/修改文件与 `jishu/ai/models/index.md` 的描述行；`jishu/iac/sst/` 并行 WIP 未纳入。主仓提交仅含本 spec 文件与子模块指针。
+
 ## Task Dependencies
 
-Task 1 → Task 2 → Task 3 → Task 4 → Task 5 → Task 6 → Task 7 → Task 8 → Task 9
+第一轮：Task 1 → Task 2 → Task 3 → Task 4 → Task 5 → Task 6 → Task 7 → Task 8 → Task 9
+
+第二轮（源码与论文补充）：Task 10 → Task 11 → Task 12 → Task 13 → Task 14
 
 ## Quality Gates
 
