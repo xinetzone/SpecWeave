@@ -14,11 +14,13 @@ source: "../references/source-inventory.md"
 
 # 01 生态全景与 Agent Skills 规范
 
+> 时点声明：本页事实采集于 2026-10-20；开源生态与本机 skill 形态可能随时间变化，引用仓库以当期上游为准。
+
 ## 1. 先补一个前置知识：什么是"Skill"
 
 本文中的 skill 指 Agent Skills 开放规范定义的能力单元：一个包含 `SKILL.md` 的目录，frontmatter 写 `name` + `description`（做什么/何时用），正文写指令，可随附 `scripts/`（可执行脚本）、`references/`（参考文献）、`assets/`（模板资源）[F-001、F-002]。Agent 对 skill 采取三级渐进式披露：启动只加载 name+description（约 100 token），命中任务才读全文，资源按需加载 [F-003]。校验用 `skills-ref validate` [F-005]。
 
-这意味着：**skill 的规模可以很小（一段提示词）也可以很大（60+ 步骤的生产线）**，而"短视频生产"天然是后者——它是多工序协作，生态因此演化成 skill 簇而非单体。
+这意味着：**skill 的规模可以很小（一段提示词）也可以很大（60+ 步骤的生产线）**。观察性事实：调研样本（本机资产 + 开源 8 仓库）中，多数面向生产的头部方案呈"簇"形态（多 skill 按工序协作），也存在单体重生产线反例（maxazure/video-editing-skill，60+ 步骤）[F-024、F-026]——簇形态是多数实践而非必然。
 
 ## 2. 三条能力带
 
