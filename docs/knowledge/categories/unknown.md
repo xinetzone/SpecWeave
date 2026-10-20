@@ -9,7 +9,7 @@ title: "分类索引：unknown"
 - [返回知识库首页](../README.md)
 - [按标签检索](../tags/README.md)
 
-> 本分片收录 **1** 个子分类，共 **174** 条条目。
+> 本分片收录 **1** 个子分类，共 **219** 条条目。
 
 ## unknown
 
@@ -38,6 +38,18 @@ title: "分类索引：unknown"
 | [Karpathy LLM Wiki 知识库方案文章深度洞察分析报告](../ai-engineering/concepts/karpathy-llm-wiki-analysis.md) |  | 2026-07-07 | - |
 | [Loop Engineering 标准化知识库](../ai-engineering/concepts/loop-engineering-knowledge-base.md) |  | 2026-08-01 | - |
 | [明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施](../ai-engineering/concepts/octo-platform-wiki.md) |  | 2026-07-04 | octo、mininglamp、private-ai、agent-collaboration、a2a、matter、taste、orchestration、multi-agent、trustworthy-ai |
+| [dsh-context npm 包](../ai-engineering/dsh-context/index.md) |  |  | dsh-context、deepseek-harness、dsh、context-visualization、context-management、cordis-plugin、token-meter、agent-observability、ai-engineering |
+| [log](../ai-engineering/dsh-context/log.md) |  |  | - |
+| [dsh-context 插件定位与四类入口](../ai-engineering/dsh-context/concepts/00-dsh-context-overview.md) |  |  | - |
+| [dsh-context 安装方式与兼容矩阵](../ai-engineering/dsh-context/concepts/01-install-and-support.md) |  |  | - |
+| [dsh-context 观测面详解](../ai-engineering/dsh-context/concepts/02-observability-surfaces.md) |  |  | - |
+| [dsh-context 的定位、适用场景与可迁移方法论](../ai-engineering/dsh-context/concepts/03-tool-positioning-and-fit.md) |  |  | - |
+| [index](../ai-engineering/dsh-context/concepts/index.md) |  |  | - |
+| [facts](../ai-engineering/dsh-context/references/facts.md) |  |  | - |
+| [index](../ai-engineering/dsh-context/references/index.md) |  |  | - |
+| [knowledge-map](../ai-engineering/dsh-context/references/knowledge-map.md) |  |  | - |
+| [source-manifest](../ai-engineering/dsh-context/references/source-manifest.md) |  |  | - |
+| [verification](../ai-engineering/dsh-context/references/verification.md) |  |  | - |
 | [index](../algorithmic-art/index.md) |  |  | - |
 | [index](../algorithmic-art/atomic-emergence/index.md) |  |  | - |
 | [log](../algorithmic-art/atomic-emergence/log.md) |  |  | - |
@@ -53,6 +65,7 @@ title: "分类索引：unknown"
 | [敏感信息脱敏规范与误报防控指南](../best-practices/sensitive-info-desensitization-spec.md) |  |  | - |
 | [spec_loader 冷启动风暴应急预案](../best-practices/spec-loader-cold-start-storm-contingency.md) |  |  | - |
 | [spec-loader.toml 配置速查手册](../best-practices/spec-loader-config-guide.md) |  |  | - |
+| [index](../cake-cutting-rule/index.md) |  |  | - |
 | [index](../decisions/index.md) |  |  | - |
 | [文档标题](../docs-separation-guide/DOC_TEMPLATE.md) |  |  | - |
 | [格式规范指南](../docs-separation-guide/FORMAT_GUIDE.md) |  |  | - |
@@ -93,6 +106,8 @@ title: "分类索引：unknown"
 | [index](../mdi/generated/case1/index.md) |  |  | - |
 | [index](../mdi/generated/case3/index.md) |  |  | - |
 | [index](../mdi-research/index.md) |  |  | - |
+| [adversarial-review](../monetization-direction-judgment/references/adversarial-review.md) |  |  | - |
+| [source-inventory](../monetization-direction-judgment/references/source-inventory.md) |  |  | - |
 | [index](../myst-unified-ecosystem/index.md) |  |  | - |
 | [开源赛事知识](../opensource-contest/index.md) |  |  | opensource、contest、index |
 | [2026 上海开源软件应用创新大赛 参赛知识包](../opensource-contest/os2026-shanghai/index.md) |  |  | opensource、contest、shanghai、oschina、ai-industrial-software、ai-cloud、ai-tools、participation-guide |
@@ -155,6 +170,22 @@ title: "分类索引：unknown"
 | [adversarial-review](../tech/openkylin-docs-wiki/references/adversarial-review.md) |  |  | - |
 | [full-catalog](../tech/openkylin-docs-wiki/references/full-catalog.md) |  |  | - |
 | [source-inventory](../tech/openkylin-docs-wiki/references/source-inventory.md) |  |  | - |
+| [PineDrama 产品调研——字节 TikTok 海外免费短剧 App](../tech/pinedrama/index.md) |  |  | pinedrama、tiktok、bytedance、short-drama、iaa、emerging-markets、product-research |
+| [log](../tech/pinedrama/log.md) |  |  | - |
+| [第三方下载站三源互证](../tech/pinedrama/concepts/00-overview.md) |  |  | pinedrama、tiktok、bytedance、short-drama、overview |
+| [第三方下载站版本记录](../tech/pinedrama/concepts/01-timeline.md) |  |  | pinedrama、timeline、tiktok、short-drama |
+| [Business Insider（经 Digital Trends 转引）](../tech/pinedrama/concepts/02-product-features.md) |  |  | pinedrama、product、features、ux、short-drama |
+| [Owl & Co. 调研（转引）](../tech/pinedrama/concepts/03-iaa-business-model.md) |  |  | pinedrama、iaa、business-model、advertising、monetization、redfruit |
+| [Short Drama Apps Report 2026（转引）](../tech/pinedrama/concepts/04-regional-markets.md) |  |  | pinedrama、indonesia、brazil、emerging-markets、payments、iaa |
+| [Owl & Co.（转引）](../tech/pinedrama/concepts/05-competitive-landscape.md) |  |  | pinedrama、reelshort、dramabox、competition、market-size、short-drama |
+| [QuestMobile/易观千帆（转引）](../tech/pinedrama/concepts/06-bytedance-strategy.md) |  |  | pinedrama、bytedance、redfruit、tiktok-minis、strategy、app-matrix |
+| [界面新闻 7 款 App 矩阵（旁证 Melolo 为字节海外短剧产品）](../tech/pinedrama/concepts/07-failed-predecessors.md) |  |  | pinedrama、melolo、pikoshow、localization、failure-lessons、southeast-asia、japan |
+| [澎湃·DataEye 圣丹斯课程稿](../tech/pinedrama/concepts/08-risks-and-outlook.md) |  |  | pinedrama、risks、outlook、monetization、regulation、short-drama |
+| [TikTok for Developers：发票与结算](../tech/pinedrama/concepts/09-monetization-playbook.md) |  |  | pinedrama、tiktok、short-drama、monetization、playbook、creator、monetization-path |
+| [index](../tech/pinedrama/concepts/index.md) |  |  | - |
+| [本文件（信源自登记）](../tech/pinedrama/references/00-sources.md) |  |  | pinedrama、tiktok、bytedance、short-drama、sources、reference |
+| [夜雨聆风行业数据汇编](../tech/pinedrama/references/01-data-caliber.md) |  |  | pinedrama、data-caliber、methodology、reference |
+| [index](../tech/pinedrama/references/index.md) |  |  | - |
 | [01-ip-exposure-and-risk](../tech/public-server-hardening/concepts/01-ip-exposure-and-risk.md) |  |  | - |
 | [02-exposure-survey-and-firewall](../tech/public-server-hardening/concepts/02-exposure-survey-and-firewall.md) |  |  | - |
 | [03-ssh-and-brute-force-defense](../tech/public-server-hardening/concepts/03-ssh-and-brute-force-defense.md) |  |  | - |
@@ -183,6 +214,20 @@ title: "分类索引：unknown"
 | [adversarial-review](../tech/quantum-secret-messaging/references/adversarial-review.md) |  |  | - |
 | [source-inventory](../tech/quantum-secret-messaging/references/source-inventory.md) |  |  | - |
 | [index](../tech/tvm-ffi-wiki/index.md) |  |  | - |
+| [WSL DrvFs 挂载与跨文件系统访问教程](../tech/wsl-drvfs-mount-wiki/index.md) |  |  | wsl、drvfs、mount、unc、smb、ntfs、filesystem、tutorial |
+| [log](../tech/wsl-drvfs-mount-wiki/log.md) |  |  | - |
+| [在 WSL 2 中挂载 Linux 磁盘（现代官方文档）](../tech/wsl-drvfs-mount-wiki/concepts/00-overview.md) |  |  | wsl、drvfs、mount、overview、filesystem |
+| [博文评论区社区反馈](../tech/wsl-drvfs-mount-wiki/concepts/01-drvfs-manual-mount.md) |  |  | wsl、drvfs、mount、removable-drive、usb |
+| [博文评论区社区反馈](../tech/wsl-drvfs-mount-wiki/concepts/02-network-mount.md) |  |  | wsl、drvfs、unc、smb、network、credentials、interop |
+| [File System Improvements to the Windows Subsystem for Linux（微软官方归档博文）](../tech/wsl-drvfs-mount-wiki/concepts/03-ntfs-folder-volumes.md) |  |  | wsl、drvfs、ntfs、mount-point、volume、bind-mount |
+| [跨 Windows 和 Linux 文件系统工作（现代官方文档）](../tech/wsl-drvfs-mount-wiki/concepts/04-filesystem-semantics.md) |  |  | wsl、drvfs、fat、network-filesystem、permissions、case-sensitivity、symlink |
+| [在 WSL 2 中挂载 Linux 磁盘（现代官方文档）](../tech/wsl-drvfs-mount-wiki/concepts/05-version-and-modern-wsl.md) |  |  | wsl、drvfs、wsl2、wslconf、automount、wsl-mount、versioning |
+| [index](../tech/wsl-drvfs-mount-wiki/concepts/index.md) |  |  | - |
+| [本文件（信源自登记）](../tech/wsl-drvfs-mount-wiki/references/00-sources.md) |  |  | wsl、drvfs、mount、sources、reference |
+| [在 WSL 2 中挂载 Linux 磁盘 wsl --mount（现代官方文档）](../tech/wsl-drvfs-mount-wiki/references/01-fact-ledger.md) |  |  | wsl、drvfs、mount、fact-ledger、retrospective |
+| [在 WSL 2 中挂载 Linux 磁盘](../tech/wsl-drvfs-mount-wiki/references/02-adversarial-review.md) |  |  | wsl、drvfs、adversarial-review、verification |
+| [index](../tech/wsl-drvfs-mount-wiki/references/index.md) |  |  | - |
+| [index](../tech/xuan-compose-sticker-wiki/index.md) |  |  | - |
 | [index](../templates/index.md) |  |  | - |
 | [knowledge-entry-template](../templates/knowledge-entry-template.md) |  |  | - |
 | [TRAE 生态特性周报（2026-09-21）](../trae-feature-watch/2026-09-21-trae-feature-watch.md) |  | 2026-09-21 | - |
@@ -192,4 +237,4 @@ title: "分类索引：unknown"
 
 ---
 
-*索引自动生成于 2026-10-07 19:07:31*
+*索引自动生成于 2026-10-20 10:57:10*

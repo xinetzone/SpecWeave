@@ -12,19 +12,21 @@ title: "分类总索引"
 
 ## 统计摘要
 
-- **总条目数**：361
-- **分类路径数**：21
-- **顶层分类数**：16
+- **总条目数**：461
+- **分类路径数**：23
+- **顶层分类数**：18
 
 | 顶层分类 | 子分类数 | 条目数 | 入口 |
 |----------|----------|--------|------|
-| unknown | 1 | 174 | [unknown](categories/unknown.md) |
+| unknown | 1 | 219 | [unknown](categories/unknown.md) |
+| tech | 1 | 86 | [tech](categories/tech.md) |
 | best-practices | 1 | 49 | [best-practices](categories/best-practices.md) |
-| tech | 1 | 48 | [tech](categories/tech.md) |
 | operations | 1 | 26 | [operations](categories/operations.md) |
 | knowledge | 4 | 20 | [knowledge](categories/knowledge.md) |
+| monetization-direction | 1 | 11 | [monetization-direction](categories/monetization-direction.md) |
 | docs | 3 | 10 | [docs](categories/docs.md) |
-| cake-cutting-rule | 1 | 7 | [cake-cutting-rule](categories/cake-cutting-rule.md) |
+| what-is-life | 1 | 7 | [what-is-life](categories/what-is-life.md) |
+| cake-cutting-rule | 1 | 6 | [cake-cutting-rule](categories/cake-cutting-rule.md) |
 | decisions | 1 | 6 | [decisions](categories/decisions.md) |
 | examples | 1 | 6 | [examples](categories/examples.md) |
 | mindfulness-positivity | 1 | 6 | [mindfulness-positivity](categories/mindfulness-positivity.md) |
@@ -37,4 +39,4 @@ title: "分类总索引"
 
 ---
 
-*索引自动生成于 2026-10-07 19:07:31*
+*索引自动生成于 2026-10-20 10:57:10*

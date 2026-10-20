@@ -19,6 +19,7 @@ docs
 examples
 knowledge
 mindfulness-positivity
+monetization-direction
 operations
 platform
 research
@@ -27,4 +28,5 @@ standards
 tech
 troubleshooting
 unknown
+what-is-life
 ```

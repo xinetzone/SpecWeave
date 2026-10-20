@@ -7,9 +7,9 @@ title: "项目知识库"
 
 项目知识库的统一入口页。详细分类条目与标签检索已拆分到独立索引，避免根 README 持续膨胀。
 
-- **总条目数**：361
-- **分类数**：21
-- **标签数**：637
+- **总条目数**：461
+- **分类数**：23
+- **标签数**：782
 
 ## 快速导航
 
@@ -17,20 +17,22 @@ title: "项目知识库"
 |----------|--------|------|
 | architecture | 1 | [architecture](categories/architecture.md) |
 | best-practices | 49 | [best-practices](best-practices/README.md) |
-| cake-cutting-rule | 7 | [cake-cutting-rule](categories/cake-cutting-rule.md) |
+| cake-cutting-rule | 6 | [cake-cutting-rule](categories/cake-cutting-rule.md) |
 | decisions | 6 | [decisions](decisions/README.md) |
 | docs | 10 | [docs](categories/docs.md) |
 | examples | 6 | [examples](categories/examples.md) |
 | knowledge | 20 | [knowledge](categories/knowledge.md) |
 | mindfulness-positivity | 6 | [mindfulness-positivity](categories/mindfulness-positivity.md) |
+| monetization-direction | 11 | [monetization-direction](categories/monetization-direction.md) |
 | operations | 26 | [operations](operations/README.md) |
 | platform | 1 | [platform](categories/platform.md) |
 | research | 1 | [research](categories/research.md) |
 | social-relations | 1 | [social-relations](categories/social-relations.md) |
 | standards | 1 | [standards](categories/standards.md) |
-| tech | 48 | [tech](tech/README.md) |
+| tech | 86 | [tech](tech/README.md) |
 | troubleshooting | 4 | [troubleshooting](troubleshooting/README.md) |
-| unknown | 174 | [unknown](categories/unknown.md) |
+| unknown | 219 | [unknown](categories/unknown.md) |
+| what-is-life | 7 | [what-is-life](categories/what-is-life.md) |
 
 ## 辅助索引
 
@@ -41,16 +43,16 @@ title: "项目知识库"
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
-| [切蛋糕法则：从数学公平分割到机制设计与职场分配（OKF 教程知识包）](cake-cutting-rule/index.md) | 2026-10-07 | cake-cutting-rule |
-| [切蛋糕法则 · 数学公平分割理论：定义、算法谱系与局限](cake-cutting-rule/concepts/01-fair-division-theory.md) | 2026-10-07 | cake-cutting-rule |
-| [切蛋糕法则 · 机制设计解读：为什么'你切我选'不需要监督](cake-cutting-rule/concepts/02-you-cut-i-choose-mechanism.md) | 2026-10-07 | cake-cutting-rule |
-| [切蛋糕法则 · 职场与处世层：做蛋糕的人与切蛋糕的人](cake-cutting-rule/concepts/03-maker-vs-cutter-workplace.md) | 2026-10-07 | cake-cutting-rule |
-| [示例：三人合伙创业的动态股权分配（你切我选思想的完整落地）](cake-cutting-rule/examples/01-worked-example-dynamic-equity.md) | 2026-10-07 | cake-cutting-rule |
-| [V 对抗审查记录：切蛋糕法则知识包](cake-cutting-rule/references/adversarial-review.md) | 2026-10-07 | cake-cutting-rule |
-| [信源台账：切蛋糕法则知识包 S01~S16](cake-cutting-rule/references/source-inventory.md) | 2026-10-07 | cake-cutting-rule |
-| [结伴 × AI 变现行动知识包：三域飞轮——群内零交易、站外去赚钱、回站只讲案例](jieban-ai-monetization/index.md) | 2026-10-07 | social-relations |
-| [正念 vs 正面：双概念知识包（教程、联系与区别、先接纳后重构整合模式）](mindfulness-positivity/index.md) | 2026-10-03 | mindfulness-positivity |
-| [正念教程：觉察、接纳与当下的科学](mindfulness-positivity/concepts/01-zheng-nian-mindfulness.md) | 2026-10-03 | mindfulness-positivity |
+| [Medium 平台知识包：从"思想之地"到注意力订阅平台](tech/medium-wiki/index.md) | 2026-10-20 | tech |
+| [Medium 知识包变更日志](tech/medium-wiki/log.md) | 2026-10-20 | tech |
+| [Medium 平台总览：从"思想之地"到注意力订阅平台](tech/medium-wiki/concepts/00-overview.md) | 2026-10-20 | tech |
+| [Medium 历史时间线：2012–2026](tech/medium-wiki/concepts/01-timeline.md) | 2026-10-20 | tech |
+| [Medium 产品形态与设计理念：为"深读"而生的交互系统](tech/medium-wiki/concepts/02-product-design.md) | 2026-10-20 | tech |
+| [Medium 商业模式：会员订阅 + Partner Program 的分成引擎](tech/medium-wiki/concepts/03-business-model.md) | 2026-10-20 | tech |
+| [Medium 技术架构：从 Node.js 单体到 AWS 全栈](tech/medium-wiki/concepts/04-architecture.md) | 2026-10-20 | tech |
+| [Medium 内容生态与治理：作者关系、治理实验与全球访问限制](tech/medium-wiki/concepts/05-ecosystem-governance.md) | 2026-10-20 | tech |
+| [Medium 竞争格局：与 Substack、Ghost 的范式分岔](tech/medium-wiki/concepts/06-competition.md) | 2026-10-20 | tech |
+| [2022–2025 转型复盘：Stubblebine 的扭亏之战](tech/medium-wiki/concepts/07-turnaround.md) | 2026-10-20 | tech |
 
 ## 相关资源
 
@@ -87,4 +89,4 @@ title: "项目知识库"
 
 ---
 
-*索引自动生成于 2026-10-07 19:07:31*
+*索引自动生成于 2026-10-20 10:57:10*
