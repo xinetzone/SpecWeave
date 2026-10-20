@@ -130,6 +130,32 @@ class TestEmailDetection:
         finally:
             f.unlink()
 
+    def test_rfc2606_subdomain_email_skipped(self):
+        """RFC 2606 保留域子域（proxy.example.com）邮箱不应检测。"""
+        content = "proxy_user = " + '"' + "password@proxy.example.com" + '"' + "\n"
+        f = _write_temp_file(content, suffix=".py")
+        try:
+            findings = scan_file(f)
+            email_findings = [i for i in findings if i.type == EMAIL]
+            assert len(email_findings) == 0
+        finally:
+            f.unlink()
+
+    def test_ofl_license_attribution_email_skipped(self):
+        """SIL OFL 许可证版权声明中的署名邮箱不应检测（法定公开署名）。"""
+        content = (
+            "Copyright (c) 2011, Denis Masharov (denis.masharov" + "@" + "gmail.com)\n"
+            "\n"
+            "This Font Software is licensed under the SIL Open Font License, Version 1.1.\n"
+        )
+        f = _write_temp_file(content, suffix=".txt")
+        try:
+            findings = scan_file(f)
+            email_findings = [i for i in findings if i.type == EMAIL]
+            assert len(email_findings) == 0
+        finally:
+            f.unlink()
+
     def test_email_fix_works(self):
         """邮箱修复验证：首字符+***+尾字符格式。"""
         content = "邮箱：" + "realuser" + "@" + "company.com" + "\n"
@@ -291,6 +317,28 @@ class TestWindowsPathDetection:
             finally:
                 f.unlink()
 
+    def test_env_var_placeholder_win_user_skipped(self):
+        """%USERNAME% 环境变量占位（文档通用示例）不应检测。"""
+        content = "C:" + "\\Users\\" + "%USERNAME%" + "\\AppData\n"
+        f = _write_temp_file(content, suffix=".md")
+        try:
+            findings = scan_file(f)
+            path_findings = [i for i in findings if i.type == PERSONAL_PATH_WIN]
+            assert len(path_findings) == 0
+        finally:
+            f.unlink()
+
+    def test_devuser_win_path_skipped(self):
+        """devuser（Windows 容器镜像固定账户，与 Unix 侧对称）不应检测。"""
+        content = "C:" + "\\Users\\" + "devuser" + "\\workspace\n"
+        f = _write_temp_file(content, suffix=".md")
+        try:
+            findings = scan_file(f)
+            path_findings = [i for i in findings if i.type == PERSONAL_PATH_WIN]
+            assert len(path_findings) == 0
+        finally:
+            f.unlink()
+
     def test_real_username_xinzo_detected(self):
         """真实用户名C:\\Users\\xinzo\\应被检测到。"""
         content = "C:" + "\\Users\\" + "xinzo" + "\\Documents\n"
@@ -389,6 +437,17 @@ class TestUnixPathDetection:
         finally:
             f.unlink()
 
+    def test_chinese_placeholder_unix_user_skipped(self):
+        """/Users/你的用户名/（中文文档占位，与 Win 侧对称）不应检测。"""
+        content = "/Users/" + "你的用户名" + "/project\n"
+        f = _write_temp_file(content, suffix=".md")
+        try:
+            findings = scan_file(f)
+            path_findings = [i for i in findings if i.type == PERSONAL_PATH_UNIX]
+            assert len(path_findings) == 0
+        finally:
+            f.unlink()
+
 
 class TestInternalIpDetection:
     """内网IP检测测试。"""
@@ -412,6 +471,31 @@ class TestInternalIpDetection:
             findings = scan_file(f)
             ip_findings = [i for i in findings if i.type == INTERNAL_IP]
             assert len(ip_findings) == 0
+        finally:
+            f.unlink()
+
+    def test_canonical_doc_example_ips_skipped(self):
+        """网络文档通用示例 IP（网络地址 + 示例首主机）不应检测。"""
+        example_ips = ["10.0.0.0", "10.0.0.1", "10.0.0.2",
+                       "192.168.0.0", "192.168.1.0", "192.168.1.1", "172.16.0.0"]
+        for ip in example_ips:
+            content = f"网关地址：{ip}\n"
+            f = _write_temp_file(content, suffix=".md")
+            try:
+                findings = scan_file(f)
+                ip_findings = [i for i in findings if i.type == INTERNAL_IP]
+                assert len(ip_findings) == 0, f"{ip} should be skipped"
+            finally:
+                f.unlink()
+
+    def test_real_internal_ip_detected(self):
+        """真实内网地址（非示例形态）仍应检测。"""
+        content = "服务器地址：" + "10.16" + ".11.3\n"
+        f = _write_temp_file(content, suffix=".md")
+        try:
+            findings = scan_file(f)
+            ip_findings = [i for i in findings if i.type == INTERNAL_IP]
+            assert len(ip_findings) == 1
         finally:
             f.unlink()
 
@@ -502,6 +586,40 @@ class TestPasswordDetection:
         finally:
             f.unlink()
 
+    def test_uppercase_password_detected(self):
+        """大写配置键（PASSWORD=）应命中——大小写不敏感（SF-036 修复）。"""
+        content = 'PASSWORD = "' + "Sup3rSecretValue" + '"\n'
+        f = _write_temp_file(content, suffix=".py")
+        try:
+            findings = scan_file(f)
+            pwd_findings = [i for i in findings if i.type == PASSWORD]
+            assert len(pwd_findings) == 1
+            assert pwd_findings[0].severity == SEVERITY_HIGH
+        finally:
+            f.unlink()
+
+    def test_capitalized_secret_detected(self):
+        """首字母大写 Secret: 应命中——大小写不敏感（SF-036 修复）。"""
+        content = 'Secret: "' + "a1b2c3d4e5f6" + '"\n'
+        f = _write_temp_file(content, suffix=".yaml")
+        try:
+            findings = scan_file(f)
+            pwd_findings = [i for i in findings if i.type == PASSWORD]
+            assert len(pwd_findings) == 1
+        finally:
+            f.unlink()
+
+    def test_literal_password_word_skipped(self):
+        """「默认密码为 password」字面占位值不应检测。"""
+        content = 'PASSWORD = "' + "password" + '"\n'
+        f = _write_temp_file(content, suffix=".py")
+        try:
+            findings = scan_file(f)
+            pwd_findings = [i for i in findings if i.type == PASSWORD]
+            assert len(pwd_findings) == 0
+        finally:
+            f.unlink()
+
 
 class TestDbConnDetection:
     """数据库连接串检测测试。"""
@@ -531,11 +649,35 @@ class TestDbConnDetection:
 
 
 class TestPrivateKeyDetection:
-    """私钥检测测试。"""
+    """私钥块级检测测试（头 + base64 体，2026-10-20 头体分离改造）。"""
 
-    def test_private_key_detected(self):
-        """私钥头应被检测到（HIGH风险）。"""
-        content = "-----BEGIN " + "RSA PRIVATE KEY-----\n"
+    # 拼接构造：源码中不出现完整 PEM 头 + 体的连续匹配串
+    _KEY_HEADER = "-----BEGIN " + "RSA PRIVATE KEY-----"
+    _KEY_BODY = "MIIE" + "pAIBAAKCAQEA" + "A" * 120
+    # 标准多行 PEM 体（每行 64）
+    _KEY_LINE = "QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVphYmNkZWZnaGlqa2xtbm9wcXJz" + "dHV2d3g="
+
+    def test_private_key_block_detected(self):
+        """PEM 头 + base64 体（单行长体）应被检测到（HIGH风险）。"""
+        content = self._KEY_HEADER + "\n" + self._KEY_BODY + "\n"
+        f = _write_temp_file(content, suffix=".txt")
+        try:
+            findings = scan_file(f)
+            key_findings = [i for i in findings if i.type == PRIVATE_KEY]
+            assert len(key_findings) == 1
+            assert key_findings[0].severity == SEVERITY_HIGH
+            # match 只存头部，不把整块密钥写进报告
+            assert key_findings[0].match == self._KEY_HEADER
+        finally:
+            f.unlink()
+
+    def test_private_key_multiline_block_detected(self):
+        """标准多行 PEM（每行 64）应被检测到（HIGH风险）。"""
+        content = (
+            self._KEY_HEADER + "\n"
+            + self._KEY_LINE + "\n" + self._KEY_LINE + "\n"
+            + "-----END " + "RSA PRIVATE KEY-----\n"
+        )
         f = _write_temp_file(content, suffix=".txt")
         try:
             findings = scan_file(f)
@@ -545,9 +687,89 @@ class TestPrivateKeyDetection:
         finally:
             f.unlink()
 
-    def test_public_key_skipped(self):
-        """公钥头不应检测。"""
-        content = "-----BEGIN PUBLIC KEY-----\n"
+    def test_private_key_header_only_skipped(self):
+        """单独提及 PEM 头（文档说明格式）不应报警——头体分离的误报根治点。"""
+        content = "PEM 格式以 " + self._KEY_HEADER + " 开头，后接 base64 体。\n"
+        f = _write_temp_file(content, suffix=".md")
+        try:
+            findings = scan_file(f)
+            key_findings = [i for i in findings if i.type == PRIVATE_KEY]
+            assert len(key_findings) == 0
+        finally:
+            f.unlink()
+
+    def test_private_key_header_with_prose_skipped(self):
+        """PEM 头后跟英文散文（无 64 连续 base64 串）不应报警。"""
+        content = (
+            self._KEY_HEADER + "\n"
+            + "The key body follows in base64 encoding on the subsequent lines "
+            + "of this document for illustration purposes only.\n"
+        )
+        f = _write_temp_file(content, suffix=".md")
+        try:
+            findings = scan_file(f)
+            key_findings = [i for i in findings if i.type == PRIVATE_KEY]
+            assert len(key_findings) == 0
+        finally:
+            f.unlink()
+
+    def test_private_key_header_with_fingerprint_skipped(self):
+        """PEM 头后跟 40 位指纹（短跑不成段）不应报警。"""
+        content = (
+            self._KEY_HEADER + "\n"
+            + "SHA256 fingerprint: " + "d41d8cd98f00b204e9800998ecf8427e12345678" + "\n"
+        )
+        f = _write_temp_file(content, suffix=".md")
+        try:
+            findings = scan_file(f)
+            key_findings = [i for i in findings if i.type == PRIVATE_KEY]
+            assert len(key_findings) == 0
+        finally:
+            f.unlink()
+
+    def test_private_key_single_line_escaped_detected(self):
+        """JSON/YAML 中转义为单行的私钥块（头+体同行）应被检测到。"""
+        content = '{"key": "' + self._KEY_HEADER + "\\n" + self._KEY_BODY + '"}\n'
+        f = _write_temp_file(content, suffix=".json")
+        try:
+            findings = scan_file(f)
+            key_findings = [i for i in findings if i.type == PRIVATE_KEY]
+            assert len(key_findings) == 1
+        finally:
+            f.unlink()
+
+    def test_private_key_example_context_downgraded(self):
+        """示例上下文中的私钥块降级为 MEDIUM（仍可见、不阻断）。"""
+        # 与旧行级规则同口径：示例关键词须在头部所在行
+        content = "示例：" + self._KEY_HEADER + "\n" + self._KEY_BODY + "\n"
+        f = _write_temp_file(content, suffix=".txt")
+        try:
+            findings = scan_file(f)
+            key_findings = [i for i in findings if i.type == PRIVATE_KEY]
+            assert len(key_findings) == 1
+            assert key_findings[0].severity == SEVERITY_MEDIUM
+        finally:
+            f.unlink()
+
+    def test_private_key_in_example_code_block_downgraded(self):
+        """示例代码块（fenced + example 关键词）内的私钥块降级为 LOW。"""
+        content = (
+            "# 用法示例\n\n```\n"
+            + self._KEY_HEADER + "\n" + self._KEY_BODY + "\n"
+            + "```\n"
+        )
+        f = _write_temp_file(content, suffix=".md")
+        try:
+            findings = scan_file(f)
+            key_findings = [i for i in findings if i.type == PRIVATE_KEY]
+            assert len(key_findings) == 1
+            assert key_findings[0].severity == SEVERITY_LOW
+        finally:
+            f.unlink()
+
+    def test_public_key_block_skipped(self):
+        """公钥块（头+体）不应按私钥检测。"""
+        content = "-----BEGIN " + "PUBLIC KEY-----\n" + self._KEY_BODY + "\n"
         f = _write_temp_file(content, suffix=".txt")
         try:
             findings = scan_file(f)
@@ -979,7 +1201,7 @@ class TestVendorCredentialDetection:
     # 检测夹具一律拼接构造：运行期值完整、源码中不出现连续匹配串，
     # 避免测试文件自身被扫描器命中（与既有手机号测试同款约定）
     FAKE_WX_ID = "wx" + "4c629ec6cd51a2d6"
-    FAKE_WX_SECRET = "5f4dcc3b" + "5aa765d61d8327deb882cf99"
+    FAKE_WX_SECRET_HEX = "5f4dcc3b" + "5aa765d61d8327deb882cf99"
     FAKE_AKID = "AKID" + "A1b2C3d4E5f6G7h8I9j0K1l2M3n4O5p6"
     FAKE_GH = "ghp_" + "A1b2C3d4E5f6G7h8I9j0K1l2M3n4O5p6Q7r8"
     FAKE_SLACK = "xoxb-" + "2498137-0aBcDeFgHiJk"
@@ -1028,7 +1250,7 @@ class TestVendorCredentialDetection:
 
     def test_wechat_app_secret_detected(self):
         """真实形态 AppSecret（32 位 hex）应被检测到。"""
-        content = f'MP_ARCHIVER_WECHAT_APP_SECRET={self.FAKE_WX_SECRET}\n'
+        content = f'MP_ARCHIVER_WECHAT_APP_SECRET={self.FAKE_WX_SECRET_HEX}\n'
         f = _write_temp_file(content, suffix=".env")
         try:
             findings = scan_file(f)

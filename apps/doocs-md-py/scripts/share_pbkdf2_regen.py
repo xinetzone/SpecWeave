@@ -28,8 +28,8 @@ TARGET = APP_ROOT / "tests" / "golden" / "share_pbkdf2_interop.json"
 WORK = APP_ROOT / ".temp-pbkdf2"
 WSL_WORK = "/mnt/d/AI/apps/doocs-md-py/.temp-pbkdf2"
 
-PASSWORD = "abcd1234"
-WRONG_PASSWORD = "abcd1235"
+PASSWORD = "abcd1234"  # nosec 黄金向量再生成夹具，非真实凭据
+WRONG_PASSWORD = "abcd1235"  # nosec 黄金向量再生成夹具，非真实凭据
 FIXED_SALT_B64 = "Zml4ZWQtc2FsdC0xNmJ5IQ=="  # b"fixed-salt-16by!"
 
 DERIVE_MJS = r"""// TR-12.2 WebCrypto PBKDF2 互认核验（与上游 share-password.ts 同 API）

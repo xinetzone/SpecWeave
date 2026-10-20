@@ -9,7 +9,7 @@ from travel_planner.config import LLMConfig
 from travel_planner.errors import LLMError
 from travel_planner.llm import GenerateRequest, LLMClient, extract_json, parse_draft
 
-SECRET = "sk-SECRET-XYZ"
+SECRET = "sk-SECRET-XYZ"  # nosec LLM 客户端测试夹具，非真实凭据
 
 
 def make_client(handler, configured=True, timeout=5.0):

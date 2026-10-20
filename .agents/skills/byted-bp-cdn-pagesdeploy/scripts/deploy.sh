@@ -80,7 +80,7 @@ install_nest() {
     fi
 
     # Check current directory installation (Cowork environment)
-    local cowork_nest="/home/gem/tmp/nest-cli/node_modules/.bin/nest"
+    local cowork_nest="~/tmp/nest-cli/node_modules/.bin/nest"
     if [[ -x "$cowork_nest" ]]; then
         NEST="$cowork_nest"
         log_ok "Found cowork nest: $($NEST --version 2>&1 | grep 'Version:' || echo 'installed')"

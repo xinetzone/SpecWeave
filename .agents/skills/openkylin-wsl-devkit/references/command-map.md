@@ -66,7 +66,7 @@
 ## 本机调用速记（PowerShell 7，PATH 裁剪环境）
 
 ```powershell
-$py = "C:\Users\XMICUser\AppData\Local\Programs\Python\Python314\python.exe"
+$py = "<USER_HOME>\AppData\Local\Programs\Python\Python314\python.exe"
 & $py -m okw list
 & $py -m okw import .\openKylin-3.0-wsl-amd64.wsl --name openKylin-3.0 --location D:\WSL\openKylin-3.0
 & $py -m pytest -q   # cwd 必须在 apps\dev-tools\openkylin-wsl-devkit

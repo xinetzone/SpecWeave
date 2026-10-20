@@ -8,10 +8,10 @@ This directory contains two sets of high-performance, dependency-free Debug Serv
 
 ## Priority Rules (MUST follow)
 
-1.  **Prefer Python Template** (`c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/tools/debug-server/python/debug-server.py`): Suitable for the vast majority of Unix/Linux/macOS environments.
-2.  **Alternative Node Template** (`c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/tools/debug-server/node/debug-server.mjs`): Suitable for pure JS/TS development environments.
+1.  **Prefer Python Template** (`<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/tools/debug-server/python/debug-server.py`): Suitable for the vast majority of Unix/Linux/macOS environments.
+2.  **Alternative Node Template** (`<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/tools/debug-server/node/debug-server.mjs`): Suitable for pure JS/TS development environments.
 3.  **Environment Detection & Fallback**:
-    *   Only when both of the above are unavailable is it permitted to detect the environment and refer to `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/tools/debug-server/TEMPLATE.md` to quickly implement an equivalent tool.
+    *   Only when both of the above are unavailable is it permitted to detect the environment and refer to `<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/tools/debug-server/TEMPLATE.md` to quickly implement an equivalent tool.
 
 ## Log Reporting Constraints
 

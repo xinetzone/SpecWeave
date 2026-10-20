@@ -60,7 +60,7 @@ param(
     [string]$Tag = "latest",
     [int]$SshPort = 2222,
     [int]$JupyterPort = 8888,
-    [string]$Password = "deploy-test",
+    [string]$Password = "deploy-test",  # nosec 本地开发容器默认口令，非真实凭据
     [string]$Token = "deploy-token",
     [ValidateSet("text", "json")]
     [string]$LogFormat = "text",

@@ -151,7 +151,7 @@ class TestIsNetworkError:
         "text",
         [
             "error: failed to build wheel for package",
-            "Permission denied: '/home/u/.local/bin/xc'",
+            "Permission denied: '/home/devuser/.local/bin/xc'",
             "Python 3.14 is required but 3.12 found",
         ],
     )

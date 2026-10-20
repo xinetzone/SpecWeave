@@ -39,8 +39,8 @@ python gil_bench.py plot --nogil scan_nogil.json --gil scan_gil.json --out curve
 
 ```bash
 python gil_bench.py compare \
-  --no-gil-py "D:\Users\xinzo\anaconda3\envs\py314t\python.exe" \
-  --gil-py "D:\Users\xinzo\anaconda3\envs\py314\python.exe" \
+  --no-gil-py "<USER_HOME>\anaconda3\envs\py314t\python.exe" \
+  --gil-py "<USER_HOME>\anaconda3\envs\py314\python.exe" \
   --out-dir results/
 ```
 

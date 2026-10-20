@@ -27,13 +27,13 @@ description: 用于调试需要收集运行时证据的复杂问题。它会启�
 ## Directory Structure
 
 This Skill consists of the following components:
-- `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/SKILL.md`: Core definition, input/output requirements, and key constraints.
-- `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/guides/debug-md.md`: Purpose, template, and maintenance specifications for the `debug-<sessionId>.md` file.
-- `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/guides/workflow.md`: Detailed 11-step scientific debugging workflow.
-- `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/guides/logging.md`: Log reporting strategy, code templates, and event structure.
-- `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/guides/debug-server.md`: Startup, API endpoints, environment file, and lifecycle constraints for the Debug Server.
-- `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/guides/scenarios.md`: Debugging scenario guides with hypothesis templates.
-- `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/examples/few-shots.md`: Correct vs. incorrect examples for common scenarios.
+- `<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/SKILL.md`: Core definition, input/output requirements, and key constraints.
+- `<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/guides/debug-md.md`: Purpose, template, and maintenance specifications for the `debug-<sessionId>.md` file.
+- `<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/guides/workflow.md`: Detailed 11-step scientific debugging workflow.
+- `<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/guides/logging.md`: Log reporting strategy, code templates, and event structure.
+- `<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/guides/debug-server.md`: Startup, API endpoints, environment file, and lifecycle constraints for the Debug Server.
+- `<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/guides/scenarios.md`: Debugging scenario guides with hypothesis templates.
+- `<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/examples/few-shots.md`: Correct vs. incorrect examples for common scenarios.
 
 ---
 
@@ -80,7 +80,7 @@ To implement the "Evidence-Driven" core philosophy, the Assistant must follow th
 
 ## Debugging Session Record (debug-<sessionId>.md)
 
-This Skill mandates using `debug-<sessionId>.md` to sync progress. For detailed specifications, refer to `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/guides/debug-md.md`.
+This Skill mandates using `debug-<sessionId>.md` to sync progress. For detailed specifications, refer to `<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/guides/debug-md.md`.
 
 ---
 
@@ -147,19 +147,19 @@ Use AskUserQuestion tool with:
 
 ### Few-shot Examples
 
-To ensure the standardization of the debugging process, refer to `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/examples/few-shots.md`.
+To ensure the standardization of the debugging process, refer to `<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/examples/few-shots.md`.
 
 ---
 
 ## Logging System (Native API Reporting)
 
-To ensure multi-end logs can be analyzed uniformly, follow `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/guides/logging.md` for log reporting.
+To ensure multi-end logs can be analyzed uniformly, follow `<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/guides/logging.md` for log reporting.
 
 ---
 
 ## Debug Server (Runtime Evidence Collection Tool)
 
-This Skill comes with a high-performance, out-of-the-box Debug Server script. For detailed instructions, refer to `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/guides/debug-server.md`.
+This Skill comes with a high-performance, out-of-the-box Debug Server script. For detailed instructions, refer to `<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/guides/debug-server.md`.
 
 **Key Features:**
 - Writes `<sessionId>.env` to output directory for zero-config instrumentation
@@ -170,7 +170,7 @@ This Skill comes with a high-performance, out-of-the-box Debug Server script. Fo
 
 ## Workflow
 
-The debugging process strictly follows an 11-step scientific workflow. For detailed steps, refer to `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/guides/workflow.md`.
+The debugging process strictly follows an 11-step scientific workflow. For detailed steps, refer to `<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/guides/workflow.md`.
 
 ---
 
