@@ -49,6 +49,9 @@
 | gap-two-round-verification | [缺口双轮核验法（公开信源轮+零变更功能轮）](research-knowledge/gap-two-round-verification.md) | L1-draft | 1 | 0 | 评估/尽调报告交付时仍挂「未获取/待验证」缺口清单，或完整复现用户路径成本过高（GB 级镜像/账号/GUI）时：第一轮公开信源轮（换环境复述+服务端配置/目录枚举/包元数据等供给侧观测点优先+负证据强制留痕），第二轮零变更功能轮（模拟安装/下载解包/strings 静态取证/免安装冒烟/总线只读探测），结论锚定 L0~L3 四档证据等级，三道收口（评分解耦/未验证留痕/前后对账）；含 7 条反模式与 6 条检验标准。案例：openKylin 评估 Q-1~Q-8 双轮核验（61 条 VF 事实），待非同谱系第二案例验证升 L1.5 |
 | citation-evidence-reconciliation | [引文回证对账](ai-collaboration/citation-evidence-reconciliation.md) | L1-draft | 1 | 0 | 成稿含成批带出处直接引用且原始证据可第三方独立打开时：判定口径先脚本化冻结，机械枚举全部引号样式（含覆盖率交叉核验）后按漏斗分流回证（存在性/逐字性/跨度），核验与修复分波分代理，收口毛=净+排除复算闭环；含非引号事实抽样回证位与复查触发器。单案例萃取（扫描版权书转多代理Wiki生产线，证据留私域溯源），待非同谱系第二案例升L1.5 |
 | cross-period-metric-scope-alignment | [跨期指标口径对齐先行](governance-strategy/cross-period-metric-scope-alignment.md) | L1 | 1 | 0 | 对同一对象做第二次及以后的度量对比，且两次观测之间存在结构治理动作（目录迁移/资产归并/分类重构）时 |
+| two-round-source-strategy | [双轮信源·漂移检出法](ai-collaboration/two-round-source-strategy.md) | L2 | 2 | 1 | 为同时有源码与官方手册的系统产出可溯源教程，且手册的人读层可能过期时（XERJ 两轮检出 6 处漂移，其中 1 处为分析器清单实质错误） |
+| hermetic-isolated-verification | [隔离验证法](ai-collaboration/hermetic-isolated-verification.md) | L2 | 2 | 2 | 验证大树里的局部变更，整树验证慢到会被跳过或被并行会话写入打断时（XERJ 束 31 文件 0 warning，替代 10 分钟以上且会被竞态打断的整树构建） |
+| shared-index-count-coupling | [共享索引计数耦合与同批判决](governance-strategy/shared-index-count-coupling.md) | L2 | 3 | 3 | 共享索引的计数由目录树派生、且多会话并行写同一仓库时，新增条目必然要改共享索引多处（awesome-okf-xs 子模块三次提交） |
 
 ## 成熟度等级说明
 

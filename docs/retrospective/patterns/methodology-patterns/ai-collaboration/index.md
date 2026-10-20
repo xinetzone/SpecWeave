@@ -31,6 +31,7 @@ first-citizen-abstraction
 first-principles-prompt-pattern
 generation-validation-closed-loop
 gotchas-domain-specialization
+hermetic-isolated-verification
 honest-limitation-acknowledgment
 human-ai-collaboration-70-30-rule
 human-in-the-loop-augmentation
@@ -84,6 +85,7 @@ task-type-precheck-bias-defense
 team-shared-ai-colleague
 template-variance-control
 tool-adoption-funnel
+two-round-source-strategy
 two-stage-outline-then-expand
 user-sovereignty-default
 visual-operation-closed-loop

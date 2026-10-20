@@ -2,7 +2,7 @@
 
 基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为8个主题类别，便于按场景快速定位相关模式。
 
-> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md与子目录），由 `generate-categories.py` 自动重建，最后更新：2026-10-17。
+> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md与子目录），由 `generate-categories.py` 自动重建，最后更新：2026-10-20。
 
 ## 分类索引
 
@@ -12,8 +12,8 @@
 | [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 43 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor/跨领域知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、语义漂移防御、知识系统五维根基、B2B AI产品定位、外部产品学习模板 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 54 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 58 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 167 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
-| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 85 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 169 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
+| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 87 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 11 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 52 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化、垂直场景AI三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA转化 |
 
@@ -291,6 +291,7 @@
 | [content-sensitivity-routing.md](governance-strategy/content-sensitivity-routing.md) | 公私域内容分离路由 | L1-draft |
 | [convention-driven-creation.md](governance-strategy/convention-driven-creation.md) | 约定驱动创建模型，先读范例提取模板再填充内容，零结构决策 | L2 |
 | [credential-copy-minimization.md](governance-strategy/credential-copy-minimization.md) | 凭证副本最小化：目录镜像/备份/同步中的凭证防护法 | L2 |
+| [cross-period-metric-scope-alignment.md](governance-strategy/cross-period-metric-scope-alignment.md) | 跨期指标口径对齐先行 | L1 |
 | [cross-platform-gate-authority.md](governance-strategy/cross-platform-gate-authority.md) | 跨平台门禁权威分工法 | L1 |
 | [cross-wiki-reference-directory-first.md](governance-strategy/cross-wiki-reference-directory-first.md) | 跨Wiki引用目录优先验证：创建跨wiki引用前必须先读取目标wiki的00-overview.md确认章节编号，用事实替代假设；5次验证4次复用，已达L3升级门槛 | L2 |
 | [data-validation-four-checks.md](governance-strategy/data-validation-four-checks.md) | 量化数据验证四查法 | L2 |
@@ -392,6 +393,7 @@
 | [seven-concepts-quick-reference.md](governance-strategy/seven-concepts-quick-reference.md) | 七概念方法论统一速查手册 | L2 |
 | [seven-concepts-retrospective-report.md](governance-strategy/seven-concepts-retrospective-report.md) | 七概念方法论体系-项目全面系统性复盘报告 | L2 |
 | [seven-concepts-trigger-decision-tree.md](governance-strategy/seven-concepts-trigger-decision-tree.md) | 七概念组合触发决策树 | L2 |
+| [shared-index-count-coupling.md](governance-strategy/shared-index-count-coupling.md) | 共享索引计数耦合与同批判决：新增条目必然改共享索引多处、且多会话并行写同一仓库时，识别耦合面→枚举候选集→显式裁决→提交信息留痕→干净检出验证 | L2 |
 | [short-command-patterns.md](governance-strategy/short-command-patterns.md) | 短指令模式库：登记已验证的 AI 协作快捷指令 | L2 |
 | [simple-task-high-risk.md](governance-strategy/simple-task-high-risk.md) | 简单任务高风险定律（Simple Task High-Risk Law） | L2 |
 | [skill-migration-position-governance.md](governance-strategy/skill-migration-position-governance.md) | Skill迁移位置治理：统一Skill存放位置的五步标准化流程 | - |
@@ -469,6 +471,7 @@
 | [first-principles-prompt-pattern.md](ai-collaboration/first-principles-prompt-pattern.md) | 第一性原理Prompt模式：七个字打断AI类比推理快思考，逼其回到基本事实重新推导，修BUG治本+架构设计从本质出发，与对抗式审查构成"生成-验证"闭环 | L3 |
 | [generation-validation-closed-loop.md](ai-collaboration/generation-validation-closed-loop.md) | 生成-验证闭环模式（Generation-Validation Closed Loop） | L2 |
 | [gotchas-domain-specialization.md](ai-collaboration/gotchas-domain-specialization.md) | Gotchas 领域特化：在 SKILL-TEMPLATE.md 通用 Gotchas 框架基础上，为模块级 Skill 新增领域特化小节（12.4），补充模块特有陷阱与反直觉行为 | L1 |
+| [hermetic-isolated-verification.md](ai-collaboration/hermetic-isolated-verification.md) | 隔离验证法：只把被测对象与构建配置放进最小源目录，秒级且不被并发写入影响；跨对象引用另由链接检查覆盖 | L2 |
 | [honest-limitation-acknowledgment.md](ai-collaboration/honest-limitation-acknowledgment.md) | 诚实承认局限性信任构建策略：三步法（主动承认当前局限→说明改进方向与时间表→用局限性衬托核心优势），将局限性从信任减分项转化为信任加分项，与用户主权默认模式互补，1次验证（mainecoon文章可信度构建） | L1 |
 | [human-ai-collaboration-70-30-rule.md](ai-collaboration/human-ai-collaboration-70-30-rule.md) | 人机协作70/30分工定律（Human-AI Collaboration 70/30 Rule） | L2 |
 | [human-in-the-loop-augmentation.md](ai-collaboration/human-in-the-loop-augmentation.md) | 「辅助人工」而非「全自动」的人机协作设计 | L2 |
@@ -523,6 +526,7 @@
 | [team-shared-ai-colleague.md](ai-collaboration/team-shared-ai-colleague.md) | 团队共享 AI 同事模式：从个人独占式聊天窗口到频道共享同一 AI，上下文共享+角色分工+知识沉淀三位一体 | - |
 | [template-variance-control.md](ai-collaboration/template-variance-control.md) | 模板质量方差控制模式：保证一类产出物质量下限、降低不同执行者之间质量方差 | L1 |
 | [tool-adoption-funnel.md](ai-collaboration/tool-adoption-funnel.md) | 工具采纳漏斗（Tool Adoption Funnel） | - |
+| [two-round-source-strategy.md](ai-collaboration/two-round-source-strategy.md) | 双轮信源·漂移检出法：源码轮建立事实基线、手册轮补运维层，两轮之间全量机械复核并按「代码为准」裁决漂移 | L2 |
 | [two-stage-outline-then-expand.md](ai-collaboration/two-stage-outline-then-expand.md) | 篇幅控制两阶段模式：阶段1输出大纲→主代理审核→阶段2按大纲展开正文，避免子代理一次性长文跑偏 | L1 |
 | [user-sovereignty-default.md](ai-collaboration/user-sovereignty-default.md) | 用户主权默认模式：被代理方始终拥有最高权限，操作可见+可感知+可干预+可终止，代理系统的核心信任设计原则 | L1 |
 | [visual-operation-closed-loop.md](ai-collaboration/visual-operation-closed-loop.md) | 视觉操作闭环模式（Screenshot-Locate-Operate-Verify Loop） | L1 |
