@@ -17,12 +17,14 @@ cake-cutting-rule
 decisions
 docs
 examples
+generative-media-pipeline
 knowledge
 mindfulness-positivity
 monetization-direction
 operations
 platform
 research
+short-video-skills
 social-relations
 standards
 tech

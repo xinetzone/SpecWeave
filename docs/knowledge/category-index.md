@@ -12,9 +12,9 @@ title: "分类总索引"
 
 ## 统计摘要
 
-- **总条目数**：461
-- **分类路径数**：23
-- **顶层分类数**：18
+- **总条目数**：472
+- **分类路径数**：25
+- **顶层分类数**：20
 
 | 顶层分类 | 子分类数 | 条目数 | 入口 |
 |----------|----------|--------|------|
@@ -28,8 +28,10 @@ title: "分类总索引"
 | cake-cutting-rule | 1 | 7 | [cake-cutting-rule](categories/cake-cutting-rule.md) |
 | what-is-life | 1 | 7 | [what-is-life](categories/what-is-life.md) |
 | decisions | 1 | 6 | [decisions](categories/decisions.md) |
+| generative-media-pipeline | 1 | 6 | [generative-media-pipeline](categories/generative-media-pipeline.md) |
 | examples | 1 | 6 | [examples](categories/examples.md) |
 | mindfulness-positivity | 1 | 6 | [mindfulness-positivity](categories/mindfulness-positivity.md) |
+| short-video-skills | 1 | 5 | [short-video-skills](categories/short-video-skills.md) |
 | troubleshooting | 1 | 4 | [troubleshooting](categories/troubleshooting.md) |
 | architecture | 1 | 1 | [architecture](categories/architecture.md) |
 | research | 1 | 1 | [research](categories/research.md) |
@@ -39,4 +41,4 @@ title: "分类总索引"
 
 ---
 
-*索引自动生成于 2026-10-20 11:27:18*
+*索引自动生成于 2026-10-20 15:34:15*
