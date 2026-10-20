@@ -363,8 +363,8 @@ standards-tools/
 | 38 | [myst-to-agentspec-migration-analysis](myst-to-agentspec-migration-analysis/spec.md) | ✓ 完成 | ✓/✗ |
 | 39 | [myst-unified-interface-ecosystem](myst-unified-interface-ecosystem/spec.md) | ✓ 完成 | ✓/✗ |
 | 40 | [optimize-trae-project-adaptation](optimize-trae-project-adaptation/spec.md) | ✓ 完成 | ✓/✗ |
-| 41 | [pdf-to-markdown-conversion-research](pdf-to-markdown-conversion-research/spec.md) | ? 待启动 | ✓✗✗ |
-| 42 | [ps1-syntax-crossplatform](ps1-syntax-crossplatform/spec.md) | ✓ 完成 | ✓/✗ |
+| 41 | [ps1-syntax-crossplatform](ps1-syntax-crossplatform/spec.md) | ✓ 完成 | ✓/✗ |
+| 42 | [publish-seven-concepts-skill-to-meoo](publish-seven-concepts-skill-to-meoo/spec.md) | ✓ 完成 | ✓/✗ |
 | 43 | [ratchet-mermaid-ci-historical-debt](ratchet-mermaid-ci-historical-debt/spec.md) | ✓ 完成 | ✓✗✗ |
 | 44 | [refactor-scripts-shared-lib](refactor-scripts-shared-lib/spec.md) | ✓ 完成 | ✓/✗ |
 | 45 | [sensitive-info-sanitization-audit](sensitive-info-sanitization-audit/spec.md) | ✓ 完成 | ✓/✗ |
