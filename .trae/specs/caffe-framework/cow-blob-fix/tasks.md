@@ -84,12 +84,12 @@
 
 | 文件 | 变更类型 | 说明 |
 |------|---------|------|
-| [blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) | 修改 | 添加identity标志、对称COW条件、Identity方法声明、RefCount修正 |
-| [blob.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp) | 修改 | 实现对称COW逻辑、Identity方法、标志重置 |
-| [split_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp) | 修改 | N=1使用Identity share，Backward检查SharesDiffWith |
-| [slice_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/slice_layer.cpp) | 修改 | N=1使用Identity share |
-| [inner_product_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/inner_product_layer.cpp) | 修改 | 添加filler应用逻辑（weight_filler/bias_filler） |
-| [test_blob_zerocopy.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp) | 修改 | 更新测试用例适配新语义 |
+| [blob.hpp](../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) | 修改 | 添加identity标志、对称COW条件、Identity方法声明、RefCount修正 |
+| [blob.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp) | 修改 | 实现对称COW逻辑、Identity方法、标志重置 |
+| [split_layer.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp) | 修改 | N=1使用Identity share，Backward检查SharesDiffWith |
+| [slice_layer.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/slice_layer.cpp) | 修改 | N=1使用Identity share |
+| [inner_product_layer.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/inner_product_layer.cpp) | 修改 | 添加filler应用逻辑（weight_filler/bias_filler） |
+| [test_blob_zerocopy.cpp](../../../../projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp) | 修改 | 更新测试用例适配新语义 |
 
 ## 后续建议（非阻塞）
 

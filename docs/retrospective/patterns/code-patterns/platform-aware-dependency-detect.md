@@ -332,9 +332,9 @@ endif()
 
 ## 来源
 
-- [cmake/DetectOpenBLAS.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/DetectOpenBLAS.cmake)
-- [cmake/Options.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake)
-- [cmake/TargetBuild.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/TargetBuild.cmake)
+- [cmake/DetectOpenBLAS.cmake](../../../../projects/xuanspace/libs/caffe-ffi/cmake/DetectOpenBLAS.cmake)
+- [cmake/Options.cmake](../../../../projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake)
+- [cmake/TargetBuild.cmake](../../../../projects/xuanspace/libs/caffe-ffi/cmake/TargetBuild.cmake)
 - 复盘报告：[retrospective-split-zerocopy-cow-milestone-20260731](../../reports/code-optimization/retrospective-split-zerocopy-cow-milestone-20260731/README.md)
 
 ## Changelog

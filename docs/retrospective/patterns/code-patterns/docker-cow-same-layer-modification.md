@@ -225,9 +225,9 @@ V阶段对抗审查（魔鬼代言人/新人/老板/未来四视角）全部通�
   - [docker-buildtime-runtime-ownership-separation.md](docker-buildtime-runtime-ownership-separation.md)（chown产生COW膨胀的具体案例）
   - [docker-deep-slim-8step.md](docker-deep-slim-8step.md)（镜像深度压缩8步法，P7是其核心理论基础；含P7违反的真实案例）
 - 参考实例：
-  - [devcontainer-base/Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/Dockerfile)（P7正向参考实现，Stage 1-7严格遵循同层修改）
-  - [onnx-pytorch/Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/onnx-pytorch/Dockerfile)（含P7反模式实例：Stage 3 chmod -R /opt/conda触发COW）
-  - [pytorch-base/Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/pytorch-base/Dockerfile)（含P7反模式实例：Stage 7 Python脚本修改低层.so文件触发COW）
+  - [devcontainer-base/Dockerfile](../../../../apps/docker-images/devcontainer-base/Dockerfile)（P7正向参考实现，Stage 1-7严格遵循同层修改）
+  - [onnx-pytorch/Dockerfile](../../../../apps/docker-images/devcontainer-base/variants/onnx-pytorch/Dockerfile)（含P7反模式实例：Stage 3 chmod -R /opt/conda触发COW）
+  - [pytorch-base/Dockerfile](../../../../apps/docker-images/pytorch-base/Dockerfile)（含P7反模式实例：Stage 7 Python脚本修改低层.so文件触发COW）
 - 术语：
   - COW (Copy-on-Write)：写时复制——修改低层文件时在当前层创建完整副本
   - whiteout：OverlayFS中标记文件删除的0字节特殊文件（`.wh.`前缀）

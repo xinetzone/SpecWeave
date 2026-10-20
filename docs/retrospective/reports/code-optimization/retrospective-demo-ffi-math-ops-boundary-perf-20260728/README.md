@@ -31,10 +31,10 @@ quality_gates:
 
 | 文件 | 变更行数 | 变更类型 |
 |------|---------|---------|
-| [math_ops.cc](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/demo-ffi/src/demo/math_ops.cc) | +133/-? | 性能日志框架+Bug修复 |
-| [test_math_ops.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/demo-ffi/tests/python/test_math_ops.py) | +448/-28 | 170个测试用例（边界全覆盖） |
-| [math_ops_demo.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/demo-ffi/examples/math_ops_demo.py) | +272（新增） | Python演示脚本 |
-| [pyproject.toml](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/demo-ffi/pyproject.toml) | 2行（1改） | Python版本3.14→3.13 |
+| [math_ops.cc](../../../../../projects/xuanspace/libs/demo-ffi/src/demo/math_ops.cc) | +133/-? | 性能日志框架+Bug修复 |
+| [test_math_ops.py](../../../../../projects/xuanspace/libs/demo-ffi/tests/python/test_math_ops.py) | +448/-28 | 170个测试用例（边界全覆盖） |
+| [math_ops_demo.py](../../../../../projects/xuanspace/libs/demo-ffi/examples/math_ops_demo.py) | +272（新增） | Python演示脚本 |
+| [pyproject.toml](../../../../../projects/xuanspace/libs/demo-ffi/pyproject.toml) | 2行（1改） | Python版本3.14→3.13 |
 
 ### 测试结果
 - 测试用例从原有基础扩充至 **170 个**，全部通过

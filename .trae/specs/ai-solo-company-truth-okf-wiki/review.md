@@ -167,7 +167,7 @@
 
 ### P0-1（阻断项）：concepts/02 互链深度 —— **已闭环 ✅**
 
-- 修复后 [02-actions-and-boundaries.md L81-82](file:///d:/spaces/SpecWeave/projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-solo-company-truth/concepts/02-actions-and-boundaries.md#L81-L82) 已改为 `[auto-money-system](../../auto-money-system/index.md)` 与 `[ai-one-person-micro-product](../../ai-one-person-micro-product/index.md)`。
+- 修复后 [02-actions-and-boundaries.md L81-82](../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-solo-company-truth/concepts/02-actions-and-boundaries.md#L81-L82) 已改为 `[auto-money-system](../../auto-money-system/index.md)` 与 `[ai-one-person-micro-product](../../ai-one-person-micro-product/index.md)`。
 - 独立实测（以 concepts/ 目录为基准做 `[System.IO.Path]::GetFullPath` 规范化解析）：`../../auto-money-system/index.md` → exists=**True**；`../../ai-one-person-micro-product/index.md` → exists=**True**（旧写法 `../` 两条实测仍为 False，反证修复方向正确）。
 - 全束链接机械解析（自行编写，覆盖 `](相对.md)` 与束根惯例 `/references/...` 两类，跳过 http 与纯锚点）：**checked=23，broken=0**。根 index 的 2 条兄弟束链接仍为 True。
 

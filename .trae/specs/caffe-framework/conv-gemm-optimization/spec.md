@@ -35,12 +35,12 @@ status: "draft"
   - 固定线程配置 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=4 时 ResNet50 mean=405ms
   - caffex 基线 ResNet50 约 21ms（几何平均 18.9× 差距）
 - 已发现的具体代码瓶颈：
-  1. **统计循环开销**（[conv_layer.cpp#L162-L181](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L162-L181)）：每次 Forward 无条件遍历 top_count（输出元素数）和 weight_count（权重元素数）计算 min/max/norm，这在 caffex 中不存在。对 ResNet50 conv5_x 层，单次遍历处理数十万到数百万元素。
-  2. **计时开销**（[conv_layer.cpp#L42-L43](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L42-L43) + L183-L184）：high_resolution_clock 每次 forward 启停。
-  3. **OpenMP kMinChunk=32 过保守**（[conv_layer.cpp#L86](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L86)）：ResNet50 的 conv1(64ch)、res2a/b/c(64ch)、res3a(128ch) 只能分 2-4 chunks，当 OMP_NUM_THREADS=4-8 时大量核心空闲。
-  4. **im2col 标量三重循环**（[math_utils.hpp#L177-L210](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/math_utils.hpp#L177-L210)）：无向量化、无 OpenMP、逐元素 pad 检查，效率低。
+  1. **统计循环开销**（[conv_layer.cpp#L162-L181](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L162-L181)）：每次 Forward 无条件遍历 top_count（输出元素数）和 weight_count（权重元素数）计算 min/max/norm，这在 caffex 中不存在。对 ResNet50 conv5_x 层，单次遍历处理数十万到数百万元素。
+  2. **计时开销**（[conv_layer.cpp#L42-L43](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L42-L43) + L183-L184）：high_resolution_clock 每次 forward 启停。
+  3. **OpenMP kMinChunk=32 过保守**（[conv_layer.cpp#L86](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L86)）：ResNet50 的 conv1(64ch)、res2a/b/c(64ch)、res3a(128ch) 只能分 2-4 chunks，当 OMP_NUM_THREADS=4-8 时大量核心空闲。
+  4. **im2col 标量三重循环**（[math_utils.hpp#L177-L210](../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/math_utils.hpp#L177-L210)）：无向量化、无 OpenMP、逐元素 pad 检查，效率低。
   5. **Dockerfile 未固定 openmp BLAS**（[Dockerfile#L110](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/Dockerfile#L110)）：builder 阶段 `conda install libopenblas` 默认 pthreads 变体。
-  6. **CAFFE_FFI_ENABLE_DEBUG_LOG=ON**（[Options.cmake#L8](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake#L8)）：Release 构建仍启用 debug log 编译路径。
+  6. **CAFFE_FFI_ENABLE_DEBUG_LOG=ON**（[Options.cmake#L8](../../../../projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake#L8)）：Release 构建仍启用 debug log 编译路径。
   7. **无默认线程配置**：容器启动时未设置 OMP_NUM_THREADS/OPENBLAS_NUM_THREADS，用户不知道最优配置。
 
 ## Functional Requirements

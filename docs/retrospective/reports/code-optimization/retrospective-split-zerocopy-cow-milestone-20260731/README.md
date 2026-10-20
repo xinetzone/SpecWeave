@@ -144,23 +144,23 @@ source: seven-concepts-cmd sessions sc-20260731-split-zerocopy + sc-20260731-spl
 
 | 文件 | 变更内容 |
 |------|---------|
-| [blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) | Phase 1: ShareData/ShareDiff/SharesDataWith/SharesDiffWith；Phase 2: SetCOWEnabled/IsCOWEnabled/IsDataShared/IsDiffShared/DataRefCount/DiffRefCount/UnshareData/UnshareDiff/cpu_mutable_data/cpu_mutable_diff/gpu_mutable_data/gpu_mutable_diff/mutable_data_tensor/mutable_diff_tensor |
-| [blob.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp) | Phase 1: ShareData/ShareDiff零拷贝实现；Phase 2: COW克隆逻辑+[COW]日志埋点 |
-| [split_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp) | Phase 1: N=1零拷贝捷径+[SPLIT-PERF] ZEROCOPY埋点；Phase 2: N≥2 ShareData循环+[SPLIT-PERF] COW埋点 |
-| [_caffe_ffi.cc](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/_caffe_ffi.cc) | FFI lambda包装：ObjectPtr→raw pointer适配；新增COW方法FFI绑定 |
-| [common.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/common.hpp) | 移除自定义TypeTraits特化，使用vendor tvm-ffi内置实现 |
-| [Options.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake) | CAFFE_FFI_ENABLE_COW选项（默认ON） |
-| [TargetBuild.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/TargetBuild.cmake) | CAFFE_FFI_ENABLE_COW编译定义注入 |
-| [DetectOpenBLAS.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/DetectOpenBLAS.cmake) | 平台感知OpenBLAS检测模块 |
-| [test_blob_zerocopy.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp) | 14个ZeroCopyTest(Phase 1) + 6个COWTest + 11个COWApiTest + 2个Split N=2集成测试 |
-| [test_objectptr_migration.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/cpp/test_objectptr_migration.cpp) | 12个ObjectPtr迁移单元测试 |
-| [test_cow.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_cow.py) | 22个Python COW测试（12 Blob API + 10 Split集成） |
-| [test_extreme_inputs.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_extreme_inputs.py) | 30个P2-B1数值边界测试（520行） |
-| [conftest.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/conftest.py) | perf_trace增强：异常捕获、[EXP]/[EXC]标记、CSV持久化、cow_snapshot helper |
-| [check_tvm_ffi_traits.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/check_tvm_ffi_traits.py) | TypeTraits冲突自动预检脚本（300行） |
-| [check_windows_dll.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/check_windows_dll.py) | Windows DLL依赖自检脚本 |
-| [verify_build.ps1](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/verify_build.ps1) | PowerShell构建验证脚本（vcvars64环境导入+三层Python发现） |
-| [_ffi_api.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/_ffi_api.py) | Windows DLL路径：添加tvm_ffi/lib目录 |
+| [blob.hpp](../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) | Phase 1: ShareData/ShareDiff/SharesDataWith/SharesDiffWith；Phase 2: SetCOWEnabled/IsCOWEnabled/IsDataShared/IsDiffShared/DataRefCount/DiffRefCount/UnshareData/UnshareDiff/cpu_mutable_data/cpu_mutable_diff/gpu_mutable_data/gpu_mutable_diff/mutable_data_tensor/mutable_diff_tensor |
+| [blob.cpp](../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp) | Phase 1: ShareData/ShareDiff零拷贝实现；Phase 2: COW克隆逻辑+[COW]日志埋点 |
+| [split_layer.cpp](../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp) | Phase 1: N=1零拷贝捷径+[SPLIT-PERF] ZEROCOPY埋点；Phase 2: N≥2 ShareData循环+[SPLIT-PERF] COW埋点 |
+| [_caffe_ffi.cc](../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/_caffe_ffi.cc) | FFI lambda包装：ObjectPtr→raw pointer适配；新增COW方法FFI绑定 |
+| [common.hpp](../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/common.hpp) | 移除自定义TypeTraits特化，使用vendor tvm-ffi内置实现 |
+| [Options.cmake](../../../../../projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake) | CAFFE_FFI_ENABLE_COW选项（默认ON） |
+| [TargetBuild.cmake](../../../../../projects/xuanspace/libs/caffe-ffi/cmake/TargetBuild.cmake) | CAFFE_FFI_ENABLE_COW编译定义注入 |
+| [DetectOpenBLAS.cmake](../../../../../projects/xuanspace/libs/caffe-ffi/cmake/DetectOpenBLAS.cmake) | 平台感知OpenBLAS检测模块 |
+| [test_blob_zerocopy.cpp](../../../../../projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp) | 14个ZeroCopyTest(Phase 1) + 6个COWTest + 11个COWApiTest + 2个Split N=2集成测试 |
+| [test_objectptr_migration.cpp](../../../../../projects/xuanspace/libs/caffe-ffi/tests/cpp/test_objectptr_migration.cpp) | 12个ObjectPtr迁移单元测试 |
+| [test_cow.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_cow.py) | 22个Python COW测试（12 Blob API + 10 Split集成） |
+| [test_extreme_inputs.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_extreme_inputs.py) | 30个P2-B1数值边界测试（520行） |
+| [conftest.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/conftest.py) | perf_trace增强：异常捕获、[EXP]/[EXC]标记、CSV持久化、cow_snapshot helper |
+| [check_tvm_ffi_traits.py](../../../../../projects/xuanspace/libs/caffe-ffi/scripts/check_tvm_ffi_traits.py) | TypeTraits冲突自动预检脚本（300行） |
+| [check_windows_dll.py](../../../../../projects/xuanspace/libs/caffe-ffi/scripts/check_windows_dll.py) | Windows DLL依赖自检脚本 |
+| [verify_build.ps1](../../../../../projects/xuanspace/libs/caffe-ffi/scripts/verify_build.ps1) | PowerShell构建验证脚本（vcvars64环境导入+三层Python发现） |
+| [_ffi_api.py](../../../../../projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/_ffi_api.py) | Windows DLL路径：添加tvm_ffi/lib目录 |
 
 ---
 

@@ -25,10 +25,10 @@ related_reports:
 
 | # | 事实 | 证据 |
 |---|------|------|
-| F-1 | okf-spec 风格（katex bundle）：根 index.md 的 toctree 引用 `concepts/index`、`examples/index`、`references/index`——即引用子目录的 index.md | [katex/index.md](file:///d:/spaces/SpecWeave/projects/awesome-okf-xs/doc/bundles/jishu/document/katex/index.md#L192-L200) |
-| F-2 | katex 的 `concepts/`、`examples/`、`references/` 各自有独立 index.md，如 concepts/index.md 同时含人读表格 + toctree（收录 24 篇概念文档） | Glob + [concepts/index.md](file:///d:/spaces/SpecWeave/projects/awesome-okf-xs/doc/bundles/jishu/document/katex/concepts/index.md#L53-L80) |
-| F-3 | katex 子目录 index.md 无 frontmatter，直接以 `#` 标题开头 | [concepts/index.md](file:///d:/spaces/SpecWeave/projects/awesome-okf-xs/doc/bundles/jishu/document/katex/concepts/index.md#L1) |
-| F-4 | trae-skills 风格（trae-skills bundle）：根 index.md 的 toctree 直接列出 13 个叶子文件（`concepts/00-introduction`…`references/skills-source`） | [trae-skills/index.md](file:///d:/spaces/SpecWeave/projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/trae-skills/index.md#L55-L73) |
+| F-1 | okf-spec 风格（katex bundle）：根 index.md 的 toctree 引用 `concepts/index`、`examples/index`、`references/index`——即引用子目录的 index.md | [katex/index.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/document/katex/index.md#L192-L200) |
+| F-2 | katex 的 `concepts/`、`examples/`、`references/` 各自有独立 index.md，如 concepts/index.md 同时含人读表格 + toctree（收录 24 篇概念文档） | Glob + [concepts/index.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/document/katex/concepts/index.md#L53-L80) |
+| F-3 | katex 子目录 index.md 无 frontmatter，直接以 `#` 标题开头 | [concepts/index.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/document/katex/concepts/index.md#L1) |
+| F-4 | trae-skills 风格（trae-skills bundle）：根 index.md 的 toctree 直接列出 13 个叶子文件（`concepts/00-introduction`…`references/skills-source`） | [trae-skills/index.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/trae-skills/index.md#L55-L73) |
 | F-5 | trae-skills 的 `concepts/`、`examples/`、`references/` 无独立 index.md（Glob 仅 16 个文件，无子目录 index） | Glob |
 | F-6 | 两种风格的根 index 都带 frontmatter（`type: Index` + `generated/verified` 溯源），且都收录 `spec/facts`、`spec/insights`、`log` | 两文件 frontmatter |
 | F-7 | katex frontmatter 含 `okf_version: "0.2"`（规范派）；trae-skills 无 `okf_version`（较早，2026-04-22 生成） | 两文件 frontmatter |

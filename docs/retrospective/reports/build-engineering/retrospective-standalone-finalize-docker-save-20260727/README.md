@@ -48,7 +48,7 @@ caffex 依赖移除和镜像构建验证完成后，本阶段完成了三项收�
 
 ### F04. 回归测试文档创建
 
-- 文件路径：[REGRESSION-TEST.md](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/REGRESSION-TEST.md)
+- 文件路径：[REGRESSION-TEST.md](../../../../../projects/xuanspace/vendor/caffe/docker/standalone/REGRESSION-TEST.md)
 - 文档结构：
   - 前置条件（环境要求、子模块初始化、清理命令）
   - T1 源码与配置检查（grep caffex、.dockerignore、脚本语法）
@@ -105,7 +105,7 @@ caffex 依赖移除和镜像构建验证完成后，本阶段完成了三项收�
 | 文件 | 操作 | 大小 | 说明 |
 |------|------|------|------|
 | [caffex-removal README.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/reports/build-engineering/retrospective-caffe-standalone-caffex-removal-20260727/README.md) | 新建 | ~8KB | caffex移除复盘报告 |
-| [REGRESSION-TEST.md](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/REGRESSION-TEST.md) | 新建 | ~16KB | 回归测试流程文档 |
+| [REGRESSION-TEST.md](../../../../../projects/xuanspace/vendor/caffe/docker/standalone/REGRESSION-TEST.md) | 新建 | ~16KB | 回归测试流程文档 |
 | [spec.md](../../../../../.trae/specs/infra-env/docker-image-save-20260727/spec.md) | 新建 | ~4KB | Docker导出PRD |
 | [tasks.md](../../../../../.trae/specs/infra-env/docker-image-save-20260727/tasks.md) | 新建+更新 | ~3KB | 实现计划（4/4完成） |
 | [checklist.md](../../../../../.trae/specs/infra-env/docker-image-save-20260727/checklist.md) | 新建 | ~1KB | 验证清单 |
@@ -198,6 +198,6 @@ caffex 依赖移除和镜像构建验证完成后，本阶段完成了三项收�
 ## 相关链接
 
 - 前序复盘报告：[retrospective-caffe-standalone-caffex-removal-20260727](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/reports/build-engineering/retrospective-caffe-standalone-caffex-removal-20260727/README.md)
-- 回归测试文档：[REGRESSION-TEST.md](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/REGRESSION-TEST.md)
+- 回归测试文档：[REGRESSION-TEST.md](../../../../../projects/xuanspace/vendor/caffe/docker/standalone/REGRESSION-TEST.md)
 - Docker导出Spec：[docker-image-save-20260727](../../../../../.trae/specs/infra-env/docker-image-save-20260727)
 - 镜像归档：`D:\BaiduSyncdisk\docker\caffe-cpu-standalone-jupyter_20260727.tar.gz`（490MB）

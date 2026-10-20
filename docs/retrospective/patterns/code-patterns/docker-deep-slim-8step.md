@@ -303,7 +303,7 @@ RUN find /opt/conda/lib/python*/site-packages/torch -name "*.so" -exec strip --s
 
 ### pytorch-base Stage 7 execstack修复分析（P7潜在违反）
 
-pytorch-base Stage 7的fix_stack.py（[Dockerfile L801-831](file:///d:/spaces/SpecWeave/apps/docker-images/pytorch-base/Dockerfile#L801-L831)）是修复ELF PT_GNU_STACK可执行栈标志的安全操作，**不是strip**。当前构建日志显示`Fixed 0 .so files`（PyTorch wheel已修复此问题），不触发COW。但设计上存在P7潜在风险：
+pytorch-base Stage 7的fix_stack.py（[Dockerfile L801-831](../../../../apps/docker-images/pytorch-base/Dockerfile#L801-L831)）是修复ELF PT_GNU_STACK可执行栈标志的安全操作，**不是strip**。当前构建日志显示`Fixed 0 .so files`（PyTorch wheel已修复此问题），不触发COW。但设计上存在P7潜在风险：
 
 - 如果未来PyTorch版本重新引入execstack标志，fix_stack.py会以`r+b`模式打开低层.so文件并修改ELF头，触发COW复制每个被修改的.so文件
 - **建议**：将fix_stack.py移至Stage 4（PyTorch安装层），在PyTorch安装同层执行修复（pip install torch → fix_stack.py → 清理），彻底消除P7违反风险
@@ -411,6 +411,6 @@ V阶段对抗审查关键发现已标注：
   - [docker-build-four-layer-verification.md](docker-build-four-layer-verification.md)（四层验证流水线，压缩后需通过验证）
   - [docker-apt-layer-slimming.md](docker-apt-layer-slimming.md)（apt瘦身是步骤1/4/7的具体实践）
 - 参考实例：
-  - [devcontainer-base/Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/Dockerfile)（8步法完整参考实现）
-  - [onnx-pytorch/Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/onnx-pytorch/Dockerfile)（追加层同层strip+清理，含顺序陷阱实例）
-  - [pytorch-base/Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/pytorch-base/Dockerfile)（GPU镜像PYTHONDONTWRITEBYTECODE+同层清理+post-verify，含P7违反实例）
+  - [devcontainer-base/Dockerfile](../../../../apps/docker-images/devcontainer-base/Dockerfile)（8步法完整参考实现）
+  - [onnx-pytorch/Dockerfile](../../../../apps/docker-images/devcontainer-base/variants/onnx-pytorch/Dockerfile)（追加层同层strip+清理，含顺序陷阱实例）
+  - [pytorch-base/Dockerfile](../../../../apps/docker-images/pytorch-base/Dockerfile)（GPU镜像PYTHONDONTWRITEBYTECODE+同层清理+post-verify，含P7违反实例）

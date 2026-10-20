@@ -304,15 +304,15 @@ source: seven-concepts session sc-20260801-caffe-ffi-milestone covering Deconv/N
 
 | 文件 | 变更类型 | 说明 |
 |------|---------|------|
-| [test_deconv_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/cpp/test_deconv_layer.cpp) | 修改 | Protobuf API修复 + 断言修正（14个用例） |
-| [test_neuron_layers.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/cpp/test_neuron_layers.cpp) | 新建 | NeuronLayer基类+5激活层测试（53-14=39个用例） |
-| [test_harness.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/cpp/test_harness.hpp) | 修改 | 添加缺失的#define保护 + 修复`*/`注释问题 |
-| [slice_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/slice_layer.cpp) | 修改 | ShareData/ShareDiff参数指针修复 |
-| [pooling_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/pooling_layer.cpp) | 修改 | 删除未使用变量 |
-| [assert_helper.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/utils/assert_helper.hpp) | 修改 | 修复`*/`注释问题 + 移除注释内宏续行符 |
-| [CompilerConfig.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/CompilerConfig.cmake) | 修改 | visibility标志PUBLIC/PRIVATE条件应用 |
-| [Tests.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Tests.cmake) | 修改 | 启用新测试文件，排除test_net/test_insert_splits |
-| [test_blob_zerocopy.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp) | 修改 | 删除未使用变量 |
+| [test_deconv_layer.cpp](../../../../../projects/xuanspace/libs/caffe-ffi/tests/cpp/test_deconv_layer.cpp) | 修改 | Protobuf API修复 + 断言修正（14个用例） |
+| [test_neuron_layers.cpp](../../../../../projects/xuanspace/libs/caffe-ffi/tests/cpp/test_neuron_layers.cpp) | 新建 | NeuronLayer基类+5激活层测试（53-14=39个用例） |
+| [test_harness.hpp](../../../../../projects/xuanspace/libs/caffe-ffi/tests/cpp/test_harness.hpp) | 修改 | 添加缺失的#define保护 + 修复`*/`注释问题 |
+| [slice_layer.cpp](../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/slice_layer.cpp) | 修改 | ShareData/ShareDiff参数指针修复 |
+| [pooling_layer.cpp](../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/pooling_layer.cpp) | 修改 | 删除未使用变量 |
+| [assert_helper.hpp](../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/utils/assert_helper.hpp) | 修改 | 修复`*/`注释问题 + 移除注释内宏续行符 |
+| [CompilerConfig.cmake](../../../../../projects/xuanspace/libs/caffe-ffi/cmake/CompilerConfig.cmake) | 修改 | visibility标志PUBLIC/PRIVATE条件应用 |
+| [Tests.cmake](../../../../../projects/xuanspace/libs/caffe-ffi/cmake/Tests.cmake) | 修改 | 启用新测试文件，排除test_net/test_insert_splits |
+| [test_blob_zerocopy.cpp](../../../../../projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp) | 修改 | 删除未使用变量 |
 
 ---
 

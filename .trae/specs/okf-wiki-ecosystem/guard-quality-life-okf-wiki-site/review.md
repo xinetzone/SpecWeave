@@ -23,7 +23,7 @@
 ### AC-1 知识包结构与 OKF 规范完整 — ✅ PASS
 
 - **证据**：`LS` 目录树确认 bundle 含 `index.md`、`log.md`、`concepts/index.md` + 7 篇概念文档（00-framework / 01-domains / 02-home / 03-health / 04-efficiency / 05-finance-relations-mind / 06-how-to-use）、`references/index.md` + article-source.md + verification.md；**不存在 examples/**。
-- 根 [index.md](file:///d:/spaces/SpecWeave/projects/awesome-okf-xs/doc/bundles/sheke/personal-growth/guard-quality-life/index.md#L118-L125) 的 toctree（concepts/index、references/index、log）与 `concepts/index.md`、`references/index.md` 的全部 toctree 条目，逐一 `Test-Path` 为真（磁盘实读确认）。
+- 根 [index.md](../../../../projects/awesome-okf-xs/doc/bundles/sheke/personal-growth/guard-quality-life/index.md#L118-L125) 的 toctree（concepts/index、references/index、log）与 `concepts/index.md`、`references/index.md` 的全部 toctree 条目，逐一 `Test-Path` 为真（磁盘实读确认）。
 
 ### AC-2 F 编号双份一致且覆盖关键事实 — ✅ PASS
 
@@ -49,7 +49,7 @@
 
 ### AC-6 边界与时效声明落实 — ✅ PASS
 
-- **证据**：根 [index.md](file:///d:/spaces/SpecWeave/projects/awesome-okf-xs/doc/bundles/sheke/personal-growth/guard-quality-life/index.md#L28-L30) 顶部含「非医疗/法律/财务专业建议、重大决策咨询专业人士」性质声明与 2026-10 时点声明；六个已知边界（非专业/分层/C 级不强当证据/与 HowToLiveBetter 区别/常识不逐条核验/时点局限/无硬编 URL）逐项落地；各篇 frontmatter 均含 okf_version/type/title/description/tags/generated/verified/status/stale_after/sources。
+- **证据**：根 [index.md](../../../../projects/awesome-okf-xs/doc/bundles/sheke/personal-growth/guard-quality-life/index.md#L28-L30) 顶部含「非医疗/法律/财务专业建议、重大决策咨询专业人士」性质声明与 2026-10 时点声明；六个已知边界（非专业/分层/C 级不强当证据/与 HowToLiveBetter 区别/常识不逐条核验/时点局限/无硬编 URL）逐项落地；各篇 frontmatter 均含 okf_version/type/title/description/tags/generated/verified/status/stale_after/sources。
 
 ### AC-7 知识树完整性与分域执行 — ✅ PASS
 
@@ -104,7 +104,7 @@
 
 ### 6.1 交付范围与代码级校验
 
-- **新增 `payments/` 子包**（[config.py](file:///d:/spaces/SpecWeave/apps/guard-quality-life-site/src/gqlsite/payments/config.py) / [sign.py](file:///d:/spaces/SpecWeave/apps/guard-quality-life-site/src/gqlsite/payments/sign.py) / [store.py](file:///d:/spaces/SpecWeave/apps/guard-quality-life-site/src/gqlsite/payments/store.py) / [gateway.py](file:///d:/spaces/SpecWeave/apps/guard-quality-life-site/src/gqlsite/payments/gateway.py)）：环境注入 + RSA2 签名/验签（标准库 cryptography）+ 订单幂等状态机 + 下单表单/异步通知入账。
+- **新增 `payments/` 子包**（[config.py](../../../../apps/guard-quality-life-site/src/gqlsite/payments/config.py) / [sign.py](../../../../apps/guard-quality-life-site/src/gqlsite/payments/sign.py) / [store.py](../../../../apps/guard-quality-life-site/src/gqlsite/payments/store.py) / [gateway.py](../../../../apps/guard-quality-life-site/src/gqlsite/payments/gateway.py)）：环境注入 + RSA2 签名/验签（标准库 cryptography）+ 订单幂等状态机 + 下单表单/异步通知入账。
 - **新增路由**：`GET /checkout/{product}`（渲染支付表单）、`POST /pay/notify`（异步通知验签入账）、`GET /order/{id}`（订单状态）；凭据未配置时 `/checkout` 优雅降级为「支付待配置」。
 - **代码级校验（M-06）**：py314 全量 `pytest tests/ -q` → **71 个测试全绿**，其中 `test_payments.py` 覆盖 RSA2 验签往返、下单表单契约（每参数 hidden input、action 不拼 query）、异步通知状态机（幂等入账 PENDING→PAID / 坏签名拒绝 / app_id 校验 / 金额校验）、凭据缺失降级路由。
 

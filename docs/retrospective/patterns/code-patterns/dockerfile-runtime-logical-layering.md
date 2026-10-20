@@ -324,5 +324,5 @@ V阶段对抗审查（怀疑者/实践者/运维/SRE/维护者五视角）全部
   - [docker-cow-same-layer-modification.md](docker-cow-same-layer-modification.md)（P7同层修改原则，本模式的横切补充原则）
   - [docker-deep-slim-8step.md](docker-deep-slim-8step.md)（镜像深度压缩8步法，在分层基础上的体积优化专项）
 - 参考实例：
-  - [Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/Dockerfile)（P1-P6参考实现）
-  - [devcontainer-base/Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/Dockerfile)（P1-P7完整参考实现）
+  - [Dockerfile](../../../../apps/docker-images/jupyter-ssh-base/Dockerfile)（P1-P6参考实现）
+  - [devcontainer-base/Dockerfile](../../../../apps/docker-images/devcontainer-base/Dockerfile)（P1-P7完整参考实现）

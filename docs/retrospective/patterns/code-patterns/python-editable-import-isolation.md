@@ -209,4 +209,4 @@ def test_python_only_fallback_when_native_lib_missing():
 
 ## 参考实现
 
-- [caffe-ffi/test_python_api.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_python_api.py#L232-L322)：`test_python_only_fallback_when_native_lib_missing`完整实现（~90行）
+- [caffe-ffi/test_python_api.py](../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_python_api.py#L232-L322)：`test_python_only_fallback_when_native_lib_missing`完整实现（~90行）

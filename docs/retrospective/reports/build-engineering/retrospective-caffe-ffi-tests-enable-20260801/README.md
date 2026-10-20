@@ -20,7 +20,7 @@ related_patterns: [
 对 `projects/xuanspace/libs/caffe-ffi/` 的 CMake 测试配置进行修改：删除 `cmake/Tests.cmake` 中静默排除 `test_net.cpp` 和 `test_insert_splits.cpp` 两个 C++ 测试源文件的 `list(REMOVE_ITEM)` 块，替换为带诊断输出的列表长度和内容打印。修改后 C++ 测试源文件数量从 7 个增加到 9 个。
 
 **关键数据**：
-- 修改文件：1个（[cmake/Tests.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Tests.cmake#L20-L31)）
+- 修改文件：1个（[cmake/Tests.cmake](../../../../../projects/xuanspace/libs/caffe-ffi/cmake/Tests.cmake#L20-L31)）
 - 代码变更：4行（删除 REMOVE_ITEM 块4行，新增 list(LENGTH) + 2×message(STATUS) 共3行，净增3行）
 - C++测试源文件：7 → 9（新增 `test_net.cpp`、`test_insert_splits.cpp`）
 - 构建环境验证：Windows MSVC（C1041 PDB锁定，MSVC 19.50 Insiders预览版Bug）、WSL GCC（protobuf版本不兼容）
@@ -43,7 +43,7 @@ related_patterns: [
 
 | 文件路径 | 操作 | 说明 |
 |----------|------|------|
-| [cmake/Tests.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Tests.cmake#L20-L31) | 修改 | 删除第24-27行 REMOVE_ITEM 块，替换为 list(LENGTH) + message(STATUS) 诊断输出 |
+| [cmake/Tests.cmake](../../../../../projects/xuanspace/libs/caffe-ffi/cmake/Tests.cmake#L20-L31) | 修改 | 删除第24-27行 REMOVE_ITEM 块，替换为 list(LENGTH) + message(STATUS) 诊断输出 |
 | `.temp/build_msvc.bat` | 新建→删除 | 临时批处理脚本，尝试绕过PowerShell环境变量问题，任务完成后删除 |
 
 ### F03. Tests.cmake 修改前后对比

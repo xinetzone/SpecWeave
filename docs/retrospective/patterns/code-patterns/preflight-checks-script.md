@@ -343,9 +343,9 @@ def check_dll_dependencies(build_dir):
 
 | 脚本 | 检查内容 | 阻止的问题 |
 |------|---------|-----------|
-| [check_tvm_ffi_traits.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/check_tvm_ffi_traits.py) | tvm-ffi TypeTraits 内置版本 vs 自定义特化冲突 | 自定义 TypeTraits 与 vendor tvm-ffi 冲突导致的编译错误 |
-| [check_windows_dll.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/check_windows_dll.py) | build 目录 DLL 完整性、PATH 冲突 | Windows 运行时 DLL load failed |
-| [verify_build.ps1](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/verify_build.ps1) | vcvars64 环境导入、三层 Python 发现、完整构建验证链 | Windows PowerShell 环境不完整导致构建失败 |
+| [check_tvm_ffi_traits.py](../../../../projects/xuanspace/libs/caffe-ffi/scripts/check_tvm_ffi_traits.py) | tvm-ffi TypeTraits 内置版本 vs 自定义特化冲突 | 自定义 TypeTraits 与 vendor tvm-ffi 冲突导致的编译错误 |
+| [check_windows_dll.py](../../../../projects/xuanspace/libs/caffe-ffi/scripts/check_windows_dll.py) | build 目录 DLL 完整性、PATH 冲突 | Windows 运行时 DLL load failed |
+| [verify_build.ps1](../../../../projects/xuanspace/libs/caffe-ffi/scripts/verify_build.ps1) | vcvars64 环境导入、三层 Python 发现、完整构建验证链 | Windows PowerShell 环境不完整导致构建失败 |
 
 ### 预检失败输出示例
 
@@ -397,7 +397,7 @@ fatal error C1903: unable to recover from previous error(s); stopping compilatio
 
 > **问题**：构建脚本硬编码 Python 路径会导致跨机器/跨环境不可移植——conda 环境、系统 Python、virtualenv 的安装位置各不相同。
 >
-> **解决方案**：按优先级三层递进发现，见 [verify_build.ps1#L219-L241](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/verify_build.ps1#L219-L241)：
+> **解决方案**：按优先级三层递进发现，见 [verify_build.ps1#L219-L241](../../../../projects/xuanspace/libs/caffe-ffi/scripts/verify_build.ps1#L219-L241)：
 > 1. **优先级 1**：`$env:CONDA_PREFIX`（当前激活的 conda 环境，最可靠）
 > 2. **优先级 2**：常见 conda 安装目录硬编码搜索（`~/miniconda3`、`~/anaconda3`、`C:\ProgramData\miniconda3` 等）
 > 3. **优先级 3**：`PATH` 中搜索 `python.exe`
@@ -495,9 +495,9 @@ def check_editable_residuals(site_packages_dir):
 
 ## 来源
 
-- [scripts/check_tvm_ffi_traits.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/check_tvm_ffi_traits.py)
-- [scripts/check_windows_dll.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/check_windows_dll.py)
-- [scripts/verify_build.ps1](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/verify_build.ps1)
+- [scripts/check_tvm_ffi_traits.py](../../../../projects/xuanspace/libs/caffe-ffi/scripts/check_tvm_ffi_traits.py)
+- [scripts/check_windows_dll.py](../../../../projects/xuanspace/libs/caffe-ffi/scripts/check_windows_dll.py)
+- [scripts/verify_build.ps1](../../../../projects/xuanspace/libs/caffe-ffi/scripts/verify_build.ps1)
 - [cmake/PreflightChecks.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/PreflightChecks.cmake)（集成点）
 - 复盘报告：[retrospective-split-zerocopy-cow-milestone-20260731](../../reports/code-optimization/retrospective-split-zerocopy-cow-milestone-20260731/README.md)
 

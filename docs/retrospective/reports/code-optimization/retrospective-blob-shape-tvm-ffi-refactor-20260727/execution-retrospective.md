@@ -71,18 +71,18 @@ date: 2026-07-27
 
 | 文件路径 | 修改类型 | 变更行数（估算） |
 |----------|----------|------------------|
-| [include/caffe/blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/include/caffe/blob.hpp) | 类型替换+接口新增 | ~30行 |
-| [src/caffe/blob.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/src/caffe/blob.cpp) | 逻辑适配+死代码清理 | ~80行 |
-| [src/caffe/_caffe.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/src/caffe/_caffe.cpp) | FFI简化 | ~40行（删除冗余转换） |
-| [pycaffe/python/pycaffe/_caffe.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/pycaffe/python/pycaffe/_caffe.cpp) | 副本同步 | 同上 |
+| [include/caffe/blob.hpp](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/include/caffe/blob.hpp) | 类型替换+接口新增 | ~30行 |
+| [src/caffe/blob.cpp](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/src/caffe/blob.cpp) | 逻辑适配+死代码清理 | ~80行 |
+| [src/caffe/_caffe.cpp](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/src/caffe/_caffe.cpp) | FFI简化 | ~40行（删除冗余转换） |
+| [pycaffe/python/pycaffe/_caffe.cpp](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/pycaffe/python/pycaffe/_caffe.cpp) | 副本同步 | 同上 |
 
 ### 3.2 构建与打包文件
 
 | 文件路径 | 修改类型 |
 |----------|----------|
-| [pycaffe/CMakeLists.txt](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/pycaffe/CMakeLists.txt) | 输出目录更新、tvm_ffi Python包安装 |
-| [pycaffe/pyproject.toml](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/pycaffe/pyproject.toml) | 包名改为`caffe`，依赖简化，支持Python 3.10+ |
-| [python/caffe/\_\_init\_\_.py](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/python/caffe/__init__.py) | 添加 `_setup_library_paths()` 预加载 libtvm_ffi.so |
+| [pycaffe/CMakeLists.txt](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/pycaffe/CMakeLists.txt) | 输出目录更新、tvm_ffi Python包安装 |
+| [pycaffe/pyproject.toml](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/pycaffe/pyproject.toml) | 包名改为`caffe`，依赖简化，支持Python 3.10+ |
+| [python/caffe/\_\_init\_\_.py](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/python/caffe/__init__.py) | 添加 `_setup_library_paths()` 预加载 libtvm_ffi.so |
 
 ### 3.3 Spec文档
 

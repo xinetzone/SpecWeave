@@ -251,5 +251,5 @@ L1-draft — jupyter-ssh-base 项目中验证可行（healthcheck.sh 重写后�
   - dual-channel-tiered-logging.md（双通道日志：stdout 关键日志、文件日志噪音日志）
 - 参考实现：
   - [scripts/healthcheck.sh](../../../../apps/docker-images/jupyter-ssh-base/scripts/healthcheck.sh)
-  - [config/sshd_config](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/config/sshd_config)（LogLevel=ERROR）
+  - [config/sshd_config](../../../../apps/docker-images/jupyter-ssh-base/config/sshd_config)（LogLevel=ERROR）
   - [config/supervisor/conf.d/jupyter.conf](../../../../apps/docker-images/jupyter-ssh-base/config/supervisor/conf.d/jupyter.conf)（stderr 分流）

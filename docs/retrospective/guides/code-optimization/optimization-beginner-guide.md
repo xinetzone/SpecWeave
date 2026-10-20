@@ -272,8 +272,8 @@ if len(os.environ.get("PATH", "")) > 30000:
 - 不需要改逻辑，只是加观测点
 - 目的：熟悉benchmark方法，了解性能热点在哪
 - **参考代码**：
-  - Split层PERF日志示例：[split_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp) 中搜索 `[SPLIT-PERF]`
-  - Python性能trace工具：[conftest.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/conftest.py) 中的 `perf_trace` 函数
+  - Split层PERF日志示例：[split_layer.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp) 中搜索 `[SPLIT-PERF]`
+  - Python性能trace工具：[conftest.py](../../../../projects/xuanspace/libs/caffe-ffi/tests/python/conftest.py) 中的 `perf_trace` 函数
 
 ### 🟢 练习2：写一个预检脚本（低风险）
 - 找一个团队里大家经常踩的环境坑
@@ -281,16 +281,16 @@ if len(os.environ.get("PATH", "")) > 30000:
 - 集成到构建流程里
 - 目的：熟悉工程化思维
 - **参考模板（真实可用脚本）**：
-  - TypeTraits冲突检测：[check_tvm_ffi_traits.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/check_tvm_ffi_traits.py)
-  - Windows DLL检测：[check_windows_dll.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/check_windows_dll.py)
-  - 完整构建预检链：[verify_build.ps1](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/verify_build.ps1)（含三层Python发现+vcvars导入）
+  - TypeTraits冲突检测：[check_tvm_ffi_traits.py](../../../../projects/xuanspace/libs/caffe-ffi/scripts/check_tvm_ffi_traits.py)
+  - Windows DLL检测：[check_windows_dll.py](../../../../projects/xuanspace/libs/caffe-ffi/scripts/check_windows_dll.py)
+  - 完整构建预检链：[verify_build.ps1](../../../../projects/xuanspace/libs/caffe-ffi/scripts/verify_build.ps1)（含三层Python发现+vcvars导入）
 
 ### 🟡 练习3：瓶颈优先小优化（中风险）
 - 用profile找到一个独立的热点函数（占比>10%）
 - 按五步法做：建基线→小范围改→加测试→加开关→验证
 - 目的：完整走一遍优化流程
 - **双开关代码模板参考**：
-  - 编译期开关：[Options.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake#L12-L13)（`CAFFE_FFI_ENABLE_COW`）
+  - 编译期开关：[Options.cmake](../../../../projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake#L12-L13)（`CAFFE_FFI_ENABLE_COW`）
   - 运行时开关参考：搜索 `CAFFE_FFI_DISABLE_COW` 环境变量用法
 
 ### 🔴 练习4：跨模块内存语义优化（高风险）
@@ -300,7 +300,7 @@ if len(os.environ.get("PATH", "")) > 30000:
 - **完整案例参考**：Split层零拷贝+COW优化
   - Phase 1零拷贝：[ffi-intrusive-refcount-zerocopy模式](../../patterns/code-patterns/ffi-intrusive-refcount-zerocopy.md)
   - Phase 2 COW：[const-cow-trigger模式](../../patterns/code-patterns/const-cow-trigger.md)
-  - 完整实现代码：[split_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp)、[blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp)
+  - 完整实现代码：[split_layer.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp)、[blob.hpp](../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp)
 
 ---
 

@@ -172,22 +172,22 @@ status: archived
 |---|---|
 | [BACKWARD_LOGGING_PLAN.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/BACKWARD_LOGGING_PLAN.md) | Backward_cpu扩展详细计划（8节，436行） |
 | [ACTIVATION_PERF_MONITORING_SPEC.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/ACTIVATION_PERF_MONITORING_SPEC.md) | 激活层性能监控规范（8节，226行，含卷积层GEMM多阶段适配） |
-| [perf_monitor.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/perf_monitor.hpp) | 统一性能监控工具头文件：RAII ScopedTimer + RangeStats/NormStats/ProbStats + Reduce辅助函数 + PerfLogBuilder |
-| [conv_layer.cpp (Forward)](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp) | ✅ P0 Forward已修复：添加[CONV-PERF] chrono计时+GEMM后reduce(out/w值域+w_norm+b值域)+子阶段分计时(im2col/gemm/bias) |
-| [conv_layer.cpp (Backward)](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L273-L489) | ✅ P0 Backward已修复：6子阶段计时(t_zero/im2col/gemm_filter/gemm_data/col2im/gemm_bias)+col_buffer单缓冲复用+double累加w_diff_norm+beta=1跨batch累积+propagate_down完整条件保护 |
-| [inner_product_layer.cpp (Forward)](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/inner_product_layer.cpp) | ✅ P0 Forward已修复：添加[IP-PERF] chrono计时+GEMM后reduce(out/w值域+w_norm+b值域)+子阶段分计时(gemm/bias) |
-| [inner_product_layer.cpp (Backward)](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/inner_product_layer.cpp#L219-L383) | ✅ P0 Backward已修复：4子阶段计时(t_zero/gemm_filter/gemm_data/gemm_bias)+beta=0一次GEMM完成+double累加w_diff_norm |
-| [batch_norm_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/batch_norm_layer.cpp) | ✅ P1已修复：添加[BN-PERF] 单次遍历融合in/out值域+mean/var参数值域独立reduce |
-| [softmax_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/softmax_layer.cpp) | ✅ P1已修复：添加[SOFTMAX-PERF] chrono计时+概率分布统计(out值域+avg_max_prob+avg_entropy+max_entropy)+补齐include一致性 |
-| [relu_layer.cpp (Backward)](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/relu_layer.cpp#L69-L135) | ✅ P2 ReLU Backward已实现：dead_ratio死区神经元统计+[ACTIVATION-PERF] backward日志(diff_in/diff_out值域) |
-| [pooling_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/pooling_layer.cpp) | ✅ P3已修复：添加[POOL-PERF] in/out值域+kernel/stride/pad参数计时 |
-| [eltwise_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp) | ✅ P3已修复：添加[ELTWISE-PERF] out值域+coeffs值域+operation+num_bottoms计时 |
-| [bias_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/bias_layer.cpp) | ✅ P3已修复：单次遍历融合copy+bias+in/out值域统计[BIAS-PERF]，替代原caffe_copy+三重循环 |
-| [scale_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/scale_layer.cpp) | ✅ P3已修复：单次遍历融合scale+bias+in/out值域统计[SCALE-PERF]，替代原caffe_copy+两重循环 |
-| [dropout_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/dropout_layer.cpp) | ✅ P3已修复：添加[DROPOUT-PERF] count+dropout_ratio+inplace标志计时 |
-| [concat_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/concat_layer.cpp) | ✅ P3已修复：添加[CONCAT-PERF] out值域+num_bottoms+concat_axis计时 |
-| [softmax_loss_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/softmax_loss_layer.cpp) | ✅ P3已修复：添加[LOSS-PERF] 概率分布统计(prob值域+avg_max_prob+avg_entropy+uncertainty)+avg_loss+valid_count |
-| [sigmoid_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/sigmoid_layer.cpp) | ✅ P2 Sigmoid Backward已有实现，含[ACTIVATION-PERF] saturate_ratio饱和率统计 |
+| [perf_monitor.hpp](../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/perf_monitor.hpp) | 统一性能监控工具头文件：RAII ScopedTimer + RangeStats/NormStats/ProbStats + Reduce辅助函数 + PerfLogBuilder |
+| [conv_layer.cpp (Forward)](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp) | ✅ P0 Forward已修复：添加[CONV-PERF] chrono计时+GEMM后reduce(out/w值域+w_norm+b值域)+子阶段分计时(im2col/gemm/bias) |
+| [conv_layer.cpp (Backward)](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L273-L489) | ✅ P0 Backward已修复：6子阶段计时(t_zero/im2col/gemm_filter/gemm_data/col2im/gemm_bias)+col_buffer单缓冲复用+double累加w_diff_norm+beta=1跨batch累积+propagate_down完整条件保护 |
+| [inner_product_layer.cpp (Forward)](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/inner_product_layer.cpp) | ✅ P0 Forward已修复：添加[IP-PERF] chrono计时+GEMM后reduce(out/w值域+w_norm+b值域)+子阶段分计时(gemm/bias) |
+| [inner_product_layer.cpp (Backward)](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/inner_product_layer.cpp#L219-L383) | ✅ P0 Backward已修复：4子阶段计时(t_zero/gemm_filter/gemm_data/gemm_bias)+beta=0一次GEMM完成+double累加w_diff_norm |
+| [batch_norm_layer.cpp](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/batch_norm_layer.cpp) | ✅ P1已修复：添加[BN-PERF] 单次遍历融合in/out值域+mean/var参数值域独立reduce |
+| [softmax_layer.cpp](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/softmax_layer.cpp) | ✅ P1已修复：添加[SOFTMAX-PERF] chrono计时+概率分布统计(out值域+avg_max_prob+avg_entropy+max_entropy)+补齐include一致性 |
+| [relu_layer.cpp (Backward)](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/relu_layer.cpp#L69-L135) | ✅ P2 ReLU Backward已实现：dead_ratio死区神经元统计+[ACTIVATION-PERF] backward日志(diff_in/diff_out值域) |
+| [pooling_layer.cpp](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/pooling_layer.cpp) | ✅ P3已修复：添加[POOL-PERF] in/out值域+kernel/stride/pad参数计时 |
+| [eltwise_layer.cpp](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp) | ✅ P3已修复：添加[ELTWISE-PERF] out值域+coeffs值域+operation+num_bottoms计时 |
+| [bias_layer.cpp](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/bias_layer.cpp) | ✅ P3已修复：单次遍历融合copy+bias+in/out值域统计[BIAS-PERF]，替代原caffe_copy+三重循环 |
+| [scale_layer.cpp](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/scale_layer.cpp) | ✅ P3已修复：单次遍历融合scale+bias+in/out值域统计[SCALE-PERF]，替代原caffe_copy+两重循环 |
+| [dropout_layer.cpp](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/dropout_layer.cpp) | ✅ P3已修复：添加[DROPOUT-PERF] count+dropout_ratio+inplace标志计时 |
+| [concat_layer.cpp](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/concat_layer.cpp) | ✅ P3已修复：添加[CONCAT-PERF] out值域+num_bottoms+concat_axis计时 |
+| [softmax_loss_layer.cpp](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/softmax_loss_layer.cpp) | ✅ P3已修复：添加[LOSS-PERF] 概率分布统计(prob值域+avg_max_prob+avg_entropy+uncertainty)+avg_loss+valid_count |
+| [sigmoid_layer.cpp](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/sigmoid_layer.cpp) | ✅ P2 Sigmoid Backward已有实现，含[ACTIVATION-PERF] saturate_ratio饱和率统计 |
 | [caffe-ffi-perf-instrumentation-template.md](../../../docs/knowledge/caffe-ffi-perf-instrumentation-template.md) | ✅ 统一C++性能埋点模板v1.1.0：四类模板（GEMM Forward/Backward+逐元素+概率分布）+8大避坑指南+15个层类型日志标签对照表+14个层已实现状态清单（Forward覆盖率82%） |
 | [框架接口渐进式扩展模式](../patterns/code-patterns/progressive-interface-extension.md) | 模式1：三阶段接口演进策略（L1候选） |
 | [单次遍历性能统计日志埋点模式](../patterns/code-patterns/single-pass-perf-instrumentation.md) | 模式3：计算+统计融合+卷积层GEMM多阶段适配+Conv Backward C++示例（L1候选） |

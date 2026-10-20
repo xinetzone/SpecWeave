@@ -197,9 +197,9 @@ export KMP_DUPLICATE_LIB_OK=TRUE
 ## 五、代码修改清单
 
 ### 5.1 Conv 层并行化代码
-- [base_conv_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/base_conv_layer.hpp#L167-L171) — 新增 `forward_cpu_gemm_ext()` 声明
-- [base_conv_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/base_conv_layer.cpp#L220-L240) — 实现 `forward_cpu_gemm_ext()`
-- [conv_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L55-L95) — Forward_cpu OpenMP batch 并行
+- [base_conv_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/base_conv_layer.hpp#L167-L171) — 新增 `forward_cpu_gemm_ext()` 声明
+- [base_conv_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/base_conv_layer.cpp#L220-L240) — 实现 `forward_cpu_gemm_ext()`
+- [conv_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L55-L95) — Forward_cpu OpenMP batch 并行
 
 ### 5.2 新增脚本
 - [build_and_bench.sh](../../../../../../.trae/specs/caffe-framework/caffe-ffi-followup-fixes-analysis/build_and_bench.sh) — 一键编译+多配置性能测试

@@ -375,7 +375,7 @@ L2-validated — 在devcontainer-base项目中多场景正向验证：
   - [docker-ssh-noninteractive-path-fix.md](docker-ssh-noninteractive-path-fix.md)（SSH非交互会话PATH配置，FixUID容器中SSH服务的配套模式）
   - [env-var-alias-backward-compat.md](env-var-alias-backward-compat.md)（环境变量别名兼容，WORKSPACE_CHOWN_MODE等变量的设计参考）
 - 参考实例：
-  - [devcontainer-base/entrypoint.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/entrypoint.sh)（adjust_user_uid_gid()函数~224行完整参考实现）
+  - [devcontainer-base/entrypoint.sh](../../../../apps/docker-images/devcontainer-base/entrypoint.sh)（adjust_user_uid_gid()函数~224行完整参考实现）
 - 外部参考：
   - [jupyter/docker-stacks start.sh](https://github.com/jupyter/docker-stacks/blob/main/docker-stacks-foundation/start.sh)（社区知名FixUID实现）
   - [VS Code Dev Containers updateRemoteUserUID](https://code.visualstudio.com/remote/advancedcontainers/add-nonroot-user)（IDE内置等价机制）

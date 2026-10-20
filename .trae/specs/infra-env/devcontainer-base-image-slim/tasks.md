@@ -11,7 +11,7 @@
 - **Completed**: 2026-08-13
 - **Commits**: ceec9c07, 5efd3eac（后经 v2.2 流水线优化迭代）
 - **Description**:
-  - 修改 [apps/docker-images/devcontainer-base/Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/Dockerfile)
+  - 修改 [apps/docker-images/devcontainer-base/Dockerfile](../../../../apps/docker-images/devcontainer-base/Dockerfile)
   - **架构决策**：采用方案B（主镜像直接集成 Miniforge3），移除/opt/venv虚拟环境，Jupyter/Lab/Python全部通过conda管理
   - Python版本升级至**3.14.6**（conda-forge, GCC 14.4.0, free-threading build cp314t）
   - 配置**libmamba**为conda默认求解器（conda 26.3.2, conda-libmamba-solver 26.7.0, libmambapy 2.3.2；v2.2.1 引入 mamba 2.5.0 原生 CLI）
@@ -70,7 +70,7 @@
 - **Status**: `completed`
 - **Commits**: 5efd3eac
 - **Description**:
-  - 更新[README.md](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/README.md)
+  - 更新[README.md](../../../../apps/docker-images/devcontainer-base/README.md)
   - 特性列表更新（venv→Miniforge3+Python3.14+libmamba, Jupyter→JupyterLab）
   - 构建脚本参数文档（多镜像源、--network-host、--test、日志特性、--verify-mode/--deep-verify）
   - 快速开始示例标签更新为conda-libmamba-ft / v2.2-fasttest
@@ -184,5 +184,5 @@
 
 ## 交付物清单（更新后）
 - ✅ [spec.md](spec.md) - PRD（已同步 v2.2/v2.2.1/v2.3 现状）
-- ✅ [tasks.md](file:///d:/spaces/SpecWeave/.trae/specs/infra-env/devcontainer-base-image-slim/tasks.md) - 实施计划（已更新路径与任务状态，含后续演进 V1-V3 记录）
+- ✅ [tasks.md](tasks.md) - 实施计划（已更新路径与任务状态，含后续演进 V1-V3 记录）
 - ✅ [checklist.md](checklist.md) - 预检清单（已更新）

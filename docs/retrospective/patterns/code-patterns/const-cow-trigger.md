@@ -497,11 +497,11 @@ def test_n2_split_cow_after_inplace_relu(self):
 
 ## 来源
 
-- [blob.hpp COW 方法声明与实现](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp#L132-L254)
-- [split_layer.cpp N≥2 COW 路径](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp#L117-L163)
-- [test_blob_zerocopy.cpp COWTest + COWApiTest](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp#L191-L1145)
-- [test_cow.py Python COW 测试](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_cow.py)
-- [cmake/Options.cmake CAFFE_FFI_ENABLE_COW 选项](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake#L12)
+- [blob.hpp COW 方法声明与实现](../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp#L132-L254)
+- [split_layer.cpp N≥2 COW 路径](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp#L117-L163)
+- [test_blob_zerocopy.cpp COWTest + COWApiTest](../../../../projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp#L191-L1145)
+- [test_cow.py Python COW 测试](../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_cow.py)
+- [cmake/Options.cmake CAFFE_FFI_ENABLE_COW 选项](../../../../projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake#L12)
 - 复盘报告：[retrospective-split-zerocopy-cow-milestone-20260731](../../reports/code-optimization/retrospective-split-zerocopy-cow-milestone-20260731/README.md)
 
 > **关联模式**：

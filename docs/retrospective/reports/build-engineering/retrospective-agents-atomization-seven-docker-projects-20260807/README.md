@@ -135,7 +135,7 @@ Malformed errors:    0
 
 ### F05. docker-ssh-dind BuildKit补全内容
 
-对 [Containerfile](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/Containerfile) 进行了3项BuildKit兼容性修复：
+对 [Containerfile](../../../../../apps/docker-images/docker-ssh-dind/Containerfile) 进行了3项BuildKit兼容性修复：
 
 1. **语法声明**：添加 `# syntax=docker/dockerfile:1.7-labs`（启用BuildKit高级特性）
 2. **安全Shell**：添加 `SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]`（管道错误传播）

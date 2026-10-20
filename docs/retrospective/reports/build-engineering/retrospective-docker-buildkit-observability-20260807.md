@@ -287,7 +287,7 @@ echo "  - python3: $(python3 --version 2>&1 | awk '{print $2}')" && \
 
 ### 新建Dockerfile时
 
-使用 [skeleton/Dockerfile](file:///d:/spaces/SpecWeave/.agents/templates/docker-snippets/skeleton/Dockerfile) 作为起点，模板已包含：
+使用 [skeleton/Dockerfile](../../../../.agents/templates/docker-snippets/skeleton/Dockerfile) 作为起点，模板已包含：
 - ✅ BuildKit syntax声明和缓存挂载示例
 - ✅ 6阶段逻辑分层
 - ✅ 结构化日志规范

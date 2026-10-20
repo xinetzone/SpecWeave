@@ -24,16 +24,16 @@
 
 **核心改动**:
 
-1. **新增 `CAFFE_FFI_ENABLE_PERF_LOG` 编译选项**（[Options.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake#L9)）
+1. **新增 `CAFFE_FFI_ENABLE_PERF_LOG` 编译选项**（[Options.cmake](../../../../projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake#L9)）
    - 默认 OFF（生产推理），设为 ON 时启用逐层计时/统计/PERF 日志
-   - [CompilerConfig.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/CompilerConfig.cmake#L77-L80) 添加预处理宏条件传递
+   - [CompilerConfig.cmake](../../../../projects/xuanspace/libs/caffe-ffi/cmake/CompilerConfig.cmake#L77-L80) 添加预处理宏条件传递
 
 2. **28个层文件 PERF 统计代码条件编译**
    - 覆盖：absval, batch_norm, bias, concat, conv, crop, deconv, dropout, eltwise, elu, hinge, inner_product, instance_norm, l2_norm, leaky_relu, lrn, margin_ranking, pooling, prelu, relu, scale, sigmoid, slice, softmax, softmax_loss, softplus, softsign, split, tanh
    - 包裹内容：`high_resolution_clock::now()` 计时、主循环内 `std::min/std::max` 统计、范数计算、`[*-PERF]` 日志输出
    - 消除 O(N) min/max 遍历对 SIMD 自动向量化的阻塞（贡献~30%性能提升）
 
-3. **Conv OpenMP 分块策略调优**（[conv_layer.cpp#L88](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L88)）
+3. **Conv OpenMP 分块策略调优**（[conv_layer.cpp#L88](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L88)）
    - `kMinChunk` 从 32 降至 8：conv1(64ch) 从2线程→4线程满载
    - 修复 serial fallback 路径 `n * bottom_dim_` 整数溢出（改用 `int64_t`）
 
@@ -92,7 +92,7 @@
 - 截断的二进制 protobuf 文件触发 `DecodeError: Wire format was corrupt`
 
 **修复**：
-- [utils.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/networks/utils.py) `_download_model()` 添加：
+- [utils.py](../../../../projects/xuanspace/libs/caffe-ffi/tests/python/networks/utils.py) `_download_model()` 添加：
   - HEAD 请求探测服务器 Content-Length
   - 本地文件大小校验（小于期望值则删除重下）
   - 3次自动重试（指数退避）
@@ -103,7 +103,7 @@
 **问题**：8个 `test_phase3_log_aggregation.py` 测试断言 `[SPLIT-PERF]` 日志输出，Release 模式 PERF_LOG=OFF 时无输出导致失败
 
 **修复**：
-- [test_phase3_log_aggregation.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_phase3_log_aggregation.py) 添加：
+- [test_phase3_log_aggregation.py](../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_phase3_log_aggregation.py) 添加：
   - `_perf_log_enabled()` 运行时检测（fd级stdout重定向捕获C++输出）
   - `@skipif_no_perf_log` 装饰器自动跳过 PERF 依赖测试
   - 4个功能正确性测试始终运行（不受影响）

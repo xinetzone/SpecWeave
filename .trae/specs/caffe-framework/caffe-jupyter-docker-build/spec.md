@@ -25,7 +25,7 @@ status: "draft"
 - 镜像体积优化（多阶段构建已包含在Dockerfile中）
 
 ## Background & Context
-- Dockerfile位于：[Dockerfile.jupyter-ssh](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/origin/Dockerfile.jupyter-ssh)
+- Dockerfile位于：[Dockerfile.jupyter-ssh](../../../../projects/xuanspace/vendor/caffe/docker/origin/Dockerfile.jupyter-ssh)
 - 构建命令（Dockerfile第14行）：`docker build -t caffe-cpu:jupyter --target runtime-jupyter -f docker/origin/Dockerfile.jupyter-ssh .`
 - 构建上下文需要在caffe根目录（包含caffex/源码目录）
 - Docker环境运行在WSL Ubuntu-24.04中（Docker 29.6.1）

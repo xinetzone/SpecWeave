@@ -118,7 +118,7 @@ maturity: "validated"
 
 ### 修复1：CMake 编译宏传播（TargetBuild.cmake）
 
-**文件**：[TargetBuild.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/TargetBuild.cmake#L58-L63)
+**文件**：[TargetBuild.cmake](../../../../../projects/xuanspace/libs/caffe-ffi/cmake/TargetBuild.cmake#L58-L63)
 
 **变更**：
 ```cmake
@@ -137,13 +137,13 @@ endif()
 
 ### 修复2：cpu_mutable_data() COW 触发（blob.cpp）
 
-**文件**：[blob.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp)
+**文件**：[blob.cpp](../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp)
 
 `cpu_mutable_data()` 是内联函数（在 blob.hpp 中定义），调用 `mutable_data_tensor()` 获取 tensor 后返回其 `data_ptr()`。由于 `mutable_data_tensor()` 已经包含了 COW 触发逻辑（F15确认该逻辑存在且正确），`cpu_mutable_data()` 通过调用 `mutable_data_tensor()` 间接获得 COW 保护。本次修复确认了该调用链正确，并验证了 `cpu_mutable_diff()` 同理通过 `mutable_diff_tensor()` 获得 COW 保护。
 
 ### 修复3：ShareDiff 形状同步（blob.cpp）
 
-**文件**：[blob.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp#L306-L345)
+**文件**：[blob.cpp](../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp#L306-L345)
 
 **变更要点**：
 1. 在设置 `diff_tensor_ = other->diff_tensor_` 之前，检查 `data_tensor_` 形状是否与 other 的 diff tensor 形状匹配
@@ -153,7 +153,7 @@ endif()
 
 ### 修复4：FFI fallback 状态标志（_ffi_api.py）
 
-**文件**：[_ffi_api.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/_ffi_api.py#L73-L113)
+**文件**：[_ffi_api.py](../../../../../projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/_ffi_api.py#L73-L113)
 
 **变更**：在三个失败退出分支中均显式设置 `_ffi_available = False`：
 - `_lib_path is None` 分支（找不到 .so 文件）：添加 `_ffi_available = False`
@@ -181,7 +181,7 @@ cp "$_CAFFE_FFI_SO" "$_PY_PKG_DIR/"
 
 ### 修复6：新增回归测试
 
-**文件**：[test_python_api.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_python_api.py#L232-L322)
+**文件**：[test_python_api.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_python_api.py#L232-L322)
 
 **测试策略**：
 1. 创建临时目录，使用 `shutil.copytree` 复制 caffe_ffi 包（排除 `*.so`、`*.pyd`、`*.dll`、`*.pyc`、`__pycache__`）
@@ -320,11 +320,11 @@ Top 5 最慢用例：
 
 | 文件 | 变更类型 | 变更行数（约） |
 |------|----------|----------------|
-| [cmake/TargetBuild.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/TargetBuild.cmake#L59) | 修复（PRIVATE→PUBLIC） | 1 |
-| [src/caffe_ffi/blob.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp#L306-L345) | 修复（ShareDiff形状同步） | ~20 |
-| [python/caffe_ffi/_ffi_api.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/_ffi_api.py#L100-L112) | 修复（fallback状态设置） | 3 |
+| [cmake/TargetBuild.cmake](../../../../../projects/xuanspace/libs/caffe-ffi/cmake/TargetBuild.cmake#L59) | 修复（PRIVATE→PUBLIC） | 1 |
+| [src/caffe_ffi/blob.cpp](../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp#L306-L345) | 修复（ShareDiff形状同步） | ~20 |
+| [python/caffe_ffi/_ffi_api.py](../../../../../projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/_ffi_api.py#L100-L112) | 修复（fallback状态设置） | 3 |
 | [apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh](../../../../../apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh#L260-L278) | 修复（SO拷贝路径+PYTHONPATH） | ~10 |
-| [tests/python/test_python_api.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_python_api.py#L232-L322) | 新增（回归测试） | ~90 |
+| [tests/python/test_python_api.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_python_api.py#L232-L322) | 新增（回归测试） | ~90 |
 
 ---
 

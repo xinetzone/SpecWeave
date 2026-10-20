@@ -14,7 +14,7 @@
   - `programmatic` TR-1.2: 因果词黑名单扫描（因为/所以/导致/错误/失误/说明/证明），零命中
   - `programmatic` TR-1.3: 事实覆盖四大架构属性、五子系统流程、核心成果数据三个维度
   - `human-judgement` TR-1.4: 事实描述客观中立，不包含分析判断或推论
-- **Notes**: 参考[retrospective指令集](file:///d:/spaces/SpecWeave/.agents/commands/retrospective.md)的事实采集规范
+- **Notes**: 参考[retrospective指令集](../../../../../.agents/commands/retrospective.md)的事实采集规范
 - **完成状态**: 产出36条事实，G1质量门通过，文件：facts.md
 
 ## [x] Task 2: I阶段 - 核心洞察提炼
@@ -71,7 +71,7 @@
   - `programmatic` TR-4.2: 至少2条审查意见被采纳并修正了模式文档
   - `programmatic` TR-4.3: 覆盖≥3个审查视角
   - `human-judgement` TR-4.4: 审查意见确实暴露了模式的潜在盲区，修正后模式更健壮
-- **Notes**: 参考[adversarial-review指令集](file:///d:/spaces/SpecWeave/.agents/commands/adversarial-review.md)
+- **Notes**: 参考[adversarial-review指令集](../../../../../.agents/commands/adversarial-review.md)
 - **完成状态**: 产出7条审查意见，采纳4条修正模式文档，V门质量门通过，文件：adversarial-review.md
 
 ## [x] Task 5: C阶段 - 模式入库、索引更新与验证

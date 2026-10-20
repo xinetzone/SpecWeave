@@ -279,7 +279,7 @@ G3质量门检查：
 
 | 文件 | 说明 |
 |------|------|
-| [viz_insert_splits.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/viz_insert_splits.py) | InsertSplits DAG可视化主脚本（1047行，零依赖） |
+| [viz_insert_splits.py](../../../../../projects/xuanspace/libs/caffe-ffi/scripts/viz_insert_splits.py) | InsertSplits DAG可视化主脚本（1047行，零依赖） |
 | 本报告 | 里程碑复盘报告（.agents/docs/retrospective/reports/code-optimization/retrospective-caffe-ffi-viz-insert-splits-20260801/） |
 | [graph-transform-validator-architecture.md](../../../patterns/architecture-patterns/graph-transform-validator-architecture.md) | 架构模式：图变换验证工具四段式架构 |
 | [protobuf-text-minimal-parser.md](../../../patterns/code-patterns/protobuf-text-minimal-parser.md) | 代码模式：Protobuf文本格式最小解析器 |

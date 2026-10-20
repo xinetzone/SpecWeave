@@ -29,10 +29,10 @@ x-toml-ref: "../../.meta/toml/.trae/specs/standards-tools/sphinx-config-mystx-ex
 - 不引入 `myst-nb` 作为硬依赖（保持当前 optional-dependencies 语义不变）。
 
 ## Background & Context
-- 上游现状：SpecWeave `.agents/scripts/lib/sphinx_config` 源自 `projects/awesome-okf-xs/doc/conf.py` 萃取，经 dd0c49a8f→f983f8d3b→c349c695c→Batch-0~3 共 7 commits 迭代，已完成 SIGIL-S 5 道门（Gateway 登记于 [README.md](file:///d:/spaces/SpecWeave/.agents/scripts/lib/README.md#L16-L30)、Integration Tests 38 条 100% PASS）。
+- 上游现状：SpecWeave `.agents/scripts/lib/sphinx_config` 源自 `projects/awesome-okf-xs/doc/conf.py` 萃取，经 dd0c49a8f→f983f8d3b→c349c695c→Batch-0~3 共 7 commits 迭代，已完成 SIGIL-S 5 道门（Gateway 登记于 [README.md](../../../../.agents/scripts/lib/README.md#L16-L30)、Integration Tests 38 条 100% PASS）。
 - 下游现状：`playground/books/libs/mystx/` 是 **独立 Git 仓库**（非 submodule，已 clone 到 playground/books/libs/ 下进行本地开发），拥有 `src/mystx/__init__.py`、`config.py`、`theme.py`、`version_switcher.py`，入口 `setup(app)` 目前只做 3 件事：`_setup_myst_nb(optional)` + `MySTX(app)` 注册主题 + `config-inited → config_inited_handler`；无 MyST date/H1 兼容钩子、无扩展优先级队列、无主题优先级队列、手写的浅合并 theme options。
 - 技术约束：Python ≥3.14（PEP 649 默认延迟注解，禁止 `from __future__ import annotations`）；Sphinx ≥7 钩子 API 不变；`myst_parser` 为 mystx 的硬依赖（被 `myst-nb` 通过 optional-dependency 引入，但 pure 主题用户未必安装——本次萃取后将 `myst_parser` 提升为 mystx 硬依赖？见 Open Question Q1）。
-- 已萃取的 PRESET-SETUP L1.5 模式（见 [preset-setup-closure-generator.md](file:///d:/spaces/SpecWeave/docs/retrospective/patterns/code-patterns/preset-setup-closure-generator.md)）将在 mystx 侧应用为 `mystx.presets` 子包，提供 `build_minimal_myst_config` 与未来更多预设。
+- 已萃取的 PRESET-SETUP L1.5 模式（见 [preset-setup-closure-generator.md](../../../../docs/retrospective/patterns/code-patterns/preset-setup-closure-generator.md)）将在 mystx 侧应用为 `mystx.presets` 子包，提供 `build_minimal_myst_config` 与未来更多预设。
 
 ## Functional Requirements
 - **FR-1（工具函数子包 `mystx.utils`）**：迁移 `deep_merge`、`has_module` 两个纯函数，保持调用签名与返回类型 100% 不变，`deep_merge` 必须保留 `remove_marker=None` 语义。

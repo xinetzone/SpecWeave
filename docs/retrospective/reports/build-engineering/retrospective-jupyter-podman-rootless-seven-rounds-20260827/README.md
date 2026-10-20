@@ -46,7 +46,7 @@ stale_after: "2027-08-27"
 |---|---|
 | 功能增强项 | 3 项（-w 参数、环境变量统一、默认值修正） |
 | Bug 修复项 | 5 个（podman create -d、CRLF换行、变量名不一致、反斜杠路径、脚本CRLF） |
-| 修改文件 | 2 个（[bin/jpman](file:///d:/spaces/SpecWeave/apps/containers/jupyter-podman-rootless/bin/jpman), [bin/jpman.ps1](file:///d:/spaces/SpecWeave/apps/containers/jupyter-podman-rootless/bin/jpman.ps1)） |
+| 修改文件 | 2 个（[bin/jpman](../../../../../apps/containers/jupyter-podman-rootless/bin/jpman), [bin/jpman.ps1](../../../../../apps/containers/jupyter-podman-rootless/bin/jpman.ps1)） |
 | 新增代码 | ~100 行（安全 .env 解析 + Windows→WSL 路径转换 + -w 参数处理） |
 | 端到端验证 | ✅ 通过（jpman start -w /tmp/test-ws + jpman start（.env配置）双验证） |
 | 可复用模式 | 4 个（bash 安全 .env 加载、Windows→WSL 路径转换、多入口配置统一、跨平台bash检查清单） |
@@ -327,8 +327,8 @@ WORKSPACE="${WORKSPACE:-${JUPYTER_WORKSPACE:-$PROJECT_ROOT/workspace}}"
 
 | 文件 | 变更类型 | 关键改动 |
 |------|---------|---------|
-| [bin/jpman](file:///d:/spaces/SpecWeave/apps/containers/jupyter-podman-rootless/bin/jpman) | 重大修改 | 1. 新增 `_win_to_wsl_path()` 函数（L65-L88）<br>2. 重写 `load_env()` 为安全逐行解析（L90-L126）<br>3. 更新默认配置块，增加短变量名 fallback（L133-L147）<br>4. 更新 WORKSPACE 优先级逻辑（L148-L159）<br>5. cmd_start 添加 `-w/--workspace` 参数解析（L309-L322）<br>6. cmd_start 添加路径转换/解析/自动创建（L324-L339）<br>7. 移除 podman create 的 `-d` 标志（L354）<br>8. cmd_restart 添加 `"$@"` 参数透传（L404-L406）<br>9. 帮助文档更新，添加 -w 参数说明（L19-L48）<br>10. CRLF → LF 行结尾转换 |
-| [bin/jpman.ps1](file:///d:/spaces/SpecWeave/apps/containers/jupyter-podman-rootless/bin/jpman.ps1) | 修改 | 1. WORKSPACE 环境变量优先级统一（L60-L74）<br>2. 默认值修正（不再硬编码 SpecWeave 根目录）<br>3. Show-Help 文档更新（L534-L585） |
+| [bin/jpman](../../../../../apps/containers/jupyter-podman-rootless/bin/jpman) | 重大修改 | 1. 新增 `_win_to_wsl_path()` 函数（L65-L88）<br>2. 重写 `load_env()` 为安全逐行解析（L90-L126）<br>3. 更新默认配置块，增加短变量名 fallback（L133-L147）<br>4. 更新 WORKSPACE 优先级逻辑（L148-L159）<br>5. cmd_start 添加 `-w/--workspace` 参数解析（L309-L322）<br>6. cmd_start 添加路径转换/解析/自动创建（L324-L339）<br>7. 移除 podman create 的 `-d` 标志（L354）<br>8. cmd_restart 添加 `"$@"` 参数透传（L404-L406）<br>9. 帮助文档更新，添加 -w 参数说明（L19-L48）<br>10. CRLF → LF 行结尾转换 |
+| [bin/jpman.ps1](../../../../../apps/containers/jupyter-podman-rootless/bin/jpman.ps1) | 修改 | 1. WORKSPACE 环境变量优先级统一（L60-L74）<br>2. 默认值修正（不再硬编码 SpecWeave 根目录）<br>3. Show-Help 文档更新（L534-L585） |
 
 ### 5.2 使用方式
 

@@ -60,7 +60,7 @@ status: "draft"
 - **Technical**：Markdown + YAML frontmatter；静态 OKF bundle；不引入构建工具或新依赖。
 - **Business**：目标版本锁定 KaTeX v0.18.4 官网当前稳定版；内容为公开资料，按公开内容工作流处理。
 - **Dependencies**：官网 https://katex.org/、KaTeX GitHub 仓库、现有 bundle 文件、awesome-okf-xs OKF v0.2 规范。
-- **Process**：遵循 [AGENTS.md](file:///d:/spaces/SpecWeave/projects/awesome-okf-xs/AGENTS.md) 与 [frontmatter.md](file:///d:/spaces/SpecWeave/projects/awesome-okf-xs/.agents/rules/frontmatter.md)；实现任务必须委派给子智能体，主智能体不直接写入实现内容。
+- **Process**：遵循 [AGENTS.md](../../../../projects/awesome-okf-xs/AGENTS.md) 与 [frontmatter.md](../../../../projects/awesome-okf-xs/.agents/rules/frontmatter.md)；实现任务必须委派给子智能体，主智能体不直接写入实现内容。
 
 ## Assumptions
 - 用户选择“融合增强”：保留源码级文档，同时新增官网导向文档。

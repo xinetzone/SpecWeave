@@ -57,8 +57,8 @@ maturity: "L1.5"
 | **read_safe 默认值** | `extension.py` kwargs 默认 | `parallel_read_safe=None`（**opt-in；未声明 = 不安全 = 强制串行**） |
 | **write_safe 默认值** | `extension.py` kwargs 默认 | `parallel_write_safe=True`（opt-out；默认允许） |
 | **myst_nb 上游声明** | Web 引用：`myst_nb/sphinx_ext.py` | 返回 `{"parallel_read_safe": True, "parallel_write_safe": True}` ✅ |
-| **mystx conf.py 当前缺口** | [conf.py:L227-251](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/mystx/doc/conf.py#L227-L251) | `setup(app)` **未返回 metadata dict** → 被计为"未声明" → 触发 warning + 强制串行 ❌ |
-| **mystx 扩展清单（风险）** | [conf.py:L46-253](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/mystx/doc/conf.py#L46-L253) | 共 17+ 扩展：mystx、sphinx_design、viewcode、intersphinx、copybutton、sphinx_comments、autoapi、graphviz、sphinx_contributors、sphinxext.opengraph、sphinx_tippy、sphinx_pyscript、mystx.ext.github_readme_stats、sphinxcontrib.bibtex、sphinx_sitemap、sphinx_examples、extlinks — **多数未显式声明 parallel_read_safe** |
+| **mystx conf.py 当前缺口** | [conf.py:L227-251](../../../../../projects/xuanspace/libs/mystx/doc/conf.py#L227-L251) | `setup(app)` **未返回 metadata dict** → 被计为"未声明" → 触发 warning + 强制串行 ❌ |
+| **mystx 扩展清单（风险）** | [conf.py:L46-253](../../../../../projects/xuanspace/libs/mystx/doc/conf.py#L46-L253) | 共 17+ 扩展：mystx、sphinx_design、viewcode、intersphinx、copybutton、sphinx_comments、autoapi、graphviz、sphinx_contributors、sphinxext.opengraph、sphinx_tippy、sphinx_pyscript、mystx.ext.github_readme_stats、sphinxcontrib.bibtex、sphinx_sitemap、sphinx_examples、extlinks — **多数未显式声明 parallel_read_safe** |
 
 ### R4. BuildEnvironment.merge 事实
 
@@ -217,7 +217,7 @@ fi
 ### 方法
 1. 静态审计：对 mystx 文档 conf.py 中**最终启用**的 17 个扩展（含 `if IS_READTHEDOCS`/条件 append 分支的并集）+ 2 个 mystx 自动注入的扩展（`myst_parser`、`sphinx.ext.mathjax`）= 共 **20 项**，逐个在 py314 site-packages 中定位其 setup()，用 AST + runtime 提取返回 dict 的 `parallel_read_safe` / `parallel_write_safe` 值。
 2. 运行时审计：用 **真实 Sphinx app** 以 parallel=4 启动最小构建（`extensions = [全部 17 项]`），然后遍历 `app.extensions[name].parallel_read_safe / parallel_write_safe`，并调用 `app.is_parallel_allowed('read' | 'write')` 做最终 Fail-Fast 判定。
-3. 测试固化：所有断言被写入 [tests/unit/test_doc_parallel_extensions_p1.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/mystx/tests/unit/test_doc_parallel_extensions_p1.py)，新增 3 条 pytest（`test_all_target_extensions_loaded` / `test_is_parallel_allowed_read_and_write` / `test_each_extension_parallel_metadata`），确保将来新增未声明扩展时**立即红测卡关**，不必等到生产 CI 才发现。
+3. 测试固化：所有断言被写入 [tests/unit/test_doc_parallel_extensions_p1.py](../../../../../projects/xuanspace/libs/mystx/tests/unit/test_doc_parallel_extensions_p1.py)，新增 3 条 pytest（`test_all_target_extensions_loaded` / `test_is_parallel_allowed_read_and_write` / `test_each_extension_parallel_metadata`），确保将来新增未声明扩展时**立即红测卡关**，不必等到生产 CI 才发现。
 
 ### 矩阵（20 项）
 | # | 扩展名 | 类型 | parallel_read_safe | parallel_write_safe | 结论 |

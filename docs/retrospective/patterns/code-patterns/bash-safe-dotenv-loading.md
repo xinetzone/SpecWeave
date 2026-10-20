@@ -136,7 +136,7 @@ load_env() {
 
 ## 验证来源
 
-- **验证1：jpman CLI 端到端测试**（2026-08-27）：[bin/jpman](file:///d:/spaces/SpecWeave/apps/containers/jupyter-podman-rootless/bin/jpman#L90-L126) 加载含 CRLF + Windows 反斜杠路径的 .env，WORKSPACE 正确转换为 `/mnt/d/spaces/SpecWeave`，CONTAINER_NAME/SSH_PORT 等值正确加载，容器成功启动并 healthy。✅
+- **验证1：jpman CLI 端到端测试**（2026-08-27）：[bin/jpman](../../../../apps/containers/jupyter-podman-rootless/bin/jpman#L90-L126) 加载含 CRLF + Windows 反斜杠路径的 .env，WORKSPACE 正确转换为 `/mnt/d/spaces/SpecWeave`，CONTAINER_NAME/SSH_PORT 等值正确加载，容器成功启动并 healthy。✅
 - **验证2：反斜杠根因复现测试**（2026-08-27）：测试脚本验证 bash source 将 `\s`、`\S` 解释为转义并丢弃反斜杠，安全解析模式无此问题。✅
 
 ## 关联模式

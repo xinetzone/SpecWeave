@@ -21,9 +21,9 @@ source: "float-precision-testing-guide.md 模式批量应用"
 ## 1. 加固背景
 
 在 P3-C 阶段浮点数精度审计中发现 sigmoid 饱和断言矛盾问题后，已：
-1. 修复了 [test_p3c_activations_ip.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_p3c_activations_ip.py) 中 `test_sigmoid_float32_saturation_exact` 的 2 个违规断言
+1. 修复了 [test_p3c_activations_ip.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_p3c_activations_ip.py) 中 `test_sigmoid_float32_saturation_exact` 的 2 个违规断言
 2. 修复了 tanh 饱和断言同类问题
-3. 编写了 [test_elu_kink_stability.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_elu_kink_stability.py) ELU C¹拐点专项测试（24个用例）
+3. 编写了 [test_elu_kink_stability.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_elu_kink_stability.py) ELU C¹拐点专项测试（24个用例）
 4. 沉淀了 [float-precision-testing-guide.md](../../../../knowledge/best-practices/float-precision-testing-guide.md) 浮点数精度测试技术指南
 
 本次批量加固目标：将指南中的 4 个核心模式**系统地应用到所有其他类似测试文件**中，排查遗漏违规和潜在 flake 风险。
@@ -52,9 +52,9 @@ source: "float-precision-testing-guide.md 模式批量应用"
 
 | # | 文件 | 行号 | 问题类型 | 修复方式 | 严重度 |
 |---|------|------|---------|---------|--------|
-| 1 | [test_p3c_activations_ip.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_p3c_activations_ip.py#L283-L301) | L296-299 | ULP饱和违规（sigmoid(±100)） | `< 1e-30` → `== 0.0`；`> 1-1e-7` → `== 1.0` | 🔴 高 |
-| 2 | [test_activation_backward.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L235-L247) | L236-241 | C¹不连续拐点flake风险 | 添加`np.where(x>0, max(x,2h), min(x,-2h))`防护 | 🟡 中 |
-| 3 | [test_activation_backward.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L564-L609) | L589-593 | C¹不连续拐点flake风险 | 添加`np.where`推离拐点防护（同上） | 🟡 中 |
+| 1 | [test_p3c_activations_ip.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_p3c_activations_ip.py#L283-L301) | L296-299 | ULP饱和违规（sigmoid(±100)） | `< 1e-30` → `== 0.0`；`> 1-1e-7` → `== 1.0` | 🔴 高 |
+| 2 | [test_activation_backward.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L235-L247) | L236-241 | C¹不连续拐点flake风险 | 添加`np.where(x>0, max(x,2h), min(x,-2h))`防护 | 🟡 中 |
+| 3 | [test_activation_backward.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L564-L609) | L589-593 | C¹不连续拐点flake风险 | 添加`np.where`推离拐点防护（同上） | 🟡 中 |
 
 ### 3.2 文档修正（1个文件）
 
@@ -128,7 +128,7 @@ source: "float-precision-testing-guide.md 模式批量应用"
 
 ### 6.1 float32-saturation-exact-equality 模式
 
-**应用点**：[test_p3c_activations_ip.py L296-299](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_p3c_activations_ip.py#L296-L299)
+**应用点**：[test_p3c_activations_ip.py L296-299](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_p3c_activations_ip.py#L296-L299)
 
 ```python
 # 修复前
@@ -149,7 +149,7 @@ assert result[0, 0, 0, 4] == 1.0  # sigmoid(100) rounds to exactly 1.0 in float3
 - **子模式A**（C¹连续拐点）：ELU α=1类型，放宽rtol到5e-3 → 上轮已应用
 - **子模式B**（C¹不连续拐点）：ReLU/LeakyReLU/PReLU类型，**必须推离拐点**
 
-**应用点**：[test_activation_backward.py L240-241](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L240-L241) 和 [L592-593](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L592-L593)
+**应用点**：[test_activation_backward.py L240-241](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L240-L241) 和 [L592-593](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L592-L593)
 
 ```python
 # 加固后：将|x|<2h的点推到±2h，确保[x-h,x+h]不跨越C¹不连续点
@@ -166,7 +166,7 @@ x = np.where(x > 0, np.maximum(x, 2*h), np.minimum(x, -2*h))
 
 ### 6.4 behavior-locking-specialized-tests 模式
 
-- ELU专项测试[test_elu_kink_stability.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_elu_kink_stability.py)（24用例）持续验证rtol=5e-3阈值的鲁棒性
+- ELU专项测试[test_elu_kink_stability.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_elu_kink_stability.py)（24用例）持续验证rtol=5e-3阈值的鲁棒性
 - 对ReLU/LeakyReLU/PReLU判断无需新增专项测试——它们的C¹不连续性比ELU的C¹连续拐点更强，现有"推离拐点"策略已足够，推离后截断误差回到O(h²)水平
 
 ---

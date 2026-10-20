@@ -48,7 +48,7 @@ depth: "standard"
 - `caffe.Net()` 构造函数支持 `weights` 参数直接加载预训练权重
 - `net.set_input_data()` 接受 numpy 数组，内部通过 DLPack 零拷贝传递
 - `net.blob_data()` 返回 zero-copy numpy view（`np.from_dlpack`），必须 `copy=True` 才能跨批次保留
-- 共创建/修改脚本：[batch_inference_demo.py](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/batch_inference_demo.py)、[download_mnist.py](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/download_mnist.py)、[run_demo.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/run_demo.sh)
+- 共创建/修改脚本：[batch_inference_demo.py](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/batch_inference_demo.py)、[download_mnist.py](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/download_mnist.py)、[run_demo.sh](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/run_demo.sh)
 
 ### F04. 模型与数据获取事实
 - 仓库内无 MNIST 预训练 `.caffemodel` 文件
@@ -217,10 +217,10 @@ depth: "standard"
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 批量推理脚本 | [batch_inference_demo.py](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/batch_inference_demo.py) | 支持预训练权重+MNIST测试集+准确率评估 |
-| 模型下载脚本 | [download_mnist.py](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/download_mnist.py) | 多源下载caffemodel+MNIST数据+转换numpy |
-| 运行脚本 | [run_demo.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/run_demo.sh) | WSL环境变量配置+一键运行 |
-| 使用指南 | [BATCH_INFERENCE_GUIDE.md](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/BATCH_INFERENCE_GUIDE.md) | 批量推理脚本使用指南 |
+| 批量推理脚本 | [batch_inference_demo.py](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/batch_inference_demo.py) | 支持预训练权重+MNIST测试集+准确率评估 |
+| 模型下载脚本 | [download_mnist.py](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/download_mnist.py) | 多源下载caffemodel+MNIST数据+转换numpy |
+| 运行脚本 | [run_demo.sh](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/run_demo.sh) | WSL环境变量配置+一键运行 |
+| 使用指南 | [BATCH_INFERENCE_GUIDE.md](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/BATCH_INFERENCE_GUIDE.md) | 批量推理脚本使用指南 |
 | 预训练权重 | `pycaffe/lenet_iter_10000.caffemodel` | LeNet-MNIST 10000次迭代权重（1.7MB） |
 | MNIST测试数据 | `data/mnist/mnist_test.npz` | 10000张测试图像+标签（numpy压缩格式） |
 | 复盘报告 | 本文件 | R-I-E全流程复盘+4条洞察+3个模式 |

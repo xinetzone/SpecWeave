@@ -52,7 +52,7 @@ sources:
 - **证据**：
   - `invocations/packaging/release.py` 全文 **无** `find_opts` 读取
   - `find_opts` 实际属于 `checks.blacken`（`invocations/checks.py` 读取 `c.config.get("blacken", {})` 的 `find_opts`）
-  - [concepts/02-checks-formatting.md#L72-L77](file:///d:/spaces/SpecWeave/projects/awesome-okf-xs/doc/bundles/jishu/build/tooling/invocations/concepts/02-checks-formatting.md#L72-L77) **正确**地将 `find_opts` 归入 `blacken` 配置，反证 05 误写
+  - [concepts/02-checks-formatting.md#L72-L77](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/build/tooling/invocations/concepts/02-checks-formatting.md#L72-L77) **正确**地将 `find_opts` 归入 `blacken` 配置，反证 05 误写
 - **影响**：误导读者以为 release 支持 `packaging.find_opts`；按此配置不生效
 - **处理**：Task 4 从 `packaging` 配置块移除 `find_opts`
 

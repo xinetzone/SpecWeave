@@ -112,7 +112,7 @@ export OMP_NUM_THREADS=1        # 我们的 OpenMP 区域串行，由 BLAS 并�
 
 ### 2.2 代码实现
 
-将以下代码替换 [conv_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp) 中的 `Forward_cpu` 函数，并在 `base_conv_layer.cpp` 中提供线程安全的 im2col+GEMM 接口：
+将以下代码替换 [conv_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp) 中的 `Forward_cpu` 函数，并在 `base_conv_layer.cpp` 中提供线程安全的 im2col+GEMM 接口：
 
 ```cpp
 // ======== base_conv_layer.hpp 新增：线程安全的 im2col+GEMM 批量执行 ========

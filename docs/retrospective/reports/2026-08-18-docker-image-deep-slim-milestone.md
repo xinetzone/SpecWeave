@@ -239,10 +239,10 @@ category: code-patterns/docker
 
 | 文件 | 变更类型 | 说明 |
 |---|---|---|
-| [Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/Dockerfile) | 修改 | 新增P7原则；Stage 1添加binutils；Stage 2/3同层strip；Stage 6添加PYTHONDONTWRITEBYTECODE+修复py_compile；Stage 7改为纯删除式清理（8步） |
-| [stage4a-miniforge.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/scripts/dockerfile/stage4a-miniforge.sh) | 修改 | 添加PYTHONDONTWRITEBYTECODE；同层清理tk/tcl+.pyc |
-| [stage4b-mamba-env.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/scripts/dockerfile/stage4b-mamba-env.sh) | 修改 | 添加PYTHONDONTWRITEBYTECODE；手动删tk/tcl（非mamba remove）；删nbclassic；同层strip bin+.so；清理测试目录 |
-| [stage4c-pip-verify.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/scripts/dockerfile/stage4c-pip-verify.sh) | 修改 | 添加PYTHONDONTWRITEBYTECODE；验证后清理.pyc |
+| [Dockerfile](../../../apps/docker-images/devcontainer-base/Dockerfile) | 修改 | 新增P7原则；Stage 1添加binutils；Stage 2/3同层strip；Stage 6添加PYTHONDONTWRITEBYTECODE+修复py_compile；Stage 7改为纯删除式清理（8步） |
+| [stage4a-miniforge.sh](../../../apps/docker-images/devcontainer-base/scripts/dockerfile/stage4a-miniforge.sh) | 修改 | 添加PYTHONDONTWRITEBYTECODE；同层清理tk/tcl+.pyc |
+| [stage4b-mamba-env.sh](../../../apps/docker-images/devcontainer-base/scripts/dockerfile/stage4b-mamba-env.sh) | 修改 | 添加PYTHONDONTWRITEBYTECODE；手动删tk/tcl（非mamba remove）；删nbclassic；同层strip bin+.so；清理测试目录 |
+| [stage4c-pip-verify.sh](../../../apps/docker-images/devcontainer-base/scripts/dockerfile/stage4c-pip-verify.sh) | 修改 | 添加PYTHONDONTWRITEBYTECODE；验证后清理.pyc |
 | [docker-cow-same-layer-modification.md](../patterns/code-patterns/docker-cow-same-layer-modification.md) | 新增 | P7同层修改原则正式模式文档（L2-validated，4案例验证） |
 | [docker-deep-slim-8step.md](../patterns/code-patterns/docker-deep-slim-8step.md) | 新增 | 镜像深度压缩8步法正式模式文档（L2-validated，3案例验证矩阵） |
 | [code-patterns/README.md](../patterns/code-patterns/README.md) | 修改 | 模式索引更新：新增两个Docker模式条目 |

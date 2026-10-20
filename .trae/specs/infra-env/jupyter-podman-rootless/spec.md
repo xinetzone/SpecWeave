@@ -29,8 +29,8 @@ status: "draft"
 - 不修改现有 jupyter-ssh-base（作为独立新应用存在）
 
 ## Background & Context
-- 现有参考实现：[devcontainer-base](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base) 已实现 Podman + Miniforge3 + Python 3.14t，但它是全功能开发容器，包含Docker DinD和大量额外工具，镜像较重且需要--privileged模式
-- 现有基础镜像：[jupyter-ssh-base](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base) 提供SSH+Jupyter基础，但使用venv，无Conda和Podman支持
+- 现有参考实现：[devcontainer-base](../../../../apps/docker-images/devcontainer-base/README.md) 已实现 Podman + Miniforge3 + Python 3.14t，但它是全功能开发容器，包含Docker DinD和大量额外工具，镜像较重且需要--privileged模式
+- 现有基础镜像：[jupyter-ssh-base](../../../../apps/docker-images/jupyter-ssh-base/README.md) 提供SSH+Jupyter基础，但使用venv，无Conda和Podman支持
 - Podman rootless技术基础：用户命名空间(UID/GID映射) + fuse-overlayfs存储 + slirp4netns/pasta用户态网络
 - Invoke任务框架：awesome-okf-xs项目使用invoke作为任务运行器，结构清晰，可复用相同模式
 - 应用目录位置：apps/containers/ 是新的分组（之前容器镜像在apps/docker-images/），按用户要求在apps/containers/下创建

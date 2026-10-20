@@ -9,7 +9,7 @@ status: "draft"
 [gap_analysis_report.md](../../../../docs/retrospective/archives/spec-working-notes/caffe-framework/caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md) 的 P2 清单包含 13 类训练专用/数据输入/冷门算子，此前标记为"推理引擎刻意不实现"。用户决定**全部补齐** P2 算子，以闭合算子覆盖差距（除 GPU 专属 CuDNN 包装层外）。补齐后算子覆盖率从 91.8% 进一步提升，且多标签损失（ContrastiveLoss/InfogainLoss/MultinomialLogisticLoss）与数据输入层（MemoryData/DummyData/Data 等）使 caffe-ffi 具备更完整的训练/数据加载能力。
 
 ## What Changes
-- 在 [caffe.proto](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/proto/caffe/proto/caffe.proto) 新增 11 个 P2 参数 message，并在 `LayerParameter` 注册字段（179-189）
+- 在 [caffe.proto](../../../../projects/xuanspace/libs/caffe-ffi/proto/caffe/proto/caffe.proto) 新增 11 个 P2 参数 message，并在 `LayerParameter` 注册字段（179-189）
 - 新增 13 个算子实现（头文件 + cpp），遵循现有 Layer/NeuronLayer/LossLayer 模式
   - **数据输入/工具类**：MemoryData、DummyData、Python、Recurrent（基类注册）、Upsample
   - **损失类**：ContrastiveLoss、InfogainLoss、MultinomialLogisticLoss

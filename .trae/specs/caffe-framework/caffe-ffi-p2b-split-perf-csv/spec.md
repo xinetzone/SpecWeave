@@ -36,14 +36,14 @@ status: "draft"
 - 不做自动 COW 触发策略优化（当前通过方法名语义区分：cpu_data()只读不触发，cpu_mutable_data()写时触发）
 
 ## Background & Context
-- **当前网络构建机制**：[net.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/net.cpp) 的 `AppendBottom` 在消费 blob 后将其从 `available_blobs` 中 erase（L155），每个非 in-place blob 只能被一个 layer 消费。
+- **当前网络构建机制**：[net.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/net.cpp) 的 `AppendBottom` 在消费 blob 后将其从 `available_blobs` 中 erase（L155），每个非 in-place blob 只能被一个 layer 消费。
 - **Split 层语义演进**：从最初计划的纯memcpy方案，演进为三阶段零拷贝架构：
   - **Phase 1 (N=1)**: ShareData/ShareDiff 直接共享Tensor引用（intrusive refcount），零拷贝
   - **Phase 2 (N≥2, CAFFE_FFI_ENABLE_COW=ON)**: 所有top共享bottom的Tensor，首次写入时通过cpu_mutable_data()触发COW克隆
   - **Phase 3 (N≥16, CAFFE_FFI_ENABLE_COW_PHASE3=ON)**: BatchShareData批量引用计数(O(1)原子操作) + SetShapeOnly懒分配 + 日志聚合
 - **Blob COW基础能力**：Blob底层使用TVM FFI Tensor（ObjectPtr引用计数），已实现完整的共享/COW API集合。
 - **in-place安全保证**：ReLU/Dropout等in-place层通过`bottom[0] == top[0]`直接写内存，COW机制确保一个分支的in-place写入不影响其他兄弟分支（写时自动克隆私有副本）。
-- **性能日志现状**：[conftest.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/conftest.py) 中 `perf_trace` 双通道输出到 stderr + CSV，支持 RSS 峰值采样和 COW 事件记录。
+- **性能日志现状**：[conftest.py](../../../../projects/xuanspace/libs/caffe-ffi/tests/python/conftest.py) 中 `perf_trace` 双通道输出到 stderr + CSV，支持 RSS 峰值采样和 COW 事件记录。
 - **现有测试覆盖**：P0 + P1 + P2-A + P2-B(Split+COW+Extreme) + P3A(Conv/Pool/BN) + P3B(Scale/Bias/Eltwise/Concat/Dropout/Accuracy)。
 
 ## Functional Requirements
@@ -80,7 +80,7 @@ status: "draft"
 
 ### FR-2: Blob COW API（Copy-on-Write基础设施）✅
 
-**新增/修改的Blob方法** ([blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp)):
+**新增/修改的Blob方法** ([blob.hpp](../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp)):
 
 | 方法 | 语义 | COW触发 |
 |------|------|--------|

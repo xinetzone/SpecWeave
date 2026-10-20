@@ -7,7 +7,7 @@ status: "draft"
 
 ## Why
 
-[Task 17b](file:///d:/spaces/SpecWeave/.trae/specs/caffe-framework/caffe-ffi-tvm-integration/tasks.md#L297-L307)「ASan内存管理验证」处于待开始状态：内存计数器已实现，但 ASan 正式验证需在 Linux/GCC 环境执行。当前缺少可复现的 ASan 测试用例、可通过 CMake 开关集成的编译选项，以及 ASan 报告堆栈的解读能力。本 Spec 补齐这三块前置能力，为 Task 17b 的正式验证奠定基础。
+[Task 17b](../caffe-ffi-tvm-integration/tasks.md#L297-L307)「ASan内存管理验证」处于待开始状态：内存计数器已实现，但 ASan 正式验证需在 Linux/GCC 环境执行。当前缺少可复现的 ASan 测试用例、可通过 CMake 开关集成的编译选项，以及 ASan 报告堆栈的解读能力。本 Spec 补齐这三块前置能力，为 Task 17b 的正式验证奠定基础。
 
 ## What Changes
 
@@ -17,8 +17,8 @@ status: "draft"
 
 ## Impact
 
-- Affected specs: [caffe-ffi-tvm-integration](file:///d:/spaces/SpecWeave/.trae/specs/caffe-framework/caffe-ffi-tvm-integration/tasks.md#L297-L307)（推进 Task 17b 前置）
-- Affected code: [caffe-ffi](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi) 的 `cmake/Options.cmake`、`cmake/CompilerConfig.cmake`、`examples/`、`docs/`、`tests/cpp/`
+- Affected specs: [caffe-ffi-tvm-integration](../caffe-ffi-tvm-integration/tasks.md#L297-L307)（推进 Task 17b 前置）
+- Affected code: [caffe-ffi](../../../../projects/xuanspace/libs/caffe-ffi/README.md) 的 `cmake/Options.cmake`、`cmake/CompilerConfig.cmake`、`examples/`、`docs/`、`tests/cpp/`
 
 ## ADDED Requirements
 

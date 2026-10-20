@@ -217,4 +217,4 @@ print(diag.summary())  # 人类可读输出
 
 ## 参考实现
 
-- [caffe-ffi/_ffi_api.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/_ffi_api.py#L73-L229)：`_FFIInitDiagnostics`完整实现（~160行）
+- [caffe-ffi/_ffi_api.py](../../../../projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/_ffi_api.py#L73-L229)：`_FFIInitDiagnostics`完整实现（~160行）

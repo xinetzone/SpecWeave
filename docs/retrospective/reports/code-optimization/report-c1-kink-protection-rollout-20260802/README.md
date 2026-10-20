@@ -13,9 +13,9 @@ source: "avoid_c1_discontinuity helper推广应用"
 
 > **报告日期**：2026-08-02
 > **推广范围**：caffe-ffi 全量 Python 测试文件（tests/python/）
-> **核心资产**：[caffe_test_helpers.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/caffe_test_helpers.py#L284-L340) 中的 `avoid_c1_discontinuity` 共享helper函数
+> **核心资产**：[caffe_test_helpers.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/caffe_test_helpers.py#L284-L340) 中的 `avoid_c1_discontinuity` 共享helper函数
 > **验证结果**：6个常规数值梯度测试 + 24个ELU专项拐点测试全部通过，覆盖率 **100%**
-> **CI防护**：新增 [`scripts/check_c1_kink_protection.py`](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/check_c1_kink_protection.py) 静态检查门禁
+> **CI防护**：新增 [`scripts/check_c1_kink_protection.py`](../../../../../projects/xuanspace/libs/caffe-ffi/scripts/check_c1_kink_protection.py) 静态检查门禁
 
 ---
 
@@ -67,18 +67,18 @@ source: "avoid_c1_discontinuity helper推广应用"
 
 | # | 文件 | 测试方法 | 激活函数 | 类别 | 防护策略 | 状态 |
 |---|------|---------|---------|------|---------|------|
-| 1 | [test_activation_backward.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L221-L234) | test_relu_numerical_gradient | ReLU(slope=0) | A类 | 偏移策略(`+1.0`全正) | ✅ 安全 |
-| 2 | [test_activation_backward.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L236-L247) | test_relu_numerical_gradient_mixed_signs | LeakyReLU(slope=0.1) | A类 | `avoid_c1_discontinuity(x, h=EPS)` | ✅ 已防护 |
-| 3 | [test_activation_backward.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L321-L331) | test_sigmoid_numerical_gradient | Sigmoid | C类 | 无特殊防护 | ✅ 无需防护 |
-| 4 | [test_activation_backward.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L392-L408) | test_tanh_numerical_gradient | TanH | C类 | 无特殊防护 | ✅ 无需防护 |
-| 5 | [test_activation_backward.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L464-L481) | test_elu_numerical_gradient | ELU(α=1) | B类 | rtol=5e-3 | ✅ 已防护 |
-| 6 | [test_activation_backward.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L564-L609) | test_prelu_shared_numerical_gradient | PReLU | A类 | `avoid_c1_discontinuity(x, h=h)` | ✅ 已防护 |
+| 1 | [test_activation_backward.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L221-L234) | test_relu_numerical_gradient | ReLU(slope=0) | A类 | 偏移策略(`+1.0`全正) | ✅ 安全 |
+| 2 | [test_activation_backward.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L236-L247) | test_relu_numerical_gradient_mixed_signs | LeakyReLU(slope=0.1) | A类 | `avoid_c1_discontinuity(x, h=EPS)` | ✅ 已防护 |
+| 3 | [test_activation_backward.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L321-L331) | test_sigmoid_numerical_gradient | Sigmoid | C类 | 无特殊防护 | ✅ 无需防护 |
+| 4 | [test_activation_backward.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L392-L408) | test_tanh_numerical_gradient | TanH | C类 | 无特殊防护 | ✅ 无需防护 |
+| 5 | [test_activation_backward.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L464-L481) | test_elu_numerical_gradient | ELU(α=1) | B类 | rtol=5e-3 | ✅ 已防护 |
+| 6 | [test_activation_backward.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L564-L609) | test_prelu_shared_numerical_gradient | PReLU | A类 | `avoid_c1_discontinuity(x, h=h)` | ✅ 已防护 |
 
 ### 3.2 ELU专项拐点测试（24个用例）
 
 | 文件 | 用途 | 拐点处理 | 状态 |
 |------|------|---------|------|
-| [test_elu_kink_stability.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_elu_kink_stability.py) | ELU C¹拐点误差特性专项验证 | **故意保留拐点采样**以验证O(h)误差缩放特性，使用rtol=5e-3 | ✅ 专项豁免 |
+| [test_elu_kink_stability.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_elu_kink_stability.py) | ELU C¹拐点误差特性专项验证 | **故意保留拐点采样**以验证O(h)误差缩放特性，使用rtol=5e-3 | ✅ 专项豁免 |
 
 ### 3.3 无数值梯度的测试文件
 
@@ -110,21 +110,21 @@ source: "avoid_c1_discontinuity helper推广应用"
 
 | 文件 | 变更类型 | 行数 | 说明 |
 |------|---------|------|------|
-| [caffe_test_helpers.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/caffe_test_helpers.py#L284-L340) | 新增函数 | +55 | `avoid_c1_discontinuity`共享helper（含完整docstring） |
-| [scripts/check_c1_kink_protection.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/check_c1_kink_protection.py) | 新增CI脚本 | +158 | C¹拐点防护静态检查 |
+| [caffe_test_helpers.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/caffe_test_helpers.py#L284-L340) | 新增函数 | +55 | `avoid_c1_discontinuity`共享helper（含完整docstring） |
+| [scripts/check_c1_kink_protection.py](../../../../../projects/xuanspace/libs/caffe-ffi/scripts/check_c1_kink_protection.py) | 新增CI脚本 | +158 | C¹拐点防护静态检查 |
 | [float-precision-testing-guide.md](../../../../knowledge/best-practices/float-precision-testing-guide.md) | 文档更新 | +50 | helper函数API文档+策略选择决策树 |
 
 ### 4.2 重构代码
 
 | 文件 | 变更类型 | 说明 |
 |------|---------|------|
-| [test_activation_backward.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L19) | 重构 | 导入`avoid_c1_discontinuity`，替换LeakyReLU和PReLU中的手动推离代码 |
+| [test_activation_backward.py](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_activation_backward.py#L19) | 重构 | 导入`avoid_c1_discontinuity`，替换LeakyReLU和PReLU中的手动推离代码 |
 
 ### 4.3 CI配置变更
 
 | 文件 | 变更 | 说明 |
 |------|------|------|
-| [.github/workflows/ci.yml](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/.github/workflows/ci.yml) | 新增lint job步骤 | 在ruff lint job中添加C¹拐点防护检查步骤 |
+| [.github/workflows/ci.yml](../../../../../projects/xuanspace/libs/caffe-ffi/.github/workflows/ci.yml) | 新增lint job步骤 | 在ruff lint job中添加C¹拐点防护检查步骤 |
 
 ---
 
@@ -185,8 +185,8 @@ tests/python/test_p3c_activations_ip.py ...........                     [100%]
 
 ## 相关资源
 
-- **共享helper函数**：[caffe_test_helpers.py: avoid_c1_discontinuity](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/caffe_test_helpers.py#L284-L340)
+- **共享helper函数**：[caffe_test_helpers.py: avoid_c1_discontinuity](../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/caffe_test_helpers.py#L284-L340)
 - **最佳实践指南**：[float-precision-testing-guide.md](../../../../knowledge/best-practices/float-precision-testing-guide.md)
-- **CI检查脚本**：[check_c1_kink_protection.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/check_c1_kink_protection.py)
+- **CI检查脚本**：[check_c1_kink_protection.py](../../../../../projects/xuanspace/libs/caffe-ffi/scripts/check_c1_kink_protection.py)
 - **前序批量加固报告**：[report-batch-hardening-float-precision-20260802](../report-batch-hardening-float-precision-20260802/README.md)
 - **ELU拐点专项复盘**：[retrospective-float-precision-elu-kink-20260802](../retrospective-float-precision-elu-kink-20260802/README.md)

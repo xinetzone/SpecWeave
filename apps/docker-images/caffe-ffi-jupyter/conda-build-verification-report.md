@@ -75,7 +75,7 @@ Placeholder of length '80' too short in file .../_caffe_ffi.so
 
 **修复方案**（build.sh + meta.yaml）：
 
-1. **meta.yaml** [L14](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml#L14) 添加：
+1. **meta.yaml** [L14](../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml#L14) 添加：
    ```yaml
    build:
      number: 5
@@ -83,7 +83,7 @@ Placeholder of length '80' too short in file .../_caffe_ffi.so
    ```
    显式禁用二进制文件prefix检测，告诉conda-build不需要进行路径替换。
 
-2. **build.sh** [L273-L303](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L273-L303) 使用patchelf将RPATH改为**全相对路径**：
+2. **build.sh** [L273-L303](../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L273-L303) 使用patchelf将RPATH改为**全相对路径**：
    - 对`_caffe_ffi.so`：
      ```bash
      NEW_RPATH="\$ORIGIN:\$ORIGIN/lib:\$ORIGIN/../tvm_ffi/lib:\$ORIGIN/../../.."
@@ -157,7 +157,7 @@ conda-build --test -c conda-forge "$_PKG_FILE"
 
 ### 修复内容
 
-**meta.yaml依赖更新** [L34-L35](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml#L34-L35)：
+**meta.yaml依赖更新** [L34-L35](../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml#L34-L35)：
 ```yaml
 host:
   - libopenblas
@@ -166,7 +166,7 @@ run:
   - libopenblas
 ```
 
-**DetectBLAS.cmake两阶段搜索** [DetectBLAS.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/DetectBLAS.cmake)：
+**DetectBLAS.cmake两阶段搜索** [DetectBLAS.cmake](../../../projects/xuanspace/libs/caffe-ffi/cmake/DetectBLAS.cmake)：
 - **Phase 1**：优先搜索conda路径（CONDA_PREFIX、CMAKE_PREFIX_PATH、Python前缀），使用`HINTS`+`NO_DEFAULT_PATH`
 - **Phase 2**：失败时回退到系统默认路径（无NO_DEFAULT_PATH）
 - 库名扩展：`openblas;openblasp;openblas.so.0`

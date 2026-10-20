@@ -27,7 +27,7 @@ status: "draft"
 
 ## Impact
 
-- **Affected specs**：[create-ai-monetization-wiki](file:///d:/spaces/SpecWeave/.trae/specs/core-foundation/create-ai-monetization-wiki/spec.md)（已完成，本次为其"本质深化+agent 平台"扩展，不冲突，互不覆盖）
+- **Affected specs**：[create-ai-monetization-wiki](../create-ai-monetization-wiki/spec.md)（已完成，本次为其"本质深化+agent 平台"扩展，不冲突，互不覆盖）
 - **Affected code**：`apps/agent-monetize/`（新增，主权区直接维护）；`projects/xuanspace/vendor/tvm-ffi`（只读引用，不修改）
 - **Affected docs**：`projects/awesome-okf-xs/doc/bundles/sheke/industry/monetization-essence/`（新增束）；`sheke/industry/index.md`（组索引登记）；`doc/bundles/index.md`（总索引登记，注意共享索引并行会话竞态）
 - **Affected git**：awesome-okf-xs 子模块提交 → 主仓库 gitlink bump（遵循推送闸门流程）

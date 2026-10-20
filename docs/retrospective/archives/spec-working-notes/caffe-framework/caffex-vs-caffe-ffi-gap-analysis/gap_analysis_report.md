@@ -43,66 +43,66 @@
 #### 视觉层（Vision Layers）— 6个
 | 算子 | 文件 | 说明 |
 |------|------|------|
-| Convolution | [conv_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/conv_layer.hpp) | 卷积层（继承BaseConvolutionLayer） |
-| Deconvolution | [deconv_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/deconv_layer.hpp) | 反卷积/转置卷积（P0，Task 31新增） |
-| Pooling | [pooling_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/pooling_layer.hpp) | 池化层（最大/平均，MAX梯度路由/AVE归一化） |
-| LRN | [lrn_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/lrn_layer.hpp) | 局部响应归一化（P0，Task 31新增） |
-| Slice | [slice_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/slice_layer.hpp) | 通道维度切分（P0，Task 31新增） |
-| Crop | [crop_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/crop_layer.hpp) | 裁剪对齐（P0，Task 31新增） |
+| Convolution | [conv_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/conv_layer.hpp) | 卷积层（继承BaseConvolutionLayer） |
+| Deconvolution | [deconv_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/deconv_layer.hpp) | 反卷积/转置卷积（P0，Task 31新增） |
+| Pooling | [pooling_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/pooling_layer.hpp) | 池化层（最大/平均，MAX梯度路由/AVE归一化） |
+| LRN | [lrn_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/lrn_layer.hpp) | 局部响应归一化（P0，Task 31新增） |
+| Slice | [slice_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/slice_layer.hpp) | 通道维度切分（P0，Task 31新增） |
+| Crop | [crop_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/crop_layer.hpp) | 裁剪对齐（P0，Task 31新增） |
 
 #### 激活层（Neuron Layers）— 9个
 | 算子 | 文件 | 说明 |
 |------|------|------|
-| ReLU | [relu_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/relu_layer.hpp) | 修正线性单元 |
-| LeakyReLU | [leaky_relu_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/leaky_relu_layer.hpp) | 带泄漏ReLU（Task 31新增） |
-| Sigmoid | [sigmoid_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/sigmoid_layer.hpp) | Sigmoid激活 |
-| TanH | [tanh_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/tanh_layer.hpp) | 双曲正切激活 |
-| ELU | [elu_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/elu_layer.hpp) | 指数线性单元 |
-| PReLU | [prelu_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/prelu_layer.hpp) | 参数化ReLU |
-| AbsVal | [absval_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/absval_layer.hpp) | 绝对值激活（P1，Task 31新增） |
-| Softplus | [softplus_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softplus_layer.hpp) | Softplus激活（P1，Task 31新增） |
-| Softsign | [softsign_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softsign_layer.hpp) | Softsign激活（P1，Task 31新增） |
+| ReLU | [relu_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/relu_layer.hpp) | 修正线性单元 |
+| LeakyReLU | [leaky_relu_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/leaky_relu_layer.hpp) | 带泄漏ReLU（Task 31新增） |
+| Sigmoid | [sigmoid_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/sigmoid_layer.hpp) | Sigmoid激活 |
+| TanH | [tanh_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/tanh_layer.hpp) | 双曲正切激活 |
+| ELU | [elu_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/elu_layer.hpp) | 指数线性单元 |
+| PReLU | [prelu_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/prelu_layer.hpp) | 参数化ReLU |
+| AbsVal | [absval_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/absval_layer.hpp) | 绝对值激活（P1，Task 31新增） |
+| Softplus | [softplus_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softplus_layer.hpp) | Softplus激活（P1，Task 31新增） |
+| Softsign | [softsign_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softsign_layer.hpp) | Softsign激活（P1，Task 31新增） |
 
 #### 损失层（Loss Layers）— 4个
 | 算子 | 文件 | 说明 |
 |------|------|------|
-| SoftmaxWithLoss | [softmax_loss_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softmax_loss_layer.hpp) | Softmax+交叉熵损失（训练/推理评估用） |
-| Accuracy | [accuracy_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/accuracy_layer.hpp) | 分类准确率（评估指标层） |
-| Hinge | [hinge_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/hinge_layer.hpp) | Hinge损失（SVM风格，Task 32新增） |
-| MarginRanking | [margin_ranking_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/margin_ranking_layer.hpp) | 排序损失（Task 32新增） |
+| SoftmaxWithLoss | [softmax_loss_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softmax_loss_layer.hpp) | Softmax+交叉熵损失（训练/推理评估用） |
+| Accuracy | [accuracy_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/accuracy_layer.hpp) | 分类准确率（评估指标层） |
+| Hinge | [hinge_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/hinge_layer.hpp) | Hinge损失（SVM风格，Task 32新增） |
+| MarginRanking | [margin_ranking_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/margin_ranking_layer.hpp) | 排序损失（Task 32新增） |
 
 #### 归一化层（Normalization Layers）— 4个
 | 算子 | 文件 | 说明 |
 |------|------|------|
-| BatchNorm | [batch_norm_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/batch_norm_layer.hpp) | 批归一化 |
-| Scale | [scale_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/scale_layer.hpp) | 缩放+平移（恒等时COW优化） |
-| L2Norm | [l2_norm_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/l2_norm_layer.hpp) | L2归一化（Task 32新增） |
-| InstanceNorm | [instance_norm_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/instance_norm_layer.hpp) | 实例归一化（Task 32新增） |
+| BatchNorm | [batch_norm_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/batch_norm_layer.hpp) | 批归一化 |
+| Scale | [scale_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/scale_layer.hpp) | 缩放+平移（恒等时COW优化） |
+| L2Norm | [l2_norm_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/l2_norm_layer.hpp) | L2归一化（Task 32新增） |
+| InstanceNorm | [instance_norm_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/instance_norm_layer.hpp) | 实例归一化（Task 32新增） |
 
 #### 公共/工具层（Common Layers）— 9个
 | 算子 | 文件 | 说明 |
 |------|------|------|
-| InnerProduct | [inner_product_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/inner_product_layer.hpp) | 全连接层 |
-| Concat | [concat_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/concat_layer.hpp) | 拼接层 |
-| Dropout | [dropout_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/dropout_layer.hpp) | Dropout正则化（推理COW零拷贝） |
-| Eltwise | [eltwise_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/eltwise_layer.hpp) | 逐元素操作（加/乘/取最大，MAX梯度路由） |
-| Flatten | [flatten_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/flatten_layer.hpp) | 展平层 |
-| Reshape | [reshape_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/reshape_layer.hpp) | 维度重塑 |
-| Bias | [bias_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/bias_layer.hpp) | 偏置加法（支持broadcasting，恒等COW） |
-| Split | [split_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/split_layer.hpp) | 张量分裂（零拷贝路径，SetShapeOnly延迟分配） |
-| Softmax | [softmax_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softmax_layer.hpp) | Softmax概率输出 |
+| InnerProduct | [inner_product_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/inner_product_layer.hpp) | 全连接层 |
+| Concat | [concat_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/concat_layer.hpp) | 拼接层 |
+| Dropout | [dropout_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/dropout_layer.hpp) | Dropout正则化（推理COW零拷贝） |
+| Eltwise | [eltwise_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/eltwise_layer.hpp) | 逐元素操作（加/乘/取最大，MAX梯度路由） |
+| Flatten | [flatten_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/flatten_layer.hpp) | 展平层 |
+| Reshape | [reshape_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/reshape_layer.hpp) | 维度重塑 |
+| Bias | [bias_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/bias_layer.hpp) | 偏置加法（支持broadcasting，恒等COW） |
+| Split | [split_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/split_layer.hpp) | 张量分裂（零拷贝路径，SetShapeOnly延迟分配） |
+| Softmax | [softmax_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softmax_layer.hpp) | Softmax概率输出 |
 
 #### 循环层（Recurrent Layers）— 3个
 | 算子 | 文件 | 说明 |
 |------|------|------|
-| LSTM | [lstm_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/lstm_layer.hpp) | 长短期记忆网络（Task 31新增） |
-| LSTMUnit | [lstm_unit.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/lstm_unit.hpp) | LSTM单元（Task 31新增） |
-| RNN | [rnn_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/rnn_layer.hpp) | 循环神经网络（Task 31新增） |
+| LSTM | [lstm_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/lstm_layer.hpp) | 长短期记忆网络（Task 31新增） |
+| LSTMUnit | [lstm_unit.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/lstm_unit.hpp) | LSTM单元（Task 31新增） |
+| RNN | [rnn_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/rnn_layer.hpp) | 循环神经网络（Task 31新增） |
 
 #### 数据层（Data Layers）— 1个
 | 算子 | 文件 | 说明 |
 |------|------|------|
-| Input | [input_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/input_layer.hpp) | 输入占位层（数据通过Python/DLPack传入） |
+| Input | [input_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/input_layer.hpp) | 输入占位层（数据通过Python/DLPack传入） |
 
 ### 2.3 缺失算子清单（按优先级分级）
 
@@ -302,15 +302,15 @@
 
 | 模块 | caffe-ffi文件 | 功能说明 |
 |------|-------------|----------|
-| **零拷贝Blob共享** | [blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) ShareData/ShareDiff/SharesDataWith | 避免Split层memcpy |
-| **COW写时复制** | [blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) cpu_mutable_data/cpu_mutable_diff + 运行时开关 | 多消费者安全写 |
-| **批量引用计数** | [blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) BatchShareData/BatchShareDiff（Phase3） | O(1)原子操作替代O(N)，N≥16时优化 |
-| **延迟分配** | [blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) SetShapeOnly/IsLazyAllocated | Split层Reshape时不立即分配内存 |
-| **DLPack互操作** | [blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) data_tensor/mutable_data_tensor | Python numpy零拷贝 |
-| **内存统计** | [blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) TotalAllocatedBytes/LiveBlobCount | 内存泄漏检测 |
-| **Backtrace捕获** | [backtrace.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/backtrace.hpp) | Blob构造栈追踪，内存问题定位 |
-| **结构化日志** | [log.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/log.hpp) | CAFFE_FFI_LOG/[COW]/[SPLIT-PERF]/[ACTIVATION-PERF] |
-| **错误处理** | [error.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/error.hpp) | CAFFE_FFI_CHECK/CAFFE_FFI_THROW |
+| **零拷贝Blob共享** | [blob.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) ShareData/ShareDiff/SharesDataWith | 避免Split层memcpy |
+| **COW写时复制** | [blob.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) cpu_mutable_data/cpu_mutable_diff + 运行时开关 | 多消费者安全写 |
+| **批量引用计数** | [blob.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) BatchShareData/BatchShareDiff（Phase3） | O(1)原子操作替代O(N)，N≥16时优化 |
+| **延迟分配** | [blob.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) SetShapeOnly/IsLazyAllocated | Split层Reshape时不立即分配内存 |
+| **DLPack互操作** | [blob.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) data_tensor/mutable_data_tensor | Python numpy零拷贝 |
+| **内存统计** | [blob.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) TotalAllocatedBytes/LiveBlobCount | 内存泄漏检测 |
+| **Backtrace捕获** | [backtrace.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/backtrace.hpp) | Blob构造栈追踪，内存问题定位 |
+| **结构化日志** | [log.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/log.hpp) | CAFFE_FFI_LOG/[COW]/[SPLIT-PERF]/[ACTIVATION-PERF] |
+| **错误处理** | [error.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/error.hpp) | CAFFE_FFI_CHECK/CAFFE_FFI_THROW |
 | **调试工具** | tools/debug.py, tools/memory.py | Python侧调试和内存分析 |
 | **COW运行时开关** | SetCOWEnabled/IsCOWEnabled | 动态切换COW模式 |
 

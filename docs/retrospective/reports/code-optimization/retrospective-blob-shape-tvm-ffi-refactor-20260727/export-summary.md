@@ -44,18 +44,18 @@ date: 2026-07-27
 
 | 文件 | 操作 | 主要变更 |
 |------|------|---------|
-| [include/caffe/blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/include/caffe/blob.hpp) | 修改 | 替换shape_类型；新增shape_view()/shape_data()；升级count_/capacity_到int64_t；移除shape_data_ |
-| [src/caffe/blob.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/src/caffe/blob.cpp) | 修改 | Reshape适配Shape；使用Product()；同步shape_vec_缓存；溢出检查；移除shape_data_相关代码；修复FromProto |
-| [src/caffe/_caffe.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/src/caffe/_caffe.cpp) | 修改 | 简化FFI绑定，直接使用shape_view()消除双重转换 |
-| [pycaffe/python/pycaffe/_caffe.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/pycaffe/python/pycaffe/_caffe.cpp) | 同步 | src/caffe版本的副本，同步更新 |
+| [include/caffe/blob.hpp](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/include/caffe/blob.hpp) | 修改 | 替换shape_类型；新增shape_view()/shape_data()；升级count_/capacity_到int64_t；移除shape_data_ |
+| [src/caffe/blob.cpp](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/src/caffe/blob.cpp) | 修改 | Reshape适配Shape；使用Product()；同步shape_vec_缓存；溢出检查；移除shape_data_相关代码；修复FromProto |
+| [src/caffe/_caffe.cpp](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/src/caffe/_caffe.cpp) | 修改 | 简化FFI绑定，直接使用shape_view()消除双重转换 |
+| [pycaffe/python/pycaffe/_caffe.cpp](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/pycaffe/python/pycaffe/_caffe.cpp) | 同步 | src/caffe版本的副本，同步更新 |
 
 ### 2.2 构建与打包
 
 | 文件 | 操作 | 主要变更 |
 |------|------|---------|
-| [pycaffe/CMakeLists.txt](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/pycaffe/CMakeLists.txt) | 修改 | 更新输出目录；添加tvm_ffi Python包安装 |
-| [pycaffe/pyproject.toml](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/pycaffe/pyproject.toml) | 修改 | 包名`caffe`；依赖简化；Python 3.10+ |
-| [python/caffe/\_\_init\_\_.py](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/python/caffe/__init__.py) | 修改 | 添加`_setup_library_paths()`预加载libtvm_ffi.so |
+| [pycaffe/CMakeLists.txt](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/pycaffe/CMakeLists.txt) | 修改 | 更新输出目录；添加tvm_ffi Python包安装 |
+| [pycaffe/pyproject.toml](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/pycaffe/pyproject.toml) | 修改 | 包名`caffe`；依赖简化；Python 3.10+ |
+| [python/caffe/\_\_init\_\_.py](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/python/caffe/__init__.py) | 修改 | 添加`_setup_library_paths()`预加载libtvm_ffi.so |
 
 ### 2.3 Spec文档（SpecWeave）
 

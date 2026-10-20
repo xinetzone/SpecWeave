@@ -307,5 +307,5 @@ docker run --rm \
 - [Docker 作为规范构建环境（方法论）](../../patterns/methodology-patterns/governance-strategy/docker-canonical-build-environment.md)
 - [构建失败分层排查法](../../patterns/code-patterns/build-failure-layered-triage.md)
 - [CMake列表变更诊断输出模式](../../patterns/code-patterns/cmake-list-removal-diagnostic-output.md)
-- [caffe-ffi README](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/README.md)
-- [caffe-ffi-jupyter Docker镜像](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter/README.md)
+- [caffe-ffi README](../../../../projects/xuanspace/libs/caffe-ffi/README.md)
+- [caffe-ffi-jupyter Docker镜像](../../../../apps/docker-images/caffe-ffi-jupyter/README.md)

@@ -504,13 +504,13 @@ source: "tasks.md#Task-1-33（全部已完成）"
 > 构建采用 `file(GLOB layers/*.cpp)` 自动收集 + CMake 选项（`CAFFE_USE_OPENMP`/`CAFFE_USE_BLAS`）开关，每子任务独立可验证。性能优化须先测量再优化，因此先建立 benchmark 基线再优化。
 
 **S1 多线程 OpenMP 集成（TS31-B1）✅ 已完成**
-- 新增构建选项 `CAFFE_USE_OPENMP`（默认 ON，OFF 时强制串行执行），见 [Options.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake)
-- OpenMP 检测与回退：`find_package(OpenMP)`，编译器不支持时自动回退串行，见 [Dependencies.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Dependencies.cmake#L114-L127)
-- 编译/链接接入：`/openmp`(MSVC) / `${OpenMP_CXX_FLAGS}`(GCC/Clang) + `OpenMP::OpenMP_CXX` + `CAFFE_USE_OPENMP` 宏，见 [CompilerConfig.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/CompilerConfig.cmake)
+- 新增构建选项 `CAFFE_USE_OPENMP`（默认 ON，OFF 时强制串行执行），见 [Options.cmake](../../../../../../projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake)
+- OpenMP 检测与回退：`find_package(OpenMP)`，编译器不支持时自动回退串行，见 [Dependencies.cmake](../../../../../../projects/xuanspace/libs/caffe-ffi/cmake/Dependencies.cmake#L114-L127)
+- 编译/链接接入：`/openmp`(MSVC) / `${OpenMP_CXX_FLAGS}`(GCC/Clang) + `OpenMP::OpenMP_CXX` + `CAFFE_USE_OPENMP` 宏，见 [CompilerConfig.cmake](../../../../../../projects/xuanspace/libs/caffe-ffi/cmake/CompilerConfig.cmake)
 - 并行化点（无跨线程写竞争）：
-  - 纯 C++ GEMM/GEMV fallback：并行化 M（行）维，见 [math_utils.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/math_utils.hpp#L99-L162)
-  - Pooling：并行化 batch（n）维；**注意**：MSVC 默认 `/openmp` 不支持 min/max reduction 子句（需 `/openmp:llvm`），`in_min/in_max` 改为独立串行统计，见 [pooling_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/pooling_layer.cpp#L166-L233)
-  - Eltwise：并行化 count 维（PROD/SUM/MAX），见 [eltwise_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp#L181-L246)
+  - 纯 C++ GEMM/GEMV fallback：并行化 M（行）维，见 [math_utils.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/math_utils.hpp#L99-L162)
+  - Pooling：并行化 batch（n）维；**注意**：MSVC 默认 `/openmp` 不支持 min/max reduction 子句（需 `/openmp:llvm`），`in_min/in_max` 改为独立串行统计，见 [pooling_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/pooling_layer.cpp#L166-L233)
+  - Eltwise：并行化 count 维（PROD/SUM/MAX），见 [eltwise_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp#L181-L246)
 - **DoD**：`.temp/_benchmark_openmp.sh`（OpenMP 重建+benchmark）与 `.temp/_benchmark_serial.sh`（OpenMP OFF 基线）双脚本，Docker 内验证通过
 
 **S2 分层 benchmark 体系（TS31-B2）✅ 已完成**
@@ -542,7 +542,7 @@ source: "tasks.md#Task-1-33（全部已完成）"
 
 **S3 BLAS 后端（TS31-B3）✅ 已完成**
 - 复用/接通 OpenBLAS 路径（`CAFFE_USE_BLAS` 已存在），完成 InnerProduct GEMM 性能基准对比（OpenBLAS vs 纯 C++ fallback vs OpenMP）
-- **关键修复**：`DetectOpenBLAS.cmake` 的 libopenblas-dev 多架构头文件检测 bug——Debian/Ubuntu 系统包把 `cblas.h` 放在 `/usr/include/<triplet>/`（如 `x86_64-linux-gnu/cblas.h`），原搜索后缀仅 `include`/`include/openblas` 导致 `find_path` 无法命中，误判 BLAS 未找到而回退纯 C++ fallback。已补充 `x86_64-linux-gnu` 及 `openblas-pthread` 后缀，见 [DetectOpenBLAS.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/DetectOpenBLAS.cmake#L113-L127)
+- **关键修复**：`DetectOpenBLAS.cmake` 的 libopenblas-dev 多架构头文件检测 bug——Debian/Ubuntu 系统包把 `cblas.h` 放在 `/usr/include/<triplet>/`（如 `x86_64-linux-gnu/cblas.h`），原搜索后缀仅 `include`/`include/openblas` 导致 `find_path` 无法命中，误判 BLAS 未找到而回退纯 C++ fallback。已补充 `x86_64-linux-gnu` 及 `openblas-pthread` 后缀，见 [DetectOpenBLAS.cmake](../../../../../../projects/xuanspace/libs/caffe-ffi/cmake/DetectOpenBLAS.cmake#L113-L127)
 - **Docker 实测（`OMP_NUM_THREADS=4`, `OPENBLAS_NUM_THREADS=4`，GEMM 为 InnerProduct）**：
 
 | Benchmark | Serial C++ | OpenMP C++ | OpenBLAS | BLAS vs OM | BLAS vs Serial |
@@ -564,7 +564,7 @@ source: "tasks.md#Task-1-33（全部已完成）"
 - **新增测试**：`test_cow.py::TestIdentityLayerCOWBehavior` 共 12 个用例——恒等 Forward 零拷贝（data 指针相等）、恒等 Backward diff 共享、非恒等不共享（保留 memcpy 路径）、下游 in-place ReLU 触发 COW 隔离
 - **验证**：`test_cow.py` 38 passed；回归 `test_cow+test_blob+test_scale_backward+test_bias_backward+test_eltwise_backward+test_split_backward+test_p3b_eltwise_scale` **298 passed（5.36s）**
 - **DoD**：COW 覆盖层清单（Scale/Bias/Eltwise 恒等 + Split/Concat 已有）+ 回归测试通过 ✅
-- **补充：FFI 基础设施单元测试**：新增 [test_ffi_api.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_ffi_api.py) 覆盖 `_ffi_api.py`（库路径发现/平台库名/诊断记录/严格模式/FFI 注册表缓存/顶层 API 契约），**30 passed / 1 skipped**（纯 Python，不依赖 C++ 扩展，双模式可运行）
+- **补充：FFI 基础设施单元测试**：新增 [test_ffi_api.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_ffi_api.py) 覆盖 `_ffi_api.py`（库路径发现/平台库名/诊断记录/严格模式/FFI 注册表缓存/顶层 API 契约），**30 passed / 1 skipped**（纯 Python，不依赖 C++ 扩展，双模式可运行）
 - **补充：模式归档**：沉淀「恒等层 COW 零拷贝分离原则」至 [caffe-identity-layer-cow-separation.md](../../../../../knowledge/best-practices/caffe-identity-layer-cow-separation.md)，并更新 best-practices 索引与深度学习/FFI 快速导航
 
 ## [x] Task 32: P4-能力扩展（更多激活/归一化/损失层）
@@ -635,7 +635,7 @@ source: "tasks.md#Task-1-33（全部已完成）"
 > 训练工程化围绕「优化器 + 调度器 + 训练循环 + 序列化 + 示例 + 文档」六层抽象，全部为纯 Python 实现（复用 C++ 已实现的 Backward/Forward），无构建改动，可独立验证。
 
 **TS33-1 优化器框架（SGD/Adam）✅ 已完成**
-- 新增 [solver.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/solver.py)：`Optimizer` 基类（`lr`/`weight_decay`/`step`/`zero_grad`/`_grad`）
+- 新增 [solver.py](../../../../../../projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/solver.py)：`Optimizer` 基类（`lr`/`weight_decay`/`step`/`zero_grad`/`_grad`）
 - `SGD`：动量（`momentum`）、Nesterov 加速、L2 weight decay；`state_dict`/`load_state_dict` 断点续训
 - `Adam`：Kingma & Ba (2015) 偏差校正、`beta1`/`beta2`/`eps`；`state_dict`/`load_state_dict`
 - 权重更新走 `mutable_data_tensor()` **COW 感知**写入；每参数以 `(layer_name, blob_index)` 为稳定 key
@@ -653,20 +653,20 @@ source: "tasks.md#Task-1-33（全部已完成）"
 - 测试：`test_solver.py::TestSolver`（端到端 fit 损失下降、step 更新权重、调度器逐 epoch、validate 返回指标）
 
 **TS33-4 模型序列化 ✅ 已完成**
-- 新增 [serialization.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/serialization.py)：`save_net`/`load_net`/`net_parameter_to_file`/`weights_to_dict`/`dict_to_weights`
+- 新增 [serialization.py](../../../../../../projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/serialization.py)：`save_net`/`load_net`/`net_parameter_to_file`/`weights_to_dict`/`dict_to_weights`
 - caffemodel 格式（`NetParameter` protobuf），按层名匹配加载（`Net.CopyTrainedLayersFrom`）
 - 测试：`test_serialization.py`（权重 dict round-trip、caffemodel save/load、protobuf 有效性、额外层忽略缺失）
 
 **TS33-5 顶层 API 集成 ✅ 已完成**
-- 更新 [__init__.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/__init__.py)：导出 `solver`/`serialization` 模块及全部类/函数至 `caffe_ffi` 顶层
+- 更新 [__init__.py](../../../../../../projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/__init__.py)：导出 `solver`/`serialization` 模块及全部类/函数至 `caffe_ffi` 顶层
 
 **TS33-6 应用示例 ✅ 已完成**
-- 新增 [examples/mlp_classifier_train.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/examples/mlp_classifier_train.py)：MLP+SoftmaxWithLoss 端到端训练（Solver+SGD+StepLR）→ save_net → load_net → 评估
+- 新增 [examples/mlp_classifier_train.py](../../../../../../projects/xuanspace/libs/caffe-ffi/examples/mlp_classifier_train.py)：MLP+SoftmaxWithLoss 端到端训练（Solver+SGD+StepLR）→ save_net → load_net → 评估
 
 **TS33-7 文档完善 + 更新 tasks.md/checklist.md ✅ 已完成**
-- 新增 [docs/training/TRAINING_GUIDE.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/training/TRAINING_GUIDE.md)：训练指南（快速开始/优化器/调度器/Solver/序列化/模式切换）
-- 新增 [docs/training/API_REFERENCE.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/training/API_REFERENCE.md)：训练 API 参考
-- 更新 [docs/README.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/README.md)：文档索引登记 training/ 目录
+- 新增 [docs/training/TRAINING_GUIDE.md](../../../../../../projects/xuanspace/libs/caffe-ffi/docs/training/TRAINING_GUIDE.md)：训练指南（快速开始/优化器/调度器/Solver/序列化/模式切换）
+- 新增 [docs/training/API_REFERENCE.md](../../../../../../projects/xuanspace/libs/caffe-ffi/docs/training/API_REFERENCE.md)：训练 API 参考
+- 更新 [docs/README.md](../../../../../../projects/xuanspace/libs/caffe-ffi/docs/README.md)：文档索引登记 training/ 目录
 - 更新 spec.md（P4 完成、FR-34/35、AC-Solver）、tasks.md（本任务）、checklist.md（Task 33 验证项）
 
 ---

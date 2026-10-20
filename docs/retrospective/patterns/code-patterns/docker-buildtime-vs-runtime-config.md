@@ -102,7 +102,7 @@ reuse_count: 0
 caffe-cpu:jupyter的Dockerfile在RUN层执行了`ssh-keygen -A`（第338行），生成SSH主机密钥到镜像层。但：
 
 1. **安全最佳实践**：每个容器实例应该有唯一的主机密钥，而非所有容器共享镜像中预生成的密钥。如果密钥固定在镜像中，攻击者可以从公开镜像提取私钥进行MITM攻击。
-2. **entrypoint处理**：[entrypoint-jupyter.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/origin/entrypoint-jupyter.sh)在容器启动时重新生成密钥（或修复权限），覆盖RUN层生成的密钥。
+2. **entrypoint处理**：[entrypoint-jupyter.sh](../../../../projects/xuanspace/vendor/caffe/docker/origin/entrypoint-jupyter.sh)在容器启动时重新生成密钥（或修复权限），覆盖RUN层生成的密钥。
 3. **验证陷阱**：`docker run --rm caffe-cpu:jupyter sshd -t`绕过了entrypoint，直接执行sshd。此时如果entrypoint负责生成密钥，绕过entrypoint后密钥不存在，报"no hostkeys available"——但这不是bug，是验证方式错误。
 
 ## 核心原则

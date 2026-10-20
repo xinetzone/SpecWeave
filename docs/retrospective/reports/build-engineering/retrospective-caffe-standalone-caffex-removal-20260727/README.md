@@ -36,9 +36,9 @@ tags: ["docker", "caffe", "dependency-isolation", "pycaffe", "standalone-build",
 ### F02. 初始状态扫描结果
 
 - grep `caffex` 搜索结果：3 处引用
-  - [verify-parity.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/pycaffe/scripts/verify-parity.sh)：硬编码 `caffex/python/caffe/test` 路径用于对标验证
-  - [pycaffe/README.md](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/pycaffe/README.md)：描述性文字"对标验证（对比 caffex/python 行为）"
-  - [pycaffe/Dockerfile](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/pycaffe/Dockerfile)：注释说明"不依赖 caffex/"（非功能性引用）
+  - [verify-parity.sh](../../../../../projects/xuanspace/vendor/caffe/docker/standalone/pycaffe/scripts/verify-parity.sh)：硬编码 `caffex/python/caffe/test` 路径用于对标验证
+  - [pycaffe/README.md](../../../../../projects/xuanspace/vendor/caffe/docker/standalone/pycaffe/README.md)：描述性文字"对标验证（对比 caffex/python 行为）"
+  - [pycaffe/Dockerfile](../../../../../projects/xuanspace/vendor/caffe/docker/standalone/pycaffe/Dockerfile)：注释说明"不依赖 caffex/"（非功能性引用）
 - Dockerfile COPY/ADD 指令检查：无路径指向 caffex 目录
 - 配置文件检查（sshd_config、supervisord.conf 等）：无外部引用
 
@@ -182,7 +182,7 @@ tags: ["docker", "caffe", "dependency-isolation", "pycaffe", "standalone-build",
 
 ## 变更文件索引
 
-- [pycaffe/Dockerfile](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/pycaffe/Dockerfile) — Ubuntu 26.04 + numpy>=2 + COPY 脚本
-- [pycaffe/scripts/verify-parity.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/pycaffe/scripts/verify-parity.sh) — 独立版本，无 caffex 依赖
-- [pycaffe/scripts/verify-pycaffe.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/pycaffe/scripts/verify-pycaffe.sh) — 核心/辅助分级验证
-- [.dockerignore](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/.dockerignore) — 修复 libbacktrace 过度排除
+- [pycaffe/Dockerfile](../../../../../projects/xuanspace/vendor/caffe/docker/standalone/pycaffe/Dockerfile) — Ubuntu 26.04 + numpy>=2 + COPY 脚本
+- [pycaffe/scripts/verify-parity.sh](../../../../../projects/xuanspace/vendor/caffe/docker/standalone/pycaffe/scripts/verify-parity.sh) — 独立版本，无 caffex 依赖
+- [pycaffe/scripts/verify-pycaffe.sh](../../../../../projects/xuanspace/vendor/caffe/docker/standalone/pycaffe/scripts/verify-pycaffe.sh) — 核心/辅助分级验证
+- [.dockerignore](../../../../../projects/xuanspace/vendor/.dockerignore) — 修复 libbacktrace 过度排除

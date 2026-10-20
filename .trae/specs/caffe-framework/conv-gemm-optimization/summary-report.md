@@ -98,8 +98,8 @@
 
 **文件**：
 
-- [Options.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake#L9)：新增 option，默认 OFF
-- [CompilerConfig.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/CompilerConfig.cmake#L77-L80)：条件添加预处理器宏
+- [Options.cmake](../../../../projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake#L9)：新增 option，默认 OFF
+- [CompilerConfig.cmake](../../../../projects/xuanspace/libs/caffe-ffi/cmake/CompilerConfig.cmake#L77-L80)：条件添加预处理器宏
 
 **设计**：
 
@@ -121,7 +121,7 @@
 
 #### 优化5：Conv 层沿输出通道 M 维 OpenMP 并行 + GEMM+Bias 融合
 
-**文件**：[conv\_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp)、[base\_conv\_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/base_conv_layer.cpp)
+**文件**：[conv\_layer.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp)、[base\_conv\_layer.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/base_conv_layer.cpp)
 
 - **并行维度切换**：从 batch 维改为输出通道（M）维并行，解决 batch=1（单张推理）时并行度=1的问题
 - **GEMM+Bias 融合**：每个线程处理连续通道分块，GEMM 后紧接 bias 加法，消除中间屏障和内存同步
@@ -132,7 +132,7 @@
 
 #### 优化6：Pooling + Eltwise 层 OpenMP 并行优化
 
-**文件**：[pooling\_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/pooling_layer.cpp)、[eltwise\_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp)
+**文件**：[pooling\_layer.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/pooling_layer.cpp)、[eltwise\_layer.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp)
 
 - **Pooling 层**：flatten(n,c) 维度 OpenMP 并行，替代原来仅沿 batch 维的有限并行
 - **Eltwise 层**：合并多个并行区域为单个 `#pragma omp parallel` 区域，减少线程 fork/join 开销
@@ -140,7 +140,7 @@
 
 #### 优化7：二进制模型序列化（NewNetFromParamBinary）
 
-**文件**：[io.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/io.py)、[\_caffe\_ffi.cc](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/_caffe_ffi.cc)
+**文件**：[io.py](../../../../projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/io.py)、[\_caffe\_ffi.cc](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/_caffe_ffi.cc)
 
 - 新增 `NewNetFromParamBinary` FFI 接口，直接从二进制 protobuf 反序列化
 - `read_net()` 优先尝试二进制路径，绕过文本 protobuf 解析（文本序列化仅用于调试/人类可读）
@@ -162,7 +162,7 @@
 
 **根因**：`urllib.request.urlretrieve` 下载大文件时网络中断导致截断（bvlc\_alexnet.caffemodel 本地95MB vs 服务器233MB），截断的二进制 protobuf 触发 `DecodeError: Wire format was corrupt`。
 
-**修复**：[networks/utils.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/networks/utils.py) `_download_model()` 添加：
+**修复**：[networks/utils.py](../../../../projects/xuanspace/libs/caffe-ffi/tests/python/networks/utils.py) `_download_model()` 添加：
 
 - HEAD 请求探测服务器 Content-Length
 - 本地文件大小校验（小于期望值则删除重下）
@@ -176,7 +176,7 @@
 **修复**：
 
 - 将 **34 个测试文件** + 2 个 conftest.py 的 `from utils import` 改为 `from .utils import` **包相对导入**
-- 重写 [ops/conftest.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/ops/conftest.py) 和 [networks/conftest.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/networks/conftest.py)，移除 sys.path/sys.modules hack
+- 重写 [ops/conftest.py](../../../../projects/xuanspace/libs/caffe-ffi/tests/python/ops/conftest.py) 和 [networks/conftest.py](../../../../projects/xuanspace/libs/caffe-ffi/tests/python/networks/conftest.py)，移除 sys.path/sys.modules hack
 - conftest 中添加 `assert hasattr(utils, "L")` 早期验证，防止静默失败
 - **36个文件修改**，新增行+47，删除行-56
 

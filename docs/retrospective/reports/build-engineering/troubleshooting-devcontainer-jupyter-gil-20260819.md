@@ -43,11 +43,11 @@ category: "build-engineering"
 
 | 步骤 | 操作 | 文件 |
 |------|------|------|
-| 1. 源修复 | `environment=` 行注入 `PYTHON_GIL="0"` | [jupyter.conf](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/config/supervisor/conf.d/jupyter.conf#L14) |
+| 1. 源修复 | `environment=` 行注入 `PYTHON_GIL="0"` | [jupyter.conf](../../../../apps/docker-images/devcontainer-base/config/supervisor/conf.d/jupyter.conf#L14) |
 | 2. Base 重建 | 重建 `devcontainer-base:latest`（根因修复落 base 层，所有变体自动继承） | base Dockerfile `COPY config/supervisor/conf.d/` |
-| 3. 变体防御 | conda-llvm Dockerfile 增加幂等 sed 注入（对旧 base tag 构建仍有效，防御纵深） | [conda-llvm/Dockerfile#L137-L147](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/conda-llvm/Dockerfile#L137-L147) |
+| 3. 变体防御 | conda-llvm Dockerfile 增加幂等 sed 注入（对旧 base tag 构建仍有效，防御纵深） | [conda-llvm/Dockerfile#L137-L147](../../../../apps/docker-images/devcontainer-base/variants/conda-llvm/Dockerfile#L137-L147) |
 | 4. 清理 | 停掉旧验证容器 → 删除悬空旧镜像（释放 ~1.8GB 唯一层） | podman rmi |
-| 5. 文档沉淀 | README 核心特性 #2 + FAQ Q6 | [README.md#L693-L696](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/README.md#L693-L696) |
+| 5. 文档沉淀 | README 核心特性 #2 + FAQ Q6 | [README.md#L693-L696](../../../../apps/docker-images/devcontainer-base/README.md#L693-L696) |
 
 ## 四、验证结果（V）
 
@@ -63,7 +63,7 @@ category: "build-engineering"
 
 - **排查速查**：Jupyter kernel GIL 异常时先查 `jupyter.conf` 的 `environment=` 是否含 `PYTHON_GIL="0"`，再用 kernel 内 `print(sys._is_gil_enabled())` 复诊。
 - **优先级语义**：supervisord `environment=` 优先级**高于** `docker run -e`——仅 `-e PYTHON_GIL=1` 无法切 Jupyter 兼容模式，需同步改 supervisord 配置。
-- **关联资产**：[scripts/nogil_kit.py](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/scripts/nogil_kit.py)（注册 `PYTHON_GIL=0` kernelspec）、[examples/nogil_kernel_template.ipynb](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/examples/nogil_kernel_template.ipynb)（GIL 一次性保险丝说明）——本修复为其提供了**默认 kernel 级别的同等保护**（非仅自定义 nogil kernel）。
+- **关联资产**：[scripts/nogil_kit.py](../../../../apps/docker-images/devcontainer-base/scripts/nogil_kit.py)（注册 `PYTHON_GIL=0` kernelspec）、[examples/nogil_kernel_template.ipynb](../../../../apps/docker-images/devcontainer-base/examples/nogil_kernel_template.ipynb)（GIL 一次性保险丝说明）——本修复为其提供了**默认 kernel 级别的同等保护**（非仅自定义 nogil kernel）。
 - **其他项目边界**：`jupyter-ssh-base`/`caffe` 等镜像使用 venv/系统 Python（非 cp314t），GIL 问题不适用，无需同步修改。
 - **CI 协同**：`.github/workflows/devcontainer-variants.yml` 已覆盖 `PYTHON_GIL=1` 兼容模式回归（bash 上下文），与本修复互补。
 

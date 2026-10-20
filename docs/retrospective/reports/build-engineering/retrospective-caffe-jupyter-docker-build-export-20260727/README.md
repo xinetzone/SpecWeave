@@ -13,7 +13,7 @@ tags: ["docker", "caffe", "multi-stage-build", "jupyter", "image-export", "wsl",
 
 ## 执行摘要
 
-使用 [Dockerfile.jupyter-ssh](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/origin/Dockerfile.jupyter-ssh#L14-L16) 中的 `runtime-jupyter` 目标构建 `caffe-cpu:jupyter` 镜像，并将镜像导出为离线tar分发包保存到 `D:\BaiduSyncdisk\docker`。构建利用已有缓存层快速完成，镜像通过Caffe导入、Jupyter环境、镜像加载完整性三重验证，最终产出754MB的可离线分发tar文件。
+使用 [Dockerfile.jupyter-ssh](../../../../../projects/xuanspace/vendor/caffe/docker/origin/Dockerfile.jupyter-ssh#L14-L16) 中的 `runtime-jupyter` 目标构建 `caffe-cpu:jupyter` 镜像，并将镜像导出为离线tar分发包保存到 `D:\BaiduSyncdisk\docker`。构建利用已有缓存层快速完成，镜像通过Caffe导入、Jupyter环境、镜像加载完整性三重验证，最终产出754MB的可离线分发tar文件。
 
 **关键数据**：
 - 镜像名称：`caffe-cpu:jupyter`
@@ -31,7 +31,7 @@ tags: ["docker", "caffe", "multi-stage-build", "jupyter", "image-export", "wsl",
 
 ### F01. 初始需求
 
-- 用户指定构建命令来源：[Dockerfile.jupyter-ssh](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/origin/Dockerfile.jupyter-ssh#L14-L16) 第14-16行注释中的构建命令
+- 用户指定构建命令来源：[Dockerfile.jupyter-ssh](../../../../../projects/xuanspace/vendor/caffe/docker/origin/Dockerfile.jupyter-ssh#L14-L16) 第14-16行注释中的构建命令
 - 目标镜像标签：`caffe-cpu:jupyter`
 - 构建目标（--target）：`runtime-jupyter`
 - 镜像保存路径：`D:\BaiduSyncdisk\docker`

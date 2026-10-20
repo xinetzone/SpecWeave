@@ -64,16 +64,16 @@ reuse_count: 1
 
 | 文件 | 行数 | 职责 |
 |------|------|------|
-| [Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/Dockerfile) | 180 | 多阶段构建（builder + runtime 6层） |
+| [Dockerfile](../../../../../apps/docker-images/jupyter-ssh-base/Dockerfile) | 180 | 多阶段构建（builder + runtime 6层） |
 | [entrypoint.sh](../../../../../apps/docker-images/jupyter-ssh-base/entrypoint.sh) | 125 | 6步运行时初始化（密码/密钥/服务/Jupyter/信号转发） |
-| [config/sshd_config](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/config/sshd_config) | 40 | SSH 服务配置（LogLevel=ERROR） |
+| [config/sshd_config](../../../../../apps/docker-images/jupyter-ssh-base/config/sshd_config) | 40 | SSH 服务配置（LogLevel=ERROR） |
 | [config/supervisord.conf](../../../../../apps/docker-images/jupyter-ssh-base/config/supervisord.conf) | 25 | Supervisor 主配置 |
 | [config/supervisor/conf.d/jupyter.conf](../../../../../apps/docker-images/jupyter-ssh-base/config/supervisor/conf.d/jupyter.conf) | 20 | Jupyter 服务配置（stderr 分流） |
 | [config/supervisor/conf.d/sshd.conf](../../../../../apps/docker-images/jupyter-ssh-base/config/supervisor/conf.d/sshd.conf) | 10 | SSH 服务配置 |
 | [scripts/healthcheck.sh](../../../../../apps/docker-images/jupyter-ssh-base/scripts/healthcheck.sh) | 60 | TCP空探针+HTTP状态码健康检查 |
 | [scripts/healthcheck-test.sh](../../../../../apps/docker-images/jupyter-ssh-base/scripts/healthcheck-test.sh) | - | 健康检查测试脚本 |
 | [scripts/test-ssh-noninteractive-path.sh](../../../../../apps/docker-images/jupyter-ssh-base/scripts/test-ssh-noninteractive-path.sh) | - | SSH非交互PATH验证脚本 |
-| [README.md](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/README.md) | 155 | 使用文档 |
+| [README.md](../../../../../apps/docker-images/jupyter-ssh-base/README.md) | 155 | 使用文档 |
 | [AGENTS.md](../../../../../apps/docker-images/jupyter-ssh-base/AGENTS.md) | 50 | 智能体路由规范 |
 
 ### F03. 构建阶段结构（物理两阶段）
@@ -326,10 +326,10 @@ supervisord 启动的子进程   supervisord environment= 配置      supervisor
 - 🆕 [container-healthcheck-minimal-probe.md](../../../patterns/code-patterns/container-healthcheck-minimal-probe.md) — L1-draft 新增
 
 ### 关联项目文件
-- [Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/Dockerfile) — 多阶段构建参考实现
+- [Dockerfile](../../../../../apps/docker-images/jupyter-ssh-base/Dockerfile) — 多阶段构建参考实现
 - [entrypoint.sh](../../../../../apps/docker-images/jupyter-ssh-base/entrypoint.sh) — 6步运行时初始化参考
 - [scripts/healthcheck.sh](../../../../../apps/docker-images/jupyter-ssh-base/scripts/healthcheck.sh) — 最小探针参考实现
-- [config/sshd_config](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/config/sshd_config) — LogLevel=ERROR配置
+- [config/sshd_config](../../../../../apps/docker-images/jupyter-ssh-base/config/sshd_config) — LogLevel=ERROR配置
 - [config/supervisor/conf.d/jupyter.conf](../../../../../apps/docker-images/jupyter-ssh-base/config/supervisor/conf.d/jupyter.conf) — stderr分流配置
 
 ### 关联已有模式

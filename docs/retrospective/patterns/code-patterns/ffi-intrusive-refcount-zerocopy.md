@@ -354,7 +354,7 @@ void SplitLayer::Forward_cpu(const vector<Blob*>& bottom, const vector<Blob*>& t
 
 ## 测试验证（14 个测试用例全覆盖）
 
-完整测试见 [test_blob_zerocopy.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp)。核心测试模式如下：
+完整测试见 [test_blob_zerocopy.cpp](../../../../projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp)。核心测试模式如下：
 
 ### 测试 1：ShareData 后指针相等
 
@@ -588,10 +588,10 @@ NDArray view = arr.CreateView({50, 100}, arr->dtype, 0);  // 零拷贝 view，�
 
 ## 来源
 
-- [blob.hpp ShareData 声明](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp#L112-L129)
-- [blob.cpp ShareData 实现](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp#L143-L171)
-- [split_layer.cpp N=1 零拷贝路径](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp#L88-L111)
-- [test_blob_zerocopy.cpp 14个测试用例](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp)
+- [blob.hpp ShareData 声明](../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp#L112-L129)
+- [blob.cpp ShareData 实现](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp#L143-L171)
+- [split_layer.cpp N=1 零拷贝路径](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp#L88-L111)
+- [test_blob_zerocopy.cpp 14个测试用例](../../../../projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp)
 - 复盘报告：[retrospective-split-zerocopy-cow-milestone-20260731](../../reports/code-optimization/retrospective-split-zerocopy-cow-milestone-20260731/README.md)
 - Phase 2 COW 设计草稿：[SPLIT_COW_PHASE2_DESIGN_DRAFT.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/SPLIT_COW_PHASE2_DESIGN_DRAFT.md)
 

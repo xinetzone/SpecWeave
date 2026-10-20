@@ -30,7 +30,7 @@ test_results:
 
 ### 2.1 问题1：COW阈值不对称（核心Bug）
 
-**位置**：[blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp)、[blob.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp)
+**位置**：[blob.hpp](../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp)、[blob.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp)
 
 **现象**：diff路径Borrower触发COW的阈值为`use_count > 2`，而data路径所有角色均为`use_count > 1`。这种不对称设计在Owner先mutable时产生顺序依赖：
 
@@ -49,7 +49,7 @@ test_results:
 
 ### 2.2 问题2：N=1场景缺少in-place直通机制
 
-**位置**：[split_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp)、[slice_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/slice_layer.cpp)
+**位置**：[split_layer.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp)、[slice_layer.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/slice_layer.cpp)
 
 **现象**：当Split/Slice层只有1个输出（N=1）时，Split层的Forward/Backward应该是零拷贝直通（输入直接传递给输出，无任何内存拷贝）。但对称COW阈值`use_count > 1`意味着：即使只有一个消费者，只要输入和输出共享tensor，任何mutable访问都会触发不必要的COW拷贝。
 
@@ -57,7 +57,7 @@ test_results:
 
 ### 2.3 问题3：InnerProduct filler未初始化（对抗性审查发现）
 
-**位置**：[inner_product_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/inner_product_layer.cpp)
+**位置**：[inner_product_layer.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/inner_product_layer.cpp)
 
 **现象**：InnerProduct层在`LayerSetUp()`中创建权重和偏置blob后，未读取和应用prototxt中定义的`weight_filler`和`bias_filler`参数，导致权重内存为未初始化值（在Debug构建中通常为零），网络输出恒为0。
 
@@ -224,12 +224,12 @@ if (ip_param.has_weight_filler()) {
 
 | 文件 | 变更行数 | 变更类型 | 说明 |
 |------|---------|---------|------|
-| [blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) | +81 | 修改 | 添加identity标志、对称COW条件、Identity方法声明、RefCount修正 |
-| [blob.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp) | +39 | 修改 | 实现对称COW逻辑、Identity方法、标志重置 |
-| [split_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp) | +40 | 修改 | N=1 Identity share + Backward SharesDiffWith检查 |
-| [slice_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/slice_layer.cpp) | +17 | 修改 | N=1 Identity share |
-| [inner_product_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/inner_product_layer.cpp) | +47 | 修改 | filler初始化（对抗性审查发现） |
-| [test_blob_zerocopy.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp) | +385/-78 | 修改 | 测试适配identity+对称COW新语义 |
+| [blob.hpp](../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp) | +81 | 修改 | 添加identity标志、对称COW条件、Identity方法声明、RefCount修正 |
+| [blob.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp) | +39 | 修改 | 实现对称COW逻辑、Identity方法、标志重置 |
+| [split_layer.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp) | +40 | 修改 | N=1 Identity share + Backward SharesDiffWith检查 |
+| [slice_layer.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/slice_layer.cpp) | +17 | 修改 | N=1 Identity share |
+| [inner_product_layer.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/inner_product_layer.cpp) | +47 | 修改 | filler初始化（对抗性审查发现） |
+| [test_blob_zerocopy.cpp](../../../../projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp) | +385/-78 | 修改 | 测试适配identity+对称COW新语义 |
 
 ---
 

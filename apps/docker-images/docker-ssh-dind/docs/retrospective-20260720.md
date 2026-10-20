@@ -387,13 +387,13 @@ $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 | 产出物 | 路径 |
 |--------|------|
-| 镜像构建定义 | [Containerfile](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/Containerfile) |
+| 镜像构建定义 | [Containerfile](../Containerfile) |
 | 容器启动脚本 | [entrypoint.sh](../entrypoint.sh) |
-| 使用文档（中文） | [README.md](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/README.md) |
+| 使用文档（中文） | [README.md](../README.md) |
 | 环境检测脚本 | [check-env.sh](../scripts/check-env.sh) |
 | 容器管理脚本 | [dind.sh](../scripts/dind.sh) |
 | AI协作者入口 | [AGENTS.md](../AGENTS.md) |
-| AI资产索引 | [.agents/README.md](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/.agents/README.md) |
+| AI资产索引 | [.agents/README.md](../.agents/README.md) |
 | Containerfile规范 | [containerfile.md](../.agents/rules/containerfile.md) |
 | Entrypoint规范 | [entrypoint.md](../.agents/rules/entrypoint.md) |
 | 构建测试规范 | [build-test.md](../.agents/rules/build-test.md) |

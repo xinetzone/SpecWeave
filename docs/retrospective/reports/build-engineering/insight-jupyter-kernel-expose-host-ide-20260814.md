@@ -41,7 +41,7 @@ Kernel（Python 解释器进程，执行代码）
 
 **公理2：容器网络已具备暴露条件**
 - 当前配置 `c.ServerApp.ip = '0.0.0.0'`（[config/jupyter_notebook_config.py:3](../../../../apps/docker-images/devcontainer-base/config/jupyter_notebook_config.py#L3-L3)）
-- Dockerfile 已声明 `EXPOSE 22 8888`（[Dockerfile:720](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/Dockerfile#L720-L720)）
+- Dockerfile 已声明 `EXPOSE 22 8888`（[Dockerfile:720](../../../../apps/docker-images/devcontainer-base/Dockerfile#L720-L720)）
 - 通过 `-p 8888:8888` 端口映射可从宿主机 localhost 访问容器内服务
 
 **公理3：IDE 支持标准 Jupyter Server 连接**
@@ -125,7 +125,7 @@ Kernel（Python 解释器进程，执行代码）
 ### 洞察2：当前 Dockerfile 已完成90%准备工作，仅需2个启动参数
 
 - **陈述**：现有 Dockerfile 已配置 `ServerApp.ip=0.0.0.0`、已 EXPOSE 8888、entrypoint.sh 已支持 `JUPYTER_TOKEN`/`JUPYTER_ALLOW_ORIGIN` 环境变量，无需修改代码即可支持宿主机 IDE 连接。
-- **证据**：[jupyter_notebook_config.py](../../../../apps/docker-images/devcontainer-base/config/jupyter_notebook_config.py)、[entrypoint.sh:305-369](../../../../apps/docker-images/devcontainer-base/entrypoint.sh#L305-L369)、[Dockerfile:720](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/Dockerfile#L720-L720)
+- **证据**：[jupyter_notebook_config.py](../../../../apps/docker-images/devcontainer-base/config/jupyter_notebook_config.py)、[entrypoint.sh:305-369](../../../../apps/docker-images/devcontainer-base/entrypoint.sh#L305-L369)、[Dockerfile:720](../../../../apps/docker-images/devcontainer-base/Dockerfile#L720-L720)
 - **反常识**：看似需要大量配置修改的"远程开发"功能，实际上镜像构建时已经做好了，只差运行时的2个环境变量和端口映射。
 - **行动**：在 README/QUICKSTART 中补充"宿主机 IDE 连接 Jupyter"的使用指南，强调3个关键启动参数。
 

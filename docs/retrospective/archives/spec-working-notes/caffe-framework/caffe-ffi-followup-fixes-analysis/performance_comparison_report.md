@@ -94,9 +94,9 @@ export KMP_DUPLICATE_LIB_OK=TRUE
 - [openmp-perf-analysis-and-conv-optimization.md](openmp-perf-analysis-and-conv-optimization.md) — 详细技术分析文档
 
 ### 4.2 修改文件
-- [base_conv_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/base_conv_layer.hpp#L167-L171) — 新增 `forward_cpu_gemm_ext()` 声明（线程安全版本，接受外部 col_buffer 指针）
-- [base_conv_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/base_conv_layer.cpp#L220-L240) — 实现 `forward_cpu_gemm_ext()`
-- [conv_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L24-L157) — Forward_cpu 添加 OpenMP batch 并行（`#pragma omp parallel for schedule(dynamic,1)` + 线程私有 col_buffer）
+- [base_conv_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/base_conv_layer.hpp#L167-L171) — 新增 `forward_cpu_gemm_ext()` 声明（线程安全版本，接受外部 col_buffer 指针）
+- [base_conv_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/base_conv_layer.cpp#L220-L240) — 实现 `forward_cpu_gemm_ext()`
+- [conv_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L24-L157) — Forward_cpu 添加 OpenMP batch 并行（`#pragma omp parallel for schedule(dynamic,1)` + 线程私有 col_buffer）
 
 ### 4.3 并行策略要点
 1. **沿 batch(n) 维度并行**：每个样本独立计算 im2col+GEMM+Bias，输出写不同内存区域，无写竞争
