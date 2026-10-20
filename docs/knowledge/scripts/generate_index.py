@@ -102,6 +102,29 @@ def _check_required_fields(file_path: Path, fields: dict) -> list:
     return missing
 
 
+# 非标准 frontmatter 分隔符：规范要求 YAML `---`（见 .agents/rules/frontmatter-metadata-standard.md）。
+# `***` 曾被用于单个知识包，因解析器静默返回 None，导致条目降级进 unknown 分类且无法定位根因。
+NONSTANDARD_DELIMITERS = ("***", "+++")
+
+
+def _detect_nonstandard_delimiter(file_path: Path) -> str | None:
+    """检测文件首行是否使用了非标准 frontmatter 分隔符。
+
+    Args:
+        file_path: Markdown 文件的 Path 对象。
+
+    Returns:
+        str | None: 命中的分隔符（``***`` / ``+++``），未命中返回 None。
+    """
+    try:
+        with file_path.open("r", encoding="utf-8", errors="replace") as fh:
+            first_line = fh.readline()
+    except OSError:
+        return None
+    line = first_line.lstrip("\ufeff").strip()
+    return line if line in NONSTANDARD_DELIMITERS else None
+
+
 def parse_frontmatter(file_path: Path) -> dict:
     """
     解析 Markdown 文件的 frontmatter（支持 YAML 和 TOML 格式）。
@@ -121,14 +144,23 @@ def parse_frontmatter(file_path: Path) -> dict:
     fields = parse_frontmatter_unified(file_path)
 
     if fields is None:
-        # 情况一：完全无 frontmatter
+        # 情况一：无 frontmatter，或使用了非标准分隔符（解析器静默返回 None）
         required_list = "/".join(REQUIRED_FIELDS)
-        msg = f"[警告] 文件缺少 frontmatter：{file_path}，必填字段：{required_list}，将使用默认值（unknown 分类、无标签、无最近更新记录）"
+        delimiter = _detect_nonstandard_delimiter(file_path)
+        if delimiter:
+            msg = (
+                f"[警告] 非标准 frontmatter 分隔符 `{delimiter}`：{file_path}，"
+                f"规范要求 YAML `---`（见 .agents/rules/frontmatter-metadata-standard.md），"
+                f"元数据未入索引，请修正分隔符后重新生成索引"
+            )
+        else:
+            msg = f"[警告] 文件缺少frontmatter：{file_path}，必填字段：{required_list}，将使用默认值（unknown 分类、无标签、无最近更新记录）"
         print(msg, file=sys.stderr)
         _frontmatter_warnings.append({
             "file": str(file_path),
-            "type": "missing_frontmatter",
+            "type": "nonstandard_delimiter" if delimiter else "missing_frontmatter",
             "missing_fields": REQUIRED_FIELDS[:],
+            "delimiter": delimiter,
         })
         return meta
 
@@ -1028,10 +1060,13 @@ def main():
         warning_count = len(_frontmatter_warnings)
         missing_fm_count = sum(1 for w in _frontmatter_warnings if w["type"] == "missing_frontmatter")
         missing_fields_count = sum(1 for w in _frontmatter_warnings if w["type"] == "missing_fields")
+        nonstandard_count = sum(1 for w in _frontmatter_warnings if w["type"] == "nonstandard_delimiter")
         print("", file=sys.stderr)
         print(f"[告警统计] 共 {warning_count} 个文件 frontmatter 不合规：", file=sys.stderr)
         print(f"  - 缺少 frontmatter：{missing_fm_count} 个", file=sys.stderr)
         print(f"  - frontmatter 字段缺失：{missing_fields_count} 个", file=sys.stderr)
+        if nonstandard_count:
+            print(f"  - 非标准分隔符（须改为 YAML `---`）：{nonstandard_count} 个", file=sys.stderr)
         print(f"  必填字段清单：{'/'.join(REQUIRED_FIELDS)}", file=sys.stderr)
         print(f"  请参考 docs/knowledge/template.md 补充 frontmatter 字段", file=sys.stderr)
     else:

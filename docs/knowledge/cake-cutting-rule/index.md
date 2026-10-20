@@ -1,4 +1,4 @@
-***
+---
 
 type: Reference
 
@@ -8,35 +8,33 @@ title: "切蛋糕法则：从数学公平分割到机制设计与职场分配（
 
 category: "cake-cutting-rule"
 
-tags: \["切蛋糕法则", "公平分割", "fair division", "你切我选", "无嫉妒", "envy-free", "机制设计", "动态股权", "做蛋糕的人", "切蛋糕的人", "博弈论", "方法论"]
+tags: ["切蛋糕法则", "公平分割", "fair division", "你切我选", "无嫉妒", "envy-free", "机制设计", "动态股权", "做蛋糕的人", "切蛋糕的人", "博弈论", "方法论"]
 
 date: "2026-10-07"
 
-last\_updated: "2026-10-07"
+last_updated: "2026-10-07"
 
-last\_verified: "2026-10-07"
+last_verified: "2026-10-07"
 
 status: "verified"
 
 author: "SpecWeave Agent（方法论编排 session sc-20261007-cake-cutting）"
 
-summary: "以七概念方法论（R→I→E→V→C，standard）沉淀「切蛋糕法则」OKF 教程知识包：26 条带来源客观事实（F-001\~F-026，覆盖数学公平分割理论、机制设计解读、职场与处世应用三层），4 条四元组洞察，1 个 L1-draft 可迁移模式「你切我选・公平分割五步法」。核心结论：切蛋糕法则的数学内核是公平分割问题 —— 公平以各自主观估值为基准而非等分；' 你切我选 ' 通过切选分离与利益对齐在无监督下自执行公平；但无嫉妒不等于直觉公平，数学公平与社会直觉之间存在鸿沟；职场层 ' 做蛋糕 vs 切蛋糕 ' 提醒分配规则可设计、可谈判、可契约化（通俗口径，证据等级低）。知识包按问题域拆为 3 个概念页 + 1 个实战示例页，附信源台账与对抗审查记录。"
+summary: "以七概念方法论（R→I→E→V→C，standard）沉淀「切蛋糕法则」OKF 教程知识包：26 条带来源客观事实（F-001~F-026，覆盖数学公平分割理论、机制设计解读、职场与处世应用三层），4 条四元组洞察，1 个 L1-draft 可迁移模式「你切我选・公平分割五步法」。核心结论：切蛋糕法则的数学内核是公平分割问题 —— 公平以各自主观估值为基准而非等分；' 你切我选 ' 通过切选分离与利益对齐在无监督下自执行公平；但无嫉妒不等于直觉公平，数学公平与社会直觉之间存在鸿沟；职场层 ' 做蛋糕 vs 切蛋糕 ' 提醒分配规则可设计、可谈判、可契约化（通俗口径，证据等级低）。知识包按问题域拆为 3 个概念页 + 1 个实战示例页，附信源台账与对抗审查记录。"
 
-security\_level: "public"
+security_level: "public"
 
-knowledge\_type: "conditional"
+knowledge_type: "conditional"
 
-validation\_status: "verified"
+validation_status: "verified"
 
-reuse\_count: "0"
+reuse_count: "0"
 
 integrity: "unchecked"
 
-source: "方法论编排 session sc-20261007-cake-cutting；联网核验信源 S01\~S16（见 references/source-inventory.md，采集时点 2026-10-07）"
+source: "方法论编排 session sc-20261007-cake-cutting；联网核验信源 S01~S16（见 references/source-inventory.md，采集时点 2026-10-07）"
 
-
-
-***
+---
 
 # 切蛋糕法则：从数学公平分割到机制设计与职场分配
 
