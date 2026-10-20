@@ -9,7 +9,7 @@ title: "项目知识库"
 
 - **总条目数**：461
 - **分类数**：23
-- **标签数**：782
+- **标签数**：783
 
 ## 快速导航
 
@@ -17,7 +17,7 @@ title: "项目知识库"
 |----------|--------|------|
 | architecture | 1 | [architecture](categories/architecture.md) |
 | best-practices | 49 | [best-practices](best-practices/README.md) |
-| cake-cutting-rule | 6 | [cake-cutting-rule](categories/cake-cutting-rule.md) |
+| cake-cutting-rule | 7 | [cake-cutting-rule](categories/cake-cutting-rule.md) |
 | decisions | 6 | [decisions](decisions/README.md) |
 | docs | 10 | [docs](categories/docs.md) |
 | examples | 6 | [examples](categories/examples.md) |
@@ -31,7 +31,7 @@ title: "项目知识库"
 | standards | 1 | [standards](categories/standards.md) |
 | tech | 86 | [tech](tech/README.md) |
 | troubleshooting | 4 | [troubleshooting](troubleshooting/README.md) |
-| unknown | 219 | [unknown](categories/unknown.md) |
+| unknown | 218 | [unknown](categories/unknown.md) |
 | what-is-life | 7 | [what-is-life](categories/what-is-life.md) |
 
 ## 辅助索引
@@ -89,4 +89,4 @@ title: "项目知识库"
 
 ---
 
-*索引自动生成于 2026-10-20 10:57:10*
+*索引自动生成于 2026-10-20 11:27:17*

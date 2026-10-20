@@ -9,7 +9,7 @@ title: "分类索引：unknown"
 - [返回知识库首页](../README.md)
 - [按标签检索](../tags/README.md)
 
-> 本分片收录 **1** 个子分类，共 **219** 条条目。
+> 本分片收录 **1** 个子分类，共 **218** 条条目。
 
 ## unknown
 
@@ -65,7 +65,6 @@ title: "分类索引：unknown"
 | [敏感信息脱敏规范与误报防控指南](../best-practices/sensitive-info-desensitization-spec.md) |  |  | - |
 | [spec_loader 冷启动风暴应急预案](../best-practices/spec-loader-cold-start-storm-contingency.md) |  |  | - |
 | [spec-loader.toml 配置速查手册](../best-practices/spec-loader-config-guide.md) |  |  | - |
-| [index](../cake-cutting-rule/index.md) |  |  | - |
 | [index](../decisions/index.md) |  |  | - |
 | [文档标题](../docs-separation-guide/DOC_TEMPLATE.md) |  |  | - |
 | [格式规范指南](../docs-separation-guide/FORMAT_GUIDE.md) |  |  | - |
@@ -237,4 +236,4 @@ title: "分类索引：unknown"
 
 ---
 
-*索引自动生成于 2026-10-20 10:57:10*
+*索引自动生成于 2026-10-20 11:27:18*
