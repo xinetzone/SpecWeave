@@ -36,7 +36,7 @@ archive_history:
 
 - 根说明：[hub/sync/AGENTS.md](../../../external/containers/workspace/dev/npuusertools/AGENTS.md)
 - 子项目说明：[hub/sync/notebook/AGENTS.md](../../../external/containers/workspace/dev/npuusertools/AGENTS.md)
-- 上游分析：`workspace-archive-priority-analysis.md`
+- 上游分析：（工作稿已清理，结论见）：[p0-08 已批准治理 Specs 稳定决策集合](../decisions/p0-08-governance-specs-decisions.md)
 
 ## 归档目标
 

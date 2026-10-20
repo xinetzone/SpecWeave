@@ -34,8 +34,8 @@ archive_history:
 
 - 源文件：`specweave-binding.md`
 - 治理入口引用：[AGENTS.md §3.2](../../../external/containers/workspace/dev/npuusertools/AGENTS.md#L3.2)
-- 执行准备文档：`p0-archive-baseline-plan.md`
-- 上游优先级分析：`workspace-archive-priority-analysis.md`
+- 执行准备文档：（工作稿已清理，结论见）：[p0-08 已批准治理 Specs 稳定决策集合](p0-08-governance-specs-decisions.md)
+- 上游优先级分析：（工作稿已清理，结论见）：[p0-08 已批准治理 Specs 稳定决策集合](p0-08-governance-specs-decisions.md)
 
 ## 归档目标
 

@@ -35,8 +35,8 @@ archive_history:
 ## 来源
 
 - 决策集合来源目录：[`.trae/specs/`](../../superpowers/specs)
-- 上游收敛方案：`p0-archive-baseline-plan.md`
-- 上游优先级分析：`workspace-archive-priority-analysis.md`
+- 上游收敛方案：`p0-archive-baseline-plan.md`（归档工作稿，已清理；稳定结论见本条目「待办分类目录骨架」与「工作区归档优先级分级」两节）
+- 上游优先级分析：`workspace-archive-priority-analysis.md`（归档工作稿，已清理；稳定结论见本条目「工作区归档优先级分级」一节）
 
 ## 归档目标
 

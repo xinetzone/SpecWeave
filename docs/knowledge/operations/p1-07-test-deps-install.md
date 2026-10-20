@@ -33,7 +33,7 @@ archive_history:
 ## 来源
 
 - 源文件：[tests/index.md](../docs-separation-guide/index.md)
-- 上游分析：`workspace-archive-priority-analysis.md`
+- 上游分析：（工作稿已清理，结论见）：[p0-08 已批准治理 Specs 稳定决策集合](../decisions/p0-08-governance-specs-decisions.md)
 
 ## 归档目标
 

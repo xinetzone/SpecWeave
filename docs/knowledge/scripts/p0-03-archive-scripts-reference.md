@@ -34,8 +34,8 @@ archive_history:
 
 - 脚本入口：`knowledge_archive.py`
 - 脚本说明：`.agents/scripts/README.md`（如存在）
-- 执行准备文档：`p0-archive-baseline-plan.md`
-- 上游优先级分析：`workspace-archive-priority-analysis.md`
+- 执行准备文档：（工作稿已清理，结论见）：[p0-08 已批准治理 Specs 稳定决策集合](../decisions/p0-08-governance-specs-decisions.md)
+- 上游优先级分析：（工作稿已清理，结论见）：[p0-08 已批准治理 Specs 稳定决策集合](../decisions/p0-08-governance-specs-decisions.md)
 
 ## 归档目标
 
