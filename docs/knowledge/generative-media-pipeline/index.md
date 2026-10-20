@@ -96,5 +96,5 @@ source: "references/evidence-and-costs.md"
 
 ---
 
-- [🏠 返回知识库索引](../../README.md)
+- [🏠 返回知识库索引](../README.md)
 - [下一篇：首帧保真 →](concepts/01-anchor-frame-fidelity.md)

@@ -189,4 +189,4 @@ mtime 可被复制、移动、重写改变，**不等于指令下发时刻**。�
 ---
 
 - [🏠 返回知识包首页](../index.md)
-- [← 上一篇：组装即代码](concepts/04-assembly-as-code.md)
+- [← 上一篇：组装即代码](../concepts/04-assembly-as-code.md)
