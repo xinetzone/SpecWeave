@@ -27,16 +27,38 @@ NONSTANDARD_DELIMITERS = ("***", "+++")
 
 
 def _load_generator():
-    """按文件路径加载知识库索引生成器模块（避免污染 sys.modules 命名空间）。"""
+    """按文件路径加载知识库索引生成器模块（隔离同名模块，避免整包测试时导入错文件）。
+
+    ``.agents/scripts/constants.py`` 与 ``docs/knowledge/scripts/constants.py`` 同名。整包
+    pytest 运行时前者可能已占据 ``sys.modules['constants']``，导致生成器导入到错误模块
+    （``ImportError: cannot import name 'SCRIPT_DIR' from 'constants'``）。故此处做隔离式
+    加载：临时把知识库的 ``constants`` 绑定进 ``sys.modules``，加载完毕后恢复原状。
+    """
     scripts_dir = str(KNOWLEDGE_SCRIPTS_DIR)
-    if scripts_dir not in sys.path:
-        sys.path.insert(0, scripts_dir)
-    spec = importlib.util.spec_from_file_location(
-        "knowledge_generate_index", KNOWLEDGE_SCRIPTS_DIR / "generate_index.py"
-    )
-    module = importlib.util.module_from_spec(spec)
-    sys.modules["knowledge_generate_index"] = module
-    spec.loader.exec_module(module)
+    saved_path = list(sys.path)
+    saved_modules = {name: sys.modules.get(name) for name in ("constants", "lib_frontmatter")}
+    sys.path.insert(0, scripts_dir)
+    try:
+        const_spec = importlib.util.spec_from_file_location(
+            "constants", KNOWLEDGE_SCRIPTS_DIR / "constants.py"
+        )
+        const_module = importlib.util.module_from_spec(const_spec)
+        sys.modules["constants"] = const_module
+        const_spec.loader.exec_module(const_module)
+
+        spec = importlib.util.spec_from_file_location(
+            "knowledge_generate_index", KNOWLEDGE_SCRIPTS_DIR / "generate_index.py"
+        )
+        module = importlib.util.module_from_spec(spec)
+        sys.modules["knowledge_generate_index"] = module
+        spec.loader.exec_module(module)
+    finally:
+        sys.path[:] = saved_path
+        for name, saved in saved_modules.items():
+            if saved is None:
+                sys.modules.pop(name, None)
+            else:
+                sys.modules[name] = saved
     return module
 
 
