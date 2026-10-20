@@ -12,7 +12,7 @@ title: "分类总索引"
 
 ## 统计摘要
 
-- **总条目数**：472
+- **总条目数**：473
 - **分类路径数**：25
 - **顶层分类数**：20
 
@@ -31,7 +31,7 @@ title: "分类总索引"
 | generative-media-pipeline | 1 | 6 | [generative-media-pipeline](categories/generative-media-pipeline.md) |
 | examples | 1 | 6 | [examples](categories/examples.md) |
 | mindfulness-positivity | 1 | 6 | [mindfulness-positivity](categories/mindfulness-positivity.md) |
-| short-video-skills | 1 | 5 | [short-video-skills](categories/short-video-skills.md) |
+| short-video-skills | 1 | 6 | [short-video-skills](categories/short-video-skills.md) |
 | troubleshooting | 1 | 4 | [troubleshooting](categories/troubleshooting.md) |
 | architecture | 1 | 1 | [architecture](categories/architecture.md) |
 | research | 1 | 1 | [research](categories/research.md) |
@@ -41,4 +41,4 @@ title: "分类总索引"
 
 ---
 
-*索引自动生成于 2026-10-20 15:34:15*
+*索引自动生成于 2026-10-20 15:41:37*

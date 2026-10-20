@@ -7,9 +7,9 @@ title: "项目知识库"
 
 项目知识库的统一入口页。详细分类条目与标签检索已拆分到独立索引，避免根 README 持续膨胀。
 
-- **总条目数**：472
+- **总条目数**：473
 - **分类数**：25
-- **标签数**：826
+- **标签数**：827
 
 ## 快速导航
 
@@ -28,7 +28,7 @@ title: "项目知识库"
 | operations | 26 | [operations](operations/README.md) |
 | platform | 1 | [platform](categories/platform.md) |
 | research | 1 | [research](categories/research.md) |
-| short-video-skills | 5 | [short-video-skills](categories/short-video-skills.md) |
+| short-video-skills | 6 | [short-video-skills](categories/short-video-skills.md) |
 | social-relations | 1 | [social-relations](categories/social-relations.md) |
 | standards | 1 | [standards](categories/standards.md) |
 | tech | 86 | [tech](tech/README.md) |
@@ -91,4 +91,4 @@ title: "项目知识库"
 
 ---
 
-*索引自动生成于 2026-10-20 15:34:15*
+*索引自动生成于 2026-10-20 15:41:37*
