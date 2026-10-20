@@ -21,7 +21,7 @@ generated:
 | 发布时间 | 2026-07-31 06:56（贵州） | 微信公开页元信息 |
 | 敏感度级别 | **公开内容** | 无登录墙、验证码或访问控制 |
 | Spec 目录 | `.trae/specs/okf-wiki-ecosystem/llama-cpp-local-inference-okf-wiki/` | 博文转化标准工作流 |
-| Bundle 目录 | `projects/awesome-okf-xs/doc/bundles/jishu/ai/llama-cpp-local-inference/` | AI 生态下的独立开源推理工具束 |
+| Bundle 目录 | `projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/llama-cpp-local-inference/` | AI 生态下的独立开源推理工具束 |
 
 ## 2. 骨架判定（操作可复现性两问）
 
@@ -71,7 +71,7 @@ P0 必核验项：仓库身份与 Star、C/C++/无 Python/CUDA 的边界、4GB R
 ## 7. 目标文件集
 
 ```text
-projects/awesome-okf-xs/doc/bundles/jishu/ai/llama-cpp-local-inference/
+projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/llama-cpp-local-inference/
 ├── index.md
 ├── log.md
 ├── concepts/

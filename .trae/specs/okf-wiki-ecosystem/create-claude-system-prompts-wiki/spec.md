@@ -9,7 +9,7 @@ status: "draft"
 > **信源**：`https://platform.claude.com/docs/zh-CN/release-notes/system-prompts/overview` 及其全部子条目（en 版为内容基线，zh-CN 为翻译对照）
 > **方法**：seven-concepts 场景4 知识沉淀（R→I→E→V 收尾）
 > **内容敏感度**：公开内容（Anthropic 官方文档）→ 标准工作流，产出物入 awesome-okf-xs 子模块 `doc/bundles/`
-> **产出位置**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/anthropic/system-prompts/`（anthropic 组现有 6 束，本束为第 7 束）
+> **产出位置**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/anthropic/system-prompts/`（anthropic 组现有 6 束，本束为第 7 束）
 
 ## Why
 
@@ -27,8 +27,8 @@ Anthropic 自 2024-07 起在官方文档持续公开 claude.ai 网页端与移�
 
 - Affected specs：无既有 spec 关联（独立新增束）
 - Affected code：
-  - `projects/awesome-okf-xs/doc/bundles/jishu/ai/anthropic/system-prompts/**`（新增）
-  - `projects/awesome-okf-xs/doc/bundles/jishu/ai/anthropic/index.md`、`log.md`（修改）
+  - `projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/anthropic/system-prompts/**`（新增）
+  - `projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/anthropic/index.md`、`log.md`（修改）
   - `projects/awesome-okf-xs/doc/bundles/jishu/ai/index.md`、`doc/bundles/index.md`（注册）
 
 ## 已知约束（R 阶段前置事实）

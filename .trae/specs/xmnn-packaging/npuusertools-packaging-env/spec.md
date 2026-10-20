@@ -32,7 +32,7 @@ status: "draft"
 - **基础镜像链**: devcontainer-base:base → conda-llvm → onnx-dev → onnx-quantized（继承Python 3.14.6 cp314t free-threading、LLVM/Clang 22.1.8、cmake 3.x、ninja、ONNX/ONNX Runtime生态、无PyTorch）
 - **npuusertools构建特点**: pyproject.toml使用scikit-build-core>=0.5 + setuptools-scm>=8.0；CMakeLists.txt使用`LANGUAGES NONE`（不编译C++），仅做版本文件生成（xmnn/_version.py）、Python包+数据目录安装、patchelf RPATH修复；预编译库位于xmnn/tools_cpp/libs/*/*/*.so和xmnn/tools_cpp/bin/*/*/
 - **参考架构**: external/chaos/ai/xmnn-whl-builder/ 两阶段Docker模式（BuildKit bind mount、pip/ccache cache mount、/opt/xmnn-dist/ wheel输出、verify-wheel.sh验证、docker-compose.yml开发模式）
-- **invoke参考**: external/chaos/npu_tvm/tasks.py 的@task模式和BuildConfig dataclass；projects/awesome-okf-xs/doc/bundles/build/tooling/pyinvoke/ 和 invocations/ 的知识体系
+- **invoke参考**: external/chaos/npu_tvm/tasks.py 的@task模式和BuildConfig dataclass；projects/awesome-okf-xs/doc/bundles/jishu/build/tooling/pyinvoke/ 和 invocations/ 的知识体系
 - **Python包名**: xmnn（注意：目录名是npuusertools，但pip包名是xmnn）；CLI使用typer框架，统一入口为`xmflow`命令（包含compile/infer/accuracy/performance/bandwidth/excelreport 6个子命令），vta-dev通过`xmnn_cli_launchers.py`薄封装层+`[project.scripts]`暴露7个console_scripts入口点（xmflow + 6个xmnn-*命令）
 
 ## Functional Requirements

@@ -1,7 +1,7 @@
 ---
 type: OKF
 title: 儒家四书知识包 V 阶段对抗审查记录
-description: 对 doc/bundles/think/confucian/four-books/ 知识包的对抗审查（Adversarial Review）记录：原文抽查、事实抽查、分层审查、格式抽查的样本、核对结果、发现与修复清单及通过结论
+description: 对 doc/bundles/guoxue/confucian/four-books/ 知识包的对抗审查（Adversarial Review）记录：原文抽查、事实抽查、分层审查、格式抽查的样本、核对结果、发现与修复清单及通过结论
 tags: [confucian, four-books, adversarial-review, verification]
 generated:
   by: "agent:create-confucian-okf-wiki"
@@ -11,7 +11,7 @@ status: stable
 
 # V 阶段对抗审查记录（Adversarial Review）
 
-- **审查对象**：`projects/awesome-okf-xs/doc/bundles/think/confucian/four-books/`（21 个文件：facts.md、insights.md、log.md、concepts/9、examples/4、references/5）
+- **审查对象**：`projects/awesome-okf-xs/doc/bundles/guoxue/confucian/four-books/`（21 个文件：facts.md、insights.md、log.md、concepts/9、examples/4、references/5）
 - **核对底料**：`.trae/specs/classics-knowledge/create-confucian-okf-wiki/raw-texts.md`（双源核对原文：ctext.org 与 zh.wikisource.org）
 - **审查日期**：2026-08-31
 - **审查依据**：spec.md Requirement 与 checklist.md 对应四项审查任务
@@ -103,7 +103,7 @@ status: stable
 ## 六、修复后回归验证
 
 1. **格式脚本复验**：199 个链接全部有效，0 问题；4 个 index.md（根 + concepts/examples/references）齐全。
-2. **Sphinx dummy 构建回归**（`sphinx-build -b dummy -E doc _build/dummy` 于 projects/awesome-okf-xs）：exit=0；构建日志中 `bundles/think/confucian/index` 与 `bundles/think/confucian/four-books/` 下全部 23 个文档正常读取/写入，**无任何 WARNING/ERROR**——新建的两个 index.md 未引入构建问题，think/index.md 的 toctree 引用断链已消除。
+2. **Sphinx dummy 构建回归**（`sphinx-build -b dummy -E doc _build/dummy` 于 projects/awesome-okf-xs）：exit=0；构建日志中 `bundles/guoxue/confucian/index` 与 `bundles/guoxue/confucian/four-books/` 下全部 23 个文档正常读取/写入，**无任何 WARNING/ERROR**——新建的两个 index.md 未引入构建问题，think/index.md 的 toctree 引用断链已消除。
 
 ## 七、审查结论
 

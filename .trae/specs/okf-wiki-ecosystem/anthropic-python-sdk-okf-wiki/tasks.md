@@ -6,10 +6,10 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
-  - 创建 `doc/bundles/ai/anthropic/` 目录
+  - 创建 `doc/bundles/jishu/ai/ecosystems/anthropic/` 目录
   - 创建所有6个子bundle目录：python-sdk/、claude-code/、cookbooks/、prompt-engineering/、official-skills/、financial-services/
   - 为每个子bundle创建concepts/、examples/、references/子目录（按需，轻量子bundle可能不需要全部三目录）
-  - 更新 `doc/bundles/ai/index.md`，添加anthropic到toctree
+  - 更新 `doc/bundles/jishu/ai/index.md`，添加anthropic到toctree
 - **Acceptance Criteria Addressed**: AC-1, FR-1, FR-11
 - **Test Requirements**:
   - `programmatic` TR-1.1: 所有目录创建成功 ✅

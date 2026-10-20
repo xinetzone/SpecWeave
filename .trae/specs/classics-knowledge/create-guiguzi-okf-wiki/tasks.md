@@ -1,7 +1,7 @@
 # Tasks — 《鬼谷子》OKF 知识包教程
 
 方法论：seven-concepts 场景4（知识沉淀）R→I→E→V→C。
-产出根目录：`projects/awesome-okf-xs/doc/bundles/think/guiguzi/guiguzi/`
+产出根目录：`projects/awesome-okf-xs/doc/bundles/guoxue/guiguzi/guiguzi/`
 规范前置：实现前先读 `projects/awesome-okf-xs/.agents/rules/frontmatter.md` 与 `.agents/global-core-rules.md`。
 
 - [x] Task 1: R — 信源采集与事实登记（G1）
@@ -15,10 +15,10 @@
 - [x] Task 3: E — 模式萃取（G3），依赖 Task 2
   - [x] 3.1 萃取 2 个可复用阅读模式（"双源逐字核读法""托名文本三层判读框架"），各含触发场景/核心步骤/反模式/迁移示例，落入 insights.md
 - [x] Task 4: 创建 bundle 骨架与索引，依赖 Task 1
-  - [x] 4.1 新建 `bundles/think/guiguzi/index.md`（分组 index + toctree）
-  - [x] 4.2 新建 `bundles/think/guiguzi/guiguzi/index.md`（bundle 根：导航/定位/快速开始/学习路径 + toctree）
+  - [x] 4.1 新建 `bundles/guoxue/guiguzi/index.md`（分组 index + toctree）
+  - [x] 4.2 新建 `bundles/guoxue/guiguzi/guiguzi/index.md`（bundle 根：导航/定位/快速开始/学习路径 + toctree）
   - [x] 4.3 建立 `concepts/`、`examples/`、`references/` 目录与各自 index.md（含 toctree）
-  - [x] 4.4 更新 `bundles/think/index.md`（分组表行 + toctree）与 `bundles/index.md`（`total_bundles`/`groups` 统计、think 域描述与分组表行）
+  - [x] 4.4 更新 `bundles/guoxue/index.md`（分组表行 + toctree）与 `bundles/index.md`（`total_bundles`/`groups` 统计、think 域描述与分组表行）
 - [x] Task 5: 生成 concepts/ 7 篇核心概念，依赖 Task 1/2/3（各篇可并行）
   - [x] 5.1 00-what-is-guiguzi：定位、「鬼谷子」其人、「鬼谷」地望与书名含义
   - [x] 5.2 01-text-transmission：版本源流（书志著录隋书/新唐书、道藏本卷次、传世本流变）

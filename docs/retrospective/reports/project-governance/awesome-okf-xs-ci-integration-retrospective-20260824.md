@@ -64,7 +64,7 @@ tags: ["里程碑复盘", "七概念", "GitHub Actions", "CI/CD", "UTF-8", "Sphi
 2. 配置 Python 3.14，安装 `.[doc]` 可选依赖，执行 `sphinx-build -E -b html`。
 3. 首次 CI 构建 run 32676581528 失败，耗时 1m32s。
 4. 失败发生在 Sphinx 构建阶段，工作流构建脚本报 `UnicodeDecodeError`。
-5. 12 个文档文件位于 `doc/bundles/document/jupyter-book/` 子目录，扫描结果无法通过 UTF-8 解码。
+5. 12 个文档文件位于 `doc/bundles/jishu/document/jupyter-book/` 子目录，扫描结果无法通过 UTF-8 解码。
 6. 12 个文件覆盖 jupyterlab-myst / myst-syntax / myst-theme 三个子束。
 7. 历史提交 `6fe904e` 中上述 12 个文件内容为有效 UTF-8，可解码。
 8. 提交 `f78d5c4` 引入中文编码损坏，正文行数从 176 行缩减至 138 行（00-theme-architecture.md 例）。

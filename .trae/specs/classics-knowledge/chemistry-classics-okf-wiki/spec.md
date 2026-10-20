@@ -71,7 +71,7 @@ science/                                    # 新建技术域（第14域：自�
 
 ## Impact
 
-- **新增目录**：`projects/awesome-okf-xs/doc/bundles/science/`（1 域索引 + 1 组索引 + 7 束，约 70+ 个 .md 文件）
+- **新增目录**：`projects/awesome-okf-xs/doc/bundles/kexue/`（1 域索引 + 1 组索引 + 7 束，约 70+ 个 .md 文件）
 - **修改文件**：`doc/bundles/index.md`（总索引计数、导航表、toctree、mermaid 生态图）
 - **不修改**：任何现有 bundle 内容；其他 13 个域的文件
 - **构建验证**：`invoke gates.all`（UTF-8 + toctree 完整性）与 `invoke clean && invoke build`（Sphinx 0 warning）必须通过
@@ -81,7 +81,7 @@ science/                                    # 新建技术域（第14域：自�
 
 ### Requirement: science 技术域与 chemistry 分组骨架
 
-系统 SHALL 在 `doc/bundles/science/` 建立自然科学技术域，包含域索引 `index.md`（frontmatter `type: group` 语义、域说明、分组导航表、`{toctree}` 引用 chemistry/index）与 `chemistry/index.md` 分组索引（7 束导航表 + `{toctree}` 引用全部 7 束入口）。
+系统 SHALL 在 `doc/bundles/kexue/` 建立自然科学技术域，包含域索引 `index.md`（frontmatter `type: group` 语义、域说明、分组导航表、`{toctree}` 引用 chemistry/index）与 `chemistry/index.md` 分组索引（7 束导航表 + `{toctree}` 引用全部 7 束入口）。
 
 #### Scenario: 域与组导航完整
 
@@ -193,7 +193,7 @@ science/                                    # 新建技术域（第14域：自�
 ### AC-1: science 域与 chemistry 分组骨架
 
 - **Type**: `rule`
-- **Given**: 任务完成后的 `doc/bundles/science/` 目录
+- **Given**: 任务完成后的 `doc/bundles/kexue/` 目录
 - **When**: 检查目录结构与索引
 - **Then**: `science/index.md` 与 `science/chemistry/index.md` 存在，均含导航表与 `{toctree}`，toctree 条目覆盖全部下层入口
 - **Pass Condition**: 两个索引文件存在且 toctree 引用目标全部存在

@@ -41,7 +41,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/knowledge-graph-generator/SKILL.
 - "节点关系网络"、"概念网络"、"知识网络"
 - "生成知识图谱"、"创建知识图谱"、"构建知识图谱"
 - "可视化知识库"、"知识库可视化"
-- 为 `docs/knowledge/learning/` 下的知识库创建配套知识图谱
+- 为 `docs/knowledge/` 下的知识库创建配套知识图谱
 - 提到 `generate-graph.py` 或 `knowledge-graph-config.toml`
 
 > **关于触发**：即使没有明确说"用知识图谱生成器"，只要涉及从Markdown文档生成交互式概念关系可视化，就应该使用本Skill。本Skill封装了表格解析、关系构建、HTML模板渲染的完整流程，手动拼接vis-network代码不仅效率低，而且容易产生孤立节点、重复节点、样式不一致等问题。
@@ -53,7 +53,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/knowledge-graph-generator/SKILL.
 ├─ 知识库已有稳定的术语表/文档索引/时间线表格？ → TOML配置方案（第5.1节，推荐）
 ├─ 需要高度定制（动态节点、条件过滤）？ → Python API方案（第5.2节）
 ├─ 首次使用不确定如何配置？ → 参考示例项目（第9节，先看第一性原理配置）
-└─ 为对抗性审查知识库生成图谱？ → 参考 [adversarial-review-wiki](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/methodology/adversarial-review-wiki/index.md) 的术语表结构设计配置
+└─ 为对抗性审查知识库生成图谱？ → 参考 [adversarial-review-wiki](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/ai-engineering-methodology/concepts/methodology/adversarial-review-wiki/index.md) 的术语表结构设计配置
 ```
 
 **写操作（生成HTML）原则**：生成HTML是纯输出操作，不修改源文件，无需dry-run。但需注意输出路径不要覆盖已有文件。
@@ -227,7 +227,7 @@ builder.generate_html(Path("docs/my-knowledge-base/knowledge-graph.html"))
 | 第一性原理配置示例 | L2 | [knowledge-graph-config.toml](../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md) | 参考完整TOML配置写法 |
 | 第一性原理知识图谱 | L2 | [12-knowledge-graph.html](../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md) | 查看生成效果 |
 | 对抗性审查指令集 | L1 | [adversarial-review.md](../../commands/adversarial-review.md) | 知识库构建的质量标准（自举验证、可信度评级） |
-| 对抗性审查知识库 | L2 | [adversarial-review-wiki/](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/methodology/adversarial-review-wiki/README.md) | 术语表结构参考（11-glossary.md含6类术语表） |
+| 对抗性审查知识库 | L2 | [adversarial-review-wiki/](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/ai-engineering-methodology/concepts/methodology/adversarial-review-wiki/README.md) | 术语表结构参考（11-glossary.md含6类术语表） |
 
 ## 11. 与对抗性审查的协同
 

@@ -1,7 +1,7 @@
 # Tasks — 《庄子》OKF 知识包教程
 
 方法论：seven-concepts 场景4（知识沉淀）R→I→E→V→C。
-产出根目录：`projects/awesome-okf-xs/doc/bundles/think/chuang-tzu/`（分组 `think/zhuangzi/`）
+产出根目录：`projects/awesome-okf-xs/doc/bundles/guoxue/zhuangzi/chuang-tzu/`（分组 `think/zhuangzi/`）
 规范前置：实现前先读 `projects/awesome-okf-xs/.agents/rules/frontmatter.md` 与 `.agents/global-core-rules.md`。
 
 - [x] Task 1: R — 信源采集与事实登记（G1）
@@ -15,10 +15,10 @@
 - [x] Task 3: E — 模式萃取（G3），依赖 Task 2
   - [x] 3.1 萃取 4 个可复用阅读模式（三层文本分辨法、本文/注家分离法、双源逐字核读法、定本意识），各含触发场景/核心步骤/反模式/迁移示例，落入 examples/03-reading-plan.md「四、可复用阅读法」
 - [x] Task 4: 创建 bundle 骨架与索引，依赖 Task 1
-  - [x] 4.1 新建 `bundles/think/zhuangzi/index.md`（分组 index + toctree）
-  - [x] 4.2 新建 `bundles/think/chuang-tzu/index.md`（bundle 根：导航/定位/快速开始/学习路径 + toctree）
+  - [x] 4.1 新建 `bundles/guoxue/zhuangzi/index.md`（分组 index + toctree）
+  - [x] 4.2 新建 `bundles/guoxue/zhuangzi/chuang-tzu/index.md`（bundle 根：导航/定位/快速开始/学习路径 + toctree）
   - [x] 4.3 建立 `concepts/`、`examples/`、`references/` 目录与各自 index.md（含 toctree）
-  - [x] 4.4 更新 `bundles/think/index.md`（已提交入 HEAD）与 `bundles/index.md`（行已写入工作区，因并发任务共改此文件而留待注册收尾）
+  - [x] 4.4 更新 `bundles/guoxue/index.md`（已提交入 HEAD）与 `bundles/index.md`（行已写入工作区，因并发任务共改此文件而留待注册收尾）
 - [x] Task 5: 生成 concepts/ 8 篇核心概念，依赖 Task 1/2/3
   - [x] 5.1 00-what-is-zhuangzi：定位、书名与《南华经》沿革、与《老子》互补关系
   - [x] 5.2 01-text-versions：33 篇本定本（郭象删定）与版本源流
@@ -41,7 +41,7 @@
   - [x] 8.2 事实抽查：facts.md 56 条均带信源 URL，核心事实（52 篇/33 篇/内篇自著）与权威文献一致
   - [x] 8.3 立场标注审查：核心句解读均呈现 ≥2 注家立场且出处可溯（示例 01/02 四家对照）
 - [x] Task 9: C — 质量门与原子提交，依赖 Task 8
-  - [x] 9.1 在 `projects/awesome-okf-xs` 运行 scoped 质量门：`check-toctrees.py doc/bundles/think/zhuangzi` 与 `check-utf8.py doc/bundles/think/zhuangzi` 均通过（全量 `gates.all` 的残留报错均在其他并发 bundle：confucian/yinyangjia/buddhism，与本任务无关）
+  - [x] 9.1 在 `projects/awesome-okf-xs` 运行 scoped 质量门：`check-toctrees.py doc/bundles/guoxue/zhuangzi` 与 `check-utf8.py doc/bundles/guoxue/zhuangzi` 均通过（全量 `gates.all` 的残留报错均在其他并发 bundle：confucian/yinyangjia/buddhism，与本任务无关）
   - [x] 9.2 原子提交：commit `3beccc7d`，`docs(bundles): 新增《庄子》知识包教程（chuang-tzu）`，22 files / 1751 insertions
 
 # Task Dependencies

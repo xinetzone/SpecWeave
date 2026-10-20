@@ -4,8 +4,8 @@
 
 ## 落位与结构
 
-- [ ] 新域骨架 `bundles/tcm/index.md`、`bundles/tcm/classics/index.md` 存在，导航完整并注明与 create-tcm-classics-okf-wiki 的衔接（classics 组当前 1 束、未来 6 束）
-- [ ] 束 `bundles/tcm/classics/waijing-weiyan/` 含根 index.md（toctree 引用全部内容文档）、facts.md、insights.md、log.md、concepts/（9 篇 + index）、examples/（5 篇 + index）、references/（3 篇 + index）
+- [ ] 新域骨架 `bundles/yixue/tcm/index.md`、`bundles/yixue/tcm/classics/index.md` 存在，导航完整并注明与 create-tcm-classics-okf-wiki 的衔接（classics 组当前 1 束、未来 6 束）
+- [ ] 束 `bundles/yixue/tcm/classics/waijing-weiyan/` 含根 index.md（toctree 引用全部内容文档）、facts.md、insights.md、log.md、concepts/（9 篇 + index）、examples/（5 篇 + index）、references/（3 篇 + index）
 - [ ] `bundles/index.md` 统计同步：total_bundles 287、groups 33、domains 14；mermaid 图含 tcm 节点；toctree 含 `tcm/index`
 - [ ] 文件名 kebab-case 纯英文，正文中文，交叉引用相对路径带 .md 后缀，无 file:/// 绝对路径
 

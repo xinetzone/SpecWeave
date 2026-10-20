@@ -13,7 +13,7 @@ status: "draft"
 - P0核验：5✅ 1⚠️ 0❌
 
 ## Bundle路径
-`projects/awesome-okf-xs/doc/bundles/ai/ai-agent/doubao-work-org-productivity/`
+`projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/doubao-work-org-productivity/`
 
 ## 文件结构（10文件）
 1. index.md

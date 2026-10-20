@@ -1,8 +1,8 @@
 # Tasks — 《黄帝外经》（外经微言）OKF 知识包教程
 
 方法论：seven-concepts 场景4（知识沉淀）R→I→E→V→C（session: sc-20260830-waijing-weiyan）。
-产出根目录：`projects/awesome-okf-xs/doc/bundles/tcm/classics/waijing-weiyan/`（新建束；同时新建 tcm/ 域与 classics/ 组骨架）。
-规范前置：实现前先读 `projects/awesome-okf-xs/.agents/rules/frontmatter.md` 与 `.agents/global-core-rules.md`；范式参照 `bundles/think/laozi/boshu-reading/`（古籍阅读教程束）。
+产出根目录：`projects/awesome-okf-xs/doc/bundles/yixue/tcm/classics/waijing-weiyan/`（新建束；同时新建 tcm/ 域与 classics/ 组骨架）。
+规范前置：实现前先读 `projects/awesome-okf-xs/.agents/rules/frontmatter.md` 与 `.agents/global-core-rules.md`；范式参照 `bundles/guoxue/laozi/boshu-reading/`（古籍阅读教程束）。
 衔接说明：同日 spec `create-tcm-classics-okf-wiki` 规划同组 5 束（未实施）；本 spec 先建 tcm/ 骨架，统计基线 286→287 束 / 32→33 组 / 13→14 域。
 
 - [ ] Task 1: R — 信源采集与事实登记（G1）
@@ -19,8 +19,8 @@
   - [ ] 3.1 萃取 ≥2 个可复用阅读模式，各含触发场景/核心步骤/≥3 反模式/迁移示例：候选①"托名古籍三层判读法"（著录层查史志目录→托名层辨叙事框架→文本层考成书流传，迁移至《黄帝内经》《难经》《神农本草经》等托名典籍）；候选②"双源逐字核读法"（主信源+第二信源逐字比对、异文标注登记，迁移至一切网络古籍文本核查）；候选③"问答体医经精读法"（问答结构→篇名立论→微言按语→命门/颠倒关键词追踪）
   - [ ] 3.2 模式沉淀于 `concepts/08-reading-method.md`（阅读方法论篇），与 tcm-classics spec 的 tcm-overview 束方法论篇交叉引用（未来链接，先以文字说明衔接）
 - [ ] Task 4: 域/组骨架与总索引，依赖 Task 1
-  - [ ] 4.1 新建 `bundles/tcm/index.md`（type: domain 或按既有域 index 惯例；中医域定位说明、分组表、classics 组当前 1 束 + 未来 5 束衔接说明、toctree 含 `classics/index`）
-  - [ ] 4.2 新建 `bundles/tcm/classics/index.md`（组 index：中医经典分组导航，waijing-weiyan 束行 + 未来 5 束占位说明、toctree 含 `waijing-weiyan/index`）
+  - [ ] 4.1 新建 `bundles/yixue/tcm/index.md`（type: domain 或按既有域 index 惯例；中医域定位说明、分组表、classics 组当前 1 束 + 未来 5 束衔接说明、toctree 含 `classics/index`）
+  - [ ] 4.2 新建 `bundles/yixue/tcm/classics/index.md`（组 index：中医经典分组导航，waijing-weiyan 束行 + 未来 5 束占位说明、toctree 含 `waijing-weiyan/index`）
   - [ ] 4.3 更新 `bundles/index.md`：frontmatter `total_bundles` 286→287、`groups` 32→33、`domains` 13→14；十三域导航表改十四域、新增 tcm 域行（🌿 中医经典与理论 · 1 束 · 1 组）；生态关系 mermaid 图新增 tcm 节点及与 think（道家思想渊源）连线；推荐入门路径按需补充；末尾隐藏 toctree 追加 `tcm/index`
 - [ ] Task 5: 束骨架与 references，依赖 Task 1/4
   - [ ] 5.1 新建束根 `index.md`：frontmatter（type: OKF、title/description/tags、version: "1.0.0"、source、generated agent、verified process:seven-concepts-v、status: stable、stale_after、okf_version: "0.2"）；正文含**医学免责声明（首屏显著位置）**、快速导航（concepts/examples/references/工作文档）、分读者快速开始、Bundle 定位对照表（汉志外经/外经微言/陈士铎/命门学说）、学习路径；结尾 toctree 全覆盖（concepts/index、examples/index、references/index、facts、insights、log）

@@ -45,7 +45,7 @@ orchestrator: seven-concepts-cmd（场景4：知识沉淀）
 | `jishu/ai/` 直挂 | ❌ | 技能类束已有 ai-agent 分组承载，直挂会造成同主题分散（参照 mattpocock-skills 直挂属生态格局分析、非单一技能教程） |
 | 新建分组 | ❌ | 单篇博文新建分组属过度工程 |
 
-**bundle 路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/show-me-skill/`
+**bundle 路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/show-me-skill/`
 **分类板块**：ai-agent 分组索引"📰 产品资讯"表，类型标注"工具教程"。
 
 ## 5. R 阶段结论：事实与核验

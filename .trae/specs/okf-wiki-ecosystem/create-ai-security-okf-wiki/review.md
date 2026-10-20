@@ -1,7 +1,7 @@
 ---
 source: V（Adversarial Review, depth=deep）阶段审查
 reviewed: 2026-09-02
-reviewed_objects: projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-security/（27 个 md）
+reviewed_objects: projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/ai-security/（27 个 md）
 fact_bases: facts-cl4r1t4s.md / facts-l1b3rt4s.md / facts-obliteratus.md / insights.md
 ---
 

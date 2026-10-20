@@ -17,8 +17,8 @@
 - [x] 全部新增文档 frontmatter 符合 OKF v0.2（type/source/generated/verified/status/stale_after）（V 8.4 Grep 全量验证）
 - [x] bundle 根 index.md 及各子目录 index.md 均含 toctree 且引用全部文档（范围化 check-toctrees exit 0：全部引用有效、所有内容文档可达）
 - [x] 文件名 kebab-case 纯英文；正文中文；交叉引用为相对路径无断链、无 file:///（Grep "file://" 0 命中）
-- [x] `bundles/think/huangdi/` 分组 index 与 toctree 完整
-- [x] `bundles/think/index.md` 与 `bundles/index.md` 统计数字、分组表行、toctree 已同步更新（两文件 huangdi 行已在 HEAD 入库——由并行会话随其提交带入；工作区残余统计数字变更属其他会话，未纳入本任务提交）
+- [x] `bundles/guoxue/huangdi/` 分组 index 与 toctree 完整
+- [x] `bundles/guoxue/index.md` 与 `bundles/index.md` 统计数字、分组表行、toctree 已同步更新（两文件 huangdi 行已在 HEAD 入库——由并行会话随其提交带入；工作区残余统计数字变更属其他会话，未纳入本任务提交）
 
 ## 交付验证
 - [x] `invoke gates.all`（在 projects/awesome-okf-xs）全部通过（toctrees + utf8）——UTF-8 全库 6098 文件通过；本 bundle 范围化 toctree 检查通过且在全库 BFS 中无未可达条目；全局 gate 余留 117 处问题经逐条核对全部位于其他并行会话未完成 bundle（amitabha-sutra/diamond-sutra/platform-sutra/four-books/guan-tzu/shang-jun-shu/yinyangjia 等），按"不得回滚他人改动"纪律不处理

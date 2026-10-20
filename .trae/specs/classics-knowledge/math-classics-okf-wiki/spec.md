@@ -46,7 +46,7 @@ content-sensitivity: Public（数学经典原文多属公共领域，解读为�
 
 ## Functional Requirements
 
-- **FR-1（分组与知识包结构）**：新建 `doc/bundles/think/math/index.md`（分组索引，`type: bundles-index`）与 `doc/bundles/think/math/classics-reading/` 知识包目录；知识包含 bundle 根 `index.md`（含 `okf_version: "0.2"`）、`log.md`、`facts.md`、`insights.md`，及 `concepts/`、`examples/`、`references/` 三个子目录（各含 `index.md`）。
+- **FR-1（分组与知识包结构）**：新建 `doc/bundles/kexue/math/index.md`（分组索引，`type: bundles-index`）与 `doc/bundles/kexue/math/classics-reading/` 知识包目录；知识包含 bundle 根 `index.md`（含 `okf_version: "0.2"`）、`log.md`、`facts.md`、`insights.md`，及 `concepts/`、`examples/`、`references/` 三个子目录（各含 `index.md`）。
 - **FR-2（阅读方法论概念）**：concepts/ 包含 ≥5 篇方法论概念文档，覆盖：为什么读原典、原文获取渠道（Gutenberg/Internet Archive/Gallica/Euler Archive/Clay 等数字图书馆）、版本与译本选择、注本与现代解读使用法、跨语言（希/拉/法/德）阅读策略。
 - **FR-3（经典谱系解读概念）**：concepts/ 包含按五时段组织的经典解读概念文档（约 8–10 篇），每篇覆盖该时段 2–5 部核心经典，每部经典给出：作者与成书年代、原文语言与权威版本、公共领域获取路径、权威译本/注本（英文为主，中译本状况注明）、核心思想与代表内容解读、阅读难度与建议顺序。
 - **FR-4（实践示例）**：examples/ 包含 ≥3 篇：① 代表性命题精读示范（《几何原本》命题三层读法：原文/译本/注本）；② 第一次读原著的最短上手路径；③ 分阶段通读计划（路线图）。
@@ -84,7 +84,7 @@ content-sensitivity: Public（数学经典原文多属公共领域，解读为�
 ### AC-1: 知识包目录结构与位置（rule）
 
 - **Given**：任务完成
-- **When**：检查 `projects/awesome-okf-xs/doc/bundles/think/math/`
+- **When**：检查 `projects/awesome-okf-xs/doc/bundles/kexue/math/`
 - **Then**：存在 `index.md`（分组索引）与 `classics-reading/` 目录；后者含 `index.md`、`log.md`、`facts.md`、`insights.md`，及 `concepts/`、`examples/`、`references/` 三个子目录且各含 `index.md`；concepts 文档 12–18 篇、examples ≥3 篇、references ≥4 篇。
 - **Pass Condition**：目录与文件全部存在，数量满足下限。
 - **Evidence**：目录列表（LS/Glob）与文件计数。

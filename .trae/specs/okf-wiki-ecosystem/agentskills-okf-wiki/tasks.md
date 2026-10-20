@@ -12,7 +12,7 @@
   - [x] SubTask 2.3: 写入 `.trae/specs/okf-wiki-ecosystem/agentskills-okf-wiki/insights.md`，通过 G2 门
 
 - [x] Task 3: E 阶段——OKF 文档批量生成（信源先行）
-  - [x] SubTask 3.1: 创建 `doc/bundles/ai/ai-agent/agent-skills-spec/` 目录结构，先生成 references/（≥2 篇信源登记：规范文档 + skills-ref 源码）
+  - [x] SubTask 3.1: 创建 `doc/bundles/jishu/ai/frameworks/ai-agent/agent-skills-spec/` 目录结构，先生成 references/（≥2 篇信源登记：规范文档 + skills-ref 源码）
   - [x] SubTask 3.2: 分批生成 concepts/（每批 ≤7 文件，共 8 篇：技能解剖/渐进式披露/frontmatter 字段/创作原则/eval 驱动迭代/description 优化/客户端集成/skills-ref 实现）
   - [x] SubTask 3.3: 生成 examples/（2 篇：创建第一个 Skill、skills-ref CLI 实战）
   - [x] SubTask 3.4: 最后生成根 index.md（含 okf_version: "0.2"）+ 子目录 index.md（无 frontmatter、含 toctree 块）+ log.md，通过 G3 门

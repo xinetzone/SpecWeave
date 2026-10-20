@@ -1,7 +1,7 @@
 # Tasks — 中医经典 OKF 知识包教程
 
 方法论：seven-concepts 场景4（知识沉淀）R→I→E→V→C。
-产出根目录：`projects/awesome-okf-xs/doc/bundles/tcm/`（新域，含 classics 分组 5 束）。
+产出根目录：`projects/awesome-okf-xs/doc/bundles/yixue/tcm/`（新域，含 classics 分组 5 束）。
 规范前置：实现前先读 `projects/awesome-okf-xs/.agents/rules/frontmatter.md` 与 `.agents/global-core-rules.md`。
 
 - [x] Task 1: R — 信源采集与事实登记（G1），可并行 5 路子代理
@@ -16,7 +16,7 @@
 - [x] Task 3: E — 模式萃取（G3），依赖 Task 2
   - [x] 3.1 萃取 ≥2 个可复用阅读模式（候选："双源逐字核读法""托名/辑复文本分层判读框架""典籍谱系分级阅读路径"），各含触发场景/核心步骤/≥3 反模式/迁移示例，落入 tcm-overview 束 concepts 对应章节（实际：3 个模式，待 Task 5 落入束内）
 - [x] Task 4: 创建域/组/束骨架与索引，依赖 Task 1
-  - [x] 4.1 新建 `bundles/tcm/index.md`（域 index：中医域定位 + 分组表 + toctree）与 `bundles/tcm/classics/index.md`（组 index：束导航 + toctree；**执行时发现并行会话已创建 tcm/ 域与《黄帝外经》束（waijing-weiyan），已合并保留**）
+  - [x] 4.1 新建 `bundles/yixue/tcm/index.md`（域 index：中医域定位 + 分组表 + toctree）与 `bundles/yixue/tcm/classics/index.md`（组 index：束导航 + toctree；**执行时发现并行会话已创建 tcm/ 域与《黄帝外经》束（waijing-weiyan），已合并保留**）
   - [x] 4.2 束骨架由 Task 5-9 各束生成时创建
   - [x] 4.3 更新 `bundles/index.md`：统计（并行会话动态推进中，本次基于 296/39 基线 +4 束 → 300/39/14）、tcm 域分组表行（1 束→5 束）、mermaid 图 tcm 节点更新、toctree 已含 `tcm/index`
 - [x] Task 5: 生成 tcm-overview 束（中医典籍总览），依赖 Task 1/2/3

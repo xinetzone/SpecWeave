@@ -4,12 +4,12 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
-  - 创建 `doc/bundles/containers/` 目录
-  - 创建 `doc/bundles/containers/index.md` 域索引（含 okf_version frontmatter 和 toctree）
+  - 创建 `doc/bundles/jishu/containers/` 目录
+  - 创建 `doc/bundles/jishu/containers/index.md` 域索引（含 okf_version frontmatter 和 toctree）
   - 预留 11 个子项目的 bundle 目录位置
 - **Acceptance Criteria Addressed**: AC-1
 - **Test Requirements**:
-  - `programmatic` TR-1.1: 目录 `doc/bundles/containers/` 存在
+  - `programmatic` TR-1.1: 目录 `doc/bundles/jishu/containers/` 存在
   - `programmatic` TR-1.2: index.md 包含 `okf_version: "0.2"` frontmatter
   - `programmatic` TR-1.3: index.md 包含 {toctree} 指令预留子 bundle 位置
 - **Notes**: 先不更新总 index.md，待所有 bundle 完成后统一更新
@@ -152,7 +152,7 @@
 - **Priority**: high
 - **Depends On**: Task 11
 - **Description**:
-  - 更新 `doc/bundles/containers/index.md` 的 toctree，包含所有 11 个子 bundle
+  - 更新 `doc/bundles/jishu/containers/index.md` 的 toctree，包含所有 11 个子 bundle
   - 更新 `doc/bundles/index.md`：
     - 在 mermaid 生态关系图中加入 containers 域
     - 在十域导航中加入 containers 域章节

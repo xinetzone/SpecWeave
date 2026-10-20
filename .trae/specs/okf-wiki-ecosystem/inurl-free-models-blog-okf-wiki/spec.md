@@ -28,7 +28,7 @@
 
 | 候选位置 | 判定 | 理由 |
 |---------|------|------|
-| `jishu/ai/inurl-unified-token/`（选定，直挂束） | ✅ | ① 主线为 AI 模型接入工具（OpenAI 兼容本地代理/密钥管理/模型路由），属 jishu/ai 域；② 同形态先例：`echobird`（Model Nexus 模型枢纽+本地 LLM+Codex Proxy 桌面工具）证明直挂束可容纳"多模型统一接入产品"；③ 同主题先例：`free-llm-api-roundup`（40 家免费 API 盘点，flagged）、`deepseek-pricing`、`fable5-cost-optimization`、`context-optimization` 可交叉引用互链；④ 文中 GLM-4-Flash/LongCat/Agnes 等实体在 ai 域均有资料 |
+| `jishu/ai/products/inurl-byok-token-hub/`（选定，直挂束） | ✅ | ① 主线为 AI 模型接入工具（OpenAI 兼容本地代理/密钥管理/模型路由），属 jishu/ai 域；② 同形态先例：`echobird`（Model Nexus 模型枢纽+本地 LLM+Codex Proxy 桌面工具）证明直挂束可容纳"多模型统一接入产品"；③ 同主题先例：`free-llm-api-roundup`（40 家免费 API 盘点，flagged）、`deepseek-pricing`、`fable5-cost-optimization`、`context-optimization` 可交叉引用互链；④ 文中 GLM-4-Flash/LongCat/Agnes 等实体在 ai 域均有资料 |
 | `sheke/industry/`（AI 行业与商业趋势） | ❌ | 该组容纳行业快照/商业分析（Copilot 成本、变现指南）；本文主体是工具配置实操与架构，非行业格局分析 |
 | `jishu/ai/ai-security/` | ❌ | 虽含 BYOK/加密安全讨论，但仅为产品卖点之一，非主线 |
 | 新建分组 | ❌ | 单篇博文新建分组违反最小变更原则 |
@@ -117,7 +117,7 @@
 | F-104 | 外部对标·P0 | OmniRoute 真实存在：MIT 开源本地优先网关，npm `omniroute`（v3.8.49）、localhost:20128、官方站自称 352 providers/19 策略、GitHub diegosouzapw/OmniRoute、RTK+Caveman 压缩 15–95%；inurl 命名与口径有开源原型且页面主动自认 | omniroute.online + npm + GitHub + 媒体 |
 | F-105 | 零迭代 | track.js 四页仍加载；页脚仍仅 ©2026 inurl 无公司/ICP/备案；免费区机场广告仍在 → F-084/F-087 持续 | 四页 HTML |
 
-### 10.5 bundle 更新范围（最小变更；现有束 `jishu/ai/inurl-unified-token/`）
+### 10.5 bundle 更新范围（最小变更；现有束 `jishu/ai/products/inurl-byok-token-hub/`）
 
 - `references/article-source.md`：G 节追加 G5 双份事实段（与 facts.md F-088~F-105 机械一致）。
 - `references/verification.md`：新增 §8 三次复核（方法、持续项清单、新增项裁决、总裁决）。

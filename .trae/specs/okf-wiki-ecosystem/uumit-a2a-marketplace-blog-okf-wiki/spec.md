@@ -58,5 +58,5 @@ status: pending
 
 ## 参考先例
 
-- [mattpocock-skills/](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/mattpocock-skills/index.md)（微信博文→bundle，零❌/4⚠️，无 examples 骨架）
-- L2 模式：[blog-article-to-okf-bundle.md](../../docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md)
+- [mattpocock-skills/](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/learning/mattpocock-skills/index.md)（微信博文→bundle，零❌/4⚠️，无 examples 骨架）
+- L2 模式：[blog-article-to-okf-bundle.md](../../../../docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md)

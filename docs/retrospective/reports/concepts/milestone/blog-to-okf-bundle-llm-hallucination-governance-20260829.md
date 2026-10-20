@@ -8,7 +8,7 @@ description: "法学学术论文（精简版）单篇转化为 OKF v0.2 知识�
 status: "stable"
 source:
   - ".trae/specs/okf-wiki-ecosystem/llm-hallucination-governance-okf-wiki/"
-  - "projects/awesome-okf-xs/doc/bundles/ai/ai-agent/llm-hallucination-governance/"
+  - "projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/llm-hallucination-governance/"
   - ".agents/docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md"
 milestone-name: "第14篇 博文→OKF知识包单篇转化（llm-hallucination-governance）"
 time-range: "2026-08-29（博文发布 2026-08-26 15:04）"
@@ -47,7 +47,7 @@ stale_after: "2027-08-29"
 
 | 维度 | 值 |
 |------|----|
-| Bundle 目录 | `projects/awesome-okf-xs/doc/bundles/ai/ai-agent/llm-hallucination-governance/` |
+| Bundle 目录 | `projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/llm-hallucination-governance/` |
 | 所属分组 | ai/ai-agent（组内第 30 个 bundle） |
 | 骨架 | **学术综述/规范分析**（操作可复现性两问皆"否"→**无 examples/**） |
 | 文件数 | 10（index + concepts×5 + references×3 + log） |

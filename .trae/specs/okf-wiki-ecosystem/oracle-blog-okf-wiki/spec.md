@@ -11,7 +11,7 @@
 
 ## 敏感度预检
 
-公开内容（无 code/token/邀请码参数）→ 标准工作流：spec 落本目录，bundle 落 `projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/oracle/`。
+公开内容（无 code/token/邀请码参数）→ 标准工作流：spec 落本目录，bundle 落 `projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/oracle/`。
 
 ## 归属决策
 

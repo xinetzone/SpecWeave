@@ -32,6 +32,6 @@
 
 ## 落位检查
 
-- [x] 新增文件位于 `projects/awesome-okf-xs/doc/bundles/think/chuang-tzu/` 与 `think/zhuangzi/index.md`
+- [x] 新增文件位于 `projects/awesome-okf-xs/doc/bundles/guoxue/zhuangzi/chuang-tzu/` 与 `think/zhuangzi/index.md`
 - [x] 提交发生在 awesome-okf-xs 子模块仓库内（非 SpecWeave 主仓）
 - [x] 未修改任何既有 bundle 内容；`doc/bundles/index.md` 的 zhuangzi 行系追加导航（非破坏既有导航）

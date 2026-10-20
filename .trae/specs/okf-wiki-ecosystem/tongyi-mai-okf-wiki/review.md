@@ -26,8 +26,8 @@
 - [x] verification.md 验证报告已产出，17 处计数偏差等问题全部修复复检
 
 ## 索引同步
-- [x] bundles/ai/ai-agent/index.md 新增 3 束条目（31→34）+ toctree 3 行 + 统计行更新
-- [x] bundles/ai/index.md 与 bundles/index.md 计数更新（total_bundles 283→286、ai 域 110→113），说明文字同步
+- [x] bundles/jishu/ai/frameworks/ai-agent/index.md 新增 3 束条目（31→34）+ toctree 3 行 + 统计行更新
+- [x] bundles/jishu/ai/index.md 与 bundles/index.md 计数更新（total_bundles 283→286、ai 域 110→113），说明文字同步
 - [x] qwen-ui-agent 束与 3 个新束互链已建立
 
 ## C 阶段（G5 提交门）

@@ -35,7 +35,7 @@ source_url: "https://mp.weixin.qq.com/s/RePxoTb2EXkSWnoWhLjapQ?from=industrynews
 | `sheke/industry/` | ❌ | 收录 AI 行业商业趋势快照；本文主线是具体产品能力实测而非行业分析，落 ai/tencent 更便于与同主体 bundle 聚合 |
 | 新建分组 | ❌ | 单篇博文新建分组属过度工程，违反最小变更原则 |
 
-**产出路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/tencent/workbuddy-one-sentence-mvp/`
+**产出路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/tencent/workbuddy-one-sentence-mvp/`
 
 ## 4. 知识地图（I 阶段三层拆分）
 

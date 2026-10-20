@@ -16,8 +16,8 @@ content-sensitivity: Public（儒家经典原文属公共领域古籍，注疏�
 
 ## What Changes
 
-- 新增分组 `bundles/think/confucian/`（儒家知识包分组，仿 `think/laozi/` 与 `think/psi/` 三层模式：域→组→束）
-- 新增知识包 `bundles/think/confucian/four-books/`（bundle 根目录用纯英文 kebab-case `four-books`，正文与标题用"四书"）：
+- 新增分组 `bundles/guoxue/confucian/`（儒家知识包分组，仿 `think/laozi/` 与 `think/psi/` 三层模式：域→组→束）
+- 新增知识包 `bundles/guoxue/confucian/four-books/`（bundle 根目录用纯英文 kebab-case `four-books`，正文与标题用"四书"）：
   - `index.md`（bundle 根：快速导航 + 定位 + 学习路径 + toctree，含 OKF v0.2 frontmatter）
   - `concepts/`（8 篇核心概念，见 Task 4）
   - `examples/`（3 篇实操，见 Task 5）
@@ -41,7 +41,7 @@ content-sensitivity: Public（儒家经典原文属公共领域古籍，注疏�
 ## Impact
 
 - Affected specs: `boshu-laozi-wiki`、`laozi-lineage-okf-bundle`、`create-zhuangzi-okf-wiki`（仅通过 references 交叉引用，不修改其产物）
-- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/think/` 新增文件与两处索引更新；提交发生在子模块仓库内
+- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/guoxue/` 新增文件与两处索引更新；提交发生在子模块仓库内
 - 不修改任何既有 bundle 内容；不修改 SpecWeave 主仓文件（除 `.trae/specs/classics-knowledge/create-confucian-okf-wiki/` 规格与工作记录）
 
 ## ADDED Requirements

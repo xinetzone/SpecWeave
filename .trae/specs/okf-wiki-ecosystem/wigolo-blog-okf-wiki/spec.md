@@ -60,7 +60,7 @@ jishu/ai/wigolo/
 | `jishu/ai/ai-agent/` 子分组 | ❌ | 该组定位为"Agent 运行时框架与架构模式（工具调用循环/多代理编排/记忆系统/框架源码解读）"；wigolo 是被 Agent 调用的工具层服务，不是 Agent 框架 |
 | 新建顶级分组 | ❌ | 单篇博文新建分组属过度工程，违反最小变更原则 |
 
-**最终路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/wigolo/`
+**最终路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/products/wigolo/`
 
 ## 4. 时效性
 

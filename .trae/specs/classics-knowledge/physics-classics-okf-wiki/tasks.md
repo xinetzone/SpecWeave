@@ -40,8 +40,8 @@
 - **Priority**: high
 - **Depends On**: None（可与 Task 1 并行）
 - **Description**:
-  - 创建 `doc/bundles/science/index.md`（域级：frontmatter、域说明、分组导航表、hidden toctree 含 physics/index）
-  - 创建 `doc/bundles/science/physics/index.md`（分组级：分组说明、bundle 列表表、toctree 含 physics-classics-reading/index）
+  - 创建 `doc/bundles/kexue/index.md`（域级：frontmatter、域说明、分组导航表、hidden toctree 含 physics/index）
+  - 创建 `doc/bundles/kexue/physics/index.md`（分组级：分组说明、bundle 列表表、toctree 含 physics-classics-reading/index）
   - 创建 bundle 目录树：`science/physics/physics-classics-reading/{concepts,examples,references}/`
   - 参照样板：think/index.md（域）、think/laozi/index.md（组）、boshu-reading/index.md（bundle 根，先建骨架后填充）
   - 每个目录 index.md 遵循保留文件约定

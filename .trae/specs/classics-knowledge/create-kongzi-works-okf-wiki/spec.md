@@ -16,8 +16,8 @@ content-sensitivity: Public（《春秋》等先秦古经原文属公共领域�
 
 ## What Changes
 
-- 新增分组 `bundles/think/confucius/`（孔子分组，仿 `think/laozi/`、`think/huangdi/` 三层模式：域→组→束）
-- 新增知识包 `bundles/think/confucius/works/`：
+- 新增分组 `bundles/guoxue/confucius/`（孔子分组，仿 `think/laozi/`、`think/huangdi/` 三层模式：域→组→束）
+- 新增知识包 `bundles/guoxue/confucius/works/`：
   - `index.md`（bundle 根，快速导航 + 归属矩阵 + 学习路径）
   - `concepts/`（9 篇核心概念，见下）
   - `examples/`（3 篇精读示例）
@@ -38,7 +38,7 @@ content-sensitivity: Public（《春秋》等先秦古经原文属公共领域�
 ## Impact
 
 - Affected specs: `laozi-lineage-okf-bundle`、`boshu-laozi-wiki`、`create-yinfujing-okf-wiki`（仅通过 references/cross-ref 交叉引用与 think 域描述更新，不修改其产物）
-- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/think/` 新增文件与 `think/index.md`、`bundles/index.md` 两处索引更新；提交发生在子模块仓库内
+- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/guoxue/` 新增文件与 `think/index.md`、`bundles/index.md` 两处索引更新；提交发生在子模块仓库内
 - 不修改任何既有 bundle 内容；不修改 SpecWeave 主仓文件
 
 ## ADDED Requirements

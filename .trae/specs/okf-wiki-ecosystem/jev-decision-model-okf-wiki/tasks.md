@@ -57,7 +57,7 @@ status: "completed"
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
-  - 在 `projects/awesome-okf-xs/doc/bundles/jishu/ai/jev/` 创建下列文件；先 references 内容，再 concepts，最后各级 index 与 log。
+  - 在 `projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/jev/` 创建下列文件；先 references 内容，再 concepts，最后各级 index 与 log。
   - `references/article-source.md`：与 facts.md 保持一致的 F 编号事实集。
   - `references/verification.md`：P0 核验四表、勘误或缺口、证据等级与复核时点。
   - `concepts/00-system-one-and-jev.md`：模型定位、三种原语、API 数据契约、概率与类型安全。

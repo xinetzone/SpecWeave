@@ -1,6 +1,6 @@
 # 河图洛书 OKF 知识包 · V 阶段独立评审报告（review.md）
 
-- **评审对象**：`projects/awesome-okf-xs/doc/bundles/think/hetu-luoshu/`（分组入口 `hetu-luoshu/index.md` ＋ 束本体 `hetu-luoshu/hetu-luoshu/`，共 28 件）
+- **评审对象**：`projects/awesome-okf-xs/doc/bundles/guoxue/hetu-luoshu/`（分组入口 `hetu-luoshu/index.md` ＋ 束本体 `hetu-luoshu/hetu-luoshu/`，共 28 件）
 - **评审方式**：seven-concepts V 阶段——新鲜上下文、只读、四视角对抗评审（魔鬼代言人／新人读者／老板／未来维护者），由独立子代理执行
 - **评审日期**：2026-08-31
 - **评审结论**：**pass-with-fixes（修复后通过）**——3 BLOCKER ＋ 7 MAJOR ＋ 10 MINOR，共 R-01～R-20；**20 条全部采纳修复**，修复后复跑质量门通过（见文末复验记录）

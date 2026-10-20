@@ -121,7 +121,7 @@ flowchart LR
 - 归档位于：`docs/retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/`
 - Wiki（知识包）位于：`projects/awesome-okf-xs/doc/bundles/<域>/<分组>/<topic>/`（入口为 `index.md`）
 - 归档→Wiki相对路径：从归档 README 出发，向上到主仓库根再进入 `projects/awesome-okf-xs/doc/bundles/`
-  - 路径示例：`../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/<topic>/index.md`
+  - 路径示例：`../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/<topic>/index.md`
 - Wiki→归档相对路径：从 bundles 内文件出发，向上到主仓库根再进入 `docs/retrospective/`
   - 路径示例：`../../../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/README.md`
 

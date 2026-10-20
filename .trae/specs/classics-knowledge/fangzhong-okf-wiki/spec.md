@@ -21,7 +21,7 @@ status: "pending-approval"
 2. **托名成风、伪托泛滥**：房中典籍托名上古神人（素女、玄女、彭祖、容成、务成子）是通例；现代出版与网络上署名《素女经》的白话演绎本、地摊「房中术/阴阳采补」读物、无出处网文大量伪托，学术权威性低；道教内丹「阴阳双修」说（东派陆西星、西派李西月）在道教史研究中本有清修/阴阳两派诠释之争，坊间却常被单一化、神秘化渲染。
 3. **缺乏可信赖的教程式入口**：现代学术研究（高罗佩《中国古代房内考》《秘戏图考》、李零《中国方术正考/续考》、江晓原、Douglas Wile《Art of the Bedchamber》、胡孚琛《道学通论》相关章节）分散在宗教史、医学史、社会史不同学科，读者无法回答「房中文献到底有哪些、哪些是真的、从哪本开始读、在线全文去哪里找、哪些说法不可信」。
 
-目标库 `doc/bundles/think/` 已有 psi、laozi、zhuangzi、mozi、yinyangjia、buddhism、guiguzi、legalism、huangdi、huangdi-neijing、daoyi 等思想类分组，尚无覆盖房中/性文化典籍的知识束。
+目标库 `doc/bundles/yixue/` 已有 psi、laozi、zhuangzi、mozi、yinyangjia、buddhism、guiguzi、legalism、huangdi、huangdi-neijing、daoyi 等思想类分组，尚无覆盖房中/性文化典籍的知识束。
 
 **内容定位与表达边界**：本束是**文化史、医学史、宗教史与文献学的学术研究教程**，不是性教育、性技巧或两性指导读物，更不收录色情内容。精选原文以目录学文献（《汉志》房中小序）、医学养生论述（《素问·上古天真论》、《千金要方·房中补益》节欲论、《三元延寿参赞书》「四不可」）、道教方法论概述（《抱朴子内篇·释滞》）、出土文献的养生原则段落（《十问》《天下至道谈》）为限；对《素女经》《洞玄子》等仅作文献学介绍与学术解读，**不收录露骨的性行为操作性段落，不收录色情文学正文与春宫图像**。
 
@@ -34,7 +34,7 @@ status: "pending-approval"
 
 ## 3. 目标（Goals）
 
-* **G1**：在 `doc/bundles/think/fangzhong/` 下新建分组与单束总览教程 `fangzhong-reading`，以 OKF v0.2 知识包形态（concepts/examples/references 三层 + facts/insights/log）系统呈现房中典籍与性文化研究著作的权威原文与解读。
+* **G1**：在 `doc/bundles/yixue/fangzhong/` 下新建分组与单束总览教程 `fangzhong-reading`，以 OKF v0.2 知识包形态（concepts/examples/references 三层 + facts/insights/log）系统呈现房中典籍与性文化研究著作的权威原文与解读。
 * **G2**：内容覆盖房中文献**六层结构**：① 目录著录与源流（《汉志》房中八家、《隋志》、方技四家）；② 出土文献（马王堆《十问》《合阴阳》《天下至道谈》及《养生方》《杂疗方》相关条目）；③ 传世辑佚（《医心方·房内》佚文系统、《素女经》《玄女经》《玉房秘诀》《玉房指要》《洞玄子》《彭祖经》、叶德辉《双梅景闇丛书》）；④ 医家性医学（《素问》、《千金要方·房中补益》、《三元延寿参赞书》、求嗣/种子文献）；⑤ 道教房中与内丹双修论（《抱朴子》、黄书合气与寇谦之清整、《参同契》《悟真篇》清修/双修诠释史、东西派）；⑥ 文学社会史料与现代学术（《天地阴阳交欢大乐赋》敦煌写本、高罗佩、李零、江晓原、刘达临、Wile、Needham）。
 * **G3**：每部核心文献提供「精选段落原文（标注篇卷出处）+ 已实际核验的在线全文链接 + 权威纸本整理本指南」三类信息，不系统收录全书全文；辑佚本一律标注「佚文辑本，非《汉志》原书」。
 * **G4**：托名、辑佚、争议一律两说并陈或分层标注（代表学者、出处、年代证据），低权威现代读物显式警示，污染信源禁用，未证实信息不写成事实。
@@ -121,7 +121,7 @@ status: "pending-approval"
 
 | 编号 | 验收标准 |
 |------|----------|
-| AC-R1 | 束目录 `doc/bundles/think/fangzhong/fangzhong-reading/` 存在，含 index.md、facts.md、insights.md、log.md 及 concepts/（index.md + 00-08 共 9 篇）、examples/（index.md + 01-03 共 3 篇）、references/（index.md + 01-04 共 4 篇）；分组页 `doc/bundles/think/fangzhong/index.md` 存在。 |
+| AC-R1 | 束目录 `doc/bundles/yixue/fangzhong/fangzhong-reading/` 存在，含 index.md、facts.md、insights.md、log.md 及 concepts/（index.md + 00-08 共 9 篇）、examples/（index.md + 01-03 共 3 篇）、references/（index.md + 01-04 共 4 篇）；分组页 `doc/bundles/yixue/fangzhong/index.md` 存在。 |
 | AC-R2 | 每个非保留 .md 均有 YAML frontmatter 且含非空 `type`；束根 type: OKF 且含 okf_version: "0.2"；分组页 type: group；概念/示例/信源页 type 分别为 Concept/Example/Reference。 |
 | AC-R3 | 束根 toctree 收录 concepts/index、examples/index、references/index、facts、insights、log；三个子目录 index.md 的 toctree 完整收录各自全部内容页；think/fangzhong/index.md 收录 fangzhong-reading/index。 |
 | AC-R4 | think/index.md 分组表含 fangzhong 行且 toctree 含 fangzhong/index；bundles/index.md frontmatter 计数与正文计数同步更新（在 T0 实测基线上净增 1 组 1 束），think 节束/组计数与分组表含 fangzhong，mermaid think 标签包含 fangzhong。 |

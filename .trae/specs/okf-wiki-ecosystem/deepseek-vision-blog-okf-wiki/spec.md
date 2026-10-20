@@ -11,7 +11,7 @@ version: "1.0"
 
 ## 归属位置分析（博文类内容判定）
 
-**结论：放置于 `projects/awesome-okf-xs/doc/bundles/ai/deepseek/vision-model-selection/`（DeepSeek-AI 分组下新建 bundle）**
+**结论：放置于 `projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/deepseek/vision-model-selection/`（DeepSeek-AI 分组下新建 bundle）**
 
 | 候选位置 | 判定 | 理由 |
 |---------|------|------|
@@ -42,8 +42,8 @@ version: "1.0"
 - **Affected specs**: 无（独立新增知识包 + 新增模式沉淀）
 - **Affected code**: 无代码改动，仅文档新增与索引更新
 - **Affected files**:
-  - 新增：`projects/awesome-okf-xs/doc/bundles/ai/deepseek/vision-model-selection/` 整个目录（约 12 个文件）
-  - 更新：`projects/awesome-okf-xs/doc/bundles/ai/deepseek/index.md`
+  - 新增：`projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/deepseek/vision-model-selection/` 整个目录（约 12 个文件）
+  - 更新：`projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/deepseek/index.md`
   - 更新：`projects/awesome-okf-xs/doc/bundles/index.md`
   - 新增：`.agents/docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md`
   - 更新：`.agents/docs/retrospective/patterns/documentation-patterns/README.md`（登记新模式）

@@ -1,6 +1,6 @@
 # V 阶段对抗审查报告（adversarial-review）
 
-- **审查对象**：`projects/awesome-okf-xs/doc/bundles/tcm/classics/` 下 4 个新建 OKF 知识包束——tcm-overview（6 概念 · 2 示例 · 3 信源）、nanjing（6 概念 · 2 示例 · 2 信源）、shanghan-zabinglun（7 概念 · 2 示例 · 3 信源）、shennong-bencaojing（6 概念 · 2 示例 · 2 信源）
+- **审查对象**：`projects/awesome-okf-xs/doc/bundles/yixue/tcm/classics/` 下 4 个新建 OKF 知识包束——tcm-overview（6 概念 · 2 示例 · 3 信源）、nanjing（6 概念 · 2 示例 · 2 信源）、shanghan-zabinglun（7 概念 · 2 示例 · 3 信源）、shennong-bencaojing（6 概念 · 2 示例 · 2 信源）
 - **审查人**：独立对抗审查代理（与生成 4 束的代理无关），以证伪为目标主动找错
 - **审查日期**：2026-08-30
 - **权威对照材料**：`facts.md`（264 条事实登记，OV/NGJ/NJ/SH/BC 前缀）、`texts/nj-sh-bc-verified-texts.md`（双源核对验证文本）、`insights.md`、`patterns.md`

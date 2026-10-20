@@ -7,7 +7,7 @@ status: "draft"
 
 ## 基本信息
 - bundle_name: tushare-ai-office
-- 路径: projects/awesome-okf-xs/doc/bundles/ai/trae/tushare-ai-office/
+- 路径: projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/tushare-ai-office/
 - 骨架: 商业分析/战略资讯（index + concepts + references + log，无examples）
 - 事实数: 32 (F-001~F-032)
 - P0核验: 3✅ 2⚠️ 1❌（核心声明F-006❌失败——Tushare未在三平台官方预置）

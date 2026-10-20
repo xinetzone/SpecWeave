@@ -11,7 +11,7 @@ status: "draft"
 
 ## 产出位置
 
-- Bundle：`projects/awesome-okf-xs/doc/bundles/ai/ai-agent/claude-vision-skill/`
+- Bundle：`projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/claude-vision-skill/`
 - 归属：ai 域 / ai-agent 组（与 anthropics-skills、book-to-skill 同组）
 
 ## 文件骨架（12 文件）

@@ -35,7 +35,7 @@ source: 阮刻《十三经注疏·周易正义》今本系统 + 出土文献整�
 
 ## Background & Context
 
-- **位置决策**：新建分组 `doc/bundles/think/zhouyi/`，下挂 1 个知识包 `zhouyi-works/`。先例：`think/laozi/laozi-works/`（2026-08-30 由 `agent:seven-concepts-cmd` 生成，26 文件，结构与本任务同构）。
+- **位置决策**：新建分组 `doc/bundles/guoxue/zhouyi/`，下挂 1 个知识包 `zhouyi-works/`。先例：`think/laozi/laozi-works/`（2026-08-30 由 `agent:seven-concepts-cmd` 生成，26 文件，结构与本任务同构）。
 - **格式规范**：OKF v0.2（`meta/okf-spec`）；frontmatter 规范见子项目 `.agents/rules/frontmatter.md`（唯一必填 `type`；bundle 根 `index.md` 方可带 `okf_version: "0.2"`；`index.md`/`log.md` 为保留文件名）。
 - **计数影响**：新增 1 组 1 束 → think 域 28 束/17 组变为 29 束/18 组；全库 324 束/61 组变为 325 束/62 组（以 `invoke gates.bundles` 三角校验输出为准，禁止手工估算）。
 - **子模块纪律**：awesome-okf-xs 为 git submodule，存在并行会话写共享索引；提交前必须显式 `git add` 目标文件、`git show :<path>` 核验暂存 blob、`git checkout-index -a --prefix=$prefix` 导出暂存态快照跑双门。
@@ -76,7 +76,7 @@ source: 阮刻《十三经注疏·周易正义》今本系统 + 出土文献整�
 
 ### AC-1: Bundle 结构与 OKF 合规
 - **Type**: `rule`
-- **Given**：任务完成后的 `projects/awesome-okf-xs/doc/bundles/think/zhouyi/` 目录
+- **Given**：任务完成后的 `projects/awesome-okf-xs/doc/bundles/guoxue/zhouyi/` 目录
 - **When**：检查目录结构与全部 `.md` 文件 frontmatter
 - **Then**：存在 `zhouyi-works/index.md`（frontmatter 含 `okf_version: "0.2"` 与 `type: OKF`）、`log.md`、`usage.md`、`facts.md`、`insights.md`、`patterns.md`，及 `concepts/`、`text/`、`examples/`、`commentaries/`、`references/` 五个子目录且各含 `index.md`；每个非保留 `.md` 含可解析 YAML frontmatter 与非空 `type`
 - **Pass Condition**：结构清单逐项存在；frontmatter 解析零错误

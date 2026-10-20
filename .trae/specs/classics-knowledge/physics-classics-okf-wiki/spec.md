@@ -13,7 +13,7 @@ source: "User Request"
 - **Target Users**：物理系本科生与研究生、物理教师、对科学史与科学原典感兴趣的自学者、希望从教科书回溯原始文献的研究者、AI 辅助物理学习的提示词工程使用者。
 
 ## Goals
-- 新建 `doc/bundles/science/` 技术域（含 domain index）与 `doc/bundles/science/physics/` 分组（含 group index），语义上与 think/（思想哲学）区分，为未来化学/数学/生物经典留扩展位
+- 新建 `doc/bundles/kexue/` 技术域（含 domain index）与 `doc/bundles/kexue/physics/` 分组（含 group index），语义上与 think/（思想哲学）区分，为未来化学/数学/生物经典留扩展位
 - 生成 `science/physics/physics-classics-reading/` 知识包，覆盖约 12 部核心元典的原文信源与解读资源：伽利略《两门新科学》(1638)、牛顿《自然哲学的数学原理》(1687)、麦克斯韦《电磁通论》(1873 及 1865 论文)、吉布斯《统计力学基本原理》(1902)、玻尔兹曼《气体理论讲义》(1896-98)、爱因斯坦奇迹年五篇论文 (1905) 与广义相对论论文 (1915/1916)、玻尔 1913 原子模型三部曲、海森堡 1925/1927 论文、薛定谔 1926 波动力学论文、狄拉克《量子力学原理》(1930)、费曼《费曼物理学讲义》(1964)、朗道-栗弗席兹《理论物理学教程》十卷
 - references/ 层登记 30+ 部扩展经典（开普勒、惠更斯、拉格朗日、拉普拉斯、傅里叶、卡诺、克劳修斯、马赫、庞加莱、索末菲、玻恩、泡利、冯·诺依曼、温伯格、米斯纳-索恩-惠勒等）与中译本信息
 - 所有外部信源 URL 通过源稳定性门（实际访问验证可达），物理事实（年份、作者、书名、版本、公式归属）经 P0 权威核验
@@ -41,9 +41,9 @@ source: "User Request"
 
 ## Functional Requirements
 - **FR-1 新域与新分组脚手架**
-  - 创建 `doc/bundles/science/index.md`（domain 型：frontmatter type: group 或等效域级元数据、域说明、分组导航表、hidden toctree 含 physics/index）
-  - 创建 `doc/bundles/science/physics/index.md`（group 型：分组说明、bundle 列表表、toctree 含 physics-classics-reading/index）
-  - 创建 `doc/bundles/science/physics/physics-classics-reading/` 目录树
+  - 创建 `doc/bundles/kexue/index.md`（domain 型：frontmatter type: group 或等效域级元数据、域说明、分组导航表、hidden toctree 含 physics/index）
+  - 创建 `doc/bundles/kexue/physics/index.md`（group 型：分组说明、bundle 列表表、toctree 含 physics-classics-reading/index）
+  - 创建 `doc/bundles/kexue/physics/physics-classics-reading/` 目录树
 - **FR-2 R 阶段事实采集（facts.md）**
   - 对 12 部核心元典逐部采集：外文原名、作者生卒年、首版年份/出版者/原始语言、篇章结构、公有领域状态判定依据、权威全文 URL（≥1 个实际验证可达）、权威英译本、权威中译本（出版社/译者/年份/ISBN 可查项）
   - 对 8+ 个在线信源门户采集：名称、网址、收录范围、使用条款（版权声明）
@@ -98,7 +98,7 @@ source: "User Request"
 ### AC-1: 新域与分组结构存在且 toctree 完整
 - **Type**: `rule`
 - **Given**: 知识包生成完成
-- **When**: 检查 doc/bundles/science/ 目录树
+- **When**: 检查 doc/bundles/kexue/ 目录树
 - **Then**: 存在 science/index.md、science/physics/index.md、physics-classics-reading/ 完整目录（concepts/examples/references 子目录 + index.md + log.md + facts.md + insights.md）
 - **Pass Condition**: 目录与文件全部存在；`invoke gates.toctrees` 通过（无孤立文档、无断链、bundle 根 index 完整）
 - **Evidence**: 目录树清单 + gates.toctrees 命令输出

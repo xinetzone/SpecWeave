@@ -25,7 +25,7 @@
   - [x] SubTask 7.1: `check-utf8.py` 退出码 0（5821 文件）；`check-toctrees.py` 全库扫描中 yangsheng 范围零问题（两次全库运行输出均不含 yangsheng 条目）；全库退出码 1 的全部 14 项问题均位于 `think/sexology`、`think/classics`（其他会话并行进行中的工作，超出本 spec 范围，按规范不干预）
   - [x] SubTask 7.2: 对照 checklist.md 逐项自查（facts 无因果词 G1=0、insights 四元组 5×4、frontmatter 齐备、相对路径零断链、并发命名冲突已统一修复）
 - [x] Task 8: 原子提交（用户跳过逐项确认后按推荐方案执行；每 commit 显式列文件，UTF-8 无乱码）
-  - [x] SubTask 8.1: commit `37755d28`（detached HEAD，awesome-okf-xs 子模块）：仅 `doc/bundles/think/yangsheng/` 20 文件 +1238 行；经 `git cat-file -p` 验证中文无乱码（stdin 字节流提交规避 GBK 陷阱）
+  - [x] SubTask 8.1: commit `37755d28`（detached HEAD，awesome-okf-xs 子模块）：仅 `doc/bundles/yixue/yangsheng/` 20 文件 +1238 行；经 `git cat-file -p` 验证中文无乱码（stdin 字节流提交规避 GBK 陷阱）
   - [x] SubTask 8.2: 两个导航 index（混入并行会话 classics/sexology 变更）按单职责原则留给并行会话合并提交；commit body 中已注明
 
 # Task Dependencies

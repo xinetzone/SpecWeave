@@ -1,7 +1,7 @@
 # Tasks — create-mawangdui-fangzhong-wiki
 
 > 依赖顺序：T1 → T2/T3/T4/T5（可并行）→ T6 → T7 → T8
-> 实施目录：`projects/awesome-okf-xs/doc/bundles/think/sexology/mawangdui-fangzhong-reading/`
+> 实施目录：`projects/awesome-okf-xs/doc/bundles/sheke/sexology/mawangdui-fangzhong-reading/`
 > 前置必读：`projects/awesome-okf-xs/.agents/rules/frontmatter.md`（OKF v0.2 frontmatter 规范）+ `think/sexology/classics-reading/` 全套文件作为模板参照
 
 - [x] Task 1: R 阶段事实采集与洞察（七概念 R→I）

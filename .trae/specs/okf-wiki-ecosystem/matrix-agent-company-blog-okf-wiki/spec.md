@@ -12,7 +12,7 @@ status: "draft"
 ## 2. 内容敏感度预检（步骤1）
 
 - URL：`mp.weixin.qq.com/s/C5clrnoai50eneYvgP1nLw`，无 `share?code=`/`token=`/邀请码等访问控制参数
-- 判定：**公开内容（Public）** → 标准工作流：spec 位于 `.trae/specs/okf-wiki-ecosystem/matrix-agent-company-blog-okf-wiki/`，产出物位于 `projects/awesome-okf-xs/doc/bundles/ai/ai-agent/`
+- 判定：**公开内容（Public）** → 标准工作流：spec 位于 `.trae/specs/okf-wiki-ecosystem/matrix-agent-company-blog-okf-wiki/`，产出物位于 `projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/`
 
 ## 3. 信源获取（R）
 
@@ -37,7 +37,7 @@ status: "draft"
 | `ai/anthropic/` | ❌ | Anthropic 官方开源生态，Matrix 仅是接入 Claude Code 的第三方产品 |
 | 新建分组 | ❌ | 单篇博文新建分组属过度工程，违反最小变更原则 |
 
-**选定路径**：`projects/awesome-okf-xs/doc/bundles/ai/ai-agent/matrix-zero-person-company/`
+**选定路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/matrix-zero-person-company/`
 
 ## 6. 三层知识拆分（I 阶段，知识地图）
 

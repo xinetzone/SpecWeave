@@ -1,7 +1,7 @@
 # Tasks — 《墨子》OKF 知识包教程
 
 方法论：seven-concepts 场景4（知识沉淀）R→I→E→V→C。
-产出根目录：`projects/awesome-okf-xs/doc/bundles/think/mozi/mozi-reading/`
+产出根目录：`projects/awesome-okf-xs/doc/bundles/guoxue/mozi/mozi-reading/`
 规范前置：实现前先读 `projects/awesome-okf-xs/.agents/rules/frontmatter.md` 与 `.agents/global-core-rules.md`。
 
 - [x] Task 1: R — 信源采集与事实登记（G1）
@@ -17,10 +17,10 @@
 - [x] Task 3: E — 模式萃取（G3），依赖 Task 2
   - [x] 3.1 萃取 ≥2 个可复用阅读模式（如"双源逐字核读法""托名/分层文本三层判读框架"），各含触发场景/核心步骤/反模式/迁移示例，落入 examples 或 concepts 对应章节
 - [x] Task 4: 创建 bundle 骨架与索引，依赖 Task 1
-  - [x] 4.1 新建 `bundles/think/mozi/index.md`（分组 index + toctree）
-  - [x] 4.2 新建 `bundles/think/mozi/mozi-reading/index.md`（bundle 根：导航/定位/快速开始/学习路径 + toctree）
+  - [x] 4.1 新建 `bundles/guoxue/mozi/index.md`（分组 index + toctree）
+  - [x] 4.2 新建 `bundles/guoxue/mozi/mozi-reading/index.md`（bundle 根：导航/定位/快速开始/学习路径 + toctree）
   - [x] 4.3 建立 `concepts/`、`examples/`、`references/` 目录与各自 index.md（含 toctree）
-  - [x] 4.4 更新 `bundles/think/index.md`（分组表行 + toctree）与 `bundles/index.md`（统计数字、think 域行、描述句、mermaid 节点）
+  - [x] 4.4 更新 `bundles/guoxue/index.md`（分组表行 + toctree）与 `bundles/index.md`（统计数字、think 域行、描述句、mermaid 节点）
 - [x] Task 5: 生成 concepts/ 9 篇核心概念，依赖 Task 1/2/3（各篇可并行）
   - [x] 5.1 00-who-is-mozi：墨子其人（生平、与儒之辩、工匠出身、止楚攻宋）
   - [x] 5.2 01-text-versions：《墨子》版本源流与注本谱系（道藏本→毕沅→孙诒让）

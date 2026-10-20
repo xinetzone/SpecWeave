@@ -18,8 +18,8 @@
 - [x] 全部新增文档 frontmatter 符合 OKF v0.2（type/generated/verified/status/stale_after）
 - [x] bundle 根 index.md 及各子目录 index.md 均含 toctree 且引用全部文档（gates toctree 对 guiguzi 0 错误）
 - [x] 文件名 kebab-case 纯英文；正文中文；交叉引用为相对路径无断链、无 file:///
-- [x] `bundles/think/guiguzi/` 分组 index 与 toctree 完整
-- [x] `bundles/think/index.md` 与 `bundles/index.md` 统计数字、分组表行、toctree 已同步更新
+- [x] `bundles/guoxue/guiguzi/` 分组 index 与 toctree 完整
+- [x] `bundles/guoxue/index.md` 与 `bundles/index.md` 统计数字、分组表行、toctree 已同步更新
 
 ## 交付验证
 - [x] `invoke gates.all`（在 projects/awesome-okf-xs）：utf8 + toctrees 均通过（guiguzi 0 错误；整体 29 处失败均来自其它在建 bundle，非本 bundle 原因）

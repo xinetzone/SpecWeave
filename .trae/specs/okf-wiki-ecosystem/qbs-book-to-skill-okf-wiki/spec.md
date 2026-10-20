@@ -71,7 +71,7 @@ jishu/ai/qbs-book-to-skill/
 | `jishu/ai/ai-agent/` 分组 | ❌ | 该分组定位为"Agent 运行时框架与架构模式"（工具调用循环/多代理编排/Coding Agent 源码），本文章为方法论而非运行框架 |
 | 新建分组 | ❌ | 单篇博文新建分组属过度工程，违反最小变更原则 |
 
-**选定**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/qbs-book-to-skill/`
+**选定**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/learning/qbs-book-to-skill/`
 
 **幂等检查**：目标 bundle 目录不存在；`book-to-skill` 为同名近似的**不同实体**（开源工具，非本源文章），无覆盖风险。全库 Grep `qbs` 无既有知识包。
 

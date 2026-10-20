@@ -11,8 +11,8 @@ status: awaiting-approval
 # 任务计划（tasks.md）
 
 > 对应 spec.md 的 AC-R1~R13（rule）与 AC-Q1~Q5（rubric）。任务级测试需求（TR）仅引用 rule/rubric。
-> 工作目录：`d:\spaces\SpecWeave\projects\awesome-okf-xs`（下称子模块根）；新增文件均在 `doc/bundles/think/fangzhong/` 下。
-> 范本：`doc/bundles/think/daoyi/daoyi-reading/`（已暂存未提交的他会话产物，结构/frontmatter/toctree/编号体例照此）与 `doc/bundles/think/laozi/boshu-reading/`。
+> 工作目录：`d:\spaces\SpecWeave\projects\awesome-okf-xs`（下称子模块根）；新增文件均在 `doc/bundles/yixue/fangzhong/` 下。
+> 范本：`doc/bundles/yixue/daoyi/daoyi-reading/`（已暂存未提交的他会话产物，结构/frontmatter/toctree/编号体例照此）与 `doc/bundles/guoxue/laozi/boshu-reading/`。
 > ⚠️ 本任务含 R 阶段在线调研（WebSearch/WebFetch 核验 URL 与书目），T2/T8 的事实与链接以执行时实测为准，本文件大纲仅为采集范围。
 
 ## 任务依赖图
@@ -47,23 +47,23 @@ T0 WIP隔离+基线实测（git status/HEAD计数/门禁试跑）
 
 | 类别 | 路径 | 处置 |
 |------|------|------|
-| 已暂存(A) | `doc/bundles/think/daoyi/` 下 23 文件（daoyi-reading 束 + daoyi/index.md，他会话产物） | 移出入隔离区 + `git reset HEAD` 取消暂存（记录清单供 T14 重新暂存） |
+| 已暂存(A) | `doc/bundles/yixue/daoyi/` 下 23 文件（daoyi-reading 束 + daoyi/index.md，他会话产物） | 移出入隔离区 + `git reset HEAD` 取消暂存（记录清单供 T14 重新暂存） |
 | 未暂存改(M) | `doc/bundles/index.md`（他会话 WIP：frontmatter 296/39/14、正文 300、含 tcm 标签） | 备份至隔离区后 `git restore` 回 HEAD 版，T11 在 HEAD 基线上加本束计数 |
-| 未暂存改(M) | `doc/bundles/think/mozi/mozi-reading/concepts/04-mohist-canons.md`、`05-defensive-warfare.md` | **不动**（已跟踪文件，不影响结构，不在本任务 pathspec 内） |
-| 未跟踪(??) | `doc/bundles/tcm/`、`think/buddhism/`、`think/confucian/`、`think/guiguzi/`、`think/huangdi-neijing/` | 整体移入隔离区 |
-| 干净(==HEAD) | `doc/bundles/think/index.md`——注意：HEAD 版已含 daoyi/buddhism/guiguzi/huangdi-neijing 的表格行与 toctree 条目（他会话此前已提交索引注册、内容未提交，HEAD 树本身处于中间态） | 验证期用**临时精简版**；提交版=HEAD+fangzhong（保留他组注册） |
+| 未暂存改(M) | `doc/bundles/guoxue/mozi/mozi-reading/concepts/04-mohist-canons.md`、`05-defensive-warfare.md` | **不动**（已跟踪文件，不影响结构，不在本任务 pathspec 内） |
+| 未跟踪(??) | `doc/bundles/yixue/tcm/`、`think/buddhism/`、`think/confucian/`、`think/guiguzi/`、`think/huangdi-neijing/` | 整体移入隔离区 |
+| 干净(==HEAD) | `doc/bundles/yixue/index.md`——注意：HEAD 版已含 daoyi/buddhism/guiguzi/huangdi-neijing 的表格行与 toctree 条目（他会话此前已提交索引注册、内容未提交，HEAD 树本身处于中间态） | 验证期用**临时精简版**；提交版=HEAD+fangzhong（保留他组注册） |
 
 **动作**：
 1. 建立隔离区（主仓侧、子模块树之外——清理-保护域隔离原则）：`d:\spaces\SpecWeave\.temp\active\fangzhong-wip-quarantine\`，下按相对结构 `bundles/` 摆放。
 2. 全量记录 `git status --short` 与各未跟踪目录文件数（供 T14 核对还原）。
 3. `git show HEAD:doc/bundles/index.md` 记录**已提交基线** frontmatter 计数（total_bundles/groups/domains）、正文计数句、think 节束/组计数、mermaid think 标签原文——T11 在此基线上净增 1 组 1 束。
-4. 移动 5 个未跟踪目录与 `think/daoyi/` 至隔离区；`git reset HEAD doc/bundles/think/daoyi`（取消暂存，磁盘文件已移走）；备份 WIP 版 `bundles/index.md` 至隔离区后 `git restore doc/bundles/index.md` 回到 HEAD。
+4. 移动 5 个未跟踪目录与 `think/daoyi/` 至隔离区；`git reset HEAD doc/bundles/yixue/daoyi`（取消暂存，磁盘文件已移走）；备份 WIP 版 `bundles/index.md` 至隔离区后 `git restore doc/bundles/index.md` 回到 HEAD。
 5. 生成**临时验证版** `think/index.md`：HEAD 内容移除 daoyi/buddhism/guiguzi/huangdi-neijing 四组的表格行与 toctree 条目（保留 psi/laozi/zhuangzi/mozi/yinyangjia/legalism/huangdi），加入 fangzhong 行与 `fangzhong/index` 条目（正式内容 T10 写入，此版仅结构占位验证用，T10 重写）。
 6. 在隔离态运行 `python scripts/check-toctrees.py` 与 `python scripts/check-utf8.py`，确认退出码 0（验证隔离策略有效：HEAD 树 + 本束占位可达）。
 - TR：rule（隔离后 `git status --short` 不含 6 个 WIP 目录；daoyi 暂存已清空；两脚本退出码 0；基线计数已记录）。
 
 ### T1 [high] 创建束骨架
-- 新建目录 `doc/bundles/think/fangzhong/fangzhong-reading/{concepts,examples,references}`。
+- 新建目录 `doc/bundles/yixue/fangzhong/fangzhong-reading/{concepts,examples,references}`。
 - TR：rule AC-R1（目录存在）。
 
 ## Phase 1：R→F 事实登记
@@ -183,7 +183,7 @@ T0 WIP隔离+基线实测（git status/HEAD计数/门禁试跑）
 
 ## Phase 4：索引更新
 
-### T10 [high] 更新 `doc/bundles/think/index.md`
+### T10 [high] 更新 `doc/bundles/yixue/index.md`
 - 在 T0 临时验证版基础上**重写为正式版**：HEAD 全部既有行（psi/laozi/zhuangzi/mozi/yinyangjia/buddhism/guiguzi/legalism/huangdi/huangdi-neijing/daoyi——他组注册保留不动）+ 新增 fangzhong 表格行（🏮 房中（Fangzhong）知识包 | 中国古代性文化典籍——《汉志》房中八家、马王堆出土、《医心方》佚文、《双梅景闇》辑本、医家性医学、道教双修论与现代学术的权威文献学阅读教程）与 toctree `fangzhong/index` 条目；description 句补"房中"。
 - TR：rule AC-R4（think 部分）。
 
@@ -196,7 +196,7 @@ T0 WIP隔离+基线实测（git status/HEAD计数/门禁试跑）
 
 ### T12 [high] 机器质量门（WIP 隔离态下）
 - 子模块根依次运行：`python scripts/check-toctrees.py`（退出码0）、`python scripts/check-utf8.py`（退出码0）、`invoke build`（构建成功，无 toctree/断链/frontmatter 错误）。
-- 补充结构核查：`python scripts/check-toctrees.py doc/bundles/think/fangzhong`（路径模式仅断链检查，验证本束全部 index 引用可解析）。
+- 补充结构核查：`python scripts/check-toctrees.py doc/bundles/yixue/fangzhong`（路径模式仅断链检查，验证本束全部 index 引用可解析）。
 - 说明：隔离态 think/index.md 为 T0 临时精简版（不含被隔离的 daoyi/buddhism/guiguzi/huangdi-neijing 注册）；T15 提交版为 T10 正式版（HEAD+fangzhong，保留他组注册），二者差异仅为他会话未提交组的注册行——HEAD 树该中间态为既有事实，非本任务引入。
 - 任一失败：回 T4-T11 修复后重跑。
 - TR：rule AC-R5。
@@ -214,7 +214,7 @@ T0 WIP隔离+基线实测（git status/HEAD计数/门禁试跑）
 
 ### T15 [high] 子模块内原子提交（WIP 仍处隔离态）
 - 提交前确认 think/index.md 已换回 T10 正式版（HEAD+fangzhong）、bundles/index.md 为 T11 版本（HEAD+fangzhong）。
-- `git add` 仅以下路径（正斜杠）：`doc/bundles/think/fangzhong`（整个新目录，含分组页与束）、`doc/bundles/think/index.md`、`doc/bundles/index.md`。
+- `git add` 仅以下路径（正斜杠）：`doc/bundles/yixue/fangzhong`（整个新目录，含分组页与束）、`doc/bundles/yixue/index.md`、`doc/bundles/index.md`。
 - `git status` 确认暂存清单恰为上述路径，不含 daoyi/mozi/tcm 等任何他会话产物。
 - message：`docs(bundles): 新增房中典籍阅读 fangzhong-reading 知识束——中国古代性文化典籍六层权威原文与信源`（body 详列：R→F→I→E→V→C、facts 100+条零推测、9概念+3示例+4信源、在线信源矩阵全部访问核验、辑本托名双修争议分层标注、学术边界声明、gates/build 通过、计数净增 1 组 1 束）。
 - 主仓不执行任何 git 操作（gitlink 不动）。
@@ -222,7 +222,7 @@ T0 WIP隔离+基线实测（git status/HEAD计数/门禁试跑）
 
 ### T14 [high] 还原 WIP（必做收尾，即使失败也必须执行）
 1. 将隔离区 6 个目录移回原位：`tcm/`、`think/buddhism/`、`think/confucian/`、`think/guiguzi/`、`think/huangdi-neijing/`、`think/daoyi/`（移回 doc/bundles/ 对应位置）；
-2. `git add doc/bundles/think/daoyi`（恢复他会话原暂存状态，按 T0 记录的 23 文件清单核对）；
+2. `git add doc/bundles/yixue/daoyi`（恢复他会话原暂存状态，按 T0 记录的 23 文件清单核对）；
 3. 将隔离区备份的 WIP 版 `bundles/index.md` 覆盖回工作区（恢复他会话未暂存改动状态；注意该版本不含 fangzhong 计数——他会话 rebase 时自行合并，隔离区备份保留至用户确认后再删）；
 4. mozi 两个改动文件全程未动，核对仍为 ` M` 状态；
 5. 核对 `git status --short` 与 T0 记录一致（daoyi 23 文件 `A`、bundles/index.md ` M`、mozi×2 ` M`、5 目录 `??`），文件数一致。

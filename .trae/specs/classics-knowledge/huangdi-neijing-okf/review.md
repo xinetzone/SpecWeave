@@ -4,7 +4,7 @@
 
 | 项 | 内容 |
 |---|---|
-| 审查对象 | `projects/awesome-okf-xs/doc/bundles/think/huangdi-neijing/neijing-reading/`（bundle 根，32 个 .md）及分组落地页 `huangdi-neijing/index.md`（1 个），合计 33 个 .md |
+| 审查对象 | `projects/awesome-okf-xs/doc/bundles/yixue/huangdi-neijing/neijing-reading/`（bundle 根，32 个 .md）及分组落地页 `huangdi-neijing/index.md`（1 个），合计 33 个 .md |
 | 规格依据 | `.trae/specs/classics-knowledge/huangdi-neijing-okf/spec.md`（AC-1~AC-10）、`tasks.md` |
 | 审查员 | 独立验收审查子代理（fresh context，未参与生成，对抗式审查） |
 | 审查日期 | 2026-08-31 |

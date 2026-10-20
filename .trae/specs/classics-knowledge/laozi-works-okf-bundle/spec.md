@@ -22,7 +22,7 @@ source: 出土文献整理本（郭店楚简/马王堆帛书/北大汉简）+ �
 
 ## What Changes
 
-- 新增 OKF bundle 目录 `projects/awesome-okf-xs/doc/bundles/think/laozi/laozi-works/`
+- 新增 OKF bundle 目录 `projects/awesome-okf-xs/doc/bundles/guoxue/laozi/laozi-works/`
 - 按 OKF v0.2 规范建立三层结构：`concepts/`（核心概念）、`text/`（出土文献原文）、`commentaries/`（权威解读）、`references/`（信源登记簿）
 - 新增方法论文档：`facts.md`（R 阶段事实清单）、`insights.md`（I 阶段洞察）、`patterns.md`（E 阶段可复用模式）
 - 更新 `think/laozi/index.md`，将新 bundle 纳入其 toctree 与知识包列表

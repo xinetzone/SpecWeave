@@ -1,6 +1,6 @@
 # Tasks
 
-> 链路：seven-concepts 场景4（知识沉淀）R→I→E→V→C。所有产物位于 `projects/awesome-okf-xs/doc/bundles/think/yinyangjia/`（子模块内开发）。
+> 链路：seven-concepts 场景4（知识沉淀）R→I→E→V→C。所有产物位于 `projects/awesome-okf-xs/doc/bundles/guoxue/yinyangjia/`（子模块内开发）。
 
 - [x] Task 1: R 阶段——信源采集与事实登记（G1）
   - [x] SubTask 1.1: 采集书志源流信源：《汉书·艺文志》阴阳家著录全目（二十一家三百六十九篇逐家登记）、《史记·孟子荀卿列传》邹衍传、司马谈《论六家要旨》阴阳家评述（ctext.org + 维基文库双源）
@@ -18,7 +18,7 @@
   - [x] SubTask 4.1: 四视角审查（魔鬼代言人/新人/老板/未来）：重点抽查 10 条 facts.md 事实与信源一致性、A/B/C 三层标注是否被混用、佚文是否被夸大为"完整原文"（审查记录见本目录 review.md）
   - [x] SubTask 4.2: 审查意见 ≥5 条且具体，至少采纳 2 条修正产物，记录审查与修正过程（Q-01～Q-07，06-legacy.md 第五节含 Q-07 显式决策段）
 - [x] Task 5: 生成 bundle 内容文档
-  - [x] SubTask 5.1: 创建 `bundles/think/yinyangjia/yinyangjia/index.md`（bundle 根：定位 + 存佚总览 + 学习路径 + toctree）
+  - [x] SubTask 5.1: 创建 `bundles/guoxue/yinyangjia/yinyangjia/index.md`（bundle 根：定位 + 存佚总览 + 学习路径 + toctree）
   - [x] SubTask 5.2: 撰写 `concepts/` 7 篇：what-is-yinyangjia（学派定位与六家要旨评述）/ bibliography-and-survival（艺文志著录与亡佚考证）/ zou-yan（邹衍生平与学说）/ wude-zhongshi（五德终始说解读）/ surviving-texts（传世文献中的阴阳家材料）/ reconstruction-history（辑佚史与历代考据）/ legacy（影响与流变）
   - [x] SubTask 5.3: 撰写 `examples/` 2 篇：yingtong-reading（《吕氏春秋·应同》逐句精读）/ reading-plan（阴阳家文献通读计划）
   - [x] SubTask 5.4: 撰写 `references/` 3 篇：sources（权威底本与信源登记）/ scholarship（辑佚本与现代研究分级表）/ cross-ref（与 laozi、guiguzi 等束交叉引用）

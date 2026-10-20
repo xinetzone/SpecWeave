@@ -1,7 +1,7 @@
 # Checklist
 
 ## Bundle 结构与规范
-- [x] `agent-skills-spec` bundle 创建于 `doc/bundles/ai/ai-agent/` 下，含 index.md、log.md、concepts/、examples/、references/ 标准结构（AC-R1）
+- [x] `agent-skills-spec` bundle 创建于 `doc/bundles/jishu/ai/frameworks/ai-agent/` 下，含 index.md、log.md、concepts/、examples/、references/ 标准结构（AC-R1）
 - [x] 根 index.md 含 `okf_version: "0.2"` 声明（AC-R2）
 - [x] 各子目录 index.md 无 frontmatter 且含 `{toctree}` 块，收录本目录全部内容文档（AC-R2）
 - [x] 所有非保留 .md 文件含有效 YAML frontmatter，type 字段非空（AC-R3）

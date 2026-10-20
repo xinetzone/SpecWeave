@@ -1,7 +1,7 @@
 ---
 type: Report
 title: invocations bundle 对抗性审查报告
-description: 对 awesome-okf-xs doc/bundles/build/tooling/invocations 全部 22 文件的引用与 vendor 4.1.0 源码逐项对账，识别确定性漂移/疑似漂移/无问题
+description: 对 awesome-okf-xs doc/bundles/jishu/build/tooling/invocations 全部 22 文件的引用与 vendor 4.1.0 源码逐项对账，识别确定性漂移/疑似漂移/无问题
 tags: [invocations, adversarial-review, bundle, drift, okf]
 generated: { by: "process:seven-concepts-v", at: "2026-08-24T00:00:00Z" }
 verified: { by: "process:seven-concepts-v", at: "2026-08-24" }
@@ -19,7 +19,7 @@ sources:
 
 ## 1. 审查范围
 
-`projects/awesome-okf-xs/doc/bundles/build/tooling/invocations/` 共 22 文件：
+`projects/awesome-okf-xs/doc/bundles/jishu/build/tooling/invocations/` 共 22 文件：
 - 根：`index.md`、`log.md`（2）
 - concepts：`00-introduction` ~ `10-composition-patterns` + `index.md`（12）
 - examples：`basic-usage`/`custom-release-flow`/`file-watch-auto-test`/`multi-site-docs`/`test-install-verification` + `index.md`（6）
@@ -52,7 +52,7 @@ sources:
 - **证据**：
   - `invocations/packaging/release.py` 全文 **无** `find_opts` 读取
   - `find_opts` 实际属于 `checks.blacken`（`invocations/checks.py` 读取 `c.config.get("blacken", {})` 的 `find_opts`）
-  - [concepts/02-checks-formatting.md#L72-L77](file:///d:/spaces/SpecWeave/projects/awesome-okf-xs/doc/bundles/build/tooling/invocations/concepts/02-checks-formatting.md#L72-L77) **正确**地将 `find_opts` 归入 `blacken` 配置，反证 05 误写
+  - [concepts/02-checks-formatting.md#L72-L77](file:///d:/spaces/SpecWeave/projects/awesome-okf-xs/doc/bundles/jishu/build/tooling/invocations/concepts/02-checks-formatting.md#L72-L77) **正确**地将 `find_opts` 归入 `blacken` 配置，反证 05 误写
 - **影响**：误导读者以为 release 支持 `packaging.find_opts`；按此配置不生效
 - **处理**：Task 4 从 `packaging` 配置块移除 `find_opts`
 

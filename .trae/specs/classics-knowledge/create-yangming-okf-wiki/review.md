@@ -4,7 +4,7 @@
 
 | 项 | 内容 |
 |----|------|
-| 审查对象 | `projects/awesome-okf-xs/doc/bundles/think/yangming/`（git 子模块内，组索引 + 5 束共 73 个 .md） |
+| 审查对象 | `projects/awesome-okf-xs/doc/bundles/guoxue/yangming/`（git 子模块内，组索引 + 5 束共 73 个 .md） |
 | 审查基准 | `.trae/specs/classics-knowledge/create-yangming-okf-wiki/spec.md`（AC-1~AC-8、FR-1~FR-10、NFR-1~NFR-4）、`tasks.md`（T1~T8） |
 | 审查员 | 独立 fresh-context 代理（Spec Mode 委托，对抗性审查；未参与生成） |
 | 审查日期 | 2026-09-01 |
@@ -184,7 +184,7 @@
 审查收尾阶段发现子模块 HEAD 由被审提交 `0dfd2361` 变为合并提交 `139c175f`（「Merge branches 'main' and 'main' …」，系并行会话合并远端，并入 workplace/sexology/ai-agent/terminal-textualize 等他方束）。审查员即时复核：
 
 - `git merge-base --is-ancestor 0dfd2361 HEAD` → exit 0：**被审提交 0dfd2361 已包含于当前 HEAD 历史**；
-- `git diff 0dfd2361 HEAD -- doc/bundles/think/yangming/` → **空输出**：合并未改动 yangming 任何文件，本报告全部证据持续有效；
+- `git diff 0dfd2361 HEAD -- doc/bundles/guoxue/yangming/` → **空输出**：合并未改动 yangming 任何文件，本报告全部证据持续有效；
 - 最终态（HEAD=139c175f，工作树 clean）重跑门控：`check-toctrees.py` exit 0（全部引用有效、内容可达）；`check-bundles-index.py` exit 0（**17 域 / 75 组 / 363 束**，计数较审查中期 359/74 增长系并入并行会话束所致，五面一致，无 yangming 对账问题）；
 - 合并提交由他方会话完成，未混入 yangming 变更；审查员未在子模块执行任何写操作（无 MERGE_HEAD 滞留）。
 

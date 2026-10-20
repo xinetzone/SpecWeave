@@ -15,7 +15,7 @@ status: "draft"
 
 ## Why
 
-`projects/awesome-okf-xs/doc/bundles/think/sexology/classics-reading/concepts/02-eastern-western-classics.md` 对印度《欲经》（Kāmasūtra）与罗马奥维德《爱经》（Ars Amatoria）仅有概览性介绍：《欲经》的七品结构、注疏传统、伯顿译本的"二次发现"细节、多尼格学术译本的解读框架均无从展开；《爱经》的三卷结构、哀歌体诗学、"一首诗和一个错误"放逐公案的学术讨论、中世纪禁毁与重估史也只有一句话。两部古典是"以术论欲"传统中与中国房中文献并置阅读的枢纽（该文档第三节已给出对照表），读者需要一份以"文本结构为经、译介与接受史为纬"的双经典专题阅读教程知识包。
+`projects/awesome-okf-xs/doc/bundles/sheke/sexology/classics-reading/concepts/02-eastern-western-classics.md` 对印度《欲经》（Kāmasūtra）与罗马奥维德《爱经》（Ars Amatoria）仅有概览性介绍：《欲经》的七品结构、注疏传统、伯顿译本的"二次发现"细节、多尼格学术译本的解读框架均无从展开；《爱经》的三卷结构、哀歌体诗学、"一首诗和一个错误"放逐公案的学术讨论、中世纪禁毁与重估史也只有一句话。两部古典是"以术论欲"传统中与中国房中文献并置阅读的枢纽（该文档第三节已给出对照表），读者需要一份以"文本结构为经、译介与接受史为纬"的双经典专题阅读教程知识包。
 
 ## What Changes
 
@@ -41,7 +41,7 @@ status: "draft"
 
 - **Affected specs**: `create-sexology-classics-wiki`（已完成，仅新增交叉引用，不改变其已交付内容）；与未实施的 `create-mawangdui-fangzhong-wiki` / `create-fangzhong-bajia-wiki` 为同分组平行纵深关系（计数以实施时磁盘状态核对）
 - **Affected code**（均为文档资产，无代码）:
-  - 新建：`projects/awesome-okf-xs/doc/bundles/think/sexology/eastern-western-classics-reading/**`（约 22 个文件：index 1 + facts/insights/log 3 + concepts 9 + examples 4 + references 5）
+  - 新建：`projects/awesome-okf-xs/doc/bundles/sheke/sexology/eastern-western-classics-reading/**`（约 22 个文件：index 1 + facts/insights/log 3 + concepts 9 + examples 4 + references 5）
   - 修改：`think/sexology/index.md`、`bundles/index.md`、`classics-reading/concepts/02-eastern-western-classics.md`（仅加链接）
   - 更新：`.trae/specs/README.md`、`.trae/specs/standards-tools/README.md`
 - **不涉及**：git commit（除非用户明确要求）、vendor 区、任何代码构建逻辑

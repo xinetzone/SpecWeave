@@ -7,7 +7,7 @@ status: "draft"
 
 ## 基本信息
 - bundle_name: threeui
-- 路径: projects/awesome-okf-xs/doc/bundles/ai/trae/threeui/
+- 路径: projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/threeui/
 - 骨架: 商业分析/战略资讯（index + concepts + references + log，无examples）
 - 事实数: 41 (F-001~F-043, F-041~F-043为勘误补充)
 - P0核验: 4✅ 3⚠️ 0❌

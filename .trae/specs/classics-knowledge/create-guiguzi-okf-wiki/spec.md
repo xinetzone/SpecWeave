@@ -16,8 +16,8 @@ content-sensitivity: Public（《鬼谷子》原文属公共领域古籍，解�
 
 ## What Changes
 
-- 新增分组 `bundles/think/guiguzi/`（鬼谷子经典分组，仿 `think/laozi/`、`think/huangdi/` 三层模式：域→组→束）
-- 新增知识包 `bundles/think/guiguzi/guiguzi/`：
+- 新增分组 `bundles/guoxue/guiguzi/`（鬼谷子经典分组，仿 `think/laozi/`、`think/huangdi/` 三层模式：域→组→束）
+- 新增知识包 `bundles/guoxue/guiguzi/guiguzi/`：
   - `index.md`（bundle 根，快速导航 + 定位 + 学习路径）
   - `concepts/`（7 篇核心概念：什么是鬼谷子 / 版本源流 / 作者与成书之争 / 原文全录与篇目存佚 / 核心概念解读 / 历代注家与立场 / 影响与纵横家传统）
   - `examples/`（2 篇实操：捭阖篇逐句精读、通读计划）
@@ -33,7 +33,7 @@ content-sensitivity: Public（《鬼谷子》原文属公共领域古籍，解�
 ## Impact
 
 - Affected specs: `laozi-lineage-okf-bundle`、`boshu-laozi-wiki`、`create-yinfujing-okf-wiki`（仅通过 references/cross-ref.md 交叉引用，不修改其产物）
-- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/think/` 新增文件与两处索引更新；提交发生在子模块仓库内，主仓 gitlink 变更需一并同步（如适用）
+- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/guoxue/` 新增文件与两处索引更新；提交发生在子模块仓库内，主仓 gitlink 变更需一并同步（如适用）
 - 不修改任何既有 bundle 内容；不修改 SpecWeave 主仓其他文件
 
 ## ADDED Requirements

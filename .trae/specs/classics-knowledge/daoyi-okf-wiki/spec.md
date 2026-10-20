@@ -19,7 +19,7 @@ status: "pending-approval"
 2. **真伪层累、托名成风**：道医文献中托名上古圣贤（华佗、扁鹊、陶弘景、吕祖）的现象普遍，《中藏经》《辅行诀脏腑用药法要》《医道还元》《扁鹊心书》《华佗神医秘传》等书的成书年代与真伪在学界存在分歧；坊间亦有学术权威性低的读物（如祝守明《道医讲义》、王爱品《道医论》）被网络当作权威引用。
 3. **缺乏可信赖的教程式入口**：现有资料要么是学术专著（盖建民《道教医学》等，面向研究者），要么是门户罗列的典籍清单（无阅读路径、无版本指导、无辨伪提示），读者无法回答“从哪部开始读、读哪个版本、在线全文去哪里找、哪些说法不可信”。
 
-目标库 `awesome-okf-xs` 的 `doc/bundles/think/`（思想与理论域）已有 psi（4 束）、laozi（1 束）两个已注册分组，尚无覆盖道医/中医经典的知识束。
+目标库 `awesome-okf-xs` 的 `doc/bundles/yixue/`（思想与理论域）已有 psi（4 束）、laozi（1 束）两个已注册分组，尚无覆盖道医/中医经典的知识束。
 
 ## 2. 用户与使用场景（Users）
 
@@ -33,7 +33,7 @@ status: "pending-approval"
 
 ## 3. 目标（Goals）
 
-* **G1**：在 `doc/bundles/think/daoyi/` 下新建分组与单束总览教程 `daoyi-reading`，以 OKF v0.2 知识包形态（concepts/examples/references 三层 + facts/insights/log）系统呈现广义道医著作的权威原文与解读。
+* **G1**：在 `doc/bundles/yixue/daoyi/` 下新建分组与单束总览教程 `daoyi-reading`，以 OKF v0.2 知识包形态（concepts/examples/references 三层 + facts/insights/log）系统呈现广义道医著作的权威原文与解读。
 
 * **G2**：内容覆盖用户已拍板的**广义道医六层**：①中医元典的道家根源；②道门医家（葛洪、陶弘景、孙思邈）；③道藏医书与养生内丹文献；④出土方技文献；⑤医道会通流派；⑥现代学术研究。
 
@@ -53,7 +53,7 @@ status: "pending-approval"
 
 * **N4**：不修改 awesome-okf-xs 的 `.agents/`、`doc/conf.py`、scripts 等基建文件。
 
-* **N5**：不处理、不提交、不删改其他会话遗留在工作区的未跟踪在建目录（`doc/bundles/tcm/`、`doc/bundles/think/confucian/`、`doc/bundles/think/guiguzi/`、`doc/bundles/think/legalism/`、`doc/bundles/think/mozi/`）；验证期间临时隔离、验证后原样还原。
+* **N5**：不处理、不提交、不删改其他会话遗留在工作区的未跟踪在建目录（`doc/bundles/yixue/tcm/`、`doc/bundles/guoxue/confucian/`、`doc/bundles/guoxue/guiguzi/`、`doc/bundles/guoxue/legalism/`、`doc/bundles/guoxue/mozi/`）；验证期间临时隔离、验证后原样还原。
 
 * **N6**：不变更主仓（SpecWeave）的 gitlink 与主仓任何文件；提交仅发生在 awesome-okf-xs 子模块仓库内。
 
@@ -153,7 +153,7 @@ status: "pending-approval"
 
 | 编号     | 验收标准                                                                                                                                                                                                                                        |
 | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| AC-R1  | 束目录 `doc/bundles/think/daoyi/daoyi-reading/` 存在，含 index.md、facts.md、insights.md、log.md 及 concepts/（index.md + 00-08 共 9 篇）、examples/（index.md + 01-03 共 3 篇）、references/（index.md + 01-04 共 4 篇）；分组页 `doc/bundles/think/daoyi/index.md` 存在。 |
+| AC-R1  | 束目录 `doc/bundles/yixue/daoyi/daoyi-reading/` 存在，含 index.md、facts.md、insights.md、log.md 及 concepts/（index.md + 00-08 共 9 篇）、examples/（index.md + 01-03 共 3 篇）、references/（index.md + 01-04 共 4 篇）；分组页 `doc/bundles/yixue/daoyi/index.md` 存在。 |
 | AC-R2  | 每个非保留 .md 均有 YAML frontmatter 且含非空 `type`；束根 type: OKF 且含 okf\_version: “0.2”；分组页 type: group；概念/示例/信源页 type 分别为 Concept/Example/Reference。                                                                                                 |
 | AC-R3  | 束根 toctree 收录 concepts/index、examples/index、references/index、facts、insights、log；三个子目录 index.md 的 toctree 完整收录各自全部内容页；think/daoyi/index.md 收录 daoyi-reading/index。                                                                           |
 | AC-R4  | think/index.md 分组表含 daoyi 行且 toctree 含 daoyi/index；bundles/index.md frontmatter 为 total\_bundles: 287、groups: 33、domains: 13，正文计数同步，think 节标题为“6 束 · 3 组”且分组表含 daoyi 行，两处 mermaid 的 think 标签包含 daoyi。                                       |

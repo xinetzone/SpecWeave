@@ -1,6 +1,6 @@
 # V 阶段独立对抗评审报告（fangzhong-bajia-reading）
 
-> 评审时间：2026-08-31 ｜ 评审方式：新鲜上下文子代理只读评审（四视角）｜ 评审对象：`projects/awesome-okf-xs/doc/bundles/think/sexology/fangzhong-bajia-reading/`（22 文件全量覆盖）
+> 评审时间：2026-08-31 ｜ 评审方式：新鲜上下文子代理只读评审（四视角）｜ 评审对象：`projects/awesome-okf-xs/doc/bundles/sheke/sexology/fangzhong-bajia-reading/`（22 文件全量覆盖）
 
 ## 结论
 

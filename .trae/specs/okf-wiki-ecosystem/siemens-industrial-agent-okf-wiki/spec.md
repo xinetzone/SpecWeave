@@ -11,7 +11,7 @@ status: "draft"
 
 ## 产出位置
 
-- Bundle：`projects/awesome-okf-xs/doc/bundles/ai/ai-agent/siemens-industrial-agent/`
+- Bundle：`projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/siemens-industrial-agent/`
 - 归属：ai 域 / ai-agent 组（产品资讯序列）
 
 ## 文件骨架（10 文件）

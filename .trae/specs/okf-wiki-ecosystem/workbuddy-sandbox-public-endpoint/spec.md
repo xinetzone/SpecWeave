@@ -57,7 +57,7 @@ jishu/ai/tencent/workbuddy-sandbox-public-endpoint/
 | `jishu/comm/` 或 `jishu/containers/` | ❌ | 虽涉及 HTTPS/反向代理/沙箱，但读者决策入口是 WorkBuddy 产品功能，不是通用通信协议或容器引擎 |
 | 新建分组 | ❌ | 单篇博文新建分组违反最小变更原则 |
 
-**最终路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/tencent/workbuddy-sandbox-public-endpoint/`
+**最终路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/tencent/workbuddy-sandbox-public-endpoint/`
 
 ## 4. 时效性
 

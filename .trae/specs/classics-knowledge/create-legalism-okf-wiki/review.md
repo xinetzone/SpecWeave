@@ -38,5 +38,5 @@
 ## 边界与安全
 
 - [x] 未修改任何既有 bundle 内容与 SpecWeave 主仓既有文件
-- [x] 新增文件仅位于 `projects/awesome-okf-xs/doc/bundles/think/`（及两处索引更新）与 `.trae/specs/classics-knowledge/create-legalism-okf-wiki/`
+- [x] 新增文件仅位于 `projects/awesome-okf-xs/doc/bundles/guoxue/`（及两处索引更新）与 `.trae/specs/classics-knowledge/create-legalism-okf-wiki/`
 - [x] 内容敏感度判定为 Public，产出物路径与级别匹配（公开知识 → `doc/bundles/`）

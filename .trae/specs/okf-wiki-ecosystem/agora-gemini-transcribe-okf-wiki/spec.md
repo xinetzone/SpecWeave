@@ -12,7 +12,7 @@ status: "draft"
 
 ## 产出位置
 
-- Bundle：`projects/awesome-okf-xs/doc/bundles/ai/ai-agent/agora-gemini-transcribe/`
+- Bundle：`projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/agora-gemini-transcribe/`
 - 归属：ai 域 / ai-agent 组（产品资讯序列，组内第 29 个 bundle）
 
 ## 文件骨架（10 文件，无 examples/）

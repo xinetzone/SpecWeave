@@ -8,7 +8,7 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
-  - 新建 `doc/bundles/workplace/hr/hr-profession-map/`
+  - 新建 `doc/bundles/sheke/workplace/hr/hr-profession-map/`
   - facts.md：F 编号事实覆盖证书改革（人社厅发〔2020〕80号、退出时点、社会化等级认定、旧证有效、2019 标准、四级→一级）、经济师人力职称独立序列、osta 查询、岗位版图与薪资框架事实；信源 S1/S2/S15
   - concepts/：01 行政人事岗位版图（行政 vs HR 关系、专员/主管/经理/总监、三支柱岗位映射）、02 证书双轨体系（技能等级认定 vs 职称考试 vs 劳动关系协调员）、03 能力模型与进修路径（选/育/用/留能力树、0-1/1-3/3-5 年学习路线）
   - examples/：01 分阶段进修行动清单、02 证书报考与防骗指南（官方渠道/挂靠骗局/保过班识别）
@@ -28,7 +28,7 @@
 - **Priority**: high
 - **Depends On**: Task 1（域目录已建则无硬依赖，可并行写）
 - **Description**:
-  - 新建 `doc/bundles/workplace/hr/hr-six-modules/`
+  - 新建 `doc/bundles/sheke/workplace/hr/hr-six-modules/`
   - facts.md：六大模块名称与边界、三支柱（COE/HRBP/SSC）定义与分工、选育用留闭环；信源 S15 + 框架佐证信源
   - concepts/：01 六大模块总览、02 三支柱与 Ulrich 模型、03 招聘配置与入职离职、04 培训开发与绩效管理（KPI/OKR 区分）、05 薪酬福利结构（薪资结构/调薪/福利）
   - examples/：01 入职/离职流程清单、02 绩效管理周期实操（目标设定→辅导→评估→反馈）、03 招聘 JD 与面试问题模板
@@ -47,7 +47,7 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
-  - 新建 `doc/bundles/workplace/hr/labor-law-compliance/`
+  - 新建 `doc/bundles/sheke/workplace/hr/labor-law-compliance/`
   - facts.md：F 编号逐条登记——劳动合同法第 10/14/19/39/40/47/83/87 条、劳动法第 36/41/44 条、年休假条例（5/10/15 天、300%）、社保费率（16%/8%、6%/2%、1%、0.2-1.9%、5%-12%）、工伤条例第 14/15/16/17 条、女职工 619 号令（98 天等）、仲裁法第 27 条（1 年时效、劳动报酬特殊时效、仲裁前置）、21.75 月计薪天数；每条标【P0】并挂 S3-S14 信源
   - concepts/：01 劳动合同全周期（订立/试用期/无固定期限/变更/解除终止）、02 经济补偿与赔偿金（N/N+1/2N/83 条试用期赔偿计算树）、03 工时加班与休假（标准工时/加班费/年休假/产假/特殊工时）、04 五险一金合规（费率表/基数/断缴风险/生育合并）、05 工伤认定（7+3+3 情形/申请时限/举证）、06 劳动争议处理（协商→调解→仲裁→诉讼/时效/证据清单）
   - examples/：01 延长试用期违法判例（S4 深圳宝安案例）、02 N/2N 计算示例（含 21.75 折算）、03 HR 合规自查清单 + 争议证据留存清单
@@ -67,7 +67,7 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
-  - 新建 `doc/bundles/workplace/admin/admin-operations/`
+  - 新建 `doc/bundles/sheke/workplace/admin/admin-operations/`
   - facts.md：行政岗职能域实证（来自 S15 JD 汇总：物资/资产/会议/公文/印章/档案/证照/接待/差旅/后勤/预算/安全保密）、固定资产全生命周期环节、印章管理红线（用印登记/不得带出/专人保管）
   - concepts/：01 行政岗职责版图（12 职能域 + 行政与 HR 边界）、02 资产与采购管理（固定资产全生命周期/办公用品/供应商/三家比价）、03 会议接待与差旅（会议全流程/商务接待分级/差旅预订）、04 印章档案与证照（用印审批流/档案分类保管/证照年检）、05 办公环境与安全保密（5S/消防/用电/访客/保密）、06 行政预算与成本管控
   - examples/：01 会议保障全流程清单、02 固定资产盘点表模板 + 用印登记表模板、03 行政年度预算框架
@@ -86,7 +86,7 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
-  - 新建 `doc/bundles/workplace/admin/official-writing/`
+  - 新建 `doc/bundles/sheke/workplace/admin/official-writing/`
   - facts.md：15 种法定公文名称与适用场景（条例第 8 条逐条）、公文格式 18 要素（第 9 条）、行文关系（上行/下行/平行）、条例施行日期（2012-07-01）；信源 S10
   - concepts/：01 15 种法定公文总览（按行文方向分组 + 易混文种辨析：决议vs决定、公告vs通告、报告vs请示）、02 公文格式要素（标题三要素/发文字号/成文日期/印章）、03 职场常用文书（通知/请示/报告/会议纪要/商务邮件/工作总结）、04 写作四原则（实事求是/准确规范/精简高效/安全保密）
   - examples/：01 通知与会议纪要范例、02 报告 vs 请示对比范例、03 商务邮件规范模板（主题/称谓/正文/附件/签名）

@@ -25,7 +25,7 @@ status: "draft"
 
 ## Goals
 
-- 在 `doc/bundles/think/hetu-luoshu/` 下建立合规 OKF v0.2 分组与知识包，文件组织、frontmatter、toctree 与 yinyangjia 束模板一致。
+- 在 `doc/bundles/guoxue/hetu-luoshu/` 下建立合规 OKF v0.2 分组与知识包，文件组织、frontmatter、toctree 与 yinyangjia 束模板一致。
 - 以**名实三层框架**贯穿全部内容：① 先秦两汉文献中的"河图洛书"= 祥瑞名物记载；② 宋代才出现并定型的黑白点数图式；③ 后世术数/民俗的附会运用——三层不混用。
 - 提供可核对的权威原文：公版原典双源核对、异文双录；现代学术结论（图式宋代定型、刘牧/朱熹图名互易、清儒辨伪、凌家滩玉版的推测性质）准确呈现并标注证据层级。
 - 新人可入门：阅读地图、零基础路径、读图实操（点数/方位/幻方验证/卦序推演）。

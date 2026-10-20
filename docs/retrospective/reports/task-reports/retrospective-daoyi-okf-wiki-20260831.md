@@ -50,7 +50,7 @@ tags: ["OKF", "知识包", "道医", "任务总结", "子模块交付"]
 |---|---|---|---|
 | P0 Spec 立项 | 08-30 | spec.md（范围/OKF v0.2 规范）、tasks.md、checklist.md | [.trae/specs/classics-knowledge/daoyi-okf-wiki/](../../../../../.trae/specs/classics-knowledge/daoyi-okf-wiki/spec.md) |
 | P1 事实采集 | 08-30 | 三路信源调研：学术专著（盖建民、胡孚琛、姜生、林富士等）、道藏与在线古籍（识典/维基文库/ctext/道藏阁）、出土方技（马王堆/张家山/老官山/敦煌） | facts.md 116 条，7 前缀分类编号 |
-| P2 内容生成（R→I→E） | 08-30 | 9 篇 concept、3 篇 example（10 段经典原文+阅读路径+现代修习）、4 篇 reference（在线信源/纸本版本/现代研究/辨伪登记） | [think/daoyi/](../../../../../projects/awesome-okf-xs/doc/bundles/think/daoyi/index.md) 24 文件 |
+| P2 内容生成（R→I→E） | 08-30 | 9 篇 concept、3 篇 example（10 段经典原文+阅读路径+现代修习）、4 篇 reference（在线信源/纸本版本/现代研究/辨伪登记） | [think/daoyi/](../../../../projects/awesome-okf-xs/doc/bundles/yixue/daoyi/index.md) 24 文件 |
 | P3 独立审查 | 08-30 | fresh-context 审查员全文件通读 + 机器枚举 + 在线逐字比对 + 对抗性外部抽查 | [review.md](../../../../../.trae/specs/classics-knowledge/daoyi-okf-wiki/review.md)：pass，6 建议 + 2 附注 |
 | P4 修复与提交 | 08-30 22:05 | 6 条建议全部修复（卷次双口径、27 部口径、35 章分章本、349 穴异说、非医疗声明补全、排版） | 子模块 `3a880237`，24 files / +1716 |
 | P5 总索引盘点 | 08-30 晚 | `git ls-tree HEAD` 三级结构盘点，识别锚点组口径，逐域对账 | HEAD=14 域/54 组/317 束 |

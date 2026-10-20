@@ -9,7 +9,7 @@ status: "draft"
 
 `awesome-okf-xs/doc/bundles/` 现有 **28 个顶层分组**，但导航索引严重失同步、主题重叠与碎片化并存：
 
-- 根 [bundles/index.md](../../projects/awesome-okf-xs/doc/bundles/index.md) frontmatter 声明 `total_bundles: 246 / groups: 25`，导航表实际仅列 **17 组**，且 11 组（build、coze、deepseek、fastapi、graphql、katex、laozi、myst、pocketflow、tencent、trae）完全缺失
+- 根 [bundles/index.md](../../../../projects/awesome-okf-xs/doc/bundles/index.md) frontmatter 声明 `total_bundles: 246 / groups: 25`，导航表实际仅列 **17 组**，且 11 组（build、coze、deepseek、fastapi、graphql、katex、laozi、myst、pocketflow、tencent、trae）完全缺失
 - [doc/index.md](../../projects/awesome-okf-xs/doc/index.md) 又声称 **23 组 / 236 束**——三处数字互相矛盾
 - 索引引用的部分路径与磁盘不符（sphinx 声称 10 束实为 3 束、jupyter 声称 4 束实为 ~35 束）
 - 主题重叠/碎片化：构建域分散在 conda/build/cmake/tooling 四组；文档域分散在 sphinx/myst/jupyter-book/katex/jupyter 五组；AI 域分散在 9 组并列
@@ -22,7 +22,7 @@ status: "draft"
 - **物理迁移**：通过 `git mv` 将组目录移入域目录，组内相对链接不受影响
 - **扁平化锚点组**：单束组（meta/okf-spec、python/cpython、build/scikit-build）作为域锚点直接保留（域名复用组名，路径不变），避免 `域/组/束` 过深嵌套
 - **修复全部跨组链接**：约 224 处根绝对链接 `](/group/...` → `](/domain/group/...`，约 121 处相对链接 `](../group/...` 按层级调整
-- **重写根索引** [bundles/index.md](../../projects/awesome-okf-xs/doc/bundles/index.md)：域导航 + 域内分组导航，修正 `total_bundles`/`groups` 计数与实际一致
+- **重写根索引** [bundles/index.md](../../../../projects/awesome-okf-xs/doc/bundles/index.md)：域导航 + 域内分组导航，修正 `total_bundles`/`groups` 计数与实际一致
 - **更新 Sphinx 入口** [doc/index.md](../../projects/awesome-okf-xs/doc/index.md) 计数；Sphinx toctree 仅引用 `bundles/index`，无需改动 conf.py
 - **每批迁移一次原子提交**（Conventional Commits，中文主题）
 
@@ -31,7 +31,7 @@ status: "draft"
 - **Affected specs**: OKF v0.2 bundle 组织（[frontmatter.md](../../projects/awesome-okf-xs/.agents/rules/frontmatter.md) 第 11 节交叉引用规范）
 - **Affected code/文件**:
   - [doc/bundles/](../../projects/awesome-okf-xs/doc/bundles/) 全部 28 组目录迁移
-  - [doc/bundles/index.md](../../projects/awesome-okf-xs/doc/bundles/index.md) 重写
+  - [doc/bundles/index.md](../../../../projects/awesome-okf-xs/doc/bundles/index.md) 重写
   - 10 个新域 `index.md`（`type: group` 或 `domain`）
   - 各域内组 `index.md` 的交叉引用（如指向其他组的链接）
   - [doc/index.md](../../projects/awesome-okf-xs/doc/index.md) 计数
@@ -75,7 +75,7 @@ status: "draft"
 
 ### Requirement: 索引一致性
 系统 SHALL 重写根索引与 Sphinx 入口，使分组、束数与磁盘一致：
-- [bundles/index.md](../../projects/awesome-okf-xs/doc/bundles/index.md)：域导航表 + 每组详情，`total_bundles`/`groups` 取实际盘点值
+- [bundles/index.md](../../../../projects/awesome-okf-xs/doc/bundles/index.md)：域导航表 + 每组详情，`total_bundles`/`groups` 取实际盘点值
 - [doc/index.md](../../projects/awesome-okf-xs/doc/index.md)：修正「N 组 / M 束」计数
 
 #### Scenario: 索引与磁盘一致

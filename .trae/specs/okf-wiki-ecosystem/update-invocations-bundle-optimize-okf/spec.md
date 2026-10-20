@@ -7,7 +7,7 @@ status: "draft"
 
 ## Why
 
-现有 `invocations` OKF 知识包（`projects/awesome-okf-xs/doc/bundles/build/tooling/invocations/`）基于 v4.1.0 创建于 2026-08-21，但源码已重新落入本地 vendor 路径 `external/libs/tools/pyinvoke/invocations`，且 bundle 声称引用的若干模块与真实源码存在偏差（如 `packaging/version.py` 实际不存在）。此外 awesome-okf-xs 项目的文档构建/清理自动化目前直接硬编码在 CI 与 `doc/conf.py` 中，未使用 `invocations` 任务集进行封装。
+现有 `invocations` OKF 知识包（`projects/awesome-okf-xs/doc/bundles/jishu/build/tooling/invocations/`）基于 v4.1.0 创建于 2026-08-21，但源码已重新落入本地 vendor 路径 `external/libs/tools/pyinvoke/invocations`，且 bundle 声称引用的若干模块与真实源码存在偏差（如 `packaging/version.py` 实际不存在）。此外 awesome-okf-xs 项目的文档构建/清理自动化目前直接硬编码在 CI 与 `doc/conf.py` 中，未使用 `invocations` 任务集进行封装。
 
 机会：①以真实 vendor 源码为准对抗性审查并修正 bundle 漂移；②用 `invocations` 为 awesome-okf-xs 建立统一的 invoke 任务化自动化，收敛散落的构建命令。
 
@@ -25,7 +25,7 @@ status: "draft"
 
 - 受影响 specs：`pyinvoke-okf-wiki`（既有创建 spec，本 delta 为其后续更新）。
 - 影响代码/文档：
-  - `projects/awesome-okf-xs/doc/bundles/build/tooling/invocations/`（references/concepts/examples/log/index）
+  - `projects/awesome-okf-xs/doc/bundles/jishu/build/tooling/invocations/`（references/concepts/examples/log/index）
   - `projects/awesome-okf-xs/tasks.py`（新增）
   - `projects/awesome-okf-xs/pyproject.toml`（新增 invoke 依赖）
   - `projects/awesome-okf-xs/.github/workflows/pages.yml`（改用 invoke）

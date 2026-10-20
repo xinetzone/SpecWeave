@@ -18,8 +18,8 @@
 - [x] 全部新增文档 frontmatter 符合 OKF v0.2（type/source 或 sources/generated/verified/status/stale_after）
 - [x] bundle 根 index.md 及各子目录 index.md 均含 toctree 且引用全部文档
 - [x] 文件名 kebab-case 纯英文；正文中文；交叉引用为相对路径无断链、无 file:///
-- [x] `bundles/think/mozi/` 分组 index 与 toctree 完整
-- [x] `bundles/think/index.md` 与 `bundles/index.md` 统计数字、分组表行、toctree、mermaid 节点已同步更新
+- [x] `bundles/guoxue/mozi/` 分组 index 与 toctree 完整
+- [x] `bundles/guoxue/index.md` 与 `bundles/index.md` 统计数字、分组表行、toctree、mermaid 节点已同步更新
 
 ## 交付验证
 - [x] `invoke gates.all`（在 projects/awesome-okf-xs）全部通过（toctrees + utf8）

@@ -14,7 +14,7 @@ sensitivity: public（三仓库均为 GitHub 公开开源内容 → 标准工作
 
 ## What Changes
 
-- 新增分组 `doc/bundles/jishu/ai/ai-security/`（🛡️ AI 安全与红队研究，3 束 1 组），含分组导航 `index.md`
+- 新增分组 `doc/bundles/jishu/ai/practice/ai-security/`（🛡️ AI 安全与红队研究，3 束 1 组），含分组导航 `index.md`
 - 新增束 `cl4r1t4s/`：系统提示词透明档案——仓库定位与透明性主张、厂商档案全景、系统提示词解剖学（角色/工具/护栏共性结构）、防御性提示工程教训、伦理框架
 - 新增束 `l1b3rt4s/`：越狱提示词研究库——攻击面研究定位、攻击技术分类学（概念级学术转述）、防御视角反哺、负责任披露边界
 - 新增束 `obliteratus/`：拒绝行为消除研究工具包——abliteration 原理、六阶段流水线、7 方法预设与双干预范式、15 分析模块与 informed 闭环、新技术谱系、扩展部署、研究生态
@@ -26,7 +26,7 @@ sensitivity: public（三仓库均为 GitHub 公开开源内容 → 标准工作
 
 - Affected specs: 无既有 spec 受影响（纯新增束）
 - Affected code: 
-  - `projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-security/**`（新增 ~30 个 md）
+  - `projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/ai-security/**`（新增 ~30 个 md）
   - `projects/awesome-okf-xs/doc/bundles/jishu/ai/index.md`（分组导航表 + toctree）
   - `projects/awesome-okf-xs/doc/bundles/jishu/index.md`（ai 行束数 121→124、关键词、正文"14 个分组"→15）
   - `projects/awesome-okf-xs/doc/bundles/index.md`（frontmatter total_bundles 398→401 / groups 46→47、mermaid jishu 节点计数、技术域节标题 301 束·14 组→304 束·15 组、ai 行）

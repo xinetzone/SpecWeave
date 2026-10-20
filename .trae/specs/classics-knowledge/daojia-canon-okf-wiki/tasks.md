@@ -1,7 +1,7 @@
 # Tasks — 道家著作全谱系调研与 OKF 知识包
 
 方法论：seven-concepts 场景4（知识沉淀）R→I→E→V→C。
-产出根目录（Phase 1+ 入库）：`projects/awesome-okf-xs/doc/bundles/think/daojia/`
+产出根目录（Phase 1+ 入库）：`projects/awesome-okf-xs/doc/bundles/guoxue/daojia/`
 Phase 0 调研工作区：`.trae/specs/classics-knowledge/daojia-canon-okf-wiki/`
 规范前置：实现前先读 `projects/awesome-okf-xs/.agents/rules/frontmatter.md` 与 `.agents/global-core-rules.md`。
 

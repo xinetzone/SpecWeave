@@ -23,7 +23,7 @@ source: "projects/awesome-okf-xs 文档构建 toc.not_included 警告清零任�
 |---|------|------|
 | R-1 | Sphinx + MyST-Parser 构建；警告类型 `toc.not_included`（文档未加入任何目录树） | 构建日志 `.temp/build*.log` |
 | R-2 | 初始警告数 4888；907 个 `index.md` 中仅 34 个含 `{toctree}`（约 96% 缺失） | Grep / Glob |
-| R-3 | `doc/bundles/web/fastapi/fastapi`、`web/graphql/graphql`、`think/psi/psi-universe` 等 bundle 缺 `{toctree}` | 文件阅读 |
+| R-3 | `doc/bundles/jishu/web/fastapi/fastapi`、`web/graphql/graphql`、`think/psi/psi-universe` 等 bundle 缺 `{toctree}` | 文件阅读 |
 | R-4 | 正常 bundle（`document/katex`）index.md 含 `{toctree}` 引子目录 `concepts/examples/references` | 文件阅读 |
 | R-5 | 项目无 `_toc.yml`、无 Makefile；构建由 `tasks.py` 管理 | LS/Glob |
 | R-6 | 因文件含假 `{toctree}` 语法示例，验证脚本误报 12 处"缺失引用"；实际 0 不可达 | 脚本 double-check |

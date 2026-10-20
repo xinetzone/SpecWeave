@@ -8,11 +8,11 @@ created: 2026-08-30
 # 验收检查清单（Checklist）
 
 > Review 阶段逐项核验；rule 项为客观判定（pass/fail），rubric 项 0-5 分且 ≥4 通过。
-> 工作目录：`projects/awesome-okf-xs`（子模块）；束路径：`doc/bundles/think/fangzhong/`。
+> 工作目录：`projects/awesome-okf-xs`（子模块）；束路径：`doc/bundles/yixue/fangzhong/`。
 
 ## rule 项
 
-- [ ] **R1 结构完整**：`doc/bundles/think/fangzhong/fangzhong-reading/` 含 index.md、facts.md、insights.md、log.md；concepts/ 含 index + 00-08 共 9 篇；examples/ 含 index + 01-03 共 3 篇；references/ 含 index + 01-04 共 4 篇；分组页 `think/fangzhong/index.md` 存在。
+- [ ] **R1 结构完整**：`doc/bundles/yixue/fangzhong/fangzhong-reading/` 含 index.md、facts.md、insights.md、log.md；concepts/ 含 index + 00-08 共 9 篇；examples/ 含 index + 01-03 共 3 篇；references/ 含 index + 01-04 共 4 篇；分组页 `think/fangzhong/index.md` 存在。
 - [ ] **R2 frontmatter**：每个非保留 .md 有含非空 type 的 YAML frontmatter；束根 type: OKF + okf_version: "0.2" + version/source/generated/verified/status/stale_after；分组页 type: group；子页 type 为 Concept/Example/Reference。
 - [ ] **R3 toctree**：束根收 concepts/index、examples/index、references/index、facts、insights、log；三个子 index 完整收录本目录全部内容；分组页收 fangzhong-reading/index。
 - [ ] **R4 索引计数**：think/index.md 含 fangzhong 表格行与 toctree 条目（且保留 daoyi/buddhism 等他组注册行）；bundles/index.md 提交版=HEAD 基线+fangzhong（frontmatter total_bundles/groups 各 +1、domains 不变；正文计数句同步；think 节束/组计数与分组表含 fangzhong；两处 mermaid think 标签含 fangzhong）；不含他会话 tcm 等 WIP 内容。

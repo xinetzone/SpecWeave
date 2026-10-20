@@ -16,8 +16,8 @@ content-sensitivity: Public（《黄帝阴符经》原文属公共领域古籍�
 
 ## What Changes
 
-- 新增分组 `bundles/think/huangdi/`（黄帝经典分组，仿 `think/laozi/` 三层模式：域→组→束）
-- 新增知识包 `bundles/think/huangdi/yinfujing/`：
+- 新增分组 `bundles/guoxue/huangdi/`（黄帝经典分组，仿 `think/laozi/` 三层模式：域→组→束）
+- 新增知识包 `bundles/guoxue/huangdi/yinfujing/`：
   - `index.md`（bundle 根，快速导航 + 定位 + 学习路径）
   - `concepts/`（7 篇核心概念：什么是阴符经 / 版本源流 / 成书与作者之争 / 原文全录与分段 / 核心概念解读 / 历代注家立场 / 阴符经与道德经）
   - `examples/`（2 篇实操：上篇逐句精读、七日通读计划）
@@ -33,7 +33,7 @@ content-sensitivity: Public（《黄帝阴符经》原文属公共领域古籍�
 ## Impact
 
 - Affected specs: `laozi-lineage-okf-bundle`、`boshu-laozi-wiki`（仅通过 references/cross-ref.md 交叉引用，不修改其产物）
-- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/think/` 新增文件与两处索引更新；提交发生在子模块仓库内
+- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/guoxue/` 新增文件与两处索引更新；提交发生在子模块仓库内
 - 不修改任何既有 bundle 内容；不修改 SpecWeave 主仓文件
 
 ## ADDED Requirements

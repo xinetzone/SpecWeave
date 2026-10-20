@@ -1,6 +1,6 @@
 # 阴阳家 OKF 知识包·对抗审查记录（V 阶段）
 
-- 审查对象：`projects/awesome-okf-xs/doc/bundles/think/yinyangjia/yinyangjia/` 下 facts.md（F-001～F-064、异文登记 Y-01～Y-23、未能核对项 U-01～U-18）、insights.md（洞察 1～4）、patterns.md（模式 1～2）
+- 审查对象：`projects/awesome-okf-xs/doc/bundles/guoxue/yinyangjia/yinyangjia/` 下 facts.md（F-001～F-064、异文登记 Y-01～Y-23、未能核对项 U-01～U-18）、insights.md（洞察 1～4）、patterns.md（模式 1～2）
 - 审查执行：agent:seven-concepts-cmd（对抗审查执行者）
 - 审查日期：2026-08-30
 - 审查方法：信源实访抽查（WebFetch 逐字比对）＋三产物全文通读＋四视角审查（魔鬼代言人／新人／老板／未来）

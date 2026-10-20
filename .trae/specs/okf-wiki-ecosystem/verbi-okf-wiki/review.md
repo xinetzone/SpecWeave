@@ -24,7 +24,7 @@
 
 ## 勘误落实核对
 
-- ❌ E-1「纯 App Store 自然量 / 全部来自 App 订阅」：正文 [02 定位与渠道](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/verbi/concepts/02-positioning-growth.md) 已改为「ASO + TikTok/YouTube + UGC + Play」组合口径；index 已知边界同步。
+- ❌ E-1「纯 App Store 自然量 / 全部来自 App 订阅」：正文 [02 定位与渠道](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/verbi/concepts/02-positioning-growth.md) 已改为「ASO + TikTok/YouTube + UGC + Play」组合口径；index 已知边界同步。
 - ⚠️ 单源项（+230.8%、3,609、55%、4.62）均保留口径标注，未拔高为审计事实。
 
 ## 未覆盖边界

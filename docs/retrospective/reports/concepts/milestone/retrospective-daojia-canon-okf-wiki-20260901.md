@@ -8,7 +8,7 @@ description: "以七概念方法论 R→I→E→V→C 对道家著作全谱系 O
 status: "stable"
 source:
   - ".trae/specs/classics-knowledge/daojia-canon-okf-wiki/"
-  - "projects/awesome-okf-xs/doc/bundles/think/daojia/"
+  - "projects/awesome-okf-xs/doc/bundles/guoxue/daojia/"
 milestone-name: "daojia-canon-okf-wiki（道家著作全谱系 OKF 知识包）"
 time-range: "2026-08-30 ~ 2026-09-01"
 methodology: "七概念方法论（R→I→E→V→C 链路，里程碑复盘场景 + daojia-canon-okf-wiki 规格）"
@@ -33,7 +33,7 @@ stale_after: "2027-09-01"
 # 道家著作全谱系 OKF Wiki（daojia-canon-okf-wiki）里程碑复盘
 
 > **方法论编排**：七概念 R→I→E→V→C 链路（里程碑复盘场景）
-> **复盘对象**：`.trae/specs/classics-knowledge/daojia-canon-okf-wiki/` → `projects/awesome-okf-xs/doc/bundles/think/daojia/`
+> **复盘对象**：`.trae/specs/classics-knowledge/daojia-canon-okf-wiki/` → `projects/awesome-okf-xs/doc/bundles/guoxue/daojia/`
 > **session**：sc-20260831-daojia-p2
 > **拖动日期**：2026-09-01（P2 九束子模块提交 3a52c2f4、主仓 gitlink d788c50de，未推送）
 
@@ -44,7 +44,7 @@ stale_after: "2027-09-01"
 | 维度 | 值 |
 |------|----|
 | 规格目录 | `.trae/specs/classics-knowledge/daojia-canon-okf-wiki/`（spec/tasks/checklist/insights/patterns/structure-proposal/facts） |
-| Bundle 根目录 | `projects/awesome-okf-xs/doc/bundles/think/daojia/` |
+| Bundle 根目录 | `projects/awesome-okf-xs/doc/bundles/guoxue/daojia/` |
 | 归属 | think 域 · daojia 分组（四段谱系伞形导航） |
 | 四段结构 | zhuzi（先秦诸子）/ huanglao（黄老之学）/ xuanxue（魏晋玄学注疏）/ daojiao（道教经典） |
 | 建成束数 | **19 束**（P0 三束 + P1 七束 + P2 九束，每束 14 文件 = 266 + 索引文件） |

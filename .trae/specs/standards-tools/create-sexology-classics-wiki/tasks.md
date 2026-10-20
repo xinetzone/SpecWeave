@@ -1,7 +1,7 @@
 # Tasks — create-sexology-classics-wiki
 
 > 依赖顺序：T1 → T2/T3（可并行）→ T4 → T5 → T6 → T7 → T8
-> 实施目录：`projects/awesome-okf-xs/doc/bundles/think/sexology/`
+> 实施目录：`projects/awesome-okf-xs/doc/bundles/sheke/sexology/`
 
 - [x] Task 1: 创建 sexology 分组入口
   - [x] SubTask 1.1: 创建 `think/sexology/index.md`（仿 laozi/index.md：分组简介表 + hidden toctree 含 `classics-reading/index`）

@@ -24,8 +24,8 @@ content-sensitivity: Public（《外经微言》为公共领域古籍清代抄�
 
 ## What Changes
 
-- 新增技术域骨架 `bundles/tcm/`（中医经典与理论域，第 14 个技术域）：`bundles/tcm/index.md`（域 index）与 `bundles/tcm/classics/index.md`（组 index）。**本 spec 先于同日 spec `create-tcm-classics-okf-wiki` 实施**，由本 spec 创建 tcm/ 域与 classics/ 组骨架；该 spec 日后实施时在同组追加 5 束（tcm-overview、huangdi-neijing、nanjing、shanghan-zabinglun、shennong-bencaojing）
-- 新增知识包 **`bundles/tcm/classics/waijing-weiyan/`**（classics 组首束，与未来 huangdi-neijing 束并列——外经/内经本为汉志著录姊妹篇），结构：
+- 新增技术域骨架 `bundles/tcm/`（中医经典与理论域，第 14 个技术域）：`bundles/yixue/tcm/index.md`（域 index）与 `bundles/yixue/tcm/classics/index.md`（组 index）。**本 spec 先于同日 spec `create-tcm-classics-okf-wiki` 实施**，由本 spec 创建 tcm/ 域与 classics/ 组骨架；该 spec 日后实施时在同组追加 5 束（tcm-overview、huangdi-neijing、nanjing、shanghan-zabinglun、shennong-bencaojing）
+- 新增知识包 **`bundles/yixue/tcm/classics/waijing-weiyan/`**（classics 组首束，与未来 huangdi-neijing 束并列——外经/内经本为汉志著录姊妹篇），结构：
   - 根 `index.md`（快速导航、读者路径、定位对照、**医学免责声明**、toctree 全覆盖）、`facts.md`（R 阶段编号事实）、`insights.md`（I 阶段四元组洞察+知识地图）、`log.md`
   - `concepts/`（约 9 篇）：名实之辨（汉志外经 vs 今本外经微言）、发现史与版本流传、作者与成书（陈士铎/傅山说/成书年代）、真伪考辨（两派并列）、结构导览（9 卷 81 篇）、颠倒之术与顺逆探原（核心思想）、命门水火学说、五行脏腑与经络运气、养生治未病与阅读方法论（承载 G3 萃取模式）
   - `examples/`（精读 4 篇文档覆盖 13 篇原文 + 阅读路径 1 篇）：卷一养生 9 篇分 2 组精读、命门三章（命门真火篇/命门经主篇/小心真主篇）合 1 篇精读、善养篇 1 篇精读；每篇含【原文逐段（双源核对）+ 字词注解 + 白话大意 + 学术解读（微言按语与现代研究对照）】；另附阅读路径与读法演示
@@ -33,7 +33,7 @@ content-sensitivity: Public（《外经微言》为公共领域古籍清代抄�
 - 更新总导航 `bundles/index.md`：`total_bundles` 286→287、`groups` 32→33、`domains` 13→14，新增 tcm 域分组表行、生态关系 mermaid 图新增 tcm 节点、toctree 追加 `tcm/index`
 - 遵循 seven-concepts 场景4 链路：R（信源采集与事实登记，G1）→ I（洞察，G2）→ E（萃取 ≥2 个可复用阅读模式，G3）→ V（对抗审查：13 篇精读原文逐字双源核对抽查 + 事实抽查 + 真伪分层/合规审查）→ C（`invoke gates.all` + `invoke build` + 原子提交）
 
-**关键决策（落位，用户 2026-08-30 裁决）**：落于 `bundles/tcm/classics/waijing-weiyan/`——并入同日上午已确认的顶级 tcm/ 域规划（而非 think/tcm/ 组），作为 classics 组第 1 束；本 spec 独立交付，与 `create-tcm-classics-okf-wiki` 的衔接点为：tcm/ 域骨架由本 spec 创建，该 spec 实施时 classics 组 1→6 束、统计基线 287→292（groups/domains 不变），其 Task 4.1"新建 tcm/index.md"应改为"检测既有骨架并追加导航"。
+**关键决策（落位，用户 2026-08-30 裁决）**：落于 `bundles/yixue/tcm/classics/waijing-weiyan/`——并入同日上午已确认的顶级 tcm/ 域规划（而非 think/tcm/ 组），作为 classics 组第 1 束；本 spec 独立交付，与 `create-tcm-classics-okf-wiki` 的衔接点为：tcm/ 域骨架由本 spec 创建，该 spec 实施时 classics 组 1→6 束、统计基线 287→292（groups/domains 不变），其 Task 4.1"新建 tcm/index.md"应改为"检测既有骨架并追加导航"。
 
 **关键决策（底本与信源）**：今本《外经微言》以 1984 年中医古籍出版社影印清代精抄本为通行底本来源；网络全文以**维基文库为主信源**、**古诗文网/古书网为第二信源**，13 篇精读原文逐字双源核对，异文显式标注"某本作某"并在 facts.md 编号登记；元始道藏/寻岐黄为第三备用信源。
 

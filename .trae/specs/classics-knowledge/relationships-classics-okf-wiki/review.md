@@ -1,6 +1,6 @@
 # 两性关系经典著作 OKF v0.2 知识包——独立对抗性评审报告（V 阶段）
 
-- 评审对象：`doc/bundles/think/relationships/`（分组导言 `index.md` + 6 个 bundle，共 96 个 Markdown 文件）
+- 评审对象：`doc/bundles/sheke/relationships/`（分组导言 `index.md` + 6 个 bundle，共 96 个 Markdown 文件）
 - 评审范围：6 束 × 16 文件 + 分组导言 + 上层索引（`think/index.md`、`bundles/index.md`）
 - 评审方式：fresh-context 独立验收；规范基线为 `spec.md`（AC-1～AC-10）、`tasks.md`、`.agents/rules/frontmatter.md`、范式 bundle `think/laozi/boshu-reading/`
 - 取证方式：全量静态扫描（PyYAML 解析 frontmatter、toctree/相对链接 BFS、事实编号/信源配对/因果词扫描、直引与盗版关键词扫描）+ 人工抽查（30 条事实、3 篇 concept 正文、争议专项）

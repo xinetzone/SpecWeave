@@ -215,8 +215,8 @@ path = "C:\\Users\\xinzo\\anaconda3"  # nosec: 测试用例真实路径样本
 1. 确认该用户名是**通用示例**而非真实个人用户名
 2. 确认该用户名在**多个文档/场景**中出现（非一次性使用）
 3. 在 `SYSTEM_WIN_USERS` 或 `SYSTEM_UNIX_USERS` 中添加
-4. 在测试文件 `tests/test_sensitive_info_shell.Tests.py` 中添加对应测试用例
-5. 运行测试验证（`python tests/test_sensitive_info_shell.Tests.py`）
+4. 在测试文件 `tests/test_sensitive_info_shell.py` 中添加对应测试用例
+5. 运行测试验证（`python tests/test_sensitive_info_shell.py`）
 
 ---
 
@@ -224,8 +224,8 @@ path = "C:\\Users\\xinzo\\anaconda3"  # nosec: 测试用例真实路径样本
 
 ### 7.1 测试套件位置
 
-- **新增误报测试**：[`tests/test_sensitive_info_shell.Tests.py`](../../../scripts/tests/test_sensitive_info_shell.Tests.py)
-- **原有综合测试**：`tests/test_sensitive_info.py`
+- **新增误报测试**：[`tests/test_sensitive_info_shell.py`](../../../.agents/scripts/tests/test_sensitive_info_shell.py)
+- **原有综合测试**：`tests/test_check_sensitive_info.py`
 
 ### 7.2 测试覆盖要求
 
@@ -233,8 +233,8 @@ path = "C:\\Users\\xinzo\\anaconda3"  # nosec: 测试用例真实路径样本
 
 ```bash
 cd .agents/scripts
-python tests/test_sensitive_info_shell.Tests.py
-python tests/test_sensitive_info.py
+python tests/test_sensitive_info_shell.py
+python tests/test_check_sensitive_info.py
 ```
 
 ### 7.3 核心测试用例清单（46项）

@@ -16,8 +16,8 @@ content-sensitivity: Public（先秦古籍原文属公共领域，解读为公�
 
 ## What Changes
 
-- 新增分组 `bundles/think/yinyangjia/`（阴阳家经典分组，仿 `think/laozi/`、`think/psi/` 域→组→束三层模式）
-- 新增知识包 `bundles/think/yinyangjia/yinyangjia/`：
+- 新增分组 `bundles/guoxue/yinyangjia/`（阴阳家经典分组，仿 `think/laozi/`、`think/psi/` 域→组→束三层模式）
+- 新增知识包 `bundles/guoxue/yinyangjia/yinyangjia/`：
   - `index.md`（bundle 根：快速导航 + 学派定位 + 学习路径 + 存佚总览）
   - `concepts/`（7 篇核心概念：什么是阴阳家 / 著作源流与存佚 / 邹衍生平与学说 / 五德终始说解读 / 传世文献中的阴阳家材料 / 辑佚史与历代考据 / 影响与流变）
   - `examples/`（2 篇实操：《吕氏春秋·应同》逐句精读、阴阳家文献通读计划）
@@ -33,7 +33,7 @@ content-sensitivity: Public（先秦古籍原文属公共领域，解读为公�
 ## Impact
 
 - Affected specs: `create-guiguzi-okf-wiki`、`create-mozi-okf-wiki`、`create-zhuangzi-okf-wiki`（同批未实施 spec，仅共享 think/ 域索引数字基准，无产物冲突）、`laozi-lineage-okf-bundle`、`create-yinfujing-okf-wiki`（仅通过 references/cross-ref.md 交叉引用，不修改其产物）
-- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/think/` 新增文件与两处索引更新；提交发生在子模块仓库内，主仓 gitlink 变更需一并同步（如适用）
+- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/guoxue/` 新增文件与两处索引更新；提交发生在子模块仓库内，主仓 gitlink 变更需一并同步（如适用）
 - 不修改任何既有 bundle 内容；不修改 SpecWeave 主仓其他文件
 
 ## ADDED Requirements

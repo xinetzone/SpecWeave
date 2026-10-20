@@ -14,7 +14,7 @@ status: active
 | 信源 URL | `https://mp.weixin.qq.com/s/2ajOzriMAKqi8f3pu5N7zw`（微信公开文章，无访问控制参数） |
 | 判定 | **公开内容** → 标准工作流 |
 | Spec 目录 | `.trae/specs/okf-wiki-ecosystem/evox-agent-review/` |
-| 产出物路径 | `projects/awesome-okf-xs/doc/bundles/jishu/ai/evox-agent-review/` |
+| 产出物路径 | `projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/agent-platform-notes/evox-agent-review/` |
 | 可提交 Git | 是 |
 
 ## 归属位置分析
@@ -25,7 +25,7 @@ status: active
 | `jishu/ai/` 同级新建 `evox-agent-review/` | ❌ | 会脱离 agent-platform-notes 聚合束，破坏分组语义；违反单篇博文不新建分组的规则 |
 | `jishu/ai/ai-agent/` | ❌ | 源码/框架类，主题不符（本文是产品分析，非框架解读） |
 
-**选定路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/agent-platform-notes/evox-agent-review/`
+**选定路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/agent-platform-notes/evox-agent-review/`
 
 ## 性质分流与目录骨架判定
 

@@ -1,7 +1,7 @@
 # 两性关系经典著作 OKF Wiki 教程 — 实施计划
 
 > 方法论链路：seven-concepts 场景 4（知识沉淀）R→I→E，叠加 V 对抗审查。
-> 根目录：`d:\AI\projects\awesome-okf-xs`；产出根：`doc/bundles/think/relationships/`。
+> 根目录：`d:\AI\projects\awesome-okf-xs`；产出根：`doc/bundles/sheke/relationships/`。
 > 委派策略：Task 2–7 为相互独立的垂直切片，可并行委派 subagent（每束一个 R→I→E 闭环）；主控逐束独立验收后整合。
 
 ## Task 1: 分组骨架与目录初始化
@@ -9,7 +9,7 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
-  - 新建 `doc/bundles/think/relationships/` 分组目录
+  - 新建 `doc/bundles/sheke/relationships/` 分组目录
   - 编写 `relationships/index.md` 骨架：frontmatter（`type: group`、title/description/tags）、分组导言占位（三层定位说明：学术实证/哲学经典/通俗实用）、6 束导航表占位、`{toctree}` 含 6 个 bundle 的 index
   - 为 6 个 bundle 创建目录：`intimate-relationships/`、`art-of-loving/`、`gottman-seven-principles/`、`five-love-languages/`、`attached/`、`mars-venus/`，各含 `concepts/`、`examples/`、`references/` 子目录
 - **Acceptance Criteria Addressed**: AC-1
@@ -127,7 +127,7 @@
 - **Priority**: high
 - **Depends On**: Task 8
 - **Description**:
-  - 更新 `doc/bundles/think/index.md`：分组导航表新增 relationships 行；toctree 增加 `relationships/index`；域描述同步
+  - 更新 `doc/bundles/sheke/index.md`：分组导航表新增 relationships 行；toctree 增加 `relationships/index`；域描述同步
   - 更新 `doc/bundles/index.md`：frontmatter 统计（total_bundles 280→286、groups 32→33）；think 域标题统计（5 束 2 组 → 11 束 3 组）；think 分组表新增 relationships 行；生态 Mermaid 图 think 节点标签更新（psi · laozi → psi · laozi · relationships）；推荐入门路径 think 节点同步
 - **Acceptance Criteria Addressed**: AC-7
 - **Test Requirements**:

@@ -13,7 +13,7 @@ target-repo: projects/awesome-okf-xs（git submodule，用户明确指定在其�
 
 ## Overview
 
-- **Summary**：在 awesome-okf-xs 文档库 `doc/bundles/think/` 域下新建 `suanxue`（算学）分组，并在其中创建 `suanjing-reading`（算经阅读教程）知识包，系统整理中国先秦至明清数学著作的原文与现代解读，形成符合 OKF v0.2 规范的中文教程。
+- **Summary**：在 awesome-okf-xs 文档库 `doc/bundles/guoxue/` 域下新建 `suanxue`（算学）分组，并在其中创建 `suanjing-reading`（算经阅读教程）知识包，系统整理中国先秦至明清数学著作的原文与现代解读，形成符合 OKF v0.2 规范的中文教程。
 - **Purpose**：将中国传统数学（算学）这一与古希腊数学平行的独立数学传统的公共领域知识，按 OKF 三层结构（concepts/examples/references）系统化沉淀，使学习者能"读到原文、看懂算法、理解体系、找到信源"。
 - **Target Users**：对中国数学史与古典算法感兴趣的中文学习者；具备基础数学知识但无古文训练的理工科读者；需要可信信源索引的研究者。
 
@@ -43,7 +43,7 @@ target-repo: projects/awesome-okf-xs（git submodule，用户明确指定在其�
 
 ## Functional Requirements
 
-- **FR-1**：新建分组 `doc/bundles/think/suanxue/index.md`（type: group），并更新 `think/index.md` 导航表与 toctree。
+- **FR-1**：新建分组 `doc/bundles/guoxue/suanxue/index.md`（type: group），并更新 `think/index.md` 导航表与 toctree。
 - **FR-2**：新建 bundle `suanjing-reading/`，含根 `index.md`（okf_version: "0.2"）、`log.md`、`facts.md`、`insights.md` 及 `concepts/`、`examples/`、`references/` 三个子目录（各含 index.md）。
 - **FR-3**：concepts/ 含 14 篇概念文档：阅读价值（00）、历史脉络（01）、筹算与记数（02）、《九章算术》结构（03）与核心术文（04）、刘徽注（05）、《周髀算经》（06）、算经十书其余八种（07）、祖冲之父子（08）、宋元高峰（09）、大衍求一/天元/四元/垛积招差算法专题（10）、明清转型（11）、中国数学特征与中西比较（12）、阅读路径与注本选用（13）。
 - **FR-4**：examples/ 含 8 篇实战文档：方田与分数（01）、盈不足双设法（02）、方程术与正负术（03）、勾股测量（04）、物不知数与大衍求一（05）、百鸡问题（06）、割圆术与圆周率（07）、系统阅读计划（08）。每篇算题文档须含"原文引录（注明底本）→ 白话译文 → 现代数学解读（公式/算法）→ 延伸"四段式。

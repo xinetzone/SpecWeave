@@ -8,7 +8,7 @@ description: "以七概念方法论 R→I→E→V→C 对 sexology classics-read
 status: "stable"
 source:
   - ".trae/specs/standards-tools/create-sexology-classics-wiki/"
-  - "projects/awesome-okf-xs/doc/bundles/think/sexology/classics-reading/"
+  - "projects/awesome-okf-xs/doc/bundles/sheke/sexology/classics-reading/"
 milestone-name: "create-sexology-classics-wiki（性学经典 OKF Wiki 教程）"
 time-range: "2026-08-30"
 methodology: "七概念方法论（R→I→E→V→C 链路，里程碑复盘场景 + create-sexology-classics-wiki 规格）"
@@ -33,7 +33,7 @@ stale_after: "2027-08-30"
 # 性学经典 OKF Wiki 教程（create-sexology-classics-wiki）里程碑复盘
 
 > **方法论编排**：七概念 R→I→E→V→C 链路（里程碑复盘场景）
-> **复盘对象**：`.trae/specs/standards-tools/create-sexology-classics-wiki/` → `projects/awesome-okf-xs/doc/bundles/think/sexology/classics-reading/`
+> **复盘对象**：`.trae/specs/standards-tools/create-sexology-classics-wiki/` → `projects/awesome-okf-xs/doc/bundles/sheke/sexology/classics-reading/`
 > **session**：sc-20260830-sexology-wiki
 > **拖动日期**：2026-08-30（文件 2026-08-31 提交、双仓已推送）
 
@@ -44,7 +44,7 @@ stale_after: "2027-08-30"
 | 维度 | 值 |
 |------|----|
 | 规格目录 | `.trae/specs/standards-tools/create-sexology-classics-wiki/`（spec/tasks/checklist/review） |
-| Bundle 目录 | `projects/awesome-okf-xs/doc/bundles/think/sexology/classics-reading/` |
+| Bundle 目录 | `projects/awesome-okf-xs/doc/bundles/sheke/sexology/classics-reading/` |
 | 归属 | think 域 · sexology 分组（新建，与 psi/laozi 平行） |
 | 文件数 | bundle 24 个 .md（concepts 10 + examples 4 + references 6 + 根文档） |
 | 事实登记 | **104 条**（F-ANCIENT 30 / F-WEST 36 / F-CHINA-MODERN 38） |

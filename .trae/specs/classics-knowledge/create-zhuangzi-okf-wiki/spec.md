@@ -16,8 +16,8 @@ content-sensitivity: Public（《庄子》原文属公共领域古籍，解读�
 
 ## What Changes
 
-- 新增分组 `bundles/think/zhuangzi/`（庄子经典分组，仿 `think/laozi/` 与 `think/huangdi/` 三层模式：域→组→束）
-- 新增知识包 `bundles/think/chuang-tzu/`（bundle 根目录用纯英文 kebab-case `chuang-tzu`，正文与标题用"庄子"）：
+- 新增分组 `bundles/guoxue/zhuangzi/`（庄子经典分组，仿 `think/laozi/` 与 `think/huangdi/` 三层模式：域→组→束）
+- 新增知识包 `bundles/guoxue/zhuangzi/chuang-tzu/`（bundle 根目录用纯英文 kebab-case `chuang-tzu`，正文与标题用"庄子"）：
   - `index.md`（bundle 根：快速导航 + 定位 + 学习路径 + toctree）
   - `concepts/`（8 篇核心概念，见 Task 5）
   - `examples/`（3 篇实操，见 Task 6）
@@ -35,7 +35,7 @@ content-sensitivity: Public（《庄子》原文属公共领域古籍，解读�
 ## Impact
 
 - Affected specs: `laozi-lineage-okf-bundle`、`boshu-laozi-wiki`、`create-yinfujing-okf-wiki`（仅通过 references/cross-ref.md 交叉引用，不修改其产物）
-- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/think/` 新增文件与两处索引更新；提交发生在子模块仓库内
+- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/guoxue/` 新增文件与两处索引更新；提交发生在子模块仓库内
 - 不修改任何既有 bundle 内容；不修改 SpecWeave 主仓文件（除 `.trae/specs/classics-knowledge/create-zhuangzi-okf-wiki/` 规格与工作记录）
 
 ## ADDED Requirements

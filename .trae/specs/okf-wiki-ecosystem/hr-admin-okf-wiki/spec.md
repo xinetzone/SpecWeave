@@ -77,7 +77,7 @@ status: "draft"
 
 ## Functional Requirements
 
-- **FR-1（域与组骨架）**：新建 `doc/bundles/workplace/index.md`（type: group，域导航表 + hidden toctree）、`workplace/hr/index.md`、`workplace/admin/index.md`（组 index，知识包列表表 + toctree）。
+- **FR-1（域与组骨架）**：新建 `doc/bundles/sheke/workplace/index.md`（type: group，域导航表 + hidden toctree）、`workplace/hr/index.md`、`workplace/admin/index.md`（组 index，知识包列表表 + toctree）。
 - **FR-2（束 1 hr-profession-map）**：`workplace/hr/hr-profession-map/`——岗位版图（行政/人事/HRBP/SSC/COE 分层）、能力模型与进修路径、证书体系双轨（技能等级认定 vs 职称考试）、osta 查询与防骗清单。
 - **FR-3（束 2 hr-six-modules）**：`workplace/hr/hr-six-modules/`——六大模块逐一概念卡 + 三支柱模型 + 招聘/入职/培训/绩效/薪酬高频实务清单与案例。
 - **FR-4（束 3 labor-law-compliance）**：`workplace/hr/labor-law-compliance/`——劳动合同全周期、试用期规则、N/N+1/2N 计算、工时加班与休假、五险一金合规、工伤、女职工保护、劳动争议仲裁时效与举证；含真实判例与计算示例。
@@ -168,7 +168,7 @@ status: "draft"
 - **Type**: `rule`
 - **Given**: 实施前后 git status
 - **When**: 对比工作区变更
-- **Then**: 新增/修改文件仅为 `doc/bundles/workplace/**`（新增）与 `doc/bundles/index.md`（修改）；think/daojia 及他会话文件零触碰；未执行 commit
+- **Then**: 新增/修改文件仅为 `doc/bundles/sheke/workplace/**`（新增）与 `doc/bundles/index.md`（修改）；think/daojia 及他会话文件零触碰；未执行 commit
 - **Pass Condition**: `git status --porcelain` 中我方变更集合与上述完全一致
 - **Evidence**: git status 输出
 

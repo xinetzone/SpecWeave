@@ -6,7 +6,7 @@ status: "draft"
 # Anthropic 生态 OKF Wiki - Product Requirement Document
 
 ## Overview
-- **Summary**: 系统化学习 `external/libs/anthropics/` 目录下全部6个Anthropic官方开源项目，按照 OKF v0.2 规范在 `projects/awesome-okf-xs/doc/bundles/ai/anthropic/` 生成结构化中文Wiki。采用分层策略：**anthropic-sdk-python**（Python SDK核心）走完整 source-code-to-okf-wiki 五阶段流程（R→I→E→V），其余5个子项目（claude-code、claude-cookbooks、financial-services、prompt-eng-interactive-tutorial、skills）根据内容性质进行结构化文档整理与索引。
+- **Summary**: 系统化学习 `external/libs/anthropics/` 目录下全部6个Anthropic官方开源项目，按照 OKF v0.2 规范在 `projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/anthropic/` 生成结构化中文Wiki。采用分层策略：**anthropic-sdk-python**（Python SDK核心）走完整 source-code-to-okf-wiki 五阶段流程（R→I→E→V），其余5个子项目（claude-code、claude-cookbooks、financial-services、prompt-eng-interactive-tutorial、skills）根据内容性质进行结构化文档整理与索引。
 - **Purpose**: 为中文开发者提供Anthropic生态的全景中文文档——从SDK底层架构到Claude Code工具链、从Cookbook示例到提示词工程、从官方Skills库到金融服务垂直方案，所有内容事实可溯源、格式统一、无虚构API。
 - **Target Users**: Claude API开发者、Claude Code用户、AI Agent开发者、提示词工程师、使用Anthropic生态的金融/企业开发者。
 

@@ -5,8 +5,8 @@
 ## 阶段一：分组骨架 + 般若系 2 个 bundle
 
 - [ ] Task 1：建立 `think/buddhism/` 分组骨架与导航索引
-  - [ ] 1.1 新建 `doc/bundles/think/buddhism/index.md`（分组首页：一句话简介 + 5 个 bundle 列表表 + `{toctree}`）
-  - [ ] 1.2 更新 `doc/bundles/think/index.md`：新增「📖 佛家核心经典」分组行（table 行 + `{toctree}` 条目）
+  - [ ] 1.1 新建 `doc/bundles/guoxue/buddhism/index.md`（分组首页：一句话简介 + 5 个 bundle 列表表 + `{toctree}`）
+  - [ ] 1.2 更新 `doc/bundles/guoxue/index.md`：新增「📖 佛家核心经典」分组行（table 行 + `{toctree}` 条目）
   - [ ] 1.3 更新 `doc/bundles/index.md`：think 域描述图（`think["💭 think/ 思想与理论：..." ]`）、分组表新增佛家行、统计数字 286→291、分组 32→33
   - [ ] 1.4 运行 `invoke gates.toctrees` 验证导航无断链、无孤立文档
 

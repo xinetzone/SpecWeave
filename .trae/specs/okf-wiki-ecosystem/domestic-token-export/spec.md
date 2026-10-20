@@ -29,7 +29,7 @@ created: 2026-09-09
 | `jishu/ai/agent-industry-research/` | ⚠️ 备选 | 已有知乎文章先例，但本文主线偏国产模型商业化出海现象，与 Agent 行业研究主题略有偏离 |
 | `jishu/ai/domestic-model-token-export/` | ✅ 推荐 | 新 bundle，专注国产模型 Token 出海分析，不新建分组（属既有 ai/ 分组下新增束） |
 
-**最终归属**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/domestic-model-token-export/`
+**最终归属**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/domestic-model-token-export/`
 
 ## 三层知识拆分规划（I 阶段）
 

@@ -4,7 +4,7 @@ created: 2026-08-29
 status: draft
 source_skills: [seven-concepts-cmd, source-code-to-okf-wiki]
 source_dir: external/libs/ai/agentskills
-target_dir: projects/awesome-okf-xs/doc/bundles/ai/ai-agent/agent-skills-spec
+target_dir: projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/agent-skills-spec
 ---
 
 # Agent Skills 开放标准源码 OKF Wiki 教程生成
@@ -51,7 +51,7 @@ target_dir: projects/awesome-okf-xs/doc/bundles/ai/ai-agent/agent-skills-spec
 
 ## Bundle 归属与命名
 
-- **分组**：`doc/bundles/ai/ai-agent/`（"技能规范"类别，与 anthropics-skills 并列）
+- **分组**：`doc/bundles/jishu/ai/frameworks/ai-agent/`（"技能规范"类别，与 anthropics-skills 并列）
 - **束名**：`agent-skills-spec`（避免与既有 `anthropics-skills` 混淆；束内 frontmatter/sources 标注源路径 `external/libs/ai/agentskills`）
 
 ## Functional Requirements
@@ -100,7 +100,7 @@ target_dir: projects/awesome-okf-xs/doc/bundles/ai/ai-agent/agent-skills-spec
 ## Constraints
 
 - 源码为 git submodule，只读
-- 输出位于 `projects/awesome-okf-xs/doc/bundles/ai/ai-agent/agent-skills-spec/`
+- 输出位于 `projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/agent-skills-spec/`
 - 遵循 awesome-okf-xs AGENTS.md 启动协议、frontmatter 规范、toctree 完整性要求
 - 遵循 source-code-to-okf-wiki 五阶段工作流与 G1-G5 质量门（seven-concepts-cmd 知识沉淀场景 R→I→E 链路编排）
 
@@ -108,7 +108,7 @@ target_dir: projects/awesome-okf-xs/doc/bundles/ai/ai-agent/agent-skills-spec
 
 ### Rules (binary verification)
 
-- **AC-R1**: `agent-skills-spec` bundle 创建于 `doc/bundles/ai/ai-agent/` 下，含 index.md、log.md、concepts/、examples/、references/ 标准结构
+- **AC-R1**: `agent-skills-spec` bundle 创建于 `doc/bundles/jishu/ai/frameworks/ai-agent/` 下，含 index.md、log.md、concepts/、examples/、references/ 标准结构
 - **AC-R2**: 根 index.md 含 `okf_version: "0.2"`；子目录 index.md 无 frontmatter 且含 `{toctree}` 块
 - **AC-R3**: 所有非保留 .md 文件含有效 YAML frontmatter，type 字段非空
 - **AC-R4**: references/ 先于 concepts/examples 生成；各级 index 最后生成

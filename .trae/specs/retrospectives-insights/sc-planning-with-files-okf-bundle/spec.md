@@ -10,7 +10,7 @@
 - 按 I 阶段(洞察):提炼 3 条核心洞察(含四元组:现象+根因+影响+建议)——AI Agent 瓶颈本质、RAM-Disk 范式映射、Hooks 自动化价值
 - 按 E 阶段(萃取):产出 1-2 个可迁移模式文档(含触发场景+核心步骤+反模式+迁移验证)——3-File Pattern 模式、Hooks 自动化模式
 - 按 V 阶段(对抗审查):对萃取的模式执行多视角攻击(魔鬼代言人/新人/老板/未来),验证可迁移性与边界条件
-- 按 C 阶段(原子提交):将产出物作为 OKF bundle 入库到 `doc/bundles/jishu/ai/planning-with-files/`,更新上级 index 导航
+- 按 C 阶段(原子提交):将产出物作为 OKF bundle 入库到 `doc/bundles/jishu/ai/practice/planning-with-files/`,更新上级 index 导航
 - **BREAKING**:无(新增知识包,不修改现有文档)
 
 ## Impact
@@ -19,8 +19,8 @@
 - Affected code: 无代码改动;产出为 OKF v0.2 格式 Markdown 文档
 - 关联资产:
   - [jishu/ai/index.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/index.md) 需新增 planning-with-files 条目
-  - [jishu/ai/context-optimization/index.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/index.md) 上下文优化束可交叉引用
-  - [jishu/ai/ai-engineering-methodology/index.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/index.md) AI 工程方法论束可交叉引用
+  - [jishu/ai/context-optimization/index.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/context-optimization/index.md) 上下文优化束可交叉引用
+  - [jishu/ai/ai-engineering-methodology/index.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/ai-engineering-methodology/index.md) AI 工程方法论束可交叉引用
 
 ## ADDED Requirements
 
@@ -81,7 +81,7 @@
 #### Scenario: bundle 入库完整
 
 - **WHEN** C 阶段执行
-- **THEN** 在 `doc/bundles/jishu/ai/planning-with-files/` 创建以下文件
+- **THEN** 在 `doc/bundles/jishu/ai/practice/planning-with-files/` 创建以下文件
 - **AND** `index.md`:OKF v0.2 frontmatter(type: group)+ 束简介 + toctree 引用全部子文档
 - **AND** `facts.md`:R 阶段事实清单
 - **AND** `insights.md`:I 阶段核心洞察

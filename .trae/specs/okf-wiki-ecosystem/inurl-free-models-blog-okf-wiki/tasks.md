@@ -3,7 +3,7 @@
 > 对应 spec：同目录 `spec.md` §10（G5，F-088~F-105）
 > 方法论：seven-concepts 场景4（R→I→E）× blog-article-to-okf-wiki（R→I→E→V→C）
 > 证据物：`.temp/inurl-refresh-g5/`（curl 原始响应、提取文本、审计脚本；不入库）
-> 目标 bundle：`projects/awesome-okf-xs/doc/bundles/jishu/ai/inurl-unified-token/`
+> 目标 bundle：`projects/awesome-okf-xs/doc/bundles/jishu/ai/products/inurl-byok-token-hub/`
 
 ## Task 1: R — G5 事实双份登记（F-088~F-105）+ P0 证据固化
 

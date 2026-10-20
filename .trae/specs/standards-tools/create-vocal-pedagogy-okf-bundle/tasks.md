@@ -97,7 +97,7 @@
 - **Priority**: medium
 - **Depends On**: T7
 - **Description**:
-  - 先 `git add` 仅本束路径（doc/bundles/think/vocal/、doc/bundles/think/index.md、doc/bundles/index.md）；**单独**跑 `git diff --cached --name-only` 核对暂存集；若混入 daojia 或他方文件则不 commit、停止报告。
+  - 先 `git add` 仅本束路径（doc/bundles/yishu/vocal/、doc/bundles/yishu/index.md、doc/bundles/index.md）；**单独**跑 `git diff --cached --name-only` 核对暂存集；若混入 daojia 或他方文件则不 commit、停止报告。
   - 暂存集干净后提交：`docs(bundles): 新增声乐教学知识束（美通唱法与咽音体系教学教程）`，正文中文说明结构与信源。不推送。
 - **Acceptance Criteria Addressed**: AC-9
 - **Test Requirements**:

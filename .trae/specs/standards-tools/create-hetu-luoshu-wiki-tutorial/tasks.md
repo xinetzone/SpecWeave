@@ -1,7 +1,7 @@
 # Tasks — create-hetu-luoshu-wiki-tutorial
 
 > 七概念链路（场景4 知识沉淀）：**R（T1）→ I（融入 T6）→ 起草（T2–T6）→ V（T9）→ E 定稿（T9）→ C 入库（T7/T8/T10）**
-> 实施目录：`projects/awesome-okf-xs/doc/bundles/think/hetu-luoshu/`
+> 实施目录：`projects/awesome-okf-xs/doc/bundles/guoxue/hetu-luoshu/`
 > 依赖顺序：T1 → T2 → T3/T4/T5（可并行）→ T6 → T7 → T8 → T9 → T10
 
 ## Task 1: R 阶段——联网调研与原典双源核对

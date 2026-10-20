@@ -16,7 +16,7 @@ content-sensitivity: Public（先秦法家古籍原文属公共领域，历代�
 
 ## What Changes
 
-- 新增分组 `bundles/think/legalism/`（法家经典分组，仿 `think/laozi/` 域→组→束三层模式），含分组 `index.md`
+- 新增分组 `bundles/guoxue/legalism/`（法家经典分组，仿 `think/laozi/` 域→组→束三层模式），含分组 `index.md`
 - 新增 4 个知识包（bundle 根目录用纯英文 kebab-case，正文与标题用中文书名）：
   - `think/legalism/han-fei-tzu/`（《韩非子》——法家集大成者，旗舰知识包）：`index.md` + `concepts/`（8 篇）+ `examples/`（3 篇）+ `references/`（3 篇）
   - `think/legalism/shang-jun-shu/`（《商君书》）：`index.md` + `concepts/`（5 篇）+ `examples/`（2 篇）+ `references/`（2 篇）
@@ -38,7 +38,7 @@ content-sensitivity: Public（先秦法家古籍原文属公共领域，历代�
 ## Impact
 
 - Affected specs: `create-zhuangzi-okf-wiki`、`boshu-laozi-wiki`、`laozi-lineage-okf-bundle`（仅通过 references 交叉引用，不修改其产物；zhuangzi 尚未实施，不产生实际依赖）
-- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/think/` 新增文件与两处索引更新；提交发生在子模块仓库内，主仓仅新增本 spec 目录
+- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/guoxue/` 新增文件与两处索引更新；提交发生在子模块仓库内，主仓仅新增本 spec 目录
 - 不修改任何既有 bundle 内容；不修改 SpecWeave 主仓其他文件
 
 ## ADDED Requirements

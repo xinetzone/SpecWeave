@@ -43,7 +43,7 @@ status: draft
 
 ## 5. 存放位置决策
 
-- 路径：`doc/bundles/think/classics/fusheng-liuji-reading/`
+- 路径：`doc/bundles/wenxue/classics/fusheng-liuji-reading/`
 - 理由：
   1. `think/` 域已承载"经典思想著作阅读"（laozi 组先例），《浮生六记》以生活美学与人生哲学为核，归入 think 域符合域描述"经典思想著作的知识沉淀"；
   2. 新建 `classics/`（经典阅读）分组而非直接以书名建组，为后续古典文学 bundle（如《陶庵梦忆》《闲情偶寄》等）预留扩展位；

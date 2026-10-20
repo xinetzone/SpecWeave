@@ -1,7 +1,7 @@
 # 孔子相关著作 OKF 知识包 - 实施计划
 
 > 方法论链路：seven-concepts 场景4（知识沉淀）R→I→E→V→C
-> 产出位置：`projects/awesome-okf-xs/doc/bundles/think/confucius/works/`（子模块内）
+> 产出位置：`projects/awesome-okf-xs/doc/bundles/guoxue/confucius/works/`（子模块内）
 
 ## Task 1: R 阶段 - 事实采集与双信源核对（G1 质量门）
 - **Priority**: high

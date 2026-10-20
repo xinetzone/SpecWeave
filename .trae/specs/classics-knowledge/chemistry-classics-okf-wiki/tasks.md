@@ -1,7 +1,7 @@
 # 中西化学经典 OKF Wiki 教程 - 实施计划
 
 > 方法论链路：seven-concepts 场景4（知识沉淀）R→I→E→V→C
-> 产出根目录：`projects/awesome-okf-xs/doc/bundles/science/`
+> 产出根目录：`projects/awesome-okf-xs/doc/bundles/kexue/`
 > 每束统一结构：index.md + log.md + facts.md + insights.md + concepts/（≥4篇 + index）+ examples/（≥2篇 + index）+ references/（≥2篇 + index）
 > 委托策略：R/E 阶段 7 束互不写同一文件，可并行委托独立子代理（每代理一束，含信源核验契约）；索引与总表更新串行；V 阶段由全新上下文独立审查员执行。
 
@@ -11,8 +11,8 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
-  - 创建 `doc/bundles/science/index.md`（域索引：自然科学域说明、化学分组导航表、`{toctree}` 引用 chemistry/index）
-  - 创建 `doc/bundles/science/chemistry/index.md`（分组索引：双线索说明、7 束导航表占位、`{toctree}` 随束完成逐步补齐）
+  - 创建 `doc/bundles/kexue/index.md`（域索引：自然科学域说明、化学分组导航表、`{toctree}` 引用 chemistry/index）
+  - 创建 `doc/bundles/kexue/chemistry/index.md`（分组索引：双线索说明、7 束导航表占位、`{toctree}` 随束完成逐步补齐）
   - 核对 awesome-okf-xs 子模块工作树状态（git status），确认与既有未提交变更隔离
   - 制定每束 frontmatter 模板（type: OKF/Concept/Example/Reference、sources/generated/verified/status/stale_after/okf_version 字段约定）与信源登记表模板
 - **Acceptance Criteria Addressed**: AC-1, AC-3

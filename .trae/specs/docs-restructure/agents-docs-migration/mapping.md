@@ -248,7 +248,7 @@ retrospective 2632 = patterns 849 + reports 1704 + 配套与根级 79
 | `vendor/caffe/docker/local/conda/RUNTIME_IMAGE_USAGE.md:225` | 1 | GitHub blob URL `github.com/xinetzone/SpecWeave/blob/main/.agents/docs/...`——主仓迁移后**已 404** | 上游更新为 `.../blob/main/docs/...` |
 | `vendor/caffe/.trae/specs/readme-comprehensive-update/checklist.md:62` | 1 | `file:///d:/spaces/...` 异机链接 | 归档/spec 文本，改为相对或标注失效 |
 
-**projects/awesome-okf-xs（1 处）：** `doc/bundles/ai/ai-agent/a2a-mcp-convergence/log.md:14` 的 `resource: .agents/docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md` 文本引用——上游更新为 `docs/...`。
+**projects/awesome-okf-xs（1 处）：** `doc/bundles/jishu/ai/frameworks/ai-agent/a2a-mcp-convergence/log.md:14` 的 `resource: .agents/docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md` 文本引用——上游更新为 `docs/...`。
 
 **projects/tvm-ffi：** 0 处命中，无需处理。
 

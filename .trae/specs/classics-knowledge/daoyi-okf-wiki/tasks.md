@@ -11,8 +11,8 @@ status: awaiting-approval
 # 任务计划（tasks.md）
 
 > 对应 spec.md 的 AC-R1~R12（rule）与 AC-Q1~Q5（rubric）。任务级测试需求（TR）仅引用 rule/rubric。
-> 工作目录：`d:\spaces\SpecWeave\projects\awesome-okf-xs`（下称子模块根）；新增文件均在 `doc/bundles/think/daoyi/` 下。
-> 范本：`doc/bundles/think/laozi/boshu-reading/`（frontmatter/toctree/编号体例照此）。
+> 工作目录：`d:\spaces\SpecWeave\projects\awesome-okf-xs`（下称子模块根）；新增文件均在 `doc/bundles/yixue/daoyi/` 下。
+> 范本：`doc/bundles/guoxue/laozi/boshu-reading/`（frontmatter/toctree/编号体例照此）。
 
 ## 任务依赖图
 
@@ -47,7 +47,7 @@ T0 WIP隔离+基线验证
 - TR：rule（隔离后 `git status --short` 不再出现这 5 个目录；check-toctrees 退出码 0）。
 
 ### T1 [high] 创建束骨架
-- 动作：新建目录 `doc/bundles/think/daoyi/daoyi-reading/{concepts,examples,references}`。
+- 动作：新建目录 `doc/bundles/yixue/daoyi/daoyi-reading/{concepts,examples,references}`。
 - TR：rule（目录存在）。
 
 ## Phase 1：R→F 事实登记
@@ -121,7 +121,7 @@ T0 WIP隔离+基线验证
 
 ## Phase 4：索引更新
 
-### T10 [high] 更新 `doc/bundles/think/index.md`
+### T10 [high] 更新 `doc/bundles/yixue/index.md`
 - 域说明段补 daoyi；分组导航表加行（💊 道医（Daoyi）知识包 | 道医经典权威阅读教程——医道同源、道门医家、道藏医书、出土方技、医道流派与辨伪信源）；toctree 加 `daoyi/index`（字母序置于 confucian 后、laozi 前？——注意当前 think/index 仅 psi/laozi 两行，WIP 的 confucian 等不注册；本任务只加 daoyi，排序按 daoyi/laozi/psi 字母序：daoyi 在前）。
 - TR：rule AC-R4（think 部分）。
 
@@ -149,7 +149,7 @@ T0 WIP隔离+基线验证
 ## Phase 6：C 原子提交
 
 ### T15 [high] 子模块内原子提交（WIP 仍处隔离态）
-- `git add` 仅以下路径（正斜杠）：`doc/bundles/think/daoyi` 整个新目录、`doc/bundles/think/index.md`、`doc/bundles/index.md`。
+- `git add` 仅以下路径（正斜杠）：`doc/bundles/yixue/daoyi` 整个新目录、`doc/bundles/yixue/index.md`、`doc/bundles/index.md`。
 - 提交前 `git status` 确认暂存清单不含任何 quarantine 原 WIP 文件；
 - message：`docs(bundles): 新增道医经典阅读 daoyi-reading 知识束——广义道医六层权威原文与信源（R→F→I→E→V→C：facts 110+条零推测，9概念+3示例+4信源，在线信源矩阵全部经访问核验，辨伪五书两说并陈；invoke gates/build 通过；bundles 286→287，think 5束2组→6束3组）`（subject 可精简至 72 字内，细节入 body）。
 - 主仓不执行任何 git 操作。

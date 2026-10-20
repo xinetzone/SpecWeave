@@ -13,11 +13,11 @@ status: "draft"
 
 ## Why
 
-`projects/awesome-okf-xs/doc/bundles/think/sexology/classics-reading/concepts/01-ancient-china.md` 对"汉志房中八家"仅有一段概览性提及。《汉书·艺文志·方技略》房中类是现存最早的系统性房中文献目录，八家著作全部亡佚、文本散见于《医心方》等后世辑引，读者面临三重门槛：书目著录（书名/卷数/班固注）无从查核、佚文辑佚链条分散、现代研究解读（李零、马王堆医书互证等）与传世目录之间缺乏桥接。需要一份以"目录学著录为锚点、以辑佚与出土文献互证为方法、以可溯源事实为底座"的专题阅读教程知识包。
+`projects/awesome-okf-xs/doc/bundles/sheke/sexology/classics-reading/concepts/01-ancient-china.md` 对"汉志房中八家"仅有一段概览性提及。《汉书·艺文志·方技略》房中类是现存最早的系统性房中文献目录，八家著作全部亡佚、文本散见于《医心方》等后世辑引，读者面临三重门槛：书目著录（书名/卷数/班固注）无从查核、佚文辑佚链条分散、现代研究解读（李零、马王堆医书互证等）与传世目录之间缺乏桥接。需要一份以"目录学著录为锚点、以辑佚与出土文献互证为方法、以可溯源事实为底座"的专题阅读教程知识包。
 
 ## What Changes
 
-- **新增 bundle** `doc/bundles/think/sexology/fangzhong-bajia-reading/`（sexology 分组下第二个 bundle），结构：
+- **新增 bundle** `doc/bundles/sheke/sexology/fangzhong-bajia-reading/`（sexology 分组下第二个 bundle），结构：
   - `index.md`（bundle 根，OKF v0.2 frontmatter，快速导航/定位对比/学习路径）
   - `facts.md`（R 阶段事实登记，≥40 条带信源编号事实，【待核验】条目显式标注）
   - `insights.md`（≥3 条四元组洞察 + 知识地图）
@@ -38,8 +38,8 @@ status: "draft"
 
 - **Affected specs**: 无既有 spec 依赖；与已交付的 `create-sexology-classics-wiki` 为同分组纵深扩展关系（仅新增交叉引用，不改其事实与结论）
 - **Affected code**（均为文档资产，无代码）:
-  - 新建：`projects/awesome-okf-xs/doc/bundles/think/sexology/fangzhong-bajia-reading/**`（约 20 个文件）
-  - 修改：`projects/awesome-okf-xs/doc/bundles/think/sexology/index.md`、`projects/awesome-okf-xs/doc/bundles/index.md`、`sexology/classics-reading/concepts/01-ancient-china.md`、`sexology/classics-reading/references/further-reading.md`
+  - 新建：`projects/awesome-okf-xs/doc/bundles/sheke/sexology/fangzhong-bajia-reading/**`（约 20 个文件）
+  - 修改：`projects/awesome-okf-xs/doc/bundles/sheke/sexology/index.md`、`projects/awesome-okf-xs/doc/bundles/index.md`、`sexology/classics-reading/concepts/01-ancient-china.md`、`sexology/classics-reading/references/further-reading.md`
   - 更新：`.trae/specs/README.md` 与 `.trae/specs/standards-tools/README.md`（看板登记）
 - **不涉及**：git commit（除非用户明确要求）、vendor 区、任何代码构建逻辑
 

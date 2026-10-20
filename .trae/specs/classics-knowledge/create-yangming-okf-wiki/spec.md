@@ -7,7 +7,7 @@ status: "draft"
 
 ## Overview
 
-* **Summary**：在 awesome-okf-xs 文档库 `doc/bundles/think/` 下新建**王阳明心学（Yangming）知识包分组**，含 5 个 OKF 束（bundle），系统覆盖王阳明（1472–1529）心学体系：《传习录》文本教程、心学义理四大纲领、修养工夫与现代实践、生平成学历程、思想源流与后学/东亚影响。
+* **Summary**：在 awesome-okf-xs 文档库 `doc/bundles/guoxue/` 下新建**王阳明心学（Yangming）知识包分组**，含 5 个 OKF 束（bundle），系统覆盖王阳明（1472–1529）心学体系：《传习录》文本教程、心学义理四大纲领、修养工夫与现代实践、生平成学历程、思想源流与后学/东亚影响。
 
 * **Purpose**：用户希望系统进修王阳明心学（含《传习录》知识库），以提升个人认知与实践能力；产出物须遵循 OKF v0.2 规范与本库既有束模板（facts/insights/log + concepts/examples/references），可被 Sphinx/MyST 构建、被门控脚本验收。
 
@@ -53,12 +53,12 @@ status: "draft"
 
 * 记忆库硬约束：frontmatter 双引号内嵌 ASCII 引号陷阱（中文语境用全角“”）；共享索引 git 竞态纪律（add 与 commit 分两次调用、暂存集核对、不 reset 他方文件）；新增束后必跑门控、计数以门控重算为准禁止手填。
 
-* 内容敏感度：公开内容（Public，公版典籍与公开学术资料）→ 标准工作流；规格产物在主仓 `.trae/specs/classics-knowledge/create-yangming-okf-wiki/`，知识包在子模块 `doc/bundles/think/yangming/`。
+* 内容敏感度：公开内容（Public，公版典籍与公开学术资料）→ 标准工作流；规格产物在主仓 `.trae/specs/classics-knowledge/create-yangming-okf-wiki/`，知识包在子模块 `doc/bundles/guoxue/yangming/`。
 
 ## 束组结构设计（5 束 · 73 文件）
 
 ```
-doc/bundles/think/yangming/
+doc/bundles/guoxue/yangming/
 ├── index.md                    # 组索引（type: group；谱系 mermaid；5 束导航；cross-ref 四书/孟子/佛家/道家）
 ├── chuanxilu/                  # 束1《传习录》阅读教程（14 文件）
 │   ├── facts.md insights.md log.md index.md
@@ -150,7 +150,7 @@ doc/bundles/think/yangming/
 
 * **Given**：任务完成
 
-* **When**：枚举 `doc/bundles/think/yangming/` 目录树
+* **When**：枚举 `doc/bundles/guoxue/yangming/` 目录树
 
 * **Then**：存在组 index.md 与 5 个束目录（chuanxilu/doctrine/gongfu/biography/lineage），每束含 facts.md、insights.md、log.md、index.md 与 concepts/examples/references 三子目录（各含 index.md），总文件数 73
 

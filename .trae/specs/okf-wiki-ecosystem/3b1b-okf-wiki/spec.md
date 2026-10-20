@@ -61,8 +61,8 @@ source: "User Request"
   - E 阶段：生成 concepts/（项目架构、路由与页面、组件系统、MDX 数学内容处理、样式体系）、examples/（典型页面模式）、references/（核心配置与组件）
 
 - **FR-5**: 新增 viz/ 技术域与索引更新
-  - 创建 `doc/bundles/viz/` 目录及其 index.md
-  - 创建 `doc/bundles/viz/3b1b/` 目录及其 index.md
+  - 创建 `doc/bundles/jishu/viz/` 目录及其 index.md
+  - 创建 `doc/bundles/jishu/viz/3b1b/` 目录及其 index.md
   - 更新 `doc/bundles/index.md`，在十域导航中添加 viz 域
   - 确保所有新增目录通过 toctree 完整性检查
 
@@ -98,7 +98,7 @@ source: "User Request"
 - **Given**: manim 源码在 `external/dao/action/3b1b/manim/` 可读
 - **When**: 完成 R→I→E→V 四阶段流程
 - **Then**: 
-  - `doc/bundles/viz/3b1b/manim/` 目录存在，包含 index.md、log.md、concepts/、examples/、references/、spec/facts.md、spec/insights.md
+  - `doc/bundles/jishu/viz/3b1b/manim/` 目录存在，包含 index.md、log.md、concepts/、examples/、references/、spec/facts.md、spec/insights.md
   - concepts/ 至少覆盖：整体架构、Mobject 对象系统、Animation 动画、Scene 场景、Camera 相机、Renderer 渲染、配置系统
   - examples/ 至少包含 2-3 个关键使用示例（如简单场景、自定义动画、LaTeX 使用）
   - references/ 包含核心模块信源登记
@@ -111,7 +111,7 @@ source: "User Request"
 - **Given**: videos 源码在 `external/dao/action/3b1b/videos/` 可读
 - **When**: 完成 R→I→E→V 四阶段流程
 - **Then**:
-  - `doc/bundles/viz/3b1b/videos/` 目录存在，结构完整
+  - `doc/bundles/jishu/viz/3b1b/videos/` 目录存在，结构完整
   - 覆盖 InteractiveScene 开发模式、checkpoint_paste 工作流、典型年份项目结构
   - spec/facts.md 包含核心模式事实，标注版本兼容性注意事项
 - **Verification**: `programmatic` + `human-judgment`
@@ -120,7 +120,7 @@ source: "User Request"
 - **Given**: caption_ops 源码在 `external/dao/action/3b1b/caption_ops/` 可读
 - **When**: 完成 R→I→E→V 四阶段流程
 - **Then**:
-  - `doc/bundles/viz/3b1b/caption-ops/` 目录存在，结构完整
+  - `doc/bundles/jishu/viz/3b1b/caption-ops/` 目录存在，结构完整
   - 覆盖字幕处理管线、SRT 操作、转录/翻译/同步工作流
   - spec/facts.md 记录核心脚本功能与调用关系
 - **Verification**: `programmatic` + `human-judgment`
@@ -130,7 +130,7 @@ source: "User Request"
 - **Given**: 3Blue1Brown.com 源码在 `external/dao/action/3b1b/3Blue1Brown.com/` 可读
 - **When**: 完成 R→I→E→V 四阶段流程
 - **Then**:
-  - `doc/bundles/viz/3b1b/3blue1brown-com/` 目录存在，结构完整
+  - `doc/bundles/jishu/viz/3b1b/3blue1brown-com/` 目录存在，结构完整
   - 覆盖项目架构、React Router v7 框架模式、MDX+MathJax 数学内容、组件体系
   - spec/facts.md 记录核心组件、路由、配置事实
 - **Verification**: `programmatic` + `human-judgment`
@@ -140,8 +140,8 @@ source: "User Request"
 - **Given**: 4 个知识包已生成
 - **When**: 更新各级 index.md
 - **Then**:
-  - `doc/bundles/viz/index.md` 存在，作为技术域入口，包含分组导航和 toctree
-  - `doc/bundles/viz/3b1b/index.md` 存在，作为分组入口，包含 4 个知识包导航和 toctree
+  - `doc/bundles/jishu/viz/index.md` 存在，作为技术域入口，包含分组导航和 toctree
+  - `doc/bundles/jishu/viz/3b1b/index.md` 存在，作为分组入口，包含 4 个知识包导航和 toctree
   - `doc/bundles/index.md` 已更新，在十域列表中添加 viz 域（第十一域）
   - `invoke gates.toctrees` 运行通过，无孤立文档、无断链
 - **Verification**: `programmatic`

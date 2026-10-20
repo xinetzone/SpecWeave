@@ -78,7 +78,7 @@ tags: [okf, 博文转化, loopx, agent-control-plane, long-horizon, loop-enginee
 ## 7. 产出文件清单（12 个文件）
 
 ```
-projects/awesome-okf-xs/doc/bundles/jishu/ai/loopx/
+projects/awesome-okf-xs/doc/bundles/jishu/ai/products/loopx/
 ├── index.md                         # 束根索引（frontmatter + 文档结构 + 已知边界 + toctree）
 ├── log.md                           # 生成与 V 阶段审查记录
 ├── concepts/

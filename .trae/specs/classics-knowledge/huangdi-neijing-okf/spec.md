@@ -7,7 +7,7 @@ status: "draft"
 
 ## Overview
 
-- **Summary**：全面调研《黄帝内经》（《素问》《灵枢》各 81 篇）及相关权威著作（历代注本、现代整理本、高校教材、权威电子文本），以最权威、最真实的原文与解读为基础，在 awesome-okf-xs 文档库 `doc/bundles/think/` 域下新建 `huangdi-neijing` 分组，产出 `neijing-reading`（《黄帝内经》原典阅读教程）OKF 知识包，并更新全库索引。
+- **Summary**：全面调研《黄帝内经》（《素问》《灵枢》各 81 篇）及相关权威著作（历代注本、现代整理本、高校教材、权威电子文本），以最权威、最真实的原文与解读为基础，在 awesome-okf-xs 文档库 `doc/bundles/yixue/` 域下新建 `huangdi-neijing` 分组，产出 `neijing-reading`（《黄帝内经》原典阅读教程）OKF 知识包，并更新全库索引。
 - **Purpose**：用户需要一个可信的《黄帝内经》入门→进阶阅读教程：读哪个版本、怎么读、原文是什么、历代大家怎么注、现代教材怎么讲——全部溯源到权威信源，杜绝凭记忆写原文、凭印象讲版本。
 - **Target Users**：想读《黄帝内经》原典的中文读者（零基础→进阶）、需要权威版本/注本导航的学习者、做中医典籍/中国哲学知识检索的 AI 智能体与研究者。
 
@@ -32,7 +32,7 @@ status: "draft"
 ## Background & Context
 
 - **目标库**：`projects/awesome-okf-xs/`（SpecWeave 第一方子模块，OKF v0.2 Sphinx 文档库），现有 286 束 / 32 组 / 13 域。
-- **先例参照**：`doc/bundles/think/laozi/boshu-reading/`（帛书《老子》阅读教程）是同型先例——经典阅读教程 bundle，含 concepts/ 7 + examples/ 3 + references/ 4 + facts.md（45 条零推测事实）+ insights.md + log.md，R→I→E 流程生成。
+- **先例参照**：`doc/bundles/guoxue/laozi/boshu-reading/`（帛书《老子》阅读教程）是同型先例——经典阅读教程 bundle，含 concepts/ 7 + examples/ 3 + references/ 4 + facts.md（45 条零推测事实）+ insights.md + log.md，R→I→E 流程生成。
 - **门禁机制**：`scripts/check-toctrees.py` 强制校验 toctree 断链、内容可达性、目录清单一致性、bundle 根 index 必备；`invoke gates.all` = UTF-8 + toctrees；CI 在 GitHub Pages 构建前拦截。
 - **frontmatter 规范**：`.agents/rules/frontmatter.md`——`type` 唯一必填；`sources` 溯源；`generated`/`verified` 信任字段；`status`/`stale_after` 生命周期；`okf_version: "0.2"` 仅允许出现在 bundle 根 index.md。
 - **内容敏感度**：Public（公有领域典籍 + 公开出版物信息），标准工作流，存放 `doc/bundles/`。
@@ -40,7 +40,7 @@ status: "draft"
 
 ## Functional Requirements
 
-- **FR-1（目录结构）**：新建 `doc/bundles/think/huangdi-neijing/index.md`（分组 index）与 `doc/bundles/think/huangdi-neijing/neijing-reading/` bundle，含 `index.md`、`log.md`、`facts.md`、`insights.md`、`concepts/`（12 篇 + index）、`examples/`（9 篇 + index）、`references/`（4 篇 + index）。
+- **FR-1（目录结构）**：新建 `doc/bundles/yixue/huangdi-neijing/index.md`（分组 index）与 `doc/bundles/yixue/huangdi-neijing/neijing-reading/` bundle，含 `index.md`、`log.md`、`facts.md`、`insights.md`、`concepts/`（12 篇 + index）、`examples/`（9 篇 + index）、`references/`（4 篇 + index）。
 - **FR-2（concepts/ 12 篇）**：00 为什么读《黄帝内经》；01 成书、流传与版本系统；02 全书结构与阅读路径；03 阴阳五行理论框架；04 藏象学说（五脏六腑、精气神）；05 经络腧穴与九针；06 病因病机（六淫七情、正邪虚实、病机十九条概说）；07 诊法（四诊合参、脉诊与色诊）；08 治则治法（治未病、治病求本、正治反治、标本先后）；09 养生学说（法于阴阳、和于术数、四季养生）；10 五运六气概要；11 历代注本系统与选用方法。
 - **FR-3（examples/ 9 篇）**：8 篇精读 + 1 篇通读计划：01《素问·上古天真论》；02《素问·四气调神大论》；03《素问·阴阳应象大论》；04《素问·生气通天论》；05《素问·藏气法时论》；06《素问·至真要大论》（病机十九条）；07《灵枢·九针十二原》；08《灵枢·经脉》；09 通读计划与注本搭配。每篇精读含：篇章定位 → 核心段落**原文**（逐字核对）→ 词句注释 → 历代注家观点 → 现代教材解读 → 延伸阅读。
 - **FR-4（references/ 4 篇）**：`editions.md`（现代权威整理本）；`commentaries.md`（历代注本信源登记：杨上善、王冰、马莳、张介宾、张志聪、黄元御、丹波元简/元坚等）；`modern-studies.md`（高校教材与工具书：王洪图《黄帝内经》、《内经讲义》、郭霭春《黄帝内经词典》、龙伯坚《黄帝内经概论》等）；`electronic-sources.md`（电子文本可信度分级：ctext.org、维基文库、国学导航、中医世家等）。
@@ -77,7 +77,7 @@ status: "draft"
 ### AC-1: bundle 结构与文件齐全
 - **Type**: `rule`
 - **Given**: 实施完成
-- **When**: 检查 `doc/bundles/think/huangdi-neijing/` 目录树
+- **When**: 检查 `doc/bundles/yixue/huangdi-neijing/` 目录树
 - **Then**: 存在 group index、bundle index/log/facts/insights、concepts/ 12 篇 + index、examples/ 9 篇 + index、references/ 4 篇 + index
 - **Pass Condition**: 文件清单与 FR-1/2/3/4 完全一致，无多余孤立 .md
 - **Evidence**: 目录列表 + toctree 门禁输出

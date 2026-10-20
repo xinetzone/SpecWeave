@@ -1,7 +1,7 @@
 # Tasks — create-fangzhong-bajia-wiki
 
 > 依赖顺序：T1 → T2 → T3/T4/T5（可并行）→ T6 → T7 → T8
-> 实施目录：`projects/awesome-okf-xs/doc/bundles/think/sexology/fangzhong-bajia-reading/`
+> 实施目录：`projects/awesome-okf-xs/doc/bundles/sheke/sexology/fangzhong-bajia-reading/`
 > 七概念链路：场景4 知识沉淀 R→I→E→V→C（session=sc-20260831-fangzhong-bajia-wiki）
 
 - [x] Task 1: R 阶段——系统性调研与事实采集（G1 质量门）

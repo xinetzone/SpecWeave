@@ -25,9 +25,9 @@ sources:
 
 | 对象 | 文件数 | 信源基准 |
 |---|---|---|
-| `bundles/ai/ai-agent/mai-ui/` | 16 | `external/libs/tools/Tongyi-MAI/MAI-UI/MAI-UI/` 源码 + facts-mai-ui.md（F-001~F-054） |
-| `bundles/ai/ai-agent/mobile-world/` | 18 | `external/libs/tools/Tongyi-MAI/MobileWorld/src/mobile_world/` 源码 + facts-mobile-world.md（F-001~F-080） |
-| `bundles/ai/ai-agent/mobilepa-bench/` | 11 | `external/libs/tools/Tongyi-MAI/MobilePA-Bench/`（网站资产仓）+ facts-mobilepa-bench.md（F-001~F-032、WEB-A-01~A-24） |
+| `bundles/jishu/ai/frameworks/ai-agent/mai-ui/` | 16 | `external/libs/tools/Tongyi-MAI/MAI-UI/MAI-UI/` 源码 + facts-mai-ui.md（F-001~F-054） |
+| `bundles/jishu/ai/frameworks/ai-agent/mobile-world/` | 18 | `external/libs/tools/Tongyi-MAI/MobileWorld/src/mobile_world/` 源码 + facts-mobile-world.md（F-001~F-080） |
+| `bundles/jishu/ai/frameworks/ai-agent/mobilepa-bench/` | 11 | `external/libs/tools/Tongyi-MAI/MobilePA-Bench/`（网站资产仓）+ facts-mobilepa-bench.md（F-001~F-032、WEB-A-01~A-24） |
 
 验证纪律：只报告与修复，不扩大改动范围；事实冲突以源码为准。
 

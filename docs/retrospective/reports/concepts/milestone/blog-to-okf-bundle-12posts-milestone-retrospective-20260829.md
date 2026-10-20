@@ -62,18 +62,18 @@ stale_after: "2027-08-29"
 
 | # | 博文（作者/日期） | bundle（分组） | 骨架 | 事实数 | P0 核验 | md 文件 |
 |---|---|---|---|---|---|---|
-| 1 | 《阿里做了个AI短剧团队，不是工具》罗导聊Ai/罗富平 08-27 | [qwen-creative-platform-news](../../../../../projects/awesome-okf-xs/doc/bundles/ai/ai-agent/qwen-creative-platform-news/index.md)（ai-agent） | 商业分析 | 39 | 8项：5✅ 3⚠️ | 7 |
-| 2 | 《字节把TRAE、扣子都并进豆包，图什么？》窥见比特/比特一哥 08-27（36氪独家双信源） | [bytedance-ai-consolidation](../../../../../projects/awesome-okf-xs/doc/bundles/ai/trae/bytedance-ai-consolidation/index.md)（trae） | 商业分析 | 21 | 8项：7✅ 1⚠️ | 9 |
-| 3 | 《阿里刚开源的Qwen-UI-Agent…试了3个内部流程》人间彷徨/wyzw 08-26 | [qwen-ui-agent](../../../../../projects/awesome-okf-xs/doc/bundles/ai/ai-agent/qwen-ui-agent/index.md)（ai-agent） | 技术评测（含 examples） | 44 | 8项：5✅ 2⚠️ 1❌ | 11 |
-| 4 | 《DeepSeek多模态视觉实验模型发布！》湖北 08-21 | [vision-model-selection](../../../../../projects/awesome-okf-xs/doc/bundles/ai/deepseek/vision-model-selection/index.md)（deepseek） | 技术选型（含 examples） | 36 | 3项：3✅ | 14 |
-| 5 | 《ThreeUI爆火！160+3D组件全开源！》前端开发爱好者 08-25 | [threeui](../../../../../projects/awesome-okf-xs/doc/bundles/ai/trae/threeui/index.md)（trae） | 资讯盘点 | 42 | 7项：4✅ 3⚠️ 0❌ | 10 |
-| 6 | 《A2A与MCP：Agent互操作协议栈的合流时刻》AI干活我偷懒 08-26 | [a2a-mcp-convergence](../../../../../projects/awesome-okf-xs/doc/bundles/ai/ai-agent/a2a-mcp-convergence/index.md)（ai-agent） | 技术综述 | 53 | 12项：6✅ 5⚠️ 1❌ | 10 |
-| 7 | 《实测豆包工作：连上飞书后…》APPSO爱范儿 08-25 | [doubao-work](../../../../../projects/awesome-okf-xs/doc/bundles/ai/ai-agent/doubao-work/index.md)（ai-agent） | 实测评测 | 43 | 8项：**8✅ 0⚠️ 0❌** | 10 |
-| 8 | 《WorkBuddy、千问办公、TraeWork三大平台同步上架》挖地兔 08-25 | [tushare-ai-office](../../../../../projects/awesome-okf-xs/doc/bundles/ai/trae/tushare-ai-office/index.md)（trae） | 厂商自宣（**status: flagged**） | 32 | 6项：3✅ 2⚠️ 1❌ | 10 |
-| 9 | 《我天，飞书就是豆包工作的完美Context Layer》AI产品阿颖 08-25 | [doubao-work-context-layer](../../../../../projects/awesome-okf-xs/doc/bundles/ai/ai-agent/doubao-work-context-layer/index.md)（ai-agent） | 产品分析 | 39 | 6项：4✅ 1⚠️ 1❌ | 10 |
-| 10 | 《下一代生产力，就在豆包工作+飞书里》36氪/陈曦 08-25 | [doubao-work-org-productivity](../../../../../projects/awesome-okf-xs/doc/bundles/ai/ai-agent/doubao-work-org-productivity/index.md)（ai-agent） | 行业分析 | 40 | 6项：5✅ 1⚠️ 0❌ | 10 |
-| 11 | 《DeepSeek V4 Pro也能看图了！》macrozheng 08-21 | [claude-vision-skill](../../../../../projects/awesome-okf-xs/doc/bundles/ai/ai-agent/claude-vision-skill/index.md)（ai-agent） | 技术教程（含 examples） | 35 | 6项：**6✅ 0⚠️ 0❌** | 12 |
-| 12 | 《工业Agent不是"套壳"大模型！西门子百年经验灌进工业AI》量子位/田晏林 08-27 | [siemens-industrial-agent](../../../../../projects/awesome-okf-xs/doc/bundles/ai/ai-agent/siemens-industrial-agent/index.md)（ai-agent） | 企业推广/行业分析 | 36 | 6大项：3✅ 3⚠️ 0❌ | 10 |
+| 1 | 《阿里做了个AI短剧团队，不是工具》罗导聊Ai/罗富平 08-27 | [qwen-creative-platform-news](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/qwen-creative-platform-news/index.md)（ai-agent） | 商业分析 | 39 | 8项：5✅ 3⚠️ | 7 |
+| 2 | 《字节把TRAE、扣子都并进豆包，图什么？》窥见比特/比特一哥 08-27（36氪独家双信源） | [bytedance-ai-consolidation](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/bytedance-ai-consolidation/index.md)（trae） | 商业分析 | 21 | 8项：7✅ 1⚠️ | 9 |
+| 3 | 《阿里刚开源的Qwen-UI-Agent…试了3个内部流程》人间彷徨/wyzw 08-26 | [qwen-ui-agent](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/qwen-ui-agent/index.md)（ai-agent） | 技术评测（含 examples） | 44 | 8项：5✅ 2⚠️ 1❌ | 11 |
+| 4 | 《DeepSeek多模态视觉实验模型发布！》湖北 08-21 | [vision-model-selection](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/deepseek/vision-model-selection/index.md)（deepseek） | 技术选型（含 examples） | 36 | 3项：3✅ | 14 |
+| 5 | 《ThreeUI爆火！160+3D组件全开源！》前端开发爱好者 08-25 | [threeui](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/threeui/index.md)（trae） | 资讯盘点 | 42 | 7项：4✅ 3⚠️ 0❌ | 10 |
+| 6 | 《A2A与MCP：Agent互操作协议栈的合流时刻》AI干活我偷懒 08-26 | [a2a-mcp-convergence](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/a2a-mcp-convergence/index.md)（ai-agent） | 技术综述 | 53 | 12项：6✅ 5⚠️ 1❌ | 10 |
+| 7 | 《实测豆包工作：连上飞书后…》APPSO爱范儿 08-25 | [doubao-work](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/doubao-work/index.md)（ai-agent） | 实测评测 | 43 | 8项：**8✅ 0⚠️ 0❌** | 10 |
+| 8 | 《WorkBuddy、千问办公、TraeWork三大平台同步上架》挖地兔 08-25 | [tushare-ai-office](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/tushare-ai-office/index.md)（trae） | 厂商自宣（**status: flagged**） | 32 | 6项：3✅ 2⚠️ 1❌ | 10 |
+| 9 | 《我天，飞书就是豆包工作的完美Context Layer》AI产品阿颖 08-25 | [doubao-work-context-layer](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/doubao-work-context-layer/index.md)（ai-agent） | 产品分析 | 39 | 6项：4✅ 1⚠️ 1❌ | 10 |
+| 10 | 《下一代生产力，就在豆包工作+飞书里》36氪/陈曦 08-25 | [doubao-work-org-productivity](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/doubao-work-org-productivity/index.md)（ai-agent） | 行业分析 | 40 | 6项：5✅ 1⚠️ 0❌ | 10 |
+| 11 | 《DeepSeek V4 Pro也能看图了！》macrozheng 08-21 | [claude-vision-skill](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/claude-vision-skill/index.md)（ai-agent） | 技术教程（含 examples） | 35 | 6项：**6✅ 0⚠️ 0❌** | 12 |
+| 12 | 《工业Agent不是"套壳"大模型！西门子百年经验灌进工业AI》量子位/田晏林 08-27 | [siemens-industrial-agent](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/siemens-industrial-agent/index.md)（ai-agent） | 企业推广/行业分析 | 36 | 6大项：3✅ 3⚠️ 0❌ | 10 |
 | | **合计** | **12 个 bundle** | **3 个含 examples** | **460** | **84项：59✅ 21⚠️ 4❌** | **123** |
 
 ### 1.2 关键汇总指标（全部 Shell 实测复验）

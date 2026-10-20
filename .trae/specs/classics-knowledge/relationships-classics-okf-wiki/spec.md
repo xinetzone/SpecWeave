@@ -12,7 +12,7 @@ content-sensitivity: Public（公开出版物的书目信息与学术性解读�
 
 ## Overview
 
-- **Summary**：在 `projects/awesome-okf-xs/doc/bundles/think/` 下新建 `relationships/` 分组，为 6 本两性关系经典著作各生成一个符合 OKF v0.2 规范的知识包（bundle），每个知识包包含 concepts（概念解读）/examples（实践指引）/references（信源参考）三层结构，外加 facts.md（事实登记）与 insights.md（洞察与知识地图）。
+- **Summary**：在 `projects/awesome-okf-xs/doc/bundles/sheke/` 下新建 `relationships/` 分组，为 6 本两性关系经典著作各生成一个符合 OKF v0.2 规范的知识包（bundle），每个知识包包含 concepts（概念解读）/examples（实践指引）/references（信源参考）三层结构，外加 facts.md（事实登记）与 insights.md（洞察与知识地图）。
 - **Purpose**：将两性关系领域最具代表性的经典著作系统化、中文化为可导航、可核验、可实践的开源知识教程，填补 awesome-okf-xs 思想域（think/）在"亲密关系/情感"主题上的空白；与 psi（理论体系）、laozi（古典思想）构成"理论—古典—生活"的思想谱系。
 - **Target Users**：希望系统理解亲密关系与婚恋情感的中文读者；OKF 知识包消费者（人类学习者与 AI 智能体）。
 
@@ -89,7 +89,7 @@ content-sensitivity: Public（公开出版物的书目信息与学术性解读�
 
 ### AC-1: 分组与 6 个 bundle 结构完整
 - **Type**: `rule`
-- **Given**: 任务完成后的 `doc/bundles/think/` 目录
+- **Given**: 任务完成后的 `doc/bundles/sheke/` 目录
 - **When**: 检查 `relationships/` 分组及其下 6 个 bundle 目录
 - **Then**: `relationships/index.md` 存在；6 个 bundle（intimate-relationships、art-of-loving、gottman-seven-principles、five-love-languages、attached、mars-venus）每个均含 `index.md`、`log.md`、`facts.md`、`insights.md` 及 `concepts/`、`examples/`、`references/` 三个子目录（各含 `index.md` 与规定数量内容文档：concepts 5–6 篇、examples 2 篇、references 2 篇）
 - **Pass Condition**: 目录树逐一核对全部存在，文档数量达标

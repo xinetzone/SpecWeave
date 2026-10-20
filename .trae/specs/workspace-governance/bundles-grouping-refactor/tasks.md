@@ -6,7 +6,7 @@
 - [x] Task 1: 基线盘点（R/I 产出）
   - [x] 枚举 `doc/bundles/` 顶层目录全集（预期 28 组），核对每组束数、是否含组 `index.md`
   - [x] 用 grep 生成跨组链接清单（根绝对 `](/group/` 与相对 `](../group/` 两类），按组分组计数
-  - [x] 记录根 [index.md](../../projects/awesome-okf-xs/doc/bundles/index.md) 与 [doc/index.md](../../projects/awesome-okf-xs/doc/index.md) 现有计数与导航表差异
+  - [x] 记录根 [index.md](../../../../projects/awesome-okf-xs/doc/bundles/index.md) 与 [doc/index.md](../../projects/awesome-okf-xs/doc/index.md) 现有计数与导航表差异
   - [x] 产出盘点报告，作为 Task 4/6 的修复依据
 - [x] Task 2: 建立 10 个域目录骨架
   - [x] 创建域目录（meta、python 已在原地复用；新建 build、document、data、ml、ai、comm、web、think）
@@ -26,7 +26,7 @@
   - [x] 按文件深度逐个调整 `](../<group>/...` 为指向新域的路径
   - [x] 修复各域内组 `index.md` 指向其他组的相对链接
   - [x] 修正：Task 4/5 合计真值 1804 处（1616 根绝对 + 188 相对），经内容哈希分类精确验证
-- [x] Task 6: 重写根索引 [bundles/index.md](../../projects/awesome-okf-xs/doc/bundles/index.md)
+- [x] Task 6: 重写根索引 [bundles/index.md](../../../../projects/awesome-okf-xs/doc/bundles/index.md)
   - [x] 改为「域导航 + 域内分组导航」两级结构
   - [x] 补齐缺失组（含 coze/deepseek/trae/tencent/myst 等），修正 `total_bundles`/`groups` 为实际值（248 束 / 28 组 / 10 域）
   - [x] 更新「生态关系概览」「推荐入门路径」中的组路径

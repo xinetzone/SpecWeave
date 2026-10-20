@@ -6,7 +6,7 @@
 - **Description**:
   - 按模块阅读 `external/dao/action/3b1b/manim/manimlib/` 核心源码
   - 重点模块：animation/、camera/、mobject/、renderer/、scene/、shaders/、utils/、config.py、constants.py、__init__.py
-  - 提取编号事实 F-001~F-xxx，写入 `doc/bundles/viz/3b1b/manim/spec/facts.md`
+  - 提取编号事实 F-001~F-xxx，写入 `doc/bundles/jishu/viz/3b1b/manim/spec/facts.md`
   - 事实要求：零推测，只记录"代码中有什么"（类名、方法签名、继承关系、字段、常量、数据流）
   - 识别核心类：Scene、Mobject、Animation、Camera、Renderer、VMobject、Group 等
 - **Acceptance Criteria Addressed**: AC-1
@@ -23,7 +23,7 @@
   - 基于 facts.md，提炼 3-5 个核心架构洞察（陈述+证据+反常识+行动四元组）
   - 设计知识地图：概念文档分组与学习路径（基础→核心→高级）
   - 确定每个概念文档覆盖哪些 F-xxx 事实
-  - 写入 `doc/bundles/viz/3b1b/manim/spec/insights.md`
+  - 写入 `doc/bundles/jishu/viz/3b1b/manim/spec/insights.md`
 - **Acceptance Criteria Addressed**: AC-1
 - **Test Requirements**:
   - `human-judgement` TR-2.1: 每个洞察包含陈述/证据/反常识/行动四要素
@@ -34,7 +34,7 @@
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
-  - 创建目录结构：`doc/bundles/viz/3b1b/manim/` 下 concepts/、examples/、references/、spec/
+  - 创建目录结构：`doc/bundles/jishu/viz/3b1b/manim/` 下 concepts/、examples/、references/、spec/
   - **信源先行**：先生成 references/ 下的信源登记文档（每个核心模块一个 .md，含源码路径索引）
   - 分批生成 concepts/ 概念文档（每批≤5个），按学习路径排序：
     - 00-overall-architecture.md（整体架构）
@@ -125,8 +125,8 @@
 - **Priority**: high
 - **Depends On**: Task 4, Task 5, Task 6, Task 7（所有知识包生成后统一创建索引）
 - **Description**:
-  - 创建 `doc/bundles/viz/index.md`：作为"数学可视化与创意编程"技术域入口，包含域说明、分组导航、toctree 引用 3b1b/index，更新 mermaid 生态关系图（添加 viz 与 data/document 的关联）
-  - 创建 `doc/bundles/viz/3b1b/index.md`：作为 3Blue1Brown 生态分组入口，包含 4 个知识包导航（manim/videos/caption-ops/3blue1brown-com）、生态关系说明、toctree
+  - 创建 `doc/bundles/jishu/viz/index.md`：作为"数学可视化与创意编程"技术域入口，包含域说明、分组导航、toctree 引用 3b1b/index，更新 mermaid 生态关系图（添加 viz 与 data/document 的关联）
+  - 创建 `doc/bundles/jishu/viz/3b1b/index.md`：作为 3Blue1Brown 生态分组入口，包含 4 个知识包导航（manim/videos/caption-ops/3blue1brown-com）、生态关系说明、toctree
   - 更新 `doc/bundles/index.md`：
     - 在十域导航中添加 viz 域为第十一域
     - 更新 mermaid 生态关系概览图，添加 viz 节点及其与 data/pydata（matplotlib）、document/katex 的关联
@@ -135,8 +135,8 @@
     - 更新统计数字（total_bundles、groups、domains）
 - **Acceptance Criteria Addressed**: AC-5, AC-6
 - **Test Requirements**:
-  - `programmatic` TR-8.1: `doc/bundles/viz/index.md` 存在且包含有效的 toctree
-  - `programmatic` TR-8.2: `doc/bundles/viz/3b1b/index.md` 存在且包含 4 个知识包的 toctree
+  - `programmatic` TR-8.1: `doc/bundles/jishu/viz/index.md` 存在且包含有效的 toctree
+  - `programmatic` TR-8.2: `doc/bundles/jishu/viz/3b1b/index.md` 存在且包含 4 个知识包的 toctree
   - `programmatic` TR-8.3: `doc/bundles/index.md` 已更新，mermaid 图包含 viz
   - `programmatic` TR-8.4: 在 awesome-okf-xs 根目录运行 `invoke gates.toctrees` 完全通过，零断链、零孤立
   - `programmatic` TR-8.5: `invoke gates.utf8` 完全通过

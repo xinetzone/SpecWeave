@@ -17,7 +17,7 @@ status: "draft"
 
 ## What Changes
 
-- **新增 bundle** `doc/bundles/think/sexology/mawangdui-fangzhong-reading/`，结构（仿 boshu-reading/classics-reading 范式）：
+- **新增 bundle** `doc/bundles/sheke/sexology/mawangdui-fangzhong-reading/`，结构（仿 boshu-reading/classics-reading 范式）：
   - `index.md`（bundle 根，OKF v0.2 frontmatter，快速导航/定位对比/学习路径）
   - `facts.md`（R 阶段事实登记，带编号与信源，【待核验】条目显式标注）
   - `insights.md`（≥4 条四元组洞察 + 知识地图）
@@ -40,7 +40,7 @@ status: "draft"
 
 - **Affected specs**: `create-sexology-classics-wiki`（已完成，仅新增交叉引用，不改变其已交付内容）
 - **Affected code**（均为文档资产，无代码）:
-  - 新建：`projects/awesome-okf-xs/doc/bundles/think/sexology/mawangdui-fangzhong-reading/**`（约 22 个文件：index 1 + facts/insights/log 3 + concepts 9 + examples 4 + references 5）
+  - 新建：`projects/awesome-okf-xs/doc/bundles/sheke/sexology/mawangdui-fangzhong-reading/**`（约 22 个文件：index 1 + facts/insights/log 3 + concepts 9 + examples 4 + references 5）
   - 修改：`think/sexology/index.md`、`bundles/index.md`、`classics-reading/concepts/01-ancient-china.md`（仅加链接）
   - 更新：`.trae/specs/README.md`、`.trae/specs/standards-tools/README.md`
 - **不涉及**：git commit（除非用户明确要求）、vendor 区、任何代码构建逻辑

@@ -31,7 +31,7 @@ status: "draft"
 ## Impact
 
 - **Affected specs**: `ssh-python-okf-wiki`（前置依赖，其产出物为本扩展的基础，不修改）
-- **Affected code**: 无代码变更；产出物全部位于 `projects/awesome-okf-xs/doc/bundles/comm/networking/scrapli/`（awesome-okf-xs 子项目，git submodule，允许在子项目开发流程内新增文档）
+- **Affected code**: 无代码变更；产出物全部位于 `projects/awesome-okf-xs/doc/bundles/jishu/comm/networking/scrapli/`（awesome-okf-xs 子项目，git submodule，允许在子项目开发流程内新增文档）
 - **不修改**现有 14 篇内容文档（00-08 概念、4 示例、1 信源）——仅追加与更新索引类文件
 
 ## ADDED Requirements

@@ -1,12 +1,12 @@
 # Anthropic 生态 OKF Wiki - Verification Checklist
 
 ## 组织级Bundle验证
-- [ ] `doc/bundles/ai/anthropic/` 目录存在
-- [ ] `doc/bundles/ai/anthropic/index.md` 存在且含 `okf_version: "0.2"` frontmatter
+- [ ] `doc/bundles/jishu/ai/ecosystems/anthropic/` 目录存在
+- [ ] `doc/bundles/jishu/ai/ecosystems/anthropic/index.md` 存在且含 `okf_version: "0.2"` frontmatter
 - [ ] 组织级index.md包含Anthropic生态简介、6个子bundle导航表格
 - [ ] 组织级index.md的toctree引用所有6个子bundle的index
-- [ ] `doc/bundles/ai/anthropic/log.md` 存在且有2026-08-27创建记录
-- [ ] `doc/bundles/ai/index.md` 已更新包含anthropic条目
+- [ ] `doc/bundles/jishu/ai/ecosystems/anthropic/log.md` 存在且有2026-08-27创建记录
+- [ ] `doc/bundles/jishu/ai/index.md` 已更新包含anthropic条目
 
 ## 目录结构验证
 - [ ] `python-sdk/` 子bundle目录存在，含concepts/examples/references子目录

@@ -15,7 +15,7 @@ id: netease-youdao-okf-wiki
 - **阶段0（G0 信源稳定性门）**：将 6 个临时克隆迁移为 `vendor/netease-youdao/<repo>` git 子模块，固定到 release tag 或 commit hash（禁止 main/master 浮动分支），更新 vendor 区域元数据（AGENTS.md 路由表、README.md 依赖清单、VERSION.md 版本记录），GATE-SPS 零引用扫描通过后清理旧临时克隆目录。参照先例 [okf-libs-vendor-migration](../../migration-archival/okf-libs-vendor-migration/spec.md)。
 - **R 阶段**：对 6 个仓库逐模块源码阅读，提取编号事实清单（F-xxx），零推测，每条事实指向 vendor 稳定路径。
 - **I 阶段**：基于事实清单提炼核心架构洞察（陈述+证据+反常识+行动四元组），设计知识地图与学习路径。
-- **E 阶段**：在 `projects/awesome-okf-xs/doc/bundles/jishu/ai/netease-youdao/` 生成生态分组索引 + 6 个知识束（每仓库一束，参照 [tencent-okf-wiki](../tencent-okf-wiki/spec.md) 先例）。信源先行（references/ 先生成）、分批生成（每批 ≤7 文件）、index 最后写。
+- **E 阶段**：在 `projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/netease-youdao/` 生成生态分组索引 + 6 个知识束（每仓库一束，参照 [tencent-okf-wiki](../tencent-okf-wiki/spec.md) 先例）。信源先行（references/ 先生成）、分批生成（每批 ≤7 文件）、index 最后写。
 - **V 阶段**：独立验证——Grep 级 API 真实性验证、计数断言比对、链接检查、frontmatter 完整性、toctree 导航完整性（`scripts/check-toctrees.py`）。
 - **C 阶段**：模式沉淀——回顾工作流，将有价值的新反模式/改进点回写 source-code-to-okf-wiki 模式文档，原子提交收尾。
 - **无 BREAKING 变更**（不修改任何源码，不改动既有 bundle）。
@@ -23,7 +23,7 @@ id: netease-youdao-okf-wiki
 ## Impact
 
 - Affected specs: `.trae/specs/okf-wiki-ecosystem/`（本 spec 新增）；source-code-to-okf-wiki 模式文档（C 阶段可能更新）
-- Affected code: `vendor/`（新增 6 个 third_party 子模块 + 元数据）；旧临时克隆目录（迁移后已清理）；`projects/awesome-okf-xs/doc/bundles/jishu/ai/netease-youdao/`（新增分组 + 6 个 bundle）
+- Affected code: `vendor/`（新增 6 个 third_party 子模块 + 元数据）；旧临时克隆目录（迁移后已清理）；`projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/netease-youdao/`（新增分组 + 6 个 bundle）
 - 受影响 Skill：source-code-to-okf-wiki（方法论）、seven-concepts-cmd（场景4 知识沉淀链路编排）
 
 ## ADDED Requirements
@@ -100,7 +100,7 @@ id: netease-youdao-okf-wiki
 
 - **Technical**: Windows + PowerShell 环境；Grep 路径分隔符需正确处理；vendor 子模块使用 SSH 远程 URL（与现有 `.gitmodules` 多数条目一致）
 - **Business**: 遵循 vendor 区域治理规范（check-vendor.py 合规）；projects/awesome-okf-xs 为 git submodule，写入前须阅读其 `AGENTS.md`（子项目路由）
-- **Dependencies**: source-code-to-okf-wiki Skill 五阶段工作流与 Prompt 模板；seven-concepts 方法论编排质量门；先例 `bundles/jishu/ai/tencent/` 作为分组格式参考
+- **Dependencies**: source-code-to-okf-wiki Skill 五阶段工作流与 Prompt 模板；seven-concepts 方法论编排质量门；先例 `bundles/jishu/ai/ecosystems/tencent/` 作为分组格式参考
 
 ## Open Questions
 

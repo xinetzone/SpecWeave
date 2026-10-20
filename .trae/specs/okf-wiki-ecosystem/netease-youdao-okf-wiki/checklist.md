@@ -24,7 +24,7 @@
 
 ## E 阶段（G3）
 
-- [x] `doc/bundles/jishu/ai/netease-youdao/` 分组 index.md 含 okf_version frontmatter 与 6 束导航
+- [x] `doc/bundles/jishu/ai/ecosystems/netease-youdao/` 分组 index.md 含 okf_version frontmatter 与 6 束导航
 - [x] 6 个 bundle 目录结构合规（index.md/log.md/concepts/references，有示例的含 examples）
 - [x] references/ 信源文件先于 concepts/examples 生成
 - [x] 每批生成 ≤7 文件；各级 index.md 最后书写

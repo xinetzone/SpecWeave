@@ -29,7 +29,7 @@
 
 ## 阶段三：E 阶段批量生成（信源先行，index 最后写）
 
-- [x] Task 9: 创建 `doc/bundles/jishu/ai/netease-youdao/` 分组骨架——group index.md（okf_version frontmatter + 生态关系概述 + 6 束导航）；6 个 bundle 目录结构（concepts/examples/references 空 index 占位除外，index 最后写）
+- [x] Task 9: 创建 `doc/bundles/jishu/ai/ecosystems/netease-youdao/` 分组骨架——group index.md（okf_version frontmatter + 生态关系概述 + 6 束导航）；6 个 bundle 目录结构（concepts/examples/references 空 index 占位除外，index 最后写）
 - [x] Task 10: 生成 6 个 bundle 的 references/ 信源文件（含 facts/insights 归档与 sources 登记），先于一切 concepts/examples
 - [x] Task 11: 小束生成（ScholarClaw、Confucius4-TTS、BCEmbedding）——每束 concepts/ 分批生成（每批 ≤7），再 examples/，附 F-xxx 事实编号（2026-09-09 子代理执行注记：3 束 concepts 18 篇 + examples 8 篇全部落盘，九字段 frontmatter 齐全、F 编号零越界、未写任何 index.md）
 - [x] Task 12: 大束生成（EmotiVoice、QAnything、LobsterAI）——每束 concepts/ 分批生成（每批 ≤7），再 examples/，附 F-xxx 事实编号（2026-09-09 子代理执行注记：3 束 concepts 21 篇 + examples 13 篇全部落盘，LobsterAI 11 篇 concepts 与 QAnything 8 篇均分两批 ≤7 执行，九字段 frontmatter 齐全、F 编号零越界、未写任何 index.md）

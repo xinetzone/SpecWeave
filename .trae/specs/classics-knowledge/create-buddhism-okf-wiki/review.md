@@ -2,7 +2,7 @@
 
 ## 分组骨架与导航
 
-- [ ] 新建 `doc/bundles/think/buddhism/index.md`，含一句话简介 + 5 bundle 列表表 + `{toctree}`
+- [ ] 新建 `doc/bundles/guoxue/buddhism/index.md`，含一句话简介 + 5 bundle 列表表 + `{toctree}`
 - [ ] `think/index.md` 新增「📖 佛家核心经典」分组行（table + toctree）
 - [ ] `bundles/index.md` think 域描述与分组表新增佛家行
 - [ ] `bundles/index.md` 统计数字更新为 291 束 / 33 组

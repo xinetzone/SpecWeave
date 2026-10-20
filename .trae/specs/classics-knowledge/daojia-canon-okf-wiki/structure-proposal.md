@@ -2,7 +2,7 @@
 
 > 依赖：facts.md（Task 1）+ insights.md（Task 2）+ patterns.md（Task 3）
 > 用途：Phase 0 确认点（Task 5）的决策输入——待用户确认后进入 Phase 1+
-> 落位根目录：`projects/awesome-okf-xs/doc/bundles/think/daojia/`
+> 落位根目录：`projects/awesome-okf-xs/doc/bundles/guoxue/daojia/`
 
 ---
 

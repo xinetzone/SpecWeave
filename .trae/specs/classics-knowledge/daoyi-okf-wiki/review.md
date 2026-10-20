@@ -2,7 +2,7 @@
 
 - **审查时间**：2026-08-30
 - **审查身份**：独立只读审查员（fresh-context review）
-- **审查对象根目录**：`projects/awesome-okf-xs/doc/bundles/think/daoyi/`（相对仓库根；24 个 .md 文件）
+- **审查对象根目录**：`projects/awesome-okf-xs/doc/bundles/yixue/daoyi/`（相对仓库根；24 个 .md 文件）
 - **体例基准**：同仓库 `think/laozi/boshu-reading/` 范本（OKF v0.2）
 - **审查方式**：全文件通读 + 结构/链接/编号机器枚举核对 + 古典原文在线逐字比对（WebFetch 维基文库 / ctext）+ 外部学术资料对抗抽查
 - **写入范围声明**：本报告为本次审查唯一写入物，未修改审查对象中的任何文件。

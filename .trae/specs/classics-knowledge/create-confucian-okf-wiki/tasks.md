@@ -2,11 +2,11 @@
 
 - [x] Task 1: R 阶段——信源调研与事实采集（facts.md）
   - [x] SubTask 1.1: Web 调研儒家经典权威信源（ctext.org《論語》《孟子》《禮記》含大学中庸、Wikisource 对应页面、中华书局整理本信息页、定州汉简《论语》等出土文献公开资料），采集《大学》《中庸》全文及《论语》《孟子》核心章句原文
-  - [x] SubTask 1.2: 撰写 `bundles/think/confucian/four-books/facts.md` ≥40 条编号事实（F-001 起，每条含信源 URL），覆盖：十三经体系、四书形成史、各书篇目字数、注疏传统（何晏/赵岐/朱熹/刘宝楠/焦循/王阳明/杨伯峻/钱穆）、关键异文登记；G1 检查：全文无因果推断词（因为/导致/所以）
+  - [x] SubTask 1.2: 撰写 `bundles/guoxue/confucian/four-books/facts.md` ≥40 条编号事实（F-001 起，每条含信源 URL），覆盖：十三经体系、四书形成史、各书篇目字数、注疏传统（何晏/赵岐/朱熹/刘宝楠/焦循/王阳明/杨伯峻/钱穆）、关键异文登记；G1 检查：全文无因果推断词（因为/导致/所以）
     - 产出：facts.md 67 条（F-001~F-067）；原文底料 `.trae/specs/classics-knowledge/create-confucian-okf-wiki/raw-texts.md`（大学全文 11 段、中庸 33 章、论语 40 章、孟子 16 章，双源一致 100%）
 - [x] Task 2: Bundle 骨架与分组索引
-  - [x] SubTask 2.1: 创建 `bundles/think/confucian/index.md`（分组根，`type: group` frontmatter，仿 think/laozi/index.md：分组简介 + 知识包列表表 + toctree，注明未来增量 bundle 规划：five-classics/xunzi/chuanxilu）
-  - [x] SubTask 2.2: 创建 `bundles/think/confucian/four-books/index.md`（bundle 根，完整 OKF v0.2 frontmatter：type: OKF、title、description、tags、version、source、generated、verified、status、stale_after、okf_version "0.2"；快速导航 + 定位表 + 快速开始 + 学习路径 + toctree 引用 concepts/examples/references/facts/insights/log）
+  - [x] SubTask 2.1: 创建 `bundles/guoxue/confucian/index.md`（分组根，`type: group` frontmatter，仿 think/laozi/index.md：分组简介 + 知识包列表表 + toctree，注明未来增量 bundle 规划：five-classics/xunzi/chuanxilu）
+  - [x] SubTask 2.2: 创建 `bundles/guoxue/confucian/four-books/index.md`（bundle 根，完整 OKF v0.2 frontmatter：type: OKF、title、description、tags、version、source、generated、verified、status、stale_after、okf_version "0.2"；快速导航 + 定位表 + 快速开始 + 学习路径 + toctree 引用 concepts/examples/references/facts/insights/log）
     - 备注：两个 index 首次写入因 IDE 超时丢失，由 V 阶段审查代理重建并经 Sphinx dummy 构建验证
 - [x] Task 3: I 阶段——洞察四元组（insights.md）
   - [x] SubTask 3.1: 撰写 `insights.md` ≥4 条四元组洞察（陈述/证据/反常识/行动，引用 facts 编号），覆盖：四书结集的阅读史意义、注疏分层使用法、汉宋之争与现代译注的选择、与道家 bundle（laozi）的方法互补
@@ -53,7 +53,7 @@
   - [x] SubTask 9.1: 在 `projects/awesome-okf-xs` 运行 `invoke gates.all`（UTF-8 + toctree 完整性全通过）
     - 产出：exit 0，UTF-8 6279 文件通过，toctree 六项自检全通过
   - [x] SubTask 9.2: 在子模块仓库内通过 atomic-commit-cmd 原子提交（单一职责：新增儒家四书知识包；git add 路径参数用正斜杠）
-    - 产出：commit `1d2060f4`，23 文件 +2953 行，仅含 doc/bundles/think/confucian/（共享索引文件因混入并行会话 fangzhong 变更，依仓库对账提交惯例留待对账）
+    - 产出：commit `1d2060f4`，23 文件 +2953 行，仅含 doc/bundles/guoxue/confucian/（共享索引文件因混入并行会话 fangzhong 变更，依仓库对账提交惯例留待对账）
   - [x] SubTask 9.3: 更新 `.trae/specs/classics-knowledge/create-confucian-okf-wiki/` 三件套勾选状态，输出方法论闭环汇总
 
 # Task Dependencies

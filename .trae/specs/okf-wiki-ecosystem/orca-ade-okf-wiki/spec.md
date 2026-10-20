@@ -15,7 +15,7 @@ version: "1.0"
 
 - URL：`https://mp.weixin.qq.com/s/8JIFdIzUwyLF6j1ysOrkzg?from=industrynews&color_scheme=light#rd`
 - 判定信号：无 `share?code=`/`token=`/邀请码参数，非企业内部域名（`mp.weixin.qq.com` 为公众号公开文章），内容为公开产品介绍
-- **结论：公开内容（Public）** → 标准工作流，spec 位于 `.trae/specs/okf-wiki-ecosystem/orca-ade-okf-wiki/`，产出物位于 `projects/awesome-okf-xs/doc/bundles/jishu/ai/orca-ade/`
+- **结论：公开内容（Public）** → 标准工作流，spec 位于 `.trae/specs/okf-wiki-ecosystem/orca-ade-okf-wiki/`，产出物位于 `projects/awesome-okf-xs/doc/bundles/jishu/ai/products/orca-ade/`
 
 ## 归属判定
 

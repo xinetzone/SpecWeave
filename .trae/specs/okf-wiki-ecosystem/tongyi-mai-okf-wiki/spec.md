@@ -11,7 +11,7 @@ status: "draft"
 
 ## What Changes
 
-在 `projects/awesome-okf-xs/doc/bundles/ai/ai-agent/` 分组下新增 **3 个 OKF bundle**（覆盖 Tongyi-MAI 全部 5 个子文件夹，按"是否有实现源码"归并）：
+在 `projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/` 分组下新增 **3 个 OKF bundle**（覆盖 Tongyi-MAI 全部 5 个子文件夹，按"是否有实现源码"归并）：
 
 | 新 Bundle | 覆盖的源文件夹 | 内容形态 |
 |---|---|---|
@@ -20,8 +20,8 @@ status: "draft"
 | `mobilepa-bench/` | `MobilePA-Bench/` + 顶层 `Qwen-UI-Agent/`（Next.js 网站源码） | 基准设计精读（以网站/Paper/README 为信源）+ 网站技术栈简析 |
 
 同步更新：
-- `bundles/ai/ai-agent/index.md`（分组索引，新增 3 束条目）
-- `bundles/ai/index.md`（域索引计数）
+- `bundles/jishu/ai/frameworks/ai-agent/index.md`（分组索引，新增 3 束条目）
+- `bundles/jishu/ai/index.md`（域索引计数）
 - `bundles/index.md`（总索引计数：total_bundles 283→286、ai-agent 组束数、说明文字）
 - 现有 `qwen-ui-agent/` 束与 3 个新束互相跨链接（该束为博客测评来源，新束为源码教程，互补关系）
 
@@ -33,13 +33,13 @@ status: "draft"
 
 - **Affected specs**: 无既有 spec 冲突；本 spec 新建于 `.trae/specs/okf-wiki-ecosystem/tongyi-mai-okf-wiki/`
 - **Affected code/产物**:
-  - `projects/awesome-okf-xs/doc/bundles/ai/ai-agent/mai-ui/**`（新增）
-  - `projects/awesome-okf-xs/doc/bundles/ai/ai-agent/mobile-world/**`（新增）
-  - `projects/awesome-okf-xs/doc/bundles/ai/ai-agent/mobilepa-bench/**`（新增）
-  - `projects/awesome-okf-xs/doc/bundles/ai/ai-agent/index.md`（更新）
-  - `projects/awesome-okf-xs/doc/bundles/ai/index.md`（更新计数）
+  - `projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/mai-ui/**`（新增）
+  - `projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/mobile-world/**`（新增）
+  - `projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/mobilepa-bench/**`（新增）
+  - `projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/index.md`（更新）
+  - `projects/awesome-okf-xs/doc/bundles/jishu/ai/index.md`（更新计数）
   - `projects/awesome-okf-xs/doc/bundles/index.md`（更新计数）
-  - `projects/awesome-okf-xs/doc/bundles/ai/ai-agent/qwen-ui-agent/index.md`（追加跨链接，最小改动）
+  - `projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/qwen-ui-agent/index.md`（追加跨链接，最小改动）
 - **质量门**：`invoke gates.all`（UTF-8 + toctree 完整性）必须通过
 - **提交**：awesome-okf-xs 子模块原子提交 → SpecWeave 主仓库子模块指针提交
 

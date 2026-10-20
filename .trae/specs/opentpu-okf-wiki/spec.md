@@ -2,7 +2,7 @@
 
 ## Overview
 
-- **Summary**：以 `source-code-to-okf-wiki` 五阶段工作流（阶段0 信源固定 + R→I→E→V→C）系统学习 openTPU 源码（本地审计副本 `external/dao/openTPU`，固定提交 `ffe997e9a8b8607b07b3d1bb3c1132db0faf044e`，2026-10-12）与既有概念页 [00-ai-designed-chip.md](../../projects/awesome-okf-xs/doc/bundles/jishu/iot/embedded-weekly-03/concepts/00-ai-designed-chip.md)（固定旧基线 `8eaa4806`，2026-10-08，事实 F-001~F-072），在 `projects/awesome-okf-xs/doc/bundles/jishu/iot/opentpu/` 新建一个源码教程型 OKF bundle（17 篇 concepts + 3 篇 examples + 4 份 references + 各级 index/log）。
+- **Summary**：以 `source-code-to-okf-wiki` 五阶段工作流（阶段0 信源固定 + R→I→E→V→C）系统学习 openTPU 源码（本地审计副本 `external/dao/openTPU`，固定提交 `ffe997e9a8b8607b07b3d1bb3c1132db0faf044e`，2026-10-12）与既有概念页 [00-ai-designed-chip.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/embedded-weekly-03/concepts/00-ai-designed-chip.md)（固定旧基线 `8eaa4806`，2026-10-08，事实 F-001~F-072），在 `projects/awesome-okf-xs/doc/bundles/jishu/iot/opentpu/` 新建一个源码教程型 OKF bundle（17 篇 concepts + 3 篇 examples + 4 份 references + 各级 index/log）。
 - **Purpose**：把「AI agent 设计的 AI 推理加速器」从一篇周报概念页，升级为可溯源到每一行源码契约（ISA 编码/位精确数值/MM 累加/VPU/量化/编译器/模拟器/RTL/板卡运行时）的系统中文教程；同时以独立束身份承担「契约对拍」可迁移方法论的源码级实证。
 - **Target Users**：希望从一次矩阵乘法出发、沿 Python 内核→编译器→ISA→位精确模拟器→SystemVerilog RTL→FPGA 板卡端到端读懂 AI 加速器的中文技术读者；以及研究「AI agent 做硬件设计」工程方法的实践者。
 

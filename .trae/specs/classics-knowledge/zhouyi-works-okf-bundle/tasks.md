@@ -1,6 +1,6 @@
 # 《周易》著作 OKF 知识包 — 实施计划（tasks.md）
 
-> 方法论：seven-concepts 场景4（知识沉淀）R→I→E→V→C。工作目录：`projects/awesome-okf-xs/doc/bundles/think/zhouyi/`。
+> 方法论：seven-concepts 场景4（知识沉淀）R→I→E→V→C。工作目录：`projects/awesome-okf-xs/doc/bundles/guoxue/zhouyi/`。
 > 任务依赖：T1→T2→T3/T4/T5/T6（可并行）→T7→T8→T9→T10→T11。
 
 ## Task 1: 建立分组与 bundle 骨架

@@ -13,7 +13,7 @@ status: "draft"
 
 ## What Changes
 
-- 新增 `projects/awesome-okf-xs/doc/bundles/rust/` 技术域（第 12 域），含 3 个 OKF v0.2 知识包：
+- 新增 `projects/awesome-okf-xs/doc/bundles/jishu/rust/` 技术域（第 12 域），含 3 个 OKF v0.2 知识包：
   - `rust/rust/` — rustc 编译器与标准库（锚点束，镜像 python/cpython 定位）
   - `rust/cargo/` — Cargo 包管理与构建系统
   - `rust/rfcs/` — Rust RFC 语言设计决策与演进流程
@@ -23,7 +23,7 @@ status: "draft"
 ## Impact
 
 - Affected specs: awesome-okf-xs OKF v0.2 frontmatter 规范（遵循，不修改）
-- Affected code: 仅新增 `doc/bundles/rust/` 目录树与修改 `doc/bundles/index.md`（awesome-okf-xs 子模块工作树内，用户指定的目标位置）
+- Affected code: 仅新增 `doc/bundles/jishu/rust/` 目录树与修改 `doc/bundles/index.md`（awesome-okf-xs 子模块工作树内，用户指定的目标位置）
 - 信源基线（只读锚定）：
   - `external/libs/rust-lang/rust` @ `e457a7b0d326d67b4322ef0d11bd715cfaeda48f`（main, 2026-08-27）
   - `external/libs/rust-lang/cargo` @ `75d17360928f57ff2a7d2f2da1c753f5fe1926d1`（master, 2026-08-26）
@@ -44,7 +44,7 @@ cargo（3,072 文件）与 rfcs（665 文件）按常规全量核心模块阅读
 
 ### Requirement: rust 域三知识包生成
 
-系统 SHALL 在 `projects/awesome-okf-xs/doc/bundles/rust/` 下生成 3 个符合 OKF v0.2 规范的中文知识包，每个包含 concepts/、examples/（有可提取示例时）、references/、根 index.md（含 `okf_version: "0.2"`）与 log.md。
+系统 SHALL 在 `projects/awesome-okf-xs/doc/bundles/jishu/rust/` 下生成 3 个符合 OKF v0.2 规范的中文知识包，每个包含 concepts/、examples/（有可提取示例时）、references/、根 index.md（含 `okf_version: "0.2"`）与 log.md。
 
 #### Scenario: Bundle 结构合规
 - **WHEN** 检查任一知识包目录

@@ -4,7 +4,7 @@ title: 「美通唱法与咽音体系教学教程」OKF 知识束独立对抗性
 status: final
 created: 2026-09-01
 reviewer: 独立技术评审者（fresh context，只读审查）
-source: spec.md / tasks.md（同目录），被审对象 projects/awesome-okf-xs/doc/bundles/think/vocal/meitong-yanyin-pedagogy/
+source: spec.md / tasks.md（同目录），被审对象 projects/awesome-okf-xs/doc/bundles/yishu/vocal/meitong-yanyin-pedagogy/
 ---
 
 # 评审结论：**PASS WITH FIXES（有条件通过）**
@@ -70,19 +70,19 @@ source: spec.md / tasks.md（同目录），被审对象 projects/awesome-okf-xs
 
 **P1-① 断链：insights.md 误用 `../` 前缀**
 
-- **位置**：`doc/bundles/think/vocal/meitong-yanyin-pedagogy/insights.md:33`
+- **位置**：`doc/bundles/yishu/vocal/meitong-yanyin-pedagogy/insights.md:33`
 - **证据**：链接写作 `[每日练声清单](../examples/01-daily-practice-routine.md)`。insights.md 位于束根目录，`../examples/` 解析到 `think/vocal/examples/`（不存在）；实际目标在束根下 `examples/01-daily-practice-routine.md`。机械路径扫描确认目标不存在；同束 concepts/06 等文件对 examples 的引用均用 `../examples/`（因 concepts/ 在子目录），insights.md 在束根应去掉 `../`。
 - **修复建议**：改为 `[每日练声清单](examples/01-daily-practice-routine.md)`。
 
 **P1-② F 编号误引：8000 元事实挂错编号**
 
-- **位置**：`doc/bundles/think/vocal/meitong-yanyin-pedagogy/concepts/04-yanyin-lineage.md:39`
+- **位置**：`doc/bundles/yishu/vocal/meitong-yanyin-pedagogy/concepts/04-yanyin-lineage.md:39`
 - **证据**：正文"**周恩来关怀建所、特批 8000 元**：中青报作'据说'、音乐生活报明确——定性多源、金额含保留（**F-022**，见 facts）"。经查 facts.md：F-022（facts.md:56）为"林俊卿书列研究所**学员名单**：罗荣钜、马玉涛、张映哲、郭颂……"；8000 元经费对应 **F-020**（facts.md:54，"周总理特批 8000 元经费……中青报……音乐生活报特稿"）。同束 references/03:83 存疑表同一行正确标注 F-020，可互证。
 - **修复建议**：将该行"（F-022，见 facts）"改为"（F-020，见 facts）"。
 
 **P1-③ 存疑表"美通创始人"行误挂 F-079**
 
-- **位置**：`doc/bundles/think/vocal/meitong-yanyin-pedagogy/references/03-institutions-history.md:92`
+- **位置**：`doc/bundles/yishu/vocal/meitong-yanyin-pedagogy/references/03-institutions-history.md:92`
 - **证据**：异说存疑表"'美通唱法创始人'（艺人乐天等宣称）"行的"对应事实"列标注"F-079、F-080"，该行核验结论为"全部为地方融媒体专访与演出软文，无学界/教材/权威信源"。经查 facts.md：F-080（facts.md:149）正是乐天创始人宣称的现象记录（通山县融媒体、华夏艺术网软文单源）；而 F-079（facts.md:148）是**学界/教材对"美通"类别词的正面用法**（金铁霖体系表述、学术论文、大河美术报教学讨论）——F-079 恰好证明"美通"作为术语在学界成立，把它挂在"无学界信源"的不采信行，易使读者误读为学界用法也被否定。
 - **修复建议（二选一）**：① 该行"对应事实"列改为仅"F-080"；② 更优：拆为两行——"'美通'术语本身：学界/教材通行用法（F-079）"与"'美通唱法创始人'个人宣称：仅软文无权威信源（F-080）"，与 concepts/02 的术语辨析呼应。
 

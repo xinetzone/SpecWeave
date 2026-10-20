@@ -2,7 +2,7 @@
 
 ## 结构与导航
 
-- [ ] `doc/bundles/think/medicine/index.md` 分组索引存在，toctree 覆盖新包
+- [ ] `doc/bundles/yixue/medicine/index.md` 分组索引存在，toctree 覆盖新包
 - [ ] `think/index.md` 分组导航表与 toctree 含 medicine 条目，域描述文案已更新
 - [ ] `doc/bundles/index.md` 统计数字（bundle 数/分组数）与 think 域条目已更新
 - [ ] 知识包目录结构齐备：根 index、facts、insights、concepts/、examples/、references/、log.md

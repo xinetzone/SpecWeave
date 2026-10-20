@@ -21,7 +21,7 @@ sources:
 - 每个 bundle 包含 concepts/（概念文档）、examples/（示例文档）、references/（信源登记）三层结构
 - 所有文档通过 G4 质量门：无虚构 API（Grep 验证）、链接无断裂、frontmatter 完整
 - 更新总索引 `doc/bundles/index.md`，将 containers 域纳入导航
-- 更新域索引 `doc/bundles/containers/index.md`
+- 更新域索引 `doc/bundles/jishu/containers/index.md`
 
 ## Non-Goals (Out of Scope)
 - 不修改容器项目本身的源码（external/dao/action/Containers 下为只读源码）
@@ -49,7 +49,7 @@ sources:
 - **构建验证**: 生成后需通过 `invoke gates.all` 质量门（UTF-8 + toctree 完整性）
 
 ## Functional Requirements
-- **FR-1**: 创建 `doc/bundles/containers/` 技术域目录及根 `index.md`
+- **FR-1**: 创建 `doc/bundles/jishu/containers/` 技术域目录及根 `index.md`
 - **FR-2**: 为 11 个子项目各生成一个独立 OKF bundle
 - **FR-3**: 每个 bundle 包含：
   - `index.md` - bundle 导航（无 frontmatter，仅 toctree）
@@ -77,7 +77,7 @@ sources:
   - frontmatter 日期字段可裸写（conf.py 已自动处理引号）
 - **Business**: 
   - 源码为只读，不修改 external/ 下任何文件
-  - 文档存放于 projects/awesome-okf-xs/doc/bundles/containers/
+  - 文档存放于 projects/awesome-okf-xs/doc/bundles/jishu/containers/
 - **Dependencies**: 
   - source-code-to-okf-wiki 工作流 Skill
   - seven-concepts-cmd 方法论编排 Skill
@@ -94,13 +94,13 @@ sources:
 ### AC-1: 技术域目录结构完整
 - **Given**: containers 域目录已创建
 - **When**: 检查目录结构
-- **Then**: `doc/bundles/containers/` 存在，包含 `index.md`，且 `doc/bundles/index.md` 已更新引用
+- **Then**: `doc/bundles/jishu/containers/` 存在，包含 `index.md`，且 `doc/bundles/index.md` 已更新引用
 - **Verification**: `programmatic`
 - **Notes**: 通过 `invoke gates.toctrees` 验证
 
 ### AC-2: 11 个 bundle 目录存在且结构合规
 - **Given**: 所有 bundle 生成完成
-- **When**: 列出 `doc/bundles/containers/` 下的子目录
+- **When**: 列出 `doc/bundles/jishu/containers/` 下的子目录
 - **Then**: 存在 11 个项目目录，每个目录包含 index.md/log.md/concepts/examples/references 子目录
 - **Verification**: `programmatic`
 

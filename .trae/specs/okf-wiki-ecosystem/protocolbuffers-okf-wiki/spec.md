@@ -11,10 +11,10 @@ status: "draft"
 
 ## What Changes
 
-- 新建分组 `doc/bundles/comm/serialization/`（序列化与数据交换生态），含 2 个 OKF v0.2 知识束：
+- 新建分组 `doc/bundles/jishu/comm/serialization/`（序列化与数据交换生态），含 2 个 OKF v0.2 知识束：
   - `protobuf/`：完整束（concepts/ + examples/ + references/ + index.md + log.md），概念文档 ≥15 篇，覆盖 C++ 运行时核心、wire format、descriptor/reflection、protoc 编译器管线、代码生成插件、Editions 特性系统、Python/upb/Rust 等运行时、hpb、conformance 测试体系
   - `protobuf-ci/`：精简束（概念文档 4-5 篇），覆盖 GitHub Actions composite actions（bash/bazel/ccache/sccache/docker/checkout）的 CI 基础设施模式
-- 更新 `doc/bundles/comm/index.md`（comm 域新增 serialization 分组）与 `doc/bundles/index.md` 总索引（束数 263→265、分组 30→31）
+- 更新 `doc/bundles/jishu/comm/index.md`（comm 域新增 serialization 分组）与 `doc/bundles/index.md` 总索引（束数 263→265、分组 30→31）
 - 遵循 source-code-to-okf-wiki 五阶段工作流（R→I→E→V→C）：编号事实采集 → 架构洞察 → 信源先行分批生成 → Grep 级 API 独立验证 → 模式沉淀
 - 更新 awesome-okf-xs 的 `doc/bundles/` 相关索引后必须通过 `invoke gates.toctrees` 与 `invoke gates.utf8` 质量门
 
@@ -22,8 +22,8 @@ status: "draft"
 
 - Affected specs: awesome-okf-xs OKF v0.2 规范（`projects/awesome-okf-xs/.agents/rules/frontmatter.md`）
 - Affected code:
-  - 新增：`projects/awesome-okf-xs/doc/bundles/comm/serialization/protobuf/**`、`projects/awesome-okf-xs/doc/bundles/comm/serialization/protobuf-ci/**`、`projects/awesome-okf-xs/doc/bundles/comm/serialization/index.md`
-  - 修改：`projects/awesome-okf-xs/doc/bundles/comm/index.md`、`projects/awesome-okf-xs/doc/bundles/index.md`
+  - 新增：`projects/awesome-okf-xs/doc/bundles/jishu/comm/serialization/protobuf/**`、`projects/awesome-okf-xs/doc/bundles/jishu/comm/serialization/protobuf-ci/**`、`projects/awesome-okf-xs/doc/bundles/jishu/comm/serialization/index.md`
+  - 修改：`projects/awesome-okf-xs/doc/bundles/jishu/comm/index.md`、`projects/awesome-okf-xs/doc/bundles/index.md`
   - 只读信源：`external/libs/protocolbuffers/protobuf/**`（约 v37.0）、`external/libs/protocolbuffers/protobuf-ci/**`
 - 工作产物（facts/insights）存放于 `.trae/specs/okf-wiki-ecosystem/protocolbuffers-okf-wiki/`
 

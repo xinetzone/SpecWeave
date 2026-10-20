@@ -1,7 +1,7 @@
 # 国外数学经典著作 OKF Wiki 教程 - 实施计划
 
 > 方法论：seven-concepts 场景4（知识沉淀）R→I→E→V→C，嵌入 Spec Mode 的 Implement 阶段。
-> 产出根目录：`projects/awesome-okf-xs/doc/bundles/think/math/classics-reading/`（下称 `<bundle>/`）。
+> 产出根目录：`projects/awesome-okf-xs/doc/bundles/kexue/math/classics-reading/`（下称 `<bundle>/`）。
 > 所有 `invoke` 命令工作目录为 `projects/awesome-okf-xs/`。
 
 ## Task 1: R 阶段——外部信源调研与事实采集
@@ -28,7 +28,7 @@
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
-  - 新建目录 `doc/bundles/think/math/` 与 `doc/bundles/think/math/classics-reading/{concepts,examples,references}/`。
+  - 新建目录 `doc/bundles/kexue/math/` 与 `doc/bundles/kexue/math/classics-reading/{concepts,examples,references}/`。
   - 新建分组索引 `think/math/index.md`（frontmatter：`okf_version: "0.2"`、`type: bundles-index`、title/description；含知识包列表表与 toctree）。
   - 新建 bundle 根 `<bundle>/index.md`（`okf_version: "0.2"`、`type: OKF`、title/description/tags、`status: draft`、`stale_after: 2027-08-30`、generated/verified actor 字段）；含快速导航、快速开始、推荐学习路径与完整 toctree（concepts/index、examples/index、references/index、facts、insights、log）。
   - 新建 `concepts/index.md`、`examples/index.md`、`references/index.md`（分组标题+条目列表+必要 toctree）、`log.md`（2026-08-30 创建条目）。

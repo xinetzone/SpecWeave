@@ -7,7 +7,7 @@ reviewer: process:seven-concepts-v（四视角 + 8 项机械门禁）
 
 # V 阶段对抗审查记录
 
-> 审查对象：`projects/awesome-okf-xs/doc/bundles/jishu/ai/gpt6-astra-usage-guide/`（10 文件）
+> 审查对象：`projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/gpt6-astra-usage-guide/`（10 文件）
 > 审查方法：四视角内容审查 + 机械门禁脚本（PowerShell 实测）+ 子模块官方 gate 脚本
 
 ## 1. 四视角审查意见（7 条，采纳修复 4 条）

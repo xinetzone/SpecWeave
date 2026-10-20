@@ -16,7 +16,7 @@ status: "draft"
 
 ## Goals
 
-- 在 `doc/bundles/think/` 下新建 `physics/` 分组（group），含分组导航 `index.md`。
+- 在 `doc/bundles/kexue/` 下新建 `physics/` 分组（group），含分组导航 `index.md`。
 - 交付 anchor bundle `physics/classics-reading/`，严格遵循 OKF v0.2 三层结构（concepts/ examples/ references/）+ 工作文档（facts.md / insights.md / log.md）。
 - **精读核心典籍 9 部**：《墨经》《考工记》《淮南子》《论衡》《梦溪笔谈》《革象新书》《天工开物》《物理小识》《镜镜詅痴》，每部至少一篇 examples 原文解读文档（《墨经》拆力学/光学两篇）。
 - concepts/ 按物理学科分篇：导论与阅读方法、力学、光学、声学、磁学、热学与物质观、天文仪器与度量衡、解读方法论，共 8 篇。
@@ -36,7 +36,7 @@ status: "draft"
 
 ## Background & Context
 
-- **范本**：`doc/bundles/think/laozi/boshu-reading/`（帛书《老子》阅读教程）是同构范本——中国古典文本阅读教程，含 concepts/（7 篇）、examples/（3 篇）、references/（4 篇）、facts.md、insights.md、log.md，frontmatter 与 toctree 写法已验证。
+- **范本**：`doc/bundles/guoxue/laozi/boshu-reading/`（帛书《老子》阅读教程）是同构范本——中国古典文本阅读教程，含 concepts/（7 篇）、examples/（3 篇）、references/（4 篇）、facts.md、insights.md、log.md，frontmatter 与 toctree 写法已验证。
 - **规范约束**：OKF v0.2 frontmatter 规范（`type` 唯一必填；`sources` 溯源；`generated`/`verified` 信任字段；`status`/`stale_after` 生命周期；`okf_version: "0.2"` 仅出现在 bundle 根 index.md）；Sphinx + myst_parser 构建；裸日期由 `doc/conf.py` 钩子自动加引号。
 - **质量门**：`invoke gates.toctrees`（无断链、无孤立文档、含子目录的 bundle 根 index 必须以 toctree 引用全部内容文档）、`invoke gates.utf8`（UTF-8 无 BOM）、`invoke build`（Sphinx 构建）。
 - **内容敏感度**：先秦至清代典籍属公有领域公开内容，现代研究文献为公开出版物 → Public 级，标准工作流，spec 存放于主权区 `.trae/specs/`。
@@ -94,7 +94,7 @@ status: "draft"
 - **Technical**：OKF v0.2 规范；Sphinx myst 构建（裸日期依赖 conf.py 钩子，无需手动加引号）；Windows 环境；invoke 任务在子模块根目录执行。
 - **Business**：内容为公开领域知识；不得编造不存在的文献、版本、ISBN 或 URL；外部 URL 须经实际访问验证可达。
 - **Dependencies**：网络访问 ctext.org、zh.wikisource.org 等公开古籍站点；子模块 invoke 工具链可用（pyproject 已声明）。
-- **Scope boundary**：所有产出物位于 `projects/awesome-okf-xs/doc/bundles/think/physics/` 及两处索引文件；spec 工件位于主权区 `.trae/specs/classics-knowledge/chinese-physics-classics-okf/`。
+- **Scope boundary**：所有产出物位于 `projects/awesome-okf-xs/doc/bundles/kexue/physics/` 及两处索引文件；spec 工件位于主权区 `.trae/specs/classics-knowledge/chinese-physics-classics-okf/`。
 
 ## Assumptions
 
@@ -107,7 +107,7 @@ status: "draft"
 
 ### AC-1: 产物结构完整性
 - **Type**: `rule`
-- **Given**: 实现完成后的 `doc/bundles/think/physics/` 目录
+- **Given**: 实现完成后的 `doc/bundles/kexue/physics/` 目录
 - **When**: 核对文件清单
 - **Then**: 29 个新文件全部存在（physics/index.md 1；classics-reading 根 4；concepts/ 9；examples/ 10；references/ 5），且 think/index.md、bundles/index.md 已更新
 - **Pass Condition**: 文件清单逐项存在，无多余孤立 .md

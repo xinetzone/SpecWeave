@@ -18,7 +18,7 @@ status: "draft"
 - 骨架：商业分析/战略资讯骨架（index + concepts + references + log，无 examples）
 
 ## Bundle路径
-`projects/awesome-okf-xs/doc/bundles/ai/ai-agent/doubao-work-context-layer/`
+`projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/doubao-work-context-layer/`
 
 ## 文件结构（10文件）
 1. index.md — 根索引

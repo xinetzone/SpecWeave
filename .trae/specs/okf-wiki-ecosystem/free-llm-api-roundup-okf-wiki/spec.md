@@ -16,7 +16,7 @@ generated: { by: "seven-concepts-cmd", at: "2026-09-09T14:17:00+08:00" }
 | 来源 | 知乎公开博文 | https://zhuanlan.zhihu.com/p/2050524686992380835 |
 | 访问控制 | 无（公开可访问） | 无 share?code=/token=/邀请码参数 |
 | 敏感度级别 | **公开内容** | 符合公开内容定义：公开发布的网页/博客 |
-| 工作流模式 | **标准 Spec Mode** | 产出物入 `projects/awesome-okf-xs/doc/bundles/jishu/ai/free-llm-api-roundup/` |
+| 工作流模式 | **标准 Spec Mode** | 产出物入 `projects/awesome-okf-xs/doc/bundles/jishu/ai/learning/free-llm-api-roundup/` |
 | Spec 目录 | `.trae/specs/free-llm-api-roundup-okf-wiki/` | |
 
 ## 2. 骨架判定（操作可复现性两问）
@@ -55,7 +55,7 @@ free-llm-api-roundup/
 | `jishu/ai/deepseek-pricing/` | ❌ 不选 | 已有 bundle，仅覆盖 DeepSeek 一家，且本 bundle 覆盖40家平台，范围远超 |
 | `jishu/ai/` 下新建 `free-llm-api-roundup/` | ✅ 选定 | 同域内唯一覆盖"多平台免费API资源盘点"的子目录，与 deepseek-pricing/context-optimization/token-economy-explosion 形成互补（付费定价↔免费资源↔成本优化↔宏观数据） |
 
-**最终路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/free-llm-api-roundup/`
+**最终路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/learning/free-llm-api-roundup/`
 
 ## 4. 时效性
 

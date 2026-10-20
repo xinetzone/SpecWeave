@@ -2,7 +2,7 @@
 
 - 轮次：R1（独立只读审查，新鲜上下文子代理）
 - 审查范围：G5（F-088~F-105）增量；spec.md §10 / tasks.md T1~T8
-- 被审产物根：`projects/awesome-okf-xs/doc/bundles/jishu/ai/inurl-unified-token/`
+- 被审产物根：`projects/awesome-okf-xs/doc/bundles/jishu/ai/products/inurl-byok-token-hub/`
 - 证据物：`.temp/inurl-refresh-g5/`（curl 提取文本、catalog.body、*.json、g5_counts.py、fset_check.py、link_check.py）
 
 ## CP：生产者自检（implementer self-check）

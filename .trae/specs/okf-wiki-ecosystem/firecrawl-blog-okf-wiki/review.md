@@ -6,7 +6,7 @@ created: 2026-09-16
 
 # V 阶段对抗审查记录（review）
 
-> 对象：`projects/awesome-okf-xs/doc/bundles/jishu/ai/firecrawl/`（9 文件）+ spec 事实集。
+> 对象：`projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/firecrawl/`（9 文件）+ spec 事实集。
 > 方法：四视角 + 老板视角内容审查，8 项机械门禁脚本实跑。
 
 ## 1. 四视角审查结论

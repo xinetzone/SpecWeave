@@ -23,9 +23,9 @@ content-sensitivity: Public（道家经典原文属公共领域古籍，解读�
 - 明确每部著作的「权威性评级」与「可入库底本」，为后续逐册 bundle 化提供事实基座
 
 **Phase 1+（调研确认后逐册入库）——统一 `think/daojia/` 分组：**
-- 新建 `bundles/think/daojia/index.md`（道家总纲：全谱系导航 + 源流谱系图 + toctree）
+- 新建 `bundles/guoxue/daojia/index.md`（道家总纲：全谱系导航 + 源流谱系图 + toctree）
 - 按著作逐册建立 bundle（`laozi/`、`zhuangzi/`、`liezi/`、`wenzi/`、`huangdi/`、`heguanzi/`、`guanzi/`、`huainanzi/`、`xuanxue-zhushu/`、`daojiao/` 等），每束含 `index.md` + `concepts/`/`examples/`/`references/` + `facts.md`/`insights.md`/`log.md`
-- 更新 `bundles/think/index.md` 与 `bundles/index.md`（统计数字、分组表行、toctree）
+- 更新 `bundles/guoxue/index.md` 与 `bundles/index.md`（统计数字、分组表行、toctree）
 
 **研究范围（调研清单目标，四段谱系）：**
 
@@ -41,7 +41,7 @@ content-sensitivity: Public（道家经典原文属公共领域古籍，解读�
 ## Impact
 
 - Affected specs: `create-yinfujing-okf-wiki`（阴符经，未实现，拟并入本谱系）、`laozi-lineage-okf-bundle`、`boshu-laozi-wiki`（仅交叉引用，不修改其产物）
-- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/think/` 新增 `daojia/` 分组与索引更新；提交发生在子模块仓库内
+- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/guoxue/` 新增 `daojia/` 分组与索引更新；提交发生在子模块仓库内
 - Phase 0 调研清单产出位于 `.trae/specs/classics-knowledge/daojia-canon-okf-wiki/`（不做公共入库动作）
 - 不修改任何既有 bundle 内容（`think/laozi/boshu-reading` 是否迁移由「开放问题」裁决）；不修改 SpecWeave 主仓文件
 
@@ -76,7 +76,7 @@ content-sensitivity: Public（道家经典原文属公共领域古籍，解读�
 
 ### Requirement: 统一 daojia 分组 + OKF 格式
 
-Phase 1+ 入库的知识包 SHALL 落位于 `bundles/think/daojia/` 统一分组，遵循 awesome-okf-xs 规范：OKF v0.2 YAML frontmatter（`type`、`source`、`generated`/`verified`、`status`、`stale_after`）、bundle 根 index 以 `{toctree}` 引用全部内容文档、Markdown 相对路径交叉引用无断链、正文中文/文件名 kebab-case 纯英文，并通过 `invoke gates.all`（UTF-8 + toctree 完整性）。
+Phase 1+ 入库的知识包 SHALL 落位于 `bundles/guoxue/daojia/` 统一分组，遵循 awesome-okf-xs 规范：OKF v0.2 YAML frontmatter（`type`、`source`、`generated`/`verified`、`status`、`stale_after`）、bundle 根 index 以 `{toctree}` 引用全部内容文档、Markdown 相对路径交叉引用无断链、正文中文/文件名 kebab-case 纯英文，并通过 `invoke gates.all`（UTF-8 + toctree 完整性）。
 
 #### Scenario: 分组建制
 

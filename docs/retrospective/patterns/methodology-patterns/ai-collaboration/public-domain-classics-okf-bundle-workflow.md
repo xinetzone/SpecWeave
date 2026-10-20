@@ -14,7 +14,7 @@ validation_count: 1
 
 ## 成熟度
 
-L1 已验证（1 次验证：2026-08-30~31 中西化学经典 7 束 120 文档，`projects/awesome-okf-xs/doc/bundles/science/chemistry/`，V 阶段 54 条事实回源核验通过）
+L1 已验证（1 次验证：2026-08-30~31 中西化学经典 7 束 120 文档，`projects/awesome-okf-xs/doc/bundles/kexue/chemistry/`，V 阶段 54 条事实回源核验通过）
 
 ## 模式概述
 

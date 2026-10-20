@@ -17,7 +17,7 @@ status: executed
 
 - 博文 URL：https://mp.weixin.qq.com/s/pdH1ZB3yPfDdA7Ay72hjGQ
 - 正文规模：约 2,800–3,000 汉字 / 5,324 字符（含 3 表 2 代码块），browser_use 两次加载交叉一致
-- 产出 bundle：`projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/openhuman/`
+- 产出 bundle：`projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/openhuman/`
 
 ## 2. 内容敏感度预检（阶段 0）
 

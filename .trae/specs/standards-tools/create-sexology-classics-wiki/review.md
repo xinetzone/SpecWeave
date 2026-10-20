@@ -1,7 +1,7 @@
 # Review — create-sexology-classics-wiki
 
 > V 阶段独立对抗评审（新鲜上下文、只读四视角）结论与修复闭环记录。
-> 评审对象：`projects/awesome-okf-xs/doc/bundles/think/sexology/classics-reading/`
+> 评审对象：`projects/awesome-okf-xs/doc/bundles/sheke/sexology/classics-reading/`
 
 ## 一、评审结论
 

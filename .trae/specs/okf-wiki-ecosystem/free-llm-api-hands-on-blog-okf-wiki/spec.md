@@ -62,7 +62,7 @@ jishu/ai/free-llm-api-hands-on/
 | `sheke/industry/`（AI 行业趋势） | ❌ | 该域为行业快照/商业分析（无操作流程）；本文是可照做的技术教程，操作密度与形态不符 |
 | 新建顶级分组 | ❌ | 单篇博文新建分组属过度工程，违反最小变更原则 |
 
-**最终路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/free-llm-api-hands-on/`
+**最终路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/learning/free-llm-api-hands-on/`
 
 **主题簇互链**：与 `jishu/ai/free-llm-api-roundup/`（广度目录，2026-06 时点、flagged）互链——本束负责"3 平台 2026-09 深度实操"，roundup 负责"40 家额度目录"；与 `agnes-ai/agnes-ai-models/`（2.5/2.1 代际）互链——本束补充 3.0/image-2.5/video-2.5 新代际。
 

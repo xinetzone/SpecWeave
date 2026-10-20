@@ -16,8 +16,8 @@ content-sensitivity: Public（《墨子》原文属公共领域古籍，解读�
 
 ## What Changes
 
-- 新增分组 `bundles/think/mozi/`（墨家经典分组，仿 `think/laozi/` 三层模式：域→组→束；人名→经典束命名，与 `laozi/`、`huangdi/` 一致）
-- 新增知识包 `bundles/think/mozi/mozi-reading/`：
+- 新增分组 `bundles/guoxue/mozi/`（墨家经典分组，仿 `think/laozi/` 三层模式：域→组→束；人名→经典束命名，与 `laozi/`、`huangdi/` 一致）
+- 新增知识包 `bundles/guoxue/mozi/mozi-reading/`：
   - `index.md`（bundle 根，快速导航 + 定位 + 学习路径）
   - `concepts/`（9 篇核心概念：墨子其人 / 版本源流 / 全书 53 篇结构与分类 / 十论核心概念 / 墨经逻辑与科学 / 城守军事篇 / 墨子言行录 / 墨学兴衰与"墨离为三" / 历代注家与注本立场）
   - `examples/`（4 篇实操：《兼爱上》《非攻上》《公输》原文全录+逐字核对+解读、十论"上"篇通读计划）
@@ -35,7 +35,7 @@ content-sensitivity: Public（《墨子》原文属公共领域古籍，解读�
 ## Impact
 
 - Affected specs: `create-yinfujing-okf-wiki`、`boshu-laozi-wiki`、`laozi-lineage-okf-bundle`（仅通过 `references/cross-ref.md` 交叉引用中国古典思想谱系，不修改其产物）
-- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/think/` 新增文件与两处索引更新；提交发生在子模块仓库内
+- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/guoxue/` 新增文件与两处索引更新；提交发生在子模块仓库内
 - 不修改任何既有 bundle 内容；不修改 SpecWeave 主仓文件
 
 ## ADDED Requirements

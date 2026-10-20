@@ -17,8 +17,8 @@ status: "draft"
 
 ## What Changes
 
-- **新增分组** `doc/bundles/think/sexology/`（与 psi/laozi 平行的子分组入口，含分组导航 index.md）
-- **新增 bundle** `doc/bundles/think/sexology/classics-reading/`（阅读教程为主+著作提要定位），结构：
+- **新增分组** `doc/bundles/sheke/sexology/`（与 psi/laozi 平行的子分组入口，含分组导航 index.md）
+- **新增 bundle** `doc/bundles/sheke/sexology/classics-reading/`（阅读教程为主+著作提要定位），结构：
   - `index.md`（bundle 根，OKF v0.2 frontmatter，快速导航/定位对比/学习路径）
   - `facts.md`（104 条事实登记，含【待核验】条目显式标注）
   - `insights.md`（4 条四元组洞察 + 知识地图）
@@ -38,8 +38,8 @@ status: "draft"
 
 - **Affected specs**: 无既有 spec 依赖；本 spec 新增
 - **Affected code**（均为文档资产，无代码）:
-  - 新建：`projects/awesome-okf-xs/doc/bundles/think/sexology/**`（约 20 个文件）
-  - 修改：`projects/awesome-okf-xs/doc/bundles/think/index.md`、`projects/awesome-okf-xs/doc/bundles/index.md`
+  - 新建：`projects/awesome-okf-xs/doc/bundles/sheke/sexology/**`（约 20 个文件）
+  - 修改：`projects/awesome-okf-xs/doc/bundles/sheke/index.md`、`projects/awesome-okf-xs/doc/bundles/index.md`
   - 更新：`.trae/specs/README.md`（主题看板与 spec 登记）
 - **不涉及**：git commit（除非用户明确要求）、vendor 区、任何代码构建逻辑
 

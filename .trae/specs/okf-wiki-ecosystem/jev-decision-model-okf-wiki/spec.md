@@ -42,8 +42,8 @@ source: "https://mp.weixin.qq.com/s/lnWrTGbsLO59w_7cK_rTqQ"
 
 | 候选位置 | 判定 | 理由 |
 | --- | --- | --- |
-| `projects/awesome-okf-xs/doc/bundles/jishu/ai/jev/` | 推荐 | 主线是模型本身；AI 分组已有 mainecoon、minit2i 等模型直挂束，不需新建分组 |
-| `projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/jev/` | 不选 | Agent 只是应用之一，不能覆盖像素配色和批量分类等完整主线 |
+| `projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/jev/` | 推荐 | 主线是模型本身；AI 分组已有 mainecoon、minit2i 等模型直挂束，不需新建分组 |
+| `projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/jev/` | 不选 | Agent 只是应用之一，不能覆盖像素配色和批量分类等完整主线 |
 | 根 `docs/knowledge/` | 不选 | 现行知识库索引将系统学习 Wiki 路由至 awesome-okf-xs，按子项目自治规范生成 |
 
 已读取 projects/AGENTS.md、子项目 AGENTS.md、上下文路由、全局规则及 frontmatter 规范；按子项目工作流执行，不在主仓库复制知识包。批准范围包含该子模块的文档修改，不包含 Git 提交或 gitlink 推进。

@@ -8,7 +8,7 @@ description: "create-sexology-classics-wiki 全链路（规格化→并行调研
 status: "stable"
 source:
   - ".trae/specs/standards-tools/create-sexology-classics-wiki/"
-  - "projects/awesome-okf-xs/doc/bundles/think/sexology/classics-reading/"
+  - "projects/awesome-okf-xs/doc/bundles/sheke/sexology/classics-reading/"
   - ".agents/docs/retrospective/reports/concepts/milestone/retrospective-sexology-classics-wiki-20260830.md"
 milestone-name: "create-sexology-classics-wiki（性学经典 OKF Wiki 教程）"
 time-range: "2026-08-30 ~ 2026-08-31"

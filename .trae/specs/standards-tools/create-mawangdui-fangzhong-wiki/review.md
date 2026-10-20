@@ -1,7 +1,7 @@
 # 马王堆房中简帛 OKF wiki 教程 — 独立对抗评审报告（七概念 V 阶段）
 
 > 评审时间：2026-08-31 ｜ 评审模式：只读（未修改 bundle 任何文件）
-> 评审对象：`projects/awesome-okf-xs/doc/bundles/think/sexology/mawangdui-fangzhong-reading/`（22 个文件：index/facts/insights/log + concepts 9 + examples 4 + references 5）
+> 评审对象：`projects/awesome-okf-xs/doc/bundles/sheke/sexology/mawangdui-fangzhong-reading/`（22 个文件：index/facts/insights/log + concepts 9 + examples 4 + references 5）
 > 评审依据：spec.md、checklist.md、frontmatter.md（awesome-okf-xs/.agents/rules/）、事实底座（.temp/mawangdui-fangzhong-facts.md 127 条 + insights 7 条）
 
 ## 一、评审范围

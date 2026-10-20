@@ -18,7 +18,7 @@ status: stable
 | URL 特征 | `mp.weixin.qq.com` 公开文章，无 `share?code=`/`token=`/邀请码参数 |
 | 内容级别 | **公开（Public）** → 标准工作流 |
 | spec 位置 | `.trae/specs/okf-wiki-ecosystem/aitokenbus-blog-okf-wiki/` |
-| 产出位置 | `projects/awesome-okf-xs/doc/bundles/jishu/ai/aitokenbus/` |
+| 产出位置 | `projects/awesome-okf-xs/doc/bundles/jishu/ai/products/aitokenbus/` |
 | 信源距离 | **厂商/个人开发者自宣**（作者即平台创建者，第一人称"我上线了…"）——所有产品能力与成效类声明默认 P0；零独立第三方信源 |
 
 ## 骨架判定（操作可复现性两问）
@@ -79,6 +79,6 @@ status: stable
 
 ## 参考先例
 
-- [token-economy-explosion/](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/token-economy-explosion/)（Token 经济主题互链 + 自宣/分析类 bundle 结构参考）
-- [free-llm-api-roundup/](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/free-llm-api-roundup/)（免费模型 API 主题互链）
-- [bytedance-ai-consolidation（商业分析无 examples 先例）](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/trae/)
+- [token-economy-explosion/](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/token-economy-explosion/)（Token 经济主题互链 + 自宣/分析类 bundle 结构参考）
+- [free-llm-api-roundup/](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/learning/free-llm-api-roundup/)（免费模型 API 主题互链）
+- [bytedance-ai-consolidation（商业分析无 examples 先例）](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/)

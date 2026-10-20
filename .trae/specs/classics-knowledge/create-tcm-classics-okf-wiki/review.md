@@ -6,7 +6,7 @@
 
 ## 落位与结构
 
-- [x] 新域 `bundles/tcm/`、分组 `bundles/tcm/classics/`、5 个束（tcm-overview/nanjing/shanghan-zabinglun/shennong-bencaojing/waijing-weiyan，内经交叉引用）目录结构与 spec 决议一致
+- [x] 新域 `bundles/tcm/`、分组 `bundles/yixue/tcm/classics/`、5 个束（tcm-overview/nanjing/shanghan-zabinglun/shennong-bencaojing/waijing-weiyan，内经交叉引用）目录结构与 spec 决议一致
 - [x] 每束含根 index.md（toctree 引用全部内容文档）、concepts/、examples/、references/ 三层结构及各自 index.md、log.md
 - [x] `bundles/index.md` 统计同步：total_bundles 300、groups 39、domains 14（frontmatter 与正文一致），mermaid 图含 tcm 节点，toctree 含 `tcm/index`
 - [x] `tcm/index.md` 与 `tcm/classics/index.md` 存在且导航完整（含内经交叉引用与推荐阅读路径）

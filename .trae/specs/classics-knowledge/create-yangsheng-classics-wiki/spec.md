@@ -11,7 +11,7 @@ status: "draft"
 
 ## What Changes
 
-* 在 `doc/bundles/think/` 下新增「养生经典」分组目录 `yangsheng/`（与 `psi/`、`laozi/` 平级），含分组 `index.md`
+* 在 `doc/bundles/yixue/` 下新增「养生经典」分组目录 `yangsheng/`（与 `psi/`、`laozi/` 平级），含分组 `index.md`
 
 * 新增核心知识包 `yangsheng/yangsheng-classics-reading/`，结构对齐 `laozi/boshu-reading` 范本：
 
@@ -60,7 +60,7 @@ status: "draft"
 
 * Affected code：
 
-  * `projects/awesome-okf-xs/doc/bundles/think/`（新增 yangsheng 分组 + 更新域 index）
+  * `projects/awesome-okf-xs/doc/bundles/yixue/`（新增 yangsheng 分组 + 更新域 index）
 
   * `projects/awesome-okf-xs/doc/bundles/index.md`（更新统计与导航）
 
@@ -70,7 +70,7 @@ status: "draft"
 
 ### Requirement: 养生经典分组落地
 
-`doc/bundles/think/yangsheng/` SHALL 存在分组 `index.md`，以 toctree 引用其下全部知识包 index，并更新 `think/index.md` 域导航表。
+`doc/bundles/yixue/yangsheng/` SHALL 存在分组 `index.md`，以 toctree 引用其下全部知识包 index，并更新 `think/index.md` 域导航表。
 
 #### Scenario: 分组导航完整
 

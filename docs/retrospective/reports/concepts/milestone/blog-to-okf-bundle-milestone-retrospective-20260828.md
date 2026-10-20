@@ -49,7 +49,7 @@ stale_after: "2027-08-28"
 | 博文主题 | DeepSeek 多模态视觉实验模型发布 | 字节把 TRAE、扣子并进豆包 | — |
 | 内容性质 | 技术教程/选型 | 商业分析/战略资讯 | 两种性质均覆盖 |
 | 目标分组 | `ai/deepseek/` | `ai/trae/` | — |
-| bundle 目录 | [vision-model-selection](../../../../../projects/awesome-okf-xs/doc/bundles/ai/deepseek/vision-model-selection/index.md) | [bytedance-ai-consolidation](../../../../../projects/awesome-okf-xs/doc/bundles/ai/trae/bytedance-ai-consolidation/index.md) | — |
+| bundle 目录 | [vision-model-selection](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/deepseek/vision-model-selection/index.md) | [bytedance-ai-consolidation](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/bytedance-ai-consolidation/index.md) | — |
 | 磁盘文件数 | 14 | 9 | 23 |
 | concepts 篇数 | 4 | 3 | 7 |
 | examples 篇数 | 3 | 0（商业分析类不设） | 3 |
@@ -82,7 +82,7 @@ stale_after: "2027-08-28"
 ### 2.1 案例1（DeepSeek 视觉模型）
 
 - **F-001**：案例1处理博文《DeepSeek 多模态视觉实验模型发布！》（微信公众号"湖北"，2026-08-21），URL `https://mp.weixin.qq.com/s/iqoikK7m7arGSHnso-q9hQ`
-- **F-002**：案例1产出 bundle 位于 `projects/awesome-okf-xs/doc/bundles/ai/deepseek/vision-model-selection/`，磁盘文件数 14
+- **F-002**：案例1产出 bundle 位于 `projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/deepseek/vision-model-selection/`，磁盘文件数 14
 - **F-003**：案例1事实集 36 条（F-001~F-033 博文 + F-034~F-036 核验补充）
 - **F-004**：案例1完成 3 项关键声明官方核验（DeepSeek 官方/智谱官方/火山引擎官方），其余 4 家厂商声明标注"仅博文单源"
 - **F-005**：案例1 V 阶段修复 4 项（deepseek/index 接入、bundles 计数同步、溯源补全、verified 升级列表）
@@ -94,7 +94,7 @@ stale_after: "2027-08-28"
 
 - **F-009**：案例2处理博文《字节把TRAE、扣子都并进豆包，图什么？》（微信公众号"窥见比特"，作者"比特一哥"，2026-08-27），URL `https://mp.weixin.qq.com/s/9D2R5MYbhLO8oYx5HSRvJg`
 - **F-010**：案例2通过 AskUserQuestion 确认归属 `ai/trae/` 分组
-- **F-011**：案例2产出 bundle 位于 `projects/awesome-okf-xs/doc/bundles/ai/trae/bytedance-ai-consolidation/`，磁盘文件数 9（无 examples/ 目录）
+- **F-011**：案例2产出 bundle 位于 `projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/bytedance-ai-consolidation/`，磁盘文件数 9（无 examples/ 目录）
 - **F-012**：案例2事实集 21 条（F-001~F-017 博文 + F-018~F-021 核验补充）
 - **F-013**：案例2核验 8 项声明，7 项通过，1 项发现博文年份错配（850亿 AI 芯片采购博文安在 2026 年，核验为 2025 年实际额）
 - **F-014**：案例2 V 阶段修复 1 项（article-source.md 事实分类统计"客观事实"数 14 误写，更正为 13）
@@ -206,8 +206,8 @@ C 阶段说明：用户本次要求为"复盘+导出报告"，未要求 git 提�
 
 ## 八、交付物清单
 
-- 案例1 bundle：[vision-model-selection/](../../../../../projects/awesome-okf-xs/doc/bundles/ai/deepseek/vision-model-selection/index.md)（14 文件）
-- 案例2 bundle：[bytedance-ai-consolidation/](../../../../../projects/awesome-okf-xs/doc/bundles/ai/trae/bytedance-ai-consolidation/index.md)（9 文件）
+- 案例1 bundle：[vision-model-selection/](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/deepseek/vision-model-selection/index.md)（14 文件）
+- 案例2 bundle：[bytedance-ai-consolidation/](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/bytedance-ai-consolidation/index.md)（9 文件）
 - 升级版模式：[blog-article-to-okf-bundle.md](../../../patterns/documentation-patterns/blog-article-to-okf-bundle.md)（L2）
 - 案例1 spec：`.trae/specs/okf-wiki-ecosystem/deepseek-vision-blog-okf-wiki/`
 - 案例2 spec：`.trae/specs/okf-wiki-ecosystem/bytedance-ai-consolidation-blog-okf-wiki/`

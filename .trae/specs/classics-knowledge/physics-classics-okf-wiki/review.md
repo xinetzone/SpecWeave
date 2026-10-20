@@ -1,6 +1,6 @@
 # V 阶段：独立对抗审查报告与修复闭环
 
-> 审查对象：`doc/bundles/science/physics/physics-classics-reading/`（物理学经典原著阅读指南 OKF 知识包）
+> 审查对象：`doc/bundles/kexue/physics/physics-classics-reading/`（物理学经典原著阅读指南 OKF 知识包）
 > 审查时间：2026-08-30 ～ 2026-08-31
 > 审查方式：独立 agent 逐文件通读 + 机械合规扫描 + 物理学史核对 + 网络信源复验
 

@@ -17,7 +17,7 @@ content-sensitivity: Public（中医古籍原文属公共领域，历代注疏�
 ## What Changes
 
 - 新增技术域 `bundles/tcm/`（中医经典与理论域，第 14 个技术域），与 `think/` 等域平级
-- 新增分组 `bundles/tcm/classics/`（中医经典分组），含 **5 个知识包**：
+- 新增分组 `bundles/yixue/tcm/classics/`（中医经典分组），含 **5 个知识包**：
   - `tcm-overview/`——中医典籍总览：典籍谱系（经典层/各家学说层/临床层）、四大经典导读、版本学常识、阅读路径、方法论沉淀（facts/insights 汇总与阅读模式）
   - `huangdi-neijing/`——《黄帝内经》（素问 81 篇 + 灵枢 81 篇：结构导览 + 核心篇目逐字精读 + 其余篇目存目导读）
   - `nanjing/`——《难经》（81 难结构导览 + 脉学等核心难精读 + 其余存目）

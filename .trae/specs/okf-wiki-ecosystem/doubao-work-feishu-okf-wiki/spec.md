@@ -15,7 +15,7 @@ status: "draft"
 - **内容性质**：产品实测评测（hands-on体验），含战略分析
 - **骨架选择**：商业分析/战略资讯骨架（index + concepts + references + log，**无examples**）
 - **归属**：`ai/ai-agent/`
-- **Bundle路径**：`projects/awesome-okf-xs/doc/bundles/ai/ai-agent/doubao-work/`
+- **Bundle路径**：`projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/doubao-work/`
 - **Bundle名**：doubao-work
 
 ## 骨架（10文件，无examples）

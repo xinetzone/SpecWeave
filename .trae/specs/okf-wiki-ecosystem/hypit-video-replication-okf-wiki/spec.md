@@ -13,7 +13,7 @@ version: "1.0"
 
 - 内容敏感度：公开微信公众号文章，无 `token`、`code` 或登录要求。
 - 方法论链路：知识沉淀场景，执行 `R→I→E→V`。
-- 目标位置：`projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/hypit-video-replication/`。
+- 目标位置：`projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/hypit-video-replication/`。
 - 归属理由：Hypit 是面向 Coding Agent 的开源视频工作流 Skill，主线是 Agent 生产工具；`jishu/ai/ai-agent/` 已有 `show-me-skill`、`wigolo`、`openviking` 等非纯源码教程先例。
 - 不新建分组：单篇文章不足以支撑新分组。
 

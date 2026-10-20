@@ -16,7 +16,7 @@ content-sensitivity: Public（佛家经典汉译本原文属公共领域古籍�
 
 ## What Changes
 
-- 新增分组 `bundles/think/buddhism/`（佛家核心经典分组，仿 `think/laozi/` 三级模式：域→组→束）。
+- 新增分组 `bundles/guoxue/buddhism/`（佛家核心经典分组，仿 `think/laozi/` 三级模式：域→组→束）。
 - 新增 5 个知识包（bundle），每个遵循「concepts / examples / references + facts / insights / log」三层结构：
   1. `heart-sutra/`（《般若波罗蜜多心经》，玄奘译 260 字）
   2. `diamond-sutra/`（《金刚般若波罗蜜经》，鸠摩罗什译）
@@ -35,7 +35,7 @@ content-sensitivity: Public（佛家经典汉译本原文属公共领域古籍�
 ## Impact
 
 - Affected specs: `create-yinfujing-okf-wiki`、`laozi-lineage-okf-bundle`、`boshu-laozi-wiki`（同属 `think/` 思想域，仅通过分组导航并列，不修改其产物）。
-- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/think/` 新增文件与两处索引更新；提交发生在子模块仓库内。
+- Affected code: `projects/awesome-okf-xs`（git submodule，第一方子项目，允许子模块内开发）内 `doc/bundles/guoxue/` 新增文件与两处索引更新；提交发生在子模块仓库内。
 - 不修改任何既有 bundle 内容；不修改 SpecWeave 主仓文件。
 
 ## ADDED Requirements

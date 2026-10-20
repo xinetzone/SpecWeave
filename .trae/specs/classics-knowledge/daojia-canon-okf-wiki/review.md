@@ -31,7 +31,7 @@
 - [ ] 全部新增文档 frontmatter 符合 OKF v0.2（type/source/generated/verified/status/stale_after）
 - [ ] `think/daojia/index.md` 总纲及每册 bundle 根 index 均含 toctree，引用全部子文档，无孤立文档
 - [ ] 文件名 kebab-case 纯英文；正文中文；交叉引用相对路径无断链、无 file:///
-- [ ] `bundles/think/index.md` 与 `bundles/index.md` 统计数字、分组表行、toctree 已同步更新
+- [ ] `bundles/guoxue/index.md` 与 `bundles/index.md` 统计数字、分组表行、toctree 已同步更新
 
 ## Phase 1+：交付验证
 

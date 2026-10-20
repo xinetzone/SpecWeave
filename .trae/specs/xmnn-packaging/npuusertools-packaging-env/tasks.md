@@ -161,7 +161,7 @@
   - `programmatic` TR-5.5: _get_project_root()通过`.agents/`+`external/chaos/npuusertools/`双marker查找根目录
   - `human-judgement` TR-5.6: 代码风格与npu_tvm/tasks.py一致（dataclass配置、日志辅助函数、错误处理模式），namespace组织符合pyinvoke namespace-organization.md参考
 - **Notes**: 
-  - 参考projects/awesome-okf-xs/doc/bundles/build/tooling/pyinvoke/examples/namespace-organization.md的namespace包模式
+  - 参考projects/awesome-okf-xs/doc/bundles/jishu/build/tooling/pyinvoke/examples/namespace-organization.md的namespace包模式
   - 原tasks.py已删除，替换为tasks/目录
   - docker.py中Popen使用绝对路径-f和绝对context路径，避免cwd切换问题
 

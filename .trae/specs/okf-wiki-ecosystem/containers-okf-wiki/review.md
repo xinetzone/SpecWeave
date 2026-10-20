@@ -1,8 +1,8 @@
 # Containers 生态 OKF Wiki 生成 - Verification Checklist
 
 ## 目录结构
-- [ ] `doc/bundles/containers/` 目录已创建
-- [ ] `doc/bundles/containers/index.md` 存在且包含 `okf_version: "0.2"` frontmatter
+- [ ] `doc/bundles/jishu/containers/` 目录已创建
+- [ ] `doc/bundles/jishu/containers/index.md` 存在且包含 `okf_version: "0.2"` frontmatter
 - [ ] 11 个子项目 bundle 目录均存在：conmon, conmon-rs, fuse-overlayfs, libocispec, olot, omlmd, podman-py, podman-compose, qm, toolbox, ai-lab-recipes
 
 ## Bundle 结构（每个项目）
