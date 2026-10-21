@@ -41,6 +41,44 @@ def _import_check_links():
 cl = _import_check_links()
 
 
+class TestSingleFileInput:
+    """--path 传入单个 .md 文件的回归：防止零文件空扫描的假通过。
+
+    背景（2026-10-21 实测）：find_markdown_files 用 rglob，对文件路径返回
+    空，旧逻辑打印「找到 0 个 Markdown 文件…校验通过」并返回 0——门禁
+    在零工作量下给出通过语义。修复后单文件直接纳入扫描。
+    """
+
+    def test_single_md_file_with_broken_link_fails(self, tmp_path):
+        f = tmp_path / "single.md"
+        f.write_text("# 单文件\n\n[断链](missing-target.md)\n", encoding="utf-8")
+        rc = cl.main(["--path", str(f)])
+        assert rc == 1, "单文件输入含断链时应返回 1（旧假通过行为返回 0）"
+
+    def test_single_md_file_without_links_passes(self, tmp_path):
+        f = tmp_path / "clean.md"
+        f.write_text("# 单文件\n\n无链接内容。\n", encoding="utf-8")
+        rc = cl.main(["--path", str(f)])
+        assert rc == 0
+
+    def test_single_md_file_with_valid_local_link_passes(self, tmp_path):
+        target = tmp_path / "target.md"
+        target.write_text("# 目标\n", encoding="utf-8")
+        f = tmp_path / "linker.md"
+        f.write_text("# 链接\n\n[到目标](target.md)\n", encoding="utf-8")
+        rc = cl.main(["--path", str(f)])
+        assert rc == 0
+
+    def test_non_md_file_input_warns_and_passes(self, tmp_path, capsys):
+        f = tmp_path / "notes.txt"
+        f.write_text("not markdown", encoding="utf-8")
+        rc = cl.main(["--path", str(f)])
+        assert rc == 0
+        err = capsys.readouterr().err
+        assert "非 .md 文件" in err
+        assert "未扫描到任何 Markdown 文件" in err
+
+
 def _write_and_parse(content: str, tmp_path: Path, filename: str = "test.md"):
     """Helper: 写临时文件并解析链接"""
     f = tmp_path / filename
