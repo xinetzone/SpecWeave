@@ -1,0 +1,28 @@
+id = "governance-engine-dual-loop"
+title = "治理×引擎双件闭环"
+domain = "methodology"
+layer = "governance"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+maturity = "L1.5"
+validation_count = 3
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念方法论编排·知识沉淀(2026-10-21 会话)——TeleAgent 用户级技能 agent-workspace-conventions（治理底座）与 SpecWeave /七概念方法论（分析引擎）的能力组合分析；案例佐证：技能自动装载器（2026-08-07）与 awesome-okf-xs UTF-8 损坏治理"
+source_report = "docs/retrospective/reports/feature-development/retrospective-skill-auto-loader-20260807.md"
+date = "2026-10-21"
+version = "1.0"
+maturity_note = "三个同谱系案例互证：①TeleAgent agent-workspace-conventions 技能×七概念组合（含技能内 AND 语义误报修复与 pytest 8.x 加载器模板两条历史进化写回证据）；②SpecWeave 技能自动装载器（F→V→I→C 引擎产出五步验证管道守护件，commit 6fb994c3）；③awesome-okf-xs UTF-8 损坏治理（根因修复引擎+check-utf8 门禁守护）。待非同谱系（跨项目/跨组织）第二案例验证后升级 L2"
+
+[bindings]
+related_patterns = [
+  "bp-evaluation-driven-self-evolution",
+  "bp-dual-engine-uncertainty-certainty",
+  "governance-outer-ring",
+  "quality-asset-accumulation-loop",
+  "bootstrap-driven-self-evolution",
+  "meta-retrospective-closed-loop",
+  "bp-preflight-integrity-gate",
+  "bp-destructive-probe-gate",
+  "bp-history-based-doc-repair",
+]

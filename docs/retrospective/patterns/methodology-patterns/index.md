@@ -52,6 +52,7 @@
 | two-round-source-strategy | [双轮信源·漂移检出法](ai-collaboration/two-round-source-strategy.md) | L2 | 2 | 1 | 为同时有源码与官方手册的系统产出可溯源教程，且手册的人读层可能过期时（XERJ 两轮检出 6 处漂移，其中 1 处为分析器清单实质错误） |
 | hermetic-isolated-verification | [隔离验证法](ai-collaboration/hermetic-isolated-verification.md) | L2 | 2 | 2 | 验证大树里的局部变更，整树验证慢到会被跳过或被并行会话写入打断时（XERJ 束 31 文件 0 warning，替代 10 分钟以上且会被竞态打断的整树构建） |
 | shared-index-count-coupling | [共享索引计数耦合与同批判决](governance-strategy/shared-index-count-coupling.md) | L2 | 3 | 3 | 共享索引的计数由目录树派生、且多会话并行写同一仓库时，新增条目必然要改共享索引多处（awesome-okf-xs 子模块三次提交） |
+| governance-engine-dual-loop | [治理×引擎双件闭环](governance-strategy/governance-engine-dual-loop.md) | L1.5 | 3 | 0 | 规则密集型资产（约定文件/检测器/门禁/装载管道）需持续优化与自进化时：拆「守护件（合规路由+回归矩阵+误报防护）×引擎件（R→I→E→V 分析决策）」，引擎产出经守护验证后原子写回，双件各自演进。案例：agent-workspace-conventions×七概念组合、技能自动装载器、awesome-okf-xs UTF-8 治理 |
 
 ## 成熟度等级说明
 
