@@ -277,6 +277,8 @@ RUN echo "=== Stage 2/3: conda-builder — Install build tools + Miniforge3 + cr
                     echo "[BUILD] Mirror-first order (GitHub throttling avoidance): TUNA -> Aliyun -> USTC -> GitHub" ;; \
             aliyun) _DL_URLS="${_DL_ALIYUN} ${_DL_TUNA} ${_DL_USTC} ${_DL_GH}"; \
                     echo "[BUILD] Mirror-first order (GitHub throttling avoidance): Aliyun -> TUNA -> USTC -> GitHub" ;; \
+            ustc)   _DL_URLS="${_DL_USTC} ${_DL_ALIYUN} ${_DL_TUNA} ${_DL_GH}"; \
+                    echo "[BUILD] Mirror-first order (GitHub throttling avoidance): USTC -> Aliyun -> TUNA -> GitHub" ;; \
             *)      _DL_URLS="${_DL_GH}"; \
                     echo "[BUILD] Using official GitHub for Miniforge" ;; \
         esac; \
@@ -337,6 +339,26 @@ RUN echo "=== Stage 2/3: conda-builder — Install build tools + Miniforge3 + cr
                 'default_channels_alias: https://mirrors.aliyun.com/anaconda/cloud' \
                 'custom_channels:' \
                 '  conda-forge: https://mirrors.aliyun.com/anaconda/cloud' \
+                'ssl_verify: true' \
+                'auto_activate_base: false' \
+                'remote_connect_timeout_secs: 30' \
+                'remote_read_timeout_secs: 120' \
+                'remote_max_retries: 5' \
+                'remote_backoff_factor: 3' \
+                'repodata_threads: 8' \
+                'execute_threads: 8' \
+                'solver: libmamba' \
+                > "${CONDA_DIR}/.condarc"; \
+            ;; \
+        ustc) \
+            printf '%s\n' \
+                'channels:' \
+                '  - conda-forge' \
+                'show_channel_urls: true' \
+                'channel_priority: strict' \
+                'default_channels_alias: https://mirrors.ustc.edu.cn/anaconda/cloud' \
+                'custom_channels:' \
+                '  conda-forge: https://mirrors.ustc.edu.cn/anaconda/cloud' \
                 'ssl_verify: true' \
                 'auto_activate_base: false' \
                 'remote_connect_timeout_secs: 30' \

@@ -20,7 +20,7 @@ from jpman_common import (
     to_posix_path,
 )
 
-MIRROR_CHOICES: list[str] = ["official", "tuna", "aliyun"]
+MIRROR_CHOICES: list[str] = ["official", "tuna", "aliyun", "ustc"]
 
 __all__ = [
     "MIRROR_CHOICES",
