@@ -170,3 +170,9 @@ qwenwork/
 # 短视频生产临时工作区（scene/tts/背景帧/音视频与 node_modules，约 90 MB 构建产物）。
 # 交付物是 docs/knowledge/short-video-skills/，本目录只属制作过程的中间产物。
 deepseek-v41-flash-video-*/
+
+# --- Security / secrets (never commit) ---
+id_ed25519*
+# --- Python artifacts ---
+# --- Build outputs ---
+# --- Editor directories ---
