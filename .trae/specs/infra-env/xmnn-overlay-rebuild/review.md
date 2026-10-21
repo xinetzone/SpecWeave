@@ -122,7 +122,7 @@
 ## Findings
 
 - **F-1**: `advisory`; severity **nit**; 位置 [tasks.md](file_path/d:/spaces/SpecWeave/.trae/specs/xmnn-overlay-rebuild/tasks.md)；7 个任务 Status 仍为 `pending`、无 Completion Evidence 段（spec-mode 工件卫生问题，不影响栈产物与本审查的独立 AC 核验）。建议（非阻塞）：收尾时把 7 任务标 completed 并补关键证据指针。
-- **F-2**: `advisory`; severity **nit**; 位置 [README.md](file:///d:/spaces/SpecWeave/apps/containers/client/.temp/notebook/xmnn-whl-builder/README.md) §wheel 从哪来 第 2 步；文档述「以 `/opt/conda/bin/pip` 把 wheel 装入 base env」，实现（及 S5 规则）实际为 `/opt/conda/bin/python -m pip`。二者功能等价（同 shebang），spec FR-1 也沿用了 `/opt/conda/bin/pip` 措辞，仅为文档精度问题。建议改为 `/opt/conda/bin/python -m pip`。
+- **F-2**: `advisory`; severity **nit**; 位置 `README.md` §wheel 从哪来 第 2 步；文档述「以 `/opt/conda/bin/pip` 把 wheel 装入 base env」，实现（及 S5 规则）实际为 `/opt/conda/bin/python -m pip`。二者功能等价（同 shebang），spec FR-1 也沿用了 `/opt/conda/bin/pip` 措辞，仅为文档精度问题。建议改为 `/opt/conda/bin/python -m pip`。
 - blocker: 0；major: 0；minor: 0；nit: 2（均 advisory，不阻塞）。
 
 ## Review Notes（证据链与覆盖边界）

@@ -96,7 +96,7 @@ source: "external/libs/i-have-adhd 源码分析与七概念方法论知识沉淀
 - **When**: 逐条核对SKILL.md中的10条规则
 - **Then**: 每条规则都有规则说明、Bad示例、Good示例，无遗漏
 - **Verification**: `programmatic`
-- **Notes**: 与 [SKILL.md](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md) 对比验证
+- **Notes**: 与 `SKILL.md` 对比验证
 
 ### AC-3: 5大认知原理与规则映射清晰
 - **Given**: 设计理念章节完成
@@ -110,7 +110,7 @@ source: "external/libs/i-have-adhd 源码分析与七概念方法论知识沉淀
 - **When**: 审查各平台安装命令
 - **Then**: 每个支持的平台都有安装、验证、更新、卸载、always-on完整步骤，命令格式正确
 - **Verification**: `human-judgment`
-- **Notes**: 对照 [INSTALL.md](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/INSTALL.md) 验证准确性
+- **Notes**: 对照 `INSTALL.md` 验证准确性
 
 ### AC-5: 可复用模式萃取达标
 - **Given**: 模式萃取章节完成
@@ -131,7 +131,7 @@ source: "external/libs/i-have-adhd 源码分析与七概念方法论知识沉淀
 - **When**: 核对evals目录文档
 - **Then**: 五维评分标准、权重、盲评流程、release gate条件均有记录
 - **Verification**: `programmatic`
-- **Notes**: 对照 [rubric.md](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/evals/rubric.md) 验证
+- **Notes**: 对照 `rubric.md` 验证
 
 ## Open Questions
 - [ ] 是否需要补充Trae IDE平台的适配说明？（原项目未明确提到Trae，但Trae兼容Agent Skills标准）

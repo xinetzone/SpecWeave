@@ -139,7 +139,7 @@ patterns_produced:
 
 ### Dockerfile.runtime
 
-**文件**：[Dockerfile.runtime](file:///d:/spaces/SpecWeave/external/xmhub/xmnn/docker/Dockerfile.runtime)
+**文件**：`Dockerfile.runtime`
 
 核心设计：
 - FROM 直接使用 `npu-tvm-build:conda`，不做 conda create/clone
@@ -151,7 +151,7 @@ patterns_produced:
 
 ### entrypoint-runtime.sh
 
-**文件**：[entrypoint-runtime.sh](file:///d:/spaces/SpecWeave/external/xmhub/xmnn/docker/entrypoint-runtime.sh)
+**文件**：`entrypoint-runtime.sh`
 
 核心功能：
 - 自动检测 /workspace 挂载目录的 UID/GID
@@ -161,7 +161,7 @@ patterns_produced:
 
 ### wheel.py 依赖捆绑
 
-**文件**：[wheel.py](file:///d:/spaces/SpecWeave/external/xmhub/xmnn/src/xmpack/wheel.py)
+**文件**：`wheel.py`
 
 核心逻辑：
 - ldd 递归扫描 .so 文件的非系统依赖

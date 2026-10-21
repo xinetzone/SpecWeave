@@ -13,7 +13,7 @@ tags: ["pyproject.toml", "dependency-management", "wheel", "python-packaging", "
 
 ## 执行摘要
 
-对 XMNN wheel 包的 [pyproject.toml](file:///d:/spaces/SpecWeave/external/chaos/xmtools/pyproject.toml) 进行系统性依赖审计，将核心依赖从 7 个补全到 **21 个**，新增 3 个可选依赖组（dev/examples/full），同步更新了 3 个 Docker 环境文件，并完成全量 import 扫描和格式验证。修复了因依赖缺失导致的 `ModuleNotFoundError: No module named 'tabulate'` 运行时错误。
+对 XMNN wheel 包的 `pyproject.toml` 进行系统性依赖审计，将核心依赖从 7 个补全到 **21 个**，新增 3 个可选依赖组（dev/examples/full），同步更新了 3 个 Docker 环境文件，并完成全量 import 扫描和格式验证。修复了因依赖缺失导致的 `ModuleNotFoundError: No module named 'tabulate'` 运行时错误。
 
 **关键数据**：
 - 核心依赖：7 → **21**（新增14个）
@@ -34,7 +34,7 @@ tags: ["pyproject.toml", "dependency-management", "wheel", "python-packaging", "
 
 ### F02. 初始依赖状态
 
-修复前 [pyproject.toml](file:///d:/spaces/SpecWeave/external/chaos/xmtools/pyproject.toml) 第10-11行仅声明 7 个依赖：
+修复前 `pyproject.toml` 第10-11行仅声明 7 个依赖：
 ```toml
 dependencies = [
     "numpy", "scipy", "decorator", "attrs",
@@ -101,11 +101,11 @@ dependencies = [
 
 | 文件 | 变更类型 | 变更内容 |
 |------|---------|---------|
-| [docker/dev-llvm22/Dockerfile](file:///d:/spaces/SpecWeave/external/chaos/xmtools/docker/dev-llvm22/Dockerfile) | conda新增10包 | pandas, matplotlib, openpyxl, tabulate, tqdm, rich, onnx, protobuf, tomlkit, pillow |
-| [docker/dev-llvm22/Dockerfile](file:///d:/spaces/SpecWeave/external/chaos/xmtools/docker/dev-llvm22/Dockerfile) | pip重构 | 配置清华镜像、单独安装torch CPU版、新增onnx2pytorch/telnetlib3 |
-| [docker/dev-llvm22/Dockerfile](file:///d:/spaces/SpecWeave/external/chaos/xmtools/docker/dev-llvm22/Dockerfile) | 验证扩展 | 新增14个包的import+版本打印 |
-| [docker/dev-llvm22/run-build.sh](file:///d:/spaces/SpecWeave/external/chaos/xmtools/docker/dev-llvm22/run-build.sh) | pip扩展 | 新增pandas/matplotlib/openpyxl/tabulate/tqdm/rich/onnx/protobuf/tomlkit/Pillow/onnx2pytorch/telnetlib3/opencv-python-headless |
-| [docker/runtime/Dockerfile](file:///d:/spaces/SpecWeave/external/chaos/xmtools/docker/runtime/Dockerfile) | 简化 | pip安装简化为torch+opencv，其余依赖由wheel自动解析；验证脚本新增telnetlib3 |
+| `docker/dev-llvm22/Dockerfile` | conda新增10包 | pandas, matplotlib, openpyxl, tabulate, tqdm, rich, onnx, protobuf, tomlkit, pillow |
+| `docker/dev-llvm22/Dockerfile` | pip重构 | 配置清华镜像、单独安装torch CPU版、新增onnx2pytorch/telnetlib3 |
+| `docker/dev-llvm22/Dockerfile` | 验证扩展 | 新增14个包的import+版本打印 |
+| `docker/dev-llvm22/run-build.sh` | pip扩展 | 新增pandas/matplotlib/openpyxl/tabulate/tqdm/rich/onnx/protobuf/tomlkit/Pillow/onnx2pytorch/telnetlib3/opencv-python-headless |
+| `docker/runtime/Dockerfile` | 简化 | pip安装简化为torch+opencv，其余依赖由wheel自动解析；验证脚本新增telnetlib3 |
 
 ### F08. 静态验证执行
 
@@ -116,8 +116,8 @@ dependencies = [
 
 ### F09. 文档更新
 
-- [BUILD_REPORT.md](file:///d:/spaces/SpecWeave/external/chaos/xmtools/BUILD_REPORT.md)：新增第九章"pyproject.toml 依赖审计与补全"
-- [README.md](file:///d:/spaces/SpecWeave/external/chaos/xmtools/README.md)：本地构建命令补全完整依赖、Wheel验证标准扩展至11项、新增自动依赖解析说明
+- `BUILD_REPORT.md`：新增第九章"pyproject.toml 依赖审计与补全"
+- `README.md`：本地构建命令补全完整依赖、Wheel验证标准扩展至11项、新增自动依赖解析说明
 
 ### F10. 最终 pyproject.toml 依赖清单
 
@@ -370,6 +370,6 @@ onnx2pytorch>=0.4, telnetlib3>=2.0
 
 - [retrospective-xmnn-wheel-scikit-build-nuitka-20260726](../retrospective-xmnn-wheel-scikit-build-nuitka-20260726/README.md) — XMNN Wheel 构建系统搭建
 - [retrospective-xmnn-wheel-packaging-data-dirs-20260722](../../bug-fix/docker-build/retrospective-xmnn-wheel-packaging-data-dirs-20260722/README.md) — 数据目录打包修复（autolibs/tools_cpp/fonts）
-- [BUILD_REPORT.md](file:///d:/spaces/SpecWeave/external/chaos/xmtools/BUILD_REPORT.md) — 完整构建修复报告（含第九章依赖审计）
+- `BUILD_REPORT.md` — 完整构建修复报告（含第九章依赖审计）
 - [python-wheel-dependency-audit-wda4.md](../../../patterns/process-patterns/python-wheel-dependency-audit-wda4.md) — 萃取产出：WDA-4模式
 - [compiled-wheel-runtime-image-build.md](../../../patterns/code-patterns/compiled-wheel-runtime-image-build.md) — 升级产出：运行时镜像构建模式（L2）

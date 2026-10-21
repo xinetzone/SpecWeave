@@ -593,7 +593,7 @@ NDArray view = arr.CreateView({50, 100}, arr->dtype, 0);  // 零拷贝 view，�
 - [split_layer.cpp N=1 零拷贝路径](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp#L88-L111)
 - [test_blob_zerocopy.cpp 14个测试用例](../../../../projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp)
 - 复盘报告：[retrospective-split-zerocopy-cow-milestone-20260731](../../reports/code-optimization/retrospective-split-zerocopy-cow-milestone-20260731/README.md)
-- Phase 2 COW 设计草稿：[SPLIT_COW_PHASE2_DESIGN_DRAFT.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/SPLIT_COW_PHASE2_DESIGN_DRAFT.md)
+- Phase 2 COW 设计草稿：`SPLIT_COW_PHASE2_DESIGN_DRAFT.md`
 
 > **关联模式**：
 > - [const-cow-trigger](const-cow-trigger.md) — 进阶模式：Phase 2 COW触发，与本模式配合实现完整N≥1零拷贝方案

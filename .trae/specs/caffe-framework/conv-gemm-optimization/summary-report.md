@@ -72,7 +72,7 @@
 
 #### 优化1：Dockerfile 固定 OpenBLAS openmp 变体
 
-**文件**：[Dockerfile](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/Dockerfile)
+**文件**：[Dockerfile](../../../../apps/docker-images/caffe-ffi-jupyter/Dockerfile)
 
 - builder 阶段 conda 安装锁定 `libopenblas=*=*openmp*`
 - 添加 `openblas` 元包提供 `cblas.h` 开发头文件
@@ -82,7 +82,7 @@
 
 #### 优化2：Release 编译优化 flags
 
-**文件**：[editable-install.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/editable-install.sh)
+**文件**：[editable-install.sh](../../../../apps/docker-images/caffe-ffi-jupyter/scripts/editable-install.sh)
 
 ```bash
 -DCAFFE_FFI_ENABLE_PERF_LOG=OFF
@@ -190,7 +190,7 @@
 | cblas.h 缺失            | 只安装 `libopenblas`（运行时库），缺少开发头文件导致 C++ 编译失败                 | 添加 `openblas` 元包提供完整头文件；移除不必要的 conda-build/conda-verify         |
 | Runtime tvm\_ffi 导入失败 | PyPI wheel 在精简 runtime 镜像中缺少依赖导致构建中断                       | 改为警告容错（editable-install.sh 启动时自动从源码重建）；Runtime 验证改用直接 python 路径 |
 
-**附加**：[editable-install.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/editable-install.sh) 添加 cblas.h 预检警告，帮助快速诊断类似环境问题。
+**附加**：[editable-install.sh](../../../../apps/docker-images/caffe-ffi-jupyter/scripts/editable-install.sh) 添加 cblas.h 预检警告，帮助快速诊断类似环境问题。
 
 ### 3.4 算子输出形状对齐修复
 

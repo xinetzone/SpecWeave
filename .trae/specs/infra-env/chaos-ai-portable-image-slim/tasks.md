@@ -3,11 +3,11 @@
 ## [x] Task 1: 多阶段重构 portable.Dockerfile
 - **Priority**: high
 - **Depends On**: None
-- **Description**: 将 [portable.Dockerfile](file:///d:/spaces/SpecWeave/external/chaos/ai/portable.Dockerfile) 从单阶段重构为 `base` → `deps` → `final` 三阶段：
+- **Description**: 将 `portable.Dockerfile` 从单阶段重构为 `base` → `deps` → `final` 三阶段：
   - **base 阶段**：`FROM devcontainer-base:onnx-quantized-latest`，保留 ENV/ARG/SHELL，创建 ai 用户（usermod devuser→ai，UID 不变）+ 目录 + sudo + 密码
   - **deps 阶段**：`FROM base`，root 身份安装全部 pip 包（保留现有包列表），清理 conda/pip 缓存
   - **final 阶段**：`FROM deps`，COPY 配置/脚本 + 配置运行时 + 元数据 + 验证
-- **关键改动**：在 base 阶段删除 `chown -R ai:${AI_GROUP} "${CONDA_DIR}"`（[原 L133](file:///d:/spaces/SpecWeave/external/chaos/ai/portable.Dockerfile#L133-L133)），conda 保持 root:root
+- **关键改动**：在 base 阶段删除 `chown -R ai:${AI_GROUP} "${CONDA_DIR}"`（`原 L133`），conda 保持 root:root
 - **关键修复**（PIP_USER）：deps 阶段设置 `ENV PIP_USER=0` 使构建期包写入 `/opt/conda`（root 属主、全局可读），final 阶段恢复 `ENV PIP_USER=1` 支持运行时 `pip install --user`。修复了构建期包误入 `/root/.local` 导致 ai 用户无法 import 的问题
 - **Acceptance**: 三阶段构建成功，`docker images chaos-ai:portable` ≤ ~10GB（实测 9.59GB）
 
@@ -32,7 +32,7 @@
 ## [x] Task 4: 更新安装文档为 sudo 方式
 - **Priority**: medium
 - **Depends On**: Task 2
-- **Description**: 更新 [conda-environment-guide.md](file:///d:/spaces/SpecWeave/external/chaos/ai/docs/portable/conda-environment-guide.md) 与 start.sh 提示，说明 conda 属主为 root、ai 需用 `sudo pip install` / `sudo pip install --user`
+- **Description**: 更新 `conda-environment-guide.md` 与 start.sh 提示，说明 conda 属主为 root、ai 需用 `sudo pip install` / `sudo pip install --user`
 - **Acceptance**: 文档与实际行为一致（已更新 guide + verify-startup.sh + .env.example 的 py314→base）
 
 ## [x] Task 5: 端到端验证镜像缩小
@@ -48,7 +48,7 @@
 - **Priority**: high
 - **Depends On**: Task 1, Task 5
 - **Description**: 收尾三件套：
-  - [docker-compose.yml](file:///d:/spaces/SpecWeave/external/chaos/ai/docker-compose.yml) 的 `dev-portable` 服务 `image:` 从 `chaos-ai:portable` 改为 `chaos-ai:portable-slim`，并同步 WSL 构建目录
+  - `docker-compose.yml` 的 `dev-portable` 服务 `image:` 从 `chaos-ai:portable` 改为 `chaos-ai:portable-slim`，并同步 WSL 构建目录
   - 通过 docker-cache skill 执行 `save chaos-ai:portable-slim`，缓存为 2.0GB tar.gz（原子写入 + SHA256 校验）
   - `docker compose up -d dev-portable` 重建容器，验证新镜像正常工作
 - **Acceptance**:

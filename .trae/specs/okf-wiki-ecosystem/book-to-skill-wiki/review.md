@@ -14,11 +14,11 @@
 - [x] 共10个章节文件，命名符合NN-slug.md格式
 
 ## 内容准确性
-- [x] 架构描述与 [ARCHITECTURE.md](file:///d:/spaces/SpecWeave/external/libs/book-to-skill/docs/ARCHITECTURE.md) 一致
-- [x] 提取器逻辑与 [utils.py](file:///d:/spaces/SpecWeave/external/libs/book-to-skill/book_to_skill/utils.py) 一致
-- [x] 依赖探测与 [dependencies.py](file:///d:/spaces/SpecWeave/external/libs/book-to-skill/book_to_skill/dependencies.py) 一致
-- [x] 安全机制覆盖 [sanitize.py](file:///d:/spaces/SpecWeave/external/libs/book-to-skill/book_to_skill/sanitize.py)、docx解析、生成扫描
-- [x] 生成规范与 [SKILL.md](file:///d:/spaces/SpecWeave/external/libs/book-to-skill/SKILL.md) 一致
+- [x] 架构描述与 `ARCHITECTURE.md` 一致
+- [x] 提取器逻辑与 `utils.py` 一致
+- [x] 依赖探测与 `dependencies.py` 一致
+- [x] 安全机制覆盖 `sanitize.py`、docx解析、生成扫描
+- [x] 生成规范与 `SKILL.md` 一致
 - [x] Token经济数据与README性能数据一致
 
 ## 可复用模式质量（G3质量门）

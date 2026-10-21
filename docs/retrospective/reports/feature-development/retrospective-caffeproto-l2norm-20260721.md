@@ -47,11 +47,11 @@ tags: ["caffeproto", "protobuf", "tvm-relax", "l2-normalization", "operator-supp
 
 | 文件 | 类型 | 说明 |
 |------|------|------|
-| [caffe.proto](file:///d:/spaces/SpecWeave/external/ffi/tvm-book/tests/caffeproto/protos/caffe.proto#L1452-L1468) | 修改 | 新增 NormalizeParameter 消息（4个字段），LayerParameter 新增 norm_param=149 |
-| [caffe_pb2.py](file:///d:/spaces/SpecWeave/external/ffi/tvm-book/tests/caffeproto/python/caffe_pb2.py) | 重新生成 | 包含 NormalizeParameter 类和 norm_param 字段 |
-| [protos/caffe_pb2.py](file:///d:/spaces/SpecWeave/external/ffi/tvm-book/tests/caffeproto/python/protos/caffe_pb2.py) | 重新生成 | 同步更新 |
-| [utils.py](file:///d:/spaces/SpecWeave/external/ffi/tvm-book/tests/caffeproto/python/utils.py#L136-L167) | 修改 | 新增 L2Norm nn.Module 类（32行） |
-| [test_l2norm.py](file:///d:/spaces/SpecWeave/external/ffi/tvm-book/tests/caffeproto/python/test_l2norm.py) | 新增 | 7个测试用例（238行） |
+| `caffe.proto#L1452-L1468` | 修改 | 新增 NormalizeParameter 消息（4个字段），LayerParameter 新增 norm_param=149 |
+| `caffe_pb2.py` | 重新生成 | 包含 NormalizeParameter 类和 norm_param 字段 |
+| `protos/caffe_pb2.py` | 重新生成 | 同步更新 |
+| `utils.py#L136-L167` | 修改 | 新增 L2Norm nn.Module 类（32行） |
+| `test_l2norm.py` | 新增 | 7个测试用例（238行） |
 
 ### 1.4 问题与异常记录
 
@@ -150,12 +150,12 @@ tags: ["caffeproto", "protobuf", "tvm-relax", "l2-normalization", "operator-supp
 
 ### 改进落地记录
 
-- **protobuf 版本一致性预检**：创建了 [gen_proto.py](file:///d:/spaces/SpecWeave/external/ffi/tvm-book/tests/caffeproto/gen_proto.py)，内置：
+- **protobuf 版本一致性预检**：创建了 `gen_proto.py`，内置：
   - 自动查找 protoc（conda 环境、系统 PATH）
   - protoc/Python protobuf 版本兼容性检查（含错误提示和升级建议）
   - 自动编译到两个输出目录（python/ 和 python/protos/）
   - 生成后自动验证 import 和 NormalizeParameter 可用性
-- **新算子添加文档**：在 [index.md](file:///d:/spaces/SpecWeave/external/ffi/tvm-book/tests/caffeproto/index.md) 中新增「添加新算子（四步法）」章节，包含协议扩展→代码生成→TVM模块→测试的完整指南和注意事项
+- **新算子添加文档**：在 `index.md` 中新增「添加新算子（四步法）」章节，包含协议扩展→代码生成→TVM模块→测试的完整指南和注意事项
 
 ---
 

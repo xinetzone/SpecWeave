@@ -12,7 +12,7 @@ status: "draft"
 ## What Changes
 
 - **多阶段构建重组** `portable.Dockerfile`：拆分为 `base` → `deps` → `final` 三阶段，实现层隔离与缓存优化
-- **删除 `chown -R ai:ai /opt/conda`**（[portable.Dockerfile#L133](file:///d:/spaces/SpecWeave/external/chaos/ai/portable.Dockerfile#L133-L133)）：conda 保持 root:root，消除 4.6GB 复制层
+- **删除 `chown -R ai:ai /opt/conda`**（`portable.Dockerfile#L133`）：conda 保持 root:root，消除 4.6GB 复制层
 - **ai 用户改为 sudo 安装包**：ai 通过 `sudo pip install` / `sudo conda install`（已有 NOPASSWD sudo 权限）安装新包，无需 conda 写权限
 - **保留全部 pip 包**：Stage 2 包列表不变，仅做结构优化
 - 配套更新文档/启动脚本中对 ai 直接写 conda 的假设（改为 sudo 提示）

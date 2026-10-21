@@ -43,10 +43,10 @@ tags: ["nuitka", "scikit-build-core", "cmake", "wheel", "tvm", "python3.14", "na
 
 ### F03. Python 版本约束设定
 
-- 配置位置：[pyproject.toml](file:///d:/spaces/SpecWeave/external/chaos/xmtools/pyproject.toml) 中 `requires-python = ">=3.14"`
-- CMake 层版本检查：[CMakeLists.txt](file:///d:/spaces/SpecWeave/external/chaos/xmtools/CMakeLists.txt#L6-L10) 中 `Python3_VERSION VERSION_LESS "3.14"` 触发 FATAL_ERROR
-- 验证脚本版本检查：[verify_wheel.py](file:///d:/spaces/SpecWeave/external/chaos/xmtools/scripts/verify_wheel.py#L361-L363) 中 `sys.version_info < (3, 14)` 退出码1
-- Invoke 任务版本检查：[tasks.py](file:///d:/spaces/SpecWeave/external/chaos/xmtools/tasks.py#L195-L199) 中 check_deps 任务
+- 配置位置：`pyproject.toml` 中 `requires-python = ">=3.14"`
+- CMake 层版本检查：`CMakeLists.txt#L6-L10` 中 `Python3_VERSION VERSION_LESS "3.14"` 触发 FATAL_ERROR
+- 验证脚本版本检查：`verify_wheel.py#L361-L363` 中 `sys.version_info < (3, 14)` 退出码1
+- Invoke 任务版本检查：`tasks.py#L195-L199` 中 check_deps 任务
 
 ### F04. Nuitka 编译配置
 
@@ -62,14 +62,14 @@ tags: ["nuitka", "scikit-build-core", "cmake", "wheel", "tvm", "python3.14", "na
 - 被移除的 AST 类：`ast.NameConstant`、`ast.Num`、`ast.Str`、`ast.Bytes`（均合并到 `ast.Constant`）
 - 被移除的 AST 类：`ast.Index`、`ast.ExtSlice`（Python 3.9 中废弃，3.12 中移除）
 - 修复方式：Monkey-patch，在模块加载时检查 `hasattr(ast, "Xxx")`，缺失则定义兼容类
-- 注入位置：[tasks.py](file:///d:/spaces/SpecWeave/external/chaos/xmtools/tasks.py#L22-L82) 中的 `_PREAMBLE_TVM` 和 `_PREAMBLE_VTA`
-- 运行时注入：[_xmnn_bootstrap.py](file:///d:/spaces/SpecWeave/external/chaos/xmtools/_xmnn_bootstrap.py#L37-L71) 中同样包含 Monkey-patch（通过 .pth 文件在所有 import 前加载）
+- 注入位置：`tasks.py#L22-L82` 中的 `_PREAMBLE_TVM` 和 `_PREAMBLE_VTA`
+- 运行时注入：`_xmnn_bootstrap.py#L37-L71` 中同样包含 Monkey-patch（通过 .pth 文件在所有 import 前加载）
 
 ### F06. TVM 原生库构建
 
 - 标准构建命令：`inv config -f` 生成配置，`inv make` 编译
 - 发现问题：默认配置下 `USE_EXAMPLE_TARGET_HOOKS=OFF`，导致 `TIRToRuntime` 属性未注册，`tvm.build(llvm)` 失败
-- 补丁操作：[tasks.py](file:///d:/spaces/SpecWeave/external/chaos/xmtools/tasks.py#L226-L240) 中 `build_tvm` 任务在 `inv config -f` 后、`inv make` 前，正则替换 `config.cmake` 将 `USE_EXAMPLE_TARGET_HOOKS` 设为 ON
+- 补丁操作：`tasks.py#L226-L240` 中 `build_tvm` 任务在 `inv config -f` 后、`inv make` 前，正则替换 `config.cmake` 将 `USE_EXAMPLE_TARGET_HOOKS` 设为 ON
 - 最终产物：`libtvm.so`（76MB），不单独安装 `libtvm_runtime.so`
 
 ### F07. 原生库依赖管理
@@ -77,13 +77,13 @@ tags: ["nuitka", "scikit-build-core", "cmake", "wheel", "tvm", "python3.14", "na
 - 依赖库来源目录：`/opt/conda/envs/xmnn/lib`
 - 安装目标目录：wheel 包内的 `_libs/` 子目录
 - 被打包的依赖库：libLLVM.so.22.1、libz.so.1、libzstd.so.1、libxml2.so.16、libiconv.so.2、libicuuc.so.78、libicudata.so.78
-- 符号链接处理：[install_real_lib()](file:///d:/spaces/SpecWeave/external/chaos/xmtools/CMakeLists.txt#L71-L89) 函数通过 `get_filename_component(... REALPATH)` 解析真实文件，安装真实文件后在 install-CODE 中重建符号链接
-- RPATH 设置：[CMakeLists.txt](file:///d:/spaces/SpecWeave/external/chaos/xmtools/CMakeLists.txt#L134-L147) 使用 patchelf 将 `_libs/` 下所有 .so 的 RPATH 设置为 `$ORIGIN`
+- 符号链接处理：`install_real_lib()#L71-L89` 函数通过 `get_filename_component(... REALPATH)` 解析真实文件，安装真实文件后在 install-CODE 中重建符号链接
+- RPATH 设置：`CMakeLists.txt#L134-L147` 使用 patchelf 将 `_libs/` 下所有 .so 的 RPATH 设置为 `$ORIGIN`
 
 ### F08. 引导加载机制
 
-- 引导脚本：[_xmnn_bootstrap.py](file:///d:/spaces/SpecWeave/external/chaos/xmtools/_xmnn_bootstrap.py) 安装到 site-packages 根目录
-- 激活方式：[xmnn_bootstrap.pth](file:///d:/spaces/SpecWeave/external/chaos/xmtools/xmnn_bootstrap.pth) 包含单行 `import _xmnn_bootstrap`，Python 启动时自动执行
+- 引导脚本：`_xmnn_bootstrap.py` 安装到 site-packages 根目录
+- 激活方式：`xmnn_bootstrap.pth` 包含单行 `import _xmnn_bootstrap`，Python 启动时自动执行
 - 引导脚本职责：设置 `TVM_LIBRARY_PATH`、设置 `LD_LIBRARY_PATH`、`RTLD_GLOBAL` 预加载 libtvm.so、应用 AST Monkey-patch
 - `_libs/` 目录存在性检查：引导脚本优先查找 `_libs/` 目录，不存在则降级到包根目录
 
@@ -107,7 +107,7 @@ tags: ["nuitka", "scikit-build-core", "cmake", "wheel", "tvm", "python3.14", "na
 
 ### F11. 验证体系
 
-- 验证脚本：[scripts/verify_wheel.py](file:///d:/spaces/SpecWeave/external/chaos/xmtools/scripts/verify_wheel.py)（442行）
+- 验证脚本：`scripts/verify_wheel.py`（442行）
 - 验证流程：创建临时 venv → 升级 pip → force-reinstall wheel → 执行检查项
 - 日志系统：控制台 INFO 级别 + 文件 DEBUG 级别双输出，含时间戳/级别/模块名
 - 6项核心检查：import tvm、import vta、import xmnn、tvm.relay 访问、libtvm ctypes 加载、relay/std .rly 文件可访问、vta_hw/config .json 文件可访问
@@ -334,7 +334,7 @@ tags: ["nuitka", "scikit-build-core", "cmake", "wheel", "tvm", "python3.14", "na
 
 ### A1（高优先级）：添加构建环境 Dockerfile 固化
 - **问题**：当前 LLVM_LIB_DIR 硬编码为 `/opt/conda/envs/xmnn/lib`，构建环境依赖特定 conda 环境
-- **建议**：利用已有的 [docker/dev-llvm22/Dockerfile](file:///d:/spaces/SpecWeave/external/chaos/xmtools/docker/dev-llvm22/Dockerfile) 固化构建环境，CI 中直接使用 Docker 构建
+- **建议**：利用已有的 `docker/dev-llvm22/Dockerfile` 固化构建环境，CI 中直接使用 Docker 构建
 - **验收标准**：`docker build` 后 `docker run` 内执行 `inv build-all` 可成功产出 wheel
 
 ### A2（中优先级）：添加 manylinux 合规性检查

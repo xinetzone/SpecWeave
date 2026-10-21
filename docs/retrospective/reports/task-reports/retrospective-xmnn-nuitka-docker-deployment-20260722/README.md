@@ -49,11 +49,11 @@ status: completed
 | src/xmpack/wheel.py | 415 | Python | Wheel 打包脚本（含库捆绑器） |
 | [packaging/pyproject.toml](../../../../../../external/libs/book-to-skill/pyproject.toml) | 196 | TOML | 包元数据、依赖声明、CMake 配置 |
 | [environment.yml](../../../../../apps/docker-images/pytorch-base/environment.yml) | 139 | YAML | Conda 环境配置（运行+开发） |
-| [docker/Dockerfile.runtime](file:///d:/spaces/SpecWeave/external/xmhub/xmnn/docker/Dockerfile.runtime) | 175 | Dockerfile | 多阶段运行时镜像构建 |
-| [docker/entrypoint-runtime.sh](file:///d:/spaces/SpecWeave/external/xmhub/xmnn/docker/entrypoint-runtime.sh) | 104 | Shell | UID/GID自动映射+降权执行 |
-| [docker/docker-compose.runtime.yml](file:///d:/spaces/SpecWeave/external/xmhub/xmnn/docker/docker-compose.runtime.yml) | 102 | YAML | Docker Compose 编排 |
+| `docker/Dockerfile.runtime` | 175 | Dockerfile | 多阶段运行时镜像构建 |
+| `docker/entrypoint-runtime.sh` | 104 | Shell | UID/GID自动映射+降权执行 |
+| `docker/docker-compose.runtime.yml` | 102 | YAML | Docker Compose 编排 |
 | [docker/deploy.sh](../../../../../../external/libs/veadk-python/frontend/service/studio_release_server/deploy.sh) | 223 | Shell | 一键部署管理脚本 |
-| [verify_import.py](file:///d:/spaces/SpecWeave/external/xmhub/xmnn/verify_import.py) | 70 | Python | 安装验证脚本 |
+| `verify_import.py` | 70 | Python | 安装验证脚本 |
 
 ### Bug 修复记录
 

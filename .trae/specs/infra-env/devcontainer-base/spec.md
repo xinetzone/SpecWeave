@@ -28,8 +28,8 @@ status: "draft"
 
 ## Background & Context
 - 现有基础镜像：
-  - [apps/jupyter-ssh-base](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base)：SSH + Jupyter，supervisord管理，多阶段构建，Python venv在/opt/venv，非root用户jupyteruser
-  - [apps/docker-ssh-dind](file:///d:/spaces/SpecWeave/apps/docker-ssh-dind)：Docker DinD + SSH，单阶段构建，非root用户ai加入docker组，无supervisord
+  - [apps/jupyter-ssh-base](../../../../apps/docker-images/jupyter-ssh-base/README.md)：SSH + Jupyter，supervisord管理，多阶段构建，Python venv在/opt/venv，非root用户jupyteruser
+  - [apps/docker-ssh-dind](../../../../apps/docker-images/docker-ssh-dind/README.md)：Docker DinD + SSH，单阶段构建，非root用户ai加入docker组，无supervisord
 - 项目约束继承：Ubuntu 26.04基础镜像、中文环境、非root用户默认、敏感信息运行时生成、tini作为init进程
 - 七概念方法论指导：通过第一性原理推导7条公理，对抗审查4视角验证，采纳5项关键修正
 

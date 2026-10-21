@@ -31,9 +31,9 @@ status: "draft"
 
 ## Background & Context
 - 用户明确要求 Python 3.14 + Anaconda3 环境
-- 现有参考：[docker-ssh-dind/Containerfile](file:///d:/spaces/SpecWeave/apps/docker-ssh-dind/Containerfile) 提供了成熟的 Docker 镜像构建规范
-- XMNN 项目已有 Python 3.14 + Conda 的实践：[environment.yml](file:///d:/spaces/SpecWeave/external/xmhub/xmnn/environment.yml) 验证了 Python 3.14 + conda-forge 的可行性
-- TVM 项目的 conda 安装脚本：[ubuntu_install_conda.sh](file:///d:/spaces/SpecWeave/external/xmhub/npu_tvm/docker/install/ubuntu_install_conda.sh) 提供了 Miniconda 安装的参考
+- 现有参考：[docker-ssh-dind/Containerfile](../../../../apps/docker-images/docker-ssh-dind/Containerfile) 提供了成熟的 Docker 镜像构建规范
+- XMNN 项目已有 Python 3.14 + Conda 的实践：`environment.yml` 验证了 Python 3.14 + conda-forge 的可行性
+- TVM 项目的 conda 安装脚本：`ubuntu_install_conda.sh` 提供了 Miniconda 安装的参考
 - 国内网络环境特点：访问官方 Anaconda repo、PyPI、Ubuntu 源速度慢且不稳定，大文件下载容易中断
 - Docker 构建特性：分层缓存机制，RUN 指令失败会导致该层重建，合理分层可大幅提升重试成功率
 - Conda 优势：预编译二进制包、科学计算库兼容性好、环境隔离清晰，适合深度学习场景

@@ -498,7 +498,7 @@ def check_editable_residuals(site_packages_dir):
 - [scripts/check_tvm_ffi_traits.py](../../../../projects/xuanspace/libs/caffe-ffi/scripts/check_tvm_ffi_traits.py)
 - [scripts/check_windows_dll.py](../../../../projects/xuanspace/libs/caffe-ffi/scripts/check_windows_dll.py)
 - [scripts/verify_build.ps1](../../../../projects/xuanspace/libs/caffe-ffi/scripts/verify_build.ps1)
-- [cmake/PreflightChecks.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/PreflightChecks.cmake)（集成点）
+- `cmake/PreflightChecks.cmake`（集成点）
 - 复盘报告：[retrospective-split-zerocopy-cow-milestone-20260731](../../reports/code-optimization/retrospective-split-zerocopy-cow-milestone-20260731/README.md)
 
 ## Changelog

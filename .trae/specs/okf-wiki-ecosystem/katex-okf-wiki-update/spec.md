@@ -6,7 +6,7 @@ status: "draft"
 # KaTeX 官网学习与 OKF Wiki 更新 - Product Requirement Document
 
 ## Overview
-- **Summary**：系统学习 https://katex.org/ 的 17 个公开页面，采用“融合增强”方式更新 [katex bundle](file:///d:/spaces/SpecWeave/projects/awesome-okf-xs/bundles/katex)，保留现有源码级架构分析，同时补齐官网文档中的安装、浏览器/Node 运行时、CLI、配置、字体、安全、错误处理、支持函数表、常见问题、迁移指南和生态信息。
+- **Summary**：系统学习 https://katex.org/ 的 17 个公开页面，采用“融合增强”方式更新 [katex bundle](../../../../projects/awesome-okf-xs/doc/bundles/jishu/document/katex/index.md)，保留现有源码级架构分析，同时补齐官网文档中的安装、浏览器/Node 运行时、CLI、配置、字体、安全、错误处理、支持函数表、常见问题、迁移指南和生态信息。
 - **Purpose**：现有 bundle 已覆盖 KaTeX v0.18.4 的核心源码架构，但对官网用户文档覆盖不完整，且部分配置默认值与官网存在偏差。本次更新将官网作为权威用户文档信源，形成“会用 + 懂原理 + 能扩展 + 可排障”的完整中文 OKF Wiki。
 - **Target Users**：KaTeX 使用者、前端/Node.js 开发者、数学排版扩展开发者、OKF 文档维护者、希望通过源码与官方文档双向学习 KaTeX 的工程师。
 
@@ -28,7 +28,7 @@ status: "draft"
 
 ## Background & Context
 - 用户明确要求使用 `seven-concepts-cmd` 与 `source-code-to-okf-wiki`。本次属于知识沉淀场景，采用 R→I→E→V→C 闭环：事实采集、架构/文档洞察、批量生成、独立验证、更新闭环。
-- 当前 bundle 位于 [projects/awesome-okf-xs/bundles/katex](file:///d:/spaces/SpecWeave/projects/awesome-okf-xs/bundles/katex)，已有根索引、15 篇 concepts、5 篇 examples、1 篇 reference、2 个 spec 文件。
+- 当前 bundle 位于 [projects/awesome-okf-xs/bundles/katex](../../../../projects/awesome-okf-xs/doc/bundles/jishu/document/katex/index.md)，已有根索引、15 篇 concepts、5 篇 examples、1 篇 reference、2 个 spec 文件。
 - 当前 bundle 缺少 concepts/examples/references 子目录索引和 log.md；部分文档仍需补齐官网信源。
 - 官网盘点发现 17 个公开页面：首页、Users、Versions、Node、Browser、API、CLI、Auto-render、Extensions & Libraries、Options、Security、Handling Errors、Font、Supported Functions、Support Table、Common Issues、Migration。
 - 官网信息与现有事实清单存在需要复核的偏差，例如 Options 页面显示 `strict` 默认值为 `"warn"`、`maxExpand` 默认值为 `Infinity`，而现有文档写为 `false` 与 `1000`。R 阶段必须以官网和必要源码复核后修正。

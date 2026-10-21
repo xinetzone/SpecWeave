@@ -32,10 +32,10 @@ PyCaffe 作为 Caffe 的 Python 绑定层，其 `io.py` 中的图像预处理实
 
 | 交付物 | 类型 | 路径 | 状态 |
 |--------|------|------|------|
-| data_processor.py | 新建模块（620 行） | [data_processor.py](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/pycaffe/python/pycaffe/data_processor.py) | 已完成 |
-| pycaffe.py 日志增强 | 修改（424 行，24 处日志） | [pycaffe.py](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/pycaffe/python/pycaffe/pycaffe.py) | 已完成 |
-| __init__.py 导出更新 | 修改（9 行） | [__init__.py](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/pycaffe/python/pycaffe/__init__.py) | 已完成 |
-| Dockerfile.conda 构建加固 | 修改（runtime conda create 添加重试） | [Dockerfile.conda](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/local/conda/Dockerfile.conda) | 已完成 |
+| data_processor.py | 新建模块（620 行） | `data_processor.py` | 已完成 |
+| pycaffe.py 日志增强 | 修改（424 行，24 处日志） | `pycaffe.py` | 已完成 |
+| __init__.py 导出更新 | 修改（9 行） | `__init__.py` | 已完成 |
+| Dockerfile.conda 构建加固 | 修改（runtime conda create 添加重试） | `Dockerfile.conda` | 已完成 |
 | Docker 镜像构建验证 | 验证 | `caffe-cpu:conda-py314` | 已通过 |
 
 ***

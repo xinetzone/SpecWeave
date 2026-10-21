@@ -57,14 +57,14 @@ tags: [docker, build-engineering, release-pipeline, xmnn, multi-stage-build, dot
 
 | 文件 | 操作 | 说明 |
 |------|------|------|
-| [.dockerignore](file:///d:/spaces/SpecWeave/external/chaos/.dockerignore#L45) | 修改 | 新增 `ai/xmnn-releases/` 排除规则，防止构建上下文扫描产物目录 |
-| [AGENTS.md](file:///d:/spaces/SpecWeave/external/chaos/ai/xmnn-releases/AGENTS.md) | 创建 | xmnn-releases目录AI协作者入口，含四层定位、核心约束、快速开始 |
-| [.gitignore](file:///d:/spaces/SpecWeave/external/chaos/ai/xmnn-releases/.gitignore) | 创建 | 大文件排除规则（*.whl, *.tar等不纳入git） |
-| [install.sh](file:///d:/spaces/SpecWeave/external/chaos/ai/xmnn-releases/scripts/install.sh) | 创建 | 客户侧安装脚本：pip install + sha256校验 + 自动调用verify.sh |
-| [verify.sh](file:///d:/spaces/SpecWeave/external/chaos/ai/xmnn-releases/scripts/verify.sh) | 创建 | 客户侧验证脚本：Python环境+tvm/vta/xmnn import+libtvm.so加载 |
-| [extract-release.sh](file:///d:/spaces/SpecWeave/external/chaos/ai/xmnn-releases/scripts/extract-release.sh) | 创建 | **核心交付脚本**：一键提取whl→生成sha256→自动探测版本→生成version.json→创建release-notes→更新latest/ |
-| [version.json.template](file:///d:/spaces/SpecWeave/external/chaos/ai/xmnn-releases/templates/version.json.template) | 创建 | 版本元数据模板（12个必填字段） |
-| [ai/AGENTS.md](file:///d:/spaces/SpecWeave/external/chaos/ai/AGENTS.md) | 修改 | 更新镜像矩阵为四层结构，补充xmnn-releases路由信息 |
+| `.dockerignore#L45` | 修改 | 新增 `ai/xmnn-releases/` 排除规则，防止构建上下文扫描产物目录 |
+| `AGENTS.md` | 创建 | xmnn-releases目录AI协作者入口，含四层定位、核心约束、快速开始 |
+| `.gitignore` | 创建 | 大文件排除规则（*.whl, *.tar等不纳入git） |
+| `install.sh` | 创建 | 客户侧安装脚本：pip install + sha256校验 + 自动调用verify.sh |
+| `verify.sh` | 创建 | 客户侧验证脚本：Python环境+tvm/vta/xmnn import+libtvm.so加载 |
+| `extract-release.sh` | 创建 | **核心交付脚本**：一键提取whl→生成sha256→自动探测版本→生成version.json→创建release-notes→更新latest/ |
+| `version.json.template` | 创建 | 版本元数据模板（12个必填字段） |
+| `ai/AGENTS.md` | 修改 | 更新镜像矩阵为四层结构，补充xmnn-releases路由信息 |
 
 ## 3. 事实清单（R阶段产出）
 

@@ -34,26 +34,26 @@ maturity: "L1.5"
 
 | 维度 | 代码位置 | 结论 |
 |---|---|---|
-| **并行可用性门槛** | [parallel.py:L28](file:///d:/spaces/SpecWeave/external/libs/docs/sphinx/sphinx/util/parallel.py#L28-L28) | `parallel_available = HAS_MULTIPROCESSING and os.name == 'posix'` — **仅 POSIX（Linux/macOS/WSL）可用** |
-| **fork 硬依赖** | [parallel.py:L103](file:///d:/spaces/SpecWeave/external/libs/docs/sphinx/sphinx/util/parallel.py#L103-L103) | 使用 `multiprocessing.get_context('fork')`，spawn 模型不可用（Windows 缺 fork → `SerialTasks`） |
-| **CLI 入口** | [build.py:L427](file:///d:/spaces/SpecWeave/external/libs/docs/sphinx/sphinx/cmd/build.py#L427-L427) | `-j N` / `-j auto`（= `cpu_count()`）→ `Sphinx(parallel=N)` |
-| **分块算法** | [parallel.py:L156-169](file:///d:/spaces/SpecWeave/external/libs/docs/sphinx/sphinx/util/parallel.py#L156-L169) | `chunksize = sqrt(nargs/nproc * maxbatch)`，maxbatch=10；对 5k 文档 + 8 worker → 每块 ≈79 doc，共 ≈64 chunks |
-| **HTML Builder 放行** | [html/__init__.py:L118](file:///d:/spaces/SpecWeave/external/libs/docs/sphinx/sphinx/builders/html/__init__.py#L118-L118) | `StandaloneHTMLBuilder.allow_parallel = True` — write 阶段可并行；read 并行另看扩展声明 |
+| **并行可用性门槛** | `parallel.py:L28` | `parallel_available = HAS_MULTIPROCESSING and os.name == 'posix'` — **仅 POSIX（Linux/macOS/WSL）可用** |
+| **fork 硬依赖** | `parallel.py:L103` | 使用 `multiprocessing.get_context('fork')`，spawn 模型不可用（Windows 缺 fork → `SerialTasks`） |
+| **CLI 入口** | `build.py:L427` | `-j N` / `-j auto`（= `cpu_count()`）→ `Sphinx(parallel=N)` |
+| **分块算法** | `parallel.py:L156-169` | `chunksize = sqrt(nargs/nproc * maxbatch)`，maxbatch=10；对 5k 文档 + 8 worker → 每块 ≈79 doc，共 ≈64 chunks |
+| **HTML Builder 放行** | `html/__init__.py:L118` | `StandaloneHTMLBuilder.allow_parallel = True` — write 阶段可并行；read 并行另看扩展声明 |
 | **其他 Builder** | 基类 `Builder.allow_parallel = False` | LaTeX / singlehtml / linkcheck / epub3 / manpage / gettext / texinfo / text / dirhtml / changes / xml / dummy 等需逐例验证 |
 
 ### R2. 并行读 / 写流程 IPC 事实
 
 | 阶段 | 代码位置 | IPC 载荷与流程 |
 |---|---|---|
-| **并行 READ** | [_read_parallel()](file:///d:/spaces/SpecWeave/external/libs/docs/sphinx/sphinx/builders/__init__.py#L592-L629) | Worker fork 完成解析后，**`pickle.dumps(整个 partial BuildEnvironment)`** 经 pipe 回传；主进程 `merge_info_from()` 合并 `all_docs`、`included`、`reread_always` 与各 domain 数据 |
-| **并行 WRITE** | [_write_parallel()](file:///d:/spaces/SpecWeave/external/libs/docs/sphinx/sphinx/builders/__init__.py#L779-L818) | **主进程先串行** 执行 `get_and_resolve_doctree() + write_doc_serialized()` N 次，再把已 resolve 的 `(docname, doctree)` 列表发给 worker 跑 `write_doc`，IPC 比 read 轻很多 |
-| **全局串行阶段** | [build()](file:///d:/spaces/SpecWeave/external/libs/docs/sphinx/sphinx/builders/__init__.py#L389-L466) | `read → pickle(env) → check_consistency → prepare_writing → write → finish`；**除 read_parallel / write_parallel 本体，其余全串行** |
+| **并行 READ** | `_read_parallel()#L592-L629` | Worker fork 完成解析后，**`pickle.dumps(整个 partial BuildEnvironment)`** 经 pipe 回传；主进程 `merge_info_from()` 合并 `all_docs`、`included`、`reread_always` 与各 domain 数据 |
+| **并行 WRITE** | `_write_parallel()#L779-L818` | **主进程先串行** 执行 `get_and_resolve_doctree() + write_doc_serialized()` N 次，再把已 resolve 的 `(docname, doctree)` 列表发给 worker 跑 `write_doc`，IPC 比 read 轻很多 |
+| **全局串行阶段** | `build()#L389-L466` | `read → pickle(env) → check_consistency → prepare_writing → write → finish`；**除 read_parallel / write_parallel 本体，其余全串行** |
 
 ### R3. 扩展并行安全门控事实
 
 | 机制 | 位置 | 规则 |
 |---|---|---|
-| **守卫函数** | [application.py:L1800-1837](file:///d:/spaces/SpecWeave/external/libs/docs/sphinx/sphinx/application.py#L1800-L1837) | `is_parallel_allowed('read'\|'write')` 遍历全部加载扩展 |
+| **守卫函数** | `application.py:L1800-1837` | `is_parallel_allowed('read'\|'write')` 遍历全部加载扩展 |
 | **read_safe 默认值** | `extension.py` kwargs 默认 | `parallel_read_safe=None`（**opt-in；未声明 = 不安全 = 强制串行**） |
 | **write_safe 默认值** | `extension.py` kwargs 默认 | `parallel_write_safe=True`（opt-out；默认允许） |
 | **myst_nb 上游声明** | Web 引用：`myst_nb/sphinx_ext.py` | 返回 `{"parallel_read_safe": True, "parallel_write_safe": True}` ✅ |
@@ -64,8 +64,8 @@ maturity: "L1.5"
 
 | 要点 | 代码位置 | 说明 |
 |---|---|---|
-| merge_info_from | [environment/__init__.py:L421-437](file:///d:/spaces/SpecWeave/external/libs/docs/sphinx/sphinx/environment/__init__.py#L421-L437) | 合并 all_docs / included / reread_always / domain_data + 触发 `env-merge-info` 事件 |
-| 扫描与增量判定 | [find_files()](file:///d:/spaces/SpecWeave/external/libs/docs/sphinx/sphinx/environment/__init__.py#L485-L535) | `project.discover()` 扫描；`get_outdated_files()` 增量判定 |
+| merge_info_from | `environment/__init__.py:L421-437` | 合并 all_docs / included / reread_always / domain_data + 触发 `env-merge-info` 事件 |
+| 扫描与增量判定 | `find_files()#L485-L535` | `project.discover()` 扫描；`get_outdated_files()` 增量判定 |
 
 ---
 

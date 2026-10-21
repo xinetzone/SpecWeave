@@ -29,7 +29,7 @@ x-toml-ref: "../../.meta/toml/.trae/specs/standards-tools/establish-pwsh7-window
 - 不负责安装pwsh7到用户机器（仅提供安装指引）
 
 ## Background & Context
-- **现状问题**：项目中已有数十个.ps1脚本分散在.agents/scripts/、apps/*/、scripts/等目录，部分脚本（如[build.ps1](file:///d:/spaces/SpecWeave/apps/pytorch-base/build.ps1#L1-L1)）头部声明`#Requires -Version 5.1`，明确要求旧版本，这与未来统一使用pwsh7的目标冲突
+- **现状问题**：项目中已有数十个.ps1脚本分散在.agents/scripts/、apps/*/、scripts/等目录，部分脚本（如[build.ps1](../../../../apps/docker-images/pytorch-base/build.ps1#L1-L1)）头部声明`#Requires -Version 5.1`，明确要求旧版本，这与未来统一使用pwsh7的目标冲突
 - **版本差异**：PowerShell 5.1（Windows自带，基于.NET Framework）与PowerShell 7（pwsh，基于.NET Core/8+）存在大量语法和行为差异：
   - pwsh7新特性：`??`/`??=`空合并运算符、三元运算符`?:`、`ForEach-Object -Parallel`、`ConvertFrom-Json -Depth`支持更高深度、`$PSNativeCommandErrorActionPreference`等
   - 5.1独有/差异：部分.NET Framework类型可用性、COM对象访问、WMI查询行为差异等

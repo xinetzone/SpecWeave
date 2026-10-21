@@ -47,11 +47,11 @@
 
 **核心改动**:
 
-1. **Dockerfile** ([Dockerfile#L110-L177](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/Dockerfile#L110-L177))
+1. **Dockerfile** ([Dockerfile#L110-L177](../../../../apps/docker-images/caffe-ffi-jupyter/Dockerfile#L110-L177))
    - builder 阶段：`libopenblas` → `libopenblas=*=*openmp*`（openmp 变体替代 pthreads 变体）
    - Runtime 阶段：默认 `OMP_NUM_THREADS=4`、`OPENBLAS_NUM_THREADS=1`
 
-2. **editable-install.sh** ([editable-install.sh#L218-L220](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/editable-install.sh#L218-L220))
+2. **editable-install.sh** ([editable-install.sh#L218-L220](../../../../apps/docker-images/caffe-ffi-jupyter/scripts/editable-install.sh#L218-L220))
    - 添加 `-DCAFFE_FFI_ENABLE_PERF_LOG=OFF`
    - 添加 `-DCAFFE_FFI_ENABLE_DEBUG_LOG=OFF`
    - 添加 `-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG -ffast-math -fno-finite-math-only`

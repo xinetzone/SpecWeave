@@ -76,7 +76,7 @@ body=[T.max(conv2d_NCHWc[...] + p2[...], 0) * T.max(conv2d_NCHWc[...] + p2[...],
 
 **结论**：该 bug 为模型特定（`fgvsirfeature_ssd` 平方 ReLU 模式）的 TVM VM 调度缺陷，与镜像（有无构建工具链）及 config 均无关。两镜像行为完全一致。
 
-**约束**：精度流程 `accuracy_xmnn` 在 [accuracy_api.py](file:///d:/spaces/SpecWeave/external/chaos/npuusertools/xmnn/accuracy_api.py#L242) 硬编码 `tvm.relay.backend.vm.compile`；依据 FR-4（不修改 xmnn/tvm 源码），本阻塞**无法在本 spec 范围内解决**，作为基线期发现记录，建议移交工具链修复。
+**约束**：精度流程 `accuracy_xmnn` 在 `accuracy_api.py#L242` 硬编码 `tvm.relay.backend.vm.compile`；依据 FR-4（不修改 xmnn/tvm 源码），本阻塞**无法在本 spec 范围内解决**，作为基线期发现记录，建议移交工具链修复。
 
 ## 5. 一致性结论
 

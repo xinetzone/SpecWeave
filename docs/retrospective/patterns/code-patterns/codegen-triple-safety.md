@@ -158,5 +158,5 @@ def verify_generated(out_dirs):
 
 ## 本次案例参考实现
 
-- 生成脚本：[gen_proto.py](file:///d:/spaces/SpecWeave/external/ffi/tvm-book/tests/caffeproto/gen_proto.py)（本模式的完整参考实现）
-- 测试验证：[test_l2norm.py](file:///d:/spaces/SpecWeave/external/ffi/tvm-book/tests/caffeproto/python/test_l2norm.py)（4个 protobuf 测试 + 3个 TVM 数值测试）
+- 生成脚本：`gen_proto.py`（本模式的完整参考实现）
+- 测试验证：`test_l2norm.py`（4个 protobuf 测试 + 3个 TVM 数值测试）

@@ -15,12 +15,12 @@ target: projects/xuanspace/vendor/caffe/tests/ops
 - **Target Users**: Caffe 框架开发者、算子实现验证人员、深度学习框架测试工程师。
 
 ## Goals
-- 从 [test_forward.py](file:///d:/spaces/SpecWeave/external/chaos/npu_tvm/tests/python/frontend/caffe/test_forward.py) 中提取 23 个 Caffe 算子的测试用例
+- 从 `test_forward.py` 中提取 23 个 Caffe 算子的测试用例
 - 完全移除 TVM 相关导入、函数调用和依赖
 - 重构为原子化的文件结构：每个算子一个测试文件，公共工具函数独立模块
 - 保持原始测试用例的完整性和参数覆盖度
 - 确保代码符合 xuanspace 项目规范（Python 3.13+，ruff/black/isort 风格）
-- 输出目录：[tests/ops](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/tests/ops)
+- 输出目录：`tests/ops`
 
 ## Non-Goals (Out of Scope)
 - 不修改 caffex/ 原始源码

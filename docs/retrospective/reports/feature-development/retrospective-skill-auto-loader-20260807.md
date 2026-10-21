@@ -83,7 +83,7 @@ commit: "6fb994c3"
 | [test_skill_loader.py](../../../../.agents/skills/load-flexloop-skills/tests/test_skill_loader.py) | 新增 | 20个单元测试 |
 | [spec.md](../../../../.trae/specs/workspace-governance/skill-auto-loader/spec.md) | 新增 | PRD产品需求文档 |
 | [tasks.md](../../../../.trae/specs/workspace-governance/skill-auto-loader/tasks.md) | 新增 | 实施计划（8个任务） |
-| [checklist.md](file:///d:/spaces/SpecWeave/.trae/specs/workspace-governance/skill-auto-loader/checklist.md) | 新增 | 验证检查清单（18个检查点） |
+| [checklist.md](../../../../.trae/specs/workspace-governance/skill-auto-loader/review.md) | 新增 | 验证检查清单（18个检查点） |
 
 ---
 

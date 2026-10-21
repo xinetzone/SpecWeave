@@ -13,7 +13,7 @@ version: 1.0
 ## Goals
 - 在 `caffe.proto` 中新增 `NormalizeParameter` 消息定义，字段包括 `across_spatial`、`scale_filler`、`channel_shared`
 - 在 `LayerParameter` 中注册 `norm_param` 字段（使用下一个可用 ID 149）
-- 在 [utils.py](file:///d:/spaces/SpecWeave/external/ffi/tvm-book/tests/caffeproto/python/utils.py) 中实现 L2 归一化的 TVM Relax 算子模块（`L2Norm`）
+- 在 `utils.py` 中实现 L2 归一化的 TVM Relax 算子模块（`L2Norm`）
 - 重新生成 `caffe_pb2.py` 以支持新协议
 - 添加单元测试验证序列化/反序列化正确性
 - 添加集成测试验证与现有 `caffe_utils.py`、`caffe_fuse.py` 的兼容性
@@ -52,11 +52,11 @@ layer {
 - `channel_shared=false` 时每个通道有独立 scale，true 时所有通道共享一个 scale
 
 现有代码结构：
-- [caffe.proto](file:///d:/spaces/SpecWeave/external/ffi/tvm-book/tests/caffeproto/protos/caffe.proto)：Protobuf 协议定义，LayerParameter next available ID 为 149
-- [caffe_pb2.py](file:///d:/spaces/SpecWeave/external/ffi/tvm-book/tests/caffeproto/python/caffe_pb2.py)：protoc 生成的 Python 绑定
-- [utils.py](file:///d:/spaces/SpecWeave/external/ffi/tvm-book/tests/caffeproto/python/utils.py)：TVM Relax nn.Module 实现（Conv2D、ConvTranspose2D）
-- [caffe_utils.py](file:///d:/spaces/SpecWeave/external/ffi/tvm-book/tests/caffeproto/python/caffe_utils.py)：模型结构标准化工具
-- [caffe_fuse.py](file:///d:/spaces/SpecWeave/external/ffi/tvm-book/tests/caffeproto/python/caffe_fuse.py)：BN+Scale 融合逻辑
+- `caffe.proto`：Protobuf 协议定义，LayerParameter next available ID 为 149
+- `caffe_pb2.py`：protoc 生成的 Python 绑定
+- `utils.py`：TVM Relax nn.Module 实现（Conv2D、ConvTranspose2D）
+- `caffe_utils.py`：模型结构标准化工具
+- `caffe_fuse.py`：BN+Scale 融合逻辑
 
 ## Functional Requirements
 - **FR-1**: `NormalizeParameter` 消息定义

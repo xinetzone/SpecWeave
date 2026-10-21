@@ -92,7 +92,7 @@ patterns_produced:
 
 ### 修改1：condarc 镜像源配置
 
-**文件**：[config/condarc](file:///d:/spaces/SpecWeave/external/xmhub/npu_tvm/docker/local/conda/config/condarc)
+**文件**：`config/condarc`
 
 ```yaml
 # 修改后
@@ -108,7 +108,7 @@ show_channel_urls: true
 
 ### 修改2：Dockerfile 版本验证统一使用 importlib.metadata
 
-**文件**：[Dockerfile](file:///d:/spaces/SpecWeave/external/xmhub/npu_tvm/docker/local/conda/Dockerfile)
+**文件**：`Dockerfile`
 
 **base-builder 阶段**：
 ```dockerfile

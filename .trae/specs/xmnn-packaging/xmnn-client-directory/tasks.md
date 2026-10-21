@@ -40,7 +40,7 @@
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**: 
-  - 创建 verify.sh，基于现有 [xmnn-releases/scripts/verify.sh](file:///d:/spaces/SpecWeave/external/chaos/ai/xmnn-releases/scripts/verify.sh) 适配
+  - 创建 verify.sh，基于现有 `xmnn-releases/scripts/verify.sh` 适配
   - 遵循现有脚本规范：`#!/bin/bash` + `set -e -o pipefail`
   - source 父级 `../scripts/lib/logging.sh` 使用统一彩色日志
   - 7项验证：Python可执行、import tvm、import vta、import xmnn、_libs目录存在、libtvm.so ctypes加载、Python≥3.14
@@ -65,7 +65,7 @@
 - **Priority**: high
 - **Depends On**: Task 1, Task 3
 - **Description**: 
-  - 创建 install.sh，基于现有 [xmnn-releases/scripts/install.sh](file:///d:/spaces/SpecWeave/external/chaos/ai/xmnn-releases/scripts/install.sh) 但增加双模式查找
+  - 创建 install.sh，基于现有 `xmnn-releases/scripts/install.sh` 但增加双模式查找
   - 遵循现有脚本规范：shebang + set -e -o pipefail + source lib/logging.sh
   - **双模式whl查找逻辑**（按优先级）：
     1. 若指定 `--whl <path>`：使用指定路径
@@ -157,7 +157,7 @@
 - **Priority**: medium
 - **Depends On**: Task 5
 - **Description**: 
-  - 修改 [xmnn-releases/scripts/extract-release.sh](file:///d:/spaces/SpecWeave/external/chaos/ai/xmnn-releases/scripts/extract-release.sh)
+  - 修改 `xmnn-releases/scripts/extract-release.sh`
   - 在脚本末尾（Step 5 更新latest/之后）添加可选同步步骤：
     - 检测 `../../xmnn-client/` 目录是否存在
     - 若存在，调用 `../../xmnn-client/scripts/sync-from-releases.sh`
@@ -173,7 +173,7 @@
 - **Priority**: medium
 - **Depends On**: Task 2
 - **Description**: 
-  - 修改 [external/chaos/ai/AGENTS.md](file:///d:/spaces/SpecWeave/external/chaos/ai/AGENTS.md)
+  - 修改 `external/chaos/ai/AGENTS.md`
   - 在"嵌套路由关系"图中添加 xmnn-client/ 条目（第五层/并行层，面向使用者）
   - 在"上下文路由表"中添加 xmnn-client 行
   - 在"核心规范入口"表中添加 xmnn-client 行

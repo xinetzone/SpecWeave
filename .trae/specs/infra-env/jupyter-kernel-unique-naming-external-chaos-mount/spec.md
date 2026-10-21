@@ -7,7 +7,7 @@ status: "draft"
 
 ## Why
 
-chaos AI Docker 生态中的三个 Jupyter 内核配置（[ai/Dockerfile](file:///d:/spaces/SpecWeave/external/chaos/ai/Dockerfile) 的 `npu`、[xmnn-whl-builder](file:///d:/spaces/SpecWeave/external/chaos/ai/xmnn-whl-builder) 的 `xmnn-conda`、[xmnn-runtime](file:///d:/spaces/SpecWeave/external/chaos/ai/xmnn-runtime) 的 `xmnn-conda`）中，whl-builder 与 runtime 复用了相同的内核名 `xmnn-conda`，存在环境污染与命名冲突风险；同时三者未能统一挂载宿主源码目录 `d:\spaces\SpecWeave\external\chaos`，导致运行期内核无法一致访问该目录下的资源（npuusertools / npu_tvm / xmnn-client / models / ai 等）。
+chaos AI Docker 生态中的三个 Jupyter 内核配置（`ai/Dockerfile` 的 `npu`、`xmnn-whl-builder` 的 `xmnn-conda`、`xmnn-runtime` 的 `xmnn-conda`）中，whl-builder 与 runtime 复用了相同的内核名 `xmnn-conda`，存在环境污染与命名冲突风险；同时三者未能统一挂载宿主源码目录 `d:\spaces\SpecWeave\external\chaos`，导致运行期内核无法一致访问该目录下的资源（npuusertools / npu_tvm / xmnn-client / models / ai 等）。
 
 ## What Changes
 

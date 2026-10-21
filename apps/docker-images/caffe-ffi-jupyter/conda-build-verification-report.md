@@ -279,7 +279,7 @@ $ nm -D $SP_DIR/tvm_ffi/lib/libtvm_ffi.so | grep TVMFFIGetCustomAllocator
 
 ### 7.1 artifacts目录
 
-构建产物已复制到 [apps/docker-images/caffe-ffi-jupyter/artifacts/](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter/artifacts/)：
+构建产物已复制到 `apps/docker-images/caffe-ffi-jupyter/artifacts/`：
 
 ```
 artifacts/

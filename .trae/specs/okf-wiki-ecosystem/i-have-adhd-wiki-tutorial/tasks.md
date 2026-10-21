@@ -32,7 +32,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `programmatic` TR-2.1: 5大认知原理全部覆盖，每条有中文解释
   - `human-judgement` TR-2.2: 原理到规则的映射逻辑清晰、可追溯
   - `programmatic` TR-2.3: 文件frontmatter正确，无格式错误
-- **Notes**: 核心内容来自 [SKILL.md#what-adhd-changes-about-reading](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L23-L31)
+- **Notes**: 核心内容来自 `SKILL.md#what-adhd-changes-about-reading`
 
 ## [x] Task 3: 创建10条核心规则详解章节
 - **Priority**: high
@@ -46,7 +46,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `programmatic` TR-3.1: 10条规则完整覆盖（行动优先、编号步骤、明确下一步、抑制离题、重述状态、时间估计、成果可见、客观错误、列表≤5项、无客套话）
   - `human-judgement` TR-3.2: 每条规则的Bad/Good示例对比清晰、有说服力
   - `programmatic` TR-3.3: 代码块标注正确语言（markdown/text用于示例）
-- **Notes**: 核心内容来自 [SKILL.md#rules](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L33-L117)
+- **Notes**: 核心内容来自 `SKILL.md#rules`
 
 ## [x] Task 4: 创建例外场景与自检清单章节
 - **Priority**: high
@@ -61,7 +61,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `programmatic` TR-4.1: 6条例外场景全部覆盖
   - `programmatic` TR-4.2: 5项自检清单条目完整
   - `human-judgement` TR-4.3: 例外场景的边界条件说明清晰，避免误用
-- **Notes**: 核心内容来自 [SKILL.md#when-to-break-the-rules](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L119-L128) 和 [SKILL.md#pre-send-check](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L130-L142)
+- **Notes**: 核心内容来自 `SKILL.md#when-to-break-the-rules` 和 `SKILL.md#pre-send-check`
 
 ## [x] Task 5: 创建跨平台安装与配置章节
 - **Priority**: high
@@ -76,7 +76,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `programmatic` TR-5.1: 至少8个平台的安装指南完整
   - `programmatic` TR-5.2: 每个平台都有install/verify/update/uninstall四步
   - `human-judgement` TR-5.3: 命令可直接复制执行，平台差异标注清晰
-- **Notes**: 核心内容来自 [INSTALL.md](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/INSTALL.md)
+- **Notes**: 核心内容来自 `INSTALL.md`
 
 ## [x] Task 6: 创建Always-On持久化机制章节
 - **Priority**: medium
@@ -91,7 +91,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `programmatic` TR-6.1: 三种持久化方式全部覆盖
   - `human-judgement` TR-6.2: hooks脚本工作原理解释清晰（POSIX sh兼容性、YAML frontmatter剥离逻辑）
   - `programmatic` TR-6.3: hooks.json和always-on.sh关键代码片段正确引用
-- **Notes**: 核心内容来自 [hooks/hooks.json](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/hooks/hooks.json) 和 [hooks/always-on.sh](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/hooks/always-on.sh)
+- **Notes**: 核心内容来自 `hooks/hooks.json` 和 `hooks/always-on.sh`
 
 ## [x] Task 7: 创建评估框架与质量保障章节
 - **Priority**: medium
@@ -107,7 +107,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `programmatic` TR-7.1: 5个评估维度及权重与rubric.md一致
   - `programmatic` TR-7.2: release gate 4个条件完整记录
   - `human-judgement` TR-7.3: 评估方法论解释清晰，体现科学验证思维
-- **Notes**: 核心内容来自 [evals/rubric.md](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/evals/rubric.md) 和 [evals/README.md](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/evals/README.md)
+- **Notes**: 核心内容来自 `evals/rubric.md` 和 `evals/README.md`
 
 ## [x] Task 8: 创建自定义开发与故障排查章节
 - **Priority**: medium
@@ -121,7 +121,7 @@ source: "基于spec.md分解的原子化任务清单"
 - **Test Requirements**:
   - `programmatic` TR-8.1: 自定义流程步骤完整（uninstall→remove marketplace→add fork→install）
   - `human-judgement` TR-8.2: 故障排查覆盖INSTALL.md中列出的所有常见问题
-- **Notes**: 核心内容来自 [INSTALL.md#troubleshooting](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/INSTALL.md#L567-L588)
+- **Notes**: 核心内容来自 `INSTALL.md#troubleshooting`
 
 ## [x] Task 9: 萃取可复用模式章节
 - **Priority**: high

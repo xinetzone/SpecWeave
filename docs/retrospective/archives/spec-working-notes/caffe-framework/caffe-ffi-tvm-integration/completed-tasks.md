@@ -514,7 +514,7 @@ source: "tasks.md#Task-1-33（全部已完成）"
 - **DoD**：`.temp/_benchmark_openmp.sh`（OpenMP 重建+benchmark）与 `.temp/_benchmark_serial.sh`（OpenMP OFF 基线）双脚本，Docker 内验证通过
 
 **S2 分层 benchmark 体系（TS31-B2）✅ 已完成**
-- 新增 [benchmark_compute.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/examples/benchmark_compute.py)，三层量化：
+- 新增 `benchmark_compute.py`，三层量化：
   - **P0 microbenchmark**：GEMM（InnerProduct）FLOPs/s 原始吞吐
   - **P1 layer benchmark**：单层 Forward 平均耗时（Pooling / Eltwise）
   - **P2 network benchmark**：端到端 MLP Forward 耗时

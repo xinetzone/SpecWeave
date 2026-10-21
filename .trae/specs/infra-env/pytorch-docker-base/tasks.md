@@ -13,7 +13,7 @@
 - **Test Requirements**:
   - `programmatic` TR-1.1: 目录结构完整，AGENTS.md 包含"启动协议"关键词
   - `human-judgement` TR-1.2: AGENTS.md 正确引用父级 SpecWeave 规范和上下文路由表
-- **Notes**: 参考 [docker-ssh-dind/AGENTS.md](file:///d:/spaces/SpecWeave/apps/docker-ssh-dind/AGENTS.md) 的结构
+- **Notes**: 参考 [docker-ssh-dind/AGENTS.md](../../../../apps/docker-images/docker-ssh-dind/AGENTS.md) 的结构
 
 ## [ ] Task 2: 创建 environment.yml Conda 环境定义
 - **Priority**: high
@@ -28,7 +28,7 @@
   - `programmatic` TR-2.1: environment.yml 语法正确，conda env create 可解析
   - `programmatic` TR-2.2: Python 版本指定为 3.14
   - `human-judgement` TR-2.3: channels 顺序合理（conda-forge 优先，pytorch 其次）
-- **Notes**: 参考 XMNN 项目的 [environment.yml](file:///d:/spaces/SpecWeave/external/xmhub/xmnn/environment.yml)
+- **Notes**: 参考 XMNN 项目的 `environment.yml`
 
 ## [ ] Task 3: 编写 Dockerfile（ubuntu:26.04 + Miniconda3 + PyTorch）
 - **Priority**: high
@@ -73,7 +73,7 @@
   - `programmatic` TR-4.2: 默认启动时切换到ai用户，conda环境已激活
   - `programmatic` TR-4.3: `docker run ... python` 直接使用pytorch环境的python
   - `human-judgement` TR-4.4: 启动日志清晰，显示版本信息
-- **Notes**: 参考 [docker-ssh-dind/entrypoint.sh](file:///d:/spaces/SpecWeave/apps/docker-ssh-dind/entrypoint.sh) 和 [xmnn entrypoint-runtime.sh](file:///d:/spaces/SpecWeave/external/xmhub/xmnn/docker/entrypoint-runtime.sh)
+- **Notes**: 参考 [docker-ssh-dind/entrypoint.sh](../../../../apps/docker-images/docker-ssh-dind/entrypoint.sh) 和 `xmnn entrypoint-runtime.sh`
 
 ## [ ] Task 5: 编写 build.sh 构建脚本
 - **Priority**: high

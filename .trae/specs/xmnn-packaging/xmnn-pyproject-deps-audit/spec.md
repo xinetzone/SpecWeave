@@ -6,7 +6,7 @@ status: "draft"
 # XMNN pyproject.toml 依赖审计与补全 - Product Requirement Document
 
 ## Overview
-- **Summary**: 审计并补全 [pyproject.toml](file:///d:/spaces/SpecWeave/external/chaos/xmtools/pyproject.toml) 中的 `dependencies` 列表，确保 `sdk/tools/` 目录下所有 CLI 脚本（compile.py、accuracy.py、infer.py、performance.py、bandwidth.py、excelreport.py）及其调用的 xmnn API 模块所需的第三方 Python 包全部声明，版本兼容 Python 3.14，且可通过 conda/pip 正确安装。
+- **Summary**: 审计并补全 `pyproject.toml` 中的 `dependencies` 列表，确保 `sdk/tools/` 目录下所有 CLI 脚本（compile.py、accuracy.py、infer.py、performance.py、bandwidth.py、excelreport.py）及其调用的 xmnn API 模块所需的第三方 Python 包全部声明，版本兼容 Python 3.14，且可通过 conda/pip 正确安装。
 - **Purpose**: 当前 pyproject.toml 的依赖列表严重不足（仅 7 个包），缺少 pandas、matplotlib、onnx、torch、torchvision、Pillow、protobuf、openpyxl、rich、tqdm、tomlkit、tabulate、onnx2pytorch 等关键依赖。用户在纯净环境中 `pip install xmnn-*.whl` 后运行 SDK 工具会因 `ModuleNotFoundError` 崩溃。本任务确保 wheel 包自带完整依赖元数据，实现"安装即用"。
 - **Target Users**: XMNN 最终用户（通过 pip install xmnn-*.whl 安装后直接使用 sdk/tools/ CLI 脚本的开发者）
 

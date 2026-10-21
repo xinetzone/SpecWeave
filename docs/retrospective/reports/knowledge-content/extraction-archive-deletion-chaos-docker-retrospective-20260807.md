@@ -60,7 +60,7 @@ tags: ["extraction", "archive", "deletion", "docker", "conda", "chaos", "code-pa
 | [conda-dual-path-env-management.md](../../patterns/code-patterns/conda-dual-path-env-management.md) | 萃取 | conda 环境双路径 |
 | [docker-podman-cross-platform-container.md](../../patterns/code-patterns/docker-podman-cross-platform-container.md) | 萃取 | Docker↔Podman 跨平台 |
 | [docker-volume-mount-dev-workflow.md](../../patterns/code-patterns/docker-volume-mount-dev-workflow.md) | 萃取 | 卷挂载开发工作流 |
-| [code-patterns/README.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/README.md) | 归档 | 索引新增 5 行 |
+| [code-patterns/README.md](../../patterns/code-patterns/README.md) | 归档 | 索引新增 5 行 |
 | conda.Containerfile / index.md | 删除 | chaos 源文件已删除 |
 
 ---

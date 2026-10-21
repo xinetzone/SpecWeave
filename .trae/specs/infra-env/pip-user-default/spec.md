@@ -29,8 +29,8 @@ status: "draft"
 ### 权限设置的设计意图
 
 1. **root 拥有 /opt/conda**：保证镜像声明状态可复现。如果 devuser 能直接修改系统 conda，容器重建后修改丢失，造成"在我机器上能跑"的漂移问题。
-2. **[Dockerfile:173](file:///d:/spaces/SpecWeave/external/chaos/ai/Dockerfile#L173) `chmod a+x`**：pip 在 Docker BuildKit 中安装脚本时偶尔丢失可执行位（umask 问题），此行确保所有 /opt/conda/bin 下的可执行文件对所有用户可执行。这是**放宽权限**而非限制。
-3. **[Dockerfile:206](file:///d:/spaces/SpecWeave/external/chaos/ai/Dockerfile#L206) `chown devuser`**：构建时 root 创建的挂载点目录默认归 root，此行将 /workspace/npu_tvm 等目录交给 devuser，使其可写。这也是**放宽权限**。
+2. **`Dockerfile:173` `chmod a+x`**：pip 在 Docker BuildKit 中安装脚本时偶尔丢失可执行位（umask 问题），此行确保所有 /opt/conda/bin 下的可执行文件对所有用户可执行。这是**放宽权限**而非限制。
+3. **`Dockerfile:206` `chown devuser`**：构建时 root 创建的挂载点目录默认归 root，此行将 /workspace/npu_tvm 等目录交给 devuser，使其可写。这也是**放宽权限**。
 
 ### 用户当前已有的三种包安装方式
 

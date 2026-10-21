@@ -36,7 +36,7 @@ caffex 依赖移除和镜像构建验证完成后，本阶段完成了三项收�
 ### F02. 复盘报告导出
 
 - 报告目录：`.agents/docs/retrospective/reports/build-engineering/retrospective-caffe-standalone-caffex-removal-20260727/`
-- 参考格式：[retrospective-xmnn-wheel-scikit-build-nuitka-20260726](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/reports/build-engineering/retrospective-xmnn-wheel-scikit-build-nuitka-20260726/README.md) 的 YAML frontmatter + 结构化章节风格
+- 参考格式：[retrospective-xmnn-wheel-scikit-build-nuitka-20260726](../retrospective-xmnn-wheel-scikit-build-nuitka-20260726/README.md) 的 YAML frontmatter + 结构化章节风格
 - 报告内容：执行摘要 + R事实清单5节 + I洞察4条 + E候选模式3条 + 验证结果表格 + 变更文件索引
 
 ### F03. 容器交互命令问题
@@ -104,7 +104,7 @@ caffex 依赖移除和镜像构建验证完成后，本阶段完成了三项收�
 
 | 文件 | 操作 | 大小 | 说明 |
 |------|------|------|------|
-| [caffex-removal README.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/reports/build-engineering/retrospective-caffe-standalone-caffex-removal-20260727/README.md) | 新建 | ~8KB | caffex移除复盘报告 |
+| [caffex-removal README.md](../retrospective-caffe-standalone-caffex-removal-20260727/README.md) | 新建 | ~8KB | caffex移除复盘报告 |
 | [REGRESSION-TEST.md](../../../../../projects/xuanspace/vendor/caffe/docker/standalone/REGRESSION-TEST.md) | 新建 | ~16KB | 回归测试流程文档 |
 | [spec.md](../../../../../.trae/specs/infra-env/docker-image-save-20260727/spec.md) | 新建 | ~4KB | Docker导出PRD |
 | [tasks.md](../../../../../.trae/specs/infra-env/docker-image-save-20260727/tasks.md) | 新建+更新 | ~3KB | 实现计划（4/4完成） |
@@ -197,7 +197,7 @@ caffex 依赖移除和镜像构建验证完成后，本阶段完成了三项收�
 
 ## 相关链接
 
-- 前序复盘报告：[retrospective-caffe-standalone-caffex-removal-20260727](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/reports/build-engineering/retrospective-caffe-standalone-caffex-removal-20260727/README.md)
+- 前序复盘报告：[retrospective-caffe-standalone-caffex-removal-20260727](../retrospective-caffe-standalone-caffex-removal-20260727/README.md)
 - 回归测试文档：[REGRESSION-TEST.md](../../../../../projects/xuanspace/vendor/caffe/docker/standalone/REGRESSION-TEST.md)
 - Docker导出Spec：[docker-image-save-20260727](../../../../../.trae/specs/infra-env/docker-image-save-20260727)
 - 镜像归档：`D:\BaiduSyncdisk\docker\caffe-cpu-standalone-jupyter_20260727.tar.gz`（490MB）

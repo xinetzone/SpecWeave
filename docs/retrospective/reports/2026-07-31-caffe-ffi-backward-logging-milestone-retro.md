@@ -170,8 +170,8 @@ status: archived
 
 | 文件 | 说明 |
 |---|---|
-| [BACKWARD_LOGGING_PLAN.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/BACKWARD_LOGGING_PLAN.md) | Backward_cpu扩展详细计划（8节，436行） |
-| [ACTIVATION_PERF_MONITORING_SPEC.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/ACTIVATION_PERF_MONITORING_SPEC.md) | 激活层性能监控规范（8节，226行，含卷积层GEMM多阶段适配） |
+| `BACKWARD_LOGGING_PLAN.md` | Backward_cpu扩展详细计划（8节，436行） |
+| `ACTIVATION_PERF_MONITORING_SPEC.md` | 激活层性能监控规范（8节，226行，含卷积层GEMM多阶段适配） |
 | [perf_monitor.hpp](../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/perf_monitor.hpp) | 统一性能监控工具头文件：RAII ScopedTimer + RangeStats/NormStats/ProbStats + Reduce辅助函数 + PerfLogBuilder |
 | [conv_layer.cpp (Forward)](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp) | ✅ P0 Forward已修复：添加[CONV-PERF] chrono计时+GEMM后reduce(out/w值域+w_norm+b值域)+子阶段分计时(im2col/gemm/bias) |
 | [conv_layer.cpp (Backward)](../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L273-L489) | ✅ P0 Backward已修复：6子阶段计时(t_zero/im2col/gemm_filter/gemm_data/col2im/gemm_bias)+col_buffer单缓冲复用+double累加w_diff_norm+beta=1跨batch累积+propagate_down完整条件保护 |
