@@ -10,6 +10,7 @@ adversarial-perspective-weighting
 amphibious-positioning-model
 appx-alias-rebirth
 architecture-over-algorithm
+artifact-form-collapse
 asset-reuse-last-mile-integration-guide
 automated-stats-three-defense-lines
 availability-heuristic-structural-guard
