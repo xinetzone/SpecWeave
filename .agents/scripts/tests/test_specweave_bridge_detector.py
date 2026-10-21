@@ -281,3 +281,35 @@ class TestPackaging:
             if line.strip().startswith("version:")
         ]
         assert version_lines == [f"version: {_CONST.PLUGIN_VERSION}"]
+
+
+# ---------------------------------------------------------------------------
+# ROUTES 路由表 —— 存在性守护（防仓库侧文件重命名后的静默漂移）
+# ---------------------------------------------------------------------------
+
+
+class TestRoutesIntegrity:
+    """路由表存在性守护。
+
+    回归背景（2026-10-21 实测）：ROUTES 曾有 17/30 条目标指向不存在的文件
+    （命令文件带 ``-cmd.md`` 后缀而仓库实名无后缀、技能路由写 ``.md``
+    文件而实为 ``*-cmd/SKILL.md`` 目录门面、规则/协议路径漂移），且因无
+    存在性断言自创建起静默存活。路由表数据与仓库文件系统的耦合和检测
+    逻辑同属行为不变式，须一并守护。
+    """
+
+    def test_all_route_targets_exist(self):
+        missing = [
+            (key, rel)
+            for key, rel in _CONST.ROUTES.items()
+            if not (REPO_ROOT / rel).exists()
+        ]
+        assert missing == [], f"路由表存在漂移目标: {missing}"
+
+    def test_route_fallback_target_exists(self):
+        # __init__.py 无关键词匹配时回退到 .agents/context-routing.md
+        assert (REPO_ROOT / ".agents" / "context-routing.md").is_file()
+
+    def test_routes_cover_core_task_types(self):
+        keys = set(_CONST.ROUTES)
+        assert {"七概念", "原子提交", "知识沉淀", "上下文路由"} <= keys

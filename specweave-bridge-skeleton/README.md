@@ -25,6 +25,7 @@ Hermes Agent 的 SpecWeave 工作区规范集成插件。本目录是该插件�
 - 同一目录内主信号优先；层级上**就近命中即返回**（从 cwd 向上递归，命中即停止，嵌套子工作区按其自身上下文治理）
 - 兼容信号较五步发现流程步骤 3 的文字描述更严格（要求 `roles/` 与 `skills/` 同时存在）：仅含单一 `skills/` 的通用技能管理器目录（如 `~/.agents/skills/`）不会误判，避免用户主目录被识别为兼容工作区、污染所有非 SpecWeave 会话
 - 行为变化提示（v0.2.0 起）：含 `.agents/roles` + `.agents/skills` 的嵌套子工作区（如 `vendor/flexloop/apps/chaos`、`apps/docker-images/pytorch-base`）现在会被识别为独立兼容工作区，而非继续向上归属外层 SpecWeave 根——这是五步发现流程「命中即返回」的既定语义
+- 行为变化提示（v0.2.1 起）：`ROUTES` 路由表 17 处目标对齐仓库实名（命令文件无 `-cmd.md` 后缀；技能路由指向 `*-cmd/SKILL.md` 目录门面；硬编码治理/数据安全/阶段守卫/应用生命周期对齐 context-routing.md 实际入口），`specweave_route` 工具返回的规范路径因此变化；并新增路由存在性回归测试（`TestRoutesIntegrity`）守护仓库侧后续重命名引发的静默漂移
 - `detector.detect_workspace_signal()` 返回命中的信号名，供 `status` / `verify` 展示与诊断
 
 > 使用者接入说明见 [ACCESS.md](ACCESS.md)。
