@@ -120,6 +120,11 @@ RUN echo "=== Stage 1/3: base-runtime — Install system packages + Chinese loca
         libcap2-bin \
         flatpak-xdg-utils \
     && echo "[OK] Runtime system packages installed" && \
+    echo "[BUILD] Asserting critical runtime binaries (guards against silent no-op apt install)..." && \
+    for _b in sshd sudo podman crun conmon tini supervisord fuse-overlayfs slirp4netns; do \
+        command -v "$_b" >/dev/null 2>&1 || { echo "[ERROR] Missing runtime binary: $_b (apt install did not take effect; check APT_MIRROR=${APT_MIRROR:-official})"; exit 1; }; \
+    done && \
+    echo "[OK] Critical runtime binaries verified: sshd sudo podman crun conmon tini supervisord fuse-overlayfs slirp4netns" && \
     echo "[BUILD] Linking flatpak-spawn for Toolbx host callback (mirrors upstream images/ubuntu/26.04/Containerfile)..." && \
     ln -sf /usr/libexec/flatpak-xdg-utils/flatpak-spawn /usr/bin/flatpak-spawn && \
     test -x /usr/bin/flatpak-spawn && echo "[OK] flatpak-spawn available (/usr/bin/flatpak-spawn)" && \
@@ -601,7 +606,7 @@ RUN echo "=== Layer 3/5: Create user devuser + subuid/subgid + directories + Pod
     echo "devuser:100000:65536" > /etc/subgid && \
     echo "[OK] subuid/subgid configured: devuser:100000:65536" && \
     echo "[BUILD] Creating directories..." && \
-    mkdir -p /workspace /root/.jupyter /home/devuser/.jupyter /home/devuser/.ssh /home/devuser/.config/containers \
+    mkdir -p /workspace /root/.jupyter /root/.ssh /home/devuser/.jupyter /home/devuser/.ssh /home/devuser/.config/containers \
         /run/sshd /var/log/supervisor /etc/supervisor/conf.d \
         /etc/containers/containers.conf.d /run/host \
         /var/lib/jpman/ssh-host-keys && \
