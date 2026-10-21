@@ -19,7 +19,7 @@ status: "draft"
 - **Purpose**: 系统性沉淀Headroom项目的核心技术原理、使用方法和设计思想，为AI Agent开发者提供上下文压缩领域的实用参考，帮助理解如何在不损失质量的前提下大幅降低Token消耗；同时通过复盘沉淀9条可复用洞察和3个设计模式。
 - **Target Users**: AI Agent开发者、Claude Code/Codex/Cursor等编程Agent深度用户、关注LLM成本优化的技术人员、对上下文工程(Context Engineering)感兴趣的研究者。
 - **交付物入口**：[00-overview.md](../../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki/00-overview.md)
-- **复盘报告入口**：[README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260803/README.md)
+- **复盘报告入口**：[README.md](../../../../docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260803/README.md)
 
 ## Goals（全部达成 ✅）
 - ✅ 完整提取并结构化Headroom项目的核心概念、技术架构和使用方法（11个原子章节完整覆盖）

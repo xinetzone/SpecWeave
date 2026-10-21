@@ -138,5 +138,5 @@ iflow-cli/
 ---
 
 **来源参考**：
-- 项目指南：[IFLOW.md](file:///d:/spaces/chaos/iflow-cli/IFLOW.md)
-- 项目 README：[README.md](file:///d:/spaces/chaos/iflow-cli/README.md)
+- 项目指南：`IFLOW.md`
+- 项目 README：`README.md`

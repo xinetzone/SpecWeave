@@ -159,6 +159,6 @@ project-root/
 ---
 
 **来源参考**：
-- [PyTorch AGENTS.md](file:///d:/spaces/chaos/hub/pytorch/AGENTS.md)
-- [PyTorch CLAUDE.md](file:///d:/spaces/chaos/hub/pytorch/CLAUDE.md)
-- [Helion AGENTS.md](file:///d:/spaces/chaos/hub/helion/AGENTS.md)
+- `PyTorch AGENTS.md`
+- `PyTorch CLAUDE.md`
+- `Helion AGENTS.md`

@@ -33,9 +33,9 @@ archive_history:
 
 ## 来源
 
-- 源文件：[dao-yan/README.md](file:///d:/spaces/chaos/daoApps/dao-yan/README.md)
-- 英文说明：[README-EN.md](file:///d:/spaces/chaos/daoApps/dao-yan/README-EN.md)（如存在）
-- 上游分析：[workspace-archive-priority-analysis.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/workspace-archive-priority-analysis.md)
+- 源文件：`dao-yan/README.md`
+- 英文说明：`README-EN.md`（如存在）
+- 上游分析：`workspace-archive-priority-analysis.md`
 
 ## 归档目标
 

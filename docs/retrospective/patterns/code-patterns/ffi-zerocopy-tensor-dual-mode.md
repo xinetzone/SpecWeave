@@ -381,8 +381,8 @@ fn tensor_data_ptr(tensor: &Tensor) -> (u64, Vec<i64>) {
 
 ## 来源
 
-- [_core.py _tensor_to_numpy 实现](file:///D:/spaces/xuanspace/python/caffe_ffi/_core.py)
-- [test_cow.py 21项COW测试用例](file:///D:/spaces/xuanspace/tests/python/test_cow.py)
+- [_core.py _tensor_to_numpy 实现](../../../../projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/_core.py)
+- [test_cow.py 21项COW测试用例](../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_cow.py)
 - Task 11 里程碑复盘报告：[retrospective-task11-cow-fix-20260801](../../reports/code-optimization/retrospective-task11-cow-fix-20260801/README.md)
 - 诊断脚本：debug_leak1.sh ~ debug_leak14.py（逐步隔离ctypes引用循环问题）
 

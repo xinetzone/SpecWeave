@@ -41,11 +41,11 @@ tags: ["milestone", "camera-power", "iot", "hardware-selection"]
 
 | 产出物 | 位置 | 状态 |
 |-------|------|------|
-| 方案说明书 | [SOLUTION.md](file:///d:/AI/apps/camera-power-controller/SOLUTION.md) | ✅ 完成 |
-| PRD规格说明 | [spec.md](file:///d:/AI/.trae/specs/xmnn-packaging/camera-power-automation-testing/spec.md) | ✅ 完成（待用户确认是否实现） |
-| 实现任务分解 | [tasks.md](file:///d:/AI/.trae/specs/xmnn-packaging/camera-power-automation-testing/tasks.md) | ✅ 完成（10项任务） |
-| 验证检查清单 | [checklist.md](file:///d:/AI/.trae/specs/xmnn-packaging/camera-power-automation-testing/checklist.md) | ✅ 完成（约60项） |
-| 基础控制代码 | [camera_power.py](file:///d:/AI/apps/camera-power-controller/camera_power.py) | ✅ 已有70%基础 |
+| 方案说明书 | [SOLUTION.md](SOLUTION.md) | ✅ 完成 |
+| PRD规格说明 | [spec.md](../../../.trae/specs/xmnn-packaging/camera-power-automation-testing/spec.md) | ✅ 完成（待用户确认是否实现） |
+| 实现任务分解 | [tasks.md](../../../.trae/specs/xmnn-packaging/camera-power-automation-testing/tasks.md) | ✅ 完成（10项任务） |
+| 验证检查清单 | [checklist.md](../../../.trae/specs/xmnn-packaging/camera-power-automation-testing/review.md) | ✅ 完成（约60项） |
+| 基础控制代码 | [camera_power.py](camera_power.py) | ✅ 已有70%基础 |
 
 ### 1.3 关键决策
 

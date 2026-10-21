@@ -36,7 +36,7 @@ archive_history:
 
 - 根说明：[hub/sync/AGENTS.md](../../../external/containers/workspace/dev/npuusertools/AGENTS.md)
 - 子项目说明：[hub/sync/notebook/AGENTS.md](../../../external/containers/workspace/dev/npuusertools/AGENTS.md)
-- 上游分析：[workspace-archive-priority-analysis.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/workspace-archive-priority-analysis.md)
+- 上游分析：`workspace-archive-priority-analysis.md`
 
 ## 归档目标
 

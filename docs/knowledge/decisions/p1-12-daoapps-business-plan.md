@@ -33,9 +33,9 @@ archive_history:
 
 ## 来源
 
-- 源文件：[BUSINESS_PLAN-A.md](file:///d:/spaces/chaos/daoCollective/tests/reports/BUSINESS_PLAN-A.md)
-- 相关计划：[BUSINESS_PLAN-B.md](file:///d:/spaces/chaos/daoCollective/tests/reports/BUSINESS_PLAN-B.md)（如存在）
-- 上游分析：[workspace-archive-priority-analysis.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/workspace-archive-priority-analysis.md)
+- 源文件：`BUSINESS_PLAN-A.md`
+- 相关计划：`BUSINESS_PLAN-B.md`（如存在）
+- 上游分析：`workspace-archive-priority-analysis.md`
 
 ## 归档目标
 

@@ -124,6 +124,6 @@ export const instance = { /* 具体实现 */ };
 ---
 
 **来源参考**：
-- 核心总结：[PHILOSOPHICAL-CORRECTION-SUMMARY.md](file:///d:/spaces/chaos/daoApps/DaoMind/.trae/PHILOSOPHICAL-CORRECTION-SUMMARY.md)
-- 详细映射：[philosophical-mapping.md](file:///d:/spaces/chaos/daoApps/DaoMind/.trae/specs/philosophical-mapping.md)
+- 核心总结：`PHILOSOPHICAL-CORRECTION-SUMMARY.md`
+- 详细映射：`philosophical-mapping.md`
 - 项目概览：[P1-09 DaoMind 项目概览](p1-09-daomind-project-overview.md)

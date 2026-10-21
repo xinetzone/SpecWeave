@@ -32,10 +32,10 @@ archive_history:
 
 ## 来源
 
-- 源文件：[specweave-binding.md](file:///d:/spaces/chaos/.agents/context/specweave-binding.md)
+- 源文件：`specweave-binding.md`
 - 治理入口引用：[AGENTS.md §3.2](../../../external/containers/workspace/dev/npuusertools/AGENTS.md#L3.2)
-- 执行准备文档：[p0-archive-baseline-plan.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/p0-archive-baseline-plan.md)
-- 上游优先级分析：[workspace-archive-priority-analysis.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/workspace-archive-priority-analysis.md)
+- 执行准备文档：`p0-archive-baseline-plan.md`
+- 上游优先级分析：`workspace-archive-priority-analysis.md`
 
 ## 归档目标
 

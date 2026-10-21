@@ -151,5 +151,5 @@ import Dashboard from "./pages/dashboard";
 ---
 
 **来源参考**：
-- [CodeGuideline.md](file:///d:/spaces/chaos/daoApps/dao-yan/CodeGuideline.md)
-- 相关项目：[DaoYan 项目](file:///d:/spaces/chaos/daoApps/dao-yan/)
+- `CodeGuideline.md`
+- 相关项目：`DaoYan 项目`

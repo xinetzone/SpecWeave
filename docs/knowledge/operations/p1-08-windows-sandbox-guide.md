@@ -33,9 +33,9 @@ archive_history:
 
 ## 来源
 
-- 源文件：[Windows 沙盒安装与配置操作手册.md](file:///d:/spaces/chaos/.trae/documents/Windows%20沙盒安装与配置操作手册.md)
+- 源文件：`Windows 沙盒安装与配置操作手册.md`
 - 官方参考：Microsoft Learn「安装 Windows 沙盒」「使用与配置 .wsb 文件」
-- 上游分析：[workspace-archive-priority-analysis.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/workspace-archive-priority-analysis.md)
+- 上游分析：`workspace-archive-priority-analysis.md`
 
 ## 归档目标
 

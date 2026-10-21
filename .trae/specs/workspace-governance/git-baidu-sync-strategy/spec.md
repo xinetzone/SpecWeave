@@ -18,7 +18,7 @@ implementation_completion: "100%"
 ### 交付物位置
 | 类型 | 路径 |
 |------|------|
-| 📜 脚本集 | [.agents/scripts/git-baidu-sync/](file:///d:/AI/.agents/scripts/git-baidu-sync/) |
+| 📜 脚本集 | [.agents/scripts/git-baidu-sync/](../../../../.agents/scripts/git-baidu-sync/README.md) |
 | 📚 完整文档 | [docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/](../../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync) |
 
 ### 快速开始

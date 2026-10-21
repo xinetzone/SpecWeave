@@ -32,10 +32,10 @@ archive_history:
 
 ## 来源
 
-- 脚本入口：[knowledge_archive.py](file:///d:/spaces/chaos/.agents/scripts/knowledge_archive.py)
-- 脚本说明：[.agents/scripts/README.md](file:///d:/spaces/chaos/.agents/scripts/README.md)（如存在）
-- 执行准备文档：[p0-archive-baseline-plan.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/p0-archive-baseline-plan.md)
-- 上游优先级分析：[workspace-archive-priority-analysis.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/workspace-archive-priority-analysis.md)
+- 脚本入口：`knowledge_archive.py`
+- 脚本说明：`.agents/scripts/README.md`（如存在）
+- 执行准备文档：`p0-archive-baseline-plan.md`
+- 上游优先级分析：`workspace-archive-priority-analysis.md`
 
 ## 归档目标
 

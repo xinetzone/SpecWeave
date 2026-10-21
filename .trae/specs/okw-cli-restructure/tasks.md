@@ -26,7 +26,7 @@
 
 - **Status**: `completed`
 - **Completion Evidence**（2026-10-12）：
-  - 新增 [tests/cli_surface_lib.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/tests/cli_surface_lib.py)（递归序列化器，口径注释列明跳过 _HelpAction、纳入 _VersionAction 与 choice_helps）、[tests/generate_cli_snapshot.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/tests/generate_cli_snapshot.py)、[tests/test_cli_surface.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/tests/test_cli_surface.py)（3 用例）与 [tests/snapshots/cli_surface.json](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/tests/snapshots/cli_surface.json)。
+  - 新增 [tests/cli_surface_lib.py](../../../apps/dev-tools/openkylin-wsl-devkit/tests/cli_surface_lib.py)（递归序列化器，口径注释列明跳过 _HelpAction、纳入 _VersionAction 与 choice_helps）、[tests/generate_cli_snapshot.py](../../../apps/dev-tools/openkylin-wsl-devkit/tests/generate_cli_snapshot.py)、[tests/test_cli_surface.py](../../../apps/dev-tools/openkylin-wsl-devkit/tests/test_cli_surface.py)（3 用例）与 [tests/snapshots/cli_surface.json](../../../apps/dev-tools/openkylin-wsl-devkit/tests/snapshots/cli_surface.json)。
   - TR-2.1 ✅ 快照由生成器从现网 `okw.cli.build_parser()` 一次性生成；choice_helps 证实 11 个顶层/子组 help 文本入库，epilog/参数 help 抽查（podman 组 epilog、preflight 的 name help）与源码一致。
   - TR-2.2 ✅ 迁移前 `pytest tests/test_cli_surface.py` → 3 passed；叶子命令实测 14 个（9 顶层 + image build/verify + podman preflight/install/verify）。
   - TR-2.3 ✅ 连续两次生成文件 SHA256 相同（idempotent: True）。
@@ -46,7 +46,7 @@
 
 - **Status**: `completed`
 - **Completion Evidence**（2026-10-12）：
-  - 新增 [src/okw/errors.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/src/okw/errors.py)（`OkwError`，零第三方导入）；[distro.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/src/okw/distro.py) 与 [scaffold.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/src/okw/scaffold.py) 仅改基类为 OkwError，raise 点消息零改动。
+  - 新增 [src/okw/errors.py](../../../apps/dev-tools/openkylin-wsl-devkit/src/okw/errors.py)（`OkwError`，零第三方导入）；[distro.py](../../../apps/dev-tools/openkylin-wsl-devkit/src/okw/distro.py) 与 [scaffold.py](../../../apps/dev-tools/openkylin-wsl-devkit/src/okw/scaffold.py) 仅改基类为 OkwError，raise 点消息零改动。
   - 新增 tests/test_errors.py（6 L0 断言）；新增文件自动被 test_no_future_annotations 参数化覆盖。
   - TR-3.1/3.2/3.3 ✅ 全量 **293 passed**（基线 279 + 新断言与守护参数化 14 项，差异已逐源解释：6 异常断言 +3 快照断言 + 守护对 5 个新 .py 的展开）；总覆盖率维持 94%，errors.py 100%，distro/scaffold 消息用例全绿。
 - **Priority**: high
@@ -65,7 +65,7 @@
 
 - **Status**: `completed`
 - **Completion Evidence**（2026-10-12）：
-  - [src/okw/__init__.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/src/okw/__init__.py) 顶部加入 `MINIMUM_PYTHON_VERSION = (3, 10)` 与 `require_python_version()` 并在定义后立即调用（仅 stdlib `sys` 在调用前导入；函数无 PEP 604/match，支持 2 元/3 元版本元组）。
+  - [src/okw/__init__.py](../../../apps/dev-tools/openkylin-wsl-devkit/src/okw/__init__.py) 顶部加入 `MINIMUM_PYTHON_VERSION = (3, 10)` 与 `require_python_version()` 并在定义后立即调用（仅 stdlib `sys` 在调用前导入；函数无 PEP 604/match，支持 2 元/3 元版本元组）。
   - 新增 tests/test_python_version_guard.py（10 L0 断言：常量、3.9.18 拒绝且消息含双版本、3.10.0/3.10.99/3.14.7 放行、二元组边界、默认 current、AST 无 BitOr、守卫调用位置先于业务导入）。
   - TR-4.1/4.2/4.3 ✅ 守卫测试 10 passed；全量 **304 passed**（293 + 10 新断言 + AST 守护对新测试文件的参数化 +1）。
 - **Priority**: high
@@ -84,8 +84,8 @@
 
 - **Status**: `completed`
 - **Completion Evidence**（2026-10-12）：
-  - 新建 commands 包 7 文件：[__init__.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/src/okw/commands/__init__.py)（14 键 COMMAND_HANDLERS，键形 docstring 固化）+ distro_cmds(82 行)/verify_cmds/scaffold_cmds/ref_cmds/podman_cmds/image_cmds 六分组；14 个 handler 函数体逐字迁入。
-  - [podman.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/src/okw/podman.py) 与 [image.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/src/okw/image.py) 仅删除 handler 定义并追加 PEP 562 `__getattr__` 惰性别名（迁移期 cli.py 仍经别名调用，已验证可工作）。
+  - 新建 commands 包 7 文件：[__init__.py](../../../apps/dev-tools/openkylin-wsl-devkit/src/okw/commands/__init__.py)（14 键 COMMAND_HANDLERS，键形 docstring 固化）+ distro_cmds(82 行)/verify_cmds/scaffold_cmds/ref_cmds/podman_cmds/image_cmds 六分组；14 个 handler 函数体逐字迁入。
+  - [podman.py](../../../apps/dev-tools/openkylin-wsl-devkit/src/okw/podman.py) 与 [image.py](../../../apps/dev-tools/openkylin-wsl-devkit/src/okw/image.py) 仅删除 handler 定义并追加 PEP 562 `__getattr__` 惰性别名（迁移期 cli.py 仍经别名调用，已验证可工作）。
   - 新增 tests/test_command_registry.py（12 断言：键集恰好 14、值皆 callable、普通 dict、5 个别名 `is` 同一对象、负向 AttributeError 2 例、干净子进程零副作用探针）。
   - TR-5.1/5.2/5.3/5.4 ✅ 全量 **324 passed**（304 + 12 注册表断言 + AST 守护对 8 个新 .py 的参数化）；test_podman*/test_image* 零修改通过。
   - TR-5.5 评分 **5/5**：六分组行数 14–82 均远低于 250 行预算；grep 证实领域模块对 commands 的引用仅存在于 `__getattr__` 惰性函数内（image.py:509、podman.py:1101），无顶层反向依赖。
@@ -108,7 +108,7 @@
 
 - **Status**: `completed`
 - **Completion Evidence**（2026-07-02）：
-  - 新建 [cli/parser.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/src/okw/cli/parser.py)（build_parser 纯装配，default 仍引用 distro.DEFAULT_IMPORT_VERSION 与 image.DEFAULT_TAG/DEFAULT_BASE_IMAGE/DEFAULT_IMAGE）、[cli/main.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/src/okw/cli/main.py)（解析→查表→OkwError 单点收口）、[cli/__init__.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/src/okw/cli/__init__.py)（重导出 main/build_parser）；旧 403 行 cli.py 已删除；__main__.py 零改动。
+  - 新建 [cli/parser.py](../../../apps/dev-tools/openkylin-wsl-devkit/src/okw/cli/parser.py)（build_parser 纯装配，default 仍引用 distro.DEFAULT_IMPORT_VERSION 与 image.DEFAULT_TAG/DEFAULT_BASE_IMAGE/DEFAULT_IMAGE）、[cli/main.py](../../../apps/dev-tools/openkylin-wsl-devkit/src/okw/cli/main.py)（解析→查表→OkwError 单点收口）、[cli/__init__.py](../../../apps/dev-tools/openkylin-wsl-devkit/src/okw/cli/__init__.py)（重导出 main/build_parser）；旧 403 行 cli.py 已删除；__main__.py 零改动。
   - 4 处私有 hack 由装配期闭包取代：`p_podman.set_defaults(_group_help=p_podman.print_help)` 与 image 同款；main 仅判 `podman_cmd/image_cmd is None` 后调用 `args._group_help()` 返回 2。
   - 收口统一：distro_cmds 的 list/status/import 与 verify_cmds、scaffold_cmds 内 WslError/ScaffoldError 自捕获全部移除，改由 main 单点 `except OkwError`（stderr「错误：…」+ return 1）；富文本路径（排障三问、exec stderr 透传、未知类型 return 2）原样保留。
   - 新增 tests/test_no_private_argparse_api.py（全包 token 门禁，带点号形态避免误伤公有 add_subparsers）、tests/test_cli_architecture.py（11 断言：叶子键集交叉校验、两子组空命令回打、WslError/ScaffoldError 收口、ValueError 不被吞、AST 禁裸 except/仅 OkwError、parser 无 IO/argv 耦合、main 无装配调用、双文件行数预算）、tests/test_command_handlers.py（9 断言补 handler 分支：空列表/未找到/导出成败/exit code 透传/-- 剥离/stderr 回显/dput 写文件/未知类型）。

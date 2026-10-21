@@ -33,9 +33,9 @@ archive_history:
 
 ## 来源
 
-- 源文件：[temp-knowledge-archive.md](file:///d:/spaces/chaos/.agents/context/temp-knowledge-archive.md)
-- 执行准备文档：[p0-archive-baseline-plan.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/p0-archive-baseline-plan.md)
-- 上游优先级分析：[workspace-archive-priority-analysis.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/workspace-archive-priority-analysis.md)
+- 源文件：`temp-knowledge-archive.md`
+- 执行准备文档：`p0-archive-baseline-plan.md`
+- 上游优先级分析：`workspace-archive-priority-analysis.md`
 
 ## 归档目标
 

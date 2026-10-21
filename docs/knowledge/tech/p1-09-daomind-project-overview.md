@@ -33,9 +33,9 @@ archive_history:
 
 ## 来源
 
-- 源文件：[DaoMind/README.md](file:///d:/spaces/chaos/daoApps/DaoMind/README.md)
-- 部署说明：[DEPLOYMENT-GUIDE.md](file:///d:/spaces/chaos/daoApps/DaoMind/DEPLOYMENT-GUIDE.md)（如提炼部署要点可另行归档）
-- 上游分析：[workspace-archive-priority-analysis.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/workspace-archive-priority-analysis.md)
+- 源文件：`DaoMind/README.md`
+- 部署说明：`DEPLOYMENT-GUIDE.md`（如提炼部署要点可另行归档）
+- 上游分析：`workspace-archive-priority-analysis.md`
 
 ## 归档目标
 

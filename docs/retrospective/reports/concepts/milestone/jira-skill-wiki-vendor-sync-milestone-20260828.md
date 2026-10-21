@@ -235,9 +235,9 @@ stale_after: "2027-08-28"
 
 | Commit | 时间 | 类型 | 文件数 | 增/删行 |
 |--------|------|------|--------|---------|
-| [209d5bfc](file:///d:/AI/.git) | 16:17:34 | docs(knowledge) | 27 | +2519/-133 |
-| [edda3939](file:///d:/AI/.git) | 16:29:56 | chore(vendor) | 5 | +11 |
-| [189e5f43](file:///d:/AI/.git) | 17:09:30 | docs(knowledge) | 21 | +501/-130 |
-| [42b6c8e6](file:///d:/AI/.git) | 2026-08-29 | feat(scripts) | 2 | +863 |
-| [1ed76273](file:///d:/AI/.git) | 2026-08-29 | docs(skill) | 4 | +117/-13 |
+| `209d5bfc` | 16:17:34 | docs(knowledge) | 27 | +2519/-133 |
+| `edda3939` | 16:29:56 | chore(vendor) | 5 | +11 |
+| `189e5f43` | 17:09:30 | docs(knowledge) | 21 | +501/-130 |
+| `42b6c8e6` | 2026-08-29 | feat(scripts) | 2 | +863 |
+| `1ed76273` | 2026-08-29 | docs(skill) | 4 | +117/-13 |
 | （本提交） | 2026-08-29 | docs(retrospective) | 2 | 行动项 A-1/A-2 闭环回写（A-3 标注已兑现、A-4 保持待执行） |

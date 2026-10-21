@@ -186,6 +186,6 @@ Error: Package name too similar to existing package
 ---
 
 **来源参考**：
-- 发布总结：[RELEASE-SUMMARY-2.0.0.md](file:///d:/spaces/chaos/daoApps/DaoMind/.trae/RELEASE-SUMMARY-2.0.0.md)
-- npm 发布指南：[publish-to-npm.md](file:///d:/spaces/chaos/daoApps/DaoMind/.trae/publish-to-npm.md)
-- GitHub Release 指南：[create-github-release.md](file:///d:/spaces/chaos/daoApps/DaoMind/.trae/create-github-release.md)
+- 发布总结：`RELEASE-SUMMARY-2.0.0.md`
+- npm 发布指南：`publish-to-npm.md`
+- GitHub Release 指南：`create-github-release.md`

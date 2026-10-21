@@ -31,9 +31,9 @@
 | 编号 | 发现 | 处置 |
 |---|---|---|
 | P2-1 | **单点收口带来的一处缺陷路径改善（唯一观测到的行为差异）**：`wsl.exe` 缺失时 `okw export`/`okw unregister --yes` 旧版为未捕获 WslError 的 traceback 外泄，新版为 stderr 单行 `错误：…` + return 1；进程退出码两边均为 1。该变化是 AC-5 的明确要求，exec/podman/image 路径无此差异。 | **登记保留，不回退**；提交说明中显式标注此单点。 |
-| P2-2 | argparse `set_defaults` 会把 `_group_help` 传播到叶子命令 Namespace；当前 main 先判子命令、handler 不读该属性，安全，但未来可能误用。 | **已采纳**：[parser.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/src/okw/cli/parser.py) 两处 set_defaults 上方补注释，声明叶子会继承且 handler 禁用。 |
+| P2-2 | argparse `set_defaults` 会把 `_group_help` 传播到叶子命令 Namespace；当前 main 先判子命令、handler 不读该属性，安全，但未来可能误用。 | **已采纳**：[parser.py](../../../apps/dev-tools/openkylin-wsl-devkit/src/okw/cli/parser.py) 两处 set_defaults 上方补注释，声明叶子会继承且 handler 禁用。 |
 | P2-3 | 包化后 `python -m okw.cli` 不可执行（旧单文件底部有 `__main__` 守卫）；README/FR-8 从未承诺该形态，承诺的 `python -m okw` 与 console script 均正常。 | **登记不改**：属未记载的内部形态；如未来有需求再补 `cli/__main__.py`。 |
-| P2-4 | `main.py` 的 `COMMAND_HANDLERS[key]` 在 try 外，理论上可能 KeyError；实际键有效性由 argparse choices 解析期保证，不可达。 | **已采纳**：[main.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/src/okw/cli/main.py) 查表前补注释，固化「KeyError 不可达」的前提与交叉测试锁定。 |
+| P2-4 | `main.py` 的 `COMMAND_HANDLERS[key]` 在 try 外，理论上可能 KeyError；实际键有效性由 argparse choices 解析期保证，不可达。 | **已采纳**：[main.py](../../../apps/dev-tools/openkylin-wsl-devkit/src/okw/cli/main.py) 查表前补注释，固化「KeyError 不可达」的前提与交叉测试锁定。 |
 | 附 | tasks.md Task 5 证据中 distro_cmds 行数「82 行」为笔误，Task 7 实测 85 行，数字不影响任何 AC。 | 已知悉，以 TR-7.4 的 85 行为准。 |
 
 P2-2/P2-4 采纳后已重跑全量：**349 passed / 97%**，行为零变化（仅注释）。
@@ -61,7 +61,7 @@ P2-2/P2-4 采纳后已重跑全量：**349 passed / 97%**，行为零变化（�
 审查 PASS 并完成两次原子提交（`9e40dc21b` docs、`03aa3457c` refactor）后，按用户决策继续处理 P2 项与内部债务，新增两次本地提交（未推送）：
 
 1. **P2 兼容层清理（提交 `e86c6411b`）**：全包走查证实五个迁移期别名（`podman.cmd_preflight/cmd_install/cmd_verify`、`image.cmd_build/cmd_verify`）已无真实消费者——旧测试均经 `cli.main` 走注册表，别名仅被 Task 5 专为兼容期写的断言引用。删除两领域模块的 PEP 562 `__getattr__` 与迁移注释（−90/+7），注册表测试删除 8 条别名断言（保留键集/可调用性/零副作用探针），过时注释同步更正；341 项测试全绿，CLI 表面零变化。注册表自此成为 handler 的唯一分发路径。
-2. **P2-3 关闭**：新增 [cli/\_\_main\_\_.py](file:///d:/AI/apps/dev-tools/openkylin-wsl-devkit/src/okw/cli/__main__.py)，`python -m okw.cli` 与 `python -m okw`、console script 三形态等价（真实冒烟 `okw 0.1.0`）。
+2. **P2-3 关闭**：新增 [cli/\_\_main\_\_.py](../../../apps/dev-tools/openkylin-wsl-devkit/src/okw/cli/__main__.py)，`python -m okw.cli` 与 `python -m okw`、console script 三形态等价（真实冒烟 `okw 0.1.0`）。
 3. **类型注解**：14 个 handler 统一签名 `(args: argparse.Namespace) -> int`，注册表新增 `Handler = Callable[[argparse.Namespace], int]` 别名并标注 `dict[str, Handler]`；全部 3.10 兼容（无 PEP 604/PEP 563），AST 守护参数化自动覆盖。
 4. **入口测试**：新增 test_entry_points.py（4 用例，runpy 覆盖两个 __main__ 的 --version/无参数路径），`__main__.py` 与 `cli/__main__.py` 覆盖率均达 100%；全量 **347 passed / 97%**。
 5. **P2-1** 维持登记保留（故障路径改善，退出码不变）；**P2-2/P2-4** 注释已于审查当日采纳。领域层故障防御分支（podman/image/distro/verify 共 33 miss 行）经评估补测成本与回归风险偏高且 AC-10 早已达标，明确不补。

@@ -353,11 +353,11 @@ Pydantic v2 数据模型：
 ---
 
 **来源参考**：
-- 项目目录：[src/reasonix/](file:///d:/spaces/chaos/hub/dao/src/reasonix/)
-- 入口点：[main.py](file:///d:/spaces/chaos/hub/dao/src/reasonix/main.py)
-- 组装器：[boot/assembler.py](file:///d:/spaces/chaos/hub/dao/src/reasonix/boot/assembler.py)
-- Agent 核心：[agent/agent.py](file:///d:/spaces/chaos/hub/dao/src/reasonix/agent/agent.py)
-- 权限系统：[permission/policy.py](file:///d:/spaces/chaos/hub/dao/src/reasonix/permission/policy.py)
-- 配置加载：[config/loader.py](file:///d:/spaces/chaos/hub/dao/src/reasonix/config/loader.py)
-- 配置模型：[config/models.py](file:///d:/spaces/chaos/hub/dao/src/reasonix/config/models.py)
-- 项目配置：[pyproject.toml](file:///d:/spaces/chaos/hub/dao/pyproject.toml)
+- 项目目录：`src/reasonix/`
+- 入口点：`main.py`
+- 组装器：`boot/assembler.py`
+- Agent 核心：`agent/agent.py`
+- 权限系统：`permission/policy.py`
+- 配置加载：`config/loader.py`
+- 配置模型：`config/models.py`
+- 项目配置：`pyproject.toml`

@@ -35,7 +35,7 @@ category: "spec"
 ## Background & Context
 - **PowerShell 5 现状**: Windows PowerShell 5.1 是 Windows 10 1607+、Windows 11、Windows Server 2016+ 的预装组件，企业存量环境中仍占主导地位；PowerShell 7+ 虽已发布多年，但企业环境迁移缓慢，5.1 将长期存在。
 - **AI 辅助编程现状**: 主流 AI 大模型（GPT-4/Claude/Gemini 等）的训练数据中 PowerShell 占比低，且 PowerShell 7+ 样本与 PowerShell 5 样本混杂，导致 AI 生成的代码经常使用 PowerShell 7 特有语法（如 `??` 运算符、`-PipelineVariable` 改进、`ForEach-Object -Parallel` 等）在 PowerShell 5 下直接报错。
-- **项目先例**: 知识库中已有 [establish-pwsh7-windows-standard](file:///d:/AI/.trae/specs/standards-tools/establish-pwsh7-windows-standard) 规划，但聚焦 PowerShell 7，本项目专注 PowerShell 5 的"地狱难度"特殊性。
+- **项目先例**: 知识库中已有 [establish-pwsh7-windows-standard](../../standards-tools/establish-pwsh7-windows-standard/spec.md) 规划，但聚焦 PowerShell 7，本项目专注 PowerShell 5 的"地狱难度"特殊性。
 - **方法论支撑**: 使用 seven-concepts-cmd 的知识沉淀+创新突破混合链路（R→F→I→V→E），通过第一性原理分析本质矛盾，以对抗审查验证方案有效性。
 - **内容敏感度**: 公开技术内容，标准工作流，产出物归档至 `docs/knowledge/learning/08-systems-infrastructure/ai-powershell5-hell-wiki/`。
 

@@ -18,7 +18,7 @@ status: "completed"
   - 提供一键初始化目录结构的脚本
 - **Acceptance Criteria Addressed**: [AC-1]
 - **Deliverables**:
-  - 脚本: [init-sync-dir.ps1](file:///d:/AI/.agents/scripts/git-baidu-sync/init-sync-dir.ps1), [init-sync-dir.sh](file:///d:/AI/.agents/scripts/git-baidu-sync/init-sync-dir.sh)
+  - 脚本: [init-sync-dir.ps1](../../../../.agents/scripts/git-baidu-sync/init-sync-dir.ps1), [init-sync-dir.sh](../../../../.agents/scripts/git-baidu-sync/init-sync-dir.sh)
   - 文档: [01-directory-structure.md](../../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/01-directory-structure.md)
 - **Test Requirements**:
   - `programmatic` TR-1.1: 初始化脚本在Windows PowerShell上可成功创建所有目录 ✓
@@ -37,7 +37,7 @@ status: "completed"
   - 提供git config设置命令脚本（区分Windows/macOS/Linux）
 - **Acceptance Criteria Addressed**: [AC-5]
 - **Deliverables**:
-  - 脚本: [setup-git-config.ps1](file:///d:/AI/.agents/scripts/git-baidu-sync/setup-git-config.ps1), [setup-git-config.sh](file:///d:/AI/.agents/scripts/git-baidu-sync/setup-git-config.sh)
+  - 脚本: [setup-git-config.ps1](../../../../.agents/scripts/git-baidu-sync/setup-git-config.ps1), [setup-git-config.sh](../../../../.agents/scripts/git-baidu-sync/setup-git-config.sh)
   - 文档: [02-cross-platform-config.md](../../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/02-cross-platform-config.md)
 - **Test Requirements**:
   - `programmatic` TR-2.1: 按规范配置后，在Windows创建的文本文件同步到Linux执行git status不显示所有文件被修改 ✓
@@ -55,7 +55,7 @@ status: "completed"
   - 包含路径适配说明（各设备上网盘同步目录路径不同时如何配置）
 - **Acceptance Criteria Addressed**: [AC-2, AC-3]
 - **Deliverables**:
-  - 脚本: [register-repo.ps1](file:///d:/AI/.agents/scripts/git-baidu-sync/register-repo.ps1), [register-repo.sh](file:///d:/AI/.agents/scripts/git-baidu-sync/register-repo.sh), [clone-repo.ps1](file:///d:/AI/.agents/scripts/git-baidu-sync/clone-repo.ps1), [clone-repo.sh](file:///d:/AI/.agents/scripts/git-baidu-sync/clone-repo.sh)
+  - 脚本: [register-repo.ps1](../../../../.agents/scripts/git-baidu-sync/register-repo.ps1), [register-repo.sh](../../../../.agents/scripts/git-baidu-sync/register-repo.sh), [clone-repo.ps1](../../../../.agents/scripts/git-baidu-sync/clone-repo.ps1), [clone-repo.sh](../../../../.agents/scripts/git-baidu-sync/clone-repo.sh)
   - 文档: [03-repo-init-workflow.md](../../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/03-repo-init-workflow.md)
 - **Test Requirements**:
   - `programmatic` TR-3.1: 在设备A按流程初始化后，网盘目录中裸仓库git config core.bare返回true ✓
@@ -75,7 +75,7 @@ status: "completed"
   - 封装为可调用的shell函数（bash）和PowerShell函数
 - **Acceptance Criteria Addressed**: [AC-4]
 - **Deliverables**:
-  - 脚本: [lock-utils.ps1](file:///d:/AI/.agents/scripts/git-baidu-sync/lock-utils.ps1), [lock-utils.sh](file:///d:/AI/.agents/scripts/git-baidu-sync/lock-utils.sh), [force-unlock.ps1](file:///d:/AI/.agents/scripts/git-baidu-sync/force-unlock.ps1), [force-unlock.sh](file:///d:/AI/.agents/scripts/git-baidu-sync/force-unlock.sh)
+  - 脚本: [lock-utils.ps1](../../../../.agents/scripts/git-baidu-sync/lock-utils.ps1), [lock-utils.sh](../../../../.agents/scripts/git-baidu-sync/lock-utils.sh), [force-unlock.ps1](../../../../.agents/scripts/git-baidu-sync/force-unlock.ps1), [force-unlock.sh](../../../../.agents/scripts/git-baidu-sync/force-unlock.sh)
   - 文档: [04-locking-mechanism.md](../../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/04-locking-mechanism.md)
 - **Test Requirements**:
   - `programmatic` TR-4.1: 一个进程已获取锁时，另一个进程获取锁立即失败并返回明确错误码 ✓
@@ -95,7 +95,7 @@ status: "completed"
   - 提供bash版本（macOS/Linux）和PowerShell版本（Windows）
 - **Acceptance Criteria Addressed**: [AC-3, AC-4]
 - **Deliverables**:
-  - 脚本: [git-sync-push.ps1](file:///d:/AI/.agents/scripts/git-baidu-sync/git-sync-push.ps1), [git-sync-push.sh](file:///d:/AI/.agents/scripts/git-baidu-sync/git-sync-push.sh), [git-sync-pull.ps1](file:///d:/AI/.agents/scripts/git-baidu-sync/git-sync-pull.ps1), [git-sync-pull.sh](file:///d:/AI/.agents/scripts/git-baidu-sync/git-sync-pull.sh), [git-sync.ps1](file:///d:/AI/.agents/scripts/git-baidu-sync/git-sync.ps1), [git-sync.sh](file:///d:/AI/.agents/scripts/git-baidu-sync/git-sync.sh)
+  - 脚本: [git-sync-push.ps1](../../../../.agents/scripts/git-baidu-sync/git-sync-push.ps1), [git-sync-push.sh](../../../../.agents/scripts/git-baidu-sync/git-sync-push.sh), [git-sync-pull.ps1](../../../../.agents/scripts/git-baidu-sync/git-sync-pull.ps1), [git-sync-pull.sh](../../../../.agents/scripts/git-baidu-sync/git-sync-pull.sh), [git-sync.ps1](../../../../.agents/scripts/git-baidu-sync/git-sync.ps1), [git-sync.sh](../../../../.agents/scripts/git-baidu-sync/git-sync.sh)
   - 文档: [05-daily-sync-workflow.md](../../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/05-daily-sync-workflow.md)
 - **Test Requirements**:
   - `programmatic` TR-5.1: 设备A执行git-sync-push后，设备B执行git-sync-pull能获取新commit，两边HEAD一致 ✓
@@ -115,7 +115,7 @@ status: "completed"
   - 提供安全清理建议（先报告、备份、再清理；不能盲目删除）
 - **Acceptance Criteria Addressed**: [AC-7]
 - **Deliverables**:
-  - 脚本: [check-conflicts.ps1](file:///d:/AI/.agents/scripts/git-baidu-sync/check-conflicts.ps1), [check-conflicts.sh](file:///d:/AI/.agents/scripts/git-baidu-sync/check-conflicts.sh)
+  - 脚本: [check-conflicts.ps1](../../../../.agents/scripts/git-baidu-sync/check-conflicts.ps1), [check-conflicts.sh](../../../../.agents/scripts/git-baidu-sync/check-conflicts.sh)
   - 文档: [06-conflict-detection.md](../../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/06-conflict-detection.md)
 - **Test Requirements**:
   - `programmatic` TR-6.1: 在objects目录下创建名为`abc123 (1).tmp`的文件，扫描脚本能检测到 ✓
@@ -134,7 +134,7 @@ status: "completed"
   - 输出健康检查报告（通过/警告/错误三级状态）
 - **Acceptance Criteria Addressed**: [AC-6]
 - **Deliverables**:
-  - 脚本: [git-doctor.ps1](file:///d:/AI/.agents/scripts/git-baidu-sync/git-doctor.ps1), [git-doctor.sh](file:///d:/AI/.agents/scripts/git-baidu-sync/git-doctor.sh)
+  - 脚本: [git-doctor.ps1](../../../../.agents/scripts/git-baidu-sync/git-doctor.ps1), [git-doctor.sh](../../../../.agents/scripts/git-baidu-sync/git-doctor.sh)
   - 文档: [07-health-check.md](../../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/07-health-check.md)
 - **Test Requirements**:
   - `programmatic` TR-7.1: 健康的裸仓库执行检查返回"通过"状态，退出码0 ✓
@@ -172,7 +172,7 @@ status: "completed"
   - 提供紧急恢复checklist
 - **Acceptance Criteria Addressed**: [AC-6]
 - **Deliverables**:
-  - 脚本: [git-backup.ps1](file:///d:/AI/.agents/scripts/git-baidu-sync/git-backup.ps1), [git-backup.sh](file:///d:/AI/.agents/scripts/git-baidu-sync/git-backup.sh)
+  - 脚本: [git-backup.ps1](../../../../.agents/scripts/git-baidu-sync/git-backup.ps1), [git-backup.sh](../../../../.agents/scripts/git-baidu-sync/git-backup.sh)
   - 文档: [09-backup-recovery.md](../../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/09-backup-recovery.md)
 - **Test Requirements**:
   - `programmatic` TR-9.1: 备份脚本生成的bundle文件可通过git bundle verify验证通过 ✓
@@ -196,7 +196,7 @@ status: "completed"
   - 提供一键诊断脚本（自动收集信息：git status、锁文件状态、冲突文件列表、fsck结果、网盘客户端状态提示）
 - **Acceptance Criteria Addressed**: [AC-8]
 - **Deliverables**:
-  - 脚本: [git-diag.ps1](file:///d:/AI/.agents/scripts/git-baidu-sync/git-diag.ps1), [git-diag.sh](file:///d:/AI/.agents/scripts/git-baidu-sync/git-diag.sh)
+  - 脚本: [git-diag.ps1](../../../../.agents/scripts/git-baidu-sync/git-diag.ps1), [git-diag.sh](../../../../.agents/scripts/git-baidu-sync/git-diag.sh)
   - 文档: [10-troubleshooting.md](../../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/10-troubleshooting.md)
 - **Test Requirements**:
   - `human-judgement` TR-10.1: 覆盖至少10种常见问题场景 ✓
@@ -217,7 +217,7 @@ status: "completed"
 - **Acceptance Criteria Addressed**: [AC-1, AC-2, AC-3, AC-8]
 - **Deliverables**:
   - 文档: [README.md](../../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/README.md)
-  - 脚本README: [README.md](file:///d:/AI/.agents/scripts/git-baidu-sync/README.md)
+  - 脚本README: [README.md](../../../../.agents/scripts/git-baidu-sync/README.md)
 - **Test Requirements**:
   - `human-judgement` TR-11.1: 一个Git使用经验中等的用户按照Quick Start可在30分钟内完成首次配置 ✓
   - `human-judgement` TR-11.2: 主文档结构清晰，可快速跳转到需要的章节 ✓

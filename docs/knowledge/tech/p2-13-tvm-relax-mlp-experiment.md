@@ -33,8 +33,8 @@ archive_history:
 
 ## 来源
 
-- 源文件：[IO/test.ipynb](file:///d:/spaces/chaos/IO/test.ipynb)
-- 上游分析：[workspace-archive-priority-analysis.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/workspace-archive-priority-analysis.md)
+- 源文件：`IO/test.ipynb`
+- 上游分析：`workspace-archive-priority-analysis.md`
 
 ## 归档目标
 

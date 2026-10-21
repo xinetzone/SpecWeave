@@ -648,7 +648,7 @@ def power_on_with_smart_retry(device_id: str, controller,
 ---
 
 **文档生成时间**：2026-08-03  
-**依据**：里程碑复盘[RETROSPECTIVE.md](file:///d:/AI/apps/camera-power-controller/RETROSPECTIVE.md)中的核心洞察与萃取模式  
+**依据**：里程碑复盘[RETROSPECTIVE.md](RETROSPECTIVE.md)中的核心洞察与萃取模式  
 **代码示例语言**：Python 3（核心逻辑模式可迁移到任意语言）
 
 ---
