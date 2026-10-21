@@ -8,7 +8,7 @@ title: ".agents/skills/ 目录索引"
 ---
 # .agents/skills/ 目录索引
 
-本目录存放 SpecWeave 项目中所有 Skill 定义。Skill 分为六类：
+本目录存放 SpecWeave 项目中所有 Skill 定义。Skill 分为七类：
 
 - **完整Skill**：包含完整的自动化操作能力（脚本、MCP工具调用等），可独立完成任务
 - **工作流门面**：对 `docs/retrospective/patterns/` 方法论模式的触发封装（L1 门面 + L2 模式文档），提供触发词、阶段流程、质量门与安全清单
@@ -16,6 +16,7 @@ title: ".agents/skills/ 目录索引"
 - **脚本命令门面**：对 `.agents/scripts/` 高频自动化脚本的封装，提供参数说明、dry-run安全机制和错误处理
 - **内置镜像 Skill**：Trae IDE 内置技能的镜像入库（原貌保留，frontmatter source 溯源），用于项目自托管与统一发现
 - **设计库镜像 Skill**：Trae IDE 内置设计系统库的完整归档（token CSS/组件 JSON/预览 HTML/UI Kit 全量自包含，frontmatter source 溯源），不依赖外部源目录
+- **TeleAgent 平台镜像 Skill**：TeleAgent（星辰超级智能体）平台技能镜像入库（原貌保留，frontmatter source 溯源），用于工作区自托管与统一发现
 
 ## Skill 列表
 
@@ -135,6 +136,14 @@ Trae IDE 内置设计系统库完整归档（2026-09-03 导入），来源目录
 | vercel-design-library-design | Vercel | Vercel 设计系统：色彩/字体/资产/UI kit（dashboard 原型） | [SKILL.md](vercel-design-library-design/SKILL.md) |
 | yuanli-design-system | Yuanli（源力） | 源力设计系统（Volcengine，PRD 驱动中文生成）：PRD→页面生成规则 + 完整 token/组件/UI kit | [SKILL.md](yuanli-design-system/SKILL.md) |
 | vibecamp-design | Vibecamp | Vibecamp 大胆编辑风 dashboard 产品：设计准则/色彩/字体/组件参考/UI kit | [SKILL.md](vibecamp-design/SKILL.md) |
+
+### TeleAgent 平台镜像 Skill（1个）
+
+TeleAgent（星辰超级智能体）平台技能镜像入库（2026-10-21 首次导入）。来源为 TeleAgent 用户级技能目录，SKILL.md frontmatter `source` 字段标注来源与归档日期；镜像保留技能包原貌，不随平台版本演进改写。
+
+| 技能名 | 来源家族 | 功能描述 | SKILL.md路径 |
+|--------|---------|---------|-------------|
+| ui-screenshot-review | TeleAgent 平台 | Web 页面/本地应用 UI 视觉验证工作流：多级降级截图（交互浏览 → headless Chromium → 静态渲染等价）+ 六维度结构化评审（1–5 分）+「打磨→复截图→复评审」迭代闭环 | [SKILL.md](ui-screenshot-review/SKILL.md) |
 
 ### 脚本命令门面（16个）
 
