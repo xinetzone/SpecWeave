@@ -8,8 +8,6 @@ verified: { by: "process:seven-concepts-v", at: "2026-08-24" }
 sources:
   - id: facts
     resource: /facts.md
-  - id: vendor
-    resource: file:///d:/spaces/SpecWeave/external/libs/tools/pyinvoke/invocations/invocations
 ---
 
 # invocations bundle 对抗性审查报告
