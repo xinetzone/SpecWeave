@@ -30,7 +30,7 @@ apps/
 ├── shared/                ← 跨应用共享资源
 ├── tests/                 ← 全局测试用例
 ├── docker-images/         ← 容器镜像类应用（7 个）
-├── ai-agents/             ← AI 应用类（3 个）
+├── ai-agents/             ← AI 应用类（7 个）
 ├── dev-tools/             ← 开发工具类（6 个）
 └── samples/               ← 示例/原型类（5 个）
 ```
@@ -91,6 +91,7 @@ apps/<group>/<app-name>/
 | [zhujian-wudao](ai-agents/zhujian-wudao/README.md) | 竹简悟道——道家哲学 AI 洞察项目 |
 | [ai-code-assistant](ai-agents/ai-code-assistant/README.md) | AI 代码助手 Web 应用 |
 | [eve-minimal-agent](ai-agents/eve-minimal-agent/README.md) | Vercel Eve 最小可运行 Agent 示例 |
+| [langgraph-commerce-poc](ai-agents/langgraph-commerce-poc/README.md) | LangGraph 商业化 PoC：StateGraph 双节点 + MemorySaver 会话持久化 + DeepSeek 接入（含无 Key 演示模式） |
 
 #### dev-tools/ —— 开发者工具类
 
