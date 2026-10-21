@@ -1,0 +1,254 @@
+# 信源锚定
+commit: 93a26eca3383d480148c5cfd8da7995ee3352187
+tag: v0.9.2
+
+# 规模计数
+cmd: go_all=76 go_non_test=66 pkg_dirs=14
+internal: go_all=109 go_non_test=65 pkg_dirs=27
+client: go_all=37 go_non_test=25 pkg_dirs=4
+tests: go_all=34 go_non_test=0 pkg_dirs=0
+skills: go_all=0 go_non_test=0 pkg_dirs=0
+npm: go_all=0 go_non_test=0 pkg_dirs=0
+scripts: go_all=0 go_non_test=0 pkg_dirs=0
+repo_total: go_all=257 go_non_test=157
+
+# cmd 包目录 (14)
+  cmd: 10
+  cmd/api: 2
+  cmd/auth: 6
+  cmd/avatar: 2
+  cmd/config: 4
+  cmd/credits: 2
+  cmd/doc: 4
+  cmd/jobs: 4
+  cmd/kb: 4
+  cmd/profile: 6
+  cmd/subtitle: 3
+  cmd/theme: 2
+  cmd/video: 15
+  cmd/voice: 2
+
+# cobra Use 取值去重数 = 49
+  add  (x1)
+  api  (x1)
+  auth  (x1)
+  avatar  (x1)
+  avatar-retry  (x1)
+  balance  (x1)
+  call  (x1)
+  completion  (x1)
+  config  (x1)
+  create  (x1)
+  credits  (x1)
+  delete  (x1)
+  doc  (x1)
+  doctor  (x1)
+  download  (x1)
+  edit  (x1)
+  export  (x1)
+  export-status  (x1)
+  fonts  (x1)
+  get  (x3)
+  images  (x1)
+  init  (x1)
+  jobs  (x1)
+  kb  (x1)
+  list  (x8)
+  login  (x1)
+  logout  (x1)
+  pause  (x1)
+  presets  (x1)
+  profile  (x1)
+  prune  (x2)
+  remove  (x1)
+  resume  (x1)
+  script  (x1)
+  set  (x2)
+  show  (x1)
+  status  (x2)
+  subtitle  (x1)
+  theme  (x1)
+  update  (x1)
+  upload  (x1)
+  url  (x1)
+  use  (x1)
+  version  (x1)
+  vibeknow  (x1)
+  video  (x1)
+  voice  (x1)
+  wait  (x1)
+  whoami  (x1)
+
+# root.go AddCommand 组数 = 15
+# root.go 顶层命令变量（去重）= 2
+  create
+  init
+
+# cmd/ 旗标注册调用总数 = 92（含重复名，不同文件各自统计）
+  cmd/create.go: 20
+  cmd/video/set.go: 12
+  cmd/profile/add.go: 8
+  cmd/video/edit.go: 6
+  cmd/api/call.go: 4
+  cmd/auth/login.go: 4
+  cmd/kb/list.go: 4
+  cmd/video/export.go: 4
+  cmd/jobs/prune.go: 3
+  cmd/root.go: 3
+  cmd/video/download.go: 3
+  cmd/jobs/list.go: 2
+  cmd/kb/prune.go: 2
+  cmd/video/avatar_retry.go: 2
+  cmd/video/list.go: 2
+
+# cmd/ 旗标名去重数 = 4
+  device-code, headless, no-wait, with-token
+
+# cmd/exitcode.go 退出码常量 = 0
+
+# skills: 目录数 = 3, SKILL.md 数 = 3
+  vibeknow-core
+  vibeknow-create
+  vibeknow-doc
+
+# tests/: go 文件数 = 34, 去重文件名数 = 34
+  agent_channel_test.go
+  agent_contract_test.go
+  auth_flow_test.go
+  auth_guidance_test.go
+  auth_key_rotation_test.go
+  auth_logout_revoke_test.go
+  auth_resume_test.go
+  avatar_retry_test.go
+  catalog_cmd_test.go
+  cli_smoke_test.go
+  create_async_test.go
+  create_credits_test.go
+  create_engine_test.go
+  create_flow_test.go
+  create_mode_test.go
+  create_ndjson_test.go
+  create_preset_test.go
+  create_text_test.go
+  create_v3_params_test.go
+  export_exit_test.go
+  jobs_ledger_test.go
+  kb_prune_test.go
+  login_flow_test.go
+  output_contract_test.go
+  pipeline_control_test.go
+  status_preview_test.go
+  stream_lifecycle_test.go
+  video_edit_test.go
+  video_flow_test.go
+  video_script_test.go
+  video_set_subtitle_test.go
+  video_set_test.go
+  video_wait_test.go
+  wait_budget_test.go
+
+# internal 包目录数 = 27
+  internal/charcheck
+  internal/clerr
+  internal/cliauth
+  internal/cmdutil
+  internal/config
+  internal/credential
+  internal/durfmt
+  internal/endpoints
+  internal/errs
+  internal/events
+  internal/httpclient
+  internal/i18n
+  internal/jobs
+  internal/keychain
+  internal/lockfile
+  internal/output
+  internal/pending
+  internal/preset
+  internal/preview
+  internal/redact
+  internal/sse
+  internal/stage
+  internal/tui
+  internal/update
+  internal/validate
+  internal/video/exportpoll
+  internal/video/snapshot
+
+# client 包目录数 = 4
+  client/account
+  client/figlens
+  client/vectoria
+  client/vibeknow
+
+# 关键符号出现位置
+  cmdutil.Gate: 5 处
+      AGENTS.md:105:`cmdutil.Gate` resolves a paid action in this order:
+      cmd/create.go:760:		ok, err := cmdutil.Gate(cmd, cmdutil.GateOptions{
+      cmd/video/edit.go:141:	ok, err = cmdutil.Gate(cmd, cmdutil.GateOptions{
+      cmd/video/export.go:63:	// decision back rather than making it — see cmdutil.Gate.
+  ActionID: 4 处
+      internal/cmdutil/gate.go:174:		ActionID: token,
+      internal/pending/pending.go:63:	ActionID string         `json:"action_id"`
+      internal/pending/pending.go:82:		"action_id":      a.ActionID,
+      internal/pending/pending_test.go:158:		ActionID: "act_x", Type: "export_confirmation", Blocking: true,
+  action.key: 3 处
+      AGENTS.md:117:payload, keyed by a per-installation secret in `<config-dir>/action.key`.
+      internal/pending/pending.go:162:	return filepath.Join(d, "action.key"), nil
+      internal/pending/pending_test.go:129:	p := filepath.Join(dir, "action.key")
+  jobs.jsonl: 5 处
+      AGENTS.md:172:records that pair in `<config-dir>/jobs.jsonl` so a caller that lost it
+      CHANGELOG.md:1025:  `vk create` now records the pair in `<config-dir>/jobs.jsonl`, and
+      internal/jobs/jobs.go:82:	return filepath.Join(d, "jobs.jsonl"), nil
+      internal/jobs/jobs_test.go:115:	p := filepath.Join(dir, "jobs.jsonl")
+  VIBEKNOW_ASSUME_YES: 17 处
+      AGENTS.md:46:  render MP4. `--yes` skips the confirmation prompt; `VIBEKNOW_ASSUME_YES=1`
+      AGENTS.md:107:1. `--yes` / `VIBEKNOW_ASSUME_YES` — the caller states it has authority.
+      AGENTS.md:471:  DELETE. `--yes` (or `VIBEKNOW_ASSUME_YES=1`) actually deletes.
+      CHANGELOG.md:929:`--yes` and `VIBEKNOW_ASSUME_YES=1` still bypass the gate and are the right
+  VIBEKNOW_OUTPUT: 18 处
+      AGENTS.md:238:- `VIBEKNOW_OUTPUT` sets the default for callers that do not want to
+      AGENTS.md:240:  `VIBEKNOW_OUTPUT` > `text`.
+      CHANGELOG.md:1090:  `VIBEKNOW_OUTPUT` is the middle path — it sets the default for
+      cmd/root.go:52:// resolveOutputFlag folds VIBEKNOW_OUTPUT into --output and rejects
+  wait_budget_expired: 17 处
+      AGENTS.md:38:  **6** with `reason: "wait_budget_expired"`. For callers whose own timeout
+      AGENTS.md:60:`wait_budget_expired` is a `--for` budget running out on a healthy run, and
+      CHANGELOG.md:298:which is the right next move — and `reason: "wait_budget_expired"` separates
+      README.md:212:# Exit 6 with reason "wait_budget_expired" means keep going; exit 0 means done.
+  resend_safe: 24 处
+      AGENTS.md:62:event (read `resend_safe`) or a paused task (`vk video resume`). None of the
+      AGENTS.md:88:| `delivery` | `resend_safe` | Basis |
+      AGENTS.md:94:`indeterminate` deliberately reports `resend_safe: false`. Waiting when a
+      CHANGELOG.md:946:`not_submitted` / `indeterminate`, with a `resend_safe` boolean, the
+  not_submitted: 7 处
+      AGENTS.md:91:| `not_submitted` | true | the backend returns not_found — the work row is created at init, so its absence means nothing was billed |
+      CHANGELOG.md:946:`not_submitted` / `indeterminate`, with a `resend_safe` boolean, the
+      internal/cmdutil/unknown.go:24:	DeliveryNotSubmitted = "not_submitted"
+      skills/vibeknow-create/SKILL.md:336:| `not_submitted` | `true` | The backend has no record; nothing was billed | Starting over is free |
+  indeterminate: 9 处
+      AGENTS.md:92:| `indeterminate` | false | the probe itself failed; unknown is not permission |
+      AGENTS.md:94:`indeterminate` deliberately reports `resend_safe: false`. Waiting when a
+      CHANGELOG.md:946:`not_submitted` / `indeterminate`, with a `resend_safe` boolean, the
+      CHANGELOG.md:947:backend's own status, and a `next_actions` command. `indeterminate`
+  export_confirmation: 20 处
+      AGENTS.md:141:| `export_confirmation` | `vk video export`, `vk create --export` | `session_id`, `credits`, `operation` |
+      internal/cmdutil/gate.go:41:const ExportActionType = "export_confirmation"
+      internal/cmdutil/gate.go:94:	// Type is the stable boundary token, e.g. "export_confirmation".
+      internal/pending/pending_test.go:20:	a, err := Token("export_confirmation", p)
+  scene_edit_confirmation: 6 处
+      AGENTS.md:142:| `scene_edit_confirmation` | `vk video edit` | `session_id`, `scene_index`, `script_only`, `from`, `to` |
+      AGENTS.md:144:`scene_edit_confirmation` carries no credit count, and that is the honest
+      CHANGELOG.md:406:second boundary, `scene_edit_confirmation`. Its payload carries `from` as
+      internal/cmdutil/gate.go:60:const SceneEditActionType = "scene_edit_confirmation"
+  resource_ready: 23 处
+      AGENTS.md:277:the run's artifacts there and announces each as a `resource_ready` event on
+      AGENTS.md:281:vk_event={"type":"resource_ready","asset_kind":"cover_image",
+      CHANGELOG.md:887:the run's artifacts there and announces each as a `resource_ready` event
+      internal/i18n/strings.go:112:		"create.flag.preview_dir":            "write cover/MP4 artifacts here and announce each as a resource_ready event",
+  SubtitleStylePatch: 10 处
+      AGENTS.md:439:**A preset is a patch, and its zeroes are meaningful.** `SubtitleStylePatch`
+      client/figlens/subtitle.go:59:	Patch SubtitleStylePatch `json:"patch"`
+      client/figlens/subtitle.go:62:// SubtitleStylePatch is a partial style: the fields a preset sets, and only
+      client/figlens/subtitle.go:71:type SubtitleStylePatch struct {

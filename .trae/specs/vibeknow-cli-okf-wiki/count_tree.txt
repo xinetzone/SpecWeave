@@ -1,0 +1,68 @@
+# rootCmd.AddCommand 顶层目标 = 20
+  completionCmd
+  doctorCmd
+  apicmd
+  Cmd
+  authcmd
+  avatarcmd
+  configcmd
+  createCmd
+  creditscmd
+  doccmd
+  jobscmd
+  kbcmd
+  profilecmd
+  subtitlecmd
+  themecmd
+  videocmd
+  voicecmd
+  initCmd
+  updateCmd
+  versionCmd
+
+# vk api 子命令 = 1: callCmd
+# vk auth 子命令 = 4: whoamiCmd, statusCmd, logoutCmd, loginCmd
+# vk avatar 子命令 = 1: listCmd
+# vk config 子命令 = 3: getCmd, setCmd, listCmd
+# vk credits 子命令 = 1: balanceCmd
+# vk doc 子命令 = 3: uploadCmd, getCmd, imagesCmd
+# vk jobs 子命令 = 3: listCmd, getCmd, pruneCmd
+# vk kb 子命令 = 3: deleteCmd, listCmd, pruneCmd
+# vk profile 子命令 = 5: addCmd, listCmd, useCmd, removeCmd, showCmd
+# vk subtitle 子命令 = 2: fontsCmd, presetsCmd
+# vk theme 子命令 = 1: listCmd
+# vk video 子命令 = 13: statusCmd, waitCmd, downloadCmd, listCmd, urlCmd, exportCmd, exportStatusCmd, scriptCmd, editCmd, setCmd, pauseCmd, resumeCmd, avatarRetryCmd
+# vk voice 子命令 = 1: listCmd
+
+# vk create 子命令 AddCommand 调用 = 0 -> []
+
+# 分组命令数 = 13
+# 顶层非分组命令数 = 20: completionCmd, doctorCmd, apicmd, Cmd, authcmd, avatarcmd, configcmd, createCmd, creditscmd, doccmd, jobscmd, kbcmd, profilecmd, subtitlecmd, themecmd, videocmd, voicecmd, initCmd, updateCmd, versionCmd
+# 叶子命令总数（分组子命令 + 顶层非分组）= 41 + 20 = 61
+# 命令节点总数（顶层 + 叶子）= 20 + 41 = 61
+
+# cmd/video 目录（叶子命令）
+  cmd/video/avatar_retry.go
+  cmd/video/download.go
+  cmd/video/edit.go
+  cmd/video/export.go
+  cmd/video/export_status.go
+  cmd/video/helpers.go
+  cmd/video/list.go
+  cmd/video/pause.go
+  cmd/video/progress.go
+  cmd/video/script.go
+  cmd/video/set.go
+  cmd/video/status.go
+  cmd/video/url.go
+  cmd/video/video.go
+  cmd/video/wait.go
+
+# i18n/i18n.go 词条数 = 0
+# i18n/strings.go 词条数 = 392
+
+# client/account: 端点路径字面量去重数 = 0
+# client/figlens: 端点路径字面量去重数 = 0
+# client/vectoria: 端点路径字面量去重数 = 0
+# client/vibeknow: 端点路径字面量去重数 = 0
+
