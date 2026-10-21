@@ -62,7 +62,7 @@ source: "公开信源（npm registry 页面 vibeknow-cli、GitHub 仓库 vibekno
 | 编号 | 事实 | 来源URL | 访问日期 |
 |---|---|---|---|
 | TEC-20 | 数字人以 `--avatar sys_<id>`（系统预设）或 `--avatar ua_<id>`（用户自训）指定，可配 `--avatar-position` 与 `--avatar-size`；README 注明数字人不可与 `--mode handdraw` 或 `--engine agent` 同用。 | https://github.com/vibeknow/cli | 2026-10-21 |
-| TEC-21 | 数字人场景失败导致 `video export` 被拒时，可执行 `vk video avatar-retry`（README 标注为免费）后重新导出。 | https://github.com/vibeknow/cli | 2026-10-21 |
+| TEC-21 | 数字人场景下 `video export` 被拒时可执行 `vk video avatar-retry`（README 标注为免费）后重新导出。 | https://github.com/vibeknow/cli | 2026-10-21 |
 | TEC-22 | 字幕可读性被定义为组合效果而非独立设置项：`vk subtitle presets` 列出设计团队出厂预设（白字·黑底 `rgba(8,8,12,0.68)` 底板无描边；白字·黑边 `Noto Sans SC 600` 3px 描边无底板），`vk subtitle fonts` 列出允许使用的字体族；单项参数仍可在预设之上叠加。 | https://github.com/vibeknow/cli | 2026-10-21 |
 | TEC-23 | 知识库清理命令为 `vk kb list --output json --size 5` 与 `vk kb prune --pattern 'vibeknow-cli-*'`；prune 默认为 dry-run，须追加 `--yes` 才实际删除。 | https://github.com/vibeknow/cli | 2026-10-21 |
 | TEC-24 | 单镜头改写能力为 `vk video edit --scene N --script`，仅重写指定场景脚本并重渲；`--script-only` 仅重做配音，README 标注其更省积分。 | https://www.npmjs.com/package/vibeknow-cli | 2026-10-21 |

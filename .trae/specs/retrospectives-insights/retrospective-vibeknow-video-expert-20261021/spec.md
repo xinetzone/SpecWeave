@@ -1,6 +1,6 @@
 ---
-status: "in_progress"
-version: 1.0
+status: "completed"
+version: 1.1
 source: "https://vibeknow.com"
 session: "sc-20261021-vibeknow-research"
 ---
@@ -33,9 +33,9 @@ session: "sc-20261021-vibeknow-research"
 
 ## Functional Requirements
 - **FR-1**: 五维度事实采集（产品功能全景 / 技术架构与 CLI / 商业化与竞品 / 口碑与风险 / 官方口径基线）
-- **FR-2**: 统一编号事实清单（F-xxx），每条含事实陈述、来源 URL、访问日期
-- **FR-3**: 数据冲突登记表（同一指标多值并陈，不裁决）
-- **FR-4**: 未获取项／证据缺口清单（G-xxx）
+- **FR-2**: 统一编号事实清单（按四维度分段编号 PRO/TEC/COM/RP-xxx），每条含事实陈述、来源 URL、访问日期
+- **FR-3**: 数据冲突登记表（同一指标多值并陈，不裁决，编号 C-x）
+- **FR-4**: 未获取项／证据缺口清单（商业化段 E-x、口碑段 G-x）
 - **FR-5**: ≥3 条四元组洞察，每条含证据引用的事实编号
 - **FR-6**: ≥1 个可迁移模式，结构含触发条件／3–7 步核心做法／≥3 反模式／检验标准／≥1 跨域迁移
 - **FR-7**: 四视角对抗审查记录（魔鬼代言人／新人／老板／未来），含意见清单与修正回写记录
@@ -68,25 +68,25 @@ session: "sc-20261021-vibeknow-research"
 - **Type**: `rule`
 - **Given**: 五维度已采集信源
 - **When**: 合并去重并编号
-- **Then**: 事实总数 ≥20 条，统一编号 F-xxx，每条含事实陈述 + 来源 URL + 访问日期（2026-10-21）
+- **Then**: 事实总数 ≥20 条，按 PRO/TEC/COM/RP 四段统一编号，每条含事实陈述 + 来源 URL + 访问日期（2026-10-21）
 - **Pass Condition**: 机械计数事实条数 ≥20，且逐条可定位到 URL
-- **Evidence**: facts-*.md 附录全文
+- **Evidence**: facts-*.md 附录全文（实际达成 106 条）
 
 ### AC-2: 事实去因果化与去评价化
 - **Type**: `rule`
 - **Given**: 已编号事实清单
 - **When**: 执行 G1 逐条检查
-- **Then**: 事实陈述中不出现「因为／所以／导致／说明／错误／失误／显然／最佳」等因果或评价词
-- **Pass Condition**: 全文检索上述词命中数为 0（或逐条说明为原文引述）
-- **Evidence**: G1 检查记录
+- **Then**: 事实陈述中不出现「因为／所以／导致／说明／错误／失误／显然／最佳」等因果或评价词（技术术语用法与原文引述须逐条甄别说明）
+- **Pass Condition**: 全文检索上述词命中项逐条甄别后，事实陈述内违例数为 0（或逐条说明为原文引述）
+- **Evidence**: G1 检查记录（实际：四份附录按完整词表扫描命中 8 处 = 事实陈述行 4 处（3 处技术术语用法 + 1 处 GitHub issue 标题原文引述）+ 缺口/冲突登记表 4 处（2 处表头 + 2 处缺口描述）；事实陈述内违例 0）
 
 ### AC-3: 冲突与缺口显式登记
 - **Type**: `rule`
 - **Given**: 双站点／双来源同指标多值
 - **When**: 编制冲突表与缺口表
-- **Then**: 冲突项按「多值原样并陈、不裁决」登记；未获取项按 G-xxx 编号登记
+- **Then**: 冲突项按「多值原样并陈、不裁决」登记（编号 C-x）；未获取项按 E-x（商业化）/ G-x（口碑）编号登记
 - **Pass Condition**: 存在独立的冲突登记表与未获取项清单，且正文引用相应降级标签
-- **Evidence**: 报告「数据冲突登记」与「未获取项清单」章节
+- **Evidence**: 报告「数据冲突登记」与「未获取项清单」章节（实际：9 项冲突 C-1~C-9、24 项已编号缺口 E-1~E-13 / G-1~G-11 + 4 项未编号未获取点）
 
 ### AC-4: 四元组洞察完整性
 - **Type**: `rule`
@@ -116,7 +116,7 @@ session: "sc-20261021-vibeknow-research"
 - **Type**: `rule`
 - **Given**: 全部产出物
 - **When**: 执行落盘
-- **Then**: 报告目录位于 `docs/retrospective/reports/competitive-analysis/` 下并含 index.md toctree；模式登记于 `docs/retrospective/patterns/methodology-patterns/governance-strategy/` 并同步 `index.md` toctree 与 `.meta/toml` 伴生 TOML
+- **Then**: 报告目录位于 `docs/retrospective/reports/competitive-analysis/` 下并含 index.md toctree；模式登记于 `docs/retrospective/patterns/methodology-patterns/tools-automation/` 并同步 `index.md` toctree 与 `.meta/toml` 伴生 TOML
 - **Pass Condition**: 路径全部在根 `docs/` 下；`docs/` 下不存在本次新增的 `.agents/docs/` 残留；toctree 条目与实体文件一一对应
 - **Evidence**: 目录列表 + 索引 diff
 

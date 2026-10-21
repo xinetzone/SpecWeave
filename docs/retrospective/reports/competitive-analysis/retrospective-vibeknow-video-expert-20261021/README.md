@@ -3,7 +3,7 @@ title: "VibeKnow 视频专家全面调研报告：产品能力、Agent 原生 CL
 date: 2026-10-21
 updated: 2026-10-21
 source: "vibeknow.com 中文站（首页/定价页/教程站/showcase）与 vibeknow.ai 英文站、github.com/vibeknow/cli 开源仓库、npm registry vibeknow-cli、12 个第三方 AI 工具目录与评测站、启信宝/BOSS直聘/36氪企业信息、gov.cn 与 court.gov.cn 监管司法文件（均为公开信源，访问日期 2026-10-21）"
-method: "七概念方法论编排（场景4 知识沉淀：R→I→E→V→C），新增事实 PRO-01~PRO-25 + TEC-01~TEC-31 + COM-01~COM-25 + RP-01~RP-25 共 106 条；13 项商业化缺口 + 11 项口碑缺口 + 8 项跨站口径冲突显式登记；萃取模式 agent-cli-charge-authority-resume（L1-draft）；V 门 4 视角 10 条意见，采纳 9 条、部分采纳 1 条；session=sc-20261021-vibeknow-research"
+method: "七概念方法论编排（场景4 知识沉淀：R→I→E→V→C），新增事实 PRO-01~PRO-25 + TEC-01~TEC-31 + COM-01~COM-25 + RP-01~RP-25 共 106 条；13 项商业化缺口 + 11 项口碑缺口 + 9 项跨站口径冲突显式登记；萃取模式 agent-cli-charge-authority-resume（L1-draft）；V 门 4 视角 10 条意见，采纳 9 条、部分采纳 1 条；session=sc-20261021-vibeknow-research"
 tags: [vibeknow, ai视频, 知识视频, agent-skills, cli, saas, 竞品分析, 七概念, 定价, 合规]
 ---
 
@@ -114,7 +114,7 @@ tags: [vibeknow, ai视频, 知识视频, agent-skills, cli, saas, 竞品分析, 
 
 ### 4.2 数据冲突与未获取项（显式登记，不裁决）
 
-**8 项跨站/跨来源口径冲突（多值并陈）**
+**9 项跨站/跨来源口径冲突（多值并陈）**
 
 | # | 冲突项 | 并陈的多值 | 登记 |
 |---|---|---|---|
@@ -126,19 +126,25 @@ tags: [vibeknow, ai视频, 知识视频, agent-skills, cli, saas, 竞品分析, 
 | C-6 | 效率提升倍数 | 官方 FAQ「相比传统 1–2 周，效率提升上千倍」｜独立评测实测 3–5 分钟视频约 5–10 分钟 | E-10 |
 | C-7 | 独立评测均分 | 官方称「4.5/5 average across independent reviewers」｜可核独立评分为 AIxploria 4.5/5 与 digitalizelife 3.5/5；olymphill 4.5/5 的评论账号形态存疑 | COM-19/E-8/RP-20/RP-21/G-9 |
 | C-8 | 另一套中文档位 | php 中文网给出 Starter ¥98/1200 积分、Pro ¥268/4500、Team ¥688/15000 等，与官方 ¥79/¥279/¥679、1,128/4,000/10,000 不符，疑为 SEO 生成内容，**未采信为事实**，仅登记 | E-4/G-11 |
+| C-9 | 企业员工规模口径 | 融资数据库「企业员工 0 人（2025 年报口径）」｜BOSS 直聘工商页标注「20-99 人」 | RP-01/RP-03 |
 
-**24 项未获取项（缺口清单）**
+**24 项已编号缺口（E-1~E-13 商业化 / G-1~G-11 口碑）+ 4 项未编号未获取点**
 
 | 段 | 编号 | 缺口摘要 |
 |---|---|---|
 | 商业化 | E-1 | 中文站年付绝对价（805.8/2845.8/6925.8 元）仅第三方转述，官方页面由前端 JS 渲染未读出 |
 | 商业化 | E-2 | 英文站年付与 Booster Pack 数值未从官方页读出；官方「Annual −20%」与第三方 85 折口径不一致 |
+| 商业化 | E-3 | 英文站站内 /pricing 页与首页对同一档位「每日赠送积分」给出不同数值（pro 150 vs 200、max 300 vs 500） |
+| 商业化 | E-4 | php 中文网给出另一套档位与价格（Starter ¥98、Pro ¥268、Team ¥688 等），与官方定价页不符，疑为 SEO 生成内容，未采信 |
 | 商业化 | E-5 | 团队版/企业版价格、坐席数、发票申请流程未在可访问页面读到（/team、/enterprise、/team-plan 均 404 或回落首页） |
+| 商业化 | E-6 | 分辨率上限与背景音乐归属档位未在两站官方定价页读到（AIHub 与英文站口径互斥） |
+| 商业化 | E-7 | 案例数据（成本降 80%、完课率 +40%、英文站 96% completion 面板）均为用户自述或占位式样例面板 |
+| 商业化 | E-8 | 「4.5/5 独立评测均分」未点名具体评测站点，该聚合口径无独立复核来源 |
+| 商业化 | E-9 | 「50,000+ creators」「Apr 2026 public launch」「7+ 目录收录」无第三方审计或流量统计佐证 |
+| 商业化 | E-10 | 「效率提升上千倍」与独立评测实测 5–10 分钟的口径不一致，均按原文记录但未独立验证 |
+| 商业化 | E-11 | 「24.6% 用户来自出版」数据来源未说明，未采信 |
 | 商业化 | E-12 | 退款政策、取消订阅后积分处理、积分抵扣顺序在 FAQ 中为折叠项，正文未渲染出答案 |
 | 商业化 | E-13 | 未找到 vibeknow.ai 站内针对 Synthesia 的独立对照页（多路径 404） |
-| 商业化 | E-7 | 案例数据（成本降 80%、完课率 +40%、英文站 96% completion 面板）均为用户自述或占位式样例面板 |
-| 商业化 | E-9 | 「50,000+ creators」「Apr 2026 public launch」「7+ 目录收录」无第三方审计或流量统计佐证 |
-| 商业化 | E-11 | 「24.6% 用户来自出版」数据来源未说明，未采信 |
 | 口碑 | G-1 | 中文社区一手用户原话缺失（知乎/小红书/B站/微博/Reddit 均无可归因内容），可溯源中文表述仅 4 家且其中 1 家为推广合作 |
 | 口碑 | G-2 | 小红书/B站一手内容未取得，仅命中官方自述内容的转载 |
 | 口碑 | G-3 | 平台稳定性公开信号缺失（status.vibeknow.com 解析到 showcase 页面），无独立状态页或历史可用性记录 |
@@ -146,15 +152,16 @@ tags: [vibeknow, ai视频, 知识视频, agent-skills, cli, saas, 竞品分析, 
 | 口碑 | G-5 | 官网中文版用户协议/隐私政策未找到（多路径 404），英文协议与国内工商主体、ICP 备案主体的对应关系未获证实 |
 | 口碑 | G-6 | 「50,000+ 用户」无独立核验，与 aitoolsatlas「无公开用户数」陈述并存 |
 | 口碑 | G-7 | 「中端定价明显低于 Synthesia 类」的口径与 digitalizelife 同源，无独立比价测算 |
+| 口碑 | G-8 | 三处官方数字口径冲突未获澄清——模板数（100+ vs 40-plus）、注册赠送积分（400 vs 500）、导出分辨率（1080p–4K vs 最高 1080p）；官网与第三方之间、官网内部之间均存在不一致 |
 | 口碑 | G-9 | olympiad hill 的 6 名评论者与 6 名提问者均为 persona-XXX 形态账号，Q&A 文案与官网 FAQ 逐字重合（仅记录现象，不作真伪判定） |
 | 口碑 | G-10 | 3 条 GitHub issue 提交者账号 xntj-ai 与推广内容作者「张拼拼」同名同域，是否同一主体未获证实 |
 | 口碑 | G-11 | php 中文网 SEO 批量生成内容中的 7 项具体口径与官方冲突，未采信为事实 |
-| 产品 | — | 中文站团队版「敬请期待」与 FAQ「提供 API 接入」的落地状态无法判定（PRO-24/COM-14/PRO-25） |
-| 技术 | — | 3 条 open issue 的修复状态与 exit 6 的实际行为无第三方复核（RP-15） |
-| 成本 | — | 无任何账号实测的积分消耗曲线，单条成本仅有厂商口径（COM-10/RP-22） |
-| 主体 | — | 天使轮后无公开新增融资信息；2025 年报口径企业员工 0 人与工商标注 20–99 人并存（RP-01/RP-03） |
+| 产品（未编号） | — | 中文站团队版「敬请期待」与 FAQ「提供 API 接入」的落地状态无法判定（PRO-24/COM-14/PRO-25） |
+| 技术（未编号） | — | 3 条 open issue 的修复状态与 exit 6 的实际行为无第三方复核（RP-15） |
+| 成本（未编号） | — | 无任何账号实测的积分消耗曲线，单条成本仅有厂商口径（COM-10/RP-22） |
+| 主体（未编号） | — | 天使轮后无公开新增融资信息；员工规模口径冲突见 C-9（RP-01/RP-03） |
 
-> **G1 检验**：事实 106 条（≥20 ✅）｜分 PRO/TEC/COM/RP 四段统一编号、逐条含来源 URL 与访问日期 2026-10-21 ✅｜全文因果词扫描命中 6 处，经逐条甄别全部位于表头、缺口表描述或原文引述语境（含 RP-15 引用 GitHub issue 标题原文），事实陈述本身无因果/评价词 ✅｜8 项冲突多值并陈不裁决、24 项缺口独立成表 ✅｜厂商自述口径逐条显式标注 ✅。
+> **G1 检验**：事实 106 条（≥20 ✅）｜分 PRO/TEC/COM/RP 四段统一编号、逐条含来源 URL 与访问日期 2026-10-21 ✅｜四份事实附录按 G1 词表（因为/所以/导致/说明/错误/失误/显然/最佳）全文扫描命中 8 处，逐条甄别：事实陈述行 4 处（PRO-05「错误码 1208/1209」、TEC-13「输入错误」、RP-12「错误语义」为技术术语用法；RP-15「导致」为 GitHub issue 标题原文引述），缺口与冲突登记表 4 处（2 处表头 + E-11「数据来源未说明」/G-8「未见官方说明」为缺口描述），**事实陈述本身无因果/评价词** ✅｜9 项冲突多值并陈不裁决、24 项缺口独立成表 ✅｜厂商自述口径逐条显式标注 ✅。
 
 ---
 
@@ -208,11 +215,11 @@ file: ../../../patterns/methodology-patterns/tools-automation/agent-cli-charge-a
 
 **反模式（6 个）**：把付费动作写进可共享配置；用同一个非零码表达"失败"与"还没好"；人类授权按命令数重复索取；异步返回不留可验证启动锚点；失败重试全额计费；破坏性操作默认执行不需 `--yes`。
 
-**检验标准**：四问——①任何一个会产生费用或不可逆副作用的命令，能否在**不开命令行显式开关**的情况下被触发？②非零退出码是否能被下游无歧义区分「终态失败」与「可续跑中间态」？③一个人类 token 最多需要几次交互？④失败重试与局部重做是否计费、是否有 dry-run 兜底？
+**检验标准**：六问——①（Q1 扣费可达性）任何一个会产生费用或不可逆副作用的命令，能否在**不开命令行显式开关**的情况下被触发？②（Q2 退出码可区分性）非零退出码是否能被下游无歧义区分「终态失败」与「可续跑中间态」？③（Q3 交互次数）一个人类 token 最多需要几次交互、是否与命令数解耦？④（Q4 重试计费）失败重试与局部重做是否计费、破坏性操作是否有 dry-run 兜底？⑤（Q5 授权来源）授权型开关是否只可能来自命令行、可共享配置文件能否携带它们？⑥（Q6 启动锚点）异步命令的返回体是否含可回查标识且文档给出可证伪断言？
 
 **跨场景迁移**：Agent 可调用的支付/云资源 CLI（`aws`/`terraform`/`kubectl`）；SaaS 平台的公开 MCP 工具集；代码托管平台的 CI 触发与部署流水线。
 
-> **G3 检验**：模式文档含触发条件与 4 类不适用边界 ✅｜6 步可执行核心做法 ✅｜6 个反模式（≥3）✅｜有四问检验标准 ✅｜3 个跨域迁移示例（≥1）✅｜单案例显式标注 L1-draft、validation_count=1 ✅｜与既有 `cli-as-api-design` 显式划界 ✅。
+> **G3 检验**：模式文档含触发条件与 4 类不适用边界 ✅｜6 步可执行核心做法 ✅｜6 个反模式（≥3）✅｜有六问检验标准（Q1~Q6）✅｜3 个跨域迁移示例（≥1）✅｜单案例显式标注 L1-draft、validation_count=1 ✅｜与既有 `cli-as-api-design` 显式划界 ✅。
 
 ---
 
@@ -234,7 +241,7 @@ file: ../../../patterns/methodology-patterns/tools-automation/agent-cli-charge-a
 
 **优势**：积分三态定义清晰（活动积分可能过期、订阅积分仅当期有效不累积、购买积分长期有效），加油包四档阶梯明确（1,000/¥99 ~ 10,750/¥999），并发档位与档位挂钩（1/5/50/不限），注册不绑卡且送 400 积分，订阅赠送与年付折扣的官方宣传口径可读（COM-01~COM-11）。两站同档位月积分额度一致（1,128/4,000/10,000），说明**积分是统一的底层单位**、货币只是前台表现（COM-24）。
 
-**缺口**：**跨站与跨来源共 8 项口径冲突**（C-1~C-8），其中每日赠送积分在英文站自身两页就不一致（C-1），分辨率上限与 BGM 归属互斥（C-2/C-3），模板数 100+ vs 40-plus（C-4），注册赠送 400 vs 500（C-5）；年付绝对价两站均未能从官方页面读出，只能依赖第三方转述（E-1/E-2）；团队版价格、坐席数、发票流程在可访问页面全部缺失（E-5/COM-14）；退款与积分抵扣顺序在 FAQ 中为未渲染的折叠项（E-12），而 ToS 4.2 条明确"费用不退不换、不为未使用的订阅/功能/产出提供退款或额度补偿"（RP-09）——即**文本上不存在退款通道**。厂商成本口径「3 分钟 ≈16 元 vs 外包 ¥5,000 起」（COM-10/RP-22）无任何实测支撑，不可进采购模型（Q-1）。
+**缺口**：**跨站与跨来源共 9 项口径冲突**（C-1~C-9），其中每日赠送积分在英文站自身两页就不一致（C-1），分辨率上限与 BGM 归属互斥（C-2/C-3），模板数 100+ vs 40-plus（C-4），注册赠送 400 vs 500（C-5）；年付绝对价两站均未能从官方页面读出，只能依赖第三方转述（E-1/E-2）；团队版价格、坐席数、发票流程在可访问页面全部缺失（E-5/COM-14）；退款与积分抵扣顺序在 FAQ 中为未渲染的折叠项（E-12），而 ToS 4.2 条明确"费用不退不换、不为未使用的订阅/功能/产出提供退款或额度补偿"（RP-09）——即**文本上不存在退款通道**。厂商成本口径「3 分钟 ≈16 元 vs 外包 ¥5,000 起」（COM-10/RP-22）无任何实测支撑，不可进采购模型（Q-1）。
 
 ### 7.4 主体稳定性与合规风险（3/5）
 
@@ -264,7 +271,7 @@ file: ../../../patterns/methodology-patterns/tools-automation/agent-cli-charge-a
 |---|---:|---:|---|
 | 产品能力完整度与可编辑性 | 20% | 4 | PRO-03/PRO-04/PRO-11~PRO-15/PRO-24；RP-16/RP-17 首版质量短板 |
 | Agent 原生工程化 | 20% | 4 | TEC-05~TEC-13/TEC-25~TEC-29；RP-15 缺陷未闭环、RP-13/14 使用量极小 |
-| 定价可预测性与单位经济 | 15% | 3 | COM-01~COM-08 积分三态清晰；C-1~C-8、COM-02/E-1/E-2/E-5/E-12、RP-09 不退款条款 |
+| 定价可预测性与单位经济 | 15% | 3 | COM-01~COM-08 积分三态清晰；C-1~C-9、COM-02/E-1/E-2/E-5/E-12、RP-09 不退款条款 |
 | 主体稳定性与合规风险 | 20% | 3 | RP-01~RP-05 主体可核；RP-06/G-5 协议主体不一致、RP-24/RP-25 声音权与标识合规 |
 | 证据强度与口碑可核性 | 15% | 2 | RP-21 无权威第三方评测、G-1/G-2 中文一手缺失、G-9 persona 账号、RP-13~RP-15 客观数据量级极小 |
 | 生态与集成开放度 | 10% | 3 | TEC-01/TEC-06/TEC-25/TEC-28/PRO-25 开发者侧开放；PRO-24 批量 API 未开放、E-5 团队版 404、RP-23 SSO 仅英文站 FAQ |
@@ -400,9 +407,9 @@ npx vibeknow-cli@latest create --from long.md --async
 
 | 质量门 | 结果 | 说明 |
 |---|---|---|
-| G1 事实门 | 通过 | 106 条事实（PRO 25 / TEC 31 / COM 25 / RP 25），分四段统一编号，逐条含来源 URL 与访问日期 2026-10-21；因果词全文扫描 6 处命中经逐条甄别均为表头/缺口表描述/原文引述；8 项冲突多值并陈不裁决、24 项缺口独立成表；厂商自述口径逐条标注 |
+| G1 事实门 | 通过 | 106 条事实（PRO 25 / TEC 31 / COM 25 / RP 25），分四段统一编号，逐条含来源 URL 与访问日期 2026-10-21；四份事实附录按 G1 词表扫描命中 8 处，逐条甄别为事实陈述行 4 处（3 处技术术语用法 + 1 处 GitHub issue 标题原文引述）与缺口/冲突登记表 4 处（2 处表头 + 2 处缺口描述），事实陈述本身无因果/评价词；9 项冲突多值并陈不裁决、24 项缺口独立成表；厂商自述口径逐条标注 |
 | G2 洞察门 | 通过 | 4 条四元组洞察，四要素齐备，维度互不重叠（产品价值落点 / 商业模式与安全契约 / 工程契约 / 证据强度），行动均落为可执行动作 |
-| G3 模式门 | 通过 | `agent-cli-charge-authority-resume`，6 步核心做法 + 6 反模式 + 四问检验标准 + 3 个跨域迁移；与既有 `cli-as-api-design` 显式划界；单案例显式标注 L1-draft、validation_count=1 |
+| G3 模式门 | 通过 | `agent-cli-charge-authority-resume`，6 步核心做法 + 6 反模式 + 六问检验标准（Q1~Q6）+ 3 个跨域迁移；与既有 `cli-as-api-design` 显式划界；单案例显式标注 L1-draft、validation_count=1 |
 | V 门 | 通过 | 4 视角 10 条意见，采纳 9、部分采纳 1，修正已回写执行摘要/第四章/第五章/第七章/第十章/第十二章 |
 | G4 交付门 | 通过 | 报告 4 份事实附录 + 主报告 + 目录 toctree 落盘根 `docs/`；模式三处登记（.md / `.meta/toml` 伴生 TOML / `index.md` toctree + README 索引）；索引与看板刷新；单次原子提交，Conventional Commits 中文主体，路径级点名暂存，不推送 |
 | 落盘前三查 | 通过 | 目标目录在根 `docs/retrospective/reports/competitive-analysis/` 下 ✅；同类产出物为「一报告一子目录 + index.md toctree + README.md + facts-*.md 附录」（参照 openKylin-20261014）✅；路径规则取自磁盘原文 AGENTS Manifest，非内联副本 ✅；无 `.agents/docs/` 残留 ✅ |
@@ -431,11 +438,11 @@ npx vibeknow-cli@latest create --from long.md --async
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=scenario | event=SCENARIO_DETECTED | session=sc-20261021-vibeknow-research | msg=公开内容（官网/定价/教程/开源CLI/第三方评测），敏感度Public，产出物入根 docs/
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=chain | event=CHAIN_SELECTED | session=sc-20261021-vibeknow-research | msg=R→I→E→V→C，V 强制不可跳过
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=R | event=CONCEPT_COMPLETED | session=sc-20261021-vibeknow-research | msg=四维并行采集，106条编号事实落4份附录 | ctx={facts=106,pro=25,tec=31,com=25,rp=25}
-[CMD-LOG] | level=INFO | cmd=seven-concepts | step=G1 | event=GATE_PASSED | session=sc-20261021-vibeknow-research | msg=8项冲突多值并陈、24项缺口独立成表；因果词扫描6处命中均属表头/缺口描述/原文引述
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=G1 | event=GATE_PASSED | session=sc-20261021-vibeknow-research | msg=9项冲突多值并陈、24项缺口独立成表；四份附录按G1词表扫描命中8处（事实陈述行4处：3术语用法+1原文引述；缺口表4处），事实陈述内0违例
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=I | event=CONCEPT_COMPLETED | session=sc-20261021-vibeknow-research | msg=4条四元组洞察 | ctx={insights=4,dimensions=产品价值落点/商业模式与安全契约/工程契约/证据强度}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=G2 | event=GATE_PASSED | session=sc-20261021-vibeknow-research
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=E | event=CONCEPT_COMPLETED | session=sc-20261021-vibeknow-research | msg=Agent 原生 CLI 扣费-授权-续跑三元契约 L1-draft 入库 tools-automation | ctx={pattern=agent-cli-charge-authority-resume,maturity=L1-draft}
-[CMD-LOG] | level=INFO | cmd=seven-concepts | step=G3 | event=GATE_PASSED | session=sc-20261021-vibeknow-research | msg=6步做法+6反模式+四问检验+3迁移；与 cli-as-api-design 显式划界
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=G3 | event=GATE_PASSED | session=sc-20261021-vibeknow-research | msg=6步做法+6反模式+六问检验+3迁移；与 cli-as-api-design 显式划界
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=V | event=GATE_PASSED | session=sc-20261021-vibeknow-research | msg=4视角10意见，采纳9部分采纳1，修正回写执行摘要/事实清单/洞察/详细评估/适用性/待验证 | ctx={opinions=10,adopted=9,partial=1}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=C | event=CHAIN_COMPLETED | session=sc-20261021-vibeknow-research | msg=报告+4附录落盘、模式三处登记、索引与看板刷新、单次原子提交
 ```
