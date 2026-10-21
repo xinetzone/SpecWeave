@@ -43,6 +43,7 @@ retrospective-oray-comprehensive-analysis-20260706/index
 retrospective-orca-ide-analysis-20260706/index
 retrospective-papi-jiang-wiki-20260706/index
 retrospective-pattern-formalization-cross-reference-20260704/index
+retrospective-python-agent-framework-selection-20261021/index
 retrospective-specforge-insight-20260629/index
 retrospective-specweave-contest-advantage-analysis-20260624/index
 retrospective-sunlogin-bootbox-analysis-20260704/index
