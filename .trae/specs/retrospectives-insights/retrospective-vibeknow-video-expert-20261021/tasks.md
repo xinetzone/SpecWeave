@@ -136,9 +136,9 @@ session: "sc-20261021-vibeknow-research"
   - `rule` TR-7.3: `git show --stat HEAD` 显示的变更集合与产出物集合一致
 - **Notes**: 默认不推送
 - **Completion Evidence**:
-  - `rule` TR-7.1: 提交 `0be352751`「docs(retrospective): 新增 VibeKnow 视频专家调研报告与 CLI 扣费授权续跑三元契约模式」共 15 文件（+1406/-31），`git show --stat` 逐项核对均为本产出物（报告 README + index + 4 份 facts 附录、模式 .md、伴生 TOML、两处 toctree、两处 README 索引、competitive-analysis 索引与归档表、tools-automation 索引与 README）；无关文件 `.trae/specs/okf-wiki-ecosystem/README.md`、`.temp_sec2.md` 已排除 ✅
-  - `rule` TR-7.2: 提交信息格式 `type(scope): 中文主体`，符合 Conventional Commits ✅
-  - `rule` TR-7.3: `git show --stat HEAD` 与 `git cat-file -p HEAD` 复验通过，变更集合与产出物集合一致，未推送 ✅
+  - `rule` TR-7.1: 交付由三次原子提交构成——① `0be352751`「docs(retrospective): 新增 VibeKnow 视频专家调研报告与 CLI 扣费授权续跑三元契约模式」15 文件（+1406/-31，新增全部产出物）；② `05ab6ac9a`「fix(retrospective): 修复 VibeKnow 调研报告 R1/R2 审查缺陷并闭环交付状态 [prevent: rule-update]」7 文件（R1/R2 缺陷修复 + 预防规则落地）；③ 本次提交（review.md 审查台账落盘 + R3 遗留 P2/P3 闭合，提交号见 `git log --oneline -1`）。逐次 `git show --stat` 核对变更集合均只含本产出物与本任务直接相关的规则/索引文件；无关文件 `.trae/specs/okf-wiki-ecosystem/README.md`、`.temp_sec2.md` 全程排除 ✅
+  - `rule` TR-7.2: 三次提交信息均为 `type(scope): 中文主体`，符合 Conventional Commits ✅
+  - `rule` TR-7.3: 逐次 `git show --stat` 与 `git cat-file -p` 复验通过，变更集合与产出物集合一致；R3 独立审查取证 `git show 05ab6ac9a:<path>` 确认提交树内已含最终态（status completed、六问、9 项冲突口径），未推送 ✅
 
 # Task Dependencies
 

@@ -3,13 +3,13 @@ title: "VibeKnow 视频专家全面调研报告：产品能力、Agent 原生 CL
 date: 2026-10-21
 updated: 2026-10-21
 source: "vibeknow.com 中文站（首页/定价页/教程站/showcase）与 vibeknow.ai 英文站、github.com/vibeknow/cli 开源仓库、npm registry vibeknow-cli、12 个第三方 AI 工具目录与评测站、启信宝/BOSS直聘/36氪企业信息、gov.cn 与 court.gov.cn 监管司法文件（均为公开信源，访问日期 2026-10-21）"
-method: "七概念方法论编排（场景4 知识沉淀：R→I→E→V→C），新增事实 PRO-01~PRO-25 + TEC-01~TEC-31 + COM-01~COM-25 + RP-01~RP-25 共 106 条；13 项商业化缺口 + 11 项口碑缺口 + 9 项跨站口径冲突显式登记；萃取模式 agent-cli-charge-authority-resume（L1-draft）；V 门 4 视角 10 条意见，采纳 9 条、部分采纳 1 条；session=sc-20261021-vibeknow-research"
+method: "七概念方法论编排（场景4 知识沉淀：R→I→E→V→C），新增事实 PRO-01~PRO-25 + TEC-01~TEC-31 + COM-01~COM-25 + RP-01~RP-25 共 106 条；24 项已编号缺口（E-1~E-13 商业化 / G-1~G-11 口碑）+ 4 项未编号未获取点 + 9 项跨站/跨来源口径冲突显式登记；萃取模式 agent-cli-charge-authority-resume（L1-draft）；V 门 4 视角 10 条意见，采纳 9 条、部分采纳 1 条；session=sc-20261021-vibeknow-research"
 tags: [vibeknow, ai视频, 知识视频, agent-skills, cli, saas, 竞品分析, 七概念, 定价, 合规]
 ---
 
 # VibeKnow 视频专家全面调研报告：产品能力、Agent 原生 CLI、商业化定价与合规风险
 
-> **方法论**：七概念编排 **R（事实）→ I（洞察）→ E（萃取）→ V（对抗审查）→ C（原子提交）**。R 阶段采集可验证公开事实 **106 条**（PRO-01~25 产品功能、TEC-01~31 技术与 CLI、COM-01~25 商业化与竞品、RP-01~25 主体口碑与风险，见附录 A~D）；I 阶段形成 4 条四元组洞察；E 阶段沉淀 [Agent 原生 CLI 扣费-授权-续跑三元契约](../../../patterns/methodology-patterns/tools-automation/agent-cli-charge-authority-resume.md)；V 阶段 4 视角 10 条意见全部处置（采纳 9、部分采纳 1）；C 阶段单次原子提交交付。
+> **方法论**：七概念编排 **R（事实）→ I（洞察）→ E（萃取）→ V（对抗审查）→ C（原子提交）**。R 阶段采集可验证公开事实 **106 条**（PRO-01~25 产品功能、TEC-01~31 技术与 CLI、COM-01~25 商业化与竞品、RP-01~25 主体口碑与风险，见附录 A~D）；I 阶段形成 4 条四元组洞察；E 阶段沉淀 [Agent 原生 CLI 扣费-授权-续跑三元契约](../../../patterns/methodology-patterns/tools-automation/agent-cli-charge-authority-resume.md)；V 阶段 4 视角 10 条意见全部处置（采纳 9、部分采纳 1）；C 阶段两次原子提交交付（新增产出物 + R1/R2 缺陷修复）。
 > **评估范围**：产品功能矩阵与可编辑性、官方开源 CLI 的 Agent 原生工程契约、双站点商业化定价与单位经济、运营主体与合规/司法风险、公开证据强度。
 > **非评估范围**：付费账号实测成片质量、真实积分消耗与服务稳定性压测、服务端实现逆向、竞品性能横评。
 > **证据分级**：官方/监管司法来源 > 权威媒体 > 第三方目录与评测 > 厂商自述；凡仅厂商/官方自述数据，全文标注「厂商口径」；第三方评分与目录收录仅作**旁证**，不与官宣等权对冲。
@@ -241,7 +241,7 @@ file: ../../../patterns/methodology-patterns/tools-automation/agent-cli-charge-a
 
 **优势**：积分三态定义清晰（活动积分可能过期、订阅积分仅当期有效不累积、购买积分长期有效），加油包四档阶梯明确（1,000/¥99 ~ 10,750/¥999），并发档位与档位挂钩（1/5/50/不限），注册不绑卡且送 400 积分，订阅赠送与年付折扣的官方宣传口径可读（COM-01~COM-11）。两站同档位月积分额度一致（1,128/4,000/10,000），说明**积分是统一的底层单位**、货币只是前台表现（COM-24）。
 
-**缺口**：**跨站与跨来源共 9 项口径冲突**（C-1~C-9），其中每日赠送积分在英文站自身两页就不一致（C-1），分辨率上限与 BGM 归属互斥（C-2/C-3），模板数 100+ vs 40-plus（C-4），注册赠送 400 vs 500（C-5）；年付绝对价两站均未能从官方页面读出，只能依赖第三方转述（E-1/E-2）；团队版价格、坐席数、发票流程在可访问页面全部缺失（E-5/COM-14）；退款与积分抵扣顺序在 FAQ 中为未渲染的折叠项（E-12），而 ToS 4.2 条明确"费用不退不换、不为未使用的订阅/功能/产出提供退款或额度补偿"（RP-09）——即**文本上不存在退款通道**。厂商成本口径「3 分钟 ≈16 元 vs 外包 ¥5,000 起」（COM-10/RP-22）无任何实测支撑，不可进采购模型（Q-1）。
+**缺口**：**跨站/跨来源共 9 项口径冲突**（C-1~C-9），其中每日赠送积分在英文站自身两页就不一致（C-1），分辨率上限与 BGM 归属互斥（C-2/C-3），模板数 100+ vs 40-plus（C-4），注册赠送 400 vs 500（C-5）；年付绝对价两站均未能从官方页面读出，只能依赖第三方转述（E-1/E-2）；团队版价格、坐席数、发票流程在可访问页面全部缺失（E-5/COM-14）；退款与积分抵扣顺序在 FAQ 中为未渲染的折叠项（E-12），而 ToS 4.2 条明确"费用不退不换、不为未使用的订阅/功能/产出提供退款或额度补偿"（RP-09）——即**文本上不存在退款通道**。厂商成本口径「3 分钟 ≈16 元 vs 外包 ¥5,000 起」（COM-10/RP-22）无任何实测支撑，不可进采购模型（Q-1）。
 
 ### 7.4 主体稳定性与合规风险（3/5）
 
@@ -411,7 +411,7 @@ npx vibeknow-cli@latest create --from long.md --async
 | G2 洞察门 | 通过 | 4 条四元组洞察，四要素齐备，维度互不重叠（产品价值落点 / 商业模式与安全契约 / 工程契约 / 证据强度），行动均落为可执行动作 |
 | G3 模式门 | 通过 | `agent-cli-charge-authority-resume`，6 步核心做法 + 6 反模式 + 六问检验标准（Q1~Q6）+ 3 个跨域迁移；与既有 `cli-as-api-design` 显式划界；单案例显式标注 L1-draft、validation_count=1 |
 | V 门 | 通过 | 4 视角 10 条意见，采纳 9、部分采纳 1，修正已回写执行摘要/第四章/第五章/第七章/第十章/第十二章 |
-| G4 交付门 | 通过 | 报告 4 份事实附录 + 主报告 + 目录 toctree 落盘根 `docs/`；模式三处登记（.md / `.meta/toml` 伴生 TOML / `index.md` toctree + README 索引）；索引与看板刷新；单次原子提交，Conventional Commits 中文主体，路径级点名暂存，不推送 |
+| G4 交付门 | 通过 | 报告 4 份事实附录 + 主报告 + 目录 toctree 落盘根 `docs/`；模式三处登记（.md / `.meta/toml` 伴生 TOML / `index.md` toctree + README 索引）；索引与看板刷新；两次原子提交（新增 + 缺陷修复），Conventional Commits 中文主体，路径级点名暂存，不推送 |
 | 落盘前三查 | 通过 | 目标目录在根 `docs/retrospective/reports/competitive-analysis/` 下 ✅；同类产出物为「一报告一子目录 + index.md toctree + README.md + facts-*.md 附录」（参照 openKylin-20261014）✅；路径规则取自磁盘原文 AGENTS Manifest，非内联副本 ✅；无 `.agents/docs/` 残留 ✅ |
 
 > **一句话结论**：VibeKnow 是**「中文知识内容批量视频化」赛道中工程契约最完整的一类产品**——它的可编辑粒度、并发产能与面向 Agent 的 CLI 契约（两阶段 Device Flow、语义化退出码、SSE 四阶段进度流、Agent Skills）都达到了可作为同行参照物的水平；但它的**证据链是薄弱的**：所有对外体量叙事均为厂商单源自述，权威第三方评测为零，中文一手用户内容近乎缺失，团队版与批量 API 处于"敬请期待"，多处能力尚未交付却已进入商业叙事。因此正确的使用姿态是——**能力面可用、证据面不可用**：把它当作可实测的工程化样本（先跑最小试用路径与 CLI 最小序列），把它的体量数字当作营销文案（引用必带"厂商口径"与访问日期），把它的扣费-授权-续跑契约抽成可复用的 CLI 设计准则。
@@ -444,5 +444,5 @@ npx vibeknow-cli@latest create --from long.md --async
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=E | event=CONCEPT_COMPLETED | session=sc-20261021-vibeknow-research | msg=Agent 原生 CLI 扣费-授权-续跑三元契约 L1-draft 入库 tools-automation | ctx={pattern=agent-cli-charge-authority-resume,maturity=L1-draft}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=G3 | event=GATE_PASSED | session=sc-20261021-vibeknow-research | msg=6步做法+6反模式+六问检验+3迁移；与 cli-as-api-design 显式划界
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=V | event=GATE_PASSED | session=sc-20261021-vibeknow-research | msg=4视角10意见，采纳9部分采纳1，修正回写执行摘要/事实清单/洞察/详细评估/适用性/待验证 | ctx={opinions=10,adopted=9,partial=1}
-[CMD-LOG] | level=INFO | cmd=seven-concepts | step=C | event=CHAIN_COMPLETED | session=sc-20261021-vibeknow-research | msg=报告+4附录落盘、模式三处登记、索引与看板刷新、单次原子提交
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=C | event=CHAIN_COMPLETED | session=sc-20261021-vibeknow-research | msg=报告+4附录落盘、模式三处登记、索引与看板刷新、两次原子提交（新增+缺陷修复）
 ```
