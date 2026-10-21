@@ -173,6 +173,3 @@ deepseek-v41-flash-video-*/
 
 # --- Security / secrets (never commit) ---
 id_ed25519*
-# --- Python artifacts ---
-# --- Build outputs ---
-# --- Editor directories ---
