@@ -123,6 +123,7 @@
 - **三阶段递进**：治理（修复→预防→闭环）、知识库（生成→重组→精确化）、抽象（具体→通用→元方法）顺序不可颠倒
 - **测试要求**：单元测试覆盖率不低于 80%，关键模块不低于 90%，所有测试用例通过无回归
 - **简单任务验证**：格式/路径/规范类批量决策必须执行「决策前三查」（查权威文档、查现有实例、查本质目标）
+- **文档站点组件唯一性**：用主题/扩展拼装的文档站点（Sphinx、`sphinx_book_theme`、`pydata-sphinx-theme` 等）会把同一交互组件**同时渲染到三处**——navbar（`navbar-persistent--container`/`--mobile`）、primary sidebar（`html_sidebars` 里的 `search-button-field.html`）、正文页头（`html_theme_options.article_header_end` 默认的 `article-header-buttons.html`），典型症状是页面上出现**两个搜索框**。规则：①建站时逐一显式声明三层归属，同一语义组件只在一层启用；②只改一层等于没改——排查时必须把三层的产出 HTML 副本数**分别统计**，禁止以「已移除 sidebar 搜索」推定问题闭环；③「构建零告警」不构成验收通过，须比对产出 HTML 中目标组件在 navbar/sidebar/article-header 三处的副本数，禁止仅靠人眼复查；④**同名交互控件的唯一性同样是硬约束**：两套主题脚本都用 `document.querySelector(".primary-toggle")` 取**第一个**匹配并各自绑定监听器（`sphinx_book_theme` 管 ≥992px 的 `pst-sidebar-hidden` 折叠，`pydata` 管 <992px 的侧栏模态），而顶栏模板**无条件**输出一个被 CSS 隐藏的 `.primary-toggle`——一旦顶栏被渲染，正文页头里可见的折叠按钮就没有监听器，表现为「主侧边栏无法折叠」；排查控件点击失效时，先按 DOM 顺序定位同名控件的首个匹配，不要先怀疑 CSS；⑤已核验处方：`navbar_persistent: []`（顶栏整体不渲染，唯一开关回到正文页头）+ `html_sidebars` 保留 `search-button-field.html` + `article_header_end` 保持主题默认（≥992px 显示侧栏带文字搜索、<992px 显示正文页头图标搜索，任一宽度恰好一个）+ `_static/*.css` 里 `header.bd-header{display:none}` 收起空容器；⑥zh 站点还须修正 `language_data.js` 里 `window.Stemmer = ...` 的赋值名（Sphinx 按 `language_name` 拼出 `ChineseStemmer`，而词干器文件导出的是 `EnglishStemmer`，引用落空后搜索框直接打不开）；已核验处方见 [openkylin-wsl-devkit/doc/conf.py](apps/dev-tools/openkylin-wsl-devkit/doc/conf.py)
 
 ## 知识库与复盘
 
