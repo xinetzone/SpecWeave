@@ -1,0 +1,25 @@
+id = "symbol-vs-variable-decomposition"
+title = "符号之争与变量之争分离法（Symbol-vs-Variable Decomposition）"
+domain = "methodology"
+layer = "research-knowledge"
+category = "retrospective/patterns/methodology-patterns/research-knowledge"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20261022-polygyny)——一夫多妻议题七概念方法论分析（74条编号事实/8假设证伪/9要素/6公理/13条V意见）"
+source_report = "docs/retrospective/reports/2026-10-22-polygyny-seven-concepts-analysis.md"
+date = "2026-10-22"
+version = "1.0"
+maturity_note = "单个完整案例首次成型：R-1~R-5 判定口径由74条编号事实与8条假设逐条证伪支撑；跨域迁移仅完成机制推演（投资尽调/技术选型/宗教社会学）。升级L1.5：第二个非同谱系争议议题完整应用六步；升级L2-validated：另需本团队一次真实议题分析实战回填"
+
+[bindings]
+related_patterns = [
+  "cross-domain-semantic-drift",
+  "falsifiable-claim-evaluation",
+  "decomposable-recognition-ladder",
+]
+rules = []
+references = []
+skills = []

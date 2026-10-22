@@ -18,6 +18,7 @@ cross-cultural-reverse-hermeneutics-defense
 cross-domain-semantic-drift
 cross-framework-atomic-analysis
 cross-vendor-knowledge-fusion
+decomposable-recognition-ladder
 dual-layer-analysis-report
 entry-doc-mirror-analysis
 essential-contradiction-three-step
@@ -42,6 +43,7 @@ riev-doc-learning-method
 small-sample-analysis-methodology
 source-pipeline-penetration-method
 spec-anchored-questioning
+symbol-vs-variable-decomposition
 vendor-doc-info-compensation-search
 vendor-high-level-doc-first-research
 vendor-neutral-three-layer-learning

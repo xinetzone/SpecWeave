@@ -1,0 +1,25 @@
+id = "decomposable-recognition-ladder"
+title = "可分离承认阶梯法（Decomposable Recognition Ladder）"
+domain = "methodology"
+layer = "research-knowledge"
+category = "retrospective/patterns/methodology-patterns/research-knowledge"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20261022-polygyny)——一夫多妻议题七概念方法论分析（74条编号事实/8假设证伪/9要素/6公理/13条V意见）"
+source_report = "docs/retrospective/reports/2026-10-22-polygyny-seven-concepts-analysis.md"
+date = "2026-10-22"
+version = "1.0"
+maturity_note = "单个完整案例首次成型：L0-L4 阶梯由9要素与6公理推导，经13条V意见中的9条独立意见对抗审查修正（新增L3前置条件化）；跨域迁移仅完成机制推演。升级L1.5：第二个非同谱系争议议题完整应用五步；升级L2-validated：另需本团队一次真实议题分析实战回填"
+
+[bindings]
+related_patterns = [
+  "symbol-vs-variable-decomposition",
+  "cross-domain-semantic-drift",
+  "core-scenario-dual-layer",
+]
+rules = []
+references = []
+skills = []

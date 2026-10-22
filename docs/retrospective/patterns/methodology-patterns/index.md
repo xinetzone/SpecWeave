@@ -53,6 +53,8 @@
 | hermetic-isolated-verification | [隔离验证法](ai-collaboration/hermetic-isolated-verification.md) | L2 | 2 | 2 | 验证大树里的局部变更，整树验证慢到会被跳过或被并行会话写入打断时（XERJ 束 31 文件 0 warning，替代 10 分钟以上且会被竞态打断的整树构建） |
 | shared-index-count-coupling | [共享索引计数耦合与同批判决](governance-strategy/shared-index-count-coupling.md) | L2 | 3 | 3 | 共享索引的计数由目录树派生、且多会话并行写同一仓库时，新增条目必然要改共享索引多处（awesome-okf-xs 子模块三次提交） |
 | governance-engine-dual-loop | [治理×引擎双件闭环](governance-strategy/governance-engine-dual-loop.md) | L1.5 | 3 | 1 | 规则密集型资产（约定文件/检测器/门禁/装载管道）需持续优化与自进化时：拆「守护件（合规路由+回归矩阵+误报防护）×引擎件（R→I→E→V 分析决策）」，引擎产出经守护验证后原子写回，双件各自演进。案例：agent-workspace-conventions×七概念组合、技能自动装载器、awesome-okf-xs UTF-8 治理 |
+| symbol-vs-variable-decomposition | [符号之争与变量之争分离法](research-knowledge/symbol-vs-variable-decomposition.md) | L1-draft | 1 | 0 | 议题被渲染成「是否应当承认/允许某种形式」的二元道德之争、双方长期僵持无新证据进入时：先检验形式特征与目标结果间是否存在单调因果（横截面/纵向/实验三型证据，结论三态判定），若无则判定为符号之争并重述为「哪个变量通过什么机制影响结果」（控制权+退出权+救济可达性），再按功能清单分级为「不触及符号可先行项」与「须触及符号设前置条件项」；含 6 条反模式与 8 条边界前提。案例：一夫多妻议题分析（74 条事实/8 假设证伪/9 要素/6 公理），待非同谱系第二案例验证升 L1.5 |
+| decomposable-recognition-ladder | [可分离承认阶梯法](research-knowledge/decomposable-recognition-ladder.md) | L1-draft | 1 | 0 | 「承认某形式」被当作全有全无的开关、且承认具有符号溢出性质（资格外溢至舆论/动员/文化）时：按符号触及度与保护强度双轴把承认拆成 L0–L4 阶梯，使零符号成本的功能保障先行落地、符号型承认置于可被经验证据满足的前置条件之后，并评估无为选项（一阶/二阶后果）；含 7 条反模式与 8 条边界前提。案例：一夫多妻议题分析（L0–L4 五级阶梯 + 无为三方案），待非同谱系第二案例验证升 L1.5 |
 
 ## 成熟度等级说明
 
