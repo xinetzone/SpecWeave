@@ -11,7 +11,10 @@ patterns_count = 2
 actions_count = 5
 gates = ["G1", "G2", "G3", "G4"]
 v_executed = true
-version = "1.0"
+cp_review = { level = "full", passed = 7, total = 7, sections = ["1.5.1", "1.5.2", "1.5.3"] }
+source_tiers = { gold = "50.0%", silver = "45.9%", bronze = "4.1%" }
+credibility_distribution = { A = "51.4%", B = "43.2%", C = "5.4%", D = "0%" }
+version = "1.2"
 
 [bindings]
 related_patterns = [

@@ -33,6 +33,7 @@ tags: ["first-principles", "polygyny", "seven-concepts", "cross-cultural", "know
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=E0 | event=CONCEPT_COMPLETED | session=sc-20261022-polygyny | msg=E 阶段完成：可迁移模式 2 个 | ctx={"patterns":2,"gate":"G3"}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=A0 | event=CONCEPT_COMPLETED | session=sc-20261022-polygyny | msg=A 阶段完成：行动项 5 条（原子化） | ctx={"actions":5,"gate":"G4"}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20261022-polygyny | msg=链路完成，产出物落盘 docs/retrospective/reports/ | ctx={"gates":["G1","G2","G3","G4"],"v_executed":true}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=CP3 | event=CP_CLOSED | session=sc-20261022-polygyny | msg=CP-3 注疏传统闭合：§1.5.1 申命记 25:5-10 希伯来文线、§1.5.2 古兰经 4:3/4:129 阿拉伯文与伊斯兰法学线、§1.5.3 R. Gershom 教令与塔木德妻妾线，三线均完成双注译本比对；据此修正 6 条事实并新增 1 项未解问题，CP-1~CP-7 由 6 通过转为 7 全通过 | ctx={"sections":["1.5.1","1.5.2","1.5.3"],"facts_revised":["F-022","F-023","F-024","F-025","F-027","F-028"],"facts_promoted":["F-025","F-027","F-028"],"new_questions":["Q-13"],"cp_status":"7/7"}
 ```
 
 ***
@@ -45,13 +46,13 @@ tags: ["first-principles", "polygyny", "seven-concepts", "cross-cultural", "know
 
 | 组 | 编号区间 | 条数 | 覆盖内容 | 可信度分布 |
 |----|----------|------|----------|-----------|
-| 法律现状 | F-001 ~ F-021 | 21 | 各国法定许可/禁止形态、程序要件、罚则 | A/B 为主 |
-| 宗教文本 | F-022 ~ F-033 | 12 | 《古兰经》《申命记》、塔木德、摩门教、Oneida 社群 | A/B |
-| 历史规模 | F-034 ~ F-040 | 7 | 民族志图谱跨社会分布、当代多配偶普及率 | A/B |
-| 结构性描述 | F-041 ~ F-048 | 8 | 配偶数量效应、分配不平等、"公平对待"不可实现性 | B/C |
-| 实证研究 | F-049 ~ F-057 | 9 | 健康、满意度、死亡率、公共品供给、稳定性 | A/B |
-| 历史制度 | F-058 ~ F-066 | 9 | 唐宋明清至民国婚姻法制沿革 | B/C |
-| 当代替代形式 | F-067 ~ F-074 | 8 | 非婚生育、同居、多元之爱合法化进程 | B/C |
+| 法律现状 | F-001 ~ F-021 | 21 | 各国法定许可/禁止形态、程序要件、罚则 | A 15 / B 6 |
+| 宗教文本 | F-022 ~ F-033 | 12 | 《古兰经》《申命记》、塔木德、摩门教、Oneida 社群 | A 10 / B 2 |
+| 历史规模 | F-034 ~ F-040 | 7 | 民族志图谱跨社会分布、当代多配偶普及率 | A 2 / B 5 |
+| 结构性描述 | F-041 ~ F-048 | 8 | 配偶数量效应、分配不平等、"公平对待"不可实现性 | A 1 / B 6 / C 1 |
+| 实证研究 | F-049 ~ F-057 | 9 | 健康、满意度、死亡率、公共品供给、稳定性 | A 6 / B 3 |
+| 历史制度 | F-058 ~ F-066 | 9 | 唐宋明清至民国婚姻法制沿革 | A 1 / B 7 / C 1 |
+| 当代替代形式 | F-067 ~ F-074 | 8 | 非婚生育、同居、多元之爱合法化进程 | A 3 / B 3 / C 2 |
 
 ### 1.2 关键事实摘录（供 F/V/I 阶段引用）
 
@@ -70,6 +71,16 @@ tags: ["first-principles", "polygyny", "seven-concepts", "cross-cultural", "know
 | F-009 | 南非《习惯法婚姻承认法》（1998）在满足特定条件时承认部分习惯法多配偶婚姻的效力 | 南非 1998 年法 | B |
 | F-010 | 多份汇编统计显示约 50–60 个法域在法律上允许某种形式的多配偶婚姻，常被引用的数字为 58；该计数随统计年份与"是否计入事实承认型法域"口径而变动 | 各国法典汇编 / 人口学统计 | B（计数口径有出入） |
 | F-011 | 承认型法域普遍附加"公平对待"义务、财产分割、子女身份认定、程序审查等附加条件 | 摩洛哥/其他承认型法域法条 | B |
+| F-012 | 肯尼亚《Marriage Act, 2014》：第 6(2) 条规定基督徒、印度教与民事婚姻为单偶制；第 6(3) 条规定依习惯法或伊斯兰法缔结的婚姻推定为多妻或潜在多妻；第 9(b) 条规定已处于多妻婚姻者不得再行缔结单偶婚姻；第 8(1) 条允许经双方自愿由多妻转为单偶；婚姻须依本法登记方为有效 | 肯尼亚《Marriage Act, 2014》（new.kenyalaw.org 官方全文） | A |
+| F-013 | 南非宪法法院《Ramuhovhi and Others v President of the Republic of South Africa and Others》[2017] ZACC 41（CCT194/16A，2017-11-30）裁定《习惯法婚姻承认法》120 of 1998 第 7(1) 条违宪，认为该条对多妻习惯婚姻中的女性构成歧视；判决缓期 24 个月至 2019-11-29 生效并给予过渡救济，2019 年 B19-2019 据此修订 | 南非宪法法院判决 [2017] ZACC 41 | A |
+| F-014 | 菲律宾《Family Code》（Executive Order No. 209, 1990）第 35(4) 条：重婚或多妻婚姻（除第 41 条推定死亡例外）自始无效；第 33 条：穆斯林与族群文化社群成员的婚姻可不经 marriage license 举行 | 菲律宾《Family Code》EO 209 原文 | A |
+| F-015 | 孟加拉国《Muslim Family Laws Ordinance, 1961》（Ordinance No. VIII of 1961）第 6(1) 条：现存婚姻存续期间非经仲裁委员会事先书面许可不得另娶，无许可之婚不予登记；第 9 条：多妻场合丈夫须公平扶养妻子，妻子可申请仲裁委员会裁定扶养额 | 孟加拉国 MFLO 1961 原文 | A |
+| F-016 | 阿尔及利亚《Code de la famille》（Loi n° 84-11 du 9 juin 1984）：多妻为附条件许可——须第一妻同意、须有正当理由（motif légitime）、须有能力扶养新增配偶、须各方同意 | 阿尔及利亚《家庭法典》1984（JORADP 官方公报） | A |
+| F-017 | 印度尼西亚《婚姻法》（UU No. 1 Tahun 1974，经 UU No. 16 Tahun 2019 修订）第 3(2) 条：多妻须经法院许可（第一妻同意 ipersetujuan istri pertama + 宗教法院裁决 putusan Pengadilan Agama），并须证明公平对待与经济扶养能力；宪法法院 12/PUU-V/2007 亦强调须取得妻子同意 | 印尼《婚姻法》1974/2019 原文 + 宪法法院 12/PUU-V/2007 | A |
+| F-018 | 印度《Hindu Marriage Act, 1955》：第 5(i) 条以婚时双方均无在世配偶为婚之要件；第 11 条规定违反第 5(i) 条的婚姻自始无效；第 17 条就重婚定罚并准用《刑法典》第 494、495 条（最高七年）；最高法院《Lily Thomas v Union of India》（2000）判定仅为规避前婚而改宗伊斯兰后再婚者，该婚姻仍属无效 | 印度 HMA 1955 原文 + 最高法院判决 | A |
+| F-019 | 日本《民法》（Act No. 89 of 1896）第 732 条：配偶者のある者は、重ねて婚姻をすることができない（已有配偶者不得再次结婚）；第 744 条第 2 款：受违反第 732、733 条之婚姻的配偶或前配偶可请求家庭法院取消该婚姻；《刑法》（Act No. 45 of 1907）第 184 条就重婚（Bigamy）定罪 | 日本法令外国語訳データベース（japaneselawtranslation.go.jp 官方） | A |
+| F-020 | 尼日利亚实行双轨婚姻制：习惯法婚姻（可多妻）与《Marriage Act》成文法婚姻（单偶）并存；成文法项下重婚依《Criminal Code Act》第 370 条论处最高七年监禁；《Marriage Act》第 35 条规定成文法婚姻存续期间不得缔结有效习惯法婚姻，第 47、48 条就两类婚姻交叉另设五年监禁罪 | Ochem & Emejuru, "Bigamy in a Polygamous Society", *Journal of Law and Criminal Justice* 2017, 5(2):96-102（DOI 10.15640/jlcj.v5n2a1） | B（法条内容经同行评审文献转引，未取法条原文） |
+| F-021 | 英国重婚罪的成文法渊源为《Offences against the Person Act 1861》第 57 条：已婚者在原配生存期间另娶其他人为重罪（felony），无论第二次婚姻在英格兰、爱尔兰或境外举行，最高可处七年苦役；该条后由《Bigamy Act 1963》承继 | 英国《Offences against the Person Act 1861》第 57 条（legislation.gov.uk 原文） | A |
 
 **宗教文本**
 
@@ -84,6 +95,9 @@ tags: ["first-principles", "polygyny", "seven-concepts", "cross-cultural", "know
 | F-028 | 塔木德传统在**婚书（כתובה）与订婚礼（קידושין）资格**层面区分妻与妾：妻有婚书与订婚礼，妾无（《Bavli Sanhedrin》21a）；Yerushalmi 进一步区分"妻有婚书及其条款、妾有婚书但无其条款"，并存 R. Meïr 与 R. Yehudah 两说（后者为多数意见） | 《Bavli Sanhedrin》21a + 《Yerushalmi Ketubot》5:2:3 希伯来文原典，见 §1.5.3 | A |
 | F-029 | 摩门教 1890 年《宣言》第一号宣布"停止（停止实行一夫多妻）"，1904 年《宣言》第二号将实行一夫多妻者开除教籍 | LDS 官方《宣言》文本 | A |
 | F-030 | Oneida 社群 1848 年采用 complex marriage（复妻婚），为已知历史上规模最大的非宗教复妻婚实验之一，后于 1880 年代解体 | 民族志与历史研究 | B |
+| F-031 | 塔木德《Yevamot》65a 记载拉瓦（Rava）依经济能力允许多妻，《Tur》EH 1 采此说；《Yevamot》37b 禁止一人在一地娶妻而在别处另娶妻 | 《Bavli Yevamot》65a、37b 原文 | A |
+| F-032 | 《Aruch Hashulchan》EH 1:32 断言所有坦拿（tannaitic）与阿摩拉（amoric）时代的拉比均只有一位妻子，多妻在塔木德时期实际罕见 | 《Aruch Hashulchan》EH 1:32 原文 | A |
+| F-033 | 《古兰经》4:3 妻数上限的三则圣训：'Abdullah ibn 'Umar 传述 Ghailan ibn Salamama 有十妻受命择四（Ibn Hanbal, 2001, p.393）；al-Harith ibn Qays 八妻择四（Abu Dawood, p.272）；Nofal ibn Mu'awiyah 五妻留四（Al-Bayhaqi, 1989, p.51） | Ibn Hanbal《Musnad》2001, p.393；Abu Dawood《Sunan》p.272；Al-Bayhaqi《Al-Sunan al-Kubra》1989, p.51 | A |
 
 **历史规模与分布**
 
@@ -558,18 +572,18 @@ tags: ["first-principles", "polygyny", "seven-concepts", "cross-cultural", "know
 
 | 来源级别 | 定义 | 本报告占比 | 说明 |
 |---------|------|-----------|------|
-| 🟢 一级（Gold） | 法律原文、经典文本原文、学术期刊同行评审、官方统计 | 约 66% | 含 F-001~F-003、F-006~F-008、F-022/F-023/F-025/F-026/F-027/F-028/F-029/F-034/F-035/F-049~F-052/F-054/F-067/F-068/F-071 |
-| 🔵 二级（Silver） | 权威机构报告、专著、比较法研究、经典民族志 | 约 24% | 含 F-004/F-005/F-009/F-024/F-036/F-037/F-038/F-058~F-063 |
-| ⚪ 三级（Bronze） | 百科、网络汇编、单一来源二手转述、调查转述 | 约 10% | 含 F-010、F-065、F-070 |
-| **可信度分布** | A/B/C/D 四级 | **A 46%｜B 36%｜C 15%｜D 2%** | CP-3 闭合后 F-025/F-027/F-028 由 B 升 A（依据：F-025 有 Farhat / Al-Tawil / Al-Qurtubi / Al-Attar / Abu Dawood 完整引证链；F-027 有 SA EH 1:1 原文 + Rema 哈拉哈 + JewishAction；F-028 有 Bavli Sanhedrin 21a 与 Yerushalmi Ketubot 5:2:3 双原典），F-024 保留 B（其 9/18/无上限三说依赖二手教法学史）。D 级仅 F-042 的口径冲突项，已在正文中降级为不可引用 |
+| 🟢 一级（Gold） | 法律原文、经典文本原文、学术期刊同行评审、官方统计 | 37 条（50.0%） | F-001~F-003、F-006~F-008、F-012~F-019、F-021~F-023、F-026~F-029、F-031~F-035、F-042、F-045、F-049~F-052、F-054、F-064、F-067~F-068、F-071 |
+| 🔵 二级（Silver） | 权威机构报告、专著、比较法研究、经典民族志 | 34 条（45.9%） | F-004~F-005、F-009、F-011、F-020、F-024~F-025、F-030、F-036~F-041、F-043~F-044、F-046~F-048、F-053、F-055~F-063、F-066、F-069、F-072~F-074 |
+| ⚪ 三级（Bronze） | 百科、网络汇编、单一来源二手转述、调查转述 | 3 条（4.1%） | F-010、F-065、F-070 |
+| **可信度分布** | A/B/C/D 四级 | **A 38 条（51.4%）｜B 32 条（43.2%）｜C 4 条（5.4%）｜D 0 条（0%）** | 按 74 条口径逐行清点：A = F-001~F-003、F-006~F-008、F-012~F-019、F-021~F-023、F-025~F-029、F-031~F-035、F-045、F-049~F-052、F-054、F-056、F-064、F-067~F-068、F-071；B = F-004~F-005、F-009~F-011、F-020、F-024、F-030、F-036~F-041、F-043~F-044、F-046~F-048、F-053、F-055、F-057~F-063、F-066、F-069~F-070、F-072；C = F-042、F-065、F-073、F-074。CP-3 闭合后 F-025/F-027/F-028 由 B 升 A（依据：F-025 有 Farhat / Al-Tawil / Al-Qurtubi / Al-Attar / Abu Dawood 完整引证链；F-027 有 SA EH 1:1 原文 + Rema 哈拉哈 + JewishAction；F-028 有 Bavli Sanhedrin 21a 与 Yerushalmi Ketubot 5:2:3 双原典），F-024 保留 B（其 9/18/无上限三说依赖二手教法学史），F-020 保留 B（法条内容经同行评审文献转引，未取法条原文）。**无 D 级事实**；口径冲突项 F-042 为 C 级，已在正文中降级为不可引用、不进入论证链 |
 
 ### 3.6 五维验证
 
 | 维度 | 结论 |
 |------|------|
-| **来源资质** | 关键法律条文（F-001~F-009）与经典文本原文（F-022/F-023/F-026/F-029）均取自一级来源；无 D 级事实进入论证链 |
+| **来源资质** | 关键法律条文（F-001~F-019、F-021）与经典文本原文（F-022/F-023/F-025~F-029/F-031~F-033）均直接取自一级来源（法条原文/判决书/原典）；F-020 为同行评审文献转引的二级来源，保留 B 级并已标注待核；无 D 级事实进入论证链 |
 | **交叉验证** | 关键结论均≥2 源：①"一夫一妻为近代全球趋同"→ F-034 + F-039；②"宗教不是主因"→ F-038 + F-035/F-034；③"多配偶不必然降低效率"→ F-054 + F-053；④"健康效应存在张力"→ F-049 + F-051 + F-052；⑤"法律与事实落差普遍"→ F-040 + F-044 + F-048 |
-| **时效性** | 法律事实截至 2026-10（F-006 犹他州 2020、F-008 摩洛哥 2004 为最近的具名法律变更）；F-067/F-068 为最新可得数据；F-010 计数随年份变动已标注 |
+| **时效性** | 法律事实截至 2026-10（F-006 犹他州 2020、F-008 摩洛哥 2004 为最近的具名法律变更；F-017 印尼 2019 修法、F-013 南非 2017 判决为近十年内的重要变动）；F-067/F-068 为最新可得数据；F-010 计数随年份变动已标注 |
 | **逻辑一致性** | 全文结论与 F 类事实无冲突；两处证据张力（F-056）与一处不可判定（H-7）已在结论中显式承载，未被抹平 |
 | **偏差识别** | 已识别并标注：文化等同（M-1）、西方中心（M-2）、目的论挪用（M-4）、单一本化（M-6）、教条化套用（M-7）、价值缺失（M-8） |
 
@@ -624,7 +638,7 @@ tags: ["first-principles", "polygyny", "seven-concepts", "cross-cultural", "know
   - F-034：Ethnographic Atlas 1231 个社会的分布 —— 一夫一妻在历史上是少数形态；
   - F-039：19–20 世纪欧美几乎同步废止合法多配偶，同步性本身指向共同外部冲击（帝国、法律移植、贸易、城市化）；
   - B-4/F-065：机制解释仍为 C 级待验证（Q-07），因此本洞察只主张"同步性排除文明程度解释"，不主张"全球一体化是唯一机制"；
-  - 反向支撑：F-041 显示多配偶社会存在稳定的年龄-婚次梯度结构，F-024 显示不同法传统给出不同的具体上限（4/7/9）—— 说明**上限是法传统的具体化，不是可普遍化的规范**；
+  - 反向支撑：F-041 显示多配偶社会存在稳定的年龄-婚次梯度结构，F-024 显示不同法传统给出不同的具体上限（逊尼派公断 4；什叶派/Zahiri 派 9 或 18；少数主张无上限）—— 说明**上限是法传统的具体化，不是可普遍化的规范**；
   - F-056/F-057：当代实证并未证明多配偶在结果上劣于单偶 —— "劣化"是推论而非测量。
 - **反常识**：人们通常认为"一夫一妻是普遍文明、人多妻是野蛮残留"。数据呈现的是相反的时间结构：**一夫一妻是近代才出现的少数派**，且其快速普及恰恰证明制度形态可以因经济社会条件而快速改变 —— 这既削弱了"传统不可变"的自恋立场，也削弱了"既然能改回一夫一妻就能改成任何形式"的随意立场。
 - **行动**：在跨文化讨论中，**禁止**使用"文明/进步/野蛮"这类修饰语评价婚姻形态（同时命中 M-2 西方中心偏差与 CP-5 不等同声明要求）；改用可检验的变量（流动性、不确定性、风险共担需求、议价能力）。对制度设计的含义是：可改变性高 → 不应把当前形态神圣化。
@@ -687,9 +701,9 @@ tags: ["first-principles", "polygyny", "seven-concepts", "cross-cultural", "know
 
 | 检查点 | 本报告的处理 | 判定 |
 |--------|-------------|------|
-| **CP-1 原典优先** | 法律条文（F-001~F-009）与经典文本（F-022/F-023/F-026/F-029）均直接引条文/原文；中国历代法制部分标注为"条文级细节待点校本核对"（B 级），未伪造条文号与刑等细节 | ✅ |
+| **CP-1 原典优先** | 法律条文（F-001~F-019、F-021）与经典文本（F-022/F-023/F-025~F-029/F-031~F-033）均直接引条文/原文；F-020 为同行评审文献转引（已标注 B 级待核）；中国历代法制部分标注为"条文级细节待点校本核对"（B 级），未伪造条文号与刑等细节 | ✅ |
 | **CP-2 体系内定位** | 伊斯兰法学"公平"要求、犹太法代婚制度（后世称 yibum）、中国法"嫡庶"、摩门教宣言、Oneida 实验均先说明其在本体系中的功能，再作跨体系比较 | ✅ |
-| **CP-3 注疏传统** | 希伯来文引文（F-026）已完成双注译本比对：5 个独立中译本 + 5 个独立英译本 + Swete LXX + Strong's/BDD 词典学 + Rashi / Bahya 解经 + 《塔木德》耶拉莫特 22b、24a，记录见 §1.5.1；据此修正 F-026 三处措辞（"yibum" 为后世术语而非经文原词；触发条件 MT 作「无儿子」而非「无嗣」；"要求"须加 ḥalizah 法定退出路径）。⚠️ 阿拉伯文引文（《古兰经》4:3 / 4:129）与犹太法史 / 伊斯兰法学两条线的双注译本比对仍在进行中 | ⚠️ 部分通过（希伯来文线已闭合，阿拉伯文与教法学线待闭合） |
+| **CP-3 注疏传统** | 希伯来文引文（F-026）已完成双注译本比对：5 个独立中译本 + 5 个独立英译本 + Swete LXX + Strong's/BDD 词典学 + Rashi / Bahya 解经 + 《塔木德》耶拉莫特 22b、24a，记录见 §1.5.1；据此修正 F-026 三处措辞（"yibum" 为后世术语而非经文原词；触发条件 MT 作「无儿子」而非「无嗣」；"要求"须加 ḥalizah 法定退出路径）。**阿拉伯文线（§1.5.2）与犹太法史 / 伊斯兰法学线（§1.5.3）已于本轮完成双注译本比对**：§1.5.2 对《古兰经》4:3 与 4:129 取 Uthmani 原文 + 马坚（quran.com resource id 56）与 Muhammad Makin（id 109）两个中译本 + Sahih International / T. Usmani / Pickthall / The Clear Quran 四个英译本，并比对 Ibn Hazm《al-Dhahiri》、Ibn Kathir、Al-Qurtubi、Al-Sabuni、Farhat、Al-Tawil、Al-Zamakhshari、Al-Attar、Abu Dawood、Bukhari 十部教法学注疏；§1.5.3 对 R. Gershom 教令取《שולחן ערוך הלכות אישות סימן א׳》1:1 希伯来文原文 + Rema 哈拉哈 + Sefaria 官方英译 + JewishAction（R. Ari Z. Zivotofsky），对塔木德妻妾区分取《Bavli Sanhedrin》21a 与《Yerushalmi Ketubot》5:2:3 双原典。三线比对共修正 F-022 / F-023 / F-024 / F-025 / F-027 / F-028 共 6 条事实，并新增 Q-13 | ✅ 通过 |
 | **CP-4 差异先行** | 步骤 3 表格先列三条承认路径的差异（承认+审查 / 承认+降序 / 全面禁止）再归拢共同结论；步骤 4 明确列出层级间"不可直接比较" | ✅ |
 | **CP-5 不等同声明** | "公平对待"≠罗尔斯式公平正义；"同意"≠知情同意；"妻妾"≠现代法 spouse/concubine；"无为"≠道家本义；已在 §三 3.1 逐项声明 | ✅ |
 | **CP-6 过度简化** | "承认"被拆为 4 项（婚姻效力/财产继承/子女身份/同意解除）再展开为 L0–L4；"公平"给出程序义与结果义两个维度；"同意"给出三层 | ✅ |
@@ -748,7 +762,7 @@ tags: ["first-principles", "polygyny", "seven-concepts", "cross-cultural", "know
 | **G3** | 模式含触发场景+3-7 步骤+≥3 反模式+检验标准+跨领域迁移 | P-1（6 步/5 反模式）、P-2（5 步/5 反模式），均含检验标准与 5 项迁移 | ✅ 通过 |
 | **G4** | 行动项单一职责/可独立验证/有 Owner/有时间点/可独立交付 | A-1~A-5 共 5 条，字段齐备；经 M-2 补齐制度接口与验收标准 | ✅ 通过 |
 | **V 强制** | 使用 F 后必须经 V | 四视角（魔鬼代言人/新人/老板/未来），13 条原始意见 → 去重 9 条独立意见；采纳 5 条修正并回写 F 阶段 | ✅ 通过 |
-| **CP-1~CP-7** | 公开级产出全做 | 6 项通过，CP-3 部分通过（外文引文待双注译本比对，已标注） | ⚠️ 带条件通过 |
+| **CP-1~CP-7** | 公开级产出全做 | 7 项全部通过（CP-3 已于 §1.5.1~§1.5.3 完成三条外文引文线的双注译本比对） | ✅ 通过 |
 
 ***
 
@@ -761,10 +775,22 @@ tags: ["first-principles", "polygyny", "seven-concepts", "cross-cultural", "know
 - 1950 年《中华人民共和国婚姻法》第 1、2 条
 - 摩洛哥《家庭法典》（Moudawana, 2004）第 42–46 条
 - 加拿大《刑法典》第 293 条；犹他州法典 2020 年修订
-- 《古兰经》4:3、4:129（通行中译本）
+- 《古兰经》4:3、4:129（Uthmani 原文；马坚译本 quran.com resource id 56、Muhammad Makin 译本 id 109；Sahih International id 20、T. Usmani id 84、Pickthall id 19、Dr. Mustafa Khattab《The Clear Quran》id 131）—— **双注译本比对记录见 §1.5.2**
 - 《申命记》25:5–10（MT，Sefaria MAM / Aleppo 底本系）；Swete 七十士译本；5 个独立中译本（和合本、中文新译本、当代中文译本、和合本修订版、中文标准译本）；NET / NRSVUE / ESV / NIV / KJV；Strong's H2993–H2992 词条（BDD）；Rashi on Deut 25、Bahya on Devarim 25.9；《塔木德》耶拉莫特 22b、24a —— **双注译本比对记录见 §1.5.1**
-- 塔木德传统；R. Gershom 教令（犹太法史）
+- 塔木德传统（《Bavli Sanhedrin》21a、《Yerushalmi Ketubot》5:2:3 希伯来文原典）；R. Gershom 教令（《שולחן ערוך הלכות אישות סימן א׳》1:1 希伯来文原文 + Rema 哈拉哈 + Sefaria 官方英译 + JewishAction / R. Ari Z. Zivotofsky）—— **双注译本比对记录见 §1.5.3**
 - 摩门教《1890 年宣言》第一号、《1904 年宣言》第二号
+- 肯尼亚《Marriage Act, 2014》第 6(2)(3)、8(1)、9(b) 条（new.kenyalaw.org 官方全文）
+- 南非宪法法院《Ramuhovhi and Others v President of the Republic of South Africa and Others》[2017] ZACC 41（CCT194/16A，2017-11-30）
+- 菲律宾《Family Code》（Executive Order No. 209, 1990）第 33、35(4) 条
+- 孟加拉国《Muslim Family Laws Ordinance, 1961》（Ordinance No. VIII of 1961）第 6(1)、9 条
+- 阿尔及利亚《Code de la famille》（Loi n° 84-11 du 9 juin 1984）多妻附条件许可条款（JORADP 官方公报）
+- 印度尼西亚《婚姻法》（UU No. 1 Tahun 1974，经 UU No. 16 Tahun 2019 修订）第 3(2) 条；宪法法院 12/PUU-V/2007
+- 印度《Hindu Marriage Act, 1955》第 5(i)、11、17 条；最高法院《Lily Thomas v Union of India》(2000)
+- 日本《民法》（Act No. 89 of 1896）第 732、744 条；《刑法》（Act No. 45 of 1907）第 184 条（日本法令外国語訳データベース japaneselawtranslation.go.jp 官方译本）
+- 英国《Offences against the Person Act 1861》第 57 条（legislation.gov.uk 原文）
+- 《Bavli Yevamot》65a、37b 希伯来文原文
+- 《Aruch Hashulchan》EH 1:32 原文
+- Ibn Hanbal《Musnad》(2001) p.393；Abu Dawood《Sunan》p.272；Al-Bayhaqi《Al-Sunan al-Kubra》(1989) p.51（《古兰经》4:3 妻数上限三则圣训）
 - Henrich et al. 2012, *Phil. Trans. R. Soc. B*（Ethnographic Atlas 1231 社会）
 - Shepard 2012, *J. Marriage & Family*；Lawson et al. 2015 *PNAS*、2024 *PNAS*；Pavlidou et al. 2011 *PNAS*（Dogon）
 - Munro et al., EDCC / World Bank（尼日利亚公共品实验）
@@ -782,7 +808,10 @@ tags: ["first-principles", "polygyny", "seven-concepts", "cross-cultural", "know
 
 - 各国法典汇编与人口学统计给出的"约 50–60 国允许多配偶"计数（F-010，口径随年份变动）
 - 中国历代法制条文（唐律疏议、《大明律》、《大清律例》、1930 年民法）—— **条文号与刑等需按权威点校本核对后方可正式引用**
-- 伊斯兰法学各派别立场、犹太教法 R. Gershom 教令的存续年代、Oneida complex marriage 档案
+- Oneida complex marriage 档案（F-036~F-038 相关）
+- 妻数上限的少数派解读（F-024 保留 B 级：什叶派 / Zahiri 派「节数可累加至 9 妻或 18 妻、少数主张无上限」三说依赖二手伊斯兰法学史，须回到各派原著核对后方可正式引用；逊尼派「四妻上限」公断已由 Ibn Hazm《al-Dhahiri》、Ibn Kathir、Al-Qurtubi、Al-Sabuni 注疏链闭合，见 §1.5.2）
+- 尼日利亚双轨婚姻制的法条细节（F-020 保留 B 级：《Marriage Act》第 35、47、48 条与《Criminal Code Act》第 370 条经同行评审文献 Ochem & Emejuru (2017) 转引，未取法条原文；须回到尼日利亚官方立法文本核对后方可正式引用）
+- 肯尼亚《Marriage Act, 2014》第 6(2)(3)、8(1)、9(b) 条与南非宪法法院 [2017] ZACC 41 的官方文本（已取一手原文，但正式引用前建议复核条款编号与判决主文措辞）
 - 民意调查（YouGov 2023、Gallup 2003）
 
 ***
