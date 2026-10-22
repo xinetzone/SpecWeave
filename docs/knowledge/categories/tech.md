@@ -9,7 +9,7 @@ title: "分类索引：tech"
 - [返回知识库首页](../README.md)
 - [按标签检索](../tags/README.md)
 
-> 本分片收录 **1** 个子分类，共 **86** 条条目。
+> 本分片收录 **1** 个子分类，共 **88** 条条目。
 
 ## tech
 
@@ -57,7 +57,9 @@ title: "分类索引：tech"
 | [V 对抗审查记录：Medium 知识包](../tech/medium-wiki/references/adversarial-review.md) | 四视角对抗审查共提出 9 条意见，采纳 5 条实质修正：补充口径并列、修正示例表述、强化数据标注、收敛推断、明确限制。 | 2026-10-20 | medium、adversarial-review、quality-gate、verification |
 | [Medium 知识包 references 索引](../tech/medium-wiki/references/index.md) | Medium 知识包 references 子索引。 | 2026-10-20 | medium、index |
 | [Medium 知识包信源台账（S01–S13）](../tech/medium-wiki/references/source-inventory.md) | 13 个信源家族覆盖维基百科镜像、官方帮助中心、行业深度复盘、转型复盘转述与竞品分析；所有数字标注机构+时间+口径。 | 2026-10-20 | medium、sources、provenance、evidence |
+| [openKylin 知识枢纽：官方文档导读、发行版对比与工程沉淀](../tech/openkylin/index.md) | openKylin 相关文档在 SpecWeave 文档中心的统一入口：知识包就地集中为 docs-wiki（官方文档平台逆向导读，20 篇）与 openeuler-comparison（openEuler 与 openKylin 系统性对比，9 篇）两个子包，okw 工具包指南以指针页并列（1 篇）；复盘报告（15 篇）与模式库案例（13 篇）按 docs 分区规范保留原位，由本页建立跨区索引聚合。 | 2026-10-22 | openkylin、linux-distro、index |
 | [openEuler 与 openKylin 系统性对比：后端根社区与桌面根社区的分工、治理、生命周期与选型](../tech/openkylin/openeuler-comparison/index.md) | 以七概念方法论（R→I→E→V→C，standard）系统对比 openEuler 与 openKylin：新采集 openEuler 侧 35 条带来源客观事实（O-001~O-035，2010 EulerOS 起源至 2026-09 装机 2000 万口径与 24.03 LTS SP4），以 12 条锚点（K-001~K-012）引用本地 openKylin 知识包 62 条事实，形成 5 条四元组洞察与 1 个 L1-draft 可迁移模式（场景区间选型法）。核心结论：两者不是直接竞品，而是同一开放原子基金会体系内后端基础设施根社区与桌面/AI 终端根社区的产业分工，麒麟软件同时为两边参与者且其服务器/桌面商业版分别以两者为上游。知识包按问题域拆为画像、定位场景、治理生态、版本生命周期、技术栈、选型指南 6 个概念页，附信源台账与对抗审查记录。 | 2026-09-30 | - |
+| [openKylin WSL 开发工具包（okw）](../tech/openkylin/references/wsl-devkit-guide.md) | openKylin WSL 开发工具包（okw）入口指针页：唯一真源位于 apps/dev-tools/openkylin-wsl-devkit/doc/（Sphinx + MyST 站点），本页登记 8 篇原子页入口，文档正文不在 docs 分区内维护。 | 2026-10-22 | openkylin、wsl、devkit |
 | [openKylin 官方文档平台学习教程（OKF Wiki）：237 篇社区文档的逆向导读](../tech/openkylin/docs-wiki/index.md) | 以七概念方法论（R→I→E→V→C，standard）系统学习 openKylin 官方文档平台 docs.openkylin.top：递归解析 Gitee 源仓库 3181 条目/237 篇中文文档、精读 35 篇代表性文档、提取 44 条客观事实，形成 4 条四元组洞察与 1 个 L1 可迁移模式（逆序文档学习法）。教程按学习者问题域重组为平台地图、版本生命周期、安装路径、桌面使用、AI 三层体系、开发者基础设施、社区治理 7 个概念页，附信源台账与完整文档分类地图。 | 2026-09-29 | - |
 | [openKylin 3.0 Kylin AI SDK 文字识别（OCR）能力落机 POC 实测（Desktop WSL）](../tech/openkylin/docs-wiki/references/ai-sdk-ocr-poc.md) |  | 2026-10-08 | - |
 | [openKylin 3 AI 子系统源码架构剖析：两代 SDK、运行时 D-Bus 与引擎插件层（huanghe 本机核验）](../tech/openkylin/docs-wiki/references/ai-subsystem-source-architecture.md) | 在 openKylin-3.0-desktop WSL（huanghe）上以 dpkg/apt 只读核验结合 Gitee 上游源码（kylin-ai-subsystem、kylin-ai-engine、kysdk-ai-common、libkysdk-genai-*、kylin-ondevice-nlp-engine、libkylin-ai-base），还原 openKylin 3 AI 子系统的真实分层：Gen1 libkylin-ai-base2 与 Gen2 kysdk 1.1 两套 SDK 同机并存、SDK 全部是 D-Bus/IPC 代理不含推理、Gen2 走 per-uid 私有 unix socket 接 kylin-ai-runtime、引擎以 C++ AbstractAiEngine 插件方式接入、本地文本生成链路终点是预装的 kytensor(Triton)+llama.cpp，并给出 huanghe 官方源组件可用性矩阵与源码分支错位的证据边界。 | 2026-10-08 | - |

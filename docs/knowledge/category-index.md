@@ -12,14 +12,14 @@ title: "分类总索引"
 
 ## 统计摘要
 
-- **总条目数**：473
+- **总条目数**：475
 - **分类路径数**：25
 - **顶层分类数**：20
 
 | 顶层分类 | 子分类数 | 条目数 | 入口 |
 |----------|----------|--------|------|
 | unknown | 1 | 218 | [unknown](categories/unknown.md) |
-| tech | 1 | 86 | [tech](categories/tech.md) |
+| tech | 1 | 88 | [tech](categories/tech.md) |
 | best-practices | 1 | 49 | [best-practices](categories/best-practices.md) |
 | operations | 1 | 26 | [operations](categories/operations.md) |
 | knowledge | 4 | 20 | [knowledge](categories/knowledge.md) |
