@@ -98,7 +98,7 @@ status: complete
 | F-065 | 实例副本数最小值设为 0 时，服务在 30min 内无流量后台会将实例副本数缩容为 0；服务部署发布时都会先产生 1 个容器实例，部署成功后等待半小时再缩容至 0。 | https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/guide/service/pipeline.html |
 | F-066 | 版本切换空窗期流量切换出现空白一般持续 1 分钟自动恢复，推荐灰度发布做法为先 50%，然后隔 3-5 分钟结束灰度。 | https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/development/call/faq.html |
 | F-067 | 服务间以内网域名方式内网调用，每个服务开启内网访问后分配一个内网域名，开启内网方式时将自动触发一次部署发布；服务间内网调用的端口为服务部署发布时填写的端口，其他端口不可使用。 | https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/guide/service/internal.html |
-| F-068 | CLI 部署命令为 `wxcloud run:deploy [OPTIONS] [PATH]`，支持 `--releaseType=FULL|GRAY`、`--containerPort`、`--dockerfile`、`--targetDir`、`--libraryImage`、`--envParams`、`--override`、`--noConfirm`、`--detach` 等参数，发布版本后直接 100% 接入现网。 | https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/guide/cli/index.html |
+| F-068 | CLI 部署命令为 `wxcloud run:deploy [OPTIONS] [PATH]`，支持 `--releaseType=FULL\|GRAY`、`--containerPort`、`--dockerfile`、`--targetDir`、`--libraryImage`、`--envParams`、`--override`、`--noConfirm`、`--detach` 等参数，发布版本后直接 100% 接入现网。 | https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/guide/cli/index.html |
 | F-069 | CLI 通过 `npm install -g @wxcloud/cli` 安装，登录命令为 `wxcloud login`，参数为 `-a, --appId=appId` 和 `-k, --privateKey=privateKey`；CLI 密钥需在「微信云托管控制台-设置-CLI 密钥」生成，生成时需要账号管理员扫码。 | https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/guide/cli/index.html |
 
 ## 四、调用链路与身份透传
