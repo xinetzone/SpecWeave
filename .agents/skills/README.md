@@ -20,7 +20,7 @@ title: ".agents/skills/ 目录索引"
 
 ## Skill 列表
 
-### 命令集门面（10个）
+### 命令集门面（11个）
 
 | Skill名称 | 类型 | 对应命令集 | 核心触发词 | SKILL.md路径 |
 |-----------|------|-----------|-----------|-------------|
@@ -34,6 +34,7 @@ title: ".agents/skills/ 目录索引"
 | mermaid-cmd | 命令门面 | Mermaid图表管理 | mermaid、流程图、时序图、状态图、画个图、图表、架构图、思维导图 | [mermaid-cmd/SKILL.md](mermaid-cmd/SKILL.md) |
 | token-optimize-cmd | 命令门面 | Token优化 | Token优化、降本、成本优化、缓存命中率、上下文压缩、Prompt优化、LLM成本 | [token-optimize-cmd/SKILL.md](token-optimize-cmd/SKILL.md) |
 | sovereign-rollout-cmd | 命令门面 | 主权区治理资产落盘 | 提案、批准落盘、主权区变更、治理资产落盘、先提案后批准 | [sovereign-rollout-cmd/SKILL.md](sovereign-rollout-cmd/SKILL.md) |
+| github-org-bootstrap-cmd | 命令门面 | GitHub 组织命名与初始化 | 创建GitHub组织、建个org、组织名怎么起、demo组织、huncheng-lab | [github-org-bootstrap-cmd/SKILL.md](github-org-bootstrap-cmd/SKILL.md) |
 
 ### 完整Skill（10个）
 

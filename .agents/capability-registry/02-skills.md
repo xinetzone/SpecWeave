@@ -40,7 +40,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 
 > 两者互为选型路由：有界变更→plan，复杂/高影响/跨会话→spec。派生自 Trae 内置 doutops skill（external/ 非 git 目录），中文五要素适配版；Trae 同步覆盖后以本仓库版本为准（大写路径为权威位置）。
 
-### 命令集门面（10个）
+### 命令集门面（11个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -53,6 +53,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | atomization-cmd | "原子化"、"拆分文件"、"atomize"、"拆分大文档"、"文档拆分" | 3（文档原子化/一键收尾/预检） | v1.2.1 | [skills/atomization-cmd/SKILL.md](../skills/atomization-cmd/SKILL.md) |
 | atomic-commit-cmd | "提交"、"commit"、"原子提交"、"代码提交"、"git commit" | 3（标准/快速/CI检查） | v1.2.1 | [skills/atomic-commit-cmd/SKILL.md](../skills/atomic-commit-cmd/SKILL.md) |
 | mermaid-cmd | "mermaid"、"流程图"、"时序图"、"状态图"、"画个图"、"图表"、"架构图"、"思维导图"、"画流程图" | 3（快速生成/检查修复/复杂协作） | v1.1.0 | [skills/mermaid-cmd/SKILL.md](../skills/mermaid-cmd/SKILL.md) |
+| github-org-bootstrap-cmd | "创建GitHub组织"、"建个org"、"组织名怎么起"、"demo组织"、"huncheng-lab"、"GitHub Organization" | 1（命名收敛F→V→I + gh api 自动配置） | v1.0.0 | [skills/github-org-bootstrap-cmd/SKILL.md](../skills/github-org-bootstrap-cmd/SKILL.md) |
 
 ### 脚本命令门面（16个）
 
