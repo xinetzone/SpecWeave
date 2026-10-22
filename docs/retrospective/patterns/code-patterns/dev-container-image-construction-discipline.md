@@ -12,8 +12,8 @@ maturity: "L1-draft"
 maturity_note: "单工程实例（openkylin-dev-container，基于本地导入 openKylin 3.0 WSL rootfs 构建，双环境 25 步构建 exit 0 + 冒烟全绿），待其他开发容器/基底镜像复用后升级 L2"
 
 source:
-  - "../../../tech/guides/openkylin-wsl-devkit/05-openkylin-dev-container.md"
-  - "../../../../apps/dev-tools/openkylin-wsl-devkit/openkylin-dev-container/README.md"
+  - "../../../../apps/dev-tools/openkylin-wsl-devkit/doc/05-openkylin-dev-container.md"
+  - "../../../../apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/README.md"
   - "../../reports/build-engineering/retrospective-openkylin-wsl-to-podman-20261009/README.md#洞察2执行通道选择决定成败"
 
 related_patterns:
