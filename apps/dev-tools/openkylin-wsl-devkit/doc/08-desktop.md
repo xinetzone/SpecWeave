@@ -1,7 +1,6 @@
 ---
 type: "Tutorial"
 title: "okw 桌面：UKUI（xrdp/WSL）预检、补齐与验收"
-source: "../../../../docs/knowledge/tech/openkylin-docs-wiki/concepts/04-desktop-usage.md"
 ---
 
 # okw 桌面：UKUI（xrdp/WSL）预检、补齐与验收
@@ -83,12 +82,18 @@ exec ukui-session
 2. 等 `:3390` 就绪（首次约数秒）后再连；`okw desktop verify <name>` 会**连带 Windows 侧回环端口**一起检查，全 PASS 即代表已可连。
 3. 仍连不上时：若改过 `/etc/xrdp/xrdp.ini` 的端口，用 `okw desktop verify <name> --port <端口>` 复核；服务异常可在发行版内 `systemctl status xrdp`，重启 `sudo systemctl restart xrdp`。
 
-> 根因与完整启动/关闭语义见 [Desktop WSL 桌面启动教程](../../../knowledge/tech/openkylin-docs-wiki/references/wsl-desktop-startup-tutorial.md)（§1 为什么不能「直接点图标」、§3 日常启动、§6 用完怎么关）。
+> 根因与完整启动/关闭语义见 [Desktop WSL 桌面启动教程](../../../../docs/knowledge/tech/openkylin-docs-wiki/references/wsl-desktop-startup-tutorial.md)（§1 为什么不能「直接点图标」、§3 日常启动、§6 用完怎么关）。
 
 ## 边界
 
 - `okw desktop` **不安装桌面套件**、不改软件源、不改 `wsl.conf`、不推送凭据；只作用于**已预装**桌面的 Desktop WSL 镜像。
-- 不自动下载或导入镜像；选型与导入见[双 WSL 镜像对照与选型参考](../../../knowledge/tech/openkylin-docs-wiki/references/wsl-dual-image-selection.md)。
-- 桌面使用的证书提示、登录、关机语义与 FAQ 见[桌面环境与基础使用](../../../knowledge/tech/openkylin-docs-wiki/concepts/04-desktop-usage.md)与 [Desktop WSL 桌面启动教程](../../../knowledge/tech/openkylin-docs-wiki/references/wsl-desktop-startup-tutorial.md)。
+- 不自动下载或导入镜像；选型与导入见[双 WSL 镜像对照与选型参考](../../../../docs/knowledge/tech/openkylin-docs-wiki/references/wsl-dual-image-selection.md)。
+- 桌面使用的证书提示、登录、关机语义与 FAQ 见[桌面环境与基础使用](../../../../docs/knowledge/tech/openkylin-docs-wiki/concepts/04-desktop-usage.md)与 [Desktop WSL 桌面启动教程](../../../../docs/knowledge/tech/openkylin-docs-wiki/references/wsl-desktop-startup-tutorial.md)。
 
 > 上一篇：[AI 栈：本地 OCR](07-ai-stack.md)
+
+## 相关页面
+
+- [文档首页](index.md)：工具定位、环境要求与全部主题入口。
+- [命令参考](02-command-reference.md)：`okw desktop` 的命令速查与端口说明。
+- [AI 栈（本地离线 OCR）](07-ai-stack.md)：同为「预检 → 显式补齐 → 只读验收」结构。

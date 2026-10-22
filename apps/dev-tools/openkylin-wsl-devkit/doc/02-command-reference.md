@@ -1,7 +1,6 @@
 ---
 type: "Reference"
 title: "okw WSL 与开发命令参考"
-source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#用法"
 ---
 
 # okw WSL 与开发命令参考
@@ -28,7 +27,7 @@ okw exec openKylin-3.0 -- uname -a
 okw export openKylin-3.0 --output .\openKylin-3.0.tar
 ```
 
-发行版名称可用 `okw list` 或 Windows 侧 `wsl -l -v` 查询。导入时若失败，工具会提示按知识库中的排障三问检查镜像/导入位置、空闲内存和纯 tar 导入路径；详见 [WSL 安装与稀疏 VHD 实操指南](../../../knowledge/tech/openkylin-docs-wiki/references/wsl-install-sparse-vhd-guide.md)。
+发行版名称可用 `okw list` 或 Windows 侧 `wsl -l -v` 查询。导入时若失败，工具会提示按知识库中的排障三问检查镜像/导入位置、空闲内存和纯 tar 导入路径；详见 [WSL 安装与稀疏 VHD 实操指南](../../../../docs/knowledge/tech/openkylin-docs-wiki/references/wsl-install-sparse-vhd-guide.md)。
 
 ## 开发脚手架
 
@@ -85,7 +84,7 @@ okw compose verify   <name> [--smoke]
 - `verify` 全路径比对双 shim 的 `version --short`；`--smoke` 在 `/tmp/okw-smoke-*` 隔离目录写最小 `compose.yaml` 跑 `xc config --quiet` 做端到端探活，不起容器、不拉镜像，前置有 FAIL 则跳过。
 - 退出码 `0` 全通过 / `1` 有 FAIL / `2` 用法错误、仅 UNKNOWN 或缺 `--yes`。
 
-> 许可证边界：xuan-compose 为 **GPL-2.0-only** 第三方软件，okw（MIT）不 import、不复制、不分发，仅在你显式授权后按你指定来源在本机引导安装。完整机制、镜像环境变量与常见问题见 [xuan-compose（xc）引导指南](06-xuan-compose.md)。
+> 许可证边界：xuan-compose 为 **GPL-2.0-only** 第三方软件，okw（Apache-2.0）不 import、不复制、不分发，仅在你显式授权后按你指定来源在本机引导安装。完整机制、镜像环境变量与常见问题见 [xuan-compose（xc）引导指南](06-xuan-compose.md)。
 
 ## AI 栈（仅已验证的本地 OCR 路径）
 
@@ -103,7 +102,7 @@ okw ai verify   <name> [--smoke-ocr <图片路径>]
 - 图片路径：发行版内绝对路径（`/tmp/a.png`）原样使用；Windows 盘符路径（`C:\...\a.png`）自动转 `/mnt/c/.../a.png`。
 - 退出码 `0` 全通过 / `1` 有 FAIL / `2` 用法错误、必选项仅 UNKNOWN，或 install 缺 `--yes`。
 
-> 边界：okw 不配置 API Key、不下载模型、不安装 ollama/Gen2 全栈、不启动推理服务。Gen2 `libkysdk` 客户端虽出厂预装，但只是 IPC 薄代理，引擎插件与模型缺省、端到端未验证。完整背景见 [AI 栈指南](07-ai-stack.md) 与知识库 [05 AI 三层体系](../../../knowledge/tech/openkylin-docs-wiki/concepts/05-ai-stack.md)。
+> 边界：okw 不配置 API Key、不下载模型、不安装 ollama/Gen2 全栈、不启动推理服务。Gen2 `libkysdk` 客户端虽出厂预装，但只是 IPC 薄代理，引擎插件与模型缺省、端到端未验证。完整背景见 [AI 栈指南](07-ai-stack.md) 与知识库 [05 AI 三层体系](../../../../docs/knowledge/tech/openkylin-docs-wiki/concepts/05-ai-stack.md)。
 
 ## 桌面（UKUI / xrdp）
 
@@ -123,7 +122,7 @@ okw desktop verify    <name> [--port <端口>]
 - `--port` 默认 **3390**（xrdp 默认端口，非标准 RDP 3389）；改了 `/etc/xrdp/xrdp.ini` 的 `port=` 后需同步传入。
 - 退出码 `0` 全通过 / `1` 有 FAIL / `2` 用法错误或 install 缺 `--yes`。
 
-首登黑屏（KWin 冷启动不驻留）的根因、`~/.xsession` 看门狗与登录/证书/FAQ 见 [桌面指南](08-desktop.md) 与知识库[桌面环境与基础使用](../../../knowledge/tech/openkylin-docs-wiki/concepts/04-desktop-usage.md)。
+首登黑屏（KWin 冷启动不驻留）的根因、`~/.xsession` 看门狗与登录/证书/FAQ 见 [桌面指南](08-desktop.md) 与知识库[桌面环境与基础使用](../../../../docs/knowledge/tech/openkylin-docs-wiki/concepts/04-desktop-usage.md)。
 
 ## 知识库参考
 
@@ -136,4 +135,11 @@ okw ref verify
 okw ref ai-stack
 ```
 
-`okw ref` 不修改知识库。`ai-stack` 主题导读 AI 三层体系、Gen1/Gen2 SDK 消歧与本地 OCR 红线。openKylin 版本代号和开发流程见[知识库对应页面](../../../knowledge/tech/openkylin-docs-wiki/concepts/02-release-lifecycle.md)与[开发者基础设施](../../../knowledge/tech/openkylin-docs-wiki/concepts/06-developer-infrastructure.md)。
+`okw ref` 不修改知识库。`ai-stack` 主题导读 AI 三层体系、Gen1/Gen2 SDK 消歧与本地 OCR 红线。openKylin 版本代号和开发流程见[知识库对应页面](../../../../docs/knowledge/tech/openkylin-docs-wiki/concepts/02-release-lifecycle.md)与[开发者基础设施](../../../../docs/knowledge/tech/openkylin-docs-wiki/concepts/06-developer-infrastructure.md)。
+
+## 相关页面
+
+- [文档首页](index.md)：工具定位、环境要求与全部主题入口。
+- [安装与快速开始](01-getting-started.md)：安装、首次环境验收与发行版导入。
+- [开发与边界](04-development-and-boundaries.md)：设计要点、验收口径与已知边界。
+- [openKylin 开发容器镜像](05-openkylin-dev-container.md)：`okw image` 对应的镜像构成与运行契约。

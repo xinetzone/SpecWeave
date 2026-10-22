@@ -1,7 +1,6 @@
 ---
 type: "Tutorial"
 title: "okw rootless Podman 指南"
-source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#Podman-入门"
 ---
 
 # okw rootless Podman 指南
@@ -62,3 +61,10 @@ okw podman verify <name> --smoke-image <本地镜像>
 - **冒烟提示镜像不存在怎么办？** 先在发行版内拉取或加载镜像，再确认 `podman image exists <镜像>` 返回 0，最后重跑 `verify --smoke-image`。
 
 发行版名称可通过 `okw list` 或 `wsl -l -v` 查询。
+
+## 相关页面
+
+- [文档首页](index.md)：工具定位、环境要求与全部主题入口。
+- [命令参考](02-command-reference.md)：`okw podman` 的命令速查与退出码。
+- [xuan-compose（xc）引导](06-xuan-compose.md)：rootless Podman 就绪后的下游引导。
+- [openKylin 开发容器镜像](05-openkylin-dev-container.md)：容器侧的 rootless Podman 开发环境。

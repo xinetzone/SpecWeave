@@ -82,4 +82,4 @@ openkylin-dev-container/
 - 容器内 live rootless Podman（devuser 建嵌套用户命名空间）依赖外层宿主的 rootful 能力：在 rootless 外层宿主（如 Windows Podman Machine）上，`newuidmap` 写 `uid_map` 会遇 `Operation not permitted`（嵌套 userns 受限）——冒烟按 spec 假设降级为「镜像内配置与二进制就绪检查」（P8）+ 记录 ENV-LIMIT；在 rootful 外层宿主（如 openKylin WSL 发行版内 podman）上可完整验证 live rootless。
 - 不含 conda/OMLMD/OLOT/Toolbx 等 jupyter-podman-rootless 特色部件（openKylin 场景无对应资产）。
 - 不修改 openKylin 软件源、不添加第三方 apt 源。
-- 完整使用指南见文档中心 `docs/tech/guides/openkylin-wsl-devkit/05-openkylin-dev-container.md`。
+- 完整使用指南见 [开发容器镜像指南](../../doc/05-openkylin-dev-container.md)。

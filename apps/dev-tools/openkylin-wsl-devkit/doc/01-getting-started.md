@@ -1,7 +1,6 @@
 ---
 type: "Tutorial"
 title: "okw 安装与快速开始"
-source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#安装"
 ---
 
 # okw 安装与快速开始
@@ -54,3 +53,9 @@ okw import <镜像.wsl> --name openKylin-3.0 --location D:\wsl\ok30 --version 2
 - [命令参考](02-command-reference.md)：发行版生命周期、脚手架和知识参考命令。
 - [rootless Podman 指南](03-podman-rootless.md)：预检、安装与 rootless 验收。
 - [开发与边界](04-development-and-boundaries.md)：安全约束、测试方式和已知限制。
+
+## 相关页面
+
+- [文档首页](index.md)：工具定位、环境要求与全部主题入口。
+- [命令参考](02-command-reference.md)：发行版生命周期、脚手架与知识参考命令。
+- [rootless Podman 指南](03-podman-rootless.md)：rootless Podman 的预检、安装与验收。

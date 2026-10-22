@@ -1,7 +1,6 @@
 ---
 type: "Tutorial"
 title: "openKylin 开发容器镜像指南"
-source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#openKylin-开发容器镜像"
 ---
 
 # openKylin 开发容器镜像指南
@@ -11,7 +10,7 @@ source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#openKylin-开
 ## 用途与定位
 
 - 面向 openKylin 平台开发者：在 openKylin 基底容器内做 SSH/Jupyter 开发、运行 rootless 容器实验。
-- 资产归属 `apps/dev-tools/openkylin-wsl-devkit/openkylin-dev-container/`（非独立应用），构建脚本零第三方运行时依赖（bash + pwsh 双环境）。
+- 资产归属 `apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/`（非独立应用），构建脚本零第三方运行时依赖（bash + pwsh 双环境）。
 - 与 `okw podman`（发行版内 rootless Podman 三步流程，见 [rootless Podman 指南](03-podman-rootless.md)）互补：okw 管理宿主侧，本镜像提供容器侧开发环境。
 
 ## 镜像构成
@@ -27,7 +26,7 @@ source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#openKylin-开
 
 ## 构建（双环境）
 
-基底镜像为**本地导入**（无 registry）：`podman machine ssh -- podman import <openKylin WSL 导出文件> openkylin:3.0`，转换方法见模式文档 [wsl-rootfs-oci-image-export](../../../retrospective/patterns/code-patterns/wsl-rootfs-oci-image-export.md)。
+基底镜像为**本地导入**（无 registry）：`podman machine ssh -- podman import <openKylin WSL 导出文件> openkylin:3.0`，转换方法见模式文档 [wsl-rootfs-oci-image-export](../../../../docs/retrospective/patterns/code-patterns/wsl-rootfs-oci-image-export.md)。
 
 **Windows Podman Machine**（自动探测；建议 pwsh 7）：
 
@@ -103,5 +102,11 @@ okw image verify openKylin-3.0-desktop    # okw 一键验收（含 Jupyter HTTP 
 ## 相关知识
 
 - [rootless Podman 指南](03-podman-rootless.md)：okw 在 WSL 发行版内的 rootless Podman 三步流程（宿主侧）。
-- [wsl-rootfs-oci-image-export](../../../retrospective/patterns/code-patterns/wsl-rootfs-oci-image-export.md)：WSL 导出文件转 OCI 镜像的模式文档。
-- [openKylin 版本生命周期](../../../knowledge/tech/openkylin-docs-wiki/concepts/02-release-lifecycle.md)：2.0 LTS / 3.0 创新版与容器 tag 的关系。
+- [wsl-rootfs-oci-image-export](../../../../docs/retrospective/patterns/code-patterns/wsl-rootfs-oci-image-export.md)：WSL 导出文件转 OCI 镜像的模式文档。
+- [openKylin 版本生命周期](../../../../docs/knowledge/tech/openkylin-docs-wiki/concepts/02-release-lifecycle.md)：2.0 LTS / 3.0 创新版与容器 tag 的关系。
+
+## 相关页面
+
+- [文档首页](index.md)：工具定位、环境要求与全部主题入口。
+- [命令参考](02-command-reference.md)：`okw image build` / `verify` 的参数与退出码。
+- [rootless Podman 指南](03-podman-rootless.md)：宿主侧发行版的 rootless Podman 三步流程。

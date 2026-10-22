@@ -1,7 +1,6 @@
 ---
 type: "Reference"
 title: "okw 开发、设计与边界"
-source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#设计要点"
 ---
 
 # okw 开发、设计与边界
@@ -35,11 +34,17 @@ pytest
 
 - 不替代 `wsl --install` 等系统级安装操作，也不自动下载发行版镜像。
 - 不调用 OKBS 或 factory API；dput 配置生成后由开发者自行上传。
-- Desktop WSL 镜像选型、磁盘占用和运行时实测结果见[双 WSL 镜像对照与选型参考](../../../knowledge/tech/openkylin-docs-wiki/references/wsl-dual-image-selection.md)；本工具不自动下载或导入该镜像。
+- Desktop WSL 镜像选型、磁盘占用和运行时实测结果见[双 WSL 镜像对照与选型参考](../../../../docs/knowledge/tech/openkylin-docs-wiki/references/wsl-dual-image-selection.md)；本工具不自动下载或导入该镜像。
 
 ## 知识库映射
 
-- WSL 导入排障三问（`E_UNEXPECTED`/`E_ABORT`）：[WSL 安装与稀疏 VHD 实操指南](../../../knowledge/tech/openkylin-docs-wiki/references/wsl-install-sparse-vhd-guide.md)。
-- 双 WSL 镜像选型与桌面版启动：[双 WSL 镜像对照与选型参考](../../../knowledge/tech/openkylin-docs-wiki/references/wsl-dual-image-selection.md)。
-- 版本代号（`yangtze`/`nile`/`huanghe`）：[版本发布与生命周期](../../../knowledge/tech/openkylin-docs-wiki/concepts/02-release-lifecycle.md)。
-- OKBS 编译流程：[开发者基础设施](../../../knowledge/tech/openkylin-docs-wiki/concepts/06-developer-infrastructure.md)。
+- WSL 导入排障三问（`E_UNEXPECTED`/`E_ABORT`）：[WSL 安装与稀疏 VHD 实操指南](../../../../docs/knowledge/tech/openkylin-docs-wiki/references/wsl-install-sparse-vhd-guide.md)。
+- 双 WSL 镜像选型与桌面版启动：[双 WSL 镜像对照与选型参考](../../../../docs/knowledge/tech/openkylin-docs-wiki/references/wsl-dual-image-selection.md)。
+- 版本代号（`yangtze`/`nile`/`huanghe`）：[版本发布与生命周期](../../../../docs/knowledge/tech/openkylin-docs-wiki/concepts/02-release-lifecycle.md)。
+- OKBS 编译流程：[开发者基础设施](../../../../docs/knowledge/tech/openkylin-docs-wiki/concepts/06-developer-infrastructure.md)。
+
+## 相关页面
+
+- [文档首页](index.md)：工具定位、环境要求与全部主题入口。
+- [安装与快速开始](01-getting-started.md)：安装、首次环境验收与发行版导入。
+- [命令参考](02-command-reference.md)：全部命令与退出码约定。

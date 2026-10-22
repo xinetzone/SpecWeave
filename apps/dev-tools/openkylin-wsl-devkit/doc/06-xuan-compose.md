@@ -1,7 +1,6 @@
 ---
 type: "Tutorial"
 title: "okw 引导 xuan-compose（xc）指南"
-source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#xuan-compose"
 ---
 
 # okw 引导 xuan-compose（xc）指南
@@ -10,7 +9,7 @@ source: "../../../../apps/dev-tools/openkylin-wsl-devkit/README.md#xuan-compose"
 
 ## 许可证边界（先读）
 
-xuan-compose 是 **GPL-2.0-only** 第三方软件，而 okw 自身采用 MIT 许可证。为避免许可证污染，okw 对 xuan-compose 采取**纯 CLI 聚合引导**，边界如下：
+xuan-compose 是 **GPL-2.0-only** 第三方软件，而 okw 自身采用 Apache-2.0 许可证。为避免许可证污染，okw 对 xuan-compose 采取**纯 CLI 聚合引导**，边界如下：
 
 - okw **不 import、不复制、不链接、不分发** xuan-compose 的任何源码或制品；
 - okw 仅在你**显式授权**（`install --yes`）后，于你自己的发行版内，按你**亲自指定的来源**（`--source`）通过 [uv](https://docs.astral.sh/uv/) 安装，与 `apt install` 一个 GPL 包的性质相同；
@@ -164,3 +163,9 @@ okw compose install <发行版> --yes --source <来源>
 - **GPL 会不会传染我的项目？** okw 只做安装引导、不分发不链接 xuan-compose；你在自己机器上安装并运行一个 GPL 工具不影响你自有代码的许可证。若要再分发 xuan-compose 本身，请遵循其 GPL-2.0-only 条款。
 
 发行版名称可通过 `okw list` 或 `wsl -l -v` 查询。
+
+## 相关页面
+
+- [文档首页](index.md)：工具定位、环境要求与全部主题入口。
+- [rootless Podman 指南](03-podman-rootless.md)：compose 的前置条件与三步验收。
+- [命令参考](02-command-reference.md)：`okw compose` 的命令速查与退出码。
