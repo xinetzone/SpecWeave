@@ -64,6 +64,7 @@ format-evidence-over-memory-pattern
 four-dimension-margin-framework
 four-negatives-external-dependency
 fp-multi-dimensional-falsification
+governance-engine-dual-loop
 governance-four-layer-progressive
 governance-three-stage-evolution
 governance-tier-priority

@@ -91,7 +91,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/openkylin-wsl-devkit/SKILL.toml"
 ## 5. 本机固定事实（先读，避免重复踩坑）
 
 - 应用源码：`apps/dev-tools/openkylin-wsl-devkit`（`src/okw`，主仓直接管理，**非 submodule，可直接修改**）；人类文档：`docs/tech/guides/openkylin-wsl-devkit/`（共 6 篇）。
-- 本机 shell 的 PATH 被裁剪：`python`、`git`、`okw` 均不可裸调。Python 用全路径 `C:\Users\XMICUser\AppData\Local\Programs\Python\Python314\python.exe`（3.14.7，已 editable 安装 okw 0.1.0，用 `& $py -m okw ...` 调用）；git 用 `D:\Program Files\Git\mingw64\bin\git.exe`，或在命令首行临时注入 `$env:PATH = "D:\Program Files\Git\mingw64\bin;" + $env:PATH`。
+- 本机 shell 的 PATH 被裁剪：`python`、`git`、`okw` 均不可裸调。Python 用全路径 `<USER_HOME>\AppData\Local\Programs\Python\Python314\python.exe`（3.14.7，已 editable 安装 okw 0.1.0，用 `& $py -m okw ...` 调用）；git 用 `D:\Program Files\Git\mingw64\bin\git.exe`，或在命令首行临时注入 `$env:PATH = "D:\Program Files\Git\mingw64\bin;" + $env:PATH`。
 - 工具安装（其他机器/新环境）：在仓库根执行 `python -m pip install -e apps/dev-tools/openkylin-wsl-devkit`。
 - okw 自身已内置 wsl.exe 全路径回退（PATH → `%WINDIR%\System32\wsl.exe`）与 `WSL_UTF8=1`，调用方不要再重复造这层封装。
 

@@ -37,7 +37,7 @@ description: 仅当用户明确要求创建、生成、开发或修改小程序�
 
 ## Commands
 ```bash
-node c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-generate-mini-app/scripts/get-skill-assets-dir.js
+node <USER_HOME>\.trae-cn\builtin_skills\TRAE-generate-mini-app/scripts/get-skill-assets-dir.js
 # 获取本次任务应使用的 Skill 资产目录；返回 skill_assets_dir，后续通过 ${skill_assets_dir}/prompts 和 ${skill_assets_dir}/scripts 读取对应文件
 
 node ${skill_assets_dir}/scripts/init-template.js [dir]
@@ -48,7 +48,7 @@ node ${skill_assets_dir}/scripts/preview-server.js [dir]
 ```
 
 注意：
-- `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-generate-mini-app` 代表 `SKILL.md` 文件所在的目录，也就是当前 Skill 被安装到的实际路径。仅 `get-skill-assets-dir.js` 使用此路径，用于获取更新后的 Skill 资产目录。
+- `<USER_HOME>\.trae-cn\builtin_skills\TRAE-generate-mini-app` 代表 `SKILL.md` 文件所在的目录，也就是当前 Skill 被安装到的实际路径。仅 `get-skill-assets-dir.js` 使用此路径，用于获取更新后的 Skill 资产目录。
 - `${skill_assets_dir}` 是由 Step 0（`get-skill-assets-dir.js`）返回的 `skill_assets_dir` 字段，`init-template.js` 和 `preview-server.js` 必须使用此变量，以确保执行的是最新版本的脚本。
 - 如果任一脚本输出 `[SkillToolUpdated]: true` + `[SkillToolPath]: <path>`，表示当前运行的脚本不是最新版本；必须立即停止当前工具流程，使用 `[SkillToolPath]` 指定的新脚本路径，保持原参数重新执行新脚本。
 
@@ -59,12 +59,12 @@ node ${skill_assets_dir}/scripts/preview-server.js [dir]
 ## Execution Flow （CRITICAL: 必须严格遵守该流程）
 
 ### 0. 绑定本次任务的 Skill 资产目录（CRITICAL: 必须最先执行）
-- **必须先执行 `node c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-generate-mini-app/scripts/get-skill-assets-dir.js` 获取本次任务应使用的 Skill 资产目录**。
+- **必须先执行 `node <USER_HOME>\.trae-cn\builtin_skills\TRAE-generate-mini-app/scripts/get-skill-assets-dir.js` 获取本次任务应使用的 Skill 资产目录**。
 - 脚本会自动完成必要的更新检查，并输出 JSON，其中 `skill_assets_dir` 字段是本次任务应使用的 Skill 根目录。
 - 后续读取 prompts 和调用 scripts 时，必须基于 `${skill_assets_dir}` 拼接路径。
 - 后续读取 prompts 时，必须使用 `${skill_assets_dir}/prompts` 下的文件。
-- 后续调用脚本工具时，必须使用 `${skill_assets_dir}/scripts` 下的脚本，不要继续直接使用 `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-generate-mini-app/scripts` 下的脚本。
-- 如果 `get-skill-assets-dir.js` 不存在或获取路径失败，需要回退到直接使用 `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-generate-mini-app/prompts` 和 `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-generate-mini-app/scripts`。
+- 后续调用脚本工具时，必须使用 `${skill_assets_dir}/scripts` 下的脚本，不要继续直接使用 `<USER_HOME>\.trae-cn\builtin_skills\TRAE-generate-mini-app/scripts` 下的脚本。
+- 如果 `get-skill-assets-dir.js` 不存在或获取路径失败，需要回退到直接使用 `<USER_HOME>\.trae-cn\builtin_skills\TRAE-generate-mini-app/prompts` 和 `<USER_HOME>\.trae-cn\builtin_skills\TRAE-generate-mini-app/scripts`。
 
 ### 1. 初始化项目模板
 在开发之前，必须先调用 `${skill_assets_dir}/scripts/init-template.js` 初始化项目模板，后续将基于初始化模版进行开发

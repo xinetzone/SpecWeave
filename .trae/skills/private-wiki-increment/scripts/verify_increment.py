@@ -13,7 +13,7 @@
 
 用法:
     python verify_increment.py --wiki <wiki目录> --from 122 --to 153 \
-        [--ledger 00-fact-ledger.md] \
+        [--ledger core/concepts/fact-ledger.md] \
         [--pdf <成品.pdf> --keywords 三大习惯 F-153 反向请教]
 
 退出码: 0 全部通过；1 存在硬失败（断号/悬空/零引用/关键词缺失）。
@@ -116,7 +116,7 @@ def check_pdf(pdf: pathlib.Path, keywords: list[str], expect_bookmarks: int | No
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--wiki", required=True, type=pathlib.Path)
-    ap.add_argument("--ledger", default="00-fact-ledger.md")
+    ap.add_argument("--ledger", default="core/concepts/fact-ledger.md")
     ap.add_argument("--from", dest="start", type=int, required=True)
     ap.add_argument("--to", dest="end", type=int, required=True)
     ap.add_argument("--pdf", type=pathlib.Path)

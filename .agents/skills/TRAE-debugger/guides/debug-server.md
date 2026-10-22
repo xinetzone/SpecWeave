@@ -8,10 +8,10 @@ This Skill provides a Python-based Debug Server script.
 
 ```bash
 # Local Debugging
-python3 c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/tools/debug-server/python/debug-server.py --session <sessionId> --outdir .dbg --clean --idle 1200
+python3 <USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/tools/debug-server/python/debug-server.py --session <sessionId> --outdir .dbg --clean --idle 1200
 
 # Remote/Mobile Debugging (Auto-detect IP)
-python3 c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/tools/debug-server/python/debug-server.py --remote --session <sessionId> --outdir .dbg --clean --idle 1200
+python3 <USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/tools/debug-server/python/debug-server.py --remote --session <sessionId> --outdir .dbg --clean --idle 1200
 ```
 
 **❌ Wrong (do NOT use)**:
@@ -73,4 +73,4 @@ Instrumentation code can read this file to auto-configure.
 
 ### Fallback
 
-If Python is unavailable, refer to `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/tools/debug-server/TEMPLATE.md` to implement a minimal collector in your environment's language.
+If Python is unavailable, refer to `<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/tools/debug-server/TEMPLATE.md` to implement a minimal collector in your environment's language.

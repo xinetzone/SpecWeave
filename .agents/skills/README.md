@@ -8,7 +8,7 @@ title: ".agents/skills/ 目录索引"
 ---
 # .agents/skills/ 目录索引
 
-本目录存放 SpecWeave 项目中所有 Skill 定义。Skill 分为六类：
+本目录存放 SpecWeave 项目中所有 Skill 定义。Skill 分为七类：
 
 - **完整Skill**：包含完整的自动化操作能力（脚本、MCP工具调用等），可独立完成任务
 - **工作流门面**：对 `docs/retrospective/patterns/` 方法论模式的触发封装（L1 门面 + L2 模式文档），提供触发词、阶段流程、质量门与安全清单
@@ -16,10 +16,11 @@ title: ".agents/skills/ 目录索引"
 - **脚本命令门面**：对 `.agents/scripts/` 高频自动化脚本的封装，提供参数说明、dry-run安全机制和错误处理
 - **内置镜像 Skill**：Trae IDE 内置技能的镜像入库（原貌保留，frontmatter source 溯源），用于项目自托管与统一发现
 - **设计库镜像 Skill**：Trae IDE 内置设计系统库的完整归档（token CSS/组件 JSON/预览 HTML/UI Kit 全量自包含，frontmatter source 溯源），不依赖外部源目录
+- **TeleAgent 平台镜像 Skill**：TeleAgent（星辰超级智能体）平台技能镜像入库（原貌保留，frontmatter source 溯源），用于工作区自托管与统一发现
 
 ## Skill 列表
 
-### 命令集门面（10个）
+### 命令集门面（11个）
 
 | Skill名称 | 类型 | 对应命令集 | 核心触发词 | SKILL.md路径 |
 |-----------|------|-----------|-----------|-------------|
@@ -33,8 +34,9 @@ title: ".agents/skills/ 目录索引"
 | mermaid-cmd | 命令门面 | Mermaid图表管理 | mermaid、流程图、时序图、状态图、画个图、图表、架构图、思维导图 | [mermaid-cmd/SKILL.md](mermaid-cmd/SKILL.md) |
 | token-optimize-cmd | 命令门面 | Token优化 | Token优化、降本、成本优化、缓存命中率、上下文压缩、Prompt优化、LLM成本 | [token-optimize-cmd/SKILL.md](token-optimize-cmd/SKILL.md) |
 | sovereign-rollout-cmd | 命令门面 | 主权区治理资产落盘 | 提案、批准落盘、主权区变更、治理资产落盘、先提案后批准 | [sovereign-rollout-cmd/SKILL.md](sovereign-rollout-cmd/SKILL.md) |
+| github-org-bootstrap-cmd | 命令门面 | GitHub 组织命名与初始化 | 创建GitHub组织、建个org、组织名怎么起、demo组织、huncheng-lab | [github-org-bootstrap-cmd/SKILL.md](github-org-bootstrap-cmd/SKILL.md) |
 
-### 完整Skill（9个）
+### 完整Skill（10个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -47,6 +49,7 @@ title: ".agents/skills/ 目录索引"
 | classical-festival-video | 完整Skill | 古典底本节日祝福视频生成（三关键帧→10s竖版视频→随片文案+考据弹药；含情感分寸矩阵、画面禁字约束、预览确认门与物理量验收） | 祝福视频、节日贺卡视频、给 TA 做个视频、用老子/庄子/诗词做底本、中秋/春节/元宵祝福 | [classical-festival-video/SKILL.md](classical-festival-video/SKILL.md) |
 | meoo-cli | 完整Skill | 秒悟（Meoo）全栈应用构建与部署（阿里云官方第三方技能，随 CLI 包安装）：static（SPA→CDN）与 server（全栈→容器）双模式，Supabase 数据库/Auth/Storage + Deno 边缘函数 + AI 模型接入；覆盖初始化→云服务→部署全生命周期，含 Mise 发布协议 BLOCKING 门禁与阿里云自托管部署分支 | 秒悟、Meoo、meoo cli、用秒悟建应用、部署到秒悟、部署全栈应用 | [meoo-cli/SKILL.md](meoo-cli/SKILL.md) |
 | meoo-skill-publish | 完整Skill（v1.0.0，L1） | 本地 Skill→自包含 ZIP→Meoo 技能市场（meoo.com/skills）发布/版本更新与字节级回验：P1 根级合规打包（YAML 头/name 一致/零包外引用，确定性 ZIP+b64+清单）→ P2 官方 `POST /api/v1/skills/publish`（带 skill_id 即版本更新，tags 取 v2_* key）→ P3 线上版本下载逐文件 SHA256 比对；含 127.0.0.1 中继脚本、浏览器 evaluate 两步法与 7 条 Gotchas；萃取自 104319 v1 耦合版→v2 独立版实战 | 上传技能、发布技能到 Meoo/技能市场、更新技能版本、技能市场上架、meoo.com/skills 发布 | [meoo-skill-publish/SKILL.md](meoo-skill-publish/SKILL.md) |
+| skill-mirror-archive | 完整Skill（v1.0.0，L1） | 外部技能镜像归档：把 TeleAgent/Trae IDE 等外部平台技能镜像入库 .agents/skills/（sovereign-rollout 四阶段 + Copy-Item 保真 + frontmatter source 溯源泛化 + 登记面双轨裁剪 + 原子提交）；萃取自 sc-20261021-teleagent-skill-archive 首例 | 归档技能、技能镜像入库、平台技能导入、镜像归档、外部技能入库 | [skill-mirror-archive/SKILL.md](skill-mirror-archive/SKILL.md) |
 
 ### 工作流门面（6个）
 
@@ -135,6 +138,14 @@ Trae IDE 内置设计系统库完整归档（2026-09-03 导入），来源目录
 | vercel-design-library-design | Vercel | Vercel 设计系统：色彩/字体/资产/UI kit（dashboard 原型） | [SKILL.md](vercel-design-library-design/SKILL.md) |
 | yuanli-design-system | Yuanli（源力） | 源力设计系统（Volcengine，PRD 驱动中文生成）：PRD→页面生成规则 + 完整 token/组件/UI kit | [SKILL.md](yuanli-design-system/SKILL.md) |
 | vibecamp-design | Vibecamp | Vibecamp 大胆编辑风 dashboard 产品：设计准则/色彩/字体/组件参考/UI kit | [SKILL.md](vibecamp-design/SKILL.md) |
+
+### TeleAgent 平台镜像 Skill（1个）
+
+TeleAgent（星辰超级智能体）平台技能镜像入库（2026-10-21 首次导入）。来源为 TeleAgent 用户级技能目录，SKILL.md frontmatter `source` 字段标注来源与归档日期；镜像保留技能包原貌，不随平台版本演进改写。
+
+| 技能名 | 来源家族 | 功能描述 | SKILL.md路径 |
+|--------|---------|---------|-------------|
+| ui-screenshot-review | TeleAgent 平台 | Web 页面/本地应用 UI 视觉验证工作流：多级降级截图（交互浏览 → headless Chromium → 静态渲染等价）+ 六维度结构化评审（1–5 分）+「打磨→复截图→复评审」迭代闭环 | [SKILL.md](ui-screenshot-review/SKILL.md) |
 
 ### 脚本命令门面（16个）
 

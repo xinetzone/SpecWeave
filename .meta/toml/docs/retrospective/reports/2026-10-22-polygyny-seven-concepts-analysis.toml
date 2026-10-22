@@ -1,0 +1,26 @@
+id = "retro-20261022-polygyny"
+title = "一夫多妻议题 · 七概念方法论分析报告"
+date = "2026-10-22"
+scope = "project"
+type = "retrospective"
+category = "retrospective/reports"
+source = "七概念方法论编排（R→F→V→I→E→A 链路，F 阶段采用跨文化第一性原理 v2.0 七步法）"
+facts_count = 74
+insights_count = 3
+patterns_count = 2
+actions_count = 5
+gates = ["G1", "G2", "G3", "G4"]
+v_executed = true
+cp_review = { level = "full", passed = 7, total = 7, sections = ["1.5.1", "1.5.2", "1.5.3"] }
+source_tiers = { gold = "50.0%", silver = "45.9%", bronze = "4.1%" }
+credibility_distribution = { A = "51.4%", B = "43.2%", C = "5.4%", D = "0%" }
+version = "1.2"
+
+[bindings]
+related_patterns = [
+  "symbol-vs-variable-decomposition",
+  "decomposable-recognition-ladder",
+]
+rules = []
+references = []
+skills = []

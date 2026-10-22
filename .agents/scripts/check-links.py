@@ -1071,6 +1071,23 @@ def main(argv=None) -> int:
     md_files = []
     file_root_map = {}  # 文件 -> 其所属扫描根目录（用于相对路径显示）
     for root in roots:
+        if root.is_file():
+            # 单文件输入：直接纳入扫描。find_markdown_files 对文件路径
+            # rglob 返回空，旧逻辑会以「找到 0 个文件…校验通过」假通过
+            # 收场（2026-10-21 实测踩坑）。
+            print(f"\n扫描文件: {root}")
+            if root.suffix.lower() == ".md":
+                resolved = root.resolve()
+                if resolved not in file_root_map:
+                    file_root_map[resolved] = root.parent
+                    md_files.append(root)
+                print("找到 1 个 Markdown 文件")
+            else:
+                print(
+                    f"警告: 输入为非 .md 文件，无链接可校验: {root}",
+                    file=sys.stderr,
+                )
+            continue
         print(f"\n扫描目录: {root}")
         if exclude_dirs:
             print(f"排除目录: {', '.join(sorted(exclude_dirs))}")
@@ -1082,6 +1099,13 @@ def main(argv=None) -> int:
                 file_root_map[resolved] = root
                 md_files.append(md_file)
     print(f"\n合计: {len(md_files)} 个 Markdown 文件（已去重）")
+    if not md_files:
+        # 零对象扫描必须显式告警：通过语义只属于「检查过且无断链」，
+        # 不属于「什么都没检查」。
+        print(
+            "警告: 未扫描到任何 Markdown 文件，请确认 --path 指向的目录或 .md 文件",
+            file=sys.stderr,
+        )
 
     # 自动修复（--fix）
     rename_map = {}

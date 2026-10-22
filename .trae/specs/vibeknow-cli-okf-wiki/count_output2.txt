@@ -1,0 +1,126 @@
+# 信源: v0.9.2 @ 93a26eca3383d480148c5cfd8da7995ee3352187
+
+# cmd/ 旗标注册调用总数（去重前，含同名重复注册）= 104
+# cmd/ (文件,旗标名) 去重对数 = 103
+# cmd/ 旗标名全局去重数 = 72
+
+## 每文件旗标数
+  cmd/create.go: 22  -> aspect, async, avatar, avatar-position, avatar-size, bgm, confirm, engine, export, from, images, kb-id, language, mode, pages, preview-dir, prompt, script-lock, text, theme, voice, yes
+  cmd/video/set.go: 15  -> bgm, bgm-volume, session-id, subtitle, subtitle-animation, subtitle-bg-color, subtitle-bottom, subtitle-color, subtitle-font, subtitle-font-weight, subtitle-preset, subtitle-size, subtitle-stroke-color, subtitle-stroke-width, title
+  cmd/profile/add.go: 8  -> credential-ref, default-project, endpoint-account, endpoint-figlens, endpoint-vectoria, endpoint-vibeknow, is-production, trust
+  cmd/video/edit.go: 7  -> confirm, preview-dir, scene, script, script-only, session-id, yes
+  cmd/video/export.go: 7  -> async, confirm, poll-interval, preview-dir, session-id, timeout, yes
+  cmd/api/call.go: 4  -> body, method, path, service
+  cmd/auth/login.go: 4  -> device-code, headless, no-wait, with-token
+  cmd/kb/list.go: 4  -> older-than, page, pattern, size
+  cmd/jobs/prune.go: 3  -> all, older-than, terminal
+  cmd/kb/prune.go: 3  -> older-than, pattern, yes
+  cmd/root.go: 3  -> output, profile, verbose
+  cmd/video/download.go: 3  -> dest, overwrite, session-id
+  cmd/video/wait.go: 3  -> for, preview-dir, session-id
+  cmd/jobs/list.go: 2  -> active, limit
+  cmd/video/avatar_retry.go: 2  -> scene, session-id
+  cmd/video/list.go: 2  -> page, size
+  cmd/video/pause.go: 2  -> session-id
+  cmd/video/status.go: 2  -> preview-dir, session-id
+  cmd/create_preset.go: 1  -> preset
+  cmd/doc/get.go: 1  -> kb-id
+  cmd/doc/images.go: 1  -> kb-id
+  cmd/kb/delete.go: 1  -> yes
+  cmd/theme/list.go: 1  -> mode
+  cmd/video/export_status.go: 1  -> session-id
+  cmd/video/script.go: 1  -> session-id
+  cmd/voice/list.go: 1  -> language
+
+# vk create 自有旗标数（create.go + create_preset.go，去重）= 23
+  aspect, async, avatar, avatar-position, avatar-size, bgm, confirm, engine, export, from, images, kb-id, language, mode, pages, preset, preview-dir, prompt, script-lock, text, theme, voice, yes
+
+# cmd/video 旗标 (文件,名) 去重对数 = 44
+
+# 代码中出现的 type 字面量去重数 = 2
+  preset.applied
+  task.failed
+
+# clerr 错误类型 = 5
+  validation
+  auth
+  network
+  api
+  internal
+
+# 退出码使用点分布（WithCode / const 定义）
+  exit 0: 1 处 -> internal/clerr/clerr.go (const)
+  exit 1: 2 处 -> cmd/video/edit.go, internal/clerr/clerr.go (const)
+  exit 2: 1 处 -> internal/clerr/clerr.go (const)
+  exit 3: 1 处 -> internal/clerr/clerr.go (const)
+  exit 4: 3 处 -> cmd/create.go, cmd/video/pause.go, internal/clerr/clerr.go (const)
+  exit 5: 5 处 -> cmd/video/pause.go, cmd/video/script.go, cmd/video/set.go, internal/clerr/clerr.go (const)
+  exit 6: 9 处 -> cmd/create.go, cmd/video/edit.go, cmd/video/progress.go, cmd/video/script.go, cmd/video/set.go, cmd/video/wait.go, internal/cmdutil/unknown.go
+  exit 7: 1 处 -> cmd/video/export.go
+
+SKILL skills/vibeknow-core/SKILL.md: name='vibeknow-core' lines=131
+    desc="vibeknow CLI setup, authentication, profile management, and diagnostics. Use when: first-time setup, auth errors, switching environments, diagnosing connection
+SKILL skills/vibeknow-create/SKILL.md: name='vibeknow-create' lines=438
+    desc="Generate videos from documents/URLs/files, track video task progress, download results, list voice templates. Use when: user wants to create a video, check tas
+SKILL skills/vibeknow-doc/SKILL.md: name='vibeknow-doc' lines=109
+    desc="Upload documents to vectoria and check processing status. Use when: user wants to upload a document, check if a document is ready, or get a doc_id for use with
+
+# package.json
+{
+  "name": "vibeknow-cli",
+  "version": "0.9.2",
+  "description": "VibeKnow CLI — turn docs / URLs into videos",
+  "license": "MIT",
+  "bin": {
+    "vibeknow": "scripts/run.js",
+    "vk": "scripts/run.js"
+  },
+  "scripts": {
+    "postinstall": "node scripts/install.js"
+  },
+  "optionalDependencies": {
+    "@vectorfunc/vibeknow-cli-darwin-arm64": "0.9.2",
+    "@vectorfunc/vibeknow-cli-darwin-x64": "0.9.2",
+    "@vectorfunc/vibeknow-cli-linux-arm64": "0.9.2",
+    "@vectorfunc/vibeknow-cli-linux-x64": "0.9.2",
+    "@vectorfunc/vibeknow-cli-win32-x64": "0.9.2"
+  },
+  "files": [
+    "scripts/",
+    "README.md",
+    "LICENSE"
+  ],
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vibeknow/cli.git"
+  },
+  "homepage": "https://github.com/vibeknow/cli",
+  "bugs": {
+    "url": "https://github.com/vibeknow/cli/issues"
+  },
+  "keywords": [
+    "cli",
+    "video",
+    "ai",
+    "document",
+    "url",
+    "tts",
+    "video-generation",
+    "automation",
+    "agent"
+  ]
+}
+
+  npm/vibeknow/package.json (21 lines)

@@ -55,6 +55,7 @@ task-reports/index
 2026-08-25-xuanspace-milestone-retro
 2026-10-09-caffe-pool-ceil-shape-inference-retro
 2026-10-13-coach-moments-milestone-retro
+2026-10-22-polygyny-seven-concepts-analysis
 hardcode-retrospective-report
 log
 meta-bootstrap-execution-log

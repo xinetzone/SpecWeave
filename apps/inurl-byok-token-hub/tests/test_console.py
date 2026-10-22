@@ -15,7 +15,7 @@ from inurl_byok_token_hub.web.console import mount_console
 
 #: 断言用的明文厂商 Key：任何页面 HTML 都不得出现该串
 PLAIN_KEY = "sk-test-plain-key-123"
-PASSWORD = "Console-Pass-1!"
+PASSWORD = "Console-Pass-1!"  # nosec 控制台页面断言夹具，非真实凭据
 PROVIDER_ID = "openai"
 
 #: 目录文件不随 tmp 数据目录迁移，显式指向随包种子文件

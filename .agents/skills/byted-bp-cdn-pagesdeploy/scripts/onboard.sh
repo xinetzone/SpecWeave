@@ -56,8 +56,8 @@ save_credentials() {
         nest="nest"
     elif [[ -x "$HOME/.nest-cli/node_modules/.bin/nest" ]]; then
         nest="$HOME/.nest-cli/node_modules/.bin/nest"
-    elif [[ -x "/home/gem/tmp/nest-cli/node_modules/.bin/nest" ]]; then
-        nest="/home/gem/tmp/nest-cli/node_modules/.bin/nest"
+    elif [[ -x "~/tmp/nest-cli/node_modules/.bin/nest" ]]; then
+        nest="~/tmp/nest-cli/node_modules/.bin/nest"
     else
         echo "[INFO] Installing @byteplus/nest CLI first..."
         local install_dir="$HOME/.nest-cli"

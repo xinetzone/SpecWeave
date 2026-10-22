@@ -13,7 +13,7 @@ from admin_console.security import (
     verify_session,
 )
 
-SECRET = "unit-test-secret"
+SECRET = "unit-test-secret"  # nosec 单测夹具常量，非真实凭据
 
 
 def test_password_roundtrip():

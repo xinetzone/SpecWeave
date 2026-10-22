@@ -1,0 +1,100 @@
+# client/account: 端点路径去重数 = 5
+    /v1/auth/device/code
+    /v1/auth/device/token
+    /v1/auth/logout
+    /v1/auth/token/refresh
+    /v1/user/profile
+
+# client/figlens: 端点路径去重数 = 26
+    /v1/agent2forVideo/exportRemoteV2
+    /v1/agent2forVideo/exportResultV2
+    /v1/agent2forVideo/fastQueryOptimize
+    /v1/agent2forVideo/signedUrl
+    /v1/agent2forVideo/stream
+    /v1/agent3forVideo/stream
+    /v1/assets?type=avatar
+    /v1/avatar/catalog
+    /v1/avatar/scenes/retry
+    /v1/pipeline/pause
+    /v1/pipeline/resume
+    /v1/scene/edit
+    /v1/task/extractDocImages
+    /v1/tasks/init
+    /v1/tasks/updateTitle
+    /v1/themes?type=
+    /v1/works/bgmSwitch
+    /v1/works/bgmVolume
+    /v1/works/detailBySession?session_id={param}
+    /v1/works/page?page={param}&size={param}
+    /v1/works/scenes?work_id={param}
+    /v1/works/subtitleFonts
+    /v1/works/subtitlePresets
+    /v1/works/subtitleStyle
+    /v1/works/subtitleSwitch
+    /v1/works/videoUrl?id={param}
+
+# client/vectoria: 端点路径去重数 = 6
+    /v1/knowledgebases
+    /v1/knowledgebases/{param}
+    /v1/knowledgebases/{param}/documents/file
+    /v1/knowledgebases/{param}/documents/url
+    /v1/knowledgebases/{param}/documents/{param}
+    /v1/knowledgebases?offset={param}&limit={param}
+
+# client/vibeknow: 端点路径去重数 = 2
+    /v1/credits/balance
+    /v1/pipeline-voices
+
+# client/ 四服务端端点路径合计去重数 = 39
+
+# internal/endpoints/defaults.go: 提及服务 = ['account', 'figlens', 'vectoria', 'vibeknow']
+# internal/endpoints/resolve.go: 提及服务 = []
+
+# i18n 词条总数 = 392，去重后 = 196
+    create: 152
+    auth: 68
+    kb: 34
+    video: 32
+    export: 20
+    init: 18
+    edit: 10
+    doctor: 8
+    avatar: 8
+    update: 8
+    err: 6
+    msg: 6
+    credits: 6
+    theme: 6
+    subtitle: 4
+    download: 4
+    root: 2
+
+# internal 各包非测试代码行数
+    internal/httpclient: 861
+    internal/cmdutil: 812
+    internal/keychain: 558
+    internal/i18n: 530
+    internal/cliauth: 471
+    internal/config: 452
+    internal/jobs: 357
+    internal/credential: 308
+    internal/preset: 308
+    internal/video/snapshot: 280
+    internal/preview: 261
+    internal/clerr: 238
+    internal/output: 199
+    internal/pending: 196
+    internal/update: 162
+    internal/validate: 123
+    internal/charcheck: 104
+    internal/video/exportpoll: 103
+    internal/stage: 98
+    internal/events: 96
+    internal/sse: 79
+    internal/durfmt: 48
+    internal/errs: 38
+    internal/tui: 36
+    internal/endpoints: 35
+    internal/lockfile: 29
+    internal/redact: 21
+# internal 非测试代码总行数 = 6803

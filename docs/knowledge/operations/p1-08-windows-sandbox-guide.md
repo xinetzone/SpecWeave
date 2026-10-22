@@ -35,7 +35,7 @@ archive_history:
 
 - 源文件：`Windows 沙盒安装与配置操作手册.md`
 - 官方参考：Microsoft Learn「安装 Windows 沙盒」「使用与配置 .wsb 文件」
-- 上游分析：`workspace-archive-priority-analysis.md`
+- 上游分析：（工作稿已清理，结论见）：[p0-08 已批准治理 Specs 稳定决策集合](../decisions/p0-08-governance-specs-decisions.md)
 
 ## 归档目标
 

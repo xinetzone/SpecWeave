@@ -40,7 +40,7 @@ Each hypothesis must include:
 | B | Auth token expired | Medium | Low | `401` response code |
 | C | Memory leak causing slowdown | Low | High | Memory growth pattern over time |
 
-> **💡 Tip**: Start with Hypothesis A (High likelihood, Low effort). Refer to `c:\Users\xinzo\.trae-cn\builtin_skills\TRAE-debugger/guides/scenarios.md` for scenario-specific hypothesis templates.
+> **💡 Tip**: Start with Hypothesis A (High likelihood, Low effort). Refer to `<USER_HOME>\.trae-cn\builtin_skills\TRAE-debugger/guides/scenarios.md` for scenario-specific hypothesis templates.
 
 Output: Hypothesis Table (A–E) with Likelihood/Effort
 

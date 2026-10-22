@@ -105,6 +105,8 @@ SYSTEM_WIN_USERS = {
     "public", "default", "all users", "default user", "defaultuser0",
     "user", "admin", "xxx", "test", "demo", "shared", "guest",
     "wdagutilityaccount", "$user", "{username}", "<user>",
+    # Windows 环境变量占位（%USERNAME% 形态，文档通用示例）
+    "%username%",
     # 文档占位符用户名（通用示例，非真实个人路径）
     "you", "yourname", "your_name", "otheruser", "john doe", "john",
     "jane", "jane doe", "用户名", "你的用户名", "用户名目录",
@@ -112,6 +114,10 @@ SYSTEM_WIN_USERS = {
     "me", "someone",
     # 中文教材通用代称
     *TEXTBOOK_CN_USERNAMES,
+    # 容器镜像 / CI 固定账户（与 SYSTEM_UNIX_USERS 对称：devuser 亦出现于
+    # Windows 容器镜像规则文档与 entrypoint.ps1 中，指容器内账户而非本机用户；
+    # containeradministrator 为 Windows 容器内置账户，同 wdagutilityaccount 类）
+    "devuser", "containeradministrator",
 }
 
 SYSTEM_UNIX_USERS = {
@@ -122,6 +128,9 @@ SYSTEM_UNIX_USERS = {
     "john", "jane", "john doe",
     # 中文教材通用代称
     *TEXTBOOK_CN_USERNAMES,
+    # 中文文档占位用户名（与 SYSTEM_WIN_USERS 对称：macOS 风格文档中
+    # /Users/你的用户名/ 属占位而非真实账户）
+    "用户名", "你的用户名", "用户名目录",
     "ai", "conda_user", "conda", # Dockerfile中常见容器内固定用户
     # 容器镜像 / CI 中的固定账户（非开发者宿主机个人路径）
     "appuser", "devuser", "builder", "jupyteruser", "runner", "openkylin",
@@ -499,6 +508,28 @@ _VENDOR_PLACEHOLDER_PATTERNS = [
     re.compile(r"not-a-real", re.IGNORECASE),
 ]
 
+# 私钥块级检测：PEM 头 + base64 体视为真实私钥块；单独出现 PEM 头（文档
+# 说明格式、示例截断）不命中，避免高频误报。体有两种合法形态，满足其一即命中：
+#   ① 跨行：首行 ≥64 连续 base64（PEM 标准行宽）+ ≥1 个后续行（≥16），
+#      换行接受真实 \r?\n 与 JSON/YAML 转义 \n；
+#   ② 单行：≥120 连续 base64（OPENSSH 单行密钥、整体转义嵌入）。
+# 散文（词间有空格，无 64 连续串）、40 位指纹（短跑）均不命中。
+# 与 GitHub partner「private key」模式（头体齐全）口径一致。
+_PRIVATE_KEY_BLOCK_RE = re.compile(
+    r"-----BEGIN (?:RSA |EC |DSA |OPENSSH |PGP )?PRIVATE KEY-----"
+    r"[\s\S]{0,64}?"
+    r"(?:"
+    r"[A-Za-z0-9+/=]{64,}"
+    r"(?:[\t ]*(?:\r?\n|\\n|\\r\\n)[\t ]*[A-Za-z0-9+/=]{16,})+"
+    r"|"
+    r"[A-Za-z0-9+/=]{120,}"
+    r")"
+)
+# 块的头部定位（Finding.match 只存头部，避免把整块密钥写进报告）
+_PRIVATE_KEY_HEADER_RE = re.compile(
+    r"-----BEGIN (?:RSA |EC |DSA |OPENSSH |PGP )?PRIVATE KEY-----"
+)
+
 
 RULES: list[Rule] = [
     Rule(
@@ -524,6 +555,8 @@ RULES: list[Rule] = [
         ),
         placeholder_patterns=[
             re.compile(r"@example\.(com|org|net)$", re.IGNORECASE),
+            # RFC 2606 保留域含子域（proxy.example.com 等示例形态）
+            re.compile(r"@(?:[\w-]+\.)*example\.(?:com|org|net)$", re.IGNORECASE),
             re.compile(r"@test\.(com|org|net)$", re.IGNORECASE),
             re.compile(r"^your[-_]?.*@", re.IGNORECASE),
             re.compile(r"^admin@test", re.IGNORECASE),
@@ -571,6 +604,15 @@ RULES: list[Rule] = [
         placeholder_patterns=[
             re.compile(r"^127\.0\.0\.1$"),
             re.compile(r"^0\.0\.0\.0$"),
+            # 网络文档通用示例 IP（各路路由器手册/教程同款，非真实拓扑）。
+            # 硬线：只收不可能是真实主机的形态——网络地址（.0 结尾，
+            # 含 10.0.0.0/24、192.168.0.0/24、192.168.1.0/24、172.16.0.0/12
+            # 段基址）与 10.0.0.1/192.168.1.1 两个通用示例首主机；
+            # 主机形态示例（192.168.1.100 等）不进白名单，留给上下文/triage。
+            re.compile(r"^10\.0\.0\.[0-2]$"),
+            re.compile(r"^192\.168\.[01]\.0$"),
+            re.compile(r"^192\.168\.1\.1$"),
+            re.compile(r"^172\.16\.0\.0$"),
         ],
         fix_func=None,
         suggestion="内网IP可能泄露网络拓扑结构，如为示例请使用文档说明",
@@ -603,18 +645,27 @@ RULES: list[Rule] = [
         type=PASSWORD,
         severity=SEVERITY_HIGH,
         pattern=re.compile(
-            r"(?:password|passwd|pwd|secret)\s*[:=]\s*['\"]([^'\"]{4,})['\"]"
+            # (?i)：PASSWORD=/Secret=/PWD= 等大小写变体均需命中——
+            # 此前仅小写命中，大写配置键（环境变量示例、CI 配置）成漏报盲区
+            r"(?i)(?:password|passwd|pwd|secret)\s*[:=]\s*['\"]([^'\"]{4,})['\"]"
         ),
         placeholder_patterns=[
             re.compile(r"your[-_]?password", re.IGNORECASE),
             re.compile(r"changeme", re.IGNORECASE),
             re.compile(r"['\"]xxx['\"]", re.IGNORECASE),
             re.compile(r"['\"]secret['\"]", re.IGNORECASE),
+            # 文档中「默认密码为 password」一类字面占位值（不指向真实凭据）
+            re.compile(r"['\"](?:password|passwd|pwd)['\"]", re.IGNORECASE),
             re.compile(r"['\"]placeholder['\"]", re.IGNORECASE),
             re.compile(r"['\"]\*{3,}['\"]", re.IGNORECASE),
+            # 文档示例通用占位形态（your-/<xxx>/example/…），与供应商规则共用
+            *_VENDOR_PLACEHOLDER_PATTERNS,
         ],
         fix_func=None,
         suggestion="明文密码泄露风险极高，请使用环境变量或密钥管理服务",
+        # 顺序/重复占位值（0123456789abcdef…）判伪：与 API_KEY 规则同概率论证
+        # （真实随机口令含 ≥8 位递增 hex 序列的概率 <10⁻⁷），抑制测试夹具误报
+        skip_sequential_placeholder=True,
     ),
     Rule(
         name="数据库连接串",
@@ -643,17 +694,9 @@ RULES: list[Rule] = [
         fix_func=None,
         suggestion="会话ID和设备ID可能关联真实用户，请确认是否为测试数据",
     ),
-    Rule(
-        name="私钥",
-        type=PRIVATE_KEY,
-        severity=SEVERITY_HIGH,
-        pattern=re.compile(
-            r"-----BEGIN (?:RSA |EC |DSA |OPENSSH |PGP )?PRIVATE KEY-----"
-        ),
-        placeholder_patterns=[],
-        fix_func=None,
-        suggestion="私钥泄露会导致身份伪造，请立即吊销对应公钥并轮换密钥对",
-    ),
+    # 私钥检测不走行级 RULES：单独提及 PEM 头（文档说明格式）属高频误报，
+    # 改为块级「头 + base64 体」匹配（见 scan_file 内 _PRIVATE_KEY_BLOCK_RE
+    # 遍后处理），与 GitHub partner「private key」模式（头体齐全）对齐。
     Rule(
         name="微信AppID",
         type=API_KEY,
@@ -814,6 +857,13 @@ def scan_file(file_path: Path) -> list[Finding]:
     in_code_block = False
     code_block_is_example = False
     is_public_doc = _is_public_doc_file(file_path)
+    # SIL OFL 许可证文件：版权声明中的署名邮箱为法定公开署名（字体设计师
+    # 刻意公开的联系方式），与 AWS 官方示例密钥同理，整文件豁免邮箱检测
+    is_ofl_license = any(
+        "sil open font license" in l.lower() for l in lines[:10]
+    )
+    # 示例代码块内的行号集合：供私钥块级检测的降级判定复用
+    example_block_lines: set[int] = set()
 
     for line_no, line in enumerate(lines, 1):
         stripped = line.strip()
@@ -831,6 +881,9 @@ def scan_file(file_path: Path) -> list[Finding]:
 
         if _has_nosec_marker(line):
             continue
+
+        if in_code_block and code_block_is_example:
+            example_block_lines.add(line_no)
 
         is_example = _is_example_context(line)
         is_note = _is_comment_note_context(line)
@@ -854,6 +907,8 @@ def scan_file(file_path: Path) -> list[Finding]:
                         continue
 
                 if rule.type == EMAIL:
+                    if is_ofl_license:
+                        continue
                     skip_email, override_severity, is_public_role_email = _should_skip_email(match_str)
                     if skip_email:
                         continue
@@ -964,6 +1019,37 @@ def scan_file(file_path: Path) -> list[Finding]:
                     suggestion=current_suggestion,
                     fixable=is_fixable,
                 ))
+
+    # 私钥块级检测后处理：PEM 头 + base64 体（跨行），命中后按头部所在行
+    # 归并行号。单独提及 PEM 头不命中（文档说明格式的高频误报根因）。
+    # 严重度沿用原行级规则口径：示例代码块内 LOW、示例上下文 MEDIUM、否则 HIGH。
+    full_text = "".join(lines)
+    for m in _PRIVATE_KEY_BLOCK_RE.finditer(full_text):
+        line_no = full_text.count("\n", 0, m.start()) + 1
+        if line_no > len(lines):
+            continue
+        header_line = lines[line_no - 1]
+        if _has_nosec_marker(header_line):
+            continue
+        if line_no in example_block_lines:
+            key_severity = SEVERITY_LOW
+        elif _is_example_context(header_line):
+            key_severity = SEVERITY_MEDIUM
+        else:
+            key_severity = SEVERITY_HIGH
+        line_start = full_text.rfind("\n", 0, m.start()) + 1
+        header_match = _PRIVATE_KEY_HEADER_RE.match(m.group(0))
+        findings.append(Finding(
+            file=file_path,
+            line=line_no,
+            col=m.start() - line_start + 1,
+            type=PRIVATE_KEY,
+            severity=key_severity,
+            match=header_match.group(0) if header_match else m.group(0)[:60],
+            rule_name="私钥",
+            suggestion="私钥泄露会导致身份伪造，请立即吊销对应公钥并轮换密钥对",
+            fixable=False,
+        ))
 
     return findings
 
@@ -1090,7 +1176,7 @@ def _simple_test() -> None:
     email_volc = "dev" + "@" + "volcengine.com"
     sk_key = "sk-" + "1234567890abcdefghijklmnop"
     pwd_value = "my" + "secretpass123"
-    priv_key_header = "-----BEGIN " + "RSA PRIVATE KEY-----"
+    priv_key_header = "-----BEGIN " + "RSA PRIVATE KEY-----\n" + "A" * 120
     session_id = "121377507783968" + ":" + "5e488b49a1b2c3d4e5f6a7b8c9d0e1f2"
     db_user = "root"
     db_pass = "password" + "123"
@@ -1116,7 +1202,7 @@ Unix路径：{unix_path_prefix}{unix_path_user}/project
 内网IP：{ip_internal}
 API密钥：{sk_key}
 {pwd_keyword} = "{pwd_value}"
-私钥头：{priv_key_header}
+私钥块（头+体，应报警）：{priv_key_header}
 会话ID：{session_id}
 数据库连接：{db_conn}
 

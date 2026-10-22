@@ -8,7 +8,7 @@ find_nest() {
     if command -v nest &>/dev/null; then echo "nest"; return; fi
     local paths=(
         "$HOME/.nest-cli/node_modules/.bin/nest"
-        "/home/gem/tmp/nest-cli/node_modules/.bin/nest"
+        "~/tmp/nest-cli/node_modules/.bin/nest"
     )
     for p in "${paths[@]}"; do
         [[ -x "$p" ]] && echo "$p" && return

@@ -35,7 +35,7 @@ archive_history:
 
 - 源文件：`DaoMind/README.md`
 - 部署说明：`DEPLOYMENT-GUIDE.md`（如提炼部署要点可另行归档）
-- 上游分析：`workspace-archive-priority-analysis.md`
+- 上游分析：（工作稿已清理，结论见）：[p0-08 已批准治理 Specs 稳定决策集合](../decisions/p0-08-governance-specs-decisions.md)
 
 ## 归档目标
 

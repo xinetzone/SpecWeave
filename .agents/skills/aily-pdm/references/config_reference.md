@@ -181,7 +181,7 @@ plugins = [
 ```bash
 export PDM_PYPI_URL="https://pypi.org/simple"
 export PDM_PRIVAT_PYPI_USERNAME="user"
-export PDM_PRIVAT_PYPI_PASSWORD="pass"
+export PDM_PRIVAT_PYPI_PASSWORD="<password>"
 ```
 
 ### 发布配置
@@ -189,7 +189,7 @@ export PDM_PRIVAT_PYPI_PASSWORD="pass"
 ```bash
 export PDM_PUBLISH_REPO="pypi"
 export PDM_PUBLISH_USERNAME="__token__"
-export PDM_PUBLISH_PASSWORD="token-value"
+export PDM_PUBLISH_PASSWORD="<pypi-token>"
 export PDM_PUBLISH_CA_CERTS="/path/to/ca.pem"
 ```
 

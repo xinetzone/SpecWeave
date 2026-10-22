@@ -43,6 +43,7 @@ retrospective-oray-comprehensive-analysis-20260706/index
 retrospective-orca-ide-analysis-20260706/index
 retrospective-papi-jiang-wiki-20260706/index
 retrospective-pattern-formalization-cross-reference-20260704/index
+retrospective-python-agent-framework-selection-20261021/index
 retrospective-specforge-insight-20260629/index
 retrospective-specweave-contest-advantage-analysis-20260624/index
 retrospective-sunlogin-bootbox-analysis-20260704/index
@@ -64,6 +65,7 @@ retrospective-trae-v3-3-74-release-analysis-20260708/index
 retrospective-tts-engine-selection-20260904/index
 retrospective-tuyaopen-dev-skills-learning-20260630/index
 retrospective-tuyaopen-learning-report-optimization-20260630/index
+retrospective-vibeknow-video-expert-20261021/index
 retrospective-viitorvoice-tts-learning-20260703/index
 retrospective-volcengine-acep-learning-20260707/index
 retrospective-volcengine-agentkit-learning-20260707/index

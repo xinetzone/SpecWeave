@@ -20,6 +20,7 @@ awesome-okf-xs-ci-integration-retrospective-20260824
 bus-factor-drill-20260804
 cpython-devguide-wiki-retrospective-20260819
 four-engineering-concepts-wiki-retrospective-20260704
+github-org-huncheng-lab-bootstrap-20261022
 harness-engineering-wiki-retrospective-20260803
 karpathy-llm-wiki-analysis-retrospective-20260707
 libtv-wiki-retrospective-20260704
