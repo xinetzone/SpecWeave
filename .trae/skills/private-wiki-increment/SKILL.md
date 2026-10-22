@@ -10,7 +10,7 @@ description: 把新增的私域课程/会议纪要增量并入已建好的 OKF �
 ## 0. 适用与边界
 
 - **私域内容**（课程纪要、带 token 链接、内部会议）：产物只落 `playground/` 对应用户目录，**禁止入公共 `docs/` 或 `.trae/specs/`**。
-- 知识包约定结构（V2.3 起主题模块化）：根级 `00-fact-ledger.md`（全局台账，F 编号跨主题唯一连续）、`09-insights-patterns.md`、`10-antipatterns-boundaries.md`、`REVIEW.md`、`README.md`、`CHANGELOG.md`；教程页在 `themes/<slug>/NN-*.md`（先例 `themes/zhenxuqiu-410/`），新主题接入 SOP 见 `wiki/themes/README.md`；`logs/<slug>/` 放对应主题的源纪要（子目录名 = 主题 slug）；导出 PDF 统一放包根 `export/`（V2.4 起，不放包根散文件）。增量教程页写入所属主题目录，事实进根级台账。
+- 知识包约定结构（V2.3 起主题模块化、V2.21 起核心层 bundle 化）：`wiki/` 为 group（`index.md`），核心层 bundle 在 `wiki/core/`（`index.md` + `log.md` + `concepts/fact-ledger.md` 全局台账 F 编号跨主题唯一连续 + `concepts/insights-patterns.md` + `concepts/antipatterns-boundaries.md`），根级治理文件 `README.md` / `CHANGELOG.md` / `REVIEW.md`；教程页在 `themes/<slug>/`（先例 `themes/zhenxuqiu-410/`），新主题接入 SOP 见 `wiki/themes/README.md`；`logs/<slug>/` 放对应主题的源纪要（子目录名 = 主题 slug）；导出 PDF 统一放包根 `export/`（V2.4 起，不放包根散文件）。增量教程页写入所属主题目录，事实进核心层台账。
 - 新主题首建骨架用脚手架脚本：`python .trae/skills/private-wiki-increment/scripts/new_theme.py --slug <slug> --title <主题名> [--tag <标签>]`——自动计算全局续号（F起/I/AP/P）、从 `themes/_template/` 复制骨架并替换元数据占位符、创建 `logs/<slug>/`；之后的事实登记与增量仍走本技能流程。
 - 不做 git commit：`playground/` 与 `.temp/` 在本仓 .gitignore 内，且用户约定明确说「原子提交」才提交。
 - 若发现源纪要本身需要先复盘，先走 seven-concepts-cmd，不要把复盘和增量混在一轮。

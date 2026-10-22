@@ -3,7 +3,7 @@
 
 做什么：
   1. 校验 slug（kebab-case）与幂等（themes / logs 同名目录已存在则拒绝）；
-  2. 扫描根级台账与 09/10，计算全局续号：F起 = max(F)+1、I-x、AP-x、P-x；
+  2. 扫描核心层台账与洞察/反模式文件，计算全局续号：F起 = max(F)+1、I-x、AP-x、P-x；
   3. 复制页面骨架（01-overview.md、NN-tutorial-page.md），替换全部**元数据**占位符；
   4. 创建 logs/<slug>/（源纪要放这里）；
   5. 打印剩余正文占位符数与后续步骤（SOP ②⑤⑥ + 双门禁命令）。
@@ -51,7 +51,7 @@ def main() -> int:
         sys.exit(f"模板包不存在：{tpl}")
 
     # 全局续号（禁止凭记忆，脚本统一计算）
-    ledger = (wiki / "00-fact-ledger.md").read_text(encoding="utf-8")
+    ledger = (wiki / "core" / "concepts" / "fact-ledger.md").read_text(encoding="utf-8")
     f_start = max_num(ledger, re.compile(r"F-(\d{3})")) + 1
     tag = a.tag.lstrip("[").rstrip("]") if a.tag else None
     if not tag:
@@ -60,8 +60,8 @@ def main() -> int:
         while f"[{prefix}{n}]" in ledger:
             n += 1
         tag = f"{prefix}{n}"
-    ins = (wiki / "09-insights-patterns.md").read_text(encoding="utf-8")
-    anti = (wiki / "10-antipatterns-boundaries.md").read_text(encoding="utf-8")
+    ins = (wiki / "core" / "concepts" / "insights-patterns.md").read_text(encoding="utf-8")
+    anti = (wiki / "core" / "concepts" / "antipatterns-boundaries.md").read_text(encoding="utf-8")
     i_next = max_num(ins, re.compile(r"I-(\d+)")) + 1
     ap_next = max_num(anti, re.compile(r"AP(\d+)")) + 1
     p_next = max_num(ins, re.compile(r"P-(\d+)")) + 1
@@ -71,6 +71,10 @@ def main() -> int:
         "{{SLUG}}": a.slug,
         "{{主题名}}": a.title,
         "{{信源标签}}": f"[{tag}]",
+        "{{信源id}}": f"{tag.lower()}-{a.slug}",
+        "{{信源标题}}": f"{a.title}（信源 {tag}）",
+        "{{信源文件}}": f"{tag}-纪要.md",
+        "{{核心层文件}}": "fact-ledger.md",
         "{{F起}}~{{F止}}": f"F-{f_start:03d} 起",
         "{{F起}}": f"F-{f_start:03d}",
         "{{F止}}": "（登记中）",
@@ -78,24 +82,31 @@ def main() -> int:
         "{{AP-x}}": f"AP{ap_next}",
         "{{P-x}}": f"P-{p_next}",
         "{{日期}}": a.date,
+        "{{日期ISO8601}}": f"{a.date}T00:00:00Z",
         "{{session-id}}": session,
     }
 
     theme_dst.mkdir(parents=True)
     logs_dst.mkdir(parents=True)
+    # 递归复制模板包，保留 OKF bundle 目录结构（根 index.md/log.md + concepts|examples|references）
+    # 不随主题走的文件：README.md（使用说明）、ledger-section.md / synthesis-snippets.md（根级粘贴片段）
+    NOT_COPIED = {"README.md", "ledger-section.md", "synthesis-snippets.md"}
     copied = []
-    for src in sorted(tpl.glob("*.md")):
-        if src.name == "README.md":  # 使用说明留在模板包，不随主题走
+    for src in sorted(tpl.rglob("*")):
+        if not src.is_file() or src.name in NOT_COPIED:
             continue
+        rel = src.relative_to(tpl)
+        dst = theme_dst / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
         text = src.read_text(encoding="utf-8")
         for k, v in meta.items():
             text = text.replace(k, v)
-        (theme_dst / src.name).write_text(text, encoding="utf-8")
-        copied.append(src.name)
+        dst.write_text(text, encoding="utf-8")
+        copied.append(str(rel).replace("\\", "/"))
 
     leftover = sum(
         len(re.findall(r"\{\{", md.read_text(encoding="utf-8")))
-        for md in theme_dst.glob("*.md")
+        for md in theme_dst.rglob("*.md")
     )
 
     print(f"主题骨架:   {theme_dst}")
@@ -103,8 +114,8 @@ def main() -> int:
     print(f"复制文件:   {', '.join(copied)}")
     print(f"全局续号:   F起=F-{f_start:03d}｜信源 [{tag}]｜洞察 I-{i_next}｜反模式 AP{ap_next}｜模式 P-{p_next}")
     print(f"正文占位符剩余 {leftover} 处（写页时人工清零；元数据占位符已全部替换）")
-    print("后续（themes/README SOP）：② 事实登记入根级台账（用 _template/ledger-section.md）"
-          "→ ⑤ 沉淀片段粘贴根级 09/10（用 _template/synthesis-snippets.md）→ ⑥ CHANGELOG/REVIEW/README 登记")
+    print("后续（themes/README SOP）：② 事实登记入核心层台账（用 _template/ledger-section.md）"
+          "→ ⑤ 沉淀片段粘贴核心层洞察/反模式文件（用 _template/synthesis-snippets.md）→ ⑥ CHANGELOG/REVIEW/README 登记")
     print("门禁：python .agents/scripts/check-links.py --path <wiki目录>")
     print("      python .trae/skills/private-wiki-increment/scripts/verify_increment.py --wiki <wiki目录> --from <F起> --to <F止>")
     return 0
