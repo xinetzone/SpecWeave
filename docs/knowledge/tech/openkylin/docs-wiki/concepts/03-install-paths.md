@@ -39,7 +39,7 @@ okw import .\openKylin-3.0-wsl-amd64.wsl --name openKylin-3.0 --location D:\WSL\
 okw import .\openKylin-3.0-desktop-wsl-amd64.wsl --name openKylin-3.0-desktop --location D:\WSL\openKylin-3.0-desktop
 ```
 
-边界说明：`okw import` 只封装导入动作——镜像仍须按步骤 3 从官网下载，不自动解压、不自动重试；低内存下 `RegisterDistro/E_UNEXPECTED`、`CreateVm/E_ABORT` 的处置仍见下文实测要点与[实操指南](../references/wsl-install-sparse-vhd-guide.md)。导入后可用 `okw list` 核对发行版、`okw verify <名称>` 执行五步环境验收；完整命令面见 [okw 使用指南](../../../../tech/guides/openkylin-wsl-devkit/index.md)。
+边界说明：`okw import` 只封装导入动作——镜像仍须按步骤 3 从官网下载，不自动解压、不自动重试；低内存下 `RegisterDistro/E_UNEXPECTED`、`CreateVm/E_ABORT` 的处置仍见下文实测要点与[实操指南](../references/wsl-install-sparse-vhd-guide.md)。导入后可用 `okw list` 核对发行版、`okw verify <名称>` 执行五步环境验收；完整命令面见 [okw 使用指南](../../references/wsl-devkit-guide.md)。
 
 > **体积预期（最小镜像，本机实测口径，S26）**：基础镜像下载文件约 336M，但它是 **gzip 压缩的 tar**（文件头 `1F 8B`），导入时 WSL 会解压为约 1.1G 量级的 VHD 虚拟磁盘，故磁盘预留应按 1.1G 以上而非 336M 规划；安装额外软件后 VHD 还会增长。336M 为 2026-09-29 时点 3.0 镜像的实测值，具体以官网下载页当时文件大小为准。
 

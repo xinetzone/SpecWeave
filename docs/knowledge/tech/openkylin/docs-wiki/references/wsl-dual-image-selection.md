@@ -22,7 +22,7 @@ source: "方法论编排 session sc-20260930-openkylin-desktop-wsl（R→I→E�
 >
 > **🟢 2026-10-08 落机实测更新（Win10 26220 + WSL 3.0.2.0）**：桌面镜像已按 §7 清单完成导入、容器级验收与**交互式 UKUI 桌面全链路**——51.6 秒流式导入成功（零失败）、软件包 **1900**（较最小镜像 +1495）、解压体积候选 **k=3（约 12.1 GiB，压缩比 1.97×）消歧**、VHD 实测 **13.01 GiB**、同盘标准路径峰值实测 **19.2 GiB**、`xrdp`/`xrdp-sesman` active 且 3390 监听正常、Windows 侧 `localhost:3390` 转发可用；首次登录出现的**纯黑屏已定位并修复**（根因 `startwm.sh` 清掉 `XDG_RUNTIME_DIR` 致窗口管理器 KWin 冷启动不驻留，用户级 `~/.xsession` 补环境变量 + WM 看门狗，重登验证通过，见 §5.1）。唯一失败单元为良性的 `systemd-binfmt`。下文以【2026-10-08 实测】标注落机结论。
 >
-> 配套萃取模式：[大归档零下载远程预检法](../../../../retrospective/patterns/code-patterns/large-archive-remote-preflight.md)（本文体积/格式结论的取得方法，可迁移到任意 GB 级归档）。
+> 配套萃取模式：[大归档零下载远程预检法](../../../../../retrospective/patterns/code-patterns/large-archive-remote-preflight.md)（本文体积/格式结论的取得方法，可迁移到任意 GB 级归档）。
 
 ---
 
@@ -214,7 +214,7 @@ exec ukui-session
 
 **验证（2026-10-08 实测）**：结束旧会话（`pkill -u openkylin -x Xorg`，注意用 `-x` 精确匹配进程名，勿用 `-f` 匹配命令行会误杀自身 shell）后重新 mstsc 登录：稳定进入 UKUI 桌面；存活 kwin 的父进程链为 `kwin_x11 ← ukuismserver ← ukui-session ← xrdp-sesexec`，进程环境 `XDG_RUNTIME_DIR=/run/user/1000` 正确，证明**决定性修复是补回环境变量（会话自此自己成功拉起 WM），看门狗仅为前几秒兜底**（其首次补拉因 WM 已在位报一条 `FATAL ERROR ... open display :10.0` 后即退出，属正常竞态、无害）。回滚：`cp ~/.xsession.bak ~/.xsession`。
 
-> 排查纪律：黑屏先取**进程与会话日志**（xrdp-sesman.log、~/.config/ukui-session/ukuismserver.log、~/.xsession-errors、~/.xorgxrdp.*.log）区分"会话没起 / WM 没起 / GL 起不来"三类，不要直接重启 WSL 或重装——本机这套证据把三类里的第二类钉死了。本次排障已萃取为可复用模式：[xrdp 黑屏三层分诊法（连接/会话/窗口管理器）](../../../../retrospective/patterns/code-patterns/xrdp-black-screen-window-manager-triage.md)（L1 单案例，含 6 反模式与跨桌面/跨网关迁移）。
+> 排查纪律：黑屏先取**进程与会话日志**（xrdp-sesman.log、~/.config/ukui-session/ukuismserver.log、~/.xsession-errors、~/.xorgxrdp.*.log）区分"会话没起 / WM 没起 / GL 起不来"三类，不要直接重启 WSL 或重装——本机这套证据把三类里的第二类钉死了。本次排障已萃取为可复用模式：[xrdp 黑屏三层分诊法（连接/会话/窗口管理器）](../../../../../retrospective/patterns/code-patterns/xrdp-black-screen-window-manager-triage.md)（L1 单案例，含 6 反模式与跨桌面/跨网关迁移）。
 
 官方 FAQ 仅两条：WSL2 内核未安装（装 https://aka.ms/wsl2kernel ）、远程桌面连接失败（查 xrdp 服务与 3390 端口）。磁盘/内存门槛、包清单、VHD 体积、导入失败排障均未覆盖——最小镜像侧由[实测指南](wsl-install-sparse-vhd-guide.md)补齐，桌面镜像侧由本文 2026-10-08 实测与 §7 清单补齐。
 
@@ -274,7 +274,7 @@ exec ukui-session
 - **陈述**：真实下载 6.14 GiB，而导入后还要叠加 VHD 长期占用与同盘 `.wsl` 共存峰值（手动解压排障路径另有完整 tar，分层口径见 §4.2）；用于廉价估算解压体积的 gzip ISIZE 字段在 >4 GiB 后回绕，本案例读出 98.5 MiB 的荒谬小值，头尾信息只能给出 8.1/12.1/16.1/20.1 GiB 离散候选（k≥6 时 ≥24.1 GiB）。**2026-10-08 落机后真值落定：k=3（tar 12.1 GiB）、VHD 13.01 GiB、同盘峰值 19.2 GiB——事前规划区间正确包裹真值，点估（k=4 参考列）偏差约 3 GiB，再次验证"区间规划、不押单点"的必要性。**
 - **证据**：F-045（精确 Content-Length）、F-047（ISIZE 回绕与候选区间）、最小镜像实测的 VHD/tar 1.17 与临时占用构成；2026-10-08 实测（df 有效数据夹逼 k=3、VHD 13.01 GiB、峰值 19.2 GiB、51.6 秒流式导入）。
 - **反常识**：直觉按下载页"6.1G"预留空间；真正失败模式是盘备好 7 GiB 却在导入途中盘满，留下半成品 VHD；更隐蔽的是网上常用的"读 gzip 末 4 字节估大小"技巧在大文件上静默给出错误答案而不报错。
-- **行动**：大归档下载前一律走[零下载远程预检](../../../../retrospective/patterns/code-patterns/large-archive-remote-preflight.md)五步；磁盘按 §4.2 三档口径依部署路径（跨盘/同盘/排障）规划，而非按下载体积或单一上限；**全量解压并非消歧 ISIZE 的唯一手段——导入后用 ext4 有效数据双向夹逼即可在整数 k 级定档，省一份 ~12 GiB 临时 tar**。
+- **行动**：大归档下载前一律走[零下载远程预检](../../../../../retrospective/patterns/code-patterns/large-archive-remote-preflight.md)五步；磁盘按 §4.2 三档口径依部署路径（跨盘/同盘/排障）规划，而非按下载体积或单一上限；**全量解压并非消歧 ISIZE 的唯一手段——导入后用 ext4 有效数据双向夹逼即可在整数 k 级定档，省一份 ~12 GiB 临时 tar**。
 
 ### I-3　同一页面上的两个下载按钮，证据等级并不相同
 
@@ -320,9 +320,9 @@ V 门结论：4 视角全覆盖，实质意见 11 条，全部采纳；另完成
 - [openKylin 3.0 WSL 安装与稀疏 VHD 实操指南（Windows 10 实测）](wsl-install-sparse-vhd-guide.md)
 - [openKylin 官方下载中心](https://www.openkylin.top/downloads/index-cn.html)
 - 官方文档《openKylin-WSL版本安装》：Gitee `openkylin/docs` → `1入门与参与/1_3系统下载与安装指南/05_openKylin-WSL版本安装.md`
-- [大归档零下载远程预检法（模式）](../../../../retrospective/patterns/code-patterns/large-archive-remote-preflight.md)
-- [WSL 导入内存分诊与稀疏 VHD 决策模式](../../../../retrospective/patterns/code-patterns/wsl-import-memory-triage-sparse-vhd.md)
-- [xrdp 黑屏三层分诊法（连接/会话/窗口管理器）](../../../../retrospective/patterns/code-patterns/xrdp-black-screen-window-manager-triage.md)
+- [大归档零下载远程预检法（模式）](../../../../../retrospective/patterns/code-patterns/large-archive-remote-preflight.md)
+- [WSL 导入内存分诊与稀疏 VHD 决策模式](../../../../../retrospective/patterns/code-patterns/wsl-import-memory-triage-sparse-vhd.md)
+- [xrdp 黑屏三层分诊法（连接/会话/窗口管理器）](../../../../../retrospective/patterns/code-patterns/xrdp-black-screen-window-manager-triage.md)
 - [03 安装路径全景与选型](../concepts/03-install-paths.md)
 
 ```

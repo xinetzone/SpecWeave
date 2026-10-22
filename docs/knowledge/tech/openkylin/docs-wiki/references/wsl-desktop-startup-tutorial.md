@@ -235,7 +235,7 @@ passwd
 | 现象 | 处置 |
 |---|---|
 | mstsc 提示连不上/找不到计算机 | 发行版没启动：先跑第 3 节方式 B 的第 ① 步；再查端口：`wsl -d openKylin-3.0-desktop -- systemctl status xrdp`，挂了就 `wsl -d openKylin-3.0-desktop -u root -- systemctl restart xrdp` |
-| 认证通过但**持续黑屏** | 窗口管理器没起来：90% 是 §2.2 的补丁没打；完整判别与修复见[双镜像文档 §5.1](wsl-dual-image-selection.md) 与 [xrdp 黑屏三层分诊法](../../../../retrospective/patterns/code-patterns/xrdp-black-screen-window-manager-triage.md) |
+| 认证通过但**持续黑屏** | 窗口管理器没起来：90% 是 §2.2 的补丁没打；完整判别与修复见[双镜像文档 §5.1](wsl-dual-image-selection.md) 与 [xrdp 黑屏三层分诊法](../../../../../retrospective/patterns/code-patterns/xrdp-black-screen-window-manager-triage.md) |
 | 登录后**闪退回登录窗** | 会话启动即崩溃：在 WSL 里看 `tail -50 ~/.xsession-errors`，常见为磁盘满（见下行） |
 | 忘记 openkylin 密码 | PowerShell 执行：`wsl -d openKylin-3.0-desktop -u root -- passwd openkylin`，直接设新密码 |
 | 想改窗口大小/全屏 | mstsc 连接前点"显示选项"→ 显示标签拖分辨率，或全屏连接；.rdp 改 `desktopwidth/height` |
@@ -267,7 +267,7 @@ Start-Process mstsc.exe -ArgumentList '/v:localhost:3390'           # 连接桌�
 
 - [openKylin 3.0 双 WSL 镜像对照与选型参考](wsl-dual-image-selection.md)（安装导入、§5 官方流程、§5.1 黑屏修复、磁盘规划）
 - [openKylin 3.0 WSL 安装与稀疏 VHD 实操指南](wsl-install-sparse-vhd-guide.md)（336M 最小镜像安装、VHD 压缩与稀疏化）
-- [xrdp 黑屏三层分诊法（模式）](../../../../retrospective/patterns/code-patterns/xrdp-black-screen-window-manager-triage.md)
+- [xrdp 黑屏三层分诊法（模式）](../../../../../retrospective/patterns/code-patterns/xrdp-black-screen-window-manager-triage.md)
 ```
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S1 | event=SCENARIO_DETECTED | session=sc-20261008-openkylin-desktop-startup-tutorial | msg=教程交付：Desktop WSL 日常启动 | ctx={"scenario":"knowledge","chain":"R-C（轻量，事实已实测）"}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=G4 | event=GATE_PASSED | session=sc-20261008-openkylin-desktop-startup-tutorial | msg=单一职责教程：启动器三方式+逐屏登录+关闭语义+FAQ+速查卡，全部锚定已实测命令

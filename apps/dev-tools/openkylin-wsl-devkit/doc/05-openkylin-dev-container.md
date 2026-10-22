@@ -103,7 +103,7 @@ okw image verify openKylin-3.0-desktop    # okw 一键验收（含 Jupyter HTTP 
 
 - [rootless Podman 指南](03-podman-rootless.md)：okw 在 WSL 发行版内的 rootless Podman 三步流程（宿主侧）。
 - [wsl-rootfs-oci-image-export](../../../../docs/retrospective/patterns/code-patterns/wsl-rootfs-oci-image-export.md)：WSL 导出文件转 OCI 镜像的模式文档。
-- [openKylin 版本生命周期](../../../../docs/knowledge/tech/openkylin-docs-wiki/concepts/02-release-lifecycle.md)：2.0 LTS / 3.0 创新版与容器 tag 的关系。
+- [openKylin 版本生命周期](../../../../docs/knowledge/tech/openkylin/docs-wiki/concepts/02-release-lifecycle.md)：2.0 LTS / 3.0 创新版与容器 tag 的关系。
 
 ## 相关页面
 

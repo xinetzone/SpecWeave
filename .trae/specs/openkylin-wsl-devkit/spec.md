@@ -1,11 +1,11 @@
 # openKylin WSL 开发工具包（openkylin-wsl-devkit）- 产品需求文档
 
-> 方法论链路：知识库学习（R→I→E）→ 应用设计（F→V→C）。本 spec 在全面学习 `docs/knowledge/tech/openkylin-docs-wiki/` 知识包（index + 7 概念页 + 5 参考文档）后固化：以 **WSL 作为切入点**，把知识库中已验证的 openKylin 3.0 WSL 实操经验（安装/验收/排障/脚手架）封装为可复用的开发工具。
+> 方法论链路：知识库学习（R→I→E）→ 应用设计（F→V→C）。本 spec 在全面学习 `docs/knowledge/tech/openkylin/docs-wiki/` 知识包（index + 7 概念页 + 5 参考文档）后固化：以 **WSL 作为切入点**，把知识库中已验证的 openKylin 3.0 WSL 实操经验（安装/验收/排障/脚手架）封装为可复用的开发工具。
 
 ## Overview
 
 - **Summary**：一个本机 CLI 开发工具包，面向"在 Windows 上通过 WSL 进行 openKylin 开发与应用"的开发者。以 openKylin WSL 发行版为切入点，提供四组能力：① WSL 发行版生命周期管理（list/status/import/export/unregister/exec）；② openKylin 环境五步验收（对应知识库 §3.3 实测验收口径）；③ openKylin 开发脚手架（deb 打包骨架 + OKBS/dput 上传配置生成）；④ 知识库快速参考（版本代号、WSL 排障、OKBS 流程的本地索引）。
-- **Purpose**：知识库 `docs/knowledge/tech/openkylin-docs-wiki/` 已沉淀 14 个原子文件与 4 个本机实测/远程核验结论，但都是"读"的资产。本应用把这些经验转成"用"的资产——开发者不必重读文档即可完成 WSL 导入验收、生成 deb 骨架与 dput 配置，降低 openKylin 开发入门摩擦，并让知识库结论以可执行命令的形式落地。
+- **Purpose**：知识库 `docs/knowledge/tech/openkylin/docs-wiki/` 已沉淀 14 个原子文件与 4 个本机实测/远程核验结论，但都是"读"的资产。本应用把这些经验转成"用"的资产——开发者不必重读文档即可完成 WSL 导入验收、生成 deb 骨架与 dput 配置，降低 openKylin 开发入门摩擦，并让知识库结论以可执行命令的形式落地。
 - **Target Users**：Windows 主力机上的 openKylin 开发者/尝鲜者（单用户、本机使用）。
 
 ## Goals
@@ -25,7 +25,7 @@
 - **不做桌面镜像实测**：6.14 GiB Desktop WSL 镜像的运行时行为仍属【待实测】（知识库 F-049/F-050），本工具不把未验证结论固化为默认建议。
 - **不做 AI 能力**：不调用任何 LLM/生成式接口；不接入 openKylin AI SDK（那是知识库 05 概念页的开发主题，后续单独立项）。
 - **不写入社区**：不自动提交 PR/issue、不调用 OKBS/factory API（dput 配置仅生成文件，上传由开发者自行执行）。
-- **不修改知识库**：`ref` 只读引用 `docs/knowledge/tech/openkylin-docs-wiki/`，不复制内容、不改变其结构。
+- **不修改知识库**：`ref` 只读引用 `docs/knowledge/tech/openkylin/docs-wiki/`，不复制内容、不改变其结构。
 
 ## Background & Context
 
@@ -53,7 +53,7 @@
 - **FR-3（五步验收 verify）**：`okw verify <name>` 依次执行知识库 §3.3 五项并输出可解析结果：① `wsl -l -v` 确认在列且 WSL2、默认星标未被本工具改变（对比调用前快照）；② `cat /etc/os-release` 提取 VERSION/ID；③ `/bin/bash -lc 'echo "user=$(whoami) uid=$(id -u)"'` 确认默认用户/UID；④ `cat /etc/wsl.conf` 检查 `[user] default=` 与 `[boot] systemd=true`；⑤ `dpkg-query -W | wc -l` 软件包计数（与 405 对照提示，注明口径 `dpkg -l` 含表头会多 5 行）。单项失败不中断，汇总输出 PASS/FAIL 清单。
 - **FR-4（deb 打包骨架 scaffold deb）**：`okw scaffold deb <项目名> --series <yangtze|nile|huanghe> --version <版本>` 生成 `debian/` 骨架：`control`（Package/Version/Architecture=amd64/Maintainer/Description）、`changelog`（Debian 格式头，系列代号参数化，知识库 F-015 纪律）、`rules`（dh 模板）、`compat`（12）、`source/format`（"3.0 (quilt)"）；输出生成文件清单。
 - **FR-5（OKBS dput 配置 scaffold dput）**：`okw scaffold dput <openkylin-id> [--output 路径]` 生成 `~/.dput.cf` 可合并片段：`[okbs] fqdn=upload.build.openkylin.top:2121 / method=sftp / incoming=%(okbs)s / login=<ID>`（知识库 D-F-027 口径）；注明 paramiko 前置与 `dput okbs:~<ID>/ppa <source.changes>` 用法。
-- **FR-6（知识库参考 ref）**：`okw ref <topic>` 输出主题速查：`series`（版本代号表 yangtze/nile/huanghe + 内核）、`wsl-troubleshoot`（E_UNEXPECTED/E_ABORT 三问 + 稀疏 VHD 纪律）、`okbs`（五步流程）、`verify`（五步验收口径）；每条附知识库相对路径（`docs/knowledge/tech/openkylin-docs-wiki/...`）。`okw ref`（无参数）列出全部主题。
+- **FR-6（知识库参考 ref）**：`okw ref <topic>` 输出主题速查：`series`（版本代号表 yangtze/nile/huanghe + 内核）、`wsl-troubleshoot`（E_UNEXPECTED/E_ABORT 三问 + 稀疏 VHD 纪律）、`okbs`（五步流程）、`verify`（五步验收口径）；每条附知识库相对路径（`docs/knowledge/tech/openkylin/docs-wiki/...`）。`okw ref`（无参数）列出全部主题。
 - **FR-7（CLI 装配）**：argparse 入口 `okw`；每个子命令 `--help` 完整；未知子命令/参数给出中文提示与退出码 2；`--version` 输出包版本。
 
 ## Non-Functional Requirements
@@ -131,7 +131,7 @@
 ### AC-7：ref 知识库索引覆盖
 - **Type**：`rule`
 - **Given**：`okw ref series|wsl-troubleshoot|okbs|verify` 与 `okw ref`（无参数）
-- **Then**：四个主题各有正确速查内容；每条附知识库相对路径（`docs/knowledge/tech/openkylin-docs-wiki/...` 且路径存在）；无参数列出全部主题
+- **Then**：四个主题各有正确速查内容；每条附知识库相对路径（`docs/knowledge/tech/openkylin/docs-wiki/...` 且路径存在）；无参数列出全部主题
 - **Pass Condition**：速查内容与知识库事实一致（代号表含 yangtze/nile/huanghe）；路径存在性断言通过
 - **Evidence**：pytest + 路径存在检查
 

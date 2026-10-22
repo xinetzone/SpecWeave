@@ -35,7 +35,7 @@ source: "openEuler 侧公开网络信源：openeuler.org 官网（下载页/生�
 - **编排 session**：`sc-20260930-openeuler-vs-openkylin`
 - **场景与链路**：场景 4 知识沉淀，`R→I→E→V→C（入库）`，depth=standard
 - **采集时点**：2026-09-30（openEuler 侧为新采集；openKylin 侧引用 2026-09-29 既有知识包，见下）
-- **信源分工**：openEuler 侧事实编号 **O-001~O-035**，来源键 [S01]~[S17] 见[信源台账](references/source-inventory.md)；openKylin 侧不重复采集，以 **K-001~K-012** 锚点引用本地知识包 [openKylin 全面调研](../openkylin-docs-wiki/references/project-overview.md)（F-001~F-062）与[官方文档平台教程](../openkylin-docs-wiki/index.md)（F-001~F-044）。
+- **信源分工**：openEuler 侧事实编号 **O-001~O-035**，来源键 [S01]~[S17] 见[信源台账](references/source-inventory.md)；openKylin 侧不重复采集，以 **K-001~K-012** 锚点引用本地知识包 [openKylin 全面调研](../docs-wiki/references/project-overview.md)（F-001~F-062）与[官方文档平台教程](../docs-wiki/index.md)（F-001~F-044）。
 
 ---
 
@@ -129,7 +129,7 @@ source: "openEuler 侧公开网络信源：openeuler.org 官网（下载页/生�
 
 | 锚点 | 事实 | 引用位置 |
 |---|---|---|
-| K-001 | 2022-06-24 麒麟软件联合 13 家单位发起 openKylin，官方表述"中国首个桌面操作系统根社区" | [project-overview F-003](../openkylin-docs-wiki/references/project-overview.md) |
+| K-001 | 2022-06-24 麒麟软件联合 13 家单位发起 openKylin，官方表述"中国首个桌面操作系统根社区" | [project-overview F-003](../docs-wiki/references/project-overview.md) |
 | K-002 | 2024-09-25 openKylin 捐赠开放原子开源基金会，官方表述"我国首例央企开源捐赠" | F-005 |
 | K-003 | 截至 2026-07-31：社区用户超 247 万、会员超 2210 家、开发者超 2.4 万、SIG 158 个 | F-007/F-008 |
 | K-004 | 版本双轨制（2026-04-09 TC 表决）：LTS 每 3 年一个、2 年主动加 3 年被动共 5 年；创新版每年一个、12 个月被动维护，定位"新技术试验田" | F-011/F-012 |
@@ -189,7 +189,7 @@ source: "openEuler 侧公开网络信源：openeuler.org 官网（下载页/生�
 
 ### 模式：场景区间选型法（L1-draft）
 
-> 本模式已于 2026-09-30 独立沉淀入方法论模式库，通用版（抽象步骤、跨域迁移、与选型类模式关系）见 [场景区间选型法](../../../retrospective/patterns/methodology-patterns/governance-strategy/scenario-interval-selection.md)；本节保留本案例版摘要，完整操作版仍以 [05 概念页](concepts/05-selection-guide.md)为准。
+> 本模式已于 2026-09-30 独立沉淀入方法论模式库，通用版（抽象步骤、跨域迁移、与选型类模式关系）见 [场景区间选型法](../../../../retrospective/patterns/methodology-patterns/governance-strategy/scenario-interval-selection.md)；本节保留本案例版摘要，完整操作版仍以 [05 概念页](concepts/05-selection-guide.md)为准。
 
 **一句话**：面对同一治理体系内两个相邻根社区（或基础软件分支），不按知名度与总量指标选型，而按"工作负载形态 → 商业下游与合规 → 生命周期偏好 → 包管理与生态存量 → 硬件架构"五问依次收敛，每问把选项推向不同区间，最后以最小实测完成验证。
 
@@ -201,9 +201,9 @@ source: "openEuler 侧公开网络信源：openeuler.org 官网（下载页/生�
 | **检验标准** | 五问每题有书面答案且可被第三人复核；最终选择至少附一条工作负载证据而非知名度证据；商业路径写明 OSV 名称、产品版本与测评编号；POC 记录可复现 |
 | **反模式** | ① 按知名度/装机量跨场景选（2000 万服务器装机不能证明桌面可用，247 万桌面用户不能证明服务器可运维）；② 把"同基金会、都有 UKUI、都发 AgentOS"当作同质化证据；③ 忽视社区版与商业版的 SLA/测评主体差异，社区版直接上关键生产；④ 六名混谈（EulerOS/欧拉/openEuler/银河麒麟/openKylin/优麒麟）导致张冠李戴；⑤ 用厂商大会口径数字（57.3%、2000 万套等）做精确采购测算 |
 | **跨域迁移** | 可迁移至同基金会多根社区选型（如服务器侧 openEuler 与龙蜥 Anolis 的区间判定需改用"合规/存量/云厂商绑定"维度）、数据库 OLTP/HTAP 分工选型、Kubernetes 商业发行版选型；步骤①"先分工作负载形态"对任何"听起来差不多"的二选一基础软件决策通用 |
-| **成熟度** | **L1-draft**：基于单对比主题与双侧多信源首次成型；步骤①—④有本案例双侧事实支撑，步骤⑤⑥迁移自[最小充分脚手架选型法](../../../retrospective/patterns/methodology-patterns/governance-strategy/minimal-sufficient-scaffold-selection.md)的"真实任务验证"原则。升级 L2 条件：在第二个独立双根社区场景（数据库或云原生方向）完成一次完整五问应用并回填修订记录 |
+| **成熟度** | **L1-draft**：基于单对比主题与双侧多信源首次成型；步骤①—④有本案例双侧事实支撑，步骤⑤⑥迁移自[最小充分脚手架选型法](../../../../retrospective/patterns/methodology-patterns/governance-strategy/minimal-sufficient-scaffold-selection.md)的"真实任务验证"原则。升级 L2 条件：在第二个独立双根社区场景（数据库或云原生方向）完成一次完整五问应用并回填修订记录 |
 
-> 本模式完整操作版（决策表、我该装谁、商业版路径）见 [05 场景区间选型法](concepts/05-selection-guide.md)。与既有模式[根社区—商业发行版双轮](../../../retrospective/patterns/methodology-patterns/product-growth/root-community-commercial-distro-flywheel.md)互补：后者解释"社区—商业"两轮如何转动，本模式解决"两个社区之间站在哪边"。
+> 本模式完整操作版（决策表、我该装谁、商业版路径）见 [05 场景区间选型法](concepts/05-selection-guide.md)。与既有模式[根社区—商业发行版双轮](../../../../retrospective/patterns/methodology-patterns/product-growth/root-community-commercial-distro-flywheel.md)互补：后者解释"社区—商业"两轮如何转动，本模式解决"两个社区之间站在哪边"。
 
 ---
 

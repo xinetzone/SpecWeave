@@ -1,7 +1,7 @@
 """知识库 frontmatter 严格 YAML 合法性守护测试。
 
 背景（2026-10-20 修复）：``docs/knowledge/tech/medium-wiki/`` 下 3 个文件与
-``tech/openkylin-docs-wiki/references/openkylin-v3-adaptation-assessment.md`` 的
+``tech/openkylin/docs-wiki/references/openkylin-v3-adaptation-assessment.md`` 的
 frontmatter 在双引号标量内嵌了未转义的 ASCII 引号（如 ``title: "从"思想之地"到..."``）。
 仓库自研解析器（``.agents/scripts/lib/frontmatter.py``）按行取值、只剥外层引号，
 因此容错通过；但标准 YAML 解析器直接报 ``expected <block end>, but found '<scalar>'`` ——

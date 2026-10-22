@@ -4,7 +4,7 @@
 
 ## 5.1 模式全文：场景区间选型法（L1-draft）
 
-> 本模式已独立沉淀入方法论模式库，通用表述与跨域迁移（服务器侧双根社区、OLTP/HTAP、K8s 发行版）见 [场景区间选型法](../../../../retrospective/patterns/methodology-patterns/governance-strategy/scenario-interval-selection.md)；本页是 openEuler/openKylin 案例的完整操作版。
+> 本模式已独立沉淀入方法论模式库，通用表述与跨域迁移（服务器侧双根社区、OLTP/HTAP、K8s 发行版）见 [场景区间选型法](../../../../../retrospective/patterns/methodology-patterns/governance-strategy/scenario-interval-selection.md)；本页是 openEuler/openKylin 案例的完整操作版。
 
 面对同一治理体系内两个相邻根社区，不按知名度与总量指标选型，而按五个维度依次提问，把选项推向不同区间，最后以最小实测收口。
 
@@ -58,7 +58,7 @@ flowchart TD
 
 ### 跨域迁移与成熟度
 
-- **跨域迁移**：同法可用于 openEuler 与龙蜥 Anolis 的服务器侧区间判定（第①问改用"合规认证/云厂商绑定/存量绑定"维度）、数据库 OLTP/HTAP 分工、Kubernetes 商业发行版选型；"先分工作负载形态"对一切"听起来差不多"的二选一基础软件决策通用。与既有[最小充分脚手架选型法](../../../../retrospective/patterns/methodology-patterns/governance-strategy/minimal-sufficient-scaffold-selection.md)互补：本模式负责"站在哪个区间"，后者负责"区间内选多厚的栈"。
+- **跨域迁移**：同法可用于 openEuler 与龙蜥 Anolis 的服务器侧区间判定（第①问改用"合规认证/云厂商绑定/存量绑定"维度）、数据库 OLTP/HTAP 分工、Kubernetes 商业发行版选型；"先分工作负载形态"对一切"听起来差不多"的二选一基础软件决策通用。与既有[最小充分脚手架选型法](../../../../../retrospective/patterns/methodology-patterns/governance-strategy/minimal-sufficient-scaffold-selection.md)互补：本模式负责"站在哪个区间"，后者负责"区间内选多厚的栈"。
 - **成熟度**：**L1-draft**。步骤①—④由本案例双侧事实支撑，步骤⑥借自最小充分脚手架选型法的真实任务验证原则。升级 L2 条件：在第二个独立双根社区场景（数据库或云原生方向）完整应用五问并回填修订。
 
 ## 5.2 典型人群的直接建议

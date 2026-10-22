@@ -81,7 +81,7 @@ okw 刻意不覆盖以下内容，需要时请按知识库手动操作：
 
 ## 证据与口径
 
-- 事实来源：知识库 [05 AI 三层体系](../../../../docs/knowledge/tech/openkylin-docs-wiki/concepts/05-ai-stack.md)、[OCR 落机 POC](../../../../docs/knowledge/tech/openkylin-docs-wiki/references/ai-sdk-ocr-poc.md)、[AI 子系统源码架构剖析](../../../../docs/knowledge/tech/openkylin-docs-wiki/references/ai-subsystem-source-architecture.md)。
+- 事实来源：知识库 [05 AI 三层体系](../../../../docs/knowledge/tech/openkylin/docs-wiki/concepts/05-ai-stack.md)、[OCR 落机 POC](../../../../docs/knowledge/tech/openkylin/docs-wiki/references/ai-sdk-ocr-poc.md)、[AI 子系统源码架构剖析](../../../../docs/knowledge/tech/openkylin/docs-wiki/references/ai-subsystem-source-architecture.md)。
 - OCR 路径为 2026-10-08 在 openKylin-3.0-desktop WSL（huanghe）实测；其余能力域仍为「成文未验证」，生产采用前应各自做最小 POC。
 - okw 自身零第三方运行时依赖，AI 命令仅用标准库与本包模块；不修改软件源、不写 `wsl.conf`、不改默认发行版。
 

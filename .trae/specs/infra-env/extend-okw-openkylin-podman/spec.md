@@ -3,7 +3,7 @@ title: "为 okw 增加 openKylin WSL rootless Podman 支持"
 status: "draft"
 methodology: "seven-concepts-cmd: F→V→I→C"
 content-sensitivity: "public"
-source: "docs/knowledge/tech/openkylin-docs-wiki/; apps/dev-tools/openkylin-wsl-devkit/; apps/containers/AGENTS.md"
+source: "docs/knowledge/tech/openkylin/docs-wiki/; apps/dev-tools/openkylin-wsl-devkit/; apps/containers/AGENTS.md"
 ---
 
 # 为 okw 增加 openKylin WSL rootless Podman 支持

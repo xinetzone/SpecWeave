@@ -86,11 +86,11 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/openkylin-wsl-devkit/SKILL.toml"
 | 知识速记 | `okw ref [series|wsl-troubleshoot|okbs|verify]` | 只读，无参数时列主题 |
 | 注销/导出/执行命令 | `okw unregister <name> --yes`、`okw export <name> --output <f>`、`okw exec <name> -- <cmd>` | unregister 必须 `--yes`；exec 非交互，不能代替 `wsl -d` 登录 |
 
-完整参数签名、默认值与退出码见 [references/command-map.md](references/command-map.md)；双镜像导入的磁盘预留口径见知识库 [03 安装路径全景](../../../docs/knowledge/tech/openkylin-docs-wiki/concepts/03-install-paths.md) §3.2。
+完整参数签名、默认值与退出码见 [references/command-map.md](references/command-map.md)；双镜像导入的磁盘预留口径见知识库 [03 安装路径全景](../../../docs/knowledge/tech/openkylin/docs-wiki/concepts/03-install-paths.md) §3.2。
 
 ## 5. 本机固定事实（先读，避免重复踩坑）
 
-- 应用源码：`apps/dev-tools/openkylin-wsl-devkit`（`src/okw`，主仓直接管理，**非 submodule，可直接修改**）；人类文档：`docs/tech/guides/openkylin-wsl-devkit/`（共 6 篇）。
+- 应用源码：`apps/dev-tools/openkylin-wsl-devkit`（`src/okw`，主仓直接管理，**非 submodule，可直接修改**）；人类文档：`apps/dev-tools/openkylin-wsl-devkit/doc/`（8 篇原子页 + 索引）。
 - 本机 shell 的 PATH 被裁剪：`python`、`git`、`okw` 均不可裸调。Python 用全路径 `<USER_HOME>\AppData\Local\Programs\Python\Python314\python.exe`（3.14.7，已 editable 安装 okw 0.1.0，用 `& $py -m okw ...` 调用）；git 用 `D:\Program Files\Git\mingw64\bin\git.exe`，或在命令首行临时注入 `$env:PATH = "D:\Program Files\Git\mingw64\bin;" + $env:PATH`。
 - 工具安装（其他机器/新环境）：在仓库根执行 `python -m pip install -e apps/dev-tools/openkylin-wsl-devkit`。
 - okw 自身已内置 wsl.exe 全路径回退（PATH → `%WINDIR%\System32\wsl.exe`）与 `WSL_UTF8=1`，调用方不要再重复造这层封装。
@@ -121,10 +121,10 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/openkylin-wsl-devkit/SKILL.toml"
 
 ## 8. 排障路由（先判层再动手）
 
-- 导入报 `RegisterDistro/E_UNEXPECTED`、`CreateVm/E_ABORT`：空闲内存不足（实测阈值约 0.8GB 失败 / 4GB+ 成功），`wsl --shutdown` 释放后重试；okw 只打印分诊提示，不自动解压 tar。详见 [wsl-install-sparse-vhd-guide](../../../docs/knowledge/tech/openkylin-docs-wiki/references/wsl-install-sparse-vhd-guide.md)。
-- 双镜像选型/磁盘峰值/xrdp 3390 黑屏：见 [wsl-dual-image-selection](../../../docs/knowledge/tech/openkylin-docs-wiki/references/wsl-dual-image-selection.md) 与桌面启动教程，不要把未验证建议写进 okw。
+- 导入报 `RegisterDistro/E_UNEXPECTED`、`CreateVm/E_ABORT`：空闲内存不足（实测阈值约 0.8GB 失败 / 4GB+ 成功），`wsl --shutdown` 释放后重试；okw 只打印分诊提示，不自动解压 tar。详见 [wsl-install-sparse-vhd-guide](../../../docs/knowledge/tech/openkylin/docs-wiki/references/wsl-install-sparse-vhd-guide.md)。
+- 双镜像选型/磁盘峰值/xrdp 3390 黑屏：见 [wsl-dual-image-selection](../../../docs/knowledge/tech/openkylin/docs-wiki/references/wsl-dual-image-selection.md) 与桌面启动教程，不要把未验证建议写进 okw。
 - podman preflight FAIL：按报告中文项修复后重跑；APT 索引缺失的 UNKNOWN 不是 FAIL，install 会先 `apt update`。
-- 领域问题回源：命令疑问读 [01 快速开始](../../../docs/tech/guides/openkylin-wsl-devkit/01-getting-started.md)、[02 命令参考](../../../docs/tech/guides/openkylin-wsl-devkit/02-command-reference.md)、[03 Podman](../../../docs/tech/guides/openkylin-wsl-devkit/03-podman-rootless.md)、[04 开发边界](../../../docs/tech/guides/openkylin-wsl-devkit/04-development-and-boundaries.md)、[05 开发容器](../../../docs/tech/guides/openkylin-wsl-devkit/05-openkylin-dev-container.md)、[06 xuan-compose](../../../docs/tech/guides/openkylin-wsl-devkit/06-xuan-compose.md)；签名以 `src/okw/cli/parser.py` 为最终事实源。
+- 领域问题回源：命令疑问读 [01 快速开始](../../../apps/dev-tools/openkylin-wsl-devkit/doc/01-getting-started.md)、[02 命令参考](../../../apps/dev-tools/openkylin-wsl-devkit/doc/02-command-reference.md)、[03 Podman](../../../apps/dev-tools/openkylin-wsl-devkit/doc/03-podman-rootless.md)、[04 开发边界](../../../apps/dev-tools/openkylin-wsl-devkit/doc/04-development-and-boundaries.md)、[05 开发容器](../../../apps/dev-tools/openkylin-wsl-devkit/doc/05-openkylin-dev-container.md)、[06 xuan-compose](../../../apps/dev-tools/openkylin-wsl-devkit/doc/06-xuan-compose.md)；签名以 `src/okw/cli/parser.py` 为最终事实源。
 
 ## 9. 技能边界（不要越界）
 
@@ -141,7 +141,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/openkylin-wsl-devkit/SKILL.toml"
 - [ ] 涉及 xuan-compose 时已确认仅做用户授权的 CLI 聚合引导，未 vendor 其 GPL 源码、未加为 Python 依赖
 - [ ] 修改 parser.py 后已重生成 `tests/snapshots/cli_surface.json`（人工零编辑），并已验证 test_cli_surface.py 对拍通过
 - [ ] 开发门禁已验证：应用目录全量 pytest 通过、覆盖率未回退、Python 红线 AST 守护测试为绿
-- [ ] 排障结论已验证与 `docs/knowledge/tech/openkylin-docs-wiki/` 实证口径一致，未把凭记忆的桌面镜像结论写入工具或文档
+- [ ] 排障结论已验证与 `docs/knowledge/tech/openkylin/docs-wiki/` 实证口径一致，未把凭记忆的桌面镜像结论写入工具或文档
 
 ## 11. Gotchas（陷阱与反直觉行为）
 
@@ -161,10 +161,10 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/openkylin-wsl-devkit/SKILL.toml"
 | 参考 | 路径 | 何时查阅 |
 |------|------|---------|
 | 命令签名与退出码对照（按需加载） | [references/command-map.md](references/command-map.md) | 不确定参数、默认 tag（镜像默认 `3.0` 非 `latest`）、退出码语义时 |
-| 安装路径全景（双镜像/磁盘口径） | [03-install-paths.md](../../../docs/knowledge/tech/openkylin-docs-wiki/concepts/03-install-paths.md) | 导入前磁盘规划 |
-| 稀疏 VHDX 导入排障 | [wsl-install-sparse-vhd-guide.md](../../../docs/knowledge/tech/openkylin-docs-wiki/references/wsl-install-sparse-vhd-guide.md) | 导入失败分诊 |
-| 双镜像选型 | [wsl-dual-image-selection.md](../../../docs/knowledge/tech/openkylin-docs-wiki/references/wsl-dual-image-selection.md) | 基础/桌面镜像与 xrdp 问题 |
-| 人类文档 6 篇 | [docs/tech/guides/openkylin-wsl-devkit/](../../../docs/tech/guides/openkylin-wsl-devkit/01-getting-started.md) | 领域问题回源 |
+| 安装路径全景（双镜像/磁盘口径） | [03-install-paths.md](../../../docs/knowledge/tech/openkylin/docs-wiki/concepts/03-install-paths.md) | 导入前磁盘规划 |
+| 稀疏 VHDX 导入排障 | [wsl-install-sparse-vhd-guide.md](../../../docs/knowledge/tech/openkylin/docs-wiki/references/wsl-install-sparse-vhd-guide.md) | 导入失败分诊 |
+| 双镜像选型 | [wsl-dual-image-selection.md](../../../docs/knowledge/tech/openkylin/docs-wiki/references/wsl-dual-image-selection.md) | 基础/桌面镜像与 xrdp 问题 |
+| 人类文档 8 篇原子页 | [apps/dev-tools/openkylin-wsl-devkit/doc/](../../../apps/dev-tools/openkylin-wsl-devkit/doc/01-getting-started.md) | 领域问题回源 |
 | 命令面最终事实源 | `apps/dev-tools/openkylin-wsl-devkit/src/okw/cli/parser.py` | 任何签名争议以此为准 |
 
 ## Changelog

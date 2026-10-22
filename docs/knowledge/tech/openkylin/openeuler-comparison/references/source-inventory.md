@@ -28,9 +28,9 @@
 
 | 引用 | 文件 | 用法 |
 |---|---|---|
-| project-overview F-001~F-062 | [../../openkylin-docs-wiki/references/project-overview.md](../../openkylin-docs-wiki/references/project-overview.md) | K-001~K-012 全部锚点的事实出处；其自带 S01—S30 信源台账与 V-01~V-08 审查记录继续有效 |
-| docs-wiki F-001~F-044 | [../../openkylin-docs-wiki/index.md](../../openkylin-docs-wiki/index.md) | 文档平台侧事实（双轨版本制 TC 文本、apt 命令、安装矩阵、AI SDK 文档等） |
-| WSL 本机实测 | [../../openkylin-docs-wiki/references/wsl-install-sparse-vhd-guide.md](../../openkylin-docs-wiki/references/wsl-install-sparse-vhd-guide.md) | 选型第⑥问"最低成本首轮体验"的实测依据 |
+| project-overview F-001~F-062 | [../../docs-wiki/references/project-overview.md](../../docs-wiki/references/project-overview.md) | K-001~K-012 全部锚点的事实出处；其自带 S01—S30 信源台账与 V-01~V-08 审查记录继续有效 |
+| docs-wiki F-001~F-044 | [../../docs-wiki/index.md](../../docs-wiki/index.md) | 文档平台侧事实（双轨版本制 TC 文本、apt 命令、安装矩阵、AI SDK 文档等） |
+| WSL 本机实测 | [../../docs-wiki/references/wsl-install-sparse-vhd-guide.md](../../docs-wiki/references/wsl-install-sparse-vhd-guide.md) | 选型第⑥问"最低成本首轮体验"的实测依据 |
 
 引用纪律：本知识包不复制本地包事实原文，只给锚点映射；openKylin 侧事实时点冻结在 2026-09-29，若本地包后续修订，以本地包最新编号内容为准。
 

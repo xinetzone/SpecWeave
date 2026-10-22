@@ -273,7 +273,7 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 
 ## 3. E 阶段：可迁移模式（G3）
 
-> 本模式已于 2026-09-30 独立沉淀入方法论模式库，通用版（六步抽象、5 个反模式、跨领域迁移、与 RIEV 等模式的层级关系）见 [逆序文档学习法](../../../retrospective/patterns/methodology-patterns/research-knowledge/reverse-order-doc-learning.md)；本节保留本案例版摘要。
+> 本模式已于 2026-09-30 独立沉淀入方法论模式库，通用版（六步抽象、5 个反模式、跨领域迁移、与 RIEV 等模式的层级关系）见 [逆序文档学习法](../../../../retrospective/patterns/methodology-patterns/research-knowledge/reverse-order-doc-learning.md)；本节保留本案例版摘要。
 
 ### 模式：逆序文档学习法（L1-draft，单案例待验证）
 
@@ -287,7 +287,7 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 | **检验标准** | 读者不回源站即可完成关键路径决策；每篇教程的事实都能在信源台账定位到具体文件；陈旧内容与最新内容的边界对读者可见 |
 | **反模式** | ① 从首页顺读（首页最可能营销化且最旧，本案例 F-019/F-040 证实）；② 把官方文档当均质权威、不做时效甄别（本案例新旧两层并存）；③ 全文转写式"翻译"（复制官方目录结构等于复制它的结构缺陷）；④ 只读正文不读元信息（文件树与提交记录恰恰暴露真实重心与活跃度） |
 | **跨域迁移** | 可迁移至任意 Git 托管文档体系：学习 Apache/CNCF 项目文档时先拉仓库树统计、读 release 文档定年；厂商文档中心可用 sitemap + 更新日期替代 Git 元信息完成步骤①③ |
-| **成熟度** | **L1-draft（单案例待验证）**：本次 openKylin 文档站为首次完整应用；步骤⑤的"本机实测交叉验证"有姊妹篇 WSL 实测（F-044）提供半个第二案例支撑。入库二次校验按模式库等级表维持 L1-draft：升级 L1.5 需第二个非同谱系文档站（非 docsify/Gitee 形态）完整应用，升级 L2-validated 另需本团队一次真实学习任务实战，通用版见[方法论模式库](../../../retrospective/patterns/methodology-patterns/research-knowledge/reverse-order-doc-learning.md) |
+| **成熟度** | **L1-draft（单案例待验证）**：本次 openKylin 文档站为首次完整应用；步骤⑤的"本机实测交叉验证"有姊妹篇 WSL 实测（F-044）提供半个第二案例支撑。入库二次校验按模式库等级表维持 L1-draft：升级 L1.5 需第二个非同谱系文档站（非 docsify/Gitee 形态）完整应用，升级 L2-validated 另需本团队一次真实学习任务实战，通用版见[方法论模式库](../../../../retrospective/patterns/methodology-patterns/research-knowledge/reverse-order-doc-learning.md) |
 
 ---
 
@@ -303,12 +303,12 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 |---|---|---|
 | G1 | 事实 ≥20、无因果词、可溯源、数字/URL 完整 | PASS（44 条，分 7 组；自我标注内容保留引号） |
 | G2 | 洞察 ≥3 且四元组完整、维度独立、含反常识与行动 | PASS（I-1~I-4：结构/时效/AI/工程治理） |
-| G3 | 模式含适用边界、步骤、≥3 反模式、检验标准、跨域迁移、成熟度标注 | PASS（逆序文档学习法，L1-draft，案例版 4 反模式；2026-09-30 入库版扩为 5 反模式并登记[模式库](../../../retrospective/patterns/methodology-patterns/research-knowledge/reverse-order-doc-learning.md)） |
+| G3 | 模式含适用边界、步骤、≥3 反模式、检验标准、跨域迁移、成熟度标注 | PASS（逆序文档学习法，L1-draft，案例版 4 反模式；2026-09-30 入库版扩为 5 反模式并登记[模式库](../../../../retrospective/patterns/methodology-patterns/research-knowledge/reverse-order-doc-learning.md)） |
 | V 门 | 4 视角、意见 ≥5 且具体、采纳 ≥2 并回归确认 | PASS（7 条意见，6 条采纳修正，1 条登记为局限） |
 | G4 | 产出原子化：单一职责文件、可独立验证、链接与命名规范 | PASS（14 个原子文件：index + concepts 索引 1 + 概念页 7 + references 5；同日 C 阶段将原 `tech/openkylin/` 两篇伴生文档合并入 references/，toctree 经本 index 统一登记，链接与文件名检查通过） |
 | **2026-09-30 专项**（session `sc-20260930-openkylin-desktop-wsl`，链路 R→I→E→V→C） | | |
 | G1/G2 | 事实客观可溯源 ≥20；洞察四元组 ≥3 | PASS（会话内 22 条事实，索引摘要 F-045~F-050；3 条洞察见双镜像文档 §8） |
-| G3 | 模式含边界/步骤/≥3 反模式/检验/迁移/成熟度 | PASS（[大归档零下载远程预检法](../../../retrospective/patterns/code-patterns/large-archive-remote-preflight.md)，L1 单案例，5 反模式，与 pretrained-model-download-validation 互补） |
+| G3 | 模式含边界/步骤/≥3 反模式/检验/迁移/成熟度 | PASS（[大归档零下载远程预检法](../../../../retrospective/patterns/code-patterns/large-archive-remote-preflight.md)，L1 单案例，5 反模式，与 pretrained-model-download-validation 互补） |
 | V 门 | 4 视角、意见 ≥5、采纳 ≥2 | PASS（4 视角 11 条意见全部采纳：候选区间保留 k≥6、包包含关系降级为推断、GiB/GB 双口径、同名冲突、WSLg 替代、弱口令红线、镜像时效） |
 | G4 | 原子化产出 | PASS（新建参考文档 1 + 模式 1；更新 index/03-install-paths/wsl 指南/信源台账/模式 toctree 共 5 处；桌面镜像运行时项明确登记待实测，不伪造实测结论） |
 | **2026-10-08 专项**（session `sc-20261008-openkylin-desktop-wsl-install`，落机安装链路 R→I→F→V→C） | | |
@@ -385,5 +385,30 @@ source: "一手信源：openKylin 文档平台 https://docs.openkylin.top/zh/hom
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S2 | event=CHAIN_SELECTED | session=sc-20261014-openkylin-wsl-verify | msg=场景4知识沉淀：R→I→E→V→C | ctx={"chain":"R-I-E-V-C","depth":"standard"}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=R9 | event=GATE_PASSED | session=sc-20261014-openkylin-wsl-verify | msg=4事实纯客观：宿主WSL3.0.3.0/内核6.18.54.1-1/镜像字节352431812未变/实例436包2.44GiB；信源S36 | ctx={"facts":"F-087~F-090","source":"S36"}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=V9 | event=GATE_PASSED | session=sc-20261014-openkylin-wsl-verify | msg=4视角5意见4采纳：组件命中口径收严、漂移标注阈值口径、结论收敛单句、身份锚改字节数
-[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20261014-openkylin-wsl-verify | msg=4事实/3洞察(I-7镜像锚,I-8导入态vs运行态,I-9规划表可核验)/1模式候选(L1-draft)/更新3文件；零新建 | ctx={"gates":["G1","G2","G3","V","G4"],"files_updated":3,"distro":"openKylin-3.0"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20261014-openkylin-wsl-verify | msg=3洞察(I-7镜像锚,I-8导入态vs运行态,I-9规划表可核验)/1模式候选(L1-draft)/更新3文件；零新建 | ctx={"gates":["G1","G2","G3","V","G4"],"files_updated":3,"distro":"openKylin-3.0"}
+```
+
+```{toctree}
+:maxdepth: 1
+:hidden:
+
+concepts/index
+concepts/01-platform-and-repository
+concepts/02-release-lifecycle
+concepts/03-install-paths
+concepts/04-desktop-usage
+concepts/05-ai-stack
+concepts/06-developer-infrastructure
+concepts/07-community-and-contribution
+references/adversarial-review
+references/ai-sdk-ocr-poc
+references/ai-subsystem-source-architecture
+references/full-catalog
+references/kylin-wayland-compositor-architecture
+references/openkylin-v3-adaptation-assessment
+references/project-overview
+references/source-inventory
+references/wsl-desktop-startup-tutorial
+references/wsl-dual-image-selection
+references/wsl-install-sparse-vhd-guide
 ```

@@ -7144,138 +7144,138 @@
     {
       "count": 1,
       "identity_source": "Q1[\"<circled-digit> 工作负载形态：后台基础设施 还是 人机交互终端？\"]",
-      "path": "docs/knowledge/tech/openeuler-vs-openkylin/concepts/05-selection-guide.md",
+      "path": "docs/knowledge/tech/openkylin/openeuler-comparison/concepts/05-selection-guide.md",
       "rule_id": "mermaid.vscode.circled_digit",
       "source": "Q1[\"① 工作负载形态：后台基础设施 还是 人机交互终端？\"]"
     },
     {
       "count": 1,
       "identity_source": "Q2[\"<circled-digit> 商业下游与合规：要不要 SLA、等保/可靠测评、售后？\"]",
-      "path": "docs/knowledge/tech/openeuler-vs-openkylin/concepts/05-selection-guide.md",
+      "path": "docs/knowledge/tech/openkylin/openeuler-comparison/concepts/05-selection-guide.md",
       "rule_id": "mermaid.vscode.circled_digit",
       "source": "Q2[\"② 商业下游与合规：要不要 SLA、等保/可靠测评、售后？\"]"
     },
     {
       "count": 1,
       "identity_source": "Q3[\"<circled-digit> 生命周期与变更容忍：要多少年不变？\"]",
-      "path": "docs/knowledge/tech/openeuler-vs-openkylin/concepts/05-selection-guide.md",
+      "path": "docs/knowledge/tech/openkylin/openeuler-comparison/concepts/05-selection-guide.md",
       "rule_id": "mermaid.vscode.circled_digit",
       "source": "Q3[\"③ 生命周期与变更容忍：要多少年不变？\"]"
     },
     {
       "count": 1,
       "identity_source": "Q4[\"<circled-digit> 包管理与生态/技能存量：RPM 系 还是 Debian 系？\"]",
-      "path": "docs/knowledge/tech/openeuler-vs-openkylin/concepts/05-selection-guide.md",
+      "path": "docs/knowledge/tech/openkylin/openeuler-comparison/concepts/05-selection-guide.md",
       "rule_id": "mermaid.vscode.circled_digit",
       "source": "Q4[\"④ 包管理与生态/技能存量：RPM 系 还是 Debian 系？\"]"
     },
     {
       "count": 1,
       "identity_source": "Q5[\"<circled-digit> 硬件架构：机型/板卡/CPU 在谁的适配清单上？\"]",
-      "path": "docs/knowledge/tech/openeuler-vs-openkylin/concepts/05-selection-guide.md",
+      "path": "docs/knowledge/tech/openkylin/openeuler-comparison/concepts/05-selection-guide.md",
       "rule_id": "mermaid.vscode.circled_digit",
       "source": "Q5[\"⑤ 硬件架构：机型/板卡/CPU 在谁的适配清单上？\"]"
     },
     {
       "count": 1,
       "identity_source": "Q6[\"<circled-digit> 最小实测：社区介质 POC，生产回到商业版\"]",
-      "path": "docs/knowledge/tech/openeuler-vs-openkylin/concepts/05-selection-guide.md",
+      "path": "docs/knowledge/tech/openkylin/openeuler-comparison/concepts/05-selection-guide.md",
       "rule_id": "mermaid.vscode.circled_digit",
       "source": "Q6[\"⑥ 最小实测：社区介质 POC，生产回到商业版\"]"
     },
     {
       "count": 1,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/01-platform-and-repository.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/01-platform-and-repository.md",
       "rule_id": "mermaid.vscode.br_tag",
       "source": "ROOT[\"openkylin/docs<br/>237 篇中文文档\"] --> A[\"1入门与参与 183篇\"]"
     },
     {
       "count": 2,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/07-community-and-contribution.md",
       "rule_id": "mermaid.flowchart.unquoted_node_text",
       "source": "A[1. Gitee 提交申请<br/>说明目标/范围/发起人] --> B[2. TC 审核表决]"
     },
     {
       "count": 2,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/07-community-and-contribution.md",
       "rule_id": "mermaid.flowchart.unquoted_node_text",
       "source": "A[1. 官网支持页<br/>了解适配范围] --> B[2. 兼容适配入口]"
     },
     {
       "count": 1,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/07-community-and-contribution.md",
       "rule_id": "mermaid.flowchart.unquoted_node_text",
       "source": "B --> C[3. 填写腾讯文档<br/>在线申请表]"
     },
     {
       "count": 1,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/07-community-and-contribution.md",
       "rule_id": "mermaid.flowchart.unquoted_node_text",
       "source": "B --> C[3. 通过后建立<br/>邮件列表/仓库/SIG 页面]"
     },
     {
       "count": 1,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/07-community-and-contribution.md",
       "rule_id": "mermaid.flowchart.unquoted_node_text",
       "source": "C --> D[4. 按 SIG 指南运作<br/>例会/产出/公开记录]"
     },
     {
       "count": 1,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/07-community-and-contribution.md",
       "rule_id": "mermaid.flowchart.unquoted_node_text",
       "source": "C --> D[4. 百度网盘模板<br/>提交测试材料<br/>提取码 1357]"
     },
     {
       "count": 1,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/07-community-and-contribution.md",
       "rule_id": "mermaid.flowchart.unquoted_node_text",
       "source": "D --> E[5. 约 7 个工作日审核]"
     },
     {
       "count": 1,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/07-community-and-contribution.md",
       "rule_id": "mermaid.flowchart.unquoted_node_text",
       "source": "E --> F[6. 通过后颁发兼容证书<br/>官网兼容性列表公示]"
     },
     {
       "count": 1,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/07-community-and-contribution.md",
       "rule_id": "mermaid.vscode.br_tag",
       "source": "A[1. Gitee 提交申请<br/>说明目标/范围/发起人] --> B[2. TC 审核表决]"
     },
     {
       "count": 1,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/07-community-and-contribution.md",
       "rule_id": "mermaid.vscode.br_tag",
       "source": "A[1. 官网支持页<br/>了解适配范围] --> B[2. 兼容适配入口]"
     },
     {
       "count": 1,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/07-community-and-contribution.md",
       "rule_id": "mermaid.vscode.br_tag",
       "source": "B --> C[3. 填写腾讯文档<br/>在线申请表]"
     },
     {
       "count": 1,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/07-community-and-contribution.md",
       "rule_id": "mermaid.vscode.br_tag",
       "source": "B --> C[3. 通过后建立<br/>邮件列表/仓库/SIG 页面]"
     },
     {
       "count": 1,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/07-community-and-contribution.md",
       "rule_id": "mermaid.vscode.br_tag",
       "source": "C --> D[4. 按 SIG 指南运作<br/>例会/产出/公开记录]"
     },
     {
       "count": 1,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/07-community-and-contribution.md",
       "rule_id": "mermaid.vscode.br_tag",
       "source": "C --> D[4. 百度网盘模板<br/>提交测试材料<br/>提取码 1357]"
     },
     {
       "count": 1,
-      "path": "docs/knowledge/tech/openkylin-docs-wiki/concepts/07-community-and-contribution.md",
+      "path": "docs/knowledge/tech/openkylin/docs-wiki/concepts/07-community-and-contribution.md",
       "rule_id": "mermaid.vscode.br_tag",
       "source": "E --> F[6. 通过后颁发兼容证书<br/>官网兼容性列表公示]"
     },

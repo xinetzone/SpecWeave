@@ -87,7 +87,7 @@ sources:
 - **缺口**：Windows 用户缺一台**可管理、可隔离、可复现**的宿主——Windows 原生桌面不适合作为「Agent 的电脑」（会抢占用户桌面）。
   - *锚点*：Cua 侧 `[F-092]`（后台操作 Windows 桌面并自测的场景描述）、`[F-128]`（只需跑命令时普通容器即可）。
 - **okw 提供什么**：面向 Windows + WSL2 的 openKylin 开发工具包，提供 WSL 发行版生命周期管理、环境验收、rootless Podman、开发容器与 UKUI 桌面（xrdp）链路。
-  - *锚点*：`docs/tech/guides/openkylin-wsl-devkit/index.md`、`docs/tech/guides/openkylin-wsl-devkit/02-command-reference.md`。
+  - *锚点*：`apps/dev-tools/openkylin-wsl-devkit/doc/index.md`、`apps/dev-tools/openkylin-wsl-devkit/doc/02-command-reference.md`。
 - **本章目标**：给出「宿主（Windows+WSL2+okw）↔ Agent 的电脑（openKylin Desktop WSL）↔ 工作负载」的解耦分工与选型判据。
 
 ### ② 分层架构分工（三层）
@@ -107,20 +107,20 @@ sources:
 ```
 
 - **第 1 层（宿主管辖）**：okw 负责发行版的导入/导出/启停与只读验收，保证「Agent 的电脑」可被创建、检查、回收。
-  - *锚点*：`docs/tech/guides/openkylin-wsl-devkit/02-command-reference.md`（`okw import/export/exec`、`okw verify`）、`docs/tech/guides/openkylin-wsl-devkit/index.md`（能力概览）。
+  - *锚点*：`apps/dev-tools/openkylin-wsl-devkit/doc/02-command-reference.md`（`okw import/export/exec`、`okw verify`）、`apps/dev-tools/openkylin-wsl-devkit/doc/index.md`（能力概览）。
 - **第 2 层（Agent 的电脑）**：openKylin Desktop WSL 发行版内预装 UKUI 桌面，经 xrdp（默认端口 **3390**）供 Windows 侧 `mstsc` 连接；`localhost` 转发稳定（内网 IP 会漂移）。
-  - *锚点*：`docs/tech/guides/openkylin-wsl-devkit/08-desktop.md`（桌面链路图、`localhost:3390`、Session 选 `xorg`）。
+  - *锚点*：`apps/dev-tools/openkylin-wsl-devkit/doc/08-desktop.md`（桌面链路图、`localhost:3390`、Session 选 `xorg`）。
 - **第 3 层（工作负载）**：三选一或并存——Cua Sandbox（gVisor，命令任务）、okw podman + openKylin dev container（可复现开发环境）、Cua Bench（评测与训练目标）。
-  - *锚点*：Cua 侧 `[F-113]`（`cua sb create ubuntu --name dev`，gVisor 容器）、`[F-014]`/`[F-035]`（Cua Bench 闭环）；okw 侧 `docs/tech/guides/openkylin-wsl-devkit/03-podman-rootless.md`、`docs/tech/guides/openkylin-wsl-devkit/05-openkylin-dev-container.md`。
+  - *锚点*：Cua 侧 `[F-113]`（`cua sb create ubuntu --name dev`，gVisor 容器）、`[F-014]`/`[F-035]`（Cua Bench 闭环）；okw 侧 `apps/dev-tools/openkylin-wsl-devkit/doc/03-podman-rootless.md`、`apps/dev-tools/openkylin-wsl-devkit/doc/05-openkylin-dev-container.md`。
 
 ### ③ 模块选型判据表（行=四类场景，列=推荐组件/理由/依据）
 
 | 场景 | 推荐组件 | 理由 | okw / Cua 侧依据 |
 |---|---|---|---|
-| **A 无 GUI 命令任务**（跑命令、装依赖、跑测试） | Cua Sandbox（`cua sb`，gVisor 容器）或 okw rootless Podman / openKylin dev container | 无需图形栈时优先轻量隔离容器：隔离性强于普通容器、开销小于虚拟机；作者亦判断「只需跑命令用普通容器就够」 | Cua：`[F-113]`、`[F-117]`、`[F-128]`；okw：`docs/tech/guides/openkylin-wsl-devkit/03-podman-rootless.md`、`docs/tech/guides/openkylin-wsl-devkit/05-openkylin-dev-container.md` |
-| **B 需 GUI 且要求隔离**（操作无 API 的桌面软件、看界面判断状态） | Cua Driver（后台投递）接入隔离桌面（Cua Fleets/Spaces 或第 2 层 UKUI 桌面） | 无 API 的界面必须"看屏幕"；后台投递不抢焦点；隔离可防污染宿主。本地 GUI 侧用 UKUI 桌面 + xrdp 承载 | Cua：`[F-078]`、`[F-088]`、`[F-129]`、`[F-011]`、`[F-048]`（付费）；okw：`docs/tech/guides/openkylin-wsl-devkit/08-desktop.md` |
-| **C 可复现开发环境**（环境要能导出/复现/验收） | okw WSL 发行版生命周期（`import/export`）+ rootless Podman + openKylin dev container | 发行版可导出为 tar、再导入复现；okw 把验收脚本化（只读 preflight/verify），复现性优于手工环境 | okw：`docs/tech/guides/openkylin-wsl-devkit/02-command-reference.md`（`okw import/export`）、`docs/tech/guides/openkylin-wsl-devkit/03-podman-rootless.md`、`docs/tech/guides/openkylin-wsl-devkit/05-openkylin-dev-container.md` |
-| **D 评测与训练**（造任务、评 Agent、导轨迹） | Cua Bench（任务/评测/轨迹导出）+ Cua Fleets 认领机器池 | Bench 提供「数据生成→训练→评估」闭环与可复核评测；Fleets 池毫秒级认领、空闲缩零，适合规模化评测 | Cua：`[F-014]`、`[F-035]`、`[F-111]`、`[F-115]`（沙箱截屏）、`[F-132]`/`[F-153]`（计费）；okw：`docs/tech/guides/openkylin-wsl-devkit/05-openkylin-dev-container.md`（本地复现评测目标环境） |
+| **A 无 GUI 命令任务**（跑命令、装依赖、跑测试） | Cua Sandbox（`cua sb`，gVisor 容器）或 okw rootless Podman / openKylin dev container | 无需图形栈时优先轻量隔离容器：隔离性强于普通容器、开销小于虚拟机；作者亦判断「只需跑命令用普通容器就够」 | Cua：`[F-113]`、`[F-117]`、`[F-128]`；okw：`apps/dev-tools/openkylin-wsl-devkit/doc/03-podman-rootless.md`、`apps/dev-tools/openkylin-wsl-devkit/doc/05-openkylin-dev-container.md` |
+| **B 需 GUI 且要求隔离**（操作无 API 的桌面软件、看界面判断状态） | Cua Driver（后台投递）接入隔离桌面（Cua Fleets/Spaces 或第 2 层 UKUI 桌面） | 无 API 的界面必须"看屏幕"；后台投递不抢焦点；隔离可防污染宿主。本地 GUI 侧用 UKUI 桌面 + xrdp 承载 | Cua：`[F-078]`、`[F-088]`、`[F-129]`、`[F-011]`、`[F-048]`（付费）；okw：`apps/dev-tools/openkylin-wsl-devkit/doc/08-desktop.md` |
+| **C 可复现开发环境**（环境要能导出/复现/验收） | okw WSL 发行版生命周期（`import/export`）+ rootless Podman + openKylin dev container | 发行版可导出为 tar、再导入复现；okw 把验收脚本化（只读 preflight/verify），复现性优于手工环境 | okw：`apps/dev-tools/openkylin-wsl-devkit/doc/02-command-reference.md`（`okw import/export`）、`apps/dev-tools/openkylin-wsl-devkit/doc/03-podman-rootless.md`、`apps/dev-tools/openkylin-wsl-devkit/doc/05-openkylin-dev-container.md` |
+| **D 评测与训练**（造任务、评 Agent、导轨迹） | Cua Bench（任务/评测/轨迹导出）+ Cua Fleets 认领机器池 | Bench 提供「数据生成→训练→评估」闭环与可复核评测；Fleets 池毫秒级认领、空闲缩零，适合规模化评测 | Cua：`[F-014]`、`[F-035]`、`[F-111]`、`[F-115]`（沙箱截屏）、`[F-132]`/`[F-153]`（计费）；okw：`apps/dev-tools/openkylin-wsl-devkit/doc/05-openkylin-dev-container.md`（本地复现评测目标环境） |
 
 > **可迁移性**：判据表的列结构（场景 / 推荐组件 / 理由 / 依据）对任意「宿主 + Agent 电脑 + 工作负载」组合成立——换用其他宿主（如 macOS + Lume）或其他 Agent 电脑（如 Windows 沙箱）时，只需替换"依据"列。此为本表作为可迁移判据的设计意图（对应 TR-3.3 / CP-10）。
 
@@ -140,7 +140,7 @@ Cua Driver（Linux，按 MCP 接入 Agent）          # Agent 驱动 UKUI 应用
 Agent（Claude Code / Codex / Cursor 等）        # 复刻 6×7 计算器闭环：算 6×7 并验证屏幕显示 42
 ```
 
-- *锚点*：okw 侧 `docs/tech/guides/openkylin-wsl-devkit/08-desktop.md`（`launch` 三步流程、`xorg`、`localhost:3390`）；Cua 侧 `[F-119]`（Linux Driver 安装命令）、`[F-094]`（MCP 接入 Agent）、`[F-010]`（CLI/MCP/SDK 三接入）、`[F-095]`（6×7 验证任务）。
+- *锚点*：okw 侧 `apps/dev-tools/openkylin-wsl-devkit/doc/08-desktop.md`（`launch` 三步流程、`xorg`、`localhost:3390`）；Cua 侧 `[F-119]`（Linux Driver 安装命令）、`[F-094]`（MCP 接入 Agent）、`[F-010]`（CLI/MCP/SDK 三接入）、`[F-095]`（6×7 验证任务）。
 - **headless 路径（设计）**：不依赖图形，直接在沙箱内跑命令——
 
 ```text
@@ -157,23 +157,23 @@ cua sb rm dev                        # 用完即弃
 
 | 前置条件 | 说明 | 锚点 |
 |---|---|---|
-| Windows + WSL2 | 宿主环境；okw 以此为切入点 | `docs/tech/guides/openkylin-wsl-devkit/index.md` |
-| openKylin Desktop 镜像**已导入** | 须为**已预装桌面**的 Desktop WSL 发行版（如 `openKylin-3.0-desktop`）；最小镜像（无 xrdp）不适用桌面路径 | `docs/tech/guides/openkylin-wsl-devkit/08-desktop.md`（先 `wsl -l -v` 确认 `<name>`） |
+| Windows + WSL2 | 宿主环境；okw 以此为切入点 | `apps/dev-tools/openkylin-wsl-devkit/doc/index.md` |
+| openKylin Desktop 镜像**已导入** | 须为**已预装桌面**的 Desktop WSL 发行版（如 `openKylin-3.0-desktop`）；最小镜像（无 xrdp）不适用桌面路径 | `apps/dev-tools/openkylin-wsl-devkit/doc/08-desktop.md`（先 `wsl -l -v` 确认 `<name>`） |
 | okw 已安装 | Python 3.10+，运行时零第三方依赖 | `apps/dev-tools/openkylin-wsl-devkit/README.md`（快速安装） |
 | Cua CLI / Driver 可用 | Driver 安装：macOS/Linux `install.sh`、Windows `install.ps1`；CLI 安装 `install.sh \| sh` | Cua 侧 `[F-112]`、`[F-119]`、`[F-120]` |
-| rootless Podman 就绪（走容器路径时） | okw 三步流程 preflight → install --yes → verify | `docs/tech/guides/openkylin-wsl-devkit/03-podman-rootless.md` |
-| 网络与磁盘 | 发行版内 apt/一般网络可用；导入/导出镜像需足够磁盘 | `docs/tech/guides/openkylin-wsl-devkit/02-command-reference.md`、`docs/tech/guides/openkylin-wsl-devkit/index.md` |
+| rootless Podman 就绪（走容器路径时） | okw 三步流程 preflight → install --yes → verify | `apps/dev-tools/openkylin-wsl-devkit/doc/03-podman-rootless.md` |
+| 网络与磁盘 | 发行版内 apt/一般网络可用；导入/导出镜像需足够磁盘 | `apps/dev-tools/openkylin-wsl-devkit/doc/02-command-reference.md`、`apps/dev-tools/openkylin-wsl-devkit/doc/index.md` |
 
 ### ⑥ 风险与未验证项清单
 
 | # | 类型 | 项 | 说明 | 锚点 |
 |---|---|---|---|---|
-| 1 | **未验证** | Cua Linux Driver 对 UKUI/xrdp 会话的支持**未验证** | 无实测证据；需在 openKylin Desktop WSL 内实测 Driver 是否能枚举/驱动 UKUI 应用 | Cua：`[F-050]`（后台投递有平台边界）；okw：`docs/tech/guides/openkylin-wsl-devkit/08-desktop.md` |
-| 2 | **未验证** | xrdp 是**远程会话**而非本地物理屏 | 截屏/输入假设可能与本地物理屏不同；Cua Driver 的"后台投递/截屏"在 xrdp 会话下行为未验证 | okw：`docs/tech/guides/openkylin-wsl-devkit/08-desktop.md`；Cua：`[F-088]`、`[F-115]` |
+| 1 | **未验证** | Cua Linux Driver 对 UKUI/xrdp 会话的支持**未验证** | 无实测证据；需在 openKylin Desktop WSL 内实测 Driver 是否能枚举/驱动 UKUI 应用 | Cua：`[F-050]`（后台投递有平台边界）；okw：`apps/dev-tools/openkylin-wsl-devkit/doc/08-desktop.md` |
+| 2 | **未验证** | xrdp 是**远程会话**而非本地物理屏 | 截屏/输入假设可能与本地物理屏不同；Cua Driver 的"后台投递/截屏"在 xrdp 会话下行为未验证 | okw：`apps/dev-tools/openkylin-wsl-devkit/doc/08-desktop.md`；Cua：`[F-088]`、`[F-115]` |
 | 3 | **未验证** | 组合路径整体**未在本机实测** | ④ 的两条路径均为设计推断，含合成成分 | 本文件第 4 节 ④ |
-| 4 | **未验证** | 发行版内**嵌套 rootless Podman** 的平台限制 | 若走"dev container 内 live rootless"路径，WSL2 嵌套 userns 映射受限（需 `--privileged`，契约禁止） | okw：`docs/tech/guides/openkylin-wsl-devkit/05-openkylin-dev-container.md`（已知边界） |
-| 5 | 风险 | WSL 发行版**按需停止** | 发行版停止 → xrdp 随之停止 → `localhost:3390` 无监听；连不上多半是发行版处于 `Stopped` | okw：`docs/tech/guides/openkylin-wsl-devkit/08-desktop.md`（FAQ） |
-| 6 | 风险 | okw **不安装桌面套件** | 只能作用于**已预装**桌面的 Desktop WSL 镜像；不含桌面套件的镜像不能走 GUI 路径 | okw：`docs/tech/guides/openkylin-wsl-devkit/08-desktop.md`（边界）、`docs/tech/guides/openkylin-wsl-devkit/index.md` |
+| 4 | **未验证** | 发行版内**嵌套 rootless Podman** 的平台限制 | 若走"dev container 内 live rootless"路径，WSL2 嵌套 userns 映射受限（需 `--privileged`，契约禁止） | okw：`apps/dev-tools/openkylin-wsl-devkit/doc/05-openkylin-dev-container.md`（已知边界） |
+| 5 | 风险 | WSL 发行版**按需停止** | 发行版停止 → xrdp 随之停止 → `localhost:3390` 无监听；连不上多半是发行版处于 `Stopped` | okw：`apps/dev-tools/openkylin-wsl-devkit/doc/08-desktop.md`（FAQ） |
+| 6 | 风险 | okw **不安装桌面套件** | 只能作用于**已预装**桌面的 Desktop WSL 镜像；不含桌面套件的镜像不能走 GUI 路径 | okw：`apps/dev-tools/openkylin-wsl-devkit/doc/08-desktop.md`（边界）、`apps/dev-tools/openkylin-wsl-devkit/doc/index.md` |
 | 7 | 风险 | **AGPL 组件与 `cuabot` 安全警告** | 可选 `cua-perception` 含 AGPL-3.0-only OmniParser，重新分发/网络提供可能触发源码义务；`cuabot` 官方 README 警告"有已知安全问题，不要运行" | Cua：`[F-124]`、`[F-125]`、`[F-146]`、`[F-127]`、`[F-147]` |
 | 8 | 风险 | **Cua Fleets 付费**且**单价未获官方核验** | 云桌面集群为按用量计费；单价仅第二篇单源，未在可达官方页检出 | Cua：`[F-048]`、`[F-132]`、`[F-153]` |
 
@@ -207,12 +207,12 @@ cua sb rm dev                        # 用完即弃
 | okw 来源（仓库根相对路径） | 束内相对写法（06 内） | 落位小节 |
 |---|---|---|
 | `apps/dev-tools/openkylin-wsl-devkit/README.md` | `../../../../../../../../../apps/dev-tools/openkylin-wsl-devkit/README.md` | ⑤ 前置条件（安装/能力概览） |
-| `docs/tech/guides/openkylin-wsl-devkit/index.md` | `../../../../../../../../../docs/tech/guides/openkylin-wsl-devkit/index.md` | ① 定位、② 第 1 层、⑤ 前置条件 |
-| `docs/tech/guides/openkylin-wsl-devkit/02-command-reference.md` | `../../../../../../../../../docs/tech/guides/openkylin-wsl-devkit/02-command-reference.md` | ② 第 1 层、③ 场景 C、⑤ 前置条件 |
-| `docs/tech/guides/openkylin-wsl-devkit/03-podman-rootless.md` | `../../../../../../../../../docs/tech/guides/openkylin-wsl-devkit/03-podman-rootless.md` | ③ 场景 A/C、⑤ 前置条件 |
-| `docs/tech/guides/openkylin-wsl-devkit/05-openkylin-dev-container.md` | `../../../../../../../../../docs/tech/guides/openkylin-wsl-devkit/05-openkylin-dev-container.md` | ② 第 3 层、③ 场景 A/C/D、⑥ 未验证项 #4 |
-| `docs/tech/guides/openkylin-wsl-devkit/08-desktop.md` | `../../../../../../../../../docs/tech/guides/openkylin-wsl-devkit/08-desktop.md` | ② 第 2 层、③ 场景 B、④ 组合路径、⑤ 前置条件、⑥ 项 #1/#2/#5/#6 |
-| 知识依据 `docs/knowledge/tech/openkylin-docs-wiki/` | 同前缀 + `docs/knowledge/tech/openkylin-docs-wiki/...` | 背景佐证（只读引用，不复制正文） |
+| `apps/dev-tools/openkylin-wsl-devkit/doc/index.md` | `../../../../../../../../../apps/dev-tools/openkylin-wsl-devkit/doc/index.md` | ① 定位、② 第 1 层、⑤ 前置条件 |
+| `apps/dev-tools/openkylin-wsl-devkit/doc/02-command-reference.md` | `../../../../../../../../../apps/dev-tools/openkylin-wsl-devkit/doc/02-command-reference.md` | ② 第 1 层、③ 场景 C、⑤ 前置条件 |
+| `apps/dev-tools/openkylin-wsl-devkit/doc/03-podman-rootless.md` | `../../../../../../../../../apps/dev-tools/openkylin-wsl-devkit/doc/03-podman-rootless.md` | ③ 场景 A/C、⑤ 前置条件 |
+| `apps/dev-tools/openkylin-wsl-devkit/doc/05-openkylin-dev-container.md` | `../../../../../../../../../apps/dev-tools/openkylin-wsl-devkit/doc/05-openkylin-dev-container.md` | ② 第 3 层、③ 场景 A/C/D、⑥ 未验证项 #4 |
+| `apps/dev-tools/openkylin-wsl-devkit/doc/08-desktop.md` | `../../../../../../../../../apps/dev-tools/openkylin-wsl-devkit/doc/08-desktop.md` | ② 第 2 层、③ 场景 B、④ 组合路径、⑤ 前置条件、⑥ 项 #1/#2/#5/#6 |
+| 知识依据 `docs/knowledge/tech/openkylin/docs-wiki/` | 同前缀 + `docs/knowledge/tech/openkylin/docs-wiki/...` | 背景佐证（只读引用，不复制正文） |
 
 > **待核说明**：okw 侧若需引用未能在这批文档中找到依据的命令/端口/行为，一律写「**待核**」，不得编造（如 Cua Driver 在发行版内的具体安装与 MCP 注册细节，官方 README 未收录于本仓，标注为「待核 / 需实测」）。
 

@@ -109,7 +109,7 @@ Format-Hex $wslFile -Count 2
 
 **2026-10-14 复验**：同一实例默认用户 `openkylin` 与 UID 1000 不变；内核随宿主升级为 `6.18.54.1-microsoft-standard-WSL2`；软件包增至 436（就地更新所致，非重新导入）；`systemctl --failed` 为 **0 个失败单元**。
 
-> 若你导入的是其他社区 WSL 镜像、登录后是 root，请按 [WSL 发行版安装、迁移与配置速查手册](../../../../retrospective/patterns/code-patterns/wsl-distro-install-migration-guide.md) 模式三配置 `/etc/wsl.conf` 的 `[user] default=`，并在 PowerShell 侧 `wsl --terminate` 使其生效。
+> 若你导入的是其他社区 WSL 镜像、登录后是 root，请按 [WSL 发行版安装、迁移与配置速查手册](../../../../../retrospective/patterns/code-patterns/wsl-distro-install-migration-guide.md) 模式三配置 `/etc/wsl.conf` 的 `[user] default=`，并在 PowerShell 侧 `wsl --terminate` 使其生效。
 
 ---
 
@@ -156,7 +156,7 @@ Format-Hex $wslFile -Count 2
    ```
 5. **在原路径重试**，成功后回到 §3.3 验收，并删除临时 `rootfs.tar`。
 
-> 详细的判读规则（错误码分段语义、失败指纹记录、反模式清单）见沉淀模式：[WSL 导入内存分诊与稀疏 VHD 决策模式](../../../../retrospective/patterns/code-patterns/wsl-import-memory-triage-sparse-vhd.md)。
+> 详细的判读规则（错误码分段语义、失败指纹记录、反模式清单）见沉淀模式：[WSL 导入内存分诊与稀疏 VHD 决策模式](../../../../../retrospective/patterns/code-patterns/wsl-import-memory-triage-sparse-vhd.md)。
 
 ---
 
@@ -201,7 +201,7 @@ Get-CimInstance Win32_OperatingSystem |
 
 > **2026-10-14 复验**：该实例已就地更新，`ext4.vhdx` 逻辑大小增至 **2,620,391,424 字节（≈2.44 GiB）**；稀疏标志下的后续回收行为本轮未重测。逻辑大小与稀疏洞的差异仍须以 `GetCompressedFileSizeW` 实测为准。
 
-> 注意：`(Get-Item).Length` 是逻辑大小，不反映稀疏洞；查真实占用要用 `GetCompressedFileSizeW`，完整脚本见[沉淀模式](../../../../retrospective/patterns/code-patterns/wsl-import-memory-triage-sparse-vhd.md) §模式二。
+> 注意：`(Get-Item).Length` 是逻辑大小，不反映稀疏洞；查真实占用要用 `GetCompressedFileSizeW`，完整脚本见[沉淀模式](../../../../../retrospective/patterns/code-patterns/wsl-import-memory-triage-sparse-vhd.md) §模式二。
 
 ### 5.2 立即压缩存量（无损坏风险的替代路径）
 
@@ -246,7 +246,7 @@ VM 没创建起来。本机实测该次尝试时空闲物理内存约 0.8 GB；`
 ## 7. 参考资料
 
 - [openKylin 全面调研：从桌面根社区到 Agent OS](project-overview.md)（§7.2 最小试用路径、§8 局限 5）
-- [WSL 导入内存分诊与稀疏 VHD 决策模式](../../../../retrospective/patterns/code-patterns/wsl-import-memory-triage-sparse-vhd.md)
-- [WSL 发行版安装、迁移与配置速查手册](../../../../retrospective/patterns/code-patterns/wsl-distro-install-migration-guide.md)
-- [openKylin 3.0 WSL 导入排障复盘报告](../../../../retrospective/reports/task-reports/retrospective-openkylin-wsl-install-sparse-20260929/retrospective-report.md)
+- [WSL 导入内存分诊与稀疏 VHD 决策模式](../../../../../retrospective/patterns/code-patterns/wsl-import-memory-triage-sparse-vhd.md)
+- [WSL 发行版安装、迁移与配置速查手册](../../../../../retrospective/patterns/code-patterns/wsl-distro-install-migration-guide.md)
+- [openKylin 3.0 WSL 导入排障复盘报告](../../../../../retrospective/reports/task-reports/retrospective-openkylin-wsl-install-sparse-20260929/retrospective-report.md)
 - Microsoft WSL 基本命令：https://learn.microsoft.com/zh-cn/windows/wsl/basic-commands

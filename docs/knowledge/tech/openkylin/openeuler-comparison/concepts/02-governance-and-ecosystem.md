@@ -14,7 +14,7 @@
 | 芯片企业位势 | Intel、Arm、AMD 均为捐赠人；2025 年新增海光、AMD、浪潮云、神州数码（O-008） | 国产 CPU/GPU 厂商以适配与 SIG 方式汇聚（本地包 F-023） |
 | 学术机制 | 联合 18 所高校成立学术与教育委员会（O-009） | 高校站与 55 个海内外用户组（本地包 F-055） |
 
-同构点：两者都是"企业发起 → 运营成熟后捐赠开放原子基金会 → 委员会加 SIG 治理"的路径，与既有模式[根社区—商业发行版双轮](../../../../retrospective/patterns/methodology-patterns/product-growth/root-community-commercial-distro-flywheel.md)描述的结构一致。差异点在发起方的产业位置（见 2.3）。
+同构点：两者都是"企业发起 → 运营成熟后捐赠开放原子基金会 → 委员会加 SIG 治理"的路径，与既有模式[根社区—商业发行版双轮](../../../../../retrospective/patterns/methodology-patterns/product-growth/root-community-commercial-distro-flywheel.md)描述的结构一致。差异点在发起方的产业位置（见 2.3）。
 
 ## 2.2 规模数字对照表（先看口径，再看数字）
 
