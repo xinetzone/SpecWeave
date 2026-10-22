@@ -5,7 +5,7 @@
 开发容器为 rootful 形态（运行契约 G3：--device /dev/fuse + --security-opt
 label=disable + --cgroupns=host，严禁 --privileged）。
 
-镜像工程见 openkylin-dev-container/（Containerfile + entrypoint + conf），
+镜像工程见 apps/openkylin-dev-container/（Containerfile + entrypoint + conf），
 本子命令把 scripts/build.sh 与 scripts/smoke.sh 的语义封装进 okw CLI：
 - build：发行版内 root podman（预装或 okw podman install）→ 基镜像本地存在
   （默认禁拉）→ 上下文同步到发行版内 /tmp → podman build --format docker
@@ -110,8 +110,8 @@ def wsl_mnt_path(win_path: str) -> str:
 
 
 def default_context_dir() -> Path:
-    """openkylin-dev-container 应用目录（本包 openkylin-wsl-devkit 内）。"""
-    return Path(__file__).resolve().parents[2] / "openkylin-dev-container"
+    """开发容器镜像工程目录（本包 openkylin-wsl-devkit/apps/openkylin-dev-container）。"""
+    return Path(__file__).resolve().parents[2] / "apps" / "openkylin-dev-container"
 
 
 @dataclass
@@ -234,7 +234,7 @@ def build_run(
                 "构建上下文",
                 "FAIL",
                 f"{ctx_win} 不是含 Containerfile 的构建上下文目录（默认取包内 "
-                "openkylin-dev-container/，可用 --context 覆盖）",
+                "apps/openkylin-dev-container/，可用 --context 覆盖）",
             )
             return report
         ctx_container = f"/tmp/okw-build-{int(time.time())}/ctx"
