@@ -1,0 +1,10 @@
+{
+  "SchemaVersion": "1.1.0",
+  "Env": [],
+  "Framework": "other",
+  "NodeVersion": "20",
+  "BuildCmd": "npm run build:track",
+  "InstallCmd": "",
+  "DeployCmd": "tcb hosting deploy . /",
+  "BuildPath": "./deploy"
+}

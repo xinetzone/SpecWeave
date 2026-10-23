@@ -157,6 +157,14 @@ work/ai-agent-kepu/
 # 仅忽略其中显式列出的本地草稿。新增草稿请在此逐条追加，勿整体忽略 work/。
 work/ai-monetization-doubao-outcome-pricing.md
 
+# 知乎 AI Works 官方 deploy-helper 的解压副本（第三方只读引用，可按 Skill §6 重新获取；
+# 工具链用法已沉淀进 aiworks-deploy-cmd Skill，副本本身不入库）
+work/zhihu-science-workshop-2026/_deploy_helper/
+
+# 微信公众号文章本地草稿与多源核验稿（含抓取页面缓存等过程素材，属本地草稿；
+# 定稿后按 wechat-public-okf 流程沉淀进 docs/knowledge/，原件不入库）
+work/wechat-K4UhZZiMGk5/
+
 # WorkBuddy 发布应用状态文件（appId 随会话生成，机器产物，本地保留不入库）
 .wbapp_*.genie
 
