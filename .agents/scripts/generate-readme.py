@@ -224,6 +224,21 @@ def resolve_docs_home_name(root: Path) -> str:
     return 'README.md'
 
 
+def has_exact_readme(dir_path: Path) -> bool:
+    """判断目录内是否存在精确命名为 README.md 的索引页（区分大小写）。
+
+    Windows 文件系统大小写不敏感，Path('README.md').exists() 会把磁盘上的
+    readme.md 判定为存在；而 Linux CI 判定为不存在。两者行为分叉会让
+    --check 门禁在 Linux 上误报，或让同一批页面在两平台被工具管理与否不一致。
+    因此统一按目录枚举做精确大小写判定。
+    """
+    try:
+        entries = list(dir_path.iterdir())
+    except OSError:
+        return False
+    return any(item.is_file() and item.name == 'README.md' for item in entries)
+
+
 def scan_directory(dir_path: Path, root: Path) -> tuple[list[DocEntry], list[DirEntry]]:
     doc_entries = []
     dir_entries = []
@@ -231,7 +246,9 @@ def scan_directory(dir_path: Path, root: Path) -> tuple[list[DocEntry], list[Dir
     for item in sorted(dir_path.iterdir()):
         if item.name.startswith('.'):
             continue
-        if item.name == 'README.md':
+        # 大小写不敏感排除：磁盘上 readme.md 与 README.md 是同一文件，
+        # 漏排除会把索引页自身收录进索引表，形成自我引用行
+        if item.name.lower() == 'readme.md':
             continue
 
         if item.is_file() and item.suffix.lower() == '.md':
@@ -244,6 +261,10 @@ def scan_directory(dir_path: Path, root: Path) -> tuple[list[DocEntry], list[Dir
             if meta:
                 title = str(meta.get('title', ''))
                 summary = str(meta.get('summary', ''))
+                if not summary:
+                    # OKF v0.2 Bundle 规范用 description 而非 summary 承载摘要，
+                    # 不回退会让索引表的说明列退化为标题重复
+                    summary = str(meta.get('description', ''))
                 tags_val = meta.get('tags', [])
                 if isinstance(tags_val, list):
                     tags = [str(t) for t in tags_val]
@@ -271,12 +292,11 @@ def scan_directory(dir_path: Path, root: Path) -> tuple[list[DocEntry], list[Dir
             parts = set(item.parts)
             if EXCLUDED_DIRS & parts:
                 continue
-            sub_readme = item / 'README.md'
             sub_md_count = len(list(item.glob('*.md')))
             sub_subdirs = len([d for d in item.iterdir() if d.is_dir() and not d.name.startswith('.')])
             dir_entries.append(DirEntry(
                 dirname=item.name,
-                readme_exists=sub_readme.exists(),
+                readme_exists=has_exact_readme(item),
                 md_count=sub_md_count,
                 subdir_count=sub_subdirs,
             ))
@@ -398,8 +418,7 @@ def find_missing_readmes(
             continue
         if '.git' in parts:
             continue
-        readme = dirpath / 'README.md'
-        if readme.exists():
+        if has_exact_readme(dirpath):
             continue
         md_count = len(list(dirpath.glob('*.md')))
         if md_count >= min_md_files:
@@ -470,30 +489,25 @@ def get_p1_dirs(root: Path) -> list[Path]:
     patterns_mp = docs / 'retrospective' / 'patterns' / 'methodology-patterns'
     if patterns_mp.exists():
         for d in sorted(patterns_mp.iterdir()):
-            if d.is_dir() and not d.name.startswith('.'):
-                readme = d / 'README.md'
-                if not readme.exists():
-                    p1_candidates.append(d)
+            if d.is_dir() and not d.name.startswith('.') and not has_exact_readme(d):
+                p1_candidates.append(d)
 
     reports_ie = docs / 'retrospective' / 'reports' / 'insight-extraction'
     if reports_ie.exists():
         for d in sorted(reports_ie.iterdir()):
-            if d.is_dir() and not d.name.startswith('.'):
-                readme = d / 'README.md'
-                if not readme.exists() and d.name not in ('external-learning', 'iot-ecosystem', 'meta-methodology', 'toolchain-dev'):
+            if d.is_dir() and not d.name.startswith('.') and not has_exact_readme(d):
+                if d.name not in ('external-learning', 'iot-ecosystem', 'meta-methodology', 'toolchain-dev'):
                     p1_candidates.append(d)
 
     reports_st = docs / 'retrospective' / 'reports' / 'standards-tools'
     if reports_st.exists():
         for d in sorted(reports_st.iterdir()):
-            if d.is_dir() and not d.name.startswith('.'):
-                readme = d / 'README.md'
-                if not readme.exists():
-                    p1_candidates.append(d)
+            if d.is_dir() and not d.name.startswith('.') and not has_exact_readme(d):
+                p1_candidates.append(d)
 
     seen = set()
     for p in p1_candidates:
-        if p.exists() and p.is_dir() and not (p / 'README.md').exists():
+        if p.exists() and p.is_dir() and not has_exact_readme(p):
             rp = p.resolve()
             if rp not in seen:
                 seen.add(rp)
@@ -511,8 +525,20 @@ def generate_for_directory(
 ) -> tuple[bool, str]:
     readme_path = dir_path / 'README.md'
 
-    if readme_path.exists() and not force:
+    if has_exact_readme(dir_path) and not force:
         return False, f"已存在，跳过（使用 --force 覆盖）"
+
+    # 大小写变体守卫：Windows 下写入 README.md 会直接覆盖磁盘上的 readme.md
+    if not has_exact_readme(dir_path):
+        try:
+            variants = [
+                i.name for i in dir_path.iterdir()
+                if i.is_file() and i.name.lower() == 'readme.md'
+            ]
+        except OSError:
+            variants = []
+        if variants and not force:
+            return False, f"存在大小写变体（{', '.join(variants)}），请先重命名为 README.md"
 
     doc_entries, dir_entries = scan_directory(dir_path, root)
 
@@ -538,6 +564,10 @@ def find_generated_readmes(root: Path, start_path: Path | None = None) -> list[P
     for readme in sorted(search_root.rglob('README.md')):
         parts = set(readme.parts)
         if EXCLUDED_DIRS & parts:
+            continue
+        # 精确大小写校验：Windows 下 rglob('README.md') 会命中磁盘上的 readme.md，
+        # 若不校验，同一批页面在 Windows 被工具管理、在 Linux 却被判定为"非脚本生成"
+        if not has_exact_readme(readme.parent):
             continue
         try:
             content = readme.read_text(encoding='utf-8')
