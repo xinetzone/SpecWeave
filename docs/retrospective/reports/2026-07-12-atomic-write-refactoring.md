@@ -124,7 +124,9 @@ _log.warning("磁盘缓存保存失败 | error=%s | elapsed=%.2fms", ...)
 
 ## 6. 测试覆盖
 
-### 6.1 单元测试（[test_atomic_write.py](../../../.agents/scripts/tests/test_atomic_write.py)）
+### 6.1 单元测试
+
+测试文件：[test_atomic_write.py](../../../.agents/scripts/tests/test_atomic_write.py)
 
 38个测试用例，覆盖7个测试类：
 
@@ -138,12 +140,16 @@ _log.warning("磁盘缓存保存失败 | error=%s | elapsed=%.2fms", ...)
 | TestConcurrentWrites | 2 | 8进程并发写入无损坏、stale文件+并发无冲突 |
 | TestCustomRetryParams | 3 | 自定义重试次数、0次重试、禁用stale清理 |
 
-### 6.2 集成测试（[test_spec_loader.py](../../../.agents/scripts/tests/test_spec_loader.py)）
+### 6.2 集成测试
+
+测试文件：[test_spec_loader.py](../../../.agents/scripts/tests/test_spec_loader.py)
 
 53个测试用例，其中10个专门覆盖原子写入集成场景：
 - 正常replace/重试/PermissionError/非PermissionError OSError/并发写入/JSON有效性/PID命名唯一性/多进程tmp不碰撞/失败只清理自己的tmp/stale清理
 
-### 6.3 压测脚本（[spec-loader-stress-test.py](../../../.agents/scripts/spec-loader-stress-test.py)）
+### 6.3 压测脚本
+
+脚本：[spec-loader-stress-test.py](../../../.agents/scripts/spec-loader-stress-test.py)
 
 支持配置进程数（默认30）、轮次（默认10）、预置stale文件数量，输出：
 - 成功率（目标100%）
