@@ -1,6 +1,6 @@
 # 参考资料
 
-- [readme](./readme.md)
+- [README](./README.md)
 
 ```{toctree}
 :maxdepth: 2

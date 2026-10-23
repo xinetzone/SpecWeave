@@ -1,5 +1,12 @@
 # OKF Bundle 转换日志
 
+## 2026-10-23
+
+- `references/readme.md` 重命名为 `references/README.md`（规范命名，与全库其余索引页一致）
+- 同步修正 2 处入站引用：`references/index.md` 文档清单表、`../index.md` 目录清单表
+- 原因：小写文件名导致 `generate-readme.py` 在 Windows（大小写不敏感）与 Linux CI（大小写敏感）行为分叉，`--check` 门禁在 Linux 上误报目录缺失 README
+- 历史转换记录（2026-08-22 的 `references/readme.md`）保持原样，不改写
+
 ## 2026-08-22
 
 - **Bundle 名称**：specweave-tech-docs
