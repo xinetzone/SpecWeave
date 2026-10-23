@@ -2,20 +2,20 @@
 
 基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为8个主题类别，便于按场景快速定位相关模式。
 
-> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md与子目录），由 `generate-categories.py` 自动重建，最后更新：2026-10-20。
+> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md与子目录），由 `generate-categories.py` 自动重建，最后更新：2026-10-23。
 
 ## 分类索引
 
 | 主题目录 | 中文名称 | 模式数量 | 核心关注点 |
 |---------|---------|---------|-----------|
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 38 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
-| [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 43 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor/跨领域知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、语义漂移防御、知识系统五维根基、B2B AI产品定位、外部产品学习模板 |
-| [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 54 | 文档体系重构、原子化拆分、文档治理、结构设计 |
+| [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 42 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor/跨领域知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、语义漂移防御、知识系统五维根基、B2B AI产品定位、外部产品学习模板 |
+| [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 53 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 58 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 169 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
-| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 87 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 172 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
+| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 83 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 11 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
-| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 52 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化、垂直场景AI三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA转化 |
+| [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 49 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化、垂直场景AI三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA转化 |
 
 ---
 
@@ -82,15 +82,13 @@
 | [b2b-product-seven-segment-ia.md](research-knowledge/b2b-product-seven-segment-ia.md) | B端技术产品页面七段式认知递进信息架构（Hero→能力→优势→场景→架构→案例→CTA），严格遵循用户决策路径，含完整性检查清单和各段设计规范 | - |
 | [b2b-value-quantification-case-validation.md](research-knowledge/b2b-value-quantification-case-validation.md) | B端产品价值量化与案例验证双闭环模式：首屏量化亮剑→优势区解释→场景区匹配→案例区验证，形成"承诺→解释→场景→验证"完整证据链，解决空洞形容词和无效Logo墙问题 | - |
 | [classic-patterns-reuse-heuristic.md](research-knowledge/classic-patterns-reuse-heuristic.md) | 经典模式优先复用启发式（Classic Patterns First Heuristic） | L2 |
-| [content-funnel-analysis.md](research-knowledge/content-funnel-analysis.md) | 内容漏斗分析模式 | L1-draft |
 | [core-scenario-dual-layer.md](research-knowledge/core-scenario-dual-layer.md) | 核心-场景双层知识架构（Core-Scenario Dual-Layer Architecture） | L1 |
 | [cpp-header-first-fact-collection.md](research-knowledge/cpp-header-first-fact-collection.md) | 大型 C/C++ 项目的头文件优先事实采集策略 | L2 |
 | [credibility-dual-track.md](research-knowledge/credibility-dual-track.md) | 可信度评分+验证日志双轨制：正文简洁标注A/B/C/D等级不干扰阅读，独立验证日志完整记录审计过程，实现"快速获取"和"严谨审计"两类需求的分离 | L2 |
 | [cross-cultural-reverse-hermeneutics-defense.md](research-knowledge/cross-cultural-reverse-hermeneutics-defense.md) | 跨文化比较反向格义防御七步法（Cross-Cultural Reverse Hermeneutics Defense） | L1 |
 | [cross-domain-semantic-drift.md](research-knowledge/cross-domain-semantic-drift.md) | 跨领域语义漂移防御：Spec阶段概念扫描→歧义术语显式标注→术语表单一事实源，解决跨领域知识整合中"同一术语不同含义"的隐性陷阱，防御可降低15%+返工 | L2 |
-| [cross-framework-atomic-analysis.md](research-knowledge/cross-framework-atomic-analysis.md) | 跨框架原子化设计分析模式 | L1-draft |
 | [cross-vendor-knowledge-fusion.md](research-knowledge/cross-vendor-knowledge-fusion.md) | 跨Vendor知识融合三步法：理解Vendor→认知自我→优势互补融合，避免"全盘照搬"和"NIH综合征"两个极端，融合后1+1>2 | - |
-| [dual-layer-analysis-report.md](research-knowledge/dual-layer-analysis-report.md) | 双层分析报告结构 | L2-validated |
+| [decomposable-recognition-ladder.md](research-knowledge/decomposable-recognition-ladder.md) | 可分离承认阶梯法（Decomposable Recognition Ladder） | L1 |
 | [entry-doc-mirror-analysis.md](research-knowledge/entry-doc-mirror-analysis.md) | 入门文档镜像分析法：8维度信号清单+判断矩阵，系统性提取Vendor入门文档中的产品定位、能力边界、设计哲学信号 | - |
 | [essential-contradiction-three-step.md](research-knowledge/essential-contradiction-three-step.md) | 技术方案本质矛盾三步法 | L1 |
 | [example-first-alignment.md](research-knowledge/example-first-alignment.md) | 示例优先对齐模式（Example-First Alignment / Reference Before Create） | L2 |
@@ -115,6 +113,7 @@
 | [small-sample-analysis-methodology.md](research-knowledge/small-sample-analysis-methodology.md) | 小样本分析方法论与三层分析框架适用性边界：样本量<5时执行"保留/降级/标注"三规则，三层框架（系统性学习→深度洞察→知识萃取）各层降级映射，解决"分析精度 vs 原始内容信度"根本矛盾 | L1 |
 | [source-pipeline-penetration-method.md](research-knowledge/source-pipeline-penetration-method.md) | 源码学习管线穿透法 | L1 |
 | [spec-anchored-questioning.md](research-knowledge/spec-anchored-questioning.md) | Spec锚定提问法（Spec-Anchored Questioning） | L1 |
+| [symbol-vs-variable-decomposition.md](research-knowledge/symbol-vs-variable-decomposition.md) | 符号之争与变量之争分离法（Symbol-vs-Variable Decomposition） | L1 |
 | [vendor-doc-info-compensation-search.md](research-knowledge/vendor-doc-info-compensation-search.md) | 厂商技术文档信息补偿六源搜索策略：控制台需登录/文档截断时，按SDK/Skill→QuickStart→插件市场→GitHub→社区→博客优先级搜索补偿信息源，含Mermaid决策流程、DX机制解释、反模式清单 | - |
 | [vendor-high-level-doc-first-research.md](research-knowledge/vendor-high-level-doc-first-research.md) | Vendor仓库"自顶向下"研究法：先读AGENTS.md/CLAUDE.md等AI友好高层文档建立全局框架，再按需深入源码，效率提升5-10倍，基础设施故障时的救命稻草 | - |
 | [vendor-neutral-three-layer-learning.md](research-knowledge/vendor-neutral-three-layer-learning.md) | 厂商项目三层剥离学习法 | L2 |
@@ -179,7 +178,6 @@
 | [spec-narrative-separation.md](document-architecture/spec-narrative-separation.md) | 技术规格与叙述报告分离原则 | L2 |
 | [sunlogin-hardware-wiki-structure.md](document-architecture/sunlogin-hardware-wiki-structure.md) | 向日葵硬件系列Wiki标准结构（13章）：4次验证的硬件产品学习Wiki文档模板，从产品概述到行业趋势覆盖认知全链路 | L2 |
 | [synthetic-stats-source-of-truth.md](document-architecture/synthetic-stats-source-of-truth.md) | 合成统计的权威数据来源：跨文件统计数据应从 metadata 全量重算，而非增量推算，避免偏差累积 | L1 |
-| [tech-article-to-wiki-batch-generation.md](document-architecture/tech-article-to-wiki-batch-generation.md) | 技术文章Wiki化批量生成模式 | L2-validated |
 | [tech-wiki-four-layer-need-structure.md](document-architecture/tech-wiki-four-layer-need-structure.md) | 技术wiki四层需求结构 | L1 |
 | [trust-first-content-funnel.md](document-architecture/trust-first-content-funnel.md) | 信任前置内容漏斗（Trust-First Content Funnel） | - |
 | [tutorial-cognitive-ladder.md](document-architecture/tutorial-cognitive-ladder.md) | 教程认知阶梯：技术教程六层递进结构（概述→原则→示例→快速开始→本地整合→生态上下文），按读者认知路径组织 | L2 |
@@ -195,9 +193,9 @@
 
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
+| [agent-cli-charge-authority-resume.md](tools-automation/agent-cli-charge-authority-resume.md) | Agent 原生 CLI 扣费-授权-续跑三元契约 | L1-draft |
 | [auto-generate-threshold.md](tools-automation/auto-generate-threshold.md) | 自动化阈值判断：手动条目占比 30% 阈值 + 模式成熟度 validation_count≥2 自动升级规则 | L2 |
 | [automation-idempotent-four-elements.md](tools-automation/automation-idempotent-four-elements.md) | 自动化幂等四要素：install/verify面向结果建模+幂等+可回滚+可判定，全分支验证（install.py验证） | L1 |
-| [batch-docs-to-okf-bundle-conversion.md](tools-automation/batch-docs-to-okf-bundle-conversion.md) | 批量Markdown文档到OKF Bundle转换模式 | stable |
 | [best-practice-hidden-cost.md](tools-automation/best-practice-hidden-cost.md) | 最佳实践隐性成本：推广实践须配套吸收成本的工具链（如原子化的"链接税"） | L1 |
 | [capability-matrix.md](tools-automation/capability-matrix.md) | 能力清单/功能矩阵：显式声明工具能力边界与精确度，三重价值（用户/维护者/规划） | L1 |
 | [capability-precondition-pairing.md](tools-automation/capability-precondition-pairing.md) | 能力前提配对搬运 | L1-draft |
@@ -268,6 +266,7 @@
 | [amphibious-positioning-model.md](governance-strategy/amphibious-positioning-model.md) | 两栖定位模型：通过资产清单+泛化路径图+落地案例三支柱支撑双重定位 | L1 |
 | [appx-alias-rebirth.md](governance-strategy/appx-alias-rebirth.md) | 命令别名重生法：Store应用别名失效（报找不到文件/0xc0070002）时以 Add-AppxPackage -Register 最小侵入重建别名与激活器 | L1 |
 | [architecture-over-algorithm.md](governance-strategy/architecture-over-algorithm.md) | 信息架构优先于算法补全：结构决定连接 | L1 |
+| [artifact-form-collapse.md](governance-strategy/artifact-form-collapse.md) | 同源产物形态坍缩法 | L1-draft |
 | [asset-reuse-last-mile-integration-guide.md](governance-strategy/asset-reuse-last-mile-integration-guide.md) | 资产复用最后一公里：配套集成指南 | L1-实验性 |
 | [automated-stats-three-defense-lines.md](governance-strategy/automated-stats-three-defense-lines.md) | 自动化统计三防线模式：路径校验→环比告警→人工复盘 | L1 |
 | [availability-heuristic-structural-guard.md](governance-strategy/availability-heuristic-structural-guard.md) | 可得性启发结构性防范模式（Availability Heuristic Structural Guard） | L1 |
@@ -308,6 +307,7 @@
 | [duplication-interest-model.md](governance-strategy/duplication-interest-model.md) | 重复代码利息模型：复制一时爽，维护火葬场 | L1 |
 | [elastic-workflow-classification.md](governance-strategy/elastic-workflow-classification.md) | 弹性流程分级：按变更风险选择流程路径 | L2 |
 | [entropy-law-automation-principle.md](governance-strategy/entropy-law-automation-principle.md) | 熵增定律自动化第一性原理（Entropy Law: Automation Against Chaos） | L2 |
+| [evidence-chain-engineering.md](governance-strategy/evidence-chain-engineering.md) | 证据链工程化（过程约束 → 可审计证据资产） | L1 |
 | [exemption-mechanism-legalization.md](governance-strategy/exemption-mechanism-legalization.md) | 豁免机制合法化：通过显式标注（前缀/路径/标记）创建合法例外通道，6设计要素（标注+隔离+生命周期+主干隔离+审计+运行时识别），4次验证（baby-前缀/.temp目录/skip审批/选择性归档） | L2 |
 | [explainer-self-violation-effect.md](governance-strategy/explainer-self-violation-effect.md) | 讲解自犯效应（Explainer Self-Violation Effect） | L2 |
 | [fail-loud-over-silent-fallback.md](governance-strategy/fail-loud-over-silent-fallback.md) | 显式报错优于静默降级：自动化系统故障显性化原则 | L2 |
@@ -321,6 +321,7 @@
 | [four-dimension-margin-framework.md](governance-strategy/four-dimension-margin-framework.md) | 四维留余框架：不确定环境下长期存续的冗余管理策略 | L2 |
 | [four-negatives-external-dependency.md](governance-strategy/four-negatives-external-dependency.md) | 外部依赖四不原则+零依赖原则：不侵入/不直引/不跟版/不裸考/不滥引，150+脚本零第三方依赖跨平台验证（L3标准化） | L3 |
 | [fp-multi-dimensional-falsification.md](governance-strategy/fp-multi-dimensional-falsification.md) | 第一性原理多维证伪验收法 | L1 |
+| [governance-engine-dual-loop.md](governance-strategy/governance-engine-dual-loop.md) | 治理×引擎双件闭环 | L1.5 |
 | [governance-four-layer-progressive.md](governance-strategy/governance-four-layer-progressive.md) | 治理基建四层递进模型 | L2 |
 | [governance-three-stage-evolution.md](governance-strategy/governance-three-stage-evolution.md) | 治理演化三阶段：修复→预防→闭环，禁止跳过任何阶段；跳过预防导致问题复发，多个场景验证（Mermaid/断链/事实漂移） | L2 |
 | [governance-tier-priority.md](governance-strategy/governance-tier-priority.md) | 治理层级优先级排序：🔴防复发→🟡提效率→🟢拓边界，与战术层投入估算互补 | L1 |
@@ -333,7 +334,6 @@
 | [knowledge-dual-layer-architecture.md](governance-strategy/knowledge-dual-layer-architecture.md) | 知识沉淀「中间产物→质量门→最终产出」双层架构模式 | L1 |
 | [knowledge-lifecycle-extract-archive-delete.md](governance-strategy/knowledge-lifecycle-extract-archive-delete.md) | 知识资产「萃取→归档→删除」生命周期闭环模式 | L1-draft |
 | [knowledge-to-command-pipeline.md](governance-strategy/knowledge-to-command-pipeline.md) | 知识库→指令集转化管道（Knowledge-to-Command Pipeline） | L1 |
-| [layered-chained-spec.md](governance-strategy/layered-chained-spec.md) | 分层链式规格：AI 编程工作流的阶段分离与链式传递 | L1.5 |
 | [layered-priority-dimension-reduction.md](governance-strategy/layered-priority-dimension-reduction.md) | 分层分级降维模式（Layered Priority Dimension Reduction） | L1 |
 | [layered-repair-verification.md](governance-strategy/layered-repair-verification.md) | 分层修复验证法（Layered Repair Verification） | L1 |
 | [learn-validate-adopt.md](governance-strategy/learn-validate-adopt.md) | Learn-Validate-Adopt：外部标准采用三步法 | L1 |
@@ -376,7 +376,7 @@
 | [quality-asset-accumulation-loop.md](governance-strategy/quality-asset-accumulation-loop.md) | 质量资产沉淀闭环模式（Quality Asset Accumulation Loop） | L1 |
 | [quality-assurance-three-layer-model.md](governance-strategy/quality-assurance-three-layer-model.md) | 质量保证三层分工模型（Quality Assurance Three-Layer Model） | L2 |
 | [reference-as-trigger.md](governance-strategy/reference-as-trigger.md) | 引用即触发协作模式：用户选中行号触发精确实施 | L2 |
-| [responsibility-transfer-governance.md](governance-strategy/responsibility-transfer-governance.md) | 责任转移治理模式 | L2-validated |
+| [release-eligibility-invariant-gate.md](governance-strategy/release-eligibility-invariant-gate.md) | 发布资格不变量与发布路径对账 | L1 |
 | [risk-transfer-unintended-consequences.md](governance-strategy/risk-transfer-unintended-consequences.md) | 风险转移非意图后果模型 | L1 |
 | [role-minimization-principle.md](governance-strategy/role-minimization-principle.md) | 角色最小化原则（RACI扩展优先于角色新增） | L1 |
 | [root-cause-diagnosis.md](governance-strategy/root-cause-diagnosis.md) | 根因诊断模式：收到纠错反馈时先暂停追溯知识缺口，再全量修正，避免表层症状修补循环 | L2 |
@@ -396,12 +396,14 @@
 | [shared-index-count-coupling.md](governance-strategy/shared-index-count-coupling.md) | 共享索引计数耦合与同批判决：新增条目必然改共享索引多处、且多会话并行写同一仓库时，识别耦合面→枚举候选集→显式裁决→提交信息留痕→干净检出验证 | L2 |
 | [short-command-patterns.md](governance-strategy/short-command-patterns.md) | 短指令模式库：登记已验证的 AI 协作快捷指令 | L2 |
 | [simple-task-high-risk.md](governance-strategy/simple-task-high-risk.md) | 简单任务高风险定律（Simple Task High-Risk Law） | L2 |
+| [single-authority-declaration-alignment.md](governance-strategy/single-authority-declaration-alignment.md) | 单一权威源与多载体声明面对齐 | L1 |
 | [skill-migration-position-governance.md](governance-strategy/skill-migration-position-governance.md) | Skill迁移位置治理：统一Skill存放位置的五步标准化流程 | - |
 | [snapshot-parity-migration.md](governance-strategy/snapshot-parity-migration.md) | 快照对拍迁移法 | L1 |
 | [spec-discoverability-guarantee.md](governance-strategy/spec-discoverability-guarantee.md) | 规范可发现性保障模式：三层映射模型（AGENTS.md引用→路由表条目→自动化脚本）确保规范不会"存在但不可发现" | L1 |
 | [spec-level-defense-in-depth.md](governance-strategy/spec-level-defense-in-depth.md) | 规范层纵深防御模型，权限定义+验证机制+防滥用+审计追溯四维防护 | L2 |
 | [spec-reference-validation.md](governance-strategy/spec-reference-validation.md) | Spec引用验证通用原则（Specification Reference Validation Pattern） | L2 |
 | [spec-triple-sync.md](governance-strategy/spec-triple-sync.md) | 规范三同步原则：新规范发布必须完成①总览引用②入口更新③存量迁移示范，解决"规范悬空"问题 | L2 |
+| [stop-loss-backward-scheduling.md](governance-strategy/stop-loss-backward-scheduling.md) | 止损前置倒排（硬截止 + 不可控依赖 → 计划内止损） | L1 |
 | [strong-constraint-self-check.md](governance-strategy/strong-constraint-self-check.md) | 强约束语言自检启发式 | L1 |
 | [structure-first-extension.md](governance-strategy/structure-first-extension.md) | 结构阅读先行：扩展前先完整阅读包结构，同概念域追加、异概念域新建 | L3 |
 | [style-anchoring-consistency.md](governance-strategy/style-anchoring-consistency.md) | 风格锚定一致性保证法 | L1 |
@@ -416,7 +418,6 @@
 | [template-placeholder-granularity-design.md](governance-strategy/template-placeholder-granularity-design.md) | 模板占位符的粒度设计原则 | L2 |
 | [test-coverage-diminishing-returns.md](governance-strategy/test-coverage-diminishing-returns.md) | 测试覆盖率边际收益递减拐点：70%处策略转换，从追求覆盖率数字转向关注关键路径测试质量 | L1 |
 | [three-as-relation-position.md](governance-strategy/three-as-relation-position.md) | 三之位：二元僵持时不增加第三实体，而在 A/B 之间找使二者构成整体的关系位（五步+5 反模式+三问检验，五域结构重现，含「真实互斥就接受」边界） | L2 |
-| [three-layer-repair-closure.md](governance-strategy/three-layer-repair-closure.md) | 三层修复闭环 | L1-draft |
 | [three-layer-rule-enforcement.md](governance-strategy/three-layer-rule-enforcement.md) | 规则落地三层模型：定义+痕迹+验证 | L2 |
 | [three-layer-spec-constraint.md](governance-strategy/three-layer-spec-constraint.md) | 规范约束三层次模型：规则定义层→路由发现层→自动化验证层，确保规范不会"存在但不可发现" | L2 |
 | [three-level-problem-solving.md](governance-strategy/three-level-problem-solving.md) | 问题解决三层跃迁：L1症状治疗→L2病因根治→L3系统免疫，架构师思考L3 | L1 |
@@ -457,12 +458,9 @@
 | [context-lifecycle-layering.md](ai-collaboration/context-lifecycle-layering.md) | 上下文生命周期分层管理模式 | L2 |
 | [context-recovery-protocol.md](ai-collaboration/context-recovery-protocol.md) | Context 恢复协议重执行模式：收到会话历史摘要/中断恢复时必须重新执行完整启动协议 | L2 |
 | [dialog-agent-four-layer-evaluation.md](ai-collaboration/dialog-agent-four-layer-evaluation.md) | 对话Agent四层评测模式（Dialog Agent Four-Layer Evaluation） | L1 |
-| [dual-engine-uncertainty-certainty.md](ai-collaboration/dual-engine-uncertainty-certainty.md) | 不确定性探索+确定性校验双引擎架构模式 | L2-validated |
 | [dual-zone-development-model.md](ai-collaboration/dual-zone-development-model.md) | 双区开发模型（非正式区→质量门禁→正式区） | L2 |
 | [ecosystem-barrier-evaluation.md](ai-collaboration/ecosystem-barrier-evaluation.md) | 生态壁垒评估框架：AI Agent的长期竞争力取决于底层生态的深度和广度，生态深度不可速成，评估应看生态而非仅看模型能力 | L2 |
 | [edit-verify-separation.md](ai-collaboration/edit-verify-separation.md) | 编辑-验证分离模式 | L2 |
-| [error-blacklist-monotonic-evolution.md](ai-collaboration/error-blacklist-monotonic-evolution.md) | 错误黑名单单调进化模式 | L2-validated |
-| [evaluation-driven-self-evolution.md](ai-collaboration/evaluation-driven-self-evolution.md) | 评测驱动的自进化闭环模式 | L2-validated |
 | [external-content-fact-verification.md](ai-collaboration/external-content-fact-verification.md) | 外部内容事实验证 | L2 |
 | [external-tech-article-learning-closed-loop.md](ai-collaboration/external-tech-article-learning-closed-loop.md) | 外部技术文章学习三阶段闭环（LAV模型） | L1 |
 | [file-existence-verification-gate.md](ai-collaboration/file-existence-verification-gate.md) | 文件存在性验证门模式（File Existence Verification Gate） | L2 |
@@ -475,9 +473,9 @@
 | [honest-limitation-acknowledgment.md](ai-collaboration/honest-limitation-acknowledgment.md) | 诚实承认局限性信任构建策略：三步法（主动承认当前局限→说明改进方向与时间表→用局限性衬托核心优势），将局限性从信任减分项转化为信任加分项，与用户主权默认模式互补，1次验证（mainecoon文章可信度构建） | L1 |
 | [human-ai-collaboration-70-30-rule.md](ai-collaboration/human-ai-collaboration-70-30-rule.md) | 人机协作70/30分工定律（Human-AI Collaboration 70/30 Rule） | L2 |
 | [human-in-the-loop-augmentation.md](ai-collaboration/human-in-the-loop-augmentation.md) | 「辅助人工」而非「全自动」的人机协作设计 | L2 |
+| [incremental-single-file-ai-development.md](ai-collaboration/incremental-single-file-ai-development.md) | 增量单文件 AI 开发（对话式开发 → 质量可验证） | L1 |
 | [index.md](ai-collaboration/index.md) | Ai Collaboration | - |
 | [isolation-over-sharing.md](ai-collaboration/isolation-over-sharing.md) | 隔离优于共享模式 | - |
-| [knowledge-compilation.md](ai-collaboration/knowledge-compilation.md) | 知识编译模式 | L1-draft |
 | [layered-caching-pattern.md](ai-collaboration/layered-caching-pattern.md) | 分层缓存模式 | L2-validated |
 | [lazy-loading-pattern.md](ai-collaboration/lazy-loading-pattern.md) | 按需加载懒加载模式 | L2-validated |
 | [llm-token-optimization-anti-patterns.md](ai-collaboration/llm-token-optimization-anti-patterns.md) | LLM Token优化反模式集 | L2-validated |
@@ -520,7 +518,6 @@
 | [style-creativity-separation-control.md](ai-collaboration/style-creativity-separation-control.md) | 风格-创意分离控制：正向约束控风格一致性 + 负向约束（禁止复刻清单）保创意多样性 | L2 |
 | [subagent-atomic-task-template.md](ai-collaboration/subagent-atomic-task-template.md) | 子代理原子任务描述模板：六要素精确委托法（路径+frontmatter+大纲+导航+硬约束+Mermaid规则）消除歧义 | L2 |
 | [subagent-git-three-prohibitions.md](ai-collaboration/subagent-git-three-prohibitions.md) | 子代理"三不准"执行规范（Subagent Git Three Prohibitions） | L1 |
-| [subagent-standardized-instruction.md](ai-collaboration/subagent-standardized-instruction.md) | 子代理分析任务标准化指令 | L2-validated |
 | [symptom-prescription-qa.md](ai-collaboration/symptom-prescription-qa.md) | 症状-处方 QA 系统：故障诊断手册式 QA，每条症状对应可执行修改指令，Agent 可自主闭环 | L2 |
 | [task-type-precheck-bias-defense.md](ai-collaboration/task-type-precheck-bias-defense.md) | 任务类型预检防偏差：对抗就近直觉偏差的防御机制，文件搜索前先做任务类型匹配 | L2 |
 | [team-shared-ai-colleague.md](ai-collaboration/team-shared-ai-colleague.md) | 团队共享 AI 同事模式：从个人独占式聊天窗口到频道共享同一 AI，上下文共享+角色分工+知识沉淀三位一体 | - |
@@ -586,12 +583,9 @@
 | [hardware-price-scenario-matrix.md](product-growth/hardware-price-scenario-matrix.md) | 硬件产品线价格梯度×场景细分矩阵：全价位段覆盖+场景精准切割，核心架构共享+功能模块差异化，入门款保留核心价值 | L1 |
 | [hidden-prize-channel-identification.md](product-growth/hidden-prize-channel-identification.md) | 隐性奖项通道识别法 | L1 |
 | [index.md](product-growth/index.md) | Product Growth | - |
-| [integration-over-invention.md](product-growth/integration-over-invention.md) | 整合优于发明模式 | L1-draft |
 | [interaction-value-directionality.md](product-growth/interaction-value-directionality.md) | 信息流方向性价值判据（Interaction Value: Directionality over Modality） | L1 |
 | [local-capability-guarantee.md](product-growth/local-capability-guarantee.md) | 本地能力保底云端增强：核心功能离线可用不依赖云端，云端提供AI/协同/增值能力，是建立用户长期信任的关键设计原则（6次验证） | L2 |
-| [lowering-barriers-creates-markets.md](product-growth/lowering-barriers-creates-markets.md) | 降低门槛即创造市场模式 | L1-draft |
 | [multi-touchpoint-aida-conversion.md](product-growth/multi-touchpoint-aida-conversion.md) | 多触点AIDA转化设计：首屏主CTA+模块间隔CTA+场景后CTA+底部最终CTA，不同位置CTA文案差异化匹配用户决策阶段，营销页面经典设计范式（L4标准化） | L4 |
-| [offline-first-architecture.md](product-growth/offline-first-architecture.md) | 离线优先架构模式 | L1-draft |
 | [pain-point-first-entry.md](product-growth/pain-point-first-entry.md) | 痛点刚需切入模式（单点突破优先于功能堆砌） | L2 |
 | [parameter-difference-quantification.md](product-growth/parameter-difference-quantification.md) | 参数差异量化方法：不满足定性描述，计算量化差异倍数，≥10倍数量级差异暗示技术架构根本不同，数字必须场景化翻译为体验差异 | L1 |
 | [positioning-drift-correction.md](product-growth/positioning-drift-correction.md) | 定位漂移修正法：三阶段（识别→剥离→重构）修正产品定位中"借用外部标签"导致的品类窄化与时效风险 | L1 |
@@ -614,5 +608,5 @@
 | [unified-contract-tool-orchestration-layer.md](product-growth/unified-contract-tool-orchestration-layer.md) | 统一契约工具编排层 | L1-draft |
 | [vertical-saas-mcp-capability-exposure.md](product-growth/vertical-saas-mcp-capability-exposure.md) | 垂直SaaS AI转型务实路径：不做通用大模型，通过MCP协议开放核心领域能力给Claude/GPT等通用大脑，六步MCP化转型+视觉兜底路径，4个行业可复用 | L2 |
 | [vertical-scenario-ai-three-elements.md](product-growth/vertical-scenario-ai-three-elements.md) | 垂直场景AI产品三要素：行业专属功能+场景化工作流+领域合规风控，AI应用层竞争从通用能力竞赛转向场景解决方案竞赛，3个跨领域产品验证 | L3 |
-| [weight-aligned-preparation.md](product-growth/weight-aligned-preparation.md) | 权重对位备赛法 | L1-draft |
+| [weight-aligned-preparation.md](product-growth/weight-aligned-preparation.md) | 权重对位备赛法 | L1 |
 | [zero-sum-rule-inversion.md](product-growth/zero-sum-rule-inversion.md) | 零和规则反利用：将竞争场景中的限制性条款从障碍转换为策略聚焦器，在 Best Shot 模式下最大化先发优势的边际回报 | L1 |

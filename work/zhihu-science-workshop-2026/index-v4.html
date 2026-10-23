@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>记忆实验室</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23F3EFE7'/%3E%3Cpath d='M5 22 C9 8, 13 8, 17 20 S 25 22, 28 12' fill='none' stroke='%238B6B43' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --paper:#F3EFE7; --card:#FBF8F1; --ink:#37322C; --muted:#7A7168;
+    --line:#DED5C7; --accent:#8B6B43; --accent-soft:#E8DCC8;
+    --good:#5E7C68; --warn:#A8654B;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+  }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,-apple-system,sans-serif;
+    line-height:1.7; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+  /* ===== 首屏 ===== */
+  header.hero{
+    min-height:72vh; display:flex; flex-direction:column;
+    justify-content:center; align-items:flex-start;
+    padding:64px 0 48px;
+  }
+  .hero h1{
+    font-family:"Songti SC","Noto Serif SC",Georgia,serif;
+    font-size:clamp(34px,6vw,56px); font-weight:700; letter-spacing:2px;
+  }
+  .hero .sub{
+    margin-top:14px; font-size:clamp(16px,2.4vw,20px); color:var(--muted);
+    max-width:34em;
+  }
+  .hero .cta{
+    margin-top:34px; display:inline-flex; align-items:center; gap:10px;
+    background:var(--accent); color:#FBF8F1; border:none;
+    font-size:17px; padding:13px 26px; border-radius:12px; cursor:pointer;
+    box-shadow:0 1px 2px rgba(55,50,44,.06);
+    transition:background .18s ease;
+    text-decoration:none;
+  }
+  .hero .cta:hover{background:#7A5D3A;}
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+    outline:2px solid var(--accent); outline-offset:3px;
+  }
+
+  /* ===== 面板通用 ===== */
+  main{padding-bottom:48px;}
+  section.panel{
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:clamp(24px,5vw,48px); margin-bottom:48px;
+  }
+  section.panel h2{
+    font-family:"Songti SC","Noto Serif SC",Georgia,serif; font-size:24px;
+  }
+  .panel-intro{color:var(--muted); font-size:15px; margin:6px 0 22px;}
+
+  /* ===== 实验台 ===== */
+  .lab-grid{display:flex; flex-direction:column; gap:26px;}
+  @media (min-width:900px){
+    .lab-grid{flex-direction:row; align-items:flex-start;}
+    .controls{flex:0 0 320px;}
+    .chart-col{flex:1 1 auto; min-width:0;}
+  }
+  .control{margin-bottom:20px;}
+  .control label{display:flex; justify-content:space-between; align-items:baseline;
+    font-size:15px; margin-bottom:8px;}
+  .control output{font-variant-numeric:tabular-nums; color:var(--accent); font-weight:600;}
+  input[type="range"]{
+    width:100%; accent-color:var(--accent); cursor:pointer;
+    min-height:24px;
+  }
+  select{
+    width:100%; font-size:15px; padding:9px 12px; border-radius:12px;
+    border:1px solid var(--line); background:#fff; color:var(--ink);
+  }
+  .reset-btn, .run-btn, .btn{
+    margin-top:4px; padding:10px 18px; font-size:15px; border-radius:12px;
+    border:1px solid var(--line); background:var(--accent-soft); color:var(--ink);
+    cursor:pointer;
+  }
+  .reset-btn:hover, .run-btn:hover, .btn:hover{background:#DCCBA9;}
+  .run-btn:disabled{opacity:.55; cursor:not-allowed;}
+
+  /* 图表 */
+  .chart-col{min-width:0;}
+  .chart-wrap{position:relative; width:100%;}
+  canvas{display:block; width:100%; height:auto;}
+  .chart-tip{
+    position:absolute; pointer-events:none; display:none;
+    background:rgba(55,50,44,.92); color:#FBF8F1; font-size:13px;
+    padding:7px 11px; border-radius:8px; white-space:nowrap;
+    transform:translate(-50%, calc(-100% - 8px));
+  }
+  .chart-note{color:var(--muted); font-size:13px; margin-top:8px;}
+
+  /* 统计卡 */
+  .stats{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:28px;}
+  @media (min-width:900px){
+    .stats{grid-template-columns:repeat(4,1fr);}
+  }
+  .stat{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:14px 16px;
+  }
+  .stat .k{font-size:13px; color:var(--muted);}
+  .stat .v{font-size:26px; font-weight:700; font-variant-numeric:tabular-nums;
+    margin-top:2px; font-family:"Songti SC","Noto Serif SC",Georgia,serif;}
+
+  /* ===== 策略对比 ===== */
+  .cmp-cards{display:grid; grid-template-columns:1fr; gap:12px; margin-bottom:22px;}
+  @media (min-width:560px){
+    .cmp-cards{grid-template-columns:repeat(3,1fr);}
+  }
+  .cmp-card{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:14px 16px;
+  }
+  .cmp-card .name{font-weight:700; font-size:16px; font-family:"Songti SC","Noto Serif SC",Georgia,serif;}
+  .cmp-card .desc{font-size:13px; color:var(--muted); margin-top:3px;}
+  .run-btn{margin-bottom:20px;}
+  table.cmp-table{
+    width:100%; border-collapse:collapse; table-layout:fixed; margin-top:8px;
+    font-size:14px;
+  }
+  .cmp-table col.c0{width:22%;}
+  .cmp-table th, .cmp-table td{
+    padding:9px 6px; text-align:center; border-bottom:1px solid var(--line);
+  }
+  .cmp-table th{color:var(--muted); font-weight:600; font-size:13px;}
+  .cmp-table th:first-child, .cmp-table td:first-child{text-align:left; font-weight:600;}
+  #cmpConclusion{margin-top:16px; font-size:15px; line-height:1.8;}
+  #cmpConclusion strong{color:var(--accent);}
+
+  /* ===== 自测 ===== */
+  .quiz-top{display:flex; align-items:center; gap:14px; margin-bottom:18px;}
+  .quiz-progress{flex:1; height:8px; background:var(--line); border-radius:99px; overflow:hidden;}
+  #quizBar{height:100%; width:10%; background:var(--accent); border-radius:99px; transition:width .25s ease;}
+  #quizCount{font-size:14px; color:var(--muted); white-space:nowrap;}
+  .quiz-q{font-size:17px; font-weight:600; margin-bottom:18px;
+    font-family:"Songti SC","Noto Serif SC",Georgia,serif; line-height:1.6;}
+  .quiz-opts{display:grid; gap:10px;}
+  .quiz-opts button{
+    text-align:left; padding:12px 14px; font-size:15px; border-radius:12px;
+    border:1px solid var(--line); background:var(--paper); color:var(--ink); cursor:pointer;
+    display:flex; gap:10px; align-items:baseline; width:100%;
+  }
+  .quiz-opts button:hover:not(:disabled){border-color:var(--accent);}
+  .quiz-opts button:disabled{cursor:default; opacity:1;}
+  .quiz-opts button .letter{color:var(--muted); font-weight:600; flex:0 0 auto;}
+  .quiz-opts button.correct{background:#E4EDE5; border-color:var(--good);}
+  .quiz-opts button.wrong{background:#F3E3DD; border-color:var(--warn);}
+  .quiz-feedback{margin-top:16px; padding:12px 14px; border-radius:12px; font-size:14px; line-height:1.7;}
+  .quiz-feedback.ok{background:#E4EDE5; border:1px solid var(--good);}
+  .quiz-feedback.no{background:#F3E3DD; border:1px solid var(--warn);}
+  #quizNext{margin-top:16px;}
+  #quizResult{margin-top:20px;}
+  .score-big{font-family:"Songti SC","Noto Serif SC",Georgia,serif; font-size:42px; font-weight:700; color:var(--accent);}
+  #quizWrong{margin:14px 0; padding-left:18px; font-size:14px; color:var(--muted);}
+  #quizAdvice{margin:10px 0 18px; font-size:15px; line-height:1.8;}
+  #quizAdvice strong{color:var(--accent);}
+
+  /* ===== 页脚 ===== */
+  footer{border-top:1px solid var(--line); padding:26px 0 40px;
+    color:var(--muted); font-size:14px;}
+
+  @media (min-width:768px){
+    .wrap{padding:0 32px;}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- ===== 首屏 ===== -->
+    <header class="hero">
+      <h1>记忆实验室</h1>
+      <p class="sub">把遗忘曲线变成可以拖动的实验台</p>
+      <a class="cta" href="#lab">开始调参</a>
+    </header>
+
+    <!-- ===== 实验台 ===== -->
+    <main>
+      <section class="panel" id="lab" aria-labelledby="lab-title">
+        <h2 id="lab-title">实验台</h2>
+        <p class="panel-intro">拖动滑块，看遗忘曲线怎么变；每次复习会抬升保持率并增大稳定度。</p>
+
+        <div class="lab-grid">
+          <div class="controls">
+            <div class="control">
+              <label for="r0">初始保持率 R0 <output id="r0Out" for="r0">90%</output></label>
+              <input type="range" id="r0" min="50" max="100" step="1" value="90">
+            </div>
+            <div class="control">
+              <label for="s">记忆稳定度 S（天） <output id="sOut" for="s">2 天</output></label>
+              <input type="range" id="s" min="0.5" max="10" step="0.1" value="2">
+            </div>
+            <div class="control">
+              <label for="count">复习次数 <output id="countOut" for="count">2 次</output></label>
+              <input type="range" id="count" min="0" max="5" step="1" value="2">
+            </div>
+            <div class="control">
+              <label for="strategy">复习间隔</label>
+              <select id="strategy">
+                <option value="0">1 天</option>
+                <option value="1" selected>1+3 天</option>
+                <option value="2">1+3+7 天</option>
+                <option value="3">1+3+7+14 天</option>
+              </select>
+            </div>
+            <button type="button" class="reset-btn" id="resetBtn">重置参数</button>
+          </div>
+
+          <div class="chart-col">
+            <div class="chart-wrap">
+              <canvas id="chart" aria-label="30 天保持率曲线：当前策略与无复习对比"></canvas>
+              <div class="chart-tip" id="chartTip" role="status"></div>
+            </div>
+            <p class="chart-note">横轴 0–30 天，纵轴 0–100%。实线 = 当前复习策略，虚线 = 不复习。悬停或点击曲线可查看某天的数值。</p>
+          </div>
+        </div>
+
+        <div class="stats" id="stats" aria-label="关键统计">
+          <div class="stat"><div class="k">第 7 天保持率</div><div class="v" id="st7">—</div></div>
+          <div class="stat"><div class="k">第 14 天保持率</div><div class="v" id="st14">—</div></div>
+          <div class="stat"><div class="k">第 30 天保持率</div><div class="v" id="st30">—</div></div>
+          <div class="stat"><div class="k">30 天平均保持率</div><div class="v" id="stAvg">—</div></div>
+        </div>
+      </section>
+
+      <!-- ===== 策略对比 ===== -->
+      <section class="panel" id="compare" aria-labelledby="cmp-title">
+        <h2 id="cmp-title">策略对比</h2>
+        <p class="panel-intro">三种复习策略跑 30 天，用同一组参数（R0、S 取实验台当前值）看间隔重复到底差多少。</p>
+
+        <div class="cmp-cards">
+          <div class="cmp-card"><div class="name">无复习</div><div class="desc">不复习</div></div>
+          <div class="cmp-card"><div class="name">突击复习</div><div class="desc">第 1 天集中复习 1 次</div></div>
+          <div class="cmp-card"><div class="name">间隔复习</div><div class="desc">第 1、3、7、14 天各复习 1 次</div></div>
+        </div>
+
+        <button type="button" class="run-btn" id="runCmp">运行 30 天模拟</button>
+
+        <div class="chart-wrap">
+          <canvas id="cmpChart" aria-label="三种复习策略的 30 天保持率对比曲线"></canvas>
+        </div>
+        <p class="chart-note">横轴 0–30 天，纵轴 0–100%。褐色实线 = 无复习；红褐虚线 = 突击复习；墨绿点线 = 间隔复习。</p>
+
+        <table class="cmp-table">
+          <colgroup>
+            <col class="c0"><col><col><col><col><col>
+          </colgroup>
+          <thead>
+            <tr><th scope="col">策略</th><th scope="col">第 1 天</th><th scope="col">第 7 天</th><th scope="col">第 14 天</th><th scope="col">第 30 天</th><th scope="col">30 天平均</th></tr>
+          </thead>
+          <tbody id="cmpBody">
+            <tr><td>无复习</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>突击复习</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>间隔复习</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+
+        <p id="cmpConclusion" role="status">点「运行 30 天模拟」后，这里会给出结论。</p>
+      </section>
+
+      <!-- ===== 自测 ===== -->
+      <section class="panel" id="quiz" aria-labelledby="quiz-title">
+        <h2 id="quiz-title">自测</h2>
+        <p class="panel-intro">10 道四选一，答完看三档复习建议。</p>
+
+        <div id="quizBox">
+          <div class="quiz-top">
+            <div class="quiz-progress" aria-hidden="true"><div id="quizBar"></div></div>
+            <span id="quizCount">第 1 / 10 题</span>
+          </div>
+          <p class="quiz-q" id="quizQ"></p>
+          <div class="quiz-opts" id="quizOpts"></div>
+          <div class="quiz-feedback" id="quizFb" hidden></div>
+          <button type="button" class="btn" id="quizNext" hidden>下一题</button>
+
+          <div id="quizResult" hidden>
+            <div class="score-big" id="quizScore"></div>
+            <p style="font-size:15px;color:var(--muted);margin-top:2px;" id="quizScoreSub"></p>
+            <ul id="quizWrong"></ul>
+            <p id="quizAdvice"></p>
+            <button type="button" class="btn" id="quizRestart">重新测试</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===== 页脚 ===== -->
+    <footer>
+      <p>这是一个简化的学习科学模型，不用于预测个人成绩。</p>
+    </footer>
+
+  </div>
+
+  <script>
+    (function(){
+      "use strict";
+
+      /* ===== 模型 ===== */
+      var STRATEGIES = [
+        { label: "1 天",            days: [1] },
+        { label: "1+3 天",          days: [1, 3] },
+        { label: "1+3+7 天",        days: [1, 3, 7] },
+        { label: "1+3+7+14 天",     days: [1, 3, 7, 14] }
+      ];
+
+      function computeCurve(R0, S, reviewDays) {
+        var curve = new Array(31);
+        var r = R0, s = S, last = 0;
+        for (var d = 0; d <= 30; d++) {
+          var R = r * Math.exp(-(d - last) / s);
+          if (reviewDays.indexOf(d) !== -1) {
+            R = Math.min(1, R + (1 - R) * 0.6);
+            r = R; s = s * 1.6; last = d;
+          }
+          curve[d] = R;
+        }
+        return curve;
+      }
+
+      /* ===== 状态 ===== */
+      var state = {
+        r0: 0.9,
+        s: 2,
+        count: 2,
+        strategyIdx: 1
+      };
+
+      /* ===== 实验台 DOM ===== */
+      var elR0 = document.getElementById('r0');
+      var elS = document.getElementById('s');
+      var elCount = document.getElementById('count');
+      var elStrategy = document.getElementById('strategy');
+      var elReset = document.getElementById('resetBtn');
+      var canvas = document.getElementById('chart');
+      var ctx = canvas.getContext('2d');
+      var tip = document.getElementById('chartTip');
+      var statEls = {
+        st7: document.getElementById('st7'),
+        st14: document.getElementById('st14'),
+        st30: document.getElementById('st30'),
+        stAvg: document.getElementById('stAvg')
+      };
+      var outs = {
+        r0: document.getElementById('r0Out'),
+        s: document.getElementById('sOut'),
+        count: document.getElementById('countOut')
+      };
+
+      /* ===== 策略对比 DOM ===== */
+      var elRunCmp = document.getElementById('runCmp');
+      var cmpCanvas = document.getElementById('cmpChart');
+      var cmpCtx = cmpCanvas.getContext('2d');
+      var cmpBody = document.getElementById('cmpBody');
+      var cmpConclusion = document.getElementById('cmpConclusion');
+      var cmpRunning = false;
+
+      /* ===== 自测 DOM ===== */
+      var quizQ = document.getElementById('quizQ');
+      var quizOpts = document.getElementById('quizOpts');
+      var quizFb = document.getElementById('quizFb');
+      var quizNext = document.getElementById('quizNext');
+      var quizCount = document.getElementById('quizCount');
+      var quizBar = document.getElementById('quizBar');
+      var quizResult = document.getElementById('quizResult');
+      var quizScore = document.getElementById('quizScore');
+      var quizScoreSub = document.getElementById('quizScoreSub');
+      var quizWrong = document.getElementById('quizWrong');
+      var quizAdvice = document.getElementById('quizAdvice');
+      var quizRestart = document.getElementById('quizRestart');
+
+      /* ===== 画布尺寸（DPR 适配） ===== */
+      var PAD = { top: 18, right: 16, bottom: 38, left: 48 };
+      var cssW = 0, cssH = 0, dpr = 1;
+      var cssW2 = 0, cssH2 = 0, dpr2 = 1;
+
+      function sizeCanvas(c, setW, setH, setDpr, w, h, d) {
+        var rect = c.getBoundingClientRect();
+        w = Math.max(280, rect.width);
+        h = Math.round(w * 0.56);
+        d = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+        c.width = Math.round(w * d);
+        c.height = Math.round(h * d);
+        c.style.height = h + 'px';
+        setW(w); setH(h); setDpr(d);
+      }
+
+      function resizeCanvases() {
+        sizeCanvas(canvas, function (w){ cssW = w; }, function (h){ cssH = h; }, function (d){ dpr = d; });
+        sizeCanvas(cmpCanvas, function (w){ cssW2 = w; }, function (h){ cssH2 = h; }, function (d){ dpr2 = d; });
+        scheduleDraw();
+        if (cmpHasDrawn) drawCompareImmediate();
+      }
+
+      /* ===== 实验台数据 ===== */
+      function currentReviewDays() {
+        var days = STRATEGIES[state.strategyIdx].days;
+        var n = Math.min(state.count, days.length);
+        return days.slice(0, n);
+      }
+
+      /* ===== 实验台绘制 ===== */
+      function draw() {
+        if (!cssW) return;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, cssW, cssH);
+        ctx.font = "12px 'PingFang SC','Microsoft YaHei',sans-serif";
+        ctx.textBaseline = 'middle';
+
+        var plotW = cssW - PAD.left - PAD.right;
+        var plotH = cssH - PAD.top - PAD.bottom;
+
+        ctx.strokeStyle = '#E5DCCB';
+        ctx.fillStyle = '#7A7168';
+        ctx.lineWidth = 1;
+        var yTicks = [0, 0.2, 0.4, 0.6, 0.8, 1];
+        for (var i = 0; i < yTicks.length; i++) {
+          var y = PAD.top + plotH - yTicks[i] * plotH;
+          ctx.beginPath();
+          ctx.moveTo(PAD.left, y);
+          ctx.lineTo(PAD.left + plotW, y);
+          ctx.stroke();
+          ctx.textAlign = 'right';
+          ctx.fillText(Math.round(yTicks[i] * 100) + '%', PAD.left - 8, y);
+        }
+        var xTicks = [0, 5, 10, 15, 20, 25, 30];
+        for (var j = 0; j < xTicks.length; j++) {
+          var x = PAD.left + xTicks[j] / 30 * plotW;
+          ctx.beginPath();
+          ctx.moveTo(x, PAD.top);
+          ctx.lineTo(x, PAD.top + plotH);
+          ctx.stroke();
+          ctx.textAlign = 'center';
+          ctx.fillText(xTicks[j] + ' 天', x, PAD.top + plotH + 18);
+        }
+        ctx.strokeStyle = '#B9AA93';
+        ctx.beginPath();
+        ctx.moveTo(PAD.left, PAD.top);
+        ctx.lineTo(PAD.left, PAD.top + plotH);
+        ctx.lineTo(PAD.left + plotW, PAD.top + plotH);
+        ctx.stroke();
+
+        var curveMain = computeCurve(state.r0, state.s, currentReviewDays());
+        var curveNone = computeCurve(state.r0, state.s, []);
+
+        function drawLine(data, color, dash) {
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 2;
+          ctx.setLineDash(dash || []);
+          ctx.beginPath();
+          for (var d = 0; d <= 30; d++) {
+            var px = PAD.left + d / 30 * plotW;
+            var py = PAD.top + plotH - data[d] * plotH;
+            if (d === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          }
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+        drawLine(curveNone, '#999999', [5, 5]);
+        drawLine(curveMain, '#8B6B43', []);
+
+        var lx = PAD.left + plotW - 150, ly = PAD.top + 14;
+        ctx.fillStyle = 'rgba(251,248,241,.92)';
+        ctx.fillRect(lx - 8, ly - 12, 158, 30);
+        ctx.strokeStyle = '#DED5C7';
+        ctx.strokeRect(lx - 8, ly - 12, 158, 30);
+        ctx.strokeStyle = '#8B6B43'; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(lx, ly - 1); ctx.lineTo(lx + 22, ly - 1); ctx.stroke();
+        ctx.fillStyle = '#37322C'; ctx.textAlign = 'left';
+        ctx.fillText('当前策略', lx + 28, ly - 1);
+        ctx.strokeStyle = '#999999'; ctx.lineWidth = 2; ctx.setLineDash([4, 4]);
+        ctx.beginPath(); ctx.moveTo(lx, ly + 14); ctx.lineTo(lx + 22, ly + 14); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = '#37322C';
+        ctx.fillText('无复习', lx + 28, ly + 14);
+
+        if (hoverDay >= 0) {
+          var hx = PAD.left + hoverDay / 30 * plotW;
+          ctx.strokeStyle = 'rgba(138,107,67,.55)';
+          ctx.setLineDash([3, 4]);
+          ctx.beginPath(); ctx.moveTo(hx, PAD.top); ctx.lineTo(hx, PAD.top + plotH); ctx.stroke();
+          ctx.setLineDash([]);
+          var hy = PAD.top + plotH - curveMain[hoverDay] * plotH;
+          ctx.fillStyle = '#8B6B43';
+          ctx.beginPath(); ctx.arc(hx, hy, 4, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+
+      var hoverDay = -1;
+
+      function updateStats() {
+        var c = computeCurve(state.r0, state.s, currentReviewDays());
+        var sum = 0;
+        for (var d = 0; d <= 30; d++) sum += c[d];
+        statEls.st7.textContent = pct(c[7]);
+        statEls.st14.textContent = pct(c[14]);
+        statEls.st30.textContent = pct(c[30]);
+        statEls.stAvg.textContent = pct(sum / 31);
+      }
+
+      function pct(v) {
+        return Math.round(v * 100) + '%';
+      }
+
+      function posToDay(evt, c, w) {
+        var rect = c.getBoundingClientRect();
+        var clientX = (evt.touches && evt.touches[0]) ? evt.touches[0].clientX : evt.clientX;
+        var plotW = w - PAD.left - PAD.right;
+        var x = clientX - rect.left - PAD.left;
+        var d = Math.round(x / plotW * 30);
+        return Math.max(0, Math.min(30, d));
+      }
+
+      function showTip(day, show) {
+        var curveMain = computeCurve(state.r0, state.s, currentReviewDays());
+        var curveNone = computeCurve(state.r0, state.s, []);
+        if (show) {
+          tip.style.display = 'block';
+          tip.textContent = '第 ' + day + ' 天 · 当前策略 ' + pct(curveMain[day]) + ' · 无复习 ' + pct(curveNone[day]);
+          var x = PAD.left + day / 30 * (cssW - PAD.left - PAD.right);
+          tip.style.left = x + 'px';
+          tip.style.top = (PAD.top + 8) + 'px';
+          hoverDay = day;
+        } else {
+          tip.style.display = 'none';
+          hoverDay = -1;
+        }
+        scheduleDraw();
+      }
+
+      canvas.addEventListener('mousemove', function (e) {
+        var rect = canvas.getBoundingClientRect();
+        var inside = e.clientX >= rect.left && e.clientX <= rect.right &&
+                     e.clientY >= rect.top && e.clientY <= rect.bottom;
+        if (inside) showTip(posToDay(e, canvas, cssW), true);
+        else showTip(0, false);
+      });
+      canvas.addEventListener('mouseleave', function () { showTip(0, false); });
+      canvas.addEventListener('click', function (e) {
+        showTip(posToDay(e, canvas, cssW), true);
+      });
+      canvas.addEventListener('touchstart', function (e) {
+        showTip(posToDay(e, canvas, cssW), true);
+        e.preventDefault();
+      }, { passive: false });
+
+      var drawQueued = false;
+      function scheduleDraw() {
+        if (drawQueued) return;
+        drawQueued = true;
+        requestAnimationFrame(function () {
+          drawQueued = false;
+          draw();
+        });
+      }
+
+      function readState() {
+        state.r0 = parseFloat(elR0.value) / 100;
+        state.s = parseFloat(elS.value);
+        state.count = parseInt(elCount.value, 10);
+        state.strategyIdx = parseInt(elStrategy.value, 10);
+      }
+
+      function refreshAll() {
+        readState();
+        outs.r0.textContent = Math.round(state.r0 * 100) + '%';
+        outs.s.textContent = (Math.round(state.s * 10) / 10) + ' 天';
+        outs.count.textContent = state.count + ' 次';
+        updateStats();
+        scheduleDraw();
+      }
+
+      [elR0, elS, elCount, elStrategy].forEach(function (el) {
+        el.addEventListener('input', refreshAll);
+        el.addEventListener('change', refreshAll);
+      });
+
+      elReset.addEventListener('click', function () {
+        elR0.value = 90; elS.value = 2; elCount.value = 2; elStrategy.value = 1;
+        refreshAll();
+      });
+
+      /* ===== 策略对比 ===== */
+      var cmpHasDrawn = false;
+
+      function cmpSeries() {
+        return [
+          { label: '无复习',   color: '#B9AA93', dash: [],       days: [] },
+          { label: '突击复习', color: '#A8654B', dash: [5, 4],    days: [1] },
+          { label: '间隔复习', color: '#5E7C68', dash: [2, 4],    days: [1, 3, 7, 14] }
+        ];
+      }
+
+      function drawCompareFrame(progressPerSeries) {
+        if (!cssW2) return;
+        cmpCtx.setTransform(dpr2, 0, 0, dpr2, 0, 0);
+        cmpCtx.clearRect(0, 0, cssW2, cssH2);
+        cmpCtx.font = "12px 'PingFang SC','Microsoft YaHei',sans-serif";
+        cmpCtx.textBaseline = 'middle';
+
+        var plotW = cssW2 - PAD.left - PAD.right;
+        var plotH = cssH2 - PAD.top - PAD.bottom;
+
+        cmpCtx.strokeStyle = '#E5DCCB';
+        cmpCtx.fillStyle = '#7A7168';
+        cmpCtx.lineWidth = 1;
+        var yTicks = [0, 0.2, 0.4, 0.6, 0.8, 1];
+        for (var i = 0; i < yTicks.length; i++) {
+          var y = PAD.top + plotH - yTicks[i] * plotH;
+          cmpCtx.beginPath();
+          cmpCtx.moveTo(PAD.left, y);
+          cmpCtx.lineTo(PAD.left + plotW, y);
+          cmpCtx.stroke();
+          cmpCtx.textAlign = 'right';
+          cmpCtx.fillText(Math.round(yTicks[i] * 100) + '%', PAD.left - 8, y);
+        }
+        var xTicks = [0, 5, 10, 15, 20, 25, 30];
+        for (var j = 0; j < xTicks.length; j++) {
+          var x = PAD.left + xTicks[j] / 30 * plotW;
+          cmpCtx.beginPath();
+          cmpCtx.moveTo(x, PAD.top);
+          cmpCtx.lineTo(x, PAD.top + plotH);
+          cmpCtx.stroke();
+          cmpCtx.textAlign = 'center';
+          cmpCtx.fillText(xTicks[j] + ' 天', x, PAD.top + plotH + 18);
+        }
+        cmpCtx.strokeStyle = '#B9AA93';
+        cmpCtx.beginPath();
+        cmpCtx.moveTo(PAD.left, PAD.top);
+        cmpCtx.lineTo(PAD.left, PAD.top + plotH);
+        cmpCtx.lineTo(PAD.left + plotW, PAD.top + plotH);
+        cmpCtx.stroke();
+
+        var curves = cmpCurves;
+        for (var k = 0; k < curves.length; k++) {
+          var data = curves[k].data;
+          var n = Math.ceil(31 * progressPerSeries[k]);
+          cmpCtx.strokeStyle = curves[k].color;
+          cmpCtx.lineWidth = 2;
+          cmpCtx.setLineDash(curves[k].dash);
+          cmpCtx.beginPath();
+          for (var d = 0; d < n; d++) {
+            var px = PAD.left + d / 30 * plotW;
+            var py = PAD.top + plotH - data[d] * plotH;
+            if (d === 0) cmpCtx.moveTo(px, py);
+            else cmpCtx.lineTo(px, py);
+          }
+          cmpCtx.stroke();
+        }
+        cmpCtx.setLineDash([]);
+
+        var lx = PAD.left + plotW - 190, ly = PAD.top + 14;
+        cmpCtx.fillStyle = 'rgba(251,248,241,.92)';
+        cmpCtx.fillRect(lx - 8, ly - 26, 198, 52);
+        cmpCtx.strokeStyle = '#DED5C7';
+        cmpCtx.strokeRect(lx - 8, ly - 26, 198, 52);
+        for (var m = 0; m < curves.length; m++) {
+          var yy = ly - 12 + m * 13;
+          cmpCtx.strokeStyle = curves[m].color;
+          cmpCtx.lineWidth = 2;
+          cmpCtx.setLineDash(curves[m].dash);
+          cmpCtx.beginPath(); cmpCtx.moveTo(lx, yy); cmpCtx.lineTo(lx + 22, yy); cmpCtx.stroke();
+          cmpCtx.setLineDash([]);
+          cmpCtx.fillStyle = '#37322C'; cmpCtx.textAlign = 'left';
+          cmpCtx.fillText(curves[m].label, lx + 28, yy);
+        }
+      }
+
+      var cmpCurves = [];
+
+      function drawCompareImmediate() {
+        var series = cmpSeries();
+        cmpCurves = series.map(function (s) {
+          return { color: s.color, dash: s.dash, label: s.label, data: computeCurve(state.r0, state.s, s.days) };
+        });
+        drawCompareFrame([1, 1, 1]);
+        cmpHasDrawn = true;
+      }
+
+      function fillCompareTable() {
+        var rows = cmpBody.querySelectorAll('tr');
+        for (var i = 0; i < rows.length; i++) {
+          var tds = rows[i].querySelectorAll('td');
+          var c = cmpCurves[i].data;
+          var sum = 0;
+          for (var d = 0; d <= 30; d++) sum += c[d];
+          tds[1].textContent = pct(c[1]);
+          tds[2].textContent = pct(c[7]);
+          tds[3].textContent = pct(c[14]);
+          tds[4].textContent = pct(c[30]);
+          tds[5].textContent = pct(sum / 31);
+        }
+        var x = Math.round((cmpCurves[2].data[30] - cmpCurves[1].data[30]) * 100);
+        var msg = x > 0
+          ? '在本模型下，间隔复习的第 30 天保持率比突击复习高 <strong>' + x + '</strong> 个百分点。'
+          : '在本模型下，间隔复习与突击复习的第 30 天保持率差异不明显。';
+        cmpConclusion.innerHTML = msg;
+      }
+
+      elRunCmp.addEventListener('click', function () {
+        if (cmpRunning) return;
+        cmpRunning = true;
+        elRunCmp.disabled = true;
+
+        var series = cmpSeries();
+        cmpCurves = series.map(function (s) {
+          return { color: s.color, dash: s.dash, label: s.label, data: computeCurve(state.r0, state.s, s.days) };
+        });
+
+        var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var done = function () {
+          cmpHasDrawn = true;
+          fillCompareTable();
+          cmpRunning = false;
+          elRunCmp.disabled = false;
+        };
+
+        if (reduce) {
+          drawCompareFrame([1, 1, 1]);
+          done();
+          return;
+        }
+
+        var progress = [0, 0, 0];
+        var cur = 0;
+        var FRAMES = 22;
+        var frame = 0;
+        function tick() {
+          progress[cur] = Math.min(1, frame / FRAMES);
+          drawCompareFrame(progress);
+          frame++;
+          if (frame > FRAMES) {
+            progress[cur] = 1;
+            frame = 0;
+            cur++;
+            if (cur >= 3) {
+              drawCompareFrame([1, 1, 1]);
+              done();
+              return;
+            }
+          }
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+
+      /* ===== 自测 ===== */
+      var QUIZ = [
+        { q: "遗忘曲线最早由谁通过实验系统研究？",
+          opts: ["巴甫洛夫", "艾宾浩斯", "斯金纳", "皮亚杰"],
+          ans: 1, exp: "艾宾浩斯 1885 年用无意义音节研究记忆保持。",
+          tag: "艾宾浩斯与无意义音节实验" },
+        { q: "间隔效应最准确的描述是？",
+          opts: ["一次学很久最好", "分散到多次、间隔进行更利于长期保持", "睡前学习一定更好", "复习次数越多越好"],
+          ans: 1, exp: "同样总时长下，分散练习的长期保持通常优于集中练习。",
+          tag: "分散练习优于集中练习" },
+        { q: "测试效应指的是？",
+          opts: ["考试让人焦虑", "主动提取比重复阅读更利于长期保持", "选择题比填空题好", "测试只适合评估"],
+          ans: 1, exp: "自测是提取练习，不只是评估手段。",
+          tag: "提取练习（测试效应）" },
+        { q: "交错练习（interleaving）通常指？",
+          opts: ["同一题型连续练", "把不同类型题目混合练习", "每次换学习环境", "只练最简单的题"],
+          ans: 1, exp: "混合题型迫使大脑区分问题类型。",
+          tag: "交错练习" },
+        { q: "下列哪种安排最符合间隔重复？",
+          opts: ["考前一夜连学 6 小时", "每天同一时间读同一段", "第 1、3、7、14 天各复习一次", "只看一遍"],
+          ans: 2, exp: "间隔逐次拉长，是间隔重复的典型形式。",
+          tag: "间隔重复" },
+        { q: "「合意困难」的含义是？",
+          opts: ["越难越好", "适度增加提取难度可促进长期保持", "困难一定有害", "只做难题"],
+          ans: 1, exp: "难度要「合意」，不是无条件加难。",
+          tag: "合意困难" },
+        { q: "睡眠对记忆的主要作用是？",
+          opts: ["没有作用", "巩固与整合记忆", "只影响情绪", "只在儿童期有效"],
+          ans: 1, exp: "睡眠参与记忆巩固，尤其与慢波睡眠相关。",
+          tag: "睡眠与记忆巩固" },
+        { q: "工作记忆容量大致是？",
+          opts: ["1 个组块", "4 个左右组块", "20 个组块", "无限"],
+          ans: 1, exp: "Cowan（2001）估计约 4 个组块。",
+          tag: "工作记忆容量约 4 个组块" },
+        { q: "重读笔记时的「熟悉感」为什么不可靠？",
+          opts: ["因为笔记写错了", "流畅性错觉：熟悉不等于需要时能提取", "因为字体问题", "因为笔记太长"],
+          ans: 1, exp: "再认的流畅感会被误当成掌握。",
+          tag: "流畅性错觉" },
+        { q: "考前突击的主要问题是？",
+          opts: ["完全无效", "短期可能有效，但长期保持差、迁移弱", "会损伤记忆", "只对理科无效"],
+          ans: 1, exp: "突击能应付短期考试，但不利于长期留存。",
+          tag: "突击复习的局限" }
+      ];
+
+      var quizState = { idx: 0, score: 0, answered: false };
+      var LETTERS = ["A", "B", "C", "D"];
+
+      function renderQuiz() {
+        var item = QUIZ[quizState.idx];
+        quizCount.textContent = '第 ' + (quizState.idx + 1) + ' / 10 题';
+        quizBar.style.width = ((quizState.idx + 1) / 10 * 100) + '%';
+        quizQ.textContent = (quizState.idx + 1) + '. ' + item.q;
+        quizOpts.innerHTML = '';
+        quizFb.hidden = true;
+        quizFb.className = 'quiz-feedback';
+        quizNext.hidden = true;
+        item.opts.forEach(function (opt, i) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.innerHTML = '<span class="letter">' + LETTERS[i] + '</span><span>' + opt + '</span>';
+          b.addEventListener('click', function () { answerQuiz(i); });
+          quizOpts.appendChild(b);
+        });
+      }
+
+      function answerQuiz(choice) {
+        if (quizState.answered) return;
+        quizState.answered = true;
+        var item = QUIZ[quizState.idx];
+        var btns = quizOpts.querySelectorAll('button');
+        var correct = choice === item.ans;
+        if (correct) quizState.score++;
+        btns.forEach(function (b, i) {
+          b.disabled = true;
+          if (i === item.ans) b.classList.add('correct');
+          if (i === choice && !correct) b.classList.add('wrong');
+        });
+        quizFb.hidden = false;
+        quizFb.className = 'quiz-feedback ' + (correct ? 'ok' : 'no');
+        quizFb.innerHTML = (correct ? '回答正确。' : '回答错误。') + item.exp;
+        if (quizState.idx < 9) {
+          quizNext.hidden = false;
+        } else {
+          showQuizResult();
+        }
+      }
+
+      function showQuizResult() {
+        quizQ.hidden = true;
+        quizOpts.hidden = true;
+        quizFb.hidden = true;
+        quizNext.hidden = true;
+        quizCount.textContent = '已完成';
+        quizBar.style.width = '100%';
+        quizResult.hidden = false;
+        quizScore.textContent = quizState.score + ' / 10';
+        quizScoreSub.textContent = '答对 ' + quizState.score + ' 题，答错 ' + (10 - quizState.score) + ' 题';
+
+        var wrong = [];
+        QUIZ.forEach(function (item, i) {
+          if (!wasCorrect(i)) wrong.push(item);
+        });
+        quizWrong.innerHTML = '';
+        if (wrong.length > 0) {
+          wrong.forEach(function (item) {
+            var li = document.createElement('li');
+            li.textContent = '第 ' + (QUIZ.indexOf(item) + 1) + ' 题：' + item.tag;
+            quizWrong.appendChild(li);
+          });
+        } else {
+          var li = document.createElement('li');
+          li.textContent = '全部答对，没有错题。';
+          quizWrong.appendChild(li);
+        }
+
+        var advice;
+        if (quizState.score <= 5) advice = '建议第 1、3、7、14 天复习。';
+        else if (quizState.score <= 8) advice = '建议第 1、3、7 天复习。';
+        else advice = '建议第 1、7 天复习。';
+        quizAdvice.innerHTML = '按分数给出的复习建议：<strong>' + advice.replace('。', '') + '</strong>。';
+      }
+
+      // 记录每题的答题结果（0-9 对应答对与否）
+      var quizResults = [];
+      function wasCorrect(i) { return quizResults[i] === true; }
+
+      quizNext.addEventListener('click', function () {
+        quizState.idx++;
+        quizState.answered = false;
+        renderQuiz();
+      });
+
+      quizRestart.addEventListener('click', function () {
+        quizState.idx = 0;
+        quizState.score = 0;
+        quizState.answered = false;
+        quizResults = [];
+        quizQ.hidden = false;
+        quizOpts.hidden = false;
+        quizResult.hidden = true;
+        renderQuiz();
+      });
+
+      // answerQuiz 里记录结果（在 renderQuiz 之前初始化数组长度）
+      // 覆写 answerQuiz 以记录结果
+      var _origAnswer = answerQuiz;
+      answerQuiz = function (choice) {
+        quizResults[quizState.idx] = (choice === QUIZ[quizState.idx].ans);
+        _origAnswer(choice);
+      };
+
+      /* ===== 首屏 CTA 焦点增强 ===== */
+      var cta = document.querySelector('.cta');
+      var lab = document.getElementById('lab');
+      if (cta && lab) {
+        cta.addEventListener('click', function () {
+          requestAnimationFrame(function () {
+            lab.setAttribute('tabindex', '-1');
+            lab.focus({ preventScroll: true });
+          });
+        });
+      }
+
+      /* ===== 初始化 ===== */
+      window.addEventListener('resize', resizeCanvases);
+      resizeCanvases();
+      refreshAll();
+      renderQuiz();
+    })();
+  </script>
+</body>
+</html>

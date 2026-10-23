@@ -45,6 +45,8 @@
 | milestone-wsl-vhdx-compact-cmd-20261010 | WSL2 VHDX 压缩 skill 门面（基线→压缩→宿主 FreeGiB 闭环，commit 83ab7cafa） | 2026-10-10 | ✅ 已完成 | 七概念R→I→E→V→A→C | 30条客观事实（4文件+690/−2、8步闭环、双基线验收、podman 79.02→33.01GiB/openKylin 48.84→48.21GiB，今日复测 33.02/48.40GiB 对得上）、3条四元组洞察（预期前置基线/外部权威量判据/全局副作用原态恢复）、V四视角8条意见采纳4条（实战计数/toml缺失/黑名单硬门/CI守护）、1个L1模式（写操作门面三基线验收法）、5项原子行动项，G1-G4+V门全部通过 | [wsl-vhdx-compact-cmd-retrospective-20261010.md](wsl-vhdx-compact-cmd-retrospective-20261010.md) |
 | milestone-specweave-project-review-20261013 | SpecWeave 全面复盘——入口计数统一与规范容器边界（113天/4219提交） | 2026-10-13 | ✅ 已完成 | 七概念R→I→E→V→A→C | 统一三处入口互相矛盾的计数（657脚本/169技能/136规则/946模式）、4条四元组洞察（计数治理/技能容器双重身份/对称区域治理/沉淀节奏）、升级合成统计权威来源模式至L2、AGENTS.md修正projects名实、登记5项原子行动项 | [specweave-project-review-20261013.md](specweave-project-review-20261013.md) |
 | milestone-wsl-drvfs-mount-wiki-20261013 | WSL DrvFs「OKF教程沉淀→网络共享实战挂载→fstab 持久化」一日闭环（commit 13715e5c0） | 2026-10-13 | ✅ 已完成 | 七概念R→I→E→V→A→C | 30条客观事实（教程14文件+994行/36事实/8意见采纳5；\\10.16.11.3\ai 经 S: 既有会话 drvfs 挂载三段验证；fstab nofail+幂等守卫+findmnt 0-error/4噪音归类+terminate 冷启动实证）、4条四元组洞察（凭据常已在Windows侧闭合/三层独立证据/跨抽象层校验噪音/知识同日闭环）、V四视角7条意见采纳5条、1个L1-draft模式（WSL-DRVFS-MOUNT-001 四处登记）、4项行动项（A-2随交付闭环）、同步导出可发布版与项目 Skill，G1-G4+V门全部通过 | [wsl-drvfs-mount-wiki-milestone-20261013.md](wsl-drvfs-mount-wiki-milestone-20261013.md) |
+| milestone-zhihu-ai-science-workshop-entry-20261023 | 知乎 AI 科学创新工坊第二弹参赛里程碑（方案→作品→过程→文章→AI Works 代部署） | 2026-10-23 | ✅ 已完成 | 七概念R→I→E→A→C | 9天冲刺参赛方案（3条硬约束/双赛道决策卡/选题空白带/评审四维对冲/合规负向清单，全量挂F编号零收益承诺）+ 单文件零依赖作品v1/v2（P-V/P-T曲线、粒子碰撞、Maxwell近似）+ 过程留痕五件套 + 介绍文章初稿750字 + AI Works 一键代部署探索；26条客观事实、3条四元组洞察（过程可举证性即评审维度/单文件形态的结构性优势/先发布再迭代）、2个L1模式（参赛留痕五件套/作品打磨闭环）、5项原子行动项，G1-G4质量门全部通过 | [zhihu-ai-science-workshop-entry-retrospective-20261023.md](zhihu-ai-science-workshop-entry-retrospective-20261023.md) |
+| milestone-zhihu-ai-science-workshop-fullchain-20261023 | 知乎 AI 科学创新工坊第二弹全链路收官对账（双作品→双文章→双 Skill→未入库清单） | 2026-10-23 | 🔶 平台达标/仓库待入库 | 七概念R→I→E→V→A→C（standard） | 25条客观事实（14:08基线锁定，并发迁移单列成条）、3条四元组洞察（闭环判定权落在勾选框而非工作区状态/门自声明与门检对象无校验回路/产出物存在≠被纳管）、2个L1模式（收官状态对账+门声明机械校验，各4条反模式+跨域迁移示例）、V四视角8条意见采纳5条（scope限定判据/跨源同形编号拆分/清单字段模板/入库三分类/赛事项优先）、6项原子行动项（A-2/A-3待批准提交），G1-G4+V门全部通过 | [zhihu-ai-science-workshop-fullchain-retrospective-20261023.md](zhihu-ai-science-workshop-fullchain-retrospective-20261023.md) |
 
 ## 知识沉淀里程碑模式库
 
@@ -104,6 +106,8 @@ veadk-a3-a6-closure-retrospective-20260829
 veadk-python-source-stability-fix-milestone-20260829
 web-content-learning-notes-patterns-20260801
 wsl-vhdx-compact-cmd-retrospective-20261010
+zhihu-ai-science-workshop-entry-retrospective-20261023
+zhihu-ai-science-workshop-fullchain-retrospective-20261023
 ```
 
 > AI生成

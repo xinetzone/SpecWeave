@@ -51,6 +51,7 @@ dual-track-progressive-evolution
 duplication-interest-model
 elastic-workflow-classification
 entropy-law-automation-principle
+evidence-chain-engineering
 exemption-mechanism-legalization
 explainer-self-violation-effect
 fail-loud-over-silent-fallback
@@ -76,7 +77,6 @@ knowledge-crystallization-second-validation-sop
 knowledge-dual-layer-architecture
 knowledge-lifecycle-extract-archive-delete
 knowledge-to-command-pipeline
-layered-chained-spec
 layered-priority-dimension-reduction
 layered-repair-verification
 learn-validate-adopt
@@ -119,7 +119,7 @@ python-stdlib-systematic-optimization-four-steps
 quality-asset-accumulation-loop
 quality-assurance-three-layer-model
 reference-as-trigger
-responsibility-transfer-governance
+release-eligibility-invariant-gate
 risk-transfer-unintended-consequences
 role-minimization-principle
 root-cause-diagnosis
@@ -139,12 +139,14 @@ seven-concepts-retrospective-report
 seven-concepts-trigger-decision-tree
 short-command-patterns
 simple-task-high-risk
+single-authority-declaration-alignment
 snapshot-parity-migration
 skill-migration-position-governance
 spec-discoverability-guarantee
 spec-level-defense-in-depth
 spec-reference-validation
 spec-triple-sync
+stop-loss-backward-scheduling
 strong-constraint-self-check
 structure-first-extension
 style-anchoring-consistency
@@ -159,7 +161,6 @@ template-cross-platform-validation
 template-placeholder-granularity-design
 test-coverage-diminishing-returns
 three-as-relation-position
-three-layer-repair-closure
 three-layer-rule-enforcement
 three-layer-spec-constraint
 three-level-problem-solving

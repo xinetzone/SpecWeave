@@ -1,0 +1,8 @@
+{
+  "name": "aiworks-event-tracking-build",
+  "private": true,
+  "scripts": {
+    "build:track": "node _tmp/materialize-event-tracking-ticket.cjs"
+  },
+  "aiworksEventTrackingBuild": 1
+}

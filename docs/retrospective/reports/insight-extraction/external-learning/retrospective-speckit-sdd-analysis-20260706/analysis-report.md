@@ -9,7 +9,7 @@ analyzer: "SpecWeave Insight Agent"
 analysis_type: "外部方法论工具研究 / 同构体系对照"
 verification_method: "SpecWeave 三件套对照 + 多源交叉（推文+仓库+官方博客+Reddit）"
 seven_concepts_output: "../../../../2026-07-06-github-speckit-sdd-seven-concepts.md"
-extracted_pattern: "../../../../patterns/methodology-patterns/governance-strategy/layered-chained-spec.md"
+extracted_pattern: "../../../../patterns/methodology-patterns/concepts/layered-chained-spec.md"
 status: "archived"
 ---
 # GitHub Spec Kit 与规格驱动开发文章深度洞察分析报告
@@ -18,7 +18,7 @@ status: "archived"
 >
 > **七概念方法论编排产出**：[2026-07-06-github-speckit-sdd-seven-concepts.md](../../../2026-07-06-github-speckit-sdd-seven-concepts.md)
 >
-> **萃取可复用模式**：[分层链式规格](../../../../patterns/methodology-patterns/governance-strategy/layered-chained-spec.md)
+> **萃取可复用模式**：[分层链式规格](../../../../patterns/methodology-patterns/concepts/layered-chained-spec.md)
 
 ---
 
@@ -540,7 +540,7 @@ GitHub Spec Kit 是一个**把规格驱动开发（SDD）封装为六命令链�
 | 产出物 | 路径 |
 |--------|------|
 | 七概念复盘报告 | [2026-07-06-github-speckit-sdd-seven-concepts.md](../../../2026-07-06-github-speckit-sdd-seven-concepts.md) |
-| 萃取模式：分层链式规格 | [layered-chained-spec.md](../../../../patterns/methodology-patterns/governance-strategy/layered-chained-spec.md) |
+| 萃取模式：分层链式规格 | [layered-chained-spec.md](../../../../patterns/methodology-patterns/concepts/layered-chained-spec.md) |
 
 ### B. SpecWeave 对照文档（已读取）
 

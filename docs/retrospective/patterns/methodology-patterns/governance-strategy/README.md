@@ -28,6 +28,7 @@ date: "2026-07-09"
 | [两栖定位模型（Amphibious Positioning Model）](./amphibious-positioning-model.md) | 两栖定位模型（Amphibious Positioning Model） | L1 |  |
 | [命令别名重生法（AppX 别名重生术）](./appx-alias-rebirth.md) | 命令别名重生法（AppX 别名重生术） | L1 | `应用执行别名` `Appx` `Windows Terminal` |
 | [信息架构优先于算法补全：结构决定连接](./architecture-over-algorithm.md) | 系统的连接性由结构决定而非算法补全：大量孤立节点的根因通常是信息架构缺陷（无分层分类、无导航路径、未定义语义关系），而非算法不足。好的架构天然消除80%以上孤立问题，算法只应处理剩余边缘案例。决策框架：孤立率>50%先做架构，<20%可用算法补全。正反验证：best-practices（0孤立，无算法）vs adversarial-review（67孤立，有配置）。 | L1 | `信息架构` `推荐算法` `知识图谱` |
+| [同源产物形态坍缩法](./artifact-form-collapse.md) | 同源产物形态坍缩法 | L1-draft | `产物治理` `多形态冗余` `再生依赖图` |
 | [资产复用最后一公里：配套集成指南](./asset-reuse-last-mile-integration-guide.md) | 资产复用最后一公里：配套集成指南 | L1-实验性 | `asset-reuse` `integration-guide` `last-mile` |
 | [自动化统计三防线模式：路径校验→环比告警→人工复盘](./automated-stats-three-defense-lines.md) | 自动化统计三防线模式：路径校验→环比告警→人工复盘 | L1 |  |
 | [可得性启发结构性防范模式（Availability Heuristic Structural Guard）](./availability-heuristic-structural-guard.md) | 可得性启发结构性防范模式（Availability Heuristic Structural Guard） | L1 |  |
@@ -68,6 +69,7 @@ date: "2026-07-09"
 | [重复代码利息模型：复制一时爽，维护火葬场](./duplication-interest-model.md) | 重复代码有利息成本：复制时节省几秒钟本金，但每次修改需同步改所有副本付利息，遗漏副本导致bug付违约金。维护成本与需要同步修改的位置数量成正比。决策矩阵：重复2次+逻辑可能变→应该提取；重复≥3次→必须提取。 | L1 | `重复代码` `DRY` `技术债务` |
 | [弹性流程分级：按变更风险选择流程路径](./elastic-workflow-classification.md) | 弹性流程分级：按变更风险选择流程路径 | L2 |  |
 | [熵增定律自动化第一性原理（Entropy Law: Automation Against Chaos）](./entropy-law-automation-principle.md) | 熵增定律自动化第一性原理（Entropy Law: Automation Against Chaos） | L2 | `第一性原理` `熵增定律` `自动化` |
+| [证据链工程化（过程约束 → 可审计证据资产）](./evidence-chain-engineering.md) | 证据链工程化（过程约束 → 可审计证据资产） | L1 | `证据链` `合规审计` `过程留痕` |
 | [豁免机制合法化](./exemption-mechanism-legalization.md) | 豁免机制合法化 | L2 | `exemption` `governance` `legalization` |
 | [讲解自犯效应（Explainer Self-Violation Effect）](./explainer-self-violation-effect.md) | 讲解自犯效应（Explainer Self-Violation Effect） | L2 | `元认知` `认知偏差` `讲解自犯` |
 | [显式报错优于静默降级：自动化系统故障显性化原则](./fail-loud-over-silent-fallback.md) | 显式报错优于静默降级：自动化系统故障显性化原则 | L2 | `显式报错` `静默降级` `故障显性化` |
@@ -81,6 +83,7 @@ date: "2026-07-09"
 | [四维留余框架：不确定环境下长期存续的冗余管理策略](./four-dimension-margin-framework.md) | 四维留余框架：不确定环境下长期存续的冗余管理策略 | L2 | `风险管理` `冗余` `决策` |
 | [外部依赖四不原则](./four-negatives-external-dependency.md) | 外部依赖四不原则 | L3 | `governance` `external-dependency` `vendor` |
 | [第一性原理多维证伪验收法](./fp-multi-dimensional-falsification.md) | 第一性原理多维证伪验收法 | L1 |  |
+| [治理×引擎双件闭环](./governance-engine-dual-loop.md) | 治理×引擎双件闭环 | L1.5 | `治理×引擎` `双件闭环` `自进化` |
 | [治理基建四层递进模型](./governance-four-layer-progressive.md) | 治理基建四层递进模型 | L2 |  |
 | [治理演化三阶段：修复→预防→闭环](./governance-three-stage-evolution.md) | 治理演化三阶段：修复→预防→闭环 | L2 | `meta-methodology` `governance` `quality` |
 | [治理层级优先级排序法（Governance Tier Priority）](./governance-tier-priority.md) | 治理层级优先级排序法（Governance Tier Priority） | L1 |  |
@@ -93,7 +96,6 @@ date: "2026-07-09"
 | [知识沉淀「中间产物→质量门→最终产出」双层架构模式](./knowledge-dual-layer-architecture.md) | 知识沉淀「中间产物→质量门→最终产出」双层架构模式 | L1 |  |
 | [知识资产「萃取→归档→删除」生命周期闭环模式](./knowledge-lifecycle-extract-archive-delete.md) | 知识资产「萃取→归档→删除」生命周期闭环模式 | L1-draft | `methodology` `knowledge-management` `lifecycle` |
 | [知识库→指令集转化管道（Knowledge-to-Command Pipeline）](./knowledge-to-command-pipeline.md) | 知识库→指令集转化管道（Knowledge-to-Command Pipeline） | L1 | `knowledge-base` `command-set` `methodology-adoption` |
-| [分层链式规格：AI 编程工作流的阶段分离与链式传递](./layered-chained-spec.md) | 分层链式规格：AI 编程工作流的阶段分离与链式传递 | L1.5 | `sdd` `spec-driven-development` `ai-programming` |
 | [分层分级降维模式（Layered Priority Dimension Reduction）](./layered-priority-dimension-reduction.md) | 分层分级降维模式（Layered Priority Dimension Reduction） | L1 | `分层架构` `优先级分级` `复杂系统` |
 | [分层修复验证法（Layered Repair Verification）](./layered-repair-verification.md) | 分层修复验证法（Layered Repair Verification） | L1 | `分层修复` `验证闭环` `分层错误屏蔽` |
 | [Learn-Validate-Adopt：外部标准采用三步法](./learn-validate-adopt.md) | Learn-Validate-Adopt：外部标准采用三步法 | L1 |  |
@@ -136,7 +138,7 @@ date: "2026-07-09"
 | [质量资产沉淀闭环模式（Quality Asset Accumulation Loop）](./quality-asset-accumulation-loop.md) | 质量资产沉淀闭环模式（Quality Asset Accumulation Loop） | L1 | `资产沉淀` `质量闭环` `知识积累` |
 | [质量保证三层分工模型（Quality Assurance Three-Layer Model）](./quality-assurance-three-layer-model.md) | 质量保证三层分工模型（Quality Assurance Three-Layer Model） | L2 | `质量保证` `三层分工` `自动化` |
 | [引用即触发（Reference-as-Trigger）协作模式](./reference-as-trigger.md) | 引用即触发（Reference-as-Trigger）协作模式 | L2 |  |
-| [责任转移治理模式](./responsibility-transfer-governance.md) | 责任转移治理模式 | L2-validated | `governance` `organizational-design` `responsibility-transfer` |
+| [发布资格不变量与发布路径对账](./release-eligibility-invariant-gate.md) | 发布资格不变量与发布路径对账 | L1 |  |
 | [风险转移非意图后果模型](./risk-transfer-unintended-consequences.md) | 风险转移非意图后果模型 | L1 | `风险管理` `供应链` `决策陷阱` |
 | [角色最小化原则（RACI扩展优先于角色新增）](./role-minimization-principle.md) | 角色最小化原则（RACI扩展优先于角色新增） | L1 |  |
 | [根因诊断模式](./root-cause-diagnosis.md) | 根因诊断模式 | L2 |  |
@@ -156,12 +158,14 @@ date: "2026-07-09"
 | [共享索引计数耦合与同批判决](./shared-index-count-coupling.md) | 共享索引计数耦合与同批判决 | L2 | `shared-index` `count-coupling` `atomic-commit` |
 | [短指令模式](./short-command-patterns.md) | 短指令模式 | L2 |  |
 | [简单任务高风险定律（Simple Task High-Risk Law）](./simple-task-high-risk.md) | 简单任务高风险定律（Simple Task High-Risk Law） | L2 | `简单任务陷阱` `认知偏差` `System1接管` |
+| [单一权威源与多载体声明面对齐](./single-authority-declaration-alignment.md) | 单一权威源与多载体声明面对齐 | L1 |  |
 | [Skill迁移位置治理：统一Skill存放位置的五步标准化流程](./skill-migration-position-governance.md) | Skill迁移位置治理：统一Skill存放位置的五步标准化流程 | - |  |
 | [快照对拍迁移法](./snapshot-parity-migration.md) | 快照对拍迁移法 | L1 |  |
 | [规范可发现性保障模式（Spec Discoverability Guarantee）](./spec-discoverability-guarantee.md) | 规范可发现性保障模式（Spec Discoverability Guarantee） | L1 |  |
 | [规范层纵深防御模型：安全设计前置](./spec-level-defense-in-depth.md) | 规范层纵深防御模型：安全设计前置 | L2 |  |
 | [Spec引用验证通用原则（Specification Reference Validation Pattern）](./spec-reference-validation.md) | Spec引用验证通用原则（Specification Reference Validation Pattern） | L2 |  |
 | [规范三同步原则：新规范落地必须完成的三个同步动作](./spec-triple-sync.md) | 新规范发布后必须立即完成三个同步动作：①顶层开发规范引用 ②导航入口更新 ③存量迁移示范，三个动作缺一不可，解决"规范悬空"问题——规范写了但没人看、看到了不会用、想用但没示例 | L2 | `规范落地` `治理策略` `文档索引` |
+| [止损前置倒排（硬截止 + 不可控依赖 → 计划内止损）](./stop-loss-backward-scheduling.md) | 止损前置倒排（硬截止 + 不可控依赖 → 计划内止损） | L1 | `止损` `倒排计划` `硬截止` |
 | [强约束语言自检启发式](./strong-constraint-self-check.md) | 强约束语言自检启发式 | L1 |  |
 | [结构阅读先行（Structure-First Extension）](./structure-first-extension.md) | 结构阅读先行（Structure-First Extension） | L3 |  |
 | [风格锚定一致性保证法](./style-anchoring-consistency.md) | 风格锚定一致性保证法 | L1 |  |
@@ -176,7 +180,6 @@ date: "2026-07-09"
 | [模板占位符的粒度设计原则](./template-placeholder-granularity-design.md) | 模板占位符的粒度设计原则 | L2 |  |
 | [测试覆盖率边际收益递减拐点](./test-coverage-diminishing-returns.md) | 测试覆盖率边际收益递减拐点 | L1 |  |
 | [三之位：二元僵持的关系位破解法](./three-as-relation-position.md) | 三之位：二元僵持的关系位破解法 | L2 | `三之位` `关系位` `二元对立` |
-| [三层修复闭环](./three-layer-repair-closure.md) | 三层修复闭环 | L1-draft | `troubleshooting` `root-cause` `auto-heal` |
 | [规则落地三层模型：定义+痕迹+验证](./three-layer-rule-enforcement.md) | 规则落地三层模型：定义+痕迹+验证 | L2 |  |
 | [规范约束三层次模型（Three-Layer Spec Constraint Model）](./three-layer-spec-constraint.md) | 规范约束三层次模型（Three-Layer Spec Constraint Model） | L2 |  |
 | [问题解决三层跃迁范式（Three-Level Problem Solving Paradigm）](./three-level-problem-solving.md) | 问题解决三层跃迁范式（Three-Level Problem Solving Paradigm） | L1 |  |
@@ -211,4 +214,4 @@ date: "2026-07-09"
 
 ---
 
-<!-- generated by generate-readme.py on 2026-10-20 -->
+<!-- generated by generate-readme.py on 2026-10-23 -->

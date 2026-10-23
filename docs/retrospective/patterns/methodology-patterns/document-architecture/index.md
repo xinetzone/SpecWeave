@@ -52,7 +52,6 @@ source-document-downgrade
 spec-narrative-separation
 sunlogin-hardware-wiki-structure
 synthetic-stats-source-of-truth
-tech-article-to-wiki-batch-generation
 tech-wiki-four-layer-need-structure
 trust-first-content-funnel
 tutorial-cognitive-ladder

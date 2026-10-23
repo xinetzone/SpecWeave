@@ -52,7 +52,7 @@ archived: "2026-08-05"
 - 核心做法：6步（定义阶段序列→结构化Markdown产出→显式链式引用→全局约束层→阶段硬隔离→顺序强制机制）
 - 反模式：5个（共享单一context/阶段边界模糊/无守卫拦截/legacy偏差未处理/长上下文时代仍坚持分段）
 - 跨场景迁移：DevOps CI/CD、学术研究流程
-- 模式文档：[layered-chained-spec.md](../../../../patterns/methodology-patterns/governance-strategy/layered-chained-spec.md)
+- 模式文档：[layered-chained-spec.md](../../../../patterns/methodology-patterns/concepts/layered-chained-spec.md)
 
 ## 本目录文件索引
 
@@ -66,7 +66,7 @@ archived: "2026-08-05"
 | 产出物 | 路径 |
 |--------|------|
 | 七概念方法论编排复盘报告 | [2026-07-06-github-speckit-sdd-seven-concepts.md](../../../2026-07-06-github-speckit-sdd-seven-concepts.md) |
-| 萃取模式：分层链式规格 | [layered-chained-spec.md](../../../../patterns/methodology-patterns/governance-strategy/layered-chained-spec.md) |
+| 萃取模式：分层链式规格 | [layered-chained-spec.md](../../../../patterns/methodology-patterns/concepts/layered-chained-spec.md) |
 | 原始Spec工作区（仅保留规划过程文件） | `.trae/specs/retrospectives-insights/analyze-github-speckit-article/`（spec.md/tasks.md/checklist.md） |
 
 ## 归档说明
@@ -76,5 +76,5 @@ archived: "2026-08-05"
 - ❌ 原位置：`.trae/specs/retrospectives-insights/analyze-github-speckit-article/`（过程工作区，不应存放最终产出）
 - ✅ 分析报告归档：本目录（`.agents/docs/retrospective/reports/insight-extraction/external-learning/`）
 - ✅ 七概念复盘归档：`.agents/docs/retrospective/2026-07-06-github-speckit-sdd-seven-concepts.md`
-- ✅ 模式入库：`.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/layered-chained-spec.md`
+- ✅ 模式入库：`docs/retrospective/patterns/methodology-patterns/concepts/layered-chained-spec.md`
 - ✅ specs工作区：仅保留 spec.md、tasks.md、checklist.md 三个规划过程文件

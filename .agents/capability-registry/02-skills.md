@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（8个）
+### 完整Skill（9个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -19,6 +19,8 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | classical-festival-video | "祝福视频"、"节日贺卡视频"、"给 TA 做个视频"、"用老子/庄子/诗词做底本"、"中秋/春节/元宵祝福" | 1（三关键帧→10s竖版→随片文案+考据弹药；含情感分寸矩阵、画面禁字约束、预览确认门、物理量验收） | v1.0.0 | [skills/classical-festival-video/SKILL.md](../skills/classical-festival-video/SKILL.md) |
 | meoo-skill-publish | "上传技能"、"发布技能到 Meoo/技能市场"、"更新技能版本"、"技能市场上架"、"meoo.com/skills 发布" | 1（P1 package 自包含根级 ZIP 与零包外引用扫描 → P2 登录态页内 POST /api/v1/skills/publish，带 skill_id 即版本更新 → P3 download 回流逐文件 SHA256 verify；含 127.0.0.1 relay 中继；L1） | v1.0.0 | [skills/meoo-skill-publish/SKILL.md](../skills/meoo-skill-publish/SKILL.md) |
 | skill-mirror-archive | "归档技能"、"技能镜像入库"、"平台技能导入"、"镜像归档"、"外部技能入库"、"把 XX 技能归档到 .agents/skills" | 1（sovereign-rollout 四阶段治理门 + Copy 保真/哈希核验 + source 溯源泛化 + 登记面双轨裁剪 + 原子提交；L1） | v1.0.0 | [skills/skill-mirror-archive/SKILL.md](../skills/skill-mirror-archive/SKILL.md) |
+| aiworks-deploy-cmd | "上传源码"、"一键部署"、"代部署"、"部署失败"、"错误码 8"、"部署包校验失败"、"frontend.deploy.json"、"AI Works"、"科学季投稿"、"deploy-helper"、"把作品发布到知乎"、"静态作品上线" | 1（官方 deploy-helper 五步链：inspect→描述符→validate（先 --plan-only）→settle→archive→浏览器上传→构建观察→审核声明→发布→复核；含 React 表单 bug 与 Draft.js 富文本两大 Gotchas 族；L2） | v1.0.0 | [skills/aiworks-deploy-cmd/SKILL.md](../skills/aiworks-deploy-cmd/SKILL.md) |
+| zhihu-article-publish-cmd | "写文章"、"发布文章"、"知乎专栏"、"zhuanlan"、"填知乎编辑器"、"插入配图"、"话题没加上"、"补话题"、"创作声明"、"发布设置"、"更新文章"、"已发布文章修改" | 1（Draft.js 唯一持久化输入通道：CDP Input.insertText，bu.type/execCommand/剪贴板均不可用；图片插入四步法：file input id 注入→upload_file→上传状态确认→JS 点击「插入图片」；话题候选四步选择法：JS 文本精确点击+标签行 DOM 验证；发布后文章页回读验证；含 10.1-10.3 Gotchas 族；L2） | v1.0.0 | [skills/zhihu-article-publish-cmd/SKILL.md](../skills/zhihu-article-publish-cmd/SKILL.md) |
 
 ### 工作流门面（6个）
 

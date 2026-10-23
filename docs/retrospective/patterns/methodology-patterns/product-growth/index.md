@@ -25,12 +25,9 @@ hardware-generic-interface-service-differentiation
 hardware-minimal-software-complex
 hardware-price-scenario-matrix
 hidden-prize-channel-identification
-integration-over-invention
 interaction-value-directionality
 local-capability-guarantee
-lowering-barriers-creates-markets
 multi-touchpoint-aida-conversion
-offline-first-architecture
 pain-point-first-entry
 parameter-difference-quantification
 positioning-drift-correction

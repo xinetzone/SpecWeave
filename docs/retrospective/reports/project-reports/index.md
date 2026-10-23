@@ -11,6 +11,7 @@ retrospective-first-principles-knowledge-system-20260710/index
 retrospective-jupyter-ssh-base-20260724/index
 retrospective-mdi-project-completion-20260702/index
 retrospective-myst-unified-ecosystem-phase1-20260704/index
+retrospective-mystx-comprehensive-20261022/index
 retrospective-openkylin-evaluation-qgate-20261014/index
 retrospective-scikit-build-core-wiki-20260705/index
 retrospective-seven-concepts-refactor-20260723/index

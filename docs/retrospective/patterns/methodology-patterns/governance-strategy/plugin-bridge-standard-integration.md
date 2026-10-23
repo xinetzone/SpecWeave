@@ -83,5 +83,5 @@ documentation_level: "complete"
 ## 关联资源
 
 - 配套模式：整合优于发明模式（`bp-integration-over-invention`，关联模式暂缺，待补链）——本模式是其"Agent 平台扩展"领域的细化
-- 分层链式规格模式：[分层链式规格模式](layered-chained-spec.md)
+- 分层链式规格模式：[分层链式规格模式](../concepts/layered-chained-spec.md)
 - 里程碑复盘报告：retrospective-hermes-specweave-integration-20260812（关联报告暂缺，待补链）

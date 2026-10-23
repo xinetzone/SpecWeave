@@ -7,7 +7,6 @@
 agent-cli-charge-authority-resume
 auto-generate-threshold
 automation-idempotent-four-elements
-batch-docs-to-okf-bundle-conversion
 best-practice-hidden-cost
 capability-matrix
 capability-precondition-pairing

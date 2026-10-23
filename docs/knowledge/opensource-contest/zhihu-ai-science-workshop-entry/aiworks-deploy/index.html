@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script data-aiworks-event-tracking-bridge="1" data-aiworks-event-tracking-sha256="sha256-EoPGuFoq/s3r6h+3VAlMJ15toAPmybAFkhWE58QcZqI=" data-aiworks-event-tracking-ticket="__AIWORKS_EVENT_TRACKING_TICKET__">(()=>{try{const current=document.currentScript,ticket=current&&current.dataset.aiworksEventTrackingTicket,placeholder='__'+'AIWORKS_EVENT_TRACKING_TICKET'+'__';if(!ticket||ticket===placeholder)return;let sent=false;const send=data=>{if(sent)return false;let body;try{body=JSON.stringify({...data,deploy_uuid:ticket})}catch{return false}if(new TextEncoder().encode(body).byteLength>1048576)return false;sent=true;fetch("https://tracking.aiworks.site/api/v1/event_tracking",{method:'POST',headers:{'content-type':'application/json'},body,credentials:'omit',referrerPolicy:'no-referrer',keepalive:true}).catch(()=>{});return true};if(self===top){const pageShow=()=>send({member_id:null,member_hash_id:null,client_id:null,element_type:'Page',log_type:'Show',view_url:location.href,is_iframe_show:0,client_timestamp:Date.now(),p_platform:'desktopweb'});if(document.readyState==='complete')queueMicrotask(pageShow);else addEventListener('load',pageShow,{once:true});return}const allowed=origin=>{try{const url=new URL(origin),host=url.hostname.toLowerCase();return url.protocol==='https:'&&(host==='zhihu.com'||host.endsWith('.zhihu.com'))}catch{return false}};const receive=event=>{if(sent||event.source!==parent||!allowed(event.origin))return;const data=event.data;if(!data||Array.isArray(data)||Object.prototype.toString.call(data)!=='[object Object]')return;if(send(data))removeEventListener('message',receive)};addEventListener('message',receive)}catch{}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>理想气体定律实验室 · PV=nRT 交互模拟器</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f172a'/%3E%3Ccircle cx='10' cy='16' r='4' fill='%233b82f6'/%3E%3Ccircle cx='17' cy='12' r='2.6' fill='%23f59e0b'/%3E%3Ccircle cx='22' cy='19' r='2.2' fill='%2334d399'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#0f172a; --panel:#1e293b; --panel2:#273449; --line:#334155;
+    --text:#e2e8f0; --sub:#94a3b8; --blue:#3b82f6; --blue-d:#2563eb;
+    --orange:#f59e0b; --green:#34d399; --red:#ef4444;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{background:var(--bg); color:var(--text); font-family:"Segoe UI","Microsoft YaHei",system-ui,-apple-system,sans-serif;}
+  .wrap{max-width:1240px; margin:0 auto; padding:14px 14px 28px;}
+  header{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; padding:6px 2px 12px; border-bottom:1px solid var(--line); margin-bottom:14px;}
+  header h1{font-size:20px; font-weight:700; letter-spacing:.5px;}
+  header .formula{font-size:14px; color:var(--blue); font-weight:600;}
+  header .tag{font-size:12px; color:var(--sub);}
+  .btn{background:var(--blue-d); color:#fff; border:0; border-radius:8px; padding:10px 18px; font-size:14px; cursor:pointer; min-height:44px;}
+  .btn:active{background:var(--blue);}
+  .demo{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
+  .demo-btn{background:var(--panel2); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:9px 12px; font-size:13px; cursor:pointer; min-height:40px;}
+  .demo-btn:hover{border-color:var(--blue); color:var(--blue);}
+  .demo-btn.active{background:var(--blue-d); color:#fff; border-color:var(--blue-d);}
+  .demo-btn:disabled{opacity:.45; cursor:not-allowed;}
+  .demo-status{font-size:12.5px; color:var(--green); min-height:18px; margin-top:8px; line-height:1.5;}
+  .demo-legend{font-size:12px; color:var(--sub); line-height:1.6; margin-top:4px;}
+  .layout{display:grid; grid-template-columns:1fr; gap:14px;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px;}
+  .card h2{font-size:14px; color:var(--sub); font-weight:600; margin-bottom:10px; letter-spacing:1px;}
+  /* 控制面板 */
+  .ctl{display:flex; flex-direction:column; gap:16px;}
+  .ctl-row label{display:block; font-size:14px; margin-bottom:4px;}
+  .ctl-row label b{color:var(--text);}
+  .ctl-row .val{float:right; color:var(--orange); font-weight:700; font-variant-numeric:tabular-nums;}
+  input[type=range]{width:100%; height:40px; accent-color:var(--blue); cursor:pointer;}
+  .ctl-note{font-size:12.5px; color:var(--sub); line-height:1.6; background:var(--panel2); border-radius:10px; padding:10px 12px;}
+  /* 容器画布 */
+  .stage{position:relative;}
+  canvas#gas{width:100%; height:340px; display:block; border-radius:10px; background:radial-gradient(ellipse at 50% 0%, #1b2a44 0%, #101c30 70%);}
+  .p-badge{position:absolute; top:10px; left:10px; background:rgba(15,23,42,.82); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:13px; line-height:1.5;}
+  .p-badge b{color:var(--red); font-size:16px; font-variant-numeric:tabular-nums;}
+  /* 读数面板 */
+  .reads{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;}
+  .read{background:var(--panel2); border:1px solid var(--line); border-radius:10px; padding:10px 12px;}
+  .read .k{font-size:12px; color:var(--sub);}
+  .read .v{font-size:18px; font-weight:700; font-variant-numeric:tabular-nums; margin-top:2px;}
+  .read .v small{font-size:12px; color:var(--sub); font-weight:400;}
+  svg#pt, svg#pv{width:100%; height:auto; display:block;}
+  /* 科学说明 */
+  .explain{font-size:13.5px; line-height:1.75; color:var(--text);}
+  .explain .eq{font-size:16px; font-weight:700; color:var(--blue); text-align:center; margin:6px 0 10px;}
+  .explain li{margin:6px 0 6px 18px;}
+  .explain .hint{color:var(--green);}
+  .foot{font-size:12px; color:var(--sub); text-align:center; margin-top:16px; line-height:1.7;}
+  @media (min-width: 900px){
+    .layout{grid-template-columns:290px 1fr 300px;}
+    canvas#gas{height:420px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1>理想气体定律实验室</h1>
+      <div class="tag">PV = nRT 交互模拟器 · 调参数，看分子怎么动</div>
+    </div>
+    <div class="formula">P·V = n·R·T</div>
+    <button class="btn" id="reset" type="button">恢复默认状态</button>
+  </header>
+
+  <div class="layout">
+
+    <!-- 控制面板 -->
+    <section class="card" aria-label="实验参数控制">
+      <h2>实验条件</h2>
+      <div class="ctl">
+        <div class="ctl-row">
+          <label for="t">温度 T <span class="val" id="vT">300 K</span></label>
+          <input type="range" id="t" min="100" max="600" step="10" value="300" aria-label="温度">
+        </div>
+        <div class="ctl-row">
+          <label for="v">体积 V <span class="val" id="vV">5.0 L</span></label>
+          <input type="range" id="v" min="100" max="1000" step="10" value="500" aria-label="体积">
+        </div>
+        <div class="ctl-row">
+          <label for="n">物质的量 n <span class="val" id="vN">2.0 mol</span></label>
+          <input type="range" id="n" min="50" max="500" step="10" value="200" aria-label="物质的量">
+        </div>
+        <div class="ctl-note">
+          拉动任一滑块，容器内的分子运动和右侧读数会实时变化。
+          试着<b>固定 V、n 只调 T</b>，或<b>固定 T、n 只调 V</b>，观察压强怎么变。
+        </div>
+        <div class="demo">
+          <button class="demo-btn" id="demoIsoT" type="button">等温演示（玻意耳）</button>
+          <button class="demo-btn" id="demoIsoV" type="button">等容演示（查理）</button>
+          <button class="demo-btn" id="demoIsoP" type="button">等压演示（盖-吕萨克）</button>
+        </div>
+        <div class="demo-status" id="demoStatus" aria-live="polite"></div>
+        <div class="demo-legend">演示期间滑块自动移动：蓝点=当前态；P–V 图上的青色轨迹=演示走过的状态序列。点「恢复默认状态」可随时中断。</div>
+      </div>
+    </section>
+
+    <!-- 主舞台：气体容器 -->
+    <section class="card stage" aria-label="气体容器动画">
+      <h2>气体容器（粒子动态演示）</h2>
+      <div class="p-badge">压强 <b id="pBig">—</b> kPa</div>
+      <canvas id="gas" width="1000" height="800" aria-label="容器内气体分子运动动画"></canvas>
+    </section>
+
+    <!-- 读数 + 关系曲线 -->
+    <section class="card" aria-label="实时读数与关系曲线">
+      <h2>实时读数</h2>
+      <div class="reads">
+        <div class="read"><div class="k">压强 P（理想气体）</div><div class="v" id="pOut">—</div></div>
+        <div class="read"><div class="k">压强（大气压 atm）</div><div class="v" id="atmOut">—</div></div>
+        <div class="read"><div class="k">分子均方根速率</div><div class="v" id="spdOut">—</div></div>
+        <div class="read"><div class="k">容器内分子数（示意）</div><div class="v" id="nOut">—</div></div>
+      </div>
+      <h2 style="margin-top:12px;">P–T 关系（当前 V、n 下）</h2>
+      <svg id="pt" viewBox="0 0 300 170" role="img" aria-label="压强随温度变化的关系曲线，橙点为当前状态">
+        <line x1="34" y1="8"  x2="34" y2="146" stroke="#475569" stroke-width="1"/>
+        <line x1="34" y1="146" x2="290" y2="146" stroke="#475569" stroke-width="1"/>
+        <line id="ptLine" x1="34" y1="146" x2="290" y2="20" stroke="#3b82f6" stroke-width="2.5"/>
+        <circle id="ptDot" cx="0" cy="0" r="5" fill="#f59e0b"/>
+        <text x="22" y="18" fill="#94a3b8" font-size="11">P</text>
+        <text x="274" y="162" fill="#94a3b8" font-size="11">T</text>
+        <text x="40" y="150" fill="#94a3b8" font-size="10">等容等量直线：T ↑ → P ↑</text>
+      </svg>
+      <h2 style="margin-top:14px;">P–V 关系（当前 T、n 下）</h2>
+      <svg id="pv" viewBox="0 0 300 170" role="img" aria-label="压强随体积变化的反比曲线，橙点为当前状态">
+        <line x1="34" y1="8"  x2="34" y2="146" stroke="#475569" stroke-width="1"/>
+        <line x1="34" y1="146" x2="290" y2="146" stroke="#475569" stroke-width="1"/>
+        <path id="pvCurve" d="M34 146 L290 20" stroke="#34d399" stroke-width="2.5" fill="none"/>
+        <polyline id="pvTrail" stroke="#67e8f9" stroke-width="1.8" stroke-dasharray="4 3" fill="none" style="display:none"/>
+        <circle id="pvDot" cx="0" cy="0" r="5" fill="#f59e0b"/>
+        <text x="22" y="18" fill="#94a3b8" font-size="11">P</text>
+        <text x="268" y="162" fill="#94a3b8" font-size="11">V</text>
+        <text x="40" y="150" fill="#94a3b8" font-size="10">等温等量反比曲线：V ↑ → P ↓</text>
+      </svg>
+    </section>
+
+  </div>
+
+  <!-- 科学说明 -->
+  <section class="card" style="margin-top:14px;" aria-label="科学原理">
+    <h2>科学原理</h2>
+    <div class="explain">
+      <div class="eq">P·V = n·R·T（理想气体状态方程）</div>
+      <ul>
+        <li><b>P</b> 压强（kPa）｜<b>V</b> 体积（L）｜<b>n</b> 物质的量（mol）｜<b>T</b> 热力学温度（K）</li>
+        <li>R = 8.314 J/(mol·K)，本模拟按 P = n·R·T / V 实时计算。</li>
+        <li>温度越高，分子平均动能越大，运动越快——<span class="hint">观察粒子速度随 T 的变化</span>。</li>
+        <li>气体分子频繁撞击容器壁产生压强；温度、分子数密度越高，撞击越剧烈。</li>
+        <li>粒子之间会发生弹性碰撞（动画中可观察）；碰撞不损失总动能，是理想气体模型的分子间相互作用。</li>
+        <li class="hint">试一试：n 不变、V 不变，只把 T 从 300 K 拉到 600 K，压强应近似翻倍。</li>
+        <li class="hint">再看 P–V 图：T、n 不变时只拉体积，压强沿反比曲线下降（玻意耳定律）。</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="foot">
+    知乎 AI 科学创新工坊第二弹 · 「模拟实验室」挑战题参赛作品骨架<br>
+    用豆包 Vibe Coding 生成 · 单文件自包含 · 无外部依赖
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  const R = 8.314;
+  var canvas = document.getElementById("gas");
+  var ctx = canvas.getContext("2d");
+  var cw = canvas.width, ch = canvas.height;
+
+  var sliderT = document.getElementById("t");
+  var sliderV = document.getElementById("v");
+  var sliderN = document.getElementById("n");
+  var vT = document.getElementById("vT");
+  var vV = document.getElementById("vV");
+  var vN = document.getElementById("vN");
+  var pBig = document.getElementById("pBig");
+  var pOut = document.getElementById("pOut");
+  var atmOut = document.getElementById("atmOut");
+  var spdOut = document.getElementById("spdOut");
+  var nOut = document.getElementById("nOut");
+
+  var state = { T: 300, V: 5.0, n: 2.0 };
+
+  var particles = [];
+  var targetCount = 0;
+  var running = true;
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // 容器绘图几何：体积 V ∈ [1,10] L 映射为容器大小（保持比例感）
+  var geom = { l: 0.16*cw, t: 0.14*ch, w: 0.68*cw, h: 0.62*ch };
+
+  function readState(){
+    state.T = parseFloat(sliderT.value);
+    state.V = sliderV.value / 100;           // 100~1000 → 1.0~10.0 L
+    state.n = sliderN.value / 100;           // 0.5~5.0 mol
+    var T = state.T, V = state.V, n = state.n;
+    var P = n * R * T / V;                    // kPa（n·R·T/V：L 与 kPa 单位折算）
+    targetCount = Math.max(8, Math.min(120, Math.round(n * 22)));
+    // 均方根速率：取 M=0.029 kg/mol（空气近似），v=sqrt(3RT/M)
+    var vrms = Math.sqrt(3 * R * T / 0.029);
+    return { T: T, V: V, n: n, P: P, vrms: vrms };
+  }
+
+  function formatV(x){ return (Math.round(x*10)/10) + " L"; }
+
+  function updateUI(d){
+    vT.textContent = d.T + " K";
+    vV.textContent = formatV(d.V);
+    vN.textContent = (Math.round(d.n*10)/10) + " mol";
+    var pStr = Math.round(d.P).toLocaleString("zh-CN");
+    pBig.textContent = pStr;
+    pOut.textContent = pStr + " kPa";
+    atmOut.textContent = (d.P/101.325).toFixed(2) + " atm";
+    spdOut.textContent = Math.round(d.vrms) + " m/s";
+    nOut.textContent = targetCount + " 个";
+    drawCurve(d);
+    drawPV(d);
+  }
+
+  // ---- P-V 关系曲线（当前 T、n 下的等温反比曲线，标注当前点）----
+  function drawPV(d){
+    var curve = document.getElementById("pvCurve");
+    var dot = document.getElementById("pvDot");
+    var x0 = 34, y0 = 146, x1 = 290, y1 = 20;
+    var Vmax = 10, Vmin = 1;
+    var Pmax = d.n * R * d.T;          // V=1 时的压强（曲线最高点）
+    var pts = [];
+    var i, V, P, px, py;
+    for (i = 0; i <= 24; i++){
+      V = Vmin + (Vmax - Vmin) * i / 24;
+      P = d.n * R * d.T / V;
+      px = x0 + (V - Vmin) / (Vmax - Vmin) * (x1 - x0);
+      py = y0 - (P / Pmax) * (y0 - y1);
+      py = Math.max(y1, Math.min(y0, py));
+      pts.push(px.toFixed(1) + "," + py.toFixed(1));
+    }
+    curve.setAttribute("d", "M" + pts.join(" L"));
+    px = x0 + (d.V - Vmin) / (Vmax - Vmin) * (x1 - x0);
+    py = y0 - (d.P / Pmax) * (y0 - y1);
+    py = Math.max(y1, Math.min(y0, py));
+    dot.setAttribute("cx", px);
+    dot.setAttribute("cy", py);
+  }
+
+  // ---- P-T 关系曲线（等 V、等 n 下的线性关系，标注当前点）----
+  function drawCurve(d){
+    var line = document.getElementById("ptLine");
+    var dot = document.getElementById("ptDot");
+    var x0 = 34, y0 = 146, x1 = 290, y1 = 20;
+    var Pmax = 5 * R * 600 / 1.0;   // 图上边界：n=5,V=1,T=600
+    var Pmin = 0.5 * R * 100 / 10;  // 图下边界：n=0.5,V=10,T=100
+    var px = x0 + (d.T - 100) / 500 * (x1 - x0);
+    var py = y0 - (d.P - Pmin) / (Pmax - Pmin) * (y0 - y1);
+    py = Math.max(y1, Math.min(y0, py));
+    dot.setAttribute("cx", px);
+    dot.setAttribute("cy", py);
+  }
+
+  // ---- 粒子系统 ----
+  function ensureParticles(){
+    while (particles.length < targetCount){
+      particles.push(newParticle());
+    }
+    if (particles.length > targetCount){
+      particles.length = targetCount;
+    }
+  }
+
+  function newParticle(){
+    var r = geom.l + Math.random()*geom.w;
+    var b = geom.t + Math.random()*geom.h;
+    return { x: r, y: b, vx: 0, vy: 0, speed: 0, ang: 0 };
+  }
+
+  function setSpeeds(T){
+    // 温度→速率尺度；Rayleigh 采样近似 Maxwell 速度分布（有快有慢，非均匀）
+    var sigma = 0.45 + T/600 * 2.1;
+    particles.forEach(function(p){
+      p.speed = sigma * Math.sqrt(-2 * Math.log(Math.random() + 0.0001));
+      p.ang = Math.random()*Math.PI*2;
+      p.vx = Math.cos(p.ang)*p.speed;
+      p.vy = Math.sin(p.ang)*p.speed;
+    });
+  }
+
+  // 粒子间弹性碰撞（等质量，交换法线方向速度分量），细化分子相互作用表现
+  function collide(){
+    var n = particles.length;
+    var i, j, a, b, dx, dy, d2, d, nx, ny, va, vb, push;
+    for (i = 0; i < n; i++){
+      a = particles[i];
+      for (j = i + 1; j < n; j++){
+        b = particles[j];
+        dx = b.x - a.x; dy = b.y - a.y;
+        d2 = dx*dx + dy*dy;
+        if (d2 < 25 && d2 > 0.0001){
+          d = Math.sqrt(d2);
+          nx = dx/d; ny = dy/d;
+          va = a.vx*nx + a.vy*ny;
+          vb = b.vx*nx + b.vy*ny;
+          if (va > vb){
+            a.vx += (vb - va)*nx; a.vy += (vb - va)*ny;
+            b.vx += (va - vb)*nx; b.vy += (va - vb)*ny;
+            push = (5 - d)/2;
+            a.x -= nx*push; a.y -= ny*push;
+            b.x += nx*push; b.y += ny*push;
+          }
+        }
+      }
+    }
+  }
+
+  function drawFrame(){
+    ctx.clearRect(0,0,cw,ch);
+    // 容器
+    ctx.fillStyle = "rgba(15,23,42,.55)";
+    ctx.fillRect(geom.l, geom.t, geom.w, geom.h);
+    ctx.strokeStyle = "#475569";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(geom.l, geom.t, geom.w, geom.h);
+    // 容器顶角标签
+    ctx.fillStyle = "#64748b";
+    ctx.font = "13px sans-serif";
+    ctx.fillText("V = " + formatV(state.V), geom.l + 8, geom.t - 8);
+
+    var hot = state.T / 600;
+    var baseHue = 210 - hot*35;
+    if (running){ collide(); }
+    particles.forEach(function(p){
+      if (running){
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < geom.l+2){ p.x = geom.l+2; p.vx = Math.abs(p.vx); }
+        if (p.x > geom.l+geom.w-2){ p.x = geom.l+geom.w-2; p.vx = -Math.abs(p.vx); }
+        if (p.y < geom.t+2){ p.y = geom.t+2; p.vy = Math.abs(p.vy); }
+        if (p.y > geom.t+geom.h-2){ p.y = geom.t+geom.h-2; p.vy = -Math.abs(p.vy); }
+      }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 3, 0, Math.PI*2);
+      ctx.fillStyle = "hsl(" + baseHue + ",80%," + (55+hot*25) + "%)";
+      ctx.fill();
+    });
+  }
+
+  function tick(){
+    drawFrame();
+    if (running && !reduceMotion){
+      requestAnimationFrame(tick);
+    } else if (reduceMotion && running){
+      running = false; // 尊重系统减弱动效设置：仅展示当前状态，参数变化时重绘
+    }
+  }
+
+  function refresh(applySpeeds){
+    var d = readState();
+    ensureParticles();
+    if (applySpeeds !== false || particles.length === 0){
+      setSpeeds(d.T);
+    }
+    // 体积变化 → 容器尺寸跟随（V: 1~10 L）
+    var ratio = state.V / 10;
+    geom.l = 0.16*cw + 0.06*cw*ratio;
+    geom.w = 0.68*cw - 0.12*cw*ratio;
+    geom.h = 0.62*ch*(0.75 + 0.25*ratio);
+    particles.forEach(function(p){
+      p.x = Math.max(geom.l+2, Math.min(geom.l+geom.w-2, p.x));
+      p.y = Math.max(geom.t+2, Math.min(geom.t+geom.h-2, p.y));
+    });
+    updateUI(d);
+    drawFrame();
+    if (reduceMotion){ running = true; }
+  }
+
+  // ---- 事件 ----
+  sliderT.addEventListener("input", function(){ refresh(); });
+  sliderV.addEventListener("input", function(){ refresh(); });
+  sliderN.addEventListener("input", function(){ refresh(); });
+  document.getElementById("reset").addEventListener("click", function(){
+    demoStop();
+    sliderT.value = 300; sliderV.value = 500; sliderN.value = 200;
+    refresh(true);
+  });
+
+  // ---- 过程演示 v3：等温（玻意耳）/ 等容（查理）/ 等压（盖-吕萨克）----
+  var demo = { active: false, type: "", timer: null, trail: [] };
+  var demoBtnIsoT = document.getElementById("demoIsoT");
+  var demoBtnIsoV = document.getElementById("demoIsoV");
+  var demoBtnIsoP = document.getElementById("demoIsoP");
+  var demoStatus = document.getElementById("demoStatus");
+  var pvTrail = document.getElementById("pvTrail");
+
+  function demoStop(){
+    if (demo.timer){ clearInterval(demo.timer); demo.timer = null; }
+    demo.active = false;
+    demoBtnIsoT.disabled = false; demoBtnIsoV.disabled = false; demoBtnIsoP.disabled = false;
+  }
+
+  function demoStart(type){
+    if (demo.active){ demoStop(); }
+    var T0 = parseFloat(sliderT.value);
+    var V0 = sliderV.value / 100;
+    if (type === "isothermal" && V0 >= 7.9){
+      demoStatus.textContent = "当前 V 已接近上限（" + V0.toFixed(1) + " L），请先「恢复默认状态」或手动调小 V 再演示等温过程";
+      return;
+    }
+    if (type === "isochoric" && T0 >= 590){
+      demoStatus.textContent = "当前 T 已接近上限（" + T0 + " K），请先「恢复默认状态」或手动调小 T 再演示等容过程";
+      return;
+    }
+    if (type === "isobaric" && T0 >= 490){
+      demoStatus.textContent = "当前 T 已接近上限（" + T0 + " K），请先「恢复默认状态」或手动调小 T 再演示等压过程";
+      return;
+    }
+    demo.active = true;
+    demo.type = type;
+    demo.t0 = T0;
+    demo.v0 = V0;
+    demo.trail = [];
+    pvTrail.style.display = "none";
+    pvTrail.setAttribute("points", "");
+    demoBtnIsoT.disabled = true; demoBtnIsoV.disabled = true; demoBtnIsoP.disabled = true;
+    var msg = "";
+    if (type === "isothermal"){ msg = "等温演示中：保持 T、n 不变，V 增大 → 压强沿反比曲线下降（玻意耳定律）"; }
+    else if (type === "isochoric"){ msg = "等容演示中：保持 V、n 不变，T 升高 → 压强沿直线上升（查理定律）"; }
+    else { msg = "等压演示中：n 不变，T 与 V 同步增大，P = nRT/V 保持恒定（盖-吕萨克定律）"; }
+    demoStatus.textContent = msg;
+    demo.timer = setInterval(demoStep, 110);
+  }
+
+  function demoStep(){
+    var done = false;
+    var T = parseFloat(sliderT.value);
+    if (demo.type === "isothermal"){
+      if (sliderV.value / 100 < 7.9){ sliderV.value = Math.round(((sliderV.value / 100) + 0.1) * 100 / 10) * 10; }
+      else { done = true; }
+    } else if (demo.type === "isochoric"){
+      if (T < 590){ sliderT.value = Math.min(600, T + 10); }
+      else { done = true; }
+    } else { // isobaric：P=nRT/V 恒定 → V = T * (V0/T0)，n 不变
+      if (T < 490){
+        sliderT.value = T + 10;
+        var Vtarget = (T + 10) / demo.t0 * demo.v0;
+        sliderV.value = Math.max(100, Math.round(Vtarget * 100 / 10) * 10);
+      } else { done = true; }
+    }
+    refresh();
+    // 记录 P-V 轨迹点
+    var dot = document.getElementById("pvDot");
+    demo.trail.push(dot.getAttribute("cx") + "," + dot.getAttribute("cy"));
+    pvTrail.setAttribute("points", demo.trail.join(" "));
+    pvTrail.style.display = "";
+    if (done){
+      demoStop();
+      var d = readState();
+      if (demo.type === "isothermal"){ demoStatus.textContent = "演示完成：V 增大后 P 降至 " + Math.round(d.P) + " kPa，状态点沿反比双曲线移动（P·V 乘积不变 ≈ " + Math.round(d.P * d.V) + "）"; }
+      else if (demo.type === "isochoric"){ demoStatus.textContent = "演示完成：T 升至 " + d.T + " K，P 升至 " + Math.round(d.P) + " kPa，状态点沿直线移动（P/T 比值不变）"; }
+      else { demoStatus.textContent = "演示完成：T、V 同步增大，P 保持 " + Math.round(d.P) + " kPa 不变，状态点沿反比曲线斜上移动"; }
+    }
+  }
+
+  // 复位/演示互斥：演示运行时滑块输入被演示驱动，手动改值视为中断
+  [sliderT, sliderV, sliderN].forEach(function(sl){
+    sl.addEventListener("input", function(){ if (demo.active){ demoStop(); demoStatus.textContent = "已中断演示，改用手动调节"; } });
+  });
+
+  demoBtnIsoT.addEventListener("click", function(){ demoStart("isothermal"); });
+  demoBtnIsoV.addEventListener("click", function(){ demoStart("isochoric"); });
+  demoBtnIsoP.addEventListener("click", function(){ demoStart("isobaric"); });
+
+  // ---- 启动 ----
+  refresh(true);
+  tick();
+})();
+</script>
+</body>
+</html>

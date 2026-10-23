@@ -1,0 +1,136 @@
+{
+  "src": "D:\\spaces\\SpecWeave\\work\\zhihu-science-workshop-2026\\index-final.html",
+  "url": "file:///D:/spaces/SpecWeave/work/zhihu-science-workshop-2026/index-final.html",
+  "outdir": "D:\\spaces\\SpecWeave\\work\\zhihu-science-workshop-2026\\_shots",
+  "include": [
+    "lint",
+    "screenshots",
+    "structure"
+  ],
+  "shots": {
+    "desktop": {
+      "screenshot": "D:\\spaces\\SpecWeave\\work\\zhihu-science-workshop-2026\\_shots\\index-final_desktop.jpg",
+      "screenshotBytes": 134671,
+      "truncated": false,
+      "structure": {
+        "title": "记忆实验室",
+        "firstH1": "记忆实验室",
+        "viewport": {
+          "w": 1440,
+          "h": 900
+        },
+        "fullpage": {
+          "w": 1440,
+          "h": 4265
+        },
+        "counts": {
+          "section": 5,
+          "h1": 1,
+          "h2": 5,
+          "img": 0,
+          "canvas": 2,
+          "svg": 0,
+          "links": 1,
+          "buttons": 10
+        }
+      },
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "horizontalOverflow": [],
+      "resourceErrors": [],
+      "reportSource": "cdp"
+    },
+    "mobile": {
+      "slices": [
+        "D:\\spaces\\SpecWeave\\work\\zhihu-science-workshop-2026\\_shots\\index-final_mobile_p1of2.jpg",
+        "D:\\spaces\\SpecWeave\\work\\zhihu-science-workshop-2026\\_shots\\index-final_mobile_p2of2.jpg"
+      ],
+      "sliceHint": "按顺序 Read slices 里的各分片。",
+      "truncated": false,
+      "structure": {
+        "title": "记忆实验室",
+        "firstH1": "记忆实验室",
+        "viewport": {
+          "w": 390,
+          "h": 844
+        },
+        "fullpage": {
+          "w": 390,
+          "h": 4840
+        },
+        "counts": {
+          "section": 5,
+          "h1": 1,
+          "h2": 5,
+          "img": 0,
+          "canvas": 2,
+          "svg": 0,
+          "links": 1,
+          "buttons": 10
+        }
+      },
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "horizontalOverflow": [],
+      "resourceErrors": [],
+      "reportSource": "cdp"
+    }
+  },
+  "engine": "chrome_cli",
+  "chromiumExec": "C:\\Users\\xinzo/AppData/Local/ms-playwright\\chromium_headless_shell-1248\\chrome-headless-shell-win64\\chrome-headless-shell.exe",
+  "engineDegraded": true,
+  "engineDegradedReason": "playwright 未装",
+  "elapsedSec": 6.84,
+  "schemaVersion": 2,
+  "status": "pass",
+  "engineInfo": {
+    "name": "chrome_cli",
+    "degraded": true,
+    "degradedReasons": [
+      "playwright 未装"
+    ]
+  },
+  "input": {
+    "original": "D:\\spaces\\SpecWeave\\work\\zhihu-science-workshop-2026\\index-final.html",
+    "resolvedPath": "D:\\spaces\\SpecWeave\\work\\zhihu-science-workshop-2026\\index-final.html",
+    "baseUrl": "file:///D:/spaces/SpecWeave/work/zhihu-science-workshop-2026/index-final.html",
+    "protocol": "file",
+    "cwd": "D:\\spaces\\SpecWeave",
+    "mediaMode": {
+      "reducedMotion": true
+    }
+  },
+  "artifacts": {
+    "screenshots": [
+      {
+        "viewport": "desktop",
+        "path": "D:\\spaces\\SpecWeave\\work\\zhihu-science-workshop-2026\\_shots\\index-final_desktop.jpg",
+        "size": 134671,
+        "visualCoverage": {
+          "complete": true,
+          "reason": null
+        }
+      },
+      {
+        "viewport": "mobile",
+        "tiles": [
+          "D:\\spaces\\SpecWeave\\work\\zhihu-science-workshop-2026\\_shots\\index-final_mobile_p1of2.jpg",
+          "D:\\spaces\\SpecWeave\\work\\zhihu-science-workshop-2026\\_shots\\index-final_mobile_p2of2.jpg"
+        ],
+        "visualCoverage": {
+          "complete": true,
+          "reason": null
+        }
+      }
+    ]
+  },
+  "summary": {
+    "blocker": 0,
+    "error": 0,
+    "warning": 0,
+    "info": 0
+  },
+  "findings": [],
+  "prioritizedActions": [],
+  "reportPath": "D:\\spaces\\SpecWeave\\work\\zhihu-science-workshop-2026\\_shots\\report.json"
+}
