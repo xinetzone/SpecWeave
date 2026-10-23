@@ -1,0 +1,131 @@
+{
+  "src": "D:\\spaces\\SpecWeave\\docs\\knowledge\\opensource-contest\\zhihu-ai-science-workshop-entry\\理想气体定律实验室.html",
+  "url": "file:///D:/spaces/SpecWeave/docs/knowledge/opensource-contest/zhihu-ai-science-workshop-entry/%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E5%AE%9A%E5%BE%8B%E5%AE%9E%E9%AA%8C%E5%AE%A4.html",
+  "outdir": "D:\\spaces\\SpecWeave\\docs\\knowledge\\opensource-contest\\zhihu-ai-science-workshop-entry\\_shots",
+  "include": [
+    "lint",
+    "screenshots",
+    "structure"
+  ],
+  "shots": {
+    "desktop": {
+      "screenshot": "D:\\spaces\\SpecWeave\\docs\\knowledge\\opensource-contest\\zhihu-ai-science-workshop-entry\\_shots\\理想气体定律实验室_desktop.jpg",
+      "screenshotBytes": 65969,
+      "truncated": false,
+      "structure": {
+        "title": "理想气体定律实验室 · PV=nRT 交互模拟器",
+        "firstH1": "理想气体定律实验室",
+        "viewport": {
+          "w": 1440,
+          "h": 900
+        },
+        "fullpage": {
+          "w": 1440,
+          "h": 1186
+        },
+        "counts": {
+          "section": 4,
+          "h1": 1,
+          "h2": 6,
+          "img": 0,
+          "canvas": 1,
+          "svg": 2,
+          "links": 0,
+          "buttons": 4
+        }
+      },
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "horizontalOverflow": [],
+      "resourceErrors": [],
+      "reportSource": "cdp"
+    },
+    "mobile": {
+      "screenshot": "D:\\spaces\\SpecWeave\\docs\\knowledge\\opensource-contest\\zhihu-ai-science-workshop-entry\\_shots\\理想气体定律实验室_mobile.jpg",
+      "screenshotBytes": 107524,
+      "truncated": false,
+      "structure": {
+        "title": "理想气体定律实验室 · PV=nRT 交互模拟器",
+        "firstH1": "理想气体定律实验室",
+        "viewport": {
+          "w": 390,
+          "h": 844
+        },
+        "fullpage": {
+          "w": 390,
+          "h": 2397
+        },
+        "counts": {
+          "section": 4,
+          "h1": 1,
+          "h2": 6,
+          "img": 0,
+          "canvas": 1,
+          "svg": 2,
+          "links": 0,
+          "buttons": 4
+        }
+      },
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "horizontalOverflow": [],
+      "resourceErrors": [],
+      "reportSource": "cdp"
+    }
+  },
+  "engine": "chrome_cli",
+  "chromiumExec": "C:\\Users\\xinzo/AppData/Local/ms-playwright\\chromium_headless_shell-1248\\chrome-headless-shell-win64\\chrome-headless-shell.exe",
+  "engineDegraded": true,
+  "engineDegradedReason": "playwright 未装",
+  "elapsedSec": 6.71,
+  "schemaVersion": 2,
+  "status": "pass",
+  "engineInfo": {
+    "name": "chrome_cli",
+    "degraded": true,
+    "degradedReasons": [
+      "playwright 未装"
+    ]
+  },
+  "input": {
+    "original": "D:\\spaces\\SpecWeave\\docs\\knowledge\\opensource-contest\\zhihu-ai-science-workshop-entry\\理想气体定律实验室.html",
+    "resolvedPath": "D:\\spaces\\SpecWeave\\docs\\knowledge\\opensource-contest\\zhihu-ai-science-workshop-entry\\理想气体定律实验室.html",
+    "baseUrl": "file:///D:/spaces/SpecWeave/docs/knowledge/opensource-contest/zhihu-ai-science-workshop-entry/%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E5%AE%9A%E5%BE%8B%E5%AE%9E%E9%AA%8C%E5%AE%A4.html",
+    "protocol": "file",
+    "cwd": "D:\\spaces\\SpecWeave",
+    "mediaMode": {
+      "reducedMotion": true
+    }
+  },
+  "artifacts": {
+    "screenshots": [
+      {
+        "viewport": "desktop",
+        "path": "D:\\spaces\\SpecWeave\\docs\\knowledge\\opensource-contest\\zhihu-ai-science-workshop-entry\\_shots\\理想气体定律实验室_desktop.jpg",
+        "size": 65969,
+        "visualCoverage": {
+          "complete": true,
+          "reason": null
+        }
+      },
+      {
+        "viewport": "mobile",
+        "path": "D:\\spaces\\SpecWeave\\docs\\knowledge\\opensource-contest\\zhihu-ai-science-workshop-entry\\_shots\\理想气体定律实验室_mobile.jpg",
+        "size": 107524,
+        "visualCoverage": {
+          "complete": true,
+          "reason": null
+        }
+      }
+    ]
+  },
+  "summary": {
+    "blocker": 0,
+    "error": 0,
+    "warning": 0,
+    "info": 0
+  },
+  "findings": [],
+  "prioritizedActions": [],
+  "reportPath": "D:\\spaces\\SpecWeave\\docs\\knowledge\\opensource-contest\\zhihu-ai-science-workshop-entry\\_shots\\report.json"
+}
