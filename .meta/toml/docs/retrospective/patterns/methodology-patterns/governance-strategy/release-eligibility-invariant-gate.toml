@@ -1,0 +1,13 @@
+id = "release-eligibility-invariant-gate"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/patterns/methodology-patterns/governance-strategy/release-eligibility-invariant-gate.md"
+
+[bindings]
+rules = []
+references = ["ledger-stock-consistency-audit", "cross-platform-gate-authority", "quality-assurance-three-layer-model", "three-layer-rule-enforcement", "shared-index-count-coupling"]
+skills = []

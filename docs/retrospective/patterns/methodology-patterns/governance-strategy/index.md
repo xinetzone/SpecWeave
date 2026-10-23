@@ -119,6 +119,7 @@ python-stdlib-systematic-optimization-four-steps
 quality-asset-accumulation-loop
 quality-assurance-three-layer-model
 reference-as-trigger
+release-eligibility-invariant-gate
 responsibility-transfer-governance
 risk-transfer-unintended-consequences
 role-minimization-principle
@@ -139,6 +140,7 @@ seven-concepts-retrospective-report
 seven-concepts-trigger-decision-tree
 short-command-patterns
 simple-task-high-risk
+single-authority-declaration-alignment
 snapshot-parity-migration
 skill-migration-position-governance
 spec-discoverability-guarantee

@@ -2,17 +2,17 @@
 
 基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为8个主题类别，便于按场景快速定位相关模式。
 
-> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md与子目录），由 `generate-categories.py` 自动重建，最后更新：2026-10-20。
+> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md与子目录），由 `generate-categories.py` 自动重建，最后更新：2026-10-22。
 
 ## 分类索引
 
 | 主题目录 | 中文名称 | 模式数量 | 核心关注点 |
 |---------|---------|---------|-----------|
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 38 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
-| [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 43 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor/跨领域知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、语义漂移防御、知识系统五维根基、B2B AI产品定位、外部产品学习模板 |
+| [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 45 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor/跨领域知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、语义漂移防御、知识系统五维根基、B2B AI产品定位、外部产品学习模板 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 54 | 文档体系重构、原子化拆分、文档治理、结构设计 |
-| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 58 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 169 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
+| [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 59 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 173 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 87 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 11 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 52 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化、垂直场景AI三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA转化 |
@@ -90,6 +90,7 @@
 | [cross-domain-semantic-drift.md](research-knowledge/cross-domain-semantic-drift.md) | 跨领域语义漂移防御：Spec阶段概念扫描→歧义术语显式标注→术语表单一事实源，解决跨领域知识整合中"同一术语不同含义"的隐性陷阱，防御可降低15%+返工 | L2 |
 | [cross-framework-atomic-analysis.md](research-knowledge/cross-framework-atomic-analysis.md) | 跨框架原子化设计分析模式 | L1-draft |
 | [cross-vendor-knowledge-fusion.md](research-knowledge/cross-vendor-knowledge-fusion.md) | 跨Vendor知识融合三步法：理解Vendor→认知自我→优势互补融合，避免"全盘照搬"和"NIH综合征"两个极端，融合后1+1>2 | - |
+| [decomposable-recognition-ladder.md](research-knowledge/decomposable-recognition-ladder.md) | 可分离承认阶梯法（Decomposable Recognition Ladder） | L1 |
 | [dual-layer-analysis-report.md](research-knowledge/dual-layer-analysis-report.md) | 双层分析报告结构 | L2-validated |
 | [entry-doc-mirror-analysis.md](research-knowledge/entry-doc-mirror-analysis.md) | 入门文档镜像分析法：8维度信号清单+判断矩阵，系统性提取Vendor入门文档中的产品定位、能力边界、设计哲学信号 | - |
 | [essential-contradiction-three-step.md](research-knowledge/essential-contradiction-three-step.md) | 技术方案本质矛盾三步法 | L1 |
@@ -115,6 +116,7 @@
 | [small-sample-analysis-methodology.md](research-knowledge/small-sample-analysis-methodology.md) | 小样本分析方法论与三层分析框架适用性边界：样本量<5时执行"保留/降级/标注"三规则，三层框架（系统性学习→深度洞察→知识萃取）各层降级映射，解决"分析精度 vs 原始内容信度"根本矛盾 | L1 |
 | [source-pipeline-penetration-method.md](research-knowledge/source-pipeline-penetration-method.md) | 源码学习管线穿透法 | L1 |
 | [spec-anchored-questioning.md](research-knowledge/spec-anchored-questioning.md) | Spec锚定提问法（Spec-Anchored Questioning） | L1 |
+| [symbol-vs-variable-decomposition.md](research-knowledge/symbol-vs-variable-decomposition.md) | 符号之争与变量之争分离法（Symbol-vs-Variable Decomposition） | L1 |
 | [vendor-doc-info-compensation-search.md](research-knowledge/vendor-doc-info-compensation-search.md) | 厂商技术文档信息补偿六源搜索策略：控制台需登录/文档截断时，按SDK/Skill→QuickStart→插件市场→GitHub→社区→博客优先级搜索补偿信息源，含Mermaid决策流程、DX机制解释、反模式清单 | - |
 | [vendor-high-level-doc-first-research.md](research-knowledge/vendor-high-level-doc-first-research.md) | Vendor仓库"自顶向下"研究法：先读AGENTS.md/CLAUDE.md等AI友好高层文档建立全局框架，再按需深入源码，效率提升5-10倍，基础设施故障时的救命稻草 | - |
 | [vendor-neutral-three-layer-learning.md](research-knowledge/vendor-neutral-three-layer-learning.md) | 厂商项目三层剥离学习法 | L2 |
@@ -195,6 +197,7 @@
 
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
+| [agent-cli-charge-authority-resume.md](tools-automation/agent-cli-charge-authority-resume.md) | Agent 原生 CLI 扣费-授权-续跑三元契约 | L1-draft |
 | [auto-generate-threshold.md](tools-automation/auto-generate-threshold.md) | 自动化阈值判断：手动条目占比 30% 阈值 + 模式成熟度 validation_count≥2 自动升级规则 | L2 |
 | [automation-idempotent-four-elements.md](tools-automation/automation-idempotent-four-elements.md) | 自动化幂等四要素：install/verify面向结果建模+幂等+可回滚+可判定，全分支验证（install.py验证） | L1 |
 | [batch-docs-to-okf-bundle-conversion.md](tools-automation/batch-docs-to-okf-bundle-conversion.md) | 批量Markdown文档到OKF Bundle转换模式 | stable |
@@ -268,6 +271,7 @@
 | [amphibious-positioning-model.md](governance-strategy/amphibious-positioning-model.md) | 两栖定位模型：通过资产清单+泛化路径图+落地案例三支柱支撑双重定位 | L1 |
 | [appx-alias-rebirth.md](governance-strategy/appx-alias-rebirth.md) | 命令别名重生法：Store应用别名失效（报找不到文件/0xc0070002）时以 Add-AppxPackage -Register 最小侵入重建别名与激活器 | L1 |
 | [architecture-over-algorithm.md](governance-strategy/architecture-over-algorithm.md) | 信息架构优先于算法补全：结构决定连接 | L1 |
+| [artifact-form-collapse.md](governance-strategy/artifact-form-collapse.md) | 同源产物形态坍缩法 | L1-draft |
 | [asset-reuse-last-mile-integration-guide.md](governance-strategy/asset-reuse-last-mile-integration-guide.md) | 资产复用最后一公里：配套集成指南 | L1-实验性 |
 | [automated-stats-three-defense-lines.md](governance-strategy/automated-stats-three-defense-lines.md) | 自动化统计三防线模式：路径校验→环比告警→人工复盘 | L1 |
 | [availability-heuristic-structural-guard.md](governance-strategy/availability-heuristic-structural-guard.md) | 可得性启发结构性防范模式（Availability Heuristic Structural Guard） | L1 |
@@ -321,6 +325,7 @@
 | [four-dimension-margin-framework.md](governance-strategy/four-dimension-margin-framework.md) | 四维留余框架：不确定环境下长期存续的冗余管理策略 | L2 |
 | [four-negatives-external-dependency.md](governance-strategy/four-negatives-external-dependency.md) | 外部依赖四不原则+零依赖原则：不侵入/不直引/不跟版/不裸考/不滥引，150+脚本零第三方依赖跨平台验证（L3标准化） | L3 |
 | [fp-multi-dimensional-falsification.md](governance-strategy/fp-multi-dimensional-falsification.md) | 第一性原理多维证伪验收法 | L1 |
+| [governance-engine-dual-loop.md](governance-strategy/governance-engine-dual-loop.md) | 治理×引擎双件闭环 | L1.5 |
 | [governance-four-layer-progressive.md](governance-strategy/governance-four-layer-progressive.md) | 治理基建四层递进模型 | L2 |
 | [governance-three-stage-evolution.md](governance-strategy/governance-three-stage-evolution.md) | 治理演化三阶段：修复→预防→闭环，禁止跳过任何阶段；跳过预防导致问题复发，多个场景验证（Mermaid/断链/事实漂移） | L2 |
 | [governance-tier-priority.md](governance-strategy/governance-tier-priority.md) | 治理层级优先级排序：🔴防复发→🟡提效率→🟢拓边界，与战术层投入估算互补 | L1 |
@@ -376,6 +381,7 @@
 | [quality-asset-accumulation-loop.md](governance-strategy/quality-asset-accumulation-loop.md) | 质量资产沉淀闭环模式（Quality Asset Accumulation Loop） | L1 |
 | [quality-assurance-three-layer-model.md](governance-strategy/quality-assurance-three-layer-model.md) | 质量保证三层分工模型（Quality Assurance Three-Layer Model） | L2 |
 | [reference-as-trigger.md](governance-strategy/reference-as-trigger.md) | 引用即触发协作模式：用户选中行号触发精确实施 | L2 |
+| [release-eligibility-invariant-gate.md](governance-strategy/release-eligibility-invariant-gate.md) | 发布资格不变量与发布路径对账 | L1 |
 | [responsibility-transfer-governance.md](governance-strategy/responsibility-transfer-governance.md) | 责任转移治理模式 | L2-validated |
 | [risk-transfer-unintended-consequences.md](governance-strategy/risk-transfer-unintended-consequences.md) | 风险转移非意图后果模型 | L1 |
 | [role-minimization-principle.md](governance-strategy/role-minimization-principle.md) | 角色最小化原则（RACI扩展优先于角色新增） | L1 |
@@ -396,6 +402,7 @@
 | [shared-index-count-coupling.md](governance-strategy/shared-index-count-coupling.md) | 共享索引计数耦合与同批判决：新增条目必然改共享索引多处、且多会话并行写同一仓库时，识别耦合面→枚举候选集→显式裁决→提交信息留痕→干净检出验证 | L2 |
 | [short-command-patterns.md](governance-strategy/short-command-patterns.md) | 短指令模式库：登记已验证的 AI 协作快捷指令 | L2 |
 | [simple-task-high-risk.md](governance-strategy/simple-task-high-risk.md) | 简单任务高风险定律（Simple Task High-Risk Law） | L2 |
+| [single-authority-declaration-alignment.md](governance-strategy/single-authority-declaration-alignment.md) | 单一权威源与多载体声明面对齐 | L1 |
 | [skill-migration-position-governance.md](governance-strategy/skill-migration-position-governance.md) | Skill迁移位置治理：统一Skill存放位置的五步标准化流程 | - |
 | [snapshot-parity-migration.md](governance-strategy/snapshot-parity-migration.md) | 快照对拍迁移法 | L1 |
 | [spec-discoverability-guarantee.md](governance-strategy/spec-discoverability-guarantee.md) | 规范可发现性保障模式：三层映射模型（AGENTS.md引用→路由表条目→自动化脚本）确保规范不会"存在但不可发现" | L1 |
