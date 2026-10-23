@@ -10,16 +10,13 @@ b2b-product-page-ux-five-dimensions
 b2b-product-seven-segment-ia
 b2b-value-quantification-case-validation
 classic-patterns-reuse-heuristic
-content-funnel-analysis
 core-scenario-dual-layer
 cpp-header-first-fact-collection
 credibility-dual-track
 cross-cultural-reverse-hermeneutics-defense
 cross-domain-semantic-drift
-cross-framework-atomic-analysis
 cross-vendor-knowledge-fusion
 decomposable-recognition-ladder
-dual-layer-analysis-report
 entry-doc-mirror-analysis
 essential-contradiction-three-step
 example-first-alignment

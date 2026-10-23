@@ -130,10 +130,10 @@ CLI/脚本等交互型前端通过"命令→契约工具"的映射表触达工�
 
 | 相关模式 | 关系 | 说明 |
 |---|---|---|
-| [integration-over-invention](../product-growth/integration-over-invention.md) | 层级互补 | integration-over-invention 是**部署交付面**：把多个工具打包成一键部署方案给终端用户；本模式是**能力消费契约面**：把外部工具统一到单一契约供一个消费者经单入口消费。一个面向"方案可部署"，一个面向"能力可消费"，不在同一层级 |
+| [integration-over-invention](../concepts/integration-over-invention.md) | 层级互补 | integration-over-invention 是**部署交付面**：把多个工具打包成一键部署方案给终端用户；本模式是**能力消费契约面**：把外部工具统一到单一契约供一个消费者经单入口消费。一个面向"方案可部署"，一个面向"能力可消费"，不在同一层级 |
 | [vertical-saas-mcp-capability-exposure](../product-growth/vertical-saas-mcp-capability-exposure.md) | 方向互补 | vertical-saas 是**外向**：SaaS 把自己的能力封装为 MCP 工具开放给外部大模型；本模式是**反向整合**：把用户自备的第三方工具经适配器接入统一契约供自身消费。都在 MCP 协议层相遇但方向相反 |
 | [agent-native-os-capability-ladder](../product-growth/agent-native-os-capability-ladder.md) | 相邻易混 | 该模式是终端平台把 AI 能力**逐级内化**进系统的自评阶梯（L1-L4，L4 才涉及开放协议）；本模式是**工具编排消费**的横向契约层，聚焦"多异构工具的单一消费入口"，二者不在同一维度 |
-| [offline-first-architecture](../product-growth/offline-first-architecture.md) | 目的区分 | offline-first 是保证离线完整可用；本模式的"本地优先 + 不动用户资产"是可信边界设计而非功能目标，二者关注点分离 |
+| [offline-first-architecture](../concepts/offline-first-architecture.md) | 目的区分 | offline-first 是保证离线完整可用；本模式的"本地优先 + 不动用户资产"是可信边界设计而非功能目标，二者关注点分离 |
 
 ## 沉淀与校验记录
 

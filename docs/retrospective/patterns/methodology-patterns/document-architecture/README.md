@@ -65,7 +65,6 @@ date: "2026-07-09"
 | [技术规格与叙述报告分离原则](./spec-narrative-separation.md) | 技术规格与叙述报告分离原则 | L2 | `document-architecture` `atomization` `spec-separation` |
 | [向日葵硬件系列Wiki标准结构](./sunlogin-hardware-wiki-structure.md) | 向日葵硬件系列Wiki标准结构 | L2 |  |
 | [合成统计的权威数据来源（Synthetic Stats Source-of-Truth）](./synthetic-stats-source-of-truth.md) | 合成统计的权威数据来源（Synthetic Stats Source-of-Truth） | L1 |  |
-| [技术文章Wiki化批量生成模式](./tech-article-to-wiki-batch-generation.md) | 技术文章Wiki化批量生成模式 | L2-validated | `wiki` `knowledge-management` `subagent` |
 | [技术wiki四层需求结构](./tech-wiki-four-layer-need-structure.md) | 技术wiki四层需求结构 | L1 |  |
 | [信任前置内容漏斗（Trust-First Content Funnel）](./trust-first-content-funnel.md) | 信任前置内容漏斗（Trust-First Content Funnel） | - |  |
 | [教程认知阶梯：技术教程六层结构设计法](./tutorial-cognitive-ladder.md) | 教程认知阶梯：技术教程六层结构设计法 | L2 |  |

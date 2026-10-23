@@ -17,12 +17,9 @@ citation-evidence-reconciliation
 context-lifecycle-layering
 context-recovery-protocol
 dialog-agent-four-layer-evaluation
-dual-engine-uncertainty-certainty
 dual-zone-development-model
 ecosystem-barrier-evaluation
 edit-verify-separation
-error-blacklist-monotonic-evolution
-evaluation-driven-self-evolution
 external-content-fact-verification
 external-tech-article-learning-closed-loop
 file-existence-verification-gate
@@ -37,7 +34,6 @@ human-ai-collaboration-70-30-rule
 human-in-the-loop-augmentation
 incremental-single-file-ai-development
 isolation-over-sharing
-knowledge-compilation
 layered-caching-pattern
 lazy-loading-pattern
 llm-token-optimization-anti-patterns
@@ -80,7 +76,6 @@ spec-stage7-independent-validation
 style-creativity-separation-control
 subagent-atomic-task-template
 subagent-git-three-prohibitions
-subagent-standardized-instruction
 symptom-prescription-qa
 task-type-precheck-bias-defense
 team-shared-ai-colleague

@@ -77,7 +77,6 @@ knowledge-crystallization-second-validation-sop
 knowledge-dual-layer-architecture
 knowledge-lifecycle-extract-archive-delete
 knowledge-to-command-pipeline
-layered-chained-spec
 layered-priority-dimension-reduction
 layered-repair-verification
 learn-validate-adopt
@@ -121,7 +120,6 @@ quality-asset-accumulation-loop
 quality-assurance-three-layer-model
 reference-as-trigger
 release-eligibility-invariant-gate
-responsibility-transfer-governance
 risk-transfer-unintended-consequences
 role-minimization-principle
 root-cause-diagnosis
@@ -163,7 +161,6 @@ template-cross-platform-validation
 template-placeholder-granularity-design
 test-coverage-diminishing-returns
 three-as-relation-position
-three-layer-repair-closure
 three-layer-rule-enforcement
 three-layer-spec-constraint
 three-level-problem-solving

@@ -38,12 +38,9 @@ date: "2026-07-09"
 | [硬件产品线"价格梯度×场景细分"矩阵策略（Hardware Price-Scenario Matrix Strategy）](./hardware-price-scenario-matrix.md) | 硬件产品线"价格梯度×场景细分"矩阵策略（Hardware Price-Scenario Matrix Strategy） | L1 |  |
 | [隐性奖项通道识别法](./hidden-prize-channel-identification.md) | 隐性奖项通道识别法 | L1 |  |
 | [Product Growth](./index.md) | Product Growth | - |  |
-| [整合优于发明模式](./integration-over-invention.md) | 整合优于发明模式 | L1-draft | `product-design` `integration` `docker-compose` |
 | [信息流方向性价值判据（Interaction Value: Directionality over Modality）](./interaction-value-directionality.md) | 信息流方向性价值判据（Interaction Value: Directionality over Modality） | L1 | `交互价值` `信息流方向性` `模态数量` |
 | [本地能力保底模式（Local-first with Cloud Enhancement）](./local-capability-guarantee.md) | 本地能力保底模式（Local-first with Cloud Enhancement） | L2 |  |
-| [降低门槛即创造市场模式](./lowering-barriers-creates-markets.md) | 降低门槛即创造市场模式 | L1-draft | `product-strategy` `developer-experience` `one-click-deploy` |
 | [多触点AIDA转化设计（Multi-Touchpoint AIDA Conversion）](./multi-touchpoint-aida-conversion.md) | 多触点AIDA转化设计（Multi-Touchpoint AIDA Conversion） | L4 |  |
-| [离线优先架构模式](./offline-first-architecture.md) | 离线优先架构模式 | L1-draft | `offline-first` `architecture` `resilience` |
 | [痛点刚需切入模式（单点突破优先于功能堆砌）](./pain-point-first-entry.md) | 痛点刚需切入模式（单点突破优先于功能堆砌） | L2 |  |
 | [硬件产品分析的参数差异量化方法](./parameter-difference-quantification.md) | 硬件产品分析的参数差异量化方法 | L1 |  |
 | [定位漂移修正法](./positioning-drift-correction.md) | 定位漂移修正法 | L1 |  |

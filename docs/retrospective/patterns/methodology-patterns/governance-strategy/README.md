@@ -96,7 +96,6 @@ date: "2026-07-09"
 | [知识沉淀「中间产物→质量门→最终产出」双层架构模式](./knowledge-dual-layer-architecture.md) | 知识沉淀「中间产物→质量门→最终产出」双层架构模式 | L1 |  |
 | [知识资产「萃取→归档→删除」生命周期闭环模式](./knowledge-lifecycle-extract-archive-delete.md) | 知识资产「萃取→归档→删除」生命周期闭环模式 | L1-draft | `methodology` `knowledge-management` `lifecycle` |
 | [知识库→指令集转化管道（Knowledge-to-Command Pipeline）](./knowledge-to-command-pipeline.md) | 知识库→指令集转化管道（Knowledge-to-Command Pipeline） | L1 | `knowledge-base` `command-set` `methodology-adoption` |
-| [分层链式规格：AI 编程工作流的阶段分离与链式传递](./layered-chained-spec.md) | 分层链式规格：AI 编程工作流的阶段分离与链式传递 | L1.5 | `sdd` `spec-driven-development` `ai-programming` |
 | [分层分级降维模式（Layered Priority Dimension Reduction）](./layered-priority-dimension-reduction.md) | 分层分级降维模式（Layered Priority Dimension Reduction） | L1 | `分层架构` `优先级分级` `复杂系统` |
 | [分层修复验证法（Layered Repair Verification）](./layered-repair-verification.md) | 分层修复验证法（Layered Repair Verification） | L1 | `分层修复` `验证闭环` `分层错误屏蔽` |
 | [Learn-Validate-Adopt：外部标准采用三步法](./learn-validate-adopt.md) | Learn-Validate-Adopt：外部标准采用三步法 | L1 |  |
@@ -140,7 +139,6 @@ date: "2026-07-09"
 | [质量保证三层分工模型（Quality Assurance Three-Layer Model）](./quality-assurance-three-layer-model.md) | 质量保证三层分工模型（Quality Assurance Three-Layer Model） | L2 | `质量保证` `三层分工` `自动化` |
 | [引用即触发（Reference-as-Trigger）协作模式](./reference-as-trigger.md) | 引用即触发（Reference-as-Trigger）协作模式 | L2 |  |
 | [发布资格不变量与发布路径对账](./release-eligibility-invariant-gate.md) | 发布资格不变量与发布路径对账 | L1 |  |
-| [责任转移治理模式](./responsibility-transfer-governance.md) | 责任转移治理模式 | L2-validated | `governance` `organizational-design` `responsibility-transfer` |
 | [风险转移非意图后果模型](./risk-transfer-unintended-consequences.md) | 风险转移非意图后果模型 | L1 | `风险管理` `供应链` `决策陷阱` |
 | [角色最小化原则（RACI扩展优先于角色新增）](./role-minimization-principle.md) | 角色最小化原则（RACI扩展优先于角色新增） | L1 |  |
 | [根因诊断模式](./root-cause-diagnosis.md) | 根因诊断模式 | L2 |  |
@@ -182,7 +180,6 @@ date: "2026-07-09"
 | [模板占位符的粒度设计原则](./template-placeholder-granularity-design.md) | 模板占位符的粒度设计原则 | L2 |  |
 | [测试覆盖率边际收益递减拐点](./test-coverage-diminishing-returns.md) | 测试覆盖率边际收益递减拐点 | L1 |  |
 | [三之位：二元僵持的关系位破解法](./three-as-relation-position.md) | 三之位：二元僵持的关系位破解法 | L2 | `三之位` `关系位` `二元对立` |
-| [三层修复闭环](./three-layer-repair-closure.md) | 三层修复闭环 | L1-draft | `troubleshooting` `root-cause` `auto-heal` |
 | [规则落地三层模型：定义+痕迹+验证](./three-layer-rule-enforcement.md) | 规则落地三层模型：定义+痕迹+验证 | L2 |  |
 | [规范约束三层次模型（Three-Layer Spec Constraint Model）](./three-layer-spec-constraint.md) | 规范约束三层次模型（Three-Layer Spec Constraint Model） | L2 |  |
 | [问题解决三层跃迁范式（Three-Level Problem Solving Paradigm）](./three-level-problem-solving.md) | 问题解决三层跃迁范式（Three-Level Problem Solving Paradigm） | L1 |  |

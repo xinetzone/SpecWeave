@@ -29,12 +29,9 @@ date: "2026-07-09"
 | [上下文生命周期分层管理模式](./context-lifecycle-layering.md) | 上下文生命周期分层管理模式 | L2 |  |
 | [Context 恢复协议重执行模式（Context Recovery Protocol Rerun）](./context-recovery-protocol.md) | Context 恢复协议重执行模式（Context Recovery Protocol Rerun） | L2 |  |
 | [对话Agent四层评测模式（Dialog Agent Four-Layer Evaluation）](./dialog-agent-four-layer-evaluation.md) | 对话Agent四层评测模式（Dialog Agent Four-Layer Evaluation） | L1 | `Agent评测` `对话系统` `四层架构` |
-| [不确定性探索+确定性校验双引擎架构模式](./dual-engine-uncertainty-certainty.md) | 不确定性探索+确定性校验双引擎架构模式 | L2-validated | `ai-engineering` `ai-safety` `dual-engine` |
 | [双区开发模型](./dual-zone-development-model.md) | 双区开发模型 | L2 |  |
 | [生态壁垒评估框架（Ecosystem Barrier Evaluation）](./ecosystem-barrier-evaluation.md) | 生态壁垒评估框架（Ecosystem Barrier Evaluation） | L2 |  |
 | [编辑-验证分离模式](./edit-verify-separation.md) | 编辑-验证分离模式 | L2 | `ai-collaboration` `quality-assurance` `workflow` |
-| [错误黑名单单调进化模式](./error-blacklist-monotonic-evolution.md) | 错误黑名单单调进化模式 | L2-validated | `quality-assurance` `regression-testing` `error-persistence` |
-| [评测驱动的自进化闭环模式](./evaluation-driven-self-evolution.md) | 评测驱动的自进化闭环模式 | L2-validated | `ai-engineering` `self-evolution` `evaluation-system` |
 | [外部内容事实验证](./external-content-fact-verification.md) | 外部内容事实验证 | L2 | `ai-collaboration` `fact-checking` `hallucination-defense` |
 | [外部技术文章学习三阶段闭环（LAV模型）](./external-tech-article-learning-closed-loop.md) | 外部技术文章学习三阶段闭环（LAV模型） | L1 | `ai-collaboration` `knowledge-management` `learning` |
 | [文件存在性验证门模式（File Existence Verification Gate）](./file-existence-verification-gate.md) | 文件存在性验证门模式（File Existence Verification Gate） | L2 | `文件验证` `存在性检查` `上下文压缩幻觉` |
@@ -50,7 +47,6 @@ date: "2026-07-09"
 | [增量单文件 AI 开发（对话式开发 → 质量可验证）](./incremental-single-file-ai-development.md) | 增量单文件 AI 开发（对话式开发 → 质量可验证） | L1 | `AI 辅助开发` `增量迭代` `单文件交付` |
 | [Ai Collaboration](./index.md) | Ai Collaboration | - |  |
 | [隔离优于共享模式](./isolation-over-sharing.md) | 隔离优于共享模式 | - |  |
-| [知识编译模式](./knowledge-compilation.md) | 知识编译模式 | L1-draft | `knowledge-management` `rag` `agent-skills` |
 | [分层缓存模式](./layered-caching-pattern.md) | 分层缓存模式 | L2-validated | `LLM` `Token` `Caching` |
 | [按需加载懒加载模式](./lazy-loading-pattern.md) | 按需加载懒加载模式 | L2-validated | `LLM` `Token` `Lazy-Loading` |
 | [LLM Token优化反模式集](./llm-token-optimization-anti-patterns.md) | LLM Token优化反模式集 | L2-validated | `LLM` `Token` `Optimization` |
@@ -93,7 +89,6 @@ date: "2026-07-09"
 | [风格-创意分离控制（Style-Creativity Separation Control）](./style-creativity-separation-control.md) | 风格-创意分离控制（Style-Creativity Separation Control） | L2 |  |
 | [子代理原子任务描述模板：六要素精确委托法](./subagent-atomic-task-template.md) | [...按照要素3的结构化大纲写正文内容...] | L2 |  |
 | [子代理"三不准"执行规范（Subagent Git Three Prohibitions）](./subagent-git-three-prohibitions.md) | 子代理"三不准"执行规范（Subagent Git Three Prohibitions） | L1 |  |
-| [子代理分析任务标准化指令](./subagent-standardized-instruction.md) | 子代理分析任务标准化指令 | L2-validated | `subagent` `agent-engineering` `quality-assurance` |
 | [症状-处方 QA 系统（Symptom-Prescription QA）](./symptom-prescription-qa.md) | 症状-处方 QA 系统（Symptom-Prescription QA） | L2 |  |
 | [任务类型预检防偏差](./task-type-precheck-bias-defense.md) | 任务类型预检防偏差 | L2 |  |
 | [团队共享 AI 同事模式（Team Shared AI Colleague）](./team-shared-ai-colleague.md) | 团队共享 AI 同事模式（Team Shared AI Colleague） | - |  |
