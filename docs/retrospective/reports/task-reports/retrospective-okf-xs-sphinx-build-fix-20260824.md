@@ -75,8 +75,8 @@ gates_passed:
 | F-012 | 13-monitoring-logging.md L323-384：Python代码块内含嵌套Markdown围栏，外层从```python改为````python |
 | F-013 | 07-multi-agent-collab.md L36和L426：嵌套围栏问题，首尾围栏从```改为```` |
 | F-014 | install-adhd-skill.md L306/327/347：blockquote内的`> ---`替换为`> ────────────────────` |
-| F-015 | calculus-integrals-source.md L624-628：添加了2个脚注定义[^F-086]、[^F-087] |
-| F-016 | sympify-function-source.md L649-666：添加了5个脚注定义[^F-049]、[^F-051]、[^F-052]、[^F-053]、[^F-074] |
+| F-015 | calculus-integrals-source.md L624-628：添加了2个脚注定义 `[^F-086]`、`[^F-087]` |
+| F-016 | sympify-function-source.md L649-666：添加了5个脚注定义 `[^F-049]`、`[^F-051]`、`[^F-052]`、`[^F-053]`、`[^F-074]` |
 | F-017 | 05-syntax-security.md L59-64：proof示例代码块外层围栏从```markdown改为````markdown |
 | F-018 | 06-directives-and-roles.md L56和L64-70：短形式示例和指令结构示例围栏从```改为```` |
 | F-019 | 增量构建验证结果：0 ERROR，0 内容相关 WARNING |
