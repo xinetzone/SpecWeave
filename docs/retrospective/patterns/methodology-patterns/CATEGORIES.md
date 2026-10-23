@@ -624,5 +624,5 @@
 | [unified-contract-tool-orchestration-layer.md](product-growth/unified-contract-tool-orchestration-layer.md) | 统一契约工具编排层 | L1-draft |
 | [vertical-saas-mcp-capability-exposure.md](product-growth/vertical-saas-mcp-capability-exposure.md) | 垂直SaaS AI转型务实路径：不做通用大模型，通过MCP协议开放核心领域能力给Claude/GPT等通用大脑，六步MCP化转型+视觉兜底路径，4个行业可复用 | L2 |
 | [vertical-scenario-ai-three-elements.md](product-growth/vertical-scenario-ai-three-elements.md) | 垂直场景AI产品三要素：行业专属功能+场景化工作流+领域合规风控，AI应用层竞争从通用能力竞赛转向场景解决方案竞赛，3个跨领域产品验证 | L3 |
-| [weight-aligned-preparation.md](product-growth/weight-aligned-preparation.md) | 权重对位备赛法 | L1-draft |
+| [weight-aligned-preparation.md](product-growth/weight-aligned-preparation.md) | 权重对位备赛法 | L1 |
 | [zero-sum-rule-inversion.md](product-growth/zero-sum-rule-inversion.md) | 零和规则反利用：将竞争场景中的限制性条款从障碍转换为策略聚焦器，在 Best Shot 模式下最大化先发优势的边际回报 | L1 |
