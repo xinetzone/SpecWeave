@@ -51,6 +51,7 @@ dual-track-progressive-evolution
 duplication-interest-model
 elastic-workflow-classification
 entropy-law-automation-principle
+evidence-chain-engineering
 exemption-mechanism-legalization
 explainer-self-violation-effect
 fail-loud-over-silent-fallback
@@ -147,6 +148,7 @@ spec-discoverability-guarantee
 spec-level-defense-in-depth
 spec-reference-validation
 spec-triple-sync
+stop-loss-backward-scheduling
 strong-constraint-self-check
 structure-first-extension
 style-anchoring-consistency

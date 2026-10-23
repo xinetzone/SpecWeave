@@ -35,6 +35,7 @@ hermetic-isolated-verification
 honest-limitation-acknowledgment
 human-ai-collaboration-70-30-rule
 human-in-the-loop-augmentation
+incremental-single-file-ai-development
 isolation-over-sharing
 knowledge-compilation
 layered-caching-pattern
