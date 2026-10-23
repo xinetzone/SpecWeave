@@ -36,7 +36,7 @@ title: ".agents/skills/ 目录索引"
 | sovereign-rollout-cmd | 命令门面 | 主权区治理资产落盘 | 提案、批准落盘、主权区变更、治理资产落盘、先提案后批准 | [sovereign-rollout-cmd/SKILL.md](sovereign-rollout-cmd/SKILL.md) |
 | github-org-bootstrap-cmd | 命令门面 | GitHub 组织命名与初始化 | 创建GitHub组织、建个org、组织名怎么起、demo组织、huncheng-lab | [github-org-bootstrap-cmd/SKILL.md](github-org-bootstrap-cmd/SKILL.md) |
 
-### 完整Skill（10个）
+### 完整Skill（11个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -50,6 +50,8 @@ title: ".agents/skills/ 目录索引"
 | meoo-cli | 完整Skill | 秒悟（Meoo）全栈应用构建与部署（阿里云官方第三方技能，随 CLI 包安装）：static（SPA→CDN）与 server（全栈→容器）双模式，Supabase 数据库/Auth/Storage + Deno 边缘函数 + AI 模型接入；覆盖初始化→云服务→部署全生命周期，含 Mise 发布协议 BLOCKING 门禁与阿里云自托管部署分支 | 秒悟、Meoo、meoo cli、用秒悟建应用、部署到秒悟、部署全栈应用 | [meoo-cli/SKILL.md](meoo-cli/SKILL.md) |
 | meoo-skill-publish | 完整Skill（v1.0.0，L1） | 本地 Skill→自包含 ZIP→Meoo 技能市场（meoo.com/skills）发布/版本更新与字节级回验：P1 根级合规打包（YAML 头/name 一致/零包外引用，确定性 ZIP+b64+清单）→ P2 官方 `POST /api/v1/skills/publish`（带 skill_id 即版本更新，tags 取 v2_* key）→ P3 线上版本下载逐文件 SHA256 比对；含 127.0.0.1 中继脚本、浏览器 evaluate 两步法与 7 条 Gotchas；萃取自 104319 v1 耦合版→v2 独立版实战 | 上传技能、发布技能到 Meoo/技能市场、更新技能版本、技能市场上架、meoo.com/skills 发布 | [meoo-skill-publish/SKILL.md](meoo-skill-publish/SKILL.md) |
 | skill-mirror-archive | 完整Skill（v1.0.0，L1） | 外部技能镜像归档：把 TeleAgent/Trae IDE 等外部平台技能镜像入库 .agents/skills/（sovereign-rollout 四阶段 + Copy-Item 保真 + frontmatter source 溯源泛化 + 登记面双轨裁剪 + 原子提交）；萃取自 sc-20261021-teleagent-skill-archive 首例 | 归档技能、技能镜像入库、平台技能导入、镜像归档、外部技能入库 | [skill-mirror-archive/SKILL.md](skill-mirror-archive/SKILL.md) |
+| aiworks-deploy-cmd | 完整Skill（v1.0.0，L2） | 知乎 AI Works 源码代部署与发布（官方 deploy-helper 五步链：inspect→描述符→validate 先 --plan-only→settle→archive→浏览器上传→构建观察→审核声明→发布→复核）；含错误码 8 修复、React 表单 bug 与 Draft.js 富文本两大 Gotchas 族；萃取自 sc-20261023-zhihu-ai-science-workshop 发布实战 | 上传源码、一键部署、代部署、部署失败、错误码 8、frontend.deploy.json、AI Works、科学季投稿、deploy-helper、静态作品上线 | [aiworks-deploy-cmd/SKILL.md](aiworks-deploy-cmd/SKILL.md) |
+| zhihu-article-publish-cmd | 完整Skill（v1.0.0，L2） | 知乎专栏文章发布自动化（Draft.js 唯一持久化输入通道：CDP Input.insertText，bu.type/execCommand/剪贴板均不可用；图片插入四步法：file input id 注入→upload_file→上传状态确认→JS 点击「插入图片」；话题候选四步选择法：JS 文本精确点击+标签行 DOM 验证；发布后文章页回读验证清单）；含 10.1-10.3 Gotchas 族；萃取自 sc-20261023-zhihu-article-publish 发布实战 | 写文章、发布文章、知乎专栏、zhuanlan、填知乎编辑器、插入配图、话题没加上、补话题、创作声明、发布设置、更新文章 | [zhihu-article-publish-cmd/SKILL.md](zhihu-article-publish-cmd/SKILL.md) |
 
 ### 工作流门面（6个）
 
