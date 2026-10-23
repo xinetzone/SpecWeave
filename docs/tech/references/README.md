@@ -55,6 +55,8 @@ stale_after: "2027-08-22"
 
 - [🏠 返回上级：docs](../../index.md)
 - [📚 文档首页](../../index.md)
+- [📁 上级目录：技术文档](../index.md)
+- [💡 概念与教程文档](../concepts/index.md)
 
 ---
 
