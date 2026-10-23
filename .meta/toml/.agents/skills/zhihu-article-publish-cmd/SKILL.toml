@@ -1,0 +1,5 @@
+id = "skill"
+title = "知乎文章发布自动化 Skill"
+category = "skills/zhihu-article-publish-cmd"
+date = "2026-10-23"
+version = "1.0"
