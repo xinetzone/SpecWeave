@@ -1,0 +1,26 @@
+id = "stop-loss-backward-scheduling"
+title = "止损前置倒排（硬截止 + 不可控依赖 → 计划内止损）"
+domain = "methodology"
+layer = "governance-strategy"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+maturity = "L1"
+maturity_level = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20261023-private-workshop)——私域执行包洞察报告（49 条事实 / 4 条洞察 / 3 模式 / 8 条 V 意见）；源文档为私域内容，本条目仅抽取去场景化的通用抽象"
+date = "2026-10-23"
+version = "1.0"
+maturity_note = "单案例（硬截止型合规执行包，49 条事实支撑）；案例为计划态——执行包已成型但尚未跑完，故 validation_count=1 仅表示完成一次方法抽取，不表示止损已真实发生；三个跨域迁移示例为同构推演、尚未实测，待第二个独立案例验证后升级 L1.5/L2"
+
+[bindings]
+related_patterns = [
+  "bounded-iteration-budget",
+  "four-dimension-margin-framework",
+  "net-value-four-questions",
+  "risk-transfer-unintended-consequences",
+  "weight-aligned-preparation",
+  "deadline-breakpoint-first",
+  "three-state-decision",
+]

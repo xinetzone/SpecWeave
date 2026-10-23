@@ -1,0 +1,27 @@
+id = "incremental-single-file-ai-development"
+title = "增量单文件 AI 开发（对话式开发 → 质量可验证）"
+domain = "methodology"
+layer = "ai-collaboration"
+category = "retrospective/patterns/methodology-patterns/ai-collaboration"
+maturity = "L1"
+maturity_level = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20261023-private-workshop)——私域执行包洞察报告（49 条事实 / 4 条洞察 / 3 模式 / 8 条 V 意见）；源文档为私域内容，本条目仅抽取去场景化的通用抽象"
+date = "2026-10-23"
+version = "1.0"
+maturity_note = "单案例（对话式单文件交付物增量开发，49 条事实支撑）；案例为计划态——执行包已成型但尚未跑完，故 validation_count=1 仅表示完成一次方法抽取，不表示产物结果已获外部验证；三个跨域迁移示例为同构推演、尚未实测，待第二个独立案例验证后升级 L1.5/L2"
+
+[bindings]
+related_patterns = [
+  "capability-stack-progressive-building",
+  "batched-creation-independent-review",
+  "prompt-to-product-seven-steps",
+  "generation-validation-closed-loop",
+  "edit-verify-separation",
+  "no-touch-list",
+  "pattern-context-recovery-protocol",
+  "two-stage-outline-then-expand",
+]

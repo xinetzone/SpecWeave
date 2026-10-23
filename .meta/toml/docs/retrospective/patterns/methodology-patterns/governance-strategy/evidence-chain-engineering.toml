@@ -1,0 +1,25 @@
+id = "evidence-chain-engineering"
+title = "证据链工程化（过程约束 → 可审计证据资产）"
+domain = "methodology"
+layer = "governance-strategy"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+maturity = "L1"
+maturity_level = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20261023-private-workshop)——私域执行包洞察报告（49 条事实 / 4 条洞察 / 3 模式 / 8 条 V 意见）；源文档为私域内容，本条目仅抽取去场景化的通用抽象"
+date = "2026-10-23"
+version = "1.0"
+maturity_note = "单案例（工具受限型合规执行包，49 条事实支撑）；案例为计划态——执行包已成型但尚未跑完，故 validation_count=1 仅表示完成一次方法抽取，不表示结果已验证；三个跨域迁移示例为同构推演、尚未实测，待第二个独立案例验证后升级 L1.5/L2"
+
+[bindings]
+related_patterns = [
+  "compliance-contracting",
+  "citation-evidence-reconciliation",
+  "provenance-driven-trust",
+  "compliance-driven-rule-building",
+  "release-eligibility-invariant-gate",
+  "weight-aligned-preparation",
+]
