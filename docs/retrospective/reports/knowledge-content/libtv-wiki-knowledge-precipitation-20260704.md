@@ -212,6 +212,6 @@ stale_after: "2027-08-22"
 ## 七、关联资源
 
 - [LibTV Wiki 里程碑复盘报告](../milestone/libtv-wiki-retrospective-20260704.md)
-- [技术文章 Wiki 化批量生成模式](../../../patterns/methodology-patterns/tech-article-to-wiki-batch-generation.md)
-- [子代理分析任务标准化指令模式](../../../patterns/methodology-patterns/subagent-standardized-instruction.md)
-- [方法论模式库索引](../../../patterns/methodology-patterns/README.md)
+- [技术文章 Wiki 化批量生成模式](../../patterns/methodology-patterns/concepts/tech-article-to-wiki-batch-generation.md)
+- [子代理分析任务标准化指令模式](../../patterns/methodology-patterns/concepts/subagent-standardized-instruction.md)
+- [方法论模式库索引](../../patterns/methodology-patterns/README.md)

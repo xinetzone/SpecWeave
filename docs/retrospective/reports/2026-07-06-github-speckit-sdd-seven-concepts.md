@@ -8,7 +8,7 @@ depth: "standard"
 date: "2026-07-06"
 archived: "2026-08-05"
 source: "reports/insight-extraction/external-learning/retrospective-speckit-sdd-analysis-20260706/analysis-report.md"
-pattern: "patterns/methodology-patterns/governance-strategy/layered-chained-spec.md"
+pattern: "patterns/methodology-patterns/concepts/layered-chained-spec.md"
 status: "archived"
 ---
 
@@ -18,7 +18,7 @@ status: "archived"
 >
 > 归档目录：[retrospective-speckit-sdd-analysis-20260706](insight-extraction/external-learning/retrospective-speckit-sdd-analysis-20260706/README.md)
 >
-> 萃取模式：[分层链式规格](../patterns/methodology-patterns/governance-strategy/layered-chained-spec.md)
+> 萃取模式：[分层链式规格](../patterns/methodology-patterns/concepts/layered-chained-spec.md)
 
 ---
 
@@ -187,7 +187,7 @@ status: "archived"
 
 ### 模式：分层链式规格（id: bp-layered-chained-spec, L1.5）
 
-> 完整模式文档已入库：[layered-chained-spec.md](../patterns/methodology-patterns/governance-strategy/layered-chained-spec.md)
+> 完整模式文档已入库：[layered-chained-spec.md](../patterns/methodology-patterns/concepts/layered-chained-spec.md)
 
 **核心做法 6 步**：
 1. 定义阶段序列（≥3 阶段，前序产出→后序输入）
@@ -315,7 +315,7 @@ status: "archived"
 | 2 | 归档目录索引 | 归档索引 | [reports/.../README.md](insight-extraction/external-learning/retrospective-speckit-sdd-analysis-20260706/README.md) | - |
 | 3 | 事实清单（35条，F-001 至 F-035） | R阶段产出 | 本文件 R阶段章节 | G1 ✅ |
 | 4 | 核心洞察（3条，四元组完整） | I阶段产出 | 本文件 I阶段章节 | G2 ✅ |
-| 5 | 可复用模式"分层链式规格"（含5反模式+2迁移示例） | E阶段产出 | [patterns/.../layered-chained-spec.md](../patterns/methodology-patterns/governance-strategy/layered-chained-spec.md) | G3 ✅ |
+| 5 | 可复用模式"分层链式规格"（含5反模式+2迁移示例） | E阶段产出 | [patterns/.../layered-chained-spec.md](../patterns/methodology-patterns/concepts/layered-chained-spec.md) | G3 ✅ |
 | 6 | 对抗审查记录（17条意见，采纳5条修正） | V阶段产出 | 本文件 V阶段章节 | V门 ✅ |
 | 7 | 复盘归档报告 | C阶段产出 | 本文件 | G4 ✅ |
 | 8 | CMD-LOG 执行记录（S0-S99） | 全链路日志 | 本文件 CMD-LOG 章节 | - |
@@ -328,7 +328,7 @@ status: "archived"
 1. 分析报告归档至：`reports/insight-extraction/external-learning/retrospective-speckit-sdd-analysis-20260706/analysis-report.md`
 2. 归档目录索引：`reports/insight-extraction/external-learning/retrospective-speckit-sdd-analysis-20260706/README.md`
 3. 复盘报告归档至：`2026-07-06-github-speckit-sdd-seven-concepts.md`（本文件）
-4. 模式"分层链式规格"入库至：`patterns/methodology-patterns/governance-strategy/layered-chained-spec.md`
+4. 模式"分层链式规格"入库至：`patterns/methodology-patterns/concepts/layered-chained-spec.md`
 5. 原 specs 目录下的 `seven-concepts-output.md` 和 `analysis-report.md` 已删除（过程文件区仅保留规划三件套）
 
 ### G4 质量门检查
@@ -361,7 +361,7 @@ status: "archived"
 **最终产出**：
 1. 归档目录：[retrospective-speckit-sdd-analysis-20260706](insight-extraction/external-learning/retrospective-speckit-sdd-analysis-20260706/README.md)（含分析报告+README索引）
 2. 复盘报告：[2026-07-06-github-speckit-sdd-seven-concepts.md](2026-07-06-github-speckit-sdd-seven-concepts.md)（本文件）
-3. 可复用模式：[layered-chained-spec.md](../patterns/methodology-patterns/governance-strategy/layered-chained-spec.md)
+3. 可复用模式：[layered-chained-spec.md](../patterns/methodology-patterns/concepts/layered-chained-spec.md)
 
 ---
 
@@ -386,6 +386,6 @@ status: "archived"
 
 本次归档修正解决了原文件存放位置不恰当的问题：
 - 原路径：`.trae/specs/retrospectives-insights/analyze-github-speckit-article/seven-concepts-output.md`（过程文件区，不适合存放最终产出）
-- 复盘报告新路径：`.agents/docs/retrospective/2026-07-06-github-speckit-sdd-seven-concepts.md`（最终归档区，日期命名规范）
-- 模式入库路径：`.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/layered-chained-spec.md`（模式库，分类存放）
+- 复盘报告新路径：`docs/retrospective/reports/2026-07-06-github-speckit-sdd-seven-concepts.md`（最终归档区，日期命名规范）
+- 模式入库路径：`docs/retrospective/patterns/methodology-patterns/concepts/layered-chained-spec.md`（模式库，OKF concepts 目录）
 - 所有内部引用路径已更新为正确的相对路径
