@@ -19,6 +19,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 
 ## 模式清单
 
+> 本表为人工维护（每条含人工撰写的一句话说明，未纳入 `generate-readme.py` 标记区）；新增模式文件后须同步补录，避免清单滞后于目录实际内容。
+
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
 | [feasibility-claim-evaluation.md](falsifiable-claim-evaluation.md) | 可证伪愿景检验法：评估技术主张时，分水岭不是指标数字精确性，而是指标是否定义了可证伪验收标准；四类状态分级（技术事实/待验证/待公开/营销话术）+上下文校准防误杀，1次验证（MaineCoon批判性审查） | L1 |
@@ -56,3 +58,12 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 | [methodology-overflow-paradigm.md](methodology-overflow-paradigm.md) | 方法论溢出范式：技术演进不是"全新领域全新范式"，而是"成熟方法论向新领域溢出"，学习新领域最快方式是寻找新旧领域方法论映射，预判新领域赢家（擅长既有领域工程化的玩家），1次验证（Vercel Eve前端方法论迁移） | L1 |
 | [open-source-repo-four-layer-identification.md](open-source-repo-four-layer-identification.md) | 开源仓库四层架构识别法：学习新仓库时先识别规范层/参考实现层/工具层/示例层四层，按40%/25%/15%/10%/10%时间分配，避免上来就读源码迷失细节，30秒完成目录扫描建立全局认知，1次验证（Knowledge Catalog仓库） | L1 |
 | [vendor-neutral-three-layer-learning.md](vendor-neutral-three-layer-learning.md) | 厂商项目三层剥离学习法（双视角）：学习者视角剥离营销话术→规范层重点投入；架构师视角识别"开放吸引生态+工具绑定变现"的成熟商业开源策略，含倒闭/竞品/本质三问+4大厂商策略识别，4次验证（OKF/Android/K8s/OpenAPI） | L2 |
+| [classic-patterns-reuse-heuristic.md](classic-patterns-reuse-heuristic.md) | 经典模式优先复用启发式：遇到新领域问题先检索成熟领域（OS/数据库/分布式/设计模式）的既有解法，把"发明"降级为"检索+映射"，6次验证（Headroom冷热分层/RAG虚拟内存/中间件/内容路由/可逆设计/MoE路由） | L2 |
+| [content-funnel-analysis.md](content-funnel-analysis.md) | 五层递进式内容深度分析模式，从原始提取到行业洞察逐层深入，确保分析有依据、洞察超越原文，1次验证 | L1-draft |
+| [cross-framework-atomic-analysis.md](cross-framework-atomic-analysis.md) | 跨多框架对比提炼原子化设计指南并回写到Agent文件的四阶段链路（样本分析→框架对比→指南聚合→Agent回写），将隐含设计哲学转化为显性知识，1次验证 | L1-draft |
+| [decomposable-recognition-ladder.md](decomposable-recognition-ladder.md) | 可分离承认阶梯法：当"承认某形式"被当作全有全无开关时，把其承载功能拆成按符号触及度与保护强度双轴排序的阶梯，让零符号成本的功能保障先行落地，1次验证（一夫多妻议题分析） | L1 |
+| [dual-layer-analysis-report.md](dual-layer-analysis-report.md) | 学习笔记层（事实）与洞察总结层（判断）分离的双目标分析报告结构，确保客观性与深度洞察并存，3次验证/15次复用 | L2-validated |
+| [example-first-alignment.md](example-first-alignment.md) | 示例优先对齐模式：开始任何新类型任务前先花5分钟研究现有成熟示例再创作，比从零猜测格式/结构/风格效率高5-10倍且保证一致性，5次验证 | L2 |
+| [gap-two-round-verification.md](gap-two-round-verification.md) | 缺口双轮核验法：公开信源轮（供给侧观测）+零变更功能轮（制品解包/二进制/CLI取证）把报告中"取不到"的未知项逐项关闭到明确证据等级，避免把访问失败误判为事实不存在，1次验证（openKylin评估关闭8个缺口、新增61条带URL事实） | L1-draft |
+| [knowledge-system-evolution-three-stages.md](knowledge-system-evolution-three-stages.md) | 知识体系三阶段演化模型：按"建构→解构→自反"三阶段推进知识体系/方法论/课程体系，配套边界条件与成熟度判定，避免原教旨主义与万能论，2次验证（第一性原理知识体系v1.0→v1.7） | L2 |
+| [symbol-vs-variable-decomposition.md](symbol-vs-variable-decomposition.md) | 符号之争与变量之争分离法：把"是否应承认某形式"的二元道德之争重写为"哪个变量通过什么机制影响结果"，先做因果检验再确定争点，1次验证（一夫多妻议题分析，74条编号事实） | L1 |
