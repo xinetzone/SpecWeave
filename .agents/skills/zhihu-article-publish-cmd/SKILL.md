@@ -1,7 +1,7 @@
 ---
 name: zhihu-article-publish-cmd
 version: 1.0.0
-description: "知乎专栏文章发布自动化全流程。当用户要填写知乎写文章编辑器（zhuanlan.zhihu.com/write 的 Draft.js 富文本）、插入配图、设置发布选项（话题/创作声明）、发布文章或对已发布文章补话题/改设置并更新时，必须使用此技能。本 Skill 封装了 Draft.js 编辑器唯一持久化输入通道（CDP Input.insertText，bu.type/execCommand/剪贴板注入均不可用）、图片插入四步法（file input id 注入 + upload_file + 上传状态确认 + JS 点击「插入图片」）、动态候选话题四步选择法（find/坐标/Enter 均不可靠，JS 按文本精确点击+目标区 DOM 验证）、以及发布后文章页回读验证清单（话题/创作声明/配图/作品链接）。也适用于任何 React/Draft.js 类富文本编辑器的自动化填充场景（参照输入通道与 Gotchas）。"
+description: "知乎专栏文章发布自动化全流程。当用户要填写知乎写文章编辑器（zhuanlan.zhihu.com/write 的 Draft.js 富文本）、插入配图、补插截图（豆包截图等）、设置发布选项（话题/创作声明）、发布文章或对已发布文章补话题/改设置/补图并更新、或将 Skill/文档上传到知乎开放平台知识库备份时，必须使用此技能。本 Skill 封装了 Draft.js 编辑器唯一持久化输入通道（CDP Input.insertText，bu.type/execCommand/剪贴板注入均不可用）、图片插入四步法（file input id 注入 + upload_file + 上传状态确认 + JS 点击「插入图片」）、动态候选话题四步选择法（find/坐标/Enter 均不可靠，JS 按文本精确点击+目标区 DOM 验证）、以及发布后文章页回读验证清单（话题/创作声明/配图/作品链接）。也适用于任何 React/Draft.js 类富文本编辑器的自动化填充场景（参照输入通道与 Gotchas）。"
 argument-hint: "<文章草稿 URL 或 /p/xxx 文章 URL> [配图本地路径列表]"
 user-invocable: true
 disable-model-invocation: false
@@ -36,8 +36,9 @@ x-toml-ref: "../../.meta/toml/.agents/skills/zhihu-article-publish-cmd/SKILL.tom
 当用户提到以下任何内容时触发：
 
 - "写文章"、"发布文章"、"知乎专栏"、"zhuanlan"、"写文章编辑器"
-- "填知乎编辑器"、"插入配图"、"文章配图"、"话题没加上"、"补话题"
+- "填知乎编辑器"、"插入配图"、"补图"、"插图"、"豆包截图"、"文章配图"、"话题没加上"、"补话题"
 - "创作声明"、"发布设置"、"更新文章"、"已发布文章修改"
+- "上传到知乎知识库"、"knowledge upload"、"Skill 备份到知乎"
 - 任何「React/Draft.js 富文本编辑器自动化填充」请求（通用迁移）
 
 > **关于触发**：即使没有说"用 skill"，只要目标是知乎写文章编辑器或已发布文章，就应该使用本技能——通用浏览器自动化在本编辑器下必然踩 Draft.js 拦截（合成事件被拒）与候选组件坐标偏移两大坑。
@@ -59,8 +60,9 @@ x-toml-ref: "../../.meta/toml/.agents/skills/zhihu-article-publish-cmd/SKILL.tom
 
 ## 5. 依赖与前置准备
 
-- **浏览器通道**：`browser-use-automation`（bu 通道），需已登录知乎账号（登录/验证码场景按浏览器自动化规范请求用户接管）。
-- **运行环境**：CDP 能力（`Input.insertText`/`Input.dispatchKeyEvent`）、`bu.upload_file`、`bu.js`（DOM 注入与验证）。
+- **浏览器通道**：`browser-use-automation` Skill（路径 `C:\Users\xinzo\AppData\Local\Doubao\User Data\Default\.doubao\agent_mode\workspace\.skills\browser-use-automation\SKILL.md`），提供 `bu.upload_file(selector, path)`、`bu.js(expression)`、`bu.find/search_type`、`bu.click(ref)`、`bu.click_xy(x, y)`、`bu.press_key(key)`、`bu.hover(ref)`、`bu.scroll`、`bu.snapshot` 等 API；执行前重读该 SKILL.md 获取最新签名。需已登录知乎账号（登录/验证码场景按浏览器自动化规范请求用户接管）。
+- **运行环境**：CDP 能力（`Input.insertText`/`Input.dispatchKeyEvent`）。
+- **可选通道**：知乎开放平台 CLI（`zhihu` Skill，`knowledge upload` 命令）可将本 Skill 的 SKILL.md 上传到个人知识库备份（需 Access Secret 授权；仅用户明确要求时执行，固定带 `--progress`）。
 - **前置状态**：文章草稿已存在（新建草稿或已发布文章编辑页）；配图本地路径已就绪。
 - **操作限制**：发布是外部不可逆动作，执行前必须获得用户明确确认；已发布文章再次编辑时发布设置可能重置（见 Gotchas 10.3）。
 
