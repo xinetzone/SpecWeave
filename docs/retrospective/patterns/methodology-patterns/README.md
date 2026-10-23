@@ -24,6 +24,17 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patt
 | creative-design | 创意与设计原则 | 11 | 视觉设计、认知锚点、角色设计、创造力 | [查看](CATEGORIES.md#creative-design--创意与设计原则) |
 | product-growth | 产品开发与竞争策略 | 52 | 产品Spec、增长、赛事、定位、交付、硬件产品设计、双产品矩阵、AI产品设计、营销转化、垂直场景三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA | [查看](CATEGORIES.md#product-growth--产品开发与竞争策略) |
 
+## 其他模式目录
+
+除上述 8 个主题分类外，模式库另含 2 个专项目录，不纳入主题分类体系：
+
+| 目录 | 中文名称 | 模式数 | 说明 | 入口 |
+|------|---------|-------|------|------|
+| concepts | 概念模式 | 20 | 跨主题可迁移的通用概念级方法：内容深度分析、双层报告结构、知识编译、子代理委派与责任转移治理、离线优先架构、导航登记与文档流水线等 | [查看](concepts/index.md) |
+| spec-workflow | Spec工作流模式 | 9 | PRD / Change Spec 编写流程与决策树、Frontmatter 元数据规范、通用 PRD 模板、引用验证与 Spec Mode 验证门禁、编写陷阱清单 | [查看](spec-workflow/index.md) |
+
+> 模式数口径与上方主题表一致（含各目录的 `index.md` 索引页）；纯模式文档数分别为 concepts 19 个、spec-workflow 8 个。
+
 ## 快速访问：多阶段 Sub-agent 协作模式集
 
 > 以下三个模式共同构成多阶段 sub-agent 协作的完整质量传递体系，源自 scikit-build-core Wiki 教程创建任务（2026-07-05）的复盘洞察萃取。
