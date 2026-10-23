@@ -29,6 +29,51 @@ def args_ns():
     return argparse.Namespace()
 
 
+def _index_payload(records) -> bytes:
+    """构造 git ls-files -s -z 的字节输出。
+
+    records: [(mode, path), ...]，mode 取自索引（"100644" 普通文件 / "160000" gitlink）。
+    """
+    blob = "".join(
+        f"{mode} 0000000000000000000000000000000000000000 0\t{path}\0"
+        for mode, path in records
+    )
+    return blob.encode("utf-8")
+
+
+def _make_mock_run(index_records=(), ignored=(), ls_files_rc=0, ls_files_stderr=b"",
+                   check_ignore_rc=None, calls=None):
+    """创建区分 git ls-files 与 git check-ignore 调用的 mock。
+
+    ignored —— 会被 .gitignore 规则命中的路径集合（模拟 check-ignore --no-index 的输出）。
+    calls  —— 可选列表，用于记录实际发生的 git 调用命令。
+    """
+    def mock_run(cmd, **kwargs):
+        if calls is not None:
+            calls.append(list(cmd))
+        if "ls-files" in cmd:
+            r = MagicMock()
+            r.returncode = ls_files_rc
+            r.stdout = _index_payload(index_records)
+            r.stderr = ls_files_stderr
+            return r
+        if "check-ignore" in cmd:
+            paths = [
+                p for p in kwargs["input"].decode("utf-8").split("\0")
+                if p
+            ]
+            matched = [p for p in paths if p in ignored]
+            r = MagicMock()
+            r.returncode = (check_ignore_rc if check_ignore_rc is not None
+                            else (0 if matched else 1))
+            r.stdout = ("".join(f"{p}\0" for p in matched)).encode("utf-8")
+            r.stderr = b""
+            return r
+        return MagicMock(returncode=0)
+
+    return mock_run
+
+
 class TestCheckRules:
     """_check_rules 内部函数测试。"""
 
@@ -62,142 +107,96 @@ class TestCheckRules:
         assert len(result) == len(REQUIRED_RULES)
 
 
-class TestCheckGitStatus:
-    """_check_git_status 内部函数测试。"""
+class TestPickTempCandidates:
+    """_pick_temp_candidates 内部函数测试。"""
 
-    def _make_mock_run(self, status_stdout="", check_ignore_rc=0):
-        """创建区分 git status 和 git check-ignore 调用的 mock。
+    def test_gitlink_excluded(self):
+        """gitlink（mode 160000）不参与临时依赖判定。"""
+        entries = [("160000", "vendor/flexloop"), ("100644", "vendor/README.md")]
+        assert gi._pick_temp_candidates(entries) == ["vendor/README.md"]
 
-        check_ignore_rc 控制 _is_actually_ignored 的返回值：
-        - 0: 文件被忽略（应报告违规）
-        - 1: 文件未被忽略（如子模块/白名单文件，不报告违规）
-        """
-        status_result = MagicMock()
-        status_result.returncode = 0
-        status_result.stdout = status_stdout
-        status_result.stderr = ""
+    def test_plain_path_excluded(self):
+        """不命中临时依赖路径的条目被排除。"""
+        entries = [("100644", "src/main.py"), ("100644", "docs/README.md")]
+        assert gi._pick_temp_candidates(entries) == []
 
-        ignore_result = MagicMock()
-        ignore_result.returncode = check_ignore_rc
-        ignore_result.stdout = ""
-        ignore_result.stderr = ""
+    def test_temp_path_picked(self):
+        """命中临时依赖路径的普通文件被选中。"""
+        entries = [("100644", ".temp/x.txt"), ("100644", "a/__pycache__/b.pyc")]
+        assert gi._pick_temp_candidates(entries) == [".temp/x.txt", "a/__pycache__/b.pyc"]
 
+
+class TestCheckTrackedTempDeps:
+    """_check_tracked_temp_deps 内部函数测试。"""
+
+    def test_clean_index(self, tmp_path):
+        """索引中无临时依赖时返回空列表，且不调用 check-ignore。"""
+        calls = []
+        mock = _make_mock_run(index_records=[("100644", "src/main.py")], calls=calls)
+        with patch.object(gi.subprocess, "run", side_effect=mock):
+            result = gi._check_tracked_temp_deps(tmp_path)
+        assert result == []
+        assert not any("check-ignore" in " ".join(c) for c in calls)
+
+    def test_gitlink_only(self, tmp_path):
+        """仅有子模块 gitlink 时不产生违规。"""
+        mock = _make_mock_run(index_records=[("160000", "vendor/flexloop")])
+        with patch.object(gi.subprocess, "run", side_effect=mock):
+            result = gi._check_tracked_temp_deps(tmp_path)
+        assert result == []
+
+    def test_tracked_and_ignored_temp_dep_is_violation(self, tmp_path):
+        """已跟踪且被忽略规则覆盖的临时依赖判为违规。"""
+        mock = _make_mock_run(
+            index_records=[("100644", ".temp/cache.bin"), ("100644", "src/main.py")],
+            ignored={".temp/cache.bin"},
+        )
+        with patch.object(gi.subprocess, "run", side_effect=mock):
+            result = gi._check_tracked_temp_deps(tmp_path)
+        assert len(result) == 1
+        assert ".temp/cache.bin" in result[0]
+
+    def test_tracked_but_not_ignored_path_not_violation(self, tmp_path):
+        """已跟踪但未被忽略规则覆盖的路径（如 vendor/README.md）不判违规。"""
+        mock = _make_mock_run(index_records=[("100644", "vendor/README.md")])
+        with patch.object(gi.subprocess, "run", side_effect=mock):
+            result = gi._check_tracked_temp_deps(tmp_path)
+        assert result == []
+
+    def test_ls_files_failure(self, tmp_path):
+        """git ls-files 返回非零退出码时报告错误。"""
+        mock = _make_mock_run(ls_files_rc=128, ls_files_stderr=b"fatal: not a git repository")
+        with patch.object(gi.subprocess, "run", side_effect=mock):
+            result = gi._check_tracked_temp_deps(tmp_path)
+        assert len(result) == 1
+        assert "执行失败" in result[0]
+
+    def test_ls_files_timeout(self, tmp_path):
+        """git ls-files 超时时报告错误而非无限期挂起。"""
         def mock_run(cmd, **kwargs):
-            if cmd[0:2] == ["git", "status"]:
-                return status_result
-            if cmd[0:2] == ["git", "check-ignore"]:
-                return ignore_result
-            return MagicMock(returncode=0)
+            raise subprocess.TimeoutExpired(cmd, gi.GIT_TIMEOUT)
+        with patch.object(gi.subprocess, "run", side_effect=mock_run):
+            result = gi._check_tracked_temp_deps(tmp_path)
+        assert len(result) == 1
+        assert "超时" in result[0]
 
-        return mock_run
-
-    def test_clean_status(self, tmp_path):
-        """git status 干净时返回空列表。"""
-        with patch.object(gi.subprocess, "run", side_effect=self._make_mock_run("")):
-            result = gi._check_git_status(tmp_path)
-        assert result == []
-
-    def test_status_with_violations(self, tmp_path):
-        """git status 包含被忽略的临时路径时返回违规列表。"""
-        with patch.object(gi.subprocess, "run", side_effect=self._make_mock_run(
-            "?? vendor/something.py\n?? .temp/cache.tmp\n M src/main.py\n"
-        )):
-            result = gi._check_git_status(tmp_path)
-        assert len(result) == 2
-        assert any("vendor/" in v for v in result)
-        assert any(".temp/" in v for v in result)
-        assert not any("src/main.py" in v for v in result)
-
-    def test_submodule_path_not_violation(self, tmp_path):
-        """子模块路径（未被 git 忽略）不应报告为违规。"""
-        def smart_mock(cmd, **kwargs):
-            if cmd[0:2] == ["git", "status"]:
-                r = MagicMock()
-                r.returncode = 0
-                r.stdout = "A  vendor/flexloop\n"
-                r.stderr = ""
-                return r
-            if cmd[0:2] == ["git", "check-ignore"]:
-                path = cmd[-1]
-                r = MagicMock()
-                r.returncode = 1 if "flexloop" in path else 0
-                r.stdout = ""
-                r.stderr = ""
-                return r
-            return MagicMock(returncode=0)
-
-        with patch.object(gi.subprocess, "run", side_effect=smart_mock):
-            result = gi._check_git_status(tmp_path)
-        assert result == []
-
-    def test_whitelisted_vendor_file_not_violation(self, tmp_path):
-        """白名单文件（vendor/README.md）未被忽略时不报告违规。"""
-        def smart_mock(cmd, **kwargs):
-            if cmd[0:2] == ["git", "status"]:
-                r = MagicMock()
-                r.returncode = 0
-                r.stdout = "?? vendor/README.md\n"
-                r.stderr = ""
-                return r
-            if cmd[0:2] == ["git", "check-ignore"]:
-                path = cmd[-1]
-                r = MagicMock()
-                r.returncode = 1 if "README.md" in path else 0
-                r.stdout = ""
-                r.stderr = ""
-                return r
-            return MagicMock(returncode=0)
-
-        with patch.object(gi.subprocess, "run", side_effect=smart_mock):
-            result = gi._check_git_status(tmp_path)
-        assert result == []
-
-    def test_git_command_failure(self, tmp_path):
-        """git 命令返回非零退出码时报告错误。"""
-        fail_result = MagicMock()
-        fail_result.returncode = 1
-        fail_result.stdout = ""
-        fail_result.stderr = "fatal: not a git repository"
-        with patch.object(gi.subprocess, "run", return_value=fail_result):
-            result = gi._check_git_status(tmp_path)
+    def test_check_ignore_failure(self, tmp_path):
+        """git check-ignore 返回异常退出码时报告错误。"""
+        mock = _make_mock_run(
+            index_records=[("100644", ".temp/cache.bin")],
+            check_ignore_rc=128,
+        )
+        with patch.object(gi.subprocess, "run", side_effect=mock):
+            result = gi._check_tracked_temp_deps(tmp_path)
         assert len(result) == 1
         assert "执行失败" in result[0]
 
     def test_git_not_found(self, tmp_path):
         """git 命令不存在时捕获 FileNotFoundError。"""
         with patch.object(gi.subprocess, "run", side_effect=FileNotFoundError):
-            result = gi._check_git_status(tmp_path)
+            result = gi._check_tracked_temp_deps(tmp_path)
         assert len(result) == 1
         assert "git 命令未找到" in result[0]
-
-    def test_deduplicates_violations(self, tmp_path):
-        """同一行匹配多个临时路径时只记录一次（break 逻辑）。"""
-        with patch.object(gi.subprocess, "run", side_effect=self._make_mock_run(
-            "?? vendor/__pycache__/test.cpython-313.pyc\n"
-        )):
-            result = gi._check_git_status(tmp_path)
-        assert len(result) == 1
-
-    def test_renamed_file_path_extraction(self, tmp_path):
-        """重命名文件（-> 语法）正确提取目标路径。"""
-        def smart_mock(cmd, **kwargs):
-            if cmd[0:2] == ["git", "status"]:
-                r = MagicMock()
-                r.returncode = 0
-                r.stdout = "R  .temp/old.txt -> .temp/new.txt\n"
-                r.stderr = ""
-                return r
-            if cmd[0:2] == ["git", "check-ignore"]:
-                r = MagicMock()
-                r.returncode = 0
-                r.stdout = ""
-                r.stderr = ""
-                return r
-            return MagicMock(returncode=0)
-
-        with patch.object(gi.subprocess, "run", side_effect=smart_mock):
-            result = gi._check_git_status(tmp_path)
-        assert len(result) == 1
 
 
 class TestRun:
@@ -208,11 +207,8 @@ class TestRun:
         gi_path = tmp_path / ".gitignore"
         gi_path.write_text("\n".join(REQUIRED_RULES), encoding="utf-8")
 
-        mock_result = MagicMock()
-        mock_result.returncode = 0
-        mock_result.stdout = ""
-        mock_result.stderr = ""
-        with patch.object(gi.subprocess, "run", return_value=mock_result):
+        mock = _make_mock_run(index_records=[("100644", "src/main.py")])
+        with patch.object(gi.subprocess, "run", side_effect=mock):
             ret = gi.run(tmp_path, args_ns)
         assert ret == 0
         out = capsys.readouterr().out
@@ -220,28 +216,30 @@ class TestRun:
         assert "验证通过" in out
 
     def test_missing_rules_returns_1(self, tmp_path, args_ns, capsys):
-        """.gitignore 缺少规则时返回 1 且不执行 git status 检查。"""
+        """.gitignore 缺少规则时返回 1 且不执行索引检查。"""
         gi_path = tmp_path / ".gitignore"
         gi_path.write_text("vendor/\n", encoding="utf-8")
-        ret = gi.run(tmp_path, args_ns)
+        calls = []
+        mock = _make_mock_run(calls=calls)
+        with patch.object(gi.subprocess, "run", side_effect=mock):
+            ret = gi.run(tmp_path, args_ns)
         assert ret == 1
         out = capsys.readouterr().out
         assert "失败: 缺少以下规则" in out
-        assert "git status" not in out
+        assert calls == []
 
-    def test_git_violations_returns_1(self, tmp_path, args_ns, capsys):
-        """规则齐全但 git status 有违规时返回 1。"""
+    def test_violation_returns_1(self, tmp_path, args_ns, capsys):
+        """规则齐全但索引中存在临时依赖时返回 1。"""
         gi_path = tmp_path / ".gitignore"
         gi_path.write_text("\n".join(REQUIRED_RULES), encoding="utf-8")
 
-        mock_result = MagicMock()
-        mock_result.returncode = 0
-        mock_result.stdout = "?? .temp/test.txt\n"
-        mock_result.stderr = ""
-        with patch.object(gi.subprocess, "run", return_value=mock_result):
+        mock = _make_mock_run(
+            index_records=[("100644", ".temp/test.txt")],
+            ignored={".temp/test.txt"},
+        )
+        with patch.object(gi.subprocess, "run", side_effect=mock):
             ret = gi.run(tmp_path, args_ns)
         assert ret == 1
         out = capsys.readouterr().out
         assert "通过: 所有" in out
-        assert "失败: git status" in out
-
+        assert "失败: 版本控制索引中存在本应被忽略的临时依赖" in out
