@@ -60,7 +60,7 @@ x-toml-ref: "../../.meta/toml/.agents/skills/zhihu-article-publish-cmd/SKILL.tom
 
 ## 5. 依赖与前置准备
 
-- **浏览器通道**：`browser-use-automation` Skill（路径 `C:\Users\xinzo\AppData\Local\Doubao\User Data\Default\.doubao\agent_mode\workspace\.skills\browser-use-automation\SKILL.md`），提供 `bu.upload_file(selector, path)`、`bu.js(expression)`、`bu.find/search_type`、`bu.click(ref)`、`bu.click_xy(x, y)`、`bu.press_key(key)`、`bu.hover(ref)`、`bu.scroll`、`bu.snapshot` 等 API；执行前重读该 SKILL.md 获取最新签名。需已登录知乎账号（登录/验证码场景按浏览器自动化规范请求用户接管）。
+- **浏览器通道**：`browser-use-automation` Skill（安装于当前环境的技能根目录，如 `.skills/browser-use-automation/SKILL.md`；执行前重读该 SKILL.md 获取最新 API 签名），提供 `bu.upload_file(selector, path)`、`bu.js(expression)`、`bu.find/search_type`、`bu.click(ref)`、`bu.click_xy(x, y)`、`bu.press_key(key)`、`bu.hover(ref)`、`bu.scroll`、`bu.snapshot` 等 API。需已登录知乎账号（登录/验证码场景按浏览器自动化规范请求用户接管）。
 - **运行环境**：CDP 能力（`Input.insertText`/`Input.dispatchKeyEvent`）。
 - **可选通道**：知乎开放平台 CLI（`zhihu` Skill，`knowledge upload` 命令）可将本 Skill 的 SKILL.md 上传到个人知识库备份（需 Access Secret 授权；仅用户明确要求时执行，固定带 `--progress`）。
 - **前置状态**：文章草稿已存在（新建草稿或已发布文章编辑页）；配图本地路径已就绪。
