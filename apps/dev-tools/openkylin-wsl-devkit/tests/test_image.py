@@ -119,8 +119,9 @@ class TestImageBuildRun:
         out = capsys.readouterr().out
         assert "构建成功" in out and "localhost/openkylin-dev:3.0" in out
         joined = _join_calls(fake_run_wsl)
-        # 上下文同步：Windows 盘符 → 发行版内 /mnt/d/...，且落 /tmp/okw-build-*/ctx
-        assert "cp -a /mnt/d/" in joined
+        # 上下文同步：默认上下文（Windows 路径）→ 发行版内 mnt 路径，且落 /tmp/okw-build-*/ctx
+        ctx_mnt = image.wsl_mnt_path(str(image.default_context_dir()))
+        assert f"cp -a {ctx_mnt}/." in joined
         assert "/tmp/okw-build-" in joined and "Containerfile" in joined
         # 构建命令：docker 格式 + 标签
         assert "podman build --format docker -t localhost/openkylin-dev:3.0" in joined

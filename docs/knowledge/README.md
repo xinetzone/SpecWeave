@@ -7,9 +7,9 @@ title: "项目知识库"
 
 项目知识库的统一入口页。详细分类条目与标签检索已拆分到独立索引，避免根 README 持续膨胀。
 
-- **总条目数**：473
+- **总条目数**：475
 - **分类数**：25
-- **标签数**：827
+- **标签数**：829
 
 ## 快速导航
 
@@ -31,7 +31,7 @@ title: "项目知识库"
 | short-video-skills | 6 | [short-video-skills](categories/short-video-skills.md) |
 | social-relations | 1 | [social-relations](categories/social-relations.md) |
 | standards | 1 | [standards](categories/standards.md) |
-| tech | 86 | [tech](tech/README.md) |
+| tech | 88 | [tech](tech/README.md) |
 | troubleshooting | 4 | [troubleshooting](troubleshooting/README.md) |
 | unknown | 218 | [unknown](categories/unknown.md) |
 | what-is-life | 7 | [what-is-life](categories/what-is-life.md) |
@@ -45,6 +45,8 @@ title: "项目知识库"
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
+| [openKylin 知识枢纽：官方文档导读、发行版对比与工程沉淀](tech/openkylin/index.md) | 2026-10-22 | tech |
+| [openKylin WSL 开发工具包（okw）](tech/openkylin/references/wsl-devkit-guide.md) | 2026-10-22 | tech |
 | [生成式媒体生产管线：从静帧到成片的六条工程做法](generative-media-pipeline/index.md) | 2026-10-20 | generative-media-pipeline |
 | [首帧保真：图生视频链路里的锚点前置](generative-media-pipeline/concepts/01-anchor-frame-fidelity.md) | 2026-10-20 | generative-media-pipeline |
 | [水印去除与编码兜底：让成片绕开平台标记与本机依赖缺失](generative-media-pipeline/concepts/02-watermark-and-codec.md) | 2026-10-20 | generative-media-pipeline |
@@ -54,7 +56,6 @@ title: "项目知识库"
 | [做短视频的 Skill 全景调研：从零到发布的多智能体流水线教程](short-video-skills/index.md) | 2026-10-20 | short-video-skills |
 | [生态全景与 Agent Skills 规范](short-video-skills/concepts/01-landscape-and-spec.md) | 2026-10-20 | short-video-skills |
 | [生产管线与选型：工序五段·双范式选型法](short-video-skills/concepts/02-pipeline-and-selection.md) | 2026-10-20 | short-video-skills |
-| [实战教程四线：口播/知识、AI 艺术片、带货、复盘分析](short-video-skills/concepts/03-recipes.md) | 2026-10-20 | short-video-skills |
 
 ## 相关资源
 

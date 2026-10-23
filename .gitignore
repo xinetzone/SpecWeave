@@ -103,6 +103,7 @@ build/
 
 # Sphinx 文档构建产物
 docs/_build/
+apps/dev-tools/openkylin-wsl-devkit/doc/_build/
 
 # 机器生成的对抗审查运行报告（每次审查自动产出的时间戳日志，可再生、零引用；
 # 人工沉淀的命名文章 adversarial-review-analyze-*.md 与 index.md 仍受跟踪）

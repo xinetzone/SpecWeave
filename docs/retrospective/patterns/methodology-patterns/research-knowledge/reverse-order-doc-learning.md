@@ -3,7 +3,7 @@ type: Pattern
 id: "reverse-order-doc-learning"
 title: "逆序文档学习法"
 source: "七概念知识沉淀(sc-20260929-openkylin-docs-wiki)——openKylin 官方文档平台 237 篇社区文档逆向导读（44 条事实/4 洞察/4 视角 7 意见 V 审查）"
-source_report: "../../../../knowledge/tech/openkylin-docs-wiki/index.md"
+source_report: "../../../../knowledge/tech/openkylin/docs-wiki/index.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/research-knowledge/reverse-order-doc-learning.toml"
 maturity: "L1-draft"
 maturity_note: "单个完整案例（openKylin 文档站 237 篇）首次成型：步骤①—④由该案例 44 条事实支撑，步骤⑤的三方交叉验证有同会话 WSL 本机实测提供半个第二案例支撑；跨域迁移（Apache/CNCF、厂商文档中心、法规标准库）仅完成机制推演。升级 L1.5 条件：在第二个非同谱系文档站（非 docsify/Gitee 形态）完整应用六步并回填修订；升级 L2-validated 另需本团队一次真实学习任务实战"
@@ -42,7 +42,7 @@ L1-draft（单个完整案例支撑，跨域迁移仅完成机制推演；升级
 
 "逆序"有两层含义：一是**结构与元信息先于正文内容**（先知道库里有什么、哪些新哪些旧，再决定读什么）；二是**版本规划页先于新手教程**（先确认代号与代际，再倒推每篇教程的适用版本）。
 
-支撑该模式的案例证据（详见[上游知识包](../../../../knowledge/tech/openkylin-docs-wiki/index.md)事实编号）：
+支撑该模式的案例证据（详见[上游知识包](../../../../knowledge/tech/openkylin/docs-wiki/index.md)事实编号）：
 
 1. **文档库按贡献历史生长而非按学习路径组织**：237 篇中文文档中 183 篇（77%）集中在"入门与参与"板块，而"标准与规范"仅 4 篇、"版本规划与发布"仅 3 篇，且存在 155–166 字符的占位性短页（F-004/F-005）。
 2. **最旧内容恰好位于新人入口**：新手入门页特性仍写 UKUI 4.0/KMRE，4/5 标题自标"需要更新"；另有"失效文档"子目录、旧编号路径链接与空 TODO 链接，而版本规划、AI 守则、SDK 指南等 2026 年新内容分布在深层板块（F-019/F-040/F-042）。
@@ -203,9 +203,9 @@ L1-draft（单个完整案例支撑，跨域迁移仅完成机制推演；升级
 
 ## 沉淀与校验记录
 
-- **上游会话**：`sc-20260929-openkylin-docs-wiki`（R→I→E→V→C，44 事实/4 洞察/7 条 V 意见），知识包位置 [docs/knowledge/tech/openkylin-docs-wiki/](../../../../knowledge/tech/openkylin-docs-wiki/index.md)；
+- **上游会话**：`sc-20260929-openkylin-docs-wiki`（R→I→E→V→C，44 事实/4 洞察/7 条 V 意见），知识包位置 [docs/knowledge/tech/openkylin/docs-wiki/](../../../../knowledge/tech/openkylin/docs-wiki/index.md)；
 - **沉淀会话**：`sc-20260930-openkylin-wiki-pattern`（2026-09-30，R→I→E→V→C 入库）；
 - **去重判定**：入库前比对 riev-doc-learning-method（产出流水线）、open-source-repo-four-layer-identification（代码仓库读法）、external-tech-doc-wiki-structure（产出结构）、product-learning-five-tier-pyramid（产出价值分层）四者——作用对象（百篇异构文档站）、核心动作（结构与时效逆向建图＋问题域重组）、所处层级（遍历策略而非加工流程）均不同，不构成重复，关系见上表；
 - **成熟度校验（沉淀 V 门）**：知识包内自标 L1；入库对照模式库等级表维持 **L1-draft**——仅单个完整案例、跨域迁移只完成机制推演，同会话 WSL 实测只构成半个第二案例，validation_count=1。升级条件见 frontmatter maturity_note；
 - **抽象化纪律**：模式正文以文件树/骨架/定年/重组/交叉验证六个通用动作表述，openKylin 仅作证据案例并挂事实编号；包内七张问题域概念页与 237 篇完整分类地图保留在知识包不复制入模式库，避免案例细节与通用模式互相绑死；
-- **沉淀 V 门（4 视角）**：① 魔鬼代言人——去重比对四模式（见上）、成熟度压回 L1-draft、确认非 Git 托管与纯即查场景已列入"不适用"；② 新人视角——各步骤均给出无 API 时的替代手段（sitemap/llms.txt/目录页）与截断标志检查，无案例背景可独立执行；③ 老板视角——即查即用场景单列以避免建图过度投入，检验标准以决策可完成而非读完全部为度；④ 未来视角——模式失效条件为文档站普遍版本化（版本切换器＋统一发布周期成为默认），届时"新旧并存"前提消失，模式退化为顺读法；随上游知识包内容随社区提交持续变化的事实时点（2026-09-29）一并复核；**计数与裁定**：4 视角全覆盖，意见 7 条（≥5）、采纳修正 6 条（≥2）、1 条登记为局限——V 门通过（详见上游 [V 审查记录](../../../../knowledge/tech/openkylin-docs-wiki/references/adversarial-review.md)）。
+- **沉淀 V 门（4 视角）**：① 魔鬼代言人——去重比对四模式（见上）、成熟度压回 L1-draft、确认非 Git 托管与纯即查场景已列入"不适用"；② 新人视角——各步骤均给出无 API 时的替代手段（sitemap/llms.txt/目录页）与截断标志检查，无案例背景可独立执行；③ 老板视角——即查即用场景单列以避免建图过度投入，检验标准以决策可完成而非读完全部为度；④ 未来视角——模式失效条件为文档站普遍版本化（版本切换器＋统一发布周期成为默认），届时"新旧并存"前提消失，模式退化为顺读法；随上游知识包内容随社区提交持续变化的事实时点（2026-09-29）一并复核；**计数与裁定**：4 视角全覆盖，意见 7 条（≥5）、采纳修正 6 条（≥2）、1 条登记为局限——V 门通过（详见上游 [V 审查记录](../../../../knowledge/tech/openkylin/docs-wiki/references/adversarial-review.md)）。

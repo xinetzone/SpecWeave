@@ -1,11 +1,11 @@
 """openKylin 知识库快速参考索引。
 
-只读引用 docs/knowledge/tech/openkylin-docs-wiki/，不复制内容、不改变结构。
+只读引用 docs/knowledge/tech/openkylin/docs-wiki/，不复制内容、不改变结构。
 """
 
 from dataclasses import dataclass
 
-KB_ROOT = "docs/knowledge/tech/openkylin-docs-wiki"
+KB_ROOT = "docs/knowledge/tech/openkylin/docs-wiki"
 
 @dataclass(frozen=True)
 class RefTopic:

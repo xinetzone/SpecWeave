@@ -25,7 +25,7 @@
 - **不重构领域逻辑**：`distro.py`、`podman.py`、`image.py`、`verify.py`、`scaffold.py`、`ref.py` 内的业务函数与判定矩阵一行不动（仅迁出其中的 cmd_* handler 并以 PEP 562 模块级 `__getattr__` 保留旧路径别名）。
 - **不新增/删除命令**，不新增功能特性。
 - **不引入异步、日志框架或任何第三方依赖**（xuan-compose 的 async/engine 模式与其问题域相关，okw 为同步短命令，不照搬）。
-- **不改文档**：`docs/tech/guides/openkylin-wsl-devkit/` 与 README 描述的 CLI 表面不变，无需同步。
+- **不改文档**：`apps/dev-tools/openkylin-wsl-devkit/doc/` 与 README 描述的 CLI 表面不变，无需同步。
 - **不修改测试断言口径**：现有 12 个测试文件保持通过；因迁移导致的唯一允许变动是 import 路径（且 G4 别名设计目标是零变动，若别名可覆盖则测试文件完全不动）。
 - **不做 Git 提交**：完成后按原子提交原则另行征求用户确认。
 

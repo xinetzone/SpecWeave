@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "openKylin WSL 开发工具包：以 WSL 为切入点的发行版管理、环境验收、deb/dput 脚手架与知识参考"
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "MIT" }
+license = { text = "Apache-2.0" }
 authors = [{ name = "SpecWeave" }]
 keywords = ["openkylin", "wsl", "linux", "deb", "okbs"]
 classifiers = [

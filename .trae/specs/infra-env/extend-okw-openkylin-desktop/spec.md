@@ -3,7 +3,7 @@ title: "为 okw 增加 openKylin 桌面（UKUI / xrdp）支持"
 status: "draft"
 methodology: "seven-concepts-cmd: F→V→I→C"
 content-sensitivity: "public"
-source: "docs/knowledge/tech/openkylin-docs-wiki/concepts/04-desktop-usage.md; docs/knowledge/tech/openkylin-docs-wiki/references/wsl-desktop-startup-tutorial.md; docs/knowledge/tech/openkylin-docs-wiki/references/wsl-dual-image-selection.md (§5.1); apps/dev-tools/openkylin-wsl-devkit/"
+source: "docs/knowledge/tech/openkylin/docs-wiki/concepts/04-desktop-usage.md; docs/knowledge/tech/openkylin/docs-wiki/references/wsl-desktop-startup-tutorial.md; docs/knowledge/tech/openkylin/docs-wiki/references/wsl-dual-image-selection.md (§5.1); apps/dev-tools/openkylin-wsl-devkit/"
 ---
 
 # 为 okw 增加 openKylin 桌面（UKUI / xrdp）支持

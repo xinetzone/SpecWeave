@@ -23,6 +23,27 @@ git checkout -b feat/your-feature
 
 分支命名遵循 `type/brief-description` 格式，例如 `feat/add-new-role`、`fix/handoff-protocol`。
 
+### 2.1 分支与标签的使用边界
+
+分支（branch）与标签（tag）承担不同职责，**不得混用**：
+
+| ref 类型 | 适用场景 | 生命周期 |
+|---------|---------|---------|
+| `branch` | **正在进行**的集成工作：有明确议题、仍在演进、等待合并或评审 | 议题闭环后即删除，不长期留存 |
+| `tag` | **检查点快照 / 归档**：工作线已封存但需保留可追溯的历史 | 长期留存，作为历史载体 |
+
+- 创建检查点快照时使用**注解标签**（`git tag -a`），标签消息写明：归档自分支、原分支 tip、判定依据、内容保全结论。
+- **不要**为「已完成」「暂时封存」「不确定是否还会继续」的工作线创建分支——这类工作线应转为 `archive/<原分支名>` 形式的注解标签（标签名中的 `/` 替换为 `-`）。
+- 议题闭环后清理对应分支，避免本地分支列表膨胀、分叉关系难以判读。
+
+```bash
+# 封存一条不再演进的分支：保留全部提交历史，可随时还原为分支
+git tag -a archive/feat-login-state -m "归档自分支 feat/login-state（原 tip abc1234）"
+git branch -d feat/login-state
+```
+
+> **背景**：曾因长期以分支充当检查点快照，累积 11 条 `backup/*`、`pre-rebuild/*` 分支，导致分支列表膨胀，合并与推送时难以判读哪些历史已进入主线。现行约定为：**branch 只用于进行中的工作，tag 承载一切需要长期留存的检查点**。
+
 ## 3. 提交变更
 
 - 遵循 [Conventional Commits](https://conventionalcommits.org) 规范。
@@ -41,6 +62,7 @@ git commit -m "feat: 添加 XXX 角色" -m "详细说明变更原因与影响。
 - [ ] 提交信息符合 Conventional Commits 规范
 - [ ] 变更不包含临时依赖（`vendor/`、`.temp/` 等）
 - [ ] 新增角色/协议/工作流已更新对应 README.md 索引
+- [ ] 未为检查点快照创建分支：需长期留存的工作线已转为 `archive/*` 注解标签（见 §2.1「分支与标签的使用边界」）
 
 ## 5. 发起 Pull Request
 

@@ -22,7 +22,7 @@
 ### 合成章节（cua×okw）
 - [x] **CP-6**: `concepts/06-cua-okw-solution.md` 顶部含**「合成设计（synthesis）· 未在本机实测」**声明（L35–37，且逐节复述边界）
 - [x] **CP-7**: 全程无"已实测可用/验证通过/已跑通"等未经证据支持的表述（机械检索三串各 0 命中；声明块与正文措辞已改写）
-- [x] **CP-8**: okw 侧事实均可回溯至 `apps/dev-tools/openkylin-wsl-devkit/README.md` 或 `docs/tech/guides/openkylin-wsl-devkit/*`；无依据处以「待核」标注
+- [x] **CP-8**: okw 侧事实均可回溯至 `apps/dev-tools/openkylin-wsl-devkit/README.md` 或 `apps/dev-tools/openkylin-wsl-devkit/doc/*`；无依据处以「待核」标注
 - [x] **CP-9**: 章节覆盖：分层架构分工 / 模块选型判据表 / 组合路径 / 前置条件 / 风险与未验证项清单（6 小节齐备）
 - [x] **CP-10**: 选型判据表对四类场景（无 GUI 命令任务 / 需 GUI 且要求隔离 / 可复现开发环境 / 评测与训练）均给出建议
 - [x] **CP-11**: 未验证项写明验证路线（8 项：#1~#4 未验证含验证路线，#5~#8 风险含缓解方式）

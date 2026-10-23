@@ -3,7 +3,7 @@ title: "为 okw 增加 openKylin AI 栈支持（OCR 已验证路径）"
 status: "draft"
 methodology: "seven-concepts-cmd: F→V→I→C"
 content-sensitivity: "public"
-source: "docs/knowledge/tech/openkylin-docs-wiki/concepts/05-ai-stack.md; docs/knowledge/tech/openkylin-docs-wiki/references/ai-sdk-ocr-poc.md; docs/knowledge/tech/openkylin-docs-wiki/references/ai-subsystem-source-architecture.md; apps/dev-tools/openkylin-wsl-devkit/"
+source: "docs/knowledge/tech/openkylin/docs-wiki/concepts/05-ai-stack.md; docs/knowledge/tech/openkylin/docs-wiki/references/ai-sdk-ocr-poc.md; docs/knowledge/tech/openkylin/docs-wiki/references/ai-subsystem-source-architecture.md; apps/dev-tools/openkylin-wsl-devkit/"
 ---
 
 # 为 okw 增加 openKylin AI 栈支持（OCR 已验证路径）

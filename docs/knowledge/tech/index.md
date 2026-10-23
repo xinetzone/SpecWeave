@@ -6,8 +6,7 @@
 
 python-rust-comparison/index
 fedora-coreos/index
-openkylin-docs-wiki/index
-openeuler-vs-openkylin/index
+openkylin/index
 public-server-hardening/index
 python-agent-harness/index
 quantum-secret-messaging/index

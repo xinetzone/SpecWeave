@@ -3,7 +3,7 @@ type: Pattern
 id: "scenario-interval-selection"
 title: "场景区间选型法"
 source: "七概念知识沉淀(sc-20260930-openeuler-vs-openkylin)——openEuler vs openKylin 后端/桌面双根社区对比（35 条新事实+12 条本地包锚点/5 洞察/4 视角 8 意见 V 审查）"
-source_report: "../../../../knowledge/tech/openeuler-vs-openkylin/index.md"
+source_report: "../../../../knowledge/tech/openkylin/openeuler-comparison/index.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/scenario-interval-selection.toml"
 maturity: "L1-draft"
 maturity_note: "单个对比主题（openEuler/openKylin）双侧多信源首次成型：步骤①—④由双侧 47 条事实支撑，步骤⑤⑥借自最小充分脚手架选型法的真实任务验证原则；跨域迁移目标（服务器侧双根社区、数据库 OLTP/HTAP、K8s 发行版）仅完成机制推演尚未实战。升级 L1 条件：在第二个非同谱系双根社区场景完整应用五问并回填修订；升级 L2-validated 另需本团队一次真实选型实战"
@@ -34,7 +34,7 @@ related_patterns:
 
 "区间"是本模式的核心概念：五问不是给候选打分加总，而是判定**你的问题落在哪一边的主场**。两个候选不是数轴上的高低之分，而是两个工作负载区间；选型错误的典型形态是"用 A 区间的总量证据论证 B 区间的适用性"。
 
-支撑该模式的案例证据（详见[上游知识包](../../../../knowledge/tech/openeuler-vs-openkylin/index.md)事实编号）：
+支撑该模式的案例证据（详见[上游知识包](../../../../knowledge/tech/openkylin/openeuler-comparison/index.md)事实编号）：
 
 1. **两个根社区按负载形态分工而非同场竞争**：openEuler 面向服务器/云/边缘/嵌入式（LTS 间隔 4 年、维护窗口 6—8 年，O-004/O-015），openKylin 面向桌面/AI PC/开发板（3 年 LTS+年度创新版双轨，K-001/K-004）；同属开放原子开源基金会、都有 UKUI 与同名 AgentOS，但工作负载区间不重叠。
 2. **总量数字跨区间不可比**：openEuler 侧 2000 万套装机为厂商大会口径、57.3% 份额为白皮书媒体转引（O-012/O-013），openKylin 侧 247 万为桌面注册用户口径（K-003）——统计对象与发布层级均不同，互相比较结论不成立（知识包 V 审查 V-02 裁定）。
@@ -143,7 +143,7 @@ related_patterns:
 
 ## 沉淀与校验记录
 
-- **上游会话**：`sc-20260930-openeuler-vs-openkylin`（R→I→E→V→C，35 条新事实+12 条本地包锚点/5 洞察/4 视角 8 条 V 意见），知识包位置 [docs/knowledge/tech/openeuler-vs-openkylin/](../../../../knowledge/tech/openeuler-vs-openkylin/index.md)；
+- **上游会话**：`sc-20260930-openeuler-vs-openkylin`（R→I→E→V→C，35 条新事实+12 条本地包锚点/5 洞察/4 视角 8 条 V 意见），知识包位置 [docs/knowledge/tech/openkylin/openeuler-comparison/](../../../../knowledge/tech/openkylin/openeuler-comparison/index.md)；
 - **沉淀会话**：`sc-20260930-scenario-interval-pattern`（2026-09-30，E→V→C 独立化）；
 - **去重判定**：入库前比对 minimal-sufficient-scaffold-selection（区间内选栈、实测向）、tech-selection-three-checks（通用原则、无分叉流程）、P-AGENT-SELECT-001（采购重量评分）三者——决策对象（同源分叉的两个根社区）、决策机制（固定顺序提问归区而非评分）、核心动作（第①问负载形态分叉）均不同，不构成重复，关系见上表；
 - **成熟度校验（沉淀 V 门）**：知识包内自标 L1-draft；入库复核维持 L1-draft——仅单主题案例、跨域迁移只完成机制推演，validation_count=1。升级条件：第二个非同谱系双根社区场景完整应用（L1），本团队真实选型实战回填（L2-validated）；

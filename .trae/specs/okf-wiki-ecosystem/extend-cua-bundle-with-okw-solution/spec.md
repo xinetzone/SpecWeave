@@ -32,7 +32,7 @@ source: "https://mp.weixin.qq.com/s/vEGTwWZ8Mws2fwAQyvm0Yg"
 
 - **Affected specs（方法论 / 规范）**：OKF v0.2（frontmatter / 保留文件名 / toctree）；`blog-article-to-okf-wiki` 六工序工作流；seven-concepts-cmd 的 R→I→E→V 链路与 G1–G4 质量门
 - **Affected code（实际改动面）**：仅 `projects/awesome-okf-xs/doc/bundles/jishu/ai/frameworks/ai-agent/cua/` 目录内文件（属 git submodule `projects/awesome-okf-xs`，按 `projects/AGENTS.md` 允许子模块内开发；改动随子模块提交）
-- **外部依赖（只读引用，不修改）**：`apps/dev-tools/openkylin-wsl-devkit/`（okw CLI 源码与 README）、`docs/tech/guides/openkylin-wsl-devkit/*`（8 篇指南）、`docs/knowledge/tech/openkylin-docs-wiki/`（okw 知识依据）
+- **外部依赖（只读引用，不修改）**：`apps/dev-tools/openkylin-wsl-devkit/`（okw CLI 源码与 README）、`apps/dev-tools/openkylin-wsl-devkit/doc/*`（8 篇指南）、`docs/knowledge/tech/openkylin/docs-wiki/`（okw 知识依据）
 
 ## 内容敏感度预检
 
@@ -55,7 +55,7 @@ source: "https://mp.weixin.qq.com/s/vEGTwWZ8Mws2fwAQyvm0Yg"
 - **骨架**：沿用既有 `index + concepts/ + references/ + log`，**无 `examples/`**——“操作可复现性两问”Q2 为否（第二篇的操作命令转述自官方且本机未实测；合成章节亦未实测）
 - **新增文件**：`concepts/06-cua-okw-solution.md`、`references/second-article-facts.md`
 - **修改文件**：`index.md`、`concepts/index.md`、`references/index.md`、`references/verification.md`、`log.md`（`references/article-source.md` 仅补一行指向第二信源，不改其既有事实体）
-- **okw 依赖**：组合章节的事实基础取自 `apps/dev-tools/openkylin-wsl-devkit/README.md` 与 `docs/tech/guides/openkylin-wsl-devkit/{index,02,03,05,08}.md`（交叉引用，不复制正文）
+- **okw 依赖**：组合章节的事实基础取自 `apps/dev-tools/openkylin-wsl-devkit/README.md` 与 `apps/dev-tools/openkylin-wsl-devkit/doc/{index,02,03,05,08}.md`（交叉引用，不复制正文）
 
 ## 事实登记摘要（预计）
 

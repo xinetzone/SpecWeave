@@ -40,7 +40,7 @@
   - 确认归属：既有束 `jishu/ai/frameworks/ai-agent/cua/`（**不新建束**，去重）
   - 确认骨架：无 `examples/`（操作可复现性两问 Q2 为否）
   - 设计 `concepts/06-cua-okw-solution.md` 大纲：①问题与定位 ②分层架构分工（宿主/Agent 的电脑/工作负载）③模块选型判据表 ④组合路径（设计）⑤前置条件 ⑥风险与未验证项清单
-  - 确定 okw 事实来源锚点（`apps/dev-tools/openkylin-wsl-devkit/README.md`、`docs/tech/guides/openkylin-wsl-devkit/{index,02,03,05,08}.md`）
+  - 确定 okw 事实来源锚点（`apps/dev-tools/openkylin-wsl-devkit/README.md`、`apps/dev-tools/openkylin-wsl-devkit/doc/{index,02,03,05,08}.md`）
   - 产出：`structure-plan.md`（含 06 章节大纲与 F 编号/okw 文档映射）
 - **Acceptance Criteria Addressed**: AC-1, AC-4
 - **Test Requirements**:
@@ -73,7 +73,7 @@
   - 撰写 cua × okw 最优解章节（OKF frontmatter：`type: Concept` + title/description/tags/generated/status/stale_after/sources）
   - 顶部显式标注**「合成设计（synthesis）· 未在本机实测」**
   - 内容：分层架构分工 / 模块选型判据表 / 组合路径 / 前置条件 / 风险与未验证项
-  - 交叉引用：Cua 侧引 F 编号；okw 侧引 `apps/dev-tools/openkylin-wsl-devkit/README.md` 与 `docs/tech/guides/openkylin-wsl-devkit/*`（**相对路径**，禁 `file:///`）
+  - 交叉引用：Cua 侧引 F 编号；okw 侧引 `apps/dev-tools/openkylin-wsl-devkit/README.md` 与 `apps/dev-tools/openkylin-wsl-devkit/doc/*`（**相对路径**，禁 `file:///`）
   - 01-five-core-modules / 05-scenarios-and-limitations 各加一行"延伸阅读 → 06"互链
 - **Acceptance Criteria Addressed**: AC-4, AC-5
 - **Test Requirements**:

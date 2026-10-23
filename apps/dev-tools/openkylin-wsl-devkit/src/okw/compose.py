@@ -5,7 +5,7 @@ xuan-compose（命令名 ``xc``）。
 preflight 只读探测、install 显式副作用（``--yes`` 闸门）、verify 只读验收。
 
 三条不可突破的边界：
-1. **许可证**：xuan-compose 为 GPL-2.0-only，okw（MIT）不 import、不复制、
+1. **许可证**：xuan-compose 为 GPL-2.0-only，okw（Apache-2.0）不 import、不复制、
    不链接其源码，也不分发其制品；okw 仅在用户显式授权后，于用户自己的
    发行版内通过 uv 从用户给定来源安装（与 apt 安装 GPL 包同理）。
 2. **解释器**：xuan-compose 要求 Python ≥3.14，而 openKylin 3.0 系统 Python

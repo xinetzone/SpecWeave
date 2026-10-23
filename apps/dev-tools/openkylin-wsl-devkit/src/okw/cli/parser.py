@@ -173,7 +173,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_img_build.add_argument("--no-cache", action="store_true", help="构建时禁用层缓存")
     p_img_build.add_argument(
         "--context",
-        help="构建上下文目录（Windows 绝对路径或发行版内绝对路径；默认包内 openkylin-dev-container/）",
+        help="构建上下文目录（Windows 绝对路径或发行版内绝对路径；默认包内 apps/openkylin-dev-container/）",
     )
 
     p_img_verify = p_image_sub.add_parser(

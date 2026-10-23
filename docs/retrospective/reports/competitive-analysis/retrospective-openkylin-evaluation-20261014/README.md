@@ -72,7 +72,7 @@ tags: [openkylin, 麒麟软件, 开放原子, 操作系统, 信创, UKUI, RISC-V
 
 ## 四、事实清单（R 阶段）
 
-事实总量：**145 条新增**（CMP-01~CMP-75，见 [附录 A：技术选型对比事实](facts-technical-comparison.md)；ECO-01~ECO-70，见 [附录 B：生态与商业事实](facts-ecosystem-business.md)）**＋约 148 条复用**（既有知识包 [openkylin-docs-wiki](../../../../knowledge/tech/openkylin-docs-wiki/index.md) 的 F-001~F-090 与 [openeuler-vs-openkylin](../../../../knowledge/tech/openeuler-vs-openkylin/index.md) 的 O/K 系列），合计约 293 条。
+事实总量：**145 条新增**（CMP-01~CMP-75，见 [附录 A：技术选型对比事实](facts-technical-comparison.md)；ECO-01~ECO-70，见 [附录 B：生态与商业事实](facts-ecosystem-business.md)）**＋约 148 条复用**（既有知识包 [openkylin-docs-wiki](../../../../knowledge/tech/openkylin/docs-wiki/index.md) 的 F-001~F-090 与 [openeuler-vs-openkylin](../../../../knowledge/tech/openkylin/openeuler-comparison/index.md) 的 O/K 系列），合计约 293 条。
 
 ### 4.1 分组概览（明细与来源 URL 见附录）
 
@@ -309,8 +309,8 @@ file: ../../../patterns/methodology-patterns/governance-strategy/community-metri
 
 - 事实附录 A：[技术选型对比事实 CMP-01~CMP-75（含 53 个信源）](facts-technical-comparison.md)
 - 事实附录 B：[生态与商业事实 ECO-01~ECO-70（含 36 个信源）](facts-ecosystem-business.md)
-- 复用知识包：[openkylin-docs-wiki（F-001~F-090，桌面栈/文档站/AI SDK 事实底座）](../../../../knowledge/tech/openkylin-docs-wiki/index.md)
-- 复用知识包：[openeuler-vs-openkylin 对比知识包（O/K 系列事实与场景区间选型法）](../../../../knowledge/tech/openeuler-vs-openkylin/index.md)
+- 复用知识包：[openkylin-docs-wiki（F-001~F-090，桌面栈/文档站/AI SDK 事实底座）](../../../../knowledge/tech/openkylin/docs-wiki/index.md)
+- 复用知识包：[openeuler-vs-openkylin 对比知识包（O/K 系列事实与场景区间选型法）](../../../../knowledge/tech/openkylin/openeuler-comparison/index.md)
 - 一手实测文档：[openkylin-wsl-devkit（okw）README](../../../../../apps/dev-tools/openkylin-wsl-devkit/README.md)
 - 萃取模式：[社区指标三查法 community-metric-triple-check](../../../patterns/methodology-patterns/governance-strategy/community-metric-triple-check.md)
 - 关键官方信源：openkylin.top（新闻/下载/SIG）、preview.openatom.org 与 www.openatom.cn（基金会公告/咨询委会议/捐赠人）、kylinos.cn（公司与新闻口径）、openeuler.org 与 gitee.com/openeuler（生命周期）、openanolis.cn 与 gitee.com/anolis（生命周期）、ubuntu.com / debian.org / docs.fedoraproject.org、中国信息安全测评中心 itsec.gov.cn（2026 年第 3 号公告）、similarweb.com / os.watch（第三方旁证）

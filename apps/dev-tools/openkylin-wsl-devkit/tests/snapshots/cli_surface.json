@@ -664,7 +664,7 @@
                           "nargs": null,
                           "required": false,
                           "metavar": null,
-                          "help": "构建上下文目录（Windows 绝对路径或发行版内绝对路径；默认包内 openkylin-dev-container/）",
+                          "help": "构建上下文目录（Windows 绝对路径或发行版内绝对路径；默认包内 apps/openkylin-dev-container/）",
                           "default": "None"
                         }
                       ]

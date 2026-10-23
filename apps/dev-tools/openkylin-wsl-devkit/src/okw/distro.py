@@ -1,6 +1,6 @@
 """WSL 发行版管理：wsl.exe 统一调用封装与发行版生命周期操作。
 
-设计依据（知识库 docs/knowledge/tech/openkylin-docs-wiki/）：
+设计依据（知识库 docs/knowledge/tech/openkylin/docs-wiki/）：
 - S26 本机实测：PATH 裁剪需全路径回退、WSL_UTF8=1 保证中文输出、E_UNEXPECTED 与空闲内存相关。
 - §3.3 验收五步、F-017/F-018 WSL 官方安装路径与默认账号纪律。
 """
