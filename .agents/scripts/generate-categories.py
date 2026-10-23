@@ -39,6 +39,8 @@ from lib.project import resolve_project_root
 from lib.cli import setup_safe_output, print_pass, print_warn
 
 # 8 个主题目录，顺序与现有 CATEGORIES.md 一致
+# 注：concepts/ 与 spec-workflow/ 为专项目录，不纳入主题分类（父级 README 已有声明），
+# 其模式清单由各自目录的 index.md / README.md 承载。
 THEME_DIRS = [
     "retrospective-knowledge",
     "research-knowledge",
