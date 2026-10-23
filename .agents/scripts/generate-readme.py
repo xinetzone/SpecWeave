@@ -213,6 +213,17 @@ def infer_id(dir_path: Path, root: Path) -> str:
         return dir_path.name + '-index'
 
 
+def resolve_docs_home_name(root: Path) -> str:
+    """返回文档中心首页文件名。
+
+    docs/README.md 已在 OKF v0.2 改造中废止，首页改为 docs/index.md。
+    此处按实际存在性判定，避免生成指向已废止文件的断链。
+    """
+    if (root / 'docs' / 'index.md').exists():
+        return 'index.md'
+    return 'README.md'
+
+
 def scan_directory(dir_path: Path, root: Path) -> tuple[list[DocEntry], list[DirEntry]]:
     doc_entries = []
     dir_entries = []
@@ -358,7 +369,7 @@ def generate_readme_content(
             lines.append(f"- [🏠 返回上级目录](../README.md)")
     try:
         depth_to_docs = len(dir_path.relative_to(root / 'docs').parts)
-        docs_home = '../' * depth_to_docs + 'README.md'
+        docs_home = '../' * depth_to_docs + resolve_docs_home_name(root)
         lines.append(f"- [📚 文档首页]({docs_home})")
     except ValueError:
         pass
