@@ -17,7 +17,7 @@ date: "2026-10-23"
 
 ## 边界说明
 
-收录可跨主题迁移的通用概念级方法；不包含按业务/技术主题划分的专项模式（见上级目录的 8 个主题分类），也不包含 Spec 编写流程类专项规范（见 spec-workflow 目录）。本目录部分模式与主题目录存在同名不同源的独立条目（如 content-funnel-analysis、dual-layer-analysis-report），以各自文件的 frontmatter `source` 字段为准区分来源。
+收录可跨主题迁移的通用概念级方法；不包含按业务/技术主题划分的专项模式（见上级目录的 8 个主题分类），也不包含 Spec 编写流程类专项规范（见 spec-workflow 目录）。本目录为跨主题通用概念模式的唯一权威源：2026-10-23 归并前曾与 8 个主题目录存在同名副本（content-funnel-analysis、dual-layer-analysis-report、layered-chained-spec 等 16 项），副本已删除并将其独有章节并入本目录对应文件，此后同名模式以本目录版本为准。
 
 <!-- README_INDEX_START -->
 ## 📄 文档索引
