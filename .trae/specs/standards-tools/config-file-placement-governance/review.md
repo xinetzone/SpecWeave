@@ -81,6 +81,7 @@
 - [x] 仅含治理入口时退出码 0；豁免不影响普通根级文件（`record.md` 仍告警）
 - [x] 单元测试 `.agents/scripts/tests/test_check_temp_lifecycle.py` 5/5 通过（TDD 红→绿）
 - [x] 实测：真实 `.temp/` 17 项合规 + 豁免 3 项，脚本退出码 0，CI 封装 `run_ci_check` 通过
+- [x] 治理入口不可被清理（Task 11）：`--clean` 后三件套保留（单测覆盖）；协议交付口径改为「清空 4 类目录内容、保留三件套」；文档 §6.6/§7 与 spec 同步；禁用 `git clean -xdf`
 
 ## 端到端验证
 

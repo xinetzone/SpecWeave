@@ -160,6 +160,14 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/config-file-plac
 - **AND** 豁免不影响其他内容：无用途前缀或无日期的普通根级文件仍按不合规告警
 - **AND** 当 `.temp/` 仅含治理入口时，脚本以零退出码退出
 
+#### Scenario: 治理入口不可被清理
+
+- **WHEN** 执行任何 `.temp/` 清理操作（`--clean`、项目交付前清空、批量清理脚本）
+- **THEN** 治理入口三件套（`README.md`、`AGENTS.md`、`.agents/`）必须保留，不得删除（检查器不将其纳入命名校验、保留期与清理清单）
+- **AND** 「项目交付前清空 `.temp/`」的执行口径为：清空 4 类用途目录（`backup/`/`experiments/`/`exports/`/`screenshots/`）内容，保留三件套
+- **AND** 禁止对 `.temp/` 使用 `git clean -xdf`/`-fdX`（忽略目录整体删除后三件套不可恢复）
+- **AND** 三件套被误删时，按 workspace-triplet-scaffold 技能（`.agents/skills/workspace-triplet-scaffold/`）重建，并以 `check_triplet.py --strict` 校验通过
+
 #### Scenario: 检测到命名不合规的临时内容
 
 - **WHEN** 运行 `check-temp-lifecycle.py`，检测到 `.temp/` 下存在无日期或无用途前缀的内容

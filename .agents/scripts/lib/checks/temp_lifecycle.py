@@ -6,7 +6,7 @@
 两层策略说明：
     1. 底层脚本策略（用途保留期）：backup=3天、experiments/exports/screenshots=14天、
        未分类根级=7天。命名不合规或超保留期时脚本退出码 1
-       （根级治理入口三件套 README.md/AGENTS.md/.agents/ 精确豁免，不参与校验与保留期）。
+       （根级治理入口三件套 README.md/AGENTS.md/.agents/ 精确豁免，不参与校验、保留期与清理）。
     2. CI/pre-commit 策略（统一年龄阈值，与用途分类无关）：
        - 年龄 > 14 天 → CI 警告（不阻塞）
        - 年龄 > 30 天 → CI 错误（阻塞流水线 / 阻塞提交）

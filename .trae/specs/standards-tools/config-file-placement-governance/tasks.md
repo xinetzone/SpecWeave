@@ -77,6 +77,14 @@
   - [x] SubTask 10.5: 同步 `.agents/protocols/dependency-management.md`（根级散放条款补豁免注记）与封装层 `lib/checks/temp_lifecycle.py` docstring
   - [x] SubTask 10.6: 实测验证：真实 `.temp/` 17 项合规 + 豁免 3 项（exit 0）、新测试 5/5 绿、定向回归 114 项全过、workspace triplet 校验 0 错 0 警
 
+- [x] Task 11: 治理入口不可被清理（规则收口）
+  - 背景：代码层 `--clean` 已豁免三件套，但协议「项目交付前应清空整个 `.temp/` 目录」按字面执行会连治理入口一并删除；三件套未入库，误删不可从 git 恢复
+  - [x] SubTask 11.1: 修改 `.agents/protocols/dependency-management.md` 清理条款：交付前清空口径改为「清空 4 类用途目录内容，保留治理入口三件套」
+  - [x] SubTask 11.2: 约定文档 §6.6 清理边界补「三件套永不删除」与清空口径，§7 反模式 +1 行（清空误删三件套 / `git clean -xdf`），版本升至 1.3.0 并同步 `.meta/toml` 镜像
+  - [x] SubTask 11.3: spec 新增 Scenario「治理入口不可被清理」（含禁用 `git clean -xdf` 与误删重建路径）
+  - [x] SubTask 11.4: `.temp/README.md` 约束表与 `.temp/AGENTS.md` 声明改为「不可被清理」口径；封装层 docstring 补「不参与清理」
+  - [x] SubTask 11.5: 实测验证：`--clean --yes` 后三件套仍在（既有单测 `test_clean_never_deletes_governance` 覆盖）；三件套校验与生命周期检查保持 0 错 / exit 0
+
 # Task Dependencies
 
 - Task 2 独立于 Task 1，可并行

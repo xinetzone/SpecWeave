@@ -90,7 +90,7 @@ vendor/
    - 检查是否有未使用的依赖
    - 验证 .gitignore 规则有效性
 2. **清理无用依赖**：移除不再使用的第三方库；清理前应确认无代码引用。
-3. **项目完成后清理 .temp/**：任务完成后，相关智能体应清理 `.temp/` 中由该任务产生的中间产物；项目交付前应清空整个 `.temp/` 目录。
+3. **项目完成后清理 .temp/**：任务完成后，相关智能体应清理 `.temp/` 中由该任务产生的中间产物；项目交付前应清空 4 类用途目录（`backup/`、`experiments/`、`exports/`、`screenshots/`）的内容，**保留治理入口三件套**（`README.md`/`AGENTS.md`/`.agents/`，不参与清理）。
 4. **虚拟环境按项目隔离**：每个项目维护独立的 `.venv/` 虚拟环境；项目归档或删除时，应同步删除对应的 `.venv/` 目录。
 5. **保留期分层**：`.temp/` 内容按用途分类设置保留期——`backup/` 3 天；`experiments/`、`exports/`、`screenshots/` 14 天；未分类根级 7 天。超期内容由 `check-temp-lifecycle.py` 检测并提示清理（缓存、日志、输出等一切中间产物同样按 4 类用途分类治理，不再单列 `cache/`、`logs/`、`output/` 子目录）。
 6. **CI 阈值对齐**：CI/预提交钩子以「>14 天警告、>30 天阻塞」为统一阈值（与用途分类保留期解耦）；本地可用 `python .agents/scripts/check-temp-lifecycle.py --clean` 按保留期提前清理。
