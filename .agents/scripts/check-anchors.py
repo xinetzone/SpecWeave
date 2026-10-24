@@ -36,6 +36,7 @@ import os
 import re
 import sys
 from pathlib import Path
+from urllib.parse import unquote
 
 from constants import EXCLUDED_DIRS
 from lib.cli import print_error, print_header, print_pass, print_warn
@@ -46,21 +47,43 @@ HEADING_RE = re.compile(r"^(#{1,6})\s+(.*?)\s*#*\s*$")
 EXTERNAL_SCHEMES = ("http://", "https://", "mailto:", "tel:", "ftp://", "file://")
 # 行号引用（`file.md#L12` / `#L12-L20`）是代码行定位约定，不是标题锚点，不参与校验
 LINE_ANCHOR_RE = re.compile(r"^l\d+(-l\d+)?$")
+# 占位符（`#<锚点>`、`#{{N锚点}}`、`#章节`）是模板/文档示例，不是真实锚点
+PLACEHOLDER_RE = re.compile(r"[{}<>]")
+# 站点/系统绝对路径（`/concepts/x.md`、`C:\repo\x.md`）无法按本地相对路径解析
+ABSOLUTE_PATH_RE = re.compile(r"^(/|[A-Za-z]:[\\/]|~)")
+HTML_TAG_RE = re.compile(r"<[^>]+>")
+MD_IMAGE_RE = re.compile(r"!\[([^\]]*)\]\([^)]*\)")
+MD_LINK_TEXT_RE = re.compile(r"\[([^\]]*)\]\([^)]*\)")
+
+
+def _strip_heading_markup(text: str) -> str:
+    """剥离标题里的 HTML 标签与 Markdown 链接/图片标记，只保留渲染后可见文本。
+
+    渲染后 `<kbd>Ctrl</kbd>` 只剩 `Ctrl`、`[标题](url)` 只剩 `标题`；若直接对原始
+    Markdown 生成 slug，会把标签名与 URL 一并算进锚点，产生误报。
+    """
+    s = HTML_TAG_RE.sub("", text)
+    s = MD_IMAGE_RE.sub(r"\1", s)
+    s = MD_LINK_TEXT_RE.sub(r"\1", s)
+    return s
 
 
 def gh_slug(text: str, seen: dict) -> str:
     """按 GitHub 规则生成锚点 slug。
 
-    流程：小写 → 去 `*` 与反引号（渲染后不存在的强调标记）→ 去标点（保留字母数字、
-    连字符、下划线、空格与 CJK）→ 空格转连字符 → 同名按出现次数追加序号后缀。
+    流程：去 HTML/链接标记 → 小写 → 去 `*` 与反引号（渲染后不存在的强调标记）→
+    去标点（保留字母数字、连字符、下划线、空格与 CJK）→ 空格转连字符 → 同名按出现
+    次数追加序号后缀。
 
-    注意：下划线在 GitHub 锚点中**保留**（`### fix_x.py` → `#fix_xpy`），因此不做删除；
+    注意 1：下划线在 GitHub 锚点中**保留**（`### fix_x.py` → `#fix_xpy`），因此不做删除；
     仅 `*`/反引号视为强调标记去除。
+    注意 2：符号（emoji、方块图）被删除后**保留其后的空格**，渲染为前导连字符
+    （`## ✅ 概览` → `#-概览`），因此去标点后不再 strip。
     """
-    s = text.strip().lower()
+    s = _strip_heading_markup(text).strip().lower()
     s = s.replace("*", "").replace("`", "")
     s = re.sub(r"[^\w\u4e00-\u9fff\- ]", "", s, flags=re.UNICODE)
-    s = s.strip().replace(" ", "-")
+    s = s.replace(" ", "-")
     if s in seen:
         seen[s] += 1
         return "%s-%d" % (s, seen[s])
@@ -68,8 +91,24 @@ def gh_slug(text: str, seen: dict) -> str:
     return s
 
 
+def docutils_slug(slug: str) -> str:
+    """把 GitHub slug 归一到 docutils/Sphinx 风格：压缩连字符、去掉首尾连字符。
+
+    为什么需要两种：本仓 Markdown 有两个渲染面——仓库托管（GitHub slugger，保留
+    前导连字符与连续连字符）与 Sphinx/MyST 站点（docutils `make_id`，压缩并去首尾）。
+    同一标题在两个渲染面会得到不同锚点。若只按 GitHub 规则校验，`## ⚠️ 警示`
+    这类符号开头标题的 `#警示` 链接会被误报为断链。
+    """
+    s = re.sub(r"-{2,}", "-", slug)
+    return s.strip("-")
+
+
 def collect_anchors(path: Path) -> set:
-    """返回该文件的锚点集合（跳过围栏代码块内的 `#` 注释行）。"""
+    """返回该文件的锚点集合（跳过围栏代码块内的 `#` 注释行）。
+
+    每个标题同时产出 GitHub 与 docutils 两种 slug，任一命中即视为可达——
+    避免因渲染面不同而把有效锚点误报为断链。
+    """
     anchors = set()
     seen = {}
     in_fence = False
@@ -82,7 +121,9 @@ def collect_anchors(path: Path) -> set:
                 continue
             m = HEADING_RE.match(line)
             if m:
-                anchors.add(gh_slug(m.group(2), seen))
+                gh = gh_slug(m.group(2), seen)
+                anchors.add(gh)
+                anchors.add(docutils_slug(gh))
     return anchors
 
 
@@ -158,8 +199,12 @@ def main() -> int:
                     if "#" not in target:
                         continue
                     rel_path, frag = target.split("#", 1)
-                    frag = frag.strip().lower()
-                    if not frag or LINE_ANCHOR_RE.match(frag):
+                    frag = unquote(frag.strip()).lower()
+                    if not frag or LINE_ANCHOR_RE.match(frag) or PLACEHOLDER_RE.search(frag):
+                        continue
+                    rel_path = rel_path.split("?", 1)[0]
+                    # 占位符路径与站点/系统绝对路径无法按本地相对路径解析，跳过以避免误报
+                    if PLACEHOLDER_RE.search(rel_path) or ABSOLUTE_PATH_RE.match(rel_path):
                         continue
                     scanned += 1
                     if rel_path:
