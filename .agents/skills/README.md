@@ -36,7 +36,7 @@ title: ".agents/skills/ 目录索引"
 | sovereign-rollout-cmd | 命令门面 | 主权区治理资产落盘 | 提案、批准落盘、主权区变更、治理资产落盘、先提案后批准 | [sovereign-rollout-cmd/SKILL.md](sovereign-rollout-cmd/SKILL.md) |
 | github-org-bootstrap-cmd | 命令门面 | GitHub 组织命名与初始化 | 创建GitHub组织、建个org、组织名怎么起、demo组织、huncheng-lab | [github-org-bootstrap-cmd/SKILL.md](github-org-bootstrap-cmd/SKILL.md) |
 
-### 完整Skill（26个）
+### 完整Skill（27个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -66,6 +66,7 @@ title: ".agents/skills/ 目录索引"
 | user-level-skill-junction-delivery | 完整Skill（v1.0.0，L1） | 用户级 Skill 目录联接交付：三条前置（推荐建到用户级 + 主权区已有双门达标副本 + 本轮明确不做四处登记）→ 只读取证四步 → 提案确认门 → PowerShell Junction 交付（禁复制、禁穿透写）→ 经目标路径六项验收（枚举文件、双门复跑、脚本与 evals、git status 哈希前后一致）；含幂等重入表与 12 条 Gotchas | 在用户级新建 Skill、装到 ~/.qoder/skills、建联接不复制、目录联接交付、为什么用户级没有这个技能 | [user-level-skill-junction-delivery/SKILL.md](user-level-skill-junction-delivery/SKILL.md) |
 | version-floor-contract-guard | 完整Skill（v1.0.0，L1） | 版本下限契约守卫：把 manifest 声明的最低支持版本变成可执行断言——实测真门槛（隔离安装候选版本、走真实消费路径跑夹具、再验门槛之上一个版本）→ 枚举全部声明面（实例 manifest/模板/脚手架生成器/文档/conda 与环境文件）→ 把断言并入 CI 已调用的校验脚本 → 夹具正负双向验证（精确退出码与报错条数）→ 扫描面审计（按 .gitmodules 判定子模块，源案例 10→12）；含 probe-matrix 与 guard-and-fixtures 两份参考与 12 条 Gotchas；萃取自会话 c9d91a62 | 版本下限失真、声明 0.10 但实测要求 0.11、minimum-version 该写多少、构建后端下限上调、守卫脚本漏扫目录、门槛从没被执行 | [version-floor-contract-guard/SKILL.md](version-floor-contract-guard/SKILL.md) |
 | skill-junction-durability-guard | 完整Skill（v1.0.0，L1） | 用户级 Skill 目录联接的持久性守卫：D0/D1/D2/D2i/D3 五级判定（跟踪状态 × 忽略规则 × 联接目标）→ 五步只读取证（`ls-files--error-unmatch` / `status` / `check-ignore` / `grep HEAD` / blob 比对）→ 联接创建与内容提交拆为 A/B/C/D 四项独立授权 → 提交后 blob 与经目标路径双复验；含纯审计模式与 14 条 Gotchas | 联接指向的技能突然没了、目录联接悬空、用户级技能能触发但没入库、建了联接还要不要提交、git clean 会不会删技能、git clean -fdx | [skill-junction-durability-guard/SKILL.md](skill-junction-durability-guard/SKILL.md) |
+| user-skill-sovereign-migration | 完整Skill（v1.2.0，L1） | 用户级 Skill 主权区原生迁移：位置决策树（原生/镜像/从零/保留用户级）→ 零写入预检（读全文、实体或联接判定、目标存在性、四处登记面探测）→ 提案批准 → 原生化 frontmatter（`x-toml-ref` 为条件字段）→ 保真复制与 SHA256/正文比对 → 两侧质量门分差归因（源 65/7 warn → 目标 70/6 warn，+5 为新增 `paths`）→ 移交四处登记与 Junction；含零源改根分支、19 条 Gotchas 与 17 项安全检查清单 | 迁入 .agents/skills、为什么没放在 .agents/skills、用户级 Skill 入库、原生迁移、移入主权区、把 ~/.qoder/skills 的技能搬进仓库 | [user-skill-sovereign-migration/SKILL.md](user-skill-sovereign-migration/SKILL.md) |
 
 ### 工作流门面（6个）
 

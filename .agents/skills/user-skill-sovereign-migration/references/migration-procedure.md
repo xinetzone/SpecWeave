@@ -80,6 +80,7 @@ disable-model-invocation: false
 paths:
   - ".agents/skills/<skill-name>/**"
 title: "<Skill 标题>"
+# 仅当 .meta/toml 镜像已创建时写：
 x-toml-ref: "../../../.meta/toml/.agents/skills/<skill-name>/SKILL.toml"
 ---
 ```
@@ -92,10 +93,12 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/<skill-name>/SKILL.toml"
 | `version` | 迁入原生轨时统一从 `1.0.0` 起 |
 | `description` | 保留原有有效描述，补足触发词与强制使用措辞 |
 | `paths` | 指向主权区技能目录，不写用户级绝对路径 |
-| `x-toml-ref` | 按 SKILL.md 实际所在层级推算，`.agents/skills/<name>/` 下是 `../../../` |
-| `source` | 若原 Skill 有来源说明则保留；不写入本机绝对路径 |
+| `x-toml-ref` | 条件字段：仅当 `.meta/toml` 镜像已创建时写入；按 SKILL.md 实际所在层级推算，`.agents/skills/<name>/` 下是 `../../../` |
+| `source` | 若原 Skill 有来源说明则保留；不写入本机绝对路径。它是 `check-links.py` 默认校验的路径字段，溯源改用会话 ID 等非路径文本 |
 
 > 层数校验：从 `.agents/skills/<name>/SKILL.md` 出发，`..` 到 `.agents/skills/`，`../..` 到 `.agents/`，`../../..` 到仓库根；再进入 `.meta/toml/...`。共三级。
+
+> `x-toml-ref` 与 `source` 都是 `check-links.py --check-frontmatter-paths` 的默认校验字段（`check-links.py:477`）。镜像未建或来源不是文件路径时，写入路径值会被判为断链；本轮登记延后时两个字段一并延后。
 
 ## 4. 复制命令
 
@@ -236,12 +239,20 @@ grep -RnoE "\]\(([^)#]+)" "$DST" | head -50
 python "$REPO/.agents/scripts/check-links.py" \
   --path "$DST" --check-frontmatter-paths
 
-# 5) 质量门基线
+# 5) 质量门基线：目标与源两侧同命令各一次
 python "$REPO/.agents/scripts/check-skill-quality.py" \
-  --path "$DST" --verbose
+  --path "$DST" --json
+python "$REPO/.agents/scripts/check-skill-quality.py" \
+  --path "$SRC" --json
 ```
 
-质量门未达 100 分时转到 `skill-quality-gate-remediation`，按 error → warn 顺序修复并复跑 `--score --threshold 100`；修复完成后再交接登记，避免 CHANGELOG 记录过期验收数据。
+先比两侧，再决定是否修复：
+
+1. 目标分数下降或出现新增警告，才可能是迁入漂移；目标分差若只来自已批准的 frontmatter 变更（如新增 `paths` 带来的 +5），且残余警告在源侧逐条存在，则判定为零漂移。
+2. 来源会话实测：源 65/100、7 warn → 目标 70/100、6 warn；+5 恰好是新增 `paths` 消掉的一条，残余 6 项均可在源侧找到。
+3. 目标 <100 时按批准范围分流：
+   - 允许改正文 → 转 `skill-quality-gate-remediation`，按 error → warn 顺序修复并复跑 `--score --threshold 100`。
+   - 明确排除正文 → 不改正文凑分；把未达标项、残余警告与两侧分差写入交付报告和交接载荷，标注「修复待下一轮单独授权」。
 
 ## 7. 交接载荷
 
@@ -256,6 +267,10 @@ body changes: none / <已批准章节列表>
 file hash check: PASS（N 个文件）
 body check: PASS（仅 frontmatter 变化）
 quality gate baseline: <分数与失败项>
+quality gate source: <score>/100，<n> warn（<清单>）
+quality gate target: <score>/100，<n> warn（<清单>）
+quality gate delta: <+x>，归因 <字段/正文变更>
+quality gate remediation: 已完成 / 未达标，待下一轮单独授权（范围排除正文）
 source kind: physical directory / junction
 deletion authorized: yes / no
 ```
@@ -276,7 +291,9 @@ deletion authorized: yes / no
 | 源路径是联接 | 不迁移；核实联接目标，直接进入验证或登记 |
 | 哈希不一致 | 重新复制，不在目标上手工修补 |
 | 正文差异未在提案中 | 恢复目标正文，重新比对 |
-| 质量门低于 100 | 转 `skill-quality-gate-remediation`，修完复跑 |
+| 质量门低于 100，批准范围允许改正文 | 转 `skill-quality-gate-remediation`，修完复跑 |
+| 质量门低于 100，批准范围排除正文 | 不改正文；上报未达标项与残余警告，修复留待下一轮授权 |
+| 目标与源分差无法归因 | 停止交接；先查是否有未列明的正文或资源变更 |
 | 链接门报错 | 修正链接或补齐目标文件；不要忽略或用 `--exclude` 掩盖 |
 | Junction 创建失败 | 确认用户级路径为空；空目录用 `rmdir` 清理后重试，非空则报告 |
 | 源目录已删除但联接缺失 | 先验证主权区目标完整，再重建联接；不要重建源实体副本 |

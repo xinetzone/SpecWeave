@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（26个）
+### 完整Skill（27个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -37,6 +37,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | user-level-skill-junction-delivery | "在用户级新建 Skill"、"装到 ~/.qoder/skills"、"建联接不复制"、"目录联接交付"、"为什么用户级没有这个技能" | 1（三条前置判定 → 只读取证 → 提案确认门 → PowerShell Junction 交付 → 经目标路径六项验收与只读哈希证明；禁复制与 mklink；L1） | v1.0.0 | [skills/user-level-skill-junction-delivery/SKILL.md](../skills/user-level-skill-junction-delivery/SKILL.md) |
 | version-floor-contract-guard | "版本下限失真"、"声明 0.10 但实测要求 0.11"、"minimum-version 该写多少"、"构建后端下限上调"、"守卫脚本漏扫目录" | 1（实测真门槛 → 枚举全部声明面 → 断言并入 CI 已调用的校验脚本 → 夹具正负双向验证 → 按 .gitmodules 审计扫描面；不用于依赖升级与版本选型；L1） | v1.0.0 | [skills/version-floor-contract-guard/SKILL.md](../skills/version-floor-contract-guard/SKILL.md) |
 | skill-junction-durability-guard | "联接指向的技能突然没了"、"目录联接悬空"、"用户级技能能触发但没入库"、"建了联接还要不要提交"、"git clean 会不会删技能" | 1（D0/D1/D2/D2i/D3 分级 → 五步只读取证 → A/B/C/D 授权拆分 → 提交后 blob 与目标路径双复验；含 --audit 只读模式；L1） | v1.0.0 | [skills/skill-junction-durability-guard/SKILL.md](../skills/skill-junction-durability-guard/SKILL.md) |
+| user-skill-sovereign-migration | "迁入 .agents/skills"、"为什么没放在 .agents/skills"、"用户级 Skill 入库"、"原生迁移"、"移入主权区"、"把 ~/.qoder/skills 的技能搬进仓库" | 1（位置决策树 → 零写入预检与冲突裁决 → 提案批准 → 原生化 frontmatter → 保真复制 → 内容级验证与两侧质量门分差归因 → 移交四处登记与 Junction；含零源改根分支；L1） | v1.2.0 | [skills/user-skill-sovereign-migration/SKILL.md](../skills/user-skill-sovereign-migration/SKILL.md) |
 
 ### 工作流门面（6个）
 

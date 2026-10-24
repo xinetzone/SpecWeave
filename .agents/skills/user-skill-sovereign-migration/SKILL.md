@@ -1,6 +1,6 @@
 ---
 name: user-skill-sovereign-migration
-version: 1.1.0
+version: 1.2.0
 description: 把用户级 Skill 迁入 SpecWeave 主权区 .agents/skills，并完成原生轨改造与交接验收。当用户说「迁入 .agents/skills」「用户级 Skill 入库」「原生迁移」「移入主权区」「为什么没放在 .agents/skills」，或方案批准后改目标根但源 Skill 从未写入任何根时，必须使用此技能。先零写入分流：旧根有实体源才读源、保真复制并做 SHA256；旧根不存在且非联接则走零源改根分支——新根跨根查重、原生 frontmatter 直接创建、新根双门验收，重规划细节移交 skill-target-root-switch-replan。不用于外部平台镜像、从零设计、质量门修复、四处登记与联接。
 argument-hint: "<skill-name 或用户级目录> [仓库根]"
 user-invocable: true
@@ -11,8 +11,9 @@ paths:
   - ".agents/skills/CHANGELOG.md"
   - ".agents/capability-registry/02-skills.md"
 title: "用户级 Skill 主权区原生迁移"
+x-toml-ref: "../../../.meta/toml/.agents/skills/user-skill-sovereign-migration/SKILL.toml"
 metadata:
-  source: "会话 0b5028ae-4c67-46da-8e99-0c2b68ae9c3a 与 82aa536e-ed72-4370-bd04-6f0ef014f959；declared-consistency-fix 迁移 + 零源改根实测"
+  source: "会话 0b5028ae-4c67-46da-8e99-0c2b68ae9c3a、82aa536e-ed72-4370-bd04-6f0ef014f959、511919f2-09d9-46aa-b6bb-a423d6f9e91d；declared-consistency-fix 迁移 + 零源改根 + ci-gate 迁移质量门分差实测"
 ---
 
 # 用户级 Skill 主权区原生迁移
@@ -156,7 +157,11 @@ metadata:
 x-toml-ref: "../../../.meta/toml/.agents/skills/<skill-name>/SKILL.toml"
 ```
 
-`x-toml-ref` 的层数必须按文件实际位置推算：`.agents/skills/<name>/SKILL.md` 到仓库根是三级，因此是 `../../../`；不要照抄模板文件在 `.agents/skills/` 根目录时的 `../../`。TOML 尚未创建时省略该字段，否则链接门会把不存在的镜像判为断链。
+`x-toml-ref` 的层数必须按文件实际位置推算：`.agents/skills/<name>/SKILL.md` 到仓库根是三级，因此是 `../../../`；不要照抄模板文件在 `.agents/skills/` 根目录时的 `../../`。
+
+`x-toml-ref` 是条件字段，不是模板常量：`check-links.py --check-frontmatter-paths` 默认校验 `source` 与 `x-toml-ref`（`check-links.py:477`），`.meta/toml` 镜像尚未创建时写入必然报「文件不存在」，等于自造一条链接门断链。若本轮登记延后，`source`/`x-toml-ref` 一并延后；`metadata.source` 用会话 ID 等非路径文本。
+
+> **为什么条件字段不能照抄模板？** 模板默认所有原生字段都已就位；实际迁移常常先交付内容、后补登记。镜像未建时写回指字段，链接门会立刻变红，而失败原因不是内容缺陷，而是模板假设与本轮范围不一致。
 
 ### 4.3 保真复制
 
@@ -175,7 +180,17 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/<skill-name>/SKILL.toml"
 4. `references/`、`scripts/` 中被正文引用的路径真实存在
 5. 内部 Markdown 链接可达
 
-质量门可在交接前先跑一次基线；未达 100 分时转 `skill-quality-gate-remediation`，不要在登记后再返工。
+质量门必须做**两侧对照**，而不是只看目标分数：
+
+1. 在目标目录与源目录用同一命令各跑一次（`check-skill-quality.py --path <dir> --json`），记录分数、错误/警告清单与退出码。
+2. 计算分差并逐项归因：目标分差应只来自已批准的 frontmatter 变更；其余警告须能在源侧逐条找到对应项，才可判定「零漂移」。来源会话实测：源 65 分/7 warn → 目标 70 分/6 warn，+5 恰好是新增 `paths` 消掉的一条，残余 6 项在源侧逐条存在。
+3. 目标 <100 时按批准范围分流：
+   - 批准范围允许正文修改 → 转 `skill-quality-gate-remediation`，修完复跑 `--score --threshold 100` 再交接。
+   - 批准范围明确排除正文（如「只迁入内容 + 验收」「正文不动」）→ **不得改正文凑分**；把未达标项、残余警告清单、两侧分差写入交付报告与交接载荷，标注「质量门未达标，修复待下一轮单独授权」。本轮不得把登记/联接表述为「已达标」。
+
+> **为什么质量门要两侧对照？** 目标分数低不一定是迁入造成的：用户级与原生轨的元数据契约不同，有些警告在源侧本来就存在。只有同一命令在源与目标各跑一次、把分差逐项归因，才能区分「迁入漂移」与「既有内容特征」。
+
+> **为什么批准范围排除正文时不能转修复？** `skill-quality-gate-remediation` 会改正文；当用户只批准「迁入内容 + 验收」且明示「正文不动」时，转修复即越权。正确动作是停止修复、把未达标项如实上报，把修复留给下一轮单独授权。
 
 ### 4.5 移交登记与收尾
 
@@ -213,7 +228,9 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/<skill-name>/SKILL.toml"
 - [ ] （有源迁移）复制采用文件复制并做 SHA256 比对，无手抄
 - [ ] 已确认正文仅按提案列明的范围修改
 - [ ] 已确认无 `file:///`、无运行残留、引用资源存在
-- [ ] 质量门未达标时已转修复技能，未把登记建立在失分内容上
+- [ ] 质量门已在源与目标两侧用同一命令各跑一次，分差可逐项归因
+- [ ] 质量门 <100 时已按批准范围分流：可改正文则转修复，不可改正文则如实上报未达标项
+- [ ] `x-toml-ref` 仅在 `.meta/toml` 镜像已创建时写入；登记延后时 `source`/`x-toml-ref` 一并延后
 - [ ] 四处登记与 Junction 已移交 `native-skill-surface-registration`
 - [ ] 删除实体源目录前已获得单独且明确的授权
 - [ ] 未提交、未推送，除非用户明确要求
@@ -236,16 +253,21 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/<skill-name>/SKILL.toml"
 14. **`ls` 输出为空不等于从未写入**：空目录、联接与权限失败都可能表现为空；存在性和联接类型必须分开判定。
 15. **无源时不要伪造“哈希一致”**：没有源就没有比对对象，报告写“不适用”；把不适用写成 PASS 会让后续审计误判。
 16. **方案批准后改根归 `skill-target-root-switch-replan`**：本技能只做无源分流与创建，不要另写一套重规划清单。
+17. **目标分数低不必然是迁入失败**：只看目标分数会把既有内容特征误判为迁移漂移；必须与源侧同命令分差对照，逐项归因（如新增 `paths` 带来的 +5）。
+18. **批准范围排除正文时，「转修复」是越权**：`skill-quality-gate-remediation` 会改正文；范围只批「迁入 + 验收」时应停止修复、上报未达标项，把修复留给下一轮单独授权。
+19. **`x-toml-ref` 不是无条件字段**：`check-links.py` 默认校验 `source` 与 `x-toml-ref`；`.meta/toml` 镜像未建时写入等于自造断链，登记延后则两个回指字段一并延后。
 
 ## 参考
 
 - 精确命令、哈希/正文比对脚本与交接载荷：[references/migration-procedure.md](references/migration-procedure.md)
 - 已验证案例（declared-consistency-fix）：[references/case-declared-consistency-fix.md](references/case-declared-consistency-fix.md)
 - 已验证案例（零源改根）：[references/case-zero-source-root-switch.md](references/case-zero-source-root-switch.md)
+- 已验证案例（ci-gate-effectiveness-audit 迁移与质量门分差）：[references/case-ci-gate-migration.md](references/case-ci-gate-migration.md)
 
 ## Changelog
 
 | 版本 | 日期 | 变更 |
 |---|---|---|
+| 1.2.0 | 2026-10-24 | 补充三条实测分支。依据会话 `511919f2-09d9-46aa-b6bb-a423d6f9e91d` 的 ci-gate-effectiveness-audit 迁移：①质量门在源与目标两侧用同一命令各跑一次，用分差证明零漂移（源 65/7 warn → 目标 70/6 warn，+5 为新增 `paths`）；②批准范围排除正文时，<100 不得改正文凑分，应上报未达标项并留待下一轮授权；③`x-toml-ref` 仅在 `.meta/toml` 镜像已创建时写入，登记延后则 `source`/`x-toml-ref` 一并延后。 |
 | 1.1.0 | 2026-10-24 | 新增零源改根分支。依据会话 `82aa536e-ed72-4370-bd04-6f0ef014f959`：用户说「迁入 .agents/skills」时旧根从未写入，复制与哈希不适用。工作流拆为 4.0 分流、4.0A 零源改根、4.0B 有源迁移；补充旧根存在/联接取证、无源不得伪造哈希结论，交接 `skill-target-root-switch-replan`；迁移入主权区并补齐原生 frontmatter。 |
 | 1.0.0 | 2026-10-23 | 初始版本。基于会话 `0b5028ae-4c67-46da-8e99-0c2b68ae9c3a` 的 declared-consistency-fix 迁移，固化位置决策、原生化、保真复制、内容验证与登记/Junction 交接门。 |
