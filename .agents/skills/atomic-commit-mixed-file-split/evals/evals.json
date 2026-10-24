@@ -1,0 +1,61 @@
+{
+  "skill_name": "atomic-commit-mixed-file-split",
+  "evals": [
+    {
+      "id": 1,
+      "name": "split-one-file-two-concerns",
+      "prompt": "pyproject.toml 里同时改了许可元数据和构建下限，我想拆成两个提交，但 git add -p 在我这边用不了。帮我拆一下。",
+      "expected_output": "先只读取快照，列出两类改动的替换对与精确出现次数并请用户确认顺序和两条提交信息。备份终态到 git 目录，用 split_state.py revert --dry-run 核对次数，再构造只含第一类的中间态，用 git diff 证明另一类未泄漏，path-scoped 暂存并提交第一类；restore 还原终态并校验 sha256，再验证 diff 只含第二类并提交；最后确认该文件在 git status 中为空。全程不推送。",
+      "files": [],
+      "assertions": [
+        "没有使用交互式 git add -p，也没有整文件 git add 直接提交混合改动",
+        "写入前列出了替换对、精确次数、提交顺序与两条提交信息并取得确认",
+        "备份路径位于 git rev-parse --absolute-git-dir 下，而非 /tmp",
+        "两次提交前都用 git diff 确认只含对应一类改动",
+        "两次 diff --cached --name-status 都只有目标文件",
+        "还原终态后校验 sha256 与备份一致",
+        "收尾确认目标文件在 git status 中为空"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "occurrence-mismatch-stops",
+      "prompt": "替换的时候脚本报次数不对，反正结果差不多，你先提交吧，回头再修。",
+      "expected_output": "拒绝提交。说明退出码 3 表示出现次数与预期不符、文件未被写入，继续提交会把未经验证的状态写进历史；回到预览门重新从 git diff 抄出替换对并核对次数，必要时缩小替换粒度或调整拆分边界。不通过整文件重写或跳过校验绕过。",
+      "files": [],
+      "assertions": [
+        "没有在次数不符时继续提交",
+        "指出退出码 3 的含义及文件未被写入",
+        "回到 git diff 重新核对替换对与次数",
+        "没有改用整文件重写或跳过次数断言来绕过"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "third-concern-or-dependency-stops",
+      "prompt": "除了许可和下限，这个文件里还顺手改了 CI 配置和依赖分组，你就按两个提交一起处理吧。",
+      "expected_output": "停止并回报：这是第三类改动，两段拆分无法容纳。先与用户确认拆分边界（是否可以按目录/文件分离，或拆成三段），确认后再继续；同时若第一类依赖第二类，说明中间提交可能短暂不自洽，要求用户选择顺序或在推送前闭合。",
+      "files": [],
+      "assertions": [
+        "识别出第三类改动并停止执行",
+        "没有把第三类改动硬塞进任一提交",
+        "要求用户重新确认拆分边界",
+        "指出依赖关系对提交顺序的影响"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "layered-push-verification",
+      "prompt": "子模块里的两个提交已经好了，本地父仓库也记录了新指针，直接推父仓库就行吧？",
+      "expected_output": "不行。先推嵌套仓并确认成功，再用 ls-remote 核对远端分支 SHA 等于嵌套 HEAD；之后才提交父仓 gitlink 并推送，最后用 ls-tree origin/main <submodule-path> 核对 gitlink 与嵌套 HEAD 一致。推送前用 rev-list --left-right --count 确认落后数为 0，禁止强推。",
+      "files": [],
+      "assertions": [
+        "坚持先推嵌套仓再推父仓",
+        "使用 ls-remote 核对嵌套远端 SHA",
+        "父仓提交后使用 ls-tree 核对 gitlink",
+        "使用 rev-list --left-right --count 检查是否落后",
+        "没有强推，也没有在未授权时执行推送"
+      ]
+    }
+  ]
+}
