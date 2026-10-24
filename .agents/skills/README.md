@@ -85,6 +85,8 @@ title: ".agents/skills/ 目录索引"
 
 Trae IDE 内置通用技能镜像入库（扁平去重取最全版，2026-09-03 导入）。来源目录 external/dao/xinzo/.trae-cn/builtin/{work,global,design,code}，每个 SKILL.md 的 frontmatter `source` 字段标注原始路径；镜像保留技能包原貌（含 LICENSE/scripts/assets），不随 Trae 同步改写。导入清单见 .trae/specs/workspace-governance/import-builtin-skills/migration-manifest.md。
 
+skill-creator 为 2026-10-24 刷新整合版（正文取 builtin scope 默认版，eval 工具链与 bundled 资源取用户级全量技能包）；其余内置镜像技能保持原貌。
+
 **work 家族：办公文档（8个）**
 
 | 技能名 | 来源家族 | 功能描述 | SKILL.md路径 |
@@ -118,13 +120,18 @@ Trae IDE 内置通用技能镜像入库（扁平去重取最全版，2026-09-03 
 | solo-graphic-generation | design（设计） | 位图优先静态视觉资产生成（海报、横幅、KV、封面、插画、产品图、图片批次，无需 HTML）；生成前须确认输出尺寸 | [SKILL.md](solo-graphic-generation/SKILL.md) |
 | solo-image-edit | design（设计） | 以图生图（image-to-image）编辑既有位图，所有保留结果写回所属 .design 画布 | [SKILL.md](solo-image-edit/SKILL.md) |
 
-**code 家族：基建（3个）**
+**code 家族：基建（2个）**
 
 | 技能名 | 来源家族 | 功能描述 | SKILL.md路径 |
 |--------|---------|---------|-------------|
 | feedback | code（基建） | 仅用于显式 TRAE 反馈提交意图（/feedback 或宿主注入 Use Skill: feedback），将反馈转化为最小 feedback JSON；仅提及 feedback/bug 不触发 | [SKILL.md](feedback/SKILL.md) |
-| skill-creator | code（基建） | 创建 SKILL 的强制工具：用户想创建/新增任何技能时必须立即调用 | [SKILL.md](skill-creator/SKILL.md) |
 | TRAE-product-knowledge | code（基建） | TRAE 品牌与官方产品知识问答：产品差异、TraeCode/TraeWork/CLI/Plugin 入口、能力、MCP、Skills、官方文档链接；不用于普通编码问题 | [SKILL.md](TRAE-product-knowledge/SKILL.md) |
+
+**trae 家族：默认（1个）**
+
+| 技能名 | 来源家族 | 功能描述 | SKILL.md路径 |
+|--------|---------|---------|-------------|
+| skill-creator | trae（默认） | 技能创建/更新/安装向导：Trae 项目级与全局技能目录落位、frontmatter 与正文结构规范、校验与反模式清单；附 eval 工具链与基准测试（评估循环、描述触发词优化、报告生成） | [SKILL.md](skill-creator/SKILL.md) |
 
 ### 设计库镜像 Skill（16个，来自 Trae IDE design_libraries 镜像）
 
