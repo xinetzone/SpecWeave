@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（31个）
+### 完整Skill（32个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -42,6 +42,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | markdown-first-deliverable-drafting | "整理成Word"、"转成PDF"、"导出文档"、"生成报告文件"、"把方案变成文档"、"做成文件夹交付" | 1（敏感度预检定落点 → Markdown 结构化草稿 → 草稿确认门双确认内容与格式 → 转换链先探测现成能力再降级 → 临时物隔离与清理；萃取自会话 af172fa6；L1） | v1.0.0 | [skills/markdown-first-deliverable-drafting/SKILL.md](../skills/markdown-first-deliverable-drafting/SKILL.md) |
 | ci-gate-effectiveness-audit | "门禁形同虚设"、"步骤存在却不阻断"、"要删 continue-on-error"、"linkcheck 超时算不算真断链" | 1（抑制面枚举 → 基线取证 → 单点解除抑制 → 环境伪失败与真实缺陷分诊；含 scan_gate_suppressions.py；L1） | v1.1.0 | [skills/ci-gate-effectiveness-audit/SKILL.md](../skills/ci-gate-effectiveness-audit/SKILL.md) |
 | consulting-lead-magnet-discovery | "咨询获客"、"咨询引流品"、"低价诊断"、"轻体检"、"9.9元产品"、"企微代运营咨询获客" | 1（咨询服务与目标客群确认 → 引流形态比较 → 人工成本/答疑范围/数据边界限定 → 方案细化与商业验证分流；默认只输出待验证方案；L1） | v1.0.0 | [skills/consulting-lead-magnet-discovery/SKILL.md](../skills/consulting-lead-magnet-discovery/SKILL.md) |
+| git-sandbox-rehearsal | "先试跑推送"、"沙箱预演"、"git 演练"、"验证子模块指针"、"复现远端领先"、"不要碰真实仓库" | 1（一次性沙箱建仓 → 复现父仓 gitlink → 重放被测流程 → rev-list/ls-remote/ls-tree 断言 → 清理与不污染核验；L1） | v1.0.0 | [skills/git-sandbox-rehearsal/SKILL.md](../skills/git-sandbox-rehearsal/SKILL.md) |
 
 ### 工作流门面（6个）
 

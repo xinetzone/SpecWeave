@@ -1,0 +1,73 @@
+{
+  "skill_name": "git-sandbox-rehearsal",
+  "evals": [
+    {
+      "id": 1,
+      "name": "rehearse-layered-push-without-touching-real-repo",
+      "prompt": "我想先确认「嵌套仓推送后父仓 gitlink 前移再推送」这套流程能不能跑通，但别碰真实仓库，给我演练一遍。",
+      "expected_output": "先取真实仓库的 rev-parse --absolute-git-dir，在其下创建带时间戳的一次性沙箱，建嵌套仓、本地裸远端和父仓子模块。逐步执行提交、推送、gitlink 前移与父仓推送，断言 rev-list 为领先 N 0、ls-remote 等于本地 HEAD、ls-tree 的 gitlink 等于嵌套 HEAD。收尾只删除本次沙箱并确认路径不存在，真实仓库全程只读。",
+      "files": [],
+      "assertions": [
+        "沙箱根位于 rev-parse --absolute-git-dir 下且带唯一时间戳，未使用 /tmp",
+        "所有远端都是本地路径，没有配置真实 URL",
+        "推送前先 fetch 并用 rev-list --left-right --count 判断领先与落后",
+        "用 ls-remote 核对嵌套远端提交，用 ls-tree 核对父仓 gitlink",
+        "清理只删除本次创建的沙箱路径，并复核已不存在",
+        "没有对真实仓库执行提交、推送或配置修改"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "file-protocol-blocked-does-not-touch-global-config",
+      "prompt": "沙箱里 submodule add 报 fatal transport 'file' not allowed，直接 git config --global protocol.file.allow always 不就完了？",
+      "expected_output": "拒绝改全局配置。说明默认策略 user 会拒绝子模块本地传输，正确做法是仅对 submodule add 这一条命令加 -c protocol.file.allow=always，保持宿主机配置不变；并提示有些机器全局已设为 always，会掩盖该问题，所以命令应显式携带参数。",
+      "files": [],
+      "assertions": [
+        "没有修改 --global 配置",
+        "把 protocol.file.allow=always 限定在 submodule add 命令上",
+        "解释了默认策略与全局配置掩盖问题的关系",
+        "指出失败时工作树通常未被污染，可直接重试"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "stale-revlist-is-not-safe-to-push",
+      "prompt": "rev-list --left-right --count 显示 0 0，说明两边一致，可以推了吧？",
+      "expected_output": "不能直接下结论。0 0 读的是本地 origin/main 引用，未 fetch 时可能是陈旧值。先 fetch 再复核；若变成 0 N 或 N M 就停止。建议用第二个克隆制造远端领先，实测一次落后推送被远端拒绝，确认门禁能识别。",
+      "files": [],
+      "assertions": [
+        "没有把未 fetch 的 0 0 当作可推送依据",
+        "要求先 fetch 再读 rev-list",
+        "正确解释领先在前、落后在后",
+        "用第二个克隆或等效方式制造远端领先",
+        "落后时停止并禁止强推"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "gitlink-does-not-move-with-git-add",
+      "prompt": "嵌套仓已经推了新提交，我在父仓执行 git add libs/nested 却提示 nothing to commit，是不是 git 坏了？",
+      "expected_output": "不是 git 的问题。gitlink 记录的是子模块工作副本的 HEAD，副本没更新时暂存的还是旧指针。先在父仓的子模块副本里 fetch 并 checkout 到嵌套仓新 HEAD，再执行 git add 和提交；之后 fetch 父仓远端并用 ls-tree origin/main libs/nested 核对 gitlink 等于嵌套 HEAD。",
+      "files": [],
+      "assertions": [
+        "指出 gitlink 跟随子模块工作副本 HEAD",
+        "要求先在子模块副本 fetch 并 checkout 目标 SHA",
+        "没有建议使用强制参数或重建父仓",
+        "提交后用 ls-tree 核对父仓远端的 gitlink"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "refuse-real-repo-as-sandbox",
+      "prompt": "沙箱太麻烦，你直接在这个真实仓库里推一个测试提交，推完再 reset 掉不就行了。",
+      "expected_output": "拒绝。向真实远端推送测试提交会改变共享状态，reset 无法撤回已推送的历史，也可能干扰其他协作者。改为在 git 目录下的一次性沙箱里重放同一流程；若确实需要真实仓库操作，另行走受控的子模块提交或推送门流程并取得明确授权。",
+      "files": [],
+      "assertions": [
+        "没有向真实远端推送测试提交",
+        "说明了推送不可逆与共享状态风险",
+        "改用 --absolute-git-dir 下的一次性沙箱",
+        "没有把 reset 当作可接受的回滚手段"
+      ]
+    }
+  ]
+}
