@@ -12,6 +12,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/01-scripts.toml"
 | 脚本名 | 用途 | 触发关键词 | 安全等级 | 支持dry-run | 路径 |
 |--------|------|-----------|---------|------------|------|
 | check-links.py | Markdown链接有效性校验与自动修复（本地文件+外部URL） | "检查链接"、"修复链接"、"断链" | 读+修复 | ✅ | [scripts/check-links.py](../scripts/check-links.py) |
+| check-anchors.py | Markdown锚点（#fragment）可达性校验：GitHub slug 规则，补 check-links.py 不校验锚点的盲区 | "检查锚点"、"锚点断链"、"fragment 校验" | 只读 | ✅ | [scripts/check-anchors.py](../scripts/check-anchors.py) |
 | check-skill-quality.py | Skill质量检查：验证SKILL.md是否符合五要素模型规范 | "检查Skill"、"验证Skill质量"、"五要素检查" | 只读 | ✅ | [scripts/check-skill-quality.py](../scripts/check-skill-quality.py) |
 | check-stage-guardrails.py | 阶段守卫日志离线分析：检测SG-LOG/PDR-LOG的拦截/跳转/缺失异常 | "分析阶段守卫日志"、"SG日志分析"、"检查SG-LOG" | 只读 | ✅ | [scripts/check-stage-guardrails.py](../scripts/check-stage-guardrails.py) |
 | check-stage-guardrail-runtime.py | 阶段守卫运行时强制执行与拦截演示 | "阶段守卫运行时"、"SG运行时检查" | 只读 | ✅ | [scripts/check-stage-guardrail-runtime.py](../scripts/check-stage-guardrail-runtime.py) |

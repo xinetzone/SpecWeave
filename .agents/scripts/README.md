@@ -13,7 +13,7 @@ x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
 
 | 文档 | 主题 | 包含脚本数 |
 |------|------|-----------|
-| [docs/usage/01-check-scripts.md](docs/usage/01-check-scripts.md) | 检查类脚本 | 10个 |
+| [docs/usage/01-check-scripts.md](docs/usage/01-check-scripts.md) | 检查类脚本 | 11个 |
 | [docs/usage/02-generate-build-scripts.md](docs/usage/02-generate-build-scripts.md) | 生成与构建脚本 | 5个 |
 | [docs/usage/03-git-ci-scripts.md](docs/usage/03-git-ci-scripts.md) | Git与CI脚本 | 3个 |
 | [docs/usage/04-fix-scripts.md](docs/usage/04-fix-scripts.md) | 批量修复与分析脚本 | 8个 |
@@ -28,6 +28,7 @@ x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
 | `check-gitignore.py` | 验证.gitignore规则覆盖 | [检查](docs/usage/01-check-scripts.md#check-gitignorepy) |
 | `check-vendor.py` | 验证vendor目录合规性 | [检查](docs/usage/01-check-scripts.md#check-vendorpy) |
 | `check-links.py` | Markdown链接有效性校验+修复 | [检查](docs/usage/01-check-scripts.md#check-linkspy) |
+| `check-anchors.py` | Markdown锚点（#fragment）可达性校验（补 check-links.py 盲区） | [检查](docs/usage/01-check-scripts.md#check-anchorspy) |
 | `check-spec-consistency.py` | spec/tasks/checklist一致性 | [检查](docs/usage/01-check-scripts.md#check-spec-consistencypy) |
 | `check-filename-convention.py` | 文件名命名规范检查 | [检查](docs/usage/01-check-scripts.md#check-filename-conventionpy) |
 | `check-move.py` | 文件移动时链接路径自动调整 | [检查](docs/usage/01-check-scripts.md#check-movepy) |

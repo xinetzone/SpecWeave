@@ -53,6 +53,24 @@ python .agents/scripts/check-vendor.py --deep --scan-refs
 
 ---
 
+## check-anchors.py
+
+校验 Markdown 链接中 `#fragment` 锚点是否真实存在于目标文件（`check-links.py` 只校验目标文件存在，不校验锚点）。
+
+```bash
+python .agents/scripts/check-anchors.py --path .agents --exempt templates
+python .agents/scripts/check-anchors.py --path playground/life/workbuddy \
+    --exempt wiki/themes/_template
+```
+
+- **GitHub slug 规则**：小写、去 `*`/反引号、去标点（保留下划线）、空格转连字符、同名标题追加 `-1`/`-2`
+- **跳过**：围栏代码块内文本、外部 URL、`file://` 链接、`#L12`/`#L12-L20` 行号引用
+- **跨根引用**：目标在 `--path` 之外但文件存在时按需解析，不误报「目标缺失」
+- **退出码**：0 = 无锚点断链；1 = 有断链或目标缺失（逐条打印文件与行号）
+- **基线说明**：`--path .agents --exempt templates` 当前存量为 24 条历史锚点断链（多为标题改写后未同步链接），尚未纳入 CI 门禁
+
+---
+
 ## check-links.py
 
 扫描项目中的所有 Markdown 文件，提取并校验链接有效性：
