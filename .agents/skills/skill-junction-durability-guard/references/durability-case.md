@@ -37,7 +37,7 @@ git status --porcelain=v1 -- <上述路径> <三个登记面>
 
 同时：
 
-- `C:/Users/xinzo/.qoder/skills/version-floor-contract-guard` **不存在**。
+- `C:/Users/<user>/.qoder/skills/version-floor-contract-guard` **不存在**。
 - `skill-junction-durability-guard` 在主权区、`.meta`、用户级三个根均不存在，仓库 grep 零命中。
 
 ## 4. 由事实得出的判定
@@ -58,9 +58,9 @@ git status --porcelain=v1 -- <上述路径> <三个登记面>
 联接交付后按 `check-links.py --path <用户级目录> --check-frontmatter-paths` 复跑，实测结果：
 
 ```text
-[C:\Users\xinzo\.qoder\skills\skill-junction-durability-guard\SKILL.md]
+[C:\Users\<user>\.qoder\skills\skill-junction-durability-guard\SKILL.md]
 x-toml-ref: ../../../.meta/toml/.agents/skills/skill-junction-durability-guard/SKILL.toml
-(文件不存在: C:\Users\xinzo\.meta\toml\.agents\skills\skill-junction-durability-guard\SKILL.toml)
+(文件不存在: C:\Users\<user>\.meta\toml\.agents\skills\skill-junction-durability-guard\SKILL.toml)
 → 本地 0 断链，frontmatter 1 处失败，退出码 1
 ```
 

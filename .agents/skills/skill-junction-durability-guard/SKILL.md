@@ -200,7 +200,7 @@ PYTHONDONTWRITEBYTECODE=1 python "$REPO/.agents/scripts/check-links.py" --path "
 PYTHONDONTWRITEBYTECODE=1 python "$REPO/.agents/scripts/check-links.py" --path "$TARGET" --check-frontmatter-paths
 ```
 
-第一次必须 0 断链、退出 0。第二次允许**且仅允许** `x-toml-ref` 一项失败：该字段按 SKILL.md 所在目录向上相对解析，从用户级根出发会落到仓库之外（实测解析为 `C:\Users\xinzo\.meta\...`）。健康态的判据是「本地引用 0 断链，frontmatter 失败项只有 `x-toml-ref`」；若还出现别的 frontmatter 失败，说明资源引用真的断了。
+第一次必须 0 断链、退出 0。第二次允许**且仅允许** `x-toml-ref` 一项失败：该字段按 SKILL.md 所在目录向上相对解析，从用户级根出发会落到仓库之外（实测解析为 `C:\Users\<user>\.meta\...`）。健康态的判据是「本地引用 0 断链，frontmatter 失败项只有 `x-toml-ref`」；若还出现别的 frontmatter 失败，说明资源引用真的断了。
 
 **步骤5：确认清理动作不会再制造悬空。**
 
