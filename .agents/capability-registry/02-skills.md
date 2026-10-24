@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（16个）
+### 完整Skill（20个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -27,6 +27,10 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | oversized-tool-output-slicing | "输出被截断"、"超过 25000 token"、"落盘文件读不了"、"tool-results"、"Read 超限"、"ripgrep 超时"、"大仓找不到文件"、"读长会话记录取证"、"咋这么慢" | 2（路径 A 零依赖抽取器对落盘 JSON 按消息/工具名/状态/正则定点切片，替代反复 Read；路径 B git ls-files 索引定位替代超时搜索；含参数预算预防与幂等重入表；L2 双场景复发验证） | v1.0.0 | [skills/oversized-tool-output-slicing/SKILL.md](../skills/oversized-tool-output-slicing/SKILL.md) |
 | skill-recommendation-disk-triage | "这个推荐该新建还是已存在"、"别覆盖已有同名 Skill"、"自动推荐 Skill"、"先核实再动手"、"create 还是登记"、"推荐指令分诊"、"跨根查重"、"双门 --path" | 1（只读磁盘取证五步管线：跨根查重→登记面 git grep→双门 --path 验收→捆绑脚本真实产物回归→create/register+junction/update 改判决策树 + 写盘前确认门；L1） | v1.0.0 | [skills/skill-recommendation-disk-triage/SKILL.md](../skills/skill-recommendation-disk-triage/SKILL.md) |
 | registered-skill-frontmatter-completion | "frontmatter 补齐"、"补 source"、"x-toml-ref 写错"、"链接门报 source 断链"、"118 条断链"、"登记后回指"、"SKILL.toml 镜像指向"、"登记状态自相矛盾" | 1（S0 基线取证 → S1 镜像先行补三级 x-toml-ref → S2 按链接门提取规则改写 source → S3 欠账句改完成记录 → S4 双门 + 基线差值验收；含 118 条既有断链归因与 10 条 Gotchas；L1） | v1.0.0 | [skills/registered-skill-frontmatter-completion/SKILL.md](../skills/registered-skill-frontmatter-completion/SKILL.md) |
+| skill-registry-count-drift-audit | "登记面计数漂移"、"表头数字和行数不一致"、"README 与 registry 数量对不上"、"命令集门面 11/10"、"审计分类计数"、"count drift"、"核对（N个）" | 1（三步审计法：分类标题正则 → 区间内全子表求和 → 表头漂移/多子表求和/跨面缺行三类判定；捆绑零依赖脚本 audit_surface_counts.js 带自检夹具与 4 档退出码；只读不改文件；L1） | v1.0.0 | [skills/skill-registry-count-drift-audit/SKILL.md](../skills/skill-registry-count-drift-audit/SKILL.md) |
+| shared-worktree-rebase-write-guard | "共享工作区"、"rebase 进行中"、"pull --rebase"、"gitlink 冲突"、"登记面数字回退"、"写入前预检"、"rebase guard"、"shared worktree"、"concurrent rebase"、"defer registration" | 1（P0 写前探测 rebase/merge/cherry-pick 信号 → 目标分类 → 内容先行登记延后的部分交付 → 恢复后重验；捆绑零依赖脚本 check_rebase_guard.js；禁 abort/continue 他人发起的 rebase；L1） | v1.0.0 | [skills/shared-worktree-rebase-write-guard/SKILL.md](../skills/shared-worktree-rebase-write-guard/SKILL.md) |
+| trae-computer-use-ptc | "Computer Use"、"ComputerUse"、"电脑操作"、"UI自动化"、"桌面交互"、"操作应用"、"点击按钮"、"输入文本"、"窗口操作" | 1（list_apps/get_app_state/click/scroll/drag/type_text/press_key/perform_action/set_value 本地 MCP 桌面操作；覆盖 Electron/桌面应用；高风险操作前须确认） | v1.2.0 | [skills/trae-computer-use-ptc/SKILL.md](../skills/trae-computer-use-ptc/SKILL.md) |
+| meoo-cli | "秒悟"、"Meoo"、"meoo cli"、"用秒悟建应用"、"部署到秒悟"、"部署全栈应用"、"部署到阿里云账号" | 2（static：SPA→CDN；server：全栈→容器；Supabase 数据库/Auth/Storage + Deno 边缘函数 + AI 模型接入；含 Mise 发布协议 BLOCKING 门禁与阿里云自托管部署分支；版本随 meoo CLI 包分发） | v0.5.5 | [skills/meoo-cli/SKILL.md](../skills/meoo-cli/SKILL.md) |
 
 ### 工作流门面（6个）
 
@@ -61,6 +65,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | atomization-cmd | "原子化"、"拆分文件"、"atomize"、"拆分大文档"、"文档拆分" | 3（文档原子化/一键收尾/预检） | v1.2.1 | [skills/atomization-cmd/SKILL.md](../skills/atomization-cmd/SKILL.md) |
 | atomic-commit-cmd | "提交"、"commit"、"原子提交"、"代码提交"、"git commit" | 3（标准/快速/CI检查） | v1.2.1 | [skills/atomic-commit-cmd/SKILL.md](../skills/atomic-commit-cmd/SKILL.md) |
 | mermaid-cmd | "mermaid"、"流程图"、"时序图"、"状态图"、"画个图"、"图表"、"架构图"、"思维导图"、"画流程图" | 3（快速生成/检查修复/复杂协作） | v1.1.0 | [skills/mermaid-cmd/SKILL.md](../skills/mermaid-cmd/SKILL.md) |
+| token-optimize-cmd | "token优化"、"省token"、"降低成本"、"Token使用优化"、"prompt优化"、"缓存策略"、"上下文压缩"、"模型路由"、"长文档处理"、"Token成本"、"降本"、"推理成本"、"Token浪费"、"优化LLM成本" | 1（P0 禁令预检 → 浪费点审计 → 方案设计 → 评审 → 效果评估；含 27 条禁令 P0-P3 分级与三维权衡框架、渐进式路线图；L1） | v1.0.0 | [skills/token-optimize-cmd/SKILL.md](../skills/token-optimize-cmd/SKILL.md) |
 | github-org-bootstrap-cmd | "创建GitHub组织"、"建个org"、"组织名怎么起"、"demo组织"、"huncheng-lab"、"GitHub Organization" | 1（命名收敛F→V→I + gh api 自动配置） | v1.0.0 | [skills/github-org-bootstrap-cmd/SKILL.md](../skills/github-org-bootstrap-cmd/SKILL.md) |
 
 ### 脚本命令门面（16个）

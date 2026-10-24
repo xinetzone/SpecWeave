@@ -1,0 +1,5 @@
+id = "skill"
+title = "登记面分类计数漂移审计 Skill"
+category = "skills/skill-registry-count-drift-audit"
+date = "2026-10-24"
+version = "1.0"

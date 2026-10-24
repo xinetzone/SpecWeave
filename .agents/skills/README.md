@@ -36,7 +36,7 @@ title: ".agents/skills/ 目录索引"
 | sovereign-rollout-cmd | 命令门面 | 主权区治理资产落盘 | 提案、批准落盘、主权区变更、治理资产落盘、先提案后批准 | [sovereign-rollout-cmd/SKILL.md](sovereign-rollout-cmd/SKILL.md) |
 | github-org-bootstrap-cmd | 命令门面 | GitHub 组织命名与初始化 | 创建GitHub组织、建个org、组织名怎么起、demo组织、huncheng-lab | [github-org-bootstrap-cmd/SKILL.md](github-org-bootstrap-cmd/SKILL.md) |
 
-### 完整Skill（18个）
+### 完整Skill（20个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -58,6 +58,8 @@ title: ".agents/skills/ 目录索引"
 | oversized-tool-output-slicing | 完整Skill（v1.0.0，L2 双场景复发验证） | 超限工具输出切片取证：识别三类信号（MCP `[OUTPUT TRUNCATED ... 25000 token limit]` 落盘、Read `exceeds maximum allowed tokens`、Glob/ripgrep/find 大仓 20s 超时）→ 路径 A 以错误消息给出的落盘绝对路径为唯一事实来源，用捆绑 `extract_tool_result.js`（零依赖，overview/messages/tool/text/grep 五模式）JSON.parse 后定点切片，禁第二次全文 Read（加 limit 仍按全文计量）→ 路径 B `git ls-files \| grep -iE` 走索引替代超时搜索；含参数预算预防、幂等重入表、7 项安全清单与 8 条 Gotchas | 输出被截断、超过 25000 token、落盘文件读不了、tool-results、Read 超限、ripgrep 超时、大仓找不到文件、读长会话记录取证、咋这么慢 | [oversized-tool-output-slicing/SKILL.md](oversized-tool-output-slicing/SKILL.md) |
 | skill-recommendation-disk-triage | 完整Skill（v1.0.0，L1） | Skill 推荐指令磁盘取证分诊：收到自动推荐的 Skill 创建/更新/重命名指令时先只读取证再决定真实动作——跨根查重（~/.qoder/skills 与 .agents/skills 两根）→ 登记面 git grep（README/registry/CHANGELOG/toml 四处）→ 双门 --path 实跑（check-skill-quality + check-links --check-frontmatter-paths）→ 捆绑脚本真实落盘产物回归 → create→register+junction/update 改判决策树 + 写盘前确认门 | 这个推荐该新建还是已存在、别覆盖已有同名 Skill、自动推荐 Skill、先核实再动手、create 还是登记、推荐指令分诊、跨根查重 | [skill-recommendation-disk-triage/SKILL.md](skill-recommendation-disk-triage/SKILL.md) |
 | registered-skill-frontmatter-completion | 完整Skill（v1.0.0，L1） | 登记后回指补齐：S0 基线取证（镜像 toml、欠账句、全集断链数）→ S1 镜像先行补三级 x-toml-ref（`../../../.meta/...`，禁止 `../../`）→ S2 按链接门 `_extract_paths_from_value` 真实规则改写 source（中文散文禁夹 `/` 与 `.md/.toml/.py` token）→ S3 欠账句改完成记录（四处落点 + CHANGELOG 版本）→ S4 质量门 100/100 + 定点链接门 0 断链 + 全集基线差值 0；含 118 条既有断链归因与 10 条 Gotchas | frontmatter 补齐、补 source、x-toml-ref 写错、链接门报 source 断链、118 条断链、登记后回指、SKILL.toml 镜像指向、登记状态自相矛盾 | [registered-skill-frontmatter-completion/SKILL.md](registered-skill-frontmatter-completion/SKILL.md) |
+| skill-registry-count-drift-audit | 完整Skill（v1.0.0，L1） | 登记面分类计数漂移审计：把 .agents/skills/README.md 与 .agents/capability-registry/02-skills.md 每个分类标题声明的（N个）与该节实际表格数据行逐一比对，先自证计数器再下结论，区分表头漂移、多子表求和与跨面缺行三类；含捆绑只读审计脚本 audit_surface_counts.js（自检夹具 + 4 档退出码）与报告模板 | 登记面计数漂移、表头数字和行数不一致、README 与 registry 数量对不上、命令集门面 11/10、审计分类计数、count drift、核对（N个） | [skill-registry-count-drift-audit/SKILL.md](skill-registry-count-drift-audit/SKILL.md) |
+| shared-worktree-rebase-write-guard | 完整Skill（v1.0.0，L1） | 共享工作树写入前预检：探测进行中的 rebase/merge/cherry-pick 与冲突信号，区分可安全创建的新目录与必须延后的共享登记面，绝不 abort/continue 他人发起的 rebase；采用「内容+验证+联接先行、登记延后」的部分交付，恢复后重新读取版本号与计数再补登记；含捆绑脚本 check_rebase_guard.js、信号解释矩阵与 10 条 Gotchas | 共享工作区、rebase 进行中、pull --rebase、gitlink 冲突、登记面数字回退、写入前预检、rebase guard、shared worktree、concurrent rebase、defer registration | [shared-worktree-rebase-write-guard/SKILL.md](shared-worktree-rebase-write-guard/SKILL.md) |
 
 ### 工作流门面（6个）
 
