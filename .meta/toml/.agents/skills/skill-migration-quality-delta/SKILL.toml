@@ -1,0 +1,5 @@
+id = "skill"
+title = "Skill 迁移质量差值归因"
+category = "skills/skill-migration-quality-delta"
+date = "2026-10-24"
+version = "1.0"
