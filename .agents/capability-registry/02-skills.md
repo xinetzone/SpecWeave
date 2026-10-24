@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（35个）
+### 完整Skill（36个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -46,6 +46,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | repo-native-skill-frontmatter-contract | "frontmatter 怎么写"、"质量门只有 80 分"、"version 放哪"、"quick_validate 报 Unexpected key"、"新建 Skill 头字段" | 1（标准键位对照 → 验收序列 → 结果口径 → 失败矩阵；L1） | v1.0.0 | [skills/repo-native-skill-frontmatter-contract/SKILL.md](../skills/repo-native-skill-frontmatter-contract/SKILL.md) |
 | skill-migration-quality-delta | "迁入后掉分"、"65 变 70"、"警告是不是迁入引入"、"要不要回滚"、"质量门为什么不到 100" | 1（两轮 --verbose 取证 → 按检查名求差集 → 差项映射改动面 → 三段式结论；含 diff_quality_warnings.py；L1） | v1.0.0 | [skills/skill-migration-quality-delta/SKILL.md](../skills/skill-migration-quality-delta/SKILL.md) |
 | user-level-junction-acceptance | "联接建好了怎么验收"、"quick_validate 报 Unexpected key"、"git status 哈希变了"、"evals 解析 FileNotFoundError"、"经目标路径验证用户级技能" | 1（A0 固化输入与基线 → A1 联接身份与文件可见性 → A2 内置格式门基线对照 → A3 仓库门 → A4 脚本与 evals → A5 工作树归因；L1） | v1.0.0 | [skills/user-level-junction-acceptance/SKILL.md](../skills/user-level-junction-acceptance/SKILL.md) |
+| contest-playbook | "我要参加 XX 比赛"、"帮我分析这个比赛规则"、"做个参赛方案"、"比赛怎么打"、"参赛材料清单"、"提交作品有哪些坑" | 1（判型 5 形态 → 采集阶梯 L1-L7 → 六族编号结构化 → 3 条通用判定 → 资产对位 → 形态决策树 → 双轨倒排与依赖阻塞 → 合规四层自查；含预检门与 11 项 Gotchas；L1） | v1.1.0 | [skills/contest-playbook/SKILL.md](../skills/contest-playbook/SKILL.md) |
 
 ### 工作流门面（6个）
 
