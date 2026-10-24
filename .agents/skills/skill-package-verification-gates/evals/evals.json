@@ -1,0 +1,47 @@
+{
+  "skill_name": "skill-package-verification-gates",
+  "evals": [
+    {
+      "id": 1,
+      "name": "ninety-five-is-not-deliverable",
+      "prompt": "Skill 包已经写完了，质量门显示 95 分、命令也没报错，链接门也过了。可以宣布交付了吗？",
+      "expected_output": "不宣布交付。用 --verbose 或 --json 定位 95 分的失分项（通常是单个 warn），补实质内容后以 --score --threshold 100 复跑，确认 100 分、全部检查项通过、真实退出码 0；链接门补 --check-frontmatter-paths 后重跑，确认 broken_local 与 broken_frontmatter 均为 0。两项都达标才给出可交付结论。",
+      "files": [],
+      "assertions": [
+        "没有把 95 分或默认阈值下的通过当作验收",
+        "使用 --verbose 或 --json 指出了具体失分项",
+        "复跑命令包含 --threshold 100",
+        "链接门命令包含 --check-frontmatter-paths",
+        "最终结论同时引用分数、通过项数和退出码"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "dirty-registration-surfaces-defer",
+      "prompt": "这个 Skill 验收都过了，顺手把 README、CHANGELOG 和 capability-registry 也登记一下吧，计数一起改了。",
+      "expected_output": "先检查登记面状态，发现 README/CHANGELOG/registry 已有其他会话的未暂存或已暂存改动，或 .meta/toml 下有未跟踪目录。停止写入登记面，只交付已验收的包体，在报告中列出被占用路径与 git status 原文，说明登记延后；不使用 git add -A，不回滚他人改动，不创建 Junction。",
+      "files": [],
+      "assertions": [
+        "写入前执行了 git status --porcelain 检查登记面",
+        "识别出登记面已有他人改动或未跟踪镜像目录",
+        "没有修改 README、CHANGELOG、capability-registry 或 .meta/toml",
+        "报告明确写出登记延后及原因",
+        "没有使用 git add -A"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "script-exit-codes-must-be-real",
+      "prompt": "这个 Skill 带了一个校验脚本，我手动跑了一次，屏幕上打印了错误信息，说明它能用吧？验收是不是可以算过了？",
+      "expected_output": "不以此结论验收。先读脚本 docstring 与 argparse 写出调用契约与退出码矩阵，再在临时夹具中逐类注入缺陷，断言精确退出码与报错数；至少三个正向样本（含一个 holdout），未注入缺陷的镜像必须先通过。跑完复查 __pycache__ 与 .pyc。深度夹具方法移交 skill-bundled-script-validation。",
+      "files": [],
+      "assertions": [
+        "没有把打印错误信息视为脚本可用",
+        "读取并写出了脚本的参数与退出码契约",
+        "用负向夹具断言了精确退出码",
+        "包含至少一个未参与开发的正向样本",
+        "跑完检查并清理了 __pycache__"
+      ]
+    }
+  ]
+}
