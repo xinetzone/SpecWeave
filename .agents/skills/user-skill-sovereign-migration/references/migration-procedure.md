@@ -11,30 +11,43 @@ REPO="$(git -C D:/spaces/SpecWeave rev-parse --show-toplevel)"
 DST="$REPO/.agents/skills/$SKILL_NAME"
 ```
 
-前置条件（任一不满足则停止）：
+先只读预检，再取得本轮对应轨道与文件范围的批准；未获批不执行写入：
 
-- 当前用户已批准迁移方案
-- `$DST` 不存在
-- 按 §1.1 判定轨道后，对应条件成立：
-  - 有源迁移：`$SRC/SKILL.md` 存在，且源路径是实体目录
-  - 零源改根：`$SRC` 不存在，且不是联接
+- 推荐目标若与项目主权区约定冲突，先说明差异并确认最终目标，不默认采纳推荐或静默改根；用户后续明确选择优先
+- 同时检查 `$SRC` 与 `$DST`，不得只凭旧根缺失创建目标
+- 有源迁移：源是包含 `SKILL.md` 的实体目录，目标不存在
+- 无源交接：两根均不存在且非联接，转 §10；只携带已有设计与当前批准，不执行 §2–§5
+- 任一目标已存在：先查权威副本与差异，转显式 Update 或冲突裁决，不以 Create 覆盖
 
-## 1.1 源判定（先做，零写入）
+## 1.1 双根判定（先做，零写入）
+
+用可区分 `ENOENT` 与权限错误的只读探测；`lstat` 保留悬空联接信息。传入 Node 的路径使用 `C:/...`、`D:/...` 等原生路径，不用 Bash 的 `/c/...`：
 
 ```bash
-test -e "$SRC" && echo OLD_EXISTS || echo OLD_NOT_FOUND
-test -L "$SRC" && echo OLD_IS_LINK || echo OLD_NOT_LINK
-find "$SRC" -mindepth 1 -maxdepth 2 2>/dev/null | head -20
+node - "$SRC" "$DST" <<'JS'
+const fs = require('node:fs');
+for (const path of process.argv.slice(2)) {
+  try {
+    const item = fs.lstatSync(path);
+    console.log(JSON.stringify({path, exists: true,
+      isDirectory: item.isDirectory(), isSymbolicLink: item.isSymbolicLink()}));
+  } catch (error) {
+    console.log(JSON.stringify({path, error: error.code}));
+    if (error.code !== 'ENOENT') process.exitCode = 1;
+  }
+}
+JS
 ```
 
-| 结果 | 轨道 |
+| 双根结果（联接或错误优先处理） | 轨道 |
 |---|---|
-| 存在，非联接，有 `SKILL.md` | 有源迁移，继续 §2 |
-| 不存在，非联接 | 零源改根，跳转 §10 |
-| 是联接 | 停止，核实目标；不要重复迁移 |
-| 存在但既非目录也非联接 | 停止，先定性（权限失败/特殊文件） |
+| 任一根为联接，含悬空联接 | 停止，核实目标；不要重复迁移或创建 |
+| 权限错误、特殊文件、空目录或缺 `SKILL.md` 的半套副本 | 停止并分类，不当作不存在 |
+| 目标已存在 | 只读取证；显式 Update 或冲突裁决，不覆盖、不更新两根 |
+| 源为含 `SKILL.md` 的实体，目标缺失 | 有源迁移，继续 §2 |
+| 两根均返回 `ENOENT`，且非联接 | 无源交接，跳转 §10 |
 
-> `ls` 输出为空不能作为「不存在」的证据；空目录、联接与权限失败都可能表现相似。
+> `ENOENT` 是有效的缺失预检结果，不是失败的迁移命令；权限错误不得吞成缺失。当前不存在也不证明「从未写入」，后者需要会话历史证据；`ls` 空输出不能证明任一结论。
 
 ## 2. 预检命令
 
@@ -225,10 +238,16 @@ python compare_skill_copy.py "$SRC" "$DST"
 
 ## 6. 内容级验证
 
-```bash
-# 1) 比对正文与资源
-python compare_skill_copy.py "$SRC" "$DST"
+**有源轨才运行** §5 比较脚本与源侧质量门。无源轨由 `skill-creator` 验证新建目标；读取源、复制、源目标 SHA256、正文保真、源侧质量门及质量分差全部记「不适用（无源）」，不能填写 PASS、0 分或零漂移。
 
+```bash
+# 仅有源迁移执行
+python compare_skill_copy.py "$SRC" "$DST"
+```
+
+两轨均验证实际目标：
+
+```bash
 # 2) 绝对路径扫描
 grep -rn "file:///" "$DST" || echo "OK: no file:///"
 
@@ -239,14 +258,22 @@ grep -RnoE "\]\(([^)#]+)" "$DST" | head -50
 python "$REPO/.agents/scripts/check-links.py" \
   --path "$DST" --check-frontmatter-paths
 
-# 5) 质量门基线：目标与源两侧同命令各一次
-python "$REPO/.agents/scripts/check-skill-quality.py" \
+python -B "$REPO/.agents/scripts/check-skill-quality.py" \
   --path "$DST" --json
-python "$REPO/.agents/scripts/check-skill-quality.py" \
+python -B "$REPO/.agents/scripts/check-skill-quality.py" \
+  --path "$DST" --score --threshold 100
+```
+
+仅有源轨再用同一检查器取源侧基线：
+
+```bash
+python -B "$REPO/.agents/scripts/check-skill-quality.py" \
   --path "$SRC" --json
 ```
 
-先比两侧，再决定是否修复：
+逐条记录实际退出码；`--verbose` 退出 0 不代替 `--score --threshold 100` 满分验收。无源时只报告目标分数、失败项与退出码，单产物 SHA256 也不能证明迁移保真。
+
+有源轨先比两侧，再决定是否修复；无源轨仅按第 3 项和新建批准范围处理目标失败：
 
 1. 目标分数下降或出现新增警告，才可能是迁入漂移；目标分差若只来自已批准的 frontmatter 变更（如新增 `paths` 带来的 +5），且残余警告在源侧逐条存在，则判定为零漂移。
 2. 来源会话实测：源 65/100、7 warn → 目标 70/100、6 warn；+5 恰好是新增 `paths` 消掉的一条，残余 6 项均可在源侧找到。
@@ -254,94 +281,91 @@ python "$REPO/.agents/scripts/check-skill-quality.py" \
    - 允许改正文 → 转 `skill-quality-gate-remediation`，按 error → warn 顺序修复并复跑 `--score --threshold 100`。
    - 明确排除正文 → 不改正文凑分；把未达标项、残余警告与两侧分差写入交付报告和交接载荷，标注「修复待下一轮单独授权」。
 
-## 7. 交接载荷
+## 7. 验收与登记交接载荷
 
-调用 `native-skill-surface-registration` 时，附上以下事实：
+目标验证通过且本轮批准登记后，才交接 `native-skill-surface-registration`；未批准则只报告内容交付与待授权事项。无源创建前给 `skill-creator` 的载荷见 §10，不用登记交接代替创建交接。
 
 ```text
 skill-name: <name>
-source: ~/.qoder/skills/<name>（实体目录/联接）
-target: <repo>/.agents/skills/<name>
+operation: migrate / create
+source: <实体源路径> / 不适用（两根缺失，无源）
+target: <本轮确认的主权区路径>
 frontmatter changes: <字段列表>
 body changes: none / <已批准章节列表>
-file hash check: PASS（N 个文件）
-body check: PASS（仅 frontmatter 变化）
-quality gate baseline: <分数与失败项>
-quality gate source: <score>/100，<n> warn（<清单>）
-quality gate target: <score>/100，<n> warn（<清单>）
-quality gate delta: <+x>，归因 <字段/正文变更>
-quality gate remediation: 已完成 / 未达标，待下一轮单独授权（范围排除正文）
-source kind: physical directory / junction
-deletion authorized: yes / no
+copy: <实测状态> / 不适用（无源）
+file hash check: <实测结果与文件数> / 不适用（无源）
+body check: <实测结果与批准差异> / 不适用（无源）
+quality gate source: <分数、失败项、退出码> / 不适用（无源）
+quality gate target: <分数、失败项、退出码>
+quality gate delta: <分差与逐项归因> / 不适用（无源）
+quality gate remediation: 无需修复 / 已完成 / 未达标，待单独授权
+source kind: physical directory / junction / absent
+registration authorized: yes / no
+junction authorized: yes / no
+delete or move source authorized: yes / no
+stage authorized: yes / no
+commit authorized: yes / no
+push authorized: yes / no
 ```
 
-交接后由该技能负责：
+按各项当前授权执行，不因内容获批或移交另一技能而扩大权限：
 
-- README、capability-registry/02-skills、CHANGELOG、`.meta/toml` 四处登记与计数校正
-- 质量门与链接门双验收
-- 用户级 Junction 创建与回读验证
-- 实体源目录为空时的 `rmdir` 清理；非空时先报告
+- 登记获批才修改 README、capability-registry/02-skills、CHANGELOG、`.meta/toml`；无新增条目不增加计数
+- 复跑质量门与链接门，并发登记面脏时延后该面，不覆盖他人改动
+- Junction 创建与回读单独授权；替换实体源还需源移动或删除授权
+- 暂存、提交、推送分别确认；历史会话中的批准不计入本轮权限
 
 ## 8. 重入与失败处理
 
 | 现象 | 处理 |
 |---|---|
-| 目标已存在且哈希一致 | 视为已迁入，跳过复制，继续验证与交接 |
-| 目标已存在但内容不同 | 停止；报告差异，等待覆盖/改名/放弃的裁决 |
-| 源路径是联接 | 不迁移；核实联接目标，直接进入验证或登记 |
-| 哈希不一致 | 重新复制，不在目标上手工修补 |
-| 正文差异未在提案中 | 恢复目标正文，重新比对 |
+| 目标已存在且两侧保真比对通过 | 只报告内容一致，不据此推断历史迁移动作；跳过复制，验证后仅按当前授权交接 |
+| 目标已存在但内容不同，或无源可比 | 停止；报告权威副本与差异，取得显式 Update 或冲突裁决，不用 Create 覆盖 |
+| 源路径是联接 | 不迁移；核实目标，可只读验证；登记仍需当前授权 |
+| 哈希不一致 | 仅重做本轮获批且由本轮创建的目标复制；既有或并发改动先停止并报告 |
+| 正文差异未在提案中 | 先归因，不覆盖既有或并发改动；仅修复本轮引入的未批准差异再比对 |
 | 质量门低于 100，批准范围允许改正文 | 转 `skill-quality-gate-remediation`，修完复跑 |
 | 质量门低于 100，批准范围排除正文 | 不改正文；上报未达标项与残余警告，修复留待下一轮授权 |
 | 目标与源分差无法归因 | 停止交接；先查是否有未列明的正文或资源变更 |
 | 链接门报错 | 修正链接或补齐目标文件；不要忽略或用 `--exclude` 掩盖 |
-| Junction 创建失败 | 确认用户级路径为空；空目录用 `rmdir` 清理后重试，非空则报告 |
-| 源目录已删除但联接缺失 | 先验证主权区目标完整，再重建联接；不要重建源实体副本 |
-| 旧根不存在且非联接 | 无源可迁；转 §10 零源改根，不要复制或比对哈希 |
-| 旧根存在但既非目录也非联接 | 先定性（权限失败/特殊文件），停止 |
-| 无源却执行了复制/哈希 | 停止并报告假失败原因；本轮误建的空目录经确认后再用 `rmdir` 清理 |
+| Junction 创建失败 | 在联接授权内排查；删除空目录也须确认源清理授权，非空则报告 |
+| 源目录已删除但联接缺失 | 先验证主权区目标完整，获准后再重建联接；不要重建源实体副本 |
+| 两根均不存在且非联接 | 无源可迁；转 §10 交接 `skill-creator`，不复制、不做迁移比较 |
+| 任一根存在但既非目录也非联接 | 先定性（权限失败/特殊文件），停止 |
+| 无源却执行了复制/哈希 | 停止并报告误走有源轨；缺失预检本身不是迁移失败，本轮误建空目录经确认后再清理 |
 
 ## 9. 安全边界
 
-- 不在未获批准时写入任何目标文件
-- 不覆盖已存在的目标目录
-- 不删除实体源目录，除非用户单独授权
+- 不在未获批准时写入任何目标文件；推荐 JSON 和历史授权不能代替本轮批准
+- 不覆盖已存在的目标目录，不因另一根缺失而重建已有目标
+- 登记、Junction、源移动或删除分别授权，保留未获清理授权的实体副本并如实报告
 - 不使用 `git add -A`、`git stash`、`git reset --hard`、`git clean`
-- 不提交、不推送，除非用户明确要求
-- 不在用户级与主权区同时保留两份实体内容作为最终状态
+- 不暂存、不提交、不推送，除非用户对各项明确授权
+- 不同时更新用户级与主权区两份实体；一个权威副本加联接是目标状态，不是擅自清理现有副本的理由
 
 ## 10. 零源改根分支（无源可迁）
 
-触发：用户说「迁入 .agents/skills」，但方案批准后只改了目标根，旧根从未写入。
+触发：用户说「迁入 .agents/skills」，但 §1.1 确认两根均不存在、非联接；操作定性为 create，而非 migrate。只有会话证据支持时才写「从未写入」。
 
-```bash
-# 1) 旧根取证
-test -e "$SRC" && echo OLD_EXISTS || echo OLD_NOT_FOUND
-test -L "$SRC" && echo OLD_IS_LINK || echo OLD_NOT_LINK
-find "$SRC" -mindepth 1 -maxdepth 2 2>/dev/null | head -20
+1. 复述推荐根与拟用根的差异，确认最终路径；若批准后改根，交由 `skill-target-root-switch-replan` 做重规划，不重复设计已批准内容。
+2. 用 §1.1 同样的只读探测补查 `~/.agents/skills/<name>`，并查仓库同名登记与 TOML 镜像；出现副本、空壳、联接或探测错误则停止分流，不造源、不清理。
+3. 检查仓库根、submodule 与并发登记面状态，重读新根 frontmatter、质量门与链接门约定；搜索无命中与命令错误分开报告。
+4. 把以下载荷交给 `skill-creator` 的 Create 流程。已有批准完整覆盖新根、操作和内容时直接承接；只批准旧根、内容仍为提案或范围不清时先补确认。来源会话中的历史批准不能移作本轮授权。
 
-# 2) 新根跨根查重
-for root in "$HOME/.qoder/skills" "$HOME/.agents/skills" "$REPO/.agents/skills"; do
-  test -e "$root/$SKILL_NAME" && echo "EXISTS: $root/$SKILL_NAME"
-  test -L "$root/$SKILL_NAME" && echo "LINK:   $root/$SKILL_NAME"
-done
-git -C "$REPO" grep -n "$SKILL_NAME" -- . || echo "NO_TRACKED_HIT"
-test -e "$REPO/.meta/toml/.agents/skills/$SKILL_NAME/SKILL.toml" \
-  && echo "TOML_EXISTS" || echo "TOML_ABSENT"
-
-# 3) 并发登记面
-git -C "$REPO" status --short -- \
-  .agents/skills/README.md .agents/skills/CHANGELOG.md \
-  .agents/capability-registry/02-skills.md
+```text
+operation: create（不是 migrate）
+skill-name: <name>
+root decision: <推荐根 → 本轮确认根；冲突如何解决>
+source probe: <路径、ENOENT、非联接证据>
+target probe: <路径、ENOENT、非联接证据>
+duplicate check: <第三根、登记与镜像结果>
+existing design: <已有正文设计、资源清单、有效约束及当前设计批准状态>
+current authorization: <本轮批准消息及其覆盖的目标、操作、文件和内容范围>
+excluded actions: <未授权的登记、Junction、源清理、暂存、提交、推送>
+target contract: <新根原生 frontmatter 与验证命令；TOML 是否存在>
+migration comparisons: 不适用（复制、源目标哈希、正文保真、源侧质量门、质量分差）
 ```
 
-处置：
+`skill-creator` 写入前须复查目标仍不存在；若已出现，停止 Create 并走 Update 或冲突裁决。它负责创建及目标验收，本技能不另设一套创建算法。
 
-| 旧根状态 | 动作 |
-|---|---|
-| 不存在且非联接 | 直接在新根创建；报告写「旧根未写入」 |
-| 空目录 | 报告；经单独授权后 `rmdir` |
-| 实体或半套副本 | 先比对文件清单与哈希，报告哪份是权威；删除需单独授权 |
-| 联接 | 先读 `LinkType`/`Target`；不得直接复制或删除 |
-
-该分支**不执行** §4–§5 的复制与哈希步骤。frontmatter 仍按新根原生约定写；新根没有 TOML 镜像时不要写 `x-toml-ref`。验收按 §6 在新根执行，报告中把哈希/正文比对写「不适用」，不要写 PASS。
+该分支**不执行**读源全文、§4–§5 复制与比较脚本或 §6 源侧评分；不为迁移造空源。新根无 TOML 镜像时不写 `x-toml-ref`。只执行 §6 的目标检查，记录分数、失败项和真实退出码；源侧与分差写「不适用」，不得声称零漂移或已 move。通过后如实报告「已在主权区新建，无源可迁」；登记和联接仅按 §7 的独立授权交接，并发占用则说明延后。
