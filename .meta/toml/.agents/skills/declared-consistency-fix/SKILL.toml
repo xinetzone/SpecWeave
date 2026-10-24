@@ -1,0 +1,5 @@
+id = "skill"
+title = "声明一致性修复 Skill"
+category = "skills/declared-consistency-fix"
+date = "2026-10-23"
+version = "1.0"

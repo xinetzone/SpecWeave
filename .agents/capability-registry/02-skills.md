@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（9个）
+### 完整Skill（15个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -21,6 +21,11 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | skill-mirror-archive | "归档技能"、"技能镜像入库"、"平台技能导入"、"镜像归档"、"外部技能入库"、"把 XX 技能归档到 .agents/skills" | 1（sovereign-rollout 四阶段治理门 + Copy 保真/哈希核验 + source 溯源泛化 + 登记面双轨裁剪 + 原子提交；L1） | v1.0.0 | [skills/skill-mirror-archive/SKILL.md](../skills/skill-mirror-archive/SKILL.md) |
 | aiworks-deploy-cmd | "上传源码"、"一键部署"、"代部署"、"部署失败"、"错误码 8"、"部署包校验失败"、"frontend.deploy.json"、"AI Works"、"科学季投稿"、"deploy-helper"、"把作品发布到知乎"、"静态作品上线" | 1（官方 deploy-helper 五步链：inspect→描述符→validate（先 --plan-only）→settle→archive→浏览器上传→构建观察→审核声明→发布→复核；含 React 表单 bug 与 Draft.js 富文本两大 Gotchas 族；L2） | v1.0.0 | [skills/aiworks-deploy-cmd/SKILL.md](../skills/aiworks-deploy-cmd/SKILL.md) |
 | zhihu-article-publish-cmd | "写文章"、"发布文章"、"知乎专栏"、"zhuanlan"、"填知乎编辑器"、"插入配图"、"话题没加上"、"补话题"、"创作声明"、"发布设置"、"更新文章"、"已发布文章修改" | 1（Draft.js 唯一持久化输入通道：CDP Input.insertText，bu.type/execCommand/剪贴板均不可用；图片插入四步法：file input id 注入→upload_file→上传状态确认→JS 点击「插入图片」；话题候选四步选择法：JS 文本精确点击+标签行 DOM 验证；发布后文章页回读验证；含 10.1-10.3 Gotchas 族；L2） | v1.0.0 | [skills/zhihu-article-publish-cmd/SKILL.md](../skills/zhihu-article-publish-cmd/SKILL.md) |
+| declared-consistency-fix | "统一口径"、"修正许可证声明"、"README 与 LICENSE 不一致"、"版本号对不上"、"路径引用失效"、"声明漂移"、"修完又漂回去" | 1（真源 git 考古 → 全仓声明扫描 + 再生产源盘点 → 策略审批门 → 统一修正 → 机械验证；含只读 check_license_consistency.py；L1） | v1.0.0 | [skills/declared-consistency-fix/SKILL.md](../skills/declared-consistency-fix/SKILL.md) |
+| skill-quality-gate-remediation | "质量门没过"、"check-skill-quality 报错"、"Skill 只有 65 分"、"评分低于阈值"、"补 Why 解释"、"Gotchas 写了不算数"、"安全检查清单缺失"、"技能落盘被扣分" | 1（基线取证 → error→warn 定位 → 按判定正则实质性补齐 → 复跑 34 项全过 → 记录首次失败原因；含 34 项映射表；L1） | v1.0.0 | [skills/skill-quality-gate-remediation/SKILL.md](../skills/skill-quality-gate-remediation/SKILL.md) |
+| native-skill-surface-registration | "登记这个 Skill"、"四处登记"、"登记面同步"、"SKILL.toml 镜像"、"技能入库"、"双门收尾"、"联接而非副本"、"计数漂移修正" | 1（前置探针 → 预览确认门 → README/registry/CHANGELOG/.meta toml 四处登记与计数同轮 → 质量门+链接门双验收 → PowerShell Junction 用户级联接 → HEAD 计数漂移顺带修正；含登记面逐字模板与 v1.31 入库案例；L1） | v1.0.0 | [skills/native-skill-surface-registration/SKILL.md](../skills/native-skill-surface-registration/SKILL.md) |
+| oversized-tool-output-slicing | "输出被截断"、"超过 25000 token"、"落盘文件读不了"、"tool-results"、"Read 超限"、"ripgrep 超时"、"大仓找不到文件"、"读长会话记录取证"、"咋这么慢" | 2（路径 A 零依赖抽取器对落盘 JSON 按消息/工具名/状态/正则定点切片，替代反复 Read；路径 B git ls-files 索引定位替代超时搜索；含参数预算预防与幂等重入表；L2 双场景复发验证） | v1.0.0 | [skills/oversized-tool-output-slicing/SKILL.md](../skills/oversized-tool-output-slicing/SKILL.md) |
+| skill-recommendation-disk-triage | "这个推荐该新建还是已存在"、"别覆盖已有同名 Skill"、"自动推荐 Skill"、"先核实再动手"、"create 还是登记"、"推荐指令分诊"、"跨根查重"、"双门 --path" | 1（只读磁盘取证五步管线：跨根查重→登记面 git grep→双门 --path 验收→捆绑脚本真实产物回归→create/register+junction/update 改判决策树 + 写盘前确认门；L1） | v1.0.0 | [skills/skill-recommendation-disk-triage/SKILL.md](../skills/skill-recommendation-disk-triage/SKILL.md) |
 
 ### 工作流门面（6个）
 

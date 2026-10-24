@@ -1,0 +1,5 @@
+id = "skill"
+title = "技能质量门修复闭环 Skill"
+category = "skills/skill-quality-gate-remediation"
+date = "2026-10-23"
+version = "1.0"
