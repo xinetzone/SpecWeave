@@ -1,0 +1,64 @@
+{
+  "skill_name": "user-level-junction-acceptance",
+  "evals": [
+    {
+      "id": 1,
+      "name": "quick-validate-failure-needs-baseline",
+      "prompt": "C:\\Users\\xinzo\\.qoder\\skills\\atomic-commit-mixed-file-split 已经联接到仓库 .agents/skills 的同名目录了。我跑 quick_validate.py 退出码是 1，报 Unexpected key(s): argument-hint, paths, source, title, user-invocable, version。是不是联接坏了？给我个验收结论。",
+      "expected_output": "先跑目标技能并原样捕获退出码，再对至少两个同根、既有、已联接的技能跑同一个校验器取基线。若同一错误类在基线中同样出现，判 ACCEPTED WITH KNOWN BASELINE，并如实写明退出码 1；若基线都通过或错误键不同，判 REJECTED 并说明是本次引入。不把仓库原生 frontmatter 的既有失败写成通过，也不擅自改写主权副本去迎合最小键集。",
+      "files": [],
+      "assertions": [
+        "先确认联接的 LinkType 与 Target，再跑格式门",
+        "裸跑 quick_validate 并立即记录原始退出码，未接管道",
+        "对至少两个同根既有联接技能取基线",
+        "按同一错误类是否在基线出现来区分既有失败与本次引入",
+        "结论使用 ACCEPTED / ACCEPTED WITH KNOWN BASELINE / REJECTED 三档之一",
+        "报告如实写出退出码 1，未宣称格式门通过",
+        "未在验收过程中改写主体技能正文"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "bash-home-path-breaks-windows-python",
+      "prompt": "验收时这样解析 evals：python -c \"import json,pathlib; d=json.loads(pathlib.Path(r'$HOME/.qoder/skills/foo-skill/evals/evals.json').read_text())\"，结果报 FileNotFoundError: '\\\\c\\\\Users\\\\xinzo\\\\.qoder\\\\skills\\\\foo-skill\\\\evals\\\\evals.json'。文件明明存在，是不是技能包坏了？",
+      "expected_output": "判定为路径表示问题而非内容缺陷：Bash 把 $HOME 展开成 /c/Users/...，Windows Python 收到 \\c\\Users\\... 后无法解析。改用 C:/Users/... 或让 Python 用 pathlib.Path.home() 计算路径后重跑，确认 evals 可解析并记录场景数。修好路径前不得据此判定技能包损坏。",
+      "files": [],
+      "assertions": [
+        "指出 /c/ 与 \\c\\ 的差异来自 Bash 展开与 Windows Python 路径语义不同",
+        "未把 FileNotFoundError 直接判定为技能内容缺陷",
+        "改用 C:/... 或 Path.home() 后重跑解析",
+        "报告重跑后的 evals 场景数或断言结果",
+        "说明带 PYTHONDONTWRITEBYTECODE=1 以免经联接写回缓存"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "global-status-hash-is-not-an-invariant",
+      "prompt": "联接建之前 git status 的哈希是 99684c18…，验收后变成 29d728c3…，但 .agents/skills/foo-skill 一直是 ?? 未跟踪。是不是这次验收写坏了工作树？",
+      "expected_output": "指出全局 git status 哈希在共享工作树里不是有效不变量：其他会话会同时修改登记面等路径。改用路径级 status 作为交付边界主证据（两次均为 ?? .agents/skills/foo-skill/ 即一致），再对全局差异逐路径用 git status、diff 内容与 mtime 归因；mtime 只作辅助证据，无法归因时写 UNRESOLVED，不得宣称工作树未变。",
+      "files": [],
+      "assertions": [
+        "明确否定“全局哈希必须相等”这一判据",
+        "以路径级 git status 前后一致作为主要证据",
+        "对全局差异逐路径列出并尝试归因",
+        "把 mtime 标为辅助证据而非作者证据",
+        "无法归因时写 UNRESOLVED 而不是编造结论",
+        "未宣称工作树完全未变"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "new-format-error-is-rejected",
+      "prompt": "我新建的一个用户级技能只写了 name 和 description，quick_validate 报 Unexpected key(s): tags。另外两个既有联接技能跑同一个校验器都是退出 0。能按既有基线豁免掉吗？",
+      "expected_output": "判 REJECTED：基线全部通过说明该类错误不是既有债务，而且基线的错误键与目标不同，不能套用豁免。指出 tags 是本次引入的非法顶层键，修复需单独授权并走用户级技能编写流程；不得把新技能的真实缺陷写成 ACCEPTED WITH KNOWN BASELINE。",
+      "files": [],
+      "assertions": [
+        "识别基线均通过，因此不存在可豁免的既有失败",
+        "指出错误键与基线不同，不能归为同类",
+        "结论为 REJECTED 并说明是本次引入",
+        "未把新技能缺陷写成 ACCEPTED WITH KNOWN BASELINE",
+        "修复前请求单独授权，未擅自改正文"
+      ]
+    }
+  ]
+}
