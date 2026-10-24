@@ -36,7 +36,7 @@ title: ".agents/skills/ 目录索引"
 | sovereign-rollout-cmd | 命令门面 | 主权区治理资产落盘 | 提案、批准落盘、主权区变更、治理资产落盘、先提案后批准 | [sovereign-rollout-cmd/SKILL.md](sovereign-rollout-cmd/SKILL.md) |
 | github-org-bootstrap-cmd | 命令门面 | GitHub 组织命名与初始化 | 创建GitHub组织、建个org、组织名怎么起、demo组织、huncheng-lab | [github-org-bootstrap-cmd/SKILL.md](github-org-bootstrap-cmd/SKILL.md) |
 
-### 完整Skill（28个）
+### 完整Skill（29个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -68,6 +68,7 @@ title: ".agents/skills/ 目录索引"
 | skill-junction-durability-guard | 完整Skill（v1.0.0，L1） | 用户级 Skill 目录联接的持久性守卫：D0/D1/D2/D2i/D3 五级判定（跟踪状态 × 忽略规则 × 联接目标）→ 五步只读取证（`ls-files--error-unmatch` / `status` / `check-ignore` / `grep HEAD` / blob 比对）→ 联接创建与内容提交拆为 A/B/C/D 四项独立授权 → 提交后 blob 与经目标路径双复验；含纯审计模式与 14 条 Gotchas | 联接指向的技能突然没了、目录联接悬空、用户级技能能触发但没入库、建了联接还要不要提交、git clean 会不会删技能、git clean -fdx | [skill-junction-durability-guard/SKILL.md](skill-junction-durability-guard/SKILL.md) |
 | user-skill-sovereign-migration | 完整Skill（v1.2.0，L1） | 用户级 Skill 主权区原生迁移：位置决策树（原生/镜像/从零/保留用户级）→ 零写入预检（读全文、实体或联接判定、目标存在性、四处登记面探测）→ 提案批准 → 原生化 frontmatter（`x-toml-ref` 为条件字段）→ 保真复制与 SHA256/正文比对 → 两侧质量门分差归因（源 65/7 warn → 目标 70/6 warn，+5 为新增 `paths`）→ 移交四处登记与 Junction；含零源改根分支、19 条 Gotchas 与 17 项安全检查清单 | 迁入 .agents/skills、为什么没放在 .agents/skills、用户级 Skill 入库、原生迁移、移入主权区、把 ~/.qoder/skills 的技能搬进仓库 | [user-skill-sovereign-migration/SKILL.md](user-skill-sovereign-migration/SKILL.md) |
 | skill-guidance-correction-propagation | 完整Skill（v1.0.0，L1） | Skill 与文档规则纠错传播：冻结旧断言与新断言 → 用原句与两组同义词扫描正文、引用章节、测试夹具、测试断言与检测逻辑 → 按依赖顺序修补（权威面 → 指针 → 夹具 → 断言 → 检测）→ 覆盖守恒 → 原始退出码复跑门禁 → 既有失败与本次回归分开归因 → 按面汇报；含 3 处 Why、10 条 Gotchas 与 12 项安全检查清单；萃取自会话 a3d000e0 | 这处规则写错了、把相关文档和测试一起改、修完 references 还矛盾、测试数据固化了旧假设、门禁红了但不是本次改的 | [skill-guidance-correction-propagation/SKILL.md](skill-guidance-correction-propagation/SKILL.md) |
+| markdown-first-deliverable-drafting | 完整Skill（v1.0.0，L1） | Markdown 优先交付物起草：敏感度预检定落点（私域入 playground/reports/{类型}-{主题}-{日期}/，README 索引 + 每文件 frontmatter type/source 溯源 + 相对互链）→ 低成本 Markdown 草稿 → 草稿确认门（内容与目标格式双确认后才进转换链，禁止预装重型依赖）→ 转换链先探测现成能力再降级（PDF 走仓库脚本 → weasyprint → Playwright msedge 通道免下载）→ 临时依赖隔离在交付目录 support/generated 内并收尾清理；含决策树、7 条 Gotchas 与 9 项安全清单；萃取自会话 af172fa6 | 整理成Word、转成PDF、导出文档、生成报告文件、把方案变成文档、做成文件夹交付 | [markdown-first-deliverable-drafting/SKILL.md](markdown-first-deliverable-drafting/SKILL.md) |
 
 ### 工作流门面（6个）
 
