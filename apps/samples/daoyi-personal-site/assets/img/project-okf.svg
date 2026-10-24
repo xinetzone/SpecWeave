@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 600" width="760" height="600" role="img" aria-label="OKF 知识生态九域矩阵示意">
+  <!-- 左：知识包结构 -->
+  <g>
+    <rect x="36" y="52" width="224" height="300" rx="13" fill="#ffffff" fill-opacity="0.82" stroke="#14504d" stroke-opacity="0.38" stroke-width="1.2"/>
+    <text x="60" y="84" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="16" font-weight="500" fill="#14161a">知识包</text>
+    <text x="60" y="103" font-family="ui-monospace,monospace" font-size="9.5" fill="#6b7078" letter-spacing="1.3">BUNDLE / OKF v0.2</text>
+    <path d="M60 118H236" stroke="#14504d" stroke-opacity="0.26" stroke-width="1"/>
+  </g>
+  <g>
+    <rect x="58" y="136" width="180" height="56" rx="9" fill="#1f6f6b" fill-opacity="0.16" stroke="#14504d" stroke-opacity="0.32" stroke-width="1"/>
+    <text x="80" y="160" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#14161a">概念层</text>
+    <text x="80" y="179" font-family="ui-monospace,monospace" font-size="9" fill="#6b7078" letter-spacing="1">CONCEPTS</text>
+  </g>
+  <g>
+    <rect x="58" y="202" width="180" height="56" rx="9" fill="#1f6f6b" fill-opacity="0.11" stroke="#14504d" stroke-opacity="0.3" stroke-width="1"/>
+    <text x="80" y="226" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#14161a">示例层</text>
+    <text x="80" y="245" font-family="ui-monospace,monospace" font-size="9" fill="#6b7078" letter-spacing="1">EXAMPLES</text>
+  </g>
+  <g>
+    <rect x="58" y="268" width="180" height="56" rx="9" fill="#1f6f6b" fill-opacity="0.07" stroke="#14504d" stroke-opacity="0.28" stroke-width="1"/>
+    <text x="80" y="292" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#14161a">参考层</text>
+    <text x="80" y="311" font-family="ui-monospace,monospace" font-size="9" fill="#6b7078" letter-spacing="1">REFERENCES</text>
+  </g>
+
+  <!-- 连接 -->
+  <g stroke="#14504d" stroke-opacity="0.3" stroke-width="1.1" fill="none">
+    <path d="M260 202H288"/>
+    <path d="M288 130V500"/>
+  </g>
+  <g fill="#14504d" fill-opacity="0.5">
+    <path d="M284 197l8 5-8 5z"/>
+  </g>
+
+  <!-- 3×3 学科域矩阵 -->
+  <g font-family="'PingFang SC','Microsoft YaHei',sans-serif" fill="#14161a">
+    <g>
+      <rect x="288" y="52" width="136" height="112" rx="11" fill="#ffffff" fill-opacity="0.82" stroke="#14504d" stroke-opacity="0.3" stroke-width="1.1"/>
+      <text x="308" y="92" font-size="16" font-weight="500">技术域</text>
+      <text x="308" y="118" font-family="ui-monospace,monospace" font-size="10" fill="#6b7078" letter-spacing="1">500 BUNDLES</text>
+      <text x="308" y="140" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">AI / BUILD / DATA</text>
+    </g>
+    <g>
+      <rect x="436" y="52" width="136" height="112" rx="11" fill="#ffffff" fill-opacity="0.82" stroke="#14504d" stroke-opacity="0.3" stroke-width="1.1"/>
+      <text x="456" y="92" font-size="16" font-weight="500">人文域</text>
+      <text x="456" y="118" font-family="ui-monospace,monospace" font-size="10" fill="#6b7078" letter-spacing="1">51 BUNDLES</text>
+      <text x="456" y="140" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">CLASSICS / LITERATURE</text>
+    </g>
+    <g>
+      <rect x="584" y="52" width="136" height="112" rx="11" fill="#ffffff" fill-opacity="0.82" stroke="#14504d" stroke-opacity="0.3" stroke-width="1.1"/>
+      <text x="604" y="92" font-size="16" font-weight="500">社科域</text>
+      <text x="604" y="118" font-family="ui-monospace,monospace" font-size="10" fill="#6b7078" letter-spacing="1">81 BUNDLES</text>
+      <text x="604" y="140" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">WORK / GROWTH / MONEY</text>
+    </g>
+
+    <g>
+      <rect x="288" y="176" width="136" height="112" rx="11" fill="#ffffff" fill-opacity="0.82" stroke="#14504d" stroke-opacity="0.3" stroke-width="1.1"/>
+      <text x="308" y="216" font-size="16" font-weight="500">科学域</text>
+      <text x="308" y="242" font-family="ui-monospace,monospace" font-size="10" fill="#6b7078" letter-spacing="1">17 BUNDLES</text>
+      <text x="308" y="264" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">CHEM / PHYSICS</text>
+    </g>
+    <g>
+      <rect x="436" y="176" width="136" height="112" rx="11" fill="#ffffff" fill-opacity="0.82" stroke="#14504d" stroke-opacity="0.3" stroke-width="1.1"/>
+      <text x="456" y="216" font-size="16" font-weight="500">哲学域</text>
+      <text x="456" y="242" font-family="ui-monospace,monospace" font-size="10" fill="#6b7078" letter-spacing="1">8 BUNDLES</text>
+      <text x="456" y="264" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">LOGIC / METHOD</text>
+    </g>
+    <g>
+      <rect x="584" y="176" width="136" height="112" rx="11" fill="#ffffff" fill-opacity="0.82" stroke="#14504d" stroke-opacity="0.3" stroke-width="1.1"/>
+      <text x="604" y="216" font-size="16" font-weight="500">艺术域</text>
+      <text x="604" y="242" font-family="ui-monospace,monospace" font-size="10" fill="#6b7078" letter-spacing="1">9 BUNDLES</text>
+      <text x="604" y="264" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">THERAPY / VOICE</text>
+    </g>
+
+    <g>
+      <rect x="288" y="300" width="136" height="112" rx="11" fill="#ffffff" fill-opacity="0.82" stroke="#14504d" stroke-opacity="0.3" stroke-width="1.1"/>
+      <text x="308" y="340" font-size="16" font-weight="500">医学域</text>
+      <text x="308" y="366" font-family="ui-monospace,monospace" font-size="10" fill="#6b7078" letter-spacing="1">10 BUNDLES</text>
+      <text x="308" y="388" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">TCM / WELLNESS</text>
+    </g>
+    <g>
+      <rect x="436" y="300" width="136" height="112" rx="11" fill="#ffffff" fill-opacity="0.82" stroke="#14504d" stroke-opacity="0.3" stroke-width="1.1"/>
+      <text x="456" y="340" font-size="16" font-weight="500">国学域</text>
+      <text x="456" y="366" font-family="ui-monospace,monospace" font-size="10" fill="#6b7078" letter-spacing="1">49 BUNDLES</text>
+      <text x="456" y="388" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">DAO / YI / YANG</text>
+    </g>
+    <g>
+      <rect x="584" y="300" width="136" height="112" rx="11" fill="#1f6f6b" fill-opacity="0.2" stroke="#14504d" stroke-opacity="0.55" stroke-width="1.3"/>
+      <text x="604" y="340" font-size="16" font-weight="500">规范域</text>
+      <text x="604" y="366" font-family="ui-monospace,monospace" font-size="10" fill="#14504d" letter-spacing="1">3 BUNDLES</text>
+      <text x="604" y="388" font-family="ui-monospace,monospace" font-size="9" fill="#14504d" opacity="0.8" letter-spacing="1">OKF SPEC ANCHOR</text>
+    </g>
+  </g>
+
+  <!-- 底部刻度 -->
+  <g stroke="#14504d" stroke-opacity="0.26" stroke-width="1">
+    <path d="M36 470H724"/>
+    <path d="M36 466V476M136 466V476M236 466V476M336 466V476M436 466V476M536 466V476M636 466V476M724 466V476"/>
+  </g>
+  <g font-family="ui-monospace,monospace" font-size="9.5" fill="#6b7078" letter-spacing="1.2">
+    <text x="36" y="40">OKF ECOSYSTEM / 9 DOMAINS</text>
+    <text x="36" y="500">TRACEABLE / TRUSTED / CITABLE</text>
+    <text x="724" y="500" text-anchor="end">339 PACKAGES</text>
+  </g>
+  <g font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="12" fill="#8b9098">
+    <text x="36" y="546">同一条流水线：源码 · 文档 · 文章 → 带出处的知识条目</text>
+  </g>
+</svg>

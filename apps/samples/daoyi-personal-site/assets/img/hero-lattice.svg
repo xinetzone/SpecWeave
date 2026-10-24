@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 560" width="720" height="560" role="img" aria-label="多智能体协作示意图">
+  <defs>
+    <linearGradient id="hl-core" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b45d8" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#1a2a9c" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 背景网格 -->
+  <g stroke="#14161a" stroke-opacity="0.07" stroke-width="1">
+    <path d="M40 0V560M80 0V560M120 0V560M160 0V560M200 0V560M240 0V560M280 0V560M320 0V560M360 0V560M400 0V560M440 0V560M480 0V560M520 0V560M560 0V560M600 0V560M640 0V560M680 0V560"/>
+    <path d="M0 40H720M0 80H720M0 120H720M0 160H720M0 200H720M0 240H720M0 280H720M0 320H720M0 360H720M0 400H720M0 440H720M0 480H720M0 520H720"/>
+  </g>
+
+  <!-- 角标 -->
+  <g stroke="#14161a" stroke-opacity="0.3" stroke-width="1.2" fill="none">
+    <path d="M28 28h26M28 28v26"/>
+    <path d="M692 28h-26M692 28v26"/>
+    <path d="M28 532h26M28 532v-26"/>
+    <path d="M692 532h-26M692 532v-26"/>
+  </g>
+
+  <!-- 外环 -->
+  <ellipse cx="360" cy="280" rx="252" ry="182" fill="none" stroke="#1a2a9c" stroke-opacity="0.22" stroke-width="1" stroke-dasharray="3 7"/>
+  <ellipse cx="360" cy="280" rx="196" ry="140" fill="none" stroke="#1a2a9c" stroke-opacity="0.14" stroke-width="1"/>
+
+  <!-- 连线 -->
+  <g stroke="#1a2a9c" stroke-opacity="0.34" stroke-width="1.1">
+    <path d="M360 280L360 100"/>
+    <path d="M360 280L537 153"/>
+    <path d="M360 280L610 280"/>
+    <path d="M360 280L537 407"/>
+    <path d="M360 280L360 460"/>
+    <path d="M360 280L183 407"/>
+    <path d="M360 280L110 280"/>
+    <path d="M360 280L183 153"/>
+  </g>
+  <g stroke="#1a2a9c" stroke-opacity="0.16" stroke-width="1">
+    <path d="M360 100L537 153M537 153L610 280M610 280L537 407M537 407L360 460M360 460L183 407M183 407L110 280M110 280L183 153M183 153L360 100"/>
+  </g>
+
+  <!-- 中心节点 -->
+  <g>
+    <circle cx="360" cy="280" r="56" fill="url(#hl-core)" stroke="#1a2a9c" stroke-opacity="0.45" stroke-width="1.2"/>
+    <circle cx="360" cy="280" r="66" fill="none" stroke="#1a2a9c" stroke-opacity="0.2" stroke-width="1"
+            stroke-dasharray="414" stroke-dashoffset="414">
+      <animate attributeName="stroke-dashoffset" from="414" to="0" dur="1400ms" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+    </circle>
+    <text x="360" y="274" text-anchor="middle" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="19" font-weight="500" fill="#14161a" letter-spacing="1">协作协议</text>
+    <text x="360" y="296" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#6b7078" letter-spacing="2">PROTOCOL</text>
+  </g>
+
+  <!-- 角色节点 -->
+  <g font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="15" text-anchor="middle" fill="#14161a">
+    <g>
+      <circle cx="360" cy="100" r="30" fill="#f7f6f2" stroke="#1a2a9c" stroke-opacity="0.4" stroke-width="1.2"/>
+      <text x="360" y="106">编排</text>
+    </g>
+    <g>
+      <circle cx="537" cy="153" r="30" fill="#f7f6f2" stroke="#1a2a9c" stroke-opacity="0.4" stroke-width="1.2"/>
+      <text x="537" y="159">架构</text>
+    </g>
+    <g>
+      <circle cx="610" cy="280" r="30" fill="#f7f6f2" stroke="#1a2a9c" stroke-opacity="0.4" stroke-width="1.2"/>
+      <text x="610" y="286">开发</text>
+    </g>
+    <g>
+      <circle cx="537" cy="407" r="30" fill="#f7f6f2" stroke="#1a2a9c" stroke-opacity="0.4" stroke-width="1.2"/>
+      <text x="537" y="413">审查</text>
+    </g>
+    <g>
+      <circle cx="360" cy="460" r="30" fill="#efb03f" stroke="#8a5d08" stroke-opacity="0.5" stroke-width="1.2"/>
+      <text x="360" y="466" fill="#14161a">门禁</text>
+    </g>
+    <g>
+      <circle cx="183" cy="407" r="30" fill="#f7f6f2" stroke="#1a2a9c" stroke-opacity="0.4" stroke-width="1.2"/>
+      <text x="183" y="413">测试</text>
+    </g>
+    <g>
+      <circle cx="110" cy="280" r="30" fill="#f7f6f2" stroke="#1a2a9c" stroke-opacity="0.4" stroke-width="1.2"/>
+      <text x="110" y="286">文档</text>
+    </g>
+    <g>
+      <circle cx="183" cy="153" r="30" fill="#f7f6f2" stroke="#1a2a9c" stroke-opacity="0.4" stroke-width="1.2"/>
+      <text x="183" y="159">治理</text>
+    </g>
+  </g>
+
+  <!-- 标注 -->
+  <g font-family="ui-monospace,monospace" font-size="9.5" fill="#6b7078" letter-spacing="1.4">
+    <text x="40" y="52">AGENTS.md</text>
+    <text x="40" y="68" fill="#8b9098">→ 角色 → 协议 → 门禁</text>
+    <text x="680" y="512" text-anchor="end">ROLE MAP / 08</text>
+  </g>
+</svg>

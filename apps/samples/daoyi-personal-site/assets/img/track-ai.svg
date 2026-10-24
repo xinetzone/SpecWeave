@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" width="560" height="400" role="img" aria-label="规范体系分层示意">
+  <g stroke="#1a2a9c" stroke-opacity="0.34" stroke-width="1.2" fill="none">
+    <path d="M84 62V336"/>
+  </g>
+
+  <g fill="#1a2a9c">
+    <circle cx="84" cy="88" r="4.5"/>
+    <circle cx="84" cy="162" r="4.5"/>
+    <circle cx="84" cy="236" r="4.5"/>
+  </g>
+  <circle cx="84" cy="310" r="4.5" fill="#efb03f"/>
+
+  <g>
+    <rect x="112" y="58" width="404" height="60" rx="10" fill="#ffffff" fill-opacity="0.72" stroke="#1a2a9c" stroke-opacity="0.36" stroke-width="1.2"/>
+    <text x="134" y="84" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="16" font-weight="500" fill="#14161a">统一入口</text>
+    <text x="134" y="103" font-family="ui-monospace,monospace" font-size="10" fill="#6b7078" letter-spacing="1.2">AGENTS.md</text>
+    <text x="494" y="94" text-anchor="end" font-family="ui-monospace,monospace" font-size="10" fill="#8b9098" letter-spacing="1">1 ENTRY</text>
+  </g>
+
+  <g>
+    <rect x="112" y="132" width="404" height="60" rx="10" fill="#ffffff" fill-opacity="0.72" stroke="#1a2a9c" stroke-opacity="0.36" stroke-width="1.2"/>
+    <text x="134" y="158" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="16" font-weight="500" fill="#14161a">角色职责</text>
+    <text x="134" y="177" font-family="ui-monospace,monospace" font-size="10" fill="#6b7078" letter-spacing="1.2">ROLES / 8 类</text>
+    <text x="494" y="168" text-anchor="end" font-family="ui-monospace,monospace" font-size="10" fill="#8b9098" letter-spacing="1">ORCHESTRATOR</text>
+  </g>
+
+  <g>
+    <rect x="112" y="206" width="404" height="60" rx="10" fill="#ffffff" fill-opacity="0.72" stroke="#1a2a9c" stroke-opacity="0.36" stroke-width="1.2"/>
+    <text x="134" y="232" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="16" font-weight="500" fill="#14161a">协作协议</text>
+    <text x="134" y="251" font-family="ui-monospace,monospace" font-size="10" fill="#6b7078" letter-spacing="1.2">PROTOCOLS / 18 份</text>
+    <text x="494" y="242" text-anchor="end" font-family="ui-monospace,monospace" font-size="10" fill="#8b9098" letter-spacing="1">HANDOFF</text>
+  </g>
+
+  <g>
+    <rect x="112" y="280" width="404" height="60" rx="10" fill="#efb03f" fill-opacity="0.34" stroke="#8a5d08" stroke-opacity="0.5" stroke-width="1.2"/>
+    <text x="134" y="306" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="16" font-weight="500" fill="#14161a">质量门禁</text>
+    <text x="134" y="325" font-family="ui-monospace,monospace" font-size="10" fill="#6b7078" letter-spacing="1.2">RULES + SCRIPTS / 503</text>
+    <text x="494" y="316" text-anchor="end" font-family="ui-monospace,monospace" font-size="10" fill="#8b9098" letter-spacing="1">EXECUTABLE</text>
+  </g>
+
+  <g font-family="ui-monospace,monospace" font-size="9.5" fill="#6b7078" letter-spacing="1.2">
+    <text x="24" y="40">LAYERED SPEC</text>
+    <text x="536" y="372" text-anchor="end">RULE → ROLE → PROTOCOL → GATE</text>
+  </g>
+</svg>

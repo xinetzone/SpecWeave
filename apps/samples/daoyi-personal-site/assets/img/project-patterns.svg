@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 600" width="760" height="600" role="img" aria-label="可复用模式矩阵示意">
+  <defs>
+    <pattern id="hatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <path d="M0 0V7" stroke="#8a5d08" stroke-opacity="0.34" stroke-width="1.4"/>
+    </pattern>
+    <pattern id="hatch2" width="7" height="7" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
+      <path d="M0 0V7" stroke="#1a2a9c" stroke-opacity="0.3" stroke-width="1.4"/>
+    </pattern>
+  </defs>
+
+  <!-- 架构模式 -->
+  <g>
+    <text x="36" y="52" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="15" font-weight="500" fill="#14161a">架构模式</text>
+    <text x="36" y="70" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1.1">ARCHITECTURE</text>
+  </g>
+  <g stroke="#8a5d08" stroke-opacity="0.34" stroke-width="1.1" fill="#ffffff" fill-opacity="0.6">
+    <rect x="150" y="32" width="84" height="52" rx="8"/>
+    <rect x="244" y="32" width="84" height="52" rx="8"/>
+    <rect x="338" y="32" width="84" height="52" rx="8"/>
+    <rect x="432" y="32" width="84" height="52" rx="8"/>
+    <rect x="526" y="32" width="84" height="52" rx="8"/>
+    <rect x="620" y="32" width="84" height="52" rx="8"/>
+  </g>
+  <g fill="url(#hatch)" opacity="0.5">
+    <rect x="150" y="32" width="84" height="52" rx="8"/>
+    <rect x="338" y="32" width="84" height="52" rx="8"/>
+    <rect x="620" y="32" width="84" height="52" rx="8"/>
+  </g>
+  <g font-family="ui-monospace,monospace" font-size="9" fill="#6b7078" letter-spacing="1">
+    <text x="162" y="62">ADR-01</text>
+    <text x="256" y="62">SPLIT-02</text>
+    <text x="350" y="62">CACHE-03</text>
+    <text x="444" y="62">QUEUE-04</text>
+    <text x="538" y="62">GATE-05</text>
+    <text x="632" y="62">ROLL-06</text>
+  </g>
+
+  <!-- 代码模式 -->
+  <g>
+    <text x="36" y="212" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="15" font-weight="500" fill="#14161a">代码模式</text>
+    <text x="36" y="230" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1.1">CODE</text>
+  </g>
+  <g stroke="#1a2a9c" stroke-opacity="0.3" stroke-width="1.1" fill="#ffffff" fill-opacity="0.6">
+    <rect x="150" y="192" width="84" height="52" rx="8"/>
+    <rect x="244" y="192" width="84" height="52" rx="8"/>
+    <rect x="338" y="192" width="84" height="52" rx="8"/>
+    <rect x="432" y="192" width="84" height="52" rx="8"/>
+    <rect x="526" y="192" width="84" height="52" rx="8"/>
+    <rect x="620" y="192" width="84" height="52" rx="8"/>
+  </g>
+  <g fill="url(#hatch2)" opacity="0.45">
+    <rect x="244" y="192" width="84" height="52" rx="8"/>
+    <rect x="432" y="192" width="84" height="52" rx="8"/>
+    <rect x="526" y="192" width="84" height="52" rx="8"/>
+  </g>
+  <g font-family="ui-monospace,monospace" font-size="9" fill="#6b7078" letter-spacing="1">
+    <text x="162" y="222">LIB-11</text>
+    <text x="256" y="222">CLI-12</text>
+    <text x="350" y="222">LOG-13</text>
+    <text x="444" y="222">TEST-14</text>
+    <text x="538" y="222">CACHE-15</text>
+    <text x="632" y="222">HOOK-16</text>
+  </g>
+
+  <!-- 方法论模式 -->
+  <g>
+    <text x="36" y="372" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="15" font-weight="500" fill="#14161a">方法论模式</text>
+    <text x="36" y="390" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1.1">METHODOLOGY</text>
+  </g>
+  <g stroke="#8a5d08" stroke-opacity="0.34" stroke-width="1.1" fill="#ffffff" fill-opacity="0.6">
+    <rect x="150" y="352" width="84" height="52" rx="8"/>
+    <rect x="244" y="352" width="84" height="52" rx="8"/>
+    <rect x="338" y="352" width="84" height="52" rx="8"/>
+    <rect x="432" y="352" width="84" height="52" rx="8"/>
+    <rect x="526" y="352" width="84" height="52" rx="8"/>
+    <rect x="620" y="352" width="84" height="52" rx="8"/>
+  </g>
+  <g fill="url(#hatch)" opacity="0.5">
+    <rect x="150" y="352" width="84" height="52" rx="8"/>
+    <rect x="526" y="352" width="84" height="52" rx="8"/>
+  </g>
+  <g font-family="ui-monospace,monospace" font-size="9" fill="#6b7078" letter-spacing="1">
+    <text x="162" y="382">REVIEW-21</text>
+    <text x="256" y="382">TDD-22</text>
+    <text x="350" y="382">FALSIFY-23</text>
+    <text x="444" y="382">SPEC-24</text>
+    <text x="538" y="382">TRACE-25</text>
+    <text x="632" y="382">LOOP-26</text>
+  </g>
+
+  <!-- 复用路径 -->
+  <g stroke="#1a2a9c" stroke-opacity="0.36" stroke-width="1.2" fill="none" stroke-dasharray="4 5">
+    <path d="M192 84V192M286 244V352M380 404V192M474 84V352M568 192V352M662 404V192"/>
+  </g>
+  <g fill="#efb03f" fill-opacity="0.85">
+    <circle cx="192" cy="192" r="5"/>
+    <circle cx="380" cy="192" r="5"/>
+    <circle cx="568" cy="352" r="5"/>
+  </g>
+  <g fill="#1a2a9c" fill-opacity="0.5">
+    <circle cx="192" cy="84" r="4"/>
+    <circle cx="286" cy="244" r="4"/>
+    <circle cx="474" cy="84" r="4"/>
+    <circle cx="662" cy="404" r="4"/>
+  </g>
+
+  <!-- 底部 -->
+  <g stroke="#8a5d08" stroke-opacity="0.26" stroke-width="1">
+    <path d="M36 468H724"/>
+    <path d="M36 464V474M136 464V474M236 464V474M336 464V474M436 464V474M536 464V474M636 464V474M724 464V474"/>
+  </g>
+  <g font-family="ui-monospace,monospace" font-size="9.5" fill="#6b7078" letter-spacing="1.2">
+    <text x="36" y="40">PATTERN MATRIX</text>
+    <text x="36" y="502">RETROSPECTIVE → PATTERN → REUSE</text>
+    <text x="724" y="502" text-anchor="end">951 DOCS</text>
+  </g>
+  <g font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="12" fill="#8b9098">
+    <text x="36" y="548">每一条模式都来自一次真实任务复盘，标注适用边界与失效条件</text>
+  </g>
+</svg>

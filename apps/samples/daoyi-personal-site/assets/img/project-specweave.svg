@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 600" width="760" height="600" role="img" aria-label="SpecWeave 协作结构示意">
+  <!-- 入口 -->
+  <g>
+    <rect x="288" y="36" width="184" height="60" rx="11" fill="#ffffff" fill-opacity="0.86" stroke="#1a2a9c" stroke-opacity="0.45" stroke-width="1.3"/>
+    <text x="380" y="63" text-anchor="middle" font-family="ui-monospace,monospace" font-size="15" font-weight="500" fill="#14161a" letter-spacing="1">AGENTS.md</text>
+    <text x="380" y="83" text-anchor="middle" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="11.5" fill="#6b7078">统一入口</text>
+  </g>
+
+  <!-- 干线 -->
+  <g stroke="#1a2a9c" stroke-opacity="0.4" stroke-width="1.2" fill="none">
+    <path d="M380 96V128"/>
+    <path d="M155 128H605"/>
+    <path d="M155 128V150M305 128V150M455 128V150M605 128V150"/>
+    <path d="M155 226V248M305 226V248M455 226V248M605 226V248"/>
+    <path d="M155 324V352M305 324V352M455 324V352M605 324V352"/>
+    <path d="M155 352H605"/>
+    <path d="M380 352V374"/>
+  </g>
+
+  <!-- 角色瓦片 -->
+  <g font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="15" fill="#14161a">
+    <g>
+      <rect x="96" y="150" width="118" height="76" rx="10" fill="#ffffff" fill-opacity="0.8" stroke="#1a2a9c" stroke-opacity="0.34" stroke-width="1.1"/>
+      <text x="155" y="185" text-anchor="middle">编排</text>
+      <text x="155" y="206" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">ORCHESTR</text>
+    </g>
+    <g>
+      <rect x="246" y="150" width="118" height="76" rx="10" fill="#ffffff" fill-opacity="0.8" stroke="#1a2a9c" stroke-opacity="0.34" stroke-width="1.1"/>
+      <text x="305" y="185" text-anchor="middle">架构</text>
+      <text x="305" y="206" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">ARCHITECT</text>
+    </g>
+    <g>
+      <rect x="396" y="150" width="118" height="76" rx="10" fill="#ffffff" fill-opacity="0.8" stroke="#1a2a9c" stroke-opacity="0.34" stroke-width="1.1"/>
+      <text x="455" y="185" text-anchor="middle">开发</text>
+      <text x="455" y="206" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">DEVELOPER</text>
+    </g>
+    <g>
+      <rect x="546" y="150" width="118" height="76" rx="10" fill="#ffffff" fill-opacity="0.8" stroke="#1a2a9c" stroke-opacity="0.34" stroke-width="1.1"/>
+      <text x="605" y="185" text-anchor="middle">审查</text>
+      <text x="605" y="206" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">REVIEWER</text>
+    </g>
+    <g>
+      <rect x="96" y="248" width="118" height="76" rx="10" fill="#ffffff" fill-opacity="0.8" stroke="#1a2a9c" stroke-opacity="0.34" stroke-width="1.1"/>
+      <text x="155" y="283" text-anchor="middle">测试</text>
+      <text x="155" y="304" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">TESTER</text>
+    </g>
+    <g>
+      <rect x="246" y="248" width="118" height="76" rx="10" fill="#ffffff" fill-opacity="0.8" stroke="#1a2a9c" stroke-opacity="0.34" stroke-width="1.1"/>
+      <text x="305" y="283" text-anchor="middle">文档</text>
+      <text x="305" y="304" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">DOCS</text>
+    </g>
+    <g>
+      <rect x="396" y="248" width="118" height="76" rx="10" fill="#ffffff" fill-opacity="0.8" stroke="#1a2a9c" stroke-opacity="0.34" stroke-width="1.1"/>
+      <text x="455" y="283" text-anchor="middle">治理</text>
+      <text x="455" y="304" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">GOVERN</text>
+    </g>
+    <g>
+      <rect x="546" y="248" width="118" height="76" rx="10" fill="#efb03f" fill-opacity="0.4" stroke="#8a5d08" stroke-opacity="0.55" stroke-width="1.2"/>
+      <text x="605" y="283" text-anchor="middle">门禁</text>
+      <text x="605" y="304" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">GATE</text>
+    </g>
+  </g>
+
+  <!-- 资产层 -->
+  <g>
+    <rect x="120" y="374" width="520" height="46" rx="9" fill="#ffffff" fill-opacity="0.72" stroke="#1a2a9c" stroke-opacity="0.3" stroke-width="1.1"/>
+    <text x="142" y="402" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#14161a">协作协议</text>
+    <text x="142" y="415" font-family="ui-monospace,monospace" font-size="8.5" fill="#8b9098" letter-spacing="1">HANDOFF / CONFLICT</text>
+    <text x="618" y="402" text-anchor="end" font-family="ui-monospace,monospace" font-size="13" fill="#1a2a9c" letter-spacing="1">18</text>
+  </g>
+  <g>
+    <rect x="120" y="428" width="520" height="46" rx="9" fill="#ffffff" fill-opacity="0.72" stroke="#1a2a9c" stroke-opacity="0.3" stroke-width="1.1"/>
+    <text x="142" y="456" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#14161a">规则</text>
+    <text x="142" y="469" font-family="ui-monospace,monospace" font-size="8.5" fill="#8b9098" letter-spacing="1">RULES / STYLE / SECURITY</text>
+    <text x="618" y="456" text-anchor="end" font-family="ui-monospace,monospace" font-size="13" fill="#1a2a9c" letter-spacing="1">137</text>
+  </g>
+  <g>
+    <rect x="120" y="482" width="520" height="46" rx="9" fill="#efb03f" fill-opacity="0.34" stroke="#8a5d08" stroke-opacity="0.5" stroke-width="1.2"/>
+    <text x="142" y="510" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#14161a">校验脚本</text>
+    <text x="142" y="523" font-family="ui-monospace,monospace" font-size="8.5" fill="#8b9098" letter-spacing="1">SCRIPTS / CI / PRE-COMMIT</text>
+    <text x="618" y="510" text-anchor="end" font-family="ui-monospace,monospace" font-size="13" fill="#8a5d08" letter-spacing="1">503</text>
+  </g>
+
+  <!-- 底部刻度 -->
+  <g stroke="#1a2a9c" stroke-opacity="0.28" stroke-width="1">
+    <path d="M120 556H640"/>
+    <path d="M120 552V562M180 552V562M240 552V562M300 552V562M360 552V562M420 552V562M480 552V562M540 552V562M600 552V562M640 552V562"/>
+  </g>
+  <g font-family="ui-monospace,monospace" font-size="9.5" fill="#6b7078" letter-spacing="1.2">
+    <text x="40" y="40">SPECWEAVE / STRUCTURE</text>
+    <text x="720" y="40" text-anchor="end">2026-06 →</text>
+    <text x="40" y="580">COMMIT</text>
+    <text x="720" y="580" text-anchor="end">4,587</text>
+  </g>
+</svg>

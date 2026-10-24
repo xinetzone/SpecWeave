@@ -72,6 +72,7 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | samples/ | maitian-bakehouse | —（遵循根规范） | ❌ 无 | 麦田烘焙 · 烘焙工作室展示网页：纯HTML/CSS/JS 零构建静态落地页（首屏大图 + 6 款招牌产品卡片 + 品牌故事 + 3 条顾客好评 + 联系地址/地图占位；手写体标题 + 奶油棕配色 + 内联 SVG 插画占位） |
 | samples/ | worker-ledger | —（遵循根规范） | ❌ 无 | 打工人小账本 · 离线个人工作台（`apps/samples/worker-ledger/`）：单文件 `index.html` 全内联零构建（真实时薪计算器含公式展开 / 10 秒记账 / 首页最近 4 笔 / 月度收入与固定弹性支出总结 / 自由基金与安全垫 / 原生 SVG 存款曲线 / 通勤加班涨薪情景模拟；localStorage 持久化 + JSON 导入导出 + 四档安全清理；奶油薄荷手账风 + 统一内联 SVG 图标库 + 小猪存钱罐插画；桌面侧栏 / 移动底部 Tab） |
 | samples/ | mobile-design-tokens | —（遵循根规范） | ❌ 无 | 移动端 Design Token 工作台（纯HTML/CSS/JS 零构建；由 Ardot 设计稿生成，Primitives→Semantic 两层 Token + Light/Dark/跟随系统三态换肤，含搜索/复制/导出；Token 真源 `styles/tokens.css`，数据源 `scripts/tokens.js`） |
+| samples/ | daoyi-personal-site | —（遵循根规范） | ❌ 无 | 道一 daoyi · 个人站（`apps/samples/daoyi-personal-site/`）：纯HTML/CSS/JS 零构建单页（首屏定位 + 三线并行「AI 工程 / 知识工程 / 内容创作」+ 4 个精选项目 + 能力经验深色区 + 工作方法四步闭环 + 关于我 + 联系方式；纸感暖白/深墨/靛蓝+藏红三线配色，10 张自绘 SVG 插图无第三方素材；交互仅轻微悬停反馈 + 一次性淡入上移；线上 https://apzv94whda1vm.space.mcode.cn ） |
 | samples/ | zleap-workspace-first-prototype | —（遵循根规范） | ❌ 无 | 工作区首个原型（多模型路由） |
 | samples/ | serial-camera-controller | —（遵循根规范） | ❌ 无 | 串口控制USB摄像头抓图/录像（CH340+OpenCV+pyserial，双协议三线程架构） |
 | samples/ | study-goal-hub | —（遵循根规范） | ❌ 无 | 学习目标管理台（单文件零构建 `index.html` + README：管理有终点/有总量的学习目标；今日建议量=剩余量÷剩余天数、每周1个休息日容错的连续天数、近7天速度外推的预计完成日（样本不足显示「暂无推算」）、补记最近6天按真实日期参与计算、四Tab（今日/看板/周报/我的）+手写SVG堆叠柱状图+周报环比与四栏复盘；localStorage `study-goal-hub.v3`，支持 v1→v3 迁移；无外部库、断网可用） |

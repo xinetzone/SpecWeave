@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 600" width="760" height="600" role="img" aria-label="内容转知识流水线示意">
+  <!-- 输入 -->
+  <g>
+    <rect x="36" y="64" width="164" height="104" rx="11" fill="#ffffff" fill-opacity="0.82" stroke="#4a3596" stroke-opacity="0.3" stroke-width="1.1"/>
+    <g stroke="#4a3596" stroke-opacity="0.32" stroke-width="1.2" stroke-linecap="round">
+      <path d="M56 88h96M56 100h120M56 112h78"/>
+    </g>
+    <text x="56" y="140" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="13.5" fill="#14161a">公众号</text>
+    <text x="56" y="157" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">WECHAT ARTICLE</text>
+  </g>
+  <g>
+    <rect x="36" y="216" width="164" height="104" rx="11" fill="#ffffff" fill-opacity="0.82" stroke="#4a3596" stroke-opacity="0.3" stroke-width="1.1"/>
+    <g stroke="#4a3596" stroke-opacity="0.32" stroke-width="1.2" stroke-linecap="round">
+      <path d="M56 240h110M56 252h88M56 264h122"/>
+    </g>
+    <text x="56" y="292" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="13.5" fill="#14161a">专栏</text>
+    <text x="56" y="309" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">COLUMN POST</text>
+  </g>
+  <g>
+    <rect x="36" y="368" width="164" height="104" rx="11" fill="#ffffff" fill-opacity="0.82" stroke="#4a3596" stroke-opacity="0.3" stroke-width="1.1"/>
+    <g stroke="#4a3596" stroke-opacity="0.32" stroke-width="1.2" stroke-linecap="round">
+      <path d="M56 392h84M56 404h116M56 416h70"/>
+    </g>
+    <text x="56" y="444" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="13.5" fill="#14161a">技术博客</text>
+    <text x="56" y="461" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">DEV BLOG</text>
+  </g>
+
+  <!-- 输入 → 闸口 -->
+  <g stroke="#4a3596" stroke-opacity="0.38" stroke-width="1.2" fill="none" stroke-linecap="round">
+    <path d="M200 116H236M200 268H236M200 420H236"/>
+  </g>
+  <g fill="#4a3596" fill-opacity="0.55">
+    <path d="M236 111l8 5-8 5zM236 263l8 5-8 5zM236 415l8 5-8 5z"/>
+  </g>
+
+  <!-- 三道闸口 -->
+  <g>
+    <rect x="244" y="64" width="196" height="70" rx="10" fill="#ffffff" fill-opacity="0.85" stroke="#4a3596" stroke-opacity="0.4" stroke-width="1.2"/>
+    <text x="266" y="94" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="15" font-weight="500" fill="#14161a">正文抽取</text>
+    <text x="266" y="114" font-family="ui-monospace,monospace" font-size="9.5" fill="#6b7078" letter-spacing="1.1">EXTRACT / STRUCTURE</text>
+  </g>
+  <g>
+    <rect x="244" y="182" width="196" height="70" rx="10" fill="#efb03f" fill-opacity="0.32" stroke="#8a5d08" stroke-opacity="0.5" stroke-width="1.2"/>
+    <text x="266" y="212" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="15" font-weight="500" fill="#14161a">事实分层核验</text>
+    <text x="266" y="232" font-family="ui-monospace,monospace" font-size="9.5" fill="#6b7078" letter-spacing="1.1">VERIFY / MULTI-SOURCE</text>
+  </g>
+  <g>
+    <rect x="244" y="300" width="196" height="70" rx="10" fill="#ffffff" fill-opacity="0.85" stroke="#4a3596" stroke-opacity="0.4" stroke-width="1.2"/>
+    <text x="266" y="330" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="15" font-weight="500" fill="#14161a">降级与分流标注</text>
+    <text x="266" y="350" font-family="ui-monospace,monospace" font-size="9.5" fill="#6b7078" letter-spacing="1.1">GRADE / SCOPE</text>
+  </g>
+  <g stroke="#4a3596" stroke-opacity="0.38" stroke-width="1.2" fill="none" stroke-linecap="round">
+    <path d="M342 134V180M342 252V298"/>
+  </g>
+  <g fill="#4a3596" fill-opacity="0.55">
+    <path d="M337 180l5 8 5-8zM337 298l5 8 5-8z"/>
+  </g>
+
+  <!-- 闸口 → 输出 -->
+  <g stroke="#4a3596" stroke-opacity="0.38" stroke-width="1.2" fill="none" stroke-linecap="round">
+    <path d="M440 99H496M440 217H496M440 335H496"/>
+  </g>
+  <g fill="#4a3596" fill-opacity="0.55">
+    <path d="M496 94l8 5-8 5zM496 212l8 5-8 5zM496 330l8 5-8 5z"/>
+  </g>
+
+  <!-- 输出 -->
+  <g>
+    <rect x="512" y="52" width="212" height="94" rx="11" fill="#ffffff" fill-opacity="0.88" stroke="#4a3596" stroke-opacity="0.36" stroke-width="1.1"/>
+    <circle cx="540" cy="82" r="11" fill="#1f6f6b" fill-opacity="0.18" stroke="#1f6f6b" stroke-opacity="0.6" stroke-width="1"/>
+    <path d="M534 82l4.5 4.5 8-9" fill="none" stroke="#14504d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="562" y="79" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#14161a">带出处的知识条目</text>
+    <text x="562" y="98" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">SOURCE TAGGED</text>
+    <path d="M536 120H700" stroke="#4a3596" stroke-opacity="0.18" stroke-width="1"/>
+    <text x="536" y="136" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="11" fill="#6b7078">事实 · 判断 · 待核验</text>
+  </g>
+  <g>
+    <rect x="512" y="170" width="212" height="94" rx="11" fill="#ffffff" fill-opacity="0.88" stroke="#4a3596" stroke-opacity="0.36" stroke-width="1.1"/>
+    <circle cx="540" cy="200" r="11" fill="#1f6f6b" fill-opacity="0.18" stroke="#1f6f6b" stroke-opacity="0.6" stroke-width="1"/>
+    <path d="M534 200l4.5 4.5 8-9" fill="none" stroke="#14504d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="562" y="197" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#14161a">可检索的知识库</text>
+    <text x="562" y="216" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">SEARCHABLE INDEX</text>
+    <path d="M536 238H700" stroke="#4a3596" stroke-opacity="0.18" stroke-width="1"/>
+    <text x="536" y="254" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="11" fill="#6b7078">问答带引用跳转</text>
+  </g>
+  <g>
+    <rect x="512" y="288" width="212" height="94" rx="11" fill="#ffffff" fill-opacity="0.88" stroke="#4a3596" stroke-opacity="0.36" stroke-width="1.1"/>
+    <circle cx="540" cy="318" r="11" fill="#1f6f6b" fill-opacity="0.18" stroke="#1f6f6b" stroke-opacity="0.6" stroke-width="1"/>
+    <path d="M534 318l4.5 4.5 8-9" fill="none" stroke="#14504d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="562" y="315" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#14161a">回流规范的素材</text>
+    <text x="562" y="334" font-family="ui-monospace,monospace" font-size="9" fill="#8b9098" letter-spacing="1">FEEDS BACK TO SPEC</text>
+    <path d="M536 356H700" stroke="#4a3596" stroke-opacity="0.18" stroke-width="1"/>
+    <text x="536" y="372" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="11" fill="#6b7078">新事实补进知识包</text>
+  </g>
+
+  <!-- 底部回流 -->
+  <g stroke="#4a3596" stroke-opacity="0.3" stroke-width="1.1" fill="none" stroke-dasharray="5 6">
+    <path d="M618 382V438H130V474"/>
+  </g>
+  <g fill="#4a3596" fill-opacity="0.5">
+    <path d="M125 474l5-8 5 8z"/>
+  </g>
+  <g font-family="ui-monospace,monospace" font-size="9.5" fill="#6b7078" letter-spacing="1.2">
+    <text x="36" y="40">CONTENT → KNOWLEDGE PIPELINE</text>
+    <text x="374" y="452" text-anchor="middle" fill="#8b9098">KNOWLEDGE LOOPS BACK INTO SPEC</text>
+    <text x="724" y="502" text-anchor="end">TRACEABLE OUTPUT</text>
+  </g>
+  <g font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="12" fill="#8b9098">
+    <text x="36" y="546">私域内容留在本地工作区，公开内容才进入知识库与索引</text>
+  </g>
+</svg>
