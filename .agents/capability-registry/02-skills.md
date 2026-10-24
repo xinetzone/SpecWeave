@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（30个）
+### 完整Skill（31个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -41,6 +41,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | skill-guidance-correction-propagation | "这处规则写错了"、"把相关文档和测试一起改"、"修完 references 还矛盾"、"测试数据固化了旧假设"、"门禁红了但不是本次改的" | 1（冻结新旧断言 → 原句与同义词枚举五个耦合面 → 依赖顺序修补 → 覆盖守恒 → 原始退出码复跑门禁 → 既有失败与本次回归分开归因 → 按面汇报；检测逻辑变更单独授权；L1） | v1.0.0 | [skills/skill-guidance-correction-propagation/SKILL.md](../skills/skill-guidance-correction-propagation/SKILL.md) |
 | markdown-first-deliverable-drafting | "整理成Word"、"转成PDF"、"导出文档"、"生成报告文件"、"把方案变成文档"、"做成文件夹交付" | 1（敏感度预检定落点 → Markdown 结构化草稿 → 草稿确认门双确认内容与格式 → 转换链先探测现成能力再降级 → 临时物隔离与清理；萃取自会话 af172fa6；L1） | v1.0.0 | [skills/markdown-first-deliverable-drafting/SKILL.md](../skills/markdown-first-deliverable-drafting/SKILL.md) |
 | ci-gate-effectiveness-audit | "门禁形同虚设"、"步骤存在却不阻断"、"要删 continue-on-error"、"linkcheck 超时算不算真断链" | 1（抑制面枚举 → 基线取证 → 单点解除抑制 → 环境伪失败与真实缺陷分诊；含 scan_gate_suppressions.py；L1） | v1.1.0 | [skills/ci-gate-effectiveness-audit/SKILL.md](../skills/ci-gate-effectiveness-audit/SKILL.md) |
+| consulting-lead-magnet-discovery | "咨询获客"、"咨询引流品"、"低价诊断"、"轻体检"、"9.9元产品"、"企微代运营咨询获客" | 1（咨询服务与目标客群确认 → 引流形态比较 → 人工成本/答疑范围/数据边界限定 → 方案细化与商业验证分流；默认只输出待验证方案；L1） | v1.0.0 | [skills/consulting-lead-magnet-discovery/SKILL.md](../skills/consulting-lead-magnet-discovery/SKILL.md) |
 
 ### 工作流门面（6个）
 
