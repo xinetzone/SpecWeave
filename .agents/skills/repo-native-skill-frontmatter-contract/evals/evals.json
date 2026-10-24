@@ -1,0 +1,74 @@
+{
+  "skill_name": "repo-native-skill-frontmatter-contract",
+  "evals": [
+    {
+      "id": 1,
+      "name": "author-new-native-skill-with-top-level-keys",
+      "prompt": "我要在 .agents/skills 下新建一个 Skill，frontmatter 里 version、argument-hint、user-invocable、paths 应该怎么写才不会掉分？",
+      "expected_output": "给出可直接复制的顶层模板：name 与目录同名，version、argument-hint、user-invocable、paths 写在顶层，title 与 source 作为自定义字段也放顶层，不使用 metadata 承载推荐字段。随后按五步验收：质量门 --score --threshold 100 得到 100 与退出 0，链接门 0 断链，quick_validate 预期退出 1 并用同根满分技能对照，最后回读顶层键集合。",
+      "files": [],
+      "assertions": [
+        "四个推荐字段均写在顶层，没有任何一个缩进到 metadata 下",
+        "质量门命令显式携带 --threshold 100，并记录退出码",
+        "明确说明 quick_validate 对原生键集预期退出 1，且不把它列为待修项",
+        "验收报告把通用门表述为按契约不适用，而非通过或已修复",
+        "引用了同根满分兄弟技能作为对照样本"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "diagnose-eighty-points-as-key-placement",
+      "prompt": "我新建的原生 Skill 质量门只有 80 分，失分项是四条 frontmatter 建议字段缺失，但我明明写了 version 和 paths，是不是检查器有 bug？",
+      "expected_output": "先看字段层级而不是先怀疑检查器。质量门用行首锚点读取 frontmatter，缩进在 metadata 下的 version/paths 读不到，四个字段各扣 5 分正好 80。用 --verbose 确认四条 warn，把字段提到顶层后复跑应得 100。不要改检查器，也不要把问题归因为 YAML 写错——该文件仍是合法 YAML。",
+      "files": [],
+      "assertions": [
+        "把原因定位为字段位于 metadata 下而非缺失",
+        "解释行首锚点导致嵌套字段不可见",
+        "给出四条 warn 各 5 分共 20 分的算术",
+        "没有建议修改检查器或评分公式",
+        "修复后以 --score --threshold 100 复跑并核对退出码"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "quick-validate-exit-one-is-contract-difference",
+      "prompt": "quick_validate.py 对我刚建好的原生 Skill 退出 1，报 Unexpected key(s): version, paths 等。我是不是要把这些字段删掉让它通过？",
+      "expected_output": "不要删。quick_validate 校验的是 Open Standard 最小键集，仓库原生键集不在其契约内，退出 1 是预期结果。删除 version/paths 会让质量门掉分。正确做法是保留字段，跑同根已满分技能做对照证明同类失败，并在报告里把通用门写成按契约不适用。",
+      "files": [],
+      "assertions": [
+        "拒绝删除 version、paths 等原生字段",
+        "指出 quick_validate 只允许 6 个 Open Standard 键",
+        "用同根满分技能跑同一命令作为对照证据",
+        "报告区分仓库门通过和通用门不适用",
+        "没有把退出 1 描述成已修复或已通过"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "refuse-moving-version-into-metadata",
+      "prompt": "既然 quick_validate 不认顶层 version，那我就把 version 挪进 metadata 好了，这样两边都能过吧？",
+      "expected_output": "不能两边都过。把 version 挪进 metadata 确实能满足 quick_validate，但仓库质量门的行首锚点读不到嵌套字段，直接静默扣 20 分（四个推荐字段都挪就是 80）。键位由 Skill 所在的根决定：原生区用顶层键集，用户级根用 metadata 写法，两者不能混写在同一份文件里。",
+      "files": [],
+      "assertions": [
+        "明确否定两边同时满足的假设",
+        "说明嵌套 version 会导致质量门静默扣分",
+        "给出四个字段全嵌套时正好 80 分的结论",
+        "按所在根区分键集，并指出用户级写法由 qoder-user-skill-authoring 覆盖",
+        "没有实际把 metadata 写法应用到原生 Skill"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "source-field-prose-with-path-breaks-link-gate",
+      "prompt": "我把来源写成「来源会话 xxx；实测见 references/verified-case.md」，结果链接门报 source 断链，这个字段不是自由文本吗？",
+      "expected_output": "source 虽常被当自由文本，但链接门会从字段值里提取潜在路径：含中文同时含 .md 且带斜杠的片段会被判为路径并解析。把路径说明移到正文，source 只保留来源标识（会话 ID、技能名等），再复跑链接门确认 0 断链。",
+      "files": [],
+      "assertions": [
+        "指出链接门按分隔符切分并提取含扩展名的片段",
+        "把路径说明从 source 移到正文",
+        "source 保留来源标识且不含路径片段",
+        "复跑 --check-frontmatter-paths 并确认退出 0"
+      ]
+    }
+  ]
+}

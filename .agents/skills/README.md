@@ -36,7 +36,7 @@ title: ".agents/skills/ 目录索引"
 | sovereign-rollout-cmd | 命令门面 | 主权区治理资产落盘 | 提案、批准落盘、主权区变更、治理资产落盘、先提案后批准 | [sovereign-rollout-cmd/SKILL.md](sovereign-rollout-cmd/SKILL.md) |
 | github-org-bootstrap-cmd | 命令门面 | GitHub 组织命名与初始化 | 创建GitHub组织、建个org、组织名怎么起、demo组织、huncheng-lab | [github-org-bootstrap-cmd/SKILL.md](github-org-bootstrap-cmd/SKILL.md) |
 
-### 完整Skill（32个）
+### 完整Skill（33个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -72,6 +72,7 @@ title: ".agents/skills/ 目录索引"
 | ci-gate-effectiveness-audit | 完整Skill（v1.1.0，L1） | CI 门禁有效性审计：枚举 continue-on-error、allow_failure 与 shell 短路（or-true / or-exit-0）三类抑制面，先取基线再单点解除抑制，并把失败分为环境伪失败与真实缺陷；含 scan_gate_suppressions.py 与 ACT-001 实测案例 | 门禁形同虚设、步骤存在却不阻断、要删 continue-on-error、linkcheck 超时算不算真断链 | [ci-gate-effectiveness-audit/SKILL.md](ci-gate-effectiveness-audit/SKILL.md) |
 | consulting-lead-magnet-discovery | 完整Skill（v1.0.0，L1） | 咨询服务引流品探索：先确认主营咨询服务与目标客群 → 比较引流形态 → 限定人工成本、答疑范围与数据使用边界 → 区分方案细化与商业验证，默认只在对话中输出待验证方案，不自动开发、落盘、发布或提交 | 咨询获客、咨询引流品、低价诊断、轻体检、9.9元产品、企微代运营咨询获客 | [consulting-lead-magnet-discovery/SKILL.md](consulting-lead-magnet-discovery/SKILL.md) |
 | git-sandbox-rehearsal | 完整Skill（v1.0.0，L1） | Git 多仓沙箱预演：在真实仓库之外搭一次性沙箱，用嵌套仓、本地裸远端与父仓子模块重放「嵌套仓提交 → 推送 → 父仓 gitlink 前移 → 父仓推送」，再用 rev-list、ls-remote、ls-tree 断言结果；含沙箱手册与实测案例 | 先试跑推送、沙箱预演、git 演练、验证子模块指针、复现远端领先、不要碰真实仓库 | [git-sandbox-rehearsal/SKILL.md](git-sandbox-rehearsal/SKILL.md) |
+| repo-native-skill-frontmatter-contract | 完整Skill（v1.0.0，L1） | 仓库原生 Skill frontmatter 键位契约：version、argument-hint、user-invocable、paths 必须写在顶层，缩进到 metadata 下会被质量门行首锚点漏读并静默扣 20 分；quick_validate 对原生键集退出 1 属尺子不同而非技能缺陷 | frontmatter 怎么写、质量门只有 80 分、version 放哪、quick_validate 报 Unexpected key、新建 Skill 头字段 | [repo-native-skill-frontmatter-contract/SKILL.md](repo-native-skill-frontmatter-contract/SKILL.md) |
 
 ### 工作流门面（6个）
 
