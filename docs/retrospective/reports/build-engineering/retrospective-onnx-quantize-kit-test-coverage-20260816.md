@@ -202,7 +202,9 @@ TOTAL                                1040    290    72%
 
 ## 7. 测试基础设施
 
-### 7.1 Fixtures（[conftest.py](../../../../apps/docker-images/devcontainer-base/scripts/tests/conftest.py)）
+### 7.1 Fixtures
+
+Fixture 定义文件：[conftest.py](../../../../apps/docker-images/devcontainer-base/scripts/tests/conftest.py)
 
 使用onnx helper直接创建轻量测试模型，**零外部依赖（不依赖torch）**：
 
