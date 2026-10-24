@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（15个）
+### 完整Skill（16个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -26,6 +26,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | native-skill-surface-registration | "登记这个 Skill"、"四处登记"、"登记面同步"、"SKILL.toml 镜像"、"技能入库"、"双门收尾"、"联接而非副本"、"计数漂移修正" | 1（前置探针 → 预览确认门 → README/registry/CHANGELOG/.meta toml 四处登记与计数同轮 → 质量门+链接门双验收 → PowerShell Junction 用户级联接 → HEAD 计数漂移顺带修正；含登记面逐字模板与 v1.31 入库案例；L1） | v1.0.0 | [skills/native-skill-surface-registration/SKILL.md](../skills/native-skill-surface-registration/SKILL.md) |
 | oversized-tool-output-slicing | "输出被截断"、"超过 25000 token"、"落盘文件读不了"、"tool-results"、"Read 超限"、"ripgrep 超时"、"大仓找不到文件"、"读长会话记录取证"、"咋这么慢" | 2（路径 A 零依赖抽取器对落盘 JSON 按消息/工具名/状态/正则定点切片，替代反复 Read；路径 B git ls-files 索引定位替代超时搜索；含参数预算预防与幂等重入表；L2 双场景复发验证） | v1.0.0 | [skills/oversized-tool-output-slicing/SKILL.md](../skills/oversized-tool-output-slicing/SKILL.md) |
 | skill-recommendation-disk-triage | "这个推荐该新建还是已存在"、"别覆盖已有同名 Skill"、"自动推荐 Skill"、"先核实再动手"、"create 还是登记"、"推荐指令分诊"、"跨根查重"、"双门 --path" | 1（只读磁盘取证五步管线：跨根查重→登记面 git grep→双门 --path 验收→捆绑脚本真实产物回归→create/register+junction/update 改判决策树 + 写盘前确认门；L1） | v1.0.0 | [skills/skill-recommendation-disk-triage/SKILL.md](../skills/skill-recommendation-disk-triage/SKILL.md) |
+| registered-skill-frontmatter-completion | "frontmatter 补齐"、"补 source"、"x-toml-ref 写错"、"链接门报 source 断链"、"118 条断链"、"登记后回指"、"SKILL.toml 镜像指向"、"登记状态自相矛盾" | 1（S0 基线取证 → S1 镜像先行补三级 x-toml-ref → S2 按链接门提取规则改写 source → S3 欠账句改完成记录 → S4 双门 + 基线差值验收；含 118 条既有断链归因与 10 条 Gotchas；L1） | v1.0.0 | [skills/registered-skill-frontmatter-completion/SKILL.md](../skills/registered-skill-frontmatter-completion/SKILL.md) |
 
 ### 工作流门面（6个）
 

@@ -36,7 +36,7 @@ title: ".agents/skills/ 目录索引"
 | sovereign-rollout-cmd | 命令门面 | 主权区治理资产落盘 | 提案、批准落盘、主权区变更、治理资产落盘、先提案后批准 | [sovereign-rollout-cmd/SKILL.md](sovereign-rollout-cmd/SKILL.md) |
 | github-org-bootstrap-cmd | 命令门面 | GitHub 组织命名与初始化 | 创建GitHub组织、建个org、组织名怎么起、demo组织、huncheng-lab | [github-org-bootstrap-cmd/SKILL.md](github-org-bootstrap-cmd/SKILL.md) |
 
-### 完整Skill（17个）
+### 完整Skill（18个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -57,6 +57,7 @@ title: ".agents/skills/ 目录索引"
 | native-skill-surface-registration | 完整Skill（v1.0.0，L1） | 原生 Skill 四处全量登记与双门收尾：前置探针（质量基线+幂等重入探测）→ 预览确认门 → README/registry/CHANGELOG/.meta toml 四处登记与计数同轮更新 → 质量门 34 项全过 + 链接门 0 断链双验收 → PowerShell Junction 用户级联接（禁复制、rmdir 清空目录树）→ HEAD 计数漂移顺带修正与记录；含登记面逐字模板与 skill-quality-gate-remediation v1.31 入库案例 | 登记这个 Skill、四处登记、登记面同步、SKILL.toml 镜像、技能入库、双门收尾、联接而非副本、计数漂移修正 | [native-skill-surface-registration/SKILL.md](native-skill-surface-registration/SKILL.md) |
 | oversized-tool-output-slicing | 完整Skill（v1.0.0，L2 双场景复发验证） | 超限工具输出切片取证：识别三类信号（MCP `[OUTPUT TRUNCATED ... 25000 token limit]` 落盘、Read `exceeds maximum allowed tokens`、Glob/ripgrep/find 大仓 20s 超时）→ 路径 A 以错误消息给出的落盘绝对路径为唯一事实来源，用捆绑 `extract_tool_result.js`（零依赖，overview/messages/tool/text/grep 五模式）JSON.parse 后定点切片，禁第二次全文 Read（加 limit 仍按全文计量）→ 路径 B `git ls-files \| grep -iE` 走索引替代超时搜索；含参数预算预防、幂等重入表、7 项安全清单与 8 条 Gotchas | 输出被截断、超过 25000 token、落盘文件读不了、tool-results、Read 超限、ripgrep 超时、大仓找不到文件、读长会话记录取证、咋这么慢 | [oversized-tool-output-slicing/SKILL.md](oversized-tool-output-slicing/SKILL.md) |
 | skill-recommendation-disk-triage | 完整Skill（v1.0.0，L1） | Skill 推荐指令磁盘取证分诊：收到自动推荐的 Skill 创建/更新/重命名指令时先只读取证再决定真实动作——跨根查重（~/.qoder/skills 与 .agents/skills 两根）→ 登记面 git grep（README/registry/CHANGELOG/toml 四处）→ 双门 --path 实跑（check-skill-quality + check-links --check-frontmatter-paths）→ 捆绑脚本真实落盘产物回归 → create→register+junction/update 改判决策树 + 写盘前确认门 | 这个推荐该新建还是已存在、别覆盖已有同名 Skill、自动推荐 Skill、先核实再动手、create 还是登记、推荐指令分诊、跨根查重 | [skill-recommendation-disk-triage/SKILL.md](skill-recommendation-disk-triage/SKILL.md) |
+| registered-skill-frontmatter-completion | 完整Skill（v1.0.0，L1） | 登记后回指补齐：S0 基线取证（镜像 toml、欠账句、全集断链数）→ S1 镜像先行补三级 x-toml-ref（`../../../.meta/...`，禁止 `../../`）→ S2 按链接门 `_extract_paths_from_value` 真实规则改写 source（中文散文禁夹 `/` 与 `.md/.toml/.py` token）→ S3 欠账句改完成记录（四处落点 + CHANGELOG 版本）→ S4 质量门 100/100 + 定点链接门 0 断链 + 全集基线差值 0；含 118 条既有断链归因与 10 条 Gotchas | frontmatter 补齐、补 source、x-toml-ref 写错、链接门报 source 断链、118 条断链、登记后回指、SKILL.toml 镜像指向、登记状态自相矛盾 | [registered-skill-frontmatter-completion/SKILL.md](registered-skill-frontmatter-completion/SKILL.md) |
 
 ### 工作流门面（6个）
 
