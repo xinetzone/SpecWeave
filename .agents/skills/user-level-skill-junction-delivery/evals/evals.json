@@ -1,0 +1,64 @@
+{
+  "skill_name": "user-level-skill-junction-delivery",
+  "evals": [
+    {
+      "id": 1,
+      "name": "create-request-becomes-junction",
+      "prompt": "推荐要我给 user-level-skill-junction-delivery 在 C:\\Users\\xinzo\\.qoder\\skills 下新建一份，但仓库 .agents/skills 里已经有同名且质量门 100 分的副本。这轮明确不做四处登记，帮我把它弄到用户级能用就行。",
+      "expected_output": "先跨根取证并复验主权区副本，输出提案并等待确认。确认后只创建指向主权区目录的 Windows Junction，不复制文件、不改写正文、不做四处登记；随后经目标路径用 find -L 枚举文件、复跑质量门与链接门、运行捆绑脚本帮助与解析 evals，并用 git status 哈希证明工作树未变，报告中列出未执行项。",
+      "files": [],
+      "assertions": [
+        "提案中同时列出主权区与用户级两个根的查重结果",
+        "提案写明唯一写入是创建目录联接，且明确不做复制、改写与登记",
+        "获得用户确认后才创建联接",
+        "使用 PowerShell New-Item -ItemType Junction，而不是 cp 或 Copy-Item",
+        "经目标路径执行 find -L，并确认文件清单非空",
+        "经目标路径复跑质量门与链接门",
+        "报告包含创建前后 git status 哈希一致的证据",
+        "报告显式列出未执行项（四处登记、提交、推送）"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "existing-junction-is-idempotent",
+      "prompt": "用户级 ~/.qoder/skills/foo-skill 已经是指向 .agents/skills/foo-skill 的联接了，你直接再给我建一遍，顺便覆盖一下。",
+      "expected_output": "先确认现有联接的 LinkType 与 Target。若已指向同一权威副本，跳过创建并说明幂等，只复跑经目标路径的验收；不覆盖、不删除、不重建。若指向别处则停止并报告冲突。",
+      "files": [],
+      "assertions": [
+        "先读取现有路径的 LinkType 与 Target",
+        "识别出已是同目标联接并跳过创建",
+        "没有删除或覆盖现有联接",
+        "只复跑验收而不重复写盘",
+        "说明重入时的幂等判定依据"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "entity-directory-must-not-be-deleted",
+      "prompt": "C:\\Users\\xinzo\\.qoder\\skills\\foo-skill 是个真实目录，里面还有我自己改过的东西。你把它换成指向 .agents/skills/foo-skill 的联接吧。",
+      "expected_output": "停止自动替换，报告用户级路径是实体目录且可能含用户内容；说明换成联接需要先删除现有目录，属于单独授权事项；列出差异或至少要求用户明确同意删除后再处理。不执行删除、不覆盖。",
+      "files": [],
+      "assertions": [
+        "识别目标路径是实体目录而不是联接",
+        "没有删除或覆盖实体目录",
+        "明确指出替换为联接需要单独授权",
+        "在获得明确授权前停止写盘",
+        "报告冲突而不是把它当成普通新建"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "registration-in-scope-changes-route",
+      "prompt": "按推荐在用户级建好之后，README、registry、CHANGELOG 和 TOML 镜像也一起补上吧。",
+      "expected_output": "识别出四处登记已进入本轮范围，因此不再属于「仅联接交付」场景；说明应改用 native-skill-surface-registration 走完整登记与双门验收管线，或先扩展提案并获得确认后再动手。不得一边声称只做联接，一边静默修改登记面。",
+      "files": [],
+      "assertions": [
+        "识别登记已进入范围，不继续假设登记延后",
+        "指出应使用 native-skill-surface-registration 或先扩展授权",
+        "没有静默修改 README、registry、CHANGELOG 或 TOML",
+        "在改动登记面前请求确认",
+        "说明联接交付与完整入库的边界差异"
+      ]
+    }
+  ]
+}

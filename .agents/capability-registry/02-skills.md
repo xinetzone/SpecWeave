@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（20个）
+### 完整Skill（24个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -31,6 +31,10 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | shared-worktree-rebase-write-guard | "共享工作区"、"rebase 进行中"、"pull --rebase"、"gitlink 冲突"、"登记面数字回退"、"写入前预检"、"rebase guard"、"shared worktree"、"concurrent rebase"、"defer registration" | 1（P0 写前探测 rebase/merge/cherry-pick 信号 → 目标分类 → 内容先行登记延后的部分交付 → 恢复后重验；捆绑零依赖脚本 check_rebase_guard.js；禁 abort/continue 他人发起的 rebase；L1） | v1.0.0 | [skills/shared-worktree-rebase-write-guard/SKILL.md](../skills/shared-worktree-rebase-write-guard/SKILL.md) |
 | trae-computer-use-ptc | "Computer Use"、"ComputerUse"、"电脑操作"、"UI自动化"、"桌面交互"、"操作应用"、"点击按钮"、"输入文本"、"窗口操作" | 1（list_apps/get_app_state/click/scroll/drag/type_text/press_key/perform_action/set_value 本地 MCP 桌面操作；覆盖 Electron/桌面应用；高风险操作前须确认） | v1.2.0 | [skills/trae-computer-use-ptc/SKILL.md](../skills/trae-computer-use-ptc/SKILL.md) |
 | meoo-cli | "秒悟"、"Meoo"、"meoo cli"、"用秒悟建应用"、"部署到秒悟"、"部署全栈应用"、"部署到阿里云账号" | 2（static：SPA→CDN；server：全栈→容器；Supabase 数据库/Auth/Storage + Deno 边缘函数 + AI 模型接入；含 Mise 发布协议 BLOCKING 门禁与阿里云自托管部署分支；版本随 meoo CLI 包分发） | v0.5.5 | [skills/meoo-cli/SKILL.md](../skills/meoo-cli/SKILL.md) |
+| workspace-triplet-scaffold | "加三件套"、"补 AGENTS 入口"、"目录治理结构"、"README+AGENTS"、"智能体入口"、"工作区入口"、"check_triplet" | 1（区域判定 → 范本对齐 → 增补写入 → 捆绑脚本校验；README/AGENTS/.agents 三层分工；外部与私域目录不可提交；L1） | v1.0.0 | [skills/workspace-triplet-scaffold/SKILL.md](../skills/workspace-triplet-scaffold/SKILL.md) |
+| session-to-skill | "这个会话做成 Skill"、"按来源会话创建/更新/重命名 Skill"、"先核实再动手不要臆造未读内容"、"会话萃取为 Skill" | 1（加载 skill-creator → 最小预算会话取证 → 三根查重判定 → 方案确认 → 写包 → 机械验证与如实报告；超限切片降级到 oversized-tool-output-slicing；L1） | v1.0.0 | [skills/session-to-skill/SKILL.md](../skills/session-to-skill/SKILL.md) |
+| shared-branch-merge-push-gate | "合并后推送"、"同步上游"、"merge origin/main"、"落后上游几条怎么办"、"推送被拒"、"共享分支合并" | 1（G0 授权基线 → G1-G6 只读预检 → 冲突预演 → 子模块先推父仓后推 → 推送后复验 0 0；捆绑 merge_gate.py 六档退出码；禁 force；L1） | v1.0.0 | [skills/shared-branch-merge-push-gate/SKILL.md](../skills/shared-branch-merge-push-gate/SKILL.md) |
+| user-level-skill-junction-delivery | "在用户级新建 Skill"、"装到 ~/.qoder/skills"、"建联接不复制"、"目录联接交付"、"为什么用户级没有这个技能" | 1（三条前置判定 → 只读取证 → 提案确认门 → PowerShell Junction 交付 → 经目标路径六项验收与只读哈希证明；禁复制与 mklink；L1） | v1.0.0 | [skills/user-level-skill-junction-delivery/SKILL.md](../skills/user-level-skill-junction-delivery/SKILL.md) |
 
 ### 工作流门面（6个）
 

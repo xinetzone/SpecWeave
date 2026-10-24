@@ -36,7 +36,7 @@ title: ".agents/skills/ 目录索引"
 | sovereign-rollout-cmd | 命令门面 | 主权区治理资产落盘 | 提案、批准落盘、主权区变更、治理资产落盘、先提案后批准 | [sovereign-rollout-cmd/SKILL.md](sovereign-rollout-cmd/SKILL.md) |
 | github-org-bootstrap-cmd | 命令门面 | GitHub 组织命名与初始化 | 创建GitHub组织、建个org、组织名怎么起、demo组织、huncheng-lab | [github-org-bootstrap-cmd/SKILL.md](github-org-bootstrap-cmd/SKILL.md) |
 
-### 完整Skill（20个）
+### 完整Skill（24个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -60,6 +60,10 @@ title: ".agents/skills/ 目录索引"
 | registered-skill-frontmatter-completion | 完整Skill（v1.0.0，L1） | 登记后回指补齐：S0 基线取证（镜像 toml、欠账句、全集断链数）→ S1 镜像先行补三级 x-toml-ref（`../../../.meta/...`，禁止 `../../`）→ S2 按链接门 `_extract_paths_from_value` 真实规则改写 source（中文散文禁夹 `/` 与 `.md/.toml/.py` token）→ S3 欠账句改完成记录（四处落点 + CHANGELOG 版本）→ S4 质量门 100/100 + 定点链接门 0 断链 + 全集基线差值 0；含 118 条既有断链归因与 10 条 Gotchas | frontmatter 补齐、补 source、x-toml-ref 写错、链接门报 source 断链、118 条断链、登记后回指、SKILL.toml 镜像指向、登记状态自相矛盾 | [registered-skill-frontmatter-completion/SKILL.md](registered-skill-frontmatter-completion/SKILL.md) |
 | skill-registry-count-drift-audit | 完整Skill（v1.0.0，L1） | 登记面分类计数漂移审计：把 .agents/skills/README.md 与 .agents/capability-registry/02-skills.md 每个分类标题声明的（N个）与该节实际表格数据行逐一比对，先自证计数器再下结论，区分表头漂移、多子表求和与跨面缺行三类；含捆绑只读审计脚本 audit_surface_counts.js（自检夹具 + 4 档退出码）与报告模板 | 登记面计数漂移、表头数字和行数不一致、README 与 registry 数量对不上、命令集门面 11/10、审计分类计数、count drift、核对（N个） | [skill-registry-count-drift-audit/SKILL.md](skill-registry-count-drift-audit/SKILL.md) |
 | shared-worktree-rebase-write-guard | 完整Skill（v1.0.0，L1） | 共享工作树写入前预检：探测进行中的 rebase/merge/cherry-pick 与冲突信号，区分可安全创建的新目录与必须延后的共享登记面，绝不 abort/continue 他人发起的 rebase；采用「内容+验证+联接先行、登记延后」的部分交付，恢复后重新读取版本号与计数再补登记；含捆绑脚本 check_rebase_guard.js、信号解释矩阵与 10 条 Gotchas | 共享工作区、rebase 进行中、pull --rebase、gitlink 冲突、登记面数字回退、写入前预检、rebase guard、shared worktree、concurrent rebase、defer registration | [shared-worktree-rebase-write-guard/SKILL.md](shared-worktree-rebase-write-guard/SKILL.md) |
+| workspace-triplet-scaffold | 完整Skill（v1.0.0，L1） | 工作区三件套补齐与校验：为目录补 README.md + AGENTS.md + .agents/README.md，先判区域（apps/projects/vendor/external/playground/独立仓库）与 gitignore 状态，再对齐既有范本做增补而非覆盖，最后用捆绑 check_triplet.py 校验启动协议关键词、相对链接、嵌套优先声明与提交状态；含不可提交目录判定与 6 条 Gotchas | 加三件套、补 AGENTS 入口、目录治理结构、README+AGENTS、智能体入口、工作区入口、check_triplet | [workspace-triplet-scaffold/SKILL.md](workspace-triplet-scaffold/SKILL.md) |
+| session-to-skill | 完整Skill（v1.0.0，L1） | 会话萃取为可复用 Skill 的端到端编排：加载 skill-creator → 以最小预算读取来源会话并用用户原话与工具失败输出取证 → 跨用户级/主权区/仓库三根查重判定 create/update → 提交方案等待确认 → 写入 SKILL.md + references + evals → 机械验证并如实标注未验证项；含超限切片降级路径与三根查重判定表 | 这个会话做成 Skill、按来源会话创建/更新/重命名 Skill、先核实再动手不要臆造未读内容、会话萃取为 Skill | [session-to-skill/SKILL.md](session-to-skill/SKILL.md) |
+| shared-branch-merge-push-gate | 完整Skill（v1.0.0，L1） | 共享分支合并与推送门禁：G0 固化授权基线 → G1 现取分歧度 → G2 fetch 取上游真值 → G3 上游改动路径 → G4 本地脏/未跟踪集合 → G5 求交集 → G6 冲突预演与中间态检查；全通过才 merge，按子模块到父仓顺序推送，推送后复验分歧度 0 0；捆绑 merge_gate.py 提供 0/2/3/4/5/6 六档退出码；含索引锁证据保全与 10 条 Gotchas | 合并后推送、同步上游、merge origin/main、落后上游几条怎么办、推送被拒、共享分支合并 | [shared-branch-merge-push-gate/SKILL.md](shared-branch-merge-push-gate/SKILL.md) |
+| user-level-skill-junction-delivery | 完整Skill（v1.0.0，L1） | 用户级 Skill 目录联接交付：三条前置（推荐建到用户级 + 主权区已有双门达标副本 + 本轮明确不做四处登记）→ 只读取证四步 → 提案确认门 → PowerShell Junction 交付（禁复制、禁穿透写）→ 经目标路径六项验收（枚举文件、双门复跑、脚本与 evals、git status 哈希前后一致）；含幂等重入表与 12 条 Gotchas | 在用户级新建 Skill、装到 ~/.qoder/skills、建联接不复制、目录联接交付、为什么用户级没有这个技能 | [user-level-skill-junction-delivery/SKILL.md](user-level-skill-junction-delivery/SKILL.md) |
 
 ### 工作流门面（6个）
 
