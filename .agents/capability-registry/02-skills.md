@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（29个）
+### 完整Skill（30个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -40,6 +40,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | user-skill-sovereign-migration | "迁入 .agents/skills"、"为什么没放在 .agents/skills"、"用户级 Skill 入库"、"原生迁移"、"移入主权区"、"把 ~/.qoder/skills 的技能搬进仓库" | 1（推荐根冲突确认 → 双根只读预检与目标存在保护 → 本轮提案批准 → 有源原生化保真迁移及两侧质量门分差归因，或无源携已有设计与本轮批准交接 skill-creator、迁移比较不适用 → 目标验收；登记、Junction、源清理及各项 Git 操作分别授权；L1） | v1.3.0 | [skills/user-skill-sovereign-migration/SKILL.md](../skills/user-skill-sovereign-migration/SKILL.md) |
 | skill-guidance-correction-propagation | "这处规则写错了"、"把相关文档和测试一起改"、"修完 references 还矛盾"、"测试数据固化了旧假设"、"门禁红了但不是本次改的" | 1（冻结新旧断言 → 原句与同义词枚举五个耦合面 → 依赖顺序修补 → 覆盖守恒 → 原始退出码复跑门禁 → 既有失败与本次回归分开归因 → 按面汇报；检测逻辑变更单独授权；L1） | v1.0.0 | [skills/skill-guidance-correction-propagation/SKILL.md](../skills/skill-guidance-correction-propagation/SKILL.md) |
 | markdown-first-deliverable-drafting | "整理成Word"、"转成PDF"、"导出文档"、"生成报告文件"、"把方案变成文档"、"做成文件夹交付" | 1（敏感度预检定落点 → Markdown 结构化草稿 → 草稿确认门双确认内容与格式 → 转换链先探测现成能力再降级 → 临时物隔离与清理；萃取自会话 af172fa6；L1） | v1.0.0 | [skills/markdown-first-deliverable-drafting/SKILL.md](../skills/markdown-first-deliverable-drafting/SKILL.md) |
+| ci-gate-effectiveness-audit | "门禁形同虚设"、"步骤存在却不阻断"、"要删 continue-on-error"、"linkcheck 超时算不算真断链" | 1（抑制面枚举 → 基线取证 → 单点解除抑制 → 环境伪失败与真实缺陷分诊；含 scan_gate_suppressions.py；L1） | v1.1.0 | [skills/ci-gate-effectiveness-audit/SKILL.md](../skills/ci-gate-effectiveness-audit/SKILL.md) |
 
 ### 工作流门面（6个）
 
