@@ -507,4 +507,5 @@ python .agents/scripts/generate-readme.py --target-dir <损坏目录> --force
 ## Changelog
 
 <!-- changelog -->
+- 2026-10-23 | fix | 索引页大小写一致性：新增 `has_exact_readme()` 精确大小写判定，替换 `find_generated_readmes()` / `find_missing_readmes()` / `scan_directory()` 子目录状态 / `get_p1_dirs()` 中的 `Path('README.md').exists()`，消除 Windows 与 Linux CI 行为分叉；`scan_directory()` 排除索引页自身改为大小写不敏感；摘要回退到 OKF v0.2 的 `description` 字段；`generate_for_directory()` 增加大小写变体守卫
 - 2026-07-09 | docs | 初始版本：冒烟测试、端到端5用例、4项专项测试、故障排查表、回归检查清单

@@ -32,7 +32,7 @@ log
 | `guides/index.md` | 开发工具与应用使用指南 |
 | `references/release-onnx-pytorch-v1-1.md` | onnx-pytorch v1.1.0 发布说明 |
 | `references/release-onnx-quantized-v2.md` | onnx-quantized v2.0.0 发布说明 |
-| `references/readme.md` | 自动生成的文档索引 |
+| `references/README.md` | 自动生成的文档索引 |
 
 ## 边界
 
