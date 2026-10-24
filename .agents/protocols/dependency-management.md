@@ -33,7 +33,7 @@ vendor/
 ### 其他临时目录结构示例
 
 ```
-.temp/                # 任务中间产物（按用途分类，禁止根级散放）
+.temp/                # 任务中间产物（按用途分类，禁止根级散放；三件套治理入口豁免）
 │   ├── backup/       # 迁移/重构前的备份快照（保留期 3 天）
 │   ├── experiments/  # 实验性脚本（保留期 14 天）
 │   ├── exports/      # 临时数据导出（保留期 14 天）
@@ -79,7 +79,7 @@ vendor/
 
 ## 其他临时目录使用规范
 
-1. **中间产物命名规范**：`.temp/` 下必须按用途前缀（`backup/`、`experiments/`、`exports/`、`screenshots/`）分类存放，名称必须包含创建日期（`YYYYMMDD`）或关联 task-id（`task-<id>`）；禁止在 `.temp/` 根级直接散放文件——不合规命名无法计算保留期、不参与自动清理（2026-09-23 实证：全量非合规时 `--clean` 空转）。完整约定（用途分类/保留期/清理机制/反模式）见 [config-file-placement-convention.md](../../docs/knowledge/best-practices/config-file-placement-convention.md)，检测与清理入口为 `python .agents/scripts/check-temp-lifecycle.py`。
+1. **中间产物命名规范**：`.temp/` 下必须按用途前缀（`backup/`、`experiments/`、`exports/`、`screenshots/`）分类存放，名称必须包含创建日期（`YYYYMMDD`）或关联 task-id（`task-<id>`）；禁止在 `.temp/` 根级直接散放文件（根级三件套治理入口 `README.md`/`AGENTS.md`/`.agents/` 为精确豁免项，不参与命名校验与保留期）——不合规命名无法计算保留期、不参与自动清理（2026-09-23 实证：全量非合规时 `--clean` 空转）。完整约定（用途分类/保留期/清理机制/反模式）见 [config-file-placement-convention.md](../../docs/knowledge/best-practices/config-file-placement-convention.md)，检测与清理入口为 `python .agents/scripts/check-temp-lifecycle.py`。
 2. **虚拟环境隔离**：每个项目应使用独立的 `.venv/` 虚拟环境，禁止跨项目共享虚拟环境；虚拟环境名称统一为 `.venv`，便于工具识别。
 3. **禁止混用**：`vendor/` 仅存放第三方依赖，`.temp/` 仅存放中间产物，禁止混用或存放无关文件。
 

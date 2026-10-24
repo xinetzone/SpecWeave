@@ -68,6 +68,15 @@
   - [x] SubTask 9.2: 评估是否需要在合规未过期项的汇总输出中列出每项的 date_source（若当前汇总不含此项的逐项列表，可在汇总表头说明"合规项未过期，未逐项列出"；若已逐项列出，则追加 date_source 列）
   - [x] SubTask 9.3: 测试验证：运行 `python .agents/scripts/check-temp-lifecycle.py`，确认不合规项输出含 `(文件 mtime)` 或 `(名称解析)` 标注；JSON 模式输出保持不变
 
+- [x] Task 10: 治理入口豁免（.temp 三件套）
+  - 背景：`.temp/` 补齐三件套（`README.md` + `AGENTS.md` + `.agents/README.md`）后，检查器将根级治理入口判为「命名不合规」，且不合规项按 mtime 计龄将于 30 天后阻塞 CI；三件套属治理基础设施而非中间产物，需精确豁免
+  - [x] SubTask 10.1: `check-temp-lifecycle.py` 新增白名单常量 `GOVERNANCE_ROOT_ENTRIES`（`README.md`/`AGENTS.md` 须为文件、`.agents` 须为目录），类型不符自动失去豁免
+  - [x] SubTask 10.2: `scan_temp_items` 返回 (检查项, 豁免项)；JSON 新增 `governance_exempt` 字段；文本与摘要输出豁免计数；豁免项不参与 `--clean` 删除
+  - [x] SubTask 10.3: 新增单元测试 `.agents/scripts/tests/test_check_temp_lifecycle.py`（TDD 红→绿：豁免生效 / 普通根级文件仍告警 / 类型不符不豁免 / 仅三件套退出码 0 / --clean 不删豁免项）
+  - [x] SubTask 10.4: 同步 `docs/knowledge/best-practices/config-file-placement-convention.md`（v1.2.0：§6.2/§6.5 豁免说明 + changelog）与 `.meta/toml` 镜像版本
+  - [x] SubTask 10.5: 同步 `.agents/protocols/dependency-management.md`（根级散放条款补豁免注记）与封装层 `lib/checks/temp_lifecycle.py` docstring
+  - [x] SubTask 10.6: 实测验证：真实 `.temp/` 17 项合规 + 豁免 3 项（exit 0）、新测试 5/5 绿、定向回归 114 项全过、workspace triplet 校验 0 错 0 警
+
 # Task Dependencies
 
 - Task 2 独立于 Task 1，可并行

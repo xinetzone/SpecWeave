@@ -16,6 +16,13 @@
     - 合规示例：.temp/backup/docs-migration-20260715/、.temp/experiments/task-abc123/
     - 不合规示例：.temp/record.md（无用途前缀、无日期与 task-id）、.temp/backup/old/（无日期与 task-id）
 
+治理入口豁免（governance exempt）:
+    .temp/ 根级的三件套是工作区治理基础设施，不是中间产物，不适用保留期语义：
+        README.md（须为文件）、AGENTS.md（须为文件）、.agents/（须为目录）
+    豁免为精确白名单匹配（不通配），且类型不符的同名条目自动失去豁免
+    （如 README.md 为目录、.agents 为文件），按普通根级内容处理。
+    豁免项不参与命名校验、保留期计算与 --clean 删除。
+
 基准日期确定:
     - 优先从名称中解析 YYYYMMDD 日期（正则 \\d{8}，首个可解析为日期者）
     - 若名称无日期但含 task-id（如 task-abc123），视为合规命名，基准日期回退取 mtime
@@ -84,6 +91,14 @@ PURPOSE_RETENTION = {
 }
 # 未分类根级内容（无用途前缀的文件或目录）保留天数
 ROOT_LEVEL_RETENTION = 7
+# 治理入口豁免白名单：条目名 → 期望类型（file/dir）
+# 三件套是工作区治理基础设施而非中间产物，不适用保留期语义。
+# 精确匹配不做通配；类型不符（如 README.md 是目录）则失去豁免。
+GOVERNANCE_ROOT_ENTRIES = {
+    "README.md": "file",
+    "AGENTS.md": "file",
+    ".agents": "dir",
+}
 # YYYYMMDD 日期匹配模式（8 位连续数字）
 DATE_PATTERN = re.compile(r"\d{8}")
 # task-id 匹配模式（如 task-abc123、task-config-file-placement）
@@ -257,24 +272,36 @@ def classify_item(path: Path, purpose: str | None, today: date) -> TempItem:
     )
 
 
-def scan_temp_items(temp_dir: Path, today: date) -> list[TempItem]:
-    """扫描 .temp/ 下所有项。
+def is_governance_entry(entry: Path) -> bool:
+    """判定根级条目是否为治理入口（三件套），类型须与白名单一致。"""
+    expected = GOVERNANCE_ROOT_ENTRIES.get(entry.name)
+    if expected is None:
+        return False
+    return entry.is_file() if expected == "file" else entry.is_dir()
+
+
+def scan_temp_items(temp_dir: Path, today: date) -> tuple[list[TempItem], list[Path]]:
+    """扫描 .temp/ 下所有项，返回 (检查项, 治理入口豁免项)。
 
     扫描规则:
         - .temp/backup/、.temp/experiments/ 等用途前缀目录的直接子项归入对应用途
+        - 根级治理入口（README.md / AGENTS.md 文件、.agents/ 目录）豁免，不参与检查
         - 其他根级条目（文件或目录）归为 unclassified
         - 用途前缀目录自身不作为检查项（仅其子项参与检查）
     """
     items: list[TempItem] = []
+    exempted: list[Path] = []
     for entry in sorted(temp_dir.iterdir()):
         if entry.name in PURPOSE_RETENTION and entry.is_dir():
             # 用途前缀目录：扫描其直接子项
             for child in sorted(entry.iterdir()):
                 items.append(classify_item(child, entry.name, today))
+        elif is_governance_entry(entry):
+            exempted.append(entry)
         else:
             # 根级未分类项（文件或目录）
             items.append(classify_item(entry, None, today))
-    return items
+    return items, exempted
 
 
 def delete_item(path: Path) -> int:
@@ -294,18 +321,22 @@ def delete_item(path: Path) -> int:
 # ============================================================================
 # 输出渲染
 # ============================================================================
-def output_json(items: list[TempItem], temp_dir: Path, exit_code: int) -> int:
+def output_json(
+    items: list[TempItem], temp_dir: Path, exit_code: int, exempted: list[Path]
+) -> int:
     """JSON 输出供 CI 集成。"""
     non_compliant = [it for it in items if not it.compliant]
     expired = [it for it in items if it.expired]
     payload = {
         "temp_dir": str(temp_dir),
         "total_items": len(items),
+        "governance_exempt": [str(p) for p in exempted],
         "non_compliant": [it.to_dict() for it in non_compliant],
         "expired": [it.to_dict() for it in expired],
         "summary": {
             "non_compliant_count": len(non_compliant),
             "expired_count": len(expired),
+            "governance_exempt_count": len(exempted),
         },
         "exit_code": exit_code,
     }
@@ -320,9 +351,14 @@ def report_empty(json_mode: bool, temp_dir: Path) -> int:
             "temp_dir": str(temp_dir),
             "exists": temp_dir.exists(),
             "total_items": 0,
+            "governance_exempt": [],
             "non_compliant": [],
             "expired": [],
-            "summary": {"non_compliant_count": 0, "expired_count": 0},
+            "summary": {
+                "non_compliant_count": 0,
+                "expired_count": 0,
+                "governance_exempt_count": 0,
+            },
             "exit_code": 0,
             "message": "无临时内容需检查",
         }
@@ -408,8 +444,8 @@ def main() -> int:
     if (not temp_dir.exists()) or (not temp_dir.is_dir()) or (not any(temp_dir.iterdir())):
         return report_empty(args.json, temp_dir)
 
-    # 扫描所有项
-    items = scan_temp_items(temp_dir, today)
+    # 扫描所有项（治理入口三件套单独收集，不参与保留期检查）
+    items, exempted = scan_temp_items(temp_dir, today)
 
     # 分类：不合规项 / 过期且合规项
     non_compliant = [it for it in items if not it.compliant]
@@ -418,13 +454,15 @@ def main() -> int:
     # JSON 模式：直接输出
     if args.json:
         exit_code = 1 if (non_compliant or expired_compliant) else 0
-        return output_json(items, temp_dir, exit_code)
+        return output_json(items, temp_dir, exit_code, exempted)
 
     # 文本输出：报告头
     print_header(".temp/ 临时文件生命周期检查")
     print(f"  扫描目录: {temp_dir}")
     print(f"  今日日期: {today.isoformat()}")
     print(f"  总项数:   {len(items)}")
+    if exempted:
+        print(f"  治理入口豁免: {len(exempted)} 项（README.md / AGENTS.md / .agents/）")
     print()
 
     # 命名不合规项
@@ -456,7 +494,8 @@ def main() -> int:
 
     # 全部合规且未过期
     if not non_compliant and not expired_compliant:
-        print_pass("所有 .temp/ 内容均合规且未过期")
+        suffix = f"（治理入口豁免 {len(exempted)} 项）" if exempted else ""
+        print_pass(f"所有 .temp/ 内容均合规且未过期{suffix}")
 
     # 合规未过期项汇总说明（不逐项列出，仅在汇总中体现）
     compliant_pending_count = sum(

@@ -16,7 +16,7 @@ tags:
   - anti-pattern
 date: "2026-09-23"
 status: "active"
-version: "1.1.0"
+version: "1.2.0"
 author: "SpecWeave Team"
 summary: "SpecWeave 项目关键配置文件的标准存放路径、放置决策树、Python 自动加载约定（sitecustomize.py / .pth / PYTHONPATH 关系）、sitecustomize.py 曾被错放根目录的根因分析，以及 .temp/ 临时文件的用途分类、命名规则、保留期、清理机制（含清理死锁说明）与写入自检。"
 ---
@@ -295,6 +295,8 @@ Python 启动时（在执行用户代码前）会依次触发以下机制，本�
 | `exports/` | 临时数据导出 | 报告草稿、中间数据集、批量导出的 JSON/CSV |
 | `screenshots/` | 调试截图、临时图片产物 | bug 复现截图、临时图表 PNG、UI 调试截图 |
 
+> **治理入口豁免**：`.temp/` 根级的三件套——`README.md`、`AGENTS.md`（文件）与 `.agents/`（目录）——是工作区治理入口而非中间产物，以精确白名单豁免命名校验与保留期（详见 6.5）。它们同样不进版本库，但 `--clean` 永不删除。
+
 ### 6.3 命名规则
 
 `.temp/` 下的子目录与文件名**必须**包含创建日期（`YYYYMMDD`）或关联 task-id。命名格式：
@@ -358,6 +360,8 @@ Python 启动时（在执行用户代码前）会依次触发以下机制，本�
 | `exports/` | **14 天** | 同上 |
 | `screenshots/` | **14 天** | 同上 |
 | 未分类根级文件（`.temp/foo.md` 等） | **7 天** | 同上 |
+
+> **豁免**：治理入口三件套（`README.md`/`AGENTS.md`/`.agents/`）不适用上表保留期。豁免为精确白名单匹配（不通配），同名条目类型不符（如 `README.md` 为目录、`.agents` 为文件）时自动失去豁免，按普通根级内容检查。
 
 **保留期基准日期的确定**（来自 spec 的 "Scenario: 保留期基准日期的确定"）：
 1. 优先取名称中解析出的 `YYYYMMDD` 日期
@@ -445,3 +449,4 @@ Python 启动时（在执行用户代码前）会依次触发以下机制，本�
 |------|------|----------|------|
 | 1.0.0 | 2026-07-18 | 初始版本：关键配置文件路径表、放置决策树、Python 自动加载约定、sitecustomize.py 根因分析、团队操作流程、`.temp/` 全生命周期治理 | SpecWeave Team |
 | 1.1.0 | 2026-09-23 | 增补实证教训：清理死锁说明（§6.6）、写入自检 4 问（§6.8）、反模式 +2 行（长寿命文档引用 `.temp/` 路径、敏感临时物不即删）；版本与 `.meta/toml` 镜像同步（来源：`.temp` 生命周期整理会话 sc-20260923-temp-lifecycle-organize） | SpecWeave Team |
+| 1.2.0 | 2026-10-24 | 新增治理入口豁免：`.temp/` 根级三件套（`README.md` / `AGENTS.md` / `.agents/`）不参与命名校验与保留期，由 check-temp-lifecycle.py 精确白名单实现并附单元测试（§6.2、§6.5）；版本与 `.meta/toml` 镜像同步（来源：session sc-20261024-temp-triplet） | SpecWeave Team |

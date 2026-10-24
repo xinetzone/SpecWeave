@@ -75,6 +75,12 @@
 - [x] `.temp/` 为空或不存在时报告"无临时内容需检查"，退出码 0
 - [x] 合规命名示例正确识别：`.temp/backup/docs-migration-20260715/`、`.temp/experiments/color-palette-20260718/`
 - [x] 不合规命名示例正确告警：`.temp/record.md`（无前缀无日期）、`.temp/backup/old/`（无日期）
+- [x] 治理入口豁免：根级三件套（`README.md`/`AGENTS.md` 文件、`.agents/` 目录）不参与命名校验与保留期（Task 10）
+  - 实现：`GOVERNANCE_ROOT_ENTRIES` 精确白名单（不通配）；`scan_temp_items` 返回 (检查项, 豁免项)；JSON 新增 `governance_exempt`；文本/摘要输出豁免计数；`--clean` 不删除豁免项
+- [x] 类型不符不豁免：`README.md` 为目录、`.agents` 为文件时仍按不合规告警
+- [x] 仅含治理入口时退出码 0；豁免不影响普通根级文件（`record.md` 仍告警）
+- [x] 单元测试 `.agents/scripts/tests/test_check_temp_lifecycle.py` 5/5 通过（TDD 红→绿）
+- [x] 实测：真实 `.temp/` 17 项合规 + 豁免 3 项，脚本退出码 0，CI 封装 `run_ci_check` 通过
 
 ## 端到端验证
 

@@ -152,6 +152,14 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/config-file-plac
 - **AND** 合规示例：`.temp/backup/docs-migration-20260715/`、`.temp/experiments/color-palette-20260718/`
 - **AND** 不合规示例（被命名校验告警）：`.temp/record.md`（无用途前缀、无日期）、`.temp/backup/old/`（无日期）
 
+#### Scenario: 治理入口豁免校验
+
+- **WHEN** `.temp/` 根级存在工作区治理入口三件套（`README.md`、`AGENTS.md` 文件与 `.agents/` 目录）
+- **THEN** 脚本将三者列为「治理入口豁免」，不参与命名合规校验、保留期计算与 `--clean` 删除
+- **AND** 豁免为精确白名单匹配（不通配）；同名条目类型不符时（如 `README.md` 为目录、`.agents` 为文件）不获豁免，按普通根级内容处理
+- **AND** 豁免不影响其他内容：无用途前缀或无日期的普通根级文件仍按不合规告警
+- **AND** 当 `.temp/` 仅含治理入口时，脚本以零退出码退出
+
 #### Scenario: 检测到命名不合规的临时内容
 
 - **WHEN** 运行 `check-temp-lifecycle.py`，检测到 `.temp/` 下存在无日期或无用途前缀的内容
