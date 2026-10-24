@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（36个）
+### 完整Skill（37个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -47,6 +47,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | skill-migration-quality-delta | "迁入后掉分"、"65 变 70"、"警告是不是迁入引入"、"要不要回滚"、"质量门为什么不到 100" | 1（两轮 --verbose 取证 → 按检查名求差集 → 差项映射改动面 → 三段式结论；含 diff_quality_warnings.py；L1） | v1.0.0 | [skills/skill-migration-quality-delta/SKILL.md](../skills/skill-migration-quality-delta/SKILL.md) |
 | user-level-junction-acceptance | "联接建好了怎么验收"、"quick_validate 报 Unexpected key"、"git status 哈希变了"、"evals 解析 FileNotFoundError"、"经目标路径验证用户级技能" | 1（A0 固化输入与基线 → A1 联接身份与文件可见性 → A2 内置格式门基线对照 → A3 仓库门 → A4 脚本与 evals → A5 工作树归因；L1） | v1.0.0 | [skills/user-level-junction-acceptance/SKILL.md](../skills/user-level-junction-acceptance/SKILL.md) |
 | contest-playbook | "我要参加 XX 比赛"、"帮我分析这个比赛规则"、"做个参赛方案"、"比赛怎么打"、"参赛材料清单"、"提交作品有哪些坑" | 1（判型 5 形态 → 采集阶梯 L1-L7 → 六族编号结构化 → 3 条通用判定 → 资产对位 → 形态决策树 → 双轨倒排与依赖阻塞 → 合规四层自查；含预检门与 11 项 Gotchas；L1） | v1.1.0 | [skills/contest-playbook/SKILL.md](../skills/contest-playbook/SKILL.md) |
+| wechat-multi-platform-verify-cmd | "核验这篇文章"、"多平台核验"、"事实核查"、"发布前核验"、"verify 台账"、"核验报告"、"证据包"、"投稿前查一遍" | 1（S0 主张抽取 → S1 四级信源分层选源 → S2 逐平台取证（官方页直取 / 搜索快照 / 浏览器三通道，含幂等重入）→ S3 主张×来源台账 → S4 冲突裁决与同源转载检测 → S5 证据包交付与红线检查；输出三件套；含 10 条 Gotchas；L1） | v1.0.0 | [skills/wechat-multi-platform-verify-cmd/SKILL.md](../skills/wechat-multi-platform-verify-cmd/SKILL.md) |
 
 ### 工作流门面（6个）
 
