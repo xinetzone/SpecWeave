@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（25个）
+### 完整Skill（26个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -35,6 +35,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | session-to-skill | "这个会话做成 Skill"、"按来源会话创建/更新/重命名 Skill"、"先核实再动手不要臆造未读内容"、"会话萃取为 Skill" | 1（加载 skill-creator → 最小预算会话取证 → 三根查重判定 → 方案确认 → 写包 → 机械验证与如实报告；超限切片降级到 oversized-tool-output-slicing；L1） | v1.0.0 | [skills/session-to-skill/SKILL.md](../skills/session-to-skill/SKILL.md) |
 | shared-branch-merge-push-gate | "合并后推送"、"同步上游"、"merge origin/main"、"落后上游几条怎么办"、"推送被拒"、"共享分支合并" | 1（G0 授权基线 → G1-G6 只读预检 → 冲突预演 → 子模块先推父仓后推 → 推送后复验 0 0；捆绑 merge_gate.py 六档退出码；禁 force；L1） | v1.0.0 | [skills/shared-branch-merge-push-gate/SKILL.md](../skills/shared-branch-merge-push-gate/SKILL.md) |
 | user-level-skill-junction-delivery | "在用户级新建 Skill"、"装到 ~/.qoder/skills"、"建联接不复制"、"目录联接交付"、"为什么用户级没有这个技能" | 1（三条前置判定 → 只读取证 → 提案确认门 → PowerShell Junction 交付 → 经目标路径六项验收与只读哈希证明；禁复制与 mklink；L1） | v1.0.0 | [skills/user-level-skill-junction-delivery/SKILL.md](../skills/user-level-skill-junction-delivery/SKILL.md) |
+| version-floor-contract-guard | "版本下限失真"、"声明 0.10 但实测要求 0.11"、"minimum-version 该写多少"、"构建后端下限上调"、"守卫脚本漏扫目录" | 1（实测真门槛 → 枚举全部声明面 → 断言并入 CI 已调用的校验脚本 → 夹具正负双向验证 → 按 .gitmodules 审计扫描面；不用于依赖升级与版本选型；L1） | v1.0.0 | [skills/version-floor-contract-guard/SKILL.md](../skills/version-floor-contract-guard/SKILL.md) |
 | skill-junction-durability-guard | "联接指向的技能突然没了"、"目录联接悬空"、"用户级技能能触发但没入库"、"建了联接还要不要提交"、"git clean 会不会删技能" | 1（D0/D1/D2/D2i/D3 分级 → 五步只读取证 → A/B/C/D 授权拆分 → 提交后 blob 与目标路径双复验；含 --audit 只读模式；L1） | v1.0.0 | [skills/skill-junction-durability-guard/SKILL.md](../skills/skill-junction-durability-guard/SKILL.md) |
 
 ### 工作流门面（6个）

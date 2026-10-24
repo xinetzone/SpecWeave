@@ -1,0 +1,5 @@
+id = "skill"
+title = "版本下限契约守卫 Skill"
+category = "skills/version-floor-contract-guard"
+date = "2026-10-24"
+version = "1.0"
