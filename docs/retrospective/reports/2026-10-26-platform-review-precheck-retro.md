@@ -57,8 +57,9 @@ pattern: "skills/platform-review-precheck"
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=E1 | event=CONCEPT_COMPLETED | session=sc-20261026-platform-review-precheck | msg=E阶段完成：萃取 Skill platform-review-precheck（v1.0.0）+ 同型缺陷整改 | ctx={"skill":"platform-review-precheck","quality_score":100}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=G3 | event=GATE_PASSED | session=sc-20261026-platform-review-precheck | msg=G3质量门通过：模式含触发场景+核心步骤+反模式+迁移验证 | ctx={"gate":"G3","result":"pass"}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=V0 | event=CONCEPT_STARTED | session=sc-20261026-platform-review-precheck | msg=V阶段开始：四视角并发对抗审查（新人/老板/魔鬼代言人/未来） | ctx={"perspectives":4}
+[CMD-LOG] | level=WARN | cmd=seven-concepts | step=V1 | event=CONCEPT_INCOMPLETED | session=sc-20261026-platform-review-precheck | msg=V阶段部分完成：4 名审查者运行 21 分钟无响应已终止；主导方自查实测修复 2 处真实缺陷（误报 / 虚假通用性） | ctx={"v_complete":false,"selfcheck_fixed":2}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=C1 | event=CONCEPT_COMPLETED | session=sc-20261026-platform-review-precheck | msg=C阶段完成：四处登记面同步 + 门禁全绿 + 原子提交 | ctx={"gates":"quality/links/selftest/regression"}
-[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S9 | event=CHAIN_COMPLETED | session=sc-20261026-platform-review-precheck | msg=方法论编排完成 | ctx={"gates_passed":["G1","G2","G3","G4","V"]}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S9 | event=CHAIN_COMPLETED | session=sc-20261026-platform-review-precheck | msg=方法论编排完成（V 门部分完成） | ctx={"gates_passed":["G1","G2","G3","G4"],"gates_partial":["V"],"pending":["A-08"]}
 ```
 
 ---
@@ -259,6 +260,7 @@ Skill 建好了但没登记，等于半个交付。本轮一并补齐（README /
 | A-05 | 修 `generate_assets.py` 的 `from __future__ import annotations` 红线 | 完成 |
 | A-06 | 在 mp 后台提审入口2 誊写《用户隐私保护指引》并重新提审 | **待人工执行**（平台侧操作，Agent 无登录态） |
 | A-07 | 若其他项目也用隐私接口，逐一跑扫描器 | 待后续项目触发 |
+| A-08 | 补做针对本 Skill 的完整四视角对抗审查（本轮 4 名审查者运行 21 分钟无响应已终止，见 §7.3） | 待办 |
 
 ---
 
@@ -337,7 +339,38 @@ Skill 建好了但没登记，等于半个交付。本轮一并补齐（README /
 
 ### 7.3 审查结论
 
-> 本节在四视角审查完成后回填。
+**V 阶段执行说明**：本轮派发了 4 个并发审查者（新人 / 老板 / 魔鬼代言人 / 未来），
+均要求「实际运行脚本取证、不接受臆测」。四者运行 21 分钟后仍未返回结论，
+经两轮催收仍无响应，已主动终止（`TaskStop`）——**审查未完成，不虚报**。
+
+因此 V 阶段以**已实际发生的独立审查证据**收口：
+
+| 证据源 | 性质 | 结论 |
+|---|---|---|
+| 主导方自查（§7.2） | 自证 | 实测确认并修复 **2 处真实缺陷**（S-01 误报 / S-02 虚假通用性），修复后自检由 15 项扩到 18 项并全绿 |
+| 并发会话对 `public-value-audit` 的 4 视角对抗审查 | **独立第二意见**（上一轮产物） | 50 条意见，其中 8 条是**实测确认的真实工具缺陷**（表名归一化与列名解析导致「不变量恒不触发」、RLS `USING` 非贪婪捕获吃掉 `auth.uid()` 右括号、H6 只认字面 `SET col = p_x`、函数体只认 `$$` 分隔符、扫描器缺豁免参数、零覆盖报「全绿」、原 pre-fix 夹具复现错缺陷） |
+| 本轮 5 项工程门禁 | 机器验证 | 质量门 100/100（0 WARN）、自检 18/18、对账 FAIL=0、登记面审计 0 漂移 0 缺行、测试 32/32 + 50/50 |
+
+**从并发会话那 50 条意见中提取的、可直接迁移到本 Skill 的教训**（已内化）：
+
+1. **「不变量恒不触发」是一类高危缺陷**——规则写了但永远不触发，比没有规则更危险
+   （它给出虚假绿灯）。⇒ 本 Skill 的 D1~D4 每道门都在**前后对照夹具**上验证过「pre-fix 必 FAIL、post-fix 必 PASS」，
+   并在自检里断言「post-fix D1 通过」——防止门形同虚设。
+2. **零覆盖不能报全绿**——扫不到东西不等于没问题。⇒ 本 Skill 扫描器在无命中时明确输出「未发现隐私相关接口调用」，
+   而非「全部通过」。
+3. **规则要能被自己的处方检出**——工具检不出自己开的处方，等于没开。⇒
+   自检用 `pre-fix` 夹具验证扫描器**能检出**它所描述的形态。
+4. **夹具要复现真实缺陷，不能复现近似形态**——上一轮的 pre-fix 夹具复现的是 P1-14 而非 P1-15，
+   导致整改后夹具仍红。⇒ 本 Skill 的 pre-fix 夹具直接照抄审核原文的拦截形态
+   （`wx.chooseMedia` + `open-type="getPhoneNumber"` + 缺声明 + 缺兜底）。
+5. **规则集必须能对应上豁免机制**——上一轮扫描器缺豁免参数导致无法排除合法形态。⇒
+   本 Skill 的 D2 门对「声明了但无调用」判 WARN 而非 FAIL，正是把「可能合法的多余声明」留给人工判断。
+
+> **关于 V 阶段未完成的事实记录**：本轮 V 门**未取得完整的四视角独立审查报告**。
+> 这不影响已交付产物的可用性（工程门禁全绿、自查修复 2 处真实缺陷），
+> 但「V 门已通过」这一说法在本报告中**不成立**——
+> 质量门记录里 V 一栏据此标注为「⚠ 部分完成」，而非打勾。
+> 待办：下次复盘时补做针对本 Skill 的完整四视角对抗审查。
 
 ---
 
@@ -349,7 +382,7 @@ Skill 建好了但没登记，等于半个交付。本轮一并补齐（README /
 | G2 | 洞察 ≥3 条、四元组完整、维度独立 | 3 条，通过 |
 | G3 | 模式含触发场景 + 核心步骤 + 反模式 + 迁移验证 | 2 个模式，通过 |
 | G4 | 行动项原子化、单一职责、可独立验证、有验收标准 | 7 条，通过 |
-| V | 四视角对抗审查 + 发现处置 | 见 §7.1 |
+| V | 四视角对抗审查 + 发现处置 | ⚠ 部分完成——4 名审查者运行 21 分钟无响应已终止；自查修复 2 处真实缺陷，见 §7.3 |
 
 **工程门禁**：
 
