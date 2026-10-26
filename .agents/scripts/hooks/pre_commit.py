@@ -237,7 +237,7 @@ def _run_sensitive_check(project_root: Path, scripts_dir: Path, staged_files: li
     try:
         from lib.checks.sensitive_info import (
             scan_file, SEVERITY_HIGH, SEVERITY_MEDIUM,
-            SUPPORTED_EXTENSIONS, FILE_EXCLUDE_PATTERNS,
+            SUPPORTED_EXTENSIONS, FILE_EXCLUDE_PATTERNS, DEFAULT_EXCLUDE_DIRS,
         )
     except ImportError:
         print("\n⚠️  无法加载检测模块，回退到 CLI 扫描...")
@@ -262,9 +262,17 @@ def _run_sensitive_check(project_root: Path, scripts_dir: Path, staged_files: li
     medium_findings: list[tuple[Path, object]] = []
 
     print("\n🔍 正在扫描暂存文件中的敏感信息...")
+    skipped_by_dir = 0
     for rel_path in staged_files:
         abs_path = project_root / rel_path
         if not abs_path.exists():
+            continue
+        # 目录级排除必须与 CLI 行为一致：DEFAULT_EXCLUDE_DIRS 已排除
+        # vendor/external/node_modules 等第三方产物目录，钩子逐文件扫描时
+        # 若不应用同一份排除表，会把第三方压缩包里的常量（API 路由路径、
+        # 第三方内置 AppID 等）误判成敏感信息并永久阻断提交。
+        if any(part in DEFAULT_EXCLUDE_DIRS for part in rel_path.parts[:-1]):
+            skipped_by_dir += 1
             continue
         if abs_path.name in FILE_EXCLUDE_PATTERNS:
             continue
@@ -280,6 +288,8 @@ def _run_sensitive_check(project_root: Path, scripts_dir: Path, staged_files: li
         except (OSError, UnicodeDecodeError):
             continue
 
+    if skipped_by_dir:
+        print(f"   （按 DEFAULT_EXCLUDE_DIRS 跳过第三方产物目录中的 {skipped_by_dir} 个文件）")
     print()
 
     if medium_findings:
