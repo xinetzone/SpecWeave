@@ -216,6 +216,18 @@ flowchart LR
 
 ---
 
+## 🏆 实战案例
+
+**用 SpecWeave 规范真实协作产出的作品**：
+
+| 作品 | 链接 | 一句话 |
+|------|------|--------|
+| **知识保鲜台**（WorkBuddy 1024 参赛作品） | [ai-agent-kepu-kit.app.workbuddy.host](https://ai-agent-kepu-kit.app.workbuddy.host/) | 679 个 OKF 知识包的在线检索与保鲜度看板——9 大学科域预生成索引、中文复合词可命中、每条结果可点击跳转原文证据 |
+
+> 该作品由 [awesome-okf-xs](https://github.com/awesome-flexloop/awesome-okf) 知识库驱动，检索索引、发布包白名单与自动化验收门禁均在 SpecWeave 多智能体协作流程下构建。
+
+---
+
 <!-- end-doc-include -->
 
 ## 文档导航
