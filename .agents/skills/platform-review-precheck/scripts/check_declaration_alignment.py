@@ -29,7 +29,7 @@ sys.path.insert(0, HERE)
 
 from scan_privacy_calls import (  # noqa: E402
     PRIVACY_API_MAP, COMPONENT_RULES, SCOPE_MAP, scan, summarize, iter_source_files,
-    detect_project_type,
+    detect_project_type, strip_comments,
 )
 
 SKIP_DIRS = {"node_modules", "miniprogram_npm", "vendor", ".git", "dist", "build", "coverage", ".temp"}
@@ -83,10 +83,38 @@ def find_declaration_files(root):
 
 
 def declared_types(text):
-    """从声明文本中识别已声明的「处理的信息」类型。"""
+    """从声明文本中识别已声明的「处理的信息」类型。
+
+    ⚠️ 只解析**声明条目行**，不做全文子串匹配。
+    实测教训：对全文匹配时，说明性文字会误命中别名——
+    协议里写「本指引不声明收集你的手机号」「服务内容声明」都会让
+    别名「手机号」「地址」被当成已声明，进而把 D1/D2 判反。
+    声明条目行的特征：以 `- ` 开头（列表项）或落在「开发者处理的信息」章节内。
+    """
+    lines = text.split("\n")
+    in_section = False
+    entry_text = []
+    for raw in lines:
+        line = raw.strip()
+        # 进入「开发者处理的信息」章节
+        if line.startswith("#"):
+            heading = line.lstrip("#").strip()
+            in_section = ("处理的信息" in heading or "开发者处理" in heading)
+            continue
+        if not in_section:
+            continue
+        # 章节内的列表项 = 声明条目
+        if line.startswith("- ") or line.startswith("* "):
+            entry_text.append(line)
+
+    # 若未识别到章节，退回全文里的一级列表项（兜底）
+    if not entry_text:
+        entry_text = [l.strip() for l in lines if l.strip().startswith("- ")]
+
+    scope = "\n".join(entry_text)
     found = set()
     for canonical, aliases in DECL_TYPE_ALIASES.items():
-        if any(alias in text for alias in aliases):
+        if any(alias in scope for alias in aliases):
             found.add(canonical)
     return found
 
@@ -106,6 +134,82 @@ def find_auth_hooks(root):
         if any(name in text for name in AUTH_HOOK_NAMES):
             hooked.add(os.path.relpath(path, root).replace("\\", "/"))
     return hooked
+
+
+# 「处理的信息类型」→ 该类型对应的采集接口/组件名单。
+# 用于判定：声明了这一类型，但代码里是否存在**任何**采集路径。
+# 取自微信官方《小程序用户隐私保护指引内容介绍》的接口↔类型对应关系。
+COLLECTION_PATHS = {
+    "收集你的昵称、头像": ["getUserProfile", "getUserInfo", "chooseAvatar", "nickname", "userInfo"],
+    "收集你的手机号": ["getPhoneNumber", "getRealtimePhoneNumber"],
+    "收集你的位置信息": ["getLocation", "startLocationUpdate", "getFuzzyLocation",
+                        "userLocation", "userFuzzyLocation", "userLocationBackground",
+                        "moveToLocation"],
+    "收集你选择的位置信息": ["choosePoi", "chooseLocation"],
+    "收集你的地址": ["chooseAddress"],
+    "收集你的发票信息": ["chooseInvoiceTitle", "chooseInvoice"],
+    "收集你的微信运动步数": ["getWeRunData", "werun"],
+    "收集你的车牌号": ["chooseLicensePlate"],
+    "收集你选中的照片或视频信息": ["chooseImage", "chooseMedia", "chooseVideo"],
+    "收集你选中的文件": ["chooseMessageFile"],
+    "访问你的麦克风": ["startRecord", "scope.record", "RecorderManager", "live-pusher",
+                       "joinVoIPChat"],
+    "访问你的摄像头": ["createVKSession", "scope.camera", "camera", "live-pusher", "voip-room"],
+    "访问你的蓝牙": ["openBluetoothAdapter", "createBLEPeripheralServer", "scope.bluetooth"],
+    "使用你的相册（仅写入）权限": ["saveImageToPhotosAlbum", "saveVideoToPhotosAlbum",
+                                  "writePhotosAlbum"],
+    "使用你的通讯录（仅写入）权限": ["addPhoneContact", "scope.addPhoneContact"],
+    "使用你的日历（仅写入）权限": ["addPhoneCalendar", "addPhoneRepeatCalendar",
+                                 "scope.addPhoneCalendar"],
+    "读取你的剪切板": ["setClipboardData", "getClipboardData"],
+    "调用你的加速传感器": ["startAccelerometer"],
+    "调用你的磁场传感器": ["startCompass"],
+    "调用你的方向传感器": ["startDeviceMotionListening"],
+    "调用你的陀螺仪传感器": ["startGyroscope"],
+}
+
+
+def has_collection_path(root, info_type):
+    """判定该「处理的信息」类型在代码里是否存在任何采集接口/组件调用。
+
+    扫描范围覆盖 .js/.ts/.wxml/.json（组件型调用如 open-type="getPhoneNumber"
+    只出现在 wxml 里），但**排除注释**——注释里的接口名不算采集路径。
+
+    ⚠️ 必须排除**测试文件**与**声明文档本身**：
+    实测教训——测试里的正则 `/getPhoneNumber|getRealtimePhoneNumber/.test(code)`
+    与协议文档里「代码中不存在 wx.getPhoneNumber 调用」的说明文字，
+    都会被当成真实采集路径，导致超范围承诺判不出来（误判方向相反，同样致命）。
+    """
+    paths = COLLECTION_PATHS.get(info_type)
+    if not paths:
+        # 映射表未收录的类型：不做判定（交人工），避免误判。
+        return True
+
+    for path in iter_source_files(root):
+        rel = os.path.relpath(path, root).replace("\\", "/")
+        # 排除测试与声明文档
+        if "/tests/" in "/" + rel or rel.startswith("tests/"):
+            continue
+        if "/test/" in "/" + rel:
+            continue
+        base = os.path.basename(rel)
+        if base.endswith(".test.js") or base.endswith(".spec.js") or base.endswith("_test.py"):
+            continue
+        if "privacy-declaration" in rel or "privacy.json" in rel:
+            continue
+        ext = os.path.splitext(path)[1]
+        if ext not in (".js", ".ts", ".jsx", ".mjs", ".wxml", ".json"):
+            continue
+        try:
+            with open(path, "r", encoding="utf-8") as fh:
+                text = fh.read()
+        except (UnicodeDecodeError, OSError):
+            continue
+        text = strip_comments(text, ext)
+        for token in paths:
+            if token in text:
+                return True
+    return False
 
 
 def check(root, declaration_path=None, only=None):
@@ -179,14 +283,37 @@ def check(root, declaration_path=None, only=None):
     else:
         add("D1", "PASS", "声明面覆盖调用面", "未检出隐私接口调用，无需声明。")
 
-    # ---- D2：声明面无死项 ----
+    # ---- D2：声明面无死项 / 无超范围承诺 ----
+    # 「声明了但代码里没检出对应调用」有两种截然不同的性质，必须分开：
+    #   (a) 死项：调用存在但静态分析看不到（如 SDK 内部、云函数内）→ WARN，人工确认即可；
+    #   (b) 超范围承诺：代码里**根本不存在**该采集路径 → 对用户做了无实际依据的
+    #       个人信息处理承诺，平台审核会追问，且构成不必要的承诺 → 独立 FAIL 级提示。
+    # 实证：某项目协议里声明「收集你的昵称、头像」「收集你的手机号」，
+    # 而代码中不存在 getUserProfile / getPhoneNumber 任一调用——属 (b)。
     extra = sorted(declared - set(required))
-    if extra:
+    overclaim = []
+    dead_items = []
+    for info_type in extra:
+        if has_collection_path(root, info_type):
+            dead_items.append(info_type)
+        else:
+            overclaim.append(info_type)
+
+    if overclaim:
+        add("D2", "FAIL", "声明存在超范围承诺（无实际采集路径）",
+            "以下类型在声明中出现，但代码中不存在任何对应的采集接口调用——"
+            "属于对用户做了无实际依据的个人信息处理承诺，平台审核会追问，"
+            "且构成不必要的承诺。请核实：若确无该采集路径，应从声明中移除；"
+            "若有（藏在 SDK 内部或云函数里），请在声明中说明采集途径：%s"
+            % "；".join(overclaim),
+            overclaim)
+    if dead_items:
         add("D2", "WARN", "声明面存在无调用对应的条目",
-            "声明了但代码中未检出对应调用：%s" % "；".join(extra),
-            extra)
-    else:
-        add("D2", "PASS", "声明面无死项", "声明条目与检出调用一致。")
+            "声明了但静态分析未检出对应调用（可能由 SDK 内部或云函数完成，需人工确认）：%s"
+            % "；".join(dead_items),
+            dead_items)
+    if not overclaim and not dead_items:
+        add("D2", "PASS", "声明面无死项且无超范围承诺", "声明条目与检出调用一致。")
 
     # ---- D3：隐私接口有授权兜底 ----
     hooked = find_auth_hooks(root)

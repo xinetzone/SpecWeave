@@ -826,6 +826,44 @@ check('隐私声明覆盖代码调用的隐私接口', () => {
   }
 })
 
+check('隐私声明不超出实际采集范围', () => {
+  // 声明了但代码里没有对应采集路径 = 乱承诺：平台审核会追问，
+  // 且对用户构成不必要的个人信息处理承诺。
+  const decl = read(path.join('docs', 'privacy-declaration.md'))
+  const auth = read(path.join('utils', 'auth.js'))
+  const pages = walk(path.join(ROOT, 'pages'))
+    .filter((f) => f.endsWith('.js'))
+    .map((f) => fs.readFileSync(f, 'utf8'))
+    .join('\n')
+  const code = auth + '\n' + pages
+
+  // 昵称/头像：必须存在真实采集路径才能声明
+  // 只认「实际声明行」——排除「本指引不声明 XXX」这类否定性说明
+  // （否则修正说明本身会被误判成声明）。
+  const declaredLines = decl.split('\n').filter((line) => {
+    const t = line.trim()
+    if (!t.startsWith('- ')) return false
+    if (/不声明|未收集|不存在|没有/.test(t)) return false
+    return true
+  })
+  const declaredText = declaredLines.join('\n')
+
+  const claimsNickname = declaredText.includes('收集你的昵称')
+  const hasNicknameCall = /getUserProfile|chooseAvatar|type\s*=\s*"nickname"|getUserInfo/.test(code)
+  assert.ok(
+    !(claimsNickname && !hasNicknameCall),
+    '隐私声明声明了「收集你的昵称、头像」，但代码中不存在任何用户信息采集接口调用'
+  )
+
+  // 手机号：必须存在真实采集路径才能声明
+  const claimsPhone = declaredText.includes('收集你的手机号')
+  const hasPhoneCall = /getPhoneNumber|getRealtimePhoneNumber/.test(code)
+  assert.ok(
+    !(claimsPhone && !hasPhoneCall),
+    '隐私声明声明了「收集你的手机号」，但代码中不存在任何手机号采集接口调用'
+  )
+})
+
 check('隐私接口调用前有授权兜底', () => {
   const privacy = read(path.join('utils', 'privacy.js'))
   assert.ok(

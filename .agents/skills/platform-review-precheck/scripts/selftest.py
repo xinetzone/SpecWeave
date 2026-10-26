@@ -93,6 +93,33 @@ def main():
     expect("post-fix D3 通过", "D3" in out and "PASS" in out)
     expect("post-fix D4 通过", "D4" in out and "PASS" in out)
 
+    print("== 超范围承诺检测 ==")
+    # 声明了「收集你的手机号」但代码里没有 getPhoneNumber 调用 → 必须判 FAIL
+    with tempfile.TemporaryDirectory() as tmp:
+        over = os.path.join(tmp, "overclaim")
+        os.makedirs(over)
+        with open(os.path.join(over, "project.config.json"), "w", encoding="utf-8") as fh:
+            fh.write('{"compileType": "miniprogram"}\n')
+        with open(os.path.join(over, "app.json"), "w", encoding="utf-8") as fh:
+            fh.write('{"pages": ["pages/index/index"]}\n')
+        with open(os.path.join(over, "app.js"), "w", encoding="utf-8") as fh:
+            fh.write("App({})\n")
+        with open(os.path.join(over, "pages.js"), "w", encoding="utf-8") as fh:
+            fh.write("Page({ onPick() { wx.chooseMedia({ count: 1 }) } })\n")
+        with open(os.path.join(over, "README.md"), "w", encoding="utf-8") as fh:
+            fh.write(
+                "# 夹具\n\n## 小程序用户隐私保护指引\n\n"
+                "### 开发者处理的信息\n\n"
+                "- 开发者收集你选中的照片或视频信息，用于上传配图。\n"
+                "- 开发者收集你的手机号，用于联系确认。\n"
+            )
+        rc, out = run(CHECK, over)
+        if verbose:
+            print(out)
+        expect("超范围承诺被判 FAIL", rc == 1, "rc=%d" % rc)
+        expect("超范围承诺报出 D2 FAIL", "D2" in out and "FAIL" in out)
+        expect("超范围承诺点名「收集你的手机号」", "收集你的手机号" in out)
+
     print()
     if failures:
         print("自检失败 %d 项：" % len(failures))

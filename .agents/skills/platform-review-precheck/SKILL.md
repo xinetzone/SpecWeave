@@ -72,7 +72,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/platform-review-precheck/SKILL.t
 2. **对账**：`python scripts/check_declaration_alignment.py <项目根>` → 五道门 D0~D4：
    - **D0** 目标是微信小程序工程（不适用则停，别硬套）
    - **D1** 声明面覆盖调用面（FAIL 即被拦截项）
-   - **D2** 声明面无死项（声明了但没调，多余声明会被追问）
+   - **D2a/D2b** 声明面无超范围承诺（声明了但代码无采集路径 → FAIL）/ 无死项（静态看不到 → WARN）
    - **D3** 隐私接口有授权兜底（`onNeedPrivacyAuthorization` / `requirePrivacyAuthorize`）
    - **D4** 平台侧声明文件存在且非空
 3. **补声明**：按扫描输出，在仓库内维护一份《用户隐私保护指引》草稿
@@ -90,7 +90,8 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/platform-review-precheck/SKILL.t
 |---|---|---|
 | **D0** | 目标是微信小程序工程（`project.config.json` 的 `compileType=miniprogram`，或 `app.json`+`app.js`） | FAIL |
 | D1 | 代码调用的每个隐私接口所映射的信息类型，都出现在声明文本中 | FAIL |
-| D2 | 声明中的每个类型都有对应调用（无死项） | WARN |
+| D2a | 声明中的类型在代码里**有实际采集路径**（否则是超范围承诺） | FAIL |
+| D2b | 声明中的类型有调用但静态分析看不到（SDK 内部/云函数） | WARN |
 | D3 | 检出隐私接口调用时，全仓存在授权钩子 | FAIL |
 | D4 | 仓库内存在《用户隐私保护指引》声明文件且非空 | FAIL |
 
@@ -125,7 +126,17 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/platform-review-precheck/SKILL.t
    `Album` / `PhoneNumber` / `UserInfo`）——那是**云服务侧**的清单，
    与**微信平台侧**的《用户隐私保护指引》是两套东西，名字都叫 privacy 但互不相认。
    → 平台声明必须单独维护。
-6. ❌ **用 `saveImageToPhotosAlbum` 的经验套 `chooseMedia`**
+6. ❌ **声明了但代码里根本没有对应采集路径**
+   实测：某项目协议里声明「收集你的昵称、头像」「收集你的手机号」，
+   而代码中不存在 `wx.getUserProfile` / `wx.getPhoneNumber` 任一调用
+   （用户信息实际由云服务 SDK 的 `signInWithWechat` 链路处理）。
+   → 这是**超范围承诺**：对用户做了无实际依据的个人信息处理承诺，
+   平台审核会追问，且构成不必要的承诺。D2 门对此判 FAIL。
+7. ❌ **声明里写「不声明 XXX」也算声明**
+   实测：协议正文写「本指引不声明收集你的手机号」，
+   用全文子串匹配会把「手机号」当成已声明，D1/D2 全部判反。
+   → 声明解析只认**声明条目行**（列表项），并排除否定性表述。
+8. ❌ **用 `saveImageToPhotosAlbum` 的经验套 `chooseMedia`**
    实测：「相册（仅写入）」与「选中的照片或视频信息」是**两个不同的类型**，
    只声明前者不声明后者，仍会被拦。→ 逐个接口查映射表，别类推。
 
@@ -232,9 +243,10 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/platform-review-precheck/SKILL.t
 - **映射表会过时**：官方接口清单会增补，表内条目带「观测于 2026-10-26」标注。
   官方新增接口时本 Skill **静默漏报**（不报错、不提示）——这是已知的失效模式。
   定期复核办法：跑扫描器后对照官方页面的接口表逐条核。
-- **D2 的 WARN 需人工判断**：「声明了但代码里扫不到」有两种可能——
+- **D2b 的 WARN 需人工判断**：「声明了但静态扫不到对应调用」有两种可能——
   声明多了（死项），或调用发生在静态分析看不到的地方（如 SDK 内部、云函数内）。
   本 Skill 不做区分，**一律交给人判断**。
+  （注：D2a 与 D2b 是两件事——D2a 判「代码里**根本没有**该采集路径」，是可静态确定的 FAIL。）
 - **只覆盖微信小程序**：D0 门会拦下非小程序项目。迁移到其他平台需替换两样东西——
   接口↔信息类型映射表、声明模板；**「对账」这个动作本身可复用**。
 - **不检查声明的「用途描述」质量**：平台会审核用途是否具体（「用于上传活动封面」合格，
