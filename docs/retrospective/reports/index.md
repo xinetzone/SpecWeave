@@ -40,6 +40,7 @@ task-reports/index
 2026-07-10-seven-concepts-methodology-integration
 2026-10-26-workbuddy-contest-submit-milestone-retro
 2026-10-26-jieban-zhilv-mp-miniprogram-milestone-retro
+2026-10-26-jieban-v2-migration-retro
 2026-07-11-meta-bootstrap-seven-concepts-trigger
 2026-07-12-atomic-write-refactoring
 2026-07-12-io-safety-architecture-evolution
