@@ -1,0 +1,79 @@
+<view class="page">
+  <!-- 顶部品牌区 -->
+  <view class="hero">
+    <view class="hero-brand">
+      <image class="hero-mark" src="/assets/icons/ic-compass.png" mode="widthFix" />
+      <view class="hero-titles">
+        <text class="hero-title">结伴之旅</text>
+        <text class="hero-sub">与全人类一起，把周末交给陌生的风景</text>
+      </view>
+    </view>
+    <view class="hero-user" wx:if="{{signedIn}}">
+      <image class="hero-avatar" src="/assets/icons/ic-users.png" mode="aspectFit" />
+      <text class="hero-user-name">{{userName || '旅伴'}}</text>
+    </view>
+    <view class="hero-user hero-user-action" wx:else bindtap="onTapSignIn">
+      <image class="hero-avatar" src="/assets/icons/ic-users.png" mode="aspectFit" />
+      <text class="hero-user-name">微信授权登录</text>
+    </view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">正在加载活动…</view>
+
+  <!-- 错误态 -->
+  <view class="error-box" wx:if="{{!loading && errorText}}">
+    <text class="error-text">{{errorText}}</text>
+    <button class="btn-ghost error-retry" bindtap="loadActivities">重新加载</button>
+  </view>
+
+  <!-- 活动列表 -->
+  <view class="list" wx:if="{{!loading && !errorText}}">
+    <block wx:for="{{activities}}" wx:key="id">
+      <view class="activity card" bindtap="onTapActivity" data-id="{{item.id}}">
+        <view class="activity-cover-wrap">
+          <image class="activity-cover" src="{{item.cover}}" mode="aspectFill" binderror="onCoverError" data-id="{{item.id}}" />
+          <view class="activity-badge" wx:if="{{item.countdown}}">{{item.countdown}}</view>
+        </view>
+
+        <view class="activity-body">
+          <text class="activity-title">{{item.title}}</text>
+          <text class="activity-summary">{{item.summary}}</text>
+
+          <view class="activity-meta">
+            <image class="icon icon-sm icon-muted" src="/assets/icons/ic-calendar.png" mode="aspectFit" />
+            <text class="meta-text">{{item.startsAt}}<text wx:if="{{item.endsAt}}"> 至 {{item.endsAt}}</text></text>
+          </view>
+          <view class="activity-meta">
+            <image class="icon icon-sm icon-muted" src="/assets/icons/ic-location.png" mode="aspectFit" />
+            <text class="meta-text">{{item.location}}</text>
+          </view>
+
+          <view class="quota">
+            <view class="quota-head">
+              <text class="quota-text">{{item.quotaText}}</text>
+              <text class="quota-count">{{item.signedUp}}/{{item.capacity}} 人已报名</text>
+            </view>
+            <view class="quota-track">
+              <view class="quota-fill" style="width: {{item.percent}}%"></view>
+            </view>
+          </view>
+
+          <view class="activity-foot">
+            <text class="activity-price">{{item.priceNote}}</text>
+            <view class="activity-go">
+              <text class="activity-go-text">查看详情</text>
+              <image class="icon icon-sm" src="/assets/icons/ic-arrow.png" mode="aspectFit" />
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <view class="empty" wx:if="{{!activities.length}}">
+      <image class="empty-icon" src="/assets/icons/ic-compass.png" mode="aspectFit" />
+      <text class="empty-title">暂无进行中的活动</text>
+      <text class="empty-desc">新的旅程正在筹备，很快与你相遇</text>
+    </view>
+  </view>
+</view>

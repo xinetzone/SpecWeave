@@ -1,0 +1,157 @@
+.records-page {
+  padding: 24rpx;
+}
+
+.signin-card {
+  margin-top: 80rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 56rpx 40rpx;
+}
+
+.signin-icon {
+  width: 96rpx;
+  height: 96rpx;
+  opacity: 0.5;
+}
+
+.signin-title {
+  margin-top: 24rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.signin-desc {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+.signin-btn {
+  margin-top: 36rpx;
+  width: 100%;
+}
+
+.list {
+  margin-top: 0;
+}
+
+.record {
+  padding: 0;
+}
+
+.record + .record {
+  margin-top: 24rpx;
+}
+
+.record-head {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 24rpx 20rpx;
+}
+
+.record-cover {
+  width: 112rpx;
+  height: 112rpx;
+  flex: none;
+  border-radius: 14rpx;
+  background: #dfe4ee;
+}
+
+.record-head-info {
+  flex: 1;
+  min-width: 0;
+  margin-left: 20rpx;
+}
+
+.record-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.record-time {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: var(--ink-3);
+}
+
+.record-status {
+  flex: none;
+  margin-left: 16rpx;
+  padding: 8rpx 18rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+}
+
+.record-status-confirmed {
+  background: #e8f7ee;
+  color: #1f9d55;
+}
+
+.record-status-cancelled {
+  background: #f1f3f7;
+  color: var(--ink-3);
+}
+
+.record-body {
+  padding: 0 24rpx;
+}
+
+.record-row {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 12rpx;
+}
+
+.record-row .icon {
+  margin-top: 3rpx;
+  margin-right: 12rpx;
+}
+
+.record-text {
+  flex: 1;
+  font-size: 25rpx;
+  color: var(--ink-2);
+}
+
+.record-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 22rpx;
+  padding: 20rpx 24rpx;
+  border-top: 2rpx solid var(--line);
+}
+
+.record-created {
+  font-size: 22rpx;
+  color: var(--ink-3);
+}
+
+.empty-icon {
+  width: 120rpx;
+  height: 120rpx;
+  opacity: 0.35;
+}
+
+.empty-btn {
+  margin-top: 32rpx;
+  padding: 0 56rpx;
+  height: 80rpx;
+}
+
+.error-retry {
+  display: inline-flex;
+  padding: 0 48rpx;
+  height: 80rpx;
+}
