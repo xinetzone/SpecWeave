@@ -58,10 +58,23 @@ check('project.config.json 存在且 miniprogramRoot 指向源码根', () => {
   assert.ok(cfg.packOptions.ignore.some((r) => r.type === 'folder' && r.value === 'tests'), 'tests 目录必须被 packOptions.ignore 排除')
 })
 
-check('app.json 存在且四个页面全部登记', () => {
+check('app.json 存在且全部页面登记', () => {
   const app = readJSON('app.json')
-  const expected = ['pages/index/index', 'pages/detail/detail', 'pages/signup/signup', 'pages/records/records']
+  // 六个页面：四个核心页 + 发布页（真人发布活动）+ 我的页（我发布的活动）。
+  // 模板化改造新增了 publish/mine 两个页面，断言必须跟着页面目录走，
+  // 否则「新增页面忘了登记」和「登记了页面忘了实现」两种漂移都测不出来。
+  const expected = [
+    'pages/index/index',
+    'pages/detail/detail',
+    'pages/signup/signup',
+    'pages/records/records',
+    'pages/publish/publish',
+    'pages/mine/mine'
+  ]
   assert.deepStrictEqual(app.pages, expected, 'pages 列表与预期不一致')
+  for (const page of expected) {
+    assert.ok(exists(`${page}.js`), `pages 登记了 ${page} 但缺少 ${page}.js`)
+  }
 })
 
 check('app.json 开启组件懒加载', () => {
@@ -328,6 +341,18 @@ check('WXML 内引用的本地资源全部存在', () => {
     const rel = path.relative(ROOT, file)
     let match = resourceRe.exec(src)
     while (match) {
+      // 动态路径（含 {{}} 插值）无法静态判定存在性——它的取值由数据决定，
+      // 例如 publish.wxml 的 /assets/covers/{{item}}.png（模板封面按素材键拼接）。
+      // 对这类路径只断言「插值合法」，真实资源存在性由下面那条
+      // 「本地主图资源与活动清单三方对齐」断言按具体 slug 逐项校验。
+      if (match[1].includes('{{')) {
+        assert.ok(
+          /^\/assets\/[a-z0-9\-/]+\{\{[^}]+\}\}\.png$/.test(match[1]),
+          `${rel} 的动态资源路径形状非法: ${match[1]}`
+        )
+        match = resourceRe.exec(src)
+        continue
+      }
       assert.ok(exists(match[1]), `${rel} 引用的资源不存在: ${match[1]}`)
       match = resourceRe.exec(src)
     }
@@ -452,10 +477,7 @@ check('schema.sql 的函数 EXECUTE 权限矩阵符合最小权限', () => {
   }
 
   // 管理侧专用：客户端一律不得调用
-  const adminFns = [
-    'public.set_activity_cover(TEXT, TEXT)',
-    'public.claim_activity(BIGINT, TEXT)'
-  ]
+  const adminFns = ['public.set_activity_cover(TEXT, TEXT)']
   for (const fn of adminFns) {
     assert.ok(
       new RegExp(`REVOKE ALL ON FUNCTION ${fn.replace(/[()]/g, '\\$&')} FROM PUBLIC;`).test(schema),
@@ -468,6 +490,45 @@ check('schema.sql 的函数 EXECUTE 权限矩阵符合最小权限', () => {
     assert.ok(
       new RegExp(`GRANT EXECUTE ON FUNCTION ${fn.replace(/[()]/g, '\\$&')} TO service_role;`).test(schema),
       `${fn} 只能授予 service_role`
+    )
+  }
+
+  // 已废止通道：模板化改造后「管理侧显式指派归属」不再需要——
+  // 归属改由发布者本人（create_activity 里 owner_id := auth.uid()）建立。
+  // 废止必须落到「显式 DROP」而不是「留着不授权」：
+  // 留着不授权的函数仍是一个可被重新授权的潜在写入通道。
+  for (const dead of ['public.claim_activity(BIGINT, TEXT)']) {
+    assert.ok(
+      new RegExp(`REVOKE ALL ON FUNCTION ${dead.replace(/[()]/g, '\\$&')} FROM PUBLIC;`).test(schema),
+      `${dead} 必须先 REVOKE FROM PUBLIC`
+    )
+    assert.ok(
+      new RegExp(`REVOKE ALL ON FUNCTION ${dead.replace(/[()]/g, '\\$&')} FROM anon, authenticated, service_role;`).test(schema),
+      `${dead} 必须显式收回 anon/authenticated/service_role`
+    )
+    assert.ok(
+      new RegExp(`DROP FUNCTION IF EXISTS ${dead.replace(/[()]/g, '\\$&')};`).test(schema),
+      `${dead} 必须显式 DROP`
+    )
+  }
+
+  // 真人发布通道：客户端可调，但归属完全由服务端 auth.uid() 裁决
+  for (const fn of [
+    'public.create_activity(BIGINT, TEXT, TEXT, TEXT, TIMESTAMPTZ, TIMESTAMPTZ, INTEGER, TEXT, JSONB, JSONB, TEXT)',
+    'public.update_activity(BIGINT, TEXT, TEXT, TEXT, TIMESTAMPTZ, TIMESTAMPTZ, INTEGER, TEXT, JSONB, JSONB, TEXT, BOOLEAN)',
+    'public.my_activities()'
+  ]) {
+    assert.ok(
+      new RegExp(`REVOKE ALL ON FUNCTION ${fn.replace(/[()]/g, '\\$&')} FROM PUBLIC;`).test(schema),
+      `${fn} 必须先 REVOKE FROM PUBLIC`
+    )
+    assert.ok(
+      new RegExp(`GRANT EXECUTE ON FUNCTION ${fn.replace(/[()]/g, '\\$&')} TO authenticated;`).test(schema),
+      `${fn} 必须授予 authenticated`
+    )
+    assert.ok(
+      !new RegExp(`GRANT EXECUTE ON FUNCTION ${fn.replace(/[()]/g, '\\$&')} TO anon;`).test(schema),
+      `${fn} 不得授予 anon（匿名用户不得发布活动）`
     )
   }
 
@@ -741,21 +802,50 @@ check('schema.sql 的部分唯一索引只约束有效报名', () => {
 })
 
 check('schema.sql 与分文件脚本保持同源', () => {
-  // 每个 fn_*.sql 的函数体都应能在 schema.sql 中找到同名函数定义，
+  // 每个【函数】分文件的函数体都应能在 schema.sql 中找到同名函数定义，
   // 避免「只改分文件、忘了改真相源」导致云端与磁盘漂移。
+  //
+  // 注意：fn_ 前缀不等于「函数文件」——fn_activity_templates.sql 建的是表、
+  // fn_migrate_activity_template.sql 是列变更迁移，两者都不含函数定义。
+  // 因此只对真正含 CREATE OR REPLACE FUNCTION 的文件断言同源；
+  // 非函数文件另走「表/迁移对象在 schema.sql 中可找到」这条断言。
   const files = fs
     .readdirSync(path.join(ROOT, 'scripts', 'db'))
     .filter((f) => /^fn_.*\.sql$/.test(f))
   assert.ok(files.length >= 6, `分文件脚本数量异常: ${files.length}`)
+
+  const nonFunctionFiles = []
   for (const file of files) {
     const src = read(`scripts/db/${file}`)
     const m = /CREATE OR REPLACE FUNCTION public\.([a-z_]+)\s*\(/.exec(src)
-    assert.ok(m, `${file} 未能解析出函数名`)
+    if (!m) {
+      nonFunctionFiles.push(file)
+      continue
+    }
     const fnName = m[1]
     assert.ok(
       schema.includes(`CREATE OR REPLACE FUNCTION public.${fnName}`),
       `schema.sql 缺少函数 ${fnName}（分文件 ${file} 有，schema 无）`
     )
+  }
+
+  // 非函数文件：其声明的表/列必须在 schema.sql 中出现
+  for (const file of nonFunctionFiles) {
+    const src = read(`scripts/db/${file}`)
+    const table = /ON TABLE public\.([a-z_]+)/i.exec(src)
+    if (table) {
+      assert.ok(
+        schema.includes(`public.${table[1]}`),
+        `schema.sql 缺少 ${file} 涉及的表 ${table[1]}`
+      )
+    }
+    const column = /ADD COLUMN IF NOT EXISTS ([a-z_]+)/i.exec(src)
+    if (column) {
+      assert.ok(
+        new RegExp(`\\b${column[1]}\\b`).test(schema),
+        `schema.sql 缺少 ${file} 新增的列 ${column[1]}`
+      )
+    }
   }
 })
 
