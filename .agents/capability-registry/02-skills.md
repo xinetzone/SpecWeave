@@ -49,7 +49,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | contest-playbook | "我要参加 XX 比赛"、"帮我分析这个比赛规则"、"做个参赛方案"、"比赛怎么打"、"参赛材料清单"、"提交作品有哪些坑" | 1（判型 5 形态 → 采集阶梯 L1-L7 → 六族编号结构化 → 3 条通用判定 → 资产对位 → 形态决策树 → 双轨倒排与依赖阻塞 → 合规四层自查；含预检门与 11 项 Gotchas；L1） | v1.1.0 | [skills/contest-playbook/SKILL.md](../skills/contest-playbook/SKILL.md) |
 | wechat-multi-platform-verify-cmd | "核验这篇文章"、"多平台核验"、"事实核查"、"发布前核验"、"verify 台账"、"核验报告"、"证据包"、"投稿前查一遍" | 1（S0 主张抽取 → S1 四级信源分层选源 → S2 逐平台取证（官方页直取 / 搜索快照 / 浏览器三通道，含幂等重入）→ S3 主张×来源台账 → S4 冲突裁决与同源转载检测 → S5 证据包交付与红线检查；输出三件套；含 10 条 Gotchas；L1） | v1.0.0 | [skills/wechat-multi-platform-verify-cmd/SKILL.md](../skills/wechat-multi-platform-verify-cmd/SKILL.md) |
 
-### 工作流门面（6个）
+### 工作流门面（7个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -59,6 +59,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | role-model-methodology | "榜样学习"、"人物解读"、"正面解读师"、"名人方法论"、"人物关联洞察"、"榜样学习路径"、"终身学习者"、"怎么学名人"、"人物知识包"、"向谁学习" | 1（七阶段工作流：四级事实分层→三框架诊断→证据桥接审查→六步解读法；L1门面 + L2 七概念编排；含伦理四条约束与「门禁全绿≠链接都对」双重护栏；实战：2026-10-03 三人榜样知识包 4包/61文档/254事实） | v1.1.0 | [skills/role-model-methodology/SKILL.md](../skills/role-model-methodology/SKILL.md) |
 | mindfulness-positivity | "正念"、"正面"、"积极心态"、"正能量"、"mindfulness"、"positive thinking"、"习得性乐观"、"有毒正能量"、"toxic positivity"、"先接纳后重构"、"正念和积极有什么区别"、"情绪调节" | 1（四场景决策树：概念问答/内容产出/自我调节方案/知识包沉淀；七维度辨析框架+先接纳后重构四步整合法+心理健康安全边界；L1门面 + L2 知识底座 sc-20261003-mindfulness-positivity：22事实/3洞察/1模式） | v1.0.0 | [skills/mindfulness-positivity/SKILL.md](../skills/mindfulness-positivity/SKILL.md) |
 | dao-san-triads | "三生万物"、"道生一"、"二生三"、"三之位"、"三元组"、"过去现在未来"、"时间三分"、"奥古斯丁三分法"、"记忆注意期待"、"一分为三"、"真问题真需求真目标"、"品质技能身份"、"生存指南"、"行动准则"、"极简原则"、"二选一怎么办"、"自我诊断"、"古典哲学概念" | 1（四场景决策树：概念探究/自我诊断/行动准则/知识包沉淀；六类「三」解释谱系+第五义「三=关系位」统一模型+奥古斯丁三分法与最强反驳+时态检验+两组三元组四元关联+七条生存指南（≤1200字）+「三之位」可迁移模式（5反模式/3问检验/L1-draft）+《老子》版本纪律；L1门面 + L2 知识底座 sc-20261003-dao-san-yuan：50事实/4洞察/1模式/9条审查） | v1.0.0 | [skills/dao-san-triads/SKILL.md](../skills/dao-san-triads/SKILL.md) |
+| private-encrypted-pdf-to-okf-wiki | "加密PDF转Wiki"、"密码PDF转知识包"、"私域材料转教程"、"课程讲义转OKF"、"内部培训材料转Wiki"、"加密文档转知识包" | 1（七工序：S0 凭据隔离 → S1 解密与文本层可信度判定 → S2 结构决策（少页材料按概念维度拆分）→ S3 主张五类分层 → S4 原创改写与数学反解 → S5 口径先行计数与声明契约化 → S6 V审查与机械对账；含 G1-G4 质量门、8 条 Gotchas、9 项安全清单、与 scanned-book-to-okf-wiki 的分工边界；L1 门面 + L2 里程碑复盘报告） | v1.0.0 | [skills/private-encrypted-pdf-to-okf-wiki/SKILL.md](../skills/private-encrypted-pdf-to-okf-wiki/SKILL.md) |
 
 ### Trae 内置工作流 Skill（2个，来自 external/doutops）
 
