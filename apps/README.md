@@ -120,7 +120,7 @@ apps/<group>/<app-name>/
 
 > **维护约定**：`agent-monetize/`、`inurl-byok-token-hub/` 为根级独立应用（不属上述分组，见下方自动应用清单）；新增/移动应用时同步本小节与下方自动清单（运行 `python .agents/scripts/docgen.py apps` 刷新）。
 >
-> 根级独立应用补充：`guard-quality-life-site/`、`travel-planner/`、`coach-moments-growth/`（商业教练朋友圈 AI 增长系统——面向高净值客群的私域内容运营方案：定位/内容/转化/度量/合规五模块，含 AI 提示词与文案模板；规格 `.trae/specs/coach-moments-growth/`）、`doocs-md-py/`（doocs/md 的 Python 3.14 复刻——markdown-it-py 渲染库 + 自托管 FastAPI API + 14 家图床 + MCP Server 13 工具 + `mdpy` CLI；scikit-build-core 纯 Python 包，前端产物 `assets/web-dist/` 不入库；规格 `.trae/specs/doocs-md-py/`）、`life-workbench/`（一页生活 · 集成式生活工作台——零构建单文件 `index.html` 全内联的本地生活工作台，数据只落浏览器 localStorage；规格 `.trae/specs/life-workbench/`）、`jieban-zhilv-mp/`（结伴之旅 · 活动报名微信小程序——微信原生 + WorkBuddy 云服务：活动首页/活动详情/在线报名/报名记录/发起活动/我的活动六页 + 微信授权登录 + 云端数据库 + 云端存储图片；运营预置内容降级为**活动模板**（`activity_templates` 表、只读不可报名），真实活动由**真人自己发布**（`create_activity` 归属取服务端 `auth.uid()`、slug 服务端生成、封面白名单、同一用户进行中活动 ≤ 10）；写入全部收敛到 SECURITY DEFINER RPC，客户端两表仅 SELECT，人数口径按 `sum(companions)`；规格 `.trae/specs/jieban-zhilv-mp/`）。
+> 根级独立应用补充：`guard-quality-life-site/`、`travel-planner/`、`coach-moments-growth/`（商业教练朋友圈 AI 增长系统——面向高净值客群的私域内容运营方案：定位/内容/转化/度量/合规五模块，含 AI 提示词与文案模板；规格 `.trae/specs/coach-moments-growth/`）、`doocs-md-py/`（doocs/md 的 Python 3.14 复刻——markdown-it-py 渲染库 + 自托管 FastAPI API + 14 家图床 + MCP Server 13 工具 + `mdpy` CLI；scikit-build-core 纯 Python 包，前端产物 `assets/web-dist/` 不入库；规格 `.trae/specs/doocs-md-py/`）、`life-workbench/`（一页生活 · 集成式生活工作台——零构建单文件 `index.html` 全内联的本地生活工作台，数据只落浏览器 localStorage；规格 `.trae/specs/life-workbench/`）、`jieban-zhilv-mp/`（结伴之旅 · 活动报名微信小程序——微信原生 + WorkBuddy 云服务：活动首页/活动详情/在线报名/报名记录/发起活动/我的活动六页 + 微信授权登录 + 云端数据库 + 云端存储图片；运营预置内容降级为**活动模板**（`activity_templates` 表、只读不可报名），真实活动由**真人自己发布**（`create_activity` 归属取服务端 `auth.uid()`、slug 服务端生成、封面白名单、同一用户进行中活动 ≤ 10）；写入全部收敛到 SECURITY DEFINER RPC，客户端两表仅 SELECT，人数口径按 `sum(companions)`；规格 `.trae/specs/jieban-zhilv-mp/`）、`daode-masterxiong/`（道德大师兄 · 品牌规范层——微信小程序「道德大师兄」的 AI 协作入口：README 品牌说明 + AGENTS.md 路由索引 + .agents/rules/ 两份规范（18 条品牌红线、内容规范含帛书引文使用与四频道边界）；**本目录只存规范层**，产品设计文档在产品站 `projects/daoapps.github.io/doc/jieban/design/`；萃取 Skill `.agents/skills/persona-brand-positioning/`）。
 
 ### 2.4 应用清单
 
@@ -133,6 +133,7 @@ apps/<group>/<app-name>/
 | `ai-agents/` | ai-agents 应用 | `ai-agents/`（暂无 README） |
 | `coach-moments-growth/` | 商业教练朋友圈 AI 增长系统（coach-moments-growth） | [README.md](coach-moments-growth/README.md) |
 | `containers/` | containers/ — Podman rootless 容器工作区分组 | [README.md](containers/README.md) |
+| `daode-masterxiong/` | 道德大师兄 · 品牌规范层（AI 协作入口 + 18 条品牌红线 + 内容规范；产品设计文档在产品站 `projects/daoapps.github.io/doc/jieban/design/`） | [README.md](daode-masterxiong/README.md) |
 | `dev-tools/` | dev-tools 应用 | `dev-tools/`（暂无 README） |
 | `docker-images/` | docker-images 应用 | `docker-images/`（暂无 README） |
 | `doocs-md-py/` | **doocs/md 的 Python 3.14 复刻**：微信兼容 Markdown 渲染库 + 自托管 API + 14 图床上传器 + MCP/CLI。 | [README.md](doocs-md-py/README.md) |
