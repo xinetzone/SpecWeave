@@ -23,6 +23,7 @@ DB_DIR = pathlib.Path(__file__).resolve().parent.parent / "db"
 # 因此统一按「分号切句 + 过滤注释与空句」拆成单条执行。
 FILES = [
     "fn_activity_templates.sql",
+    "fn_has_control_chars.sql",
     "fn_create_activity.sql",
     "fn_update_activity.sql",
     "fn_my_activities.sql",

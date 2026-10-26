@@ -81,7 +81,10 @@ Page({
             ? format.quotaText(activity.capacity, signedUp)
             : '人数待刷新',
           full: quotaKnown ? format.isFull(activity.capacity, signedUp) : false,
-          cover: format.fallbackCover(activity.slug)
+          // 封面：优先云端主图，否则用内置素材（cover_slug）。
+          // 不能用 slug 推导：真人发布的活动 slug 由服务端生成（act-xxx），
+          // 随包没有同名素材，用 slug 推导会永远落默认图。
+          cover: format.activityCover(activity.cover_path, activity.cover_slug)
         }
       })
       this.refreshQuota()

@@ -1,5 +1,5 @@
 /**
- * 数据访问层：活动与报名记录。
+ * 数据访问层：活动模板、活动与报名记录。
  *
  * 约束（与云端 schema 对齐，见 scripts/db/schema.sql）：
  * - 客户端绝不传 owner_id，由 DEFAULT auth.uid() 与 RLS 决定归属。
@@ -8,11 +8,16 @@
  * - 报名写入走 submit_signup RPC，容量校验（人数口径）在服务端原子完成。
  * - 客户端对 registrations 只有 SELECT 权限；取消报名走 cancel_registration RPC。
  * - 报名人数一律为「人数」（含本人），与服务端 sum(companions) 口径一致。
+ * - 活动发布/编辑走 create_activity / update_activity RPC：
+ *   归属、slug、封面白名单、活动数上限全部在服务端裁决。
  */
 const { cloud } = require('./cloud')
 
 const ACTIVITY_FIELDS =
-  'id, slug, title, summary, cover_path, location, starts_at, ends_at, capacity, price_note, highlights, notes, published'
+  'id, slug, title, summary, cover_path, cover_slug, location, starts_at, ends_at, capacity, price_note, highlights, notes, published, template_id'
+
+const TEMPLATE_FIELDS =
+  'id, slug, title, summary, cover_slug, highlights, notes, default_capacity, default_duration_minutes, sort_order'
 
 /** 拉取全部已发布活动（公开可读表）。 */
 async function listActivities() {
@@ -40,6 +45,21 @@ async function getActivity(id) {
     throw new Error('活动信息加载失败，请稍后重试')
   }
   return data || null
+}
+
+/**
+ * 拉取活动模板（平台维护的内容，只读）。
+ * 模板不承载报名，仅作为「活动骨架」供发起人参考与套用。
+ */
+async function listTemplates() {
+  const { data, error } = await cloud.database
+    .from('activity_templates')
+    .select(TEMPLATE_FIELDS)
+    .order('sort_order', { ascending: true })
+  if (error) {
+    throw new Error('活动模板加载失败，请稍后重试')
+  }
+  return data || []
 }
 
 /**
@@ -118,6 +138,85 @@ async function attachCover(registrationId, coverPath) {
 }
 
 /**
+ * 发布活动（真人发布活动的唯一入口）。
+ *
+ * 归属、slug、封面白名单、活动数上限全部由服务端裁决，
+ * 客户端只提供用户填写的内容。
+ *
+ * @param {object} payload
+ * @returns {Promise<{id:number, slug:string}>}
+ */
+async function createActivity(payload) {
+  const { data, error } = await cloud.database.rpc('create_activity', {
+    p_template_id: payload.templateId || null,
+    p_title: payload.title,
+    p_summary: payload.summary || null,
+    p_location: payload.location,
+    p_starts_at: payload.startsAt,
+    p_ends_at: payload.endsAt || null,
+    p_capacity: payload.capacity,
+    p_price_note: payload.priceNote || null,
+    p_highlights: payload.highlights || [],
+    p_notes: payload.notes || [],
+    p_cover_slug: payload.coverSlug || null
+  })
+  if (error) {
+    throw new Error(readableActivityError(error))
+  }
+  const row = (data || [])[0] || null
+  return row ? { id: row.activity_id, slug: row.activity_slug } : null
+}
+
+/**
+ * 编辑活动（含下架 / 重新上架）。
+ * 只有归属人可调用，服务端会校验归属。
+ */
+async function updateActivity(payload) {
+  const { data, error } = await cloud.database.rpc('update_activity', {
+    p_activity_id: payload.activityId,
+    p_title: payload.title,
+    p_summary: payload.summary || null,
+    p_location: payload.location,
+    p_starts_at: payload.startsAt,
+    p_ends_at: payload.endsAt || null,
+    p_capacity: payload.capacity,
+    p_price_note: payload.priceNote || null,
+    p_highlights: payload.highlights || [],
+    p_notes: payload.notes || [],
+    p_cover_slug: payload.coverSlug || null,
+    p_published: payload.published !== false
+  })
+  if (error) {
+    throw new Error(readableActivityError(error))
+  }
+  return data === true || data === 'true'
+}
+
+/** 我发布的活动（服务端按登录身份过滤，含已下架）。 */
+async function listMyActivities() {
+  const { data, error } = await cloud.database.rpc('my_activities')
+  if (error) {
+    throw new Error(readableActivityError(error))
+  }
+  return (data || []).map((row) => ({
+    id: row.activity_id,
+    slug: row.slug,
+    title: row.title,
+    summary: row.summary,
+    coverSlug: row.cover_slug,
+    location: row.location,
+    startsAt: row.starts_at,
+    endsAt: row.ends_at,
+    capacity: row.capacity,
+    priceNote: row.price_note,
+    highlights: row.highlights || [],
+    notes: row.notes || [],
+    published: row.published === true,
+    signedUp: Number(row.signed_up || 0)
+  }))
+}
+
+/**
  * 把服务端错误映射为可读文案。
  * 兜底不得直出后端原始错误，避免把 SQL 细节暴露给终端用户。
  */
@@ -171,34 +270,65 @@ function readableCancelError(error) {
   return '操作失败，请稍后重试'
 }
 
-/** 主图绑定报错的文案映射（不直出后端原始错误）。 */
-function readableCoverError(error) {
+/**
+ * 发布/编辑活动的错误文案映射。
+ *
+ * 服务端已经用中文抛出了可直接展示的业务错误（如「活动名称不能超过 40 字」），
+ * 这里按关键字透传；未识别的错误一律落到通用兜底，不直出 SQL 细节。
+ */
+function readableActivityError(error) {
   const raw = String((error && error.message) || '')
-  if (raw.indexOf('创建者') >= 0) {
-    return '只有活动创建者可以设置主图'
-  }
-  if (raw.indexOf('主图路径') >= 0) {
-    return '主图上传失败，请重新选择图片'
-  }
-  if (raw.indexOf('活动不存在') >= 0) {
-    return '活动不存在或已下架'
+  const known = [
+    '请先完成微信授权登录',
+    '活动模板不可用',
+    '请填写活动名称',
+    '活动名称不能超过',
+    '活动简介不能超过',
+    '请填写活动地点',
+    '活动地点不能超过',
+    '请选择活动开始时间',
+    '活动开始时间必须晚于当前时间',
+    '活动结束时间必须晚于开始时间',
+    '名额不能为负数',
+    '名额不能超过',
+    '费用说明不能超过',
+    '活动亮点格式不正确',
+    '活动亮点最多',
+    '每条活动亮点需在',
+    '报名须知格式不正确',
+    '报名须知最多',
+    '每条报名须知需在',
+    '封面选择无效',
+    '你同时进行的活动过多',
+    '活动不存在或无权修改',
+    '名额不能少于已报名人数',
+    '发布状态无效'
+  ]
+  for (let i = 0; i < known.length; i += 1) {
+    if (raw.indexOf(known[i]) >= 0) {
+      return known[i]
+    }
   }
   if (raw.indexOf('42501') >= 0 || raw.indexOf('登录') >= 0) {
     return '登录状态已失效，请重新授权登录'
   }
-  if (raw.indexOf('网络') >= 0 || raw.indexOf('network') >= 0) {
+  if (raw.indexOf('网络') >= 0 || raw.indexOf('network') >= 0 || raw.indexOf('timeout') >= 0) {
     return '网络连接不稳定，请稍后重试'
   }
-  return '主图设置失败，请稍后重试'
+  return '操作失败，请稍后重试'
 }
 
 module.exports = {
   listActivities,
   getActivity,
+  listTemplates,
   getRegistrationStats,
   signup,
   listMyRegistrations,
   cancelRegistration,
   attachCover,
+  createActivity,
+  updateActivity,
+  listMyActivities,
   readableSignupError
 }

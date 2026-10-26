@@ -7,6 +7,7 @@ Page({
     loading: true,
     errorText: '',
     activities: [],
+    templates: [],
     signedIn: false,
     userName: ''
   },
@@ -33,12 +34,13 @@ Page({
   async loadActivities() {
     this.setData({ loading: true, errorText: '' })
     try {
-      // 活动列表是核心数据；报名人数是增强信息。
-      // 两者用 allSettled 隔离：人数加载失败不应让整个列表消失，
+      // 活动列表是核心数据；报名人数是增强信息；模板是平台内容。
+      // 三者用 allSettled 隔离：任一增强信息加载失败不应让整个列表消失，
       // 但也不能静默当成「0 人已报名」——那会误导用户。
-      const [listResult, statsResult] = await Promise.allSettled([
+      const [listResult, statsResult, templatesResult] = await Promise.allSettled([
         api.listActivities(),
-        api.getRegistrationStats()
+        api.getRegistrationStats(),
+        api.listTemplates()
       ])
       if (listResult.status === 'rejected') {
         throw listResult.reason
@@ -65,10 +67,20 @@ Page({
             : '人数待刷新',
           percent: known ? format.percent(item.capacity, signedUp) : 0,
           priceNote: item.price_note,
-          cover: format.fallbackCover(item.slug)
+          cover: format.activityCover(item.cover_path, item.cover_slug)
         }
       })
-      this.setData({ activities, loading: false })
+      const templates = templatesResult.status === 'fulfilled'
+        ? (templatesResult.value || []).map((item) => ({
+            id: item.id,
+            title: item.title,
+            summary: item.summary || '',
+            cover: format.activityCover('', item.cover_slug),
+            defaultCapacity: item.default_capacity,
+            defaultDuration: item.default_duration_minutes
+          }))
+        : []
+      this.setData({ activities, templates, loading: false })
       this.loadCovers(list)
     } catch (error) {
       this.setData({
@@ -133,6 +145,17 @@ Page({
   onTapActivity(event) {
     const id = Number(event.currentTarget.dataset.id)
     wx.navigateTo({ url: `/pages/detail/detail?id=${id}` })
+  },
+
+  /** 用某个模板发起活动：跳发布页并带上模板 id。 */
+  onTapUseTemplate(event) {
+    const id = Number(event.currentTarget.dataset.id)
+    wx.navigateTo({ url: `/pages/publish/publish?templateId=${id}` })
+  },
+
+  /** 发起活动入口。 */
+  onTapPublish() {
+    wx.switchTab({ url: '/pages/publish/publish' })
   },
 
   async onTapSignIn() {

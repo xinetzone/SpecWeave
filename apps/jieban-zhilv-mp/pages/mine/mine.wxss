@@ -1,0 +1,170 @@
+.mine-page {
+  padding: 24rpx;
+}
+
+.signin-card {
+  margin-top: 80rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 56rpx 40rpx;
+}
+
+.signin-icon {
+  width: 96rpx;
+  height: 96rpx;
+  opacity: 0.5;
+}
+
+.signin-title {
+  margin-top: 24rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.signin-desc {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+.signin-btn {
+  margin-top: 36rpx;
+  width: 100%;
+}
+
+.list {
+  margin-top: 0;
+}
+
+.mine-item {
+  padding: 0;
+}
+
+.mine-item + .mine-item {
+  margin-top: 24rpx;
+}
+
+.mine-head {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 24rpx 20rpx;
+}
+
+.mine-cover {
+  width: 112rpx;
+  height: 112rpx;
+  flex: none;
+  border-radius: 14rpx;
+  background: #dfe4ee;
+}
+
+.mine-head-info {
+  flex: 1;
+  min-width: 0;
+  margin-left: 20rpx;
+}
+
+.mine-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mine-time {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: var(--ink-3);
+}
+
+.mine-status {
+  flex: none;
+  margin-left: 16rpx;
+  padding: 8rpx 18rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+}
+
+.mine-status-live {
+  background: #e8f7ee;
+  color: #1f9d55;
+}
+
+.mine-status-upcoming {
+  background: var(--brand-soft);
+  color: var(--brand);
+}
+
+.mine-status-ended {
+  background: #f1f3f7;
+  color: var(--ink-3);
+}
+
+.mine-status-off {
+  background: #f1f3f7;
+  color: var(--ink-3);
+}
+
+.mine-body {
+  padding: 0 24rpx;
+}
+
+.mine-row {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 12rpx;
+}
+
+.mine-row .icon {
+  margin-top: 3rpx;
+  margin-right: 12rpx;
+}
+
+.mine-text {
+  flex: 1;
+  font-size: 25rpx;
+  color: var(--ink-2);
+}
+
+.mine-foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 22rpx;
+  padding: 16rpx 24rpx;
+  border-top: 2rpx solid var(--line);
+}
+
+.mine-foot .btn-text {
+  margin-left: 32rpx;
+}
+
+.mine-btn-danger {
+  color: #e05a5a;
+}
+
+.empty-icon {
+  width: 120rpx;
+  height: 120rpx;
+  opacity: 0.35;
+}
+
+.empty-btn {
+  margin-top: 32rpx;
+  padding: 0 56rpx;
+  height: 88rpx;
+}
+
+.error-retry {
+  display: inline-flex;
+  padding: 0 48rpx;
+  height: 80rpx;
+}

@@ -7,12 +7,24 @@
 
 | 页面 | 路径 | 职责 |
 |------|------|------|
-| 活动首页 | `pages/index/index` | 品牌区 + 活动卡片列表（时间、地点、名额进度、费用），支持下拉刷新，点击进入详情 |
+| 活动首页 | `pages/index/index` | 「大家发起的活动」列表（真人发布、可报名）+ 「活动模板」区块（只读参考）+「发起活动」入口 |
 | 活动详情 | `pages/detail/detail` | 主图、亮点、报名须知、名额进度，底部固定「立即报名」 |
 | 在线报名 | `pages/signup/signup` | 同行人数、手机号校验、备注、报名配图上传（存云端存储） |
 | 报名记录 | `pages/records/records` | 本人报名列表、状态、取消报名 |
+| 发起活动 | `pages/publish/publish` | 选模板或自由发起 → 填表 → 发布；编辑已有活动也走此页 |
+| 我的活动 | `pages/mine/mine` | 本人发布的活动（含已下架），可下架 / 重新上架 / 编辑 |
 
-底部 Tab：活动 / 我的报名。
+底部 Tab：活动 / 发起 / 我的活动 / 我的报名。
+
+### 模板与活动
+
+| 概念 | 载体 | 谁创建 | 可否报名 | 归属人 |
+|------|------|--------|---------|--------|
+| **活动模板** | `activity_templates` 表 | 平台维护 | 否（只读参考） | 无 |
+| **活动** | `activities` 表 | 登录用户自己发布 | 是 | 发布者本人（服务端取 `auth.uid()`） |
+
+模板是「活动骨架」：标题范式、亮点、报名须知、封面风格、默认名额与时长。
+用户在发布页选一个模板，内容会被预填进表单且**全部可编辑**，改完即成为自己的活动。
 
 ## 技术栈与云端能力
 
@@ -26,15 +38,25 @@
 ### 数据模型
 
 ```
-activities     id, slug, title, summary, cover_path, location,
+activity_templates  id, slug, title, summary, cover_slug,
+                    highlights(jsonb), notes(jsonb),
+                    default_capacity, default_duration_minutes,
+                    published, sort_order, created_at
+
+activities     id, slug, title, summary, cover_path, cover_slug, location,
                starts_at, ends_at, capacity, price_note,
                highlights(jsonb), notes(jsonb), published,
-               owner_id（创建者；客户端不读）
+               owner_id（发布者；客户端不读）, template_id → activity_templates.id
 
 registrations  id, activity_id → activities.id, owner_id, owner_name,
                contact, companions, remark, cover_path,
                status('confirmed'|'cancelled'), created_at
 ```
+
+> `cover_slug` 是内置封面素材键（`assets/covers/<slug>.png`），
+> 随包分发、路径不含任何用户标识，匿名访客也能看到。
+> `cover_path` 只承载平台侧已发布主图，取值域被服务端锁死为
+> `shared/_application/activities/<slug>.png`，不作为用户上传通道。
 
 ### 服务端函数
 
@@ -45,8 +67,10 @@ registrations  id, activity_id → activities.id, owner_id, owner_name,
 | `attach_registration_cover(registration_id, cover_path)` | `authenticated` | 绑定本人报名配图，路径须落在本人私有目录且记录为 `confirmed` |
 | `registration_stats()` | `authenticated` + `anon` | 各活动已报名**人数**（跨用户聚合，不放开原始表读权限；只统计已发布活动） |
 | `sync_activity_cover(slug)` | `authenticated` + `service_role` | 绑定活动主图到**规范路径** `shared/_application/activities/<slug>.png`。目标路径由服务端拼出、调用方无法指定；对象尚未上传则拒绝绑定。只返回路径字符串 |
-| `claim_activity(activity_id, owner_uid)` | 仅 `service_role` | **管理侧**显式指派活动归属。终端用户无法调用，因此不可能出现「谁先登录谁就是创建者」 |
 | `set_activity_cover(slug, path)` | 仅 `service_role` | 管理侧绑定主图（路径前缀 `shared/_application/activities/`）。**只返回路径**，不返回 `activities` 行 |
+| `create_activity(template_id, title, summary, location, starts_at, ends_at, capacity, price_note, highlights, notes, cover_slug)` | `authenticated` | **发布活动的唯一入口**：归属取 `auth.uid()`、slug 服务端生成、封面白名单校验、同一用户进行中活动数 ≤ 10 |
+| `update_activity(activity_id, …同上…, published)` | `authenticated` | 编辑 / 下架 / 重新上架**本人**活动。归属在服务端校验；下架走短路，不受内容与时间校验约束 |
+| `my_activities()` | `authenticated` | 本人发布的活动列表（含已下架）+ 聚合报名人数。**返回列不含 `owner_id`** |
 
 > `signup` 是已关闭的历史入口（不授予任何角色），保留仅为阻止旧客户端绕过校验。
 >
@@ -56,11 +80,11 @@ registrations  id, activity_id → activities.id, owner_id, owner_name,
 
 ### 权限矩阵
 
-| 角色 | activities | registrations | 报名 RPC | 主图绑定 RPC | 归属指派 |
-|------|-----------|--------------|---------|------------|---------|
-| `anon` | 仅 13 个业务列 | 无（RLS 恒空） | — | — | — |
-| `authenticated` | 同上（不含 `owner_id` / `created_at`） | 仅 SELECT（RLS 限本人） | 可调 | `sync_activity_cover` 可调 | — |
-| `service_role` | 全表 | 全表 | 可调 | 可调 | 可调 |
+| 角色 | activities | activity_templates | registrations | 报名 RPC | 发布/编辑 RPC | 主图绑定 RPC |
+|------|-----------|-------------------|--------------|---------|------------|------------|
+| `anon` | 仅 15 个业务列 | 仅 10 个内容列 | 无（RLS 恒空） | — | — | — |
+| `authenticated` | 同上（不含 `owner_id` / `created_at`） | 同上（不含 `published` / `created_at`） | 仅 SELECT（RLS 限本人） | 可调 | 可调 | `sync_activity_cover` 可调 |
+| `service_role` | 全表 | 全表 | 全表 | 可调 | 可调 | 可调 |
 
 ### 安全模型
 
@@ -81,9 +105,25 @@ registrations  id, activity_id → activities.id, owner_id, owner_name,
   - 旧通道 `claim_activity_cover`（唯一能写入含 uid 路径的入口）已显式 `DROP`。
   该作用域属主是应用身份 `wbapp:<applicationId>`，而 `applicationId` 本就硬编码在客户端
   `publishableKey` 里，不构成新增泄露。
-- **归属不能被终端用户夺取**：归属建立（`claim_activity`）只有 `service_role` 能执行，
-  且必须显式给出 `p_owner_uid`；客户端对 `activities` 无 UPDATE 权限，
-  因此普通用户无法把自己写进任何活动的 `owner_id`。
+- **归属 = 发布者本人**：`owner_id` 恒等于服务端取到的 `auth.uid()`。
+  客户端不传归属参数，也不读归属字段；`create_activity` / `update_activity`
+  的签名里没有 `owner_id`，客户端对 `activities` 无 INSERT/UPDATE 权限。
+- **模板与活动分表**：模板只承载骨架、不承载报名、没有归属人；
+  客户端对模板表只有列级 SELECT，无任何写权限。
+- **slug 由服务端生成**：客户端不能指定活动 slug——否则可抢占模板 slug、
+  填入含路径穿越片段的 slug、或与他人活动撞名。
+- **用户输入由服务端裁决**：标题/简介/地点/费用有长度上限，
+  文本不得含控制字符（含换行，否则破坏单行布局）；
+  亮点与须知必须是**字符串数组**——`jsonb_array_elements_text` 会把对象转成
+  JSON 文本从而绕过长度校验，所以服务端用 `jsonb_typeof` 逐项确认元素类型。
+- **发布限流**：同一用户「进行中」（已发布且未结束）的活动数 ≤ 10。
+  并发创建会同时通过计数检查，因此用 `pg_advisory_xact_lock` 按 uid 串行化。
+- **编辑权限**：只有归属人可改自己的活动；归属不匹配时抛 42501，
+  且**不区分「活动不存在」与「非归属人」**——区分会形成 id 存在性探测接口。
+- **下架走短路**：`published=false` 直接改状态，不受内容与时间校验约束——
+  否则已结束的活动将永远无法下架（内容校验含「开始时间必须晚于当前时间」）。
+- **已开始的活动不可改期**：判定「是否已开始」必须用**原值** `v_origin.starts_at`，
+  用传入值会让「把开始时间传成未来时刻」整块跳过检查。
 - **人数口径统一**：`registration_stats()` 与 `submit_signup()` 的容量校验一律按
   `sum(companions)`（含本人），客户端 `quotaText` / `percent` / `isFull` / `canFit` 与之对齐。
   `capacity <= 0` 表示不限名额。
@@ -108,7 +148,7 @@ jieban-zhilv-mp/
 ├── project.config.json                # miniprogramRoot: "./"，tests 已排除打包
 ├── sitemap.json
 ├── package.json
-├── pages/                             # index / detail / signup / records
+├── pages/                             # index / detail / signup / records / publish / mine
 ├── utils/
 │   ├── cloud.js                       # 云客户端（唯一 SDK 初始化点）
 │   ├── api.js                         # 数据访问层
@@ -117,8 +157,8 @@ jieban-zhilv-mp/
 │   ├── storage.js                     # 云端存储读写（签名 URL + 二进制直传）
 │   └── workbuddy-cloud-diagnostics.js # 请求诊断适配器
 ├── vendor/workbuddy-cloud-sdk/        # SDK 官方发布产物（免「构建 npm」步骤）
-├── assets/icons/                      # 22 个统一风格线性图标（PNG）
-├── assets/covers/                     # 4 张活动主图（PNG，本地降级图，文件名=slug）
+├── assets/icons/                      # 27 个统一风格线性图标（PNG）
+├── assets/covers/                     # 6 张封面素材（PNG，随包分发，文件名=cover_slug）
 ├── scripts/
 │   ├── generate_assets.py             # 素材生成脚本（Pillow）
 │   ├── db/                            # 云数据库最终态真相源（逐条 SQL）
@@ -143,6 +183,12 @@ jieban-zhilv-mp/
 | `fn_set_activity_cover.sql` | 活动主图绑定（管理侧，只接受 `_application` 前缀，只返回路径） |
 | `fn_claim_activity.sql` | 活动归属指派（管理侧，需显式给出归属 uid） |
 | `fn_sync_activity_cover.sql` | 活动主图绑定（canonical 通道，路径由服务端拼出） |
+| `fn_activity_templates.sql` | 活动模板表（建表 + RLS + 列级授权） |
+| `fn_create_activity.sql` | 发布活动（归属服务端取、slug 服务端生成、封面白名单、限流） |
+| `fn_update_activity.sql` | 编辑 / 下架 / 重新上架本人活动 |
+| `fn_my_activities.sql` | 我发布的活动（服务端按 `auth.uid()` 过滤，不返回 `owner_id`） |
+| `fn_has_control_chars.sql` | 文本控制字符检测（IMMUTABLE 纯函数） |
+| `fn_migrate_activity_template.sql` | 表结构变更迁移（新增列与外键） |
 
 ## 素材
 
@@ -286,8 +332,8 @@ SDK 的小程序端 fetch 只接受**字符串** body，传 `ArrayBuffer` 会直
 ## 验收
 
 ```bash
-node tests/format.test.js     # 32 项纯函数单测
-node tests/structure.test.js  # 46 项静态契约检查
+node tests/format.test.js     # 46 项纯函数单测
+node tests/structure.test.js  # 61 项静态契约检查
 ```
 
 `structure.test.js` 覆盖：项目结构与打包配置、app.json 四页登记、组件懒加载、

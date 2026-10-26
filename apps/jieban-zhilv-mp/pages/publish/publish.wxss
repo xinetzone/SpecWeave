@@ -1,0 +1,291 @@
+.publish-page {
+  /* 底部固定发布栏高度 ≈ 20(上内边距) + 92(按钮高) + 20(下内边距) = 132rpx，
+     再加安全区（home indicator）。用 calc 精确对齐，避免底栏压住最后一张卡片。
+
+     为什么必须预留：发布页是全站最长的表单（5 张卡片 / 9 个字段），
+     「报名须知」是最后一个字段，若不给底栏留空间，fixed 的发布按钮
+     会正好盖在它上面——用户看到的是一个「被截断的输入框」，
+     根本不知道自己填的内容有没有被遮住。
+
+     预留量取 150rpx（= 132rpx + 18rpx 余量），与 detail/signup 两个
+     操作型页面保持同一口径：三页的底栏形态一致，滚动到底的手感也一致。 */
+  padding: 24rpx 24rpx calc(150rpx + env(safe-area-inset-bottom));
+}
+
+.signin-card {
+  margin-top: 40rpx;
+}
+
+.signin-desc {
+  display: block;
+  margin-top: 16rpx;
+  font-size: 26rpx;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+.signin-btn {
+  margin-top: 32rpx;
+  width: 100%;
+}
+
+.block-desc {
+  display: block;
+  margin-top: 12rpx;
+  font-size: 25rpx;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+/* 模板选择 */
+.template-grid {
+  margin-top: 24rpx;
+}
+
+.template-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 18rpx;
+  border: 2rpx solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.template-card + .template-card {
+  margin-top: 16rpx;
+}
+
+.template-card-active {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
+.template-cover {
+  width: 96rpx;
+  height: 96rpx;
+  flex: none;
+  border-radius: 14rpx;
+  background: #dfe4ee;
+}
+
+.template-info {
+  flex: 1;
+  min-width: 0;
+  margin-left: 20rpx;
+}
+
+.template-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.template-meta {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 23rpx;
+  color: var(--ink-3);
+}
+
+.template-check {
+  flex: none;
+  margin-left: 12rpx;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 20rpx;
+  background: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.template-check .icon {
+  opacity: 1;
+  filter: brightness(0) invert(1);
+}
+
+.free-btn {
+  margin-top: 20rpx;
+  width: 100%;
+  height: 84rpx;
+}
+
+/* 表单字段 */
+.field {
+  margin-top: 28rpx;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 14rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.field-input {
+  width: 100%;
+  height: 88rpx;
+  padding: 0 24rpx;
+  border: 2rpx solid var(--line);
+  border-radius: var(--radius);
+  background: #f8fafd;
+  font-size: 28rpx;
+  color: var(--ink);
+}
+
+.field-input-error {
+  border-color: #e05a5a;
+  background: #fff5f5;
+}
+
+.field-textarea {
+  width: 100%;
+  height: 180rpx;
+  padding: 20rpx 24rpx;
+  border: 2rpx solid var(--line);
+  border-radius: var(--radius);
+  background: #f8fafd;
+  font-size: 27rpx;
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+.field-placeholder {
+  color: #a8b1c0;
+}
+
+.field-error {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: #e05a5a;
+}
+
+.field-hint {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 23rpx;
+  color: var(--ink-3);
+}
+
+.field-count {
+  display: block;
+  margin-top: 8rpx;
+  text-align: right;
+  font-size: 22rpx;
+  color: var(--ink-3);
+}
+
+/* 时间选择 */
+.picker-row {
+  display: flex;
+}
+
+.picker-box {
+  flex: 1;
+  height: 88rpx;
+  padding: 0 24rpx;
+  border: 2rpx solid var(--line);
+  border-radius: var(--radius);
+  background: #f8fafd;
+  display: flex;
+  align-items: center;
+}
+
+.picker-box-time {
+  flex: none;
+  width: 200rpx;
+  margin-left: 16rpx;
+}
+
+.picker-text {
+  font-size: 28rpx;
+  color: var(--ink);
+}
+
+.picker-text-error {
+  color: #e05a5a;
+}
+
+/* 封面选择 */
+.cover-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 24rpx;
+}
+
+/*
+ * 封面缩略图：每行 3 个，横向刚好排满卡片内容宽。
+ *
+ * 为什么是 3 个而不是 2 个：
+ *   卡片内容可用宽 = 750(屏宽) - 24*2(页面 padding) - 32*2(卡片 padding) = 638rpx。
+ *   原方案每项 200rpx + 右外边距 16rpx = 实际占 216rpx，
+ *   3 项 = 648rpx > 638rpx 放不下 → flex-wrap 退化成每行 2 个，
+ *   右侧空出 638 - 2*200 - 16 = 222rpx（一屏近三分之一），整块封面区看着「缺一块」。
+ *
+ *   现在每项 204rpx + 间距 12rpx：3*204 + 2*12 = 636rpx，几乎恰好排满。
+ *
+ * 为什么用 margin + nth-child 而不用 CSS gap：
+ *   flex gap 在微信小程序的支持度依赖基础库版本，用 margin + nth-child 归零
+ *   在所有版本上表现一致，不引入「有的机型 3 列、有的机型 2 列」的不确定性。
+ */
+.cover-item {
+  width: 204rpx;
+  height: 124rpx;
+  margin: 0 12rpx 12rpx 0;
+  border: 4rpx solid transparent;
+  border-radius: 16rpx;
+  overflow: hidden;
+  background: #dfe4ee;
+}
+
+/* 每行第 3 个归零右外边距：满行 3 项时正好排满，不多占一格 */
+.cover-item:nth-child(3n) {
+  margin-right: 0;
+}
+
+.cover-item-active {
+  border-color: var(--brand);
+}
+
+.cover-thumb {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 表单级错误 */
+.form-error {
+  margin-top: 24rpx;
+  padding: 20rpx 24rpx;
+  border-radius: var(--radius);
+  background: #fff5f5;
+}
+
+.form-error-text {
+  font-size: 25rpx;
+  color: #e05a5a;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20rpx 32rpx calc(20rpx + env(safe-area-inset-bottom));
+  background: var(--surface);
+  box-shadow: 0 -4rpx 20rpx rgba(31, 39, 51, 0.06);
+}
+
+.footer-btn {
+  width: 100%;
+}
+
+.error-retry {
+  display: inline-flex;
+  padding: 0 48rpx;
+  height: 80rpx;
+}

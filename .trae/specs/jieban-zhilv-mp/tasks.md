@@ -371,3 +371,62 @@
 - **Acceptance Criteria Addressed**: AC-16
 - **Test Requirements**:
   - `manual` TR-20.6: 提审结果为通过。
+
+## Task 21: 模板化 + 真人发布活动（2026-10-26）
+
+> 用户诉求：「当下的活动应该算作活动模板，真实的活动应该是由真人自己发布，请优化小程序」。
+> 方法论链路：七概念场景 5（创新突破）F → V → I → C。
+
+- **Status**: `completed`
+- **Completion Evidence**:
+  - TR-21.1：**模板表落地**——新建 `public.activity_templates`（slug/title/summary/cover_slug/
+    highlights/notes/default_capacity/default_duration_minutes/published/sort_order），
+    RLS 只放行 `published = TRUE`；客户端列级 SELECT 10 列（不含 published/created_at），无写权限。
+  - TR-21.2：**存量迁移**——3 条运营预置活动（dawn-trek / night-market / island-week）
+    迁入模板表并从 `activities` 删除；实测迁移后 `activities=0 / templates=3 / registrations=0`。
+  - TR-21.3：**三个新 RPC**——`create_activity`（归属取 auth.uid()、slug 服务端生成、
+    封面白名单、限流）、`update_activity`（归属校验、下架短路、已开始不可改期）、
+    `my_activities`（服务端过滤、返回列不含 owner_id、不过滤 published）。
+    权限：仅 `authenticated` + `service_role`，`PUBLIC`/`anon` 无 EXECUTE（`pg_proc.proacl` 复核）。
+  - TR-21.4：**云端端到端实测**——以 `set_config('request.jwt.claim.sub', 'wx:testuser001', false)`
+    构造登录态：发布返回 `id=11 / slug=act-fb0261dcbb084a53`，落库 `owner_id=wx:testuser001`；
+    非法封面 → 22023；对象元素 → 22023；标题含换行 → 22023；他人编辑 → 42501；
+    连建 11 次 → 停在 10 个；下架/重新上架 → true；`my_activities` 他人查返回 0 行。测试数据已清理。
+  - TR-21.5：**客户端 6 页 4 tab**——新增 `pages/publish/publish`（选模板→填表→发布/编辑）
+    与 `pages/mine/mine`（我的活动：下架/重新上架/编辑）；首页改双区块
+    （「大家发起的活动」+「活动模板」）+ 发起入口；tabBar 扩为 4 项（活动/发起/我的活动/我的报名）。
+  - TR-21.6：**封面改内置素材白名单**——新增 `cover_slug` 列与 6 张随包素材
+    （dawn-trek / night-market / island-week / city-walk / co-reading / default）；
+    保留 `cover_path` 承载平台侧已发布主图（取值域仍锁在 `_application`）。
+  - TR-21.7：**V 门自查采纳项**——①JSONB 元素类型校验（`jsonb_array_elements_text`
+    会把对象转文本从而绕过长度校验）；②控制字符校验（长度检查挡不住中间换行）；
+    ③「已开始」判定必须用原值 `v_origin.starts_at`（用传入值可被绕过改期）；
+    ④下架走短路（否则已结束活动永远无法下架）。
+  - TR-21.8：**同步与回归**——`schema.sql` 与分文件同源；`claim_activity` 已废止并 DROP；
+    `node tests/format.test.js` 46/46、`node tests/structure.test.js` 61/61 全绿。
+- **Priority**: high
+- **Depends On**: Task 20
+- **Description**:
+  - 翻转「活动由管理侧预置、归属由管理侧指派」的隐含假设，改为「活动由真人发布、归属即发布者」。
+  - 模板与活动分表，避免「模板是否可报名」「模板有没有归属人」变成靠 published 猜的隐式约定。
+- **Acceptance Criteria Addressed**: AC-17 ~ AC-21
+- **Test Requirements**:
+  - `rule` TR-21.9: `node tests/format.test.js` → 46/46；`node tests/structure.test.js` → 61/61。
+
+## Task 22: 活动主图字节迁移（追加 · 需人工一步）
+
+- **Status**: `pending`
+- **Completion Evidence**:
+  - TR-22.1（待办）：在 WorkBuddy「设置 → 数据管理 → 应用 → 文件存储」中，
+    进入 `shared/_application`，新建文件夹 `activities`，上传
+    `assets/covers/` 下的 `dawn-trek.png` / `night-market.png` / `island-week.png`。
+  - TR-22.2（待办）：执行 `node scripts/tools/sync-activity-covers.cjs`，
+    预期 3/3「绑定成功 + HTTP 200 + content-type image/png + 字节完全一致」。
+- **Priority**: medium
+- **Depends On**: Task 21
+- **Description**:
+  - 3 条运营活动已迁为模板，模板封面当前走随包素材；
+  - 本任务只影响平台侧已发布主图的字节资产，不影响模板展示。
+- **Acceptance Criteria Addressed**: AC-13
+- **Test Requirements**:
+  - `rule` TR-22.3: 迁移后 `activities.cover_path` 全量落在规范作用域。

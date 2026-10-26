@@ -117,6 +117,11 @@ def icon_plus(draw, c):
     _line(draw, [(32, 17), (32, 47)], c, STROKE)
 
 
+def icon_pencil(draw, c):
+    _line(draw, [(16, 48), (16, 44), (42, 18), (48, 24), (22, 50), (16, 48)], c, STROKE - 1.0, closed=True)
+    _line(draw, [(38, 22), (44, 28)], c, STROKE - 2.0)
+
+
 def icon_image(draw, c):
     _rrect(draw, (9, 14, 55, 50), 6, c, STROKE)
     _circle(draw, 22, 26, 5, c, STROKE - 2)
@@ -153,6 +158,7 @@ ICONS = {
     "ic-close": icon_close,
     "ic-minus": icon_minus,
     "ic-plus": icon_plus,
+    "ic-pencil": icon_pencil,
     "ic-image": icon_image,
     "ic-home": icon_home,
     "ic-list": icon_list,
@@ -175,6 +181,10 @@ def build_icons() -> None:
     write_icon("tab-home-active", icon_home, BRAND, 81)
     write_icon("tab-list", icon_list, TAB_IDLE, 81)
     write_icon("tab-list-active", icon_list, BRAND, 81)
+    write_icon("tab-publish", icon_pencil, TAB_IDLE, 81)
+    write_icon("tab-publish-active", icon_pencil, BRAND, 81)
+    write_icon("tab-mine", icon_users, TAB_IDLE, 81)
+    write_icon("tab-mine-active", icon_users, BRAND, 81)
 
 
 def _vertical_gradient(size, top, bottom):
@@ -250,10 +260,53 @@ def cover_default(w=750, h=420):
     return img
 
 
+def cover_city(w=750, h=420):
+    """城市漫步：城市天际线与街道的扁平插画。"""
+    img = _vertical_gradient((w, h), (236, 198, 168), (248, 232, 214)).convert("RGBA")
+    d = ImageDraw.Draw(img)
+    d.ellipse([w * 0.7, 62, w * 0.7 + 84, 62 + 84], fill=(255, 236, 198, 255))
+    # 远景楼群
+    _poly(d, [(0, 250), (90, 168), (176, 250), (176, 420), (0, 420)], (150, 160, 186, 255))
+    _poly(d, [(176, 262), (268, 186), (360, 262), (360, 420), (176, 420)], (166, 174, 198, 255))
+    _poly(d, [(360, 240), (470, 152), (580, 240), (580, 420), (360, 420)], (138, 148, 176, 255))
+    _poly(d, [(580, 268), (672, 200), (750, 268), (750, 420), (580, 420)], (162, 172, 196, 255))
+    # 街道
+    _poly(d, [(0, 344), (750, 320), (750, 420), (0, 420)], (86, 96, 122, 255))
+    _poly(d, [(0, 372), (750, 350), (750, 420), (0, 420)], (72, 82, 106, 255))
+    # 窗格点缀
+    for x in (30, 66, 118, 210, 250, 400, 448, 620, 664, 706):
+        for y in (196, 232):
+            d.rectangle([x, y, x + 14, y + 20], fill=(246, 226, 186, 190))
+    return img
+
+
+def cover_read(w=750, h=420):
+    """共读共学：书页与桌面光影的扁平插画。"""
+    img = _vertical_gradient((w, h), (226, 232, 240), (246, 248, 252)).convert("RGBA")
+    d = ImageDraw.Draw(img)
+    # 桌面
+    _poly(d, [(0, 316), (750, 316), (750, 420), (0, 420)], (198, 206, 220, 255))
+    # 展开的书
+    _poly(d, [(375, 196), (150, 232), (150, 348), (375, 320)], (255, 255, 255, 255))
+    _poly(d, [(375, 196), (600, 232), (600, 348), (375, 320)], (240, 243, 249, 255))
+    _line(d, [(375, 196), (375, 320)], (176, 186, 204, 255), 3.0)
+    # 书页文字线
+    for i, y in enumerate((238, 262, 286)):
+        _line(d, [(186, y + i * 2), (338, y + 10)], (196, 204, 218, 255), 4.0)
+        _line(d, [(412, y + 10), (564, y + i * 2)], (206, 214, 226, 255), 4.0)
+    # 光晕
+    glow = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    ImageDraw.Draw(glow).ellipse([w * 0.28, 40, w * 0.28 + 260, 300], fill=(255, 226, 168, 120))
+    img = Image.alpha_composite(img, glow.filter(ImageFilter.GaussianBlur(40)))
+    return img
+
+
 def build_covers() -> None:
     cover_dawn().save(COVER_DIR / "dawn-trek.png")
     cover_night().save(COVER_DIR / "night-market.png")
     cover_island().save(COVER_DIR / "island-week.png")
+    cover_city().save(COVER_DIR / "city-walk.png")
+    cover_read().save(COVER_DIR / "co-reading.png")
     cover_default().save(COVER_DIR / "default.png")
 
 

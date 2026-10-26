@@ -235,6 +235,99 @@ check('空值返回兜底文案', () => {
 })
 
 console.log('')
+console.log('== 活动封面：内置素材白名单 ==')
+
+check('activityCover 优先用云端主图', () => {
+  assert.strictEqual(
+    format.activityCover('shared/_application/activities/dawn-trek.png', 'city-walk'),
+    'shared/_application/activities/dawn-trek.png'
+  )
+})
+
+check('activityCover 无云端主图时用内置素材', () => {
+  assert.strictEqual(format.activityCover('', 'city-walk'), '/assets/covers/city-walk.png')
+  assert.strictEqual(format.activityCover(null, 'co-reading'), '/assets/covers/co-reading.png')
+})
+
+check('activityCover 封面键非法时落到中性兜底图', () => {
+  assert.strictEqual(format.activityCover('', '../etc/passwd'), '/assets/covers/default.png')
+  assert.strictEqual(format.activityCover('', 'a/b'), '/assets/covers/default.png')
+  assert.strictEqual(format.activityCover('', ''), '/assets/covers/default.png')
+  assert.strictEqual(format.activityCover('', undefined), '/assets/covers/default.png')
+})
+
+check('isAllowedCover 只认白名单内的封面键', () => {
+  assert.strictEqual(format.isAllowedCover('city-walk'), true)
+  assert.strictEqual(format.isAllowedCover('default'), true)
+  assert.strictEqual(format.isAllowedCover('dawn-trek'), true)
+  assert.strictEqual(format.isAllowedCover('not-exist'), false)
+  assert.strictEqual(format.isAllowedCover('../secret'), false)
+  assert.strictEqual(format.isAllowedCover(''), false)
+})
+
+check('COVER_SLUGS 每一项都能推导出随包素材路径', () => {
+  assert.ok(Array.isArray(format.COVER_SLUGS) && format.COVER_SLUGS.length > 0)
+  format.COVER_SLUGS.forEach((slug) => {
+    assert.strictEqual(format.fallbackCover(slug), `/assets/covers/${slug}.png`)
+  })
+})
+
+console.log('== parseLines / joinLines：多行文本与条目数组互转 ==')
+
+check('多行文本拆成条目并去空行', () => {
+  assert.deepStrictEqual(format.parseLines('第一条\n第二条\n\n第三条\n'), ['第一条', '第二条', '第三条'])
+  assert.deepStrictEqual(format.parseLines('  带空格  '), ['带空格'])
+  assert.deepStrictEqual(format.parseLines(''), [])
+  assert.deepStrictEqual(format.parseLines(null), [])
+  assert.deepStrictEqual(format.parseLines(undefined), [])
+})
+
+check('条目数组拼回多行文本', () => {
+  assert.strictEqual(format.joinLines(['第一条', '第二条']), '第一条\n第二条')
+  assert.strictEqual(format.joinLines([]), '')
+  assert.strictEqual(format.joinLines(null), '')
+})
+
+check('parseLines 与 joinLines 可往返', () => {
+  const lines = ['专业领队与安全保障', '全程补给点与医疗包']
+  assert.strictEqual(format.joinLines(format.parseLines(format.joinLines(lines))), format.joinLines(lines))
+})
+
+console.log('== activityStatus：活动状态判定 ==')
+
+check('下架优先于其它状态', () => {
+  assert.strictEqual(format.activityStatus(false, '2026-01-01T00:00:00Z', '2025-12-31T00:00:00Z', '2026-06-01T00:00:00Z'), '已下架')
+})
+
+check('已结束优先于未开始', () => {
+  const now = '2026-06-01T00:00:00Z'
+  assert.strictEqual(format.activityStatus(true, '2026-05-30T00:00:00Z', '2026-05-29T00:00:00Z', now), '已结束')
+})
+
+check('未来开始的活动显示未开始', () => {
+  const now = '2026-06-01T00:00:00Z'
+  assert.strictEqual(format.activityStatus(true, '2026-06-05T00:00:00Z', '2026-06-03T00:00:00Z', now), '未开始')
+})
+
+check('正在进行中的活动显示进行中', () => {
+  const now = '2026-06-01T00:00:00Z'
+  assert.strictEqual(format.activityStatus(true, '2026-06-05T00:00:00Z', '2026-05-30T00:00:00Z', now), '进行中')
+})
+
+check('无结束时间时按开始时间判定', () => {
+  const now = '2026-06-01T00:00:00Z'
+  assert.strictEqual(format.activityStatus(true, null, '2026-06-03T00:00:00Z', now), '未开始')
+  assert.strictEqual(format.activityStatus(true, null, '2026-05-30T00:00:00Z', now), '进行中')
+})
+
+check('状态对应的语义色 class 稳定', () => {
+  assert.strictEqual(format.activityStatusClass('已下架'), 'off')
+  assert.strictEqual(format.activityStatusClass('已结束'), 'ended')
+  assert.strictEqual(format.activityStatusClass('未开始'), 'upcoming')
+  assert.strictEqual(format.activityStatusClass('进行中'), 'live')
+})
+
+console.log('')
 if (failures.length) {
   console.error(`失败 ${failures.length}/${checks} 项：`)
   failures.forEach((f) => console.error(`  - ${f.name}: ${f.message}`))

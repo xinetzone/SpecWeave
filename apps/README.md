@@ -120,7 +120,7 @@ apps/<group>/<app-name>/
 
 > **维护约定**：`agent-monetize/`、`inurl-byok-token-hub/` 为根级独立应用（不属上述分组，见下方自动应用清单）；新增/移动应用时同步本小节与下方自动清单（运行 `python .agents/scripts/docgen.py apps` 刷新）。
 >
-> 根级独立应用补充：`guard-quality-life-site/`、`travel-planner/`、`coach-moments-growth/`（商业教练朋友圈 AI 增长系统——面向高净值客群的私域内容运营方案：定位/内容/转化/度量/合规五模块，含 AI 提示词与文案模板；规格 `.trae/specs/coach-moments-growth/`）、`doocs-md-py/`（doocs/md 的 Python 3.14 复刻——markdown-it-py 渲染库 + 自托管 FastAPI API + 14 家图床 + MCP Server 13 工具 + `mdpy` CLI；scikit-build-core 纯 Python 包，前端产物 `assets/web-dist/` 不入库；规格 `.trae/specs/doocs-md-py/`）、`life-workbench/`（一页生活 · 集成式生活工作台——零构建单文件 `index.html` 全内联的本地生活工作台，数据只落浏览器 localStorage；规格 `.trae/specs/life-workbench/`）。
+> 根级独立应用补充：`guard-quality-life-site/`、`travel-planner/`、`coach-moments-growth/`（商业教练朋友圈 AI 增长系统——面向高净值客群的私域内容运营方案：定位/内容/转化/度量/合规五模块，含 AI 提示词与文案模板；规格 `.trae/specs/coach-moments-growth/`）、`doocs-md-py/`（doocs/md 的 Python 3.14 复刻——markdown-it-py 渲染库 + 自托管 FastAPI API + 14 家图床 + MCP Server 13 工具 + `mdpy` CLI；scikit-build-core 纯 Python 包，前端产物 `assets/web-dist/` 不入库；规格 `.trae/specs/doocs-md-py/`）、`life-workbench/`（一页生活 · 集成式生活工作台——零构建单文件 `index.html` 全内联的本地生活工作台，数据只落浏览器 localStorage；规格 `.trae/specs/life-workbench/`）、`jieban-zhilv-mp/`（结伴之旅 · 活动报名微信小程序——微信原生 + WorkBuddy 云服务：活动首页/活动详情/在线报名/报名记录/发起活动/我的活动六页 + 微信授权登录 + 云端数据库 + 云端存储图片；运营预置内容降级为**活动模板**（`activity_templates` 表、只读不可报名），真实活动由**真人自己发布**（`create_activity` 归属取服务端 `auth.uid()`、slug 服务端生成、封面白名单、同一用户进行中活动 ≤ 10）；写入全部收敛到 SECURITY DEFINER RPC，客户端两表仅 SELECT，人数口径按 `sum(companions)`；规格 `.trae/specs/jieban-zhilv-mp/`）。
 
 ### 2.4 应用清单
 
@@ -138,11 +138,11 @@ apps/<group>/<app-name>/
 | `doocs-md-py/` | **doocs/md 的 Python 3.14 复刻**：微信兼容 Markdown 渲染库 + 自托管 API + 14 图床上传器 + MCP/CLI。 | [README.md](doocs-md-py/README.md) |
 | `guard-quality-life-site/` | 守护品质生活（guard-quality-life-site） | [README.md](guard-quality-life-site/README.md) |
 | `inurl-byok-token-hub/` | BYOK 统一令牌枢纽复刻：E2EE 密钥保险库 + 逻辑别名路由 + 本地三协议代理 + 用量计费。 | [README.md](inurl-byok-token-hub/README.md) |
+| `jieban-zhilv-mp/` | 面向**全人类**的活动报名小程序：活动首页、活动详情、在线报名、报名记录、发起活动、我的活动六个页面；运营预置内容为**活动模板**（骨架参考、不可报名），真实活动由**真人自己发布**（归属取服务端 `auth.uid()`）；写入全部收敛到 SECURITY DEFINER RPC，客户端两表仅 SELECT，人数口径按 `sum(companions)`；规格 `.trae/specs/jieban-zhilv-mp/` | [README.md](jieban-zhilv-mp/README.md) |
 | `life-workbench/` | 面向泛生活人群的本地生活工作台：**一个 `index.html` 文件，双击即用**。全部 CSS、JavaScript、图标与演示数据内联，不依赖任何... | [README.md](life-workbench/README.md) |
 | `samples/` | samples 应用 | `samples/`（暂无 README） |
 | `tests/` | tests 应用 | `tests/`（暂无 README） |
 | `travel-planner/` | 本地单用户 Web 应用：多行程管理、每日行程编排、预算跟踪、打包清单、JSON 导入导出，以及可选的 **BYOK AI 行程草稿生成**（任意 Ope... | [README.md](travel-planner/README.md) |
-| `zleap-workspace-first-prototype/` | zleap-workspace-first-prototype 应用 | `zleap-workspace-first-prototype/`（暂无 README） |
 
 <!-- APPS_TABLE_END -->
 

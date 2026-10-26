@@ -161,6 +161,27 @@ function canFit(capacity, signedUp, companions) {
 const COVER_DIR = '/assets/covers'
 const DEFAULT_COVER = COVER_DIR + '/default.png'
 
+/**
+ * 内置封面素材白名单。
+ *
+ * 为什么封面只能从白名单里选、不能由用户上传图片：
+ *   端用户可写的云存储作用域只有 users/<uid>/（私有）与 shared/<uid>/（路径内嵌 uid），
+ *   而不含用户标识的 shared/_application/ 仅管理员可写（端用户会话一律 403）。
+ *   因此「用户上传封面 + 所有人可见 + 路径不含创建者标识」三者在当前平台约束下
+ *   不可兼得。封面改走内置素材：路径不含任何用户标识，随包分发，匿名访客也能看到。
+ *
+ * 这份名单必须与云端 create_activity / update_activity 里的白名单一致，
+ * 也必须与 assets/covers/ 下实际存在的素材一致——三者由结构测试逐项对齐。
+ */
+const COVER_SLUGS = [
+  'dawn-trek',
+  'night-market',
+  'island-week',
+  'city-walk',
+  'co-reading',
+  'default'
+]
+
 /** slug 形状校验：小写字母、数字、连字符，1~64 位。 */
 function isSafeSlug(slug) {
   return typeof slug === 'string' && /^[a-z0-9-]{1,64}$/.test(slug)
@@ -182,6 +203,97 @@ function fallbackCover(slug) {
   return COVER_DIR + '/' + slug + '.png'
 }
 
+/**
+ * 活动的展示封面。
+ *
+ * 优先用云端主图（cover_path 命中平台已发布主图时），
+ * 否则退回内置素材（cover_slug 指向的随包素材）。
+ * 两者都缺时落到中性兜底图。
+ *
+ * @param {string} coverPath 云端主图路径（可能为空）
+ * @param {string} coverSlug 内置素材键（可能为空）
+ * @returns {string}
+ */
+function activityCover(coverPath, coverSlug) {
+  if (coverPath) {
+    return coverPath
+  }
+  if (isSafeSlug(coverSlug)) {
+    return fallbackCover(coverSlug)
+  }
+  return DEFAULT_COVER
+}
+
+/** 封面是否在白名单内（服务端同款判定，客户端先做一次以减少无效请求）。 */
+function isAllowedCover(slug) {
+  return COVER_SLUGS.indexOf(slug) >= 0
+}
+
+/**
+ * 把多行文本拆成条目数组（用于「亮点」「报名须知」输入框）。
+ * 空行丢弃，每条去首尾空白。
+ */
+function parseLines(text) {
+  if (typeof text !== 'string') {
+    return []
+  }
+  return text
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
+}
+
+/** 把条目数组拼回多行文本（用于编辑时回填输入框）。 */
+function joinLines(list) {
+  if (!Array.isArray(list)) {
+    return ''
+  }
+  return list.join('\n')
+}
+
+/**
+ * 活动状态文案（我的活动页）。
+ * 优先级：已下架 > 已结束 > 进行中 > 未开始。
+ *
+ * @param {boolean} published 是否已发布
+ * @param {string} endsAt 结束时间
+ * @param {string} startsAt 开始时间
+ * @param {string} now 当前时间（可注入，便于测试）
+ */
+function activityStatus(published, endsAt, startsAt, now) {
+  if (!published) {
+    return '已下架'
+  }
+  const base = now ? new Date(now) : new Date()
+  if (endsAt) {
+    const end = new Date(endsAt)
+    if (!Number.isNaN(end.getTime()) && end.getTime() <= base.getTime()) {
+      return '已结束'
+    }
+  }
+  if (startsAt) {
+    const start = new Date(startsAt)
+    if (!Number.isNaN(start.getTime()) && start.getTime() > base.getTime()) {
+      return '未开始'
+    }
+  }
+  return '进行中'
+}
+
+/** 状态对应的语义色 class 后缀（wxss 里按 class 取色）。 */
+function activityStatusClass(status) {
+  if (status === '已下架') {
+    return 'off'
+  }
+  if (status === '已结束') {
+    return 'ended'
+  }
+  if (status === '未开始') {
+    return 'upcoming'
+  }
+  return 'live'
+}
+
 module.exports = {
   formatEventTime,
   formatEndTime,
@@ -194,5 +306,12 @@ module.exports = {
   canFit,
   fallbackCover,
   defaultCover,
-  isSafeSlug
+  isSafeSlug,
+  activityCover,
+  isAllowedCover,
+  COVER_SLUGS,
+  parseLines,
+  joinLines,
+  activityStatus,
+  activityStatusClass
 }

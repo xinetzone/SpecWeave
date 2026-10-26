@@ -83,7 +83,7 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | 根级 | guard-quality-life-site | —（遵循根规范） | ❌ 无 | 《守护品质生活》生活方式方案库可变现 MVP 网站（Python 3.14+ / FastAPI 动态 Web：11 域知识树按域浏览/搜索 + 订阅兴趣登记 + 推荐位占位 + 访问埋点三验证信号；暖灰纸感 UI；scikit-build-core 纯 Python 包 `gqlsite`，pytest 37 用例全绿/覆盖 96%；知识本源 `projects/awesome-okf-xs/doc/bundles/sheke/personal-growth/guard-quality-life/`，规格 `.trae/specs/okf-wiki-ecosystem/guard-quality-life-okf-wiki-site/`） |
 | 根级 | coach-moments-growth | —（遵循根规范） | ❌ 无 | 商业教练朋友圈 AI 增长系统（私域内容运营方案：定位/内容/转化/度量/合规五模块，含可直接调用的 AI 提示词与五大品类文案模板；规格 `.trae/specs/coach-moments-growth/`） |
 | 根级 | doocs-md-py | [doocs-md-py/AGENTS.md](doocs-md-py/AGENTS.md) | ✅ 有 | doocs/md 的 Python 3.14 复刻（上游 v2.1.0 @ 1bdad48d）：markdown-it-py 渲染库 + 自托管 FastAPI API（SQLite 替代 D1、手写 SigV4 对象存储替代 R2 绑定）+ 14 家图床上传器 + MCP stdio Server（13 工具）+ `mdpy` CLI（render/serve/upload/mcp/migrate 5 子命令）；scikit-build-core 纯 Python 包，前端产物 `assets/web-dist/` 不入库；文档见 `docs/`（architecture / contract-mapping / contract-differences / build-web-dist），规格 `.trae/specs/doocs-md-py/`；应用自治：6 rules（upstream-reconstruction / engineering-redlines / render-and-theme-contract / server-api-and-security / uploaders-dual-path / cli-and-mcp-contract）+ 5 docs |
-| 根级 | jieban-zhilv-mp | —（遵循根规范） | ❌ 无 | 结伴之旅 · 活动报名微信小程序（微信原生 + WorkBuddy 云服务：活动首页/活动详情/在线报名/报名记录四页 + 微信授权登录 + 云端数据库 + 云端存储图片；写入全部收敛到 SECURITY DEFINER RPC，人数口径按 `sum(companions)`；规格 `.trae/specs/jieban-zhilv-mp/`） |
+| 根级 | jieban-zhilv-mp | —（遵循根规范） | ❌ 无 | 结伴之旅 · 活动报名微信小程序（微信原生 + WorkBuddy 云服务：活动首页/活动详情/在线报名/报名记录/发起活动/我的活动六页 + 微信授权登录 + 云端数据库 + 云端存储图片；运营预置内容降级为**活动模板**（`activity_templates` 表、只读不可报名），真实活动由**真人自己发布**（`create_activity`/`update_activity`/`my_activities` 三个 RPC：归属取服务端 `auth.uid()`、slug 服务端生成、封面走内置素材白名单、同一用户进行中活动 ≤ 10）；写入全部收敛到 SECURITY DEFINER RPC，人数口径按 `sum(companions)`；规格 `.trae/specs/jieban-zhilv-mp/`） |
 | 根级 | shared | —（遵循根规范） | ❌ 无 | 跨应用共享资源目录 |
 | 根级 | tests | —（遵循根规范） | ❌ 无 | 测试用例目录 |
 
@@ -288,7 +288,7 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/doocs-md-py/.agents/ | 应用自治 | ✅ 是 | doocs-md-py 规范体系（6个rules文件：upstream-reconstruction/engineering-redlines/render-and-theme-contract/server-api-and-security/uploaders-dual-path/cli-and-mcp-contract） |
 | apps/doocs-md-py/README.md | 应用自治 | ✅ 是 | doocs-md-py 应用说明书（功能矩阵/快速开始/CLI/配置全表/图床/MCP/许可与来源） |
 | apps/doocs-md-py/docs/ | 应用自治 | ✅ 是 | doocs-md-py 工程向文档（architecture / contract-mapping / contract-differences / build-web-dist / coverage-report-t20 五篇） |
-| apps/jieban-zhilv-mp/ | 应用自治（遵循根规范） | ✅ 是 | 结伴之旅 · 活动报名微信小程序（微信原生 + WorkBuddy 云服务：活动首页/活动详情/在线报名/报名记录四页 + 微信授权登录 + 云端数据库 + 云端存储图片；写入全部收敛到 SECURITY DEFINER RPC，客户端两表仅 SELECT，人数口径按 `sum(companions)`；规格 `.trae/specs/jieban-zhilv-mp/`） |
+| apps/jieban-zhilv-mp/ | 应用自治（遵循根规范） | ✅ 是 | 结伴之旅 · 活动报名微信小程序（微信原生 + WorkBuddy 云服务：活动首页/活动详情/在线报名/报名记录/发起活动/我的活动六页 + 微信授权登录 + 云端数据库 + 云端存储图片；写入全部收敛到 SECURITY DEFINER RPC，客户端两表仅 SELECT，人数口径按 `sum(companions)`；规格 `.trae/specs/jieban-zhilv-mp/`） |
 | apps/samples/ | SpecWeave 主权区 | ✅ 是 | 示例/原型类分组 |
 | apps/containers/jupyter-podman-rootless/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | Podman rootless Jupyter开发容器（Python 3.14t + Miniforge3 + SSH + rootless Podman + OMLMD/OLOT + Toolbx透传，invoke管理，三层后端自动降级） |
 | apps/containers/jupyter-podman-rootless/AGENTS.md | 应用自治 | ✅ 是 | jupyter-podman-rootless 入口 |

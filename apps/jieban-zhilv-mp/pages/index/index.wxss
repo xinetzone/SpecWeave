@@ -73,6 +73,155 @@
   padding: 24rpx 24rpx 0;
 }
 
+/* 发起活动入口 */
+.publish-entry {
+  display: flex;
+  align-items: center;
+  margin: 24rpx 24rpx 0;
+  padding: 26rpx 28rpx;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #2f6bff 0%, #5b95ff 100%);
+  box-shadow: var(--shadow);
+}
+
+.publish-entry-icon {
+  width: 56rpx;
+  height: 56rpx;
+  flex: none;
+  margin-right: 20rpx;
+  opacity: 0.95;
+  filter: brightness(0) invert(1);
+}
+
+.publish-entry-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.publish-entry-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #fff;
+}
+
+.publish-entry-desc {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 23rpx;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.publish-entry-arrow {
+  flex: none;
+  margin-left: 12rpx;
+  opacity: 0.9;
+  filter: brightness(0) invert(1);
+}
+
+/* 区块标题 */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.section-head-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.section-head-count {
+  font-size: 23rpx;
+  color: var(--ink-3);
+}
+
+/* 活动模板区块 */
+.template-section {
+  margin-top: 40rpx;
+  padding: 0 24rpx;
+}
+
+.template-section-desc {
+  display: block;
+  margin-top: -8rpx;
+  margin-bottom: 20rpx;
+  font-size: 24rpx;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+.template-item {
+  display: flex;
+  padding: 24rpx;
+}
+
+.template-item + .template-item {
+  margin-top: 24rpx;
+}
+
+.template-cover {
+  width: 180rpx;
+  height: 180rpx;
+  flex: none;
+  border-radius: 16rpx;
+  background: #dfe4ee;
+}
+
+.template-body {
+  flex: 1;
+  min-width: 0;
+  margin-left: 22rpx;
+}
+
+.template-title {
+  display: block;
+  font-size: 29rpx;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.template-summary {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+
+.template-meta {
+  display: flex;
+  align-items: center;
+  margin-top: 14rpx;
+}
+
+.template-meta .icon {
+  margin-right: 8rpx;
+}
+
+.template-meta-icon {
+  margin-left: 20rpx;
+}
+
+.template-meta-text {
+  font-size: 23rpx;
+  color: var(--ink-3);
+}
+
+.template-btn {
+  margin-top: 20rpx;
+  height: 76rpx;
+  padding: 0 40rpx;
+}
+
+.empty-btn {
+  margin-top: 32rpx;
+  padding: 0 56rpx;
+  height: 88rpx;
+}
+
 .activity {
   overflow: hidden;
   padding: 0;

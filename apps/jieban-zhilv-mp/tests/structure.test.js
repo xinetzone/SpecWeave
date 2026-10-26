@@ -896,6 +896,273 @@ check('本地主图资源与活动清单、客户端兜底规则三方对齐', (
 // 这几条断言把该防线固化为可回归项。
 // ---------------------------------------------------------------------------
 console.log('')
+// ---------------------------------------------------------------------------
+// 模板化 + 真人发布活动（2026-10-26）
+// 这组断言锁住本轮改造引入的不变量：模板与活动分表、归属由服务端裁决、
+// 封面白名单三方对齐、三个新 RPC 的权限矩阵。
+// ---------------------------------------------------------------------------
+console.log('')
+console.log('== 模板化与真人发布活动 ==')
+
+check('模板与活动分表：模板承载骨架，活动承载实例', () => {
+  assert.ok(
+    /CREATE TABLE IF NOT EXISTS public\.activity_templates/.test(schema),
+    'schema.sql 必须有 activity_templates 表'
+  )
+  assert.ok(
+    /template_id\s+BIGINT/.test(schema),
+    'activities 必须有 template_id 列指向模板'
+  )
+  assert.ok(
+    /FOREIGN KEY \(template_id\) REFERENCES public\.activity_templates\(id\) ON DELETE SET NULL/.test(schema),
+    '模板外键必须是 ON DELETE SET NULL：模板被删不该连带抹掉真人发布的活动与报名'
+  )
+  // 模板不承载报名：registrations 的外键只能指向 activities
+  const reg = /activity_id\s+BIGINT\s+NOT NULL REFERENCES public\.([a-z_]+)\(id\)/.exec(schema)
+  assert.ok(reg && reg[1] === 'activities', '报名只能挂在活动上，模板不得承载报名')
+})
+
+check('模板表只读且列级授权不含 published/created_at', () => {
+  assert.ok(
+    /REVOKE ALL ON TABLE public\.activity_templates FROM anon, authenticated;/.test(schema),
+    '模板表必须撤销客户端全部权限'
+  )
+  // 精确定位模板表自己的 GRANT 段：正则必须锚定到 "ON TABLE public.activity_templates"，
+  // 否则非贪婪匹配会跨越 activities 的那段 GRANT，把 activities 的列误算成模板表的列。
+  const m = /GRANT SELECT \(([^)]*?)\)\s+ON TABLE public\.activity_templates TO anon, authenticated;/.exec(schema)
+  assert.ok(m, '模板表必须以列级 GRANT 授予 SELECT')
+  const cols = m[1].split(',').map((c) => c.trim()).filter(Boolean)
+  assert.ok(cols.includes('cover_slug'), '模板表必须授权 cover_slug')
+  assert.ok(cols.includes('default_capacity'), '模板表必须授权 default_capacity')
+  assert.ok(!cols.includes('published'), 'published 不应授权（服务端已用 RLS 过滤）')
+  assert.ok(!cols.includes('created_at'), 'created_at 不应授权（最小权限）')
+  // 模板无任何客户端写权限
+  assert.ok(
+    !/GRANT (INSERT|UPDATE|DELETE).*ON TABLE public\.activity_templates/.test(schema),
+    '模板表不得对客户端开放写权限'
+  )
+  // 客户端字段白名单与授权名单逐列对齐
+  const apiSrc = read('utils/api.js')
+  const fm = /const TEMPLATE_FIELDS\s*=\s*'([^']+)'/.exec(apiSrc)
+  assert.ok(fm, 'api.js 必须显式声明 TEMPLATE_FIELDS 白名单')
+  fm[1].split(',').map((c) => c.trim()).filter(Boolean).forEach((f) => {
+    assert.ok(cols.includes(f), `客户端请求的模板列 ${f} 未在服务端列级授权名单内，会导致 42501`)
+  })
+})
+
+check('真人发布活动：归属由服务端裁决，客户端不传不读 owner_id', () => {
+  const create = read('scripts/db/fn_create_activity.sql')
+  const update = read('scripts/db/fn_update_activity.sql')
+  const mine = read('scripts/db/fn_my_activities.sql')
+
+  // 三个函数的签名里都不得出现 owner_id 参数
+  for (const [name, src] of [['create_activity', create], ['update_activity', update]]) {
+    const sig = /CREATE OR REPLACE FUNCTION public\.\w+\s*\(([\s\S]*?)\)\s*RETURNS/.exec(src)
+    assert.ok(sig, `${name} 必须能解析出签名`)
+    assert.ok(!/owner_id/i.test(sig[1]), `${name} 的参数里不得出现 owner_id（归属只能由服务端取 auth.uid()）`)
+  }
+  assert.ok(create.includes('auth.uid()'), 'create_activity 必须从 auth.uid() 取归属')
+  assert.ok(update.includes('owner_id = v_uid'), 'update_activity 必须按 owner_id = auth.uid() 校验归属')
+
+  // my_activities 的返回列不得含 owner_id
+  const mineSig = /RETURNS TABLE\(([\s\S]*?)\)/.exec(mine)
+  assert.ok(mineSig, 'my_activities 必须显式声明返回列')
+  assert.ok(!/owner_id/.test(mineSig[1]), 'my_activities 的返回列不得含 owner_id（响应体泄露创建者标识）')
+  assert.ok(mine.includes('WHERE a.owner_id = v_uid'), 'my_activities 必须按服务端身份过滤')
+  // 不过滤 published：归属人必须能看到自己下架的活动
+  assert.ok(
+    !/WHERE a\.owner_id = v_uid\s+AND\s+a\.published/.test(mine),
+    'my_activities 不得过滤 published：归属人需要看到自己下架的活动'
+  )
+})
+
+check('真人发布活动：slug 由服务端生成，客户端不可指定', () => {
+  const create = read('scripts/db/fn_create_activity.sql')
+  const sig = /CREATE OR REPLACE FUNCTION public\.create_activity\s*\(([\s\S]*?)\)\s*RETURNS/.exec(create)
+  assert.ok(!/p_slug/i.test(sig[1]), 'create_activity 不得接受客户端传入的 slug')
+  assert.ok(
+    /v_slug\s*:=\s*'act-'\s*\|\|/.test(create),
+    'slug 必须由服务端生成（act- 前缀 + 随机串）'
+  )
+  const update = read('scripts/db/fn_update_activity.sql')
+  const updateSig = /CREATE OR REPLACE FUNCTION public\.update_activity\s*\(([\s\S]*?)\)\s*RETURNS/.exec(update)
+  assert.ok(!/p_slug/i.test(updateSig[1]), 'update_activity 也不得接受 slug（改名等于换链接）')
+})
+
+check('真人发布活动：服务端校验覆盖登录态、内容、时长、名额与限流', () => {
+  const create = read('scripts/db/fn_create_activity.sql')
+  assert.ok(create.includes('auth.uid()'), '必须校验登录态')
+  assert.ok(create.includes('p_title IS NULL OR length(btrim(p_title)) < 2'), '必须校验标题非空')
+  assert.ok(create.includes('length(btrim(p_title)) > 40'), '必须校验标题长度上限')
+  assert.ok(create.includes('length(p_summary) > 200'), '必须校验简介长度上限')
+  assert.ok(create.includes('length(btrim(p_location)) > 60'), '必须校验地点长度上限')
+  assert.ok(create.includes('p_starts_at <= now()'), '必须校验开始时间在未来')
+  assert.ok(create.includes('p_ends_at <= p_starts_at'), '必须校验结束时间晚于开始时间')
+  assert.ok(create.includes('p_capacity < 0'), '必须校验名额非负')
+  assert.ok(create.includes('p_capacity > 10000'), '必须校验名��上限')
+  assert.ok(create.includes('jsonb_array_length(p_highlights) > 8'), '必须校验亮点条数')
+  // 元素类型校验：jsonb_array_elements_text 会把对象转成 JSON 文本，
+  // 必须用 jsonb_typeof 确认每项都是字符串，否则能塞进结构化内容。
+  assert.ok(
+    /jsonb_typeof\(t\.value\)\s*<>\s*'string'/.test(create),
+    '亮点/须知的元素必须是字符串（jsonb_array_elements_text 会把对象转文本从而绕过长度校验）'
+  )
+  // 控制字符：长度检查挡不住中间的换行
+  assert.ok(create.includes('has_control_chars('), '必须校验文本字段不含控制字符（含换行）')
+  // 限流：同一用户进行中活动数上限 + 串行化
+  assert.ok(create.includes('pg_advisory_xact_lock'), '并发创建必须按 uid 串行化（否则限流可被并发绕过）')
+  assert.ok(create.includes('v_active_count >= 10'), '必须限制同一用户同时进行的活动数')
+})
+
+check('封面白名单三方对齐：SQL、客户端、随包素材必须一致', () => {
+  // 三处白名单：服务端 RPC（权威）、客户端 format.js、assets/covers/ 实际文件。
+  // 任一漂移都会导致「用户选了封面但显示不出来」或「客户端能选服务端不认的值」。
+  const slugsInSql = new Set()
+  for (const file of ['fn_create_activity.sql', 'fn_update_activity.sql']) {
+    const src = read(`scripts/db/${file}`)
+    const m = /p_cover_slug[\s\S]{0,120}?NOT IN \(([\s\S]*?)\)/.exec(src)
+    assert.ok(m, `${file} 必须对 cover_slug 做白名单校验`)
+    const list = m[1].match(/'([a-z0-9-]+)'/g) || []
+    assert.ok(list.length > 0, `${file} 的 cover_slug 白名单不得为空`)
+    list.forEach((s) => slugsInSql.add(s.replace(/'/g, '')))
+  }
+
+  const format = require(path.join(ROOT, 'utils', 'format.js'))
+  assert.ok(Array.isArray(format.COVER_SLUGS), 'format.js 必须导出 COVER_SLUGS 白名单')
+  format.COVER_SLUGS.forEach((slug) => {
+    assert.ok(
+      slugsInSql.has(slug),
+      `客户端白名单与服务端不一致：${slug} 只在 format.js 里出现`
+    )
+    assert.ok(
+      exists(path.join('assets', 'covers', `${slug}.png`)),
+      `白名单素材缺失：assets/covers/${slug}.png`
+    )
+  })
+
+  // 反向：assets/covers/ 下的每个素材都必须在白名单里（防止加了图却没进白名单）
+  const coversDir = path.join(ROOT, 'assets', 'covers')
+  fs.readdirSync(coversDir)
+    .filter((f) => f.endsWith('.png'))
+    .map((f) => f.replace(/\.png$/, ''))
+    .forEach((slug) => {
+      assert.ok(
+        slugsInSql.has(slug),
+        `素材 ${slug}.png 存在但不在服务端白名单里（会选了却不生效）`
+      )
+    })
+})
+
+check('真人发布活动的三个 RPC 权限矩阵符合最小权限', () => {
+  const clientFns = [
+    'public.create_activity(BIGINT, TEXT, TEXT, TEXT, TIMESTAMPTZ, TIMESTAMPTZ, INTEGER, TEXT, JSONB, JSONB, TEXT)',
+    'public.update_activity(BIGINT, TEXT, TEXT, TEXT, TIMESTAMPTZ, TIMESTAMPTZ, INTEGER, TEXT, JSONB, JSONB, TEXT, BOOLEAN)',
+    'public.my_activities()'
+  ]
+  for (const fn of clientFns) {
+    const esc = fn.replace(/[()]/g, '\\$&')
+    assert.ok(
+      new RegExp(`REVOKE ALL ON FUNCTION ${esc} FROM PUBLIC;`).test(schema),
+      `${fn} 必须先 REVOKE FROM PUBLIC`
+    )
+    assert.ok(
+      new RegExp(`GRANT EXECUTE ON FUNCTION ${esc} TO authenticated;`).test(schema),
+      `${fn} 必须只授予 authenticated`
+    )
+    assert.ok(
+      !new RegExp(`GRANT EXECUTE ON FUNCTION ${esc} TO anon`).test(schema),
+      `${fn} 不得授予 anon`
+    )
+  }
+  // 客户端源码必须走这三个 RPC，且不得直接写 activities 表
+  const apiSrc = read('utils/api.js')
+  assert.ok(apiSrc.includes("rpc('create_activity'"), '发布活动必须调用 create_activity RPC')
+  assert.ok(apiSrc.includes("rpc('update_activity'"), '编辑活动必须调用 update_activity RPC')
+  assert.ok(apiSrc.includes("rpc('my_activities'"), '我的活动必须调用 my_activities RPC')
+  assert.ok(
+    !/\.from\('activities'\)[\s\S]{0,400}?\.(insert|update|delete)\(/.test(apiSrc),
+    '客户端不得直接写 activities 表（写入必须收敛到 RPC）'
+  )
+  // 客户端不得自报身份
+  assert.ok(!/owner_id\s*:/.test(apiSrc), 'api.js 不得出现 owner_id 字段')
+})
+
+check('管理侧归属指派通道已废止（归属语义已翻转为发布者本人）', () => {
+  assert.ok(
+    /DROP FUNCTION IF EXISTS public\.claim_activity\(BIGINT, TEXT\);/.test(schema),
+    'claim_activity 必须显式 DROP：归属由发布者本人决定，管理侧指派通道不再需要'
+  )
+  assert.ok(
+    !/CREATE OR REPLACE FUNCTION public\.claim_activity/.test(schema),
+    'schema.sql 不得再定义 claim_activity'
+  )
+  assert.ok(
+    !fs.existsSync(path.join(ROOT, 'scripts', 'db', 'fn_claim_activity.sql')),
+    'fn_claim_activity.sql 必须删除'
+  )
+})
+
+check('下架走短路：归属人随时能下架已结束的活动', () => {
+  // 内容校验里含「开始时间必须晚于当前时间」，而下架若走完整校验，
+  // 已结束的活动将永远无法下架——这是必须保留的处置手段。
+  const update = read('scripts/db/fn_update_activity.sql')
+  const shortCircuit = update.indexOf('IF p_published = FALSE THEN')
+  assert.ok(shortCircuit >= 0, 'update_activity 必须为下架提供短路分支')
+  const timeCheck = update.indexOf('活动开始时间必须晚于当前时间')
+  assert.ok(
+    shortCircuit < timeCheck,
+    '下架短路必须早于时间校验：否则已结束的活动无法下架'
+  )
+  // 已开始的活动不允许改开始时间：判定必须用原值，不能用传入值
+  assert.ok(
+    /v_origin\.starts_at <= now\(\)\s*\n\s*AND p_starts_at IS DISTINCT FROM v_origin\.starts_at/.test(update),
+    '判定「已开始」必须用原值 v_origin.starts_at（用传入值可被绕过改期）'
+  )
+})
+
+check('客户端不自行判定活动归属，靠 my_activities 返回结果识别', () => {
+  // 客户端拿不到 owner_id（被移出列级授权），因此不能靠比对 uid 判断归属。
+  // my_activities 由服务端按 auth.uid() 过滤并返回，客户端据此展示「我的活动」。
+  const mine = read('pages/mine/mine.js')
+  assert.ok(mine.includes('listMyActivities'), '我的活动页必须走 my_activities')
+  // 只检查代码行：注释里说明「不读 owner_id」是允许的，出现在代码里才是不允许。
+  // 注释形态覆盖三种：// 开头、* 开头（块注释续行）、/** 单行块注释。
+  const codeOnly = (src) =>
+    src
+      .split('\n')
+      .filter((line) => !/^\s*(\*|\/\/|\/\*\*)/.test(line))
+      .join('\n')
+  assert.ok(!/owner_id/.test(codeOnly(mine)), '客户端代码不得读取或比对 owner_id')
+  const apiSrc = read('utils/api.js')
+  assert.ok(
+    !/owner_id/.test(codeOnly(apiSrc)),
+    'api.js 代码不得出现 owner_id：归属判定完全在服务端'
+  )
+})
+
+check('页面封面一律走 activityCover，不按 slug 推导', () => {
+  // 真人发布的活动 slug 由服务端生成（act-xxx），随包没有同名素材。
+  // 若页面仍用 fallbackCover(slug) 推导，用户在发布页精心选的封面
+  // 在详情页/报名页/报名记录页会全部落成默认图——功能上看似正常，
+  // 但封面选择这个功能实际失效。
+  for (const page of ['detail', 'records', 'signup']) {
+    const src = read(`pages/${page}/${page}.js`)
+    assert.ok(
+      src.includes('activityCover('),
+      `pages/${page} 必须用 format.activityCover(cover_path, cover_slug) 取封面`
+    )
+    assert.ok(
+      !/fallbackCover\(/.test(src),
+      `pages/${page} 不得用 fallbackCover(slug) 推导封面：真人活动的 slug 是服务端生成的 act-xxx，随包无同名素材`
+    )
+  }
+  // 首页同理
+  const index = read('pages/index/index.js')
+  assert.ok(index.includes('activityCover('), 'pages/index 必须用 activityCover 取封面')
+  assert.ok(!/fallbackCover\(/.test(index), 'pages/index 不得用 fallbackCover(slug) 推导封面')
+})
+
+console.log('')
 console.log('== 隐私合规面 ==')
 
 check('存在平台侧隐私声明文件', () => {

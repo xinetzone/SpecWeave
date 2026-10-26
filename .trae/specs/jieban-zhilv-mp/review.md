@@ -193,3 +193,70 @@
   但该路径内嵌 uid，尚未彻底根除）。
 
 > AI生成
+
+---
+
+## 追加审查轮次：模板化 + 真人发布活动（2026-10-26）
+
+> 审查方法：F（第一性原理）→ V（对抗审查）→ I（洞察落地）。
+> 本轮 V 门由团队负责人**逐条对着已落地的 SQL/JS 源码核验**，
+> 并对每一条结论做云端实测（构造登录态调用真实函数），不接受「凭印象通过」。
+> 审查结论：**P0 = 2（全部修复）**，P1 = 3（全部修复），另有 3 项自查发现的设计缺陷（全部修复）。
+
+### V 门审查项
+
+- [x] CP-R20: 模板与活动分表，模板不承载报名
+  - **Type**: `rule`
+  - **Covers**: AC-17
+  - **Evidence**: `activity_templates` 表 + RLS + 列级授权；`registrations.activity_id` 外键只指向
+    `activities`；`activities.template_id` 为 `ON DELETE SET NULL`；结构测试断言全绿
+
+- [x] CP-R21: 归属由服务端裁决，客户端不可指定
+  - **Type**: `rule`
+  - **Covers**: AC-18
+  - **Evidence**: `create_activity` / `update_activity` 签名无 `owner_id`；实测落库 `owner_id=wx:testuser001`；
+    越权编辑返回 42501
+
+- [x] CP-R22: slug 服务端生成
+  - **Type**: `rule`
+  - **Covers**: AC-18
+  - **Evidence**: 实测 slug = `act-fb0261dcbb084a53`（`act-` + 16 位随机）；结构测试断言签名不含 `p_slug`
+
+- [x] CP-R23: 封面白名单三方对齐
+  - **Type**: `rule`
+  - **Covers**: AC-19、AC-21
+  - **Evidence**: 结构测试双向断言（服务端 SQL ↔ 客户端 `COVER_SLUGS` ↔ `assets/covers/*.png`）全绿；
+    实测非法封面 `../../etc/passwd` 被拒
+
+- [x] CP-R24: 发布限流与并发安全
+  - **Type**: `rule`
+  - **Covers**: AC-19
+  - **Evidence**: `pg_advisory_xact_lock(hashtext(v_uid))` 串行化同一用户的创建；
+    实测连建 11 次恰好停在 10 个
+
+- [x] CP-R25: 编辑权限与下架可用性
+  - **Type**: `rule`
+  - **Covers**: AC-20
+  - **Evidence**: 越权 → 42501；下架短路早于时间校验（结构测试断言位置关系）；
+    实测下架/重新上架均返回 true
+
+### 本轮 V 门发现并修复的问题
+
+| 编号 | 级别 | 问题 | 修法 |
+|------|------|------|------|
+| V-1 | **P0** | 亮点/须知的 JSONB 元素未校验类型。`jsonb_array_elements_text` 会把对象转成 JSON 文本（如 `{"a":1}` → 7 字符），能绕过 60 字限制，把结构化内容塞进本该是字符串数组的字段 | 改用 `jsonb_array_elements` + `jsonb_typeof(t.value) <> 'string'` 逐项确认；两个 RPC 都改 |
+| V-2 | **P0** | 文本字段未拒绝控制字符。`length()` 计入换行且 `btrim` 只去首尾空白，标题中间的 `\n` 会保留并破坏单行布局 | 新增 IMMUTABLE 纯函数 `has_control_chars()`（`~ '[\x00-\x1F\x7F]'`），在两个 RPC 中校验 title/summary/location/price_note |
+| V-3 | P1 | 「活动是否已开始」用传入值 `p_starts_at` 判定。把它传成未来时刻即可整块跳过检查，从而把已开始活动的开始时间改到未来——等于单方面变更已报名者的约定 | 判定改用**原值** `v_origin.starts_at`；已开始的活动的 `p_starts_at` 必须与原值一致 |
+| V-4 | P1 | 下架走完整校验路径。内容校验含「开始时间必须晚于当前时间」，而已结束活动的开始时间天然早于当前时间 → **归属人永远无法下架已结束的活动** | `published = FALSE` 走短路分支，只改状态，不做任何内容/时间校验 |
+| V-5 | P1 | `IS NOT DISTINCT FROM` 用于多行 AND 链时 PostgreSQL 解析产生歧义（实测 42601 syntax error at or near "p_capacity"） | 改写为显式 `(a = b OR (a IS NULL AND b IS NULL))`，语义等价且解析无歧义 |
+| V-6 | 自查 | 客户端下架/重新上架时把亮点与须知传成空数组 → 会清空活动内容 | 客户端改为传原始值；服务端下架短路本就不需要这些字段 |
+| V-7 | 自查 | 归属人无法下架已结束的活动（V-4 的表现）与已结束活动仍提供「重新上架」入口（服务端会以时间校验拒绝） | 下架短路修复；客户端对「已结束」状态禁用重新上架并给出说明 |
+
+### 本轮 V 门明确不采纳的方案
+
+- **删除 `activities.cover_path` 列**：不采纳。`cover_path` 承载的是平台侧已发布主图，
+  取值域已被服务端锁死为不含 uid 的 `_application` 路径，保留它不构成泄露面；
+  删除会连带废止 `sync_activity_cover` / `set_activity_cover` 与既有 AC-13 的取值域约束，
+  属于超出本轮需求的重构。用户上传封面走 `cover_slug` 内置素材解决（V 门新增 A11 公理）。
+- **给客户端开放 `activities` 的 INSERT/UPDATE 权限**：不采纳。违反 A2
+  （所有业务写入必须经服务端函数完成），且会让归属判定脱离服务端控制。

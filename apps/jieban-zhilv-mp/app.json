@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/detail/detail",
     "pages/signup/signup",
-    "pages/records/records"
+    "pages/records/records",
+    "pages/publish/publish",
+    "pages/mine/mine"
   ],
   "window": {
     "navigationBarBackgroundColor": "#ffffff",
@@ -24,6 +26,18 @@
         "text": "活动",
         "iconPath": "assets/icons/tab-home.png",
         "selectedIconPath": "assets/icons/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/publish/publish",
+        "text": "发起",
+        "iconPath": "assets/icons/tab-publish.png",
+        "selectedIconPath": "assets/icons/tab-publish-active.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的活动",
+        "iconPath": "assets/icons/tab-mine.png",
+        "selectedIconPath": "assets/icons/tab-mine-active.png"
       },
       {
         "pagePath": "pages/records/records",

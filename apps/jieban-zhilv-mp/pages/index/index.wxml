@@ -27,10 +27,25 @@
     <button class="btn-ghost error-retry" bindtap="loadActivities">重新加载</button>
   </view>
 
-  <!-- 活动列表 -->
-  <view class="list" wx:if="{{!loading && !errorText}}">
-    <block wx:for="{{activities}}" wx:key="id">
-      <view class="activity card" bindtap="onTapActivity" data-id="{{item.id}}">
+  <block wx:if="{{!loading && !errorText}}">
+    <!-- 发起活动入口 -->
+    <view class="publish-entry" bindtap="onTapPublish">
+      <image class="publish-entry-icon" src="/assets/icons/ic-pencil.png" mode="aspectFit" />
+      <view class="publish-entry-info">
+        <text class="publish-entry-title">发起一场活动</text>
+        <text class="publish-entry-desc">选个模板或自由发起，让别人报名你的行程</text>
+      </view>
+      <image class="icon icon-sm publish-entry-arrow" src="/assets/icons/ic-arrow.png" mode="aspectFit" />
+    </view>
+
+    <!-- 大家发起的活动 -->
+    <view class="list" wx:if="{{activities.length}}">
+      <view class="section-head">
+        <text class="section-head-title">大家发起的活动</text>
+        <text class="section-head-count">{{activities.length}} 场</text>
+      </view>
+
+      <view class="activity card" bindtap="onTapActivity" data-id="{{item.id}}" wx:for="{{activities}}" wx:key="id">
         <view class="activity-cover-wrap">
           <image class="activity-cover" src="{{item.cover}}" mode="aspectFill" binderror="onCoverError" data-id="{{item.id}}" />
           <view class="activity-badge" wx:if="{{item.countdown}}">{{item.countdown}}</view>
@@ -68,12 +83,42 @@
           </view>
         </view>
       </view>
-    </block>
-
-    <view class="empty" wx:if="{{!activities.length}}">
-      <image class="empty-icon" src="/assets/icons/ic-compass.png" mode="aspectFit" />
-      <text class="empty-title">暂无进行中的活动</text>
-      <text class="empty-desc">新的旅程正在筹备，很快与你相遇</text>
     </view>
-  </view>
+
+    <!-- 无人发起时的引导 -->
+    <view class="empty" wx:else>
+      <image class="empty-icon" src="/assets/icons/ic-compass.png" mode="aspectFit" />
+      <text class="empty-title">还没有人发起活动</text>
+      <text class="empty-desc">你可以做第一个，把想做的事组织起来</text>
+      <button class="btn-primary empty-btn" bindtap="onTapPublish">发起第一场活动</button>
+    </view>
+
+    <!-- 活动模板 -->
+    <view class="template-section" wx:if="{{templates.length}}">
+      <view class="section-head">
+        <text class="section-head-title">活动模板</text>
+        <text class="section-head-count">只读参考 · 不可报名</text>
+      </view>
+      <text class="template-section-desc">模板是活动的骨架。挑一个套用，改成你自己的活动。</text>
+
+      <view class="template-list">
+        <view class="template-item card" wx:for="{{templates}}" wx:key="id">
+          <image class="template-cover" src="{{item.cover}}" mode="aspectFill" />
+          <view class="template-body">
+            <text class="template-title">{{item.title}}</text>
+            <text class="template-summary">{{item.summary}}</text>
+            <view class="template-meta">
+              <image class="icon icon-sm icon-muted" src="/assets/icons/ic-users.png" mode="aspectFit" />
+              <text class="template-meta-text">{{item.defaultCapacity}} 人成行</text>
+              <image class="icon icon-sm icon-muted template-meta-icon" src="/assets/icons/ic-clock.png" mode="aspectFit" />
+              <text class="template-meta-text">约 {{item.defaultDuration}} 分钟</text>
+            </view>
+            <button class="btn-ghost template-btn" bindtap="onTapUseTemplate" data-id="{{item.id}}">
+              <text>用此模板发起</text>
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
 </view>
