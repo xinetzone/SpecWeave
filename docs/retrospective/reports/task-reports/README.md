@@ -74,6 +74,8 @@ date: "2026-07-09"
 | ✅ [Retrospective Concurrent Safety Checker 20260708](./retrospective-concurrent-safety-checker-20260708/README.md) | 4 |  |
 | ✅ [Retrospective Conflict Resolution Mechanism 20260708](./retrospective-conflict-resolution-mechanism-20260708/README.md) | 4 |  |
 | ✅ [Retrospective Conflict Resolution Pattern Advancement 20260711](./retrospective-conflict-resolution-pattern-advancement-20260711/README.md) | 2 |  |
+| ✅ [Retrospective Daode Masterxiong Blueprint 20261026](./retrospective-daode-masterxiong-blueprint-20261026/README.md) | 2 |  |
+| ✅ [Retrospective Daode Masterxiong Brand 20261026](./retrospective-daode-masterxiong-brand-20261026/README.md) | 2 |  |
 | ✅ [Retrospective First Principles Command Creation 20260709](./retrospective-first-principles-command-creation-20260709/README.md) | 7 | （1个子目录） |
 | ✅ [Retrospective First Principles Exercises 20260709](./retrospective-first-principles-exercises-20260709/README.md) | 5 | （1个子目录） |
 | ✅ [Retrospective First Principles Knowledge Graph 20260709](./retrospective-first-principles-knowledge-graph-20260709/README.md) | 5 | （1个子目录） |
