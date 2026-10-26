@@ -3,6 +3,7 @@
 本文件记录项目的重要变更历史，格式遵循 `- YYYY-MM-DD | type | description`，按时间倒序排列。
 
 <!-- changelog -->
+- 2026-10-26 | feat(skills) | 新增 platform-review-precheck 平台提审合规预检 Skill（v1.0.0）：隐私接口调用面扫描器 + 声明/调用面对账器（D1 声明覆盖调用 / D2 无死项 / D3 授权兜底 / D4 声明文件存在）+ 前后对照夹具 + 自检脚本（15/15 通过），质量门 100/100；萃取自 2026-10-26 微信小程序提审被拒实战（拦截类型「收集你选中的照片或视频信息」）；同步补齐 public-value-audit（上一轮产物）缺失的四处登记面，完整 Skill 计数 38→40
 - 2026-10-13 | docs | 全面复盘并统一对外入口计数：七概念里程碑复盘（4219提交/169技能/657脚本/136规则/946模式），修正根 README、docs/index、.agents/README、subdirectory-responsibilities、ONBOARDING、capability-registry 互相矛盾的计数；AGENTS.md 明确 projects 含主仓追踪工作目录；升级「合成统计权威数据来源」模式至 L2（新增入口徽章漂移案例）
 - 2026-09-30 | docs | 七概念全项目深度复盘（100天/3990提交），沉淀公私域内容分离路由模式，登记 6 项原子行动项
 - 2026-08-31 | refactor(docs) | `.agents/docs/` 整体迁移废止，根 `docs/` 成为唯一文档中心；完成 docs 文档中心全面复盘与文档治理项目复盘

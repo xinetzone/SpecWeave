@@ -1,0 +1,4 @@
+{
+  "pages": ["pages/index/index", "pages/signup/signup"],
+  "window": { "navigationBarTitleText": "示例" }
+}

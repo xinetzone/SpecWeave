@@ -1,0 +1,5 @@
+id = "skill"
+title = "公开值取值域审计 Skill"
+category = "skills/public-value-audit"
+date = "2026-10-26"
+version = "1.1.0"

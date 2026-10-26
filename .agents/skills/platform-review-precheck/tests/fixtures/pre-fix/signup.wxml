@@ -1,0 +1,5 @@
+<view>
+  <button open-type="getPhoneNumber" bindgetphonenumber="onPhone">获取手机号</button>
+  <input type="nickname" placeholder="昵称" />
+  <button bindtap="onTapUploadCover">上传图片</button>
+</view>

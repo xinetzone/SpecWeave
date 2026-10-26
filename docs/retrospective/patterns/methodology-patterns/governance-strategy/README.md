@@ -24,6 +24,8 @@ date: "2026-07-09"
 
 | 文档 | 说明 | 成熟度 | 标签 |
 |------|------|--------|------|
+| [本地不可自测面的显式立项](./locally-unobservable-surface-explicit-scoping.md) | 验证范围的边界比验证深度更决定成败：验收方维度先穷举再标可测性，不可自测面要么找代理观测手段、要么显式列为待办 | L1 | `外部验收面` `审查面覆盖` `平台审核` |
+| [声明面与执行面的双侧对账](./declared-vs-executed-dual-surface-reconciliation.md) | 声明与执行分处两面、独立出错、失败现象相反：双面提取 → 映射建模 → 逐项对账 → 同批修改 | L1 | `声明对账` `双侧验证` `平台合规` |
 | [V阶段对抗审查「用户视角优先」权重分配模式](./adversarial-perspective-weighting.md) | V阶段对抗审查「用户视角优先」权重分配模式 | L1 |  |
 | [两栖定位模型（Amphibious Positioning Model）](./amphibious-positioning-model.md) | 两栖定位模型（Amphibious Positioning Model） | L1 |  |
 | [命令别名重生法（AppX 别名重生术）](./appx-alias-rebirth.md) | 命令别名重生法（AppX 别名重生术） | L1 | `应用执行别名` `Appx` `Windows Terminal` |
