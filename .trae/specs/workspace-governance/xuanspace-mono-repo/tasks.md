@@ -483,5 +483,5 @@ x-toml-ref: "../../../.meta/toml/.trae/specs/workspace-governance/xuanspace-mono
   - `human-judgement` TR-20.7: frontmatter 规范文档清晰说明二分法的使用方法
   - `programmatic` TR-20.8: 项目模板生成的 README.md 包含正确的二分法 frontmatter
   - `programmatic` TR-20.9: 根目录 AGENTS.md/README.md/CONTRIBUTING.md 均有配套 TOML 元数据文件
-- **Notes**: `xs meta` 命令不依赖 PDM；TOML 文件使用 Python 标准库 tomllib/tomli-w 读写；路径计算使用 pathlib 确保跨平台兼容
+- **Notes**: `xs meta` 命令不依赖 PDM；TOML 文件读取使用 Python 标准库 `tomllib`，写入使用 `tomlkit`（parse→改字段→dumps 原地编辑，保留既有注释、空行与键序）；路径计算使用 pathlib 确保跨平台兼容
 
