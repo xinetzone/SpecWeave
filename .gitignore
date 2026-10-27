@@ -179,6 +179,11 @@ qwenwork/
 # Box Agent 运行时任务注册表（task-registry 等 IDE 智能体状态文件，不入库）
 .box-agent/
 
+# 外部创作设计工具的本地工作目录（配图 brief 等过程素材，不入库）。
+# 注意必须带前导点：写作 `creative-design/` 会匹配已被跟踪的
+# docs/retrospective/patterns/methodology-patterns/creative-design/，属误伤。
+.creative-design/
+
 # 短视频生产临时工作区（scene/tts/背景帧/音视频与 node_modules，约 90 MB 构建产物）。
 # 交付物是 docs/knowledge/short-video-skills/，本目录只属制作过程的中间产物。
 deepseek-v41-flash-video-*/
