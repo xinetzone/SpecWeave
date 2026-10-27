@@ -21,7 +21,16 @@ class LLMError(RuntimeError):
 
 
 class LLMClient:
-    """OpenAI 兼容端点的极薄封装。"""
+    """大模型客户端：同时支持 OpenAI 兼容端点与云端免密钥通道。
+
+    两条通道的**对外契约相同**（``chat`` 返回一段文本），差别在协议：
+
+    - OpenAI 兼容端点：一次性 JSON 响应，带 ``Authorization: Bearer``；
+    - 云端通道：只有流式（SSE），鉴权头是 ``x-wb-webapp-access-key``，
+      且 publishableKey **不能**当 Bearer 用。
+
+    优先级：请求级 BYOK > 云端通道 > 服务端 OpenAI 兼容配置。
+    """
 
     def __init__(self, settings: Settings):
         self._settings = settings
@@ -36,9 +45,23 @@ class LLMClient:
         return settings.llm_base_url, settings.llm_api_key, settings.llm_model
 
     def available(self, override: LLMOverride | None = None) -> bool:
-        """当前凭据下大模型是否可用——决定是否走降级分支。"""
+        """当前凭据下大模型是否可用——决定是否走降级分支。
+
+        BYOK 最优先；没有 BYOK 时，云端免密钥通道也算「可用」——用户不需要
+        自己的 API Key 就能拿到模型能力，这是平台托管环境的核心价值。
+        """
+        if override is not None and override.active:
+            return True
+        if self._settings.wb_llm_ready:
+            return True
         _, api_key, _ = self._resolve(override)
         return bool(api_key)
+
+    def _use_cloud_channel(self, override: LLMOverride | None) -> bool:
+        """该次请求是否走云端通道。"""
+        if override is not None and override.active:
+            return False
+        return self._settings.wb_llm_ready
 
     def probe(self, override: LLMOverride | None = None) -> dict:
         """打一次最小探针，回答「我填的对不对」，返回 ``{ok, model, reason}``。
@@ -51,6 +74,9 @@ class LLMClient:
         ``/models``，是因为只有 chat 才能同时验出「Key 有效」与「模型名存在」——
         后者是 BYOK 场景下最常见的填错项。
         """
+        if self._use_cloud_channel(override):
+            return self._probe_cloud()
+
         base_url, api_key, model = self._resolve(override)
         if not api_key:
             return {"ok": False, "model": model, "reason": "还没有填 API Key"}
@@ -67,7 +93,7 @@ class LLMClient:
             "Content-Type": "application/json",
         }
         try:
-            with http_client(url, self._settings.llm_timeout) as client:
+            with http_client(f"{base_url}/chat/completions", self._settings.llm_timeout) as client:
                 response = client.post(f"{base_url}/chat/completions", json=payload, headers=headers)
         except httpx.HTTPError as exc:  # pragma: no cover - 由测试用假 client 覆盖
             return {"ok": False, "model": model, "reason": f"连不上这个地址（{type(exc).__name__}）"}
@@ -85,6 +111,114 @@ class LLMClient:
             return {"ok": False, "model": model, "reason": f"端点返回 {status}：{response.text[:120]}"}
         return {"ok": True, "model": model, "reason": ""}
 
+    def _cloud_headers(self) -> dict[str, str]:
+        """云端通道鉴权头。
+
+    publishableKey 只能放 ``x-wb-webapp-access-key``——它不是 Bearer 令牌，
+    当成 ``Authorization: Bearer`` 用会被服务端判为「仅 publishableKey」而拒绝。
+    """
+        return {
+            "x-wb-webapp-access-key": self._settings.wb_publishable_key,
+            "Content-Type": "application/json",
+            "Accept": "text/event-stream",
+        }
+
+    def _probe_cloud(self) -> dict:
+        """云端通道探针：最小流式请求，确认链路通不通。"""
+        model = self._settings.wb_llm_model
+        url = f"{self._settings.wb_cloud_endpoint.rstrip('/')}/.cloud/llm/chat/completions"
+        payload = {
+            "model": model,
+            "messages": [{"role": "user", "content": "ping"}],
+            "stream": True,
+            "max_tokens": 1,
+        }
+        try:
+            with http_client(url, self._settings.llm_timeout) as client:
+                with client.stream(
+                    "POST", url, json=payload, headers=self._cloud_headers()
+                ) as response:
+                    if response.status_code >= 400:
+                        body = response.read().decode("utf-8", "replace")[:120]
+                        return {
+                            "ok": False,
+                            "model": model,
+                            "reason": f"云端通道返回 {response.status_code}：{body}",
+                        }
+                    for _ in response.iter_lines():
+                        pass
+        except httpx.HTTPError as exc:  # pragma: no cover - 依赖外部网络
+            return {"ok": False, "model": model, "reason": f"连不上云端通道（{type(exc).__name__}）"}
+        return {"ok": True, "model": model, "reason": ""}
+
+    def _chat_cloud(
+        self,
+        system: str,
+        user: str,
+        *,
+        temperature: float = 0.2,
+        max_tokens: int = 2000,
+        json_mode: bool = False,
+    ) -> str:
+        """云端通道对话：只有流式，需自行聚合 SSE 分片。
+
+        帧序（官方约定）：首个 role 帧 → content 增量帧 → finish 帧 → ``[DONE]``。
+        这里只取 ``delta.content`` 拼接，``reasoning_content`` 属思考过程、
+        不并入可见回复。
+        """
+        model = self._settings.wb_llm_model
+        url = f"{self._settings.wb_cloud_endpoint.rstrip('/')}/.cloud/llm/chat/completions"
+        payload: dict[str, object] = {
+            "model": model,
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
+            ],
+            "stream": True,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+        }
+        if json_mode:
+            payload["response_format"] = {"type": "json_object"}
+
+        parts: list[str] = []
+        try:
+            with http_client(url, self._settings.llm_timeout) as client:
+                with client.stream(
+                    "POST", url, json=payload, headers=self._cloud_headers()
+                ) as response:
+                    if response.status_code >= 400:
+                        body = response.read().decode("utf-8", "replace")[:200]
+                        raise LLMError(f"云端大模型返回 {response.status_code}：{body}")
+                    for line in response.iter_lines():
+                        if not line or not line.startswith("data:"):
+                            continue
+                        data = line[5:].strip()
+                        if data == "[DONE]":
+                            break
+                        try:
+                            frame = json.loads(data)
+                        except ValueError:
+                            continue
+                        error = frame.get("error")
+                        if error:
+                            message = error.get("message") if isinstance(error, dict) else str(error)
+                            raise LLMError(f"云端大模型报错：{message}")
+                        choices = frame.get("choices") or []
+                        if not choices:
+                            continue
+                        delta = choices[0].get("delta") or {}
+                        content = delta.get("content")
+                        if content:
+                            parts.append(str(content))
+        except httpx.HTTPError as exc:  # pragma: no cover - 依赖外部网络
+            raise LLMError(f"云端大模型请求失败：{exc}") from exc
+
+        text = "".join(parts).strip()
+        if not text:
+            raise LLMError("云端大模型返回空内容")
+        return text
+
     def chat(
         self,
         system: str,
@@ -97,8 +231,17 @@ class LLMClient:
     ) -> str:
         """发起一次对话，返回 assistant 的文本内容。
 
-        :raises LLMError: 未配置 Key、网络异常、非 2xx、响应结构异常。
+        :raises LLMError: 未配置凭据、网络异常、非 2xx、响应结构异常。
         """
+        if self._use_cloud_channel(override):
+            return self._chat_cloud(
+                system,
+                user,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                json_mode=json_mode,
+            )
+
         base_url, api_key, model = self._resolve(override)
         if not api_key:
             raise LLMError("未配置大模型密钥")

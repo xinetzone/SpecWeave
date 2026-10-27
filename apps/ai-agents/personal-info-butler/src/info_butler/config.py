@@ -62,6 +62,12 @@ class Settings:
     http_timeout: float = 15.0
     llm_timeout: float = 60.0
 
+    # WorkBuddy 云服务：平台托管的 Postgres + 免密钥大模型。
+    # 由平台在发布时注入，缺任一项即整体降级（不半启用）。
+    wb_cloud_endpoint: str = ""
+    wb_publishable_key: str = ""
+    wb_llm_model: str = ""
+
     # 关联分析：先取候选集再本地打分，避免把全表拉进内存
     max_candidates: int = 500
     link_limit: int = 5
@@ -79,6 +85,9 @@ class Settings:
             cors_origins=_env_list("CORS_ORIGINS", "*"),
             http_timeout=_env_float("HTTP_TIMEOUT", 15.0),
             llm_timeout=_env_float("LLM_TIMEOUT", 60.0),
+            wb_cloud_endpoint=_env("WB_CLOUD_ENDPOINT").rstrip("/"),
+            wb_publishable_key=_env("WB_PUBLISHABLE_KEY"),
+            wb_llm_model=_env("WB_LLM_MODEL"),
             max_candidates=_env_int("MAX_CANDIDATES", 500),
             link_limit=_env_int("LINK_LIMIT", 5),
             link_threshold=_env_float("LINK_THRESHOLD", 0.12),
@@ -90,12 +99,33 @@ class Settings:
         return bool(self.supabase_url and self.supabase_key)
 
     @property
+    def wb_cloud_ready(self) -> bool:
+        """WorkBuddy 云服务的 endpoint 与 publishableKey 必须成对出现。"""
+        return bool(self.wb_cloud_endpoint and self.wb_publishable_key)
+
+    @property
     def llm_ready(self) -> bool:
         return bool(self.llm_api_key and self.llm_base_url)
 
     @property
+    def wb_llm_ready(self) -> bool:
+        """云端免密钥大模型可用：需要云服务环境 + 模型名。"""
+        return bool(self.wb_cloud_ready and self.wb_llm_model)
+
+    @property
     def storage_mode(self) -> str:
-        return "cloud" if self.cloud_ready else "memory"
+        if self.wb_cloud_ready or self.cloud_ready:
+            return "cloud"
+        return "memory"
+
+    @property
+    def storage_backend(self) -> str:
+        """存储实现名，用于前端徽标与诊断。"""
+        if self.wb_cloud_ready:
+            return "workbuddy-cloud"
+        if self.cloud_ready:
+            return "supabase"
+        return "memory"
 
 
 @dataclass(frozen=True)

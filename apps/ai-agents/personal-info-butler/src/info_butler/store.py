@@ -36,6 +36,11 @@ class Store(ABC):
     #: ``"cloud"`` 或 ``"memory"``，直接暴露给前端徽标。
     mode: str = "memory"
 
+    #: 实现名（``memory`` / ``supabase`` / ``workbuddy-cloud``）。
+    #: 与 ``mode`` 分开是因为 mode 只回答「数据会不会丢」，
+    #: backend 才回答「数据存在哪」——两者都要能被诊断接口读出来。
+    backend: str = "memory"
+
     @abstractmethod
     def list_items(
         self,
@@ -79,6 +84,7 @@ class MemoryStore(Store):
     """
 
     mode = "memory"
+    backend = "memory"
 
     def __init__(self) -> None:
         self._items: dict[str, dict] = {}
@@ -176,6 +182,7 @@ class SupabaseStore(Store):
     """
 
     mode = "cloud"
+    backend = "supabase"
 
     def __init__(self, settings: Settings):
         self._base = f"{settings.supabase_url}/rest/v1"
@@ -188,8 +195,128 @@ class SupabaseStore(Store):
         }
 
     def _request(self, method: str, path: str, **kwargs) -> list[dict]:
+        url = f"{self._base}/{path}"
         try:
-            url = f"{self._base}/{path}"
+            with http_client(url, self._timeout) as client:
+                response = client.request(method, url, headers=self._headers, **kwargs)
+        except httpx.HTTPError as exc:  # pragma: no cover - 依赖外部网络
+            raise StoreError(f"云端存储不可达：{exc}") from exc
+        if response.status_code >= 400:
+            raise StoreError(
+                f"云端存储返回 {response.status_code}：{response.text[:200]}"
+            )
+        if not response.content:
+            return []
+        try:
+            data = response.json()
+        except ValueError as exc:
+            raise StoreError("云端存储响应不是合法 JSON") from exc
+        return data if isinstance(data, list) else [data]
+
+    def list_items(
+        self,
+        *,
+        kind: str | None = None,
+        tag: str | None = None,
+        status: str | None = None,
+        limit: int = 50,
+    ) -> list[dict]:
+        params = ["select=*", "order=created_at.desc", f"limit={max(1, limit)}"]
+        if kind:
+            params.append(f"kind=eq.{kind}")
+        if status:
+            params.append(f"status=eq.{status}")
+        if tag:
+            params.append(f"tags=cs.{{{tag}}}")
+        return self._request("GET", f"items?{'&'.join(params)}")
+
+    def get_item(self, item_id: str) -> dict | None:
+        rows = self._request("GET", f"items?id=eq.{item_id}&select=*&limit=1")
+        return rows[0] if rows else None
+
+    def create_item(self, item: dict) -> dict:
+        record = dict(item)
+        record.setdefault("created_at", now_iso())
+        record.setdefault("updated_at", record["created_at"])
+        rows = self._request("POST", "items", json=record)
+        return rows[0] if rows else record
+
+    def update_item(self, item_id: str, patch: dict) -> dict | None:
+        body = {k: v for k, v in patch.items() if v is not None}
+        if not body:
+            return self.get_item(item_id)
+        body["updated_at"] = now_iso()
+        rows = self._request("PATCH", f"items?id=eq.{item_id}", json=body)
+        return rows[0] if rows else None
+
+    def delete_item(self, item_id: str) -> bool:
+        self._request("DELETE", f"item_links?src_id=eq.{item_id}")
+        self._request("DELETE", f"item_links?dst_id=eq.{item_id}")
+        self._request("DELETE", f"items?id=eq.{item_id}")
+        return True
+
+    def create_links(self, src_id: str, scored: list[dict]) -> list[dict]:
+        if not scored:
+            return []
+        payload = [
+            {
+                "src_id": src_id,
+                "dst_id": entry["id"],
+                "score": entry.get("score", 0.0),
+                "reason": entry.get("reason", ""),
+                "created_at": now_iso(),
+            }
+            for entry in scored
+        ]
+        return self._request("POST", "item_links", json=payload)
+
+    def list_links(self, item_id: str) -> list[dict]:
+        query = f"or=(src_id.eq.{item_id},dst_id.eq.{item_id})"
+        return self._request("GET", f"item_links?select=*&{query}")
+
+    def list_summaries(self, limit: int = 10) -> list[dict]:
+        return self._request(
+            "GET", f"summaries?select=*&order=created_at.desc&limit={max(1, limit)}"
+        )
+
+    def create_summary(self, summary: dict) -> dict:
+        record = dict(summary)
+        record.setdefault("created_at", now_iso())
+        rows = self._request("POST", "summaries", json=record)
+        return rows[0] if rows else record
+
+
+class WorkBuddyCloudStore(Store):
+    """WorkBuddy 云服务（托管 PostgreSQL / PostgREST）存储。
+
+    与 :class:`SupabaseStore` 的差异是**协议级**的，不是配置差异：
+
+    - 数据面路径是 ``/.cloud/database/rest/<table>``（不是 ``/rest/v1/``）；
+    - 鉴权头是 ``x-wb-webapp-access-key``，且 publishableKey **只能**放这个头，
+      不能当 Bearer 令牌用；
+    - 列级授权是「全有或全无」：请求列清单里只要有 1 列未授权，整表报
+      ``42501``（不是「少一列」）。因此这里的 ``select=*`` 必须与云端
+      授权的列集合严格对齐。
+
+    这些差异无法通过参数化复用 Supabase 的实现，故独立成类；但**对外查询
+    语义**（过滤、排序、截断）与另两种实现保持一致，由基类定义。
+    """
+
+    mode = "cloud"
+    backend = "workbuddy-cloud"
+
+    def __init__(self, settings: Settings):
+        self._base = f"{settings.wb_cloud_endpoint.rstrip('/')}/.cloud/database/rest"
+        self._timeout = settings.http_timeout
+        self._headers = {
+            "x-wb-webapp-access-key": settings.wb_publishable_key,
+            "Content-Type": "application/json",
+            "Prefer": "return=representation",
+        }
+
+    def _request(self, method: str, path: str, **kwargs) -> list[dict]:
+        url = f"{self._base}/{path}"
+        try:
             with http_client(url, self._timeout) as client:
                 response = client.request(method, url, headers=self._headers, **kwargs)
         except httpx.HTTPError as exc:  # pragma: no cover - 依赖外部网络
@@ -280,7 +407,15 @@ class SupabaseStore(Store):
 
 
 def create_store(settings: Settings) -> Store:
-    """按配置可用性选择存储：成对配齐才上云，否则内存。"""
+    """按配置可用性选择存储。
+
+    优先级：WorkBuddy 云服务 > Supabase > 内存。
+    WorkBuddy 云服务排在最前，是因为它是平台托管环境——同一份代码在平台上
+    跑时，平台注入的 ``WB_CLOUD_*`` 变量应该直接生效，而不是被本机残留的
+    Supabase 变量截胡。
+    """
+    if settings.wb_cloud_ready:
+        return WorkBuddyCloudStore(settings)
     if settings.cloud_ready:
         return SupabaseStore(settings)
     return MemoryStore()
