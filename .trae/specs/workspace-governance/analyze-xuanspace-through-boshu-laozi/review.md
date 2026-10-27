@@ -65,6 +65,8 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 
 ## 八、门禁与边界（AC-6 / AC-7 / NFR-3 / NFR-4 / NFR-5）
 
+> **断言范围**：本节涉及 commit / push / tag 的检查项，范围是**本规格任务的实施过程**（Task 1–7）。规格完成后经用户另行授权落地 P0-1 所产生的提交，记于文末「十、P0-1 落地证据」——本节原始记录不回改。
+
 - [x] `check-links.py` 对新增/修改文件报告 0 断链
 - [x] `check_mermaid.py` 校验通过（如含 Mermaid）
 - [x] 文档内交叉引用全部为相对路径，无 `file:///`，无 `.temp/` 引用
@@ -98,3 +100,47 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 禁止项 | 检查 git 历史 | 未执行 commit / push / tag |
 
 > 门禁脚本的已知环境约束：`.agents/scripts/constants.py` 的 `EXCLUDED_DIRS` 含 `projects`，故对 `projects/xuanspace` 的扫描须在 xuanspace 内以相对路径执行（链接检查），或复制到不含 `projects` 的临时目录后执行（Mermaid 检查）。
+
+## 十、P0-1 落地证据（规格完成后追加）
+
+> 范围：规格完成后经用户另行授权执行的《优化建议书》**P0-1**（统一根文档目录命名口径为 `doc/`）落地。对应 tasks.md 的 Task 8。本节为独立审查记录，不改写一至九节的原始验收结果。
+
+### 10.1 交付物与提交
+
+| 仓库 | 提交 | 变更规模 |
+|---|---|---|
+| `projects/xuanspace` | `207256c` refactor(xs): 重命名 docs 子命令为 doc 并对齐仓库目录约定 | 16 文件，52 insertions / 52 deletions（BREAKING） |
+| `projects/xuanspace` | `aed2e5b` refactor(xs): 重命名 docs_cmd 模块为 doc_cmd 并统一函数名前缀 | 3 文件，13 / 13，`rename ... (94%)` |
+| `projects/xuanspace` | `cc5c5b1` docs(changelog): 补记 xs doc 改名的破坏性变更 | 1 文件，+7 |
+| 根仓 `SpecWeave` | `b86f2a98e` chore(submodule): 更新 xuanspace 子模块指针至 cc5c5b1 | 1 文件，+1 / −1（仅 gitlink） |
+
+未 push、未 tag。
+
+### 10.2 门禁与核验
+
+| 检查项 | 命令 / 方法 | 结果 |
+|---|---|---|
+| CLI 注册表 | `from xs.cli import app` → `[g.name for g in app.registered_groups]` | `['toolchain','deps','doc','version','meta','archive','lfs']`；`has doc: True`、`has docs: False` |
+| 模块解析 | `import xs.commands.doc_cmd` | `...\commands\doc_cmd.py`（非 `docs_cmd`） |
+| 子命令可用 | `python -m xs.cli doc --help` | exit=0；`build` / `serve` / `clean` / `linkcheck` 四子命令齐备 |
+| 符号可达 | 导入 `doc_build`/`doc_serve`/`doc_clean`/`doc_linkcheck`/`_get_docs_dir` | 全部可导入；`_get_docs_dir(...)` → `projects\xuanspace\doc` |
+| 残留引用 | `rg 'docs_cmd\|docs_app\|docs_build\|docs_serve\|docs_clean\|docs_linkcheck'`（xuanspace 全仓） | **命中 0** |
+| 单元测试 | `pytest tests -q`（`PYTHONPATH=tools/xs/src`） | `1 failed, 20 passed`；失败项 `test_check_python_version` 为**环境性**（本机 Python 3.14.3 < 仓库要求 3.14.6），改动前即失败 |
+| 断链门禁 | `check-links.py --path doc`（cwd = `projects/xuanspace`） | 本地 33 / 外部 0，与改动前基线一致，**0 新增** |
+| Mermaid 门禁 | `repo-check.py mermaid` 不覆盖子模块内文件（按主仓 git 索引扫描），改以人工核对块边界 | `doc/` 下 3 处 mermaid 块（`dependency-report.md:50`、`blueprint.md:108`、`architecture.md:7`）与本次改动行**均不相交**，0 新增 |
+| 保留项未误改 | 检查 `_get_docs_dir` / `("doc","docs")` 兼容回退 / 变量名 `docs_dir` | 全部保留（其语义为「目录集合」而非「命令名」） |
+| 边界核对（xuanspace） | `git status --short` / `git submodule status` | 提交后工作树清空；`libs/mystx`、`libs/tvm-book`、`vendor/caffe`、`vendor/tvm-ffi` 四子模块指针干净 |
+| 边界核对（根仓） | `git ls-tree HEAD projects/xuanspace` / `git submodule status projects/xuanspace` | gitlink = `cc5c5b1356...`，与子模块 HEAD 一致 |
+
+### 10.3 过程发现（反模式记录）
+
+**`git commit -- <paths>` 无法提交 rename 的旧路径。**
+
+- **现象**：以 `git-commit-utf8.py <点名路径>` 提交「重命名 + 内容修改」时，工作树虽已 `git add`，但提交后旧文件仍以 `D` 状态残留于暂存区。
+- **复现**（沙箱，`$TEMP\gitpathspec-probe`）：
+  - `git mv a.py b.py` → 改 `b.py` → `git add b.py` → `git commit -- b.py` → 结果 `A b.py`，并残留 `D  a.py`（旧路径未进提交）。
+  - 改为 `git commit -- a.py b.py` → 结果 `D a.py` 被正确记录。
+- **根因**：`git commit -- <paths>` 的语义是「**HEAD + 点名路径的工作树态**」；未点名的暂存**删除**不进入本次提交。而 `git add <旧路径>` 会因文件不存在报错，故工具的 `check_staged_matches`（对 rename 只列新路径的 `--name-only` 做集合等值校验）无法与含旧路径的点名列表同时满足。
+- **处置**：先显式 `git add` 三个目标路径 → 以 `git diff --cached --name-status` 核验暂存集恰为 `M / M / R094` → 再以 UTF-8 消息文件经 bytes 通道提交该索引；提交后用 `git show --name-status` 复核 rename 成立。
+- **可迁移纪律**：**涉及重命名（删除+新增）的原子提交，不能用「只点名新路径」的 path 级提交**；须把旧路径一并纳入 pathspec，或改为「核验暂存集后提交整索引」。
+

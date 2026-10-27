@@ -91,6 +91,7 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
   - [x] SubTask 7.1: 在 `projects/xuanspace` 执行 `git status` 与 `git log -1`，确认变更仅限 `doc/`（两份新文档 + `index.md`）、HEAD 与 Task 1 记录一致
   - [x] SubTask 7.2: 确认 `projects/awesome-okf-xs` 零变更
   - [x] SubTask 7.3: 确认未执行任何 commit / push / tag，未清理或回滚任何既有改动
+    - **断言范围**：本条仅覆盖**本规格任务的实施过程**（Task 1–7）。规格完成后，用户另行授权落地《优化建议书》P0-1，由此产生的提交见文末「后续任务：P0-1 落地」——该追加不改写本条原始验收记录。
   - [x] SubTask 7.4: 保留 `doc/_build/` 产物若已生成——按需清理或保留（不得删除他人已有产物）
   - **Acceptance Criteria Addressed**: AC-6
   - **Test Requirements**:
@@ -109,3 +110,34 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 
 - Task 2 与 Task 3 在 Task 1 完成后可并行推进
 - Task 4 与 Task 5 在各自前置满足后可并行推进（两者写入不同文件，无共享状态）
+
+# 后续任务：P0-1 落地（规格完成后追加）
+
+> 本节记录**规格完成后**、经用户另行授权执行的《优化建议书》P0-1 落地及其提交。它不改写 Task 1–7 的原始验收记录；Task 7.3 关于 commit 的断言以本规格任务的实施过程为范围（见该条「断言范围」注）。
+
+- [x] Task 8: 落地 P0-1（统一根文档目录命名口径为 `doc/`）
+  - **Priority**: high
+  - **Depends On**: Task 7
+  - **Description**: 依《优化建议书》P0-1，以磁盘目录名 `doc/` 为唯一命名事实，消除 CLI 名、脚手架生成目录与文档/CI 示例的口径分裂，并收口模块命名约定。
+  - [x] SubTask 8.1: CLI 子命令 `xs docs` → `xs doc`（按裁定不保留别名）；`xs init` 脚手架生成目录 `docs/` → `doc/`（含模板文本）；文档与 CI 示例同步，共 16 文件
+  - [x] SubTask 8.2: 模块 `commands/docs_cmd.py` → `commands/doc_cmd.py`；公开函数统一 `doc_*` 前缀（`doc_build`／`doc_serve`／`doc_clean`／`doc_linkcheck`）；`cli.py` 导入与 Typer 别名同步为 `doc_app`
+  - [x] SubTask 8.3: `doc/recommendations.md` 的排除项分类（`CHANGELOG.md#L12` 由「语义不同」移入「历史记录与归档」）、路径引用与验证白名单同步
+  - [x] SubTask 8.4: `CHANGELOG.md` 补记 `Unreleased` 段（两项 BREAKING + 模块重命名），v0.1.0 历史发布记录不改写
+  - [x] SubTask 8.5: 根仓推进 `projects/xuanspace` 子模块指针
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace` 内的具名文件与 `CHANGELOG.md`）
+  - **Test Requirements**:
+    - `rule` TR-8.1: CLI 注册表 groups 含 `doc` 且不含 `docs`；`xs doc --help` exit=0 且 build/serve/clean/linkcheck 四子命令齐备
+    - `rule` TR-8.2: `docs_cmd|docs_app|docs_build|docs_serve|docs_clean|docs_linkcheck` 全仓检索命中 0
+    - `rule` TR-8.3: `pytest tests` 无新增失败（现存 1 项 `test_check_python_version` 为环境性——本机 Python 3.14.3 < 仓库要求 3.14.6，改动前即失败）
+    - `rule` TR-8.4: 根仓 `git ls-tree HEAD projects/xuanspace` 的 gitlink 等于子模块 HEAD
+
+## 提交记录（证据）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `207256c` | `refactor(xs): 重命名 docs 子命令为 doc 并对齐仓库目录约定`（16 文件，BREAKING） |
+| `projects/xuanspace` | `aed2e5b` | `refactor(xs): 重命名 docs_cmd 模块为 doc_cmd 并统一函数名前缀`（3 文件，rename 94%） |
+| `projects/xuanspace` | `cc5c5b1` | `docs(changelog): 补记 xs doc 改名的破坏性变更`（1 文件） |
+| 根仓 | `b86f2a98e` | `chore(submodule): 更新 xuanspace 子模块指针至 cc5c5b1`（仅 gitlink，+1/−1） |
+
+> 未 push、未 tag。根仓存在并行会话的在途暂存改动（`docs/retrospective/patterns/methodology-patterns/governance-strategy/` 9 项），本次 gitlink 提交按 path 级钉死，未卷入其中。
