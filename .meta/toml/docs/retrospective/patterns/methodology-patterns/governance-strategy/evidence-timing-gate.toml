@@ -1,0 +1,24 @@
+id = "evidence-timing-gate"
+title = "证据时序门"
+domain = "methodology"
+layer = "governance-strategy"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+maturity = "L1"
+maturity_level = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20261027-contest-task8)——知乎/WorkBuddy/头条三入口参赛与写作指南知识包（83 条事实/3 洞察/2 候选方法）"
+source_report = "../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/contest-writing-guide/index.md"
+date = "2026-10-27"
+version = "1.0"
+maturity_note = "单案例（三入口参赛与写作指南知识包，83 条事实族支撑）；跨域迁移示例（资助申请）为同构推演、尚未实测；待第二个非同谱系案例完整应用并复盘升级 L2"
+
+[bindings]
+related_patterns = [
+  "stop-loss-backward-scheduling",
+  "release-eligibility-invariant-gate",
+  "evidence-chain-engineering",
+  "deadline-breakpoint-first",
+]
