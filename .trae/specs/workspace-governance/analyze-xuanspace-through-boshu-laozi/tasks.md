@@ -287,6 +287,6 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 仓库 | 提交 | 说明 |
 |---|---|---|
 | `projects/xuanspace` | `2750078` | `ci(xuanspace): 新增声明—实现一致性门禁（P0-4）`（4 文件，+304/−5：`scripts/check_declaration_consistency.py` + `scripts/declaration-snapshot.json` + `.github/workflows/ci.yml` + `scripts/README.md`） |
-| 根仓 | `见 review.md 第十四节` | `chore(xuanspace): 前移子模块指针至 2750078（声明一致性门禁 P0-4 落地）` + 规格三件套回写（仅 gitlink + 本规格文档） |
+| 根仓 | `3a6d95193` | `chore(xuanspace): 前移子模块指针至 2750078 并回写 P0-4 落地证据`（3 文件，+78/−1：`review.md` + `tasks.md` + 子模块 gitlink） |
 
 > 未 push、未 tag。子模块 HEAD 为 `2750078e2386ee4efd3e09c0a3155bd43abaffd4`，根仓 gitlink 与之对齐。子模块工作树残留 8 项（`.gitignore`、`pyproject.toml`、`src/xuanspace/__init__.py`、`tools/xs/README.md`、`tools/xs/src/xs/__init__.py`、`tools/xs/src/xs/cli.py`、`tools/xs/src/xs/commands/version_cmd.py`、`tools/xs/src/xs/discovery.py`）为**并行会话在途改动**，本轮未触碰、未提交。

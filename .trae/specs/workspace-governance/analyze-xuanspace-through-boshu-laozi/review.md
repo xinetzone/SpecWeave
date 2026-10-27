@@ -275,7 +275,7 @@ Task 10 收敛 `apps/xs-cli/` 主引用后，`rg` 发现同源残余两处，改
 | 仓库 | 提交 | 变更规模 |
 |---|---|---|
 | `projects/xuanspace` | `2750078` ci(xuanspace): 新增声明—实现一致性门禁（P0-4） | 4 文件，+304 / −5 |
-| 根仓 `SpecWeave` | `见 14.4` | 本规格三件套回写 + 子模块 gitlink 前移 |
+| 根仓 `SpecWeave` | `3a6d95193` chore(xuanspace): 前移子模块指针至 2750078 并回写 P0-4 落地证据 | 3 文件，+78 / −1（gitlink + 本规格 `tasks.md`/`review.md`） |
 
 未 push、未 tag。子模块 HEAD 为 `2750078e2386ee4efd3e09c0a3155bd43abaffd4`，根仓 gitlink 与之对齐。
 
