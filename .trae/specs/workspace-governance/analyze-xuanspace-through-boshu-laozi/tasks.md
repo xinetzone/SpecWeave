@@ -315,3 +315,33 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 根仓 | `4b538fa72` | `chore(xuanspace): 前移子模块指针并回写建议书收口证据`（`tasks.md` + `review.md` + gitlink） |
 
 > 未 push、未 tag。
+
+## 后续任务：P1-4① 落地与建议书彻底精简（第七轮授权）
+
+> 本节记录规格完成后**第七轮**经用户另行授权执行的工作：① 落地《优化建议书》P1-4 期望态遗留的**第 ① 条**（清单改由脚本注入的生成块派生）；② 按用户指令把 `doc/recommendations.md` 中的**已闭环条目彻底清空**——P1-4 在本轮 ① 落地后即闭环，故该条目亦随之移除，文件收口为「全量闭环、无待办」终态。不改写 Task 1–17 的原始记录。
+
+- [x] Task 18: 落地 P1-4①（libs 子项目清单改为脚本生成块）并收口建议书
+  - **Priority**: medium
+  - **Depends On**: Task 17
+  - **Description**: P1-4 期望态第 ② 条（清单 ⊆ 磁盘目录断言）已于第五轮由 B 类断言覆盖；本轮落地第 ① 条——把 `libs/README.md`「现有子项目」表改为由 `scripts/check_declaration_consistency.py` 从 `libs/` 磁盘目录派生的生成块，并把「类型 / 说明」两列收进脚本内嵌映射 `LIB_PROJECT_META`，消灭最后一处手写真源；随后按用户指令清空建议书中全部已闭环条目。
+  - [x] SubTask 18.1: `check_declaration_consistency.py` 新增 `LIBS_GENERATED_BEGIN`/`LIBS_GENERATED_END` 标记常量与 `LIB_PROJECT_META`（8 项：目录名 → (类型, 说明)）；新增 `_generated_block()`、`render_lib_projects_table()`、`inject_lib_projects_block()`；删除 `_LIB_ROW_RE`、`_section()`、`declared_lib_projects()`（不再解析手写表）
+  - [x] SubTask 18.2: 校验模式 B 段重写——比对「生成块内容 == 脚本渲染结果」，且 `LIB_PROJECT_META` 缺登记项亦判失败；`--generate` 增加「刷新清单生成块」职责（幂等）
+  - [x] SubTask 18.3: `libs/README.md` 手写表改为「引语 + 生成标记块」；`scripts/README.md` 该脚本行说明同步为「子项目清单（`libs/README.md` 生成块）…`--generate` 刷新快照与清单生成块」
+  - [x] SubTask 18.4: `doc/recommendations.md` 彻底清空已闭环条目（P0-1~P0-4、P1-1~P1-6、P2-1~P2-4，含本轮闭环的 P1-4），收口为终态说明（166 行 → 12 行）
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace` 内脚本与文档）
+  - **Test Requirements**:
+    - `rule` TR-18.1: 校验模式退出码 = 0；新增 `libs/<probe>/` 目录后退出码 = 1 且报「生成块缺元数据登记」「已过期」「快照 lib_projects 已过期」，探针清理后复现通过
+    - `rule` TR-18.2: 生成模式幂等——`--generate` 输出「清单快照已是目标状态，跳过」与「生成块已是目标状态，跳过」且退出码 = 0
+    - `rule` TR-18.3: `ruff check scripts/check_declaration_consistency.py` 通过（新脚本省略 `# -*- coding: utf-8 -*-`，符合 py314 `UP009`）
+    - `rule` TR-18.4: `check-links.py --paths doc libs scripts`（cwd = `projects/xuanspace`）本轮 4 文件 **0 新增断链**（127 处为存量）
+    - `rule` TR-18.5: 根仓 `git ls-tree HEAD projects/xuanspace` 的 gitlink = 子模块 HEAD
+
+## 提交记录（证据，第七轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `fc4fe25` | `refactor(xuanspace): libs 子项目清单改由脚本生成块派生`（3 文件：`scripts/check_declaration_consistency.py` + `libs/README.md` + `scripts/README.md`，+96/−34） |
+| `projects/xuanspace` | `f9e2b2c` | `docs(xuanspace): 优化建议书移除已闭环条目并收口为终态`（1 文件：`doc/recommendations.md`，+2/−166） |
+| 根仓 | `<待回填>` | `chore(xuanspace): 前移子模块指针并回写 P1-4① 落地证据`（`tasks.md` + `review.md` + gitlink） |
+
+> 未 push、未 tag。子模块 HEAD 为 `f9e2b2cde2c04055dd58026b7c38d168e2ce274a`，根仓 gitlink 与之对齐。子模块工作树残留项（`.gitignore`、`pyproject.toml`、`src/xuanspace/__init__.py`、`tools/xs/**`、`libs/xuan-compose/**`、`libs/caffe-ffi/**`、`libs/npu-ffi/**`、`libs/demo-ffi/**`）为**并行会话在途改动**，本轮未触碰、未提交。

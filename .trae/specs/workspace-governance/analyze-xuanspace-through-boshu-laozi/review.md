@@ -347,3 +347,46 @@ Task 10 收敛 `apps/xs-cli/` 主引用后，`rg` 发现同源残余两处，改
 - **P1-4 期望态的第 ① 条**（生成标记由脚本注入文档）仍未实现（承 §14.4）；第 ② 条已由第五轮 B 类断言覆盖。
 - 本轮为该规格的纯收口轮次，P0/P1/P2 已全量闭环；除上述 P1-4 ① 外，建议书无剩余可执行项。
 
+## 十六、P1-4① 落地与建议书彻底精简证据（规格完成后追加，第七轮）
+
+> 范围：规格完成后**第七轮**经用户另行授权执行的工作——① P1-4 期望态第 ① 条（清单改由脚本注入的生成块派生）；② 按用户指令彻底清空 `doc/recommendations.md` 中全部已闭环条目。对应 tasks.md 的 Task 18。本节为独立审查记录，不改写一至十五节的原始验收结果。
+
+### 16.1 交付物与提交
+
+| 仓库 | 提交 | 变更规模 |
+|---|---|---|
+| `projects/xuanspace` | `fc4fe25` refactor(xuanspace): libs 子项目清单改由脚本生成块派生 | 3 文件（`scripts/check_declaration_consistency.py` + `libs/README.md` + `scripts/README.md`，+96 / −34） |
+| `projects/xuanspace` | `f9e2b2c` docs(xuanspace): 优化建议书移除已闭环条目并收口为终态 | 1 文件（`doc/recommendations.md`，+2 / −166） |
+| 根仓 `SpecWeave` | `<待回填>` chore(xuanspace): 前移子模块指针并回写 P1-4① 落地证据 | 3 文件（`tasks.md` + `review.md` + gitlink） |
+
+未 push、未 tag。子模块 HEAD 为 `f9e2b2cde2c04055dd58026b7c38d168e2ce274a`，根仓 gitlink 与之对齐。
+
+### 16.2 生成块设计（P1-4①）
+
+| 要素 | 内容 |
+|---|---|
+| 标记 | `libs/README.md` 清单块由 `<!-- BEGIN GENERATED: libs-projects -->` / `<!-- END GENERATED: libs-projects -->` 包裹，块内禁止手改 |
+| 单一事实源 | 「类型 / 说明」迁入脚本内嵌映射 `LIB_PROJECT_META`（8 项）；目录名集合由 `libs/` 磁盘派生——手写真源清零 |
+| 门禁升级 | 由「比对条目集合」升级为「**块内容 == 脚本渲染结果**」；`LIB_PROJECT_META` 缺登记项亦判失败 |
+| 生成 | `--generate` 重写该块（幂等），与快照刷新合并为同一命令 |
+
+### 16.3 门禁与核验
+
+| 检查项 | 命令 / 方法 | 结果 |
+|---|---|---|
+| 校验模式 | `python scripts/check_declaration_consistency.py` | 退出码 **0**；「声明与实现一致：CLI 命令清单 / 子项目清单 / 目录名口径 全部通过。」 |
+| 负向探针 | 新建 `libs/probe-tmp/` 后重跑 | 退出码 **1**；三项报错（生成块缺元数据登记 / 生成块已过期 / 快照 `lib_projects` 已过期）；探针已清理 |
+| 生成模式幂等 | `--generate` 连跑两次 | 「清单快照已是目标状态，跳过」+「生成块已是目标状态，跳过」，退出码 0 |
+| 结构化输出 | `--json` | `{"ok": true, "failures": [], "notes": []}` |
+| 静态检查 | `ruff check scripts/check_declaration_consistency.py` | `All checks passed!` |
+| 断链门禁 | `check-links.py --paths doc libs scripts`（cwd = `projects/xuanspace`） | rc=1；127 处**均为存量**（集中在 `libs/caffe-ffi/docs`、`libs/mystx/doc` 与 `doc/okf`），本轮 4 文件 **0 新增** |
+| 行号引用一致性 | 核对 `recommendations.md` 曾引用的两处 `#L` 区间 | `check_declaration_consistency.py#L207-L217`（B 段）与 `libs/README.md#L106-L123`（生成块）均与磁盘一致（收口后该两处引用随条目移除） |
+| 边界核对（xuanspace） | `git status --short` | 除本轮 4 文件外，其余 dirty 全为**并行会话在途改动**，本轮未触碰 |
+| 边界核对（根仓） | `git ls-tree HEAD projects/xuanspace` | gitlink = 子模块 HEAD |
+
+### 16.4 遗留与后续
+
+- **P1-4 至此完整闭环**——期望态第 ① 条（本轮）与第 ② 条（第五轮 B 类断言）均已落地。
+- `doc/recommendations.md` 已收口为「全量闭环、无待办」终态：P0/P1/P2 全部条目及其正文均移除，逐条证据由 git 历史与根仓本主题规格三件套承载。
+- 《优化建议书》至此**无剩余可执行项**；本规格亦无遗留任务。
+
