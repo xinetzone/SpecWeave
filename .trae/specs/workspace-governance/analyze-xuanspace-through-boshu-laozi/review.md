@@ -144,3 +144,44 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 - **处置**：先显式 `git add` 三个目标路径 → 以 `git diff --cached --name-status` 核验暂存集恰为 `M / M / R094` → 再以 UTF-8 消息文件经 bytes 通道提交该索引；提交后用 `git show --name-status` 复核 rename 成立。
 - **可迁移纪律**：**涉及重命名（删除+新增）的原子提交，不能用「只点名新路径」的 path 级提交**；须把旧路径一并纳入 pathspec，或改为「核验暂存集后提交整索引」。
 
+## 十一、P0-1 主体 + P0-2/P0-3 落地证据（规格完成后追加，第二轮）
+
+> 范围：规格完成后**第二轮**经用户另行授权执行的《优化建议书》落地——P0-1 主体的文档级 7 处引用、P0-2（`apps/` 与 `apps/xs-cli/` 失实声明）、P0-3（上游子模块数 3→4），以及同源残余引用清理。对应 tasks.md 的 Task 9–13。本节为独立审查记录，不改写一至十节的原始验收结果。
+
+### 11.1 交付物与提交
+
+| 仓库 | 提交 | 变更规模 |
+|---|---|---|
+| `projects/xuanspace` | `d681e4c` refactor(doc): 补齐根文档目录命名漂移的 7 处引用 | 6 文件，+7 / −7 |
+| `projects/xuanspace` | `349afa6` docs(xuanspace): 修正 apps/ 与上游子模块数量的失实声明 | 4 文件，+12 / −8（P0-2 + P0-3） |
+| `projects/xuanspace` | `edce88f` docs(xuanspace): 清理 apps/xs-cli 残余引用 | 2 文件，+1 / −3 |
+| 根仓 `SpecWeave` | `abc724559` chore(submodule): 更新 xuanspace 子模块指针至 edce88f | 1 文件，+1 / −1（仅 gitlink） |
+
+未 push、未 tag。子模块 HEAD 最终为 `edce88f4a3bd96cf3fe7761383d0dbd08937df7c`，根仓 gitlink 与之对齐（`abc724559`）。
+
+### 11.2 门禁与核验
+
+| 检查项 | 命令 / 方法 | 结果 |
+|---|---|---|
+| P0-1 目标清零 | 白名单 `rg -n "docs/" --hidden --glob '!vendor/**' --glob '!libs/**' --glob '!.git/**' --glob '!.trae/**' --glob '!attic/**' --glob '!doc/blueprint.md' --glob '!doc/recommendations.md'`（cwd = xuanspace） | 目标 7 处**全清零**；剩余 8 行全部落排除项（`doc_cmd.py:21/24`、`doctor_cmd.py:200/210` 兼容实现、`CONTRIBUTING.md:316` 分支命名 `docs/<name>`、`CHANGELOG.md:12/19` 历史记录、`tests/test_doctor_sphinx.py:19` 兼容注释） |
+| `--hidden` 必要性 | 上述扫描含 `.agents/` 下 1 处命中 | 该处（`.agents/ONBOARDING.md`）须 `--hidden` 方可扫到——正是本项目记录的失效模式 |
+| P0-3 数字 | `rg -n "3 个上游子模块" CONTRIBUTING.md` | rc=1（**无命中**） |
+| P0-3 事实源 | `git config -f .gitmodules --get-regexp '^submodule\..*\.path'` | 4 条（`vendor/tvm-ffi`、`libs/tvm-book`、`vendor/caffe`、`libs/mystx`） |
+| 磁盘事实（P0-2 依据） | 列 `apps/` 目录 | 仅 `.gitkeep` + `README.md`，「当前为空目录」成立 |
+| 残余引用 | `rg -n "apps[\\/]xs-cli" --hidden --glob '!.git/**'`（cwd = xuanspace） | 剩余命中仅为否定式表述（`tools/README.md:32`）、建议书原文（`doc/recommendations.md:66/67`）、历史归档（`attic/README.md:178`） |
+| 断链门禁 | `check-links.py --path .`（cwd = `projects/xuanspace`） | 128 处**均为存量**（集中 `libs/caffe-ffi/docs/`、`doc/okf/`）；本轮改动 4 文件 **0 新增** |
+| Sphinx 构建 | `python -m sphinx -b html doc doc/_build/html -q --keep-going`（cwd = xuanspace） | rc=0 |
+| 边界核对（xuanspace） | `git status --short` | 提交后工作树为空（干净） |
+| 边界核对（根仓） | `git diff --submodule=short` / `git ls-tree HEAD projects/xuanspace` | gitlink 前移至 `edce88f`，与子模块 HEAD 一致 |
+
+> 门禁脚本环境约束（与第十节同源）：`.agents/scripts/constants.py` 的 `EXCLUDED_DIRS` 含 `projects`，故从根仓以 `--path projects/xuanspace` 调用 `check-links.py` 会扫到 **0 个文件**；须在 `projects/xuanspace` 内以 `--path .` 执行。
+
+### 11.3 同源残余发现
+
+Task 10 收敛 `apps/xs-cli/` 主引用后，`rg` 发现同源残余两处，改由 Task 12 一并清理（随 `edce88f` 落地）：
+
+- `CONTRIBUTING.md` §4.2（L273）与 §4.3（L288）：`uv pip install -e apps/xs-cli` / `pip install -e apps/xs-cli` ——照抄会失败（路径不存在），且与紧邻的 `-e tools/xs` 重复。
+- `.agents/context-routing.md#L20`：routing 表中 `[../apps/xs-cli/]` 为失效链接。
+
+退化的排除项（**不改**，语义不同或属历史）：`tools/README.md:32` 的否定式表述（「不存在 `apps/xs-cli/` 包装层」）、`doc/recommendations.md:66/67` 的建议书原文、`attic/README.md:178` 的历史归档。
+

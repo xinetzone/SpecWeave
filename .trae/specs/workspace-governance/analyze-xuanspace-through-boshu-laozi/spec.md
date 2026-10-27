@@ -212,3 +212,14 @@ Xuanspace（玄境）自述「技术为器、思想为道、器以载道」，�
 - [review.md](review.md) → 「十、P0-1 落地证据」（含门禁核验与过程发现）
 
 涉及提交：`projects/xuanspace` 的 `207256c`、`aed2e5b`、`cc5c5b1`，以及根仓 `b86f2a98e`（子模块指针）。未 push、未 tag。
+
+### 第二轮授权（P0-1 主体 + P0-2/P0-3）
+
+其后用户再次授权落地《优化建议书》的 **P0-1 主体**（文档层 7 处 `docs/` → `doc/`）、**P0-2**（`apps/` 与 `apps/xs-cli/` 失实声明）与 **P0-3**（上游子模块数 3→4，补 `libs/mystx`），并清理同源残余引用。该动作同样超出本规格授权边界，不改写本文件的 Non-Goals 与 Assumptions，另记：
+
+- [tasks.md](tasks.md) → 「后续任务：P0-1 主体 + P0-2/P0-3 落地」Task 9–13（含第二轮提交记录）
+- [review.md](review.md) → 「十一、P0-1 主体 + P0-2/P0-3 落地证据」（含门禁核验与残余发现）
+
+涉及提交：`projects/xuanspace` 的 `d681e4c`、`349afa6`、`edce88f`，以及根仓 `abc724559`（子模块指针前移至 `edce88f`）。未 push、未 tag。
+
+> 注：P0-1 的「主体」指文档层引用；其代码侧主体（`xs doc` 改名）已于第一轮 Task 8 落地。全文 P0-1 至此**完整闭环**。

@@ -141,3 +141,64 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 根仓 | `b86f2a98e` | `chore(submodule): 更新 xuanspace 子模块指针至 cc5c5b1`（仅 gitlink，+1/−1） |
 
 > 未 push、未 tag。根仓存在并行会话的在途暂存改动（`docs/retrospective/patterns/methodology-patterns/governance-strategy/` 9 项），本次 gitlink 提交按 path 级钉死，未卷入其中。
+
+# 后续任务：P0-1 主体 + P0-2/P0-3 落地（规格完成后追加，第二轮授权）
+
+> 本节记录规格完成后**第二轮**经用户另行授权执行的《优化建议书》落地：P0-1 主体的文档级 7 处引用 + P0-2（`apps/` 与 `apps/xs-cli/` 失实声明）+ P0-3（上游子模块数 3→4）。不改写 Task 1–8 的原始记录。
+
+- [x] Task 9: 落地 P0-1 主体（文档级 7 处 `docs/` → `doc/`）
+  - **Priority**: high
+  - **Depends On**: Task 8
+  - **Description**: Task 8 已收口 CLI 名与脚手架生成目录；本轮补齐**文档层**残余 7 处 `docs/` 引用，使根文档目录命名口径在文档层一致。
+  - [x] SubTask 9.1: 修正 6 文件 7 处——`AGENTS.md#L66`、`.agents/ONBOARDING.md#L103`、`CHANGELOG.md#L20`、`doc/architecture.md#L71`、`doc/dependency-report.md#L28`、`CONTRIBUTING.md#L709` 与 §12.1 目录树首行（L714）
+  - [x] SubTask 9.2: 以白名单 `rg --hidden` 复核——剩余 8 行**全部**落入既有排除项（`doc_cmd.py` / `doctor_cmd.py` 兼容实现、`CONTRIBUTING.md#L316` 分支命名 `docs/<name>`、`CHANGELOG.md#L12/19` 历史记录、`tests/test_doctor_sphinx.py#L19` 兼容注释）
+  - **Acceptance Criteria Addressed**: AC-6
+  - **Test Requirements**:
+    - `rule` TR-9.1: 白名单 `rg` 扫描下 P0-1 目标 7 处零命中
+- [x] Task 10: 落地 P0-2（`apps/` 与 `apps/xs-cli/` 失实声明）
+  - **Priority**: high
+  - **Depends On**: Task 9
+  - **Description**: 磁盘事实为 `apps/` 仅含 `.gitkeep` 与 `README.md`（无应用），但 `doc/architecture.md`、`apps/README.md`、`tools/README.md` 仍以「现有子项目」口径描述 `xs-cli/`、`zhujian-wudao/`。按《优化建议书》P0-2 期望态改为「当前为空目录，预留应用位」，示例标注为模板示意。
+  - [x] SubTask 10.1: `doc/architecture.md` 目录树 L59 精简为「可执行应用（当前为空目录，预留应用位）」；L85 子项目分类表末列同步
+  - [x] SubTask 10.2: `apps/README.md` L87-96「现有子项目示例」改为「子项目清单」，明示「当前为空目录」，示例表改标「模板示意，非磁盘现状」
+  - [x] SubTask 10.3: `tools/README.md#L32` 与 L80 消除 `apps/xs-cli/` 包装层的失实描述（实现全部位于 `tools/xs/`，发行版名 `xs-cli`）
+  - **Acceptance Criteria Addressed**: AC-6
+  - **Test Requirements**:
+    - `rule` TR-10.1: `rg 'apps[\\/]xs-cli'` 命中仅剩否定式表述 / 建议书原文 / 历史归档
+- [x] Task 11: 落地 P0-3（上游子模块数 3 → 4，补 `libs/mystx`）
+  - **Priority**: high
+  - **Depends On**: Task 9
+  - **Description**: `.gitmodules` 实有 4 条（`vendor/tvm-ffi`、`libs/tvm-book`、`vendor/caffe`、`libs/mystx`），而 `CONTRIBUTING.md` §3.5 记为「3 个上游子模块」且未提 `libs/mystx`。
+  - [x] SubTask 11.1: `CONTRIBUTING.md#L212` 数字改为 4；子模块表补 `libs/mystx` 行（用途：可选 Sphinx 文档主题，缺失时回退 `sphinx-book-theme`）
+  - [x] SubTask 11.2: §3.5「初始化时机」补 `libs/mystx` 条目（与 `doc/conf.py` 的 `mystx → sphinx_book_theme → alabaster` 回退链一致）
+  - **Acceptance Criteria Addressed**: AC-6
+  - **Test Requirements**:
+    - `rule` TR-11.1: `rg '3 个上游子模块' CONTRIBUTING.md` 零命中；`git config -f .gitmodules` 条目数 = 4
+- [x] Task 12: 清理同源残余引用
+  - **Priority**: medium
+  - **Depends On**: Task 10
+  - **Description**: Task 10 收敛 `apps/xs-cli/` 主引用后，清理同源残余：照抄会失败的安装命令与 routing 表的失效链接。
+  - [x] SubTask 12.1: `CONTRIBUTING.md` §4.2/§4.3 删除 `uv pip install -e apps/xs-cli` / `pip install -e apps/xs-cli`（与紧邻 `-e tools/xs` 重复且旧路径不存在）
+  - [x] SubTask 12.2: `.agents/context-routing.md#L20` 移除 `[../apps/xs-cli/]` 失效链接
+  - **Acceptance Criteria Addressed**: AC-6
+- [x] Task 13: 收尾核验与根仓 gitlink 前移
+  - **Priority**: medium
+  - **Depends On**: Task 12
+  - **Description**: 对全轮改动跑门禁（链接、Sphinx 构建），并把子模块指针前移提交到根仓。
+  - [x] SubTask 13.1: `check-links.py --path .`（cwd = `projects/xuanspace`）——本轮改动文件 0 新增断链（目录内 128 处为存量，集中 `libs/caffe-ffi/docs/` 与 `doc/okf/`）
+  - [x] SubTask 13.2: `python -m sphinx -b html doc doc/_build/html -q --keep-going` → rc=0
+  - [x] SubTask 13.3: 根仓推进 `projects/xuanspace` 子模块指针至 `edce88f`
+  - **Acceptance Criteria Addressed**: AC-6
+  - **Test Requirements**:
+    - `rule` TR-13.1: 根仓 `git ls-tree HEAD projects/xuanspace` 的 gitlink = 子模块 HEAD `edce88f`
+
+## 提交记录（证据，第二轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `d681e4c` | `refactor(doc): 补齐根文档目录命名漂移的 7 处引用`（6 文件，+7/−7） |
+| `projects/xuanspace` | `349afa6` | `docs(xuanspace): 修正 apps/ 与上游子模块数量的失实声明`（4 文件，+12/−8，含 P0-2 + P0-3） |
+| `projects/xuanspace` | `edce88f` | `docs(xuanspace): 清理 apps/xs-cli 残余引用`（2 文件，+1/−3） |
+| 根仓 | `abc724559` | `chore(submodule): 更新 xuanspace 子模块指针至 edce88f`（仅 gitlink，+1/−1） |
+
+> 未 push、未 tag。子模块 HEAD 最终为 `edce88f4a3bd96cf3fe7761383d0dbd08937df7c`，根仓 gitlink 与之对齐。
