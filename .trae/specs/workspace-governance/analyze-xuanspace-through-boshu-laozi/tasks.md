@@ -290,3 +290,28 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 根仓 | `3a6d95193` | `chore(xuanspace): 前移子模块指针至 2750078 并回写 P0-4 落地证据`（3 文件，+78/−1：`review.md` + `tasks.md` + 子模块 gitlink） |
 
 > 未 push、未 tag。子模块 HEAD 为 `2750078e2386ee4efd3e09c0a3155bd43abaffd4`，根仓 gitlink 与之对齐。子模块工作树残留 8 项（`.gitignore`、`pyproject.toml`、`src/xuanspace/__init__.py`、`tools/xs/README.md`、`tools/xs/src/xs/__init__.py`、`tools/xs/src/xs/cli.py`、`tools/xs/src/xs/commands/version_cmd.py`、`tools/xs/src/xs/discovery.py`）为**并行会话在途改动**，本轮未触碰、未提交。
+
+## 后续任务：建议书文末陈述收口（第六轮授权）
+
+> 本节记录规格完成后**第六轮**经用户另行授权执行的收口：处置《优化建议书》文末「本轮不执行任何建议项，仅提出清单」这一**在 P0/P1/P2 陆续落地后已与事实不符**的存量陈述（承第四轮 review.md §13.4、第五轮 §14.4 两轮登记的「留待后续统一处置」）。仅修正陈述与回写证据，不改写 Task 1–16 的原始记录。
+
+- [x] Task 17: 修正《优化建议书》文末失真陈述并回写收口证据
+  - **Priority**: low
+  - **Depends On**: Task 16
+  - **Description**: `doc/recommendations.md` 文末「本轮不执行任何建议项，仅提出清单」在 P0-1~P0-4、P1 全量、P2 全量落地后已失真；改写为反映实际闭环状态的陈述，并在规格三件套回写本轮证据。
+  - [x] SubTask 17.1: 改写 `doc/recommendations.md` 文末末句——列明已闭环项（P0-1~P0-4、P1-1~P1-4 与 P1-6、P2-1~P2-4；P1-5 随「文档入口合并」消解）并指向根仓本主题规格三件套
+  - [x] SubTask 17.2: `tasks.md` / `review.md` 回写第六轮收口证据（本节 + review.md 第十五节）
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace` 文档陈述与根仓规格三件套）
+  - **Test Requirements**:
+    - `rule` TR-17.1: `rg "本轮不执行任何建议项" doc/` 命中 0
+    - `rule` TR-17.2: `check-links.py --path .`（cwd = `projects/xuanspace`）本轮 **0 新增断链**（127 处为存量）
+    - `rule` TR-17.3: 根仓 `git ls-tree HEAD projects/xuanspace` 的 gitlink = 子模块 HEAD
+
+## 提交记录（证据，第六轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `d2dc124` | `docs(xuanspace): 修正建议书文末与落地事实不符的存量陈述`（`doc/recommendations.md`） |
+| 根仓 | `<待回填>` | `chore(xuanspace): 前移子模块指针并回写建议书收口证据`（`tasks.md` + `review.md` + gitlink） |
+
+> 未 push、未 tag。
