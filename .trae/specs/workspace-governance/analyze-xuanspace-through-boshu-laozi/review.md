@@ -357,7 +357,7 @@ Task 10 收敛 `apps/xs-cli/` 主引用后，`rg` 发现同源残余两处，改
 |---|---|---|
 | `projects/xuanspace` | `fc4fe25` refactor(xuanspace): libs 子项目清单改由脚本生成块派生 | 3 文件（`scripts/check_declaration_consistency.py` + `libs/README.md` + `scripts/README.md`，+96 / −34） |
 | `projects/xuanspace` | `f9e2b2c` docs(xuanspace): 优化建议书移除已闭环条目并收口为终态 | 1 文件（`doc/recommendations.md`，+2 / −166） |
-| 根仓 `SpecWeave` | `<待回填>` chore(xuanspace): 前移子模块指针并回写 P1-4① 落地证据 | 3 文件（`tasks.md` + `review.md` + gitlink） |
+| 根仓 `SpecWeave` | `f92d2ebe1` chore(xuanspace): 前移子模块指针并回写 P1-4① 落地证据 | 3 文件（`tasks.md` + `review.md` + gitlink） |
 
 未 push、未 tag。子模块 HEAD 为 `f9e2b2cde2c04055dd58026b7c38d168e2ce274a`，根仓 gitlink 与之对齐。
 
