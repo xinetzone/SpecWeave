@@ -196,11 +196,16 @@ Xuanspace（玄境）自述「技术为器、思想为道、器以载道」，�
 
 ## Open Questions
 
-- [ ] 两份文档的最终文件名是否采用 `blueprint.md` + `recommendations.md`？还是使用中文名或其他命名？（默认取前者，Sphinx 文件名保持 ASCII）
-- [ ] toctree 新分组的 caption 用「规划」还是「蓝图与规划」？（默认取「规划」）
-- [ ] 是否需要在实施后由用户在 `projects/xuanspace` 内自行提交（本次默认不提交、不推送）？
-- [ ] 若 Task 1 核验发现 xuanspace 已过 Task 20（frontmatter 约束失效），是否改为按 `.meta/toml/` 二分法补齐元数据？（默认：仍不加，除非用户明确要求）
-- [ ] 《优化建议书》中的 P0 建议是否允许随本次一并落地？（默认：不落地，仅产出建议）
+- [x] 两份文档的最终文件名是否采用 `blueprint.md` + `recommendations.md`？还是使用中文名或其他命名？（默认取前者，Sphinx 文件名保持 ASCII）
+  - **结论**：取 `blueprint.md` + `recommendations.md`（已按此落地，Sphinx 文件名保持 ASCII）。
+- [x] toctree 新分组的 caption 用「规划」还是「蓝图与规划」？（默认取「规划」）
+  - **结论**：取「规划」（已按此落地于 `doc/index.md`）。
+- [x] 是否需要在实施后由用户在 `projects/xuanspace` 内自行提交（本次默认不提交、不推送）？
+  - **结论**：本规格任务自身（Task 1–7）未提交；后续落地由用户另行授权两轮完成（见下「后续变更」节），均未 push、未 tag。
+- [x] 若 Task 1 核验发现 xuanspace 已过 Task 20（frontmatter 约束失效），是否改为按 `.meta/toml/` 二分法补齐元数据？（默认：仍不加，除非用户明确要求）
+  - **结论**：Task 1 核验确认 frontmatter 约束仍有效，故**仍不加** frontmatter、不建 `.meta/toml/`。
+- [x] 《优化建议书》中的 P0 建议是否允许随本次一并落地？（默认：不落地，仅产出建议）
+  - **结论**：本规格任务自身不落地；其后由用户另行授权落地 **P0-1（含主体）/P0-2/P0-3**（见下两轮授权记录）。
 
 ## 后续变更（规格完成后的独立授权）
 

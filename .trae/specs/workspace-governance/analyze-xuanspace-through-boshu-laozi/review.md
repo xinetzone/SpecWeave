@@ -185,3 +185,39 @@ Task 10 收敛 `apps/xs-cli/` 主引用后，`rg` 发现同源残余两处，改
 
 退化的排除项（**不改**，语义不同或属历史）：`tools/README.md:32` 的否定式表述（「不存在 `apps/xs-cli/` 包装层」）、`doc/recommendations.md:66/67` 的建议书原文、`attic/README.md:178` 的历史归档。
 
+## 十二、规格收口与看板登记证据（第三轮，纯登记性）
+
+> 范围：不新增分析内容，仅收口本规格——勾选已实际解决的 Open Questions，并补齐**创建时遗漏**的看板登记（`.trae/specs/README.md`「新增 Spec 指南」第 5 步）。对应 tasks.md 的 Task 14。本节为独立审查记录，不改写一至十一节的原始验收结果。
+
+### 12.1 交付物
+
+| 文件 | 变更 |
+|---|---|
+| `analyze-xuanspace-through-boshu-laozi/spec.md` | Open Questions 5 条 `- [ ]` → `- [x]` 并各附结论 |
+| `analyze-xuanspace-through-boshu-laozi/tasks.md` | 追加 Task 14 + 第三轮提交记录 |
+| `analyze-xuanspace-through-boshu-laozi/review.md` | 追加本节（第十二节） |
+| `.trae/specs/workspace-governance/README.md` | marker 区新增第 3 行（本规格），30 → 31 行；表头 `**Spec 数量**：29` → `31` |
+| `.trae/specs/okf-wiki-ecosystem/README.md` | 连带刷新：marker 区新增 1 行（`create-contest-writing-guide`），全表序号后移 1 |
+| `.trae/specs/README.md` | 全局看板：workspace-governance 30 → 31、okf-wiki-ecosystem 214 → 215、合计 738 → 740；生成日期 2026-10-26 → 2026-10-27 |
+
+### 12.2 门禁与核验
+
+| 检查项 | 命令 / 方法 | 结果 |
+|---|---|---|
+| 主题看板登记 | `docgen.py theme-dashboards`（cwd = 根仓） | `workspace-governance（31 spec）`；本规格登记于第 3 行（字母序） |
+| 主题看板行数 = 表头 | `Read` 逐行核对 marker 区 | 31 行（序号 1–31），与表头 `**Spec 数量**：31` 一致 |
+| 全局看板计数 | `docgen.py update-spec-readme` | 本主题 30 → 31；合计 738 → 740（740 = 738 + 本规格 + 并行的 `create-contest-writing-guide`） |
+| 未回改既有记录 | `git diff --stat` | 一至十一节验收表**零改动**；改动仅限 Open Questions、两处追加小节与看板 |
+| 边界核对 | `git status --short` | 根仓仅本轮 4 个具名文件（+ 无关 `?? .creative-design/`）；`projects/xuanspace` 的 `M src/xuanspace/__init__.py` 为**并行会话在途改动**，本轮未触碰、未提交 |
+
+### 12.3 连带 diff 的处置判断
+
+`docgen.py theme-dashboards` 全量扫描 50 个主题后，仅 2 个主题 README 产生 diff：本篇所属 `workspace-governance`（本规格登记）与 `okf-wiki-ecosystem`（注册并行会话已提交但未登记的 `create-contest-writing-guide`，纯插入 1 行 + 全表序号后移，无内容改写）。
+
+纳入本轮的理由（非扩权，而是**一致性强制**）：
+
+- 全局看板 `.trae/specs/README.md` 的同一表格内**同时**含 `workspace-governance` 与 `okf-wiki-ecosystem` 两行计数，无法按 hunk 拆分；若只提交其一，两级看板将互相矛盾。
+- 且下一轮 `docgen` 会再次写回同一结果，回退该行反而制造新的漂移。
+
+故 6 个文件作**单一原子提交**（三件套 spec/tasks/review + 两级看板 README + okf 主题看板连带刷新）；未触碰其余 11 个主题 README（无 diff，天然幂等）。
+

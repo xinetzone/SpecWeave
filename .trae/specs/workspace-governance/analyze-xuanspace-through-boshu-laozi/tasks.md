@@ -202,3 +202,28 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 根仓 | `abc724559` | `chore(submodule): 更新 xuanspace 子模块指针至 edce88f`（仅 gitlink，+1/−1） |
 
 > 未 push、未 tag。子模块 HEAD 最终为 `edce88f4a3bd96cf3fe7761383d0dbd08937df7c`，根仓 gitlink 与之对齐。
+
+## 后续任务：规格收口与看板登记（第三轮，纯登记性）
+
+> 范围：不新增分析内容，仅收口本规格自身——勾选已实际解决的 Open Questions，并按 `.trae/specs/README.md`「新增 Spec 指南」第 5 步补齐本规格**创建时遗漏**的看板登记。未改动一至十三节既有记录。
+
+- [x] Task 14: 规格收口与看板登记
+  - **Priority**: medium
+  - **Depends On**: Task 13
+  - **Description**: 本规格三件套的「内容」在 Task 1–7 已完成，但「登记与状态」未收口：spec.md 五条 Open Questions 在实施中已实际定论却未回填；主题/全局看板均未收录本规格（创建时漏跑「新增 Spec 指南」第 5 步）。
+  - [x] SubTask 14.1: spec.md「Open Questions」5 条全部改为 `[x]` 并附结论（文件名 / 分组 caption / 提交授权 / frontmatter 约束 / P0 落地）
+  - [x] SubTask 14.2: 运行 `docgen.py theme-dashboards`，本规格登记为 workspace-governance 第 3 行（31 行）
+  - [x] SubTask 14.3: 运行 `docgen.py update-spec-readme`，全局看板 workspace-governance 30 → 31、合计 738 → 740
+  - [x] SubTask 14.4: 修正主题看板表头漂移 `**Spec 数量**：29` → `31`（marker 之外，docgen 不覆盖）
+  - **Acceptance Criteria Addressed**: AC-6（一致性口径）
+  - **Test Requirements**:
+    - `rule` TR-14.1: 主题看板 marker 区内行数 = 31，且含 `analyze-xuanspace-through-boshu-laozi`
+    - `rule` TR-14.2: 主题看板表头数字 = marker 区行数；全局看板本主题计数 = 主题看板行数
+
+## 提交记录（证据，第三轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| 根仓 | 见 [review.md](review.md) 第十二节 | `docs(spec): 收口 analyze-xuanspace-through-boshu-laozi 并登记进看板`（6 文件：三件套 spec/tasks/review + 两级看板 README + okf 主题看板连带刷新） |
+
+> 未 push、未 tag。本轮不涉及 `projects/xuanspace`，子模块无变更。
