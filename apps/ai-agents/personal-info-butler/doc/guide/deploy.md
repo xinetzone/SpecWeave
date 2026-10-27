@@ -4,65 +4,115 @@ id: deploy
 
 # 发布上线
 
-两条链路**互相独立**：静态站发 GitHub Pages，后端发任意容器平台。
-任一侧挂了，另一侧仍能提供部分价值（站点可浏览、接口可直连）。
+## 部署形态：同源单端口
 
-## 通道一：静态站 → GitHub Pages
+前端站点与 API 由**同一个进程、同一个端口**提供。`/` 进工作台，`/api/*` 是接口。
 
-推送到 `main` 即触发 `.github/workflows/personal-info-butler-pages.yml`
-（位于仓库根 `.github/workflows/`，GitHub 只认仓库根的工作流）：
+这不是优化，是**发布的硬前提**——发布平台只暴露一个公网端口。分成两处会带来
+三个必然后果：
 
-1. **gates** —— 跑 `pytest`（API 契约与业务逻辑）；
-2. **build** —— 安装 `requirements.txt`，`sphinx -W` 构建，上传 Pages 产物；
-3. **deploy** —— `actions/deploy-pages` 发布。
+| 后果 | 机理 |
+|---|---|
+| 跨域被拦 | 要配 CORS，而平台云服务要求 **Origin 精确匹配**（静态站域名 ≠ API 域名即被拒） |
+| 用户要手填地址 | 页面打开却连不上，得手动在「设置」里填 API 基址 |
+| 混合内容被拦 | HTTPS 页面请求 HTTP API，浏览器直接拦掉 |
 
-首次发布前需在仓库 Settings → Pages 把 Source 设为 **GitHub Actions**。
+同源部署把三个问题一次消掉。
 
-构建时通过环境变量注入后端地址，读者打开就能连：
-
-```yaml
-env:
-  BUTLER_API_BASE: https://info-butler-api.example.com
-```
-
-:::{warning}
-`BUTLER_API_BASE` 写进产品页面 = 写进公开仓库。这是**有意为之**：
-个人自托管场景下后端地址不是秘密，秘密是 `APP_TOKEN`，而它永远不进前端代码。
-若你的后端需要保密，改为让读者在页面「设置」里自行填写（留空该变量即可）。
-:::
-
-## 通道二：后端 → 云端容器
-
-`Dockerfile` 基于 `python:3.14-slim`，以非 root 用户运行：
+## 通道一：平台发布（推荐）
 
 ```bash
-docker build -t info-butler-api .
-docker run --rm -p 8080:8080 \
-  -e SUPABASE_URL=... \
-  -e SUPABASE_SERVICE_ROLE_KEY=... \
-  -e LLM_BASE_URL=... \
-  -e LLM_API_KEY=... \
-  -e APP_TOKEN=... \
-  -e CORS_ORIGINS=https://<你的 Pages 域名> \
-  info-butler-api
+# 平台会自动探测 Python 项目；也可显式指定
+#   installCmd: pip install -r requirements.txt && pip install -e .
+#   startCmd:   python app.py
 ```
 
-任何能跑容器的平台（Fly.io / Render / Railway / Cloud Run / Koyeb）均可，
-关键是三件事：
+`app.py` 是发布入口，它做三件事：
 
-| 项 | 要求 |
-|---|---|
-| 监听 | 容器内 `0.0.0.0:8080`（`Dockerfile` 已设置） |
-| 环境变量 | 至少 `APP_TOKEN` 与 `CORS_ORIGINS`；存储与模型按需 |
-| 健康检查 | `GET /api/health` 返回 200 |
+1. 把 `src` 挂到 `sys.path`（源码布局下平台未必会 `pip install -e .`）；
+2. **确保前端构建产物存在**——平台上传目录时会排除「构建输出」，
+   `_build/` 很可能被一并排除，于是线上只剩 API 没有页面。启动前现场构建
+   一次即可解决（产物已在则直接复用）；
+3. 读 `PORT` / `HOST` 启动 uvicorn（平台只暴露一个公网端口并注入 `PORT`，
+   绑死端口号会导致探活失败）。
+
+发布后自检：
+
+```bash
+curl -s https://<你的域名>/api/health
+# {"status":"ok","storage":"cloud","storage_backend":"workbuddy-cloud",...}
+```
+
+## 通道二：容器平台
+
+`Dockerfile` 基于 `python:3.14-slim`，**构建期就把 Sphinx 站点编好**，以非 root
+用户运行：
+
+```bash
+docker build -t info-butler .
+docker run --rm -p 8080:8080 \
+  -e WB_CLOUD_ENDPOINT=... \
+  -e WB_PUBLISHABLE_KEY=... \
+  -e WB_LLM_MODEL=... \
+  -e APP_TOKEN=... \
+  info-butler
+```
+
+任何能跑容器的平台（Fly.io / Render / Railway / Cloud Run / Koyeb）均可。
+
+## 通道三：静态站 + 独立 API（GitHub Pages）
+
+推送 `main` 触发 `.github/workflows/personal-info-butler-pages.yml`（仓库根），
+gates（pytest）→ build（`sphinx -W`）→ deploy。
+
+这条通道要求前端与 API **分处两处**，因此：
+
+- 前端构建时要注入 `BUTLER_API_BASE`（后端地址），
+- 后端要把 `CORS_ORIGINS` 收窄到 Pages 域名。
+
+## 数据存哪
+
+三种存储实现，优先级如下（任一不满足就降级到下一档）：
+
+| 优先级 | 实现 | 何时启用 | 数据面 |
+|---|---|---|---|
+| 1 | WorkBuddy 云服务 | `WB_CLOUD_ENDPOINT` + `WB_PUBLISHABLE_KEY` **成对** | `/.cloud/database/rest/<table>`，鉴权头 `x-wb-webapp-access-key` |
+| 2 | Supabase / PostgreSQL | `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` **成对** | `/rest/v1/<table>` |
+| 3 | 进程内存 | 都不满足 | 进程内，重启即失（仅本地体验） |
+
+**成对才启用**是硬规则：只配一半等于没配，半启用会让「看起来在云上」与
+「实际存在内存里」并存，最难排查。
+
+诊断：`GET /api/health` 的 `storage` 与 `storage_backend` 字段会如实报出
+当前实际生效的实现（以**真实 store 实例**为准，不读配置）。
+
+## 大模型从哪来
+
+三条通道，优先级：页面 BYOK > 云端免密钥通道 > 服务端 OpenAI 兼容配置。
+
+| 通道 | 触发条件 | 说明 |
+|---|---|---|
+| BYOK | 页面「设置」里填了 API Key | 凭据只在本机浏览器，随请求头透传，**后端不落盘、不写日志** |
+| 云端免密钥 | `WB_CLOUD_ENDPOINT` + `WB_PUBLISHABLE_KEY` + `WB_LLM_MODEL` | 平台托管，用户无需自己的 Key |
+| 服务端配置 | `LLM_API_KEY` | 任何 OpenAI 兼容端点 |
+
+都没有时，全部 AI 能力降级为启发式/统计直出——**应用仍完整可用**，
+只是没那么聪明。
 
 ## 上线前检查清单
 
 - [ ] `APP_TOKEN` 已设置（否则任何人可读写你的库）
-- [ ] `CORS_ORIGINS` 收窄到 Pages 域名（不要留 `*`）
-- [ ] Supabase 已执行 `schema.sql`，并按需启用 RLS（见该文件末尾）
-- [ ] `BUTLER_API_BASE` 指向 HTTPS 地址（Pages 是 HTTPS，混合内容会被浏览器拦）
+- [ ] 云端存储已建表（见 `schema.sql`），列授权与代码里的 `select=*` 对齐
+- [ ] 前端产物存在（`app.py` 会自动构建，但确认构建依赖已装）
+- [ ] `GET /api/health` 返回 200 且 `storage` 不是 `memory`
 - [ ] 本地 `pytest` 与 `sphinx -W` 均通过
+
+:::{warning}
+**代理环境**：httpx 默认信任 `HTTP_PROXY` 等环境变量。本机回环地址在应用内
+已被显式豁免（`src/info_butler/http_client.py`），但**外部工具**（curl、浏览器
+扩展）仍可能把回环请求转发给代理，导致看起来「接口全 404」。排查时先用
+`curl --noproxy '*'` 排除这一层。
+:::
 
 ## 数据模型
 
