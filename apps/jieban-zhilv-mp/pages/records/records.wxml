@@ -1,0 +1,72 @@
+<view class="page records-page">
+  <!-- 未登录：引导授权 -->
+  <view class="card signin-card" wx:if="{{!signedIn}}">
+    <image class="signin-icon" src="/assets/icons/ic-list.png" mode="aspectFit" />
+    <text class="signin-title">授权登录查看报名记录</text>
+    <text class="signin-desc">你的报名信息保存在云端数据库，仅本人可见。</text>
+    <button class="btn-primary signin-btn" bindtap="onTapSignIn" disabled="{{signingIn}}">
+      <text>{{signingIn ? '授权中…' : '微信授权登录'}}</text>
+    </button>
+  </view>
+
+  <block wx:else>
+    <view class="loading" wx:if="{{loading}}">正在加载报名记录…</view>
+
+    <view class="error-box" wx:if="{{!loading && errorText}}">
+      <text class="error-text">{{errorText}}</text>
+      <button class="btn-ghost error-retry" bindtap="loadRecords">重新加载</button>
+    </view>
+
+    <view class="list" wx:if="{{!loading && !errorText}}">
+      <view class="record card" wx:for="{{records}}" wx:key="id">
+        <view class="record-head" bindtap="onTapRecord" data-id="{{item.activityId}}">
+          <image class="record-cover" src="{{item.cover}}" mode="aspectFill" />
+          <view class="record-head-info">
+            <text class="record-title">{{item.title}}</text>
+            <text class="record-time">{{item.startsAt}}</text>
+          </view>
+          <text class="record-status record-status-{{item.status}}">{{item.statusText}}</text>
+        </view>
+
+        <view class="record-body">
+          <view class="record-row">
+            <image class="icon icon-sm icon-muted" src="/assets/icons/ic-location.png" mode="aspectFit" />
+            <text class="record-text">{{item.location}}</text>
+          </view>
+          <view class="record-row">
+            <image class="icon icon-sm icon-muted" src="/assets/icons/ic-users.png" mode="aspectFit" />
+            <text class="record-text">同行 {{item.companions}} 人</text>
+          </view>
+          <view class="record-row">
+            <image class="icon icon-sm icon-muted" src="/assets/icons/ic-ticket.png" mode="aspectFit" />
+            <text class="record-text">{{item.contact}}</text>
+          </view>
+          <view class="record-row" wx:if="{{item.remark}}">
+            <image class="icon icon-sm icon-muted" src="/assets/icons/ic-list.png" mode="aspectFit" />
+            <text class="record-text">{{item.remark}}</text>
+          </view>
+        </view>
+
+        <view class="record-foot">
+          <text class="record-created">提交于 {{item.createdAt}}</text>
+          <button
+            class="btn-text"
+            wx:if="{{item.status === 'confirmed'}}"
+            bindtap="onTapCancel"
+            data-id="{{item.id}}"
+            disabled="{{cancellingId === item.id}}"
+          >
+            <text>{{cancellingId === item.id ? '处理中…' : '取消报名'}}</text>
+          </button>
+        </view>
+      </view>
+
+      <view class="empty" wx:if="{{!records.length}}">
+        <image class="empty-icon" src="/assets/icons/ic-compass.png" mode="aspectFit" />
+        <text class="empty-title">还没有报名记录</text>
+        <text class="empty-desc">去首页挑一场活动，与陌生的旅伴出发</text>
+        <button class="btn-ghost empty-btn" bindtap="onTapGoHome">去看看活动</button>
+      </view>
+    </view>
+  </block>
+</view>

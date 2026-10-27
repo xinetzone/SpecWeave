@@ -1,0 +1,184 @@
+/** 全局设计令牌与基础样式。 */
+page {
+  --brand: #2f6bff;
+  --brand-soft: #eaf0ff;
+  --ink: #1f2733;
+  --ink-2: #4e596a;
+  --ink-3: #6b7684;
+  --line: #e8ebf1;
+  --surface: #ffffff;
+  --bg: #f4f6fa;
+  --radius: 20rpx;
+  --radius-lg: 28rpx;
+  --shadow: 0 8rpx 24rpx rgba(31, 39, 51, 0.06);
+
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 28rpx;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+  line-height: 1.5;
+}
+
+view,
+text,
+image,
+button,
+input,
+textarea,
+scroll-view {
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  padding-bottom: 48rpx;
+}
+
+/** 卡片容器 */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 32rpx;
+}
+
+.card + .card {
+  margin-top: 24rpx;
+}
+
+/** 区块标题 */
+.section-title {
+  display: flex;
+  align-items: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.section-title::before {
+  content: "";
+  width: 8rpx;
+  height: 30rpx;
+  border-radius: 4rpx;
+  background: var(--brand);
+  margin-right: 16rpx;
+}
+
+/** 通用图标 */
+.icon {
+  width: 40rpx;
+  height: 40rpx;
+  flex: none;
+}
+
+.icon-sm {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.icon-muted {
+  opacity: 0.55;
+}
+
+/** 主按钮 */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  height: 92rpx;
+  border-radius: 46rpx;
+  background: var(--brand);
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: 600;
+  border: none;
+  line-height: 1;
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+.btn-primary[disabled] {
+  background: #c8d3e6;
+  color: #fff;
+}
+
+.btn-ghost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 88rpx;
+  border-radius: 44rpx;
+  background: var(--brand-soft);
+  color: var(--brand);
+  font-size: 28rpx;
+  font-weight: 600;
+  border: none;
+  line-height: 1;
+}
+
+.btn-ghost::after {
+  border: none;
+}
+
+/** 文本按钮 */
+.btn-text {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 26rpx;
+  color: var(--brand);
+  line-height: 1.4;
+}
+
+.btn-text::after {
+  border: none;
+}
+
+/** 空状态 */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120rpx 48rpx;
+}
+
+.empty-title {
+  margin-top: 24rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.empty-desc {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: var(--ink-3);
+  text-align: center;
+}
+
+/** 加载态 */
+.loading {
+  padding: 80rpx 0;
+  text-align: center;
+  font-size: 26rpx;
+  color: var(--ink-3);
+}
+
+/** 错误态 */
+.error-box {
+  margin: 32rpx;
+  padding: 40rpx 32rpx;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.error-text {
+  font-size: 28rpx;
+  color: var(--ink-2);
+  margin-bottom: 24rpx;
+}

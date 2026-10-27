@@ -1,0 +1,12 @@
+id = "locally-unobservable-surface-explicit-scoping"
+type = "methodology"
+category = "governance-strategy"
+maturity = "L1"
+source = "docs/retrospective/reports/2026-10-26-platform-review-precheck-retro.md"
+created = "2026-10-26"
+verified_count = 1
+
+[bindings]
+rules = []
+references = []
+skills = ["platform-review-precheck"]

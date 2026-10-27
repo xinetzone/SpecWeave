@@ -1,0 +1,218 @@
+.detail-page {
+  /* 底部固定操作栏高度 ≈ 18+88+18 rpx，再加安全区，用 calc 精确对齐 */
+  padding-bottom: calc(150rpx + env(safe-area-inset-bottom));
+}
+
+.cover-wrap {
+  position: relative;
+  width: 100%;
+  height: 380rpx;
+  background: #dfe4ee;
+}
+
+.cover {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.cover-badge {
+  position: absolute;
+  left: 32rpx;
+  bottom: 24rpx;
+  padding: 10rpx 24rpx;
+  border-radius: 26rpx;
+  background: rgba(31, 39, 51, 0.75);
+  color: #fff;
+  font-size: 24rpx;
+}
+
+.detail-body {
+  padding: 24rpx;
+}
+
+.detail-title {
+  display: block;
+  font-size: 38rpx;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.detail-summary {
+  display: block;
+  margin-top: 14rpx;
+  font-size: 27rpx;
+  color: var(--ink-2);
+  line-height: 1.65;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 26rpx;
+}
+
+.price-main {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--brand);
+}
+
+.price-quota {
+  font-size: 24rpx;
+  color: var(--ink-3);
+}
+
+.quota {
+  margin-top: 16rpx;
+}
+
+.quota-track {
+  height: 10rpx;
+  border-radius: 6rpx;
+  background: #edf0f6;
+  overflow: hidden;
+}
+
+.quota-fill {
+  height: 100%;
+  border-radius: 6rpx;
+  background: linear-gradient(90deg, #2f6bff, #62a0ff);
+}
+
+.quota-count {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: var(--ink-3);
+  text-align: right;
+}
+
+.info-row {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 22rpx;
+}
+
+.info-row .icon {
+  margin-top: 4rpx;
+  margin-right: 14rpx;
+}
+
+.info-text {
+  flex: 1;
+  font-size: 27rpx;
+  color: var(--ink);
+}
+
+.highlight {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 20rpx;
+}
+
+.check-icon {
+  margin-top: 4rpx;
+  margin-right: 14rpx;
+  opacity: 0.75;
+}
+
+.highlight-text {
+  flex: 1;
+  font-size: 27rpx;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+.note {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 20rpx;
+}
+
+.note-index {
+  flex: none;
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 14rpx;
+  margin-top: 4rpx;
+  border-radius: 50%;
+  background: var(--brand-soft);
+  color: var(--brand);
+  font-size: 22rpx;
+  text-align: center;
+  line-height: 36rpx;
+}
+
+.note-text {
+  flex: 1;
+  font-size: 27rpx;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+.signin-desc {
+  display: block;
+  margin-top: 16rpx;
+  font-size: 26rpx;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+.signin-btn {
+  margin-top: 26rpx;
+}
+
+.btn-icon {
+  margin-right: 10rpx;
+  opacity: 0.9;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 18rpx 28rpx calc(18rpx + env(safe-area-inset-bottom));
+  background: var(--surface);
+  box-shadow: 0 -4rpx 20rpx rgba(31, 39, 51, 0.06);
+}
+
+.footer-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.footer-quota {
+  display: block;
+  font-size: 24rpx;
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.footer-price {
+  display: block;
+  margin-top: 4rpx;
+  font-size: 22rpx;
+  color: var(--ink-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.footer-btn {
+  flex: none;
+  width: 260rpx;
+  height: 88rpx;
+  border-radius: 44rpx;
+}
+
+.error-retry {
+  display: inline-flex;
+  padding: 0 48rpx;
+  height: 80rpx;
+}

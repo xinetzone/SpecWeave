@@ -1,0 +1,9 @@
+{
+  "name": "jieban-zhilv-mp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "结伴之旅 · 活动报名微信小程序",
+  "dependencies": {
+    "@tencent-ai/workbuddy-cloud-sdk": "dev"
+  }
+}

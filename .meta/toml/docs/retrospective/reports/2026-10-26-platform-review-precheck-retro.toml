@@ -1,0 +1,24 @@
+id = "retro-20261026-platform-review-precheck"
+title = "平台提审合规预检：一次提审拦截的可复用能力萃取"
+date = "2026-10-26"
+scope = "project"
+type = "retrospective"
+category = "retrospective/reports"
+source = "事件：2026-10-26 14:30:58 某微信小程序提交代码发布审核被拒（拦截类型「收集你选中的照片或视频信息」）；任务：七概念方法论编排复盘并萃取可复用 Skill"
+facts_count = 39
+insights_count = 3
+patterns_count = 2
+actions_count = 8
+gates = ["G1", "G2", "G3", "G4", "V"]
+v_executed = true
+selfcheck_fixed = 2
+version = "1.0"
+
+[bindings]
+related_patterns = [
+  "locally-unobservable-surface-explicit-scoping",
+  "declared-vs-executed-dual-surface-reconciliation",
+]
+rules = []
+references = []
+skills = ["platform-review-precheck"]

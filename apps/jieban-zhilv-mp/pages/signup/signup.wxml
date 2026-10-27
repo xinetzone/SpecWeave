@@ -1,0 +1,117 @@
+<view class="page signup-page">
+  <view class="loading" wx:if="{{loading}}">正在加载…</view>
+
+  <view class="error-box" wx:if="{{!loading && errorText}}">
+    <text class="error-text">{{errorText}}</text>
+    <button class="btn-ghost error-retry" bindtap="loadActivity">重新加载</button>
+  </view>
+
+  <block wx:if="{{!loading && detail}}">
+    <!-- 活动概要 -->
+    <view class="summary card">
+      <image class="summary-cover" src="{{detail.cover}}" mode="aspectFill" />
+      <view class="summary-info">
+        <text class="summary-title">{{detail.title}}</text>
+        <view class="summary-meta">
+          <image class="icon icon-sm icon-muted" src="/assets/icons/ic-calendar.png" mode="aspectFit" />
+          <text class="summary-text">{{detail.startsAt}}</text>
+        </view>
+        <view class="summary-meta">
+          <image class="icon icon-sm icon-muted" src="/assets/icons/ic-location.png" mode="aspectFit" />
+          <text class="summary-text">{{detail.location}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 授权登录 -->
+    <view class="card" wx:if="{{!signedIn}}">
+      <text class="section-title">微信授权登录</text>
+      <text class="signin-desc">授权后可提交报名信息，报名记录保存在你的账号下，随时可查可取消。</text>
+      <button class="btn-primary signin-btn" bindtap="onTapSignIn" disabled="{{signingIn}}">
+        <text>{{signingIn ? '授权中…' : '微信授权登录'}}</text>
+      </button>
+    </view>
+
+    <!-- 报名表单 -->
+    <view class="card">
+      <text class="section-title">报名信息</text>
+
+      <!-- 同行人数 -->
+      <view class="field">
+        <text class="field-label">同行人数</text>
+        <view class="stepper">
+          <view class="stepper-btn" bindtap="onTapMinus">
+            <image class="icon icon-sm" src="/assets/icons/ic-minus.png" mode="aspectFit" />
+          </view>
+          <text class="stepper-value">{{companions}}</text>
+          <view class="stepper-btn" bindtap="onTapPlus">
+            <image class="icon icon-sm" src="/assets/icons/ic-plus.png" mode="aspectFit" />
+          </view>
+        </view>
+      </view>
+
+      <!-- 联系方式 -->
+      <view class="field">
+        <text class="field-label">联系手机号</text>
+        <input
+          class="field-input {{contactError ? 'field-input-error' : ''}}"
+          type="number"
+          maxlength="11"
+          placeholder="请输入 11 位手机号"
+          placeholder-class="field-placeholder"
+          value="{{contact}}"
+          bindinput="onInputContact"
+        />
+        <text class="field-error" wx:if="{{contactError}}">{{contactError}}</text>
+      </view>
+
+      <!-- 备注 -->
+      <view class="field">
+        <text class="field-label">备注</text>
+        <textarea
+          class="field-textarea"
+          maxlength="100"
+          placeholder="饮食禁忌、集合点偏好等（选填）"
+          placeholder-class="field-placeholder"
+          value="{{remark}}"
+          bindinput="onInputRemark"
+        />
+        <text class="field-count">{{remarkLen}}/100</text>
+      </view>
+    </view>
+
+    <!-- 配图上传 -->
+    <view class="card">
+      <text class="section-title">报名配图</text>
+      <text class="upload-desc">可上传一张你与旅伴的合照，图片将存入云端存储，仅本次报名可见。</text>
+      <view class="upload-row">
+        <view class="upload-box" wx:if="{{uploadedCoverUrl}}">
+          <image class="upload-preview" src="{{uploadedCoverUrl}}" mode="aspectFill" />
+        </view>
+        <view class="upload-box upload-box-action" wx:else bindtap="onTapUploadCover">
+          <image class="icon icon-muted" src="/assets/icons/ic-camera.png" mode="aspectFit" />
+          <text class="upload-text">{{uploadingCover ? '上传中…' : '选择图片'}}</text>
+        </view>
+        <view class="upload-box upload-box-action" wx:if="{{uploadedCoverUrl}}" bindtap="onTapUploadCover">
+          <image class="icon icon-muted" src="/assets/icons/ic-image.png" mode="aspectFit" />
+          <text class="upload-text">更换</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 底部提交栏 -->
+  <view class="footer" wx:if="{{!loading && detail}}">
+    <view class="footer-info">
+      <text class="footer-quota">{{detail.quotaText}}</text>
+      <text class="footer-hint">提交即表示同意活动须知</text>
+    </view>
+    <button
+      class="btn-primary footer-btn"
+      bindtap="onSubmit"
+      disabled="{{submitting || detail.full || !fits}}"
+    >
+      <text>{{submitting ? '提交中…' : (detail.full ? '名额已满' : (!fits ? '名额不足' : '提交报名'))}}</text>
+    </button>
+  </view>
+</view>

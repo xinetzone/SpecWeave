@@ -1,0 +1,10 @@
+{
+  "_comment": "样例：字段定义模板。真实值请由用户口述后填入本文件，勿把敏感信息写进会被提交到 git 的文件——用环境变量或本地未跟踪文件承载。",
+  "应用名称": {"type": "text", "value": "<你的应用名称>"},
+  "提交编号": {"type": "text", "value": "<业务唯一键，用于幂等查重>"},
+  "作者": {"type": "text", "value": "<用户口述的作者昵称>"},
+  "审核状态": {"type": "select", "value": "待审核"},
+  "作品形态": {"type": "select", "value": "网页应用"},
+  "作品截图": {"type": "image", "value": [{"title": "<截图标题>", "imageUrl": "<上传接口返回的 https URL>", "width": 1280, "height": 720}]},
+  "_redline_example": {"type": "checkbox", "value": true, "redline": true, "_note": "授权/承诺类字段会被脚本拦截；除非用户本人已提供（用 --user-provided 声明），否则拒绝写入"}
+}

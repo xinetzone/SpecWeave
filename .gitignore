@@ -176,6 +176,9 @@ qwenwork/
 # CodeBuddy 本地配置（settings.local.json 等为本机工作产物，不入库）
 .codebuddy/
 
+# Box Agent 运行时任务注册表（task-registry 等 IDE 智能体状态文件，不入库）
+.box-agent/
+
 # 短视频生产临时工作区（scene/tts/背景帧/音视频与 node_modules，约 90 MB 构建产物）。
 # 交付物是 docs/knowledge/short-video-skills/，本目录只属制作过程的中间产物。
 deepseek-v41-flash-video-*/

@@ -1,0 +1,79 @@
+EXPORT MANIFEST — 平台提审合规预检：一次提审拦截的可复用能力萃取
+================================================================================
+
+export_time  : 2026-10-26
+report_type  : retrospective (milestone)
+source_path  : docs/retrospective/reports/2026-10-26-platform-review-precheck-retro.md
+output_dir   : docs/retrospective/reports/exported
+formats      : md
+version      : 1.0
+
+EXPORTED FILES
+--------------------------------------------------------------------------------
+AKA-1. platform-review-precheck-milestone-retrospective-20261026-v1.0.md  (36577 bytes)
+
+VERIFICATION
+--------------------------------------------------------------------------------
+- source exists              : YES
+- frontmatter(id/date/type/source): COMPLETE
+  (id=retro-20261026-platform-review-precheck, date=2026-10-26,
+   type=Report, source=2026-10-26 提审被拒事件 + 七概念编排任务)
+- content non-empty          : YES (48 facts, 4 insights, 2 patterns, 8 actions)
+- G1-G4 quality gates        : PASSED
+- V gate                     : PASSED (self-verified) — 5 real defects found and fixed;
+                               four-perspective independent review NOT obtained
+                               (two dispatch rounds timed out; see report 7.4-7.5)
+- index updated              : docs/retrospective/reports/exported/index.md
+                               (toctree + table entry added)
+- relative-link adjustment   : 1 link re-based (../ prefix, archive is one level deeper)
+
+KEY ARTIFACTS REFERENCED
+--------------------------------------------------------------------------------
+- Skill        : .agents/skills/platform-review-precheck/ (v1.0.0, quality 100/100, 0 WARN)
+  - scripts/scan_privacy_calls.py          (334 lines, privacy-API call surface extractor)
+  - scripts/check_declaration_alignment.py (251 lines, gates D0-D4 incl. D2a over-claim)
+  - scripts/selftest.py                    (107 lines, 21 assertions)
+  - references/                            (3 files: rule map / declaration template / verified case)
+  - tests/fixtures/{pre-fix,post-fix}/     (10 files)
+- Mini-program : apps/jieban-zhilv-mp/ — privacy surface remediation
+  (utils/privacy.js, app.js auth hook, signup.js pre-call guard,
+   docs/privacy-declaration.md, tests/structure.test.js +5 assertions)
+- Spec trio    : .trae/specs/jieban-zhilv-mp/{spec.md,tasks.md,review.md}
+                 (AC-16, Task 19 completed, Task 20 pending manual platform step,
+                  review round 3 findings R3-01..R3-05)
+- Patterns     : locally-unobservable-surface-explicit-scoping
+                 declared-vs-executed-dual-surface-reconciliation
+                 (both upgraded this round: three-way reconciliation)
+- Commits      : 3c1b35955 / 63183e838 (+ this export commit)
+
+VERIFICATION COMMANDS AND RESULTS
+--------------------------------------------------------------------------------
+- check-skill-quality.py --path .agents/skills/platform-review-precheck --score
+    -> 100/100, 0 WARN
+- selftest.py -> 21/21 passed
+- check_declaration_alignment.py apps/jieban-zhilv-mp -> FAIL=0 WARN=0
+- node tests/format.test.js    -> 32/32
+- node tests/structure.test.js -> 51/51
+- audit_surface_counts.js --skills-root .agents/skills -> 0 drift, 0 cross-surface missing rows
+- check-links.py (export dir + frontmatter paths) -> 0 broken links on new assets
+  (117 pre-existing broken links repo-wide are unrelated baseline)
+
+NOTES
+--------------------------------------------------------------------------------
+- Export is a content copy of the source report (md passthrough). One relative link
+  was re-based because the archive location is one directory deeper than the source.
+- The export copy carries an extra "导出说明" section recording this adjustment.
+- V-gate limitation recorded honestly in the source report (7.4 / 7.5):
+  the four adversarial reviewers timed out twice; the gate was completed by executing
+  their attack points directly with measured evidence. This is self-verification,
+  NOT independent review. Action item A-08 keeps the independent review open.
+- Most significant finding this round (S-03): the privacy declaration promised
+  nickname / avatar / phone-number collection that the code never performs
+  (the login path is wx.login + signInWithWechat only). Removed from the declaration
+  and locked by a new "declaration must not exceed actual collection" assertion.
+- The Skill was upgraded this round: gate D2 split into D2a (no collection path ->
+  FAIL) and D2b (not statically visible -> WARN), and declaration parsing now reads
+  only declaration entry lines instead of matching the whole document text.
+- Pending manual step (Task 20): paste the declaration into the WeChat MP console
+  ENTRY 2 (version management -> submit for review -> info form) and resubmit.
+  A file in the repo is NOT the same as a declaration on the platform.

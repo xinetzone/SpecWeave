@@ -1,0 +1,204 @@
+<view class="page publish-page">
+  <view class="loading" wx:if="{{loading}}">正在加载…</view>
+
+  <view class="error-box" wx:if="{{!loading && errorText}}">
+    <text class="error-text">{{errorText}}</text>
+    <button class="btn-ghost error-retry" bindtap="loadTemplates">重新加载</button>
+  </view>
+
+  <block wx:if="{{!loading && !errorText}}">
+    <!-- 授权登录 -->
+    <view class="card signin-card" wx:if="{{!signedIn}}">
+      <text class="section-title">微信授权登录</text>
+      <text class="signin-desc">授权后即可发起自己的活动，发布内容会记在你名下，随时可编辑或下架。</text>
+      <button class="btn-primary signin-btn" bindtap="onTapSignIn" disabled="{{signingIn}}">
+        <text>{{signingIn ? '授权中…' : '微信授权登录'}}</text>
+      </button>
+    </view>
+
+    <!-- 选模板 -->
+    <view class="card">
+      <text class="section-title">选一个模板</text>
+      <text class="block-desc">模板是活动的骨架参考，可以直接套用后改成你自己的活动；也可以自由发起。</text>
+
+      <view class="template-grid">
+        <view
+          class="template-card {{selectedTemplateId === item.id ? 'template-card-active' : ''}}"
+          wx:for="{{templates}}"
+          wx:key="id"
+          bindtap="onTapTemplate"
+          data-id="{{item.id}}"
+        >
+          <image class="template-cover" src="{{item.coverSlug ? '/assets/covers/' + item.coverSlug + '.png' : '/assets/covers/default.png'}}" mode="aspectFill" />
+          <view class="template-info">
+            <text class="template-title">{{item.title}}</text>
+            <text class="template-meta">{{item.defaultCapacity}} 人成行 · 约 {{item.defaultDuration}} 分钟</text>
+          </view>
+          <view class="template-check" wx:if="{{selectedTemplateId === item.id}}">
+            <image class="icon icon-sm" src="/assets/icons/ic-check.png" mode="aspectFit" />
+          </view>
+        </view>
+      </view>
+
+      <button class="btn-ghost free-btn" bindtap="onTapFreeStart">
+        <text>{{selectedTemplateId === 0 ? '已选择：自由发起' : '不用模板，自由发起'}}</text>
+      </button>
+    </view>
+
+    <!-- 活动信息 -->
+    <view class="card">
+      <text class="section-title">活动信息</text>
+
+      <view class="field">
+        <text class="field-label">活动名称</text>
+        <input
+          class="field-input {{titleError ? 'field-input-error' : ''}}"
+          maxlength="40"
+          placeholder="例如：周六一起去看展"
+          placeholder-class="field-placeholder"
+          value="{{title}}"
+          bindinput="onInputTitle"
+        />
+        <text class="field-error" wx:if="{{titleError}}">{{titleError}}</text>
+      </view>
+
+      <view class="field">
+        <text class="field-label">活动简介</text>
+        <textarea
+          class="field-textarea"
+          maxlength="200"
+          placeholder="说清楚去哪里、做什么、为什么值得参加（选填）"
+          placeholder-class="field-placeholder"
+          value="{{summary}}"
+          bindinput="onInputSummary"
+        />
+        <text class="field-count">{{summary.length}}/200</text>
+      </view>
+
+      <view class="field">
+        <text class="field-label">活动地点</text>
+        <input
+          class="field-input {{locationError ? 'field-input-error' : ''}}"
+          maxlength="60"
+          placeholder="例如：市美术馆 3 号展厅"
+          placeholder-class="field-placeholder"
+          value="{{location}}"
+          bindinput="onInputLocation"
+        />
+        <text class="field-error" wx:if="{{locationError}}">{{locationError}}</text>
+      </view>
+    </view>
+
+    <!-- 时间与名额 -->
+    <view class="card">
+      <text class="section-title">时间与名额</text>
+
+      <view class="field">
+        <text class="field-label">开始时间</text>
+        <view class="picker-row">
+          <picker class="picker-box" mode="date" value="{{startsAtDate}}" start="{{minDate}}" end="{{maxDate}}" bindchange="onChangeStartsDate">
+            <text class="picker-text {{timeError ? 'picker-text-error' : ''}}">{{startsAtDate || '选择日期'}}</text>
+          </picker>
+          <picker class="picker-box picker-box-time" mode="time" value="{{startsAtTime}}" bindchange="onChangeStartsTime">
+            <text class="picker-text">{{startsAtTime || '选择时间'}}</text>
+          </picker>
+        </view>
+        <text class="field-error" wx:if="{{timeError}}">{{timeError}}</text>
+      </view>
+
+      <view class="field">
+        <text class="field-label">结束时间（选填）</text>
+        <view class="picker-row">
+          <picker class="picker-box" mode="date" value="{{endsAtDate}}" start="{{minDate}}" end="{{maxDate}}" bindchange="onChangeEndsDate">
+            <text class="picker-text">{{endsAtDate || '选择日期'}}</text>
+          </picker>
+          <picker class="picker-box picker-box-time" mode="time" value="{{endsAtTime}}" bindchange="onChangeEndsTime">
+            <text class="picker-text">{{endsAtTime || '选择时间'}}</text>
+          </picker>
+        </view>
+      </view>
+
+      <view class="field">
+        <text class="field-label">人数上限</text>
+        <input
+          class="field-input"
+          type="number"
+          maxlength="5"
+          placeholder="0 表示不限名额"
+          placeholder-class="field-placeholder"
+          value="{{capacityInput}}"
+          bindinput="onInputCapacity"
+        />
+        <text class="field-hint">填 0 表示不限名额</text>
+      </view>
+
+      <view class="field">
+        <text class="field-label">费用说明（选填）</text>
+        <input
+          class="field-input"
+          maxlength="40"
+          placeholder="例如：免费 · 含门票"
+          placeholder-class="field-placeholder"
+          value="{{priceNote}}"
+          bindinput="onInputPriceNote"
+        />
+      </view>
+    </view>
+
+    <!-- 封面 -->
+    <view class="card">
+      <text class="section-title">封面</text>
+      <text class="block-desc">从内置封面中挑一张，封面会随包分发，人人都能看到。</text>
+      <view class="cover-grid">
+        <view
+          class="cover-item {{coverSlug === item ? 'cover-item-active' : ''}}"
+          wx:for="{{coverSlugs}}"
+          wx:key="*this"
+          bindtap="onTapCover"
+          data-slug="{{item}}"
+        >
+          <image class="cover-thumb" src="/assets/covers/{{item}}.png" mode="aspectFill" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 亮点与须知 -->
+    <view class="card">
+      <text class="section-title">活动亮点与须知</text>
+
+      <view class="field">
+        <text class="field-label">活动亮点（选填）</text>
+        <textarea
+          class="field-textarea"
+          maxlength="540"
+          placeholder="一行一条，最多 8 条，每条 60 字以内"
+          placeholder-class="field-placeholder"
+          value="{{highlightsText}}"
+          bindinput="onInputHighlights"
+        />
+      </view>
+
+      <view class="field">
+        <text class="field-label">报名须知（选填）</text>
+        <textarea
+          class="field-textarea"
+          maxlength="540"
+          placeholder="一行一条，最多 8 条，每条 60 字以内"
+          placeholder-class="field-placeholder"
+          value="{{notesText}}"
+          bindinput="onInputNotes"
+        />
+      </view>
+    </view>
+
+    <view class="form-error" wx:if="{{formError}}">
+      <text class="form-error-text">{{formError}}</text>
+    </view>
+  </block>
+
+  <view class="footer" wx:if="{{!loading && !errorText}}">
+    <button class="btn-primary footer-btn" bindtap="onSubmit" disabled="{{submitting}}">
+      <text>{{submitting ? '提交中…' : (editing ? '保存修改' : '发布活动')}}</text>
+    </button>
+  </view>
+</view>

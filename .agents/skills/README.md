@@ -36,7 +36,7 @@ title: ".agents/skills/ 目录索引"
 | sovereign-rollout-cmd | 命令门面 | 主权区治理资产落盘 | 提案、批准落盘、主权区变更、治理资产落盘、先提案后批准 | [sovereign-rollout-cmd/SKILL.md](sovereign-rollout-cmd/SKILL.md) |
 | github-org-bootstrap-cmd | 命令门面 | GitHub 组织命名与初始化 | 创建GitHub组织、建个org、组织名怎么起、demo组织、huncheng-lab | [github-org-bootstrap-cmd/SKILL.md](github-org-bootstrap-cmd/SKILL.md) |
 
-### 完整Skill（37个）
+### 完整Skill（40个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -76,9 +76,12 @@ title: ".agents/skills/ 目录索引"
 | skill-migration-quality-delta | 完整Skill（v1.0.0，L1） | Skill 迁移质量差值归因：对源根与目标根各跑一次 check-skill-quality.py --verbose，按检查名求差集并映射到 frontmatter 或正文改动，最后按「本次引入 0 项、已消除 N 项、既有 M 项」三段陈述；含 diff_quality_warnings.py 与 ci-gate 迁移实测案例 | 迁入后掉分、65 变 70、警告是不是迁入引入、要不要回滚、质量门为什么不到 100 | [skill-migration-quality-delta/SKILL.md](skill-migration-quality-delta/SKILL.md) |
 | user-level-junction-acceptance | 完整Skill（v1.0.0，L1） | 用户级目录联接三段验收：经联接路径跑 quick_validate 先对既有联接技能取基线，区分仓库原生 frontmatter 既有失败与本次引入 → 共享工作树全局 git status 哈希不等时改路径级 status、mtime 与 diff 逐路径归因 → Windows Python 不接受 Bash 的 /c/ 路径，统一改 C:/ 或 Path.home()；含 A0-A5 步骤与验收报告模板 | 联接建好了怎么验收、quick_validate 报 Unexpected key、git status 哈希变了、evals 解析 FileNotFoundError、经目标路径验证用户级技能 | [user-level-junction-acceptance/SKILL.md](user-level-junction-acceptance/SKILL.md) |
 | contest-playbook | 完整Skill（v1.1.0，L1） | 通用参赛作战流程：判型（5 种赛道形态）→ 采集阶梯 L1-L7 → 编号事实六族结构化 → 抽取跨比赛通用机制判定（3 条经双样本检验）→ 资产对位 → 形态决策树 → 双轨倒排与外部依赖阻塞管理 → 合规四层自查；含规则不可得模式、传播三档分支、提交技术风险 12 项与预检门 | 我要参加 XX 比赛、帮我分析这个比赛规则、做个参赛方案、比赛怎么打、参赛材料清单、提交作品有哪些坑 | [contest-playbook/SKILL.md](contest-playbook/SKILL.md) |
+| embedded-page-submit-cmd | 完整Skill（v1.1.0，L1） | 内嵌智能页代提交通道：通道权限模型判定（3 条 API 权限通道 + 1 上下文通道 + 1 交互兜底）→ 宿主 HTTP 面逆向（asar 定位/chunk 裁决/baseUrl 穷举/host 跨域）→ PropertyValue oneof 形状契约 → 三道写入闸门（用户明示确认 / 红线字段禁代填 / 幂等查重）→ 写后回读复核；含只读探针与带闸门提交脚本 | 帮我提交、代填并提交、帮我在活动页报名、这个表单替我填、permission denied、12607、写入被拒 | [embedded-page-submit-cmd/SKILL.md](embedded-page-submit-cmd/SKILL.md) |
 | wechat-multi-platform-verify-cmd | 完整Skill（v1.0.0，L1） | 公众号文章多平台事实核验与发布证据包：S0 主张抽取 → S1 四级信源分层选源 → S2 逐平台取证（官方页直取/搜索快照/浏览器三通道）→ S3 主张×来源比对台账 → S4 冲突裁决与同源转载检测 → S5 证据包交付；输出 article.md + verify-<平台>.md + verify-ledger.md 三件套，含四态结论、价格口径门、邀测状态门与 10 条 Gotchas；萃取自 2026-10-23 公众号「千问Go! 我的应用」核验实战 | 核验这篇文章、多平台核验、事实核查、发布前核验、verify 台账、核验报告、证据包、这篇文章靠谱吗、投稿前查一遍 | [wechat-multi-platform-verify-cmd/SKILL.md](wechat-multi-platform-verify-cmd/SKILL.md) |
+| public-value-audit | 完整Skill（v1.1.0，L1） | 公开值取值域审计：三张清单（公开面 / 标识列 / 值域构造方）交叉定位泄露面 → 收口三件套（服务端拼装目标值 + 列级授权 + 客户端白名单逐列对齐）→ 7 条可回归不变量（I1~I7，可挂 CI）；含扫描器 / 断言器 / 自检三脚本与三态对照夹具（pre-fix / p115-only / post-fix）；v1.1.0 经 4 视角对抗审查（50 条意见）修订——修复表名归一化与列名解析两处「不变量恒不触发」缺陷、新增 p115 夹具、「入参是否承载标识」判定分流、覆盖率守卫（扫不到≠没问题） | 这个字段会不会泄露用户、公开列安全吗、cover_path 会不会暴露创建者、帮我审一下权限面、值域怎么收口 | [public-value-audit/SKILL.md](public-value-audit/SKILL.md) |
+| platform-review-precheck | 完整Skill（v1.0.0，L1） | 平台提审合规预检：静态提取代码实际调用的隐私接口 → 映射官方「处理的信息」类型 → 与《用户隐私保护指引》逐项对账（D1 声明覆盖调用 / D2 无死项 / D3 授权兜底 / D4 声明文件存在）；含扫描器 / 对账器 / 自检三脚本与前后对照夹具；萃取自 2026-10-26 提审被拒实战 | 提审被拒、审核不通过、代码发布审核没过、隐私保护指引怎么填、涉及收集照片手机号位置信息、提交审核被拦 | [platform-review-precheck/SKILL.md](platform-review-precheck/SKILL.md) |
 
-### 工作流门面（7个）
+### 工作流门面（8个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -88,6 +91,7 @@ title: ".agents/skills/ 目录索引"
 | ⭐ role-model-methodology | 工作流门面（v1.1.0） | 榜样人物方法论萃取与正面解读（四级事实分层 A权威/B百科/C转述/D推断 → 三框架诊断 → 证据桥接审查（时间线核对 + ★~★★★★★五档强度）→ 六步解读法 → 23条交付门禁）；含伦理四条约束（创伤不是教材/他人不是论据/隐私不评判/幸存者偏差前置）；案例：2026-10-03 三人榜样知识包（陶行知/游本昌/胡歌，61文档/254条四级事实/3框架） | 榜样学习、人物解读、正面解读师、名人方法论、人物关联洞察、榜样学习路径、终身学习者、怎么学名人、人物知识包、向谁学习、以某人为榜样 | [role-model-methodology/SKILL.md](role-model-methodology/SKILL.md) |
 | mindfulness-positivity | 工作流门面（v1.0.0） | 正念 vs 正面（积极心态）概念辨析与整合：四场景决策树（概念问答/内容产出/自我调节方案/知识包沉淀）+ 七维度辨析框架 + 「先接纳后重构」四步整合法 + 心理健康安全边界（不诊断/不替代治疗/危机转介/证据分级）；L2 知识底座 sc-20261003-mindfulness-positivity（22事实/3洞察/1模式） | 正念、正面、积极心态、正能量、mindfulness、positive thinking、习得性乐观、有毒正能量、toxic positivity、先接纳后重构、正念和积极有什么区别 | [mindfulness-positivity/SKILL.md](mindfulness-positivity/SKILL.md) |
 | dao-san-triads | 工作流门面（v1.0.0） | 「三」之本体论与三元组诊断：六类「三」解释谱系（和气/天地人/一+天地/模式/三合生物/本体显现）+ **第五义「三=关系位」统一模型** + 奥古斯丁三分法与最强反驳 + 时态检验诊断法 + 两组行动三元组四元关联 + **七条可当场判定的生存指南**（≤1200字）+ 「三之位」可迁移模式（5反模式/3问检验/L1-draft）+ 《老子》版本纪律（甲乙本/今本/楚简本不得混称）；L2 知识底座 sc-20261003-dao-san-yuan（50事实/4洞察/1模式/9条审查） | 三生万物、道生一、二生三、三之位、三元组、过去现在未来、时间三分、奥古斯丁三分法、一分为三、真问题真需求真目标、品质技能身份、生存指南、行动准则、极简原则、二选一怎么办、自我诊断、古典哲学概念 | [dao-san-triads/SKILL.md](dao-san-triads/SKILL.md) |
+| persona-brand-positioning | 工作流门面（v1.0.0） | 人格化品牌定位诊断：画层级图（品牌→子模块→子频道，避免子模块被当成品类招牌）→ 理解命名哲学三层（哲学/美学/人格）→ 补桥不改名（靠简介与页面内容承接搜索权重）→ 三环闭环按人→学→钱顺序建；含 6 条反模式、9 项安全检查清单、6 条无报错码隐性陷阱（Gotchas）、预览确认与幂等复用机制；L2 知识底座 sc-20261026-daode-masterxiong（26事实/3洞察/1模式/9行动项） | 品牌定位诊断、优化小程序简介、品牌名怎么取、人格化IP、搜索权重、简介怎么写、品牌名要不要加品类词、子站命名 | [persona-brand-positioning/SKILL.md](persona-brand-positioning/SKILL.md) |
 | private-encrypted-pdf-to-okf-wiki | 工作流门面（v1.0.0，L1） | 加密私域 PDF→OKF 知识包（七工序：S0 凭据隔离→S1 解密与文本层可信度判定→S2 结构决策（少页材料按概念维度拆分）→S3 主张五类分层→S4 原创改写与数学反解→S5 口径先行计数与声明契约化→S6 V审查与机械对账）；含 G1-G4 质量门、8 条 Gotchas、9 项安全清单与与 scanned-book-to-okf-wiki 的分工边界；L2 底座为同主题里程碑复盘报告 | 加密PDF转Wiki、密码PDF转知识包、私域材料转教程、课程讲义转OKF、内部培训材料转Wiki、加密文档转知识包 | [private-encrypted-pdf-to-okf-wiki/SKILL.md](private-encrypted-pdf-to-okf-wiki/SKILL.md) |
 
 ### Trae 内置工作流 Skill（2个，来自 external/doutops）
