@@ -321,7 +321,7 @@ Task 10 收敛 `apps/xs-cli/` 主引用后，`rg` 发现同源残余两处，改
 | 仓库 | 提交 | 变更规模 |
 |---|---|---|
 | `projects/xuanspace` | `d2dc124` docs(xuanspace): 修正建议书文末与落地事实不符的存量陈述 | 1 文件（`doc/recommendations.md`） |
-| 根仓 `SpecWeave` | `<待回填>` chore(xuanspace): 前移子模块指针并回写建议书收口证据 | 3 文件（`tasks.md` + `review.md` + gitlink） |
+| 根仓 `SpecWeave` | `4b538fa72` chore(xuanspace): 前移子模块指针并回写建议书收口证据 | 3 文件（`tasks.md` + `review.md` + gitlink） |
 
 未 push、未 tag。
 

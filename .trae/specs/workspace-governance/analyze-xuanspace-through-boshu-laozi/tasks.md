@@ -312,6 +312,6 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 仓库 | 提交 | 说明 |
 |---|---|---|
 | `projects/xuanspace` | `d2dc124` | `docs(xuanspace): 修正建议书文末与落地事实不符的存量陈述`（`doc/recommendations.md`） |
-| 根仓 | `<待回填>` | `chore(xuanspace): 前移子模块指针并回写建议书收口证据`（`tasks.md` + `review.md` + gitlink） |
+| 根仓 | `4b538fa72` | `chore(xuanspace): 前移子模块指针并回写建议书收口证据`（`tasks.md` + `review.md` + gitlink） |
 
 > 未 push、未 tag。
