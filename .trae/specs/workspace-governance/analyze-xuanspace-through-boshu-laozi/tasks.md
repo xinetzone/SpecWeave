@@ -227,3 +227,35 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 根仓 | 见 [review.md](review.md) 第十二节 | `docs(spec): 收口 analyze-xuanspace-through-boshu-laozi 并登记进看板`（6 文件：三件套 spec/tasks/review + 两级看板 README + okf 主题看板连带刷新） |
 
 > 未 push、未 tag。本轮不涉及 `projects/xuanspace`，子模块无变更。
+
+## 后续任务：P1/P2 落地（第四轮授权）
+
+> 本节记录规格完成后**第四轮**经用户另行授权执行的《优化建议书》落地：P1（一致性缺口）的 P1-1/P1-2/P1-3/P1-4/P1-6 与 P2（精确化）的 P2-1/P2-2/P2-3/P2-4，共 9 项。P1-5 已于「文档入口合并」轮次消解，本轮不含。不改写 Task 1–14 的原始记录。
+
+- [x] Task 15: 落地 P1/P2 一致性缺口与精确化（9 项）
+  - **Priority**: medium
+  - **Depends On**: Task 14
+  - **Description**: 依《优化建议书》P1（一致性缺口）与 P2（精确化）两级清单，逐项对齐 `projects/xuanspace` 文档与实现的缺口。
+  - [x] SubTask 15.1（P1-1）: `doc/intro.md` 命令表补 `xs archive` / `xs lfs` / `xs affected` 三行，12 → 15 个一级项，与 `tools/xs/src/xs/cli.py`（7 命令组 + 8 直接命令）及 `README.md`「15 个子命令」口径齐平
+  - [x] SubTask 15.2（P1-2）: `doc/architecture.md` 依赖示例扩为 `docs` 6 项（`sphinx`/`myst-parser`/`sphinx-book-theme`/`sphinx-design`/`sphinx-copybutton`/`sphinxcontrib-mermaid`），并显式列出 `test`/`lint`/`build` 与 `[dependency-groups]` 的 `dev` 展开式，替换原 `xuanspace[docs,test,lint,build]` 引用式
+  - [x] SubTask 15.3（P1-3）: `libs/README.md` 示例 `scikit-build-core>=0.5` → `>=0.11`，与全仓实际声明（根 `pyproject.toml`、`tools/xs`、`tools/okf`、`libs/xuan-core`、`libs/xuan-ext-demo`）一致
+  - [x] SubTask 15.4（P1-4）: 三份「现有子项目」清单补全至磁盘现状——`libs/README.md` 由 2 项改 8 项（按字母序，附免责注）；`tools/README.md` 目录树与模板表补 `native-ffi/`；`README.md` 项目索引表补 `mystx`/`xuan-compose`/`xuan-core`/`xuan-ext-demo` 4 行（9 → 13）。**期望态的「生成物/断言对象」形式未实现，列为后续**（见 review.md 第十三节 13.4）
+  - [x] SubTask 15.5（P1-6）: `.meta/README.md` 于「概述」后新增「当前阶段冻结（重要）」节（Task 20 前禁止加 frontmatter / 建 TOML 镜像，规则层优先）；`.agents/rules/frontmatter.md` 补 **Task 20 解冻触发条件**（`xs meta scan` / `xs meta sync` 端到端可用时）
+  - [x] SubTask 15.6（P2-1）: `doc/intro.md` 开篇《老子》引文后补版本标注——明示依**传世本**（王弼本系统）面貌，并给出马王堆甲本／乙本相应文句（乙本此句完整、甲本此句残、「恒」字据帛书通释；「恒」改「常」系避汉文帝刘恒讳）
+  - [x] SubTask 15.7（P2-2）: `doc/architecture.md`「自建库（projects/）」节「SpecWeave 主仓库」→「上层工作区」，消除与文件所在语境的指代漂移
+  - [x] SubTask 15.8（P2-3）: `AGENTS.md` 验收基线 mypy 行补范围口径——「检查范围以 CI 为准（当前为 `tools/xs libs/xuan-core libs/xuan-ext-demo`，见 `.github/workflows/ci.yml`）」
+  - [x] SubTask 15.9（P2-4）: `README.md` Mermaid `法` 子图重名节点 `Conventions[AGENTS.md]` → `AgentsMd[AGENTS.md]`，节点标识唯一
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace` 内文档与规范文件）
+  - **Test Requirements**:
+    - `rule` TR-15.1: `check-links.py --path .`（cwd = `projects/xuanspace`）本轮 8 文件 **0 新增断链**（目录内 127 处为存量）
+    - `rule` TR-15.2: `doc/intro.md` 命令表条目数 = 15；`rg "scikit-build-core>="` 于 `libs/` `tools/` 与 `pyproject.toml` 一致（`>=0.11`）
+    - `rule` TR-15.3: 根仓 `git ls-tree HEAD projects/xuanspace` 的 gitlink = 子模块 HEAD `4c9a346`
+
+## 提交记录（证据，第四轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `4c9a346` | `docs(xuanspace): 对齐文档与实现的一致性缺口与精确化（P1/P2）`（8 文件，+54/−11） |
+| 根仓 | `d0d531e2c` | `chore(xuanspace): 前移子模块指针至 4c9a346（文档一致性 P1/P2 落地）`（仅 gitlink，+1/−1） |
+
+> 未 push、未 tag。子模块 HEAD 最终为 `4c9a3467a30e35cb820bb9784cec19593d2e31e6`，根仓 gitlink 与之对齐。子模块工作树残留 5 项（`.gitignore`、`pyproject.toml`、`src/xuanspace/__init__.py`、`tools/xs/src/xs/commands/version_cmd.py`、`tools/xs/src/xs/discovery.py`）为**并行会话在途改动**，本轮未触碰、未提交。

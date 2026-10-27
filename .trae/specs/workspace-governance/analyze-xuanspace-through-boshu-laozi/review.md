@@ -221,3 +221,48 @@ Task 10 收敛 `apps/xs-cli/` 主引用后，`rg` 发现同源残余两处，改
 
 故 6 个文件作**单一原子提交**（三件套 spec/tasks/review + 两级看板 README + okf 主题看板连带刷新）；未触碰其余 11 个主题 README（无 diff，天然幂等）。
 
+## 十三、P1/P2 落地证据（规格完成后追加，第四轮）
+
+> 范围：规格完成后**第四轮**经用户另行授权执行的《优化建议书》落地——P1（一致性缺口）的 P1-1/P1-2/P1-3/P1-4/P1-6 与 P2（精确化）的 P2-1/P2-2/P2-3/P2-4，共 9 项。对应 tasks.md 的 Task 15。本节为独立审查记录，不改写一至十二节的原始验收结果。
+
+### 13.1 交付物与提交
+
+| 仓库 | 提交 | 变更规模 |
+|---|---|---|
+| `projects/xuanspace` | `4c9a346` docs(xuanspace): 对齐文档与实现的一致性缺口与精确化（P1/P2） | 8 文件，+54 / −11 |
+| 根仓 `SpecWeave` | `d0d531e2c` chore(xuanspace): 前移子模块指针至 4c9a346（文档一致性 P1/P2 落地） | 1 文件，+1 / −1（仅 gitlink） |
+
+未 push、未 tag。子模块 HEAD 为 `4c9a3467a30e35cb820bb9784cec19593d2e31e6`，根仓 gitlink 与之对齐。
+
+涉及文件（8）：`doc/intro.md`、`doc/architecture.md`、`README.md`、`libs/README.md`、`tools/README.md`、`.meta/README.md`、`.agents/rules/frontmatter.md`、`AGENTS.md`。
+
+### 13.2 逐项对照
+
+| 条款 | 落地文件 | 变更要点 |
+|---|---|---|
+| P1-1 统一 CLI 命令清单口径 | `doc/intro.md` | 命令表补 `xs archive` / `xs lfs` / `xs affected`，12 → 15 一级项 |
+| P1-2 同步依赖声明示例 | `doc/architecture.md` | `docs` 示例 2 → 6 项；显式 `test`/`lint`/`build`；`dev` 由 `xuanspace[...]` 引用式改 `[dependency-groups]` 展开式 |
+| P1-3 统一 scikit-build-core 下限 | `libs/README.md` | `>=0.5` → `>=0.11` |
+| P1-4 「现有子项目」清单 | `libs/README.md`、`tools/README.md`、`README.md` | libs 2 → 8 项（附免责注）；tools 补 `native-ffi/`；README 项目索引 9 → 13 行 |
+| P1-6 元数据规范冲突 | `.meta/README.md`、`.agents/rules/frontmatter.md` | 新增「当前阶段冻结」节；补 Task 20 解冻触发条件 |
+| P2-1 引文补版本标注 | `doc/intro.md` | 标注传世本（王弼本系统）并给甲/乙本对照 |
+| P2-2 上下文漂移 | `doc/architecture.md` | 「SpecWeave 主仓库」→「上层工作区」 |
+| P2-3 mypy 范围口径 | `AGENTS.md` | 补「范围以 CI 为准（`tools/xs libs/xuan-core libs/xuan-ext-demo`）」 |
+| P2-4 Mermaid 重名节点 | `README.md` | `Conventions[AGENTS.md]` → `AgentsMd[AGENTS.md]` |
+
+### 13.3 门禁与核验
+
+| 检查项 | 命令 / 方法 | 结果 |
+|---|---|---|
+| 断链门禁 | `check-links.py --path .`（cwd = `projects/xuanspace`） | rc=1；127 处**均为存量**（MyST 无扩展名交叉引用 `doc/intro.md:68-71`、`libs/caffe-ffi` 跨仓链接、目录链接警告）；本轮 8 文件 **0 新增** |
+| Mermaid 门禁 | `check_mermaid.py` | **不适用**——该脚本硬编码无关路径（`04-architecture.md`），执行报 `FileNotFoundError`；改以人工核对：P2-4 节点重名已消除，`doc/` 内 3 处 mermaid 块与改动行不相交 |
+| 命令表口径 | 核对 `doc/intro.md` 表行数 | 15 行，与 `cli.py`（7 组 + 8 直接命令）一致 |
+| 版本下限 | `rg "scikit-build-core>=" libs/ tools/ pyproject.toml` | 全仓 `>=0.11`，示例同步后一致 |
+| 边界核对（xuanspace） | `git status --short` | 提交后 5 项 dirty 全为**并行会话在途改动**（`.gitignore`/`pyproject.toml`/`__init__.py`/`version_cmd.py`/`discovery.py`），本轮未触碰 |
+| 边界核对（根仓） | `git ls-tree HEAD projects/xuanspace` | gitlink = `4c9a346`，与子模块 HEAD 一致 |
+
+### 13.4 未落项与后续
+
+- **P1-4 期望态的「生成物 / 断言对象」形式未实现**：本轮按「补全清单 + 免责注」最小实现落地（清单与磁盘一致），期望态给出的两条路径（① 生成标记由脚本注入；② 在 P0-4 检查中增加「清单条目 ⊆ 磁盘目录」断言）**均未实现**，作为后续项。
+- **建议书文末的存量陈述**：`doc/recommendations.md` 文末仍写「本轮不执行任何建议项，仅提出清单」——该句在 P0/P1/P2 陆续落地后已与事实不符。本轮范围锁定为「规格三件套 + 看板」，未扩权修改建议书本体，此句留待后续统一处置。
+
