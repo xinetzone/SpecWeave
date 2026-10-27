@@ -266,3 +266,49 @@ Task 10 收敛 `apps/xs-cli/` 主引用后，`rg` 发现同源残余两处，改
 - **P1-4 期望态的「生成物 / 断言对象」形式未实现**：本轮按「补全清单 + 免责注」最小实现落地（清单与磁盘一致），期望态给出的两条路径（① 生成标记由脚本注入；② 在 P0-4 检查中增加「清单条目 ⊆ 磁盘目录」断言）**均未实现**，作为后续项。
 - **建议书文末的存量陈述**：`doc/recommendations.md` 文末仍写「本轮不执行任何建议项，仅提出清单」——该句在 P0/P1/P2 陆续落地后已与事实不符。本轮范围锁定为「规格三件套 + 看板」，未扩权修改建议书本体，此句留待后续统一处置。
 
+## 十四、P0-4 落地证据（规格完成后追加，第五轮）
+
+> 范围：规格完成后**第五轮**经用户另行授权执行的《优化建议书》**P0-4**（建立「声明—实现一致性」门禁）落地。P0-4 是建议书中最后一个未落地的 P0 项。对应 tasks.md 的 Task 16。本节为独立审查记录，不改写一至十三节的原始验收结果。
+
+### 14.1 交付物与提交
+
+| 仓库 | 提交 | 变更规模 |
+|---|---|---|
+| `projects/xuanspace` | `2750078` ci(xuanspace): 新增声明—实现一致性门禁（P0-4） | 4 文件，+304 / −5 |
+| 根仓 `SpecWeave` | `见 14.4` | 本规格三件套回写 + 子模块 gitlink 前移 |
+
+未 push、未 tag。子模块 HEAD 为 `2750078e2386ee4efd3e09c0a3155bd43abaffd4`，根仓 gitlink 与之对齐。
+
+新增/变更文件（4）：`scripts/check_declaration_consistency.py`（新）、`scripts/declaration-snapshot.json`（新）、`.github/workflows/ci.yml`、`scripts/README.md`。
+
+### 14.2 三类声明覆盖与实现要点
+
+| 类别 | 声明源 | 事实源 | 断言 |
+|---|---|---|---|
+| A. CLI 命令清单 | `README.md`「N 个子命令」；`doc/intro.md`「项目状态」命令表 | `tools/xs/src/xs/cli.py` 注册表（`app.add_typer(..., name=)` + `app.command("...")`） | 计数相等 + 命令名集合双向相等 |
+| B. 子项目清单 | `libs/README.md`「现有子项目」表 | `libs/` 磁盘目录（忽略隐藏项与 `__pycache__`/`.git`/`node_modules`） | 集合双向相等（即 P1-4 遗留的「清单 ⊆ 磁盘」断言之实现） |
+| C. 目录名口径 | `README.md`「目录结构」围栏块声明的顶层目录 | 磁盘目录存在性 | 声明目录均存在 + 顶层禁 `docs/` + 必有 `doc/` |
+
+- 双模式：默认**校验模式**（退出码 0 / 1 / 2）；`--generate` **生成模式**写 `scripts/declaration-snapshot.json` 快照；`--json` 结构化输出。
+- 校验模式末尾额外比对快照：磁盘事实若与已提交快照不一致即失败（提示 `--generate` 刷新），从而把「实现变更未同步声明」也纳入门禁。
+- 脚本自包含（不导入 `libs/`/`apps/` 内部包），符合 `scripts/README.md` §6；共享库 `SpecWeave/.agents/scripts/lib/` 不在本仓内、单仓 CI 检出不可导入，仅镜像其表格解析思路（详见脚本 docstring）。
+
+### 14.3 门禁与核验
+
+| 检查项 | 命令 / 方法 | 结果 |
+|---|---|---|
+| **验收动作（正）** | `README.md`「15 个子命令」→「14」，`python scripts/check_declaration_consistency.py` | 退出码 **1**；输出「README.md 声明 14 个子命令，tools/xs/src/xs/cli.py 实际注册 15 个」 |
+| **验收动作（反）** | 改回「15」后重跑 | 退出码 **0**；「声明与实现一致：CLI 命令清单 / 子项目清单 / 目录名口径 全部通过。」 |
+| 生成模式幂等 | `--generate` 连跑两次 | 首次刷新快照；第二次「清单快照已是目标状态，跳过」，退出码 0 |
+| 快照内容 | `Read scripts/declaration-snapshot.json` | 15 命令 + 8 子项目，与 `cli.py` 注册表、`libs/` 磁盘一致 |
+| 静态检查 | `ruff check scripts/`、`ruff format --check scripts/` | `All checks passed!`、`2 files already formatted` |
+| 断链门禁 | `check-links.py --path .`（cwd = `projects/xuanspace`） | rc=1；127 处**均为存量**（与第四轮基线一致），本轮 4 文件 **0 新增** |
+| 事实源未受并行改动影响 | `git diff -- tools/xs/src/xs/cli.py` | 并行会话改动仅涉导入与版本解析（`_dist_version` 回退），**未触及** `add_typer`/`command` 注册行；15 个一级项在 HEAD 与工作树一致 |
+| 边界核对（xuanspace） | `git status --short` | 提交后剩余 8 项 dirty 全为**并行会话在途改动**（`.gitignore`/`pyproject.toml`/`__init__.py`/`tools/xs/README.md`/`tools/xs/src/xs/{__init__,cli}.py`/`version_cmd.py`/`discovery.py`），本轮未触碰 |
+| 边界核对（根仓） | `git ls-tree HEAD projects/xuanspace` | gitlink = `2750078`，与子模块 HEAD 一致 |
+
+### 14.4 遗留与后续
+
+- **建议书文末的存量陈述**（承 13.4）：`doc/recommendations.md` 文末「本轮不执行任何建议项，仅提出清单」仍未处置；本轮范围锁定为「脚本 + 快照 + CI + 规格三件套」，未扩权修改建议书本体。
+- **P1-4 期望态的第 ① 条**（生成标记由脚本注入文档）仍未实现；第 ② 条（清单 ⊆ 磁盘目录断言）已由本轮的 B 类断言覆盖（见 14.2）。
+

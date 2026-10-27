@@ -259,3 +259,34 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 根仓 | `d0d531e2c` | `chore(xuanspace): 前移子模块指针至 4c9a346（文档一致性 P1/P2 落地）`（仅 gitlink，+1/−1） |
 
 > 未 push、未 tag。子模块 HEAD 最终为 `4c9a3467a30e35cb820bb9784cec19593d2e31e6`，根仓 gitlink 与之对齐。子模块工作树残留 5 项（`.gitignore`、`pyproject.toml`、`src/xuanspace/__init__.py`、`tools/xs/src/xs/commands/version_cmd.py`、`tools/xs/src/xs/discovery.py`）为**并行会话在途改动**，本轮未触碰、未提交。
+
+## 后续任务：P0-4 落地（第五轮授权）
+
+> 本节记录规格完成后**第五轮**经用户另行授权执行的《优化建议书》**P0-4**（建立「声明—实现一致性」门禁）落地。P0-4 是建议书中最后一个未落地的 P0 项（P0-1/P0-2/P0-3 已在前四轮闭环，P1/P2 全量 9 项已在第四轮闭环）。不改写 Task 1–15 的原始记录。
+
+- [x] Task 16: 落地 P0-4（声明—实现一致性门禁）
+  - **Priority**: high
+  - **Depends On**: Task 15
+  - **Description**: 依《优化建议书》P0-4，把仓库中**可机械提取的文档声明**与**磁盘/代码事实**做成自动化门禁——新增 `scripts/check_declaration_consistency.py`（生成/校验双模式），覆盖三类声明，并接入 `ci.yml` 的 `quality` job，使声明与实现的静默漂移在 CI 期即失败。
+  - [x] SubTask 16.1: 新增 `scripts/check_declaration_consistency.py`——校验模式（默认，退出码 0/1/2）+ 生成模式（`--generate` 刷新清单快照，幂等）+ `--json` 输出；三类断言：**A. CLI 命令清单**（`README.md`「N 个子命令」计数与 `doc/intro.md` 命令表 ↔ `tools/xs/src/xs/cli.py` 注册表）、**B. 子项目清单**（`libs/README.md`「现有子项目」表 ↔ `libs/` 磁盘目录）、**C. 目录名口径**（`README.md`「目录结构」块声明的目录磁盘存在性 + 顶层禁止 `docs/` + 必须有 `doc/`）；末尾比对 `scripts/declaration-snapshot.json` 快照
+  - [x] SubTask 16.2: 生成 `scripts/declaration-snapshot.json`（15 一级命令 + 8 `libs/` 子项目）
+  - [x] SubTask 16.3: `ci.yml` `quality` job 于 `Check pyproject.toml canonical style` 之后插入 `Check declaration consistency` step（`python scripts/check_declaration_consistency.py`），步骤序号顺延，job 表头注释更新为「五项自动化检查」
+  - [x] SubTask 16.4: `scripts/README.md` 登记新脚本（「现有脚本示例」表 + 「脚本目录结构」不变）；于 §1「Shebang 和编码声明」补 **Python 3.14 例外**说明（py314 下 ruff `UP009` 视编码声明多余，新脚本省略该行），消解 README 字面要求与 ruff 配置的叙述张力
+  - [x] SubTask 16.5: 落实建议书规定的**验收动作**——故意把 `README.md` 的「15」改为「14」，校验应失败；改回后应通过
+  - [x] SubTask 16.6: 顺带覆盖 P1-4 遗留的「清单条目 ⊆ 磁盘目录」断言（第四轮 review.md §13.4 记为后续项）——B 类断言即 `libs/README.md` 表与 `libs/` 磁盘目录的双向集合比对
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace` 内新增脚本、快照、CI 配置与脚本目录 README）
+  - **Test Requirements**:
+    - `rule` TR-16.1: **验收动作**——`README.md`「15 个子命令」改为「14」时 `python scripts/check_declaration_consistency.py` 退出码 = 1 且报出「声明 14 … 实际注册 15」；改回后退出码 = 0
+    - `rule` TR-16.2: 生成模式幂等——连续两次 `--generate` 第二次输出「清单快照已是目标状态，跳过」且退出码 = 0
+    - `rule` TR-16.3: `ruff check` 与 `ruff format --check` 对 `scripts/` 双绿
+    - `rule` TR-16.4: `check-links.py --path .`（cwd = `projects/xuanspace`）本轮 **0 新增断链**（127 处为存量）
+    - `rule` TR-16.5: 根仓 `git ls-tree HEAD projects/xuanspace` 的 gitlink = 子模块 HEAD
+
+## 提交记录（证据，第五轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `2750078` | `ci(xuanspace): 新增声明—实现一致性门禁（P0-4）`（4 文件，+304/−5：`scripts/check_declaration_consistency.py` + `scripts/declaration-snapshot.json` + `.github/workflows/ci.yml` + `scripts/README.md`） |
+| 根仓 | `见 review.md 第十四节` | `chore(xuanspace): 前移子模块指针至 2750078（声明一致性门禁 P0-4 落地）` + 规格三件套回写（仅 gitlink + 本规格文档） |
+
+> 未 push、未 tag。子模块 HEAD 为 `2750078e2386ee4efd3e09c0a3155bd43abaffd4`，根仓 gitlink 与之对齐。子模块工作树残留 8 项（`.gitignore`、`pyproject.toml`、`src/xuanspace/__init__.py`、`tools/xs/README.md`、`tools/xs/src/xs/__init__.py`、`tools/xs/src/xs/cli.py`、`tools/xs/src/xs/commands/version_cmd.py`、`tools/xs/src/xs/discovery.py`）为**并行会话在途改动**，本轮未触碰、未提交。
