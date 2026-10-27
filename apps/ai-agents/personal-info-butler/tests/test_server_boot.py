@@ -14,6 +14,7 @@ import uvicorn
 
 from info_butler.api import create_app
 from info_butler.config import Settings
+from info_butler.http_client import http_client
 from info_butler.llm import LLMClient
 from info_butler.store import MemoryStore
 
@@ -24,7 +25,20 @@ def _free_port() -> int:
         return int(sock.getsockname()[1])
 
 
-def test_uvicorn_serves_the_app():
+def test_uvicorn_serves_the_app(monkeypatch):
+    """真实 uvicorn 服务器必须能对外服务全部 API 路由。
+
+    这条测试守着的是一个「测试全绿但服务上线即挂」的缺陷：httpx 默认信任
+    ``HTTP_PROXY`` 环境变量，回环请求被代理转发后 request-target 变成绝对
+    URI，h11 只认 origin 形式，于是**全部** ``/api/*`` 返回 404——而进程内
+    TestClient 直接调 ASGI callable，根本不经过网络层，测不出来。
+
+    因此本测试必须真的起服务器、走真实 socket，而不是用 TestClient。
+    """
+    # 环境里有代理（企业网 / CI runner 常见）时，回环请求仍须直达
+    monkeypatch.setenv("HTTP_PROXY", "http://127.0.0.1:9")
+    monkeypatch.setenv("http_proxy", "http://127.0.0.1:9")
+
     settings = Settings()
     app = create_app(settings=settings, store=MemoryStore(), llm=LLMClient(settings))
     port = _free_port()
@@ -41,10 +55,14 @@ def test_uvicorn_serves_the_app():
 
     try:
         assert server.started, "uvicorn 未能启动"
-        with httpx.Client(base_url=f"http://127.0.0.1:{port}", timeout=5.0) as client:
-            assert client.get("/api/health").json()["status"] == "ok"
+        base = f"http://127.0.0.1:{port}"
+        # 用应用的统一 HTTP 工厂发起请求：回环地址自动禁用环境代理。
+        # 这里刻意**不**用裸 httpx.Client——否则测试自己会被代理劫持，
+        # 变成「测试失败」而不是「守护住真实用户的路径」。
+        with http_client(base, 5.0) as client:
+            assert client.get(f"{base}/api/health").json()["status"] == "ok"
             response = client.post(
-                "/api/items", json={"content": "记得明天把定价方案发给客户"}
+                f"{base}/api/items", json={"content": "记得明天把定价方案发给客户"}
             )
             assert response.status_code == 201
             assert response.json()["item"]["kind"] == "todo"

@@ -13,6 +13,7 @@ import json
 import httpx
 
 from .config import LLMOverride, Settings
+from .http_client import http_client
 
 
 class LLMError(RuntimeError):
@@ -66,7 +67,7 @@ class LLMClient:
             "Content-Type": "application/json",
         }
         try:
-            with httpx.Client(timeout=self._settings.llm_timeout) as client:
+            with http_client(url, self._settings.llm_timeout) as client:
                 response = client.post(f"{base_url}/chat/completions", json=payload, headers=headers)
         except httpx.HTTPError as exc:  # pragma: no cover - 由测试用假 client 覆盖
             return {"ok": False, "model": model, "reason": f"连不上这个地址（{type(exc).__name__}）"}
@@ -121,7 +122,7 @@ class LLMClient:
         }
 
         try:
-            with httpx.Client(timeout=self._settings.llm_timeout) as client:
+            with http_client(url, self._settings.llm_timeout) as client:
                 response = client.post(url, json=payload, headers=headers)
         except httpx.HTTPError as exc:  # pragma: no cover - 网络分支依赖外部
             raise LLMError(f"大模型请求失败：{exc}") from exc

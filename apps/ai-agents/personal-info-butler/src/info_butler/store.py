@@ -16,6 +16,7 @@ from datetime import datetime, timezone
 import httpx
 
 from .config import Settings
+from .http_client import http_client
 
 ISO = "%Y-%m-%dT%H:%M:%S.%f%z"
 
@@ -188,10 +189,9 @@ class SupabaseStore(Store):
 
     def _request(self, method: str, path: str, **kwargs) -> list[dict]:
         try:
-            with httpx.Client(timeout=self._timeout) as client:
-                response = client.request(
-                    method, f"{self._base}/{path}", headers=self._headers, **kwargs
-                )
+            url = f"{self._base}/{path}"
+            with http_client(url, self._timeout) as client:
+                response = client.request(method, url, headers=self._headers, **kwargs)
         except httpx.HTTPError as exc:  # pragma: no cover - 依赖外部网络
             raise StoreError(f"云端存储不可达：{exc}") from exc
         if response.status_code >= 400:

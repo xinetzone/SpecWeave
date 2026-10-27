@@ -97,10 +97,15 @@ class FakeResponse:
 
 
 class FakeClient:
-    """替身 httpx.Client：按脚本依次返回响应。"""
+    """替身 httpx.Client：按脚本依次返回响应。
 
-    def __init__(self, timeout=None):
+    ``trust_env`` 必须能被接受——真实客户端由 :func:`info_butler.http_client.http_client`
+    创建，它会按目标地址决定是否信任环境代理（回环必须禁用，否则真实服务器上 404）。
+    """
+
+    def __init__(self, timeout=None, trust_env=True, **_kwargs):
         self.timeout = timeout
+        self.trust_env = trust_env
         self.calls: list[dict] = []
 
     def __enter__(self):
