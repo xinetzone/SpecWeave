@@ -715,3 +715,58 @@ review.md §一 AC-1「交付物存在性」曾断言两份文档存在于 `doc/
 - 本轮已完成 `doc/` 全量 19 个 `.md` 的筛查；识别出的 5 项失真候选全部处置。
 - 本规格至此仍无遗留任务；如后续再启动收口轮次，沿用「子模块原子提交 → 根仓前移 gitlink → 两段式（占位符 + `docs(spec)` 回填）提交 → 三件套回写」既定流程。
 
+## 二十三、规格正式结项证据（规格完成后追加，第十四轮）
+
+> 范围：规格完成后**第十四轮**经用户裁定执行的工作——本规格十三轮全闭环、无遗留任务，唯一未闭环项为其自身 frontmatter `status` 仍为 `draft`、两级看板未反映完成态。本节为独立审查记录，不改写一至二十二节的原始验收结果。对应 tasks.md 的 Task 25。
+
+### 23.1 处置与提交
+
+| 仓库 | 提交 | 变更规模 |
+|---|---|---|
+| 根仓 `SpecWeave` | `ROOT_COMMIT_PLACEHOLDER` docs(spec): 规格正式结项并刷新两级看板 | 5 文件（`spec.md` + `tasks.md` + `review.md` + 主题看板 `.trae/specs/workspace-governance/README.md` + 全局总览 `.trae/specs/README.md`） |
+
+未 push、未 tag。本轮无子模块变更，故无 gitlink 前移。
+
+### 23.2 结项依据（为什么现在结项）
+
+| 判据 | 事实 |
+|---|---|
+| 任务全闭环 | Task 1–25 全部勾选 |
+| 审查记录完整 | review.md §一–§二十二逐轮登记 |
+| 无遗留任务 | §22.6「本规格至此仍无遗留任务」 |
+| 唯一未闭环项 | 三件套 `status` 仍为 `draft`；两级看板未反映完成态 |
+
+### 23.3 结项动作
+
+| 动作 | 内容 |
+|---|---|
+| 状态收口 | `spec.md` / `tasks.md` frontmatter `status: "draft"` → `"completed"` |
+| 主题看板刷新 | `python .agents/scripts/docgen.py theme-dashboards` |
+| 全局总览刷新 | `python .agents/scripts/docgen.py update-spec-readme` |
+| 证据回写 | 本节 §二十三 + `tasks.md` Task 25 |
+
+### 23.4 门禁与核验
+
+| 检查项 | 命令 / 方法 | 结果 |
+|---|---|---|
+| 状态收口 | 检索 `status: "draft"`（`spec.md`、`tasks.md`） | 命中 **0** |
+| 主题看板 | `docgen.py theme-dashboards` | 退出码 **0**；本规格行状态列为「✓ 完成」 |
+| 全局总览 | `docgen.py update-spec-readme` | 退出码 **0**；合计 **741** Spec |
+| 计数核对 | 全局总览「已完成」 | 收口前后均 **460**（成因见 §23.5） |
+| 占位符残留 | 检索 `ROOT_COMMIT_PLACEHOLDER`（三件套） | **0** |
+| 边界核对（子模块） | `git -C projects/xuanspace status --short` | 无变更 |
+
+### 23.5 核验发现（两处 docgen 既有行为，据实记录）
+
+1. **全局总览计数不变**：`docgen.py` 的 `_dash_scan_spec` 对 `status ∈ COMPLETED_STATUSES` 置 `completed=True`，但对非 completed 状态改用「全部任务勾选」判据（`unchecked == 0 and total_tasks > 0`）。本规格在收口前 Task 1–24 已全部勾选，故**收口前即被计为已完成**——本轮 frontmatter 收口不改变「已完成」计数（460）。先前预期的「+1」不成立，已据实修正 Task 25 的 TR-25.3（改为「计数前后一致」）。
+2. **主题看板「三件套」列形态变化**：`_dash_scan_all_specs` 对 `status ∈ COMPLETED_STATUSES` 走短路分支，`total_tasks`/`done_tasks` 恒为 0，使 `_build_theme_dashboard_table` 的 `has_tasks` 判为假，三件套列由 `✓/✗` 变为 `✓✗✗`（任务项显示 ✗）。此为 docgen 的**既有行为**，同主题已完成的 `ai-dev-variant`（`status: completed`）同形；本轮据实记录，**不修改 `.agents/scripts/docgen.py`**（主权区共享脚本，改动影响全仓 51 个主题看板，超出本轮授权）。
+
+### 23.6 决策记录：为何不改写一至二十二节
+
+沿用「不改动历史事实快照」约束：§一–§二十二记录各轮实施当时的验收结果，本轮不修改其内容，只追加本节。`status` 字段是**随时间演进的状态**而非历史快照，故收口不违反该约束。
+
+### 23.7 遗留与后续
+
+- 本规格**正式结项**（`status: completed`）；至此无遗留任务。
+- 结项后无待授权轮次；如未来需重启，须重新走「提案 → 用户批准 → 执行」治理门。
+

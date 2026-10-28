@@ -1,5 +1,5 @@
 ---
-status: "draft"
+status: "completed"
 title: "从帛书《老子》视角分析 Xuanspace 并产出项目蓝图与优化建议书 - 实施计划"
 change-id: "analyze-xuanspace-through-boshu-laozi"
 ---
@@ -532,3 +532,30 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 根仓 | `c71613604` | `chore(xuanspace): 前移子模块指针并回写 doc 易腐性筛查处置证据`（`tasks.md` + `review.md` + gitlink） |
 
 > 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 4 项变更。
+
+## 后续任务：规格正式结项（第十四轮授权）
+
+> 本节记录规格完成后**第十四轮**经用户裁定执行的工作：本规格经十三轮增量治理（Task 1–24、review.md §一–§二十二）后全量闭环、无遗留任务，唯一未闭环项是规格自身的 `frontmatter status` 仍为 `draft`，且两级看板未反映完成态。经用户裁定执行**规格正式结项**。裁定依据见 review.md §23。不改写 Task 1–24 的原始记录，亦不回改历史验收勾选。
+
+- [x] Task 25: 规格正式结项（状态收口 + 看板刷新 + 证据回写）
+  - **Priority**: low
+  - **Depends On**: Task 24
+  - **Description**: 本规格十三轮全闭环且无遗留任务，但三件套的 `status` 仍为 `draft`、两级看板（主题看板 + 全局总览）未反映完成态——「收官后未登记状态」是唯一未闭环项。本轮把状态收口为 `completed`，用 `docgen.py` 同步两级看板，并把结项证据回写 `review.md`。
+  - [x] SubTask 25.1: 状态收口——`spec.md` 与 `tasks.md` 的 frontmatter `status: "draft"` → `status: "completed"`
+  - [x] SubTask 25.2: 看板刷新——`docgen.py theme-dashboards`（主题看板）与 `docgen.py update-spec-readme`（全局总览）
+  - [x] SubTask 25.3: 证据回写——`review.md` 追加 §二十三（结项证据与核验）
+  - [x] SubTask 25.4: 结论化（C）——两级看板计数自洽；`ROOT_COMMIT_PLACEHOLDER` 残留 = 0
+  - **Acceptance Criteria Addressed**: AC-4（规格三件套口径自洽）、AC-6（范围仅限规格三件套与看板，不改子模块）
+  - **Test Requirements**:
+    - `rule` TR-25.1: `spec.md` 与 `tasks.md` 的 frontmatter `status` 均为 `completed`（`grep -c 'status: "draft"'` = 0）
+    - `rule` TR-25.2: `docgen.py theme-dashboards` 与 `docgen.py update-spec-readme` 退出码 = 0；本规格在主题看板中状态列为「✓ 完成」
+    - `rule` TR-25.3: 全局总览「已完成」计数在收口前后一致（460）——该规格此前已因「全部任务勾选」被计为已完成，本轮 frontmatter 收口不制造计数漂移
+    - `rule` TR-25.4: 变更面恰为 5 项（`spec.md`、`tasks.md`、`review.md`、主题看板 README、全局总览 `.trae/specs/README.md`）；`projects/xuanspace` 子模块无变更
+
+## 提交记录（证据，第十四轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| 根仓 | `ROOT_COMMIT_PLACEHOLDER` | `docs(spec): 规格正式结项并刷新两级看板`（`spec.md` + `tasks.md` + `review.md` + 两级看板 README） |
+
+> 本轮仅动根仓（规格三件套 + 两级看板），不改动 `projects/xuanspace` 子模块；故无子模块提交、无 gitlink 前移。未 push、未 tag。

@@ -1,6 +1,6 @@
 # Specs 全局执行看板
 
-> 本目录是 SpecWeave 项目所有规格文档（spec）的指挥中心，按 13 大主题分类组织。本文档由 docgen（C-6）于 **2026-10-27** 自动生成；详细 spec 列表见各主题 README。
+> 本目录是 SpecWeave 项目所有规格文档（spec）的指挥中心，按 13 大主题分类组织。本文档由 docgen（C-6）于 **2026-10-28** 自动生成；详细 spec 列表见各主题 README。
 
 ---
 
@@ -38,6 +38,7 @@
 | [digital-economy-okf-wiki](./digital-economy-okf-wiki/README.md) | 1 | 0 | 0 | 1 | 📋 [查看](./digital-economy-okf-wiki/README.md) |
 | [docs-as-product-api](./docs-as-product-api/README.md) | 1 | 0 | 0 | 1 | 📋 [查看](./docs-as-product-api/README.md) |
 | [doocs-md-py](./doocs-md-py/README.md) | 1 | 0 | 0 | 1 | 📋 [查看](./doocs-md-py/README.md) |
+| [financial-economics-okf-wiki](./financial-economics-okf-wiki/README.md) | 1 | 0 | 1 | 0 | 📋 [查看](./financial-economics-okf-wiki/README.md) |
 | [hwe-bench-okf-wiki](./hwe-bench-okf-wiki/README.md) | 1 | 0 | 0 | 1 | 📋 [查看](./hwe-bench-okf-wiki/README.md) |
 | [inurl-byok-token-hub](./inurl-byok-token-hub/README.md) | 1 | 0 | 0 | 1 | 📋 [查看](./inurl-byok-token-hub/README.md) |
 | [jieban-zhilv-mp](./jieban-zhilv-mp/README.md) | 1 | 0 | 0 | 1 | 📋 [查看](./jieban-zhilv-mp/README.md) |
@@ -58,7 +59,7 @@
 | [zhihu-ai-science-workshop-okf-wiki](./zhihu-ai-science-workshop-okf-wiki/README.md) | 1 | 0 | 0 | 1 | 📋 [查看](./zhihu-ai-science-workshop-okf-wiki/README.md) |
 | [zhihu-big-tech-pontzi-okf-wiki](./zhihu-big-tech-pontzi-okf-wiki/README.md) | 1 | 0 | 0 | 1 | 📋 [查看](./zhihu-big-tech-pontzi-okf-wiki/README.md) |
 | [zhihu-checkin-hub](./zhihu-checkin-hub/README.md) | 1 | 0 | 0 | 1 | 📋 [查看](./zhihu-checkin-hub/README.md) |
-| **合计** | **740** | **460** | **56** | **224** | &mdash; |
+| **合计** | **741** | **460** | **57** | **224** | &mdash; |
 
 **状态**：✓ 已完成 ｜ ! 进行中 ｜ ? 待启动 ｜ — 无 metadata
 
@@ -98,26 +99,27 @@
 28. [digital-economy-okf-wiki](./digital-economy-okf-wiki/README.md) — 1 spec：
 29. [docs-as-product-api](./docs-as-product-api/README.md) — 1 spec：
 30. [doocs-md-py](./doocs-md-py/README.md) — 1 spec：
-31. [hwe-bench-okf-wiki](./hwe-bench-okf-wiki/README.md) — 1 spec：
-32. [inurl-byok-token-hub](./inurl-byok-token-hub/README.md) — 1 spec：
-33. [jieban-zhilv-mp](./jieban-zhilv-mp/README.md) — 1 spec：
-34. [kylin-agent-runtime-okf-wiki](./kylin-agent-runtime-okf-wiki/README.md) — 1 spec：
-35. [life-workbench](./life-workbench/README.md) — 1 spec：
-36. [okw-cli-restructure](./okw-cli-restructure/README.md) — 1 spec：
-37. [openkylin-wsl-devkit](./openkylin-wsl-devkit/README.md) — 1 spec：
-38. [opensource-okf-wiki](./opensource-okf-wiki/README.md) — 1 spec：
-39. [opentpu-okf-wiki](./opentpu-okf-wiki/README.md) — 1 spec：
-40. [plane-okf-wiki](./plane-okf-wiki/README.md) — 0 spec：
-41. [sphinx-agent-dev-pbl](./sphinx-agent-dev-pbl/README.md) — 7 spec：
-42. [sync-upstream-delta](./sync-upstream-delta/README.md) — 1 spec：
-43. [travel-planner](./travel-planner/README.md) — 1 spec：
-44. [vibeknow-cli-okf-wiki](./vibeknow-cli-okf-wiki/README.md) — 0 spec：
-45. [wechat-cloudrun-okf-wiki](./wechat-cloudrun-okf-wiki/README.md) — 0 spec：
-46. [wechat-mp-content-archiver](./wechat-mp-content-archiver/README.md) — 1 spec：
-47. [xuan-compose-refactor](./xuan-compose-refactor/README.md) — 1 spec：
-48. [zhihu-ai-science-workshop-okf-wiki](./zhihu-ai-science-workshop-okf-wiki/README.md) — 1 spec：
-49. [zhihu-big-tech-pontzi-okf-wiki](./zhihu-big-tech-pontzi-okf-wiki/README.md) — 1 spec：
-50. [zhihu-checkin-hub](./zhihu-checkin-hub/README.md) — 1 spec：
+31. [financial-economics-okf-wiki](./financial-economics-okf-wiki/README.md) — 1 spec：
+32. [hwe-bench-okf-wiki](./hwe-bench-okf-wiki/README.md) — 1 spec：
+33. [inurl-byok-token-hub](./inurl-byok-token-hub/README.md) — 1 spec：
+34. [jieban-zhilv-mp](./jieban-zhilv-mp/README.md) — 1 spec：
+35. [kylin-agent-runtime-okf-wiki](./kylin-agent-runtime-okf-wiki/README.md) — 1 spec：
+36. [life-workbench](./life-workbench/README.md) — 1 spec：
+37. [okw-cli-restructure](./okw-cli-restructure/README.md) — 1 spec：
+38. [openkylin-wsl-devkit](./openkylin-wsl-devkit/README.md) — 1 spec：
+39. [opensource-okf-wiki](./opensource-okf-wiki/README.md) — 1 spec：
+40. [opentpu-okf-wiki](./opentpu-okf-wiki/README.md) — 1 spec：
+41. [plane-okf-wiki](./plane-okf-wiki/README.md) — 0 spec：
+42. [sphinx-agent-dev-pbl](./sphinx-agent-dev-pbl/README.md) — 7 spec：
+43. [sync-upstream-delta](./sync-upstream-delta/README.md) — 1 spec：
+44. [travel-planner](./travel-planner/README.md) — 1 spec：
+45. [vibeknow-cli-okf-wiki](./vibeknow-cli-okf-wiki/README.md) — 0 spec：
+46. [wechat-cloudrun-okf-wiki](./wechat-cloudrun-okf-wiki/README.md) — 0 spec：
+47. [wechat-mp-content-archiver](./wechat-mp-content-archiver/README.md) — 1 spec：
+48. [xuan-compose-refactor](./xuan-compose-refactor/README.md) — 1 spec：
+49. [zhihu-ai-science-workshop-okf-wiki](./zhihu-ai-science-workshop-okf-wiki/README.md) — 1 spec：
+50. [zhihu-big-tech-pontzi-okf-wiki](./zhihu-big-tech-pontzi-okf-wiki/README.md) — 1 spec：
+51. [zhihu-checkin-hub](./zhihu-checkin-hub/README.md) — 1 spec：
 
 ## 📆 新增 Spec 指南
 
@@ -127,4 +129,4 @@
 4. **创建三件套**：spec.md（YAML frontmatter 含 status/title）+ tasks.md + review.md（独立审查清单）。产物命名与结构以 .agents/skills/TRAE-spec-mode/SKILL.md 为唯一权威依据，禁止使用 checklist.md 等非规范命名。
 5. **更新看板**：运行 `python .agents/scripts/docgen.py theme-dashboards` 刷新主题看板，运行 `python .agents/scripts/docgen.py update-spec-readme` 刷新全局总览。
 
-*本看板由 docgen（C-6）于 2026-10-27 生成，后续自动维护。*
+*本看板由 docgen（C-6）于 2026-10-28 生成，后续自动维护。*
