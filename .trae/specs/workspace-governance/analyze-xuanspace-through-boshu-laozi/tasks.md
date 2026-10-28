@@ -466,6 +466,6 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 仓库 | 提交 | 说明 |
 |---|---|---|
 | `projects/xuanspace` | `91ba03d` | `docs(xuanspace): 删除已闭环的过程性分析文档并清理导航`（3 文件：`doc/blueprint.md` D、`doc/recommendations.md` D、`doc/index.md` M） |
-| 根仓 | `ROOT_COMMIT_PLACEHOLDER` | `chore(xuanspace): 前移子模块指针并回写过程性文档清理证据`（`tasks.md` + `review.md` + gitlink） |
+| 根仓 | `575f839d1` | `chore(xuanspace): 前移子模块指针并回写过程性文档清理证据`（`tasks.md` + `review.md` + gitlink） |
 
 > 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 3 项变更。

@@ -575,7 +575,7 @@ Task 10 收敛 `apps/xs-cli/` 主引用后，`rg` 发现同源残余两处，改
 | 仓库 | 提交 | 变更规模 |
 |---|---|---|
 | `projects/xuanspace` | `91ba03d` docs(xuanspace): 删除已闭环的过程性分析文档并清理导航 | 3 文件（`doc/blueprint.md` 删除、`doc/recommendations.md` 删除、`doc/index.md` 移除「规划」toctree） |
-| 根仓 `SpecWeave` | `ROOT_COMMIT_PLACEHOLDER` chore(xuanspace): 前移子模块指针并回写过程性文档清理证据 | 3 文件（`tasks.md` + `review.md` + gitlink） |
+| 根仓 `SpecWeave` | `575f839d1` chore(xuanspace): 前移子模块指针并回写过程性文档清理证据 | 3 文件（`tasks.md` + `review.md` + gitlink） |
 
 未 push、未 tag。
 
