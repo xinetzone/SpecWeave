@@ -376,3 +376,35 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 根仓 | `8d5872424` | `chore(xuanspace): 前移子模块指针并回写门禁扩容证据`（`tasks.md` + `review.md` + gitlink） |
 
 > 未 push、未 tag。子模块 HEAD 为 `fd6d7e6bdc2447b8e027d56b6f4f5f65338c6a55`，根仓 gitlink 与之对齐。根仓 `?? .trae/specs/financial-economics-okf-wiki/` 与 ` ? projects/awesome-okf-xs` 为**并行会话在途改动**，本轮未触碰、未提交。
+
+## 后续任务：依赖方向门禁（第九轮授权）
+
+> 本节记录规格完成后**第九轮**经用户另行授权执行的工作：兑现《项目蓝图》目标态三特征中**唯一未兑现**的特征 3「方向可断言」——把 `libs/README.md`「依赖规则」一节的分区依赖规则从「只写在文档里」变为 CI 可判定。不改写 Task 1–19 的原始记录。
+
+- [x] Task 20: 新增依赖方向门禁（分区依赖规则可断言）
+  - **Priority**: medium
+  - **Depends On**: Task 19
+  - **Description**: 蓝图目标态三特征中，特征 1（声明可核对，第八轮六类断言）与特征 2（单一事实来源，P1-4① 生成块 + 快照）已兑现，特征 3「方向可断言」仍只在文档里——蓝图洞察 I4 明言该依赖方向约束「只写在图里、未被任何检查断言」。本轮新增 `scripts/check_dependency_direction.py`：以 `ast` 解析 `libs/` 下全部 Python 源码的 import，断言不依赖 `apps/`、`scripts/`、`attic/`、`vendor/`，与 `libs/README.md`「依赖规则」同源。
+  - [x] SubTask 20.1: 新建 `scripts/check_dependency_direction.py`——规则常量 `FORBIDDEN_IMPORTS` 登记为单一事实来源；`ast.walk` 取绝对导入顶层模块名（`Import` 与 `ImportFrom`，`level > 0` 的相对导入不检查）；`_submodule_paths` / `_is_nested_submodule` 排除 `.gitmodules` 声明的子模块（`libs/mystx`、`libs/tvm-book`）；`IGNORED_DIR_NAMES` 跳过构建产物与缓存目录；`main() -> int` 返回 0/1/2，输出「文件:行号:顶层模块」定位
+  - [x] SubTask 20.2: 接入 CI——`.github/workflows/ci.yml` quality job 在 declaration 之后增「Check dependency direction」步骤；并修正该 job 头注释（原「五项」与所列六项不符）为「七项」并纳入 `dependency`
+  - [x] SubTask 20.3: `scripts/README.md`「现有脚本示例」表补 `check_dependency_direction.py` 行（校验类、幂等=是）；并修正 `check_declaration_consistency.py` 行描述（第八轮扩至六类后仍写三类）
+  - [x] SubTask 20.4: `libs/README.md`「依赖规则」一节补注脚——声明该规则由脚本在 CI 中机械断言，其 `FORBIDDEN_IMPORTS` 为单一事实来源
+  - [x] SubTask 20.5: 决策记录——`doc/blueprint.md` 事实清单第 14/15/17 行的行号引用（`libs/README.md#L106-L111`、`#L115-L118`）与洞察 I4 行动项中的同址引用，系**带基线 `8db593d5` 的时点快照事实**（其漂移本身即 P1-4① 注入生成块所致，已在第八轮登记）；按项目「不改动历史事实快照」约束**不予回改**，仅在本规格留痕
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace` 内脚本与文档）
+  - **Test Requirements**:
+    - `rule` TR-20.1: 基线退出码 = 0，输出「扫描到 291 个 Python 文件（分区：libs）」与「全部通过依赖方向校验：libs 未依赖 apps, scripts, attic, vendor。」
+    - `rule` TR-20.2: 负向探针 3/3 命中——在 `libs/xuan-core/src/xuan_core/` 临时注入 `from scripts import x` / `import vendor.caffe` / `from attic.old import y`，退出码 = 1 且逐条输出 `文件:行号: 禁止导入 '<分区>'（来自 '<模块>'）`；清理探针后恢复退出码 = 0
+    - `rule` TR-20.3: 相对导入不误报——`from . import x` / `from ..mod import y`（`level > 0`）不进入检查，探针验证通过
+    - `rule` TR-20.4: `ruff check` 与 `ruff format --check` 对新脚本通过（新脚本省略 `# -*- coding: utf-8 -*-` 且不含 `from __future__ import annotations`，符合 py314 规范）
+    - `rule` TR-20.5: 既有门禁无回归——`check_declaration_consistency.py` 退出码 = 0（六类全通过）、`check_pyproject_style.py` 退出码 = 0（12 个 pyproject.toml）
+    - `rule` TR-20.6: `check-links.py --paths libs/README.md scripts/README.md doc/blueprint.md`（cwd = `projects/xuanspace`）本轮 3 文件 **0 新增断链**
+    - `rule` TR-20.7: 根仓 `git ls-tree HEAD projects/xuanspace` 的 gitlink = 子模块 HEAD
+
+## 提交记录（证据，第九轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `c50f18e` | `feat(scripts): 新增依赖方向门禁并同步文档与 CI`（4 文件，+164/−2：`scripts/check_dependency_direction.py`（新建）+ `scripts/README.md` + `libs/README.md` + `.github/workflows/ci.yml`） |
+| 根仓 | `ROOT_COMMIT_PLACEHOLDER` | `chore(xuanspace): 前移子模块指针并回写依赖方向门禁证据`（`tasks.md` + `review.md` + gitlink） |
+
+> 未 push、未 tag。子模块 HEAD 为 `c50f18eb26f62e3d0f56cb60c10655e5e50dd233`，根仓 gitlink 与之对齐。本轮 `projects/xuanspace` 工作树仅含本轮 4 项变更（无并行会话残留）；根仓在途改动（并行会话已自行提交 `b40d65e82`、`68f5f0b79`）本轮未触碰。

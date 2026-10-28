@@ -442,3 +442,68 @@ Task 10 收敛 `apps/xs-cli/` 主引用后，`rg` 发现同源残余两处，改
 - **可选遗留**（本轮未获授权，未启动）：`doc/intro.md`、`doc/quickstart.md`、`doc/okf/**` 的 33 处**省略扩展名**存量断链——属 `check-links.py` 对无扩展名相对链接的既有误报模式，非本轮引入，需另行评估是否加白名单或批量补扩展名。
 - 本规格至此无遗留任务；如后续再启动收口轮次，沿用「子模块原子提交 → 根仓前移 gitlink → 三件套回写」既定流程。
 
+## 十八、依赖方向门禁证据（规格完成后追加，第九轮）
+
+> 范围：规格完成后**第九轮**经用户另行授权执行的工作——兑现《项目蓝图》目标态三特征中唯一未兑现的特征 3「方向可断言」。对应 tasks.md 的 Task 20。本节为独立审查记录，不改写一至十七节的原始验收结果。
+
+### 18.1 交付物与提交
+
+| 仓库 | 提交 | 变更规模 |
+|---|---|---|
+| `projects/xuanspace` | `c50f18e` feat(scripts): 新增依赖方向门禁并同步文档与 CI | 4 文件（`scripts/check_dependency_direction.py`（新建）+ `scripts/README.md` + `libs/README.md` + `.github/workflows/ci.yml`，+164 / −2） |
+| 根仓 `SpecWeave` | `ROOT_COMMIT_PLACEHOLDER` chore(xuanspace): 前移子模块指针并回写依赖方向门禁证据 | 3 文件（`tasks.md` + `review.md` + gitlink） |
+
+未 push、未 tag。子模块 HEAD 为 `c50f18eb26f62e3d0f56cb60c10655e5e50dd233`，根仓 gitlink 与之对齐。
+
+### 18.2 蓝图三特征兑现对照
+
+| 目标态特征（`doc/blueprint.md` L205–207） | 兑现轮次 | 证据 |
+|---|---|---|
+| 1 声明可核对 | 第八轮 | A–F 六类断言（`check_declaration_consistency.py`） |
+| 2 单一事实来源 | 第七/八轮 | `libs/README.md` 生成块（P1-4①）+ `scripts/declaration-snapshot.json` |
+| 3 **方向可断言** | **第九轮（本节）** | `scripts/check_dependency_direction.py` + CI quality job |
+
+> 蓝图洞察 I4（L56）亲口点名：「四层解构的真正价值不在于把东西分成四类，而在于它**隐含了一个依赖方向约束**……而当前这份约束只写在图里、未被任何检查断言。」本轮即把该约束从「描述」升为「规范」。
+
+### 18.3 规则来源与检查设计
+
+| 维度 | 设计 |
+|---|---|
+| 规则单一事实来源 | 脚本 `FORBIDDEN_IMPORTS` 常量，与 `libs/README.md`「依赖规则」一节同源；`libs/README.md` 已加注脚双向指认 |
+| 检查对象 | `libs/` 下全部 `.py` 源码（本轮基线 291 个文件） |
+| 检查方法 | `ast` 解析，取**绝对导入**顶层模块名（`Import` / `ImportFrom`）；`level > 0` 的相对导入视为 lib 内部引用，不检查 |
+| 禁止集合（libs） | `apps`、`scripts`、`attic`、`vendor`；`tools` 属「谨慎依赖」，**不拦截**（尊重 `libs/README.md` 的语义分级，未用纯层级序机械推导） |
+| 排除项 | `.gitmodules` 声明的子模块（`libs/mystx`、`libs/tvm-book`）+ 构建产物/缓存目录（`build`、`dist`、`__pycache__`、`.mypy_cache` 等） |
+| 输出与退出码 | `文件:行号: 禁止导入 '<分区>'（来自 '<模块>'）`；0 通过 / 1 违规（或源码不可解析）/ 2 脚本自身错误（未扫描到源码） |
+
+### 18.4 门禁与核验
+
+| 检查项 | 命令 / 方法 | 结果 |
+|---|---|---|
+| 基线 | `python scripts/check_dependency_direction.py` | 退出码 **0**；「扫描到 291 个 Python 文件（分区：libs）」「全部通过依赖方向校验：libs 未依赖 apps, scripts, attic, vendor。」 |
+| 负向探针 | 在 `libs/xuan-core/src/xuan_core/_dep_probe.py` 注入 `from scripts import …` / `import vendor.caffe` / `from attic.old import …` | **3/3 命中**，退出码 **1**，逐条输出 `libs/xuan-core/src/xuan_core/_dep_probe.py:<行>: 禁止导入 '<分区>'（来自 '<模块>'）`；清理探针后恢复退出码 0（扫描数回落 291） |
+| 相对导入 | `level > 0` 分支代码审查 + 全量基线无 `..` 误报 | 不误报（`libs/xuan-compose` 等大量 `from .` 导入全部通过） |
+| 静态检查 | `ruff check` / `ruff format --check scripts/check_dependency_direction.py` | `All checks passed!` / `1 file already formatted` |
+| 既有门禁无回归 | `check_declaration_consistency.py`、`check_pyproject_style.py` | 均退出码 **0**（六类全通过 / 12 个 pyproject.toml 全通过） |
+| 断链门禁 | `check-links.py --paths libs/README.md scripts/README.md doc/blueprint.md`（cwd = `projects/xuanspace`） | 退出码 **0**，121 处本地引用全部有效，**0 新增断链** |
+| 边界核对（xuanspace） | `git status --short` | 仅本轮 4 项变更，无并行会话残留 |
+| 边界核对（根仓） | `git ls-tree HEAD projects/xuanspace` | gitlink = 子模块 HEAD（`c50f18e…`） |
+
+### 18.5 附带口径修正
+
+| 文件 | 修正内容 |
+|---|---|
+| `.github/workflows/ci.yml` | quality job 头注释原为「五项自动化检查」而实列 6 项；本轮增 `dependency` 后统一为「七项（pyproject/declaration/dependency/doctor/meta/lfs/docs）」 |
+| `scripts/README.md` | `check_declaration_consistency.py` 行描述第八轮扩至六类后仍写三类 → 补齐六类；新增 `check_dependency_direction.py` 行 |
+
+### 18.6 决策记录：不回改蓝图时点快照
+
+`doc/blueprint.md` 事实清单第 14/15/17 行（`libs/README.md#L106-L111`、`#L115-L118`）与洞察 I4 行动项中的同址引用，因 P1-4① 注入生成块而**行号漂移**。该文件首部显式声明**基线 `HEAD = 8db593d5fc1ee999c8311f83951e40f15024e2d9`**，其事实清单是**时点快照**；按项目「不改动历史事实快照」约束**不予回改**，漂移本身已在本规格第八轮登记。此为本轮**有意不做的动作**，非遗漏。
+
+### 18.7 遗留与后续
+
+- 本轮兑现《项目蓝图》目标态**第 3 项（末项）特征**；三特征至此全部具备 CI 断言。
+- 门禁当前仅覆盖 `libs` 分区（`FORBIDDEN_IMPORTS` 表的唯一键）。`tools`、`apps` 等分区的依赖方向**尚未登记规则**——`libs/README.md` 未对其声明禁止集合，故本轮不臆造规则、不越界扩展（避免制造无文档依据的断言）。
+- **可选遗留**（本轮未获授权，未启动）：`doc/intro.md`、`doc/quickstart.md`、`doc/okf/**` 的 33 处**省略扩展名**存量断链——属 `check-links.py` 既有误报模式，非本轮引入。
+- 本规格至此无遗留任务；如后续再启动收口轮次，沿用「子模块原子提交 → 根仓前移 gitlink → 两段式（占位符 + `docs(spec)` 回填）提交 → 三件套回写」既定流程。
+
