@@ -469,3 +469,36 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 根仓 | `575f839d1` | `chore(xuanspace): 前移子模块指针并回写过程性文档清理证据`（`tasks.md` + `review.md` + gitlink） |
 
 > 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 3 项变更。
+
+## 后续任务：文档易腐性清理与门禁扩容（第十二轮授权）
+
+> 本节记录规格完成后**第十二轮**经用户裁定执行的工作：①删除手工维护的时点快照 `doc/dependency-report.md`（及其 `.meta` 元数据镜像）；②修复活文档 `doc/cli/index.md` 的命令清单失真；③把门禁断言 A 扩容覆盖该文件以预防同类漂移。裁定依据见 review.md §21。不改写 Task 1–22 的原始记录，亦不回改历史验收勾选。
+
+- [x] Task 23: 删除 `doc/dependency-report.md` 并修复 `doc/cli/index.md` 失真 + 门禁扩容
+  - **Priority**: low
+  - **Depends On**: Task 22
+  - **Description**: `dependency-report.md` 是**手工维护的时点快照**（全仓无生成器），必然随实现演进而漂移，且已实证偏离（CI job 表误列已不存在的 `lint`、漏 `py-compat`；子模块树仅列 2 项、实际 4 项；`apps/` 仍标「空，待填充」），其持久事实已由 `architecture.md`/`build-system.md`/`CONTRIBUTING.md` 承载 → 删除。`cli/index.md` 是**活参考文档**（README 以其为 CLI 参考链接）却仅列 13 条命令，缺 `xs archive`/`xs lfs`（README 声明 15 条）→ 补全，并扩容门禁断言 A 覆盖之。
+  - [x] SubTask 23.1: 洞察（I）——机械提取引用面：`doc/index.md` L60「项目」toctree；`.meta/toml/doc/dependency-report.toml`（`x-toml-ref` 目标）；文档自引三处。核验命令口径：`cli.py` 实际注册 **15** 项（7 `add_typer` + 8 `app.command`），`intro.md` 已列全、`cli/index.md` 仅列 13
+  - [x] SubTask 23.2: 第一性原理（F）——区分**活文档**与**时点快照**：报告类产物若不自带生成器，其功能等价于「过期风险载体」；CLI 参考的功能是「与注册表一致」，故唯一正确形态是受门禁约束的活文档
+  - [x] SubTask 23.3: 属性判定——`dependency-report.md` ＝ 时点快照（处置：删除）；`cli/index.md` ＝ 活文档但内容过期（处置：更新对齐 + 门禁约束）
+  - [x] SubTask 23.4: 删除 `doc/dependency-report.md` 与 `.meta/toml/doc/dependency-report.toml`，移出 `doc/index.md`「项目」toctree
+  - [x] SubTask 23.5: 补全 `doc/cli/index.md` 的 `xs archive`（archive/unarchive）与 `xs lfs`（check/patterns）两条，含总览表行与细则章节
+  - [x] SubTask 23.6: 结论化（C）——扩容 `check_declaration_consistency.py` 断言 A：新增 `CLI_REF_FILE` 常量与 `declared_cli_ref_commands()`，共用 `_DOC_CMD_ROW_RE`，`run_checks` 增加「`cli/index.md` 命令总览 ↔ 注册表」集合比对
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace`）、AC-7（门禁不回归且**增强**）
+  - **Test Requirements**:
+    - `rule` TR-23.1: `check_declaration_consistency.py` 退出码 = 0（六类全通过，含新增的 `cli/index.md` 覆盖）
+    - `rule` TR-23.2: 负向回归（内存预演，不动磁盘文件）——将 `cli/index.md` 内存副本移除 `xs archive` 行后重跑 `run_checks`，失败项含 `doc/cli/index.md 命令总览 与事实不一致（声明缺：['archive']；声明多：[]）`，证明新断言有效
+    - `rule` TR-23.3: `check-links.py --path doc`（cwd = `projects/xuanspace`）退出码 = 0（19 个 Markdown 文件、35 处本地引用全有效）
+    - `rule` TR-23.4: `sphinx -b html doc doc/_build/probe5` 构建成功、无 WARNING/ERROR、无 orphan 警告
+    - `rule` TR-23.5: 残留检索 `dependency-report|dependency_report` 全仓命中 = **0**
+    - `rule` TR-23.6: `xs meta validate` 报出条目**无一条**落在 `doc/` 或 `.meta/`（122 项均为 `libs/caffe-ffi`、`libs/mystx`、`vendor/caffe`、`tools/okf/tests/fixtures` 既有问题）
+    - `rule` TR-23.7: 变更面恰为 5 项（两删除 + `doc/index.md`、`doc/cli/index.md`、`scripts/check_declaration_consistency.py` 修改）
+
+## 提交记录（证据，第十二轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `72898a2` | `docs(xuanspace): 删除失效的依赖报告并补全 CLI 参考与门禁覆盖`（5 文件，+53/−143） |
+| 根仓 | `ROOT_COMMIT_PLACEHOLDER` | `chore(xuanspace): 前移子模块指针并回写文档易腐性清理证据`（`tasks.md` + `review.md` + gitlink） |
+
+> 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 5 项变更。

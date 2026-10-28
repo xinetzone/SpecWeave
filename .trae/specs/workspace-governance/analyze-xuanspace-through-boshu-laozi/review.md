@@ -608,3 +608,58 @@ review.md §一 AC-1「交付物存在性」曾断言两份文档存在于 `doc/
 - 承 §17.5 / §18.7 / §19.6 的「本规格无遗留任务」：本轮为可选的文档生命周期清理，非规格欠账。
 - 本规格至此仍无遗留任务；如后续再启动收口轮次，沿用「子模块原子提交 → 根仓前移 gitlink → 两段式（占位符 + `docs(spec)` 回填）提交 → 三件套回写」既定流程。
 
+## 二十一、文档易腐性清理与门禁扩容证据（规格完成后追加，第十二轮）
+
+> 范围：规格完成后**第十二轮**经用户裁定执行的工作——① 删除手工维护、无生成器的时点快照 `doc/dependency-report.md`（及 `.meta` 镜像）；② 补全活文档 `doc/cli/index.md` 的命令总览与细则（缺 `archive`、`lfs` 两条）；③ 扩容 `check_declaration_consistency.py` 断言 A 覆盖该文件，预防同类漂移复发。对应 tasks.md 的 Task 23。本节为独立审查记录，不改写一至二十节的原始验收结果。
+
+### 21.1 处置与提交
+
+| 仓库 | 提交 | 变更规模 |
+|---|---|---|
+| `projects/xuanspace` | `72898a2` docs(xuanspace): 删除失效的依赖报告并补全 CLI 参考与门禁覆盖 | 5 文件（`doc/dependency-report.md` 删除、`.meta/toml/doc/dependency-report.toml` 删除、`doc/index.md` 移除「项目」toctree 中的 `dependency-report`、`doc/cli/index.md` 补两条命令、`scripts/check_declaration_consistency.py` 扩容，+53 / −143） |
+| 根仓 `SpecWeave` | `ROOT_COMMIT_PLACEHOLDER` | 3 文件（`tasks.md` + `review.md` + gitlink） |
+
+未 push、未 tag。
+
+### 21.2 定性依据（先定性，后处置）
+
+| 对象 | 身份 | 失实证据 | 处置 |
+|---|---|---|---|
+| `doc/dependency-report.md` | **时点快照**（手工维护，全仓无生成器） | §7 CI 表误列已不存在的 `lint`、漏 `py-compat`（实为 4 job：test / quality / template-validation / py-compat）；§2 子模块树仅列 2 项（`.gitmodules` 实为 4 项：vendor/tvm-ffi、libs/tvm-book、vendor/caffe、libs/mystx）；§1 `apps/` 仍标「空，待填充」 | **删除**（连同 `.meta` 镜像） |
+| `doc/cli/index.md` | **活文档但内容过期** | `README.md` L101 声明「15 个子命令」并以其为 CLI 参考链接，该参考原仅列 13 条（缺 `archive`、`lfs`）；`cli.py` 实际注册 **15** 项（7 `add_typer` + 8 `app.command`），`doc/intro.md` 已列全 | **更新对齐 + 门禁约束** |
+
+> 判定要点同 §20.2：**活文档与现状不一致即失真源**。报告类产物若不自带生成器，其功能等价于「过期风险载体」——其持久事实（架构、构建流程、目录口径）已由 `doc/architecture.md`、`doc/build-system.md`、`CONTRIBUTING.md` 承载，历史内容可由 git 追溯。
+
+### 21.3 门禁扩容（预防）
+
+| 维度 | 内容 |
+|---|---|
+| 根因 | 断言 A 只覆盖 `README.md` + `doc/intro.md`，未覆盖作为 CLI 参考链接目标的 `doc/cli/index.md` → 该文件漂移静默积累 |
+| 改动 | `check_declaration_consistency.py` 新增 `CLI_REF_FILE = "doc/cli/index.md"` 常量与 `declared_cli_ref_commands()`；原 `doc/intro.md` 专用行正则泛化为共用 `_DOC_CMD_ROW_RE`（底座 `_declared_doc_commands(root, rel)`）；`run_checks` 增加「`doc/cli/index.md` 命令总览 ↔ 注册表」集合比对 |
+| 预防逻辑 | 只修文档不改门禁＝「修复即复发」；扩容后三个声明源（README 计数、intro 命令表、cli/index 命令表）同受断言约束 |
+
+### 21.4 门禁与核验
+
+| 检查项 | 命令 / 方法 | 结果 |
+|---|---|---|
+| 声明一致性（正向） | `python scripts/check_declaration_consistency.py` | 退出码 **0**；六类全通过（含新增 cli/index 比对） |
+| 负向回归（内存预演，不动磁盘文件） | `importlib` 加载门禁脚本 + `monkeypatch _read_text` 将 `cli/index.md` 内存副本移除 `xs archive` 行后重跑 `run_checks` | 命中 1 项：`doc/cli/index.md 命令总览 与事实不一致（声明缺：['archive']；声明多：[]）` → 证明新断言有效 |
+| 断链门禁 | `check-links.py --path doc`（cwd = `projects/xuanspace`） | 退出码 **0**；19 个 Markdown 文件、35 处本地引用全有效 |
+| 构建回归 | `sphinx -b html doc doc/_build/probe5` | `构建成功。`（无 WARNING / ERROR） |
+| 残留检索 | `dependency-report\|dependency_report` 全仓 | 命中 **0** |
+| 元数据校验 | `xs meta validate` | 退出码 **0**；报出 122 项**无一条**落在 `doc/` 或 `.meta/`（全为 `libs/caffe-ffi`、`libs/mystx`、`vendor/caffe`、`tools/okf/tests/fixtures` 既有问题），与本轮无关 |
+| 边界核对（xuanspace） | `git status --short` | 仅本轮 5 项变更 |
+| 边界核对（根仓） | `git ls-tree HEAD projects/xuanspace` | gitlink = 子模块 HEAD（`72898a2…`） |
+
+### 21.5 决策记录
+
+- 本轮「删除 / 修复 / 门禁扩容」三项均经用户裁定授权（AskUserQuestion：删除 `dependency-report.md` 推荐；一并修复 `doc/cli/index.md` + 扩容门禁推荐）。
+- `doc/dependency-report.md` 的持久事实未丢失——架构、构建、目录口径已由其他活文档承载，历史内容可由 git 追溯。
+- review.md 一至二十节原始验收结果**不回改**（沿用「不改动历史事实快照」约束）。
+
+### 21.6 遗留与后续
+
+- 承 §20.5「本规格无遗留任务」：本轮为可选的文档生命周期清理 + 门禁补强，非规格欠账。
+- 本轮定性复查聚焦 `doc/` 目录，已处理对象为上表两项；同类「时点快照 / 活文档失真」对象的进一步筛查属可选后续，非本轮授权范围。
+- 本规格至此仍无遗留任务；如后续再启动收口轮次，沿用「子模块原子提交 → 根仓前移 gitlink → 两段式（占位符 + `docs(spec)` 回填）提交 → 三件套回写」既定流程。
+
