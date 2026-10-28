@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（40个）
+### 完整Skill（46个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -51,6 +51,12 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | public-value-audit | "这个字段会不会泄露用户"、"公开列安全吗"、"cover_path 会不会暴露创建者"、"帮我审一下权限面"、"值域怎么收口" | 2（只读扫描器 scan_public_identifiers.py + 不变量断言器 check_public_value_invariants.py + 自检 selftest.py；三张清单交叉定位 → 收口三件套 → 7 条不变量 I1~I7；L1） | v1.1.0 | [skills/public-value-audit/SKILL.md](../skills/public-value-audit/SKILL.md) |
 | platform-review-precheck | "提审被拒"、"审核不通过"、"代码发布审核没过"、"隐私保护指引怎么填"、"涉及收集照片或视频信息"、"提交审核被拦" | 2（隐私接口扫描器 scan_privacy_calls.py + 声明对账器 check_declaration_alignment.py + 自检；调用面提取 → 官方类型映射 → D1~D4 对账；L1） | v1.0.0 | [skills/platform-review-precheck/SKILL.md](../skills/platform-review-precheck/SKILL.md) |
 | wechat-multi-platform-verify-cmd | "核验这篇文章"、"多平台核验"、"事实核查"、"发布前核验"、"verify 台账"、"核验报告"、"证据包"、"投稿前查一遍" | 1（S0 主张抽取 → S1 四级信源分层选源 → S2 逐平台取证（官方页直取 / 搜索快照 / 浏览器三通道，含幂等重入）→ S3 主张×来源台账 → S4 冲突裁决与同源转载检测 → S5 证据包交付与红线检查；输出三件套；含 10 条 Gotchas；L1） | v1.0.0 | [skills/wechat-multi-platform-verify-cmd/SKILL.md](../skills/wechat-multi-platform-verify-cmd/SKILL.md) |
+| knowledge-bundle-naming-audit | "知识包改名"、"bundle 名字不准"、"目录名与内容不符"、"标题范围过宽"、"中英命名不一致"、"命名审计" | 1（只读五步：覆盖台账 → 主题映射 → 三性检查 → 反向审查 → 待确认命名建议；不重命名、不改文件、不提交；L1） | v1.0.0 | [skills/knowledge-bundle-naming-audit/SKILL.md](../skills/knowledge-bundle-naming-audit/SKILL.md) |
+| specweave-slash-alias-resolution | "斜杠别名"、"/七概念"、"别名解析"、"技能不存在"、"不在可用列表"、"指令集入口"、"slash alias" | 1（四步解析：别名归一化 → 有界 Grep → 读指令 frontmatter 与触发条件 → 核对 Skill 门面与两处登记行；解析后按有门面 / 仅指令 / 未找到三分支动作；含超时 grep 降级与输出契约；L1） | v1.0.0 | [skills/specweave-slash-alias-resolution/SKILL.md](../skills/specweave-slash-alias-resolution/SKILL.md) |
+| bundled-script-exit-code-ambiguity | "退出码对了但行为不对"、"Traceback 也是退出 1"、"目录路径报 IsADirectoryError"、"夹具只看退出码"、"PASS 但其实是崩了"、"异常冒充契约码" | 2（契约清单化预检（零写入）→ 三断言判别（退出码 + 语义标记 + 预期命中数）→ 歧义码对照 → 修复模式与复跑证据；捆绑 scripts/assert_contract.py；L1） | v1.0.0 | [skills/bundled-script-exit-code-ambiguity/SKILL.md](../skills/bundled-script-exit-code-ambiguity/SKILL.md) |
+| stale-read-edit-reconciliation | "读完后文件被改了"、"Edit 报 0 occurrences"、"版本号被前移"、"用户级路径变成联接"、"另一会话动了同一文件"、"按已确认方案写入却写入失败" | 2（信号分类 → 写前低成本复核（重读现盘 + 标题级差集）→ 恢复六步（只补缺失项、版本号从现盘顺延、复跑门禁、回报并发事实）→ 停手条件；捆绑 scripts/probe_drift.py；L1） | v1.0.0 | [skills/stale-read-edit-reconciliation/SKILL.md](../skills/stale-read-edit-reconciliation/SKILL.md) |
+| windows-deletion-blast-radius-attribution | "到底删了什么"、"核对某目录是不是真没了"、"误删范围有多大"、"回收站能不能恢复"、"rm -rf 打到盘根了" | 1（冻结现场 → 四步取证：根级清单差异 / 权限与报错证据 / 服务写入判别 / 按 SID 查回收站 → 三段结论与可恢复性判定 → 删除前置断言与安全拦截处置；L1） | v1.0.0 | [skills/windows-deletion-blast-radius-attribution/SKILL.md](../skills/windows-deletion-blast-radius-attribution/SKILL.md) |
+| windows-temp-fixture-teardown-safety | "建临时夹具"、"跑受控删除验证"、"清理探针目录"、"清理命令里出现变量拼接路径" | 2（五条硬规则写前预检 → 单进程 tempfile.mkdtemp/断言/shutil.rmtree 标准模板 → 路径交外部工具时的规则 → 坏味道扫描与验收步骤；捆绑 scripts/temp_fixture_guard.py；L1） | v1.0.0 | [skills/windows-temp-fixture-teardown-safety/SKILL.md](../skills/windows-temp-fixture-teardown-safety/SKILL.md) |
 
 ### 工作流门面（7个）
 

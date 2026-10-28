@@ -36,7 +36,7 @@ title: ".agents/skills/ 目录索引"
 | sovereign-rollout-cmd | 命令门面 | 主权区治理资产落盘 | 提案、批准落盘、主权区变更、治理资产落盘、先提案后批准 | [sovereign-rollout-cmd/SKILL.md](sovereign-rollout-cmd/SKILL.md) |
 | github-org-bootstrap-cmd | 命令门面 | GitHub 组织命名与初始化 | 创建GitHub组织、建个org、组织名怎么起、demo组织、huncheng-lab | [github-org-bootstrap-cmd/SKILL.md](github-org-bootstrap-cmd/SKILL.md) |
 
-### 完整Skill（40个）
+### 完整Skill（46个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -80,6 +80,12 @@ title: ".agents/skills/ 目录索引"
 | wechat-multi-platform-verify-cmd | 完整Skill（v1.0.0，L1） | 公众号文章多平台事实核验与发布证据包：S0 主张抽取 → S1 四级信源分层选源 → S2 逐平台取证（官方页直取/搜索快照/浏览器三通道）→ S3 主张×来源比对台账 → S4 冲突裁决与同源转载检测 → S5 证据包交付；输出 article.md + verify-<平台>.md + verify-ledger.md 三件套，含四态结论、价格口径门、邀测状态门与 10 条 Gotchas；萃取自 2026-10-23 公众号「千问Go! 我的应用」核验实战 | 核验这篇文章、多平台核验、事实核查、发布前核验、verify 台账、核验报告、证据包、这篇文章靠谱吗、投稿前查一遍 | [wechat-multi-platform-verify-cmd/SKILL.md](wechat-multi-platform-verify-cmd/SKILL.md) |
 | public-value-audit | 完整Skill（v1.1.0，L1） | 公开值取值域审计：三张清单（公开面 / 标识列 / 值域构造方）交叉定位泄露面 → 收口三件套（服务端拼装目标值 + 列级授权 + 客户端白名单逐列对齐）→ 7 条可回归不变量（I1~I7，可挂 CI）；含扫描器 / 断言器 / 自检三脚本与三态对照夹具（pre-fix / p115-only / post-fix）；v1.1.0 经 4 视角对抗审查（50 条意见）修订——修复表名归一化与列名解析两处「不变量恒不触发」缺陷、新增 p115 夹具、「入参是否承载标识」判定分流、覆盖率守卫（扫不到≠没问题） | 这个字段会不会泄露用户、公开列安全吗、cover_path 会不会暴露创建者、帮我审一下权限面、值域怎么收口 | [public-value-audit/SKILL.md](public-value-audit/SKILL.md) |
 | platform-review-precheck | 完整Skill（v1.0.0，L1） | 平台提审合规预检：静态提取代码实际调用的隐私接口 → 映射官方「处理的信息」类型 → 与《用户隐私保护指引》逐项对账（D1 声明覆盖调用 / D2 无死项 / D3 授权兜底 / D4 声明文件存在）；含扫描器 / 对账器 / 自检三脚本与前后对照夹具；萃取自 2026-10-26 提审被拒实战 | 提审被拒、审核不通过、代码发布审核没过、隐私保护指引怎么填、涉及收集照片手机号位置信息、提交审核被拦 | [platform-review-precheck/SKILL.md](platform-review-precheck/SKILL.md) |
+| knowledge-bundle-naming-audit | 完整Skill（v1.0.0，L1） | 只读知识包命名审计：盘点并全文读取 bundle → 映射实际主题与读者任务 → 候选名三项检查（范围承诺、中英一致、误导含义）→ 独立反向审查 → 输出中文标题、英文目录名与范围或日期限定；结论标记待确认，不重命名、不改文件、不提交 | 知识包改名、bundle 名字不准、目录名与内容不符、标题范围过宽、中英命名不一致、命名审计 | [knowledge-bundle-naming-audit/SKILL.md](knowledge-bundle-naming-audit/SKILL.md) |
+| specweave-slash-alias-resolution | 完整Skill（v1.0.0，L1） | Slash 别名解析：把 `/七概念` 等中文斜杠别名解析为 `.agents/commands` 指令正文、Skill 门面与两处登记行，四步有界检索后按「有门面/仅指令/未找到」三分支动作，避免仅凭运行时技能列表误判不存在；含超时 grep 降级与输出契约 | 斜杠别名、/七概念、别名解析、技能不存在、未在可用列表、指令集入口、slash alias | [specweave-slash-alias-resolution/SKILL.md](specweave-slash-alias-resolution/SKILL.md) |
+| bundled-script-exit-code-ambiguity | 完整Skill（v1.0.0，L1） | 自带脚本退出码歧义判别：区分「契约检出的退出 1」与「未捕获异常返回的退出 1」（Python 未捕获异常固定退出 1，恰是校验脚本最常用的检出码），用退出码 + 语义标记 + 预期命中数三断言把「PASS 但其实是崩了」与真检出分开；含契约清单化预检、歧义码对照、修复模式与复跑证据要求 | 退出码对了但行为不对、Traceback 也是退出 1、目录路径报 IsADirectoryError、夹具只看退出码、PASS 但其实是崩了、异常冒充契约码 | [bundled-script-exit-code-ambiguity/SKILL.md](bundled-script-exit-code-ambiguity/SKILL.md) |
+| stale-read-edit-reconciliation | 完整Skill（v1.0.0，L1） | 读后写前漂移恢复：既有文件读完后、写入前被并发会话改写时，先重读现盘，按标题级差集把已获批方案裁成只补缺失项，版本号从现盘顺延，写入后复跑门禁并回报并发事实；含漂移探针脚本、恢复六步与停手条件 | 读完后文件被改了、Edit 报 0 occurrences、版本号被前移、用户级路径变成联接、另一会话动了同一文件、按已确认方案写入却写入失败 | [stale-read-edit-reconciliation/SKILL.md](stale-read-edit-reconciliation/SKILL.md) |
+| windows-deletion-blast-radius-attribution | 完整Skill（v1.0.0，L1） | Windows 误删影响面定性：根级清单差异、权限与报错证据、服务写入判别、按 SID 查回收站四步交叉印证，输出「已确认删除 / 已确认完好 / 未验证」三段结论与可恢复性判定；含删除前置断言与安全拦截处置 | 到底删了什么、核对某目录是不是真没了、误删范围有多大、回收站能不能恢复、rm -rf 打到盘根了 | [windows-deletion-blast-radius-attribution/SKILL.md](windows-deletion-blast-radius-attribution/SKILL.md) |
+| windows-temp-fixture-teardown-safety | 完整Skill（v1.0.0，L1） | Windows 临时夹具建测清安全约束：单个 Python 进程内 `tempfile.mkdtemp` 建、断言、`shutil.rmtree` 清理，禁止把 cygpath/sed/变量替换得到的路径交给 `rm -rf`，删除前打印并断言解析后的绝对路径前缀与层级深度；含五条硬规则、标准模板与坏味道扫描 | 建临时夹具、跑受控删除验证、清理探针目录、清理命令里出现变量拼接路径 | [windows-temp-fixture-teardown-safety/SKILL.md](windows-temp-fixture-teardown-safety/SKILL.md) |
 
 ### 工作流门面（7个）
 
