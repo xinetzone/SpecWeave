@@ -408,3 +408,35 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 根仓 | `06f37e234` | `chore(xuanspace): 前移子模块指针并回写依赖方向门禁证据`（`tasks.md` + `review.md` + gitlink） |
 
 > 未 push、未 tag。子模块 HEAD 为 `c50f18eb26f62e3d0f56cb60c10655e5e50dd233`，根仓 gitlink 与之对齐。本轮 `projects/xuanspace` 工作树仅含本轮 4 项变更（无并行会话残留）；根仓在途改动（并行会话已自行提交 `b40d65e82`、`68f5f0b79`）本轮未触碰。
+
+## 后续任务：存量断链修复（第十轮授权）
+
+> 本节记录规格完成后**第十轮**经用户另行授权执行的工作：清理 `doc/` 目录内 33 处「省略 `.md` 扩展名」的相对链接——该批断链自第一轮（Task 7 取证）起即由根仓 `check-links.py` 报出，长期以「存量」挂账。本轮**先做根因判定再修**，避免照单全改。不改写 Task 1–20 的原始记录。
+
+- [x] Task 21: 修复 `doc/` 目录 33 处省略扩展名的相对链接
+  - **Priority**: medium
+  - **Depends On**: Task 20
+  - **Description**: 33 处断链分布在 7 个文件；目标文件全部**真实存在**，差异仅在链接未写 `.md`。故本轮的关键不是「改 33 处」而是**先定性**：是文档缺陷，还是检查器误报？定性决定修复对象（改文档 vs 改检查器）。
+  - [x] SubTask 21.1: 根因判定（I+F，三项独立验证）——
+    ① **渲染验证**（决定性）：`sphinx -b html` 产物 `doc/_build/probe/intro.html` 中 `[快速开始](quickstart)` 渲染为 `<a class="reference internal" href="quickstart.html"><span class="doc std std-doc">快速开始</span></a>`，与 `.md` 写法产物**逐字一致** → **渲染无缺陷**，`check-links.py` 判为断链属**误报**（该脚本未实现 MyST docname 解析）；
+    ② **约定验证**：仓内唯一书面化的链接格式规则是 `doc/okf/synthesis.md` L12 的 `` `- [<title>](<相对路径>.md)` ``，且 `doc/index.md`、`doc/okf/synthesis.md` 均照此写 → 这 33 处**违反仓内书面约定**；
+    ③ **门禁验证**：CI 走的是 `xs doc linkcheck`（Sphinx linkcheck，只校外链），根仓 `check-links.py` 才拦本地相对链接 → 该批断链的**真实影响面**是「仓内链接门禁常红、PR 要求无法满足」，而非站点 404
+  - [x] SubTask 21.2: 修复 33 处（7 文件，33 增 33 删）——`doc/intro.md`（4）、`doc/quickstart.md`（4）、`doc/okf/architecture.md`（4）、`doc/okf/bundle.md`（11）、`doc/okf/commands.md`（3）、`doc/okf/conformance.md`（1）、`doc/okf/quickstart.md`（6）；逐条与检查器输出的 `文件:行号` 对齐核对
+  - [x] SubTask 21.3: 预防（修复即闭环）——`CONTRIBUTING.md` §12.4「文档风格建议」增一行：交叉引用一律使用带 `.md` 扩展名的相对路径，并说明省略扩展名会被链接门禁判为断链。选点理由：该文件经 `{include} ../CONTRIBUTING.md` 进入 `doc/contributing.md`，是文档作者的通用入口，而原约定只写在 `okf/synthesis.md`（OKF 教程局部），故顶层与 okf 教程作者看不到——这正是漂移得以存续九轮的机制
+  - [x] SubTask 21.4: 决策记录——**不修改**根仓 `.agents/scripts/check-links.py`。该脚本未实现 MyST docname 解析，是误报来源；但它是**主权区共享资产**，改动影响全仓所有 app，需另行授权；且「带/不带 `.md` 两种写法都合法」会造成口径分裂，与单一事实来源相悖。本轮取「统一文档到已书面化的 `.md` 约定」路线，把检查器局限作为**已知限制**登记而非就地修补
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace`）、AC-7（门禁不回归）
+  - **Test Requirements**:
+    - `rule` TR-21.1: `check-links.py --path doc`（cwd = `projects/xuanspace`）退出码 = 0，输出「校验通过: 所有链接均有效」（修复前：33 断链、退出码 1）
+    - `rule` TR-21.2: 残留检索 `\]\((?:trust|attested|conformance|commands|synthesis|plugins|bundle|index|architecture|build-system|contributing|cli/index|quickstart)\)` 于 `doc/**/*.md` 命中 = **0**（修复前 32 + `quickstart` 1 = 33）
+    - `rule` TR-21.3: `sphinx -b html doc doc/_build/probe2` 构建成功、无 WARNING/ERROR；抽验产物 `okf/bundle.html` 的 `href`（`trust.html`、`attested.html`）与修复前逐字一致 → 修复为**纯口径统一、零渲染变化**
+    - `rule` TR-21.4: `git diff --stat` 恰为 7 文件 **33 增 33 删**（无附带改动）
+    - `rule` TR-21.5: 既有门禁无回归——`check_pyproject_style.py`（12 个 pyproject.toml）退出码 = 0；`check_declaration_consistency.py`（六类）退出码 = 0；`check_dependency_direction.py`（291 文件）退出码 = 0；`check-links.py --path CONTRIBUTING.md` 退出码 = 0（新增预防条款未引入本地引用误报）
+
+## 提交记录（证据，第十轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `13b98b3` | `docs(xuanspace): 统一 doc/ 相对链接为带 .md 扩展名的仓内约定`（8 文件，+34/−33：7 个 `doc/**` 文档 33 处链接 + `CONTRIBUTING.md` 预防条款） |
+| 根仓 | `ROOT_COMMIT_PLACEHOLDER` | `chore(xuanspace): 前移子模块指针并回写存量断链修复证据`（`tasks.md` + `review.md` + gitlink） |
+
+> 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 8 项变更。
