@@ -502,3 +502,33 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 根仓 | `7a73015a6` | `chore(xuanspace): 前移子模块指针并回写文档易腐性清理证据`（`tasks.md` + `review.md` + gitlink） |
 
 > 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 5 项变更。
+
+## 后续任务：doc/ 全量易腐性筛查与失真处置（第十三轮授权）
+
+> 本节记录规格完成后**第十三轮**经用户裁定执行的工作：对 `projects/xuanspace/doc/` 全部 19 个文档做只读定性筛查，识别「活文档失真」与「时点快照」两类腐化对象并统一处置。裁定依据见 review.md §22。不改写 Task 1–23 的原始记录，亦不回改历史验收勾选。
+
+- [x] Task 24: 消除 `doc/` 活文档输出示例、目录树与依赖片段失真（含时点快照去值）
+  - **Priority**: low
+  - **Depends On**: Task 23
+  - **Description**: 第十二轮已清理「独立成篇的时点快照」。本轮把筛查面扩展到 `doc/` 全部活文档的**内嵌失真**：命令输出示例、目录树、依赖片段。核心判据仍是「活文档与现状不一致即失真源」。处置策略经用户裁定统一为「**去具体数值，改为结构性说明**」——从根上消除随实现演进必然腐化的硬编码数值。
+  - [x] SubTask 24.1: 洞察（I）——以源码为事实基准核查全部 19 个 `doc/**/*.md`：`xs list` 实际为 rich Table（`list_cmd.py`），`xs doctor` 实际为 rich Table（`doctor_cmd.py`），与文档中的缩进树 / 冒号格式示例双双不符；`discovery.py` 跳过 `.git` 子模块与 `templates`/`vendor`，故 `xs list` 应列 8 个项目（libs 6 + tools 2）
+  - [x] SubTask 24.2: 第一性原理（F）——文档内嵌的「具体输出」本质是**时点快照的微形态**：只要它是手抄的数值，就与独立报告文件同样必然腐化；活文档描述机制的正确形态是**结构性说明 + 指向单一事实来源**
+  - [x] SubTask 24.3: 属性判定——① `quickstart.md` `xs list` 示例 ＝ 活文档失真（高）；② `user-guide/index.md` `xs doctor` 示例 ＝ 活文档失真（高）；③ `okf/index.md` 版本示例 ＝ 时点快照（中）；④ `architecture.md` 依赖片段 ＝ 活文档片段偏差（中）；⑤ `architecture.md` libs 目录树 ＝ 活文档不完整（低）
+  - [x] SubTask 24.4: 处置——① ② 改为结构性说明（去具体数值）；③ 删除硬编码版本号输出；④ 标注为节选并指向根 `pyproject.toml` 为单一事实来源；⑤ 目录树由 2 项补全为实际 8 项（含 2 个子模块，按 `libs/README.md` 生成块口径）
+  - [x] SubTask 24.5: 结论化（C）——`check_declaration_consistency.py` 六类断言不回归（无新增机械可断言面，故不加门禁，理由记入 review.md §22）
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace`）、AC-7（门禁不回归）
+  - **Test Requirements**:
+    - `rule` TR-24.1: `scripts/check_declaration_consistency.py` 退出码 = 0（六类全通过）
+    - `rule` TR-24.2: `check-links.py --path doc`（cwd = `projects/xuanspace`）退出码 = 0（19 个 Markdown 文件、35 处本地引用全有效）
+    - `rule` TR-24.3: `sphinx -b html doc build/_doccheck` 构建成功（退出码 0）
+    - `rule` TR-24.4: 变更面恰为 4 项（`doc/quickstart.md`、`doc/user-guide/index.md`、`doc/okf/index.md`、`doc/architecture.md` 修改）
+    - `rule` TR-24.5: 残留检索四份文档中不再出现硬编码命令输出数值（`3.14.6`/`2.22.0`/`0.1.0` 等既有示例值）
+
+## 提交记录（证据，第十三轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `f8d223d` | `docs(xuanspace): 消除输出示例与目录树失真并标注依赖片段为节选`（4 文件，+11/−27） |
+| 根仓 | `ROOT_COMMIT_PLACEHOLDER` | `chore(xuanspace): 前移子模块指针并回写 doc 易腐性筛查处置证据`（`tasks.md` + `review.md` + gitlink） |
+
+> 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 4 项变更。

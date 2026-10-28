@@ -663,3 +663,55 @@ review.md §一 AC-1「交付物存在性」曾断言两份文档存在于 `doc/
 - 本轮定性复查聚焦 `doc/` 目录，已处理对象为上表两项；同类「时点快照 / 活文档失真」对象的进一步筛查属可选后续，非本轮授权范围。
 - 本规格至此仍无遗留任务；如后续再启动收口轮次，沿用「子模块原子提交 → 根仓前移 gitlink → 两段式（占位符 + `docs(spec)` 回填）提交 → 三件套回写」既定流程。
 
+## 二十二、doc/ 全量易腐性筛查与失真处置证据（规格完成后追加，第十三轮）
+
+> 范围：规格完成后**第十三轮**经用户裁定执行的工作——对 `doc/` 全部 19 个 `.md` 做**只读定性筛查**（承接 §21.6 上述「进一步筛查」的后续），识别「活文档失真」与「时点快照」两类腐化对象，并按用户裁定统一以「**去具体数值，改为结构性说明**」的策略处置。对应 tasks.md 的 Task 24。本节为独立审查记录，不改写一至二十一节的原始验收结果。
+
+### 22.1 处置与提交
+
+| 仓库 | 提交 | 变更规模 |
+|---|---|---|
+| `projects/xuanspace` | `f8d223d` docs(xuanspace): 消除输出示例与目录树失真并标注依赖片段为节选 | 4 文件（`doc/quickstart.md`、`doc/user-guide/index.md`、`doc/okf/index.md`、`doc/architecture.md` 修改，+11 / −27） |
+| 根仓 `SpecWeave` | `ROOT_COMMIT_PLACEHOLDER` | 3 文件（`tasks.md` + `review.md` + gitlink） |
+
+未 push、未 tag。
+
+### 22.2 定性依据（先定性，后处置）
+
+事实基准取自源码：`xs list` 实为 rich `Table`（`tools/xs/src/xs/commands/list_cmd.py`）、`xs doctor` 实为 rich `Table`（`tools/xs/src/xs/commands/doctor_cmd.py`）、项目发现规则见 `tools/xs/src/xs/discovery.py`（跳过含 `.git` 的子模块与 `templates`/`vendor`/`build`/`dist`）。
+
+| # | 对象 | 身份 | 失实证据 | 处置 |
+|---|---|---|---|---|
+| ① | `doc/quickstart.md` L63-73 `xs list` 示例 | **活文档失真（高）** | 示例为缩进树、仅 3 项；实际为 rich Table（NAME/TYPE/VERSION/PATH + 汇总行）、应列 8 项（libs 6 + tools 2）→ 格式与内容双错 | 改为结构性说明 |
+| ② | `doc/user-guide/index.md` L216-226 `xs doctor` 示例 | **活文档失真（高）** | 示例为 `Name: version ✓` 冒号格式、仅 7 行；实际为 rich Table（状态/工具/版本/信息）、含 Git/子模块×4/版本一致性等行，并硬编码 7 个版本号 | 改为结构性说明 |
+| ③ | `doc/okf/index.md` L25-28 `okf --version` 示例 | **时点快照（中）** | `# okf 0.1.0` 当前虽正确（`tools/okf/pyproject.toml` version=0.1.0），但硬编码版本号随版本升级即腐化 | 删除输出数值 |
+| ④ | `doc/architecture.md` L94-115 依赖声明片段 | **活文档片段偏差（中）** | 片段 `[project.optional-dependencies]` 缺 `dev` 组；`[dependency-groups] dev` 缺 5 项直接依赖（pdm/typer/rich/packaging/tomlkit），与根 `pyproject.toml` 不符且未标节选 | 标注节选 + 指向单一事实来源 |
+| ⑤ | `doc/architecture.md` L58-62 `libs/` 目录树 | **活文档不完整（低）** | 仅列 2 项 + `...`；实际 `libs/` 含 8 项（6 非子模块 + mystx/tvm-book 两个子模块） | 补全为实际 8 项 |
+
+> 判定要点同 §21.2：**活文档与现状不一致即失真源**。本轮进一步抽象出：文档内嵌的「具体输出」本质是**时点快照的微形态**——只要数值是手抄的，就与独立报告文件同样必然腐化；活文档描述机制的正确形态是**结构性说明 + 指向单一事实来源**。
+
+### 22.3 未失真对象（核查通过，不改）
+
+`doc/intro.md`（15 命令）、`doc/okf/commands.md`（6 子命令）、`doc/okf/architecture.md`（模块地图）、`doc/build-system.md`（工具版本下限表）、`doc/index.md`、`doc/contributing.md`、`doc/adr/index.md`、`doc/okf/{quickstart,bundle,conformance,trust,synthesis,attested,plugins}.md`、`doc/user-guide/index.md` 其余命令示例——经核对均与源码一致或为机制描述，无需改动。
+
+### 22.4 门禁与核验
+
+| 检查项 | 命令 / 方法 | 结果 |
+|---|---|---|
+| 声明一致性 | `python scripts/check_declaration_consistency.py`（cwd = `projects/xuanspace`） | 退出码 **0**；六类（CLI 命令清单 / 子项目清单 / 目录名口径 / vendor 清单 / 子模块声明 / 项目索引）全通过 |
+| 断链门禁 | `check-links.py --path doc`（cwd = `projects/xuanspace`） | 退出码 **0**；19 个 Markdown 文件、37 内联 / 35 本地引用全有效 |
+| 构建回归 | `sphinx -b html doc build/_doccheck` | 退出码 **0**（构建成功；临时产物已清理） |
+| 残留检索（去值） | 四份文档中 `3.14.6` / `2.22.0` / `# okf 0.1.0` 等原示例数值 | 命中 **0**（已全部改为结构性说明） |
+| 边界核对（xuanspace） | `git status --short` | 仅本轮 4 项变更 |
+| 边界核对（根仓） | `git ls-tree HEAD projects/xuanspace` | gitlink = 子模块 HEAD（`f8d223d…`） |
+
+### 22.5 决策记录：本轮为何不加门禁
+
+§21.3 的「只修文档不改门禁＝修复即复发」在本轮**不适用**：本轮处置对象为**自然语言输出示例与目录树**，其正确性依赖「与运行时真实输出一致」，而真实输出含绝对版本号、环境相关行与随机项，不存在稳定到可机械断言的文本形态——强行加正则门禁会引入比它拦截的漂移更高频的**误报**（例如版本升级即误报失败）。故本轮仅作内容修复，不加机械门禁；防复发依赖的是**形态转变**（把易腐的具体数值替换为不腐的结构性说明），而非文本断言。此判断与 §21.3 的扩容并非矛盾：可机械断言的面（命令清单、计数、路径口径）继续受门禁约束，不可机械断言的面（自由文本示例）改用形态治理。
+
+### 22.6 遗留与后续
+
+- 承 §21.6：本轮为可选的文档生命周期清理，非规格欠账。
+- 本轮已完成 `doc/` 全量 19 个 `.md` 的筛查；识别出的 5 项失真候选全部处置。
+- 本规格至此仍无遗留任务；如后续再启动收口轮次，沿用「子模块原子提交 → 根仓前移 gitlink → 两段式（占位符 + `docs(spec)` 回填）提交 → 三件套回写」既定流程。
+
