@@ -723,7 +723,7 @@ review.md §一 AC-1「交付物存在性」曾断言两份文档存在于 `doc/
 
 | 仓库 | 提交 | 变更规模 |
 |---|---|---|
-| 根仓 `SpecWeave` | `ROOT_COMMIT_PLACEHOLDER` docs(spec): 规格正式结项并刷新两级看板 | 5 文件（`spec.md` + `tasks.md` + `review.md` + 主题看板 `.trae/specs/workspace-governance/README.md` + 全局总览 `.trae/specs/README.md`） |
+| 根仓 `SpecWeave` | `2083149d2` docs(spec): 规格正式结项并刷新两级看板 | 5 文件（`spec.md` + `tasks.md` + `review.md` + 主题看板 `.trae/specs/workspace-governance/README.md` + 全局总览 `.trae/specs/README.md`） |
 
 未 push、未 tag。本轮无子模块变更，故无 gitlink 前移。
 

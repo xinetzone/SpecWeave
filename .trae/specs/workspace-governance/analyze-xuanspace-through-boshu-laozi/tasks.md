@@ -556,6 +556,6 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 
 | 仓库 | 提交 | 说明 |
 |---|---|---|
-| 根仓 | `ROOT_COMMIT_PLACEHOLDER` | `docs(spec): 规格正式结项并刷新两级看板`（`spec.md` + `tasks.md` + `review.md` + 两级看板 README） |
+| 根仓 | `2083149d2` | `docs(spec): 规格正式结项并刷新两级看板`（`spec.md` + `tasks.md` + `review.md` + 两级看板 README） |
 
 > 本轮仅动根仓（规格三件套 + 两级看板），不改动 `projects/xuanspace` 子模块；故无子模块提交、无 gitlink 前移。未 push、未 tag。
