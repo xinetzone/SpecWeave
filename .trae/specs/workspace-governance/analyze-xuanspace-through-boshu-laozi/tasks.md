@@ -345,3 +345,34 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 根仓 | `f92d2ebe1` | `chore(xuanspace): 前移子模块指针并回写 P1-4① 落地证据`（`tasks.md` + `review.md` + gitlink） |
 
 > 未 push、未 tag。子模块 HEAD 为 `f9e2b2cde2c04055dd58026b7c38d168e2ce274a`，根仓 gitlink 与之对齐。子模块工作树残留项（`.gitignore`、`pyproject.toml`、`src/xuanspace/__init__.py`、`tools/xs/**`、`libs/xuan-compose/**`、`libs/caffe-ffi/**`、`libs/npu-ffi/**`、`libs/demo-ffi/**`）为**并行会话在途改动**，本轮未触碰、未提交。
+
+## 后续任务：声明一致性门禁扩容与残余漂移清理（第八轮授权）
+
+> 本节记录规格完成后**第八轮**经用户另行授权执行的工作：① 把 `scripts/check_declaration_consistency.py` 从三类断言扩容至**六类**（新增 D vendor 清单、E 子模块声明、F 项目索引）；② 清理两处残余漂移（`doc/architecture.md` 失实的 `CMakeLists.txt` 行、`vendor/README.md` 的「待实际添加后更新此表」占位符）。本轮兑现《项目蓝图》目标态特征 1「所有可机械提取的声明（子项目清单、命令清单、目录树）要么由脚本生成，要么受 CI 断言约束」。不改写 Task 1–18 的原始记录。
+
+- [x] Task 19: 声明一致性门禁扩容至六类断言并清理残余漂移
+  - **Priority**: medium
+  - **Depends On**: Task 18
+  - **Description**: 既有门禁仅覆盖 A（CLI 命令清单）、B（子项目清单生成块）、C（目录名口径）三类，`vendor/README.md` 子项目表、`CONTRIBUTING.md` 子模块计数与表、`README.md` 项目索引表三处声明仍无断言守护。本轮补齐 D/E/F 三类，并把新增的 `submodules` 事实纳入清单快照；同时清除两处与磁盘不符的残余陈述。
+  - [x] SubTask 19.1: 新增解析助手与事实/声明提取函数——`_section`（截二级标题间正文）、`_table_first_column`（只解析首张连续表首列）、`extract_dir_names`、`extract_submodules`（解析 `.gitmodules` 的 `path`）、`extract_vendor_submodules`、`declared_vendor_projects`、`declared_contributing_submodules`、`declared_submodule_count`、`declared_index_projects`、`expected_index_projects`（tools/ ∪ libs/ ∪ vendor/ 子模块）
+  - [x] SubTask 19.2: `run_checks` 新增 D（vendor 表 ↔ `.gitmodules` vendor 子模块）、E（`包含 N 个上游子模块` 计数与子模块表 ↔ `.gitmodules`）、F（「项目索引」表 ↔ tools/ + libs/ 磁盘 ∪ vendor 子模块）三段；`collect_manifest` 加 `submodules` 键，快照比对改为遍历 manifest 全键（新增键自动纳入校验）
+  - [x] SubTask 19.3: 清理两处残余漂移——`doc/architecture.md` 删根目录树中失实的 `CMakeLists.txt` 行（该项目为纯 Python 枢纽包，`wheel.cmake = false`）；`vendor/README.md`「现有子项目」表前删「（待实际添加后更新此表）」占位符
+  - [x] SubTask 19.4: 同步口径文案——脚本模块 docstring「覆盖三类声明」→「覆盖六类声明」（列 A–F）、成功输出与 argparse description 同步；`scripts/declaration-snapshot.json` 刷新纳入 `submodules` 键；`.github/workflows/ci.yml` 步骤注释同步为六类
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace` 内脚本与文档）
+  - **Test Requirements**:
+    - `rule` TR-19.1: 校验模式退出码 = 0，输出「声明与实现一致：CLI 命令清单 / 子项目清单 / 目录名口径 / vendor 清单 / 子模块声明 / 项目索引 全部通过。」
+    - `rule` TR-19.2: 负向探针 4/4 PASS——基线（无漂移）+ D（vendor 表删 `caffe` 行）+ E（`包含 4 个上游子模块` 改 `5 个`）+ F（项目索引插 `ghost` 行）均按预期退出码与关键词命中；探针在 `tempfile` 夹具上执行，不触碰真实仓库
+    - `rule` TR-19.3: 生成模式幂等——`--generate` 二次运行输出「已是目标状态，跳过」且退出码 = 0
+    - `rule` TR-19.4: `--json` → `{"ok": true, "failures": [], "notes": []}`
+    - `rule` TR-19.5: `ruff check scripts/check_declaration_consistency.py` 通过
+    - `rule` TR-19.6: `check-links.py --paths doc vendor scripts`（cwd = `projects/xuanspace`）本轮 4 文件 **0 新增断链**（33 处为存量）
+    - `rule` TR-19.7: 根仓 `git ls-tree HEAD projects/xuanspace` 的 gitlink = 子模块 HEAD
+
+## 提交记录（证据，第八轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `fd6d7e6` | `feat(scripts): 声明一致性门禁扩容至六类断言并清理残余漂移`（5 文件，+149/−19：`scripts/check_declaration_consistency.py` + `scripts/declaration-snapshot.json` + `doc/architecture.md` + `vendor/README.md` + `.github/workflows/ci.yml`） |
+| 根仓 | `ROOT_COMMIT_PLACEHOLDER` | `chore(xuanspace): 前移子模块指针并回写门禁扩容证据`（`tasks.md` + `review.md` + gitlink） |
+
+> 未 push、未 tag。子模块 HEAD 为 `fd6d7e6bdc2447b8e027d56b6f4f5f65338c6a55`，根仓 gitlink 与之对齐。根仓 `?? .trae/specs/financial-economics-okf-wiki/` 与 ` ? projects/awesome-okf-xs` 为**并行会话在途改动**，本轮未触碰、未提交。

@@ -390,3 +390,55 @@ Task 10 收敛 `apps/xs-cli/` 主引用后，`rg` 发现同源残余两处，改
 - `doc/recommendations.md` 已收口为「全量闭环、无待办」终态：P0/P1/P2 全部条目及其正文均移除，逐条证据由 git 历史与根仓本主题规格三件套承载。
 - 《优化建议书》至此**无剩余可执行项**；本规格亦无遗留任务。
 
+## 十七、声明一致性门禁扩容与残余漂移清理证据（规格完成后追加，第八轮）
+
+> 范围：规格完成后**第八轮**经用户另行授权执行的工作——① `scripts/check_declaration_consistency.py` 由三类断言扩容至**六类**（新增 D vendor 清单、E 子模块声明、F 项目索引）；② 清除两处残余漂移。对应 tasks.md 的 Task 19。本节为独立审查记录，不改写一至十六节的原始验收结果。
+
+### 17.1 交付物与提交
+
+| 仓库 | 提交 | 变更规模 |
+|---|---|---|
+| `projects/xuanspace` | `fd6d7e6` feat(scripts): 声明一致性门禁扩容至六类断言并清理残余漂移 | 5 文件（`scripts/check_declaration_consistency.py` + `scripts/declaration-snapshot.json` + `doc/architecture.md` + `vendor/README.md` + `.github/workflows/ci.yml`，+149 / −19） |
+| 根仓 `SpecWeave` | `ROOT_COMMIT_PLACEHOLDER` chore(xuanspace): 前移子模块指针并回写门禁扩容证据 | 3 文件（`tasks.md` + `review.md` + gitlink） |
+
+未 push、未 tag。子模块 HEAD 为 `fd6d7e6bdc2447b8e027d56b6f4f5f65338c6a55`，根仓 gitlink 与之对齐。
+
+### 17.2 六类断言设计
+
+| 类别 | 声明方（文档） | 事实方（磁盘） | 新增/既有 |
+|---|---|---|---|
+| A CLI 命令清单 | `README.md`「N 个子命令」+ `doc/intro.md` 命令表 | `tools/xs/src/xs/cli.py` 注册表 | 既有 |
+| B 子项目清单 | `libs/README.md` 生成块 | `libs/` 磁盘目录 + `LIB_PROJECT_META` | 既有 |
+| C 目录名口径 | `README.md`「目录结构」块 | 磁盘存在性（且顶层不得出现 `docs/`） | 既有 |
+| D vendor 清单 | `vendor/README.md`「现有子项目」表 | `.gitmodules` 中 `vendor/` 子模块 | **本轮新增** |
+| E 子模块声明 | `CONTRIBUTING.md`「N 个上游子模块」计数与子模块表 | `.gitmodules` | **本轮新增** |
+| F 项目索引 | `README.md`「项目索引」表 | `tools/` + `libs/` 磁盘目录 ∪ `vendor/` 子模块 | **本轮新增** |
+
+解析底座：`_section`（按二级标题截取章节正文）+ `_table_first_column`（只解析章节内**首张连续**表格首列，遇非 `|` 行即停，避免误吞同章节后续表格）+ `_GITMODULES_PATH_RE`（解析 `path =` 行）。快照新增 `submodules` 键，`run_checks` 快照比对改为遍历 `manifest` 全键，后续新增事实键自动纳入校验。
+
+### 17.3 门禁与核验
+
+| 检查项 | 命令 / 方法 | 结果 |
+|---|---|---|
+| 校验模式 | `python scripts/check_declaration_consistency.py` | 退出码 **0**；「声明与实现一致：CLI 命令清单 / 子项目清单 / 目录名口径 / vendor 清单 / 子模块声明 / 项目索引 全部通过。」 |
+| 负向探针 | `tempfile` 夹具构造三类漂移后重跑 | **4/4 PASS**——基线（exit 0）+ D（vendor 表删 `caffe` 行，命中「vendor/README.md『现有子项目』表」）+ E（`包含 4 个上游子模块` 改 `5 个`，命中计数不符）+ F（项目索引插 `ghost` 行）均按预期退出码与关键词命中 |
+| 生成模式幂等 | `--generate` 连跑两次 | 二次运行「已是目标状态，跳过」，退出码 0 |
+| 结构化输出 | `--json` | `{"ok": true, "failures": [], "notes": []}` |
+| 静态检查 | `ruff check scripts/check_declaration_consistency.py` | `All checks passed!` |
+| 断链门禁 | `check-links.py --paths doc vendor scripts`（cwd = `projects/xuanspace`） | rc=1；33 处**均为存量**（集中在 `doc/intro.md`、`doc/quickstart.md`、`doc/okf/**` 的省略扩展名写法），本轮 4 文件 **0 新增** |
+| 边界核对（xuanspace） | `git status --short` | 除本轮 5 文件外，其余 dirty 全为**并行会话在途改动**，本轮未触碰 |
+| 边界核对（根仓） | `git ls-tree HEAD projects/xuanspace` | gitlink = 子模块 HEAD（`fd6d7e6…`） |
+
+### 17.4 残余漂移清理
+
+| 文件 | 清理内容 |
+|---|---|
+| `doc/architecture.md` | 删根目录树中失实的 `CMakeLists.txt` 行——该项目为纯 Python 枢纽包（`[tool.scikit-build.wheel] cmake = false`），磁盘无根级 `CMakeLists.txt`；`CMakePresets.json` 保留 |
+| `vendor/README.md` | 「现有子项目」表前删「（待实际添加后更新此表）」占位符，表体（`tvm-ffi/`、`caffe/`）与 `.gitmodules` 对齐 |
+
+### 17.5 遗留与后续
+
+- 本轮兑现《项目蓝图》目标态特征 1：子项目清单、命令清单、目录树、vendor 清单、子模块声明、项目索引六类可机械提取的声明均已受 CI 断言约束。
+- **可选遗留**（本轮未获授权，未启动）：`doc/intro.md`、`doc/quickstart.md`、`doc/okf/**` 的 33 处**省略扩展名**存量断链——属 `check-links.py` 对无扩展名相对链接的既有误报模式，非本轮引入，需另行评估是否加白名单或批量补扩展名。
+- 本规格至此无遗留任务；如后续再启动收口轮次，沿用「子模块原子提交 → 根仓前移 gitlink → 三件套回写」既定流程。
+
