@@ -1,14 +1,14 @@
 ---
 name: skill-target-root-switch-replan
-version: 1.0.0
-description: 当用户把已批准的 Skill 方案目标根从 ~/.qoder/skills 改成 .agents/skills 或其他目录时，重新在新根跨根查重、重读该根 frontmatter 与登记约定、核对旧根未被写入，并在新根重跑格式、链接与质量门。用户说「要写入 .agents/skills/」「迁入 .agents/skills」「改到主权区」「目标目录换成」「不要写用户级目录」「方案批了但目录变了」时必须使用此技能；不用于首次跨根分诊（用 skill-recommendation-disk-triage）、已有 Skill 的位置迁移（用 user-skill-sovereign-migration）或从零设计内容（用 skill-creator）。
+version: 1.1.0
+description: 当用户把已批准的 Skill 方案目标根从 ~/.qoder/skills 改成 .agents/skills 或其他目录时，重新在新根跨根查重、重读该根 frontmatter 与登记约定、按四项契约差异重算字段与门禁口径、显式列出被作废的已批准条目、核对旧根未被写入，并在新根重跑格式、链接与质量门。用户说「要写入 .agents/skills/」「迁入 .agents/skills」「改到主权区」「目标目录换成」「不要写用户级目录」「方案批了但目录变了」「哪些已批准条目作废」时必须使用此技能；不用于首次跨根分诊（用 skill-recommendation-disk-triage）、已有 Skill 的位置迁移（用 user-skill-sovereign-migration）或从零设计内容（用 skill-creator）。
 argument-hint: "<旧根> <新根>"
 user-invocable: true
 disable-model-invocation: false
 paths:
   - ".agents/skills/skill-target-root-switch-replan/**"
 title: "Skill 目标根切换重规划"
-source: "会话 767c40d5-6d6c-4bbe-9682-09774c17eaa2；shared-branch-merge-push-gate 方案提出后、写入前改根实测"
+source: "会话 767c40d5-6d6c-4bbe-9682-09774c17eaa2；shared-branch-merge-push-gate 方案提出后、写入前改根实测；v1.1.0 补四项契约差异与作废清单，依据会话 198e9c74-f925-4825-a798-7af8c50415bf 中用户级 frontmatter 已出方案、一句改根后重算的实测"
 ---
 
 # Skill 目标根切换重规划
@@ -110,6 +110,17 @@ ls -d .meta/toml/.agents/skills/<name> 2>/dev/null || echo "NO_TOML"
 | `title` | 可选 | 推荐 | 人类可读标题 |
 | `x-toml-ref` | 不适用 | 有 TOML 镜像时才写 | 层级按文件实际位置推算 |
 
+四项**契约级**差异必须逐项重算，结论写进 R6 方案；只换路径字符串会同时踩错键位与门禁口径：
+
+| 契约面 | 用户级根 | 仓库主权区 | 权威出处 |
+|---|---|---|---|
+| frontmatter 键层级 | `version` 只能写 `metadata.version`；顶层只认 `name`、`description`、`license`、`allowed-tools`、`metadata`、`compatibility` | `version`、`argument-hint`、`user-invocable`、`paths` 必须在**顶层**；缩进到 `metadata` 会被质量门行首锚点漏读并静默 −5 | `qoder-user-skill-authoring`、`repo-native-skill-frontmatter-contract` |
+| `quick_validate` 期望退出码 | 期望 **0**，非 0 即真失败需修 | 期望 **1**（报 `Unexpected key(s)`），属尺子差异；为凑 0 而删字段会掉分，把 `version` 挪进 `metadata` 会掉更多 | `repo-native-skill-frontmatter-contract` |
+| 登记面义务 | 无；落盘即可用 | 四处：`README` 表行与分类计数、`capability-registry/02-skills` 表行与计数、`CHANGELOG` 版本条目、`.meta/toml` 镜像 | `native-skill-surface-registration` |
+| 可见性机制 | 独立目录，或指向权威副本的联接 | 该目录即唯一权威副本；用户级入口是事后联接，不是第二份内容 | `native-skill-surface-registration`、`skill-junction-durability-guard` |
+
+> **为什么不能在两个根之间复制同一份 SKILL.md？** 两把尺子对 `version` 层级的要求互斥：用户级把顶层 `version` 判为 unexpected key，主权区对 `metadata.version` 静默扣分。同一份文件无法同时拿两边满分，先按**所在根**选尺子，再定键位。
+
 同时记录新根的登记面与门禁位置：
 
 ```bash
@@ -152,7 +163,17 @@ find "<old-root>/<name>" -mindepth 1 -maxdepth 2 2>/dev/null | head -20
 | frontmatter | 保留、新增、删除的字段，及 `x-toml-ref` 是否有真实目标 |
 | 文件清单 | SKILL.md、references、scripts、evals 各写什么 |
 | 验收命令 | 新根质量门与链接门的实际命令 |
+| 作废条目 | 旧方案中被新根作废的已批准项，及各自的替代 |
 | 延后事项 | 登记面、TOML、联接，以及延后原因 |
+
+**作废清单**：换根会作废旧方案里已批准、但只对其中一个根成立的条目。逐条给出「作废 / 替代」，不要静默沿用——把旧根已批准的头字段直接写进新根，是换根事故里最常见的一种。
+
+| 旧方案条目 | 改到主权区后 | 改到用户级后 |
+|---|---|---|
+| 已拟好的 frontmatter 段 | 作废：`version` 等提回顶层，补 `paths`、`title`、`source` | 作废：`version` 收进 `metadata`，删掉顶层扩展键 |
+| 已拟定的验收命令 | 作废：改跑 `check-skill-quality.py --score --threshold 100` 与 `check-links.py --check-frontmatter-paths` | 作废：改跑 `quick_validate.py`（期望退出 0）与链接门 |
+| 「落地即完成」的交付口径 | 作废：四处登记与 TOML 镜像转为待办 | 作废：无需登记，但须说明与主权区权威副本的关系 |
+| 「目标目录要创建」 | 作废：改为事后联接，不是第二份副本 | 作废：该目录本身就是唯一交付物 |
 
 等待用户确认后再进入写入阶段。批准范围外的扩展回到 R6 补充。
 
@@ -202,6 +223,7 @@ python .agents/scripts/check-links.py \
 新根：<path> — 新建 N 个文件
 同名校验：四根 0 命中；git grep 0 命中；TOML 无镜像
 frontmatter：新增 <字段>；未写 x-toml-ref（TOML 待建）
+作废条目：<旧方案中被新根作废的字段 / 命令 / 口径，及替代>
 质量门：<分数> / <通过项数>
 链接门：<断链数>
 未做：登记面（并发修改中）、TOML、联接、提交、推送
@@ -218,6 +240,8 @@ frontmatter：新增 <字段>；未写 x-toml-ref（TOML 待建）
 7. **不要把 `source` 当路径字段**：它是溯源自由文本；写成仓库相对路径会被链接门当成失效引用。
 8. **并发登记面不能顺手改**：`README`、`CHANGELOG`、`registry` 可能已暂存他人改动，延后并在报告中写明。
 9. **旧根清理优先 `rmdir`**：非空目录是实体副本信号，先报告；递归强删会销毁未知产物。
+10. **`metadata.version` 在主权区不报错但掉分**：它是合法 YAML，`quick_validate` 也接受，只有质量门的行首锚点读不到，代价是静默 −5；反向把顶层 `version` 带进用户级则会让 `quick_validate` 退出 1。
+11. **`quick_validate` 在主权区退出 1 不是待修缺陷**：不要让退出码变成换根后的返工任务；在同根取一个已满分的原生 Skill 跑同一命令即可证明是尺子差异。
 
 ## 8. 安全检查清单（逐项确认）
 
@@ -225,6 +249,7 @@ frontmatter：新增 <字段>；未写 x-toml-ref（TOML 待建）
 - [ ] 新根已解析为绝对路径，仓库根与 submodule 状态已确认
 - [ ] 四根查重与 `git grep` 完成，同名命中时未覆盖
 - [ ] 新根 frontmatter 与登记约定已从磁盘原文读取，非凭记忆
+- [ ] 四项契约差异已按新根重算，作废条目已逐条列出并给出替代
 - [ ] 旧根存在性、联接类型与内容清单已取证并分类
 - [ ] 修订方案已输出并取得确认，批准前零写入
 - [ ] 只在单一根创建，无双写、无 `cp -r`、无联接掩盖
