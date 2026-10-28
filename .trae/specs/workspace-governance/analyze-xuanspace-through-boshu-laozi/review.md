@@ -399,7 +399,7 @@ Task 10 收敛 `apps/xs-cli/` 主引用后，`rg` 发现同源残余两处，改
 | 仓库 | 提交 | 变更规模 |
 |---|---|---|
 | `projects/xuanspace` | `fd6d7e6` feat(scripts): 声明一致性门禁扩容至六类断言并清理残余漂移 | 5 文件（`scripts/check_declaration_consistency.py` + `scripts/declaration-snapshot.json` + `doc/architecture.md` + `vendor/README.md` + `.github/workflows/ci.yml`，+149 / −19） |
-| 根仓 `SpecWeave` | `ROOT_COMMIT_PLACEHOLDER` chore(xuanspace): 前移子模块指针并回写门禁扩容证据 | 3 文件（`tasks.md` + `review.md` + gitlink） |
+| 根仓 `SpecWeave` | `8d5872424` chore(xuanspace): 前移子模块指针并回写门禁扩容证据 | 3 文件（`tasks.md` + `review.md` + gitlink） |
 
 未 push、未 tag。子模块 HEAD 为 `fd6d7e6bdc2447b8e027d56b6f4f5f65338c6a55`，根仓 gitlink 与之对齐。
 

@@ -373,6 +373,6 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 仓库 | 提交 | 说明 |
 |---|---|---|
 | `projects/xuanspace` | `fd6d7e6` | `feat(scripts): 声明一致性门禁扩容至六类断言并清理残余漂移`（5 文件，+149/−19：`scripts/check_declaration_consistency.py` + `scripts/declaration-snapshot.json` + `doc/architecture.md` + `vendor/README.md` + `.github/workflows/ci.yml`） |
-| 根仓 | `ROOT_COMMIT_PLACEHOLDER` | `chore(xuanspace): 前移子模块指针并回写门禁扩容证据`（`tasks.md` + `review.md` + gitlink） |
+| 根仓 | `8d5872424` | `chore(xuanspace): 前移子模块指针并回写门禁扩容证据`（`tasks.md` + `review.md` + gitlink） |
 
 > 未 push、未 tag。子模块 HEAD 为 `fd6d7e6bdc2447b8e027d56b6f4f5f65338c6a55`，根仓 gitlink 与之对齐。根仓 `?? .trae/specs/financial-economics-okf-wiki/` 与 ` ? projects/awesome-okf-xs` 为**并行会话在途改动**，本轮未触碰、未提交。
