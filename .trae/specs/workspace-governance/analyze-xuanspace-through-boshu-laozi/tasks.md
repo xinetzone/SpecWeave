@@ -529,6 +529,6 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 仓库 | 提交 | 说明 |
 |---|---|---|
 | `projects/xuanspace` | `f8d223d` | `docs(xuanspace): 消除输出示例与目录树失真并标注依赖片段为节选`（4 文件，+11/−27） |
-| 根仓 | `ROOT_COMMIT_PLACEHOLDER` | `chore(xuanspace): 前移子模块指针并回写 doc 易腐性筛查处置证据`（`tasks.md` + `review.md` + gitlink） |
+| 根仓 | `c71613604` | `chore(xuanspace): 前移子模块指针并回写 doc 易腐性筛查处置证据`（`tasks.md` + `review.md` + gitlink） |
 
 > 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 4 项变更。

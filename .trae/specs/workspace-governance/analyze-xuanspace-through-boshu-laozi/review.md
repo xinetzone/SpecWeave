@@ -672,7 +672,7 @@ review.md §一 AC-1「交付物存在性」曾断言两份文档存在于 `doc/
 | 仓库 | 提交 | 变更规模 |
 |---|---|---|
 | `projects/xuanspace` | `f8d223d` docs(xuanspace): 消除输出示例与目录树失真并标注依赖片段为节选 | 4 文件（`doc/quickstart.md`、`doc/user-guide/index.md`、`doc/okf/index.md`、`doc/architecture.md` 修改，+11 / −27） |
-| 根仓 `SpecWeave` | `ROOT_COMMIT_PLACEHOLDER` | 3 文件（`tasks.md` + `review.md` + gitlink） |
+| 根仓 `SpecWeave` | `c71613604` | 3 文件（`tasks.md` + `review.md` + gitlink） |
 
 未 push、未 tag。
 
