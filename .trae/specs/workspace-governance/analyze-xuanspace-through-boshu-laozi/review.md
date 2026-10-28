@@ -451,7 +451,7 @@ Task 10 收敛 `apps/xs-cli/` 主引用后，`rg` 发现同源残余两处，改
 | 仓库 | 提交 | 变更规模 |
 |---|---|---|
 | `projects/xuanspace` | `c50f18e` feat(scripts): 新增依赖方向门禁并同步文档与 CI | 4 文件（`scripts/check_dependency_direction.py`（新建）+ `scripts/README.md` + `libs/README.md` + `.github/workflows/ci.yml`，+164 / −2） |
-| 根仓 `SpecWeave` | `ROOT_COMMIT_PLACEHOLDER` chore(xuanspace): 前移子模块指针并回写依赖方向门禁证据 | 3 文件（`tasks.md` + `review.md` + gitlink） |
+| 根仓 `SpecWeave` | `06f37e234` chore(xuanspace): 前移子模块指针并回写依赖方向门禁证据 | 3 文件（`tasks.md` + `review.md` + gitlink） |
 
 未 push、未 tag。子模块 HEAD 为 `c50f18eb26f62e3d0f56cb60c10655e5e50dd233`，根仓 gitlink 与之对齐。
 
