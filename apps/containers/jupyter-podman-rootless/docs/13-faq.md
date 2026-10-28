@@ -81,6 +81,32 @@ podman run -d \
 
 invoke的`run`命令已自动添加此参数，无需手动添加。
 
+### Q: `podman run` 报 `could not find pasta`？
+
+```text
+Error: could not find pasta, the network namespace can't be configured: exec: "pasta": executable file not found in $PATH
+```
+
+rootless Podman 5.x 默认使用 `pasta`（由 `passt` 包提供）建立网络命名空间。**宿主机未安装 `passt`** 时，任何 `podman run` 都会在创建容器阶段失败——注意此时 `podman --version`、`podman ps`、`podman images` 都正常，故障与镜像、参数、权限均无关，容易误判为容器镜像问题。
+
+解决：
+
+```bash
+sudo apt-get install -y passt      # Debian/Ubuntu/openKylin
+sudo dnf install -y passt          # Fedora/RHEL
+
+command -v pasta                    # 应输出 /usr/bin/pasta
+podman run --rm docker.io/library/hello-world
+```
+
+WSL2 下 `sudo` 提示需要交互式密码（或 invoke 等非交互场景无法输入密码）时，用 WSL 的免密 root 直接安装：
+
+```bash
+wsl -u root -- apt-get install -y passt
+```
+
+> 该依赖只作用于**宿主机**。容器内的 DinP 场景已由 Containerfile 固化 passt（`.agents/CHANGELOG.md` 2026-08-29 条目），容器内无需另行处理；宿主机侧要求见 [05-rootless-podman.md](05-rootless-podman.md)。
+
 ### Q: WSL2 下挂载路径不对？
 
 invoke的`utils.to_posix_path()`会自动将Windows路径转换为WSL2路径：
