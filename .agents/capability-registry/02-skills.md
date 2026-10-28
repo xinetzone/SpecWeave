@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（46个）
+### 完整Skill（47个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -57,6 +57,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | stale-read-edit-reconciliation | "读完后文件被改了"、"Edit 报 0 occurrences"、"版本号被前移"、"用户级路径变成联接"、"另一会话动了同一文件"、"按已确认方案写入却写入失败" | 2（信号分类 → 写前低成本复核（重读现盘 + 标题级差集）→ 恢复六步（只补缺失项、版本号从现盘顺延、复跑门禁、回报并发事实）→ 停手条件；捆绑 scripts/probe_drift.py；L1） | v1.0.0 | [skills/stale-read-edit-reconciliation/SKILL.md](../skills/stale-read-edit-reconciliation/SKILL.md) |
 | windows-deletion-blast-radius-attribution | "到底删了什么"、"核对某目录是不是真没了"、"误删范围有多大"、"回收站能不能恢复"、"rm -rf 打到盘根了" | 1（冻结现场 → 四步取证：根级清单差异 / 权限与报错证据 / 服务写入判别 / 按 SID 查回收站 → 三段结论与可恢复性判定 → 删除前置断言与安全拦截处置；L1） | v1.0.0 | [skills/windows-deletion-blast-radius-attribution/SKILL.md](../skills/windows-deletion-blast-radius-attribution/SKILL.md) |
 | windows-temp-fixture-teardown-safety | "建临时夹具"、"跑受控删除验证"、"清理探针目录"、"清理命令里出现变量拼接路径" | 2（五条硬规则写前预检 → 单进程 tempfile.mkdtemp/断言/shutil.rmtree 标准模板 → 路径交外部工具时的规则 → 坏味道扫描与验收步骤；捆绑 scripts/temp_fixture_guard.py；L1） | v1.0.0 | [skills/windows-temp-fixture-teardown-safety/SKILL.md](../skills/windows-temp-fixture-teardown-safety/SKILL.md) |
+| qibu-story-cmd | "七步故事法"、"靶心人公式"、"故事骨架"、"因果链"、"删步测试"、"意外极性"、"付费墙切在哪"、"后面为什么强行" | 3（新建骨架 / 诊断改稿 / 反向拆解；均含七格判据、三次删步测试与极性判墙；L1） | v1.0.0 | [skills/qibu-story-cmd/SKILL.md](../skills/qibu-story-cmd/SKILL.md) |
 
 ### 工作流门面（7个）
 
