@@ -1172,53 +1172,97 @@ check('存在平台侧隐私声明文件', () => {
   )
 })
 
-check('隐私声明覆盖代码调用的隐私接口', () => {
-  const decl = read(path.join('docs', 'privacy-declaration.md'))
-  const signup = read(path.join('pages', 'signup', 'signup.js'))
-  if (signup.includes('wx.chooseMedia')) {
+function assertPrivacyDeclaration(declaration, terms, collected) {
+  const section = declaration.split(/^## /m)
+    .find((text) => /^二、开发者处理的信息\r?\n/.test(text))
+  assert.ok(section, '缺少开发者处理的信息章节')
+  // 仅接受明确的正向主句，避免否定句、用途说明或对照表里的字段充当声明。
+  const statements = section.split(/\r?\n/).map((line) => line.trim())
+    .map((line) => line.match(/^- 开发者(?:收集|处理)(?:你(?:手工)?填写的|你|云服务返回的(?:可选)?)?(选中的照片或视频信息|手机号|展示名(?:[和、]头像地址)?|头像地址)(?=[，。；]|$)/))
+    .filter(Boolean)
+  const declaredTerms = statements.flatMap((match) => match[1].split(/[和、]/))
+  for (const term of terms) {
     assert.ok(
-      decl.includes('选中的照片或视频信息'),
-      '代码调用了 wx.chooseMedia（收集你选中的照片或视频信息），隐私声明缺少对应条目'
+      declaredTerms.includes(term) === collected,
+      collected ? `${term}缺少正向声明` : `${term}已声明但没有已核实的采集路径`
     )
+  }
+}
+
+const privacyDeclaration = read('docs/privacy-declaration.md')
+const privacySignup = read('pages/signup/signup.js')
+const privacyForm = read('pages/signup/signup.wxml')
+const privacyAuth = read('utils/auth.js')
+const privacyApi = read('utils/api.js')
+const privacySql = read('scripts/db/schema.sql')
+const collectedInformation = {
+  photo: /wx\.chooseMedia\s*\(/.test(privacySignup),
+  phone: /<input\b[^>]*value="\{\{contact\}\}"[^>]*bindinput="onInputContact"/.test(privacyForm)
+    && /onInputContact\(event\)\s*\{\s*this\.setData\(\{ contact: event\.detail\.value/.test(privacySignup)
+    && /api\.signup\(detail\.id,\s*\{[^}]*\bcontact,/.test(privacySignup)
+    && /p_contact:\s*payload\.contact/.test(privacyApi)
+    && /INSERT INTO public\.registrations[^;]*VALUES\s*\([^)]*p_contact/.test(privacySql),
+  profile: /CACHED_USER_FIELDS\s*=\s*\[[^\]]*'name'[^\]]*'avatarUrl'/.test(privacyAuth)
+    && /cloud\.auth\.signInWithWechat\(res\.code, appid\)/.test(privacyAuth)
+    && /cacheUser\(data\.user\)/.test(privacyAuth)
+    && /wx\.setStorageSync\(SESSION_KEY, snapshot\)/.test(privacyAuth)
+    && /ownerName:[^\n]*app\.globalData\.user\.name/.test(privacySignup)
+    && /p_owner_name:\s*payload\.ownerName/.test(privacyApi)
+    && /INSERT INTO public\.registrations[^;]*VALUES\s*\([^)]*p_owner_name/.test(privacySql)
+}
+const privacyTerms = {
+  photo: ['选中的照片或视频信息'],
+  phone: ['手机号'],
+  profile: ['展示名', '头像地址']
+}
+
+check('隐私采集路径映射覆盖媒体、手填手机号和云资料缓存', () => {
+  assert.deepStrictEqual(collectedInformation, { photo: true, phone: true, profile: true },
+    '采集路径发生变化，须重新核对声明映射，不能静默跳过检查')
+})
+
+for (const [key, terms] of Object.entries(privacyTerms)) {
+  check(`隐私声明与实际处理一致：${terms.join('、')}`, () => {
+    assertPrivacyDeclaration(privacyDeclaration, terms, collectedInformation[key])
+  })
+}
+
+check('隐私声明检查接受手填手机号及可选云资料的正向声明', () => {
+  const declaration = '## 二、开发者处理的信息\n'
+    + '- 开发者收集你填写的手机号。\n'
+    + '- 开发者处理云服务返回的可选展示名和头像地址。\n'
+  assertPrivacyDeclaration(declaration, privacyTerms.phone, true)
+  assertPrivacyDeclaration(declaration, privacyTerms.profile, true)
+})
+
+check('隐私声明检查拦截移除实际声明行，即使表格仍有字段', () => {
+  for (const terms of Object.values(privacyTerms)) {
+    const statement = `- 开发者处理${terms.join('、')}。`
+    const declaration = `## 二、开发者处理的信息\n${statement}\n| ${terms.join('、')} | 代码位置 |\n`
+    assertPrivacyDeclaration(declaration, terms, true)
+    assert.throws(() => assertPrivacyDeclaration(declaration.replace(statement, ''), terms, true),
+      { code: 'ERR_ASSERTION', message: `${terms[0]}缺少正向声明` })
   }
 })
 
-check('隐私声明不超出实际采集范围', () => {
-  // 声明了但代码里没有对应采集路径 = 乱承诺：平台审核会追问，
-  // 且对用户构成不必要的个人信息处理承诺。
-  const decl = read(path.join('docs', 'privacy-declaration.md'))
-  const auth = read(path.join('utils', 'auth.js'))
-  const pages = walk(path.join(ROOT, 'pages'))
-    .filter((f) => f.endsWith('.js'))
-    .map((f) => fs.readFileSync(f, 'utf8'))
-    .join('\n')
-  const code = auth + '\n' + pages
+check('隐私声明检查不把否定句或其他章节当作采集声明', () => {
+  for (const terms of Object.values(privacyTerms)) {
+    for (const denial of ['的信息不声明', '的信息不包含', '的资料中没有']) {
+      const declaration = `## 二、开发者处理的信息\n- 开发者处理${denial}${terms.join('、')}。\n`
+        + `## 三、开发者对信息的存储\n- 开发者收集${terms.join('、')}。\n`
+      assert.throws(() => assertPrivacyDeclaration(declaration, terms, true),
+        { code: 'ERR_ASSERTION', message: `${terms[0]}缺少正向声明` })
+    }
+  }
+})
 
-  // 昵称/头像：必须存在真实采集路径才能声明
-  // 只认「实际声明行」——排除「本指引不声明 XXX」这类否定性说明
-  // （否则修正说明本身会被误判成声明）。
-  const declaredLines = decl.split('\n').filter((line) => {
-    const t = line.trim()
-    if (!t.startsWith('- ')) return false
-    if (/不声明|未收集|不存在|没有/.test(t)) return false
-    return true
-  })
-  const declaredText = declaredLines.join('\n')
-
-  const claimsNickname = declaredText.includes('收集你的昵称')
-  const hasNicknameCall = /getUserProfile|chooseAvatar|type\s*=\s*"nickname"|getUserInfo/.test(code)
-  assert.ok(
-    !(claimsNickname && !hasNicknameCall),
-    '隐私声明声明了「收集你的昵称、头像」，但代码中不存在任何用户信息采集接口调用'
-  )
-
-  // 手机号：必须存在真实采集路径才能声明
-  const claimsPhone = declaredText.includes('收集你的手机号')
-  const hasPhoneCall = /getPhoneNumber|getRealtimePhoneNumber/.test(code)
-  assert.ok(
-    !(claimsPhone && !hasPhoneCall),
-    '隐私声明声明了「收集你的手机号」，但代码中不存在任何手机号采集接口调用'
-  )
+check('隐私声明检查拦截无采集路径的声明', () => {
+  for (const terms of Object.values(privacyTerms)) {
+    const declaration = `## 二、开发者处理的信息\n- 开发者处理${terms.join('、')}。\n`
+    assert.throws(() => assertPrivacyDeclaration(declaration, terms, false),
+      { code: 'ERR_ASSERTION', message: `${terms[0]}已声明但没有已核实的采集路径` })
+    assertPrivacyDeclaration('## 二、开发者处理的信息\n暂无采集项。\n', terms, false)
+  }
 })
 
 check('隐私接口调用前有授权兜底', () => {
