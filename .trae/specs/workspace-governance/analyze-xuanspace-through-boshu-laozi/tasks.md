@@ -437,6 +437,6 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 仓库 | 提交 | 说明 |
 |---|---|---|
 | `projects/xuanspace` | `13b98b3` | `docs(xuanspace): 统一 doc/ 相对链接为带 .md 扩展名的仓内约定`（8 文件，+34/−33：7 个 `doc/**` 文档 33 处链接 + `CONTRIBUTING.md` 预防条款） |
-| 根仓 | `ROOT_COMMIT_PLACEHOLDER` | `chore(xuanspace): 前移子模块指针并回写存量断链修复证据`（`tasks.md` + `review.md` + gitlink） |
+| 根仓 | `f8e60d147` | `chore(xuanspace): 前移子模块指针并回写存量断链修复证据`（`tasks.md` + `review.md` + gitlink） |
 
 > 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 8 项变更。

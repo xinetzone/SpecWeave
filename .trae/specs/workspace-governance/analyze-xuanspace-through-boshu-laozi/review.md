@@ -516,7 +516,7 @@ Task 10 收敛 `apps/xs-cli/` 主引用后，`rg` 发现同源残余两处，改
 | 仓库 | 提交 | 变更规模 |
 |---|---|---|
 | `projects/xuanspace` | `13b98b3` docs(xuanspace): 统一 doc/ 相对链接为带 .md 扩展名的仓内约定 | 8 文件（7 个 `doc/**` 文档共 33 处链接 + `CONTRIBUTING.md` §12.4 预防条款，+34 / −33） |
-| 根仓 `SpecWeave` | `ROOT_COMMIT_PLACEHOLDER` chore(xuanspace): 前移子模块指针并回写存量断链修复证据 | 3 文件（`tasks.md` + `review.md` + gitlink） |
+| 根仓 `SpecWeave` | `f8e60d147` chore(xuanspace): 前移子模块指针并回写存量断链修复证据 | 3 文件（`tasks.md` + `review.md` + gitlink） |
 
 未 push、未 tag。
 
