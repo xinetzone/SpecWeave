@@ -440,3 +440,32 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 根仓 | `f8e60d147` | `chore(xuanspace): 前移子模块指针并回写存量断链修复证据`（`tasks.md` + `review.md` + gitlink） |
 
 > 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 8 项变更。
+
+## 后续任务：过程性文档清理（第十一轮授权）
+
+> 本节记录规格完成后**第十一轮**经用户裁定执行的文档生命周期处置：删除两份**过程性分析产物** `doc/blueprint.md`（《项目蓝图》）与 `doc/recommendations.md`（《优化建议书》），并清理其导航登记与交叉引用。裁定依据见 review.md §20。不改写 Task 1–21 的原始记录，亦不回改 §一 AC-1 的勾选（历史可审计性）。
+
+- [x] Task 22: 删除 `doc/blueprint.md` 与 `doc/recommendations.md`
+  - **Priority**: low
+  - **Depends On**: Task 21
+  - **Description**: 两份文档为**一次性过程性分析产物**，其权威载体已转移至本规格三件套（决策与证据）与 git 历史（变更事实）；`recommendations.md` 已收口为终态空壳（12 行，条目全部闭环后正文移除），`blueprint.md` 内容基于基线 `8db593d` 已与现状不一致（其标记「薄弱」的事项多数已在第七至十轮闭环）。活文档与现状不一致即**失真源**，故删除。
+  - [x] SubTask 22.1: 洞察（I）——机械提取引用面：`doc/index.md` L64–70 的「规划」toctree 登记两项；`blueprint.md` L308 ↔ `recommendations.md` L3/L12 互引。确认二者是**活的 doc/ 文档**（非规格历史快照）
+  - [x] SubTask 22.2: 第一性原理（F）——剥离叙事看本质：蓝图＝分析结论、建议书＝待办清单，均属**一次性产物**；结构叙事已由 `README.md` 与 `doc/architecture.md` 承载，无需第三份重复且易腐
+  - [x] SubTask 22.3: 删除两份文档（`doc/blueprint.md`、`doc/recommendations.md`）
+  - [x] SubTask 22.4: 清理导航与引用——移除 `doc/index.md` 的「规划」toctree（两项全删后该分组变空）
+  - [x] SubTask 22.5: 决策记录——**不回改** review.md §一 AC-1 的勾选记录（该断言的范围是规格实施过程，删除属规格完成后经用户裁定的新决策，二者不矛盾）
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace`）、AC-7（门禁不回归）
+  - **Test Requirements**:
+    - `rule` TR-22.1: `check-links.py --path doc`（cwd = `projects/xuanspace`）退出码 = 0（20 个 Markdown 文件、35 处本地引用全有效；删除后「规划」toctree 与互引一并消失，无新增断链）
+    - `rule` TR-22.2: 残留检索 `blueprint|recommendations` 于 `doc/**/*.md` 命中 = **0**
+    - `rule` TR-22.3: `sphinx -b html doc doc/_build/probe3` 构建成功、无 WARNING/ERROR、无 orphan 警告
+    - `rule` TR-22.4: 变更面恰为 3 项（`doc/blueprint.md` D、`doc/recommendations.md` D、`doc/index.md` M）
+
+## 提交记录（证据，第十一轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `91ba03d` | `docs(xuanspace): 删除已闭环的过程性分析文档并清理导航`（3 文件：`doc/blueprint.md` D、`doc/recommendations.md` D、`doc/index.md` M） |
+| 根仓 | `ROOT_COMMIT_PLACEHOLDER` | `chore(xuanspace): 前移子模块指针并回写过程性文档清理证据`（`tasks.md` + `review.md` + gitlink） |
+
+> 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 3 项变更。
