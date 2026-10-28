@@ -9,6 +9,7 @@ source: "README.md#快速开始"
 ## 前置条件
 
 - **Podman**（推荐）或 **Docker** 已安装
+- **`passt`**（rootless Podman 5.x 的宿主机网络转发器，提供 `pasta` 命令）
 - **Python ≥3.14**（用于运行 invoke 任务）
 - Linux 宿主机需要 FUSE 支持（`--device /dev/fuse`）
 - **可选**：`podman-compose`（声明式编排，推荐安装）
@@ -16,6 +17,14 @@ source: "README.md#快速开始"
 - **可选**：`omlmd` + `olot[oras-py]`（ML 模型 OCI artifact 管理，容器内预装）
 
 > 注：上面的 podman-compose / podman-py 是**宿主机 invoke 三层后端**所需（`pip install`）；镜像内已另行内嵌同源工具（含 toolbox），版本经 vendor/ 子模块固定、与宿主 pip 版本相互独立，详见 [17-upstream-tools.md](17-upstream-tools.md)。
+
+> 注：`passt` 只在**宿主机以 rootless 模式运行 Podman 5.x**时需要。rootless Podman 默认使用 `pasta` 建立网络命名空间，宿主缺失该包时任何 `podman run` 都会在创建容器阶段直接失败：
+>
+> ```text
+> Error: could not find pasta, the network namespace can't be configured: exec: "pasta": executable file not found in $PATH
+> ```
+>
+> 安装：`sudo apt-get install -y passt`（Debian/Ubuntu/openKylin）或 `sudo dnf install -y passt`（Fedora/RHEL）。容器**内部**的 DinP 场景所用 passt 已固化在 Containerfile 中，无需在容器内重复安装；判定与排错详见 [13-faq.md](13-faq.md) 与 [05-rootless-podman.md](05-rootless-podman.md)。
 
 ## 安装 invoke
 

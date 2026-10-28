@@ -6,6 +6,12 @@ source: 从 apps/containers/jupyter-podman-rootless/AGENTS.md 拆分归档
 
 # 变更日志
 
+## 2026-10-28
+
+| 类型 | 变更 |
+|------|------|
+| docs | **宿主机 `passt` 前置依赖补入用户文档（`podman run` 失败修复的预防环节）**：真机在 WSL2 `openKylin-3.0` 使用 rootless Podman 5.7.0 时 `podman run` 直接失败——`Error: could not find pasta, the network namespace can't be configured: exec: "pasta": executable file not found in $PATH`。根因：Podman 5.x rootless 默认网络转发器为 `pasta`（由 `passt` 包提供），发行版默认未预装该包；此时 `podman --version` / `podman ps` / `podman images` 全部正常，仅创建容器阶段退出，故障表象与镜像、参数、rootless 三必需均无关，极易误判为容器镜像问题（既有 2026-08-29 条目处理的 passt 是**容器内部 DinP 场景**，由 Containerfile 固化，与宿主机侧相互独立、互不替代）。修复动作本身为宿主侧 `apt-get install -y passt`（WSL 下 `sudo` 报 `interactive authentication is required` 时改用 `wsl -u root -- apt-get install -y passt`），无 `containers.conf` 改动、网络后端仍为 `netavark`；真机验证矩阵：`podman run --rm ubuntu:26.04` 正常退出、容器内 DNS 解析 `pypi.org`/`ppa.build.openkylin.top` 成功、容器内 HTTPS 双方均 200、`-p 18099:18099` 端口转发返回 200、既有 `jp-test` 容器不受影响。**本次将宿主前置依赖补入三处用户文档**（此前的空白即本次预防的落点）：① `docs/01-getting-started.md` 前置条件清单新增 `passt` 条目，并附错误文本、apt/dnf 安装命令与「宿主机 vs 容器内」分层说明；② `docs/05-rootless-podman.md` 「宿主机运行要求」下新增小节「宿主机网络转发器（`pasta` / `passt`）」，含安装校验与 WSL 免密 root 提示；③ `docs/13-faq.md` 「运行问题」新增 `Q: podman run 报 could not find pasta？` 专条（含「版本/列表命令正常、仅 run 失败」的误判提示）。链接校验：`python .agents/scripts/check-links.py --path apps/containers/jupyter-podman-rootless/docs` 通过（19 个 Markdown、70 条本地引用零断链）。按组级 G4 反双写纪律，该依赖仅对构建端成员成立，故落成员级 docs，未提升为组级规则（预防措施：外部运行时依赖缺失未在用户文档前置声明——宿主侧前置条件须与容器内同名依赖显式分层表述） |
+
 ## 2026-09-15
 
 | 类型 | 变更 |

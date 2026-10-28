@@ -51,6 +51,28 @@ podman run -d \
 - `--security-opt label=disable`：禁用SELinux标签，否则FUSE挂载可能失败
 - `--cgroupns=host`：共享宿主机cgroup命名空间，rootless Podman需要
 
+### 宿主机网络转发器（`pasta` / `passt`）
+
+上述三个参数解决的是**存储与权限**，网络侧还依赖一个宿主机软件包：rootless Podman 5.x 默认用 `pasta`（由 `passt` 包提供）建立网络命名空间。宿主未安装时，`podman run` 在创建容器前即退出：
+
+```bash
+Error: could not find pasta, the network namespace can't be configured: exec: "pasta": executable file not found in $PATH
+```
+
+安装并验证：
+
+```bash
+sudo apt-get install -y passt      # Debian/Ubuntu/openKylin
+sudo dnf install -y passt          # Fedora/RHEL
+
+command -v pasta                    # 应输出 /usr/bin/pasta
+podman run --rm docker.io/library/hello-world
+```
+
+- 该依赖位于**宿主机**，与镜像无关；`podman --version`、`podman ps` 此时均正常，只有创建容器会失败
+- 容器**内部**的 DinP 场景所用 passt 已固化在 Containerfile 中，两者相互独立，不要在容器内重复安装
+- WSL2 下 `sudo` 需要交互式密码时，可用 `wsl -u root -- apt-get install -y passt` 直接以 root 安装
+
 ## 存储配置
 
 容器内Podman存储配置在 `/home/devuser/.config/containers/storage.conf`：
