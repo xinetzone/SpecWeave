@@ -617,7 +617,7 @@ review.md §一 AC-1「交付物存在性」曾断言两份文档存在于 `doc/
 | 仓库 | 提交 | 变更规模 |
 |---|---|---|
 | `projects/xuanspace` | `72898a2` docs(xuanspace): 删除失效的依赖报告并补全 CLI 参考与门禁覆盖 | 5 文件（`doc/dependency-report.md` 删除、`.meta/toml/doc/dependency-report.toml` 删除、`doc/index.md` 移除「项目」toctree 中的 `dependency-report`、`doc/cli/index.md` 补两条命令、`scripts/check_declaration_consistency.py` 扩容，+53 / −143） |
-| 根仓 `SpecWeave` | `ROOT_COMMIT_PLACEHOLDER` | 3 文件（`tasks.md` + `review.md` + gitlink） |
+| 根仓 `SpecWeave` | `7a73015a6` | 3 文件（`tasks.md` + `review.md` + gitlink） |
 
 未 push、未 tag。
 

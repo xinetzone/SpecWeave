@@ -499,6 +499,6 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 仓库 | 提交 | 说明 |
 |---|---|---|
 | `projects/xuanspace` | `72898a2` | `docs(xuanspace): 删除失效的依赖报告并补全 CLI 参考与门禁覆盖`（5 文件，+53/−143） |
-| 根仓 | `ROOT_COMMIT_PLACEHOLDER` | `chore(xuanspace): 前移子模块指针并回写文档易腐性清理证据`（`tasks.md` + `review.md` + gitlink） |
+| 根仓 | `7a73015a6` | `chore(xuanspace): 前移子模块指针并回写文档易腐性清理证据`（`tasks.md` + `review.md` + gitlink） |
 
 > 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 5 项变更。
