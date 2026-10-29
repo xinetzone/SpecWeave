@@ -283,7 +283,7 @@ flowchart LR
 | A-01 | 复盘报告落盘（源报告 + TOML 镜像） | 本次完成 |
 | A-02 | 导出归档（exported 副本 + manifest + index 更新） | 本次完成 |
 | A-03 | 模式库更新（`single-authority-declaration-alignment` 升级 L2 + 新建 `convergence-period-triple-track` + CATEGORIES/README 索引同步） | 本次完成 |
-| A-04 | 建议 xuanspace 将「子模块指针 ↔ 文档索引」对账纳入声明—实现一致性门禁（跨子项目边界，提交建议待 xuanspace 团队决策） | 待决策 |
+| A-04 | 子模块指针对账门禁提案已提交：[submodule-alignment-gate spec](../../../projects/xuanspace/.trae/specs/submodule-alignment-gate/spec.md)（TRAE-spec-mode Specify 阶段产物，G1-G3 断言 + 快照扩展），待 xuanspace 批准后进入 Plan/Implement | 待批准 |
 | A-05 | 下次发布（0.2.0）前执行「收口期三线」预检清单，作为 `convergence-period-triple-track` 首次复用验证（验证后 L1→L2） | 待触发 |
 
 ---
