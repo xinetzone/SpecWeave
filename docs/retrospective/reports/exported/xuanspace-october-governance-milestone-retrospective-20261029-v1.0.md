@@ -283,7 +283,7 @@ flowchart LR
 | A-01 | 复盘报告落盘（源报告 + TOML 镜像） | 本次完成 |
 | A-02 | 导出归档（exported 副本 + manifest + index 更新） | 本次完成 |
 | A-03 | 模式库更新（`single-authority-declaration-alignment` 升级 L2 + 新建 `convergence-period-triple-track` + CATEGORIES/README 索引同步） | 本次完成 |
-| A-04 | 子模块指针对账门禁已实施：[submodule-alignment-gate spec](../../../../projects/xuanspace/.trae/specs/submodule-alignment-gate/spec.md)（TRAE-spec-mode 三件套 + G1-G3 断言 + 快照 `submodule_status` 字段 + `--generate` 漂移保护，xuanspace `2714647`）；首跑即捕获 `vendor/tvm-ffi` 真实漂移（checkout `e9fdc58` vs 索引 `6628c46`）并恢复索引指针；主仓 gitlink 前移 `cb9c186c2` | 已实施 |
+| A-04 | 子模块指针对账门禁已实施：[submodule-alignment-gate spec](../../../../projects/xuanspace/.trae/specs/submodule-alignment-gate/spec.md)（TRAE-spec-mode 三件套 + G1-G3 断言 + 快照 `submodule_status` 字段 + `--generate` 漂移保护，xuanspace `2714647`）；首跑即捕获 `vendor/tvm-ffi` 真实漂移（checkout `e9fdc58` vs 索引 `6628c46`），经确认按 CONTRIBUTING §3.6 三步正式推进指针至 `e9fdc58`（上游快进 30 提交，xuanspace `991f635`）；主仓 gitlink 前移 `fce857675` | 已实施 |
 | A-05 | 下次发布（0.2.0）前执行「收口期三线」预检清单，作为 `convergence-period-triple-track` 首次复用验证（验证后 L1→L2） | 待触发 |
 
 ---
