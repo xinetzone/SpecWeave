@@ -44,10 +44,14 @@
     - 三处规模数字对账一致：`doc/index.md`（692）、`README.md`（badge/正文/表行/合计 692）、`doc/bundles/index.md`（692）。
   - **Description**: 完成 bundle 落位所需的全部父级索引与计数更新，保证规模数字单一真相源一致。
 
-- [ ] Task 6: C 阶段——双层原子提交（待用户明确请求）
-  - **Status**: pending ｜ **Priority**: medium ｜ **Depends On**: Task 5
-  - **Completion Evidence**: —
-  - **Description**: ① 子模块 `projects/awesome-okf-xs` 内显式文件列表提交（bundle 9 文件 + 三层父级索引 + README + doc/index）；② 主仓库提交 spec；③ 主仓库更新子模块指针。使用 `python .agents\scripts\git-commit-utf8.py -m "<type>(<scope>): <中文描述>" <显式文件列表>`，不 push。
+- [x] Task 6: C 阶段——双层原子提交
+  - **Status**: completed ｜ **Priority**: medium ｜ **Depends On**: Task 5
+  - **Completion Evidence**:
+    - ① 子模块 `projects/awesome-okf-xs`：`7acf00a3 feat(bundles): 新增豆包直播间嵌入抖音电商博文知识包`（14 文件：bundle 9 + sheke/industry/index.md + sheke/index.md + bundles/index.md + README.md + doc/index.md）。
+    - ② 主仓库 spec：`5f811c706 docs(specs): 新增豆包直播间嵌入抖音电商博文 OKF Wiki 规格`（spec.md + facts.md + tasks.md + review.md）。
+    - ③ 主仓库子模块指针：`8118e7285 chore(submodule): 更新 awesome-okf-xs 指针至豆包直播间知识包`。
+    - 提交后两工作区 `git status --short` 均为空；未 push。
+  - **Description**: ① 子模块内显式文件列表提交；② 主仓库提交 spec；③ 主仓库更新子模块指针。均以 `python .agents\scripts\git-commit-utf8.py -m "<type>(<scope>): <中文描述>" <显式文件列表>` 落地，不 push。
 
 # Task Dependencies
 
