@@ -73,4 +73,8 @@
 - Task 6 的四个机械门禁可并行运行，但计数对账须在 Task 4 索引更新完成后启动。
 
 ## Out of Scope
-- Git 提交（子模块内部提交 + 主仓库 spec + 子模块指针更新）需用户显式授权，不在本 Spec 执行范围。
+- Git 提交属授权后动作，不在本 Spec 的规划范围内。经用户显式请求「原子提交」后已按双层顺序落地：
+  - ① 子模块 `projects/awesome-okf-xs`：`0946b419 docs(bundles): 新增豆掌柜拼豆店副业案例知识包并同步各级索引计数`（18 文件：bundle 10 + 三级父级索引 7 + README.md）
+  - ② 主仓库 spec：`d497b76ae docs(specs): 新增秒悟豆掌柜副业案例博文 OKF Wiki 规格`（spec.md + facts.md + tasks.md + review.md）
+  - ③ 主仓库子模块指针：`77a3fb6fe chore(submodule): 更新 awesome-okf-xs 指针至豆掌柜知识包`
+  - 提交后两个工作区 `git status --short` 均为空；未 push。
