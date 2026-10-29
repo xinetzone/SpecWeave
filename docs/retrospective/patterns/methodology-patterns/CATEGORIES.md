@@ -12,7 +12,7 @@
 | [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 42 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor/跨领域知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、语义漂移防御、知识系统五维根基、B2B AI产品定位、外部产品学习模板 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 53 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 58 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 172 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 173 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 83 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 11 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 49 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化、垂直场景AI三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA转化 |
@@ -289,6 +289,7 @@
 | [config-persistence-full-chain-coverage.md](governance-strategy/config-persistence-full-chain-coverage.md) | 配置持久化全链路覆盖模式 | L1 实验性 |
 | [content-sensitivity-routing.md](governance-strategy/content-sensitivity-routing.md) | 公私域内容分离路由 | L1-draft |
 | [convention-driven-creation.md](governance-strategy/convention-driven-creation.md) | 约定驱动创建模型，先读范例提取模板再填充内容，零结构决策 | L2 |
+| [convergence-period-triple-track.md](governance-strategy/convergence-period-triple-track.md) | 收口期三线闭环：版本定源→约定门禁化→文档诚实化，顺序不可颠倒（案例：xuanspace 十月治理收口） | L1-draft |
 | [credential-copy-minimization.md](governance-strategy/credential-copy-minimization.md) | 凭证副本最小化：目录镜像/备份/同步中的凭证防护法 | L2 |
 | [cross-period-metric-scope-alignment.md](governance-strategy/cross-period-metric-scope-alignment.md) | 跨期指标口径对齐先行 | L1 |
 | [cross-platform-gate-authority.md](governance-strategy/cross-platform-gate-authority.md) | 跨平台门禁权威分工法 | L1 |
@@ -396,7 +397,7 @@
 | [shared-index-count-coupling.md](governance-strategy/shared-index-count-coupling.md) | 共享索引计数耦合与同批判决：新增条目必然改共享索引多处、且多会话并行写同一仓库时，识别耦合面→枚举候选集→显式裁决→提交信息留痕→干净检出验证 | L2 |
 | [short-command-patterns.md](governance-strategy/short-command-patterns.md) | 短指令模式库：登记已验证的 AI 协作快捷指令 | L2 |
 | [simple-task-high-risk.md](governance-strategy/simple-task-high-risk.md) | 简单任务高风险定律（Simple Task High-Risk Law） | L2 |
-| [single-authority-declaration-alignment.md](governance-strategy/single-authority-declaration-alignment.md) | 单一权威源与多载体声明面对齐 | L1 |
+| [single-authority-declaration-alignment.md](governance-strategy/single-authority-declaration-alignment.md) | 单一权威源与多载体声明面对齐（L2：第二独立案例 xuanspace 十月治理收口） | L2 |
 | [skill-migration-position-governance.md](governance-strategy/skill-migration-position-governance.md) | Skill迁移位置治理：统一Skill存放位置的五步标准化流程 | - |
 | [snapshot-parity-migration.md](governance-strategy/snapshot-parity-migration.md) | 快照对拍迁移法 | L1 |
 | [spec-discoverability-guarantee.md](governance-strategy/spec-discoverability-guarantee.md) | 规范可发现性保障模式：三层映射模型（AGENTS.md引用→路由表条目→自动化脚本）确保规范不会"存在但不可发现" | L1 |
