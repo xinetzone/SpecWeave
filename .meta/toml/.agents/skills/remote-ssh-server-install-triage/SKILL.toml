@@ -1,0 +1,5 @@
+id = "skill"
+title = "Remote-SSH 远端 Server 下载卡死诊断与修复"
+category = "skills/remote-ssh-server-install-triage"
+date = "2026-10-29"
+version = "1.0"

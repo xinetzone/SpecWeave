@@ -185,7 +185,7 @@ TeleAgent（星辰超级智能体）平台技能镜像入库（2026-10-21 首次
 |--------|---------|---------|-------------|
 | ui-screenshot-review | TeleAgent 平台 | Web 页面/本地应用 UI 视觉验证工作流：多级降级截图（交互浏览 → headless Chromium → 静态渲染等价）+ 六维度结构化评审（1–5 分）+「打磨→复截图→复评审」迭代闭环 | [SKILL.md](ui-screenshot-review/SKILL.md) |
 
-### 脚本命令门面（16个）
+### 脚本命令门面（17个）
 
 | Skill名称 | 类型 | 对应脚本 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -205,6 +205,7 @@ TeleAgent（星辰超级智能体）平台技能镜像入库（2026-10-21 首次
 | artifact-consistency-audit | 脚本门面 | 复用 check-links.py + check-source-traceability.py（无新建脚本） | 核验一致性、复验、体检、覆盖率核对、引用是否忠实、有无遗漏、修补后复验 | [artifact-consistency-audit/SKILL.md](artifact-consistency-audit/SKILL.md) |
 | docs-as-product-cmd | 脚本门面 | docs-as-product.py | 文档即产品、docs-as-product、Diátaxis四型分区、文档质量门G1-G4/V门、sphinx-build -W、元数据漂移F-021、读者契约、文档指标M1-M5 | [docs-as-product-cmd/SKILL.md](docs-as-product-cmd/SKILL.md) |
 | wsl-vhdx-compact-cmd | 脚本门面 | compact-vhdx-with-baseline.ps1；失败自动降级 compress-wsl-vhdx.ps1（双方案自动降级 + BaselineOnly dry-run 只读基线 + RestorePodman/RestoreOriginalState 原态恢复 + Win32 FreeGiB 数值闭环） | 压缩WSL磁盘、vhdx回收、ext4.vhdx太大、wsl --manage --compact、宿主机FreeGiB核对、VHDX前后基线、podman-machine-default vhdx压缩、openKylin WSL磁盘回收、C/D盘爆红 清WSL、wsl vhdx瘦身、Win32_LogicalDisk 对账 | [wsl-vhdx-compact-cmd/SKILL.md](wsl-vhdx-compact-cmd/SKILL.md) |
+| remote-ssh-server-install-triage | 脚本门面 | scripts/triage.sh（只读六节取证：通道基线/进程链与锁/卡死三判据/落盘目标/CDN 探测/判定建议；六档退出码 0/2/3/4/5/6，不 kill 不删远端） | Remote-SSH、remote server 下载卡住、Downloading and installing remote server、正在配置 SSH 主机、.trae-cn-server、resolve-lock、SOLO 一直 Loading、远端文件打不开 | [remote-ssh-server-install-triage/SKILL.md](remote-ssh-server-install-triage/SKILL.md) |
 
 ## 模板
 
