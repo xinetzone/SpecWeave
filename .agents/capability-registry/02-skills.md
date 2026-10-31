@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（47个）
+### 完整Skill（48个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -58,6 +58,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | windows-deletion-blast-radius-attribution | "到底删了什么"、"核对某目录是不是真没了"、"误删范围有多大"、"回收站能不能恢复"、"rm -rf 打到盘根了" | 1（冻结现场 → 四步取证：根级清单差异 / 权限与报错证据 / 服务写入判别 / 按 SID 查回收站 → 三段结论与可恢复性判定 → 删除前置断言与安全拦截处置；L1） | v1.0.0 | [skills/windows-deletion-blast-radius-attribution/SKILL.md](../skills/windows-deletion-blast-radius-attribution/SKILL.md) |
 | windows-temp-fixture-teardown-safety | "建临时夹具"、"跑受控删除验证"、"清理探针目录"、"清理命令里出现变量拼接路径" | 2（五条硬规则写前预检 → 单进程 tempfile.mkdtemp/断言/shutil.rmtree 标准模板 → 路径交外部工具时的规则 → 坏味道扫描与验收步骤；捆绑 scripts/temp_fixture_guard.py；L1） | v1.0.0 | [skills/windows-temp-fixture-teardown-safety/SKILL.md](../skills/windows-temp-fixture-teardown-safety/SKILL.md) |
 | qibu-story-cmd | "七步故事法"、"靶心人公式"、"故事骨架"、"因果链"、"删步测试"、"意外极性"、"付费墙切在哪"、"后面为什么强行" | 3（新建骨架 / 诊断改稿 / 反向拆解；均含七格判据、三次删步测试与极性判墙；L1） | v1.0.0 | [skills/qibu-story-cmd/SKILL.md](../skills/qibu-story-cmd/SKILL.md) |
+| okf-bundle-to-pdf | "bundle 转 PDF"、"知识包导出 PDF"、"多文档合并成一个 pdf"、"PDF 没有目录/书签"、"md 合集导出 pdf"、"OKF PDF 导出"、"要书签大纲和目录页" | 2（方案A 七步主路径 build_bundle_pdf.py / 方案B 降级路径；含 --dry-run 预览门、--channel auto 浏览器降级、CDP generateDocumentOutline 书签大纲、程序化产物断言；萃取自老子文化生态圈 bundle 实战；L1） | v1.0.0 | [skills/okf-bundle-to-pdf/SKILL.md](../skills/okf-bundle-to-pdf/SKILL.md) |
 
 ### 工作流门面（7个）
 

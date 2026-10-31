@@ -36,7 +36,7 @@ title: ".agents/skills/ 目录索引"
 | sovereign-rollout-cmd | 命令门面 | 主权区治理资产落盘 | 提案、批准落盘、主权区变更、治理资产落盘、先提案后批准 | [sovereign-rollout-cmd/SKILL.md](sovereign-rollout-cmd/SKILL.md) |
 | github-org-bootstrap-cmd | 命令门面 | GitHub 组织命名与初始化 | 创建GitHub组织、建个org、组织名怎么起、demo组织、huncheng-lab | [github-org-bootstrap-cmd/SKILL.md](github-org-bootstrap-cmd/SKILL.md) |
 
-### 完整Skill（47个）
+### 完整Skill（48个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -87,6 +87,7 @@ title: ".agents/skills/ 目录索引"
 | windows-deletion-blast-radius-attribution | 完整Skill（v1.0.0，L1） | Windows 误删影响面定性：根级清单差异、权限与报错证据、服务写入判别、按 SID 查回收站四步交叉印证，输出「已确认删除 / 已确认完好 / 未验证」三段结论与可恢复性判定；含删除前置断言与安全拦截处置 | 到底删了什么、核对某目录是不是真没了、误删范围有多大、回收站能不能恢复、rm -rf 打到盘根了 | [windows-deletion-blast-radius-attribution/SKILL.md](windows-deletion-blast-radius-attribution/SKILL.md) |
 | windows-temp-fixture-teardown-safety | 完整Skill（v1.0.0，L1） | Windows 临时夹具建测清安全约束：单个 Python 进程内 `tempfile.mkdtemp` 建、断言、`shutil.rmtree` 清理，禁止把 cygpath/sed/变量替换得到的路径交给 `rm -rf`，删除前打印并断言解析后的绝对路径前缀与层级深度；含五条硬规则、标准模板与坏味道扫描 | 建临时夹具、跑受控删除验证、清理探针目录、清理命令里出现变量拼接路径 | [windows-temp-fixture-teardown-safety/SKILL.md](windows-temp-fixture-teardown-safety/SKILL.md) |
 | qibu-story-cmd | 完整Skill（v1.0.0，L1） | 七步故事法骨架校验：填七格（目标/阻碍/努力/结果/意外/转弯/结局）→ 三次删步测试 → 判意外极性定付费墙 → 可选插低谷接强度曲线；区分 AI 模板六步（交付流程）与七步（因果结构），并给出与爽点 / 付费漏斗 / 信息差的边界 | 七步故事法、靶心人公式、故事骨架、因果链、删步测试、意外极性、付费墙切在哪、后面为什么强行、六步模板和七步是不是一回事 | [qibu-story-cmd/SKILL.md](qibu-story-cmd/SKILL.md) |
+| okf-bundle-to-pdf | 完整Skill（v1.0.0，L1） | OKF bundle（分层索引 + 正文）→ 单文件、带双层目录 PDF 导出：七步链路（递归枚举剔除嵌套 index → 相对链接降级 → h1/h2 锚点注入 → Pandoc --toc 合并 → Mermaid 运行时渲染 → CDP generateDocumentOutline 打印 → 程序化产物断言）；含 `--dry-run` 预览门、`--channel auto` 浏览器降级（chromium→系统 Edge）、6 条错误码与 7 条 Gotchas；萃取自老子文化生态圈 bundle（23 个 .md / 12 图）188 页 / 264 条大纲实测 | bundle 转 PDF、知识包导出 PDF、多文档合并成一个 pdf、PDF 没有目录/书签、md 合集导出 pdf、OKF PDF 导出、要书签大纲和目录页 | [okf-bundle-to-pdf/SKILL.md](okf-bundle-to-pdf/SKILL.md) |
 
 ### 工作流门面（7个）
 

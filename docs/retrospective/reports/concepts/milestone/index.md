@@ -48,6 +48,7 @@
 | milestone-zhihu-ai-science-workshop-entry-20261023 | 知乎 AI 科学创新工坊第二弹参赛里程碑（方案→作品→过程→文章→AI Works 代部署） | 2026-10-23 | ✅ 已完成 | 七概念R→I→E→A→C | 9天冲刺参赛方案（3条硬约束/双赛道决策卡/选题空白带/评审四维对冲/合规负向清单，全量挂F编号零收益承诺）+ 单文件零依赖作品v1/v2（P-V/P-T曲线、粒子碰撞、Maxwell近似）+ 过程留痕五件套 + 介绍文章初稿750字 + AI Works 一键代部署探索；26条客观事实、3条四元组洞察（过程可举证性即评审维度/单文件形态的结构性优势/先发布再迭代）、2个L1模式（参赛留痕五件套/作品打磨闭环）、5项原子行动项，G1-G4质量门全部通过 | [zhihu-ai-science-workshop-entry-retrospective-20261023.md](zhihu-ai-science-workshop-entry-retrospective-20261023.md) |
 | milestone-zhihu-ai-science-workshop-fullchain-20261023 | 知乎 AI 科学创新工坊第二弹全链路收官对账（双作品→双文章→双 Skill→未入库清单） | 2026-10-23 | 🔶 平台达标/仓库待入库 | 七概念R→I→E→V→A→C（standard） | 25条客观事实（14:08基线锁定，并发迁移单列成条）、3条四元组洞察（闭环判定权落在勾选框而非工作区状态/门自声明与门检对象无校验回路/产出物存在≠被纳管）、2个L1模式（收官状态对账+门声明机械校验，各4条反模式+跨域迁移示例）、V四视角8条意见采纳5条（scope限定判据/跨源同形编号拆分/清单字段模板/入库三分类/赛事项优先）、6项原子行动项（A-2/A-3待批准提交），G1-G4+V门全部通过 | [zhihu-ai-science-workshop-fullchain-retrospective-20261023.md](zhihu-ai-science-workshop-fullchain-retrospective-20261023.md) |
 | xuanspace-license-unification-dual-repo-20261024 | xuanspace 许可口径统一与双仓交付（A1 落地 + 合并并发防护） | 2026-10-24 | ✅ 已完成 | 七概念R→I→E→V→A→C | 31条客观事实、4条四元组洞察（分布式真值/语义与形态分离/授权保鲜期/门禁存在≠生效）、2个L1模式（许可口径四面清算/合并前三分叉取证）、V四视角6条意见采纳4条、4项原子行动项，G1-G4+V门全部通过 | [xuanspace-license-unification-dual-repo-milestone-20261024.md](xuanspace-license-unification-dual-repo-milestone-20261024.md) |
+| okf-bundle-to-pdf-milestone-retrospective-20261031 | OKF bundle → 带目录 PDF 导出流水线里程碑（双层目录 + 程序化验收） | 2026-10-31 | ✅ 已完成 | 七概念R→I→E→V→A→C（场景1+场景4，standard） | 36条客观事实（PDF 3357333字节/188页/264条大纲/335个Annots 实测）、3条四元组洞察（静默吞参/运行时通道可替换/目录双层各有前置）、1个L1模式（双层目录导出法 7步+5反模式+2类跨域迁移）、V四视角8条意见采纳6条、5项原子行动项（A-1 新建 Skill okf-bundle-to-pdf、A-2 四处登记），G1-G4+V门全部通过 | [okf-bundle-to-pdf-milestone-retrospective-20261031.md](okf-bundle-to-pdf-milestone-retrospective-20261031.md) |
 
 ## 知识沉淀里程碑模式库
 
@@ -83,6 +84,7 @@ loop-engineering-milestone-acceptance-20260801
 loop-engineering-patterns-20260801
 octo-platform-wiki-retrospective-20260704
 okf-bundles-production-iteration-analysis-20260903
+okf-bundle-to-pdf-milestone-retrospective-20261031
 zhihu-okf-bundles-ai-knowledge-factory-20260903
 zhihu-okf-bundles-insights-report-20260903
 zhihu-okf-bundles-analysis-lens-20260903
