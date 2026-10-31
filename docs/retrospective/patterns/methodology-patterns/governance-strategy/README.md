@@ -86,6 +86,7 @@ date: "2026-07-09"
 | [四维留余框架：不确定环境下长期存续的冗余管理策略](./four-dimension-margin-framework.md) | 四维留余框架：不确定环境下长期存续的冗余管理策略 | L2 | `风险管理` `冗余` `决策` |
 | [外部依赖四不原则](./four-negatives-external-dependency.md) | 外部依赖四不原则 | L3 | `governance` `external-dependency` `vendor` |
 | [第一性原理多维证伪验收法](./fp-multi-dimensional-falsification.md) | 第一性原理多维证伪验收法 | L1 |  |
+| [基线型门禁的写盘不变量：生成器不得洗白漂移](./gate-baseline-write-invariants.md) | 基线型门禁的写盘不变量：生成器不得洗白漂移 | L1 |  |
 | [治理×引擎双件闭环](./governance-engine-dual-loop.md) | 治理×引擎双件闭环 | L1.5 | `治理×引擎` `双件闭环` `自进化` |
 | [治理基建四层递进模型](./governance-four-layer-progressive.md) | 治理基建四层递进模型 | L2 |  |
 | [治理演化三阶段：修复→预防→闭环](./governance-three-stage-evolution.md) | 治理演化三阶段：修复→预防→闭环 | L2 | `meta-methodology` `governance` `quality` |

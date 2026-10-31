@@ -12,7 +12,7 @@ documentation_level: "standard"
 version: "1.0.0"
 created_date: "2026-10-29"
 last_updated: "2026-10-29"
-source: "docs/retrospective/reports/2026-10-29-xuanspace-october-governance-retro.md"
+source: "../../../reports/2026-10-29-xuanspace-october-governance-retro.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/convergence-period-triple-track.toml"
 tags:
   - release-governance
@@ -198,7 +198,7 @@ flowchart LR
 
 ## 案例证据（xuanspace）
 
-来源复盘：[2026-10-29-xuanspace-october-governance-retro.md](../../../../reports/2026-10-29-xuanspace-october-governance-retro.md)（F-012~F-031）。
+来源复盘：[2026-10-29-xuanspace-october-governance-retro.md](../../../reports/2026-10-29-xuanspace-october-governance-retro.md)（F-012~F-031）。
 
 | 线 | 动作 | 事实 |
 |---|---|---|
@@ -209,9 +209,17 @@ flowchart LR
 **顺序验证**：时间线显示 线3 的集中收口（10-28）严格晚于线1（10-23~27）与线2（10-24~28）落定，
 顺序约束在本案例中成立。文档治理提交占比（26/73）最高，证实「文档清理是收口的结果」。
 
-**未闭合面**：README 项目索引（13 行声明）与目录实态仍靠人工核对（F-033~F-034），
-「子模块指针 ↔ 文档索引」对账尚未机器化——这是本模式后续演进输入
-（对应 xuanspace 行动项 A-04）。
+**已闭合（2026-10-29，附保留条件）**：README 项目索引（13 行声明）与目录实态的对账
+在 xuanspace 已机器化（F-033~F-034 对应的行动项 A-04）：`check_declaration_consistency.py`
+新增子模块指针对账 G1-G3（状态可解析 / 指针 = 快照 / 文档版本引用对账），提交 `2714647`；
+门禁首次运行即检出 `vendor/tvm-ffi` 指针漂移（快照 `e9fdc58` vs 索引 `6628c46`），
+按 CONTRIBUTING §3.6 推进指针至 `e9fdc58`（提交 `991f635`）。
+
+保留条件：该门禁的**生成模式**仍缺写盘不变量——先验证后落盘、基线不得缩表、
+状态四档（含假性对齐）、变更可追溯四条尚未补齐，
+见 [gate-baseline-write-invariants](gate-baseline-write-invariants.md) 与
+[A-04 知识沉淀](../../../reports/2026-10-29-submodule-pointer-gate-sedimentation.md)。
+即：线2 的「约定门禁化」在**判定侧**已闭合，在**基线写入侧**仍是本模式的演进输入。
 
 ## 失效条件与演进
 
