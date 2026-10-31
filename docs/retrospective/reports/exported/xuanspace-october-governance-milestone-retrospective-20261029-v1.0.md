@@ -284,7 +284,7 @@ flowchart LR
 | A-02 | 导出归档（exported 副本 + manifest + index 更新） | 本次完成 |
 | A-03 | 模式库更新（`single-authority-declaration-alignment` 升级 L2 + 新建 `convergence-period-triple-track` + CATEGORIES/README 索引同步） | 本次完成 |
 | A-04 | 子模块指针对账门禁已实施：[submodule-alignment-gate spec](../../../../projects/xuanspace/.trae/specs/submodule-alignment-gate/spec.md)（TRAE-spec-mode 三件套 + G1-G3 断言 + 快照 `submodule_status` 字段 + `--generate` 漂移保护，xuanspace `2714647`）；首跑即捕获 `vendor/tvm-ffi` 真实漂移（checkout `e9fdc58` vs 索引 `6628c46`），经确认按 CONTRIBUTING §3.6 三步正式推进指针至 `e9fdc58`（上游快进 30 提交，xuanspace `991f635`）；主仓 gitlink 前移 `fce857675` | 已实施 |
-| A-05 | 下次发布（0.2.0）前执行「收口期三线」预检清单，作为 `convergence-period-triple-track` 首次复用验证（验证后 L1→L2） | 待触发 |
+| A-05 | 下次发布（0.2.0）前执行「收口期三线」预检清单，作为 `convergence-period-triple-track` 首次复用验证（验证后 L1→L2） | 已执行：[0.2.0 收口期三线预检报告](../2026-10-29-xuanspace-020-convergence-precheck.md)（HEAD `991f635`，16 项：10 通过 / 3 必修 / 3 登记；两处人为注入漂移均被门禁拦截）。模式复用形式不变成立，但本次为**同谱系第二次应用**，与原「非同谱系案例」L2 判据冲突 → L2 裁决待定（B-05），成熟度字段维持 L1；3 项必修落在子项目侧，待授权（B-01~B-04） |
 
 ---
 
