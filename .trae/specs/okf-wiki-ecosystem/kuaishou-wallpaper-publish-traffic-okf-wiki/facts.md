@@ -3,7 +3,7 @@
 > 本表登记「快手发布壁纸作品引流教程」信源中可直接回溯的事实，**不含执行者推断**。
 > 口径类型枚举：`page_fact`（源页面 HTML 直接实测）/ `meta`（本包自身元事实，如采集通道、核验结论）/ `video_claim`（源视频音轨 ASR 转写中讲解者的陈述，一律视为「讲师口径」而非官方规则）/ `official_doc`（官方文档）/ `third_party`（第三方来源）。
 > 本包**无 `reporter_test`**（无记者一手实测环节）。
-> 核验结论、勘误与缺口见 bundle 内 [references/verification.md](../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/kuaishou-wallpaper-publish-traffic/references/verification.md)。
+> 核验结论、勘误与缺口见 bundle 内 [references/verification.md](../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/kuaishou-wallpaper-publish-traffic/references/verification.md)。
 
 - **一手信源**：微信公众号图文 `https://mp.weixin.qq.com/s/Cvyuyo6uNV0zhfl2_ybEAw?scene=1`（标题《快手发布-视频教程》，公众号「特级班班资料小屋」）
 - **采集时间**：2026-11-01
