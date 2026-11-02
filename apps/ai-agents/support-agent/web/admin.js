@@ -60,12 +60,12 @@ function renderSessions(rows) {
   const tbody = document.getElementById('sessions');
   document.getElementById('sessions-empty').style.display = rows.length ? 'none' : 'block';
   tbody.innerHTML = rows.map(s => `
-    <tr class="link" data-id="${s.id}">
-      <td class="mono">${s.id}</td>
-      <td>${INTENT_LABELS[s.last_intent] || '—'}</td>
-      <td>${s.status}</td>
+    <tr class="link" data-id="${escapeHtml(s.id)}">
+      <td class="mono">${escapeHtml(s.id)}</td>
+      <td>${escapeHtml(INTENT_LABELS[s.last_intent] || '—')}</td>
+      <td>${escapeHtml(s.status)}</td>
       <td>${s.transferred ? '<span class="tag human">已转人工</span>' : '—'}</td>
-      <td class="hint">${(s.updated_at || '').replace('T', ' ').slice(0, 19)}</td>
+      <td class="hint">${escapeHtml((s.updated_at || '').replace('T', ' ').slice(0, 19))}</td>
     </tr>`).join('');
   tbody.querySelectorAll('tr.link').forEach(tr => {
     tr.addEventListener('click', () => openDetail(tr.dataset.id));
