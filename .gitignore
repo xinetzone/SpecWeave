@@ -190,3 +190,6 @@ deepseek-v41-flash-video-*/
 
 # --- Security / secrets (never commit) ---
 id_ed25519*
+.venv-support-agent/
+.tmp-shot/
+.venv313/
