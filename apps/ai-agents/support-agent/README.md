@@ -10,7 +10,8 @@ source: apps/ai-agents/support-agent
 - 语言/运行时：**Python 3.14**（`requires-python = ">=3.14"`），运行时**零第三方依赖**（仅标准库）
 - 存储：**Supabase（Postgres）云端**，未配置时自动降级为内存存储
 - 大模型：**OpenAI 兼容协议**（DeepSeek / 通义 / 混元 / OpenAI / Moonshot 任意一家），支持服务端配置或前端 BYOK
-- 部署：Vercel Serverless（`api/index.py` 导出 ASGI 应用）
+- 部署：Vercel Serverless（`api/index.py` 导出 ASGI 应用）/ WorkBuddy 应用平台（`scripts/deploy-start.sh`）
+- 前端：零构建静态页，视觉语言取自 `projects/daoapps.github.io` 的「新宣纸」设计体系（朱砂 / 黛色 / 纸白）
 
 ## 能力矩阵
 
@@ -44,7 +45,8 @@ support-agent/
 │   ├── asgi.py               # 极简 ASGI 应用与路由
 │   └── cli.py                # serve / doctor / seed-faq
 ├── web/                      # 零构建前端（客服端 + 管理后台）
-└── tests/                    # pytest 用例（39 项）
+├── scripts/deploy-start.sh   # 部署启动脚本（自解析可用 Python 解释器）
+└── tests/                    # pytest 用例（86 项）
 ```
 
 ## 快速开始
@@ -87,6 +89,47 @@ vercel deploy --prod
 | `LLM_MODEL` | 可选 | 默认 `deepseek-chat` |
 | `ADMIN_TOKEN` | **必填** | 未配置时 `/api/admin/*` 返回 503 |
 
+## 部署（WorkBuddy 应用平台）
+
+```bash
+# 平台注入 PORT，脚本自行解析可用解释器并绑定 0.0.0.0
+sh scripts/deploy-start.sh
+```
+
+**为什么需要 `deploy-start.sh`**：部署沙箱用 pyenv 管理 Python，预置版本不含 3.14，
+而项目根的 `.python-version` 钉死了 3.14 —— 直接执行 `python3` 会命中
+`pyenv: version '3.14' is not installed` 而启动失败。脚本按以下顺序解析解释器：
+
+1. uv 托管的 3.14（部署期由 `installCmd` 执行 `uv python install 3.14` 预装）
+2. 平台自带 venv（`$VIRTUAL_ENV` / `/workspace/.venv`）
+3. 系统预置解释器（`/usr/bin`、`/usr/local/bin`，显式枚举以绕开 pyenv shim）
+4. pyenv / uv 版本目录中任意一个 ≥3.10 的解释器
+5. `PYENV_VERSION=system` —— 让 pyenv 忽略 `.python-version` 兜底
+
+应用**零第三方依赖、纯标准库**，已在 Python 3.13 与 3.14 双版本跑通全部 86 项测试，
+因此降级到任意 ≥3.10 的解释器都是安全的。
+
+## 前端设计（5 分钟改配色）
+
+视觉语言移植自 `projects/daoapps.github.io` 的「新宣纸」体系：纸白底、朱砂主行动色、黛色引文。
+所有颜色集中在 **`web/styles.css` 的 `:root` 变量表**，改配色只改这一处：
+
+| 变量 | 值 | 用途 |
+|---|---|---|
+| `--paper` / `--paper-deep` | `#f5f1ea` / `#ede6d9` | 页面底色 / 分区底色 |
+| `--card` | `#fcfaf5` | 卡片面 |
+| `--ink` / `--ink-2` / `--ink-3` | `#3a352e` / `#6e655a` / `#9c9386` | 正文 / 次要 / 弱化文字 |
+| `--line` / `--line-strong` | `#e2d9c8` / `#cfc4ae` | 细线 / 强分隔线 |
+| `--cinnabar` / `--cinnabar-deep` | `#a8543c` / `#8f442f` | 朱砂：主行动色、印章、强调 |
+| `--dai` | `#46534f` | 黛色：引文与次要信息 |
+| `--ok` / `--warn` / `--danger` | `#5e7659` / `#8a6d2f` / `#a33127` | 语义状态色（不与朱砂混用） |
+
+改配色后跑 `pytest tests/test_web_contract.py` 即可校验契约（`:root` 之外不得出现硬编码色值）。
+
+**移植边界**：移植「色与质」，不移植「排版密度」。daoapps 是阅读型内容站（大字、疏排版），
+客服是高频工具界面，故正文保持 14px/1.7，标题不放大到内容站尺度——`test_web_contract.py`
+中的 `test_density_is_not_content_site_scale` 会守住这条边界。
+
 ## HTTP 接口
 
 | 方法 | 路径 | 说明 |
@@ -110,3 +153,11 @@ vercel deploy --prod
 3. **成本与延迟优先**：意图规则命中即返回，仅低置信时才调用大模型分类。
 4. **永不 500**：云端与大模型任一不可用时降级（知识库直答 → 转人工），响应中显式标记 `degraded`。
 5. **最小依赖**：零第三方依赖，避免 Serverless 冷启动与构建期不确定性。
+
+## Gotcha 记录
+
+| # | 现象 | 根因 | 预防 |
+|---|---|---|---|
+| 1 | 后台会话列表可被恶意 `session_id` 触发存储型 XSS | 客户端可自带 `session_id`（Cookie / query / body），原先原样落库，再经 `innerHTML` 渲染 | 服务端按 `^s_[0-9a-f]{16}$` 白名单校验，不合规一律重新签发；前端渲染再转义一次（纵深防御）。**注意**：不要改成严格格式校验后不回退——历史会话 ID 形态可能不同，校验失败必须重新签发而非报错 |
+| 2 | 「人工智能客服能做到什么」被判为转人工，转人工率虚高 | 意图规则按子串匹配，「人工智能」命中了「人工」关键词 | 转人工关键词改为带上下文的前缀匹配，并补 `test_intent.py` 回归用例 |
+| 3 | 部署到应用平台时启动失败（`pyenv: version '3.14' is not installed`） | 沙箱 pyenv 无 3.14，而 `.python-version` 钉死版本 | 用 `scripts/deploy-start.sh` 自解析解释器并按序降级；不要用「换 language / 换 startCmd 硬凑」绕过 |
