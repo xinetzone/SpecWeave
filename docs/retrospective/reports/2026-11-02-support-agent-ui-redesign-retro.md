@@ -142,9 +142,9 @@ pyenv: version `3.14' is not installed (set by /workspace/.python-version)
 | 门 | 检查项 | 结果 | 证据 |
 |---|---|:---:|---|
 | G1 | 事实无因果词、数字可追溯 | 通过 | 全部数字经 `wc` / `grep` / `pytest --collect-only` 实测 |
-| G2 | 洞察四元组（现象+根因+影响+建议）≥3 条 | 通过 | 第三节 6 条 |
-| G3 | 模式可迁移（触发场景+核心步骤+反模式+迁移验证） | 通过 | 第四节 3 条模式 |
-| G4 | 交付原子化（单一职责、可独立验证） | 通过 | 6 个原子提交 |
+| G2 | 洞察四元组（现象+根因+影响+建议）≥3 条 | 通过 | 第三节 7 条（4 条关键发现 + 3 条规律认知） |
+| G3 | 模式可迁移（触发场景+核心步骤+反模式+迁移验证） | 通过 | 第四节 4 条模式 |
+| G4 | 交付原子化（单一职责、可独立验证） | 通过 | 8 个原子提交 |
 | V | 4 视角、≥5 条具体意见、≥2 条被采纳 | 通过 | 51 攻击点 / 45 可验证缺陷 / **采纳 9 条** |
 
 **测试与覆盖率**
@@ -341,7 +341,7 @@ pyenv: version `3.14' is not installed (set by /workspace/.python-version)
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S6 | event=GATE_PASSED | session=sc-20261102-support-agent-ui | msg=G1/G2/G3/G4 全部通过（事实可追溯 / 洞察四元组 / 模式可迁移 / 交付原子化）
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S7 | event=CONCEPT_COMPLETED | session=sc-20261102-support-agent-ui | msg=I 完成：视觉层重构 + 2 处 P0 修复 + 测试补齐（86 用例 / 85% 覆盖）
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S8 | event=GATE_FAILED | session=sc-20261102-support-agent-ui | msg=C 阶段首次部署失败：pyenv 缺 3.14；按平台指引修项目而非换姿势
-[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S9 | event=CONCEPT_COMPLETED | session=sc-20261102-support-agent-ui | msg=C 完成：deploy-start.sh 五级降级链，6 个原子提交，发布上线并逐字节比对线上产物
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S9 | event=CONCEPT_COMPLETED | session=sc-20261102-support-agent-ui | msg=C 完成：deploy-start.sh 五级降级链，8 个原子提交，发布上线并逐字节比对线上产物
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S10 | event=CHAIN_COMPLETED | session=sc-20261102-support-agent-ui | msg=链路闭环完成，产出复盘报告与 4 条可迁移模式
 ```
 
