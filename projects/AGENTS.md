@@ -31,6 +31,7 @@ projects/AGENTS.md 与 projects/.agents/ 由 SpecWeave 主权区维护，直接�
 | xuanspace | [projects/xuanspace/AGENTS.md](xuanspace/AGENTS.md) | 玄境（Xuanspace）Python 3.14.6+ monorepo 项目管理工具 |
 | awesome-okf-xs | [projects/awesome-okf-xs/AGENTS.md](awesome-okf-xs/AGENTS.md) | 玄境项目 OKF（开源知识格式）文档库 |
 | daoapps.github.io | [projects/daoapps.github.io/AGENTS.md](daoapps.github.io/AGENTS.md) | 道用（daoApps）组织站点——全站 Sphinx 源码，含组织主页与结伴子站，由 GitHub Actions 构建发布到 GitHub Pages |
+| zhenxuqiu-site | [projects/zhenxuqiu-site/AGENTS.md](zhenxuqiu-site/AGENTS.md) | 需求澄清方法论工作台（公开站）——Python 3.14 + Starlette 动态站 + 同源静态产物，含四张表互动练习；**付费课程内容只走摘要改写路线**，去品牌化 |
 | monetize | [monetize/AGENTS.md](monetize/AGENTS.md) | 变现执行工作区容器（主仓库直接跟踪的普通目录，非 git 子模块）；含主题工作台 zhihu-monetization（知乎变现） |
 
 ### 嵌套优先级
@@ -41,6 +42,7 @@ SpecWeave 根 AGENTS.md
        ├─ projects/xuanspace/AGENTS.md（xuanspace 子项目入口）
        ├─ projects/awesome-okf-xs/AGENTS.md（awesome-okf-xs 子项目入口）
        ├─ projects/daoapps.github.io/AGENTS.md（daoapps.github.io 子项目入口）
+       ├─ projects/zhenxuqiu-site/AGENTS.md（zhenxuqiu-site 子项目入口）
        └─ projects/monetize/AGENTS.md（monetize 变现执行工作区容器入口 · 主仓库直接跟踪的普通目录，非子模块；下辖主题工作台 zhihu-monetization）
 ```
 
@@ -130,6 +132,19 @@ projects 区域内各子项目可被 SpecWeave 跨边界调用的资产清单。
 | 契约测试 | [daoapps.github.io/tests/test_site_contract.py](daoapps.github.io/tests/test_site_contract.py) | 22 项站点契约（结构、配色、引文版本、内容纪律、页脚分层） |
 | 发布流水线 | [daoapps.github.io/.github/workflows/pages.yml](daoapps.github.io/.github/workflows/pages.yml) | 质量门 → Sphinx 构建 → GitHub Pages 部署 |
 
+### zhenxuqiu-site 子项目
+
+| 资产 | 路径 | 说明 |
+|------|------|------|
+| 子项目规范入口 | [zhenxuqiu-site/AGENTS.md](zhenxuqiu-site/AGENTS.md) | 启动协议、任务路由表、内容纪律（四条硬约束）、契约纪律、练习器纪律、发布纪律与下线时限 |
+| 开发者文档 | [zhenxuqiu-site/README.md](zhenxuqiu-site/README.md) | 本地开发、构建、预览、发布流程；内容怎么写（frontmatter 十项 + 四档来源表） |
+| 内容契约 | [zhenxuqiu-site/src/zhenxuqiu_site/content.py](zhenxuqiu-site/src/zhenxuqiu_site/content.py) | 八项 frontmatter 必填、四档 `derivation`、三档 `claim`、术语覆盖的加载期硬约束 |
+| 双模渲染器 | [zhenxuqiu-site/src/zhenxuqiu_site/render.py](zhenxuqiu-site/src/zhenxuqiu_site/render.py) | 动态站与静态站共用的唯一渲染实现（漂移只可能在部署后显形，故结构性禁止两套逻辑） |
+| 练习器定义 | [zhenxuqiu-site/src/zhenxuqiu_site/static/js/exercises.defs.js](zhenxuqiu-site/src/zhenxuqiu_site/static/js/exercises.defs.js) | 四张表（three-questions / strengths / calibration / action）的字段与跨表派生规则 |
+| 公开仓结构闸门 | [zhenxuqiu-site/scripts/leak_guard.py](zhenxuqiu-site/scripts/leak_guard.py) | 无表单 / 无外部脚本 / 无自动加载的站外资源 / 无品牌标识；**不含任何敏感词表**（那是确认预言机） |
+| 发布入口 | [zhenxuqiu-site/scripts/release.py](zhenxuqiu-site/scripts/release.py) | 单一入口，闸门顺序写死（G1→G2→G3→构建→人工审→promote）；含急停与撤回 |
+| 契约测试 | [zhenxuqiu-site/tests/test_content_contract.py](zhenxuqiu-site/tests/test_content_contract.py) | 内容契约（页唯一性 / 派生措辞与档位一致 / 表格可达且按序串联）；另有双模逐字节一致性、闸门有效性、JS 运行时（node 内建 runner + 自研 DOM 桩） |
+
 ### monetize 子项目
 
 | 资产 | 路径 | 说明 |
@@ -157,6 +172,8 @@ projects 区域内各子项目可被 SpecWeave 跨边界调用的资产清单。
 | projects/daoapps.github.io/ | daoapps.github.io 子项目 | ❌ 否 | 通过 gitlink 追踪，修改需走子项目开发流程 |
 | projects/daoapps.github.io/AGENTS.md | daoapps.github.io 子项目 | ❌ 否 | 子项目自治入口 |
 | projects/daoapps.github.io/doc/ | daoapps.github.io 子项目 | ❌ 否 | 站点 Sphinx 源码（组织主页 + 结伴子站） |
+| projects/zhenxuqiu-site/ | zhenxuqiu-site 子项目 | ❌ 否 | **独立仓库**（自有 git 历史，尚无远端，父仓不跟踪其内容）；修改需走子项目开发流程 |
+| projects/zhenxuqiu-site/AGENTS.md | zhenxuqiu-site 子项目 | ❌ 否 | 子项目自治入口 |
 | projects/monetize/ | SpecWeave 主权区 | ✅ 是 | 变现执行工作区容器（主仓库直接跟踪的普通目录，非 git 子模块） |
 | projects/monetize/zhihu-monetization/ | SpecWeave 主权区 | ✅ 是 | 知乎变现执行工作台（AGENTS.md 智能体入口 + 入口 README + 执行台账 + 记录表） |
 | projects/monetize/zhihu-monetization/local/ | 用户本地数据（隔离区） | —（禁入库） | 真实执行数据（截图 / 到账记录等）仅本地存放；已 gitignore，仅 `local/README.md` 入库 |

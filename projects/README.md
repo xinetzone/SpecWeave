@@ -33,4 +33,5 @@ git submodule update --init --recursive
 | [xuanspace](xuanspace/) | Xuanspace（玄境）Python monorepo 项目管理工具 | https://github.com/xinetzone/xuanspace |
 | [awesome-okf-xs](awesome-okf-xs/) | 玄境项目 OKF（开源知识格式）文档库 | https://github.com/awesome-flexloop/awesome-okf |
 | [daoapps.github.io](daoapps.github.io/) | 道用（daoApps）组织站点——全站 Sphinx 源码（组织主页 + 结伴子站），GitHub Actions 构建发布 | https://github.com/daoApps/daoApps.github.io |
+| [zhenxuqiu-site](zhenxuqiu-site/) | 需求澄清方法论工作台（公开站）——Python 3.14 + Starlette 动态站 + 同源静态产物，含四张表互动练习；内容为独立整理的摘要改写，**已去品牌化**；入口见 [zhenxuqiu-site/AGENTS.md](zhenxuqiu-site/AGENTS.md) | —（独立仓库，尚无远端） |
 | [monetize](monetize/) | 变现执行工作区容器（主仓库直接跟踪的普通目录，非 git 子模块）；含主题工作台 [zhihu-monetization](monetize/zhihu-monetization/)（知乎变现）；入口见 [monetize/AGENTS.md](monetize/AGENTS.md) | —（主仓库直接跟踪，无独立仓库） |
