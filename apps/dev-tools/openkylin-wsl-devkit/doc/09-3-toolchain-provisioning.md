@@ -72,9 +72,11 @@ part_of: "09-npu-toolchain-windows-host.md"
 |---|---|
 | 镜像 | `localhost/openkylin-npu-toolchain:3.0`，ID `e7244a0cc7a3`，14 GB，2026-11-02 02:04 构建 |
 | Python | 3.14.10（conda `main`，通道 USTC conda-forge） |
-| LLVM | `/opt/build/llvm20`=20.0.0、`/opt/build/llvm21`=21.0.0，**无 22** |
+| LLVM | `/opt/build/llvm22`=**22.1.8**（conda-forge `llvmdev`/`clang`；G3 处置后前缀内仅余 22 系）、`/opt/build/llvm20`=20.0.0、`/opt/build/llvm21`=21.0.0 |
 | 构建产物 | `/opt/build/npu_tvm/libtvm.so` 存在；`/opt/build/npuusertools` 存在 |
 | Python 包 | `tvm`、`xmnn` **均未安装** |
+
+> **注（G3 已处置，2026-11-03）**：`/opt/build/llvm22` 前缀内曾混装 conda-forge 23 系包——`libllvm23 23.1.4`、`lld 23.1.4`、`llvm-openmp 23.1.4`，其中 `bin/ld.lld` 实为 **LLD 23.1.4**，其 `NEEDED` 条目引用 `libLLVM.so.23.1`。处置采用**隔离式移除**（未用 `conda remove`）：整批 `mv` 至 `/opt/build/.llvm23-quarantine-20261103/`（268 MB / 48 文件），并同步迁出 `conda-meta/` 中对应 3 个包描述，`conda-meta/*.json` 由 28 条降为 **25 条**。`libLLVM.so -> libLLVM.so.22.1`、`libLLVM-22.so`、`llvm-config`、`include/`、`lib/cmake/llvm` 均未被触及；前缀内现已无 23 系构件（残留 `libgomp.so*` 属 `libgomp 16.2.0`，非 LLVM 组件）。回归证据见[验收与实测 §9.2 D7 与 §9.4](09-5-acceptance-and-evidence.md)。副作用：`clang-22 -fopenmp` 所需的 `libomp.so` 随 `llvm-openmp` 一并移出，22 系 `lld` 本未安装。隔离副本（268 MB / 48 文件）已于同日删除，XFS 可用字节 315,729,219,584 → 316,010,168,320（+280,948,736 B，约 268 MiB）；`mv` 回滚路径随之失效，如需恢复须自 conda 通道重新安装。
 
 ## 相关文档
 

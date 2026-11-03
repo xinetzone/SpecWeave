@@ -61,6 +61,8 @@ part_of: "09-npu-toolchain-windows-host.md"
 | Q5 | XFS 99% 已用是否需要在构建前清理（`podman system prune` 可回收约 14 GB 悬空镜像） | 中（影响 R1） | 建议先只读 `podman images` 复核悬空镜像，再经用户批准执行 | **已决（用户放行并已执行）**：执行 `podman image prune -f`，**回收 0 GB**；两个 dangling 条目（13.7 GB / 1.19 GB）为 tagged 镜像的祖先层，prune 无权移除；严格未使用 `-a` |
 | Q6 | 是否保留 v1.x 的 `scripts-host/preflight-wsl.sh` | 低 | 保留文件、在规格标注废弃，不删除 | 已定为保留（本轮未动该文件） |
 
+> **注（Q1 历史表述订正，2026-11-03）**：上表 Q1 行的「含 clang-22 / lld 23.1.4」为实施当日的原始记录，为保留决策链的可追溯性，原文不动，仅在此追加订正。经复核，该表述中的 `lld` 自始即 **23.1.4**（22 系 `lld` 从未安装），属偏差 G3 的混装构件；该批 23 系包（`libllvm23`、`lld`、`llvm-openmp` 23.1.4）已隔离移出 `/opt/build/llvm22`，隔离副本（268 MB / 48 文件）随后删除。XFS 可用字节 315,729,219,584 → **316,010,168,320**（+280,948,736 B，约 268 MiB），prefix 内现仅余 22 系。处置证据见[验收与实测 D7](09-5-acceptance-and-evidence.md)。
+
 ## 附录 A：与服务器侧 `all-in-one.sh` 的差异点
 
 | 差异点 | 服务器侧（既有） | v2 远程后端 |
@@ -86,6 +88,7 @@ part_of: "09-npu-toolchain-windows-host.md"
 | **v2.1.0-draft（补记）** | **2026-11-03** | **缺陷修复与重编**：定位并修复 `--connection` 主机名丢失缺陷（`~/.ssh/config` 的 `Host 10.16.11.3` 改为 `Match host 10.16.11.3`，根因与隔离实验见 09-1 §4.1）；以 `-DUSE_LLVM=/opt/build/llvm22/bin/llvm-config` 重编 `libtvm.so`（854 目标 rc=0，`ldd` 链接 `libLLVM.so.22.1`，旧产物备份 `libtvm.so.bak-llvm21`）；A2/A4 证据与 D1/D2 处置同步更新 |
 | **v2.1.0-draft（补记 2）** | **2026-11-03** | **临时产物清理与 Q3/Q4 定案**：清理前复验 `import tvm` rc=0、`ldd` 命中 `libLLVM.so.22.1`；断言后删除 `.temp/npu-toolchain-run`（6,904 文件 / 3,001,480,000 B）与 `.temp/npu-toolchain-spec-v2`（2 文件 / 97,370 B），以及 Windows `~/.ssh/config.bak-20261103-split`，XFS 可用 **292 GB → 295 GB**；`libtvm.so.bak-llvm21`（79 MB）当时主动保留为 LLVM 21 回滚点。Q3 定为保持不切默认连接、Q4 选定 8888→8888（备用 8894） |
 | **v2.1.0-draft（补记 3）** | **2026-11-03** | **旧库备份与拆分中间件清理**：删前校验 `import tvm`（0.19.0 + `llvm`/`ccompiler` 两个 Target）、`import xmnn`（1.0.1.dev120）、`podman --remote --connection remote-ai ps -a` 与 `info` 均正常，并确认 `libtvm.so.bak-llvm21` 未被 `profile.d`/脚本/rpath 引用；随后删除该备份（79,231,568 B，sha256 `9dfa9a66…`）与 `split-doc09.ps1`（19,711 B）。删后回归：`import tvm`/`import xmnn` rc=0、`remote-ai info` → 5.6.2/rootless/overlay、`ssh BatchMode whoami` → `ai`(1006)。XFS 可用 316,398,936,064 → 316,478,189,568 B（+75.6 MiB）；D: 保持 34.00 GB。**保留** `.temp/doc09-atomize/original-backup.md`（拆分前原文整档副本；2026-11-03 已迁入 `.agents/archive/doc09-atomize-20261103/` 并删源）与 `.temp/npu-toolchain`（被 `run.sh`/`verify.sh`/`all-in-one.sh` 硬编码引用） |
+| **v2.1.0-draft（补记 4）** | **2026-11-03** | **G3 处置收口**：§8 Q1 行保留实施当日原文（含 clang-22 / lld 23.1.4）以维持决策链可追溯，其后追加注记——`lld` 自始即 23.1.4、22 系 `lld` 从未安装，该批 23 系包（`libllvm23`/`lld`/`llvm-openmp` 23.1.4）已隔离移出，隔离副本（268 MB / 48 文件）已删除，XFS 可用 315,729,219,584 → 316,010,168,320 B。同步订正 09-3 容器现状表与注、09-5 A3 行/偏差 D7/§9.3/§9.4 第 5 条 |
 
 ## 相关文档
 

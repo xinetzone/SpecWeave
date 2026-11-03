@@ -38,7 +38,7 @@ part_of: "09-npu-toolchain-windows-host.md"
 |---|------|---------------------------|------|
 | A1 | **PASS** | `ssh -o BatchMode=yes ai@10.16.11.3 whoami` → `ai`，exit 0 | 免密成立，无口令交互 |
 | A2 | **PASS** | `podman --remote --connection remote-ai info` → `5.6.2`、`rootless=true`、`driver=overlay`、`os=ubuntu`；graphroot `/home/ai/.local/share/containers/storage`（软链落点 XFS `/dev/sda1`） | `--connection` 客户端缺陷已修复（偏差 D1），默认连接仍未切换 |
-| A3 | **PASS** | 宿主 `py314/bin/llvm-config --version` → `22.1.2`；容器内 `/opt/build/llvm22/bin/llvm-config --version` → **`22.1.8`**；`--libdir`/`--includedir`/`--cmakedir` 指向路径均可达；`libLLVM-22.so`、`LLVMConfig.cmake`、`clang-22`、`lld`、`ld.lld` 齐备 | 前缀被重写为 `/var/opt/build/llvm22/...`（偏差 D3） |
+| A3 | **PASS** | 宿主 `py314/bin/llvm-config --version` → `22.1.2`；容器内 `/opt/build/llvm22/bin/llvm-config --version` → **`22.1.8`**；`--libdir`/`--includedir`/`--cmakedir` 指向路径均可达；`libLLVM-22.so`、`LLVMConfig.cmake`、`clang-22` 齐备（prefix 内原 `lld`/`ld.lld` 实为 23.1.4，已于 2026-11-03 隔离移除，见 D7；22 系 `lld` 未曾安装） | 前缀被重写为 `/var/opt/build/llvm22/...`（偏差 D3） |
 | A4 | **PASS** | 第二轮以 `-DUSE_LLVM=/opt/build/llvm22/bin/llvm-config` 重编：`ninja -C /opt/build/npu_tvm tvm` rc=0（854 个目标，2026-11-03 10:24）；新 `libtvm.so` 79,226,112 B，`ldd` → `libLLVM.so.22.1 => /var/opt/build/llvm22/lib/libLLVM.so.22.1`；`import tvm` → `0.19.0`，`Target("llvm")` → `llvm -keys=cpu -mtriple=x86_64-conda-linux-gnu`，`Target("ccompiler")` → `ccompiler` | 旧产物备份为 `libtvm.so.bak-llvm21`（该备份已于同日清理，见 §9.4 第 4 条）；Python 层仍走最小安装（偏差 D2） |
 | A5 | **PASS** | `pip install -e .` 成功；`import xmnn` → `1.0.1.dev120`，`xmnn.__file__=/opt/conda/envs/main/lib/python3.14/site-packages/xmnn/__init__.py` | `project(... LANGUAGES NONE)` 纯 Python，无需 C++ 编译 |
 | A6 | **PASS** | `podman inspect` → `Privileged=false`、`CgroupMode=host`、`SecurityOpt=[label=disable]`、`UsernsMode=private`，而容器内 `id` → `uid=1006(ai) gid=1006(ai)` | 无 `--privileged`；未加 `--device /dev/fuse`（无嵌套 podman 需求） |
@@ -56,13 +56,14 @@ part_of: "09-npu-toolchain-windows-host.md"
 | D4 | 容器内直连国内 conda 镜像失败 | USTC `HTTP 000`、tuna/bfsu `403`、aliyun `404`、nju 超时；根因为容器 IPv6 无路由而解析优先 AAAA | 以 `podman exec -u 0` 向 `/etc/gai.conf` 追加 `precedence ::ffff:0:0/96 100`；大文件仍 302 跳转失败，改由 **Windows 侧 `curl.exe`** 下载并发到共享目录，再以 `@EXPLICIT` 清单 + `--offline`（配合 `CONDA_PKGS_DIRS`、`HOME` 重定向）完成 `conda create` |
 | D5 | `podman system df` 报 infra-container 缺失 | `lstat /run/user/1006/libpod/tmp/infra-container: no such file`；`podman ps -a` 可见 `1595a496d0b9` 为 `Created` 状态的 `9514ffe234c3-infra` | 未修复（属 podman 5.6.2 已知瑕疵，不影响构建）；容量核算以 `df`/`du` 替代 |
 | D6 | D: 盘清理（原 v1.x 遗留） | 删除前可用 **8.82 GB**，三个待删文件均无进程占用（`UNLOCKED`） | 删除 `ok3.tar`、`fresh.tar`、`openKylin.wsl` 与两个 `WSL-import*.ps1`；删除后可用 **34.01 GB**（回收 25.19 GB）；保留 `libs\podman-machine-default.tar`（0.89 GB）与 `podman-machine-wsl`（1.81 GB） |
+| D7 | `llvm22` 前缀混装 LLVM 23 构件（G3 缺口） | `conda list -p` 显示同 prefix 内 `libllvm23 23.1.4`、`lld 23.1.4`、`llvm-openmp 23.1.4`；`bin/ld.lld` 实为 LLD 23.1.4，`objdump -p` 的 `NEEDED` 引用 `libLLVM.so.23.1`；22 系包（`clang-22`/`libclang-cpp22.1`/`llvm-tools-22`/`llvmdev`）只依赖 `libllvm22`，无任何包依赖 `lld` 或 `llvm-openmp` | **已处置（隔离式移除，未用 `conda remove`）**：整批 `mv` 至 `/opt/build/.llvm23-quarantine-20261103/`（268 MB / 48 文件），同步迁出 3 个 `conda-meta` JSON，`conda-meta/*.json` 由 28 条降为 **25 条**；回归全绿——`llvm-config --version` 仍 `22.1.8`、`--libs` 正常，`ldd libtvm.so` 的 `libLLVM.so.22.1 => /var/opt/build/llvm22/lib/...` 不变，codegen 探针 + `Target("llvm")`/`Target("ccompiler")` + `import xmnn`、CMake `find_package(LLVM 22.1 CONFIG)` 探针、`verify.sh`（13 PASS / 1 N/A / 0 FAIL）全部通过；隔离目录（268 MB / 48 文件）已于 2026-11-03 删除，XFS 可用字节 315,729,219,584 → 316,010,168,320（+280,948,736 B，约 268 MiB） |
 
 ### 9.3 容器内配置与产物
 
 | 项 | 值 |
 |---|---|
 | 容器运行参数 | `--userns=keep-id --cgroupns=host --security-opt label=disable`，`-v /media/pc/data/ai:/workspace/ai`，`-v npu-build:/opt/build`，`-w /workspace`，`--name npu-toolchain`，镜像 `localhost/openkylin-npu-toolchain:3.0`，命令 `sleep infinity`；**未发布端口** |
-| LLVM 22 | `/opt/build/llvm22`（conda-forge `llvmdev`/`clang`/`lld`，`llvmdev=22.1.8`） |
+| LLVM 22 | `/opt/build/llvm22`（conda-forge `llvmdev`/`clang`，`llvmdev=22.1.8`；G3 处置后前缀内不再含 `lld`/`ld.lld`/`llvm-openmp`，见 D7） |
 | Python 构建后端 | `cython 3.3.1`、`scikit-build-core 1.1.1`、`setuptools-scm 10.3.4`、`wheel 0.48.0`、`setuptools 84.2.1` |
 | Python 运行时依赖 | `numpy 2.5.4`、`scipy 1.18.1`、`pandas 3.1.0`、`matplotlib 3.11.2`、`onnx 1.23.2`、`protobuf 7.36.2`、`pytest 9.2.0`、`openpyxl`、`tabulate`、`rich`、`tqdm`、`tomlkit`、`decorator 5.3.1`、`attrs 26.1.0`、`psutil`、`typing_extensions`、`cloudpickle`、`ml_dtypes` |
 | tvm 安装方式 | `site-packages/tvm_src.pth` → 源码 `python/`；`/etc/profile.d/tvm.sh` 导出 `TVM_LIBRARY_PATH=/opt/build/npu_tvm`、`TEST_DATA_ROOT_PATH=/opt/build/tvm_test_data`（`bash -lc` 自动生效） |
@@ -75,6 +76,7 @@ part_of: "09-npu-toolchain-windows-host.md"
 2. **Q3/Q4 已决**（详见[风险与待办 §8](09-6-risks-todos-changelog.md)）：Q3 保持不切默认连接，用 `--connection remote-ai` 显式调用；Q4 选定宿主 8888 → 容器 8888（备用 8894），双检通过（远程仅 8890/8892 在听，Windows 侧 8888/8889/8894 均空闲），但按目标 6 仍不发布端口。
 3. **`libtvm.so` 运行期依赖 conda LLVM 22 运行库**：`ldd` 显示 `libLLVM.so.22.1`、`libstdc++`、`libxml2`、`libicuuc` 均解析到 `/var/opt/build/llvm22/lib`（rpath）。删除或替换 `/opt/build/llvm22` 会使 `import tvm` 失败。
 4. **临时产物与旧库备份已清理**：删除 `.temp/npu-toolchain-run`（6,904 文件 / 3,001,480,000 B）、`.temp/npu-toolchain-spec-v2`（2 文件 / 97,370 B）、Windows 侧 `~/.ssh/config.bak-20261103-split`（596 B）、拆分中间脚本 `.temp/doc09-atomize/split-doc09.ps1`（19,711 B）与容器内 `libtvm.so.bak-llvm21`（79,231,568 B，删前 `sha256=9dfa9a66…61b2a`）；删后复验 `import tvm`（0.19.0 + 两个 Target）与 `xmnn 1.0.1.dev120` 均 rc=0。XFS 可用字节 316,398,936,064 → **316,478,189,568**（+79,253,504 B）。**保留并随后归档** `.temp/doc09-atomize/original-backup.md`（1171 行 / 106,206 B，拆分前 09 原文整档副本）——2026-11-03 已迁入 `.agents/archive/doc09-atomize-20261103/`（`cmp` + sha256 一致后删源，凭证见该目录 `README.md`）。
+5. **G3（LLVM 23 混装）已处置，隔离目录已删除**：`/opt/build/.llvm23-quarantine-20261103/` 删除前含 `libLLVM-23.so`、`libLLVM.so.23.1`、`libLTO.so.23.1`、`libRemarks.so.23.1`、6 个 `liblld*.a`、`libomp*` 与 `libiomp5.so`、`bin/{lld,ld.lld,ld64.lld,lld-link,wasm-ld}`、`include/lld/` 与 `include/omp*.h`、`lib/cmake/{lld,openmp}`，合计 **268 MB / 48 文件**。该隔离副本已于 2026-11-03 删除（删前 `grep` 确认 `llvm22` 内无文件引用该路径），XFS 可用字节 315,729,219,584 → 316,010,168,320（+280,948,736 B，约 268 MiB）。删除后 `mv` 回滚路径失效，如需恢复须自 conda 通道重新安装。副作用：`clang-22 -fopenmp` 依赖的 `libomp.so` 已移出 prefix；22 系从未安装 `lld`，故构建与运行不依赖二者。
 
 ## 相关文档
 
