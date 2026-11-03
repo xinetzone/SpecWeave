@@ -116,6 +116,21 @@ WORKSPACE     text eol=lf
 # -----------------------------------------------------------------------------
 Dockerfile*     text eol=lf
 *.dockerfile    text eol=lf
+# Podman/Buildah also accept the `Containerfile` spelling, which no pattern
+# above matches, so it fell back to `text=auto` + `eol:unspecified` and a
+# Windows checkout wrote CRLF into the working tree. Pin it to LF like the
+# Dockerfile rules. (No slash → matches a file of this exact name at any depth;
+# variants named `Containerfile.<flavour>` keep the `text=auto` fallback.)
+Containerfile   text eol=lf
+# OpenSSH server config. sshd is strict about line endings: a CRLF
+# `sshd_config` yields stray \r in option values ("Bad configuration option" /
+# "missing argument"), so keep every copy LF — no slash → matches at any depth.
+sshd_config     text eol=lf
+# Extensionless POSIX shell CLI (.agents/scripts/docker-cache, `#!/bin/bash`).
+# Same fallback problem as the extensionless CLIs in "Shell & scripts": the
+# shebang is parsed before bash starts, so a CRLF checkout dies with
+# "bad interpreter: /bin/bash^M". Add one line per new extensionless CLI.
+docker-cache    text eol=lf
 # docker-compose yml (already covered by *.yml, explicit for clarity)
 docker-compose*.yml text eol=lf
 .containerignore text eol=lf
