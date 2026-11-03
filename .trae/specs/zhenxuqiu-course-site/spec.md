@@ -124,6 +124,15 @@ content_level: public
 - 提供**急停开关**（触发后整站下线并显示撤回声明页）与撤回声明页
 - 指定下线责任人与时限
 
+### 6.1 已上线地址
+
+- 地址：`https://2117169354930384896.app.workbuddy.host/?sharecode=DBZNI7HII5`
+- appId：`wbapp_jkkqDWa54EKtV5jxugZnqz`
+- 形态：静态托管 `dist/`（`python3 -m http.server`），重发布同一目录 ⇒ 同一链接
+- 访问模型：**分享链接制**——无凭据访问返回 403 + `noindex`；带凭据首次访问发 cookie，
+  站内导航不掉凭据。⇒ `site.toml` 的 `indexable = false`，robots 写 `Disallow: /`（不求收录）
+- base_url 只记 origin（不带 sharecode）：sharecode 是访问凭据，不进 sitemap / canonical
+
 ## 7. 验收标准
 
 - [x] 全部方法论页面 + 术语表 + 关于页可达，无断链（11 条路由，含 4 张练习表）
