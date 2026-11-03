@@ -74,7 +74,7 @@ part_of: "09-npu-toolchain-windows-host.md"
 1. **`podman system df` 的 infra-container 瑕疵**未修复（podman 5.6.2 已知问题，不影响构建）。
 2. **Q3/Q4 已决**（详见[风险与待办 §8](09-6-risks-todos-changelog.md)）：Q3 保持不切默认连接，用 `--connection remote-ai` 显式调用；Q4 选定宿主 8888 → 容器 8888（备用 8894），双检通过（远程仅 8890/8892 在听，Windows 侧 8888/8889/8894 均空闲），但按目标 6 仍不发布端口。
 3. **`libtvm.so` 运行期依赖 conda LLVM 22 运行库**：`ldd` 显示 `libLLVM.so.22.1`、`libstdc++`、`libxml2`、`libicuuc` 均解析到 `/var/opt/build/llvm22/lib`（rpath）。删除或替换 `/opt/build/llvm22` 会使 `import tvm` 失败。
-4. **临时产物与旧库备份已清理**：删除 `.temp/npu-toolchain-run`（6,904 文件 / 3,001,480,000 B）、`.temp/npu-toolchain-spec-v2`（2 文件 / 97,370 B）、Windows 侧 `~/.ssh/config.bak-20261103-split`（596 B）、拆分中间脚本 `.temp/doc09-atomize/split-doc09.ps1`（19,711 B）与容器内 `libtvm.so.bak-llvm21`（79,231,568 B，删前 `sha256=9dfa9a66…61b2a`）；删后复验 `import tvm`（0.19.0 + 两个 Target）与 `xmnn 1.0.1.dev120` 均 rc=0。XFS 可用字节 316,398,936,064 → **316,478,189,568**（+79,253,504 B）。**保留** `.temp/doc09-atomize/original-backup.md`（1171 行 / 106,206 B）——该文件是拆分前 09 原文的唯一整档副本（`doc/*` 在 Git 中呈未跟踪状态，历史中无原件提交）。
+4. **临时产物与旧库备份已清理**：删除 `.temp/npu-toolchain-run`（6,904 文件 / 3,001,480,000 B）、`.temp/npu-toolchain-spec-v2`（2 文件 / 97,370 B）、Windows 侧 `~/.ssh/config.bak-20261103-split`（596 B）、拆分中间脚本 `.temp/doc09-atomize/split-doc09.ps1`（19,711 B）与容器内 `libtvm.so.bak-llvm21`（79,231,568 B，删前 `sha256=9dfa9a66…61b2a`）；删后复验 `import tvm`（0.19.0 + 两个 Target）与 `xmnn 1.0.1.dev120` 均 rc=0。XFS 可用字节 316,398,936,064 → **316,478,189,568**（+79,253,504 B）。**保留并随后归档** `.temp/doc09-atomize/original-backup.md`（1171 行 / 106,206 B，拆分前 09 原文整档副本）——2026-11-03 已迁入 `.agents/archive/doc09-atomize-20261103/`（`cmp` + sha256 一致后删源，凭证见该目录 `README.md`）。
 
 ## 相关文档
 

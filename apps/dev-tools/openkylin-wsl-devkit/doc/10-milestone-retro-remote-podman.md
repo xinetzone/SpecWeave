@@ -407,7 +407,7 @@ python -c "import xmnn,importlib.metadata as m;print(m.version(\"xmnn\"),xmnn.__
 | 5 | `/opt/build/llvm22` 不可删 | `libtvm.so` 的 rpath 依赖该目录 | 在运维层面标记为受保护路径；删除前必须 `ldd` 复验 |
 | 6 | LLVM 21 回滚点已删 | `libtvm.so.bak-llvm21` 已清理 | 回滚路径改为「用 `/opt/build/llvm21` 重编」，须预留一次重编时间 |
 | 7 | `.temp/npu-toolchain/`（254 MB） | 被 `run.sh` / `verify.sh` / `all-in-one.sh` 硬编码引用 | 保留；如需清理须先改脚本常量 |
-| 8 | `.temp/doc09-atomize/original-backup.md` | 拆分前原件唯一整档副本（未纳入 Git） | 迁入正式归档后删除，需批准 |
+| 8 | `.temp/doc09-atomize/original-backup.md` → `.agents/archive/doc09-atomize-20261103/original-backup.md` | 拆分前原件整档副本 | 2026-11-03 已归档并删源（`cmp` + sha256 一致）；归档目录未入 Git |
 | 9 | `verify.sh` 与规格一致性（阶段 7） | 未启动 | 按 A1–A9 重写断言，纳入自动化 |
 
 ## 附录 A：证据与引用
