@@ -61,6 +61,18 @@
 [进入](08-desktop.md)
 :::
 
+:::{grid-item-card} npu-toolchain（Windows 远程 Podman）
+Windows 经 SSH 使用 10.16.11.3 rootless Podman 的 npu-toolchain 规格，已原子化为 8 篇。
+
+[进入](09-npu-toolchain-windows-host.md)
+:::
+
+:::{grid-item-card} 里程碑复盘（WSL → 远程 Podman）
+七概念复盘：方案为何转向、哪些假设被证伪、可复用命令与量化结果。
+
+[进入](10-milestone-retro-remote-podman.md)
+:::
+
 ::::
 
 ```{toctree}
@@ -74,4 +86,13 @@
 06-xuan-compose
 07-ai-stack
 08-desktop
+09-npu-toolchain-windows-host
+09-1-backend-and-decision
+09-2-mounts-uid-storage
+09-3-toolchain-provisioning
+09-4-build-and-verify
+09-5-acceptance-and-evidence
+09-6-risks-todos-changelog
+09-7-appendix-v1-wsl-deprecated
+10-milestone-retro-remote-podman
 ```
