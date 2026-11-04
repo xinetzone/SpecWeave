@@ -63,6 +63,44 @@ x-toml-ref: "../.meta/toml/.agents/README.toml"
 
 本目录采用 **Core（核心规范）/ Tools（执行工具）** 双层治理模型；完整分层原则、跨层引用规则、边界判定清单与 docs 目录关系见 [governance-layers.md](governance-layers.md)。
 
+## 工作区三件套与校验
+
+任何独立工作区——`apps/` 下的应用、`projects/` 下的子项目、`playground/` 下的 demo，以及嵌套在其他目录中的子工作区——都应具备下述三件套，缺一即视为工作区不完整。
+
+| 文件 | 读者 | 职责 | 不该写什么 |
+|---|---|---|---|
+| `README.md` | 人类 | 定位（是什么 / 不是什么）、目录结构、归类约定、约束、Changelog | 智能体启动协议、角色与规则 |
+| `AGENTS.md` | 智能体 | 启动协议、区域性质、上下文路由表、本区差异规则、嵌套入口、边界与退出 | 长篇人类说明、父级规范副本 |
+| `.agents/README.md` | 智能体 | 本区元数据容器、嵌套入口索引、与父级 `.agents/` 的关系 | 父级 roles/rules/workflows/protocols 的副本、任何产出物 |
+
+权威规范见技能 [workspace-triplet-scaffold](skills/workspace-triplet-scaffold/SKILL.md)（五步流程 + 9 条不可协商规则），实测案例见 [evidence-case.md](skills/workspace-triplet-scaffold/references/evidence-case.md)。
+
+### 校验
+
+```powershell
+# 单个工作区
+python .agents/skills/workspace-triplet-scaffold/scripts/check_triplet.py <工作区路径> --strict
+# 多个工作区，并加深嵌套扫描
+python .agents/skills/workspace-triplet-scaffold/scripts/check_triplet.py apps/foo projects/bar --strict --max-depth 6
+```
+
+参数：`targets`（一个或多个目录，必填）、`--strict`（warning 也判为失败）、`--max-depth`（嵌套 `AGENTS.md` 扫描深度，默认 4）。退出码非 0 即未通过。
+
+| 校验项 | 判定规则 |
+|---|---|
+| 文件完整性 | 三文件均存在、是文件、非空 |
+| 关键词 | `AGENTS.md` 必须包含"启动协议" |
+| 相对链接 | 三文件的 Markdown 链接目标须可解析；`file://` 与 Windows 绝对路径直接判错；`%20` 会还原为空格 |
+| 嵌套优先 | 扫描到嵌套 `AGENTS.md` 时，本级 `AGENTS.md` 须同时出现"嵌套"与"优先" |
+| 废止路径 | 存在 `.agents/docs/` 即告警 |
+| Git 状态 | 输出 `tracked` / `untracked` / `ignored` / `not-a-repo`；`untracked` 在 `--strict` 下被拒 |
+
+### 三条硬约束
+
+1. 被 `.gitignore` 忽略的工作区（校验输出 `ignored`）禁止 `git add -f`，也不得声称"已提交"——其改动不会出现在 `git status`。
+2. `.agents/README.md` 只做索引，不复制父级规则；副本会漂移，引用不会。
+3. 嵌套工作区一律嵌套优先：离被改文件最近的 `AGENTS.md` 生效，本级只登记入口，不重复其中内容。
+
 ---
 
 ## 使用流程示例
@@ -91,6 +129,7 @@ flowchart TD
 ## Changelog
 
 <!-- changelog -->
+- 2026-10-27 | docs | 新增「工作区三件套与校验」章节：明确三件套分工与内容边界、check_triplet.py 参数与六类校验项、三条硬约束（ignored 禁 add -f / 索引不复制父级规则 / 嵌套优先）。来源：.chaos 工作区三件套初始化
 - 2026-09-03 | refactor | 原子化拆分 README 详细章节：新增 subdirectory-responsibilities.md 承载完整职责表，新增 governance-layers.md 承载 Core/Tools 规范分层治理，README 仅保留索引链接与摘要，减少启动读取 token。来源：seven-concepts-cmd README原子化
 - 2026-07-24 | docs | 核心资源一致性更新：目录树新增brand/目录；更新统计数据（341+脚本、133+规则文件、19个Skill、13个指令集、526+可复用模式）；子目录职责表同步更新commands/skills/scripts计数；「与AGENTS.md的关系」更新模式数量。来源：方法论编排 update-core-resources spec
 - 2026-07-12 | refactor | 第一性原理全面复盘更新：目录结构新增checklists/、capability-registry/；更新统计数据（320+脚本、133+规则文件、16个Skill、10个指令集、438+可复用模式）；子目录职责表补充PDR前置阅读、阶段守卫运行时、MDI解析器、论坛自动化、对抗性评审等新增内容；「与AGENTS.md的关系」补充L0/L1/L2渐进式披露说明；明确core-rules持续演进不固定条数。来源：第一性原理+全项目复盘

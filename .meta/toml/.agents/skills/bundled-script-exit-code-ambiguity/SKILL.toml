@@ -1,0 +1,5 @@
+id = "skill"
+title = "自带脚本退出码歧义判别 Skill"
+category = "skills/bundled-script-exit-code-ambiguity"
+date = "2026-10-28"
+version = "1.0.0"

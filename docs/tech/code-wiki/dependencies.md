@@ -11,7 +11,7 @@ source:
   - ../../../projects/xuanspace/tools/xs/pyproject.toml
   - ../../../vendor/flexloop/apps/chaos/pyproject.toml
 status: stable
-updated_at: 2026-08-23
+updated_at: 2026-10-27
 ---
 
 # 依赖关系
@@ -149,7 +149,7 @@ flowchart LR
 | `typer` | CLI 框架 |
 | `rich` | 终端输出 |
 | `packaging` | 版本与依赖处理 |
-| `tomli-w` | TOML 写入 |
+| `tomlkit` | TOML 写入（保留注释与键序的原地编辑） |
 
 ## `vendor/` 区域依赖
 

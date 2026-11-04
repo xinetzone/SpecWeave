@@ -11,19 +11,19 @@
     <div class="logo">智</div>
     <div>
       <div class="brand-title">智能客服 Agent</div>
-      <div class="brand-sub">多轮对话 · 知识库检索 · 意图识别 · 自动转人工</div>
+      <div class="brand-sub">多轮对话 · 知识库检索 · 自动转人工</div>
     </div>
     <div class="spacer"></div>
     <span class="badge" id="status-badge">检测中…</span>
     <button class="btn ghost" id="btn-settings">设置</button>
-    <a class="btn ghost" href="/admin" style="display:inline-flex;align-items:center;text-decoration:none;">管理后台</a>
+    <a class="btn ghost" href="/admin">管理后台</a>
   </header>
 
   <main class="chat-wrap">
     <section class="chat-panel">
       <div class="stream" id="stream">
         <div class="msg">
-          <div class="avatar bot">AI</div>
+          <div class="avatar bot">智</div>
           <div>
             <div class="bubble">您好，我是智能客服「小织」。可以问我退款政策、订单物流、技术故障等问题，需要人工时直接说「转人工」。</div>
           </div>
@@ -47,21 +47,26 @@
     <section class="rate-bar">
       <span>本次服务满意度：</span>
       <div class="stars" id="stars">
-        <button class="star" data-v="1">★</button>
-        <button class="star" data-v="2">★</button>
-        <button class="star" data-v="3">★</button>
-        <button class="star" data-v="4">★</button>
-        <button class="star" data-v="5">★</button>
+        <button class="star" data-v="1" title="1 星" aria-label="1 星">★</button>
+        <button class="star" data-v="2" title="2 星" aria-label="2 星">★</button>
+        <button class="star" data-v="3" title="3 星" aria-label="3 星">★</button>
+        <button class="star" data-v="4" title="4 星" aria-label="4 星">★</button>
+        <button class="star" data-v="5" title="5 星" aria-label="5 星">★</button>
       </div>
       <input type="text" id="comment" class="grow" placeholder="补充建议（可选）" />
       <button class="btn ghost" id="btn-rate">提交评价</button>
       <span class="hint" id="rate-hint">评价将写入云端，用于后台满意度统计</span>
     </section>
+
+    <footer class="foot-sign">
+      <q>人法地，地法天，天法道，道法自然。</q>
+      <div>《老子》第二十五章 · 道用 daoApps</div>
+    </footer>
   </main>
 
   <div class="modal hidden" id="settings">
     <div class="modal-card">
-      <h3 style="margin-top:0">大模型设置（BYOK，可选）</h3>
+      <h3>大模型设置（BYOK，可选）</h3>
       <div class="stack">
         <input type="text" id="set-base" placeholder="Base URL，如 https://api.deepseek.com/v1" />
         <input type="password" id="set-key" placeholder="API Key（sk-...）" />

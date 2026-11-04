@@ -2,7 +2,7 @@
 
 基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为8个主题类别，便于按场景快速定位相关模式。
 
-> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md与子目录），由 `generate-categories.py` 自动重建，最后更新：2026-10-23。
+> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md与子目录），由 `generate-categories.py` 自动重建，最后更新：2026-10-29。
 
 ## 分类索引
 
@@ -12,7 +12,7 @@
 | [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 42 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor/跨领域知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、语义漂移防御、知识系统五维根基、B2B AI产品定位、外部产品学习模板 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 53 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 58 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 172 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 179 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 83 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 11 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 49 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化、垂直场景AI三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA转化 |
@@ -289,11 +289,13 @@
 | [config-persistence-full-chain-coverage.md](governance-strategy/config-persistence-full-chain-coverage.md) | 配置持久化全链路覆盖模式 | L1 实验性 |
 | [content-sensitivity-routing.md](governance-strategy/content-sensitivity-routing.md) | 公私域内容分离路由 | L1-draft |
 | [convention-driven-creation.md](governance-strategy/convention-driven-creation.md) | 约定驱动创建模型，先读范例提取模板再填充内容，零结构决策 | L2 |
+| [convergence-period-triple-track.md](governance-strategy/convergence-period-triple-track.md) | 收口期三线闭环：版本定源→约定门禁化→文档诚实化，顺序不可颠倒（案例：xuanspace 十月治理收口） | L1 |
 | [credential-copy-minimization.md](governance-strategy/credential-copy-minimization.md) | 凭证副本最小化：目录镜像/备份/同步中的凭证防护法 | L2 |
 | [cross-period-metric-scope-alignment.md](governance-strategy/cross-period-metric-scope-alignment.md) | 跨期指标口径对齐先行 | L1 |
 | [cross-platform-gate-authority.md](governance-strategy/cross-platform-gate-authority.md) | 跨平台门禁权威分工法 | L1 |
 | [cross-wiki-reference-directory-first.md](governance-strategy/cross-wiki-reference-directory-first.md) | 跨Wiki引用目录优先验证：创建跨wiki引用前必须先读取目标wiki的00-overview.md确认章节编号，用事实替代假设；5次验证4次复用，已达L3升级门槛 | L2 |
 | [data-validation-four-checks.md](governance-strategy/data-validation-four-checks.md) | 量化数据验证四查法 | L2 |
+| [declared-vs-executed-dual-surface-reconciliation.md](governance-strategy/declared-vs-executed-dual-surface-reconciliation.md) | 声明面与执行面的双侧对账 | L1 |
 | [defensive-programming-first-principles.md](governance-strategy/defensive-programming-first-principles.md) | 防御性编程第一性原理：7项根因原则 | L2 |
 | [dependency-ordered-slice-gates.md](governance-strategy/dependency-ordered-slice-gates.md) | 依赖序切片门禁法 | L1 |
 | [dev-env-dockerfile-optimization.md](governance-strategy/dev-env-dockerfile-optimization.md) | 开发环境Dockerfile优化法：优先排序而非最小化，整合变化频率分层+.dockerignore三重价值+层缓存涟漪效应 | L1 |
@@ -308,6 +310,7 @@
 | [elastic-workflow-classification.md](governance-strategy/elastic-workflow-classification.md) | 弹性流程分级：按变更风险选择流程路径 | L2 |
 | [entropy-law-automation-principle.md](governance-strategy/entropy-law-automation-principle.md) | 熵增定律自动化第一性原理（Entropy Law: Automation Against Chaos） | L2 |
 | [evidence-chain-engineering.md](governance-strategy/evidence-chain-engineering.md) | 证据链工程化（过程约束 → 可审计证据资产） | L1 |
+| [evidence-timing-gate.md](governance-strategy/evidence-timing-gate.md) | 证据时序门 | L1 |
 | [exemption-mechanism-legalization.md](governance-strategy/exemption-mechanism-legalization.md) | 豁免机制合法化：通过显式标注（前缀/路径/标记）创建合法例外通道，6设计要素（标注+隔离+生命周期+主干隔离+审计+运行时识别），4次验证（baby-前缀/.temp目录/skip审批/选择性归档） | L2 |
 | [explainer-self-violation-effect.md](governance-strategy/explainer-self-violation-effect.md) | 讲解自犯效应（Explainer Self-Violation Effect） | L2 |
 | [fail-loud-over-silent-fallback.md](governance-strategy/fail-loud-over-silent-fallback.md) | 显式报错优于静默降级：自动化系统故障显性化原则 | L2 |
@@ -321,6 +324,7 @@
 | [four-dimension-margin-framework.md](governance-strategy/four-dimension-margin-framework.md) | 四维留余框架：不确定环境下长期存续的冗余管理策略 | L2 |
 | [four-negatives-external-dependency.md](governance-strategy/four-negatives-external-dependency.md) | 外部依赖四不原则+零依赖原则：不侵入/不直引/不跟版/不裸考/不滥引，150+脚本零第三方依赖跨平台验证（L3标准化） | L3 |
 | [fp-multi-dimensional-falsification.md](governance-strategy/fp-multi-dimensional-falsification.md) | 第一性原理多维证伪验收法 | L1 |
+| [gate-baseline-write-invariants.md](governance-strategy/gate-baseline-write-invariants.md) | 基线型门禁的写盘不变量：生成器不得洗白漂移 | L1 |
 | [governance-engine-dual-loop.md](governance-strategy/governance-engine-dual-loop.md) | 治理×引擎双件闭环 | L1.5 |
 | [governance-four-layer-progressive.md](governance-strategy/governance-four-layer-progressive.md) | 治理基建四层递进模型 | L2 |
 | [governance-three-stage-evolution.md](governance-strategy/governance-three-stage-evolution.md) | 治理演化三阶段：修复→预防→闭环，禁止跳过任何阶段；跳过预防导致问题复发，多个场景验证（Mermaid/断链/事实漂移） | L2 |
@@ -339,6 +343,7 @@
 | [learn-validate-adopt.md](governance-strategy/learn-validate-adopt.md) | Learn-Validate-Adopt：外部标准采用三步法 | L1 |
 | [ledger-stock-consistency-audit.md](governance-strategy/ledger-stock-consistency-audit.md) | 台账存量审计：注册清单与磁盘存量的一致性审计法 | L2 |
 | [local-dependency-cache-proxy.md](governance-strategy/local-dependency-cache-proxy.md) | 本地依赖缓存代理体系：多层缓存加速构建 | L1-draft |
+| [locally-unobservable-surface-explicit-scoping.md](governance-strategy/locally-unobservable-surface-explicit-scoping.md) | 本地不可自测面的显式立项 | L1 |
 | [low-risk-wontfix-closure-gate.md](governance-strategy/low-risk-wontfix-closure-gate.md) | 审查低危问题「登记不修」闭环门 | L1 |
 | [meta-bootstrap-action-plan.md](governance-strategy/meta-bootstrap-action-plan.md) | 元方法论自举行动计划——七概念触发匹配CLI工具 | L1 |
 | [meta-methodology-bootstrap.md](governance-strategy/meta-methodology-bootstrap.md) | 元方法论自举模式 | L2 |
@@ -396,7 +401,7 @@
 | [shared-index-count-coupling.md](governance-strategy/shared-index-count-coupling.md) | 共享索引计数耦合与同批判决：新增条目必然改共享索引多处、且多会话并行写同一仓库时，识别耦合面→枚举候选集→显式裁决→提交信息留痕→干净检出验证 | L2 |
 | [short-command-patterns.md](governance-strategy/short-command-patterns.md) | 短指令模式库：登记已验证的 AI 协作快捷指令 | L2 |
 | [simple-task-high-risk.md](governance-strategy/simple-task-high-risk.md) | 简单任务高风险定律（Simple Task High-Risk Law） | L2 |
-| [single-authority-declaration-alignment.md](governance-strategy/single-authority-declaration-alignment.md) | 单一权威源与多载体声明面对齐 | L1 |
+| [single-authority-declaration-alignment.md](governance-strategy/single-authority-declaration-alignment.md) | 单一权威源与多载体声明面对齐（L2：第二独立案例 xuanspace 十月治理收口） | L2 |
 | [skill-migration-position-governance.md](governance-strategy/skill-migration-position-governance.md) | Skill迁移位置治理：统一Skill存放位置的五步标准化流程 | - |
 | [snapshot-parity-migration.md](governance-strategy/snapshot-parity-migration.md) | 快照对拍迁移法 | L1 |
 | [spec-discoverability-guarantee.md](governance-strategy/spec-discoverability-guarantee.md) | 规范可发现性保障模式：三层映射模型（AGENTS.md引用→路由表条目→自动化脚本）确保规范不会"存在但不可发现" | L1 |
@@ -421,6 +426,7 @@
 | [three-layer-rule-enforcement.md](governance-strategy/three-layer-rule-enforcement.md) | 规则落地三层模型：定义+痕迹+验证 | L2 |
 | [three-layer-spec-constraint.md](governance-strategy/three-layer-spec-constraint.md) | 规范约束三层次模型：规则定义层→路由发现层→自动化验证层，确保规范不会"存在但不可发现" | L2 |
 | [three-level-problem-solving.md](governance-strategy/three-level-problem-solving.md) | 问题解决三层跃迁：L1症状治疗→L2病因根治→L3系统免疫，架构师思考L3 | L1 |
+| [three-object-ledger.md](governance-strategy/three-object-ledger.md) | 三对象分账法 | L1 |
 | [three-stage-content-validation.md](governance-strategy/three-stage-content-validation.md) | 三段式内容验证模式：任务级→专项→终验 | L1 |
 | [three-state-decision.md](governance-strategy/three-state-decision.md) | 三态决策模式：做/明确不做/推迟（Do/Explicitly-No/Defer） | L1 |
 | [three-tier-board-system.md](governance-strategy/three-tier-board-system.md) | 三层看板体系：全局看板→主题看板→创建模板，覆盖看-管-建全生命周期，含自维护闭环 | L1 |
@@ -431,6 +437,7 @@
 | [two-dimension-document-governance.md](governance-strategy/two-dimension-document-governance.md) | 文档治理双维度检查模型：位置维度（目录归属）+ 命名维度（kebab-case），双重违规暴露流程漏洞 | L2 |
 | [two-phase-development.md](governance-strategy/two-phase-development.md) | 两阶段开发模式（Two-Phase Development: Validate First, Optimize Later） | - |
 | [vendor-lifecycle-governance.md](governance-strategy/vendor-lifecycle-governance.md) | 第三方供应商全生命周期治理模型 | L1 |
+| [verification-scope-bounding.md](governance-strategy/verification-scope-bounding.md) | 核验范围限定 | L1 |
 | [version-ripple-grep-sweep.md](governance-strategy/version-ripple-grep-sweep.md) | 版本涟漪Grep清扫模式：单点更新后的多点引用同步 | L2 |
 | [wiki-dual-track-frontmatter.md](governance-strategy/wiki-dual-track-frontmatter.md) | Wiki双轨Frontmatter规范：单文件wiki和原子化wiki使用不同字段集，模板/检查清单必须类型感知，禁止混用字段 | L2 |
 | [wiki-pre-creation-three-checks.md](governance-strategy/wiki-pre-creation-three-checks.md) | Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern） | L3 |

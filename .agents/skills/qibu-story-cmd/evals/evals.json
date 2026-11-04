@@ -1,0 +1,41 @@
+{
+  "skill": "qibu-story-cmd",
+  "queries": [
+    {
+      "prompt": "我有个点子：女主被上司抢功三年，最后在全员大会上翻盘。帮我搭个骨架",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "这篇稿子读者说后面有点强行，帮我看看是哪一格出了问题",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "七步故事法的意外和转弯到底怎么区分？我总写成解释",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "AI 短篇模板的六步和七步故事法是一回事吗",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "盐选现在千字多少钱，我一个月能赚多少",
+      "expected": false,
+      "type": "should-not",
+      "source": "train"
+    },
+    {
+      "prompt": "把这段对话改得更有画面感，多用动词",
+      "expected": false,
+      "type": "should-not",
+      "source": "train"
+    }
+  ]
+}

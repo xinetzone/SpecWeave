@@ -10,6 +10,9 @@
   Supabase 的情况下把路由跑完整。
 """
 
+from collections.abc import Callable
+from typing import Any
+
 from fastapi import APIRouter, Depends, FastAPI, Header, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -31,12 +34,34 @@ from .store import Store, StoreError, create_store
 TOKEN_HEADER = "X-App-Token"
 
 
+def _llm_source(settings: Settings, llm: LLMClient, override: LLMOverride) -> str:
+    """大模型来源：byok / cloud / server / 空。
+
+    这个字段是**诊断事实**，不是装饰：发布后要能一眼看出「模型到底走的是
+    哪条通道」——填了 BYOK 却仍显示未接入，或云端通道已就绪却没被选中，
+    都是只有这个字段能暴露的问题。
+    """
+    if override.active:
+        return "byok"
+    if settings.wb_llm_ready:
+        return "cloud"
+    if llm.available():
+        return "server"
+    return ""
+
+
 def create_app(
     settings: Settings | None = None,
     store: Store | None = None,
     llm: LLMClient | None = None,
+    home_handler: Callable[[], Any] | None = None,
 ) -> FastAPI:
-    """构建应用。三个依赖均可注入，缺省时按环境变量自动装配。"""
+    """构建应用。三个依赖均可注入，缺省时按环境变量自动装配。
+
+    ``home_handler`` 覆盖首页行为。同源部署（:mod:`info_butler.web`）用它
+    把首页导向工作台；不传则首页返回服务信息。**必须在挂载静态资源之前
+    决定**——FastAPI 按注册顺序匹配路由，谁先注册谁先命中。
+    """
     settings = settings or Settings.from_env()
     store = store or create_store(settings)
     llm = llm or LLMClient(settings)
@@ -77,13 +102,17 @@ def create_app(
     def _guard(exc: StoreError) -> HTTPException:
         return HTTPException(status_code=503, detail=str(exc))
 
-    @app.get("/", summary="服务信息")
-    def root() -> dict:
+    @app.get("/", summary="服务信息", include_in_schema=False)
+    def root():
+        if home_handler is not None:
+            return home_handler()
         return {
             "service": "info-butler",
             "version": __version__,
             "storage": store.mode,
+            "storage_backend": settings.storage_backend,
             "llm_ready": llm.available(),
+            "llm_source": _llm_source(settings, llm, LLMOverride()),
         }
 
     @router.get("/health", summary="健康检查")
@@ -92,9 +121,13 @@ def create_app(
         # "模型：未接入"，而他的请求其实一直在用模型——状态徽标不能说谎。
         return {
             "status": "ok",
+            # storage / storage_backend 一律以**实际生效的 store 实例**为准，
+            # 不读配置——注入的 store 可能与配置不一致（测试、降级场景），
+            # 此时只有实例知道真相。
             "storage": store.mode,
+            "storage_backend": getattr(store, "backend", store.mode),
             "llm_ready": llm.available(override),
-            "llm_source": "byok" if override.active else ("server" if llm.available() else ""),
+            "llm_source": _llm_source(settings, llm, override),
             "version": __version__,
             "auth_required": bool(settings.app_token),
         }

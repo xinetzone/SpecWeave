@@ -59,6 +59,9 @@ task-reports/index
 2026-10-09-caffe-pool-ceil-shape-inference-retro
 2026-10-13-coach-moments-milestone-retro
 2026-10-22-polygyny-seven-concepts-analysis
+2026-10-29-submodule-pointer-gate-sedimentation
+2026-10-29-xuanspace-020-convergence-precheck
+2026-11-02-support-agent-ui-redesign-retro
 hardcode-retrospective-report
 log
 meta-bootstrap-execution-log

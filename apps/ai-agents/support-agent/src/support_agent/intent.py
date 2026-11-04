@@ -72,6 +72,18 @@ RULES: Dict[str, List[str]] = {
     "smalltalk": ["你好", "您好", "hi", "hello", "在吗", "谢谢", "感谢", "再见", "拜拜"],
 }
 
+# 关键词排除：命中排除词时，对应关键词不计命中。
+# 「人工智能」含「人工」——裸子串匹配会把「人工智能客服能做到什么」判成转人工，
+# 直接生成人工工单并抬高转人工率（后台总览的核心指标之一）。
+EXCLUSIONS: List[tuple[str, str]] = [
+    ("人工智能", "人工"),
+    ("人工ai", "人工"),
+]
+
+# 查询类标记：退款与订单查询同时命中时，若用户在问「进度」而非「发起」，判为订单查询。
+# 例：「退货到哪了」——含「退货」（动作）与「到哪了」（进度），应归订单查询。
+STATUS_MARKERS = ("到哪了", "什么时候到", "多久到", "进度", "查单", "查一下", "物流", "发货了")
+
 
 @dataclass
 class IntentResult:
@@ -99,9 +111,14 @@ class IntentResult:
 def rule_classify(text: str) -> IntentResult:
     """纯规则分类：确定性强、零成本。"""
     content = (text or "").lower()
+    excluded = {kw for pattern, kw in EXCLUSIONS if pattern.lower() in content}
     hits: Dict[str, int] = {}
     for intent, keywords in RULES.items():
-        count = sum(1 for kw in keywords if kw.lower() in content)
+        count = sum(
+            1
+            for kw in keywords
+            if kw.lower() in content and kw.lower() not in excluded
+        )
         if count:
             hits[intent] = count
 
@@ -115,6 +132,19 @@ def rule_classify(text: str) -> IntentResult:
             method="rule",
             needs_human=True,
             reason="命中转人工关键词",
+        )
+
+    # 退款与订单查询同分时，按「问进度」优先归订单查询
+    if (
+        hits.get("refund") == hits.get("order_query")
+        and "refund" in hits
+        and any(marker in content for marker in STATUS_MARKERS)
+    ):
+        return IntentResult(
+            intent="order_query",
+            confidence=0.7,
+            method="rule",
+            reason="退款/订单查询同命中，按进度类标记归订单查询",
         )
 
     best = max(hits.items(), key=lambda kv: kv[1])[0]

@@ -1,0 +1,15 @@
+id = "gate-baseline-write-invariants"
+domain = "methodology"
+layer = "governance-strategy"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/patterns/methodology-patterns/governance-strategy/gate-baseline-write-invariants.md"
+version = "1.0.0"
+last_updated = "2026-10-29"
+
+[bindings]
+rules = []
+references = ["single-authority-declaration-alignment", "snapshot-parity-migration", "convergence-period-triple-track", "dual-mode-submodule-governance", "fail-loud-over-silent-fallback", "release-eligibility-invariant-gate", "2026-10-29-submodule-pointer-gate-sedimentation"]
+skills = []

@@ -10,6 +10,7 @@ inurl-byok-token-hub-milestone-retrospective-20260929-v1.0
 wsl-drvfs-mount-wiki-milestone-retrospective-20261013-v1.0
 coach-moments-milestone-retrospective-20261013-v1.0
 platform-review-precheck-milestone-retrospective-20261026-v1.0
+xuanspace-october-governance-milestone-retrospective-20261029-v1.0
 ```
 
 | 导出日期 | 报告 | 清单 |
@@ -20,3 +21,4 @@ platform-review-precheck-milestone-retrospective-20261026-v1.0
 | 2026-10-13 | [WSL DrvFs 挂载「教程→实战→fstab 持久化」一日闭环里程碑复盘](wsl-drvfs-mount-wiki-milestone-retrospective-20261013-v1.0.md) | [manifest](export-manifest-wsl-drvfs-mount-20261013.txt) |
 | 2026-10-13 | [商业教练朋友圈 AI 增长系统里程碑复盘](coach-moments-milestone-retrospective-20261013-v1.0.md) | [manifest](export-manifest-coach-moments-20261013.txt) |
 | 2026-10-26 | [平台提审合规预检：一次提审拦截的可复用能力萃取](platform-review-precheck-milestone-retrospective-20261026-v1.0.md) | [manifest](export-manifest-platform-review-precheck-20261026.txt) |
+| 2026-10-29 | [xuanspace 十月治理收口里程碑复盘：版本定源、门禁固化与文档诚实化](xuanspace-october-governance-milestone-retrospective-20261029-v1.0.md) | [manifest](export-manifest-xuanspace-october-governance-20261029.txt) |
