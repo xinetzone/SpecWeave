@@ -97,7 +97,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | token-optimize-cmd | "token优化"、"省token"、"降低成本"、"Token使用优化"、"prompt优化"、"缓存策略"、"上下文压缩"、"模型路由"、"长文档处理"、"Token成本"、"降本"、"推理成本"、"Token浪费"、"优化LLM成本" | 1（P0 禁令预检 → 浪费点审计 → 方案设计 → 评审 → 效果评估；含 27 条禁令 P0-P3 分级与三维权衡框架、渐进式路线图；L1） | v1.0.0 | [skills/token-optimize-cmd/SKILL.md](../skills/token-optimize-cmd/SKILL.md) |
 | github-org-bootstrap-cmd | "创建GitHub组织"、"建个org"、"组织名怎么起"、"demo组织"、"huncheng-lab"、"GitHub Organization" | 1（命名收敛F→V→I + gh api 自动配置） | v1.0.0 | [skills/github-org-bootstrap-cmd/SKILL.md](../skills/github-org-bootstrap-cmd/SKILL.md) |
 
-### 脚本命令门面（16个）
+### 脚本命令门面（17个）
 
 | Skill名 | 触发词 | 对应脚本 | 版本 | 路径 |
 |---------|--------|---------|------|------|
@@ -117,6 +117,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | artifact-consistency-audit | "核验一致性"、"复验"、"体检"、"覆盖率核对"、"引用是否忠实"、"有无遗漏"、"修补后复验"、"对照源文档检查" | 复用 check-links.py + check-source-traceability.py（无新建脚本） | v1.0.0 | [skills/artifact-consistency-audit/SKILL.md](../skills/artifact-consistency-audit/SKILL.md) |
 | docs-as-product-cmd | "文档即产品"、"docs-as-product"、"Diátaxis四型分区"、"文档质量门G1-G4/V门"、"sphinx-build -W"、"元数据漂移F-021"、"读者契约"、"文档指标M1-M5" | docs-as-product.py + lib/docs_as_product/（structure/gates/metadata/contract/metrics/all 子命令；只读，外部工具缺失降级） | v1.0.0 | [skills/docs-as-product-cmd/SKILL.md](../skills/docs-as-product-cmd/SKILL.md) |
 | wsl-vhdx-compact-cmd | "压缩WSL磁盘"、"vhdx回收"、"ext4.vhdx太大"、"wsl --manage --compact"、"宿主机FreeGiB核对"、"VHDX前后基线"、"podman-machine-default vhdx压缩"、"openKylin WSL磁盘回收"、"C/D盘爆红 清WSL"、"wsl vhdx瘦身"、"Win32_LogicalDisk对账"、"fstrim 基线 闭环" | compact-vhdx-with-baseline.ps1；失败自动降级 compress-wsl-vhdx.ps1（双方案自动降级 + BaselineOnly dry-run 只读基线 + RestorePodman/RestoreOriginalState 原态恢复 + Win32 FreeGiB 数值闭环 + PCMClawUbuntu 永久黑名单） | v1.0.0 | [skills/wsl-vhdx-compact-cmd/SKILL.md](../skills/wsl-vhdx-compact-cmd/SKILL.md) |
+| remote-ssh-server-install-triage | "Remote-SSH"、"remote server 下载卡住"、"Downloading and installing remote server"、"正在配置 SSH 主机"、".trae-cn-server"、"resolve-lock"、"SOLO 一直 Loading"、"远端文件打不开" | 自带 scripts/triage.sh（只读六节取证：通道基线/进程链与锁/卡死三判据/落盘目标/CDN 探测/判定建议；六档退出码 0/2/3/4/5/6） | v1.0.0 | [skills/remote-ssh-server-install-triage/SKILL.md](../skills/remote-ssh-server-install-triage/SKILL.md) |
 
 > **Skill类型说明**：
 > - **完整Skill**：包含完整双方案实现、工具函数、详细步骤，可独立完成复杂任务
