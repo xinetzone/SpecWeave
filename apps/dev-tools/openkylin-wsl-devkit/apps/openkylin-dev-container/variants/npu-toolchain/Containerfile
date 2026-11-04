@@ -1,0 +1,161 @@
+# npu-toolchain variant — Python 3.14 native build toolchain for npu_tvm /
+# npuusertools on top of the offline openKylin 3.0 rootfs baseline.
+#
+# Base: localhost/openkylin:3.0 — produced by importing the offline package
+#       /media/pc/data/ai/.agents/wsl-images/openKylin-3.0-desktop-wsl-amd64.wsl
+#       (gzip-compressed rootfs tar). That rootfs already ships gcc/g++ 15,
+#       python3.12, cmake 4.2.3, make, git and zlib headers, but no Ninja and
+#       no pkg-config.
+#
+# Why there is no package-manager layer:
+#       every openKylin package mirror (the official archive as well as the
+#       domestic university mirrors) is unreachable from this host, so an
+#       install layer would abort at its first RUN. The whole
+#       native toolchain therefore comes from conda-forge. Only two endpoints
+#       are reachable and used: mirrors.ustc.edu.cn (conda channels + Miniforge
+#       installer) and mirrors.aliyun.com (pip). No other source is referenced.
+#
+# Comments stay in English (same convention as the baseline Containerfile).
+# No credentials are baked in, and no service/port is exposed by this image.
+
+FROM localhost/openkylin:3.0
+
+# Miniforge installer served by the USTC github-release mirror (github.com
+# itself times out).
+ARG MINIFORGE_URL=https://mirrors.ustc.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-x86_64.sh
+# Optional hardening: pass the digest explicitly and abort on mismatch, e.g.
+#   podman build --build-arg MINIFORGE_SHA256=<sha256 of the .sh>
+ARG MINIFORGE_SHA256=
+ARG PYTHON_VERSION=3.14
+ARG CONDA_DIR=/opt/conda
+ARG CONDA_ENV=${CONDA_DIR}/envs/main
+
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+# ---------------------------------------------------------------------------
+# Layer 1: Miniforge distribution
+# The installer is fetched with curl, falling back to wget and then to the
+# baseline python3.12, so the build does not depend on a single downloader.
+# Integrity, in order of precedence:
+#   1. an explicit MINIFORGE_SHA256 build-arg (sha256sum -c);
+#   2. the USTC .sha256 / .sha256sum sidecar, when it exists and is non-empty;
+#   3. bash -n syntax check of the shell header only (the payload below
+#      @@END_HEADER@@ is a compressed binary blob, so a whole-file bash -n can
+#      never succeed) plus the real digest printed to the build log
+#      (never a hard-coded digest that was not verified on this mirror).
+# ---------------------------------------------------------------------------
+RUN set -euo pipefail; \
+    dst=/tmp/miniforge.sh; \
+    if command -v curl >/dev/null 2>&1; then \
+        curl -fSL --retry 3 --retry-delay 2 -o "$dst" "${MINIFORGE_URL}"; \
+    elif command -v wget >/dev/null 2>&1; then \
+        wget -O "$dst" "${MINIFORGE_URL}"; \
+    else \
+        python3 -c 'import sys,urllib.request; urllib.request.urlretrieve(sys.argv[1], sys.argv[2])' \
+            "${MINIFORGE_URL}" "$dst"; \
+    fi; \
+    actual="$(sha256sum "$dst" | awk '{print $1}')"; \
+    echo "[npu-toolchain] Miniforge3 sha256: $actual"; \
+    verified=0; \
+    if [ -n "${MINIFORGE_SHA256}" ]; then \
+        echo "${MINIFORGE_SHA256}  $dst" | sha256sum -c -; \
+        verified=1; \
+    elif command -v curl >/dev/null 2>&1; then \
+        for ext in .sha256 .sha256sum; do \
+            side="/tmp/miniforge${ext}"; \
+            if curl -fsSL --retry 2 -o "$side" "${MINIFORGE_URL}${ext}" 2>/dev/null \
+               && [ -s "$side" ]; then \
+                expected="$(awk 'NR==1{print $1}' "$side")"; \
+                if [ "$expected" = "$actual" ]; then \
+                    echo "[npu-toolchain] sidecar ${ext} matched ($expected)"; \
+                    verified=1; \
+                else \
+                    echo "[npu-toolchain] sidecar ${ext} mismatch: expected $expected"; \
+                    exit 1; \
+                fi; \
+                break; \
+            fi; \
+        done; \
+    fi; \
+    if [ "$verified" -eq 0 ]; then \
+        echo "[npu-toolchain] digest unverified: header syntax check only (see sha256 above)"; \
+        hdr="$(mktemp)"; \
+        end="$(grep -anm1 '^@@END_HEADER@@' "$dst" | cut -d: -f1)" || end=""; \
+        if [ -z "$end" ]; then \
+            rm -f "$hdr"; \
+            echo "FAIL: installer header marker @@END_HEADER@@ not found"; \
+            exit 1; \
+        fi; \
+        head -n "$end" "$dst" > "$hdr"; \
+        bash -n "$hdr"; \
+        rm -f "$hdr"; \
+    fi; \
+    bash "$dst" -b -p "${CONDA_DIR}"; \
+    rm -f "$dst" /tmp/miniforge.sha256 /tmp/miniforge.sha256sum
+
+# Persist the only reachable channel inside /opt/conda. repodata_use_zst lets
+# conda fetch the .json.zst variants, which the USTC mirror serves.
+# pkgs/main is deliberately absent: USTC answers every /anaconda/pkgs/main/*
+# request with a 302 to mirrors.nju.edu.cn, which is not reachable from this
+# host, so keeping it in the channel list only stalls and then fails the solve.
+RUN printf '%s\n' \
+        'channels:' \
+        '  - https://mirrors.ustc.edu.cn/anaconda/cloud/conda-forge' \
+        'channel_priority: flexible' \
+        'repodata_use_zst: true' \
+        'auto_activate_base: false' \
+        > "${CONDA_DIR}/.condarc"
+
+# ---------------------------------------------------------------------------
+# Layer 2: Python 3.14 + native toolchain in one conda env
+# ninja comes from conda because the rootfs lacks it (the rootfs does ship
+# cmake 4.2.3, make, gcc/g++ 15 and zlib headers). cmake, make and zlib are
+# still installed here so the whole toolchain lives in one prefix and does not
+# drift with the distro layer. -c flags are repeated here so the solve never
+# depends on an ambient .condarc.
+# ---------------------------------------------------------------------------
+RUN "${CONDA_DIR}/bin/conda" create -y -p "${CONDA_ENV}" \
+        --override-channels \
+        -c https://mirrors.ustc.edu.cn/anaconda/cloud/conda-forge \
+        "python=${PYTHON_VERSION}" \
+        cmake \
+        ninja \
+        pip \
+        make \
+        zlib \
+    && "${CONDA_ENV}/bin/pip" config set global.index-url https://mirrors.aliyun.com/pypi/simple/ \
+    && "${CONDA_ENV}/bin/pip" config set global.trusted-host mirrors.aliyun.com \
+    && "${CONDA_DIR}/bin/conda" clean -afy
+
+# ---------------------------------------------------------------------------
+# Layer 3: metadata + fail-fast gate
+# The gate is cheap and turns a broken solve into a build failure instead of a
+# runtime surprise: python >= 3.14, cmake >= 3.18, ninja >= 1.10, a working
+# gcc, and sys.prefix pinned to the conda env (never into /workspace).
+# PIP_INDEX_URL/PIP_TRUSTED_HOST are exported so the runtime user (uid 1006 via
+# userns keep-id, not root) gets the same mirror without extra setup.
+# ---------------------------------------------------------------------------
+ENV PATH=/opt/conda/envs/main/bin:/opt/conda/bin:${PATH} \
+    CONDA_PREFIX_MAIN=/opt/conda/envs/main \
+    LANG=C.UTF-8 \
+    PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/ \
+    PIP_TRUSTED_HOST=mirrors.aliyun.com
+
+RUN set -euo pipefail; \
+    ge() { [ "$(printf '%s\n%s\n' "$2" "$1" | sort -V | head -n1)" = "$2" ]; }; \
+    py="$(python -c 'import sys; print("%d.%d" % sys.version_info[:2])')"; \
+    ge "$py" "3.14" || { echo "FAIL: python $py < 3.14"; exit 1; }; \
+    cm="$(cmake --version | head -n1 | awk '{print $3}')"; \
+    ge "$cm" "3.18" || { echo "FAIL: cmake $cm < 3.18"; exit 1; }; \
+    nj="$(ninja --version)"; \
+    ge "$nj" "1.10" || { echo "FAIL: ninja $nj < 1.10"; exit 1; }; \
+    prefix="$(python -c 'import sys; print(sys.prefix)')"; \
+    [ "$prefix" = "/opt/conda/envs/main" ] \
+        || { echo "FAIL: sys.prefix=$prefix, expected /opt/conda/envs/main"; exit 1; }; \
+    gcc --version | head -n1; \
+    echo "[npu-toolchain] gate OK: python $py / cmake $cm / ninja $nj / prefix $prefix"
+
+# The baseline rootfs has no service stack (no sshd) and this variant publishes
+# no port: the container is an idle build box entered through podman exec.
+WORKDIR /workspace
+CMD ["sleep", "infinity"]
