@@ -24,11 +24,6 @@ date: "2026-07-09"
 
 | 文档 | 说明 | 成熟度 | 标签 |
 |------|------|--------|------|
-| [三对象分账法](./three-object-ledger.md) | 一次主题交付实含多个独立交付客体：分对象登记 → 同一性关系 → 逐平台路径，避免用同一产物应付多入口（案例：三入口参赛与写作指南知识包；validation_count=1，待独立验证） | L1-draft | `交付客体分账` `工具资格` `跨平台路径` |
-| [证据时序门](./evidence-timing-gate.md) | 不可逆公开动作按三线并列倒排、按实际时刻算窗口、任一前提未知即暂停并保留退路（案例：三入口参赛与写作指南知识包；validation_count=1，待独立验证） | L1-draft | `不可逆动作` `证据就绪` `时序窗口` |
-| [核验范围限定](./verification-scope-bounding.md) | 结论必写四项：谁检查·查哪份·截至何时·仍不覆盖什么，把「证据有没有」推进到「这份证据能支持多大的话」（案例：三入口参赛与写作指南知识包；validation_count=1，待独立验证） | L1-draft | `核验范围` `结论口径` `未覆盖声明` |
-| [本地不可自测面的显式立项](./locally-unobservable-surface-explicit-scoping.md) | 验证范围的边界比验证深度更决定成败：验收方维度先穷举再标可测性，不可自测面要么找代理观测手段、要么显式列为待办 | L1 | `外部验收面` `审查面覆盖` `平台审核` |
-| [声明面与执行面的双侧对账](./declared-vs-executed-dual-surface-reconciliation.md) | 声明与执行分处两面、独立出错、失败现象相反：双面提取 → 映射建模 → 逐项对账 → 同批修改 | L1 | `声明对账` `双侧验证` `平台合规` |
 | [V阶段对抗审查「用户视角优先」权重分配模式](./adversarial-perspective-weighting.md) | V阶段对抗审查「用户视角优先」权重分配模式 | L1 |  |
 | [两栖定位模型（Amphibious Positioning Model）](./amphibious-positioning-model.md) | 两栖定位模型（Amphibious Positioning Model） | L1 |  |
 | [命令别名重生法（AppX 别名重生术）](./appx-alias-rebirth.md) | 命令别名重生法（AppX 别名重生术） | L1 | `应用执行别名` `Appx` `Windows Terminal` |
@@ -56,11 +51,13 @@ date: "2026-07-09"
 | [配置持久化全链路覆盖模式](./config-persistence-full-chain-coverage.md) | 配置持久化全链路覆盖模式 | L1 实验性 | `config` `persistence` `cmake` |
 | [公私域内容分离路由](./content-sensitivity-routing.md) | 公私域内容分离路由 | L1-draft | `内容敏感度` `公私域分离` `文档治理` |
 | [约定驱动创建模型：范例即模板](./convention-driven-creation.md) | 约定驱动创建模型：范例即模板 | L2 |  |
+| [收口期三线闭环：版本定源、约定门禁化与文档诚实化的顺序治理](./convergence-period-triple-track.md) | 收口期三线闭环：版本定源、约定门禁化与文档诚实化的顺序治理 | L1 |  |
 | [凭证副本最小化：目录镜像/备份/同步中的凭证防护法](./credential-copy-minimization.md) | 凭证副本最小化：目录镜像/备份/同步中的凭证防护法 | L2 | `credential` `backup-safety` `mirror` |
 | [跨期指标口径对齐先行](./cross-period-metric-scope-alignment.md) | 跨期指标口径对齐先行 | L1 |  |
 | [跨平台门禁权威分工法](./cross-platform-gate-authority.md) | 跨平台门禁权威分工法 | L1 |  |
 | [跨Wiki引用目录优先验证模式](./cross-wiki-reference-directory-first.md) | 跨Wiki引用目录优先验证模式 | L2 |  |
 | [量化数据验证四查法](./data-validation-four-checks.md) | 量化数据验证四查法 | L2 | `data-validation` `documentation` `drift-detection` |
+| [声明面与执行面的双侧对账](./declared-vs-executed-dual-surface-reconciliation.md) | 声明面与执行面的双侧对账 | L1 |  |
 | [防御性编程第一性原理：7项根因原则](./defensive-programming-first-principles.md) | 防御性编程第一性原理：7项根因原则 | L2 |  |
 | [依赖序切片门禁法](./dependency-ordered-slice-gates.md) | 依赖序切片门禁法 | L1 |  |
 | [开发环境 Dockerfile 优化法：优先排序而非最小化](./dev-env-dockerfile-optimization.md) | 开发环境 Dockerfile 优化法：优先排序而非最小化 | L1 |  |
@@ -75,6 +72,7 @@ date: "2026-07-09"
 | [弹性流程分级：按变更风险选择流程路径](./elastic-workflow-classification.md) | 弹性流程分级：按变更风险选择流程路径 | L2 |  |
 | [熵增定律自动化第一性原理（Entropy Law: Automation Against Chaos）](./entropy-law-automation-principle.md) | 熵增定律自动化第一性原理（Entropy Law: Automation Against Chaos） | L2 | `第一性原理` `熵增定律` `自动化` |
 | [证据链工程化（过程约束 → 可审计证据资产）](./evidence-chain-engineering.md) | 证据链工程化（过程约束 → 可审计证据资产） | L1 | `证据链` `合规审计` `过程留痕` |
+| [证据时序门](./evidence-timing-gate.md) | 证据时序门 | L1 | `不可逆动作` `证据就绪` `资格门` |
 | [豁免机制合法化](./exemption-mechanism-legalization.md) | 豁免机制合法化 | L2 | `exemption` `governance` `legalization` |
 | [讲解自犯效应（Explainer Self-Violation Effect）](./explainer-self-violation-effect.md) | 讲解自犯效应（Explainer Self-Violation Effect） | L2 | `元认知` `认知偏差` `讲解自犯` |
 | [显式报错优于静默降级：自动化系统故障显性化原则](./fail-loud-over-silent-fallback.md) | 显式报错优于静默降级：自动化系统故障显性化原则 | L2 | `显式报错` `静默降级` `故障显性化` |
@@ -88,6 +86,7 @@ date: "2026-07-09"
 | [四维留余框架：不确定环境下长期存续的冗余管理策略](./four-dimension-margin-framework.md) | 四维留余框架：不确定环境下长期存续的冗余管理策略 | L2 | `风险管理` `冗余` `决策` |
 | [外部依赖四不原则](./four-negatives-external-dependency.md) | 外部依赖四不原则 | L3 | `governance` `external-dependency` `vendor` |
 | [第一性原理多维证伪验收法](./fp-multi-dimensional-falsification.md) | 第一性原理多维证伪验收法 | L1 |  |
+| [基线型门禁的写盘不变量：生成器不得洗白漂移](./gate-baseline-write-invariants.md) | 基线型门禁的写盘不变量：生成器不得洗白漂移 | L1 |  |
 | [治理×引擎双件闭环](./governance-engine-dual-loop.md) | 治理×引擎双件闭环 | L1.5 | `治理×引擎` `双件闭环` `自进化` |
 | [治理基建四层递进模型](./governance-four-layer-progressive.md) | 治理基建四层递进模型 | L2 |  |
 | [治理演化三阶段：修复→预防→闭环](./governance-three-stage-evolution.md) | 治理演化三阶段：修复→预防→闭环 | L2 | `meta-methodology` `governance` `quality` |
@@ -106,6 +105,7 @@ date: "2026-07-09"
 | [Learn-Validate-Adopt：外部标准采用三步法](./learn-validate-adopt.md) | Learn-Validate-Adopt：外部标准采用三步法 | L1 |  |
 | [台账存量审计：注册清单与磁盘存量的一致性审计法](./ledger-stock-consistency-audit.md) | 台账存量审计：注册清单与磁盘存量的一致性审计法 | L2 | `ledger` `inventory-audit` `shadow-assets` |
 | [本地依赖缓存代理体系：多层缓存加速构建](./local-dependency-cache-proxy.md) | 本地依赖缓存代理体系：多层缓存加速构建 | L1-draft |  |
+| [本地不可自测面的显式立项](./locally-unobservable-surface-explicit-scoping.md) | 本地不可自测面的显式立项 | L1 |  |
 | [审查低危问题「登记不修」闭环门](./low-risk-wontfix-closure-gate.md) | 审查低危问题「登记不修」闭环门 | L1 | `review-closure` `wontfix` `risk-acceptance` |
 | [元方法论自举行动计划——七概念触发匹配CLI工具](./meta-bootstrap-action-plan.md) | 元方法论自举行动计划——七概念触发匹配CLI工具 | L1 | `行动计划` `元方法论` `自举验证` |
 | [元方法论自举模式](./meta-methodology-bootstrap.md) | 元方法论自举模式 | L2 | `meta-methodology` `bootstrap` `self-validation` |
@@ -163,7 +163,7 @@ date: "2026-07-09"
 | [共享索引计数耦合与同批判决](./shared-index-count-coupling.md) | 共享索引计数耦合与同批判决 | L2 | `shared-index` `count-coupling` `atomic-commit` |
 | [短指令模式](./short-command-patterns.md) | 短指令模式 | L2 |  |
 | [简单任务高风险定律（Simple Task High-Risk Law）](./simple-task-high-risk.md) | 简单任务高风险定律（Simple Task High-Risk Law） | L2 | `简单任务陷阱` `认知偏差` `System1接管` |
-| [单一权威源与多载体声明面对齐](./single-authority-declaration-alignment.md) | 单一权威源与多载体声明面对齐 | L1 |  |
+| [单一权威源与多载体声明面对齐](./single-authority-declaration-alignment.md) | 单一权威源与多载体声明面对齐 | L2 |  |
 | [Skill迁移位置治理：统一Skill存放位置的五步标准化流程](./skill-migration-position-governance.md) | Skill迁移位置治理：统一Skill存放位置的五步标准化流程 | - |  |
 | [快照对拍迁移法](./snapshot-parity-migration.md) | 快照对拍迁移法 | L1 |  |
 | [规范可发现性保障模式（Spec Discoverability Guarantee）](./spec-discoverability-guarantee.md) | 规范可发现性保障模式（Spec Discoverability Guarantee） | L1 |  |
@@ -188,6 +188,7 @@ date: "2026-07-09"
 | [规则落地三层模型：定义+痕迹+验证](./three-layer-rule-enforcement.md) | 规则落地三层模型：定义+痕迹+验证 | L2 |  |
 | [规范约束三层次模型（Three-Layer Spec Constraint Model）](./three-layer-spec-constraint.md) | 规范约束三层次模型（Three-Layer Spec Constraint Model） | L2 |  |
 | [问题解决三层跃迁范式（Three-Level Problem Solving Paradigm）](./three-level-problem-solving.md) | 问题解决三层跃迁范式（Three-Level Problem Solving Paradigm） | L1 |  |
+| [三对象分账法](./three-object-ledger.md) | 三对象分账法 | L1 | `交付客体分账` `工具资格` `许可登记` |
 | [三段式内容验证模式：任务级→专项→终验](./three-stage-content-validation.md) | 三段式内容验证模式：任务级→专项→终验 | L1 |  |
 | [三态决策模式：做/明确不做/推迟（Do/Explicitly-No/Defer）](./three-state-decision.md) | 三态决策模式：做/明确不做/推迟（Do/Explicitly-No/Defer） | L1 | `decision-making` `governance` `retrospective` |
 | [三层看板体系：看-管-建全生命周期覆盖](./three-tier-board-system.md) | 三层看板体系：看-管-建全生命周期覆盖 | L1 |  |
@@ -198,6 +199,7 @@ date: "2026-07-09"
 | [文档治理双维度检查模型（Two-Dimension Document Governance Model）](./two-dimension-document-governance.md) | 文档治理双维度检查模型（Two-Dimension Document Governance Model） | L2 |  |
 | [两阶段开发模式（Two-Phase Development: Validate First, Optimize Later）](./two-phase-development.md) | 两阶段开发模式（Two-Phase Development: Validate First, Optimize Later） | - |  |
 | [第三方供应商全生命周期治理模型](./vendor-lifecycle-governance.md) | 第三方供应商全生命周期治理模型 | L1 |  |
+| [核验范围限定](./verification-scope-bounding.md) | 核验范围限定 | L1 | `核验范围` `结论口径` `证据边界` |
 | [版本涟漪Grep清扫模式：单点更新后的多点引用同步](./version-ripple-grep-sweep.md) | 版本涟漪Grep清扫模式：单点更新后的多点引用同步 | L2 | `version-control` `consistency` `grep` |
 | [Wiki双轨Frontmatter规范模式](./wiki-dual-track-frontmatter.md) | Wiki双轨Frontmatter规范模式 | L2 |  |
 | [Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern）](./wiki-pre-creation-three-checks.md) | Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern） | L3 |  |
@@ -219,4 +221,4 @@ date: "2026-07-09"
 
 ---
 
-<!-- generated by generate-readme.py on 2026-10-23 -->
+<!-- generated by generate-readme.py on 2026-10-29 -->

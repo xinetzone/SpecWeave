@@ -1,0 +1,5 @@
+id = "skill"
+title = "读后写前漂移恢复 Skill"
+category = "skills/stale-read-edit-reconciliation"
+date = "2026-10-28"
+version = "1.0.0"

@@ -1,5 +1,5 @@
 ---
-status: "draft"
+status: "completed"
 title: "从帛书《老子》视角分析 Xuanspace 并产出项目蓝图与优化建议书 - 实施计划"
 change-id: "analyze-xuanspace-through-boshu-laozi"
 ---
@@ -345,3 +345,217 @@ change-id: "analyze-xuanspace-through-boshu-laozi"
 | 根仓 | `f92d2ebe1` | `chore(xuanspace): 前移子模块指针并回写 P1-4① 落地证据`（`tasks.md` + `review.md` + gitlink） |
 
 > 未 push、未 tag。子模块 HEAD 为 `f9e2b2cde2c04055dd58026b7c38d168e2ce274a`，根仓 gitlink 与之对齐。子模块工作树残留项（`.gitignore`、`pyproject.toml`、`src/xuanspace/__init__.py`、`tools/xs/**`、`libs/xuan-compose/**`、`libs/caffe-ffi/**`、`libs/npu-ffi/**`、`libs/demo-ffi/**`）为**并行会话在途改动**，本轮未触碰、未提交。
+
+## 后续任务：声明一致性门禁扩容与残余漂移清理（第八轮授权）
+
+> 本节记录规格完成后**第八轮**经用户另行授权执行的工作：① 把 `scripts/check_declaration_consistency.py` 从三类断言扩容至**六类**（新增 D vendor 清单、E 子模块声明、F 项目索引）；② 清理两处残余漂移（`doc/architecture.md` 失实的 `CMakeLists.txt` 行、`vendor/README.md` 的「待实际添加后更新此表」占位符）。本轮兑现《项目蓝图》目标态特征 1「所有可机械提取的声明（子项目清单、命令清单、目录树）要么由脚本生成，要么受 CI 断言约束」。不改写 Task 1–18 的原始记录。
+
+- [x] Task 19: 声明一致性门禁扩容至六类断言并清理残余漂移
+  - **Priority**: medium
+  - **Depends On**: Task 18
+  - **Description**: 既有门禁仅覆盖 A（CLI 命令清单）、B（子项目清单生成块）、C（目录名口径）三类，`vendor/README.md` 子项目表、`CONTRIBUTING.md` 子模块计数与表、`README.md` 项目索引表三处声明仍无断言守护。本轮补齐 D/E/F 三类，并把新增的 `submodules` 事实纳入清单快照；同时清除两处与磁盘不符的残余陈述。
+  - [x] SubTask 19.1: 新增解析助手与事实/声明提取函数——`_section`（截二级标题间正文）、`_table_first_column`（只解析首张连续表首列）、`extract_dir_names`、`extract_submodules`（解析 `.gitmodules` 的 `path`）、`extract_vendor_submodules`、`declared_vendor_projects`、`declared_contributing_submodules`、`declared_submodule_count`、`declared_index_projects`、`expected_index_projects`（tools/ ∪ libs/ ∪ vendor/ 子模块）
+  - [x] SubTask 19.2: `run_checks` 新增 D（vendor 表 ↔ `.gitmodules` vendor 子模块）、E（`包含 N 个上游子模块` 计数与子模块表 ↔ `.gitmodules`）、F（「项目索引」表 ↔ tools/ + libs/ 磁盘 ∪ vendor 子模块）三段；`collect_manifest` 加 `submodules` 键，快照比对改为遍历 manifest 全键（新增键自动纳入校验）
+  - [x] SubTask 19.3: 清理两处残余漂移——`doc/architecture.md` 删根目录树中失实的 `CMakeLists.txt` 行（该项目为纯 Python 枢纽包，`wheel.cmake = false`）；`vendor/README.md`「现有子项目」表前删「（待实际添加后更新此表）」占位符
+  - [x] SubTask 19.4: 同步口径文案——脚本模块 docstring「覆盖三类声明」→「覆盖六类声明」（列 A–F）、成功输出与 argparse description 同步；`scripts/declaration-snapshot.json` 刷新纳入 `submodules` 键；`.github/workflows/ci.yml` 步骤注释同步为六类
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace` 内脚本与文档）
+  - **Test Requirements**:
+    - `rule` TR-19.1: 校验模式退出码 = 0，输出「声明与实现一致：CLI 命令清单 / 子项目清单 / 目录名口径 / vendor 清单 / 子模块声明 / 项目索引 全部通过。」
+    - `rule` TR-19.2: 负向探针 4/4 PASS——基线（无漂移）+ D（vendor 表删 `caffe` 行）+ E（`包含 4 个上游子模块` 改 `5 个`）+ F（项目索引插 `ghost` 行）均按预期退出码与关键词命中；探针在 `tempfile` 夹具上执行，不触碰真实仓库
+    - `rule` TR-19.3: 生成模式幂等——`--generate` 二次运行输出「已是目标状态，跳过」且退出码 = 0
+    - `rule` TR-19.4: `--json` → `{"ok": true, "failures": [], "notes": []}`
+    - `rule` TR-19.5: `ruff check scripts/check_declaration_consistency.py` 通过
+    - `rule` TR-19.6: `check-links.py --paths doc vendor scripts`（cwd = `projects/xuanspace`）本轮 4 文件 **0 新增断链**（33 处为存量）
+    - `rule` TR-19.7: 根仓 `git ls-tree HEAD projects/xuanspace` 的 gitlink = 子模块 HEAD
+
+## 提交记录（证据，第八轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `fd6d7e6` | `feat(scripts): 声明一致性门禁扩容至六类断言并清理残余漂移`（5 文件，+149/−19：`scripts/check_declaration_consistency.py` + `scripts/declaration-snapshot.json` + `doc/architecture.md` + `vendor/README.md` + `.github/workflows/ci.yml`） |
+| 根仓 | `8d5872424` | `chore(xuanspace): 前移子模块指针并回写门禁扩容证据`（`tasks.md` + `review.md` + gitlink） |
+
+> 未 push、未 tag。子模块 HEAD 为 `fd6d7e6bdc2447b8e027d56b6f4f5f65338c6a55`，根仓 gitlink 与之对齐。根仓 `?? .trae/specs/financial-economics-okf-wiki/` 与 ` ? projects/awesome-okf-xs` 为**并行会话在途改动**，本轮未触碰、未提交。
+
+## 后续任务：依赖方向门禁（第九轮授权）
+
+> 本节记录规格完成后**第九轮**经用户另行授权执行的工作：兑现《项目蓝图》目标态三特征中**唯一未兑现**的特征 3「方向可断言」——把 `libs/README.md`「依赖规则」一节的分区依赖规则从「只写在文档里」变为 CI 可判定。不改写 Task 1–19 的原始记录。
+
+- [x] Task 20: 新增依赖方向门禁（分区依赖规则可断言）
+  - **Priority**: medium
+  - **Depends On**: Task 19
+  - **Description**: 蓝图目标态三特征中，特征 1（声明可核对，第八轮六类断言）与特征 2（单一事实来源，P1-4① 生成块 + 快照）已兑现，特征 3「方向可断言」仍只在文档里——蓝图洞察 I4 明言该依赖方向约束「只写在图里、未被任何检查断言」。本轮新增 `scripts/check_dependency_direction.py`：以 `ast` 解析 `libs/` 下全部 Python 源码的 import，断言不依赖 `apps/`、`scripts/`、`attic/`、`vendor/`，与 `libs/README.md`「依赖规则」同源。
+  - [x] SubTask 20.1: 新建 `scripts/check_dependency_direction.py`——规则常量 `FORBIDDEN_IMPORTS` 登记为单一事实来源；`ast.walk` 取绝对导入顶层模块名（`Import` 与 `ImportFrom`，`level > 0` 的相对导入不检查）；`_submodule_paths` / `_is_nested_submodule` 排除 `.gitmodules` 声明的子模块（`libs/mystx`、`libs/tvm-book`）；`IGNORED_DIR_NAMES` 跳过构建产物与缓存目录；`main() -> int` 返回 0/1/2，输出「文件:行号:顶层模块」定位
+  - [x] SubTask 20.2: 接入 CI——`.github/workflows/ci.yml` quality job 在 declaration 之后增「Check dependency direction」步骤；并修正该 job 头注释（原「五项」与所列六项不符）为「七项」并纳入 `dependency`
+  - [x] SubTask 20.3: `scripts/README.md`「现有脚本示例」表补 `check_dependency_direction.py` 行（校验类、幂等=是）；并修正 `check_declaration_consistency.py` 行描述（第八轮扩至六类后仍写三类）
+  - [x] SubTask 20.4: `libs/README.md`「依赖规则」一节补注脚——声明该规则由脚本在 CI 中机械断言，其 `FORBIDDEN_IMPORTS` 为单一事实来源
+  - [x] SubTask 20.5: 决策记录——`doc/blueprint.md` 事实清单第 14/15/17 行的行号引用（`libs/README.md#L106-L111`、`#L115-L118`）与洞察 I4 行动项中的同址引用，系**带基线 `8db593d5` 的时点快照事实**（其漂移本身即 P1-4① 注入生成块所致，已在第八轮登记）；按项目「不改动历史事实快照」约束**不予回改**，仅在本规格留痕
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace` 内脚本与文档）
+  - **Test Requirements**:
+    - `rule` TR-20.1: 基线退出码 = 0，输出「扫描到 291 个 Python 文件（分区：libs）」与「全部通过依赖方向校验：libs 未依赖 apps, scripts, attic, vendor。」
+    - `rule` TR-20.2: 负向探针 3/3 命中——在 `libs/xuan-core/src/xuan_core/` 临时注入 `from scripts import x` / `import vendor.caffe` / `from attic.old import y`，退出码 = 1 且逐条输出 `文件:行号: 禁止导入 '<分区>'（来自 '<模块>'）`；清理探针后恢复退出码 = 0
+    - `rule` TR-20.3: 相对导入不误报——`from . import x` / `from ..mod import y`（`level > 0`）不进入检查，探针验证通过
+    - `rule` TR-20.4: `ruff check` 与 `ruff format --check` 对新脚本通过（新脚本省略 `# -*- coding: utf-8 -*-` 且不含 `from __future__ import annotations`，符合 py314 规范）
+    - `rule` TR-20.5: 既有门禁无回归——`check_declaration_consistency.py` 退出码 = 0（六类全通过）、`check_pyproject_style.py` 退出码 = 0（12 个 pyproject.toml）
+    - `rule` TR-20.6: `check-links.py --paths libs/README.md scripts/README.md doc/blueprint.md`（cwd = `projects/xuanspace`）本轮 3 文件 **0 新增断链**
+    - `rule` TR-20.7: 根仓 `git ls-tree HEAD projects/xuanspace` 的 gitlink = 子模块 HEAD
+
+## 提交记录（证据，第九轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `c50f18e` | `feat(scripts): 新增依赖方向门禁并同步文档与 CI`（4 文件，+164/−2：`scripts/check_dependency_direction.py`（新建）+ `scripts/README.md` + `libs/README.md` + `.github/workflows/ci.yml`） |
+| 根仓 | `06f37e234` | `chore(xuanspace): 前移子模块指针并回写依赖方向门禁证据`（`tasks.md` + `review.md` + gitlink） |
+
+> 未 push、未 tag。子模块 HEAD 为 `c50f18eb26f62e3d0f56cb60c10655e5e50dd233`，根仓 gitlink 与之对齐。本轮 `projects/xuanspace` 工作树仅含本轮 4 项变更（无并行会话残留）；根仓在途改动（并行会话已自行提交 `b40d65e82`、`68f5f0b79`）本轮未触碰。
+
+## 后续任务：存量断链修复（第十轮授权）
+
+> 本节记录规格完成后**第十轮**经用户另行授权执行的工作：清理 `doc/` 目录内 33 处「省略 `.md` 扩展名」的相对链接——该批断链自第一轮（Task 7 取证）起即由根仓 `check-links.py` 报出，长期以「存量」挂账。本轮**先做根因判定再修**，避免照单全改。不改写 Task 1–20 的原始记录。
+
+- [x] Task 21: 修复 `doc/` 目录 33 处省略扩展名的相对链接
+  - **Priority**: medium
+  - **Depends On**: Task 20
+  - **Description**: 33 处断链分布在 7 个文件；目标文件全部**真实存在**，差异仅在链接未写 `.md`。故本轮的关键不是「改 33 处」而是**先定性**：是文档缺陷，还是检查器误报？定性决定修复对象（改文档 vs 改检查器）。
+  - [x] SubTask 21.1: 根因判定（I+F，三项独立验证）——
+    ① **渲染验证**（决定性）：`sphinx -b html` 产物 `doc/_build/probe/intro.html` 中 `[快速开始](quickstart)` 渲染为 `<a class="reference internal" href="quickstart.html"><span class="doc std std-doc">快速开始</span></a>`，与 `.md` 写法产物**逐字一致** → **渲染无缺陷**，`check-links.py` 判为断链属**误报**（该脚本未实现 MyST docname 解析）；
+    ② **约定验证**：仓内唯一书面化的链接格式规则是 `doc/okf/synthesis.md` L12 的 `` `- [<title>](<相对路径>.md)` ``，且 `doc/index.md`、`doc/okf/synthesis.md` 均照此写 → 这 33 处**违反仓内书面约定**；
+    ③ **门禁验证**：CI 走的是 `xs doc linkcheck`（Sphinx linkcheck，只校外链），根仓 `check-links.py` 才拦本地相对链接 → 该批断链的**真实影响面**是「仓内链接门禁常红、PR 要求无法满足」，而非站点 404
+  - [x] SubTask 21.2: 修复 33 处（7 文件，33 增 33 删）——`doc/intro.md`（4）、`doc/quickstart.md`（4）、`doc/okf/architecture.md`（4）、`doc/okf/bundle.md`（11）、`doc/okf/commands.md`（3）、`doc/okf/conformance.md`（1）、`doc/okf/quickstart.md`（6）；逐条与检查器输出的 `文件:行号` 对齐核对
+  - [x] SubTask 21.3: 预防（修复即闭环）——`CONTRIBUTING.md` §12.4「文档风格建议」增一行：交叉引用一律使用带 `.md` 扩展名的相对路径，并说明省略扩展名会被链接门禁判为断链。选点理由：该文件经 `{include} ../CONTRIBUTING.md` 进入 `doc/contributing.md`，是文档作者的通用入口，而原约定只写在 `okf/synthesis.md`（OKF 教程局部），故顶层与 okf 教程作者看不到——这正是漂移得以存续九轮的机制
+  - [x] SubTask 21.4: 决策记录——**不修改**根仓 `.agents/scripts/check-links.py`。该脚本未实现 MyST docname 解析，是误报来源；但它是**主权区共享资产**，改动影响全仓所有 app，需另行授权；且「带/不带 `.md` 两种写法都合法」会造成口径分裂，与单一事实来源相悖。本轮取「统一文档到已书面化的 `.md` 约定」路线，把检查器局限作为**已知限制**登记而非就地修补
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace`）、AC-7（门禁不回归）
+  - **Test Requirements**:
+    - `rule` TR-21.1: `check-links.py --path doc`（cwd = `projects/xuanspace`）退出码 = 0，输出「校验通过: 所有链接均有效」（修复前：33 断链、退出码 1）
+    - `rule` TR-21.2: 残留检索 `\]\((?:trust|attested|conformance|commands|synthesis|plugins|bundle|index|architecture|build-system|contributing|cli/index|quickstart)\)` 于 `doc/**/*.md` 命中 = **0**（修复前 32 + `quickstart` 1 = 33）
+    - `rule` TR-21.3: `sphinx -b html doc doc/_build/probe2` 构建成功、无 WARNING/ERROR；抽验产物 `okf/bundle.html` 的 `href`（`trust.html`、`attested.html`）与修复前逐字一致 → 修复为**纯口径统一、零渲染变化**
+    - `rule` TR-21.4: `git diff --stat` 恰为 7 文件 **33 增 33 删**（无附带改动）
+    - `rule` TR-21.5: 既有门禁无回归——`check_pyproject_style.py`（12 个 pyproject.toml）退出码 = 0；`check_declaration_consistency.py`（六类）退出码 = 0；`check_dependency_direction.py`（291 文件）退出码 = 0；`check-links.py --path CONTRIBUTING.md` 退出码 = 0（新增预防条款未引入本地引用误报）
+
+## 提交记录（证据，第十轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `13b98b3` | `docs(xuanspace): 统一 doc/ 相对链接为带 .md 扩展名的仓内约定`（8 文件，+34/−33：7 个 `doc/**` 文档 33 处链接 + `CONTRIBUTING.md` 预防条款） |
+| 根仓 | `f8e60d147` | `chore(xuanspace): 前移子模块指针并回写存量断链修复证据`（`tasks.md` + `review.md` + gitlink） |
+
+> 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 8 项变更。
+
+## 后续任务：过程性文档清理（第十一轮授权）
+
+> 本节记录规格完成后**第十一轮**经用户裁定执行的文档生命周期处置：删除两份**过程性分析产物** `doc/blueprint.md`（《项目蓝图》）与 `doc/recommendations.md`（《优化建议书》），并清理其导航登记与交叉引用。裁定依据见 review.md §20。不改写 Task 1–21 的原始记录，亦不回改 §一 AC-1 的勾选（历史可审计性）。
+
+- [x] Task 22: 删除 `doc/blueprint.md` 与 `doc/recommendations.md`
+  - **Priority**: low
+  - **Depends On**: Task 21
+  - **Description**: 两份文档为**一次性过程性分析产物**，其权威载体已转移至本规格三件套（决策与证据）与 git 历史（变更事实）；`recommendations.md` 已收口为终态空壳（12 行，条目全部闭环后正文移除），`blueprint.md` 内容基于基线 `8db593d` 已与现状不一致（其标记「薄弱」的事项多数已在第七至十轮闭环）。活文档与现状不一致即**失真源**，故删除。
+  - [x] SubTask 22.1: 洞察（I）——机械提取引用面：`doc/index.md` L64–70 的「规划」toctree 登记两项；`blueprint.md` L308 ↔ `recommendations.md` L3/L12 互引。确认二者是**活的 doc/ 文档**（非规格历史快照）
+  - [x] SubTask 22.2: 第一性原理（F）——剥离叙事看本质：蓝图＝分析结论、建议书＝待办清单，均属**一次性产物**；结构叙事已由 `README.md` 与 `doc/architecture.md` 承载，无需第三份重复且易腐
+  - [x] SubTask 22.3: 删除两份文档（`doc/blueprint.md`、`doc/recommendations.md`）
+  - [x] SubTask 22.4: 清理导航与引用——移除 `doc/index.md` 的「规划」toctree（两项全删后该分组变空）
+  - [x] SubTask 22.5: 决策记录——**不回改** review.md §一 AC-1 的勾选记录（该断言的范围是规格实施过程，删除属规格完成后经用户裁定的新决策，二者不矛盾）
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace`）、AC-7（门禁不回归）
+  - **Test Requirements**:
+    - `rule` TR-22.1: `check-links.py --path doc`（cwd = `projects/xuanspace`）退出码 = 0（20 个 Markdown 文件、35 处本地引用全有效；删除后「规划」toctree 与互引一并消失，无新增断链）
+    - `rule` TR-22.2: 残留检索 `blueprint|recommendations` 于 `doc/**/*.md` 命中 = **0**
+    - `rule` TR-22.3: `sphinx -b html doc doc/_build/probe3` 构建成功、无 WARNING/ERROR、无 orphan 警告
+    - `rule` TR-22.4: 变更面恰为 3 项（`doc/blueprint.md` D、`doc/recommendations.md` D、`doc/index.md` M）
+
+## 提交记录（证据，第十一轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `91ba03d` | `docs(xuanspace): 删除已闭环的过程性分析文档并清理导航`（3 文件：`doc/blueprint.md` D、`doc/recommendations.md` D、`doc/index.md` M） |
+| 根仓 | `575f839d1` | `chore(xuanspace): 前移子模块指针并回写过程性文档清理证据`（`tasks.md` + `review.md` + gitlink） |
+
+> 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 3 项变更。
+
+## 后续任务：文档易腐性清理与门禁扩容（第十二轮授权）
+
+> 本节记录规格完成后**第十二轮**经用户裁定执行的工作：①删除手工维护的时点快照 `doc/dependency-report.md`（及其 `.meta` 元数据镜像）；②修复活文档 `doc/cli/index.md` 的命令清单失真；③把门禁断言 A 扩容覆盖该文件以预防同类漂移。裁定依据见 review.md §21。不改写 Task 1–22 的原始记录，亦不回改历史验收勾选。
+
+- [x] Task 23: 删除 `doc/dependency-report.md` 并修复 `doc/cli/index.md` 失真 + 门禁扩容
+  - **Priority**: low
+  - **Depends On**: Task 22
+  - **Description**: `dependency-report.md` 是**手工维护的时点快照**（全仓无生成器），必然随实现演进而漂移，且已实证偏离（CI job 表误列已不存在的 `lint`、漏 `py-compat`；子模块树仅列 2 项、实际 4 项；`apps/` 仍标「空，待填充」），其持久事实已由 `architecture.md`/`build-system.md`/`CONTRIBUTING.md` 承载 → 删除。`cli/index.md` 是**活参考文档**（README 以其为 CLI 参考链接）却仅列 13 条命令，缺 `xs archive`/`xs lfs`（README 声明 15 条）→ 补全，并扩容门禁断言 A 覆盖之。
+  - [x] SubTask 23.1: 洞察（I）——机械提取引用面：`doc/index.md` L60「项目」toctree；`.meta/toml/doc/dependency-report.toml`（`x-toml-ref` 目标）；文档自引三处。核验命令口径：`cli.py` 实际注册 **15** 项（7 `add_typer` + 8 `app.command`），`intro.md` 已列全、`cli/index.md` 仅列 13
+  - [x] SubTask 23.2: 第一性原理（F）——区分**活文档**与**时点快照**：报告类产物若不自带生成器，其功能等价于「过期风险载体」；CLI 参考的功能是「与注册表一致」，故唯一正确形态是受门禁约束的活文档
+  - [x] SubTask 23.3: 属性判定——`dependency-report.md` ＝ 时点快照（处置：删除）；`cli/index.md` ＝ 活文档但内容过期（处置：更新对齐 + 门禁约束）
+  - [x] SubTask 23.4: 删除 `doc/dependency-report.md` 与 `.meta/toml/doc/dependency-report.toml`，移出 `doc/index.md`「项目」toctree
+  - [x] SubTask 23.5: 补全 `doc/cli/index.md` 的 `xs archive`（archive/unarchive）与 `xs lfs`（check/patterns）两条，含总览表行与细则章节
+  - [x] SubTask 23.6: 结论化（C）——扩容 `check_declaration_consistency.py` 断言 A：新增 `CLI_REF_FILE` 常量与 `declared_cli_ref_commands()`，共用 `_DOC_CMD_ROW_RE`，`run_checks` 增加「`cli/index.md` 命令总览 ↔ 注册表」集合比对
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace`）、AC-7（门禁不回归且**增强**）
+  - **Test Requirements**:
+    - `rule` TR-23.1: `check_declaration_consistency.py` 退出码 = 0（六类全通过，含新增的 `cli/index.md` 覆盖）
+    - `rule` TR-23.2: 负向回归（内存预演，不动磁盘文件）——将 `cli/index.md` 内存副本移除 `xs archive` 行后重跑 `run_checks`，失败项含 `doc/cli/index.md 命令总览 与事实不一致（声明缺：['archive']；声明多：[]）`，证明新断言有效
+    - `rule` TR-23.3: `check-links.py --path doc`（cwd = `projects/xuanspace`）退出码 = 0（19 个 Markdown 文件、35 处本地引用全有效）
+    - `rule` TR-23.4: `sphinx -b html doc doc/_build/probe5` 构建成功、无 WARNING/ERROR、无 orphan 警告
+    - `rule` TR-23.5: 残留检索 `dependency-report|dependency_report` 全仓命中 = **0**
+    - `rule` TR-23.6: `xs meta validate` 报出条目**无一条**落在 `doc/` 或 `.meta/`（122 项均为 `libs/caffe-ffi`、`libs/mystx`、`vendor/caffe`、`tools/okf/tests/fixtures` 既有问题）
+    - `rule` TR-23.7: 变更面恰为 5 项（两删除 + `doc/index.md`、`doc/cli/index.md`、`scripts/check_declaration_consistency.py` 修改）
+
+## 提交记录（证据，第十二轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `72898a2` | `docs(xuanspace): 删除失效的依赖报告并补全 CLI 参考与门禁覆盖`（5 文件，+53/−143） |
+| 根仓 | `7a73015a6` | `chore(xuanspace): 前移子模块指针并回写文档易腐性清理证据`（`tasks.md` + `review.md` + gitlink） |
+
+> 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 5 项变更。
+
+## 后续任务：doc/ 全量易腐性筛查与失真处置（第十三轮授权）
+
+> 本节记录规格完成后**第十三轮**经用户裁定执行的工作：对 `projects/xuanspace/doc/` 全部 19 个文档做只读定性筛查，识别「活文档失真」与「时点快照」两类腐化对象并统一处置。裁定依据见 review.md §22。不改写 Task 1–23 的原始记录，亦不回改历史验收勾选。
+
+- [x] Task 24: 消除 `doc/` 活文档输出示例、目录树与依赖片段失真（含时点快照去值）
+  - **Priority**: low
+  - **Depends On**: Task 23
+  - **Description**: 第十二轮已清理「独立成篇的时点快照」。本轮把筛查面扩展到 `doc/` 全部活文档的**内嵌失真**：命令输出示例、目录树、依赖片段。核心判据仍是「活文档与现状不一致即失真源」。处置策略经用户裁定统一为「**去具体数值，改为结构性说明**」——从根上消除随实现演进必然腐化的硬编码数值。
+  - [x] SubTask 24.1: 洞察（I）——以源码为事实基准核查全部 19 个 `doc/**/*.md`：`xs list` 实际为 rich Table（`list_cmd.py`），`xs doctor` 实际为 rich Table（`doctor_cmd.py`），与文档中的缩进树 / 冒号格式示例双双不符；`discovery.py` 跳过 `.git` 子模块与 `templates`/`vendor`，故 `xs list` 应列 8 个项目（libs 6 + tools 2）
+  - [x] SubTask 24.2: 第一性原理（F）——文档内嵌的「具体输出」本质是**时点快照的微形态**：只要它是手抄的数值，就与独立报告文件同样必然腐化；活文档描述机制的正确形态是**结构性说明 + 指向单一事实来源**
+  - [x] SubTask 24.3: 属性判定——① `quickstart.md` `xs list` 示例 ＝ 活文档失真（高）；② `user-guide/index.md` `xs doctor` 示例 ＝ 活文档失真（高）；③ `okf/index.md` 版本示例 ＝ 时点快照（中）；④ `architecture.md` 依赖片段 ＝ 活文档片段偏差（中）；⑤ `architecture.md` libs 目录树 ＝ 活文档不完整（低）
+  - [x] SubTask 24.4: 处置——① ② 改为结构性说明（去具体数值）；③ 删除硬编码版本号输出；④ 标注为节选并指向根 `pyproject.toml` 为单一事实来源；⑤ 目录树由 2 项补全为实际 8 项（含 2 个子模块，按 `libs/README.md` 生成块口径）
+  - [x] SubTask 24.5: 结论化（C）——`check_declaration_consistency.py` 六类断言不回归（无新增机械可断言面，故不加门禁，理由记入 review.md §22）
+  - **Acceptance Criteria Addressed**: AC-6（范围仅限 `projects/xuanspace`）、AC-7（门禁不回归）
+  - **Test Requirements**:
+    - `rule` TR-24.1: `scripts/check_declaration_consistency.py` 退出码 = 0（六类全通过）
+    - `rule` TR-24.2: `check-links.py --path doc`（cwd = `projects/xuanspace`）退出码 = 0（19 个 Markdown 文件、35 处本地引用全有效）
+    - `rule` TR-24.3: `sphinx -b html doc build/_doccheck` 构建成功（退出码 0）
+    - `rule` TR-24.4: 变更面恰为 4 项（`doc/quickstart.md`、`doc/user-guide/index.md`、`doc/okf/index.md`、`doc/architecture.md` 修改）
+    - `rule` TR-24.5: 残留检索四份文档中不再出现硬编码命令输出数值（`3.14.6`/`2.22.0`/`0.1.0` 等既有示例值）
+
+## 提交记录（证据，第十三轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| `projects/xuanspace` | `f8d223d` | `docs(xuanspace): 消除输出示例与目录树失真并标注依赖片段为节选`（4 文件，+11/−27） |
+| 根仓 | `c71613604` | `chore(xuanspace): 前移子模块指针并回写 doc 易腐性筛查处置证据`（`tasks.md` + `review.md` + gitlink） |
+
+> 未 push、未 tag。本轮 `projects/xuanspace` 工作树仅含本轮 4 项变更。
+
+## 后续任务：规格正式结项（第十四轮授权）
+
+> 本节记录规格完成后**第十四轮**经用户裁定执行的工作：本规格经十三轮增量治理（Task 1–24、review.md §一–§二十二）后全量闭环、无遗留任务，唯一未闭环项是规格自身的 `frontmatter status` 仍为 `draft`，且两级看板未反映完成态。经用户裁定执行**规格正式结项**。裁定依据见 review.md §23。不改写 Task 1–24 的原始记录，亦不回改历史验收勾选。
+
+- [x] Task 25: 规格正式结项（状态收口 + 看板刷新 + 证据回写）
+  - **Priority**: low
+  - **Depends On**: Task 24
+  - **Description**: 本规格十三轮全闭环且无遗留任务，但三件套的 `status` 仍为 `draft`、两级看板（主题看板 + 全局总览）未反映完成态——「收官后未登记状态」是唯一未闭环项。本轮把状态收口为 `completed`，用 `docgen.py` 同步两级看板，并把结项证据回写 `review.md`。
+  - [x] SubTask 25.1: 状态收口——`spec.md` 与 `tasks.md` 的 frontmatter `status: "draft"` → `status: "completed"`
+  - [x] SubTask 25.2: 看板刷新——`docgen.py theme-dashboards`（主题看板）与 `docgen.py update-spec-readme`（全局总览）
+  - [x] SubTask 25.3: 证据回写——`review.md` 追加 §二十三（结项证据与核验）
+  - [x] SubTask 25.4: 结论化（C）——两级看板计数自洽；`ROOT_COMMIT_PLACEHOLDER` 残留 = 0
+  - **Acceptance Criteria Addressed**: AC-4（规格三件套口径自洽）、AC-6（范围仅限规格三件套与看板，不改子模块）
+  - **Test Requirements**:
+    - `rule` TR-25.1: `spec.md` 与 `tasks.md` 的 frontmatter `status` 均为 `completed`（`grep -c 'status: "draft"'` = 0）
+    - `rule` TR-25.2: `docgen.py theme-dashboards` 与 `docgen.py update-spec-readme` 退出码 = 0；本规格在主题看板中状态列为「✓ 完成」
+    - `rule` TR-25.3: 全局总览「已完成」计数在收口前后一致（460）——该规格此前已因「全部任务勾选」被计为已完成，本轮 frontmatter 收口不制造计数漂移
+    - `rule` TR-25.4: 变更面恰为 5 项（`spec.md`、`tasks.md`、`review.md`、主题看板 README、全局总览 `.trae/specs/README.md`）；`projects/xuanspace` 子模块无变更
+
+## 提交记录（证据，第十四轮）
+
+| 仓库 | 提交 | 说明 |
+|---|---|---|
+| 根仓 | `2083149d2` | `docs(spec): 规格正式结项并刷新两级看板`（`spec.md` + `tasks.md` + `review.md` + 两级看板 README） |
+
+> 本轮仅动根仓（规格三件套 + 两级看板），不改动 `projects/xuanspace` 子模块；故无子模块提交、无 gitlink 前移。未 push、未 tag。

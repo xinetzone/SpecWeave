@@ -3,7 +3,7 @@ type: Pattern
 id: "verification-scope-bounding"
 title: "核验范围限定"
 source: "七概念知识沉淀(sc-20261027-contest-task8)——知乎/WorkBuddy/头条三入口参赛与写作指南知识包（83 条事实/3 洞察/2 候选方法）"
-source_report: "../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/contest-writing-guide/index.md"
+source_report: "../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-project-submission-and-content-publishing-guide/index.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/verification-scope-bounding.toml"
 maturity: "L1"
 maturity_level: "L1-draft"
@@ -43,7 +43,7 @@ related_patterns:
 
 **核心转向（一句话定义）**：一项检查成功只能支持它**实际比较过的字段与对象**；每条结论必须写明四项——**谁检查、检查哪份材料、截至何时、仍不覆盖什么**。
 
-四项互相不可替代：检查主体决定谁可为结论负责；检查材料决定证据的载体边界；截止时点决定结论的有效期；未覆盖范围决定结论不能延伸到何处。任何一项缺失，结论都可被合法地追问到它支撑不住的地方。本模式由一次三入口参赛与写作指南知识包沉淀萃取（83 条事实 / 3 条洞察 / 2 项候选方法，见[源页](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/contest-writing-guide/concepts/07-insights-and-reusable-methods.md)），案例细节不在本库复述，仅以事实编号作证据。
+四项互相不可替代：检查主体决定谁可为结论负责；检查材料决定证据的载体边界；截止时点决定结论的有效期；未覆盖范围决定结论不能延伸到何处。任何一项缺失，结论都可被合法地追问到它支撑不住的地方。本模式由一次三入口参赛与写作指南知识包沉淀萃取（83 条事实 / 3 条洞察 / 2 项候选方法，见[源页](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-project-submission-and-content-publishing-guide/concepts/07-insights-and-reusable-methods.md)），案例细节不在本库复述，仅以事实编号作证据。
 
 支撑本模式的直接证据：
 
@@ -72,7 +72,7 @@ related_patterns:
 
 1. **字符串比对一致，但表单提示已更新**：两版细则文本逐字符相同，据此写成"流程未变"；实际上同一材料面向用户填写的提示面已经改变（F-043；C-002 / E-002）。比对成功地覆盖了"这些字段的文本"，却没有覆盖"表单与实际入口"。
 2. **官方规则未变 ≠ 全流程未变**：规则正文可比对，但其关联的服务协议与隐私正文并未读取（G-019）。"规则没变"这句完全可能为真，同时"全流程没变"为假——两个命题的检查材料根本不是同一份。
-3. **构建通过只证明构建范围**：某次范围检查通过只说明该次检查所覆盖的文件与包通过，不代表全库或跨包全面验收（见[源报告实施状态](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/contest-writing-guide/index.md)）。"绿灯"是检查范围的属性，不是被检查对象的属性。
+3. **构建通过只证明构建范围**：某次范围检查通过只说明该次检查所覆盖的文件与包通过，不代表全库或跨包全面验收（见[源报告实施状态](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-project-submission-and-content-publishing-guide/index.md)）。"绿灯"是检查范围的属性，不是被检查对象的属性。
 
 三者的共同点是：**检查本身没有错，错在把检查的覆盖范围当成了被检查对象的属性**。
 
@@ -107,7 +107,7 @@ flowchart TD
 - **动作**：多源主张必须先回溯**来源谱系**（每个数值/条款的最早出处及其转载链），而不是数链接条数；同一平台内两页互引、同一通稿的多次转载，均只算一个谱系。
 - **主手段**：回溯最早出处，按谱系计数。
 - **替代手段**：无法回溯来源时，一律按**单一来源**登记并标注"谱系未明"，不得计入多源互证。
-- **可执行判据**：多源主张能给出**至少两条互不派生的出处**；同平台互引一律不计（案例中某入口的百科与公告同平台互引即属此列，见[源报告边界与缺口](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/contest-writing-guide/index.md)）。
+- **可执行判据**：多源主张能给出**至少两条互不派生的出处**；同平台互引一律不计（案例中某入口的百科与公告同平台互引即属此列，见[源报告边界与缺口](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-project-submission-and-content-publishing-guide/index.md)）。
 
 ### 第 4 步：来源更新后按字段重核，不做全量重验也不假定全部失效
 
@@ -222,7 +222,7 @@ flowchart TD
 
 ## 沉淀与校验记录
 
-- **上游会话**：`sc-20261027-contest-task8`（三入口参赛与写作指南知识包，83 条事实 / 24 条缺口 / 7 项比较 / 6 项解读，3 条洞察 / 2 项候选方法），知识包位置见 [contest-writing-guide/index.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/contest-writing-guide/index.md)；本条目来源于该包的 [I-003 核验范围决定证据能支持多大的话](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/contest-writing-guide/concepts/07-insights-and-reusable-methods.md)。
+- **上游会话**：`sc-20261027-contest-task8`（三入口参赛与写作指南知识包，83 条事实 / 24 条缺口 / 7 项比较 / 6 项解读，3 条洞察 / 2 项候选方法），知识包位置见 [ai-project-submission-and-content-publishing-guide/index.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-project-submission-and-content-publishing-guide/index.md)；本条目来源于该包的 [I-003 核验范围决定证据能支持多大的话](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-project-submission-and-content-publishing-guide/concepts/07-insights-and-reusable-methods.md)。
 - **沉淀会话**：`sc-20261027-contest-writing-guide-pattern`（2026-10-27，R→I→E→V→C 入库）。
 - **去重判定**：入库前逐一比对 4 个候选模式（证据链工程化、社区指标三查法、引文回证对账、单一权威源与多载体声明面对齐），按**作用对象 / 核心动作 / 所处层级**三维裁定不重复——
   - 对 **证据链工程化**：作用对象是"证据资产"（对方）与"结论口径"（本模式），核心动作是"生产证据"（对方）与"限定结论范围"（本模式），判定**上下游非重复**；

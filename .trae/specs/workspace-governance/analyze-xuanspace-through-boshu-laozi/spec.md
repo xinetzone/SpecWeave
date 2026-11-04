@@ -1,5 +1,5 @@
 ---
-status: "draft"
+status: "completed"
 title: "从帛书《老子》视角分析 Xuanspace（玄境）并产出项目蓝图与优化建议书"
 change-id: "analyze-xuanspace-through-boshu-laozi"
 ---
@@ -228,3 +228,7 @@ Xuanspace（玄境）自述「技术为器、思想为道、器以载道」，�
 涉及提交：`projects/xuanspace` 的 `d681e4c`、`349afa6`、`edce88f`，以及根仓 `abc724559`（子模块指针前移至 `edce88f`）。未 push、未 tag。
 
 > 注：P0-1 的「主体」指文档层引用；其代码侧主体（`xs doc` 改名）已于第一轮 Task 8 落地。全文 P0-1 至此**完整闭环**。
+
+### 规格结项（第十四轮授权）
+
+本规格经十三轮增量治理（Task 1–24，review.md §一–§二十二）后**全量闭环、无遗留任务**；第十四轮经用户裁定执行**正式结项**：三件套 frontmatter `status` 由 `draft` 收口为 `completed`，同步刷新主题看板与全局总览。结项证据见 [tasks.md](tasks.md) Task 25 与 [review.md](review.md) §二十三。未 push、未 tag。

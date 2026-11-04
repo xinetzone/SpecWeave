@@ -190,3 +190,17 @@ deepseek-v41-flash-video-*/
 
 # --- Security / secrets (never commit) ---
 id_ed25519*
+.venv-support-agent/
+.tmp-shot/
+.venv313/
+
+# ── 独立仓库（自有 git 历史，尚未有远端）────────────────────────────
+# projects/zhenxuqiu-site 是**独立仓库**，不是本仓的子模块：
+# 它有自己的 .git 与提交历史，将来会以「独立仓库 + 可选 submodule」的方式接入。
+#
+# ★ 为什么这里必须忽略，而不是当子模块加进来：
+#   父仓的 gitlink（mode 160000）只有在 .gitmodules 里有对应条目时才有意义。
+#   本仓现在没有它的远端 URL——强行 git add 会产生一个**断链**：
+#   克隆父仓的人拿到的是空目录，且 git submodule update 找不到来源。
+#   等远端仓库建立、URL 确定后，再走 `git submodule add` 正式接入。
+projects/zhenxuqiu-site/

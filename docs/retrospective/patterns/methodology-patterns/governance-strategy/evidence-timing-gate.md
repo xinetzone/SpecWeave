@@ -3,7 +3,7 @@ type: Pattern
 id: "evidence-timing-gate"
 title: "证据时序门"
 source: "七概念知识沉淀(sc-20261027-contest-task8)——知乎/WorkBuddy/头条三入口参赛与写作指南知识包（83 条事实/3 洞察/2 候选方法）"
-source_report: "../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/contest-writing-guide/index.md"
+source_report: "../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-project-submission-and-content-publishing-guide/index.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/evidence-timing-gate.toml"
 maturity: "L1"
 maturity_level: "L1-draft"
@@ -44,7 +44,7 @@ related_patterns:
 
 **为什么是合取（AND）而非加权**：三条件各自独立地拥有"一票否决"的能力——证据不足使成果无法被判定成立，资格不符使动作从起点无效，时间不符使动作错过窗口。任何一项无法用其他项的盈余补偿（资格不能靠证据多补，时间不能靠资格好换），因此不能用加权分数把"两项很好、一项未知"平均成"可以推进"；合取的产物是"未知必须显式保留"，而非"总分够高即可放行"。
 
-本模式由一次"三入口参赛与写作指南"知识包沉淀萃取：其 M-002 给出六步动作，I-002 给出该门必须存在的原因——先发表的历史不因**等待**、**换词**或**删除重发**而消失（F-062/F-063：站外先发与实质相似简单改写均非首发；F-066/F-079：站内相同内容删后重发仍在非首发情景内），且窗口按**实际小时**而非日期计算（F-061/F-064）。案例细节与完整规则地图保留在[上游知识包](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/contest-writing-guide/index.md)，本条只取去场景化的通用动作。
+本模式由一次"三入口参赛与写作指南"知识包沉淀萃取：其 M-002 给出六步动作，I-002 给出该门必须存在的原因——先发表的历史不因**等待**、**换词**或**删除重发**而消失（F-062/F-063：站外先发与实质相似简单改写均非首发；F-066/F-079：站内相同内容删后重发仍在非首发情景内），且窗口按**实际小时**而非日期计算（F-061/F-064）。案例细节与完整规则地图保留在[上游知识包](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-project-submission-and-content-publishing-guide/index.md)，本条只取去场景化的通用动作。
 
 ## 适用场景
 
@@ -217,7 +217,7 @@ related_patterns:
 
 ## 沉淀与校验记录
 
-- **上游会话**：`sc-20261027-contest-task8`（知乎 / WorkBuddy / 头条三入口参赛与写作指南知识包：83 条事实、24 条缺口、3 条洞察、2 项候选方法；本模式取自 **M-002 证据时序门**，问题背景取自 **I-002 公开表达有独立的时间成本**），知识包位置 [三入口参赛与写作指南](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/contest-writing-guide/index.md)；
+- **上游会话**：`sc-20261027-contest-task8`（知乎 / WorkBuddy / 头条三入口参赛与写作指南知识包：83 条事实、24 条缺口、3 条洞察、2 项候选方法；本模式取自 **M-002 证据时序门**，问题背景取自 **I-002 公开表达有独立的时间成本**），知识包位置 [三入口参赛与写作指南](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-project-submission-and-content-publishing-guide/index.md)；
 - **沉淀会话**：`sc-20261027-contest-writing-guide-pattern`（2026-10-27，R→I→E→V→C 入库）；
 - **去重判定**：入库前比对 4 个候选模式（`stop-loss-backward-scheduling`、`release-eligibility-invariant-gate`、`evidence-chain-engineering`、`deadline-breakpoint-first`），从**作用对象 / 核心动作 / 所处层级**三维度裁定不重复，关系见上表；其中与 `stop-loss-backward-scheduling` 系最近邻，专项划界结论为「**时间倒排**（单一计划线，按日期反向排程 + 依赖锚定 + 退出闸门）vs **多维合取门**（证据 / 资格 / 时间三维同时过，任一未知即留暂停或退路）」——层级互补、非重复；
 - **成熟度重裁**：未照抄上游 M-002 的自标口径，对照库等级表按"单案例首次入库"重裁为 **L1-draft**；落盘按库内双字段惯例表示为 `maturity: "L1"`（机器可校验阶梯）+ `maturity_level: "L1-draft"`（库内细粒度语义）；validation_count = 1（仅表示完成一次方法抽取，**不表示**真实不可逆动作已经受检验）、reuse_count = 0；升级条件已写入「成熟度」节与 `maturity_note`；

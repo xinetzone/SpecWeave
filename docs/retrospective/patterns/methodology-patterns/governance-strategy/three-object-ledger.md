@@ -3,7 +3,7 @@ type: Pattern
 id: "three-object-ledger"
 title: "三对象分账法"
 source: "七概念知识沉淀(sc-20261027-contest-task8)——知乎/WorkBuddy/头条三入口参赛与写作指南知识包（83 条事实/3 洞察/2 候选方法）"
-source_report: "../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/contest-writing-guide/index.md"
+source_report: "../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-project-submission-and-content-publishing-guide/index.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-object-ledger.toml"
 maturity: "L1"
 maturity_level: "L1-draft"
@@ -42,7 +42,7 @@ related_patterns:
 
 三类客体必须分开登记，因为约束它们的**三个条件互相独立**：① 工具绑定——产物的创作工具是否满足去向的资格要求；② 作品同一性——不同去向是否把同一产物视为同一件作品；③ 发表先发——何处何时首次公开，是否已消耗首发或独占条件。三者不可互相补偿：工具合资格，不表示跨去向不构成重复投稿（F-022）；许可非独占，也不表示其他去向接受该作品；先发状态一旦形成，等待或删重发都不能自动复位。
 
-案例中，去向把"用什么工具做"直接写进资格条件——要求全程使用指定工具、一件作品只对应一个工具与一个赛道（F-012/F-014），并要求提供真实创作对话（F-035/F-042）；同时对一稿多投、轻微修改重复与跨赛道投稿设有取消资格的情形（F-022）。这些条件分属工具、同一性与时序三本账，任一本不满足都不能由另一本的好转抵消。证据均登记于[上游知识包](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/contest-writing-guide/index.md)。
+案例中，去向把"用什么工具做"直接写进资格条件——要求全程使用指定工具、一件作品只对应一个工具与一个赛道（F-012/F-014），并要求提供真实创作对话（F-035/F-042）；同时对一稿多投、轻微修改重复与跨赛道投稿设有取消资格的情形（F-022）。这些条件分属工具、同一性与时序三本账，任一本不满足都不能由另一本的好转抵消。证据均登记于[上游知识包](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-project-submission-and-content-publishing-guide/index.md)。
 
 本模式由一次多入口内容交付的七概念知识沉淀萃取（83 条事实 / 3 条洞察 / 2 项候选方法）。**隐藏前提**是：存在两个及以上去向，且各去向的约束文本可读、可逐条对齐。**降级路径**是：当去向唯一，或规则不可读时，本模式降级为"单客体缺口清单"——只列未知与缺口，不产出任何"可以做"的许可结论。
 
@@ -202,7 +202,7 @@ related_patterns:
 
 ## 沉淀与校验记录
 
-- **上游会话**：`sc-20261027-contest-task8`（知识包 `contest-writing-guide`），知识包位置 [三入口参赛与写作指南](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/contest-writing-guide/index.md)。
+- **上游会话**：`sc-20261027-contest-task8`（知识包 `ai-project-submission-and-content-publishing-guide`），知识包位置 [三入口参赛与写作指南](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-project-submission-and-content-publishing-guide/index.md)。
 - **沉淀会话**：`sc-20261027-contest-writing-guide-pattern`。
 - **去重判定**：入库前与 4 个近邻逐维比对（作用对象 / 核心动作 / 所处层级）——与 [单一权威声明对齐](single-authority-declaration-alignment.md)（同一事实的副本收敛，非不同客体）、[合规契约化](../compliance-contracting.md)（约束写法层，非对象划分层）、[权重对位备赛法](../product-growth/weight-aligned-preparation.md)（对位对象为评分维度，非交付客体）、[证据链工程化](evidence-chain-engineering.md)（证据生产过程，非归属分账）对比，结论为**不重复，独立入库**，划界见上表。
 - **成熟度重裁**：不照抄知识包自标，首次单案例入库重裁为 **L1-draft**（validation_count = 1，reuse_count = 0）。落盘按库内双字段惯例表示——`maturity: "L1"`（机器可校验阶梯）+ `maturity_level: "L1-draft"`（库内细粒度语义）。

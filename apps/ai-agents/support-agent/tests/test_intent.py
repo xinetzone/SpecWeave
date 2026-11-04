@@ -28,6 +28,27 @@ def test_rule_other_without_keyword():
     assert rule_classify("今天天气不错").intent == "other"
 
 
+def test_rule_ai_question_is_not_human():
+    """「人工智能」含「人工」——裸子串匹配会把它判成转人工并生成工单。"""
+    result = rule_classify("人工智能客服能做到什么")
+    assert result.intent != "human"
+    assert result.needs_human is False
+
+
+def test_rule_explicit_human_still_wins():
+    """排除规则不得误伤真实的转人工诉求。"""
+    for text in ("我要转人工", "找客服", "要人工客服"):
+        result = rule_classify(text)
+        assert result.intent == "human", text
+        assert result.needs_human is True
+
+
+def test_rule_status_query_beats_refund_action():
+    """「退货到哪了」问的是进度，应归订单查询而非退款。"""
+    assert rule_classify("退货到哪了").intent == "order_query"
+    assert rule_classify("退款多久到账").intent == "refund"
+
+
 def test_classify_falls_back_without_llm():
     cfg = Config(llm_api_key="")
     result = classify(cfg, "完全无关的闲聊内容")

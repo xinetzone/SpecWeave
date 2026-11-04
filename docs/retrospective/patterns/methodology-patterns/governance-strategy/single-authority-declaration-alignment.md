@@ -4,14 +4,14 @@ title: "单一权威源与多载体声明面对齐"
 type: "Pattern"
 domain: "methodology"
 layer: "governance-strategy"
-maturity: "L1"
-maturity_level: "L1-draft"
-validation_count: 1
-reuse_count: 0
+maturity: "L2"
+maturity_level: "L2-validated"
+validation_count: 2
+reuse_count: 1
 documentation_level: "standard"
-version: "1.0.0"
+version: "1.1.0"
 created_date: "2026-10-22"
-last_updated: "2026-10-23"
+last_updated: "2026-10-29"
 source: "../../../../../.trae/specs/retrospectives-insights/mystx-comprehensive-retrospective-export/insights.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/single-authority-declaration-alignment.toml"
 tags:
@@ -42,9 +42,10 @@ related_patterns:
 
 ## 成熟度
 
-L1（`maturity_level` = L1-draft；单案例：mystx 主题包，2026-10-22 全面复盘；validation_count = 1，reuse_count = 0）。
-案例覆盖异构声明面（构建清单 / pre-commit 配置 / README / 变更记录 / 贡献指南 / 环境定义 / 运行时元数据），
-但均属同一项目的同一谱系；跨项目验证缺失，故不高于 L1。
+L2（`maturity_level` = L2-validated；两案例：mystx 主题包 2026-10-22 + xuanspace 十月治理收口 2026-10-29；validation_count = 2，reuse_count = 1）。
+案例一覆盖异构声明面（构建清单 / pre-commit 配置 / README / 变更记录 / 贡献指南 / 环境定义 / 运行时元数据），
+均属同一项目的同一谱系；案例二（xuanspace）为不同项目、不同谱系、不同场景（发布前治理收口），
+跨项目验证达成，故升级为 L2。
 
 ## 一句话
 
@@ -186,6 +187,28 @@ flowchart TD
   变更记录 12 个已打标签版本无对应条目（F-071、F-072）。
 - **门禁不覆盖载体一致性**：门禁集合只有风格检查与产物存在性校验，
   无任何一项比对两处依赖段或各处工具版本参数（F-035、F-036、F-055、F-056）。
+
+## 案例证据二（xuanspace，L2 升级依据）
+
+本模式第二案例来自第一方子项目 xuanspace（玄境）的十月治理收口
+（2026-10-23 ~ 2026-10-28，复盘见
+[2026-10-29-xuanspace-october-governance-retro.md](../../../reports/2026-10-29-xuanspace-october-governance-retro.md)），
+覆盖与 mystx 案例同构但不同谱系的声明面分叉：
+
+| 分叉/漂移 | 定源动作 | 校验动作 |
+|---|---|---|
+| 版本号双声明点：`pyproject.toml` 静态 version + `xs/__init__.py` 的 `__version__` | setuptools-scm 动态推导、移除 `__version__`，pyproject 为单一事实来源 | 声明—实现一致性门禁 P0-4（后扩容至六类断言） |
+| 构建后端混用：根/xuan-core 用 setuptools，部分子项目用 scikit-build-core | 全仓统一 scikit-build-core，下限提升至 `>=0.11`（PEP 639 license 自 0.11 起被接受） | `scripts/check_pyproject_style.py` 下限契约校验 |
+| 许可元数据形态不一 | 统一为 PEP 639 表达式（Apache-2.0） | 同一一致性门禁覆盖 |
+| 文档索引 vs 目录实态：README 登记 13 行 vs 目录实测 libs 8 + tools 3 | 纳入声明—实现一致性门禁，磁盘为唯一真源（`--generate` 派生清单快照与生成块） | 已实施：子模块指针对账（行动项 A-04，xuanspace `2714647`；G1 状态可解析 / G2 指针 = 快照 / G3 文档版本引用对账）；基线写入侧的遗留缺口见 [gate-baseline-write-invariants](gate-baseline-write-invariants.md) |
+| 文档失效陈述：失效依赖报告、输出示例失真、目录树失真 | 版本可信 + 门禁可验后集中删除（10-28 文档诚实化收口） | 统一 `.md` 相对链接约定 |
+
+**案例特征**：与 mystx 不同，xuanspace 的定源动作集中在**构建/发布元数据**
+（版本、许可、构建下限），且出现了 mystx 案例没有的「约定门禁化」动作——
+把 AGENTS.md 规范约定转化为 CI 可执行断言。这验证了本模式第 ④ 步
+「机器校验对齐」在不同项目的可重复性；该案例暴露的未闭合面（文档索引 vs 目录实态仍靠人工）
+随后由行动项 A-04 机器化，但其门禁生成模式的写盘不变量仍待补齐——
+这部分作为模式的持续演进输入，见 [gate-baseline-write-invariants](gate-baseline-write-invariants.md)。
 
 ## 失败案例：mystx 声明面分叉
 

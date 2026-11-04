@@ -20,7 +20,7 @@
 |---|---|---|---|
 | 1 | [add-thesis-advisor-role](add-thesis-advisor-role/spec.md) | ✓ 完成 | ✓/✗ |
 | 2 | [ai-dev-variant](ai-dev-variant/spec.md) | ✓ 完成 | ✓✗✗ |
-| 3 | [analyze-xuanspace-through-boshu-laozi](analyze-xuanspace-through-boshu-laozi/spec.md) | ✓ 完成 | ✓/✗ |
+| 3 | [analyze-xuanspace-through-boshu-laozi](analyze-xuanspace-through-boshu-laozi/spec.md) | ✓ 完成 | ✓✗✗ |
 | 4 | [apps-grouping-refactor](apps-grouping-refactor/spec.md) | ✓ 完成 | ✓/✗ |
 | 5 | [bundles-grouping-refactor](bundles-grouping-refactor/spec.md) | ✓ 完成 | ✓/✗ |
 | 6 | [bundles-self-contained](bundles-self-contained/spec.md) | ? 待启动 | ✓/✗ |
