@@ -1,0 +1,59 @@
+EXPORT MANIFEST — xuanspace 十月治理收口里程碑复盘
+================================================================================
+
+export_time  : 2026-10-29
+report_type  : retrospective (milestone)
+source_path  : docs/retrospective/reports/2026-10-29-xuanspace-october-governance-retro.md
+output_dir   : docs/retrospective/reports/exported
+formats      : md
+version      : 1.0
+
+EXPORTED FILES
+--------------------------------------------------------------------------------
+AKA-1. xuanspace-october-governance-milestone-retrospective-20261029-v1.0.md  (23290 bytes)
+
+VERIFICATION
+--------------------------------------------------------------------------------
+- source exists              : YES
+- frontmatter(id/date/type/source): COMPLETE
+  (id=retro-20261029-xuanspace-october-governance, date=2026-10-29,
+   type=Report, source=七概念编排任务：xuanspace 里程碑复盘)
+- content non-empty          : YES (40 facts, 3 insights, 2 patterns, 5 actions)
+- G1-G4 quality gates        : PASSED
+- index updated              : docs/retrospective/reports/exported/index.md
+                               (toctree + table entry added)
+- relative-link adjustment   : 3 links re-based (archive is one level deeper)
+
+KEY ARTIFACTS REFERENCED
+--------------------------------------------------------------------------------
+- Patterns    : single-authority-declaration-alignment (L1 → L2, second
+                 independent case: xuanspace October governance)
+                 convergence-period-triple-track (new, L1)
+- Spec        : projects/xuanspace/.trae/specs/unify-scikit-build-core/
+                 (spec.md + tasks.md + checklist.md, 0.10→0.11 erratum)
+- Baseline    : 2026-08-25-xuanspace-milestone-retro.md
+                 (first-stage retrospective, 314 commits)
+- Commits     : f8d223d (HEAD, 2026-10-28) + this export commit
+
+VERIFICATION COMMANDS AND RESULTS
+--------------------------------------------------------------------------------
+- git log --since=2026-10-01 | Measure-Object -Line       -> 73 commits
+- git log --since=2026-10-01 --name-only dedup             -> 378 files
+- git log commit-type grouping                             -> docs 26 / fix 19 /
+   refactor 7 / chore 6 / feat 6 / test 4 / build 1 / ci 1 / style 1
+- git rev-list --count HEAD                                -> 428 total
+- chapter structure grep (^# headings)                     -> all sections present
+- check-links (relative paths, no file://)                 -> n/a (no file:// links)
+
+NOTES
+--------------------------------------------------------------------------------
+- Export is a content copy of the source report (md passthrough). Three relative
+  links were re-based because the archive location is one directory deeper.
+- The export copy carries an extra "导出说明" section recording this adjustment.
+- E-stage avoided duplicate extraction: single-authority-declaration-alignment
+  already covers "single source of truth + declaration alignment"; this milestone
+  provided its second independent case, so the pattern was upgraded L1→L2
+  instead of creating a duplicate. One genuinely new pattern was extracted
+  (convergence-period-triple-track, L1).
+- Pending actions: A-04 (xuanspace team decision on submodule-pointer↔doc-index
+  alignment gate) and A-05 (run triple-track preflight checklist before 0.2.0).

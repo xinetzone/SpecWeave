@@ -1,0 +1,25 @@
+id = "sediment-20261029-submodule-pointer-gate"
+title = "A-04 子模块指针对账门禁知识沉淀：生成器为何是门禁最薄弱的一环"
+date = "2026-10-29"
+scope = "module"
+type = "knowledge-sedimentation"
+category = "retrospective/reports"
+source = "任务：对 A-04 子模块指针对账门禁（xuanspace submodule-alignment-gate）执行知识沉淀，方法论编排 seven-concepts 场景4（R→I→E→V），深度 deep，V 阶段由独立审查者执行"
+facts_count = 32
+insights_count = 3
+patterns_count = 1
+actions_count = 5
+gates = ["G1", "G2", "G3", "V"]
+v_executed = true
+version = "1.0"
+
+[bindings]
+related_patterns = [
+  "gate-baseline-write-invariants",
+  "single-authority-declaration-alignment",
+  "snapshot-parity-migration",
+  "convergence-period-triple-track",
+]
+rules = []
+references = []
+skills = ["seven-concepts-cmd"]

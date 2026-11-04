@@ -60,6 +60,9 @@
 | evidence-chain-engineering | [证据链工程化](governance-strategy/evidence-chain-engineering.md) | L1 | 1 | 0 | 合规性由过程而非结果证明时（须证明"全程使用某工具""过程真实""未搬运他人成果"）：把条款翻译成可观察的证据动作并嵌入工作流当场生产，版本化命名串成可审计轨迹；含 5 条反模式与 8 条检验标准。案例：工具受限型合规执行包（计划态单案例，49 条事实支撑；validation_count=1 仅表示完成一次方法抽取，不表示结果已验证），待非同谱系第二案例验证升 L1.5 |
 | stop-loss-backward-scheduling | [止损前置倒排](governance-strategy/stop-loss-backward-scheduling.md) | L1 | 1 | 0 | 有硬截止日且含不可控外部依赖、结果不确定的任务（比赛/申报/投标/创业里程碑）：从截止日倒排到首日，标出唯一外部依赖节点并在其前留缓冲、演练与硬检查点，明确退出条件与"不参与"合法分支；含 5 条反模式与 9 条检验标准。案例：硬截止型合规执行包（计划态单案例，49 条事实支撑；validation_count=1 仅表示完成一次方法抽取，不表示止损已真实发生），待非同谱系第二案例验证升 L1.5 |
 | incremental-single-file-ai-development | [增量单文件 AI 开发](ai-collaboration/incremental-single-file-ai-development.md) | L1 | 1 | 0 | 用 AI 对话式开发单文件交付物（单页应用/小工具/演示原型）且要求功能可验证、可回滚时：按功能区块切轮次、每轮只改一个区块、每轮输出完整文件即存档（体量触顶时降级为最小完整片段）、每轮内嵌验收标准并实际点测、末轮出测试结果表逐条修复；含 6 条反模式与 9 条检验标准。案例：对话式单文件增量开发（计划态单案例，49 条事实支撑；validation_count=1 仅表示完成一次方法抽取，不表示产物结果已获外部验证），待非同谱系第二案例验证升 L1.5 |
+| three-object-ledger | [三对象分账法](governance-strategy/three-object-ledger.md) | L1 | 1 | 0 | 一次主题交付实含多个独立交付客体（工具/许可/发表状态等各自独立出错）、却易被当作同一产物应付多入口时：分对象登记 → 判同一性关系 → 逐平台映射路径；含 5 条反模式与检验标准。案例：知乎/WorkBuddy/头条三入口参赛与写作指南知识包（83 条事实族），待非同谱系第二案例验证升 L2 |
+| evidence-timing-gate | [证据时序门](governance-strategy/evidence-timing-gate.md) | L1 | 1 | 0 | 存在发布/提交/上线/投稿等一旦发生便无法回撤的对外动作、且依赖外部审核与硬时间窗口时：三线并列倒排、按实际时刻算窗口、任一前提未知即暂停并保留退路；与 stop-loss-backward-scheduling 划界（时间闸 vs 次数预算）。案例：三入口参赛与写作指南知识包（83 条事实族），待非同谱系第二案例验证升 L1.5/L2 |
+| verification-scope-bounding | [核验范围限定](governance-strategy/verification-scope-bounding.md) | L1 | 1 | 0 | 需要把检查结果写进结论/报告/对外声明时：结论必写四项（谁检查·查哪份·截至何时·仍不覆盖什么），把「证据有没有」推进到「这份证据能支持多大的话」；含 6 条反模式与检验标准。案例：三入口参赛与写作指南知识包（83 条事实族），待非同谱系第二案例验证升 L1.5 |
 
 ## 成熟度等级说明
 

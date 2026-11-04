@@ -13,17 +13,32 @@ name = "info-butler"
 version = "0.2.0"
 description = "个人信息管家 Agent：Sphinx 静态站 + Python 3.14 云端 API"
 readme = "README.md"
-requires-python = ">=3.14"
+# ★ 下限放宽到 3.13：发布平台的 pyenv 沙箱不一定装了 3.14，写死 >=3.14 会让
+    # pip 直接报 "requires a different Python" 而装不上。源码已实测兼容 3.13
+    # （无 3.14 专属语法、无 __future__ annotations）。开发与本地仍首选 3.14。
+    requires-python = ">=3.13"
 license = { text = "MIT" }
 dependencies = [
     "fastapi>=0.115",
     "uvicorn>=0.30",
     "httpx>=0.27",
-    "pydantic>=2.7",
+    # ★ 下限不能写 2.7：pip 解析时可能选中 pydantic 2.7.x → pydantic-core 2.18.x，
+    # 而那批 pydantic-core **没有 cp314 轮子**，在 Python 3.14 上直接
+    # ResolutionImpossible（发布沙箱正是 3.14，表现为「安装依赖失败」）。
+    # 2.14.1 对应的 pydantic-core 2.50.1 已确认提供 cp314 轮子。
+    "pydantic>=2.14.1",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0", "pytest-cov>=5.0"]
+# dev 必须包含站点构建依赖：tests/test_site_contract.py 会 import sphinx_book_theme
+# 校验「侧边栏是全站唯一搜索入口」这条上游契约。缺了它，CI 的 gates job 会在
+# 收集阶段直接 ModuleNotFoundError —— 门禁变成噪声，真实的契约漂移反而看不见。
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "sphinx>=8.2",
+    "sphinx-book-theme>=1.1",
+]
 
 [project.scripts]
 info-butler = "info_butler.cli:main"

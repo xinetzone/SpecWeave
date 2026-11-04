@@ -184,3 +184,35 @@ def test_vercel_rewrite_root_falls_back_to_page():
 def test_unknown_route_404():
     context = ctx_with(echo_chat)
     assert call(context, "GET", "/api/nope")[0] == 404
+
+
+def test_malicious_session_id_is_rejected_and_reissued():
+    """客户端可自带 session_id；若不校验，恶意字符串会落库并经后台 innerHTML
+    渲染成存储型 XSS（管理员打开会话列表即执行）。"""
+    context = ctx_with(echo_chat)
+    hostile = '"><img src=x onerror=alert(1)>'
+    resp = call(context, "POST", "/api/chat", {"message": "你好", "session_id": hostile})
+    assert resp[0] == 200
+    data = payload(resp)
+    assert data["session_id"] != hostile
+    assert data["session_id"].startswith("s_")
+
+    # 恶意 ID 不得进入会话表
+    sessions = context.store.list_sessions()
+    assert all(s.id != hostile for s in sessions)
+
+
+def test_valid_session_id_is_preserved():
+    """合法格式的会话 ID 必须原样保留，否则会丢失多轮对话上下文。"""
+    context = ctx_with(echo_chat)
+    valid = "s_" + "0123456789abcdef"
+    resp = call(context, "POST", "/api/chat", {"message": "你好", "session_id": valid})
+    assert payload(resp)["session_id"] == valid
+
+
+def test_hostile_session_id_via_cookie_is_ignored():
+    """Cookie 通道同样受校验约束。"""
+    context = ctx_with(echo_chat)
+    hostile = "s_'; DROP TABLE cs_sessions;--"
+    resp = call(context, "GET", "/api/history", headers={"cookie": f"cs_sid={hostile}"})
+    assert payload(resp)["session_id"] != hostile

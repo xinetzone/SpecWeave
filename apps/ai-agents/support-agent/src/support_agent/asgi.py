@@ -18,6 +18,7 @@
 
 import asyncio
 import json
+import re
 import uuid
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
@@ -31,6 +32,12 @@ from .store import Feedback, Store, build_store, new_id
 SESSION_COOKIE = "cs_sid"
 ADMIN_COOKIE = "cs_admin_token"
 ADMIN_HEADER = "x-admin-token"
+# 会话 ID 由服务端签发（见 store.new_id，格式 s_<16 位十六进制>）。
+# 客户端可自带 session_id（Cookie / query / body），若不校验则恶意字符串会落库，
+# 再经管理后台的 innerHTML 渲染 —— 构成存储型 XSS。
+# 这里按字符集白名单校验（而非固定 s_ 前缀格式）：既有会话标识仍可用，
+# 而引号、尖括号、空格、分号等 XSS 与注入字符一律拒绝。
+SESSION_ID_RE = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
 # Vercel 内部重写可能把请求路径替换为函数路径，需要还原原始路径
 FUNCTION_PATHS = ("/api/index", "/api/index.py", "/api/index/")
 
@@ -174,11 +181,24 @@ class Context:
 # ---- 业务处理 ------------------------------------------------------------
 
 
+def _valid_session_id(value: Any) -> bool:
+    """会话 ID 是否为服务端签发的合法格式。"""
+    return bool(SESSION_ID_RE.match(str(value or "")))
+
+
 def _session_id(req: Request) -> str:
     for source in (req.cookies.get(SESSION_COOKIE), req.query.get("session_id")):
-        if source:
+        if source and _valid_session_id(source):
             return str(source)
     return new_id("s")
+
+
+def _requested_session_id(body: Dict[str, Any], req: Request) -> str:
+    """取客户端请求的会话 ID；格式不合规则重新签发（防止恶意 ID 落库）。"""
+    candidate = str(body.get("session_id") or "").strip()
+    if candidate and _valid_session_id(candidate):
+        return candidate
+    return _session_id(req)
 
 
 def _chat(ctx: Context, req: Request) -> Response:
@@ -188,7 +208,7 @@ def _chat(ctx: Context, req: Request) -> Response:
         return _json(400, {"error": "empty_message", "message": "请输入内容"})
     text = text[: ctx.cfg.max_input_chars]
 
-    session_id = str(body.get("session_id") or "").strip() or _session_id(req)
+    session_id = _requested_session_id(body, req)
     cfg = ctx.cfg.with_llm(
         base_url=req.headers.get("x-llm-base-url") or str(body.get("llm_base_url") or ""),
         api_key=req.headers.get("x-llm-api-key") or str(body.get("llm_api_key") or ""),
@@ -214,7 +234,8 @@ def _chat(ctx: Context, req: Request) -> Response:
 
 
 def _history(ctx: Context, req: Request) -> Response:
-    session_id = req.query.get("session_id") or _session_id(req)
+    requested = req.query.get("session_id") or ""
+    session_id = requested if _valid_session_id(requested) else _session_id(req)
     messages = ctx.store.session_messages(session_id)
     return _json(
         200,
@@ -243,7 +264,7 @@ def _feedback(ctx: Context, req: Request) -> Response:
         rating = 0
     if rating < 1 or rating > 5:
         return _json(400, {"error": "invalid_rating", "message": "评分需为 1-5"})
-    session_id = str(body.get("session_id") or "").strip() or _session_id(req)
+    session_id = _requested_session_id(body, req)
     ctx.store.ensure_session(session_id)
     ctx.store.add_feedback(
         Feedback(

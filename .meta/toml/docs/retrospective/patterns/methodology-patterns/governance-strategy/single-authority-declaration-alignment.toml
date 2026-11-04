@@ -1,13 +1,15 @@
 id = "single-authority-declaration-alignment"
 domain = "methodology"
 layer = "methodology"
-maturity = "L1"
-validation_count = 1
-reuse_count = 0
+maturity = "L2"
+validation_count = 2
+reuse_count = 1
 documentation_level = "standard"
 source = "docs/retrospective/patterns/methodology-patterns/governance-strategy/single-authority-declaration-alignment.md"
+version = "1.1.0"
+last_updated = "2026-10-29"
 
 [bindings]
 rules = []
-references = ["version-ripple-grep-sweep", "dual-track-metadata-consistency", "shared-index-count-coupling", "ledger-stock-consistency-audit", "spec-triple-sync", "dual-env-drift-reconciliation"]
+references = ["version-ripple-grep-sweep", "dual-track-metadata-consistency", "shared-index-count-coupling", "ledger-stock-consistency-audit", "spec-triple-sync", "dual-env-drift-reconciliation", "convergence-period-triple-track"]
 skills = []

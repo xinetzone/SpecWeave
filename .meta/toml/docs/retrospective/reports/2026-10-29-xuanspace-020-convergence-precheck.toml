@@ -1,0 +1,26 @@
+id = "precheck-20261029-xuanspace-020-convergence"
+title = "xuanspace 0.2.0 发布前「收口期三线」预检：三门禁拦截验证有效，线1/线3 各留必修项"
+date = "2026-10-29"
+scope = "project"
+type = "precheck"
+category = "retrospective/reports"
+source = "行动项 A-05（源报告：docs/retrospective/reports/2026-10-29-xuanspace-october-governance-retro.md）：在 xuanspace 0.2.0 发布前执行「收口期三线」预检清单，作为 convergence-period-triple-track 模式的首次复用验证。检查基准：xuanspace HEAD 991f635（2026-10-29）"
+checks_total = 16
+checks_passed = 10
+checks_blocking = 3
+checks_register = 3
+gates = ["T0", "T1", "T2", "T3"]
+v_executed = false
+version = "1.0"
+
+[bindings]
+related_patterns = [
+  "convergence-period-triple-track",
+  "single-authority-declaration-alignment",
+  "release-eligibility-invariant-gate",
+]
+rules = []
+references = [
+  "projects/xuanspace/.trae/specs/submodule-alignment-gate/spec.md",
+]
+skills = []
