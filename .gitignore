@@ -190,6 +190,27 @@ deepseek-v41-flash-video-*/
 
 # --- Security / secrets (never commit) ---
 id_ed25519*
+
+# --- npu-toolchain 容器变体（apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/variants）---
+# 该目录只入库源码/脚本/配置（Containerfile、compose.yaml、scripts/*.sh、README）。
+# 运行期临时数据默认落在仓库外 /media/pc/data/ai/.temp/npu-toolchain（已被顶部 .temp/ 规则覆盖），
+# 日志、凭据、密钥已由上方通用规则（*.log、.env*、*.pem、*.key 等）覆盖，此处不重复；
+# 以下仅作变体目录内的防御性兜底，防止运行产物被误放到此处后提交。
+# 镜像与归档大件（MB~GB 级，可由脚本重建或从 registry 拉取）
+apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/variants/**/*.tar
+apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/variants/**/*.tar.gz
+apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/variants/**/*.tgz
+apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/variants/**/*.tar.xz
+apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/variants/**/*.wsl
+apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/variants/**/*.img
+apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/variants/**/*.iso
+apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/variants/**/*.qcow2
+# 本地运行目录与残留文件（若将 LOG_DIR/SCRATCH_HOST 指到变体目录内）
+apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/variants/**/logs/
+apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/variants/**/scratch/
+apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/variants/**/tmp/
+apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/variants/**/*.pid
+
 .venv-support-agent/
 .tmp-shot/
 .venv313/

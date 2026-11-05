@@ -1,0 +1,50 @@
+# compose.yaml — declarative entry point for the npu-toolchain variant.
+#
+# This file is the declarative mirror only; the primary entry point is
+# scripts/run.sh, because bringing the container up also requires an image
+# check, a probe directory and a post-start mount gate. Use run.sh unless you
+# only need to inspect/adjust the topology.
+#
+# Rootless contract (do not weaken):
+#   - never enable the rootful/raise-privilege mode for the container
+#   - /dev/fuse + label=disable + cgroupns host are mandatory for rootless podman
+#   - no port is published at all (the baseline rootfs runs no service)
+
+services:
+  npu-toolchain:
+    image: localhost/openkylin-npu-toolchain:3.0
+    container_name: npu-toolchain
+
+    # Equivalent to `podman run --userns=keep-id`: the container user maps back
+    # to the invoking host user (uid 1006), which is what keeps the bind mount
+    # writable with matching ownership.
+    userns_mode: keep-id
+
+    # Mandatory rootless trio.
+    devices:
+      - /dev/fuse
+    security_opt:
+      - label=disable
+    cgroupns: host
+
+    # Long syntax is required: `create_host_path: false` makes a missing mount
+    # source a hard error instead of silently creating an empty host directory.
+    # (`bind.propagation` needs Compose spec >= 2.23 / podman-compose with
+    #  propagation support; the plain `podman run` flag is bind-propagation=rshared.)
+    volumes:
+      - type: bind
+        source: /media/pc/data/ai
+        target: /workspace/ai
+        bind:
+          create_host_path: false
+          propagation: rshared
+      - type: volume
+        source: npu-build
+        target: /opt/build
+
+    command: ["sleep", "infinity"]
+
+volumes:
+  # Named volume for build artefacts: compiled objects, wheels and CMake caches
+  # stay off the shared workspace and survive container re-creation.
+  npu-build:
