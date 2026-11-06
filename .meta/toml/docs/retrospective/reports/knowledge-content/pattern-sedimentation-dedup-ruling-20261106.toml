@@ -1,0 +1,30 @@
+id = "pattern-20261106-shared-index-dedup-ruling"
+title = "模式沉淀复核：共享索引增量拓展的跨模式去重再裁决与分层沉淀"
+date = "2026-11-06"
+scope = "project"
+type = "pattern-sedimentation-ruling"
+category = "retrospective/reports/knowledge-content"
+source = "任务：以七概念知识沉淀链路对上一轮里程碑复盘所申报的新模式做正式模式沉淀。对象：模式库既有资产、上一轮复盘报告、已写入的 Skill 包。"
+source_report = "../../../../docs/retrospective/reports/knowledge-content/retrospective-okf-bundle-atomic-extension-20261106.md"
+facts_count = 34
+insights_count = 4
+patterns_count = 1
+actions_count = 6
+gates = ["G1", "G2", "G3", "G4", "V"]
+v_executed = true
+c_executed = false
+version = "1.0"
+ruling = "撤销 shared-index-atomic-extension 的独立入库声称；策略 C 回写 3 个既有模式 + 1 个 Skill 来源声明；策略 D 新建 1 个窄补充模式"
+
+[bindings]
+related_patterns = [
+  "pattern-dedup-three-axis-ruling",
+  "bp-nav-co-registration",
+  "shared-index-count-coupling",
+  "pre-check-duplication-layered-sedimentation",
+  "context-recovery-protocol",
+  "format-evidence-over-memory-pattern",
+]
+rules = []
+references = []
+skills = ["seven-concepts-cmd", "shared-index-atomic-extension"]

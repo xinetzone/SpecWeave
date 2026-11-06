@@ -1,0 +1,157 @@
+EXPORT MANIFEST — OKF 知识包里程碑复盘：共享索引下的原子化增量拓展与门禁自洽
+================================================================================
+
+export_time  : 2026-11-06
+report_type  : retrospective (milestone)
+source_path  : docs/retrospective/reports/knowledge-content/retrospective-okf-bundle-atomic-extension-20261106.md
+output_dir   : docs/retrospective/reports/exported
+formats      : md
+version      : 1.0
+skill_status : PROPOSAL ONLY at export time; WRITTEN later the same day after
+               explicit user confirmation (see POST-EXPORT STATE CHANGE below)
+
+EXPORTED FILES
+--------------------------------------------------------------------------------
+AKA-1. okf-bundle-atomic-extension-milestone-retrospective-20261106-v1.0.md
+       21654 bytes at export time; 22772 bytes after the appended
+       "post-export state change" section (see bottom of this manifest)
+AKA-2. export-manifest-okf-bundle-atomic-extension-20261106.txt                (this file)
+
+SOURCE REPORT ASSETS
+--------------------------------------------------------------------------------
+- Source report  : docs/retrospective/reports/knowledge-content/
+                   retrospective-okf-bundle-atomic-extension-20261106.md
+                   (19827 bytes at export time; 21819 bytes after section 8)
+- TOML binding   : .meta/toml/docs/retrospective/reports/knowledge-content/
+                   retrospective-okf-bundle-atomic-extension-20261106.toml
+- Index entries  : knowledge-content/index.md (toctree)
+                   knowledge-content/README.md (report table)
+                   exported/index.md (toctree + export table)
+
+VERIFICATION
+--------------------------------------------------------------------------------
+- source exists              : YES
+- frontmatter(id/date/type/source/pattern): COMPLETE
+  (id=retro-20261106-okf-bundle-atomic-extension, date=2026-11-06,
+   type=Report, scenario=milestone, status=archived)
+- content non-empty          : YES (32 facts, 4 insights, 1 pattern, 6 attacks, 5 actions)
+- G1-G4 quality gates        : PASSED (self-assessed; see NOTES)
+- V gate                     : PASSED (self-verified) — 6 attacks, 5 adopted + 1 partial;
+                               independent adversarial reviewer NOT obtained
+- check-links (source)       : 12 local links, 0 broken, frontmatter paths valid
+- check-links (export copy)  : 13 local links, 0 broken, frontmatter paths valid
+- relative-link adjustment   : 0 (source and export are SIBLING directories under
+                               reports/; ../../../../ and ../../ prefixes identical)
+- index updated              : exported/index.md (toctree + table entry added)
+- categorization             : check-report-categorization.py --json run; baseline has
+                               38 pre-existing root-level violations (incl. exported/
+                               and concepts/). This export adds NO new violation.
+                               Gate still RED — not claimed as passing.
+
+SUBPROJECT GATE SNAPSHOT (2026-11-06, projects/awesome-okf-xs)
+--------------------------------------------------------------------------------
+- check-toctrees.py          : exit=0  (all index refs valid, all docs reachable)
+- check-bundles-index.py     : exit=0  (9 domains / 64 groups / 718 bundles)
+- check-utf8.py              : exit=0  (12963 files)
+- check-asset-baseline.py    : exit=1  (1 failure: line-ending normalisation drift
+                               +302365; NO "scale number contradiction")
+- four --self-test probes    : exit=0 / 0 / 0 / 0
+
+KEY ARTIFACTS REFERENCED
+--------------------------------------------------------------------------------
+- Bundle      : projects/awesome-okf-xs/doc/bundles/sheke/industry/
+                ai-comic-drama-opc-transition/ (18 .md files)
+- Log         : <bundle>/log.md (seven-concepts chain and gate records)
+- Examples    : <bundle>/examples/03-two-layer-unit-economics.md (15820 bytes)
+                <bundle>/examples/04-judgement-as-parameter.md (12049 bytes)
+- Pattern     : shared-index-atomic-extension (L1-draft, validation_count=1,
+                reuse_count=0, cross-project verification NOT done)
+- Skill       : PROPOSAL STAGE ONLY. No SKILL.md, no references/, no evals/.
+                session-to-skill step 6 requires explicit user confirmation
+                before any write. Nothing committed, pushed, or registered.
+- Commits     : 12efe455 (subproject, 3-bundle self-consistent batch)
+                94f848331 (parent gitlink)
+                d609277de (parent HEAD at export time, from parallel session)
+
+NOTES
+--------------------------------------------------------------------------------
+- Export is a content copy of the source report (md passthrough) plus one added
+  "导出说明" section. No numeric conclusion was edited.
+- All counters in the report are a 2026-11-06 live-run snapshot. A previous
+  log entry recorded the same residual as +299491; the live run yields +302365.
+  The report explicitly instructs readers to re-run the scripts rather than
+  quote the numbers as durable facts.
+- V gate was completed by the executor directly against measured evidence,
+  NOT by an independent reviewer. Attack V-2 specifically downgraded an
+  executor self-claim ("gate was red before wiring") to an inference derived
+  from the BFS rule plus the post-wiring exit=0, and marks it as not
+  historically measured.
+- C (atomic commit) was NOT executed: no explicit authorisation this round,
+  and session-to-skill forbids unprompted commit/push/registration. The bundle
+  03/04 additions and wiring edits remain uncommitted at export time.
+- check-asset-baseline.py stays RED because the working tree contains parallel
+  session WIP; the script itself asks to commit or stash before re-running.
+  The residual was NOT attributed to this bundle without a quantitative check.
+- Environment limits (unchanged from bundle log): invoke fails to load
+  (PackageNotFoundError: invocations); pytest and sphinx are not installed,
+  so gates.redline and invoke build were NOT run.
+
+POST-EXPORT STATE CHANGE (same day, after explicit user confirmation)
+--------------------------------------------------------------------------------
+- The dry-run proposal gate was cleared by the user choosing "confirm write".
+  The sections above are kept verbatim as the export-time snapshot.
+- Skill package written: .agents/skills/shared-index-atomic-extension/
+    SKILL.md                              167 lines (five-element model)
+    references/projection-checklist.md    61 lines (9 projection surfaces)
+    references/gate-evidence-playbook.md 101 lines (gate evidence + residual)
+    evals/evals.json                      57 lines (4 real scenarios)
+- check-skill-quality.py --path <skill> --score --threshold 100
+    -> 100/100, exit=0
+- check-links.py --path <skill> --check-frontmatter-paths
+    -> 3 md files / 17 local links / 0 broken / 0 broken frontmatter
+    (first run found 1 broken link: references/ needs 4 levels of ../ to
+     reach repo root, not 3. Fixed, then re-run passed.)
+- evals.json: parseable, ids [1,2,3,4] unique, required fields present,
+  each eval has 5 assertions.
+- Positive control: platform-review-precheck on the SAME quality gate
+    -> 100/100, exit=0 (gate is not only passing the new package).
+- Source report and export copy each gained a "subsequent state" section.
+- Action A-4 changed from "stopped at proposal gate" to "written and
+  verified, NOT committed".
+- STILL NOT DONE: commit / push / registration; official benchmark
+  (aggregate_benchmark and eval-viewer unavailable locally); cross-project
+  validation; clean-worktree re-run of check-asset-baseline.py.
+- Nothing was committed, pushed, or registered at any point.
+
+PATTERN SEDIMENTATION ERRATA (same day, later than the section above)
+--------------------------------------------------------------------------------
+- A follow-up /七概念 模式沉淀 review revoked the independent pattern claim for
+  shared-index-atomic-extension. The Skill package is RETAINED (not renamed,
+  not deleted) but re-positioned as an executable projection of existing
+  L2/L1.5 patterns; its frontmatter `source` and a "来源模式与去重声明"
+  section were updated (Changelog 1.0.1).
+- One narrow supplementary pattern was added instead:
+  docs/retrospective/patterns/methodology-patterns/governance-strategy/
+  pattern-dedup-three-axis-ruling.md (L1-draft, validation_count=1,
+  reuse_count=0), plus 3 strategy-C write-backs to existing patterns
+  (validation_count and maturity levels untouched).
+- Source report gained section 9 "模式沉淀复核与勘误"; this export copy gained
+  "模式沉淀复核与导出后勘误". All earlier snapshot statements are kept verbatim.
+- Full ruling: docs/retrospective/reports/knowledge-content/
+  pattern-sedimentation-dedup-ruling-20261106.md
+- Category counters rebuilt by the official script (NOT hand-edited):
+  generate-categories.py --dry-run first (8 theme dirs / 515 pattern files /
+  8-of-8 parse-health OK), then real run -> CATEGORIES.md diff 5+/3-.
+  One of the added rows (ai-collaboration/surplus-content-acceptance-gate.md)
+  is a pre-existing drift from another session, not this round's artifact.
+- Final link gate (12 md incl. CATEGORIES.md): 609 local refs / 0 broken;
+  frontmatter paths and x-toml-ref all valid; exit=0.
+  New pattern quality gate 100/100; Skill quality gate re-run 100/100;
+  check-report-categorization violation_count stays 38 (no new violation);
+  pattern-maturity check 378 passed / 491 warnings (baseline 377/491).
+- Known red item, NOT introduced here: pattern-maturity.py check-index
+  exit=1 ("统计表不存在: docs/retrospective/patterns/README.md"); that file
+  exists neither in HEAD nor in the working tree and was not touched here.
+- Still NOT done: commit / push / registration; official benchmark;
+  cross-project validation; clean-worktree re-run of check-asset-baseline.py.
+  C (atomic commit) remains unauthorised.

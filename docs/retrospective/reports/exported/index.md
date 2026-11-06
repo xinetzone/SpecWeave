@@ -11,6 +11,7 @@ wsl-drvfs-mount-wiki-milestone-retrospective-20261013-v1.0
 coach-moments-milestone-retrospective-20261013-v1.0
 platform-review-precheck-milestone-retrospective-20261026-v1.0
 xuanspace-october-governance-milestone-retrospective-20261029-v1.0
+okf-bundle-atomic-extension-milestone-retrospective-20261106-v1.0
 okf-content-creation-three-rules-milestone-retrospective-20261106-v1.0
 ```
 
@@ -23,4 +24,5 @@ okf-content-creation-three-rules-milestone-retrospective-20261106-v1.0
 | 2026-10-13 | [商业教练朋友圈 AI 增长系统里程碑复盘](coach-moments-milestone-retrospective-20261013-v1.0.md) | [manifest](export-manifest-coach-moments-20261013.txt) |
 | 2026-10-26 | [平台提审合规预检：一次提审拦截的可复用能力萃取](platform-review-precheck-milestone-retrospective-20261026-v1.0.md) | [manifest](export-manifest-platform-review-precheck-20261026.txt) |
 | 2026-10-29 | [xuanspace 十月治理收口里程碑复盘：版本定源、门禁固化与文档诚实化](xuanspace-october-governance-milestone-retrospective-20261029-v1.0.md) | [manifest](export-manifest-xuanspace-october-governance-20261029.txt) |
+| 2026-11-06 | [OKF 知识包里程碑复盘：共享索引下的原子化增量拓展与门禁自洽](okf-bundle-atomic-extension-milestone-retrospective-20261106-v1.0.md) | [manifest](export-manifest-okf-bundle-atomic-extension-20261106.txt) |
 | 2026-11-06 | [单源课程材料转 OKF 知识包里程碑复盘：负向边界成对交付与并发隔离提交](okf-content-creation-three-rules-milestone-retrospective-20261106-v1.0.md) | [manifest](export-manifest-okf-content-creation-three-rules-20261106.txt) |
