@@ -78,6 +78,73 @@ part_of: "09-npu-toolchain-windows-host.md"
 4. **临时产物与旧库备份已清理**：删除 `.temp/npu-toolchain-run`（6,904 文件 / 3,001,480,000 B）、`.temp/npu-toolchain-spec-v2`（2 文件 / 97,370 B）、Windows 侧 `~/.ssh/config.bak-20261103-split`（596 B）、拆分中间脚本 `.temp/doc09-atomize/split-doc09.ps1`（19,711 B）与容器内 `libtvm.so.bak-llvm21`（79,231,568 B，删前 `sha256=9dfa9a66…61b2a`）；删后复验 `import tvm`（0.19.0 + 两个 Target）与 `xmnn 1.0.1.dev120` 均 rc=0。XFS 可用字节 316,398,936,064 → **316,478,189,568**（+79,253,504 B）。**保留并随后归档** `.temp/doc09-atomize/original-backup.md`（1171 行 / 106,206 B，拆分前 09 原文整档副本）——2026-11-03 已迁入 `.agents/archive/doc09-atomize-20261103/`（`cmp` + sha256 一致后删源，凭证见该目录 `README.md`）。
 5. **G3（LLVM 23 混装）已处置，隔离目录已删除**：`/opt/build/.llvm23-quarantine-20261103/` 删除前含 `libLLVM-23.so`、`libLLVM.so.23.1`、`libLTO.so.23.1`、`libRemarks.so.23.1`、6 个 `liblld*.a`、`libomp*` 与 `libiomp5.so`、`bin/{lld,ld.lld,ld64.lld,lld-link,wasm-ld}`、`include/lld/` 与 `include/omp*.h`、`lib/cmake/{lld,openmp}`，合计 **268 MB / 48 文件**。该隔离副本已于 2026-11-03 删除（删前 `grep` 确认 `llvm22` 内无文件引用该路径），XFS 可用字节 315,729,219,584 → 316,010,168,320（+280,948,736 B，约 268 MiB）。删除后 `mv` 回滚路径失效，如需恢复须自 conda 通道重新安装。副作用：`clang-22 -fopenmp` 依赖的 `libomp.so` 已移出 prefix；22 系从未安装 `lld`，故构建与运行不依赖二者。
 
+## 10. `3.0-minimal` 重基线验收（2026-11-05）
+
+### 10.1 镜像层实体断言（必须为空）
+
+```bash
+podman run --rm --network none localhost/openkylin-npu-toolchain:3.0-minimal bash -c \
+  'find / -xdev \( -name "libtvm.so" -o -name "xmnn" -o -name "tvm" \
+     -o -name "*xmnn*dist-info" -o -name "tvm_src.pth" -o -name "_editable_skbc_xmnn.pth" \) 2>/dev/null'
+```
+
+输出为空。镜像内 site-packages 仅 5 项：`README.txt`、`conda-site.pth`、**`npu-toolchain.pth`（3 行纯指针）**、`pip/`、`pip-*.dist-info`。`podman create` 后立即 `podman diff` 为空（未启动的干净容器无可写层差异）。
+
+### 10.2 三层归属
+
+| 层 | 内容（实测） |
+|---|---|
+| 镜像层（只读） | 基础 rootfs + gcc 15.2.0 + conda `py314` 环境（cmake/ninja/make/zlib/pip）+ 两条 `.pth`（`conda-site.pth`、`npu-toolchain.pth`）+ 软链 `/var/opt/build -> /opt/build` |
+| 容器可写层 | 仅 `/etc/passwd`、`/etc/group`（keep-id 注入）与 `/workspace` 挂载点占位；**无 tvm/xmnn 实体** |
+| `npu-build` 卷 | `llvm21/`、`llvm22/`（含 195,933,536 B 的 `libLLVM.so.22.1`）、`npu_tvm/libtvm.so`（79,226,112 B）、`npuusertools/`（`userbase` 内 93 项，含 `xmnn 1.0.1.dev120`）、`tvm_test_data/` |
+
+### 10.3 验收对照（P0 基线 / 上一轮无接线 / 本轮）
+
+| 检查 | P0（旧容器 `npu-toolchain`） | run3（`f76cf7f2b9a1`，无接线） | 本轮（`f4a56dee74c2`） |
+|---|---|---|---|
+| A3 llvm22 | PASS `22.1.8` | PASS `22.1.8` | **PASS `22.1.8`** |
+| A4 npu_tvm | PASS | **FAIL** | **PASS**（`tvm 0.19.0`） |
+| A5 npuusertools | PASS | **FAIL** | **PASS**（`xmnn 1.0.1.dev120`） |
+| A1/A2/A6/A8/A9 | 5 PASS | 5 PASS | 5 PASS |
+| A7 端口 | N/A | N/A | N/A |
+| **total / pass / fail / na** | **14 / 13 / 0 / 1** | **14 / 11 / 2 / 1** | **14 / 13 / 0 / 1** |
+
+抽验：`tvm 0.19.0`、`xmnn 1.0.1.dev120`、`llvm-config 22.1.8`、`Target("llvm")` → `llvm -keys=cpu -mtriple=x86_64-conda-linux-gnu`、`Target("ccompiler")` 可用、`libLLVM.so.22.1` 存在且 `ldd` 解析到 `/var/opt/build/llvm22/lib/libLLVM.so.22.1`（**195,933,536 B**，非系统 `libllvm22` 的 147,600,808 B）。
+
+### 10.4 体积与耗时（三口径，以 `df` 差为准）
+
+| 口径 | run3（全量 15 步） | run4（增量 2 层） |
+|---|---|---|
+| 真实耗时 | **374 s** | **2 s**（Layer 1/2 全命中缓存） |
+| `df -B1 /media/pc/data` 前后差 | 303,620,898,816 → 302,264,004,608，**Δ 1,356,894,208 B** | 302,144,782,336 → 302,144,442,368，**Δ 339,968 B** |
+| `podman images` SIZE | 2.51 GB | 2.51 GB |
+| `inspect .Size` | — | 2,512,697,064 B |
+| 容器内 `du -sb --one-file-system /` | — | 2,108,526,926 B |
+
+### 10.5 缺挂载可读性（改前 / 改后）
+
+| 场景 | 改前（`verify.sh` 原判定） | 改后 |
+|---|---|---|
+| 缺 `npu-build` | A3：`bash: line 1: /opt/build/llvm22/bin/llvm-config: No such file or directory`；A4/A5：Python 堆栈（`ModuleNotFoundError`） | A3/A4/A5 各自输出「npu-build 卷未挂载到 /opt/build（…）」人工可读文案 |
+| 缺 `/workspace/ai` | A4：Python 堆栈；A8：`mkdir: cannot create directory '/workspace': Permission denied`；A9：`df: /workspace/ai: No such file or directory` | A4 输出「`/workspace/ai` 绑定挂载缺失（A4 依赖 tvm python 源码…）」；A8/A9 同因文案 |
+
+判定改造仅发生在 `scripts/verify.sh`（新增 `has_mount()` 与 A3/A4/A5/A8/A9 前置门禁），**镜像未改动**；健康容器回归仍为 `14 / 13 / 0 / 1`。
+
+### 10.6 镜像静态内容契约（`audit-image-contract.sh`，2026-11-05）
+
+`verify.sh` 覆盖运行态（A1–A9）；`audit-image-contract.sh` 覆盖镜像静态内容，二者互补、互不替代。脚本只读：不 build / import / tag / rmi / prune，容器一律 `--rm --network none`。
+
+| 用例 | 命令 | 结果 |
+|---|---|---|
+| 正例 | `--image localhost/openkylin-npu-toolchain:3.0-minimal --with-volume` | `total=12 pass=12 fail=0 unknown=0`，`exit=0` |
+| 反例 1（无 gcc 的最小基） | `--image localhost/openkylin:3.0-minimal` | `total=10 pass=4 fail=6`，A2–A7 FAIL，`exit=1` |
+| 反例 2（桌面基，无 conda/.pth） | `--image localhost/openkylin:3.0` | `total=10 pass=5 fail=5`，A3–A7 FAIL，`exit=1` |
+| 缺失镜像 | `--image localhost/openkylin:9.9-nope` | `total=1 unknown=1`，`exit=2` |
+
+`npu-toolchain.pth` 逐字比对：按镜像内 python 版本拼接三行期望文本，比 `wc -c`（146 B，含结尾换行）与 `sha256sum`；实测一致（`b0476df3da93…`）。
+
+判定逻辑另有离线单测守护（`bash scripts/tests/run-tests.sh`，27 条用例、全离线、`podman` 桩注入应答，含 D25 控制字符保真 / D26 反斜杠·双引号·Tab·SOH 四类混用 / D27 NUL 边界锁定）：[详述见变体 README §离线单元测试](../apps/openkylin-dev-container/variants/npu-toolchain/README.md)。
+
 ## 相关文档
 
 - [入口索引](09-npu-toolchain-windows-host.md)

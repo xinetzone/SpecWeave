@@ -73,6 +73,12 @@ Windows 经 SSH 使用 10.16.11.3 rootless Podman 的 npu-toolchain 规格，已
 [进入](10-milestone-retro-remote-podman.md)
 :::
 
+:::{grid-item-card} 里程碑复盘（EOL/CRLF 与远程连接）
+WSL 收尾与空间回收、远程连接收口，以及「CRLF 致解析失败」被实测证伪的完整过程与验证方法。
+
+[进入](11-milestone-retro-eol-and-remote-connection.md)
+:::
+
 ::::
 
 ```{toctree}
@@ -95,4 +101,5 @@ Windows 经 SSH 使用 10.16.11.3 rootless Podman 的 npu-toolchain 规格，已
 09-6-risks-todos-changelog
 09-7-appendix-v1-wsl-deprecated
 10-milestone-retro-remote-podman
+11-milestone-retro-eol-and-remote-connection
 ```

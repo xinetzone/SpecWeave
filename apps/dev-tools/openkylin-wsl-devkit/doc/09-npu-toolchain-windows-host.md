@@ -72,8 +72,8 @@ owner: "未指定"
 | [09-1-backend-and-decision.md](09-1-backend-and-decision.md) | 预检事实基线、七概念分解、架构图、连接形态 A/B 对比、端口与访问策略 | 想了解方案依据与连接方式时先读 |
 | [09-2-mounts-uid-storage.md](09-2-mounts-uid-storage.md) | 挂载与 UID 策略、graphroot 实际落点 | 排查读写属主或存储位置时 |
 | [09-3-toolchain-provisioning.md](09-3-toolchain-provisioning.md) | LLVM 22 供给决策、Python 3.14 环境复用、附录 B 事实卡 | 准备补装工具链时 |
-| [09-4-build-and-verify.md](09-4-build-and-verify.md) | 两库构建链复用点与验证方案（含命令块） | 实际构建、验证时照做 |
-| [09-5-acceptance-and-evidence.md](09-5-acceptance-and-evidence.md) | A1–A9 标准表与实施结果（判定表、偏差 D1–D6、容器内配置、遗留问题） | 验收、复核证据时 |
+| [09-4-build-and-verify.md](09-4-build-and-verify.md) | 两库构建链复用点与验证方案（含命令块）；§7 镜像重建与挂载契约（`3.0-minimal` 重基线，§7.4 基线由 `scripts/build-minimal-base.sh` 产出） | 实际构建、验证时照做 |
+| [09-5-acceptance-and-evidence.md](09-5-acceptance-and-evidence.md) | A1–A9 标准表与实施结果（判定表、偏差 D1–D7、容器内配置、遗留问题）；§10 `3.0-minimal` 重基线验收（三层归属、缺挂载可读性） | 验收、复核证据时 |
 | [09-6-risks-todos-changelog.md](09-6-risks-todos-changelog.md) | 风险矩阵、回滚方案、分阶段实施、Q1–Q6、附录 A/C | 做决策、回溯问题时 |
 | [09-7-appendix-v1-wsl-deprecated.md](09-7-appendix-v1-wsl-deprecated.md) | v1.x WSL 本地后端全文归档（DEPRECATED） | 仅历史追溯，按需 |
 
@@ -90,3 +90,4 @@ owner: "未指定"
 - [09-1 预检基线、七概念与连接决策](09-1-backend-and-decision.md)
 - [09-5 验收标准与实测证据](09-5-acceptance-and-evidence.md)
 - [10 里程碑复盘（WSL → 远程 Podman）](10-milestone-retro-remote-podman.md)
+- [11 里程碑复盘（EOL/CRLF 治理与远程连接收口）](11-milestone-retro-eol-and-remote-connection.md)
