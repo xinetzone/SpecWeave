@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/local-ocr-npu/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 local-ocr-npu）"
 name: local-ocr-npu
 description: |
   Local NPU OCR (本地NPU文字识别). Use this skill when the user wants to extract,

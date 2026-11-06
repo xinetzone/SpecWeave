@@ -2,7 +2,7 @@
 id: xs-template-usage-guide
 date: 2026-08-29
 type: usage-guide
-source: "templates/xs-sdk-guide-template.docx"
+source: "../templates/xs-sdk-guide-template.docx"
 ---
 
 # 脱敏高保真技术文档模板使用说明（xs-sdk-guide-template）

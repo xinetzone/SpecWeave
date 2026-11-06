@@ -1,7 +1,7 @@
 ---
 id: "feat-dev-01"
 title: "01 变更类型判定与流程概览"
-source: "workflows/feature-development.md#01"
+source: "../feature-development.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/workflows/feature-development/01-change-type-overview.toml"
 ---
 

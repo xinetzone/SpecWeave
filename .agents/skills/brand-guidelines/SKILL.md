@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/brand-guidelines/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 brand-guidelines）"
 name: brand-guidelines
 description: Applies Anthropic's official brand colors and typography to any sort of artifact that may benefit from having Anthropic's look-and-feel. Use it when brand colors or style guidelines, visual formatting, or company design standards apply.
 license: Complete terms in LICENSE.txt

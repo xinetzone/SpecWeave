@@ -1,7 +1,7 @@
 ---
 id: "pdr-04"
 title: "04 二次暴露治理检查点"
-source: "protocols/pre-document-reading.md#04"
+source: "../pre-document-reading.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/protocols/pre-document-reading/04-second-exposure-governance.toml"
 ---
 

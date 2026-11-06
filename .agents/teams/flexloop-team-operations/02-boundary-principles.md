@@ -1,7 +1,7 @@
 ---
 id: "flexloop-team-operations-02-boundary-principles"
 title: "flexloop团队手册：三区域边界与协作原则"
-source: "teams/flexloop-team-operations.md#02"
+source: "../flexloop-team-operations.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/teams/flexloop-team-operations/02-boundary-principles.toml"
 ---
 # flexloop团队手册：三区域边界与协作原则

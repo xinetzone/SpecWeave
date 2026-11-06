@@ -1,7 +1,7 @@
 ---
 id: "compliance-contracting-reproduction-checklist"
 title: "合规契约化复现检查清单（A-006）"
-source: "retro:sc-20260911-pipeline-parable-retro / pattern-compliance-contracting (L1) / A-006"
+source: "retro:sc-20260911-pipeline-parable-retro; pattern-compliance-contracting (L1); A-006"
 date: "2026-09-11"
 type: "checklist"
 severity: "high"

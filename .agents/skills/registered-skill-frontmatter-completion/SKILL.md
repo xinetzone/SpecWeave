@@ -82,7 +82,7 @@ python .agents/scripts/check-links.py --paths .agents/skills --check-frontmatter
 | 欠账句 | 零命中 | 跳过 S3 |
 | 基线断链数 | 记为 `B` | S4 复跑必须仍为 `B`（本技能零新增） |
 
-> **为什么？** 本仓全集链接门长期存在 118 条既有断链（镜像技能把「原路径 …/SKILL.md」写进 `source`、个别 `x-toml-ref` 深度写错）。不先记基线，改完看到「118」会误判失败，或看到「0」会误判自己修好了全集。
+> **为什么？** 本仓全集链接门长期存在 118 条既有断链（镜像技能把「原镜像标识 …」写进 `source`、个别 `x-toml-ref` 深度写错）。不先记基线，改完看到「118」会误判失败，或看到「0」会误判自己修好了全集。
 
 ## 4. S1 补 `x-toml-ref`（镜像先于回指）
 
@@ -137,7 +137,7 @@ source: "session:<uuid>; session:<uuid>"
 反面样例（都会入检查并报断链）：
 
 ```yaml
-source: "镜像自 X（原路径 skills/foo/SKILL.md）"   # 含 .md + 斜杠 → 整段被当路径
+source: "镜像自 X（原镜像标识 foo）"   # 含 .md + 斜杠 → 整段被当路径
 source: "templates/x.docx"                          # 含斜杠 → 被当路径
 source: "a.md + 复盘洞察"                           # ASCII + 切成两段，第一段命中扩展名
 ```

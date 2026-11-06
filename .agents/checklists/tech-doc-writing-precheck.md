@@ -1,7 +1,7 @@
 ---
 id: "tech-doc-writing-precheck"
 title: "技术文档编写前置检查清单"
-source: "retrospective-weasyprint-learning-20260713.md#行动项与改进措施 ACT-002/ACT-003"
+source: "../../docs/retrospective/reports/task-reports/retrospective-weasyprint-learning-20260713.md"
 maturity: "L1"
 validation_count: 1
 x-toml-ref: "../../.meta/toml/.agents/checklists/tech-doc-writing-precheck.toml"

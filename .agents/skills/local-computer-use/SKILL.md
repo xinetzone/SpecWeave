@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/local-computer-use/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 local-computer-use）"
 name: local-computer-use
 description: |
   Intel Local Windows Computer Use (本地计算机使用). Use this skill when the user, in Chinese or English, asks to query or change Windows system state/settings in the supported categories below. Trigger on Chinese verbs like 打开/开启/关闭/设置/调整/切换/查询/查看/列出, English verbs like open/turn on/turn off/set/adjust/switch/query/list, and explicit mentions of 英特尔/intel/AIPC/LocalComputer/本地/助手/Assistant.

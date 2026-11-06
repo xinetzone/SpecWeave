@@ -1,7 +1,7 @@
 ---
 id: "sg-guide-06"
 title: "06 Python API参考与排错指南"
-source: "rules/stage-guardrails-guide.md#06"
+source: "../stage-guardrails-guide.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails-guide/06-api-troubleshooting.toml"
 ---
 

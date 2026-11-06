@@ -1,7 +1,7 @@
 ---
 id: "rules-detection-reporting-04-manual-review"
 title: "检测与报告机制：人工审查规范"
-source: "rules/detection-and-reporting.md#人工审查规范"
+source: "../detection-and-reporting.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/detection-and-reporting/04-manual-review.toml"
 ---
 # 检测与报告机制：人工审查规范

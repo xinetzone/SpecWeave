@@ -9,7 +9,7 @@ paths:
   - ".agents/skills/zhihu-article-publish-cmd/**"
   - "work/zhihu-science-workshop-2026/**"
 title: "知乎文章发布自动化 Skill"
-x-toml-ref: "../../.meta/toml/.agents/skills/zhihu-article-publish-cmd/SKILL.toml"
+x-toml-ref: "../../../.meta/toml/.agents/skills/zhihu-article-publish-cmd/SKILL.toml"
 ---
 
 # 知乎文章发布自动化 Skill

@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/byted-mediakit-shared/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 byted-mediakit-shared）"
 name: byted-mediakit-shared
 version: '1.0.0'
 license: 'MIT'

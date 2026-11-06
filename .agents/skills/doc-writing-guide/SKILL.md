@@ -8,7 +8,7 @@ description: >
   calibration, content structuring, visual generation guidance, and
   sub-scenario routing to specialized references (e.g., PRD routes to
   references/prd-document.md).
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/work/default/skills/doc-writing-guide/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 doc-writing-guide）"
 ---
 
 ## 1. Interpret Intent Before Writing

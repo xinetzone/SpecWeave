@@ -1,7 +1,7 @@
 ---
 id: "lib-api"
 title: ".agents/scripts/lib/ API 参考"
-source: "lib/api_docs.py"
+source: "api_docs.py"
 x-toml-ref: "../../../.meta/toml/.agents/scripts/lib/README.toml"
 ---
 

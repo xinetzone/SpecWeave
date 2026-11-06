@@ -1,7 +1,7 @@
 ---
 id: "docker-legacy-project-risk-warning-checklist"
 title: "Docker 化老旧项目风险预警清单"
-source: "docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/README.md"
+source: "../../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/README.md"
 date: 2026-07-22
 related_patterns:
   - "docker-build-reference-template-copy.md"

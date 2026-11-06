@@ -1,7 +1,7 @@
 ---
 id: "sg-guide-02"
 title: "02 8阶段权限速查表"
-source: "rules/stage-guardrails-guide.md#02"
+source: "../stage-guardrails-guide.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails-guide/02-permissions-reference.toml"
 ---
 

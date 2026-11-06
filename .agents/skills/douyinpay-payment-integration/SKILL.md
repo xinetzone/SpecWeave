@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/douyinpay-payment-integration/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 douyinpay-payment-integration）"
 name: douyinpay-payment-integration
 description: >-
   抖音支付（DouyinPay）端到端接入集成助手。提供支付产品选型、前置准备引导、

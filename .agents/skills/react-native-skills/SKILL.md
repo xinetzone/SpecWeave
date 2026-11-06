@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/react-native-skills/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 react-native-skills）"
 name: vercel-react-native-skills
 description:
   React Native and Expo best practices for building performant mobile apps. Use

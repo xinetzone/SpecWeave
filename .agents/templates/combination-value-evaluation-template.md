@@ -1,7 +1,7 @@
 ---
 id: "combination-value-evaluation-template"
 title: "组合价值评估三原则决策记录模板"
-source: "docs/retrospective/patterns/methodology-patterns/governance-strategy/combination-value-triple-test.md"
+source: "../../docs/retrospective/patterns/methodology-patterns/governance-strategy/combination-value-triple-test.md"
 x-toml-ref: "../../.meta/toml/.agents/templates/combination-value-evaluation-template.toml"
 version: "1.0.0"
 patterns_applied: ["combination-value-triple-test"]

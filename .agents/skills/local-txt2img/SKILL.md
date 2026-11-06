@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/local-txt2img/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 local-txt2img）"
 name: local-txt2img
 description: |
   Intel Local Text-to-Image (本地文字转图片). Use this skill when the user, in Chinese or English, asks to generate/create/draw/paint/make an image or picture from a text prompt. Trigger on Chinese verbs like 生成/画/绘制/出图/文生图 or English verbs like generate/create/draw/paint/make an image/picture — whether or not the user specifies "locally"/"本地".

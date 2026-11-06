@@ -1,7 +1,7 @@
 ---
 id: "pdr-02"
 title: "02 前置文档清单"
-source: "protocols/pre-document-reading.md#02"
+source: "../pre-document-reading.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/protocols/pre-document-reading/02-required-docs.toml"
 ---
 

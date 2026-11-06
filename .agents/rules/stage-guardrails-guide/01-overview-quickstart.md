@@ -1,7 +1,7 @@
 ---
 id: "sg-guide-01"
 title: "01 概述、架构与快速开始"
-source: "rules/stage-guardrails-guide.md#01"
+source: "../stage-guardrails-guide.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails-guide/01-overview-quickstart.toml"
 ---
 

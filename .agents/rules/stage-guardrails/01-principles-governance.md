@@ -1,7 +1,7 @@
 ---
 id: "stage-guard-01"
 title: "01 核心原则与治理基建模型"
-source: "rules/stage-guardrails.md#01"
+source: "../stage-guardrails.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails/01-principles-governance.toml"
 ---
 

@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/spec-to-implementation/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 spec-to-implementation）"
 name: notion-spec-to-implementation
 description: Turns product or tech specs into concrete Notion tasks that Claude code can implement. Breaks down spec pages into detailed implementation plans with clear tasks, acceptance criteria, and progress tracking to guide development from requirements to completion.
 ---

@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/podcast/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 podcast）"
 name: podcast
 description: "Create podcasts from topics, URLs, or text. Triggers on: \"做播客\", \"podcast\", \"播客\", \"录一期节目\", \"chat about\", \"discuss\", \"debate\", \"dialogue\", \"make a podcast about\"."
 ---

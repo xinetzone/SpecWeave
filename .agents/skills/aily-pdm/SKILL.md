@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/aily-pdm/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 aily-pdm）"
 name: aily-pdm
 description: "PDM（Python Development Master）专业技能助手，提供完整的Python包管理和项目管理指导。 当用户询问以下内容时使用此技能： - PDM安装、项目初始化、依赖管理（add/remove/update） - pyproject.toml配置、PEP 621元数据 - PDM命令（pdm init, pdm add, pdm install, pdm lock, pdm publish等） - 虚拟环境配置、Python版本管理 - PDM插件开发、脚本编写（tool.pdm.scripts） - 依赖解析错误、构建配置问题 - 从Pipenv/Poetry/requirements.txt迁移到PDM - CI/CD集成、IDE配置（VS Code/PyCharm） - PDM高级用法（hooks、环境变量、集中式缓存） - 项目结构设计、最佳实践 - pdm.lock锁定文件管理 - 发布到PyPI、自定义索引配置 - Python/PDM安装（系统无Python时的引导安装） - conda环境与PDM协同使用 - monorepo多包项目管理 - PEP 723内联脚本、workspace原生支持 - uv后端集成、Docker容器化部署"
 ---

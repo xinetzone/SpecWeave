@@ -8,7 +8,7 @@ user-invocable: true
 paths:
   - ".agents/skills/meoo-skill-publish/**"
 title: "Meoo 技能市场发布 (Meoo Skill Publish)"
-x-toml-ref: "../../.meta/toml/.agents/skills/meoo-skill-publish/SKILL.toml"
+x-toml-ref: "../../../.meta/toml/.agents/skills/meoo-skill-publish/SKILL.toml"
 ---
 # Meoo 技能市场发布 (Meoo Skill Publish)
 

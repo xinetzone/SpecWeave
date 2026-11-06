@@ -1,7 +1,7 @@
 ---
 module: ps1_syntax
 version: 1.1.0
-source: lib/ps1_test_cases.py
+source: ../lib/ps1_test_cases.py
 generated: 2026-07-29
 tags: [crossplatform, newline, BOM, CR, CRLF, LF, here-string]
 ---

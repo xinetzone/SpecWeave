@@ -1,7 +1,7 @@
 ---
 id: "spec-writing-04"
 title: "04 可选元素"
-source: "rules/spec-writing-guide.md#04"
+source: "../spec-writing-guide.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/spec-writing-guide/04-optional-elements.toml"
 ---
 

@@ -1,7 +1,7 @@
 ---
 id: "rules-data-security-incident-response-01-overview-organization"
 title: "应急响应：概述与组织架构"
-source: "rules/data-security/incident-response.md#01"
+source: "../incident-response.md#文档导航"
 x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/incident-response/01-overview-organization.toml"
 ---
 # 应急响应：概述与组织架构

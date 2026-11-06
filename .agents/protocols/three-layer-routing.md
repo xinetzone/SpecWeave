@@ -1,7 +1,7 @@
 ---
 id: "three-layer-routing"
 title: "三层路由流程图与异常处理说明"
-source: "docs/knowledge/three-layer-routing.md"
+source: "../../docs/knowledge/three-layer-routing.md"
 x-toml-ref: "../../.meta/toml/.agents/protocols/three-layer-routing.toml"
 ---
 # 三层路由流程图与异常处理说明

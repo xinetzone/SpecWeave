@@ -1,7 +1,7 @@
 ---
 name: wsl-vhdx-compact-cmd
-version: 1.0.0
-description: 'WSL2 ext4.vhdx 可验证物理压缩门面。当用户提到"压缩 WSL 磁盘"、"vhdx 回收"、"ext4.vhdx 太大"、"compact vhdx"、"wsl 磁盘瘦身后没回空间"、"fstrim + compact 两步"、"podman-machine-default vhdx 压缩"、"openKylin WSL 磁盘回收"、"wsl --manage --compact"、"宿主机 FreeGiB 核对"、"wsl shutdown 后再启动"、"WSL VHDX 前后基线核对"、"C/D 盘爆红 清 WSL" 时，必须使用此技能。封装 8 步闭环：宿主 FreeGiB 基线 → VHDX 长度基线 → Linux 内 fstrim（挂载点智能探测）→ 发行版状态快照 → wsl --shutdown → wsl --manage <distro> --compact（原生路径优先，失败自动降级管理员 compress-wsl-vhdx.ps1）→ After 双基线复测 → 恢复发行版原态（原态 Running 的 podman 用 podman machine start 幂等恢复；原态 Stopped 的不主动启动）。输出以"Before/After/Saved + 宿主 FreeGiB 数值闭环"为唯一验收依据，禁止把 wsl.exe stdout 的 UTF-16 乱码或"执行成功"提示作为解析依据；podman machine start 的"API proxy pipe not available"警告视为 shutdown 后首启正常现象，不要误报错误。姊妹技能 wsl-ops-cmd 管辖磁盘清理（Docker/prune）、GPU 修复、Trae 缓存、Docker 自启；本技能只负责"已经清理完 Linux 内层后的 Windows 侧 VHDX 物理瘦身与可验证闭环"。'
+version: 1.1.0
+description: 'WSL2 ext4.vhdx 可验证物理压缩门面。当用户提到"压缩 WSL 磁盘"、"vhdx 回收"、"ext4.vhdx 太大"、"compact vhdx"、"wsl 磁盘瘦身后没回空间"、"fstrim + compact 两步"、"podman-machine-default vhdx 压缩"、"openKylin WSL 磁盘回收"、"wsl --manage --compact"、"宿主机 FreeGiB 核对"、"wsl shutdown 后再启动"、"WSL VHDX 前后基线核对"、"C/D 盘爆红 清 WSL"、"回收站清空后空间没回来" 时，必须使用此技能。封装 8 步闭环：宿主 FreeGiB 基线 → VHDX 长度基线 → Linux 内 fstrim（挂载点智能探测）→ 发行版状态快照 → wsl --shutdown → wsl --manage <distro> --compact（原生路径优先，失败自动降级管理员 compress-wsl-vhdx.ps1）→ After 双基线复测 → 恢复发行版原态（原态 Running 的 podman 用 podman machine start 幂等恢复；原态 Stopped 的不主动启动）。输出以"Before/After/Saved + 宿主 FreeGiB 数值闭环"为唯一验收依据，禁止把 wsl.exe stdout 的 UTF-16 乱码或"执行成功"提示作为解析依据；podman machine start 的"API proxy pipe not available"警告视为 shutdown 后首启正常现象，不要误报错误。姊妹技能 wsl-ops-cmd 管辖磁盘清理（Docker/prune）、GPU 修复、Trae 缓存、Docker 自启；本技能只负责"已经清理完 Linux 内层后的 Windows 侧 VHDX 物理瘦身与可验证闭环"。'
 argument-hint: "[-Distro <发行版名>] [-VhdxPath <路径>] [-Mounts /,/home,/workspace] [-RestoreOriginalState] [-BaselineOnly] [-SkipFstrim]"
 disable-model-invocation: false
 user-invocable: true
@@ -88,10 +88,10 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/wsl-vhdx-compact-cmd/SKILL.toml"
 - **方案B依赖**：管理员 pwsh 7.4+，compress-wsl-vhdx.ps1 有 `#Requires -RunAsAdministrator`
 - **操作限制**：
   1. `wsl --shutdown` 会关闭 **所有** 发行版，包括 podman-machine-default / openKylin / PCMClaw 等都会 Stopped
-  2. Trae 集成 shell 里跑 `Clear-RecycleBin` 会被沙箱拦截，**所有回收站清空必须用户在 Trae 外做**（技能不提供命令）
+  2. Trae 集成 shell 里跑 `Clear-RecycleBin` 表现为**命令挂起超时并被移入后台**（无报错、无输出），不是立刻抛出拒绝；回收站清空须解除沙箱重试或由用户在 Trae 外执行，且**清空后必须复检残留**——缺 `$I` 元数据的孤立 `$R` 目录不会报错、也不会被清掉
   3. `wsl.exe` 输出是 UTF-16 LE，会出现 UTF-8 解码得到的 `�` 乱码字符；**永远不要解析 stdout 文本，只能依赖 ExitCode + Get-Item Length + Win32 FreeGiB**
 
-> **为什么三条限制这么死？**（Why-Explanation）三条都是 3 次实战踩过的真坑：限制1让 podman 被误关后用户半天拉不起容器；限制2是 Agent 曾经说"已清回收站"结果空间零增长（沙箱只移文件到回收站，没清物理空间）；限制3导致上一轮解析 compact 结果时出现 `�d\Ob�R�[b0` 这类完全不可信的字符串，后来统一用"数值三基线"。
+> **为什么三条限制这么死？**（Why-Explanation）三条都是 3 次实战踩过的真坑：限制1让 podman 被误关后用户半天拉不起容器；限制2在 2026-11-05 会话中复现两次：沙箱内命令挂起至超时被移入后台，解除沙箱后虽报 `C_CLEARED`/`D_CLEARED`，C 盘仍余 0.95 GiB、D 盘仍余两个孤立 `$R` 目录——提示语与真实释放量脱钩；限制3导致上一轮解析 compact 结果时出现 `�d\Ob�R�[b0` 这类完全不可信的字符串，后来统一用"数值三基线"。
 
 ## 7. 方案A：原生 `wsl --manage` 压缩（⭐默认，8 步闭环）
 
@@ -186,7 +186,8 @@ function Build-DegradeCommand { param($D,$V,$S) "pwsh -File ...compress-wsl-vhdx
 - [ ] 已告知：`wsl --shutdown` 会关闭**所有**发行版，podman/jupyter/其他你在运行的容器都会挂；用户已明确批准
 - [ ] 已拿 `wsl -l -v` 真实名称核对 Distro 参数（本项目：podman-machine-default / openKylin-3.0-desktop；PCMClawUbuntu 永远别碰，它的 BasePath 在 C 盘不占 D）
 - [ ] VhdxPath 已核对过实际盘符（本项目基本都是 D:\WSL\<x>\ext4.vhdx），不要用 `%LOCALAPPDATA%\Packages\...\LocalState` 默认路径
-- [ ] 如果用户同时还在删 tar/tar.gz 等大文件：已明确告知 Trae 沙箱 Remove-Item **只进回收站不真释放**，B 删除后宿主盘 FreeGiB 不会立即涨，必须用户在 Trae 外清空回收站
+- [ ] 如果用户同时还在删 tar/tar.gz 等大文件：已明确告知 Trae 沙箱 Remove-Item **只进回收站不真释放**，B 删除后宿主盘 FreeGiB 不会立即涨，必须用户在 Trae 外清空回收站；清空后以 `$Recycle.Bin` 实测字节数复检，孤立 `$R` 目录需手动递归删除（见 Gotcha 11）
+- [ ] 若用户把大文件先中转搬到另一个盘：已核对目标盘剩余容量 ≥ 文件大小（中转期间两份副本同时占盘，删除前不产生净收益），并明确告知源盘要等 compact 完成才释放（见 Gotcha 9）
 - [ ] RestorePodman 已按原态正确开关：原本 Running 的 podman-machine-default 一定要开（否则 shutdown 后停了，用户下次 docker pull 才发现）
 - [ ] 验收时**至少两条独立证据都对得上**：VHDX Length 差量 > 0、宿主 Win32 FreeGiB 增量与之对应（允许 ±0.05 GiB 的簇对齐误差）；只有一条满足不算通过
 - [ ] compact 后所有原本 Running 的发行版已恢复成原态，或者已明确告知用户"我没帮你启动 X，你需要手动 Y"
@@ -201,13 +202,15 @@ function Build-DegradeCommand { param($D,$V,$S) "pwsh -File ...compress-wsl-vhdx
 | COMPACT_004 | DeltaHostFreeGiB 明显比 SavedVhdxGiB 大/小（差值>1 GiB） | 说明 shutdown→compact 这段时间有其他进程在写/删目标盘（例如下载、杀毒、用户手动清回收站）；等待 1 分钟复测，或告知用户"有其他进程干扰，数值闭环不精确但 VHDX 长度差量已实锤 N GiB" |
 | COMPACT_005 | `podman machine start` 后报 "API forwarding for Docker API clients is not available… pipe not available" | 属于 **NORMAL HINT**：是 shutdown 后 podman 的首启正常提示，下一次 start 就没了；只要 Machine started successfully 就算通过，不要误修 |
 | COMPACT_006 | 步骤5 shutdown 后仍有发行版 Running 超过 15s | 手动退出 Trae 里所有打开的 wsl 终端、关闭所有运行中的 Docker Desktop/Podman Desktop，再在独立 pwsh 里跑 `Stop-Process -Name wsl,wslhost -Force` 后重试 |
-| COMPACT_007 | 用户说"我清了回收站但 D 盘还没涨" | 在 Trae 外的独立管理员 pwsh 里跑：`Clear-RecycleBin -DriveLetter D -Force`；Trae 集成沙箱会被 UAC 拦截 |
+| COMPACT_007 | 用户说"我清了回收站但 D 盘还没涨" | 解除沙箱重试或让用户在 Trae 外跑 `Clear-RecycleBin -DriveLetter D -Force`；沙箱内的表现是**命令挂起超时**，不是立刻报错。执行后必须实测 `$Recycle.Bin` 字节数，不以 `C_CLEARED`/`D_CLEARED` 提示语为验收 |
+| COMPACT_008 | `Clear-RecycleBin` 报成功但 `$Recycle.Bin` 仍占空间 | 属孤立 `$R` 目录（无配对 `$I`）。按 Gotcha 11 三步取证（独占打开证伪锁 → ACL 证伪权限 → 递归删除）；两盘仅余 `desktop.ini` 才算达标 |
 
 ## 12. Gotchas（陷阱与反直觉行为）
 
 ### 12.1 宿主/内层差值的解释陷阱
 - **Gotcha 1：df Used 与 VHDX Length 几乎等值（如 48.84 GiB vs 48G）时，compact 收益一定在 GiB 级甚至 1 GiB 内**。不要因为用户清了"一大堆"就预期 VHDX 会掉 20G，必须 BaselineOnly 把期望值摆在台面上（E 动作的 openKylin 案例就是这样 48.84→48.21 只掉 0.66 GiB）。
 - **Gotcha 2：Win32 FreeGiB 的增量 ≠ VHDX 长度差量**。两者是关联但不是同一回事：簇对齐、后台 NTFS 压缩、MFT、其他进程同时写盘都会导致 0.03–0.5 GiB 误差。只要"符号一致、量级一致"就算通过，不要硬要求数字精确相等。
+- **Gotcha 9：跨盘中转不产生净收益，源盘要等 compact 才归还**。把发行版内的大文件搬到另一个盘只是把占用换了个盘——中转期间两份副本同时存在，目标盘先被吃掉同等容量（2026-11-05 实战：C 盘可用从 86.70 GiB 降到 52.92 GiB 才装下 31.81 GB 中转文件），删除后才有净收益；而源盘的 VHDX 体积仍要等 §7 的 compact 完成才下降。搬移前必须核对目标盘剩余 ≥ 文件大小。若宿主侧 `Remove-Item` 报 `Access to the path is denied` 而 ACL 显示当前用户具 `Modify`（无 Deny），说明拦住它的是沙箱可写区边界而非 NTFS 权限，改用 `wsl -d <distro> -u root rm /var/mnt/<盘符>/<路径>` 旁路，再以宿主 FreeGiB 复测确认。
 
 ### 12.2 状态恢复陷阱
 - **Gotcha 3：`wsl --shutdown` 不是单发行版命令，是全局命令**。用户只让你压缩 openKylin，但 shutdown 一样会把 podman/jupyter/pcmclaw 都停掉。脚本 §7.2 步骤1的 OriginalStates 快照 + §7.2 步骤8的恢复机制就是为这个而生——绝对不能假设"我只关了这个发行版"。
@@ -216,6 +219,8 @@ function Build-DegradeCommand { param($D,$V,$S) "pwsh -File ...compress-wsl-vhdx
 ### 12.3 工具使用陷阱
 - **Gotcha 5：Trae 集成 Shell 里的"Remove-Item 是删除"其实只是"放入回收站"**。这是项目记忆里反复踩过的坑（A 之后 C 一直没做导致 D 盘没涨）。本技能**不提供任何删文件命令的封装**，因为那部分风险太高；如果用户需要删文件请他自己在资源管理器里做。技能的职责只有"做基线→做 compact→做闭环→恢复"。
 - **Gotcha 6：compact 前后 podman-machine-default 的 ext4.vhdx LastWrite 会变，但即使只差 0.01–0.02 GiB 也是正常的**（shutdown 后内部 journal / 脏页回写 / ext4 元数据对齐）。不要见风就是雨拿这个当 compact 成功/失败依据。必须和 Gotcha2 一起看三条（VHDX Length / HostFreeGiB / ExitCode）。
+- **Gotcha 10：`Clear-RecycleBin` 在 Trae 沙箱内是「挂起」不是「拒绝」**。表现为命令一直无输出、直到超时被移入后台，没有任何异常信息；解除沙箱后才会打印 `C_CLEARED`/`D_CLEARED`。所以「命令没报错」不等于清空成功——唯一验收是实测 `C:\$Recycle.Bin` 与 `D:\$Recycle.Bin` 的字节数和文件数，两盘只剩 `desktop.ini` 才算达标。
+- **Gotcha 11：孤立 `$R` 目录是回收站的「幽灵占用」**。`$Recycle.Bin\<SID>\` 下若只有 `$R<id>` 而没有配对的 `$I<id>` 元数据，该条目既不在资源管理器显示，也不被 `Clear-RecycleBin` 清理，但它确实占着磁盘。判定三步：① 按 SID 逐目录求和定位（`Get-ChildItem $Recycle.Bin -Force -Directory` 再递归 `Measure-Object`）；② 对可疑文件做独占打开 `[System.IO.File]::Open($p,'Open','ReadWrite','None')`——能打开即证伪"被进程锁定"；③ `Get-Acl` 与属性核对——无 `Deny`、非只读即证伪"权限问题"；随后 `Remove-Item -Recurse -Force` 直接删除。实战数据：58 个文件 58/58 独占打开成功，删除后两盘仅余 `desktop.ini`。
 
 ### 12.4 领域特定陷阱
 - **Gotcha 7：PCMClawUbuntu（管家的发行版）永远不要碰**。它的 BasePath 在 `C:\ProgramData\PCManager\WslClaw`，由 PC Manager 自己生命周期管理。你 compact 了它下次管家会重启修复，反而会占更多 C 盘。本技能在参数校验时，如果用户把 Distro 写成 PCMClawUbuntu 就直接 ABORT。
@@ -240,4 +245,5 @@ function Build-DegradeCommand { param($D,$V,$S) "pwsh -File ...compress-wsl-vhdx
 
 ## 15. Changelog
 
+- **v1.1.0**（2026-11-05）：补三条实锤 Gotcha（Gotcha 9 跨盘中转与宿主旁路删除、Gotcha 10 沙箱内 `Clear-RecycleBin` 是挂起而非拒绝、Gotcha 11 孤立 `$R` 目录识别与处置）；纠正 §6 限制2 的旧表述（"会被沙箱拦截"→"挂起超时"）、§10 检查清单新增残留复检与目标盘容量核对、§11 新增 COMPACT_008；description 增加触发词"回收站清空后空间没回来"。实战依据：openKylin-3.0-desktop 49.46→16.85 GiB（先迁出内部 31.81 GB rootfs tar，Saved/Delta 均 32.61 GiB），对账报告见 [retrospective-openkylin-vhdx-reclaim-20261105](../../../docs/retrospective/reports/environment-setup/retrospective-openkylin-vhdx-reclaim-20261105.md)。
 - **v1.0.0**（2026-10-09）：首版交付；3 次实战（A 轮 podman-machine-default 79.02→33.01 GiB + E 轮 openKylin-3.0-desktop 48.84→48.21 GiB）沉淀而来；封装 8 步闭环、双方案自动降级、三基线验收、原态快照与 podman machine start 幂等恢复、12 条 Gotchas 实锤版。

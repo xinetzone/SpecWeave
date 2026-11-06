@@ -1,7 +1,7 @@
 ---
 id: "pdr-01"
 title: "01 核心原则"
-source: "protocols/pre-document-reading.md#01"
+source: "../pre-document-reading.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/protocols/pre-document-reading/01-principles.toml"
 ---
 

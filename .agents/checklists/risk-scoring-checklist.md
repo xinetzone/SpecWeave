@@ -1,7 +1,7 @@
 ---
 id: "risk-scoring-checklist"
 title: "风险评分决策检查清单"
-source: "docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md"
+source: "../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/non-intrusive-security-ux.md"
 x-toml-ref: "../../.meta/toml/.agents/checklists/risk-scoring-checklist.toml"
 ---
 # 风险评分决策检查清单

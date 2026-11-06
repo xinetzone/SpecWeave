@@ -1,7 +1,7 @@
 ---
 id: "rules-data-security-data-masking-04-reversible-and-strict-techniques"
 title: "数据脱敏：可逆与严格脱敏技术（FPE/令牌化/删除抑制）"
-source: "rules/data-security/data-masking.md#04"
+source: "../data-masking.md#文档导航"
 x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/data-masking/04-reversible-and-strict-techniques.toml"
 ---
 # 数据脱敏：可逆与严格脱敏技术（FPE/令牌化/删除抑制）

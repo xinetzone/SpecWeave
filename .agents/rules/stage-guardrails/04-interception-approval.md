@@ -1,7 +1,7 @@
 ---
 id: "stage-guard-04"
 title: "04 跨阶段拦截与跳转审批"
-source: "rules/stage-guardrails.md#04"
+source: "../stage-guardrails.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails/04-interception-approval.toml"
 ---
 

@@ -1,7 +1,7 @@
 ---
 id: "flexloop-team-operations-03-workflow-version-update"
 title: "flexloop团队手册：工作流1-子模块版本更新"
-source: "teams/flexloop-team-operations.md#03"
+source: "../flexloop-team-operations.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/teams/flexloop-team-operations/03-workflow-version-update.toml"
 ---
 # flexloop团队手册：工作流1-子模块版本更新

@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 builtin_skills/TRAE-debugger/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 TRAE-debugger）"
 name: TRAE-debugger
 description: 用于调试需要收集运行时证据的复杂问题。它会启动一个调试服务器通过 HTTP 收集日志，然后遵循科学的调试流程（假设 → 插桩 → 复现 → 分析 → 修复 → 验证）。适用于仅通过静态代码分析无法诊断的 Bug。在用户主动要求运行时调试、或经过多轮对话仍无法通过静态分析解决问题时触发。
 ---

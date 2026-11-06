@@ -1,7 +1,7 @@
 ---
 id: "meta-retrospective-checklist"
 title: "元复盘执行检查清单"
-source: "docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/meta-retrospective.md + docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/meta-retrospective-two-round-method.md + docs/retrospective/patterns/methodology-patterns/governance-strategy/meta-retrospective-closed-loop.md"
+source: "../../docs/retrospective/reports/project-reports/retrospective-first-principles-knowledge-system-20260710/meta-retrospective.md + ../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/meta-retrospective-two-round-method.md + ../../docs/retrospective/patterns/methodology-patterns/governance-strategy/meta-retrospective-closed-loop.md"
 x-toml-ref: "../../.meta/toml/.agents/checklists/meta-retrospective-checklist.toml"
 maturity: "L1"
 validation_count: 2

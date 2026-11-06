@@ -1,7 +1,7 @@
 ---
 id: "spec-writing-09"
 title: "09 PRD模板引用"
-source: "rules/spec-writing-guide.md#09"
+source: "../spec-writing-guide.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/spec-writing-guide/09-prd-template-reference.toml"
 ---
 

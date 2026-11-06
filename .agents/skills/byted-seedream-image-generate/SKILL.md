@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/byted-seedream-image-generate/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 byted-seedream-image-generate）"
 name: byted-seedream-image-generate
 description: Generate high-quality images from text prompts using Volcano Engine Seedream models. Supports multiple artistic styles and aspect ratios. Use this skill when users want to create images from text descriptions, generate artwork in various styles, create visual content for creative projects, or need AI-powered image generation capabilities.
 license: Apache-2.0

@@ -3,7 +3,7 @@ title: PS1 语法分析模块 here-string 处理逻辑验证测试报告
 version: 1.0.0
 date: 2026-07-29
 status: ✅ 全部通过
-source: Python (_skip_ps1_here_string in ps1_syntax.py) / PowerShell (Skip-Ps1HereString in encoding-safety.ps1)
+source: Python (_skip_ps1_here_string in ps1_syntax.py); PowerShell (Skip-Ps1HereString in encoding-safety.ps1)
 tags: [test-report, ps1-syntax, here-string, cross-language-alignment]
 ---
 

@@ -1,7 +1,7 @@
 ---
 id: "spec-writing-07"
 title: "07 完整Spec模板"
-source: "rules/spec-writing-guide.md#07"
+source: "../spec-writing-guide.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/spec-writing-guide/07-template-reference.toml"
 ---
 

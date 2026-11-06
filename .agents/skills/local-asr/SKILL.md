@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/local-asr/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 local-asr）"
 name: local-asr
 description: |
   Intel Local Windows ASR (本地离线语音识别). Use this skill when the user, in Chinese or English, asks to transcribe audio or video files, convert speech to text, or extract text from a recording. Trigger on Chinese verbs like 转录/转写/转文字/识别/提取文本 and phrases like 把...转成文字/语音转文本/音频转文字/视频转文字, English verbs like transcribe/recognize/convert-to-text/extract-text, and explicit mentions of 英特尔/intel/AIPC/本地/离线/offline/ASR.

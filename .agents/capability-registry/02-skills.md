@@ -60,7 +60,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | qibu-story-cmd | "七步故事法"、"靶心人公式"、"故事骨架"、"因果链"、"删步测试"、"意外极性"、"付费墙切在哪"、"后面为什么强行" | 3（新建骨架 / 诊断改稿 / 反向拆解；均含七格判据、三次删步测试与极性判墙；L1） | v1.0.0 | [skills/qibu-story-cmd/SKILL.md](../skills/qibu-story-cmd/SKILL.md) |
 | okf-bundle-to-pdf | "bundle 转 PDF"、"知识包导出 PDF"、"多文档合并成一个 pdf"、"PDF 没有目录/书签"、"md 合集导出 pdf"、"OKF PDF 导出"、"要书签大纲和目录页" | 2（方案A 七步主路径 build_bundle_pdf.py / 方案B 降级路径；含 --dry-run 预览门、--channel auto 浏览器降级、CDP generateDocumentOutline 书签大纲、程序化产物断言；萃取自老子文化生态圈 bundle 实战；L1） | v1.0.0 | [skills/okf-bundle-to-pdf/SKILL.md](../skills/okf-bundle-to-pdf/SKILL.md) |
 
-### 工作流门面（7个）
+### 工作流门面（8个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -71,6 +71,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | mindfulness-positivity | "正念"、"正面"、"积极心态"、"正能量"、"mindfulness"、"positive thinking"、"习得性乐观"、"有毒正能量"、"toxic positivity"、"先接纳后重构"、"正念和积极有什么区别"、"情绪调节" | 1（四场景决策树：概念问答/内容产出/自我调节方案/知识包沉淀；七维度辨析框架+先接纳后重构四步整合法+心理健康安全边界；L1门面 + L2 知识底座 sc-20261003-mindfulness-positivity：22事实/3洞察/1模式） | v1.0.0 | [skills/mindfulness-positivity/SKILL.md](../skills/mindfulness-positivity/SKILL.md) |
 | dao-san-triads | "三生万物"、"道生一"、"二生三"、"三之位"、"三元组"、"过去现在未来"、"时间三分"、"奥古斯丁三分法"、"记忆注意期待"、"一分为三"、"真问题真需求真目标"、"品质技能身份"、"生存指南"、"行动准则"、"极简原则"、"二选一怎么办"、"自我诊断"、"古典哲学概念" | 1（四场景决策树：概念探究/自我诊断/行动准则/知识包沉淀；六类「三」解释谱系+第五义「三=关系位」统一模型+奥古斯丁三分法与最强反驳+时态检验+两组三元组四元关联+七条生存指南（≤1200字）+「三之位」可迁移模式（5反模式/3问检验/L1-draft）+《老子》版本纪律；L1门面 + L2 知识底座 sc-20261003-dao-san-yuan：50事实/4洞察/1模式/9条审查） | v1.0.0 | [skills/dao-san-triads/SKILL.md](../skills/dao-san-triads/SKILL.md) |
 | persona-brand-positioning | "品牌定位诊断"、"优化小程序简介"、"品牌名怎么取"、"人格化IP"、"搜索权重"、"简介怎么写"、"品牌名要不要加品类词"、"子站命名"、"做品牌怎么找定位" | 1（六步诊断工作流：画层级图→理解命名哲学三层→补桥不改名→三环闭环按人→学→钱顺序建→四视角对抗审查；含 6 条反模式+9 项安全检查清单+6 条 Gotchas 隐性陷阱+预览确认与幂等复用机制；L1门面 + L2 知识底座 sc-20261026-daode-masterxiong：26事实/3洞察/1模式/9行动项） | v1.0.0 | [skills/persona-brand-positioning/SKILL.md](../skills/persona-brand-positioning/SKILL.md) |
+| private-encrypted-pdf-to-okf-wiki | "加密PDF转Wiki"、"密码PDF转知识包"、"私域材料转教程"、"课程讲义转OKF"、"内部培训材料转Wiki"、"加密文档转知识包" | 1（七工序：S0 凭据隔离 → S1 解密与文本层可信度判定 → S2 结构决策（少页材料按概念维度拆分）→ S3 主张五类分层 → S4 原创改写与数学反解 → S5 口径先行计数与声明契约化 → S6 V审查与机械对账；含 G1-G4 质量门、8 条 Gotchas、9 项安全清单、与 scanned-book-to-okf-wiki 的分工边界；L1 门面 + L2 里程碑复盘报告） | v1.0.0 | [skills/private-encrypted-pdf-to-okf-wiki/SKILL.md](../skills/private-encrypted-pdf-to-okf-wiki/SKILL.md) |
 
 ### Trae 内置工作流 Skill（2个，来自 external/doutops）
 
@@ -116,7 +117,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | knowledge-graph-generator | "知识图谱"、"knowledge graph"、"概念关系可视化"、"交互式知识图谱"、"节点关系网络"、"生成知识图谱" | generate-graph.py + knowledge_graph_core.py | v1.0.0 | [skills/knowledge-graph-generator/SKILL.md](../skills/knowledge-graph-generator/SKILL.md) |
 | artifact-consistency-audit | "核验一致性"、"复验"、"体检"、"覆盖率核对"、"引用是否忠实"、"有无遗漏"、"修补后复验"、"对照源文档检查" | 复用 check-links.py + check-source-traceability.py（无新建脚本） | v1.0.0 | [skills/artifact-consistency-audit/SKILL.md](../skills/artifact-consistency-audit/SKILL.md) |
 | docs-as-product-cmd | "文档即产品"、"docs-as-product"、"Diátaxis四型分区"、"文档质量门G1-G4/V门"、"sphinx-build -W"、"元数据漂移F-021"、"读者契约"、"文档指标M1-M5" | docs-as-product.py + lib/docs_as_product/（structure/gates/metadata/contract/metrics/all 子命令；只读，外部工具缺失降级） | v1.0.0 | [skills/docs-as-product-cmd/SKILL.md](../skills/docs-as-product-cmd/SKILL.md) |
-| wsl-vhdx-compact-cmd | "压缩WSL磁盘"、"vhdx回收"、"ext4.vhdx太大"、"wsl --manage --compact"、"宿主机FreeGiB核对"、"VHDX前后基线"、"podman-machine-default vhdx压缩"、"openKylin WSL磁盘回收"、"C/D盘爆红 清WSL"、"wsl vhdx瘦身"、"Win32_LogicalDisk对账"、"fstrim 基线 闭环" | compact-vhdx-with-baseline.ps1；失败自动降级 compress-wsl-vhdx.ps1（双方案自动降级 + BaselineOnly dry-run 只读基线 + RestorePodman/RestoreOriginalState 原态恢复 + Win32 FreeGiB 数值闭环 + PCMClawUbuntu 永久黑名单） | v1.0.0 | [skills/wsl-vhdx-compact-cmd/SKILL.md](../skills/wsl-vhdx-compact-cmd/SKILL.md) |
+| wsl-vhdx-compact-cmd | "压缩WSL磁盘"、"vhdx回收"、"ext4.vhdx太大"、"wsl --manage --compact"、"宿主机FreeGiB核对"、"VHDX前后基线"、"podman-machine-default vhdx压缩"、"openKylin WSL磁盘回收"、"C/D盘爆红 清WSL"、"wsl vhdx瘦身"、"Win32_LogicalDisk对账"、"fstrim 基线 闭环"、"回收站清空后空间没回来" | compact-vhdx-with-baseline.ps1；失败自动降级 compress-wsl-vhdx.ps1（双方案自动降级 + BaselineOnly dry-run 只读基线 + RestorePodman/RestoreOriginalState 原态恢复 + Win32 FreeGiB 数值闭环 + PCMClawUbuntu 永久黑名单；孤立 $R 目录三步取证） | v1.1.0 | [skills/wsl-vhdx-compact-cmd/SKILL.md](../skills/wsl-vhdx-compact-cmd/SKILL.md) |
 | remote-ssh-server-install-triage | "Remote-SSH"、"remote server 下载卡住"、"Downloading and installing remote server"、"正在配置 SSH 主机"、".trae-cn-server"、"resolve-lock"、"SOLO 一直 Loading"、"远端文件打不开" | 自带 scripts/triage.sh（只读六节取证：通道基线/进程链与锁/卡死三判据/落盘目标/CDN 探测/判定建议；六档退出码 0/2/3/4/5/6） | v1.0.0 | [skills/remote-ssh-server-install-triage/SKILL.md](../skills/remote-ssh-server-install-triage/SKILL.md) |
 
 > **Skill类型说明**：

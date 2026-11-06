@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/gh-cli/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 gh-cli）"
 name: gh-cli
 description: GitHub CLI (gh) comprehensive reference for repositories, issues, pull requests, Actions, projects, releases, gists, codespaces, organizations, extensions, and all GitHub operations from the command line.
 ---

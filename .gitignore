@@ -143,6 +143,8 @@ apps/devcontainer-base/benchmark-results-ci/
 
 # WorkBuddy 本地配置（skills 为指向 .agents/skills 的本地目录联接，整体为本地工作产物，不可提交）
 .workbuddy/
+# WorkBuddy AI 本地记忆目录（按日期落盘的会话记忆，机器生成，本地保留不入库）
+.workbuddy-ai/
 
 # Tencent Cloud EdgeOne（CLI 本地关联、部署暂存与凭证，机器生成产物）
 .edgeone/
@@ -178,6 +180,16 @@ qwenwork/
 
 # Box Agent 运行时任务注册表（task-registry 等 IDE 智能体状态文件，不入库）
 .box-agent/
+.box-agent-scratch/
+
+# 根级本机工具目录与缓存（本机 CLI / IDE / 智能体生成，非仓库资产，不入库）
+# 均以 / 锚定根目录，避免误伤嵌套目录中的同名路径
+/.benchmarks/
+/.cache/
+/.claude/
+/.uvcache/
+/.vercel/
+/Claw/
 
 # 外部创作设计工具的本地工作目录（配图 brief 等过程素材，不入库）。
 # 注意必须带前导点：写作 `creative-design/` 会匹配已被跟踪的

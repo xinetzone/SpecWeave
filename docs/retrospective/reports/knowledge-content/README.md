@@ -14,3 +14,4 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/knowledge-content
 | 报告 | 日期 | 类型 | 关键指标 |
 |------|------|------|---------|
 | [Agent通信协议Wiki教程](./retrospective-agent-proto-wiki-20260703/README.md) | 2026-07-03 | 技术教程 | 13文档/4286行/34图 |
+| [加密私域 PDF 转 OKF Wiki 里程碑复盘](./retrospective-private-encrypted-pdf-okf-wiki-20261026.md) | 2026-10-26 | 里程碑复盘（已脱敏） | 20文件/45事实/102链接/4洞察/4模式 |

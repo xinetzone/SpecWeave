@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/byted-seedance-video-generate/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 byted-seedance-video-generate）"
 name: byted-seedance-video-generate
 description: Generate videos using Seedance models. Invoke when user wants to create videos from text prompts, images, or reference materials.
 ---

@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/load-specweave/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 load-specweave）"
 name: "load-specweave"
 description: "装载 SpecWeave Agent Workspace Hub 子体系并建立技能触发就绪状态。当用户说'请装载 SpecWeave'、'初始化 SpecWeave 环境'或要求按 client/sdk/AI/AGENTS.md 启动协议装载时调用。装载后可用触发词调用子体系技能（复盘/洞察/mermaid/导出报告等）。"
 ---

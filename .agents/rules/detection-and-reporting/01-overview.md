@@ -1,7 +1,7 @@
 ---
 id: "rules-detection-reporting-01-overview"
 title: "检测与报告机制：规范说明"
-source: "rules/detection-and-reporting.md#检测与报告机制"
+source: "../detection-and-reporting.md#检测与报告机制"
 x-toml-ref: "../../../.meta/toml/.agents/rules/detection-and-reporting/01-overview.toml"
 ---
 # 检测与报告机制：规范说明

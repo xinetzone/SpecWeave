@@ -1,7 +1,7 @@
 ---
 id: "flexloop-team-operations-01-overview-preparation"
 title: "flexloop团队手册：概述与前置准备"
-source: "teams/flexloop-team-operations.md#01"
+source: "../flexloop-team-operations.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/teams/flexloop-team-operations/01-overview-preparation.toml"
 ---
 # flexloop团队手册：概述与前置准备

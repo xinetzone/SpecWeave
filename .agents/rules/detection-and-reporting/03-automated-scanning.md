@@ -1,7 +1,7 @@
 ---
 id: "rules-detection-reporting-03-automated-scanning"
 title: "检测与报告机制：自动化扫描规范"
-source: "rules/detection-and-reporting.md#自动化扫描规范"
+source: "../detection-and-reporting.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/detection-and-reporting/03-automated-scanning.toml"
 ---
 # 检测与报告机制：自动化扫描规范

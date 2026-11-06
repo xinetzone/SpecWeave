@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/web-design-guidelines/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 web-design-guidelines）"
 name: web-design-guidelines
 description: Review UI code for Web Interface Guidelines compliance. Use when asked to "review my UI", "check accessibility", "audit design", "review UX", or "check my site against best practices".
 metadata:

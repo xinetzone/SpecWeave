@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/local-tts/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 local-tts）"
 name: local-tts
 description: |
   Intel Local Text-to-Speech (本地文字转语音) on Windows AI PCs. Use this skill when the user, in Chinese or English, asks to synthesize / speak / read aloud / clone a voice / generate audio from text. Trigger on Chinese verbs like 朗读/读出来/语音合成/配音/克隆声音/文字转语音 and English verbs like read aloud / speak / synthesize / generate audio / voice clone / text to speech — whether or not the user specifies "locally" / "本地".

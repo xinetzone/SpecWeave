@@ -1,7 +1,7 @@
 ---
 id: "rules-data-security-incident-response-07-checklist"
 title: "应急响应：检查清单"
-source: "rules/data-security/incident-response.md#07"
+source: "../incident-response.md#文档导航"
 x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/incident-response/07-checklist.toml"
 ---
 # 应急响应：检查清单

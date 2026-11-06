@@ -1,7 +1,7 @@
 ---
 id: "templates-three-tier-quality-gate"
 title: "通用三层质量门禁模板"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.md"
+source: "../../docs/retrospective/reports/competitive-analysis/retrospective-minitest-ecosystem-learning-20260707/insight-extraction.md"
 x-toml-ref: "../../.meta/toml/.agents/templates/three-tier-quality-gate-template.toml"
 version: "1.0.0"
 patterns_applied: ["three-tier-governance"]

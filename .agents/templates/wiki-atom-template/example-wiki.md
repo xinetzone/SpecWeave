@@ -2,7 +2,7 @@
 id: "example-wiki"
 title: "{{Wiki标题}}示例索引页"
 source: "{{来源URL}}"
-x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/example-wiki.toml"
+x-toml-ref: "../../../.meta/toml/{bundle-dir}/example-wiki.toml"
 ---
 # {{Wiki标题}}
 

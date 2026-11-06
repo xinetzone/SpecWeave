@@ -1,7 +1,7 @@
 ---
 id: "rules-data-security-incident-response-03-phase-details"
 title: "应急响应：各阶段详细操作要求"
-source: "rules/data-security/incident-response.md#03"
+source: "../incident-response.md#文档导航"
 x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/incident-response/03-phase-details.toml"
 ---
 # 应急响应：各阶段详细操作要求

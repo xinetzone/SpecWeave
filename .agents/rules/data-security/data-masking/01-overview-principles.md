@@ -1,7 +1,7 @@
 ---
 id: "rules-data-security-data-masking-01-overview-principles"
 title: "数据脱敏：概述与基本原则"
-source: "rules/data-security/data-masking.md#01"
+source: "../data-masking.md#文档导航"
 x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/data-masking/01-overview-principles.toml"
 ---
 # 数据脱敏：概述与基本原则

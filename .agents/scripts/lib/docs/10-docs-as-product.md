@@ -1,7 +1,7 @@
 ---
 id: "lib-api-docs_as_product"
 title: "lib.docs_as_product — 文档即产品校验"
-source: "lib/api_docs.py#docs_as_product"
+source: "../api_docs.py"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/10-docs-as-product.toml"
 ---
 

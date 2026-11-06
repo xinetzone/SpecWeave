@@ -1,7 +1,7 @@
 ---
 id: "declaration-reconciliation-reproduction-report-template"
 title: "声明对账模式复现报告模板（A-004）"
-source: "retro:sc-20260911-pipeline-parable-retro / pattern-declaration-reconciliation (L1) / A-004"
+source: "retro:sc-20260911-pipeline-parable-retro; pattern-declaration-reconciliation (L1); A-004"
 date: "2026-09-11"
 type: "template"
 tags: ["V-对抗审查", "声明对账", "事实核验", "模式复现", "L2晋升", "A-004"]

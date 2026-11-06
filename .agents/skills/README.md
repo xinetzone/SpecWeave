@@ -2,7 +2,7 @@
 id: "specweave-skills-index"
 date: "2026-06-30"
 type: "index"
-source: "AGENTS.md#能力索引;.agents/capability-registry.md"
+source: "AGENTS.md#能力索引;../capability-registry.md"
 x-toml-ref: "../../.meta/toml/.agents/skills/README.toml"
 title: ".agents/skills/ 目录索引"
 ---
@@ -89,7 +89,7 @@ title: ".agents/skills/ 目录索引"
 | qibu-story-cmd | 完整Skill（v1.0.0，L1） | 七步故事法骨架校验：填七格（目标/阻碍/努力/结果/意外/转弯/结局）→ 三次删步测试 → 判意外极性定付费墙 → 可选插低谷接强度曲线；区分 AI 模板六步（交付流程）与七步（因果结构），并给出与爽点 / 付费漏斗 / 信息差的边界 | 七步故事法、靶心人公式、故事骨架、因果链、删步测试、意外极性、付费墙切在哪、后面为什么强行、六步模板和七步是不是一回事 | [qibu-story-cmd/SKILL.md](qibu-story-cmd/SKILL.md) |
 | okf-bundle-to-pdf | 完整Skill（v1.0.0，L1） | OKF bundle（分层索引 + 正文）→ 单文件、带双层目录 PDF 导出：七步链路（递归枚举剔除嵌套 index → 相对链接降级 → h1/h2 锚点注入 → Pandoc --toc 合并 → Mermaid 运行时渲染 → CDP generateDocumentOutline 打印 → 程序化产物断言）；含 `--dry-run` 预览门、`--channel auto` 浏览器降级（chromium→系统 Edge）、6 条错误码与 7 条 Gotchas；萃取自老子文化生态圈 bundle（23 个 .md / 12 图）188 页 / 264 条大纲实测 | bundle 转 PDF、知识包导出 PDF、多文档合并成一个 pdf、PDF 没有目录/书签、md 合集导出 pdf、OKF PDF 导出、要书签大纲和目录页 | [okf-bundle-to-pdf/SKILL.md](okf-bundle-to-pdf/SKILL.md) |
 
-### 工作流门面（7个）
+### 工作流门面（8个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -100,6 +100,7 @@ title: ".agents/skills/ 目录索引"
 | mindfulness-positivity | 工作流门面（v1.0.0） | 正念 vs 正面（积极心态）概念辨析与整合：四场景决策树（概念问答/内容产出/自我调节方案/知识包沉淀）+ 七维度辨析框架 + 「先接纳后重构」四步整合法 + 心理健康安全边界（不诊断/不替代治疗/危机转介/证据分级）；L2 知识底座 sc-20261003-mindfulness-positivity（22事实/3洞察/1模式） | 正念、正面、积极心态、正能量、mindfulness、positive thinking、习得性乐观、有毒正能量、toxic positivity、先接纳后重构、正念和积极有什么区别 | [mindfulness-positivity/SKILL.md](mindfulness-positivity/SKILL.md) |
 | dao-san-triads | 工作流门面（v1.0.0） | 「三」之本体论与三元组诊断：六类「三」解释谱系（和气/天地人/一+天地/模式/三合生物/本体显现）+ **第五义「三=关系位」统一模型** + 奥古斯丁三分法与最强反驳 + 时态检验诊断法 + 两组行动三元组四元关联 + **七条可当场判定的生存指南**（≤1200字）+ 「三之位」可迁移模式（5反模式/3问检验/L1-draft）+ 《老子》版本纪律（甲乙本/今本/楚简本不得混称）；L2 知识底座 sc-20261003-dao-san-yuan（50事实/4洞察/1模式/9条审查） | 三生万物、道生一、二生三、三之位、三元组、过去现在未来、时间三分、奥古斯丁三分法、一分为三、真问题真需求真目标、品质技能身份、生存指南、行动准则、极简原则、二选一怎么办、自我诊断、古典哲学概念 | [dao-san-triads/SKILL.md](dao-san-triads/SKILL.md) |
 | persona-brand-positioning | 工作流门面（v1.0.0） | 人格化品牌定位诊断：画层级图（品牌→子模块→子频道，避免子模块被当成品类招牌）→ 理解命名哲学三层（哲学/美学/人格）→ 补桥不改名（靠简介与页面内容承接搜索权重）→ 三环闭环按人→学→钱顺序建；含 6 条反模式、9 项安全检查清单、6 条无报错码隐性陷阱（Gotchas）、预览确认与幂等复用机制；L2 知识底座 sc-20261026-daode-masterxiong（26事实/3洞察/1模式/9行动项） | 品牌定位诊断、优化小程序简介、品牌名怎么取、人格化IP、搜索权重、简介怎么写、品牌名要不要加品类词、子站命名 | [persona-brand-positioning/SKILL.md](persona-brand-positioning/SKILL.md) |
+| private-encrypted-pdf-to-okf-wiki | 工作流门面（v1.0.0，L1） | 加密私域 PDF→OKF 知识包（七工序：S0 凭据隔离→S1 解密与文本层可信度判定→S2 结构决策（少页材料按概念维度拆分）→S3 主张五类分层→S4 原创改写与数学反解→S5 口径先行计数与声明契约化→S6 V审查与机械对账）；含 G1-G4 质量门、8 条 Gotchas、9 项安全清单与与 scanned-book-to-okf-wiki 的分工边界；L2 底座为同主题里程碑复盘报告 | 加密PDF转Wiki、密码PDF转知识包、私域材料转教程、课程讲义转OKF、内部培训材料转Wiki、加密文档转知识包 | [private-encrypted-pdf-to-okf-wiki/SKILL.md](private-encrypted-pdf-to-okf-wiki/SKILL.md) |
 
 ### Trae 内置工作流 Skill（2个，来自 external/doutops）
 
@@ -212,7 +213,7 @@ TeleAgent（星辰超级智能体）平台技能镜像入库（2026-10-21 首次
 | knowledge-graph-generator | 脚本门面 | generate-graph.py | 知识图谱、knowledge graph、概念关系可视化、交互式知识图谱、节点关系网络 | [knowledge-graph-generator/SKILL.md](knowledge-graph-generator/SKILL.md) |
 | artifact-consistency-audit | 脚本门面 | 复用 check-links.py + check-source-traceability.py（无新建脚本） | 核验一致性、复验、体检、覆盖率核对、引用是否忠实、有无遗漏、修补后复验 | [artifact-consistency-audit/SKILL.md](artifact-consistency-audit/SKILL.md) |
 | docs-as-product-cmd | 脚本门面 | docs-as-product.py | 文档即产品、docs-as-product、Diátaxis四型分区、文档质量门G1-G4/V门、sphinx-build -W、元数据漂移F-021、读者契约、文档指标M1-M5 | [docs-as-product-cmd/SKILL.md](docs-as-product-cmd/SKILL.md) |
-| wsl-vhdx-compact-cmd | 脚本门面 | compact-vhdx-with-baseline.ps1；失败自动降级 compress-wsl-vhdx.ps1（双方案自动降级 + BaselineOnly dry-run 只读基线 + RestorePodman/RestoreOriginalState 原态恢复 + Win32 FreeGiB 数值闭环） | 压缩WSL磁盘、vhdx回收、ext4.vhdx太大、wsl --manage --compact、宿主机FreeGiB核对、VHDX前后基线、podman-machine-default vhdx压缩、openKylin WSL磁盘回收、C/D盘爆红 清WSL、wsl vhdx瘦身、Win32_LogicalDisk 对账 | [wsl-vhdx-compact-cmd/SKILL.md](wsl-vhdx-compact-cmd/SKILL.md) |
+| wsl-vhdx-compact-cmd | 脚本门面 | compact-vhdx-with-baseline.ps1；失败自动降级 compress-wsl-vhdx.ps1（双方案自动降级 + BaselineOnly dry-run 只读基线 + RestorePodman/RestoreOriginalState 原态恢复 + Win32 FreeGiB 数值闭环） | 压缩WSL磁盘、vhdx回收、ext4.vhdx太大、wsl --manage --compact、宿主机FreeGiB核对、VHDX前后基线、podman-machine-default vhdx压缩、openKylin WSL磁盘回收、C/D盘爆红 清WSL、wsl vhdx瘦身、Win32_LogicalDisk 对账、回收站清空后空间没回来 | [wsl-vhdx-compact-cmd/SKILL.md](wsl-vhdx-compact-cmd/SKILL.md) |
 | remote-ssh-server-install-triage | 脚本门面 | scripts/triage.sh（只读六节取证：通道基线/进程链与锁/卡死三判据/落盘目标/CDN 探测/判定建议；六档退出码 0/2/3/4/5/6，不 kill 不删远端） | Remote-SSH、remote server 下载卡住、Downloading and installing remote server、正在配置 SSH 主机、.trae-cn-server、resolve-lock、SOLO 一直 Loading、远端文件打不开 | [remote-ssh-server-install-triage/SKILL.md](remote-ssh-server-install-triage/SKILL.md) |
 
 ## 模板

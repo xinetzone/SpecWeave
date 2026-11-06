@@ -1,7 +1,7 @@
 ---
 id: "declaration-reconciliation-reproduction-checklist"
 title: "声明对账模式复现检查清单（A-004）"
-source: "retro:sc-20260911-pipeline-parable-retro / pattern-declaration-reconciliation (L1) / A-004"
+source: "retro:sc-20260911-pipeline-parable-retro; pattern-declaration-reconciliation (L1); A-004"
 date: "2026-09-11"
 type: "checklist"
 severity: "high"

@@ -1,7 +1,7 @@
 ---
 id: "spec-writing-05"
 title: "05 命名规范与格式化要求"
-source: "rules/spec-writing-guide.md#05"
+source: "../spec-writing-guide.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/spec-writing-guide/05-naming-formatting.toml"
 ---
 

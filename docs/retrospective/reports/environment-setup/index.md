@@ -10,6 +10,7 @@ retrospective-docker-cache-to-wsl-migration-20260818/index
 retrospective-windows-desktop-icons-missing-20260819/index
 retrospective-wsl-docker-gpu-fix-20260815/index
 retrospective-wsl-ubuntu2604-install-migration-20260722/index
+retrospective-openkylin-vhdx-reclaim-20261105
 retrospective-py314t-conda-freethreading-20260819
 retrospective-vm-crash-nested-image-recovery-20260828
 ```

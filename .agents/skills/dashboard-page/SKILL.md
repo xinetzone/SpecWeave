@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/dashboard-page/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 dashboard-page）"
 name: Dashboard Page
 description: Use when the user wants to create a stable local/offline ECharts dashboard with KPI panels, time controls, auditable source modals, and optional daily data snapshots produced by automations.
 ---

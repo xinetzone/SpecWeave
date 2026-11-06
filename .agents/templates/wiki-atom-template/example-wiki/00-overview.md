@@ -2,7 +2,7 @@
 id: "example-wiki-00-overview"
 title: "{{Wiki标题}}：概述与学习目标"
 source: "{{来源URL}}#overview"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/example-wiki/00-overview.toml"
+x-toml-ref: "../../../../.meta/toml/{bundle-dir}/example-wiki/00-overview.toml"
 ---
 # 概述与学习目标
 

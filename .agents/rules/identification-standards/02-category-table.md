@@ -1,7 +1,7 @@
 ---
 id: "rules-identification-02-category-table"
 title: "硬编码识别标准：分类定义表"
-source: "rules/identification-standards.md#分类定义表"
+source: "../identification-standards.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/identification-standards/02-category-table.toml"
 ---
 # 硬编码识别标准：分类定义表

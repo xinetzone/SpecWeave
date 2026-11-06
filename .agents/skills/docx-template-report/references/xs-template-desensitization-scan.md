@@ -2,7 +2,7 @@
 id: xs-template-desensitization-scan
 date: 2026-08-29
 type: scan-report
-source: "templates/xs-sdk-guide-template.docx"
+source: "../templates/xs-sdk-guide-template.docx"
 ---
 
 # XS SDK 指南模板脱敏扫描报告

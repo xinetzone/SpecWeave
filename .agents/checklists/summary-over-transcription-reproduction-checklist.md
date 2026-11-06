@@ -1,7 +1,7 @@
 ---
 id: "summary-over-transcription-reproduction-checklist"
 title: "扫描版版权材料摘要替代转录复现检查清单（A-005）"
-source: "retro:sc-20260911-pipeline-parable-retro / pattern-summary-over-transcription (L1) / A-005"
+source: "retro:sc-20260911-pipeline-parable-retro; pattern-summary-over-transcription (L1); A-005"
 date: "2026-09-11"
 type: "checklist"
 severity: "high"

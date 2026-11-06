@@ -1,7 +1,7 @@
 ---
 id: "rules-identification-01-overview"
 title: "硬编码识别标准：规范说明"
-source: "rules/identification-standards.md#硬编码识别标准"
+source: "../identification-standards.md#硬编码识别标准"
 x-toml-ref: "../../../.meta/toml/.agents/rules/identification-standards/01-overview.toml"
 ---
 # 硬编码识别标准：规范说明

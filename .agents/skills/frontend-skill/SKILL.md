@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/frontend-skill/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 frontend-skill）"
 name: frontend-skill
 description: Use when the task asks for a visually strong landing page, website, app, prototype, demo, or game UI. This skill enforces restrained composition, image-led hierarchy, cohesive content structure, and tasteful motion while avoiding generic cards, weak branding, and UI clutter.
 ---

@@ -1,7 +1,7 @@
 ---
 id: "declaration-reconciliation-checklist"
 title: "统计型声明实证核验清单（声明对账）"
-source: "retro:sc-20260911-pipeline-parable-retro / pattern-declaration-reconciliation (L1)"
+source: "retro:sc-20260911-pipeline-parable-retro; pattern-declaration-reconciliation (L1)"
 date: "2026-09-11"
 type: "checklist"
 severity: "high"

@@ -1,7 +1,7 @@
 ---
 id: "rules-data-security-data-masking-02-scenarios-and-matrix"
 title: "数据脱敏：场景分类与四级要求矩阵"
-source: "rules/data-security/data-masking.md#02"
+source: "../data-masking.md#文档导航"
 x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/data-masking/02-scenarios-and-matrix.toml"
 ---
 # 数据脱敏：场景分类与四级要求矩阵

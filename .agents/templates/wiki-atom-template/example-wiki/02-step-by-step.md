@@ -2,7 +2,7 @@
 id: "example-wiki-02-step-by-step"
 title: "{{Wiki标题}}：步骤式操作指南"
 source: "{{来源URL}}#guide"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/example-wiki/02-step-by-step.toml"
+x-toml-ref: "../../../../.meta/toml/{bundle-dir}/example-wiki/02-step-by-step.toml"
 ---
 # 步骤式操作指南
 

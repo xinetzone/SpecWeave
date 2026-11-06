@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/elite-longterm-memory/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 elite-longterm-memory）"
 name: elite-longterm-memory
 description: Elite Longterm Memory skill for enhanced memory management and retrieval
 user-invocable: true

@@ -1,7 +1,7 @@
 ---
 id: "compliance-contracting-reproduction-report-template"
 title: "合规契约化模式复现报告模板（A-006）"
-source: "retro:sc-20260911-pipeline-parable-retro / pattern-compliance-contracting (L1) / A-006"
+source: "retro:sc-20260911-pipeline-parable-retro; pattern-compliance-contracting (L1); A-006"
 date: "2026-09-11"
 type: "template"
 tags: ["合规契约", "可度量标准", "显式声明", "模式复现", "L2晋升", "A-006"]

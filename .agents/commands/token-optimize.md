@@ -1,7 +1,7 @@
 ---
 id: "token-optimize"
 title: "Token优化指令集"
-source: "AGENTS.md#token-optimize指令;roles/token-optimizer.md"
+source: "AGENTS.md#token-optimize指令;../roles/token-optimizer.md"
 x-toml-ref: "../../.meta/toml/.agents/commands/token-optimize.toml"
 ---
 # Token优化指令集

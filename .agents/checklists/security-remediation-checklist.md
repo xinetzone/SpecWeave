@@ -1,7 +1,7 @@
 ---
 id: "security-remediation-checklist"
 title: "敏感信息防泄露安全整改建议清单"
-source: "reports/security-remediation-checklist.md"
+source: "源自数据安全整改实践，对应复盘报告未单独归档"
 x-toml-ref: "../../.meta/toml/.agents/checklists/security-remediation-checklist.toml"
 maturity: "L1"
 ---

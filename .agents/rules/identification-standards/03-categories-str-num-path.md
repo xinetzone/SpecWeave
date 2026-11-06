@@ -1,7 +1,7 @@
 ---
 id: "rules-identification-03-categories-str-num-path"
 title: "硬编码识别标准：类别详解（字符串·数值·路径）"
-source: "rules/identification-standards.md#各类别详细说明"
+source: "../identification-standards.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/identification-standards/03-categories-str-num-path.toml"
 ---
 # 硬编码识别标准：类别详解（字符串·数值·路径）

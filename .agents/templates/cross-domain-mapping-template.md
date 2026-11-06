@@ -1,7 +1,7 @@
 ---
 id: "cross-domain-mapping-template"
 title: "跨领域映射模板"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/export-suggestions.md"
+source: "../../docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/export-suggestions.md"
 x-toml-ref: "../../.meta/toml/.agents/templates/cross-domain-mapping-template.toml"
 x-template-ref: "templates/cross-domain-mapping-template"
 ---

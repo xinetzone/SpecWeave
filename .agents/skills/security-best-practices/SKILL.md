@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/security-best-practices/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 security-best-practices）"
 name: "security-best-practices"
 description: "Perform language and framework specific security best-practice reviews and suggest improvements. Trigger only when the user explicitly requests security best practices guidance, a security review/report, or secure-by-default coding help. Trigger only for supported languages (python, javascript/typescript, go). Do not trigger for general code review, debugging, or non-security tasks."
 ---

@@ -13,6 +13,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/environment-setup
 
 | 报告 | 主题 | 日期 |
 |------|------|------|
+| [retrospective-openkylin-vhdx-reclaim-20261105.md](./retrospective-openkylin-vhdx-reclaim-20261105.md) | openKylin WSL 发行版 49.46 GiB 体积溯源与两相回收（自包含备份膨胀） | 2026-11-05 |
 | [retrospective-vm-crash-nested-image-recovery-20260828.md](./retrospective-vm-crash-nested-image-recovery-20260828.md) | VM 磁盘满崩溃致嵌套 Podman 镜像全损的分层恢复（备份闭环） | 2026-08-28 |
 | [retrospective-c-drive-vhdx-recovery-20260828/](./retrospective-c-drive-vhdx-recovery-20260828/README.md) | C盘空间耗尽治理（vhdx 二相回收：sparse/compact 互斥发现） | 2026-08-28 |
 | [retrospective-claude-code-agnes-proxy-20260826/](./retrospective-claude-code-agnes-proxy-20260826/README.md) | Claude Code + Agnes API 本地代理配置（安全脱敏版） | 2026-08-26 |

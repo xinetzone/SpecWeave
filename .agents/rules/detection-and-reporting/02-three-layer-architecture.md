@@ -1,7 +1,7 @@
 ---
 id: "rules-detection-reporting-02-three-layer-architecture"
 title: "检测与报告机制：三层检测体系架构"
-source: "rules/detection-and-reporting.md#三层检测体系架构"
+source: "../detection-and-reporting.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/detection-and-reporting/02-three-layer-architecture.toml"
 ---
 # 检测与报告机制：三层检测体系架构

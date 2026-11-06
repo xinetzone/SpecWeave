@@ -1,7 +1,7 @@
 ---
 id: "spec-ver-06"
 title: "06 版本演进示例与检查清单"
-source: "rules/spec-version-control.md#06"
+source: "../spec-version-control.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/spec-version-control/06-evolution-checklist.toml"
 ---
 

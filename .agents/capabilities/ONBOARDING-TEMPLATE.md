@@ -30,10 +30,10 @@ x-toml-ref: "../../.meta/toml/.agents/capabilities/ONBOARDING-TEMPLATE.toml"
 
 | 你要做什么 | 应该用什么 | 去哪里找 |
 |-----------|-----------|---------|
-| **<操作1>**（<触发词>） | <能力名> | `path/to/SKILL.md` |
-| **<操作2>**（<触发词>） | <能力名> | `path/to/SKILL.md` |
-| **<操作3>**（<触发词>） | <能力名> | `path/to/SKILL.md` |
-| **<操作N>** | <能力名> | REGISTRY.md |
+| **＜操作1＞**（<触发词>） | <能力名> | `path/to/SKILL.md` |
+| **＜操作2＞**（<触发词>） | <能力名> | `path/to/SKILL.md` |
+| **＜操作3＞**（<触发词>） | <能力名> | `path/to/SKILL.md` |
+| **＜操作N＞** | <能力名> | REGISTRY.md |
 
 ---
 

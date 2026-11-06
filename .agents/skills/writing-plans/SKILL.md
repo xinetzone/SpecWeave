@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/writing-plans/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 writing-plans）"
 name: writing-plans
 description: Use when you have a spec or requirements for a multi-step task, before touching code
 ---

@@ -369,4 +369,4 @@ title: <区域名称> 入口路由
 ### 8.3 验证来源
 
 - [四区域路由体系建立复盘报告](../../docs/retrospective/reports/project-governance/documentation-governance/retrospective-establish-four-region-routing-system-20260724/README.md)
-- [上下文路由表](context-routing.md)
+- [上下文路由表](../context-routing.md)

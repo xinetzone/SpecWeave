@@ -1,7 +1,7 @@
 ---
 id: "scanned-book-to-okf-wiki-reproduction-checklist"
 title: "扫描版书籍转OKF Wiki教程 Skill L2 案例复现检查清单"
-source: "skill:scanned-book-to-okf-wiki (v1.0.0) / A-005"
+source: "skill:scanned-book-to-okf-wiki (v1.0.0); A-005"
 date: "2026-09-11"
 type: "checklist"
 severity: "high"

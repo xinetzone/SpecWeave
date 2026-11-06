@@ -1,7 +1,7 @@
 ---
 id: "multi-product-wiki-template-readme"
 title: "多产品原子化Wiki模板包使用说明"
-source: "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#模式5"
+source: "../../../docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/insight-extraction.md#模式5"
 x-toml-ref: "../../../.meta/toml/.agents/templates/multi-product-wiki-template/README.toml"
 date: "2026-07-04"
 tags: ["模板", "Wiki", "原子化", "多产品对比"]

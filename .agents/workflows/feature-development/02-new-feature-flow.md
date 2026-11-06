@@ -1,7 +1,7 @@
 ---
 id: "feat-dev-02"
 title: "02 新功能完整流程（8步）"
-source: "workflows/feature-development.md#02"
+source: "../feature-development.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/workflows/feature-development/02-new-feature-flow.toml"
 ---
 

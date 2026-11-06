@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 builtin_skills/TRAE-generate-mini-app/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 TRAE-generate-mini-app）"
 name: TRAE-generate-mini-app
 version: 1.0.2
 owner: pai

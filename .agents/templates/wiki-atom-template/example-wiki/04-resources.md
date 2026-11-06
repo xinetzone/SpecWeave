@@ -2,7 +2,7 @@
 id: "example-wiki-04-resources"
 title: "{{Wiki标题}}：相关资源链接"
 source: "{{来源URL}}#resources"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/example-wiki/04-resources.toml"
+x-toml-ref: "../../../../.meta/toml/{bundle-dir}/example-wiki/04-resources.toml"
 ---
 # 相关资源链接
 
