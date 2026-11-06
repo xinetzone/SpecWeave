@@ -1,0 +1,69 @@
+EXPORT MANIFEST — 单源课程材料转 OKF 知识包里程碑复盘：负向边界成对交付与并发隔离提交
+================================================================================
+
+export_time  : 2026-11-06
+report_type  : retrospective (milestone)
+source_path  : docs/retrospective/reports/knowledge-content/
+               retrospective-okf-content-creation-three-rules-20261106.md
+output_dir   : docs/retrospective/reports/exported
+formats      : md
+version      : 1.0
+
+EXPORTED FILES
+--------------------------------------------------------------------------------
+CCTR-1. okf-content-creation-three-rules-milestone-retrospective-20261106-v1.0.md
+        Export copy. Frontmatter id/x-toml-ref rebound to the exported binding;
+        body identical to the source report plus the export note at the end.
+CCTR-2. export-manifest-okf-content-creation-three-rules-20261106.txt (this file)
+
+SOURCE REPORT ASSETS
+--------------------------------------------------------------------------------
+- Source report  : docs/retrospective/reports/knowledge-content/
+                   retrospective-okf-content-creation-three-rules-20261106.md
+- Source TOML    : .meta/toml/docs/retrospective/reports/knowledge-content/
+                   retrospective-okf-content-creation-three-rules-20261106.toml
+- Export TOML    : .meta/toml/docs/retrospective/reports/exported/
+                   okf-content-creation-three-rules-milestone-retrospective-20261106-v1.0.toml
+- Pattern        : docs/retrospective/patterns/methodology-patterns/
+                   governance-strategy/negative-boundary-paired-delivery.md
+- Pattern TOML   : .meta/toml/docs/retrospective/patterns/methodology-patterns/
+                   governance-strategy/negative-boundary-paired-delivery.toml
+- Index entries  : knowledge-content/index.md (toctree)
+                   knowledge-content/README.md (report table)
+                   exported/index.md (toctree + export table)
+                   governance-strategy/index.md (pattern toctree)
+
+VERIFICATION
+--------------------------------------------------------------------------------
+- source exists                  : YES
+- frontmatter (id/source/x-toml-ref): COMPLETE
+  (category/date/tags/version/changelog externalized to TOML per
+   .agents/scripts/check-frontmatter.py FORBIDDEN_YAML_FIELDS)
+- content non-empty              : YES (36 facts, 3 insights, 1 pattern,
+                                   6 attacks, 4 actions)
+- G1-G4 quality gates            : PASSED (self-assessed; see report sections 1-5)
+- V gate                         : PASSED (self-verified) — 4 perspectives,
+                                   6 attacks, 5 adopted + 1 partial;
+                                   independent third-party reviewer NOT obtained
+- relative-link adjustment       : 0 (source and export are SIBLING directories
+                                   under reports/; ../../ prefixes identical)
+- index updated                  : 4 entries (see SOURCE REPORT ASSETS)
+- key-count reconciliation       : 36 / 3 / 1 / 6 / 4 consistent across
+                                   report, both TOMLs, manifest and README row
+- report-categorization baseline : violation_count=38 (pre-existing);
+                                   NO new reports/ root-level files added.
+                                   "No new violations" != "gate passed".
+- asset-baseline (submodule)     : exit=1, residual +112690; registered as
+                                   NOT PASSED, no scale numbers rewritten.
+- pytest                         : NOT INSTALLED; no tests claimed.
+
+POST-EXPORT STATE CHANGE
+--------------------------------------------------------------------------------
+C (atomic commit) executes in the same batch as this report archive. Per the
+report's self-reference declaration, commit hashes are NOT written back into
+this manifest or the report; they are verified by git log / git show and
+recorded in the delivery note and the workspace daily log.
+
+Concurrent WIP from a parallel session (retrospective family, Skill package,
+TOML bindings and ai-comic-drama-opc-transition edits) is deliberately NOT
+included in this export or in the atomic commits.

@@ -1,0 +1,29 @@
+id = "retro-20261106-okf-content-creation-three-rules"
+title = "单源课程材料转 OKF 知识包里程碑复盘：负向边界成对交付与并发隔离提交"
+date = "2026-11-06"
+scope = "project"
+type = "milestone-retrospective"
+category = "retrospective/reports/knowledge-content"
+source = "事件：一篇 2026-11-05 发布的公众号付费课程班主任课后复盘，经内容敏感度预检后以 chaptered-summary 转为 OKF 知识包 content-creation-three-rules（14 篇 / 40 条事实），落 sheke/industry/ 并同步五级索引至 719 束。任务：以七概念方法论编排执行里程碑复盘、洞察、萃取、导出报告与原子提交。"
+facts_count = 36
+insights_count = 3
+patterns_count = 1
+attacks_count = 6
+actions_count = 4
+gates = ["G1", "G2", "G3", "G4", "V"]
+v_executed = true
+c_executed = true
+c_note = "与报告同批次原子提交；提交哈希不回填自引用文件"
+version = "1.0"
+tags = ["seven-concepts", "milestone", "okf", "single-source", "negative-boundary", "adversarial-review", "atomic-commit", "parallel-session"]
+
+[bindings]
+related_patterns = [
+  "negative-boundary-paired-delivery",
+  "pattern-dedup-three-axis-ruling",
+  "verification-scope-bounding",
+  "bp-nav-co-registration",
+]
+rules = []
+references = []
+skills = ["seven-concepts-cmd", "export-report-cmd", "extraction-cmd"]

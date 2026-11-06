@@ -96,6 +96,7 @@ minimal-sufficient-scaffold-selection
 module-size-bug-correlation
 mutual-exclusion-composability-precheck
 mvp-unvalidated-code-debt
+negative-boundary-paired-delivery
 net-value-four-questions
 noise-free-container
 no-touch-list
