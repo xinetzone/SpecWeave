@@ -1,0 +1,33 @@
+{
+  "report_id": "milestone-ai-poster-generation-20261106",
+  "report_path": "docs/retrospective/reports/concepts/milestone/ai-poster-generation-retrospective-20261106.md",
+  "exported_at": "2026-11-06",
+  "format": "md+json",
+  "content_sensitivity": "public",
+  "maturity": "L1-draft",
+  "counts": {
+    "facts": 30,
+    "insights": 3,
+    "patterns": 1,
+    "actions": 5,
+    "adversarial_opinions": 7,
+    "adopted_opinions": 6,
+    "gates_passed": 5
+  },
+  "gates": [
+    "G1",
+    "G2",
+    "V 门",
+    "G3",
+    "G4"
+  ],
+  "deliverables": [
+    "docs/retrospective/reports/concepts/milestone/ai-poster-generation-retrospective-20261106.md",
+    "docs/retrospective/patterns/methodology-patterns/ai-collaboration/surplus-content-acceptance-gate.md",
+    ".agents/skills/generation-surplus-content-gate/SKILL.md",
+    ".agents/skills/generation-surplus-content-gate/scripts/check_acceptance_record.py",
+    ".agents/skills/generation-surplus-content-gate/evals/evals.json",
+    ".agents/skills/generation-surplus-content-gate/references/example-record.json"
+  ],
+  "source_verification": "counts mechanically extracted from report markdown via regex; assertion guards drift"
+}
