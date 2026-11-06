@@ -1,0 +1,26 @@
+{
+  "record_id": "gsg-20261106-001",
+  "artifact": "generated-images/复古未来主义电影海报_插画风格_金属质感与有机美感交织_超写_2026-11-06T00-53-54.png",
+  "artifact_type": "bitmap",
+  "expected": [
+    "主体：古代中国仙女，盘发髻，眉间美人痣",
+    "低角度仰拍，自空中俯冲，面朝下，双臂舒展，全身镜头",
+    "服饰：宽大刺绣袖、层叠褶皱、飘带、金属饰品",
+    "橙色主调，高对比度服装配色",
+    "背景：中国传统纹样与抽象云纹",
+    "竖版海报，1024x1536"
+  ],
+  "negative_constraints": [],
+  "negative_constraints_applied_before_generation": false,
+  "missing_items": [],
+  "surplus_items": [
+    {"item": "英文竖排标题 SHENYI", "location": "左上", "evidence": "生成后目视审"},
+    {"item": "英文副标 LEGEND OF THE FLYING IMMORTAL", "location": "左侧标题下方", "evidence": "生成后目视审"},
+    {"item": "英文 COMING SOON", "location": "下方标题组", "evidence": "生成后目视审"},
+    {"item": "中文标题 云上神女", "location": "下方居中", "evidence": "生成后目视审"},
+    {"item": "英文副标 A FUTURE TANG OPERA", "location": "中文标题下方", "evidence": "生成后目视审"},
+    {"item": "平台水印 AI生成 / WORKBUDDY", "location": "右下角", "evidence": "生成后目视审"}
+  ],
+  "check_method": "生成后目视审；生成前未建立负向清单，未套用位图生成专用门面模板",
+  "conclusion": "surplus_found"
+}

@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（48个）
+### 完整Skill（49个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -59,6 +59,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | windows-temp-fixture-teardown-safety | "建临时夹具"、"跑受控删除验证"、"清理探针目录"、"清理命令里出现变量拼接路径" | 2（五条硬规则写前预检 → 单进程 tempfile.mkdtemp/断言/shutil.rmtree 标准模板 → 路径交外部工具时的规则 → 坏味道扫描与验收步骤；捆绑 scripts/temp_fixture_guard.py；L1） | v1.0.0 | [skills/windows-temp-fixture-teardown-safety/SKILL.md](../skills/windows-temp-fixture-teardown-safety/SKILL.md) |
 | qibu-story-cmd | "七步故事法"、"靶心人公式"、"故事骨架"、"因果链"、"删步测试"、"意外极性"、"付费墙切在哪"、"后面为什么强行" | 3（新建骨架 / 诊断改稿 / 反向拆解；均含七格判据、三次删步测试与极性判墙；L1） | v1.0.0 | [skills/qibu-story-cmd/SKILL.md](../skills/qibu-story-cmd/SKILL.md) |
 | okf-bundle-to-pdf | "bundle 转 PDF"、"知识包导出 PDF"、"多文档合并成一个 pdf"、"PDF 没有目录/书签"、"md 合集导出 pdf"、"OKF PDF 导出"、"要书签大纲和目录页" | 2（方案A 七步主路径 build_bundle_pdf.py / 方案B 降级路径；含 --dry-run 预览门、--channel auto 浏览器降级、CDP generateDocumentOutline 书签大纲、程序化产物断言；萃取自老子文化生态圈 bundle 实战；L1） | v1.0.0 | [skills/okf-bundle-to-pdf/SKILL.md](../skills/okf-bundle-to-pdf/SKILL.md) |
+| generation-surplus-content-gate | "生成图片多了字"、"有水印"、"AI 自己加了标题"、"多了没要求的东西"、"交付前检查"、"负向约束怎么写"、"挂的技能跟任务不匹配" | 1（五步链：预期清单→生成前负向约束→挂载语义核验→双向验收→留痕；含只读校验器 check_acceptance_record.py；L1） | v1.0.0 | [skills/generation-surplus-content-gate/SKILL.md](../skills/generation-surplus-content-gate/SKILL.md) |
 
 ### 工作流门面（8个）
 
