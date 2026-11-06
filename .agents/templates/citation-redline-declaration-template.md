@@ -1,7 +1,7 @@
 ---
 id: "citation-redline-declaration-template"
 title: "引用红线声明模板（知识包/教程类产出）"
-source: "retro:sc-20260911-pipeline-parable-retro / pattern-declaration-reconciliation (L1)"
+source: "retro:sc-20260911-pipeline-parable-retro; pattern-declaration-reconciliation (L1)"
 date: "2026-09-11"
 version: "1.1.0"
 type: "template"

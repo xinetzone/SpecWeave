@@ -1,7 +1,7 @@
 ---
 id: "code-review-checklist"
 title: "Code Review 检查清单"
-source: "reports/code-review-checklist.md"
+source: "源自代码审查实践，对应复盘报告未单独归档"
 x-toml-ref: "../../.meta/toml/.agents/checklists/code-review-checklist.toml"
 maturity: "L1"
 ---

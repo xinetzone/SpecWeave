@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/local-vram/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 local-vram）"
 name: local-vram
 description: |
   Intel Local GPU Memory Limit / VRAM Adjust (集成显卡显存调整) on Windows AI PCs. Use this skill when the user, in Chinese or English, asks to limit, adjust, increase, change, or query the GPU shared memory limit. Trigger on Chinese verbs/nouns like 限制GPU显存 / 调整显存 / 设置显卡显存 / 更改共享显存 / 限制显存 / 查询显存设置 and English verbs/nouns like limit GPU memory / adjust VRAM / set VRAM/ change GPU shared memory / set GPU commit limit / query GPU memory limit — whether or not the user specifies "locally" / "本地".

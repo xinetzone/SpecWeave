@@ -1,7 +1,7 @@
 ---
 id: "rules-data-security-incident-response-06-resources-review-template"
 title: "应急响应：资源准备与复盘模板"
-source: "rules/data-security/incident-response.md#06"
+source: "../incident-response.md#文档导航"
 x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/incident-response/06-resources-review-template.toml"
 ---
 # 应急响应：资源准备与复盘模板

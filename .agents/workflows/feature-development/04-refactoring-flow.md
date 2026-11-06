@@ -1,7 +1,7 @@
 ---
 id: "feat-dev-04"
 title: "04 功能重构重量流程（7步）"
-source: "workflows/feature-development.md#04"
+source: "../feature-development.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/workflows/feature-development/04-refactoring-flow.toml"
 ---
 

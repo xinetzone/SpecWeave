@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/iga-pages/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 iga-pages）"
 name: iga-pages
 description: Deploy frontend and full-stack projects to IGA Pages. Use when the user mentions IGA Pages or requests deployment ("deploy my app", "publish this site", "push this live", "deploy and give me the link", "create a preview deployment", "deploy to IGA Pages", "ship to production"), or wants to develop an API ("write an API", "create an endpoint", "build a backend service").
 metadata:

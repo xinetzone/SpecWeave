@@ -1,7 +1,7 @@
 ---
 id: "stage-guard-05"
 title: "05 关键节点日志规范"
-source: "rules/stage-guardrails.md#05"
+source: "../stage-guardrails.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails/05-logging-spec.toml"
 ---
 

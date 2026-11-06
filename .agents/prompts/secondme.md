@@ -1,7 +1,7 @@
 ---
 id: "secondme"
 title: "SecondMe 交互提示词模板"
-source: "chaos/flexloop/prompts/secondme.md"
+source: "外部导入：SecondMe 平台 Skill 规范（mindverse 参考资料）"
 ---
 
 # SecondMe 交互提示词模板

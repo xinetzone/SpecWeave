@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 builtin_skills/TRAE-security-review/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 TRAE-security-review）"
 name: TRAE-security-review
 description: 用于代码安全扫描，或用户要求对 MR/PR、commit、分支、代码差异或未提交变更执行安全审查、漏洞扫描或安全审计时使用。只报告可证实可利用且由本次变更引入的风险。不得用于通用代码审查、普通编码、功能实现或修复请求，也不得用于运行时故障排查。
 ---

@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/secondme-reference/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 secondme-reference）"
 name: secondme-reference
 description: SecondMe API 技术参考文档，供开发时查阅
 user-invocable: true

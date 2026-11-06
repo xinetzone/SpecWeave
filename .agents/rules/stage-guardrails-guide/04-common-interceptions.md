@@ -1,7 +1,7 @@
 ---
 id: "sg-guide-04"
 title: "04 常见拦截原因与解决方案"
-source: "rules/stage-guardrails-guide.md#04"
+source: "../stage-guardrails-guide.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails-guide/04-common-interceptions.toml"
 ---
 

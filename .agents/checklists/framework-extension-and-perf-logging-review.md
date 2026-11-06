@@ -1,7 +1,7 @@
 ---
 id: "framework-extension-and-perf-logging-review"
 title: "框架扩展与性能日志代码审查清单"
-source: "retrospective/2026-07-31-caffe-ffi-backward-logging-milestone-retro.md"
+source: "../../docs/retrospective/reports/2026-07-31-caffe-ffi-backward-logging-milestone-retro.md"
 related_patterns:
   - progressive-interface-extension
   - single-pass-perf-instrumentation

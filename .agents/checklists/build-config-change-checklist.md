@@ -1,7 +1,7 @@
 ---
 id: "build-config-change-checklist"
 title: "构建配置变更检查清单（三层覆盖）"
-source: "reports/task-reports/retrospective-xmnn-runtime-repackaging-20260718/README.md#改进行动项"
+source: "../../docs/retrospective/reports/task-reports/retrospective-xmnn-runtime-repackaging-20260718/README.md"
 x-toml-ref: "../../.meta/toml/.agents/checklists/build-config-change-checklist.toml"
 maturity: "L1"
 date: "2026-07-18"

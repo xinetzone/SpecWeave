@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/composition-patterns/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 composition-patterns）"
 name: vercel-composition-patterns
 description:
   React composition patterns that scale. Use when refactoring components with

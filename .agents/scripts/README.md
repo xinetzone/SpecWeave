@@ -1,7 +1,6 @@
 ---
 id: "scripts"
 title: "Scripts 脚本目录"
-source: ".agents/scripts/README.md"
 x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
 ---
 

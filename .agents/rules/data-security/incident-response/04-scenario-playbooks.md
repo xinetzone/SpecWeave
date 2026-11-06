@@ -1,7 +1,7 @@
 ---
 id: "rules-data-security-incident-response-04-scenario-playbooks"
 title: "应急响应：典型场景处置预案库"
-source: "rules/data-security/incident-response.md#04"
+source: "../incident-response.md#文档导航"
 x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/incident-response/04-scenario-playbooks.toml"
 ---
 # 应急响应：典型场景处置预案库

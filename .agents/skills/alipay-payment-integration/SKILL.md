@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/alipay-payment-integration/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 alipay-payment-integration）"
 name: alipay-payment-integration
 description: >-
   支付宝开放平台支付产品接入最佳实践。涵盖当面付、订单码支付、App 支付、JSAPI 支付、手机网站支付、电脑网站支付、预授权支付、商家扣款等全场景产品选型与集成指导。

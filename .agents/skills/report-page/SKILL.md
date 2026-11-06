@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/report-page/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 report-page）"
 name: report-page
 description: Use when the user wants to create a source-backed report, document, memo, research note, operating update, or data interpretation page delivered as editable static HTML with a clean document reading experience and optional ECharts figures.
 ---

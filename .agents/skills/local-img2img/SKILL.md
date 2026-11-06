@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/local-img2img/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 local-img2img）"
 name: local-img2img
 description: |
   Intel Local Image-to-Image (本地图像编辑). Use this skill when the user asks to modify, edit, restyle, transform, or regenerate an existing image from a source image and a prompt. Trigger on Chinese requests like 修改图片/编辑图片/图生图/把这张图改成... and English requests like edit/modify/transform/restyle this image.

@@ -1,7 +1,7 @@
 ---
 id: "spec-ver-01"
 title: "01 概述"
-source: "rules/spec-version-control.md#01"
+source: "../spec-version-control.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/spec-version-control/01-overview.toml"
 ---
 

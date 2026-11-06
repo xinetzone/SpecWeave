@@ -2,7 +2,7 @@
 id: "skills-changelog"
 date: "2026-06-29"
 type: "changelog"
-source: ".agents/skills/README.md#Changelog"
+source: "README.md#Changelog"
 title: ".agents/skills/ 目录变更记录"
 ---
 # Changelog

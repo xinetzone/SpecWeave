@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/secondme/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 secondme）"
 name: secondme
 description: Use when the user wants to log in to SecondMe from OpenClaw, re-login, logout, get the auth URL, manage their SecondMe profile, create or browse Plaza content, redeem an invitation code, browse discover users, use Key Memory, check daily activity, or manage installable third-party skills
 user-invocable: true

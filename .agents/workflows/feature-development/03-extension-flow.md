@@ -1,7 +1,7 @@
 ---
 id: "feat-dev-03"
 title: "03 功能扩展轻量流程（6步）"
-source: "workflows/feature-development.md#03"
+source: "../feature-development.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/workflows/feature-development/03-extension-flow.toml"
 ---
 

@@ -1,7 +1,7 @@
 ---
 id: "rules-identification-04-categories-url-enc-regex"
 title: "硬编码识别标准：类别详解（URL·编码·正则）"
-source: "rules/identification-standards.md#各类别详细说明"
+source: "../identification-standards.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/identification-standards/04-categories-url-enc-regex.toml"
 ---
 # 硬编码识别标准：类别详解（URL·编码·正则）

@@ -2,7 +2,7 @@
 id: "example-wiki-01-core-concepts"
 title: "{{Wiki标题}}：核心概念解析"
 source: "{{来源URL}}#concepts"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/example-wiki/01-core-concepts.toml"
+x-toml-ref: "../../../../.meta/toml/{bundle-dir}/example-wiki/01-core-concepts.toml"
 ---
 # 核心概念解析
 

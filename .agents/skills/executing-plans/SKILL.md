@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/executing-plans/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 executing-plans）"
 name: executing-plans
 description: Use when you have a written implementation plan to execute in a separate session with review checkpoints
 ---

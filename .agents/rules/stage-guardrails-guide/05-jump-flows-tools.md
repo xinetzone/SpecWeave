@@ -1,7 +1,7 @@
 ---
 id: "sg-guide-05"
 title: "05 阶段跳转流程与CLI工具"
-source: "rules/stage-guardrails-guide.md#05"
+source: "../stage-guardrails-guide.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails-guide/05-jump-flows-tools.toml"
 ---
 

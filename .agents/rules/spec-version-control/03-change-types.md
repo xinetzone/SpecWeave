@@ -1,7 +1,7 @@
 ---
 id: "spec-ver-03"
 title: "03 变更类型分类"
-source: "rules/spec-version-control.md#03"
+source: "../spec-version-control.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/spec-version-control/03-change-types.toml"
 ---
 

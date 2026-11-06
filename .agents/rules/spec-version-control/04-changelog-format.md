@@ -1,7 +1,7 @@
 ---
 id: "spec-ver-04"
 title: "04 变更日志格式与维护"
-source: "rules/spec-version-control.md#04"
+source: "../spec-version-control.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/spec-version-control/04-changelog-format.toml"
 ---
 

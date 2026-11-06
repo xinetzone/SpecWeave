@@ -1,7 +1,7 @@
 ---
 id: "rules-detection-reporting-07-roles-constraints"
 title: "检测与报告机制：角色职责与使用约束"
-source: "rules/detection-and-reporting.md#角色职责划分"
+source: "../detection-and-reporting.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/detection-and-reporting/07-roles-constraints.toml"
 ---
 # 检测与报告机制：角色职责与使用约束

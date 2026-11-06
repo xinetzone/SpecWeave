@@ -1,7 +1,7 @@
 ---
 id: "lib-api-sphinx_config"
 title: "lib.sphinx_config — Sphinx + MyST 文档构建配置层"
-source: "lib/api_docs.py#sphinx_config"
+source: "../api_docs.py"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/16-sphinx-config.toml"
 ---
 

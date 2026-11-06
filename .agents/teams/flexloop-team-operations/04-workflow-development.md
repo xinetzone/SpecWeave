@@ -1,7 +1,7 @@
 ---
 id: "flexloop-team-operations-04-workflow-development"
 title: "flexloop团队手册：工作流2-子模块内开发"
-source: "teams/flexloop-team-operations.md#04"
+source: "../flexloop-team-operations.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/teams/flexloop-team-operations/04-workflow-development.toml"
 ---
 # flexloop团队手册：工作流2-子模块内开发

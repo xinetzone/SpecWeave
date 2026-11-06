@@ -1,7 +1,7 @@
 ---
 id: "pdr-05"
 title: "05 使用示例与PDR-LOG日志规范"
-source: "protocols/pre-document-reading.md#05"
+source: "../pre-document-reading.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/protocols/pre-document-reading/05-examples-logging.toml"
 ---
 

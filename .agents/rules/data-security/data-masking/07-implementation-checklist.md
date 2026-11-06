@@ -1,7 +1,7 @@
 ---
 id: "rules-data-security-data-masking-07-implementation-checklist"
 title: "数据脱敏：实施检查清单"
-source: "rules/data-security/data-masking.md#07"
+source: "../data-masking.md#文档导航"
 x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/data-masking/07-implementation-checklist.toml"
 ---
 # 数据脱敏：实施检查清单

@@ -1,7 +1,7 @@
 ---
 id: "rules-data-security-incident-response-02-classification-process"
 title: "应急响应：事件分级与响应流程"
-source: "rules/data-security/incident-response.md#02"
+source: "../incident-response.md#文档导航"
 x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/incident-response/02-classification-process.toml"
 ---
 # 应急响应：事件分级与响应流程

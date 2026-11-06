@@ -4,7 +4,7 @@ description: "Presentation creation, editing, and analysis. When you need to wor
 license: Proprietary. LICENSE.txt has complete terms
 supported_os:
   - windows
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/work/default/skills/pptx/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 pptx）"
 ---
 
 # PPTX Skill

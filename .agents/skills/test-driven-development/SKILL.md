@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/test-driven-development/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 test-driven-development）"
 name: test-driven-development
 description: Use when implementing any feature or bugfix, before writing implementation code
 ---

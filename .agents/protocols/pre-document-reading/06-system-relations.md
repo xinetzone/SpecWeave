@@ -1,7 +1,7 @@
 ---
 id: "pdr-06"
 title: "06 与现有体系的关联"
-source: "protocols/pre-document-reading.md#06"
+source: "../pre-document-reading.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/protocols/pre-document-reading/06-system-relations.toml"
 ---
 

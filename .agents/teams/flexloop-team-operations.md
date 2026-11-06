@@ -1,7 +1,7 @@
 ---
 id: "flexloop-team-operations"
 title: "flexloop 子模块治理团队 · 工作流操作手册"
-source: ".agents/teams/flexloop-team.md#标准工作流"
+source: "flexloop-team.md#标准工作流"
 x-toml-ref: "../../.meta/toml/.agents/teams/flexloop-team-operations.toml"
 ---
 # flexloop 子模块治理团队 · 工作流操作手册

@@ -1,7 +1,7 @@
 ---
 id: "dl-framework-op-correctness-test-checklist"
 title: "深度学习框架算子正确性测试检查清单"
-source: "docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-ops-correctness-test-20260727/"
+source: "../../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-ops-correctness-test-20260727/README.md"
 related_patterns:
   - "C1: dockerignore-exclude-whitelist.md"
   - "C2: dl-framework-op-test-assert-unpack.md"

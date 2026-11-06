@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/content-parser/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 content-parser）"
 name: content-parser
 description: "Extract and parse content from URLs. Triggers on: user provides a URL to extract content from, another skill needs to parse source material, \"parse this URL\", \"extract content\", \"解析链接\", \"提取内容\"."
 ---

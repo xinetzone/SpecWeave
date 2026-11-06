@@ -1,7 +1,7 @@
 ---
 id: "protocols-workspace-discovery"
 title: "工作区发现协议（Workspace Discovery Protocol）"
-source: "specs/okf-wiki-ecosystem/agent-app-marketplace/spec.md#工作区发现协议"
+source: "../../.trae/specs/okf-wiki-ecosystem/agent-app-marketplace/spec.md"
 x-toml-ref: "../../.meta/toml/.agents/protocols/workspace-discovery.toml"
 ---
 # 工作区发现协议（Workspace Discovery Protocol）

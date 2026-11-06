@@ -1,7 +1,7 @@
 ---
 id: "doc-automation-pipeline-reproduction-checklist"
 title: "文档流水线模式跨领域复现检查清单（A-007）"
-source: "pattern:bp-doc-automation-pipeline (L1-draft) / sc-20260911-doc-pipeline-pattern / A-007"
+source: "pattern:bp-doc-automation-pipeline (L1-draft); sc-20260911-doc-pipeline-pattern; A-007"
 date: "2026-09-11"
 type: "checklist"
 severity: "high"

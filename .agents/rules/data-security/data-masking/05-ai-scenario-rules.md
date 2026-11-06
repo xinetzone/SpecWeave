@@ -1,7 +1,7 @@
 ---
 id: "rules-data-security-data-masking-05-ai-scenario-rules"
 title: "数据脱敏：AI智能体场景特殊脱敏规则"
-source: "rules/data-security/data-masking.md#05"
+source: "../data-masking.md#文档导航"
 x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/data-masking/05-ai-scenario-rules.toml"
 ---
 # 数据脱敏：AI智能体场景特殊脱敏规则

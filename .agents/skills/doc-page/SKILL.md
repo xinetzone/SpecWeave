@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/doc-page/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 doc-page）"
 name: Doc Page
 description: Create polished printable document pages for reports, forms, schedules, resumes, memos, and records, with clean A4 layout and optional PDF or DOCX export when needed.
 ---

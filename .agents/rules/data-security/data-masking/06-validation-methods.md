@@ -1,7 +1,7 @@
 ---
 id: "rules-data-security-data-masking-06-validation-methods"
 title: "数据脱敏：有效性验证方法"
-source: "rules/data-security/data-masking.md#06"
+source: "../data-masking.md#文档导航"
 x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/data-masking/06-validation-methods.toml"
 ---
 # 数据脱敏：有效性验证方法

@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/secondme-init/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 secondme-init）"
 name: secondme-init
 description: 初始化 SecondMe 项目配置和功能模块选择，创建 state.json 和 CLAUDE.md
 user-invocable: true

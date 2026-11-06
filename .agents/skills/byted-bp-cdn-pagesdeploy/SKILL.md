@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/byted-bp-cdn-pagesdeploy/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 byted-bp-cdn-pagesdeploy）"
 name: byted-bp-cdn-pagesdeploy
 description: One-click deployment of static websites to BytePlus Edge Pages platform, supporting auto project creation, update deployment, custom domain binding, and CDN acceleration. Includes guided onboarding for new users without a BytePlus account.
 ---

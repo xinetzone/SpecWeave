@@ -1,7 +1,7 @@
 ---
 id: "rules-identification-05-categories-style-cfg"
 title: "硬编码识别标准：类别详解（样式·配置）"
-source: "rules/identification-standards.md#各类别详细说明"
+source: "../identification-standards.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/identification-standards/05-categories-style-cfg.toml"
 ---
 # 硬编码识别标准：类别详解（样式·配置）

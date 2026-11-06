@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/local-realtime-translator/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 local-realtime-translator）"
 name: local-realtime-translator
 description: |
   Intel Local Windows Realtime Speech Translator (本地实时语音翻译 / 同声传译 / 实时翻译软件). Use this skill whenever the user, in Chinese or English, wants to translate live speech from the microphone in real time, do simultaneous interpretation, show live subtitles with translation, "translate as I speak", OR more generally asks to open/start a translator or translation app, or to translate what they say into another language (e.g. "translate this into English / 帮我翻译成英文").

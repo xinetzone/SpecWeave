@@ -1,7 +1,7 @@
 ---
 id: "pdr-03"
 title: "03 读取确认与缺失处理"
-source: "protocols/pre-document-reading.md#03"
+source: "../pre-document-reading.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/protocols/pre-document-reading/03-confirmation-missing.toml"
 ---
 

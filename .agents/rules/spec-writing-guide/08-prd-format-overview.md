@@ -1,7 +1,7 @@
 ---
 id: "spec-writing-08"
 title: "08 PRD Spec格式概述"
-source: "rules/spec-writing-guide.md#08"
+source: "../spec-writing-guide.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/spec-writing-guide/08-prd-format-overview.toml"
 ---
 

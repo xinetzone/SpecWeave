@@ -1,7 +1,7 @@
 ---
 id: "summary-over-transcription-reproduction-report-template"
 title: "摘要替代转录模式复现报告模板（A-005）"
-source: "retro:sc-20260911-pipeline-parable-retro / pattern-summary-over-transcription (L1) / A-005"
+source: "retro:sc-20260911-pipeline-parable-retro; pattern-summary-over-transcription (L1); A-005"
 date: "2026-09-11"
 type: "template"
 tags: ["R-路线决策", "版权合规", "扫描版材料", "模式复现", "L2晋升", "A-005"]

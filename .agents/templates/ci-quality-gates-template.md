@@ -1,7 +1,7 @@
 ---
 id: "templates-ci-quality-gates"
 title: "CI/CD 八项质量门禁配置模板"
-source: "docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-optimization-cycle/export-suggestions.md"
+source: "../../docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-insight-optimization-cycle/export-suggestions.md"
 x-toml-ref: "../../.meta/toml/.agents/templates/ci-quality-gates-template.toml"
 version: "1.0.0"
 patterns_applied: ["three-tier-governance", "spec-as-code-automated-gates", "toolchain-maturity"]

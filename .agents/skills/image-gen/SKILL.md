@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/image-gen/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 image-gen）"
 name: image-gen
 description: "Generate AI images from text prompts. Triggers on: \"生成图片\", \"画一张\", \"AI图\", \"generate image\", \"配图\", \"create picture\", \"draw\", \"visualize\", \"generate an image\"."
 ---

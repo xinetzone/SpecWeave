@@ -1,7 +1,7 @@
 ---
 id: "sg-guide-03"
 title: "03 日志示例与格式规范"
-source: "rules/stage-guardrails-guide.md#03"
+source: "../stage-guardrails-guide.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails-guide/03-logging-examples.toml"
 ---
 

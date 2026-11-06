@@ -1,7 +1,7 @@
 ---
 id: "spec-ver-05"
 title: "05 弃用流程与版本兼容性"
-source: "rules/spec-version-control.md#05"
+source: "../spec-version-control.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/spec-version-control/05-deprecation-compatibility.toml"
 ---
 

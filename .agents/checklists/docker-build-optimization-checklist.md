@@ -1,7 +1,7 @@
 ---
 id: "docker-build-optimization-checklist"
 title: "Docker构建流程优化检查清单"
-source: "docs/retrospective/reports/bug-fix/docker-build/retrospective-xmnn-nuitka-docker-runtime-20260722/README.md"
+source: "../../docs/retrospective/reports/bug-fix/docker-build/retrospective-xmnn-nuitka-docker-runtime-20260722/README.md"
 related_patterns:
   - "compiled-wheel-runtime-image-build.md"
   - "python-native-extension-self-contained-wheel.md"

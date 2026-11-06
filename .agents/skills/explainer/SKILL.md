@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/explainer/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 explainer）"
 name: explainer
 description: "Create explainer videos with narration and AI-generated visuals. Triggers on: \"解说视频\", \"explainer video\", \"explain this as a video\", \"tutorial video\", \"introduce X (video)\", \"解释一下XX（视频形式）\"."
 ---

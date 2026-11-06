@@ -1,7 +1,7 @@
 ---
 id: "flexloop-team-operations-05-workflow-pattern-extraction"
 title: "flexloop团队手册：工作流3-模式萃取"
-source: "teams/flexloop-team-operations.md#05"
+source: "../flexloop-team-operations.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/teams/flexloop-team-operations/05-workflow-pattern-extraction.toml"
 ---
 # flexloop团队手册：工作流3-模式萃取

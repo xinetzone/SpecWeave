@@ -1,7 +1,7 @@
 ---
 id: "spec-writing-02"
 title: "02 标准章节结构"
-source: "rules/spec-writing-guide.md#02"
+source: "../spec-writing-guide.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/spec-writing-guide/02-standard-structure.toml"
 ---
 

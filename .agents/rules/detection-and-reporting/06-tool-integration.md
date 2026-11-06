@@ -1,7 +1,7 @@
 ---
 id: "rules-detection-reporting-06-tool-integration"
 title: "检测与报告机制：工具集成建议"
-source: "rules/detection-and-reporting.md#工具集成建议"
+source: "../detection-and-reporting.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/detection-and-reporting/06-tool-integration.toml"
 ---
 # 检测与报告机制：工具集成建议

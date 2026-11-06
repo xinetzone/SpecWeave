@@ -1,7 +1,7 @@
 ---
 id: "rules-data-security-data-masking-03-basic-techniques"
 title: "数据脱敏：基础脱敏技术（掩码/替换/泛化/扰动）"
-source: "rules/data-security/data-masking.md#03"
+source: "../data-masking.md#文档导航"
 x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/data-masking/03-basic-techniques.toml"
 ---
 # 数据脱敏：基础脱敏技术（掩码/替换/泛化/扰动）

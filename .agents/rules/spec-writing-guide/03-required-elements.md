@@ -1,7 +1,7 @@
 ---
 id: "spec-writing-03"
 title: "03 必需元素清单"
-source: "rules/spec-writing-guide.md#03"
+source: "../spec-writing-guide.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/spec-writing-guide/03-required-elements.toml"
 ---
 

@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/load-flexloop-skills/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 load-flexloop-skills）"
 name: load-flexloop-skills
 description: 自动装载/扫描 flexloop chaos 技能目录，生成技能注册表索引。触发词："装载flexloop技能"、"扫描技能目录"、"加载技能"、"skill auto loader"、"skill registry"、"技能索引"、"加载flexloop技能"、"扫描flexloop技能"、"注册技能"
 version: "0.1.0"

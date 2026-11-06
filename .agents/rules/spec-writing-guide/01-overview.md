@@ -1,7 +1,7 @@
 ---
 id: "spec-writing-01"
 title: "01 概述"
-source: "rules/spec-writing-guide.md#01"
+source: "../spec-writing-guide.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/spec-writing-guide/01-overview.toml"
 ---
 

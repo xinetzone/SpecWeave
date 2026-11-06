@@ -1,7 +1,7 @@
 ---
 id: "spec-writing-06"
 title: "06 正反示例与检查清单"
-source: "rules/spec-writing-guide.md#06"
+source: "../spec-writing-guide.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/spec-writing-guide/06-examples-checklist.toml"
 ---
 

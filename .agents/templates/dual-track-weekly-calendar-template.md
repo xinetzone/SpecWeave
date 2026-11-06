@@ -1,7 +1,7 @@
 ---
 title: "双轨复盘周执行日历模板"
 id: "dual-track-weekly-calendar-template"
-source: "patterns/methodology-patterns/retrospective-knowledge/dual-track-retrospective-cadence.md"
+source: "../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/dual-track-retrospective-cadence.md"
 x-toml-ref: "../../.meta/toml/.agents/templates/dual-track-weekly-calendar-template.toml"
 type: "planning-template"
 maturity_level: "L1"

@@ -9,7 +9,7 @@ paths:
   - ".agents/skills/aiworks-deploy-cmd/**"
   - "work/zhihu-science-workshop-2026/deploy/**"
 title: "AI Works 源码代部署与发布 Skill"
-x-toml-ref: "../../.meta/toml/.agents/skills/aiworks-deploy-cmd/SKILL.toml"
+x-toml-ref: "../../../.meta/toml/.agents/skills/aiworks-deploy-cmd/SKILL.toml"
 ---
 
 # AI Works 源码代部署与发布 Skill

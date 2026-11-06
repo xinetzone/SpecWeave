@@ -2,7 +2,7 @@
 id: "capability-architecture"
 title: "渐进式披露三层架构规范"
 schema: "progressive-disclosure-v1"
-source: "insight-a-progressive-disclosure-architecture.md"
+source: "../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/insights/insight-a-progressive-disclosure-architecture.md"
 maturity: "L2"
 x-toml-ref: "../../.meta/toml/.agents/capabilities/ARCHITECTURE.toml"
 ---

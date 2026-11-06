@@ -1,7 +1,7 @@
 ---
 id: "spec-ver-02"
 title: "02 版本号命名规则"
-source: "rules/spec-version-control.md#02"
+source: "../spec-version-control.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/spec-version-control/02-version-naming.toml"
 ---
 

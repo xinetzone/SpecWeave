@@ -1,7 +1,7 @@
 ---
 id: "stage-guard-02"
 title: "02 标准阶段序列"
-source: "rules/stage-guardrails.md#02"
+source: "../stage-guardrails.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails/02-standard-stages.toml"
 ---
 

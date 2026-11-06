@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/brainstorming/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 brainstorming）"
 name: brainstorming
 description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
 ---

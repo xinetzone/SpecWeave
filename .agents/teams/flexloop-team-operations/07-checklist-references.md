@@ -1,7 +1,7 @@
 ---
 id: "flexloop-team-operations-07-checklist-references"
 title: "flexloop团队手册：检查清单与文档索引"
-source: "teams/flexloop-team-operations.md#07"
+source: "../flexloop-team-operations.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/teams/flexloop-team-operations/07-checklist-references.toml"
 ---
 # flexloop团队手册：检查清单与文档索引

@@ -1,7 +1,7 @@
 ---
 id: "feat-dev-06"
 title: "06 结构化日志与交接协议"
-source: "workflows/feature-development.md#06"
+source: "../feature-development.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/workflows/feature-development/06-logging-handoff.toml"
 ---
 

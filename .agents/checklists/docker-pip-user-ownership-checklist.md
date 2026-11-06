@@ -1,7 +1,7 @@
 ---
 id: "docker-pip-user-ownership-checklist"
 title: "Docker 构建时/运行时属主分离（PIP_USER 治理）检查清单"
-source: "docs/retrospective/reports/build-engineering/retrospective-chaos-ai-portable-slim-20260811/README.md"
+source: "../../docs/retrospective/reports/build-engineering/retrospective-chaos-ai-portable-slim-20260811/README.md"
 related_patterns:
   - "docker-buildtime-runtime-ownership-separation.md"
   - "docker-buildtime-vs-runtime-config.md"

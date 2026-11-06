@@ -1,7 +1,7 @@
 ---
 id: "flexloop-team-operations-06-compliance-emergency"
 title: "flexloop团队手册：合规检查与应急处理"
-source: "teams/flexloop-team-operations.md#06"
+source: "../flexloop-team-operations.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/teams/flexloop-team-operations/06-compliance-emergency.toml"
 ---
 # flexloop团队手册：合规检查与应急处理

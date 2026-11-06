@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/ppt-page/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 ppt-page）"
 name: PPT Page
 description: Create single-file HTML presentation galleries as a vertical, single-column feed of capped-width slide cards. Use for turning slide outlines, articles, screenshots, images, or existing deck content into a scrollable web PPT with below-card captions, a global page-gap/caption toggle, hidden zoom controls, fullscreen presentation shortcuts, and hover/focus-only page badges.
 ---

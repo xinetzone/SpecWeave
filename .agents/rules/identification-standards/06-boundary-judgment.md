@@ -1,7 +1,7 @@
 ---
 id: "rules-identification-06-boundary-judgment"
 title: "硬编码识别标准：区分标准与边界判断"
-source: "rules/identification-standards.md#区分标准与边界判断"
+source: "../identification-standards.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/identification-standards/06-boundary-judgment.toml"
 ---
 # 硬编码识别标准：区分标准与边界判断

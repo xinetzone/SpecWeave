@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 builtin_skills/TRAE-code-review/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 TRAE-code-review）"
 name: TRAE-code-review
 description: 仅当用户明确要求对 MR/PR、commit、分支或代码差异执行通用代码审查时使用。审查质量、正确性、可维护性、性能和最佳实践，并返回结构化问题。不得用于仅安全审计、普通编码、功能实现或修复请求，也不得在用户明确要求 Bits Code Guard 时使用。
 ---

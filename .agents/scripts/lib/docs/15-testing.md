@@ -1,7 +1,7 @@
 ---
 id: "lib-api-testing"
 title: "lib.testing — 测试辅助工具库"
-source: "lib/testing/__init__.py"
+source: "../__init__.py"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/15-testing.toml"
 ---
 

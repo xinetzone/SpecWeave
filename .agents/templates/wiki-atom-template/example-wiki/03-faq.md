@@ -2,7 +2,7 @@
 id: "example-wiki-03-faq"
 title: "{{Wiki标题}}：常见问题解答"
 source: "{{来源URL}}#faq"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/example-wiki/03-faq.toml"
+x-toml-ref: "../../../../.meta/toml/{bundle-dir}/example-wiki/03-faq.toml"
 ---
 # 常见问题解答
 

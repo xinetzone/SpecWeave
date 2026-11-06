@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/redis-development/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 redis-development）"
 name: redis-development
 description: Redis performance optimization and best practices. Use this skill when working with Redis data structures, Redis Query Engine (RQE), vector search with RedisVL, semantic caching with LangCache, or optimizing Redis performance.
 license: MIT

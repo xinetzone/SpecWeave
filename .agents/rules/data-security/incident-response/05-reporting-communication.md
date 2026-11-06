@@ -1,7 +1,7 @@
 ---
 id: "rules-data-security-incident-response-05-reporting-communication"
 title: "应急响应：事件上报与通报机制"
-source: "rules/data-security/incident-response.md#05"
+source: "../incident-response.md#文档导航"
 x-toml-ref: "../../../../.meta/toml/.agents/rules/data-security/incident-response/05-reporting-communication.toml"
 ---
 # 应急响应：事件上报与通报机制

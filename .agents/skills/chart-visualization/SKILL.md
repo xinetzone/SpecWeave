@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/chart-visualization/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 chart-visualization）"
 name: chart-visualization
 description: This skill should be used when the user wants to visualize data. It intelligently selects the most suitable chart type from 26 available options, extracts parameters based on detailed specifications, and generates a chart image using a JavaScript script.
 dependency:

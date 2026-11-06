@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/screenshot/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 screenshot）"
 name: "screenshot"
 description: "Use when the user explicitly asks for a desktop or system screenshot (full screen, specific app or window, or a pixel region), or when tool-specific capture capabilities are unavailable and an OS-level capture is needed."
 ---

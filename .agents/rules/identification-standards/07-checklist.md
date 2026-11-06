@@ -1,7 +1,7 @@
 ---
 id: "rules-identification-07-checklist"
 title: "硬编码识别标准：检查清单"
-source: "rules/identification-standards.md#检查清单"
+source: "../identification-standards.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/identification-standards/07-checklist.toml"
 ---
 # 硬编码识别标准：检查清单

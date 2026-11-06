@@ -1,5 +1,5 @@
 ---
-source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 skills/local-mineru/SKILL.md）"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 local-mineru）"
 name: local-mineru
 description: |
   Intel Local Windows Document Parsing (本地离线文档与图片解析). Use this skill when the user, in Chinese or English, asks to parse, extract, OCR, or convert PDF documents or images to text or Markdown. Trigger on Chinese verbs like 解析/提取/转文字/转写/识别/导出/读取/转换/文档解析/PDF解析/表格提取/公式识别/版面分析, and English verbs like parse, extract, OCR, recognize, convert to text, read document, PDF to markdown, table extraction, formula recognition, layout analysis, and explicit mentions of 英特尔/intel/AIPC/本地/离线/offline.

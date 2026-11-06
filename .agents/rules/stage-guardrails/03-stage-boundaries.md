@@ -1,7 +1,7 @@
 ---
 id: "stage-guard-03"
 title: "03 各阶段操作边界"
-source: "rules/stage-guardrails.md#03"
+source: "../stage-guardrails.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/rules/stage-guardrails/03-stage-boundaries.toml"
 ---
 

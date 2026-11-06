@@ -1,7 +1,7 @@
 ---
 id: "feat-dev-05"
 title: "05 治理规则引用"
-source: "workflows/feature-development.md#05"
+source: "../feature-development.md#文档导航"
 x-toml-ref: "../../../.meta/toml/.agents/workflows/feature-development/05-governance-references.toml"
 ---
 

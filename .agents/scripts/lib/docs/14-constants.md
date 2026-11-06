@@ -1,7 +1,7 @@
 ---
 id: "lib-api-constants"
 title: "constants.py — 全局常量（scripts/ 根目录）"
-source: "lib/api_docs.py#constants"
+source: "../api_docs.py"
 x-toml-ref: "../../../../.meta/toml/.agents/scripts/lib/docs/14-constants.toml"
 ---
 
