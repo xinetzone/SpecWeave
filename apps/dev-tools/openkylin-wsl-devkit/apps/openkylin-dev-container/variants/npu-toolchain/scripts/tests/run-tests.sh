@@ -88,6 +88,9 @@ run_case D18 "--json 可解析且字段与 exit_code 一致" case_d18
 run_case D19 "汇总行自洽 total == pass+fail+unknown" case_d19
 run_case D22 "note 含 Tab 时 --json 仍是合法 JSON" case_d22
 run_case D24 "pth 含非 ASCII 时仍按字节口径比对" case_d24
+run_case D25 "note 含 SOH/VT/US 时 --json 合法且信息未丢失" case_d25
+run_case D26 "note 含 \\ \" Tab SOH 四类混合时转义均正确" case_d26
+run_case D27 "已知边界：NUL 无法进入 bash 字符串（命令替换丢弃）" case_d27
 
 # ---- E 组：变异测试 ------------------------------------------------------
 run_case E20 "变异：移除 A5 检查后同一 FAIL 构造不再被检出" case_e20

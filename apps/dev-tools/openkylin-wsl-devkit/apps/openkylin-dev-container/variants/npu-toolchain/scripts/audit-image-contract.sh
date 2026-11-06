@@ -109,8 +109,32 @@ check() {
 }
 
 json_escape() {
-    # 控制字符必须替换掉：ldd 的输出行以 Tab 开头，原样写进 JSON 会产出非法文档。
-    printf '%s' "$1" | tr '\n\r\t' '   ' | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g'
+    # 按 JSON 规范转义：反斜杠、双引号，以及 U+0000–U+001F 控制字符。
+    # 控制字符必须转义而非替换成空格（ldd 的输出行以 Tab 开头，原样写进 JSON 会产出
+    # 非法文档；替换成空格则丢失信息）。\b \f \n \r \t 用短形式，其余用 \u00XX。
+    # 已知边界：NUL（U+0000）无法存在于 bash 字符串，故不在覆盖范围。
+    local s="${1-}" ch out="" codepoint esc
+    # 反斜杠必须先于其余规则处理，否则后面插入的 \uXXXX 会被二次转义
+    s="${s//\\/\\\\}"
+    s="${s//\"/\\\"}"
+    while [ -n "$s" ]; do
+        ch="${s:0:1}"
+        s="${s:1}"
+        case "$ch" in
+            $'\b') out+='\b' ;;
+            $'\f') out+='\f' ;;
+            $'\n') out+='\n' ;;
+            $'\r') out+='\r' ;;
+            $'\t') out+='\t' ;;
+            [[:cntrl:]])
+                printf -v codepoint '%d' "'$ch"
+                printf -v esc '\\u%04X' "$codepoint"
+                out+="$esc"
+                ;;
+            *) out+="$ch" ;;
+        esac
+    done
+    printf '%s' "$out"
 }
 
 # ---------------------------------------------------------------------------

@@ -128,6 +128,21 @@ assert_json_ok() {
         || fail "JSON 不能被 python3 -m json.tool 解析"
 }
 
+assert_json_note_eq() {  # assert_json_note_eq <checks 下标> <期望 note 原文>
+    # 解析 JSON 后逐字符比对 note：若控制字符被替换成空格或被二次转义，此处必然失败。
+    python3 - "$CASE/audit.json" "$1" "$2" <<'PY' || fail "JSON note 与原文不符（控制字符可能被替换或转义错误）"
+import json
+import sys
+
+path, idx, expected = sys.argv[1], int(sys.argv[2]), sys.argv[3]
+note = json.load(open(path))["checks"][idx]["note"]
+if note != expected:
+    print("实测:", [hex(ord(c)) for c in note], file=sys.stderr)
+    print("期望:", [hex(ord(c)) for c in expected], file=sys.stderr)
+    sys.exit(1)
+PY
+}
+
 assert_json_fields() {  # assert_json_fields <exit> <total> <pass> <fail> <unknown>
     local got
     got="$(python3 - "$CASE/audit.json" <<'PY'

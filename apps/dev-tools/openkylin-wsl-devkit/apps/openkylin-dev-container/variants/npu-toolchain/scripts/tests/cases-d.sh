@@ -73,3 +73,55 @@ case_d24() {  # pth 期待值含非 ASCII 时仍按字节计（副本替换路�
     # 148 B（字节）而非 143（字符）：旧口径会把这条判成 FAIL
     assert_contains "148 B"
 }
+
+case_d25() {  # note 含 SOH/VT/US 时 --json 合法，且解析后原控制字符逐字还原（未被替换成空格）
+    new_fixture
+    fx_default_good
+    local raw
+    raw="$(printf 'x\001y\013z\037w')"
+    fx_run a1 0 "$raw"
+    run_audit --json
+    assert_rc 1
+    assert_summary 10 9 1 0
+
+    # 前提确认：SUMMARY 表格里仍是裸控制字符（JSON 里才应是 \u00XX），否则构造无效
+    grep -q "$(printf '\001')" "$CASE/out.txt" || fail "输出中未出现裸 SOH，构造无效"
+    assert_json_ok
+    assert_json_fields 1 10 9 1 0
+    # 信息未丢失的判据：json.loads 后 note 与原文逐字符相等（空格替换/二次转义都会失败）
+    assert_json_note_eq 0 "实测 ${raw}（期望 openkylin|3.0|huanghe）"
+    grep -qF '\u0001' "$CASE/audit.json" || fail "SOH 未编码为 \\u0001"
+}
+
+case_d26() {  # note 同时含 反斜杠 / 双引号 / Tab / SOH 四类，转义各自正确
+    new_fixture
+    fx_default_good
+    local raw
+    raw="$(printf 'a\\b"c\td\001e')"
+    fx_run a1 0 "$raw"
+    run_audit --json
+    assert_rc 1
+    assert_summary 10 9 1 0
+    assert_json_ok
+    assert_json_fields 1 10 9 1 0
+    assert_json_note_eq 0 "实测 ${raw}（期望 openkylin|3.0|huanghe）"
+    # 逐类核对字面形态：反斜杠 \\、双引号 \"、Tab \t、SOH \u0001，且无二次转义
+    grep -qF 'a\\b\"c\td\u0001e' "$CASE/audit.json" || fail "四类混合转义结果不符"
+}
+
+case_d27() {  # 已知边界：NUL（U+0000）无法存在于 bash 字符串，json_escape 不覆盖该码位
+    # bash 的命令替换会丢弃 NUL 并告警（"ignored null byte in input"），NUL 根本到不了
+    # json_escape；本用例锁定该边界的事实：JSON 仍合法、输出中无裸 NUL 泄漏。
+    # 这是 bash 数据通路的固有限制，非本脚本缺陷；若要覆盖 U+0000 须先改造数据通路。
+    new_fixture
+    fx_default_good
+    printf 'x\000y' > "$FX/run/a1.out"
+    run_audit --json
+    assert_rc 1
+
+    # note 被 check() 截到 220 字符，故只匹配告警前缀，避免被截断位置不同的影响
+    grep -q 'command substitution: ignored' "$CASE/out.txt" || fail "构造无效：NUL 未被命令替换丢弃"
+    assert_json_ok
+    [ "$(tr -cd '\000' < "$CASE/audit.json" | wc -c)" -eq 0 ] || fail "JSON 中出现裸 NUL 字节"
+    ! grep -qF '\u0000' "$CASE/audit.json" || fail "不应出现 \\u0000（NUL 已在数据通路被丢弃）"
+}
