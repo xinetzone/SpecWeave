@@ -9,6 +9,7 @@ paths:
   - ".agents/skills/generation-surplus-content-gate/**"
 title: "查多了什么 — 生成型产物双向验收门"
 source: "来源会话为复古未来主义海报生成与七概念里程碑复盘，结论沉淀于同日复盘报告与模式文档查多了什么"
+x-toml-ref: "../../../.meta/toml/.agents/skills/generation-surplus-content-gate/SKILL.toml"
 ---
 
 # generation-surplus-content-gate — 查多了什么

@@ -10,6 +10,7 @@ paths:
   - ".agents/skills/zero-intrusion-handoff/**"
 source: "2026-11-06 个人知识库方法包交付里程碑复盘，模式 P-1 与 P-2，成熟度 L1"
 maturity: "L1"
+x-toml-ref: "../../../.meta/toml/.agents/skills/zero-intrusion-handoff/SKILL.toml"
 ---
 
 (zero-intrusion-overview)=

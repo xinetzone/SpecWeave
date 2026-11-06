@@ -2,7 +2,7 @@
 id: "zero-intrusion-handoff-patterns-reference"
 title: "两个模式的完整定义（按需加载）"
 type: "reference"
-source: "本 Skill 的 SKILL.md"
+source: "../SKILL.md"
 version: "1.0.0"
 ---
 
