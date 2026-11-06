@@ -190,6 +190,8 @@ qwenwork/
 /.uvcache/
 /.vercel/
 /Claw/
+# AI 图像生成输出目录（文本生图工具产出的位图，机器生成，本地保留不入库）
+/generated-images/
 
 # 外部创作设计工具的本地工作目录（配图 brief 等过程素材，不入库）。
 # 注意必须带前导点：写作 `creative-design/` 会匹配已被跟踪的
