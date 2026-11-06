@@ -4,14 +4,14 @@ id: "pre-check-duplication-layered-sedimentation"
 title: "知识沉淀前置查重与分层沉淀工作流"
 maturity_level: "L1"
 created_date: "2026-07-07"
-last_updated: "2026-07-07"
+last_updated: "2026-11-06"
 source: "external: retrospective-volcengine-mua-learning-20260707/insight-extraction.md（外部项目）"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/pre-check-duplication-layered-sedimentation.toml"
 tags: ["知识管理", "前置查重", "文档分层", "知识库", "知识沉淀", "避免重复", "内容策略", "文档治理", "学习笔记"]
 trigger_conditions: ["编写新的学习笔记/文档/报告", "向知识库沉淀内容", "同一产品/技术的二次及以上学习", "发现知识库可能已有相关内容", "避免重复建设"]
 problem_solved: "知识沉淀时容易忘记先查知识库是否已有相关内容，直接从零开始编写导致内容重复（约40%重叠），不仅浪费时间精力，还造成知识库内容冗余和后续维护困难（同一信息需多处更新，容易不一致）。本工作流通过前置查重+策略选择+交叉引用三步法，确保知识增量积累而非重复建设。"
 validation_count: 1
-reuse_count: 0
+reuse_count: 2
 ---
 > **来源**：火山引擎MobileUseAgent移动端智能体系统学习复盘（2026-07-07）——前置查重发现已有MUA产品概览笔记，采用"产品概览+技术实现"双文档分层结构，避免约200-300行重复内容，查重仅耗时约2分钟，ROI极高
 > **验证次数**：1次（火山引擎MUA）；待在更多厂商产品学习、技术文档撰写任务中验证
@@ -196,9 +196,54 @@ ROI极高，应该成为肌肉记忆。
 
 ---
 
+## 失败案例
+
+**案例 1：漏做前置查重导致重复建设（2026-07-07，本模式来源案例）**
+
+火山引擎 MobileUseAgent 学习任务在形成本工作流之前，已存在一份产品概览笔记。若直接从零编写，预计产生约 200-300 行、约 40% 的重复内容，并且同一信息此后需要在两份文档中同步。**失败根因**是「写新东西」的心理偏好压过了「先查再写」的强制动作，属于可预防的过程性失败，而非能力不足。本次实测补做的查重仅耗时约 2 分钟，重复内容未发生，反证了漏做查重的代价。
+
+**案例 2：查重清单粒度不足导致裁决失效（2026-11-06，同仓复用）**
+
+复用 A~E 策略矩阵时同时面对 5 个候选增量，Step 1 的四项检查只回答「是否已有相同主题 / 是否部分覆盖 / 已有质量与时效如何」，无法回答「两个候选算不算同一个模式」。**失败根因**是清单停留在「内容重复度」这一层，未覆盖「条目粒度」这一层；本次只能临时补「作用对象 / 核心动作 / 所处层级」三维比对才完成裁决。该缺口现由 [模式入库三维去重裁决](../governance-strategy/pattern-dedup-three-axis-ruling.md) 补位，本工作流正文不改。
+
+---
+
+## 反目标用户/场景
+
+以下场景**不适用**本工作流的完整流程，强行执行只会增加成本而无收益：
+
+| 场景 | 判定 | 处理方式 |
+|------|------|---------|
+| 确认全新的主题（多次检索均无相关条目） | 不适用 | 直接走标准模板新建，不必再花时间扩大检索 |
+| 个人笔记、一次性问答（不进入知识库） | 不适用 | 不入库即无同步维护成本，查重收益趋零 |
+| 应急排障中的临时记录 | 不适合 | 先止血记录，事后归档前补做一次查重与分层判定 |
+| 时限极紧的单次交付（≤30 分钟） | 不推荐完整执行 | 只做产品名/技术名关键词快搜，跳过 4 项清单的逐条确认 |
+
+> 判断口径：只有当「内容将长期留在知识库」且「存在被重复编写的现实可能」时，前置查重才是必做项；两者缺一，本工作流即降级为可选建议。
+
+---
+
 ## 关联模式
 
 - [knowledge-sedimentation-workflow-sop.md](knowledge-sedimentation-workflow-sop.md)：知识沉淀SOP，本模式是其"前置检查"环节的具体展开
 - [wiki-pre-creation-three-checks.md](../governance-strategy/wiki-pre-creation-three-checks.md)：Wiki创建前三查，本模式可作为其查重环节的补充
 - [knowledge-base-three-stage.md](../document-architecture/knowledge-base-three-stage.md)：知识库三阶段演进模型，本模式支持第二阶段（结构化积累）
 - [vendor-product-learning-twelve-step-template.md](../research-knowledge/vendor-product-learning-twelve-step-template.md)：十二步产品学习模板，Step 0（前置查重）可嵌入本工作流
+
+---
+
+## 复用记录（2026-11-06）
+
+**会话**：`sc-20261106-pattern-sedimentation`（`/七概念 模式沉淀`）。本工作流的 A~E 策略矩阵被完整复用一次：对 5 个候选增量逐条裁决，按 **C 更新已有** 回写 3 个既有模式、按 **D 新增补充** 新建 1 个窄模式、1 个候选判「另案」，并对 2 份报告追加勘误。依据 [模式沉淀复核裁定报告](../../../reports/knowledge-content/pattern-sedimentation-dedup-ruling-20261106.md) §3.2。
+
+**复用中发现的缺口**：Step 1「查重检查清单」4 项回答的是「有没有相同主题 / 部分覆盖 / 质量如何」，未给出「两个候选算不算同一个模式」的可判定标准；本次在候选数 >1 时无法仅凭该清单判定「重复 / 特化 / 互补 / 独立」，需补「作用对象 / 核心动作 / 所处层级」三维比对与可证伪区分判据。该缺口由补充型模式 [模式入库三维去重裁决](../governance-strategy/pattern-dedup-three-axis-ruling.md) 覆盖，本工作流正文不改。
+
+**成熟度口径**：`reuse_count` 0→1、`last_updated` 更新为 2026-11-06；`validation_count` 保持 1、成熟度保持 L1。本次为同仓自审复用，非独立第三方验证，不计入独立案例。
+
+### 复用记录（2026-11-06，同日第二次）
+
+**会话**：`sc-20261106-examples-pattern-sedimentation`（`/七概念 ...examples 模式沉淀`）。A~E 策略矩阵再次被完整复用：对 5 个候选增量裁决为「1 个策略 A 新建完整文档、4 个策略 C 登记不新建」，并对「另案处理」做结案裁定。依据 [examples 模式沉淀裁定报告](../../../reports/knowledge-content/pattern-sedimentation-examples-assumption-substitution-20261106.md) §3.2。
+
+**与上次复用的差别**：上次候选来源是**里程碑复盘洞察**，本次候选来源是**同一知识包内四篇连续算例**，因此额外触发了「同仓同谱系连续产出只计 1 个案例」的成熟度口径裁定；该口径由 [模式入库三维去重裁决](../governance-strategy/pattern-dedup-three-axis-ruling.md) 规则 5 覆盖，本工作流正文不改。
+
+**成熟度口径**：`reuse_count` 1→2；`validation_count` 保持 1、成熟度保持 L1。同为同仓自审复用，不计入独立案例。

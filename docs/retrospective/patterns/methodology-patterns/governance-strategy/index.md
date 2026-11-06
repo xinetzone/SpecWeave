@@ -108,6 +108,7 @@ P-AGENT-SELECT-001-agent-platform-selection-scorecard
 P-DEMO-TO-PROD-003-demo-to-prod-checklist
 P-LEGACY-AI-UPGRADE-002-legacy-ai-upgrade-sop
 P-SPEC-AC-DUAL-TRACK-004-spec-hard-soft-ac-dual-track-acceptance
+pattern-dedup-three-axis-ruling
 pattern-tooling-progressive-extraction
 performance-optimization-five-step-method
 phased-incremental-optimization
