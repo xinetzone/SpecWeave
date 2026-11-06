@@ -7,22 +7,29 @@
     默认完全不改状态；仅当显式传入 -Fix 时，允许执行「把默认连接设回
     remote-ai」这一项修复，且执行前先打印完整命令。
 
-    审计项（C1-C8）：
-      C1 默认连接名是否等于 remote-ai
-      C2 本地 podman machine 是否存在且状态为 stopped
-      C3 零参数 podman 实际落点是否为远端主机
-      C4 本地容器存储目录实际体积
-      C5 本地遗留归档（.tar/.vhdx/podman save 产物）扫描
-      C6 D:\WSL 残留体积
-      C7 远端 graphroot 所在文件系统可用空间
-      C8 CONTAINER_HOST / DOCKER_HOST / CONTAINER_CONNECTION 是否被设置
+    审计项（C1-C10）：
+      C1  默认连接名是否等于 remote-ai
+      C2  本地 podman machine 是否存在且状态为 stopped
+      C3  零参数 podman 实际落点是否为远端主机
+      C4  本地容器存储目录实际体积
+      C5  本地遗留归档（.tar/.vhdx/podman save 产物）扫描
+      C6  D:\WSL 残留体积
+      C7  远端 graphroot 所在文件系统可用空间
+      C8  CONTAINER_HOST / DOCKER_HOST / CONTAINER_CONNECTION 是否被设置
+      C9  WSL 发行版的 ext4.vhdx 体积（N/A=发行版已被删除）
+      C10 WSL 内共享盘挂载与可写性（候选 /media/pc/data/ai 或 /media/pc/data；
+          N/A=发行版已被删除）
 
 .PARAMETER Json
     以 JSON 输出机器可读结果（不输出人类可读表格）。
 
 .PARAMETER Fix
-    仅修复 C1：执行 podman system connection default remote-ai。
+    仅修复 C1 与 C9：
+      C1 执行 podman system connection default remote-ai；
+      C9 在 C9 判 FAIL 且 sparse 未开启时执行
+         wsl --manage openkylin-test --set-sparse true。
     执行前打印完整命令；绝不启动 machine、不改其他状态。
+    C10 不提供修复动作：挂载属于外部会话的职责，脚本不重放可能破坏挂载的操作。
 
 .NOTES
     退出码语义：0=全部 PASS；1=存在 FAIL；2=无 FAIL 但存在 UNKNOWN
@@ -66,8 +73,36 @@ $Config = [ordered]@{
     # C7：远端 graphroot 所在文件系统可用空间低水位（GiB）
     MinRemoteFreeGiB = 50
 
+    # C9：WSL 发行版与其 ext4.vhdx 体积上限
+    #     基线 1,354,760,192 B ≈ 1.262 GiB（2026-11 实测），阈值约 2 倍余量。
+    WslDistroName = 'openkylin-test'
+    WslVhdxPath = 'D:\WSL\openkylin-test\ext4.vhdx'
+    WslVhdxBaselineBytes = 1354760192
+    MaxWslVhdxGiB = 2.5
+
+    # C10：WSL 内共享盘挂载候选（按列表顺序逐个探测，取首个可写者）
+    #      过渡期 /media/pc/data/ai 与旧布局 /media/pc/data 同时接受，
+    #      因此挂载点切换、回滚到旧布局都不会制造假告警。
+    WslMountPoints = @(
+        '/media/pc/data/ai',
+        '/media/pc/data'
+    )
+    EnableWslMountAutodiscover = $true
+
     # C6：本地 WSL 残留根目录
     WslResidualRoot = 'D:\WSL'
+
+    # C5/C6：由 C9 单独计量的资产——既不算遗留归档，也不计入 WSL 残留总量，
+    #         避免 C6 的 3 GiB 预算与 C9 的 2.5 GiB 上限互相矛盾。
+    WslOwnedByC9Paths = @(
+        'D:\WSL\openkylin-test\ext4.vhdx'
+    )
+
+    # C6：已知 WSL 资产（发行版磁盘 + 导入用安装介质），不计入「podman machine 残留」总量
+    WslResidualExcludePaths = @(
+        'D:\WSL\openkylin-test\ext4.vhdx',
+        'D:\WSL\import\openKylin-3.0-wsl-amd64.wsl'
+    )
 
     # C4：本地容器存储候选根（不存在的自动跳过）
     LocalStorageRootCandidates = @(
@@ -107,6 +142,8 @@ $script:DefaultUri = $null
 $script:DefaultIdentity = $null
 $script:GraphRoot = $null
 $script:RemoteSocket = $null
+$script:SparseEnabled = $null
+$script:WslDistroExists = $false
 
 $podmanCmd = Get-Command podman -ErrorAction SilentlyContinue
 if ($podmanCmd) {
@@ -118,12 +155,18 @@ if ($sshCmd) {
 } else {
     $script:SshPath = $null
 }
+$wslCmd = Get-Command wsl -ErrorAction SilentlyContinue
+if ($wslCmd) {
+    if ($wslCmd.Source) { $script:WslPath = $wslCmd.Source } else { $script:WslPath = $wslCmd.Path }
+} else {
+    $script:WslPath = $null
+}
 
 function Add-Check {
     param(
         [string]$Id,
         [string]$Name,
-        [ValidateSet('PASS', 'FAIL', 'UNKNOWN')][string]$Status,
+        [ValidateSet('PASS', 'FAIL', 'UNKNOWN', 'N/A')][string]$Status,
         [string]$Measured,
         [string]$Threshold,
         [string]$Detail,
@@ -152,7 +195,8 @@ function Invoke-Cmd {
     param(
         [string]$Exe,
         [string[]]$ArgList = @(),
-        [int]$TimeoutSec = 60
+        [int]$TimeoutSec = 60,
+        [int]$CodePage = 65001
     )
     $obj = [PSCustomObject]@{
         ExitCode = $null
@@ -174,8 +218,14 @@ function Invoke-Cmd {
         $psi.RedirectStandardOutput = $true
         $psi.RedirectStandardError = $true
         $psi.CreateNoWindow = $true
-        $psi.StandardOutputEncoding = [System.Text.Encoding]::UTF8
-        $psi.StandardErrorEncoding = [System.Text.Encoding]::UTF8
+        if ($CodePage -ne 65001) {
+            $enc = [System.Text.Encoding]::GetEncoding($CodePage)
+            $psi.StandardOutputEncoding = $enc
+            $psi.StandardErrorEncoding = $enc
+        } else {
+            $psi.StandardOutputEncoding = [System.Text.Encoding]::UTF8
+            $psi.StandardErrorEncoding = [System.Text.Encoding]::UTF8
+        }
 
         $proc = [System.Diagnostics.Process]::Start($psi)
         $outTask = $proc.StandardOutput.ReadToEndAsync()
@@ -431,6 +481,14 @@ function Test-KnownMachineArtifact {
     return $false
 }
 
+function Test-C9OwnedPath {
+    param([string]$Path)
+    foreach ($p in $Config.WslOwnedByC9Paths) {
+        if ($Path -ieq $p) { return $true }
+    }
+    return $false
+}
+
 function Get-LeftoverFiles {
     param([string]$Root, [int]$MaxDepth)
     $found = New-Object System.Collections.ArrayList
@@ -466,8 +524,9 @@ function Invoke-Check5 {
         foreach ($i in $items) { [void]$all.Add($i) }
     }
 
-    $unexpected = @($all | Where-Object { -not (Test-KnownMachineArtifact -Path $_.Path) })
+    $unexpected = @($all | Where-Object { -not (Test-KnownMachineArtifact -Path $_.Path) -and -not (Test-C9OwnedPath -Path $_.Path) })
     $known = @($all | Where-Object { Test-KnownMachineArtifact -Path $_.Path })
+    $c9Owned = @($all | Where-Object { Test-C9OwnedPath -Path $_.Path })
     $unexpectedMB = 0.0
     foreach ($u in $unexpected) { $unexpectedMB = $unexpectedMB + $u.SizeMB }
     $knownMB = 0.0
@@ -476,6 +535,7 @@ function Invoke-Check5 {
     $evidence = @()
     foreach ($u in $unexpected) { $evidence += ("{0} ({1} MB)" -f $u.Path, $u.SizeMB) }
     foreach ($k in $known) { $evidence += ("[machine 缓存] {0} ({1} MB)" -f $k.Path, $k.SizeMB) }
+    foreach ($o in $c9Owned) { $evidence += ("[C9 管辖，单独计量] {0} ({1} MB)" -f $o.Path, $o.SizeMB) }
 
     $status = if ($unexpected.Count -gt 0) { 'FAIL' } else { 'PASS' }
     $detail = if ($status -eq 'FAIL') {
@@ -500,11 +560,29 @@ function Invoke-Check6 {
     if ($null -eq $totalMB) {
         return Add-Check -Id 'C6' -Name 'D:\WSL 残留体积' -Status 'UNKNOWN' -Measured 'n/a' -Threshold ("<= " + $Config.MaxWslResidualMB + ' MB') -Detail "$root 无法读取"
     }
+    $excludedMB = 0.0
+    foreach ($p in $Config.WslResidualExcludePaths) {
+        if (Test-Path -LiteralPath $p -PathType Leaf) {
+            $excludedMB = $excludedMB + ((Get-Item -LiteralPath $p -Force).Length / 1MB)
+        }
+    }
+    $totalMB = $totalMB - $excludedMB
     $totalMB = [math]::Round($totalMB, 1)
     $evidence = @()
     foreach ($child in @(Get-ChildItem -LiteralPath $root -Force -Directory -ErrorAction SilentlyContinue)) {
         $mb = Get-DirSizeMB -Path $child.FullName
-        if ($null -ne $mb) { $evidence += ("{0}={1:N1}MB" -f $child.Name, $mb) }
+        if ($null -ne $mb) {
+            $sub = 0.0
+            foreach ($p in $Config.WslResidualExcludePaths) {
+                if ($p.StartsWith($child.FullName.TrimEnd('\') + '\', [System.StringComparison]::OrdinalIgnoreCase) -and (Test-Path -LiteralPath $p -PathType Leaf)) {
+                    $sub = $sub + ((Get-Item -LiteralPath $p -Force).Length / 1MB)
+                }
+            }
+            $evidence += ("{0}={1:N1}MB" -f $child.Name, ($mb - $sub))
+        }
+    }
+    if ($excludedMB -gt 0) {
+        $evidence += ("[已知 WSL 资产已排除] {0:N1} MB" -f $excludedMB)
     }
     $pct = if ($Config.MaxWslResidualMB -gt 0) { [math]::Round(($totalMB / $Config.MaxWslResidualMB) * 100) } else { 0 }
     $status = if ($totalMB -gt $Config.MaxWslResidualMB) { 'FAIL' } else { 'PASS' }
@@ -612,6 +690,310 @@ function Invoke-Check8 {
 }
 
 # =============================================================================
+# C9：WSL VHDX 体积
+# =============================================================================
+function Get-WslDistroList {
+    if (-not $script:WslPath) { return $null }
+    $r = Invoke-Cmd -Exe $script:WslPath -ArgList @('--list', '--quiet') -TimeoutSec $Config.SshTimeoutSec
+    if ($r.Error -or $r.TimedOut) { return $null }
+    # wsl.exe 可能输出含 NUL 的 UTF-16 字节流，按 UTF-8 解码后去掉 NUL 即可还原 ASCII 名称
+    $text = ($r.StdOut -replace "`0", '')
+    $names = @($text -split "`r?`n" | ForEach-Object { $_.Trim() } | Where-Object { $_.Length -gt 0 })
+    $errText = ((($r.StdErr -replace "`0", '') -replace "`r?`n", ' ').Trim())
+    return [PSCustomObject]@{
+        Names    = $names
+        ExitCode = $r.ExitCode
+        StdErr   = $errText
+    }
+}
+
+function Invoke-Check9 {
+    $name = $Config.WslDistroName
+    $threshold = ("<= " + $Config.MaxWslVhdxGiB + ' GiB')
+    $sampledAt = (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')
+
+    if (-not $script:WslPath) {
+        return Add-Check -Id 'C9' -Name 'WSL VHDX 体积' -Status 'UNKNOWN' -Measured 'n/a' `
+            -Threshold $threshold -Detail 'wsl.exe 不在 PATH 中，无法测量 VHDX'
+    }
+
+    $list = Get-WslDistroList
+    if ($null -eq $list) {
+        return Add-Check -Id 'C9' -Name 'WSL VHDX 体积' -Status 'UNKNOWN' -Measured 'n/a' `
+            -Threshold $threshold -Detail 'wsl --list --quiet 执行失败或超时'
+    }
+
+    $script:WslDistroExists = ($list.Names -contains $name)
+    if (-not $script:WslDistroExists) {
+        $detail = ("发行版 $name 不存在（wsl --list 未列出），视为合法状态，不制造告警")
+        if ($list.StdErr) { $detail = $detail + "；wsl 提示: $($list.StdErr)" }
+        return Add-Check -Id 'C9' -Name 'WSL VHDX 体积' -Status 'N/A' -Measured '(发行版不存在)' `
+            -Threshold $threshold -Detail $detail -Evidence @("采样时刻=$sampledAt")
+    }
+
+    $path = $Config.WslVhdxPath
+    if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
+        return Add-Check -Id 'C9' -Name 'WSL VHDX 体积' -Status 'UNKNOWN' -Measured '(VHDX 未找到)' `
+            -Threshold $threshold -Detail ("发行版存在于列表，但 $path 不存在，无法测量") `
+            -Evidence @("采样时刻=$sampledAt")
+    }
+    try {
+        $bytes = [int64](Get-Item -LiteralPath $path -Force).Length
+    } catch {
+        return Add-Check -Id 'C9' -Name 'WSL VHDX 体积' -Status 'UNKNOWN' -Measured 'n/a' `
+            -Threshold $threshold -Detail ("读取 VHDX 大小失败: " + $_.Exception.Message) `
+            -Evidence @("采样时刻=$sampledAt")
+    }
+
+    $sizeGiB = [math]::Round(($bytes / 1073741824), 3)
+    $deltaBytes = [int64]($bytes - $Config.WslVhdxBaselineBytes)
+    $deltaGiB = [math]::Round(($deltaBytes / 1073741824), 3)
+    $maxBytes = [int64]($Config.MaxWslVhdxGiB * 1073741824)
+
+    # sparse 状态：优先 wsl --get-sparse；该子命令在部分 WSL 版本不可用时回退 fsutil
+    $sparseRaw = ''
+    $sparseSource = ''
+    $sr = Invoke-Cmd -Exe $script:WslPath -ArgList @('--manage', $name, '--get-sparse') -TimeoutSec $Config.SshTimeoutSec
+    if (-not $sr.Error -and -not $sr.TimedOut -and $sr.ExitCode -eq 0) {
+        $sparseRaw = ((($sr.StdOut -replace "`0", '') -replace "`r?`n", ' ').Trim())
+        $sparseSource = 'wsl --get-sparse'
+        $low = $sparseRaw.ToLowerInvariant()
+        if ($low -match 'disabled|not enabled|false|关闭|未启用|已禁用') {
+            $script:SparseEnabled = $false
+        } elseif ($low -match 'enabled|true|开启|已启用') {
+            $script:SparseEnabled = $true
+        }
+    } else {
+        $fsutilPath = Join-Path $env:SystemRoot 'System32\fsutil.exe'
+        if (Test-Path -LiteralPath $fsutilPath -PathType Leaf) {
+            $fr = Invoke-Cmd -Exe $fsutilPath -ArgList @('sparse', 'queryflag', $path) -TimeoutSec $Config.SshTimeoutSec -CodePage ([int](Get-Culture).TextInfo.ANSICodePage)
+            if (-not $fr.Error -and -not $fr.TimedOut -and $fr.ExitCode -eq 0) {
+                $sparseRaw = ((($fr.StdOut -replace "`0", '') -replace "`r?`n", ' ').Trim())
+                $sparseSource = 'fsutil（wsl --get-sparse 不可用）'
+                $low = $sparseRaw.ToLowerInvariant()
+                if ($low -match 'not a sparse|非稀疏|不是稀疏') {
+                    $script:SparseEnabled = $false
+                } elseif ($low -match 'sparse|稀疏') {
+                    $script:SparseEnabled = $true
+                }
+            }
+        }
+    }
+    $sparseText = if ([string]::IsNullOrEmpty($sparseSource)) {
+        'sparse=(查询失败)'
+    } elseif ($null -eq $script:SparseEnabled) {
+        "sparse=未知($sparseRaw)"
+    } else {
+        "sparse=$($script:SparseEnabled) [$sparseSource]"
+    }
+
+    $status = if ($bytes -gt $maxBytes) { 'FAIL' } else { 'PASS' }
+    $deltaText = if ($deltaBytes -ge 0) { "+$deltaGiB GiB" } else { "$deltaGiB GiB" }
+    $detail = if ($status -eq 'FAIL') {
+        "VHDX 为 $sizeGiB GiB，超过上限 $($Config.MaxWslVhdxGiB) GiB（相对基线 $deltaText）"
+    } else {
+        "VHDX 为 $sizeGiB GiB，未超过上限 $($Config.MaxWslVhdxGiB) GiB（相对基线 $deltaText）"
+    }
+    $measured = "$sizeGiB GiB ($bytes B), 相对基线 $deltaText, $sparseText"
+    return Add-Check -Id 'C9' -Name 'WSL VHDX 体积' -Status $status -Measured $measured `
+        -Threshold ("$threshold（基线 " + ([math]::Round(($Config.WslVhdxBaselineBytes / 1073741824), 3)) + ' GiB）') `
+        -Detail $detail -Evidence @("path=$path", "采样时刻=$sampledAt", "sparse 原始输出=$sparseRaw")
+}
+
+# =============================================================================
+# C10：WSL 共享盘挂载
+# =============================================================================
+function Get-WslMountEntries {
+    param([string]$Distro)
+    $r = Invoke-Cmd -Exe $script:WslPath -ArgList @('-d', $Distro, '--', 'cat', '/proc/mounts') -TimeoutSec $Config.CommandTimeoutSec
+    if ($r.Error -or $r.TimedOut -or $r.ExitCode -ne 0) {
+        $why = if ($r.Error) { $r.Error } elseif ($r.TimedOut) { '超时' } else { "退出码 $($r.ExitCode)" }
+        return [PSCustomObject]@{ Entries = @(); Error = $why }
+    }
+    $entries = @()
+    foreach ($line in (Get-OutputLines -Text ($r.StdOut -replace "`0", ''))) {
+        $f = @($line -split '\s+')
+        if ($f.Count -lt 4) { continue }
+        $src = ($f[0] -replace '\\040', ' ').Replace('\134', '\')
+        $mp = ($f[1] -replace '\\040', ' ').Replace('\134', '\')
+        $ft = $f[2]
+        $opts = $f[3]
+        $isShare = $false
+        if ($ft -eq 'drvfs' -or $ft -eq 'cifs') {
+            $isShare = $true
+        } elseif ($ft -eq '9p' -and ($src -match 'drvfs' -or $opts -match 'drvfs')) {
+            $isShare = $true
+        }
+        $entries += [PSCustomObject]@{
+            Source     = $src
+            MountPoint = $mp
+            FsType     = $ft
+            Options    = $opts
+            IsShare    = $isShare
+        }
+    }
+    return [PSCustomObject]@{ Entries = $entries; Error = $null }
+}
+
+function Test-WslMountWritable {
+    param([string]$Distro, [string]$MountPoint)
+
+    # 零字节可写性探测：touch 后立即 rm，不写大文件
+    $probeName = '.podman-audit-probe-' + ([System.Guid]::NewGuid().ToString('N').Substring(0, 8))
+    $probePath = $MountPoint.TrimEnd('/') + '/' + $probeName
+    $tr = Invoke-Cmd -Exe $script:WslPath -ArgList @('-d', $Distro, '--', 'touch', $probePath) -TimeoutSec $Config.CommandTimeoutSec
+    $rmExit = $null
+    if (-not $tr.Error -and -not $tr.TimedOut -and $tr.ExitCode -eq 0) {
+        $rr = Invoke-Cmd -Exe $script:WslPath -ArgList @('-d', $Distro, '--', 'rm', '-f', $probePath) -TimeoutSec $Config.CommandTimeoutSec
+        if (-not $rr.Error -and -not $rr.TimedOut) { $rmExit = $rr.ExitCode }
+    }
+
+    $writeFailed = [bool]($tr.Error -or $tr.TimedOut -or $tr.ExitCode -ne 0)
+    $why = ''
+    if ($writeFailed) {
+        $errText = ((($tr.StdErr -replace "`0", '') -replace "`r?`n", ' ').Trim())
+        $why = if ($tr.Error) { $tr.Error } elseif ($tr.TimedOut) { '超时' } else { ("touch 退出码 $($tr.ExitCode): " + $errText) }
+    } elseif ($null -eq $rmExit -or $rmExit -ne 0) {
+        $why = ("探测文件已创建但清理失败（rm 退出码 $rmExit）")
+    }
+
+    return [PSCustomObject]@{
+        Ok        = [bool](-not $writeFailed -and $rmExit -eq 0)
+        ProbePath = $probePath
+        Residue   = [bool](-not $writeFailed -and ($null -eq $rmExit -or $rmExit -ne 0))
+        Why       = $why
+    }
+}
+
+function Test-RootLevelMountPoint {
+    param([string]$MountPoint)
+    # 根目录级挂载：/mnt 本身或 /mnt/<单段>（如 /mnt/c、/mnt/d）。这类挂载点落在
+    # Windows 盘根，写入通常需要管理员权限，纳入可写候选只会制造假告警。
+    if ($MountPoint -match '^/mnt$') { return $true }
+    if ($MountPoint -match '^/mnt/[^/]+$') { return $true }
+    return $false
+}
+
+function Invoke-Check10 {
+    $name = $Config.WslDistroName
+    $threshold = ("候选挂载点（" + ($Config.WslMountPoints -join ' / ') + "）之一为 drvfs/cifs 且可写")
+    $sampledAt = (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')
+
+    if (-not $script:WslPath) {
+        return Add-Check -Id 'C10' -Name 'WSL 共享盘挂载' -Status 'UNKNOWN' -Measured 'n/a' `
+            -Threshold $threshold -Detail 'wsl.exe 不在 PATH 中，无法检查发行版内挂载'
+    }
+    if (-not $script:WslDistroExists) {
+        # 可能 C9 之前未能列出；此处再确认一次
+        $list = Get-WslDistroList
+        if ($null -eq $list) {
+            return Add-Check -Id 'C10' -Name 'WSL 共享盘挂载' -Status 'UNKNOWN' -Measured 'n/a' `
+                -Threshold $threshold -Detail 'wsl --list --quiet 执行失败或超时'
+        }
+        $script:WslDistroExists = ($list.Names -contains $name)
+        if (-not $script:WslDistroExists) {
+            return Add-Check -Id 'C10' -Name 'WSL 共享盘挂载' -Status 'N/A' -Measured '(发行版不存在)' `
+                -Threshold $threshold -Detail ("发行版 $name 不存在，无法检查挂载，视为合法状态") `
+                -Evidence @("采样时刻=$sampledAt")
+        }
+    }
+
+    $mount = Get-WslMountEntries -Distro $name
+    if ($mount.Error) {
+        return Add-Check -Id 'C10' -Name 'WSL 共享盘挂载' -Status 'UNKNOWN' -Measured 'n/a' `
+            -Threshold $threshold -Detail ("读取 /proc/mounts 失败: " + $mount.Error) `
+            -Evidence @("采样时刻=$sampledAt")
+    }
+
+    $entries = @($mount.Entries)
+    $shares = @($entries | Where-Object { $_.IsShare })
+    $evidence = @()
+    foreach ($s in $shares) { $evidence += ("share {0} <- {1} [{2}]" -f $s.MountPoint, $s.Source, $s.FsType) }
+    if ($evidence.Count -eq 0) { $evidence = @('未发现 drvfs/cifs 挂载') }
+
+    # 候选构造：配置常量按列表顺序优先（过渡期 /media/pc/data/ai 与旧布局
+    # /media/pc/data 同时接受）；常量均未命中且允许自动发现时，追加其余 drvfs/cifs
+    # 挂载，但排除根目录级挂载。所有候选逐个做可写探测，取首个可写者。
+    $candidates = @()
+    $pickSources = @()
+    $notes = @()
+    foreach ($mp in $Config.WslMountPoints) {
+        $hit = @($entries | Where-Object { $_.MountPoint -eq $mp })
+        if ($hit.Count -eq 0) {
+            $notes += ("[常量未挂载] " + $mp)
+        } elseif ($hit[0].IsShare) {
+            $candidates += $hit[0]
+            $pickSources += '常量'
+        } else {
+            $notes += ("[常量类型不符] {0} 为 {1}" -f $mp, $hit[0].FsType)
+        }
+    }
+    if ($Config.EnableWslMountAutodiscover) {
+        foreach ($s in $shares) {
+            if (Test-RootLevelMountPoint -MountPoint $s.MountPoint) {
+                $notes += ("[根目录级挂载，已排除] {0} <- {1} [{2}]" -f $s.MountPoint, $s.Source, $s.FsType)
+                continue
+            }
+            $dup = $false
+            foreach ($c in $candidates) { if ($c.MountPoint -eq $s.MountPoint) { $dup = $true } }
+            if (-not $dup) {
+                $candidates += $s
+                $pickSources += '自动发现'
+            }
+        }
+    } else {
+        $notes += '[自动发现已禁用]'
+    }
+
+    if ($candidates.Count -eq 0) {
+        $detail = ("常量候选（" + ($Config.WslMountPoints -join ' / ') + "）均未命中，且无可用自动发现候选")
+        return Add-Check -Id 'C10' -Name 'WSL 共享盘挂载' -Status 'FAIL' -Measured '(不可用)' `
+            -Threshold $threshold -Detail $detail -Evidence @((("采样时刻=" + $sampledAt)) + $notes + $evidence)
+    }
+
+    $target = $null
+    $sourceOfPick = ''
+    $probe = $null
+    $skipped = @()
+    for ($i = 0; $i -lt $candidates.Count; $i++) {
+        $cand = $candidates[$i]
+        $pr = Test-WslMountWritable -Distro $name -MountPoint $cand.MountPoint
+        if ($pr.Residue) {
+            $measured = ("mount={0} ({1}, {2}), 来源={3}, writable=True(清理失败)" -f $cand.MountPoint, $cand.FsType, $cand.Source, $pickSources[$i])
+            $ev = @((("采样时刻=" + $sampledAt)), ("探测路径=" + $pr.ProbePath))
+            return Add-Check -Id 'C10' -Name 'WSL 共享盘挂载' -Status 'UNKNOWN' -Measured $measured `
+                -Threshold $threshold -Detail ("挂载可写但清理失败，无法确认无残留: " + $pr.Why) -Evidence @($ev + $notes + $evidence)
+        }
+        if ($pr.Ok) {
+            $target = $cand
+            $sourceOfPick = $pickSources[$i]
+            $probe = $pr
+            break
+        }
+        $skipped += ("[不可写] {0} ({1}) <- {2}: {3}" -f $cand.MountPoint, $cand.FsType, $cand.Source, $pr.Why)
+    }
+
+    $measured0 = ("mount={0} ({1}, {2}), 来源={3}, writable=False" -f $candidates[0].MountPoint, $candidates[0].FsType, $candidates[0].Source, $pickSources[0])
+    if (-not $target) {
+        $detail = ("候选挂载均不可写（共 {0} 个）: {1}" -f $candidates.Count, $skipped[0])
+        return Add-Check -Id 'C10' -Name 'WSL 共享盘挂载' -Status 'FAIL' -Measured $measured0 `
+            -Threshold $threshold -Detail $detail -Evidence @((("采样时刻=" + $sampledAt)) + $skipped + $notes + $evidence)
+    }
+
+    $measured = ("mount={0} ({1}, {2}), 来源={3}, writable=True" -f $target.MountPoint, $target.FsType, $target.Source, $sourceOfPick)
+    $ev = @((("采样时刻=" + $sampledAt)), ("探测路径=" + $probe.ProbePath))
+    $ev = @($ev + $skipped + $notes + $evidence)
+
+    $detail = if ($sourceOfPick -eq '常量') {
+        "$($target.MountPoint) 为 drvfs/cifs 挂载（常量候选命中），零字节写入与清理均成功"
+    } else {
+        "常量候选均未命中，自动发现可用共享挂载 $($target.MountPoint)，零字节写入与清理均成功"
+    }
+    return Add-Check -Id 'C10' -Name 'WSL 共享盘挂载' -Status 'PASS' -Measured $measured `
+        -Threshold $threshold -Detail $detail -Evidence $ev
+}
+
+# =============================================================================
 # 执行
 # =============================================================================
 function Invoke-CheckSafely {
@@ -635,8 +1017,10 @@ $c1 = Invoke-CheckSafely -Id 'C1' -Name '默认连接名' -Body { Invoke-Check1 
 [void](Invoke-CheckSafely -Id 'C6' -Name 'D:\WSL 残留体积' -Body { Invoke-Check6 })
 [void](Invoke-CheckSafely -Id 'C7' -Name '远端 graphroot 可用空间' -Body { Invoke-Check7 })
 [void](Invoke-CheckSafely -Id 'C8' -Name '连接覆盖类环境变量' -Body { Invoke-Check8 })
+[void](Invoke-CheckSafely -Id 'C9' -Name 'WSL VHDX 体积' -Body { Invoke-Check9 })
+[void](Invoke-CheckSafely -Id 'C10' -Name 'WSL 共享盘挂载' -Body { Invoke-Check10 })
 
-# -Fix：只修复 C1（默认连接），执行前打印完整命令
+# -Fix：修复 C1（默认连接）与 C9（VHDX sparse），执行前打印完整命令
 if ($Fix -and $c1.Status -ne 'PASS' -and $script:PodmanPath) {
     $fixCmd = 'podman system connection default ' + $Config.ExpectedDefaultConnection
     if ($Json) {
@@ -661,12 +1045,40 @@ if ($Fix -and $c1.Status -ne 'PASS' -and $script:PodmanPath) {
     }
 }
 
+# -Fix：仅当 C9 判 FAIL 且 sparse 明确未开启时，才尝试把 VHDX 转为稀疏
+$c9 = @($script:Results | Where-Object { $_.Id -eq 'C9' })[0]
+if ($Fix -and $script:WslPath -and $script:WslDistroExists -and ($script:SparseEnabled -eq $false) -and $c9 -and ($c9.Status -eq 'FAIL')) {
+    $fixCmd9 = 'wsl --manage ' + $Config.WslDistroName + ' --set-sparse true'
+    if ($Json) {
+        [Console]::Error.WriteLine('[FIX] 计划执行（仅把 VHDX 设为 sparse，不启动发行版）:')
+        [Console]::Error.WriteLine('       ' + $fixCmd9)
+    } else {
+        Write-Host ''
+        Write-Host '[FIX] 计划执行（仅把 VHDX 设为 sparse，不启动发行版）:' -ForegroundColor Yellow
+        Write-Host ('       ' + $fixCmd9) -ForegroundColor Yellow
+    }
+    $fixResult9 = Invoke-Cmd -Exe $script:WslPath `
+        -ArgList @('--manage', $Config.WslDistroName, '--set-sparse', 'true') -TimeoutSec $Config.CommandTimeoutSec
+    if ($fixResult9.Error -or $fixResult9.TimedOut -or $fixResult9.ExitCode -ne 0) {
+        $why9 = if ($fixResult9.Error) { $fixResult9.Error } elseif ($fixResult9.TimedOut) { '超时' } else { "退出码 $($fixResult9.ExitCode)" }
+        if ($Json) { [Console]::Error.WriteLine('[FIX] C9 执行失败: ' + $why9) }
+        else { Write-Host ('[FIX] C9 执行失败: ' + $why9) -ForegroundColor Red }
+    } else {
+        if ($Json) { [Console]::Error.WriteLine('[FIX] C9 执行完成，重新核验 C9') }
+        else { Write-Host '[FIX] C9 执行完成，重新核验 C9' -ForegroundColor Green }
+        [void]$script:Results.Remove($c9)
+        $script:SparseEnabled = $null
+        [void](Invoke-CheckSafely -Id 'C9' -Name 'WSL VHDX 体积' -Body { Invoke-Check9 })
+    }
+}
+
 # =============================================================================
 # 输出与退出码
 # =============================================================================
 $failCount = @($script:Results | Where-Object { $_.Status -eq 'FAIL' }).Count
 $unknownCount = @($script:Results | Where-Object { $_.Status -eq 'UNKNOWN' }).Count
 $passCount = @($script:Results | Where-Object { $_.Status -eq 'PASS' }).Count
+$naCount = @($script:Results | Where-Object { $_.Status -eq 'N/A' }).Count
 
 if ($failCount -gt 0) { $exitCode = 1 }
 elseif ($unknownCount -gt 0) { $exitCode = 2 }
@@ -683,6 +1095,7 @@ if ($Json) {
             pass    = $passCount
             fail    = $failCount
             unknown = $unknownCount
+            na      = $naCount
         }
         exit_code   = $exitCode
         checks      = @($script:Results)
@@ -698,6 +1111,7 @@ if ($Json) {
         $color = switch ($r.Status) {
             'PASS' { 'Green' }
             'FAIL' { 'Red' }
+            'N/A' { 'DarkGray' }
             default { 'Yellow' }
         }
         Write-Host ("[{0}] {1} {2}" -f $r.Status, $r.Id, $r.Name) -ForegroundColor $color
@@ -707,7 +1121,7 @@ if ($Json) {
         foreach ($e in $r.Evidence) { Write-Host ("       证据: {0}" -f $e) -ForegroundColor DarkGray }
     }
     Write-Host '------------------------------------------------------------' -ForegroundColor Cyan
-    Write-Host ("汇总: PASS={0}  FAIL={1}  UNKNOWN={2}" -f $passCount, $failCount, $unknownCount) -ForegroundColor White
+    Write-Host ("汇总: PASS={0}  FAIL={1}  UNKNOWN={2}  N/A={3}" -f $passCount, $failCount, $unknownCount, $naCount) -ForegroundColor White
     Write-Host ("退出码: {0}  (0=全部通过, 1=存在违规, 2=存在无法判定项)" -f $exitCode) -ForegroundColor White
     Write-Host ''
 }
