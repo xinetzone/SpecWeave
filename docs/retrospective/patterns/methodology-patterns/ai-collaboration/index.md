@@ -76,6 +76,7 @@ spec-stage7-independent-validation
 style-creativity-separation-control
 subagent-atomic-task-template
 subagent-git-three-prohibitions
+surplus-content-acceptance-gate
 symptom-prescription-qa
 task-type-precheck-bias-defense
 team-shared-ai-colleague

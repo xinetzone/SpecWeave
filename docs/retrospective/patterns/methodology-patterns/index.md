@@ -63,6 +63,7 @@
 | three-object-ledger | [三对象分账法](governance-strategy/three-object-ledger.md) | L1 | 1 | 0 | 一次主题交付实含多个独立交付客体（工具/许可/发表状态等各自独立出错）、却易被当作同一产物应付多入口时：分对象登记 → 判同一性关系 → 逐平台映射路径；含 5 条反模式与检验标准。案例：知乎/WorkBuddy/头条三入口参赛与写作指南知识包（83 条事实族），待非同谱系第二案例验证升 L2 |
 | evidence-timing-gate | [证据时序门](governance-strategy/evidence-timing-gate.md) | L1 | 1 | 0 | 存在发布/提交/上线/投稿等一旦发生便无法回撤的对外动作、且依赖外部审核与硬时间窗口时：三线并列倒排、按实际时刻算窗口、任一前提未知即暂停并保留退路；与 stop-loss-backward-scheduling 划界（时间闸 vs 次数预算）。案例：三入口参赛与写作指南知识包（83 条事实族），待非同谱系第二案例验证升 L1.5/L2 |
 | verification-scope-bounding | [核验范围限定](governance-strategy/verification-scope-bounding.md) | L1 | 1 | 0 | 需要把检查结果写进结论/报告/对外声明时：结论必写四项（谁检查·查哪份·截至何时·仍不覆盖什么），把「证据有没有」推进到「这份证据能支持多大的话」；含 6 条反模式与检验标准。案例：三入口参赛与写作指南知识包（83 条事实族），待非同谱系第二案例验证升 L1.5 |
+| surplus-content-acceptance-gate | [查多了什么](ai-collaboration/surplus-content-acceptance-gate.md) | L1-draft | 1 | 0 | 概率模型一次性产出位图/文档/代码/数据且提示词以正向描述为主时：冻结预期清单→生成前负向约束→双向验收（少了什么/多了什么）→留可校验记录。案例：AI 复古未来主义海报生成（2026-11-06） |
 
 ## 成熟度等级说明
 

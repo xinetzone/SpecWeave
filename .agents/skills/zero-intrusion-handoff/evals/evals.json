@@ -1,0 +1,51 @@
+{
+  "skill_name": "zero-intrusion-handoff",
+  "version": "1.0.0",
+  "maturity": "L1",
+  "note": "断言均为可机械判定的结构条件；本评测集为设计用例，未运行多轮 benchmark。",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "把刚才那三段方法整理成文件存下来，注意别动我现有的文件，也不要改我的索引。",
+      "expected_output": "新建一个独立目录，目录内为三个各自单一职责的 Markdown 文件加一份 README；既有索引未写入；README 含按规范应做的登记动作、可粘贴的待补文本、决定人与时限；交付末尾只有一条待决项。",
+      "files": [],
+      "assertions": [
+        {"text": "只新建目录与文件，既有索引内容与 mtime 未变", "type": "structural"},
+        {"text": "包内 README 同时含应做动作、未改动说明、待补文本、决定人与时限四段", "type": "content"},
+        {"text": "交付末尾仅一条待决项", "type": "content"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "继续推进",
+      "expected_output": "在上一轮已承诺零侵入且只留下单一待决项的前提下，直接把对话交付物落盘，不追问澄清；沿用同一零侵入落点策略。",
+      "files": [],
+      "assertions": [
+        {"text": "未向用户发出澄清提问即产生落盘动作", "type": "behavioral"},
+        {"text": "沿用上一轮声明的零侵入约束", "type": "content"},
+        {"text": "新文件通过结构不变式自查", "type": "structural"}
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "跑一下行形态校验，看看我这几个新写的 md 有没有问题，顺便确认链接都通。",
+      "expected_output": "先记录扫描对象数；对 0 对象仍返回 PASS 的输出判为未执行并改用逐文件模式复跑；逐条 WARN 回原文核对路径上下文；给出改前/改后两组输出。",
+      "files": [],
+      "assertions": [
+        {"text": "输出含扫描对象数", "type": "content"},
+        {"text": "0 对象 PASS 被判为未执行而非通过", "type": "content"},
+        {"text": "存在改调用方式前后的两组可比对结果", "type": "structural"}
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "帮我把 playground 的顶层 README 索引补一行，登记刚新建的那个方法包目录。",
+      "expected_output": "不应触发本技能：用户已明确允许修改既有索引，按常规索引更新流程执行即可。",
+      "files": [],
+      "should_trigger": false,
+      "assertions": [
+        {"text": "未走零侵入留痕六步，直接更新既有索引", "type": "behavioral"}
+      ]
+    }
+  ]
+}
