@@ -15,6 +15,7 @@ retrospective-agency-deep-learning-20260706/index
 retrospective-daily-20260629-full-day/index
 standards-governance/index
 tools-and-automation/index
+agent-takeover-pain-points-20261109
 analyze-wechat-article-eeb14-retrospective-20260704
 awesome-okf-xs-ci-integration-retrospective-20260824
 bus-factor-drill-20260804
@@ -24,6 +25,7 @@ github-org-huncheng-lab-bootstrap-20261022
 harness-engineering-wiki-retrospective-20260803
 karpathy-llm-wiki-analysis-retrospective-20260707
 libtv-wiki-retrospective-20260704
+link-gate-closed-loop-pilot-20261109
 loop-engineering-milestone-acceptance-20260801
 loop-engineering-patterns-20260801
 npu-ffi-vta-completion-retrospective
