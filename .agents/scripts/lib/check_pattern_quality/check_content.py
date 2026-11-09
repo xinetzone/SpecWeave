@@ -187,10 +187,11 @@ def check_cross_references(content):
 def _is_innovation_pattern(content: str) -> bool:
     """判断模式是否为创新/跨领域迁移类模式。
 
-    有「## 模式类型」章节时只看该章节（宽口径，含裸「迁移」）；
+    有「## 模式类型」章节时只看该章节（宽口径，含裸「迁移」「反向」）；
     无该章节时回退扫描开头 1000 字符，但用短语级关键词
     （FALLBACK_INNOVATION_KEYWORDS）——开头普遍出现「迁移」二字的
-    SOP/速查/操作手册不应被兜底判为创新类。
+    SOP/速查/操作手册，以及「反向」用于表示计算方向（前向/反向计算、
+    反向传播、反向依赖）的工程文档，不应被兜底判为创新类。
     """
     type_section_match = re.search(
         r"##\s*模式类型\s*\n(.+?)(?=\n##|\Z)", content, re.DOTALL
