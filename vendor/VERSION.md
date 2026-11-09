@@ -24,8 +24,13 @@
 | netease-youdao/LobsterAI | 2026.9.4@7592cd0 | git@github.com:netease-youdao/LobsterAI.git | 2026-09-09 | MIT | third_party | — | 网易有道 LobsterAI（AI Agent 桌面应用，固定 tag 2026.9.4 = commit 7592cd034a7cb458a8650df0325b4980dd1bc162） |
 | netease-youdao/QAnything | v2.0.0-69-g615417a | git@github.com:netease-youdao/QAnything.git | 2026-09-09 | AGPL-3.0 | third_party | — | 网易有道 QAnything（企业级 RAG 问答，HEAD 超前 tag v2.0.0 共 69 commits，pin commit 615417a92420d77a2606392a74f5771ca2f31a4b） |
 | netease-youdao/ScholarClaw | N/A@97bdb5e | git@github.com:netease-youdao/ScholarClaw.git | 2026-09-09 | MIT | third_party | — | 网易有道 ScholarClaw（学术搜索 Agent，无 tag 版本基线，gitlink pin commit 97bdb5e4a763d4f98d4603f5be876587c0871e0f） |
+| WecomTeam/wecom-cli | 1.3.4@1d48b6c | git@github.com:WecomTeam/wecom-cli.git | 2026-11-09 | MIT | third_party | — | 企业微信官方 CLI（Rust + npm `@wecom/cli` 1.3.4，仓库无 tag 版本基线，gitlink pin commit 1d48b6c9ecd1b4897c4bf728d564bfda1d62fbde） |
+| WecomTeam/wecom-unified | N/A@cae8a5b | git@github.com:WecomTeam/wecom-unified.git | 2026-11-09 | MIT | third_party | — | 企业微信全能 Skill 套件（纯 Skill 仓库无独立版本号，要求 wecom-cli ≥1.2.1，gitlink pin commit cae8a5befac67d96bfe573b1675c5faab474758e） |
+| WecomTeam/wecom-aibot-python-sdk | 1.0.1@6bcb59a | git@github.com:WecomTeam/wecom-aibot-python-sdk.git | 2026-11-09 | MIT | third_party | — | 企业微信智能机器人 Python SDK（pyproject 1.0.1，默认分支 master，无 tag，gitlink pin commit 6bcb59a9a636c566f4c6ea5268b228e3def1611a） |
 
 ## 更新记录
+
+- 2026-11-09 | 引入 WecomTeam 3 仓库 third_party 子模块（分组布局 vendor/WecomTeam/）：wecom-cli（1.3.4@1d48b6c，MIT）、wecom-unified（N/A@cae8a5b，MIT）、wecom-aibot-python-sdk（1.0.1@6bcb59a，MIT），企业微信办公能力与智能机器人 SDK 只读信源，gitlink pin commit
 
 - 2026-09-09 | 引入 netease-youdao 6 仓库 third_party 子模块：BCEmbedding（N/A@1aa07ea，Apache-2.0）、Confucius4-TTS（N/A@4fb32c4，Apache-2.0）、EmotiVoice（v0.3-17-g59f0f36，Apache-2.0）、LobsterAI（2026.9.4@7592cd0，MIT）、QAnything（v2.0.0-69-g615417a，AGPL-3.0）、ScholarClaw（N/A@97bdb5e，MIT）；G0 信源稳定性门：从 .chaos 临时克隆迁移至 vendor/（基线见 .trae/specs/okf-wiki-ecosystem/netease-youdao-okf-wiki/migration-baseline.md）
 

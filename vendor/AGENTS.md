@@ -41,6 +41,10 @@ vendor/AGENTS.md 与 vendor/.agents/ 由 SpecWeave 主权区维护,直接纳入�
 | podman-compose | third_party | 无（第三方项目） | containers 官方容器编排工具链：podman-compose 声明式编排（第三方只读依赖，gitlink pin commit） |
 | podman-py | third_party | 无（第三方项目） | containers 官方容器编排工具链：podman-py SDK（第三方只读依赖，gitlink pin commit） |
 | toolbox | third_party | 无（第三方项目） | containers 官方容器编排工具链：toolbox 工具（第三方只读依赖，gitlink pin commit） |
+| WecomTeam | third_party | 无（第三方项目） | 企业微信（WeCom）官方开源生态分组（第三方只读依赖，gitlink pin commit） |
+| └ wecom-cli | third_party | 无（第三方项目） | 企业微信官方 CLI（Rust + npm `@wecom/cli` 1.3.4，覆盖消息/邮件/文档/表格/待办/日程/会议/微盘/通讯录，内置 14 个 Agent Skills） |
+| └ wecom-unified | third_party | 无（第三方项目） | 企业微信全能 Skill 套件（wecom-unified SKILL.md + 业务域 references + 辅助脚本，要求 wecom-cli ≥1.2.1） |
+| └ wecom-aibot-python-sdk | third_party | 无（第三方项目） | 企业微信智能机器人 Python SDK（WebSocket 长连接、流式回复、模板卡片、事件回调、文件下载解密，1.0.1） |
 
 ### 嵌套优先级
 
@@ -148,6 +152,7 @@ flowchart TD
 | 知乎内容获取（搜索/热榜/直达/全站搜索） | [zhihu-search](flexloop/apps/chaos/.agents/skills/zhihu-search/SKILL.md) / [zhihu-hot-list](flexloop/apps/chaos/.agents/skills/zhihu-hot-list/SKILL.md) / [zhihu-zhida](flexloop/apps/chaos/.agents/skills/zhihu-zhida/SKILL.md) / [zhihu-global-search](flexloop/apps/chaos/.agents/skills/zhihu-global-search/SKILL.md) | 知乎平台数据获取工具集，覆盖热榜、搜索、问题直达、全站搜索 |
 | 静态站点冗余资源分析 | [asset-redundancy-analyzer SKILL.md](flexloop/apps/chaos/.agents/skills/asset-redundancy-analyzer/SKILL.md) | 声明但缺失/存在但未引用的资源分析，PowerShell实现 |
 | flexloop 子模块开发/规则查阅/技能规范 | [vendor/flexloop/AGENTS.md](flexloop/AGENTS.md) → [vendor/flexloop/apps/chaos/AGENTS.md](flexloop/apps/chaos/AGENTS.md) | 三层路由嵌套入口，flexloop完整规则体系（context-economy、python、skills、browser-agent等） |
+| 企业微信（WeCom）办公能力/Skill/机器人 SDK 参考 | [vendor/WecomTeam/README.md](WecomTeam/README.md) → [wecom-cli](WecomTeam/wecom-cli/README.md) / [wecom-unified](WecomTeam/wecom-unified/README.md) / [wecom-aibot-python-sdk](WecomTeam/wecom-aibot-python-sdk/README.md) | 分组入口：CLI（Rust + npm）、全能 Skill 套件、Python 机器人 SDK 的定位、版本与依赖基线；只读引用，禁止本地修改 |
 
 > **使用说明**：启动协议步骤2.0任务类型预检时，无论工作目录是否在 vendor/ 内，都先查本表。命中任务类型则必须读取对应资产，不得跳过。
 
@@ -157,7 +162,7 @@ vendor 区域内可被 SpecWeave 跨边界调用的资产清单。实际资产�
 
 ### Skills
 
-所有 skill 存放在 [vendor/flexloop/apps/chaos/.agents/skills/](flexloop/apps/chaos/.agents/skills/),遵循 flexloop 的[技能规范](flexloop/apps/chaos/.agents/rules/skills.md)。
+flexloop 的 skill 存放在 [vendor/flexloop/apps/chaos/.agents/skills/](flexloop/apps/chaos/.agents/skills/),遵循 flexloop 的[技能规范](flexloop/apps/chaos/.agents/rules/skills.md);WecomTeam 分组的 Skill 位于各自子模块内(third_party,只读引用)。
 
 | Skill | 功能 | 依赖 | 路径 |
 |---|---|---|---|
@@ -170,6 +175,13 @@ vendor 区域内可被 SpecWeave 跨边界调用的资产清单。实际资产�
 | zhihu-hot-list | 知乎热榜 | ZHIHU_ACCESS_SECRET + 网络 | [flexloop/apps/chaos/.agents/skills/zhihu-hot-list/](flexloop/apps/chaos/.agents/skills/zhihu-hot-list/) |
 | zhihu-search | 知乎搜索 | ZHIHU_ACCESS_SECRET + 网络 | [flexloop/apps/chaos/.agents/skills/zhihu-search/](flexloop/apps/chaos/.agents/skills/zhihu-search/) |
 | zhihu-zhida | 知乎直达 | ZHIHU_ACCESS_SECRET + 网络 | [flexloop/apps/chaos/.agents/skills/zhihu-zhida/](flexloop/apps/chaos/.agents/skills/zhihu-zhida/) |
+
+#### WecomTeam 分组 Skill（只读引用）
+
+| Skill | 功能 | 依赖 | 路径 |
+|---|---|---|---|
+| wecom-unified | 企业微信全能 Skill（通讯录/文档/在线表格/智能表格/智能文档/PPT/日程/会议/待办/微盘/邮件/消息） | Node.js ≥18 + wecom-cli ≥1.2.1 + 企业微信凭证 | [WecomTeam/wecom-unified/skills/wecom-unified/](WecomTeam/wecom-unified/skills/wecom-unified/) |
+| wecom-cli skills | 企业微信 CLI 内置 Agent Skills（14 个，命令级操作指引） | Node.js ≥18 + wecom-cli 凭证 | [WecomTeam/wecom-cli/skills/](WecomTeam/wecom-cli/skills/) |
 
 ### Scripts
 
@@ -202,6 +214,9 @@ flexloop 的验证与检查脚本存放在 [vendor/flexloop/apps/chaos/.agents/s
 | vendor/netease-youdao/LobsterAI/ | third_party 子模块 | ❌ 否 | 网易有道 LobsterAI 第三方只读依赖（MIT，固定 tag 2026.9.4），禁止本地修改 |
 | vendor/netease-youdao/QAnything/ | third_party 子模块 | ❌ 否 | 网易有道 QAnything 第三方只读依赖（AGPL-3.0，pin commit），禁止本地修改 |
 | vendor/netease-youdao/ScholarClaw/ | third_party 子模块 | ❌ 否 | 网易有道 ScholarClaw 第三方只读依赖（MIT，pin commit），禁止本地修改 |
+| vendor/WecomTeam/wecom-cli/ | third_party 子模块 | ❌ 否 | 企业微信官方 CLI 第三方只读依赖（MIT，1.3.4@1d48b6c），禁止本地修改 |
+| vendor/WecomTeam/wecom-unified/ | third_party 子模块 | ❌ 否 | 企业微信全能 Skill 套件第三方只读依赖（MIT，N/A@cae8a5b），禁止本地修改 |
+| vendor/WecomTeam/wecom-aibot-python-sdk/ | third_party 子模块 | ❌ 否 | 企业微信智能机器人 Python SDK 第三方只读依赖（MIT，1.0.1@6bcb59a），禁止本地修改 |
 
 ## 跨边界调用规范
 

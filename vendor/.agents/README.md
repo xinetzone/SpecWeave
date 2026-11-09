@@ -18,6 +18,12 @@ vendor/
 │   └── README.md          ← 本文件(元数据容器说明)
 ├── README.md              ← vendor 依赖总览(由 check-vendor 自动生成)
 ├── VERSION.md             ← vendor 版本元数据
+├── netease-youdao/        ← 网易有道生态分组目录(普通目录,非子模块)
+│   ├── README.md          ← 分组级元数据
+│   └── */                 ← 6 个 third_party 子模块 gitlink
+├── WecomTeam/             ← 企业微信生态分组目录(普通目录,非子模块)
+│   ├── README.md          ← 分组级元数据
+│   └── */                 ← 3 个 third_party 子模块 gitlink
 └── flexloop/              ← flexloop 子模块(git submodule,自治管理)
     ├── AGENTS.md          ← flexloop 入口(嵌套优先)
     └── apps/chaos/.agents/ ← 完整规则体系(skills/scripts/rules 等)

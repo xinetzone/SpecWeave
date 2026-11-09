@@ -34,6 +34,9 @@
 | netease-youdao/LobsterAI | 2026.9.4@7592cd0 (子模块) | third_party | 2026-09-09 | 网易有道 LobsterAI AI Agent 桌面应用（只读依赖，固定 tag 2026.9.4） |
 | netease-youdao/QAnything | v2.0.0-69-g615417a (子模块) | third_party | 2026-09-09 | 网易有道 QAnything 企业级 RAG 问答（只读依赖，pin commit，HEAD 超前 v2.0.0 69 commits） |
 | netease-youdao/ScholarClaw | N/A@97bdb5e (子模块) | third_party | 2026-09-09 | 网易有道 ScholarClaw 学术搜索 Agent（只读依赖，gitlink pin commit） |
+| WecomTeam/wecom-cli | 1.3.4@1d48b6c (子模块) | third_party | 2026-11-09 | 企业微信官方 CLI（Rust 实现，经 npm `@wecom/cli` 分发；覆盖消息/邮件/文档/表格/待办/日程/会议/微盘/通讯录，内置 14 个 Agent Skills，只读依赖，gitlink pin commit） |
+| WecomTeam/wecom-unified | N/A@cae8a5b (子模块) | third_party | 2026-11-09 | 企业微信全能 Skill 套件（wecom-unified SKILL.md + 业务域 references + 辅助脚本，依赖 wecom-cli ≥1.2.1，只读依赖，gitlink pin commit） |
+| WecomTeam/wecom-aibot-python-sdk | 1.0.1@6bcb59a (子模块) | third_party | 2026-11-09 | 企业微信智能机器人 Python SDK（WebSocket 长连接、流式回复、模板卡片、事件回调、文件下载解密，只读依赖，gitlink pin commit） |
 
 ## 使用说明
 

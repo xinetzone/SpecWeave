@@ -68,3 +68,12 @@
 [submodule "projects/daoapps.github.io"]
 	path = projects/daoapps.github.io
 	url = git@github.com:daoApps/daoApps.github.io.git
+[submodule "vendor/WecomTeam/wecom-cli"]
+	path = vendor/WecomTeam/wecom-cli
+	url = git@github.com:WecomTeam/wecom-cli.git
+[submodule "vendor/WecomTeam/wecom-unified"]
+	path = vendor/WecomTeam/wecom-unified
+	url = git@github.com:WecomTeam/wecom-unified.git
+[submodule "vendor/WecomTeam/wecom-aibot-python-sdk"]
+	path = vendor/WecomTeam/wecom-aibot-python-sdk
+	url = git@github.com:WecomTeam/wecom-aibot-python-sdk.git
