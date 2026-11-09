@@ -149,7 +149,7 @@ def test_copy_owns_data(self):
 
 ## 来源
 
-- [test_blob.py:TestBlobZeroCopy](../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/tests/python/test_blob.py#L274-L327) — caffe-ffi 8个零拷贝测试用例
+- [test_blob.py:TestBlobZeroCopy](../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_blob.py#L274-L327) — caffe-ffi 8个零拷贝测试用例
 - [zero-copy-batch-inference-defense.md](zero-copy-batch-inference-defense.md) — 零拷贝view生命周期管理（生产代码侧）
 - 复盘报告：[retrospective-caffe-ffi-memlog-20260728](../../reports/task-reports/retrospective-caffe-ffi-memlog-20260728/README.md) — Blob data_tensor零拷贝验证实践
 

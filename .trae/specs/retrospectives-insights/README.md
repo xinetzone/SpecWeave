@@ -352,7 +352,7 @@ retrospectives-insights/
 | 89 | [audiox-turbo-learning-analysis](audiox-turbo-learning-analysis/spec.md) | ✓ 完成 | ✓/✗ |
 | 90 | [browseract-learning-wiki](browseract-learning-wiki/spec.md) | ✓ 完成 | ✓/✗ |
 | 91 | [browseract-official-wiki](browseract-official-wiki/spec.md) | ✓ 完成 | ✓/✗ |
-| 92 | [business-trends-analysis](business-trends-analysis/spec.md) | ? 待启动 | ✓✗✗ |
+| 92 | business-trends-analysis | ? 待启动 | ✓✗✗ |
 | 93 | [caffe-comprehensive-retrospective-export](caffe-comprehensive-retrospective-export/spec.md) | ✓ 完成 | ✓/✗ |
 | 94 | [caffe-ffi-zerocopy-phase1-retrospective](caffe-ffi-zerocopy-phase1-retrospective/spec.md) | ✓ 完成 | ✓/✗ |
 | 95 | [chatgpt-codex-analysis](chatgpt-codex-analysis/spec.md) | ? 待启动 | ✓/✗ |

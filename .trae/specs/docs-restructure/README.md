@@ -199,7 +199,7 @@ docs-restructure/
 | 10 | [methodology-patterns-categorization](methodology-patterns-categorization/spec.md) | ✓ 完成 | ✓/✗ |
 | 11 | [migrate-docs-into-agents-docs](migrate-docs-into-agents-docs/spec.md) | ! 进行中 | ✓/✗ |
 | 12 | [project-governance-reports-reorg](project-governance-reports-reorg/spec.md) | ! 进行中 | ✓/✗ |
-| 13 | [readme-completion-plan](readme-completion-plan/spec.md) | ? 待启动 | ✓✗✗ |
+| 13 | readme-completion-plan | ? 待启动 | ✓✗✗ |
 | 14 | [refactor-retrospective-docs](refactor-retrospective-docs/spec.md) | ✓ 完成 | ✓/✗ |
 | 15 | [reports-duplication-optimization](reports-duplication-optimization/spec.md) | ✓ 完成 | ✓/✗ |
 | 16 | [restructure-retrospective-reports-by-topic](restructure-retrospective-reports-by-topic/spec.md) | ✓ 完成 | ✓/✗ |

@@ -141,7 +141,7 @@
     - Standalone分发包（sync-from-releases.sh用法，面向分发场景）
     - 安装指定版本（--whl参数用法）
     - 常见问题（简短FAQ，如import失败、_libs找不到、版本检测）
-  - 明确说明：这是面向**使用者**的目录，开发者/发布管理者请去 [xmnn-releases/](../xmnn-releases/)
+  - 明确说明：这是面向**使用者**的目录，开发者/发布管理者请去 [chaos-ai-xmnn-releases/](../chaos-ai-xmnn-releases/spec.md)
   - **不包含**：构建说明、Docker镜像构建、extract-release用法、Nuitka编译、开发者流程
 - **Acceptance Criteria Addressed**: [AC-4]
 - **Test Requirements**:

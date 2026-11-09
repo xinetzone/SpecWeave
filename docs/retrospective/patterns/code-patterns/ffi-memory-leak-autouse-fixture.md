@@ -207,7 +207,7 @@ def test_cached_model_inference(cached_model):
 
 ## 来源
 
-- [conftest.py:_check_memory_leaks](../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/tests/python/conftest.py#L38-L85) — caffe-ffi 自动泄漏检测fixture完整实现
+- [conftest.py:_check_memory_leaks](../../../../projects/xuanspace/libs/caffe-ffi/tests/python/conftest.py#L38-L85) — caffe-ffi 自动泄漏检测fixture完整实现
 - 复盘报告：[retrospective-caffe-ffi-memlog-20260728](../../reports/task-reports/retrospective-caffe-ffi-memlog-20260728/README.md) — 三层防护闭环中的第三层
 
 > **关联模式**：

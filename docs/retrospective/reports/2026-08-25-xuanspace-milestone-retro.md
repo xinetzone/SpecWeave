@@ -200,6 +200,6 @@ status: active
 | [xuanspace AGENTS.md](../../../projects/xuanspace/AGENTS.md) | 智能体协作入口与上下文路由 |
 | [xuanspace CHANGELOG](../../../projects/xuanspace/CHANGELOG.md) | 变更日志（v0.1.0） |
 | [caffe-ffi README](../../../projects/xuanspace/libs/caffe-ffi/README.md) | caffe-ffi 子项目说明（60+ 层、COW、Docker 黄金标准） |
-| [xs CLI 参考](../../../projects/xuanspace/docs/cli/index.md) | xs 命令总览 |
-| [OKF 工具链教程](../../../projects/xuanspace/docs/okf/index.md) | OKF v0.2 教程导航 |
+| [xs CLI 参考](../../../projects/xuanspace/doc/cli/index.md) | xs 命令总览 |
+| [OKF 工具链教程](../../../projects/xuanspace/doc/okf/index.md) | OKF v0.2 教程导航 |
 | 本复盘报告 | R→I→E→V→C 全链路产出，含 40 条事实、4 条洞察、1 个候选模式、5 个行动项 |

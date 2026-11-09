@@ -111,7 +111,7 @@ source: ".trae/specs/okf-wiki-ecosystem/workbuddy-open-platform-sharing-and-prom
 | 级别 | 类型 | 发现 | 文件:行号 | 说明 |
 | --- | --- | --- | --- | --- |
 | P3 | advisory | `tencent/index.md`「关于本分组」的「**信源**」计数（当前 **72**）无法由显式口径复现：机械实测 references 文档数（去 index.md）为 **63**，frontmatter sources 条目亦与 72 不符。 | `doc/bundles/jishu/ai/ecosystems/tencent/index.md`:43 | **非本变更引入**：该基数为历史遗留，实施者已在 `log.md` L8 明确披露「基数 64 不可由显式口径复现，本次只记增量 +4、不重定基数（归属隔离）」，与既有先例一致；`check-bundles-index.py` 不校验该描述性计数，门禁五面仍一致。建议后续由治理侧统一「信源」口径，不在本束范围修复。 |
-| P3 | advisory | `jishu/index.md` 的 ai 行「束数」现以「[递归束数](../index.md)」链接呈现而非数字（如 244），与本变更 Completion Evidence 记录的「242→243」数值口径不一致。 | `doc/bundles/jishu/index.md`:20 | 疑为并行会话改动或治理层口径变更；`check-bundles-index.py` EXIT 0 表明当前五面一致，属观测性差异，不代表本束计数错误。 |
+| P3 | advisory | `jishu/index.md` 的 ai 行「束数」现以「`[递归束数](../index.md)`」链接呈现而非数字（如 244），与本变更 Completion Evidence 记录的「242→243」数值口径不一致。 | `doc/bundles/jishu/index.md`:20 | 疑为并行会话改动或治理层口径变更；`check-bundles-index.py` EXIT 0 表明当前五面一致，属观测性差异，不代表本束计数错误。 |
 | P3 | advisory | 审查窗口内工作树出现动态漂移：新增 `M doc/bundles/sheke/industry/index.md`，`check-toctrees.py` 失败项归属并行在途束。 | `git status --porcelain`；`scripts/check-toctrees.py` 输出 | 并行会话活跃导致的噪声，已按归属隔离，不计入本变更（详见下）。 |
 
 ## 并行会话噪声声明（归属隔离）

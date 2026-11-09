@@ -40,7 +40,7 @@
     - `python scripts/check-toctrees.py` → `toctree 检查通过: 全部 index.md 引用有效，所有内容文档均可达。` **rc=0**
     - `python scripts/check-bundles-index.py` → `bundles 总索引对账通过: 9 域 / 62 组 / 644 束，frontmatter、计数行、节标题、分组表、toctree 五面一致。` **rc=0**
     - `python scripts/check-utf8.py` → `UTF-8 检查通过: 11751 个文件均为有效 UTF-8。` **rc=0**
-    - **独立重算计数三角**（自写递归口径枚举器，不引用 gate 结论）：`DOMAINS 9 / GROUPS 62 / BUNDLES 644`；`SHEKE groups 9 / bundles 72 / digital-economy = 2` → 与总索引 frontmatter（`total_bundles: 644`、`groups: 62`、`domains: 9`）、计数行「当前共 **644 个知识包**……**9 个技术域、62 个分组**」、sheke 节标题「### 👥 [社会科学](sheke/index.md) · 72 束 · 9 组」、sheke 分组表「`[💠 数字经济与数字资产（Digital Economy）](sheke/digital-economy/index.md) | 2 |`」**四面对齐**。
+    - **独立重算计数三角**（自写递归口径枚举器，不引用 gate 结论）：`DOMAINS 9 / GROUPS 62 / BUNDLES 644`；`SHEKE groups 9 / bundles 72 / digital-economy = 2` → 与总索引 frontmatter（`total_bundles: 644`、`groups: 62`、`domains: 9`）、计数行「当前共 **644 个知识包**……**9 个技术域、62 个分组**」、sheke 节标题「### 👥 `[社会科学](sheke/index.md)` · 72 束 · 9 组」、sheke 分组表「`[💠 数字经济与数字资产（Digital Economy）](sheke/digital-economy/index.md) | 2 |`」**四面对齐**。
     - 变更面一致性：41 个 Markdown 文件（分组 index 1 + 束 2×20），`TOTAL_FILES 41 / MD 41 / NON_MD []`；与 spec FR-1~FR-3 一致。
     - `sphinx-build -b dummy -E doc _build/dummy` **由主会话提供证据**（本评审按约束未执行，避免与主会话争用 `_build` 目录）——该子项未由本评审独立复现。
   - **Findings**: 无（遗留风险 R-1 记录该子项依赖主会话证据）

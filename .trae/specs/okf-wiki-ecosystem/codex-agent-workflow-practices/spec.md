@@ -35,6 +35,6 @@
 
 ## 主题关联
 
-- 与 [`agent-platform-notes`](../../agent-platform-notes/index.md) 互补：后者聚合各平台散篇，本篇为单篇深度实践
-- 与 [`planning-with-files`](../../planning-with-files/index.md) 互补：后者讲 3-File Pattern 文件系统外存，本篇讲 Spec+Plan 文档组合与垂直切片
-- 与 [`context-optimization`](../../context-optimization/index.md) 互补：后者讲 Token 优化技术，本篇讲上下文管理的工作流策略
+- 与 [`agent-platform-notes`](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/agent-platform-notes/index.md) 互补：后者聚合各平台散篇，本篇为单篇深度实践
+- 与 [`planning-with-files`](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/planning-with-files/index.md) 互补：后者讲 3-File Pattern 文件系统外存，本篇讲 Spec+Plan 文档组合与垂直切片
+- 与 [`context-optimization`](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/context-optimization/index.md) 互补：后者讲 Token 优化技术，本篇讲上下文管理的工作流策略
