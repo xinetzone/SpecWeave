@@ -91,3 +91,4 @@ owner: "未指定"
 - [09-5 验收标准与实测证据](09-5-acceptance-and-evidence.md)
 - [10 里程碑复盘（WSL → 远程 Podman）](10-milestone-retro-remote-podman.md)
 - [11 里程碑复盘（EOL/CRLF 治理与远程连接收口）](11-milestone-retro-eol-and-remote-connection.md)
+- [12 三路用法复盘（WSL / Podman / 10.16.11.3）](12-usage-retro-wsl-podman-remote-host.md)

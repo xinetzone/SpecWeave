@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>三路用法复盘：WSL、Podman 与 10.16.11.3 的取舍边界</title>
+<style>
+:root{--fg:#1c1f23;--muted:#5c6570;--line:#dfe3e8;--bg:#fbfcfd;--accent:#0b5cad;--code:#f4f6f8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.75 "Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:32px 28px 80px;display:grid;grid-template-columns:250px minmax(0,1fr);gap:40px}
+nav{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow:auto;border-right:1px solid var(--line);padding-right:18px}
+nav h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+nav .toc ul{list-style:none;margin:0;padding:0}
+nav .toc ul ul{padding-left:14px}
+nav .toc li{margin:2px 0}
+nav .toc a{color:var(--fg);text-decoration:none;font-size:13.5px;display:block;padding:3px 0}
+nav .toc ul ul a{color:var(--muted);font-size:12.5px}
+nav .toc a:hover{color:var(--accent)}
+main{min-width:0}
+header.meta{border-bottom:2px solid var(--line);padding-bottom:16px;margin-bottom:8px}
+header.meta h1{font-size:28px;line-height:1.35;margin:0 0 10px}
+.meta-line{color:var(--muted);font-size:13px}
+h1,h2,h3,h4{scroll-margin-top:20px}
+h2{font-size:21px;margin:34px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:10px 0}
+a{color:var(--accent)}
+blockquote{margin:16px 0;padding:12px 16px;border-left:4px solid var(--accent);background:#f0f5fa;color:#2b3a47}
+blockquote p{margin:4px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font:13.5px/1.5 Consolas,"Cascadia Mono",monospace}
+pre{background:#22272e;color:#e6edf3;padding:14px 16px;border-radius:8px;overflow:auto;font:13px/1.6 Consolas,"Cascadia Mono",monospace}
+pre code{background:none;color:inherit;padding:0}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px;display:block;overflow:auto}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eef2f6;font-weight:600;white-space:nowrap}
+tbody tr:nth-child(even){background:#fff}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+footer{margin-top:56px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+@media (max-width:900px){.wrap{grid-template-columns:1fr;gap:18px}nav{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--line);padding:0 0 12px}}
+@media print{nav{display:none}.wrap{display:block;max-width:none;padding:0}body{background:#fff;font-size:12pt}pre{background:#f4f4f4;color:#111;border:1px solid #ccc}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+<h2>目录</h2>
+<div class="toc">
+<ul>
+<li><a href="#0">0. 结论摘要</a></li>
+<li><a href="#1">1. 范围、口径与事实基线</a><ul>
+<li><a href="#11">1.1 三条路（加一条对照路）的定义</a></li>
+<li><a href="#12-r">1.2 事实基线（R）</a></li>
+<li><a href="#13">1.3 测量口径与已知偏差</a></li>
+</ul>
+</li>
+<li><a href="#2-f">2. 第一性原理（F）：四组区分如何决定路线</a><ul>
+<li><a href="#21-vs">2.1 本地盘 vs 网络盘</a></li>
+<li><a href="#22-vs">2.2 块存储 vs 共享文件系统</a></li>
+<li><a href="#23-vs">2.3 镜像层 vs 卷</a></li>
+<li><a href="#24-vs">2.4 进程边界 vs 文件系统边界</a></li>
+<li><a href="#25">2.5 把「硬约束」与「当前选择」分开</a></li>
+</ul>
+</li>
+<li><a href="#3-v">3. 对抗审查（V）：七个攻击点</a><ul>
+<li><a href="#v1">V1「全远端一定更省」——不成立</a></li>
+<li><a href="#v2wsl-podman">V2「WSL 只是 Podman 的劣化替代」——不成立</a></li>
+<li><a href="#v3">V3「把构建产物放卷里，掩盖了镜像不可复现」——部分成立</a></li>
+<li><a href="#v499">V4「99% 的盘还能不能算可用」——部分成立</a></li>
+<li><a href="#v5-10-pass">V5「审计脚本 10 项 PASS 等于环境健康」——不成立</a></li>
+<li><a href="#v613-26">V6（补充）「13 与 26 的体积矛盾说明统计不可信」——不成立</a></li>
+<li><a href="#v7graphroot-mediapcdata-xfs">V7（补充）「graphroot 在 /media/pc/data 就等于落在 XFS」——成立，但有前提</a></li>
+<li><a href="#v8-podman-podman">V8（补充）「这台机器上的 podman 就是 podman」——不成立</a></li>
+<li><a href="#39">3.9 审查结果汇总</a></li>
+</ul>
+</li>
+<li><a href="#4-i">4. 洞察（I）：条件 → 结论 → 依据</a></li>
+<li><a href="#5-e">5. 萃取（E）：可复用手法与一次性结论</a><ul>
+<li><a href="#51">5.1 可复用的检查手法</a></li>
+<li><a href="#52-2026-11-06">5.2 一次性结论（只对 2026-11-06 这个现场成立，不要外推）</a></li>
+<li><a href="#53">5.3 反模式</a></li>
+</ul>
+</li>
+<li><a href="#6-c">6. 交付（C）：分场景决策表与开工检查清单</a><ul>
+<li><a href="#61">6.1 分场景决策表</a></li>
+<li><a href="#62-5">6.2 下次开工前 5 分钟检查清单</a></li>
+<li><a href="#63">6.3 本文件状态</a></li>
+</ul>
+</li>
+<li><a href="#7">7. 不确定性与证伪条件</a></li>
+<li><a href="#_1">相关文档</a></li>
+</ul>
+</div>
+
+</nav>
+<main>
+<header class="meta">
+<h1>三路用法复盘：WSL、Podman 与 10.16.11.3 的取舍边界</h1>
+<div class="meta-line">v1.0 · 2026-11-06 · final（事实截至 2026-11-06 11:00）</div>
+</header>
+<blockquote>
+<p><strong>本篇职责</strong>：把这一路试出来的事实，沉淀为「什么场景该走哪条路、每条路的边界在哪、哪些约束不可绕过」。这是一份<strong>面向未来用法</strong>的复盘，不是里程碑复盘——10 号讲「为什么从 WSL 转向远端」，11 号讲「EOL/CRLF 与远程连接如何收口」，本篇只回答「下次动手时怎么选、怎么验」。
+<strong>本篇不负责</strong>：方案级决策依据见<a href="09-1-backend-and-decision.md">09-1</a>；挂载与 UID 细节见<a href="09-2-mounts-uid-storage.md">09-2</a>；工具链供给见<a href="09-3-toolchain-provisioning.md">09-3</a>；构建命令见<a href="09-4-build-and-verify.md">09-4</a>；验收判定见<a href="09-5-acceptance-and-evidence.md">09-5</a>；风险与待办见<a href="09-6-risks-todos-changelog.md">09-6</a>；历史转折见<a href="10-milestone-retro-remote-podman.md">10 号</a>与<a href="11-milestone-retro-eol-and-remote-connection.md">11 号</a>。</p>
+</blockquote>
+<h2 id="0">0. 结论摘要</h2>
+<ul>
+<li><strong>一句话</strong>：WSL、Podman、10.16.11.3 <strong>不是同一层的竞品</strong>。WSL 提供「Windows 上的 Linux 内核与 VM 边界」，Podman 提供「进程与镜像边界」，10.16.11.3 提供「块存储与 15 TB 数据平面」。把它们放在一起比「谁更省」，问题本身就问错了层。</li>
+<li><strong>真正的硬约束只有四条</strong>：① VHDX 必须落在本地固定盘（DriveType=3，<code>wsl --import</code> 强制）；② overlay 要求底层具备 d_type / user xattr / hardlink / flock（SMB 不具备）；③ bind 可写的前提是容器 uid 与宿主 uid 对齐（实测 1006）；④ 镜像层不承载构建产物时，运行期依赖由卷提供，卷即隐式运行时依赖。</li>
+<li><strong>当前选择的四条</strong>（可改，不是硬约束）：默认连接指向 <code>remote-ai</code>；graphroot 经软链落在 XFS；基镜像用 <code>3.0</code> 而非 <code>3.0-minimal</code>；审计脚本取 10 项静态口径。</li>
+<li><strong>最该带走的一条判断</strong>：<strong>「谁的分区余量最稀缺，就把负载放在另一侧」</strong>。Windows 侧 D: 只剩 30.62 GB（<code>Get-Volume</code>），服务器 XFS 尚有 293.28 GiB 可用（<code>df -B1</code>，已用 99%）——所以构建必须去远端；但反过来若 D: 扩容到 TB 级，「全远端」就不再必然更省。</li>
+<li><strong>最容易反复踩的一脚</strong>：这台服务器上的 <code>podman</code> <strong>不是一个二进制，而是一个按用户分流的包装器</strong>。<code>ai</code> 用户落到 conda py313 的 5.6.2 并叠加 <code>containers-5.conf</code>，其他用户落到 <code>/usr/bin/podman</code> 3.4.4。直接写绝对路径 <code>/usr/bin/podman</code>，拿到的是 3.4.4（本次即出现 <code>podman info</code> 模板字段不存在）。</li>
+</ul>
+<p><strong>五条核心结论</strong></p>
+<ol>
+<li>构建负载应放远端，理由是 Windows 本地盘余量（30.62 GB）比服务器（293.28 GiB）稀缺两个数量级，不是「远端更快」。</li>
+<li>WSL 的价值不是「跑容器」，而是「提供 systemd、独立内核、drvfs 跨文件系统挂载」——这三项 Podman 一项都给不了。</li>
+<li>镜像层与卷是<strong>不可变 / 可变</strong>的分工。镜像层零 tvm/xmnn 实体（B1 断言）意味着镜像不能独立交付，这不是缺陷，是必须写进契约的取舍。</li>
+<li>所有体积结论只认字节数。<code>podman images</code> 的 <code>26 GB</code> 与 <code>inspect .Size</code> 的 <code>25,976,321,159 B</code> 是同一件事（24.19 GiB），混读单位会制造假矛盾。</li>
+<li>自检脚本必须先做「能力探测」再谈健康度：<code>podman system df</code> 在本机直接报错、<code>podman ps</code> 只打印帮助，这两条都不能当健康判据。</li>
+</ol>
+<h2 id="1">1. 范围、口径与事实基线</h2>
+<h3 id="11">1.1 三条路（加一条对照路）的定义</h3>
+<p>本文件用词固定如下，避免后文歧义：</p>
+<table>
+<thead>
+<tr>
+<th>代号</th>
+<th>形态</th>
+<th>提供的边界</th>
+<th>2026-11-06 现场状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A 路</strong></td>
+<td>WSL2 发行版 <code>openkylin-test</code>（VHDX on <code>D:\WSL</code>）</td>
+<td>内核 / VM 边界</td>
+<td>Stopped（<code>wsl -l -v</code>）</td>
+</tr>
+<tr>
+<td><strong>B 路</strong></td>
+<td>Windows Podman 客户端 + podman machine（WSL 后端）</td>
+<td>进程 / 镜像边界（本地）</td>
+<td>两台 machine 均未运行（<code>podman machine ls</code>）</td>
+</tr>
+<tr>
+<td><strong>C 路</strong></td>
+<td>任意客户端 → SSH → 10.16.11.3 的 rootless Podman 5.6.2</td>
+<td>进程 / 镜像边界（远端）</td>
+<td>多个容器在跑（<code>podman container ps --all</code>）</td>
+</tr>
+<tr>
+<td><strong>D 路</strong></td>
+<td>直接在 10.16.11.3 宿主上跑进程（非容器）</td>
+<td>无隔离，仅文件系统边界</td>
+<td>常驻可用</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>说明：B 路与 C 路才是同层比较（都是 Podman），A 路与它们不同层。历史上把 A 路当「B 路的廉价替代」来评估，是 10 号复盘里最主要的判断偏差来源。</p>
+</blockquote>
+<h3 id="12-r">1.2 事实基线（R）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>事实</th>
+<th>测量口径</th>
+<th>采集时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R-01</td>
+<td>WSL 发行版 <code>openkylin-test</code>，Version 2，State=Stopped</td>
+<td><code>wsl -l -v</code></td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-02</td>
+<td><code>D:\WSL\openkylin-test\ext4.vhdx</code> 长度 <strong>1,399,848,960 B</strong>（1.30 GiB），属性含 <code>SparseFile</code>，<code>fsutil sparse queryflag</code> 返回 "This file is set as sparse"</td>
+<td><code>Get-Item.Length</code> + <code>fsutil</code></td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-03</td>
+<td>D: 为 NTFS，总 <strong>112.28 GB</strong>，可用 <strong>30.62 GB</strong></td>
+<td><code>Get-Volume</code></td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-04</td>
+<td><code>.wsl</code> 包 <code>D:\WSL\import\openKylin-3.0-wsl-amd64.wsl</code> = <strong>352,431,812 B</strong>；服务器同名文件同尺寸；desktop 包 = <strong>6,592,986,686 B</strong>（另有 <code>-old</code> 同尺寸副本）</td>
+<td><code>Get-Item.Length</code> / <code>stat -c %s</code></td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-05</td>
+<td>该包解压后 rootfs = <strong>1,182,607,360 B</strong></td>
+<td>前序实测（解压后 tar 流字节数），本轮未复测</td>
+<td>2026-11 前序</td>
+</tr>
+<tr>
+<td>R-06</td>
+<td>向 WSL 内写入 1 GiB 后，VHDX 文件长度 Δ=0</td>
+<td>写入前后 <code>Get-Item.Length</code> 差值，单次观测</td>
+<td>2026-11 前序</td>
+</tr>
+<tr>
+<td>R-07</td>
+<td>WSL 内<strong>无</strong> gcc / sshd / conda；<code>/etc/wsl.conf</code> 自带 <code>systemd=true</code>；drvfs 挂载 <code>/media/pc/data/ai</code> 由 systemd mount unit 持久化</td>
+<td>前序实测，本轮未复测</td>
+<td>2026-11 前序</td>
+</tr>
+<tr>
+<td>R-08</td>
+<td><code>wsl --import</code> 只接受本地固定盘（DriveType=3）；<code>S:</code> 为 DriveType=4（网络盘）</td>
+<td>10 号报告已固化</td>
+<td>2026-11-01</td>
+</tr>
+<tr>
+<td>R-09</td>
+<td><code>vmcompute</code> / <code>wslservice</code> 以 SYSTEM 身份持有导入包独占句柄，非管理员会话无法释放</td>
+<td>10 号 / 11 号已固化</td>
+<td>2026-11-02</td>
+</tr>
+<tr>
+<td>R-10</td>
+<td>Windows Podman <strong>5.8.1</strong>；machine 两台：<code>podman-machine-default</code>（last up 3 weeks ago）、<code>machine-os</code>（Never），均 4 CPU / 2 GiB / 100 GiB</td>
+<td><code>podman machine ls</code></td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-11</td>
+<td>服务器 <code>podman</code> 是 POSIX sh 分流包装器（<code>/usr/local/bin/podman</code>、<code>/home/ai/.local/bin/podman</code>）：<code>ai</code> → conda py313 的 <strong>5.6.2</strong> + <code>CONTAINERS_CONF_OVERRIDE=~/.config/containers/containers-5.conf</code>；其他用户 → <code>/usr/bin/podman</code> <strong>3.4.4</strong></td>
+<td><code>cat</code> 两个包装器 + 三次 <code>--version</code></td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-12</td>
+<td>服务器 Podman 5.6.2：<code>Rootless=true</code>，<code>GraphDriver=overlay</code>，<code>GraphRoot=/home/ai/.local/share/containers/storage</code>；<code>readlink -f</code> 指向 <code>/media/pc/data/ai/.agents/podman-storage/storage</code></td>
+<td><code>podman info --format</code> + <code>readlink -f</code></td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-13</td>
+<td><code>podman images</code> SIZE（十进制 GB）：<code>openkylin:3.0</code> <strong>26 GB</strong>、<code>openkylin-npu-toolchain:3.0</code> <strong>14 GB</strong>、<code>3.0-minimal</code> <strong>2.37 GB</strong>、<code>3.0-minimal-gcc</code> <strong>1.46 GB</strong>；另有 <code>&lt;none&gt;</code> 13.7 / 1.86 / 1.19 GB</td>
+<td><code>podman images</code></td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-14</td>
+<td><code>inspect .Size</code>（字节）：<code>25,976,321,159</code> / <code>14,044,799,709</code> / <code>2,365,215,839</code></td>
+<td><code>podman image inspect --format '{{.Size}}'</code></td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-15</td>
+<td>卷 <code>npu-build</code> 数据目录 <strong>7,309,844,950 B</strong>（6.81 GiB）</td>
+<td><code>du -sb &lt;mountpoint&gt;/_data</code></td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-16</td>
+<td>graphroot 全树 <strong>46,658,270,520 B</strong>（43.45 GiB），多处 Permission denied → <strong>下界</strong></td>
+<td><code>du -sb &lt;graphroot&gt;</code></td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-17</td>
+<td><code>/media/pc/data</code>：总 15,998,762,643,456 B，可用 <strong>314,910,449,664 B</strong>（293.28 GiB），Use 99%；<code>/</code>：总 243,936,256,000 B，可用 <strong>13,608,550,400 B</strong>（12.67 GiB），Use 95%；<code>/home/ai</code> 落在 <code>/</code></td>
+<td><code>df -B1</code></td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-18</td>
+<td><code>podman system df</code> 报 <code>lstat /run/user/1006/libpod/tmp/infra-container: no such file or directory</code>。另一条：用 <code>/usr/bin/podman</code>（3.4.4）执行 <code>info</code> 时报警 <code>OCI Runtime crun130 is in use by a container, but is not available</code>，并把运行时回退为 <code>crun</code>；而 5.6.2 下 <code>info</code> 正常返回 <code>crun130 /home/ai/.local/bin/crun</code>。根因：<code>crun130</code> 只定义在 <code>containers-5.conf</code>（<code>crun130=["/home/ai/.local/bin/crun"]</code>，该软链指向存在的 <code>crun-1.30.1</code>，可执行）；3.4.4 不读该覆盖文件，因而不认识该运行时名</td>
+<td><code>podman info</code> 原文 + <code>grep</code> 配置原文 + <code>ls -l</code> soft link</td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-19</td>
+<td>容器：<code>npu-toolchain</code> <strong>Up 3 days</strong>、<code>npu-toolchain-minimal</code> <strong>Up 25 hours</strong>、<code>native-dev</code> / <code>agent-monetize-dev</code> <strong>Up 3 weeks</strong>、<code>9514ffe234c3-infra</code> Created</td>
+<td><code>podman container ps --all</code></td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-20</td>
+<td>审计脚本共 12 处 <code>check</code>：A1–A7（7）、B1–B3（3）、C1–C2（2）。默认口径 <strong>10 项</strong>，<code>--with-volume</code> 为 <strong>12 项</strong></td>
+<td><code>grep -n 'check "' audit-image-contract.sh</code></td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-21</td>
+<td>镜像层内零 <code>libtvm.so</code> / <code>tvm</code> / <code>xmnn</code> 实体，仅 <code>.pth</code> 指针；实体全在卷内</td>
+<td>B1 断言 + <code>du -sb</code> 卷</td>
+<td>2026-11-04 起</td>
+</tr>
+<tr>
+<td>R-22</td>
+<td><code>podman ps</code> 打印帮助且不列容器；<code>podman container ps --all</code> 正常</td>
+<td>两次复现（<code>ps</code> / <code>ps -a</code> / <code>ps --all</code>）</td>
+<td>2026-11-06</td>
+</tr>
+<tr>
+<td>R-23</td>
+<td>EOL/CRLF 残留 <strong>3,275</strong> 处</td>
+<td>逐文件行尾扫描（11 号口径）</td>
+<td>2026-11-04</td>
+</tr>
+</tbody>
+</table>
+<h3 id="13">1.3 测量口径与已知偏差</h3>
+<table>
+<thead>
+<tr>
+<th>口径</th>
+<th>含义</th>
+<th>已知偏差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df -B1</code> 差</td>
+<td>块级可用字节差</td>
+<td>准；但相邻命令间有其他进程写入时会有噪声，故余量一律取同一时刻</td>
+</tr>
+<tr>
+<td><code>du -sb</code></td>
+<td>目录下文件字节和</td>
+<td>软链不跟随；<strong>权限拒绝的目录静默跳过</strong> → 结果是下界（R-16 即下界）</td>
+</tr>
+<tr>
+<td><code>podman images</code> SIZE</td>
+<td>十进制 GB，四舍五入</td>
+<td>与 GiB 混读会得到「矛盾」（见 V6）</td>
+</tr>
+<tr>
+<td><code>podman image inspect .Size</code></td>
+<td>未压缩层字节和</td>
+<td>与容器内 <code>du</code> 口径不同，不可互换</td>
+</tr>
+<tr>
+<td>容器内 <code>du -sb --one-file-system /</code></td>
+<td>排除 bind 挂载与卷</td>
+<td>只反映镜像层，不含卷内容</td>
+</tr>
+<tr>
+<td><code>Get-Item.Length</code>（VHDX）</td>
+<td>文件逻辑长度</td>
+<td>sparse 文件的实际磁盘占用需另查分配大小，本轮未测</td>
+</tr>
+<tr>
+<td><code>wsl -l -v</code></td>
+<td>瞬时状态</td>
+<td>Stopped 只代表查询时刻</td>
+</tr>
+<tr>
+<td><code>podman machine ls</code> 的 LAST UP</td>
+<td>相对时间</td>
+<td>精度到周，不能当精确停机时刻</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-f">2. 第一性原理（F）：四组区分如何决定路线</h2>
+<h3 id="21-vs">2.1 本地盘 vs 网络盘</h3>
+<p><strong>这条区分直接判死了 A 路的一个落点选项</strong>。<code>wsl --import</code> 要求目标卷是本地固定磁盘（DriveType=3），而 <code>S:</code> 是网络映射盘（DriveType=4），实测被拒（R-08）。于是 A 路只剩下 D: 一个可选落点，而 D: 只有 112.28 GB / 可用 30.62 GB（R-03）。</p>
+<p>反过来，C 路不受这条约束——它的「落盘」发生在服务器的本地块设备上，与 Windows 盘符无关。<strong>同一份「磁盘放哪儿」的问题，在 A 路是硬约束，在 C 路不是问题</strong>，这就是两条路不同层的直接后果。</p>
+<h3 id="22-vs">2.2 块存储 vs 共享文件系统</h3>
+<p>overlay 驱动要求底层提供四项能力：d_type、user xattr、hardlink、flock。SMB/CIFS 不具备完整语义，落到 SMB 上的 graphroot 会回退 vfs——空间与性能代价同时上升。</p>
+<p>实测两侧都满足：服务器 graphroot 落在 <code>/dev/sda1</code> 的 XFS 上，<code>GraphDriverName=overlay</code>（R-12）；drvfs 挂载虽能读写，但元数据缓存会造成「宿主侧看不到刚写的文件」这类假象（前序实测）。</p>
+<p><strong>判断顺序应当是：先探测文件系统能力，再选存储驱动</strong>。这不是配置项，是能力探测项。</p>
+<h3 id="23-vs">2.3 镜像层 vs 卷</h3>
+<p>镜像层不可变、按层共享、可被 <code>save</code>/<code>load</code> 搬运；卷可变、按名引用、只存在于本机。实测分工非常清楚：</p>
+<ul>
+<li>镜像层：<code>openkylin-npu-toolchain:3.0</code> 报 14 GB（<code>podman images</code>）/ 14,044,799,709 B（<code>inspect .Size</code>），但<strong>层内没有任何 tvm/xmnn 实体</strong>，只有 <code>.pth</code> 指针（R-21）。</li>
+<li>卷：<code>npu-build</code> 承载 llvm22 / tvm / xmnn，<code>du -sb</code> = 7,309,844,950 B（R-15）。</li>
+</ul>
+<p><strong>结论</strong>：镜像负责「环境」，卷负责「产物」。一旦把产物放进卷，镜像就<strong>不能独立交付</strong>——换机 <code>save</code>/<code>load</code> 过去仍然 <code>import tvm</code> 失败。这条后果必须显式写进契约（B1 断言 + 09-4 的挂载契约），否则三个月后没人记得。</p>
+<h3 id="24-vs">2.4 进程边界 vs 文件系统边界</h3>
+<p>容器只隔离进程与命名空间，<strong>文件系统是穿透的</strong>：bind 把宿主目录带进容器，能不能写由宿主 uid 权限决定。实测契约是容器内运行用户 = 宿主 uid <code>1006</code>（<code>--userns=keep-id</code>），挂载探针文件权限必须是 <code>700 1006</code>。</p>
+<p>这解释了一个常见误判：容器「写不进去」时，第一反应是查容器配置，但真正的决定因素是宿主目录属主与权限。<strong>挂载是容器的边界交点，也是唯一需要双侧同时验证的地方</strong>（宿主看得到、容器写得出、属主对得上）。</p>
+<h3 id="25">2.5 把「硬约束」与「当前选择」分开</h3>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>条目</th>
+<th>依据</th>
+<th>能否改</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>硬约束</strong></td>
+<td>VHDX 必须在本地固定盘</td>
+<td>R-08</td>
+<td>否（Windows 语义）</td>
+</tr>
+<tr>
+<td><strong>硬约束</strong></td>
+<td>overlay 要求 d_type / xattr / hardlink / flock</td>
+<td>R-12 反向推论</td>
+<td>否（驱动语义）</td>
+</tr>
+<tr>
+<td><strong>硬约束</strong></td>
+<td>bind 可写要求容器 uid = 宿主 uid</td>
+<td>探针 700/1006</td>
+<td>否（除非改 UID 映射）</td>
+</tr>
+<tr>
+<td><strong>硬约束</strong></td>
+<td>产物进卷 → 镜像不自足</td>
+<td>R-21</td>
+<td>否（逻辑后果）</td>
+</tr>
+<tr>
+<td><strong>当前选择</strong></td>
+<td>默认连接 = <code>remote-ai</code></td>
+<td>连接配置</td>
+<td>是</td>
+</tr>
+<tr>
+<td><strong>当前选择</strong></td>
+<td>graphroot 经软链落 XFS</td>
+<td>R-12</td>
+<td>是（但要迁移数据）</td>
+</tr>
+<tr>
+<td><strong>当前选择</strong></td>
+<td>基镜像 <code>3.0</code> 而非 <code>3.0-minimal</code></td>
+<td>镜像清单</td>
+<td>是</td>
+</tr>
+<tr>
+<td><strong>当前选择</strong></td>
+<td>审计取 10 项静态口径</td>
+<td>R-20</td>
+<td>是（可扩）</td>
+</tr>
+<tr>
+<td><strong>当前选择</strong></td>
+<td>Windows 侧保留 WSL 发行版</td>
+<td>R-01</td>
+<td>是（可注销）</td>
+</tr>
+</tbody>
+</table>
+<p>把这两类混在一起，就会得出「远端必须用、WSL 必须废」这种过度结论——实际上只有前四行不可协商。</p>
+<h2 id="3-v">3. 对抗审查（V）：七个攻击点</h2>
+<h3 id="v1">V1「全远端一定更省」——<strong>不成立</strong></h3>
+<p>省钱的对象错了。C 路省下的是 Windows 侧最稀缺的资源：D: 可用 30.62 GB（R-03）、两台 machine 各配置 2 GiB 内存（R-10，未运行即未占用）。但成本转移到了服务器：graphroot 已占 43.45 GiB 以上（R-16，下界），XFS 已用 99%（R-17），根分区只剩 12.67 GiB。</p>
+<p>更关键的是<strong>可观测性反而变差</strong>：远端 <code>podman system df</code> 直接报错（R-18）、<code>podman ps</code> 打不出列表（R-22），只剩 <code>images</code> / <code>inspect</code> / <code>container ps</code> / <code>du</code> 可用。</p>
+<p>正确表述：<strong>在当前余量结构下，构建放远端更省</strong>；判据是「谁的分区余量最稀缺」，不是「远端」这个方向本身。</p>
+<h3 id="v2wsl-podman">V2「WSL 只是 Podman 的劣化替代」——<strong>不成立</strong></h3>
+<p>二者不同层。WSL 提供的能力 Podman 一项都给不了：</p>
+<ul>
+<li>独立内核与 systemd（<code>/etc/wsl.conf</code> 自带 <code>systemd=true</code>，R-07）；</li>
+<li>完整发行版用户空间（可装 gcc/sshd/conda，虽然当前未装）；</li>
+<li>drvfs 跨文件系统挂载，把 15 TB 共享盘映射进 Linux 路径；</li>
+<li>整个 VM 只花 1.30 GiB 磁盘（R-02，稀疏）。</li>
+</ul>
+<p>而 Podman 提供的镜像分层、卷、rootless 隔离，在 WSL 里面同样能装一份。</p>
+<p>真正的同层替代关系是「<strong>WSL 内跑 Podman</strong>」vs「<strong>远端跑 Podman</strong>」——10 号复盘比的正是这一层，结论也只对这一层成立。把边界层级不同的两件事做优劣比较，是这次复盘最该纠正的思维习惯。</p>
+<h3 id="v3">V3「把构建产物放卷里，掩盖了镜像不可复现」——<strong>部分成立</strong></h3>
+<p>成立的部分：镜像层零 tvm/xmnn 实体（R-21），<code>podman save</code> 出去的镜像不含卷内容，换一台机器 <code>import tvm</code> 必失败。镜像<strong>不是</strong>自足交付物。</p>
+<p>不成立的部分：这不是「被掩盖」，而是「被显式化」。B1 断言（镜像内不得有实体）+ C1 断言（<code>libLLVM</code> 必须解析到卷内 <code>llvm22</code>）把这条后果写成了可执行契约；09-4 的挂载契约又规定了「卷 + bind 缺一即 A3/A4/A5/A8/A9 FAIL」。</p>
+<p>所以准确表述是：<strong>不可复现是设计取舍，不是隐藏缺陷；风险从「无人知晓」转为「文档与断言必须同步维护」</strong>。反证条件也明确——若哪天 B1 被删、或卷内容没有清单，这条就退化为真正的掩盖。</p>
+<h3 id="v499">V4「99% 的盘还能不能算可用」——<strong>部分成立</strong></h3>
+<p>数学上可用：<code>df -B1</code> 显示可用 314,910,449,664 B ≈ 293.28 GiB（R-17），装一个 26 GB 报数的镜像（R-13）绰绰有余。</p>
+<p>工程上不可轻信：99% 的 XFS 没有配额，任何一次 <code>podman build</code> + <code>load</code> 都可能吃掉数十 GB；而 <code>podman system df</code> 不可用（R-18），意味着<strong>你不知道层占用，只能靠 <code>du</code> 现场算</strong>。</p>
+<p>结论：可用，但必须用<strong>绝对阈值门禁</strong>（如「XFS 可用 ≥ 50 GB 才允许启动新构建」），而不是百分比。百分比在 99% 附近几乎没有分辨率——从 99.0% 到 99.9%，剩余空间会从 293 GiB 掉到 29 GiB，而百分比只动了 0.9。</p>
+<h3 id="v5-10-pass">V5「审计脚本 10 项 PASS 等于环境健康」——<strong>不成立</strong></h3>
+<p>审计的判定对象是<strong>镜像静态内容</strong>：A1–A7 验「该有的在」，B1–B3 验「不该有的不在」，<code>--with-volume</code> 追加 C1–C2（R-20）。它不覆盖：</p>
+<ul>
+<li>运行态（容器是否在跑、进程是否健康）；</li>
+<li>卷内容完整性（C1 只验 <code>libLLVM</code> 解析路径）；</li>
+<li>磁盘余量、SSH 连通性、drvfs 缓存、EOL/CRLF（R-23 的 3,275 处完全在审计视野之外）。</li>
+</ul>
+<p>最有力的反证就在同一时刻：审计可以全 PASS，而 <code>podman system df</code> 正在报错（R-18）、<code>podman ps</code> 打不出容器列表（R-22）。所以 PASS 的含义必须写死为「<strong>镜像静态内容符合契约</strong>」，不能外推为「环境健康」。</p>
+<h3 id="v613-26">V6（补充）「13 与 26 的体积矛盾说明统计不可信」——<strong>不成立</strong></h3>
+<p>本轮对同一对象做了双口径实测：<code>podman images</code> 报 <code>26 GB</code>（R-13），<code>inspect .Size</code> 报 <code>25,976,321,159 B</code>（R-14）。换算：25,976,321,159 B = 24.19 GiB = 25.98 GB（十进制），与 <code>26 GB</code> 的差异来自四舍五入，<strong>小于 0.1%</strong>。<code>14 GB ↔ 14,044,799,709 B</code> 同理。</p>
+<p>历史上的「13 与 26」在本轮无法复现——可能是不同镜像版本并存，也可能是 GiB/GB 混读。<strong>处置方式不变：所有体积只记字节数，展示层再换算</strong>。</p>
+<h3 id="v7graphroot-mediapcdata-xfs">V7（补充）「graphroot 在 <code>/media/pc/data</code> 就等于落在 XFS」——<strong>成立，但有前提</strong></h3>
+<p><code>podman info</code> 报的 GraphRoot 是 <code>/home/ai/.local/share/containers/storage</code>（R-12），看起来落在根分区（只剩 12.67 GiB）。实际 <code>readlink -f</code> 指向 <code>/media/pc/data/ai/.agents/podman-storage/storage</code>，是 XFS。</p>
+<p>前提是<strong>软链存在</strong>。工作区红线明确禁止改名 <code>.agents/podman-storage/</code>，正是因为这条链被硬编码引用。任何重建家目录、清理 <code>.local/share</code> 的操作，都会让 podman「看不见」全部镜像与卷——数据还在，入口断了。</p>
+<h3 id="v8-podman-podman">V8（补充）「这台机器上的 podman 就是 podman」——<strong>不成立</strong></h3>
+<p><code>/usr/local/bin/podman</code> 与 <code>/home/ai/.local/bin/podman</code> 都是分流脚本（R-11）：</p>
+<ul>
+<li><code>id -un = ai</code> → conda py313 的 <strong>5.6.2</strong>，并注入 <code>XDG_RUNTIME_DIR=/run/user/1006</code>、<code>CONTAINERS_CONF_OVERRIDE=containers-5.conf</code>，以及「幂等预置 <code>image_copy_tmp_dir</code>」；</li>
+<li>其他用户 → <code>/usr/bin/podman</code> <strong>3.4.4</strong>。</li>
+</ul>
+<p>本次实测就踩到了两处：用 <code>/usr/bin/podman info --format '{{.Host.PodmanVersion}}'</code> 直接报「模板字段不存在」（3.4.4 的字段路径不同）；用 <code>/usr/bin/podman info</code> 还会报 <code>OCI Runtime crun130 ... is not available</code> 并把运行时<strong>回退为 <code>crun</code></strong>（R-18）——因为 <code>crun130</code> 只写在 3.4.4 不读的 <code>containers-5.conf</code> 里。而登录 shell 里的 <code>podman --version</code> 是 5.6.2，运行时即 <code>crun130</code>。</p>
+<p><strong>结论</strong>：在这台机器上，写脚本要么用 <code>podman</code>（依赖 PATH），要么同时锁定版本断言；写死 <code>/usr/bin/podman</code> 会静默降级到 3.4.4。</p>
+<h3 id="39">3.9 审查结果汇总</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>攻击点</th>
+<th>判定</th>
+<th>一句话理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>V1</td>
+<td>全远端一定更省</td>
+<td><strong>不成立</strong></td>
+<td>省的是 Windows 盘，费的是 XFS 与可观测性</td>
+</tr>
+<tr>
+<td>V2</td>
+<td>WSL 是 Podman 的劣化替代</td>
+<td><strong>不成立</strong></td>
+<td>内核/VM 边界 ≠ 进程/镜像边界</td>
+</tr>
+<tr>
+<td>V3</td>
+<td>卷承载产物掩盖镜像不可复现</td>
+<td><strong>部分成立</strong></td>
+<td>不可复现是事实，但已被 B1/C1 显式化</td>
+</tr>
+<tr>
+<td>V4</td>
+<td>99% 的盘仍可用</td>
+<td><strong>部分成立</strong></td>
+<td>绝对值够，百分比无分辨率，须用绝对阈值</td>
+</tr>
+<tr>
+<td>V5</td>
+<td>审计 10 项 PASS = 环境健康</td>
+<td><strong>不成立</strong></td>
+<td>只覆盖镜像静态内容</td>
+</tr>
+<tr>
+<td>V6</td>
+<td>体积报数矛盾</td>
+<td><strong>不成立</strong></td>
+<td>十进制/二进制混读</td>
+</tr>
+<tr>
+<td>V7</td>
+<td>graphroot 在 XFS</td>
+<td><strong>成立（有前提）</strong></td>
+<td>依赖软链不断</td>
+</tr>
+<tr>
+<td>V8</td>
+<td>podman 是单一二进制</td>
+<td><strong>不成立</strong></td>
+<td>按用户分流，两版本并存</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-i">4. 洞察（I）：条件 → 结论 → 依据</h2>
+<p><strong>I1｜需要内核级能力（systemd、网络命名空间、独立内核）</strong>
+→ 选 WSL，不要把这类需求塞进容器。
+→ 依据：<code>/etc/wsl.conf</code> 自带 <code>systemd=true</code>（R-07）；rootless 容器内无法起 systemd，这是设计前提而非配置缺失。</p>
+<p><strong>I2｜需要跑构建，且 Windows 本地盘余量是最稀缺资源</strong>
+→ 选远端（C 路）。
+→ 依据：D: 可用 30.62 GB（R-03）vs XFS 可用 293.28 GiB（R-17），差两个数量级。</p>
+<p><strong>I3｜构建产物大于 1 GB 且需要跨会话复用</strong>
+→ 放卷，不进镜像层；同时在镜像里留下指针（<code>.pth</code>）。
+→ 依据：镜像层零 tvm/xmnn 实体、卷 6.81 GiB（R-15 / R-21）；这条分工把镜像体积从「随产物膨胀」变成「恒定环境」。</p>
+<p><strong>I4｜需要判断「磁盘够不够」</strong>
+→ 用绝对可用字节 + 增长速率，不用百分比。
+→ 依据：99% 时仍有 293.28 GiB（R-17），百分比在饱和区没有分辨率（V4）。</p>
+<p><strong>I5｜需要判断「镜像多大」</strong>
+→ 只认 <code>inspect .Size</code> 的字节数，展示层再换算。
+→ 依据：<code>26 GB</code> 与 <code>25,976,321,159 B</code> 是同值异单位（R-13 / R-14），混读会制造假矛盾（V6）。</p>
+<p><strong>I6｜需要长期驻留（天级及以上）</strong>
+→ 用远端容器，并显式声明重启策略或交给宿主 systemd；不要指望 Podman machine 自动活着。
+→ 依据：远端 <code>npu-toolchain</code> 已 Up 3 days（R-19），而 Windows 侧两台 machine 均未运行（R-10）。</p>
+<p><strong>I7｜需要判断同一份文件在两侧的状态</strong>
+→ 以服务器侧命令为准，SMB 侧只作参考。
+→ 依据：SMB 存在内容缓存与 d_type/xattr 缺失（前序实测），元数据可能滞后；而服务器侧是本地块设备。</p>
+<p><strong>I8｜受限网络内要补工具链</strong>
+→ 从宿主复制（<code>podman cp</code> / <code>tar | exec tar -x</code>），不要在容器内 apt/pip 装大包。
+→ 依据：09-3 已固化——容器内无 apt 源，conda-forge 的 llvmdev 大包不可达，仅有 <code>mirrors.ustc.edu.cn</code> 与 <code>mirrors.aliyun.com</code> 白名单。</p>
+<p><strong>I9｜要写任何自检或巡检脚本</strong>
+→ 先做能力探测（版本 / 容器列表 / 卷），再谈健康度。
+→ 依据：<code>podman system df</code> 报错、<code>podman ps</code> 只打印帮助（R-18 / R-22），而 <code>container ps</code>、<code>images</code>、<code>volume inspect</code> 均正常。</p>
+<p><strong>I10｜要在脚本里调用 podman</strong>
+→ 用 <code>podman</code>（走 PATH）并断言版本，或显式接受 3.4.4 的行为差异；不要写死 <code>/usr/bin/podman</code>。
+→ 依据：分流包装器（R-11），写死绝对路径会静默降级。</p>
+<h2 id="5-e">5. 萃取（E）：可复用手法与一次性结论</h2>
+<h3 id="51">5.1 可复用的检查手法</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>手法</th>
+<th>怎么做</th>
+<th>通过判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M1</td>
+<td>三步能力探测</td>
+<td><code>podman --version</code> → <code>podman info --format '{{.Host.Security.Rootless}}'</code> → <code>podman container ps --all</code></td>
+<td>版本符合预期、<code>true</code>、能列出容器</td>
+</tr>
+<tr>
+<td>M2</td>
+<td>双口径体积记录</td>
+<td>同时记 <code>podman images</code> 与 <code>inspect .Size</code>，只把字节数写进结论</td>
+<td>两口径换算误差 &lt; 1%</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>绝对余量门禁</td>
+<td><code>df -B1</code> 取可用字节，设两个阈值（XFS ≥ 50 GB、根 ≥ 5 GiB）</td>
+<td>均高于阈值</td>
+</tr>
+<tr>
+<td>M4</td>
+<td>挂载契约探针</td>
+<td>容器内写探针文件，<code>stat -c '%a %u'</code></td>
+<td><code>700 1006</code>，且宿主侧可见</td>
+</tr>
+<tr>
+<td>M5</td>
+<td>卷占用实测</td>
+<td><code>du -sb &lt;mountpoint&gt;/_data</code></td>
+<td>与上一次记录同量级</td>
+</tr>
+<tr>
+<td>M6</td>
+<td>graphroot 落点验证</td>
+<td><code>readlink -f /home/ai/.local/share/containers/storage</code></td>
+<td>指向 <code>.agents/podman-storage/storage</code></td>
+</tr>
+<tr>
+<td>M7</td>
+<td>镜像静态契约审计</td>
+<td><code>bash scripts/audit-image-contract.sh</code></td>
+<td><code>exit=0</code>，<code>total=10 pass=10</code>（带卷 12）</td>
+</tr>
+<tr>
+<td>M8</td>
+<td>容器清单用长路径</td>
+<td><code>podman container ps --all</code></td>
+<td>有输出，不打印帮助</td>
+</tr>
+<tr>
+<td>M9</td>
+<td>VHDX 三查</td>
+<td><code>wsl -l -v</code> + <code>Get-Item.Length</code> + <code>fsutil sparse queryflag</code></td>
+<td>Version=2、长度合理、sparse 已设</td>
+</tr>
+<tr>
+<td>M10</td>
+<td>分层落盘</td>
+<td>环境进层、产物进卷、指针进层（<code>.pth</code>）</td>
+<td>B1 零实体 + C1 解析到卷</td>
+</tr>
+<tr>
+<td>M11</td>
+<td>提交前基线</td>
+<td><code>git status --porcelain</code> + <code>rev-list --left-right --count</code></td>
+<td>仅预期文件变动</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52-2026-11-06">5.2 一次性结论（只对 2026-11-06 这个现场成立，不要外推）</h3>
+<ul>
+<li>D: 可用 30.62 GB、两台 machine 均未运行（R-03 / R-10）。</li>
+<li>XFS 已用 99%、可用 293.28 GiB；根分区可用 12.67 GiB（R-17）。</li>
+<li>当前镜像清单与体积（26 / 14 / 2.37 / 1.46 GB 等，R-13）。</li>
+<li><code>npu-toolchain</code> Up 3 days、<code>npu-toolchain-minimal</code> Up 25 hours（R-19）。</li>
+<li><code>crun130</code> 只定义在 <code>containers-5.conf</code> 中；3.4.4 读不到该覆盖文件，会把运行时回退为 <code>crun</code>（R-18）——这是版本分流的后果，不是坏二进制。</li>
+<li>EOL/CRLF 残留 3,275 处（R-23），是治理进度快照。</li>
+</ul>
+<h3 id="53">5.3 反模式</h3>
+<ol>
+<li><strong>用 <code>podman images</code> 的 GB 数字做容量规划</strong>——十进制与二进制混读会差 7%，且掩盖真实字节。</li>
+<li><strong>用 <code>podman ps</code> 判断容器状态</strong>——本机会打印帮助（R-22），看起来「没有容器」。</li>
+<li><strong>用 <code>podman system df</code> 做存储统计</strong>——本机直接报错（R-18），且即使正常也含 infra 容器瑕疵。</li>
+<li><strong>写死 <code>/usr/bin/podman</code></strong>——静默降级到 3.4.4（R-11）。</li>
+<li><strong>把 <code>/home/ai/.local/share/containers/storage</code> 当真实路径做备份或清理</strong>——它是软链入口（R-12 / V7）。</li>
+<li><strong>在容器内 apt/pip 装大工具链</strong>——网络白名单不允许，且会把镜像撑大（09-3）。</li>
+<li><strong>把构建产物写回 bind 挂载的工作区</strong>——会污染源码树，且 <code>du</code> 统计被 15 TB 共享盘淹没。</li>
+<li><strong>用百分比判断磁盘可用性</strong>——99% 附近没有分辨率（V4）。</li>
+</ol>
+<h2 id="6-c">6. 交付（C）：分场景决策表与开工检查清单</h2>
+<h3 id="61">6.1 分场景决策表</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>首选</th>
+<th>次选</th>
+<th>不要选</th>
+<th>判定依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只跑 CPU 构建（tvm / xmnn），产物落卷</td>
+<td><strong>C 路</strong>：远端 <code>npu-toolchain</code> 容器 + <code>npu-build</code> 卷</td>
+<td>D 路：远端宿主直接跑</td>
+<td>A 路：WSL 内跑（无 gcc/conda，且 D: 仅 30.62 GB）</td>
+<td>R-07 / R-03 / R-15</td>
+</tr>
+<tr>
+<td>需要 systemd / 内核模块 / 网络命名空间实验</td>
+<td><strong>A 路</strong>：WSL2 <code>openkylin-test</code>（<code>systemd=true</code>）</td>
+<td>D 路：远端宿主 systemd</td>
+<td>容器内起 systemd（rootless 不允许）</td>
+<td>R-07</td>
+</tr>
+<tr>
+<td>需要长期驻留（天级及以上）</td>
+<td><strong>C 路</strong> + 显式重启策略或宿主 systemd</td>
+<td>D 路：宿主服务</td>
+<td>B 路：Podman machine（默认不运行）</td>
+<td>R-19 / R-10</td>
+</tr>
+<tr>
+<td>只是临时验证一条命令</td>
+<td><strong>C 路</strong>：<code>podman run --rm --network none</code></td>
+<td>A 路：WSL 一次性命令</td>
+<td>新建 machine / 重新 import 发行版</td>
+<td>R-10 / R-08</td>
+</tr>
+<tr>
+<td>需要在 Windows 侧看图形桌面</td>
+<td><strong>A 路</strong>：桌面发行版 + xrdp</td>
+<td>—</td>
+<td>远端容器（无 X 服务）</td>
+<td>08 文档</td>
+</tr>
+<tr>
+<td>需要读写 15 TB 共享数据</td>
+<td><strong>C 路 / D 路</strong>：服务器本地 XFS 直读</td>
+<td>A 路：drvfs 挂载（有缓存与语义损耗）</td>
+<td>在 SMB 上直接跑构建</td>
+<td>R-17 / 2.2</td>
+</tr>
+<tr>
+<td>完全离线、不能拉镜像</td>
+<td><strong>C 路</strong>：镜像与卷已就位</td>
+<td>—</td>
+<td>任何需要 <code>pull</code> 的路径</td>
+<td>09-3</td>
+</tr>
+<tr>
+<td>需要 root 权限改宿主配置</td>
+<td><strong>D 路</strong>：远端宿主会话</td>
+<td>—</td>
+<td>容器内提权（rootless 不可能）</td>
+<td>设计前提</td>
+</tr>
+<tr>
+<td>需要在 Windows 桌面上双击运行 Linux 工具</td>
+<td><strong>A 路</strong></td>
+<td><strong>B 路</strong></td>
+<td>—</td>
+<td>R-01 / R-10</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62-5">6.2 下次开工前 5 分钟检查清单</h3>
+<p>逐条执行，任一条不符先停下来归因，不要「先跑起来再说」。</p>
+<ol>
+<li><strong>身份与版本</strong>：<code>podman --version</code> → 期望 <code>5.6.2</code>；若看到 <code>3.4.4</code>，说明走到了 <code>/usr/bin/podman</code>（R-11）。
+   通过判据：版本正确；失败含义：后续所有体积与行为结论都不可信。</li>
+<li><strong>权限模型</strong>：<code>podman info --format '{{.Host.Security.Rootless}}'</code> → 期望 <code>true</code>。
+   失败含义：当前不是 rootless 会话，挂载与 UID 结论全部失效。</li>
+<li><strong>存储落点</strong>：<code>readlink -f /home/ai/.local/share/containers/storage</code> → 期望 <code>/media/pc/data/ai/.agents/podman-storage/storage</code>（R-12）。
+   失败含义：软链断了，podman 会看到一个空存储。</li>
+<li><strong>余量</strong>：<code>df -B1 /media/pc/data /</code> → XFS 可用 ≥ 50 GB、根可用 ≥ 5 GiB（R-17）。
+   失败含义：本次构建有把分区写满的风险，先清理或换目标。</li>
+<li><strong>能力探测</strong>：<code>podman container ps --all</code>、<code>podman images</code>、<code>podman volume inspect npu-build</code> 三条都要有数据（R-19 / R-13 / R-15）。
+   失败含义：容器运行时或存储不可用；注意<strong>不要</strong>用 <code>podman ps</code> 或 <code>podman system df</code> 作为判据（R-18 / R-22）。</li>
+<li><strong>挂载契约</strong>：容器内探针 <code>stat -c '%a %u'</code> → <code>700 1006</code>，且文件在宿主侧可见。
+   失败含义：bind 或 <code>--userns=keep-id</code> 未生效，构建产物会写到错误属主。</li>
+<li><strong>静态契约</strong>：<code>bash scripts/audit-image-contract.sh</code> → <code>exit=0</code>、<code>total=10 pass=10</code>（带卷 12，R-20）。
+   失败含义：镜像内容与规格不符；注意这只证明镜像，不证明环境（V5）。</li>
+<li><strong>WSL 侧（仅当本次要用 A 路）</strong>：<code>wsl -l -v</code> → Version=2；<code>fsutil sparse queryflag D:\WSL\openkylin-test\ext4.vhdx</code> → 已设 sparse（R-01 / R-02）。
+   失败含义：发行版状态异常或 VHDX 已失去稀疏属性，磁盘增长会失控。</li>
+<li><strong>版本控制基线</strong>：<code>git status --porcelain</code> → 仅预期文件；<code>git rev-list --left-right --count origin/main...HEAD</code> 与开工前记录一致（M11）。
+   失败含义：工作区有其他未预期改动，后续提交可能混入。</li>
+</ol>
+<h3 id="63">6.3 本文件状态</h3>
+<ul>
+<li>本文件（Markdown 与同名 HTML）按委托要求<strong>未提交 Git、未 push</strong>；<code>doc/index.md</code> 与 09 入口的登记同属工作区改动，同样未提交。</li>
+<li>未删除、未移动任何既有文件；未触碰 <code>vendor/awesome-okf</code>；未改动此前 9 条未推送提交。</li>
+</ul>
+<h2 id="7">7. 不确定性与证伪条件</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>不确定项</th>
+<th>现状</th>
+<th>怎样才能证伪/确认</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>U1</td>
+<td>VHDX 写入 1 GiB 后 Δ=0 是否可外推</td>
+<td>单次观测（R-06）</td>
+<td>连续写入 10 GiB 并分段记录长度；若线性增长则「写入不膨胀」不成立</td>
+</tr>
+<tr>
+<td>U2</td>
+<td><code>podman ps</code> 打印帮助的根因</td>
+<td>两次复现（R-22），未归因</td>
+<td>在干净 <code>env -i</code> 下复跑；若恢复正常则为环境/包装器问题，否则为该构建裁剪</td>
+</tr>
+<tr>
+<td>U3</td>
+<td>历史「13 与 26 GiB」冲突</td>
+<td>本轮无法复现（V6）</td>
+<td>找到当时的镜像 ID 与命令原文；否则只能按单位混读解释</td>
+</tr>
+<tr>
+<td>U4</td>
+<td>解压后 rootfs 1,182,607,360 B</td>
+<td>前序实测，本轮未复测（R-05）</td>
+<td>重新解压并 <code>wc -c</code></td>
+</tr>
+<tr>
+<td>U5</td>
+<td>graphroot 43.45 GiB 的下界误差</td>
+<td>权限拒绝目录数未统计（R-16）</td>
+<td>以 root 或有权限的身份复跑 <code>du -sb</code>，差值即误差量级</td>
+</tr>
+<tr>
+<td>U6</td>
+<td>「全远端更省」依赖 D: 余量假设</td>
+<td>依赖 30.62 GB 这一现场值</td>
+<td>若 D: 扩容到 TB 级，结论应重新评估（V1）</td>
+</tr>
+<tr>
+<td>U7</td>
+<td>审计 10 项与 <code>verify.sh</code> 14 项口径不同</td>
+<td>11 号已披露</td>
+<td>两套口径不可互相替代，任何「通过率」必须注明口径</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_1">相关文档</h2>
+<ul>
+<li><a href="09-npu-toolchain-windows-host.md">入口索引</a></li>
+<li><a href="09-2-mounts-uid-storage.md">09-2 挂载与 UID 策略</a></li>
+<li><a href="09-3-toolchain-provisioning.md">09-3 工具链供给</a></li>
+<li><a href="09-5-acceptance-and-evidence.md">09-5 验收标准与实测证据</a></li>
+<li><a href="10-milestone-retro-remote-podman.md">10 里程碑复盘（WSL → 远程 Podman）</a></li>
+<li><a href="11-milestone-retro-eol-and-remote-connection.md">11 里程碑复盘（EOL/CRLF 治理与远程连接收口）</a></li>
+<li><a href="index.md">文档站点首页</a></li>
+</ul>
+</main>
+</div>
+</body>
+</html>

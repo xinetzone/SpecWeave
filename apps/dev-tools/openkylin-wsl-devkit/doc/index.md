@@ -79,6 +79,12 @@ WSL 收尾与空间回收、远程连接收口，以及「CRLF 致解析失败�
 [进入](11-milestone-retro-eol-and-remote-connection.md)
 :::
 
+:::{grid-item-card} 三路用法复盘（WSL / Podman / 10.16.11.3）
+面向未来的用法复盘：四组物理约束如何决定路线、五个攻击点的对抗审查、分场景决策表与开工前 5 分钟检查清单。
+
+[进入](12-usage-retro-wsl-podman-remote-host.md)
+:::
+
 ::::
 
 ```{toctree}
@@ -102,4 +108,5 @@ WSL 收尾与空间回收、远程连接收口，以及「CRLF 致解析失败�
 09-7-appendix-v1-wsl-deprecated
 10-milestone-retro-remote-podman
 11-milestone-retro-eol-and-remote-connection
+12-usage-retro-wsl-podman-remote-host
 ```
