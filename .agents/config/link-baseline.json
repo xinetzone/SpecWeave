@@ -1,31 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-09T19:48:58",
+  "generated_at": "2026-11-09T20:48:00",
   "entries": [
-    {
-      "source": ".trae/skills/pattern-to-methodology-library/assets/pattern-template.md",
-      "target": "../../../../knowledge/<域>/<bundle-id>/index.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/skills/pattern-to-methodology-library/assets/pattern-template.md",
-      "target": "../<other-area 或本目录>/<id>.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/caffe-framework/conv-gemm-optimization/summary-report.md",
-      "target": "performance-charts.html",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
     {
       "source": ".trae/specs/core-foundation/README.md",
       "target": "../../../apps/prompt_extraction/README.md",
@@ -155,43 +131,11 @@
       "review_by": "2027-02-07"
     },
     {
-      "source": ".trae/specs/create-miaowu-docs-okf-wiki/review.md",
-      "target": "09-file-storage.md",
-      "count": 2,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/digital-economy-okf-wiki/review.md",
-      "target": "sheke/index.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
       "source": ".trae/specs/docs-restructure/README.md",
       "target": "../../../docs/README.md",
       "count": 1,
       "since": "2026-11-09",
       "reason": "deleted",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/docs-restructure/README.md",
-      "target": "readme-completion-plan/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/financial-economics-okf-wiki/facts.md",
-      "target": "references/02-verification.md",
-      "count": 2,
-      "since": "2026-11-09",
-      "reason": "unclassified",
       "review_by": "2027-02-07"
     },
     {
@@ -251,155 +195,11 @@
       "review_by": "2027-02-07"
     },
     {
-      "source": ".trae/specs/infra-env/xmnn-overlay-rebuild/review.md",
-      "target": "file_path/d:/spaces/SpecWeave/.trae/specs/xmnn-overlay-rebuild/tasks.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "ai-app-survival-okf-wiki/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "conda-source-okf-wiki/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "free-llm-api-roundup/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "jupyter-extension-template-okf/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "jupyterlab-translate-wiki/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "knowledge-consolidation/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "llm-hallucination-governance-okf-wiki/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "mattpocock-skills-wiki/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "nuitka-okf-wiki/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "openmaic-wiki-20260909/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "pi-agent-harness-okf-wiki/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "podman-py-wiki-r3/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "sphinx-argparse-okf-wiki/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "tkinter-okf-wiki/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "toolbox-source-okf-wiki/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "volcengine-agent-plan-wiki-followups/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/README.md",
-      "target": "wechat-presence-joy-meditation-blog-okf-wiki/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
       "source": ".trae/specs/okf-wiki-ecosystem/ai-app-survival-okf-wiki/facts.md",
       "target": "verification.md",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -407,7 +207,7 @@
       "target": "../../../docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -415,7 +215,7 @@
       "target": "../../../docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -423,7 +223,7 @@
       "target": "../../../docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -431,7 +231,7 @@
       "target": "../../../docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -463,31 +263,7 @@
       "target": "../../../docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/codex-agent-workflow-practices/spec.md",
-      "target": "../../agent-platform-notes/index.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/codex-agent-workflow-practices/spec.md",
-      "target": "../../context-optimization/index.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/codex-agent-workflow-practices/spec.md",
-      "target": "../../planning-with-files/index.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -511,7 +287,7 @@
       "target": "../08-systems-infrastructure/conda-dev-github-wiki/00-overview.md",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -547,30 +323,6 @@
       "review_by": "2027-02-07"
     },
     {
-      "source": ".trae/specs/okf-wiki-ecosystem/ssh-python-okf-wiki/netmiko-insights.md",
-      "target": "../../paramiko/concepts/02-ssh-client.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/token-economy-explosion/spec.md",
-      "target": "../../agent-industry-research/index.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/token-economy-explosion/spec.md",
-      "target": "../../domestic-model-token-export/index.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
       "source": ".trae/specs/okf-wiki-ecosystem/volcengine-agent-plan-wiki-followups/tasks.md",
       "target": "../../../docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agent-plan-wiki/06-crossmodal-paradigm.md",
       "count": 1,
@@ -583,7 +335,7 @@
       "target": "00-overview.md",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -591,7 +343,7 @@
       "target": "01-product-intro.md",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -599,7 +351,7 @@
       "target": "02-core-architecture.md",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -607,7 +359,7 @@
       "target": "03-veadk-framework.md",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -615,7 +367,7 @@
       "target": "04-agentkit-sdk-cli.md",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -623,7 +375,7 @@
       "target": "05-quickstart.md",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -631,7 +383,7 @@
       "target": "06-application-scenarios.md",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -639,7 +391,7 @@
       "target": "07-core-features-detailed.md",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -647,7 +399,7 @@
       "target": "08-comparison-ecosystem.md",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -655,7 +407,7 @@
       "target": "09-faq-best-practices.md",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -663,31 +415,7 @@
       "target": "10-resources-glossary.md",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/wecom-topic-scenarios-okf-wiki/review.md",
-      "target": "02-feedback-collection.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/wecom-topic-scenarios-okf-wiki/tasks.md",
-      "target": "02-feedback-collection.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/okf-wiki-ecosystem/workbuddy-open-platform-sharing-and-promotion-okf-wiki/review.md",
-      "target": "../index.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -727,7 +455,7 @@
       "target": "../../../docs/knowledge/learning/analyze-wechat-article-causal-ai",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -736,14 +464,6 @@
       "count": 1,
       "since": "2026-11-09",
       "reason": "moved",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/retrospectives-insights/README.md",
-      "target": "business-trends-analysis/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
       "review_by": "2027-02-07"
     },
     {
@@ -831,7 +551,7 @@
       "target": "../../../../docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -856,14 +576,6 @@
       "count": 1,
       "since": "2026-11-09",
       "reason": "moved",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/retrospectives-insights/create-codewhale-wiki-tutorial/spec.md",
-      "target": "../../../okf-wiki-ecosystem/knowledge-base-wiki-template/template",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
       "review_by": "2027-02-07"
     },
     {
@@ -1020,14 +732,6 @@
     },
     {
       "source": ".trae/specs/standards-tools/myst-to-agentspec-migration-analysis/spec.md",
-      "target": "../../../../../.agents/scripts/mdi/parser.py",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/standards-tools/myst-to-agentspec-migration-analysis/spec.md",
       "target": "../../../../docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/01-myst-syntax.md",
       "count": 1,
       "since": "2026-11-09",
@@ -1040,54 +744,6 @@
       "count": 1,
       "since": "2026-11-09",
       "reason": "moved",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/workspace-governance/analyze-xuanspace-through-boshu-laozi/tasks.md",
-      "target": "<相对路径>.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/workspace-governance/bundles-grouping-refactor/review.md",
-      "target": "../../projects/awesome-okf-xs/doc/index.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/workspace-governance/bundles-grouping-refactor/spec.md",
-      "target": "../../projects/awesome-okf-xs/.agents/rules/frontmatter.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/workspace-governance/bundles-grouping-refactor/spec.md",
-      "target": "../../projects/awesome-okf-xs/doc/bundles",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/workspace-governance/bundles-grouping-refactor/spec.md",
-      "target": "../../projects/awesome-okf-xs/doc/index.md",
-      "count": 4,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": ".trae/specs/workspace-governance/bundles-grouping-refactor/tasks.md",
-      "target": "../../projects/awesome-okf-xs/doc/index.md",
-      "count": 2,
-      "since": "2026-11-09",
-      "reason": "other",
       "review_by": "2027-02-07"
     },
     {
@@ -1111,7 +767,7 @@
       "target": "../../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -1127,7 +783,7 @@
       "target": "../../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -1227,22 +883,6 @@
       "review_by": "2027-02-07"
     },
     {
-      "source": ".trae/specs/xmnn-packaging/xmnn-client-directory/tasks.md",
-      "target": "../xmnn-releases",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "apps/admin-console/README.md",
-      "target": "../../../.trae/specs/admin-console/spec.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
       "source": "apps/docker-images/devcontainer-base/docs/PY314T-C-EXTENSION-GUIDE.md",
       "target": "templates/cmake-cext/CMakeLists.txt",
       "count": 1,
@@ -1283,19 +923,11 @@
       "review_by": "2027-02-07"
     },
     {
-      "source": "apps/docker-images/devcontainer-base/docs/RELEASE-v2.md",
-      "target": "scripts/deep-verify.py",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
       "source": "apps/docker-images/devcontainer-base/variants/ai-dev/AGENTS.md",
       "target": "../llm-agent/AGENTS.md",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -1303,7 +935,7 @@
       "target": "../llm-agent/README.md",
       "count": 1,
       "since": "2026-11-09",
-      "reason": "unclassified",
+      "reason": "deleted",
       "review_by": "2027-02-07"
     },
     {
@@ -1323,30 +955,6 @@
       "review_by": "2027-02-07"
     },
     {
-      "source": "apps/docker-images/pytorch-base/.agents/AGENTS.md",
-      "target": "../../AGENTS.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "apps/docker-images/pytorch-base/.agents/AGENTS.md",
-      "target": ".agents/rules/build.md",
-      "count": 2,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "apps/docker-images/pytorch-base/.agents/AGENTS.md",
-      "target": ".agents/rules/dockerfile.md",
-      "count": 2,
-      "since": "2026-11-09",
-      "reason": "depth",
-      "review_by": "2027-02-07"
-    },
-    {
       "source": "apps/docker-images/xmnn-runtime/docker/.agents/README.md",
       "target": "lib/logging.sh",
       "count": 1,
@@ -1358,22 +966,6 @@
       "source": "docs/knowledge/tech/tvm-ffi-wiki/00-overview.md",
       "target": "01-core-concepts.md",
       "count": 2,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/archives/spec-working-notes/caffe-framework/caffe-ffi-followup-fixes-analysis/openmp-eltwise-pooling-examples.md",
-      "target": "eltwise_layer.cpp",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/archives/spec-working-notes/caffe-framework/caffe-ffi-followup-fixes-analysis/openmp-eltwise-pooling-examples.md",
-      "target": "pooling_layer.cpp",
-      "count": 1,
       "since": "2026-11-09",
       "reason": "unclassified",
       "review_by": "2027-02-07"
@@ -1408,14 +1000,6 @@
       "count": 1,
       "since": "2026-11-09",
       "reason": "deleted",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-workbuddy-harness-seven-concepts/retrospective.md",
-      "target": "checklist.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "unclassified",
       "review_by": "2027-02-07"
     },
     {
@@ -1492,58 +1076,10 @@
     },
     {
       "source": "docs/retrospective/patterns/architecture-patterns/multidomain-inv-warmup-pr-cache-pipeline.md",
-      "target": "../../../projects/awesome-okf-xs/.github/workflows/pages.yml",
-      "count": 5,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/patterns/architecture-patterns/multidomain-inv-warmup-pr-cache-pipeline.md",
-      "target": "../../../projects/awesome-okf-xs/doc/conf.py",
-      "count": 3,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/patterns/architecture-patterns/multidomain-inv-warmup-pr-cache-pipeline.md",
       "target": "../../../projects/awesome-okf-xs/tasks/docs.py",
       "count": 2,
       "since": "2026-11-09",
       "reason": "moved",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/patterns/code-patterns/cross-language-three-layer-logging.md",
-      "target": "../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/include/caffe_ffi/log.hpp",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/patterns/code-patterns/cross-language-three-layer-logging.md",
-      "target": "../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/python/caffe_ffi/__init__.py",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/patterns/code-patterns/cross-language-three-layer-logging.md",
-      "target": "../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/python/caffe_ffi/tools/debug.py",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "moved",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/patterns/code-patterns/cross-language-three-layer-logging.md",
-      "target": "../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/src/caffe_ffi/_caffe_ffi.cc",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
       "review_by": "2027-02-07"
     },
     {
@@ -1579,22 +1115,6 @@
       "review_by": "2027-02-07"
     },
     {
-      "source": "docs/retrospective/patterns/code-patterns/examples/three-layer-logging/README.md",
-      "target": "../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/include/caffe_ffi/log.hpp",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/patterns/code-patterns/ffi-memory-leak-autouse-fixture.md",
-      "target": "../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/tests/python/conftest.py",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
       "source": "docs/retrospective/patterns/code-patterns/fixuid-runtime-uid-mapping.md",
       "target": "../reports/build-engineering/retrospective-devcontainer-base-seven-concepts-v2-20260819/README.md",
       "count": 1,
@@ -1611,30 +1131,6 @@
       "review_by": "2027-02-07"
     },
     {
-      "source": "docs/retrospective/patterns/code-patterns/resource-counter-primitive-binding.md",
-      "target": "../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/include/caffe_ffi/common.hpp",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/patterns/code-patterns/resource-counter-primitive-binding.md",
-      "target": "../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/src/caffe_ffi/blob.cpp",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/patterns/code-patterns/zero-copy-tensor-verification.md",
-      "target": "../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/tests/python/test_blob.py",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
       "source": "docs/retrospective/plans/q4-2026-ecosystem-construction-plan.md",
       "target": "../../../docs/retrospective/reports/milestone/okf-ecosystem-milestone-retrospective-20260819.md",
       "count": 1,
@@ -1648,22 +1144,6 @@
       "count": 1,
       "since": "2026-11-09",
       "reason": "moved",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/reports/2026-08-25-xuanspace-milestone-retro.md",
-      "target": "../../../projects/xuanspace/docs/cli/index.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/reports/2026-08-25-xuanspace-milestone-retro.md",
-      "target": "../../../projects/xuanspace/docs/okf/index.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
       "review_by": "2027-02-07"
     },
     {
@@ -1960,30 +1440,6 @@
       "count": 1,
       "since": "2026-11-09",
       "reason": "moved",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/reports/task-reports/retrospective-alipay-aipay-windows-install-20260723.md",
-      "target": "../../../../skills/alipay-aipay/SKILL.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/reports/task-reports/retrospective-alipay-aipay-windows-install-20260723.md",
-      "target": "../../../../skills/alipay-aipay/VERSION",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/retrospective/reports/task-reports/retrospective-alipay-aipay-windows-install-20260723.md",
-      "target": "../../../../skills/alipay-aipay/references/normal/alipay-cli-env.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "other",
       "review_by": "2027-02-07"
     },
     {
