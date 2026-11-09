@@ -105,6 +105,16 @@ JUNCTION_ALIAS_REASON = "junction-alias"
 _TRACKED_INDEX_CACHE: dict[str, set[str] | None] = {}
 
 
+def clear_tracked_index_cache() -> None:
+    """清空 git 索引缓存。
+
+    缓存按仓库根目录常驻进程，单次 CLI 运行只读一次索引；但同一进程内
+    多次调用（测试、批处理、基线更新后复扫）必须看到最新索引，否则新增
+    文件会被误判为未跟踪而过滤掉。入口脚本在每次执行前调用本函数。
+    """
+    _TRACKED_INDEX_CACHE.clear()
+
+
 def _git_tracked_index(repo_root: Path) -> set[str] | None:
     """返回仓库 git 索引中全部文件的 posix 相对路径集合。
 
@@ -252,6 +262,114 @@ def filter_untracked_paths(
     for reason in skipped.values():
         stats[reason] = stats.get(reason, 0) + 1
     return kept, stats
+
+
+def git_tracked_files(repo_root: Path) -> set[str] | None:
+    """返回仓库 git 索引中的 posix 相对路径集合（None 表示索引不可用）。"""
+    return _git_tracked_index(repo_root)
+
+
+# ============================================================================
+# 测试夹具数据跳过（check-links 专用）
+# ============================================================================
+# 判据是「文件 + 形态」，不是「整个 tests/ 目录」一刀切：
+#   ① 形态：文件位于 tests/（或 test/）下的 fixtures/（或 testdata/、test_data/）
+#      目录——这是测试数据的约定位置，其中的链接是喂给解析器的假路径；
+#   ② 文件：文件名不是 README.md / index.md——夹具目录里的导航文档仍按真实
+#      文档检查，避免把写在夹具目录里的真文档顺手豁免；
+#   ③ 引用：该文件名被同源 tests 树中的 Python 测试以字符串常量引用，证明确实
+#      作为夹具被消费；未被任何测试引用的 Markdown 一律继续检查（宁可多查）。
+# 另外只跳过 git 已跟踪的夹具文件，且 --path 点名的单个文件永不跳过。
+
+TEST_FIXTURE_DIR_NAMES = frozenset({"fixtures", "testdata", "test_data"})
+TEST_ROOT_NAMES = frozenset({"tests", "test"})
+NAV_DOC_NAMES = frozenset({"readme.md", "index.md"})
+
+_TEST_REFERENCE_CACHE: dict[tuple[str, str], bool] = {}
+
+
+def _tests_fixture_location(path: Path, repo_root: Path) -> tuple[list[str], int] | None:
+    """返回 (仓库相对路径分段, tests 段下标)，当且仅当路径位于 tests/**/fixtures 下。"""
+    try:
+        rel = Path(os.path.abspath(path)).relative_to(Path(os.path.abspath(repo_root)))
+    except ValueError:
+        return None
+    parts = list(rel.parts)
+    lowered = [p.lower() for p in parts]
+    tests_idx = None
+    for i, part in enumerate(lowered[:-1]):
+        if part in TEST_ROOT_NAMES:
+            tests_idx = i  # 取最深的 tests 段
+    if tests_idx is None:
+        return None
+    if not any(part in TEST_FIXTURE_DIR_NAMES for part in lowered[tests_idx + 1 : -1]):
+        return None
+    return parts, tests_idx
+
+
+def _is_referenced_by_tests(path: Path, tests_root: Path) -> bool:
+    """判断夹具文件名是否被同源 tests 树中的 Python 测试以字符串常量引用。"""
+    name = path.name
+    key = (str(tests_root), name)
+    if key in _TEST_REFERENCE_CACHE:
+        return _TEST_REFERENCE_CACHE[key]
+    patterns = (f'"{name}"', f"'{name}'")
+    found = False
+    try:
+        for py_file in tests_root.rglob("*.py"):
+            try:
+                text = py_file.read_text(encoding="utf-8", errors="ignore")
+            except OSError:
+                continue
+            if any(pattern in text for pattern in patterns):
+                found = True
+                break
+    except OSError:
+        found = False
+    _TEST_REFERENCE_CACHE[key] = found
+    return found
+
+
+def is_test_fixture_markdown(path: Path, repo_root: Path) -> bool:
+    """判断 Markdown 文件是否是测试夹具数据（三条判据见本节顶部注释）。"""
+    if path.name.lower() in NAV_DOC_NAMES:
+        return False
+    location = _tests_fixture_location(path, repo_root)
+    if location is None:
+        return False
+    parts, tests_idx = location
+    tests_root = Path(repo_root).joinpath(*parts[: tests_idx + 1])
+    return _is_referenced_by_tests(path, tests_root)
+
+
+def filter_test_fixture_paths(
+    md_files: list[Path],
+    repo_root: Path,
+    explicit_paths: set[Path] | None = None,
+) -> tuple[list[Path], list[Path]]:
+    """剔除测试夹具数据 Markdown，返回 (保留列表, 被跳过列表)。
+
+    显式点名的单个文件与未跟踪文件不参与跳过：前者保证「指定了文件就真的查」，
+    后者保证跳过集只豁免受版本控制的夹具数据。
+    """
+    explicit = {Path(os.path.abspath(p)) for p in (explicit_paths or set())}
+    tracked = _git_tracked_index(repo_root)
+    if tracked is None:
+        return list(md_files), []
+    kept: list[Path] = []
+    skipped: list[Path] = []
+    for md_path in md_files:
+        if Path(os.path.abspath(md_path)) in explicit:
+            kept.append(md_path)
+            continue
+        if _literal_relative(md_path, repo_root) not in tracked:
+            kept.append(md_path)
+            continue
+        if is_test_fixture_markdown(md_path, repo_root):
+            skipped.append(md_path)
+        else:
+            kept.append(md_path)
+    return kept, skipped
 
 
 def extract_title(path: Path | str) -> str:

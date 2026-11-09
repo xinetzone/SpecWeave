@@ -42,9 +42,17 @@ from constants import (
 from lib.project import resolve_project_root
 from lib.link_fixer import is_code_fence_context, INLINE_LINK_RE
 from lib.cli import add_common_args, setup_safe_output
-from lib.markdown import filter_untracked_paths, find_markdown_files, is_literal_path
+from lib.markdown import (
+    clear_tracked_index_cache,
+    filter_test_fixture_paths,
+    filter_untracked_paths,
+    find_markdown_files,
+    git_tracked_files,
+    is_literal_path,
+)
 from lib.atomic_write import atomic_write_json
 from lib.cache import get_cache_path, load_cache, save_cache
+from lib import link_baseline
 
 # 匹配引用式链接定义: [ref]: url
 REF_LINK_RE = re.compile(r"^\s*\[([^\]]+)\]:\s*(.+)$", re.MULTILINE)
@@ -1006,6 +1014,9 @@ def print_bold_autolink_report(fixes: list[tuple[Path, int]], dry_run: bool = Fa
 
 def main(argv=None) -> int:
     setup_safe_output()
+    # 每次执行重新读取 git 索引：同一进程内多次调用（测试、更新基线后复扫）
+    # 必须看到最新跟踪状态，否则新增文件会被当成未跟踪而漏检。
+    clear_tracked_index_cache()
     parser = argparse.ArgumentParser(
         description="扫描 Markdown 文件中的链接，校验外部 URL 可达性与本地文件引用有效性。"
     )
@@ -1065,6 +1076,48 @@ def main(argv=None) -> int:
         action="store_true",
         default=False,
         help="与 --fix 配合使用，仅预览修复内容不写入文件",
+    )
+    parser.add_argument(
+        "--baseline",
+        action="store_true",
+        default=False,
+        help="基线模式：只报告基线之外的新增断链（存量不打印）",
+    )
+    parser.add_argument(
+        "--update-baseline",
+        action="store_true",
+        default=False,
+        help="按当前断链重写基线文件（新增条目必须提供 --reason 或 --reason-map）",
+    )
+    parser.add_argument(
+        "--reason",
+        choices=link_baseline.REASON_ENUM,
+        default=None,
+        help="新增基线条目的原因（批量默认值）",
+    )
+    parser.add_argument(
+        "--reason-map",
+        type=str,
+        default=None,
+        help="逐条原因映射 JSON（数组，元素含 source/target/reason），优先于 --reason",
+    )
+    parser.add_argument(
+        "--baseline-file",
+        type=str,
+        default=link_baseline.BASELINE_RELATIVE_PATH,
+        help=f"基线文件路径（默认 {link_baseline.BASELINE_RELATIVE_PATH}）",
+    )
+    parser.add_argument(
+        "--since",
+        type=str,
+        default=datetime.now().date().isoformat(),
+        help="新增基线条目的入账日期（默认今天）",
+    )
+    parser.add_argument(
+        "--review-by",
+        type=str,
+        default=None,
+        help="新增基线条目的复核期限（默认 since + 90 天）",
     )
     parser.add_argument(
         "--rename",
@@ -1127,6 +1180,7 @@ def main(argv=None) -> int:
     md_files = []
     file_root_map = {}  # 文件 -> 其所属扫描根目录（用于相对路径显示）
     dedup_index = {}  # 解析后实体 -> 在 md_files 中的下标（用于别名去重择优）
+    explicit_files: set[Path] = set()  # --path 点名的单文件：不参与夹具跳过
     for root in roots:
         if root.is_file():
             # 单文件输入：直接纳入扫描。find_markdown_files 对文件路径
@@ -1139,6 +1193,7 @@ def main(argv=None) -> int:
                     file_root_map[resolved] = root.parent
                     dedup_index[resolved] = len(md_files)
                     md_files.append(root)
+                explicit_files.add(resolved)
                 print("找到 1 个 Markdown 文件")
             else:
                 print(
@@ -1175,6 +1230,18 @@ def main(argv=None) -> int:
             f"（未跟踪 {skip_stats.get('untracked', 0)}，"
             f"联接别名 {skip_stats.get('junction-alias', 0)}）"
         )
+    # 跳过测试夹具数据（判据见 lib.markdown.is_test_fixture_markdown）
+    md_files, fixture_skipped = filter_test_fixture_paths(
+        md_files, project_root, explicit_files
+    )
+    if fixture_skipped:
+        print(f"跳过测试夹具数据: {len(fixture_skipped)} 个 Markdown 文件")
+        for fixture in fixture_skipped:
+            try:
+                shown = fixture.relative_to(project_root).as_posix()
+            except ValueError:
+                shown = str(fixture)
+            print(f"  - {shown}")
     if not md_files:
         # 零对象扫描必须显式告警：通过语义只属于「检查过且无断链」，
         # 不属于「什么都没检查」。
@@ -1255,6 +1322,7 @@ def main(argv=None) -> int:
     # 检查本地文件引用
     broken_local = []
     warning_local = []
+    baseline_hits: list[tuple[str, str]] = []  # (仓库相对源文件, 断链目标)
     print(f"\n1. 检查本地文件引用（共 {len(local_links)} 个）...")
     for file_path, text, url, line_num in local_links:
         file_root = file_root_map.get(file_path.resolve(), roots[0])
@@ -1263,17 +1331,117 @@ def main(argv=None) -> int:
             file_root = file_root_map.get(file_path.resolve(), roots[0])
             rel_path = file_path.relative_to(file_root) if file_root in file_path.parents else file_path
             broken_local.append((rel_path, line_num, text, url_str, message))
+            try:
+                source_rel = file_path.resolve().relative_to(project_root.resolve())
+            except ValueError:
+                source_rel = None
+            if source_rel is not None:
+                baseline_hits.append((source_rel.as_posix(), url_str))
         elif status == "directory":
             file_root = file_root_map.get(file_path.resolve(), roots[0])
             rel_path = file_path.relative_to(file_root) if file_root in file_path.parents else file_path
             warning_local.append((rel_path, line_num, text, url_str, message))
+
+    # ---- 基线模式 ----------------------------------------------------------
+    # 指纹只认（仓库相对源文件, 规范化目标），不含行号；只允许全仓扫描，
+    # 避免用子集算出错误的仓库相对路径或误清空基线。
+    baseline_summary = None
+    if args.baseline or args.update_baseline:
+        baseline_path = Path(args.baseline_file)
+        if not baseline_path.is_absolute():
+            baseline_path = Path(project_root) / baseline_path
+        tracked = git_tracked_files(project_root)
+        if tracked is None:
+            print("错误: 基线模式需要可用的 git 索引来验证源文件", file=sys.stderr)
+            return 1
+        scope_ok = (
+            len(roots) == 1
+            and Path(roots[0]).resolve() == Path(project_root).resolve()
+        )
+        if not scope_ok:
+            print(
+                "错误: 基线的 source 以仓库根为基准，只允许全仓扫描"
+                "（请去掉 --path/--paths）",
+                file=sys.stderr,
+            )
+            return 1
+        current_counts: dict[tuple[str, str], int] = {}
+        untracked_ignored = 0
+        for source_rel, url in baseline_hits:
+            # 基线只收 git 跟踪的源文件：未跟踪文件在 CI 中不存在，
+            # 既不能入账，也不能在 --baseline 下制造永久“新增”。
+            if source_rel not in tracked:
+                untracked_ignored += 1
+                continue
+            key = link_baseline.fingerprint(source_rel, url)
+            current_counts[key] = current_counts.get(key, 0) + 1
+        if args.update_baseline:
+            try:
+                existing = link_baseline.load_baseline(baseline_path, tracked)
+                reason_map = (
+                    link_baseline.load_reason_map(Path(args.reason_map))
+                    if args.reason_map
+                    else None
+                )
+                merged, stats = link_baseline.build_updated_entries(
+                    current_counts,
+                    existing,
+                    reason=args.reason,
+                    reason_map=reason_map,
+                    since=args.since,
+                    review_by=args.review_by,
+                )
+                link_baseline.save_baseline(baseline_path, merged, tracked)
+            except link_baseline.BaselineError as exc:
+                print(f"错误: {exc}", file=sys.stderr)
+                return 1
+            print(f"\n基线已更新: {baseline_path}")
+            print(
+                f"  新增 {stats['added']}，保留 {stats['kept']}，"
+                f"清理已消失 {stats['stale']}，总计 {stats['total']}"
+            )
+            if untracked_ignored:
+                print(f"  忽略未跟踪源文件的断链 {untracked_ignored} 条（不入基线）")
+            return 0
+        try:
+            baseline = link_baseline.load_baseline(baseline_path, tracked)
+        except link_baseline.BaselineError as exc:
+            print(f"错误: {exc}", file=sys.stderr)
+            return 1
+        fresh, stale = link_baseline.diff_baseline(current_counts, baseline)
+        fresh_keys = {(source, target) for source, target, _, _ in fresh}
+        broken_local = [
+            row
+            for row in broken_local
+            if link_baseline.normalize_source(str(row[0])) in tracked
+            and link_baseline.fingerprint(str(row[0]), row[3]) in fresh_keys
+        ]
+        baseline_summary = {
+            "current": len(current_counts),
+            "known": len(baseline),
+            "new": len(fresh),
+            "stale": stale,
+            "untracked_ignored": untracked_ignored,
+        }
+        print(
+            f"\n[基线] 当前断链指纹 {len(current_counts)} 条，基线内 {len(baseline)} 条；"
+            f"新增 {len(fresh)} 条，基线中已消失 {stale} 条"
+        )
+        if untracked_ignored:
+            print(f"  忽略未跟踪源文件的断链 {untracked_ignored} 条（不入基线）")
 
     if broken_local:
         print(f"   失败: {len(broken_local)} 个断链")
         for rel_path, line_num, text, url, error in broken_local:
             print(f"     [{rel_path}:{line_num}] {text} -> {url} ({error})")
     else:
-        print(f"   通过: 所有本地引用均存在")
+        if baseline_summary:
+            print(
+                f"   通过: 无基线外新增断链"
+                f"（基线内 {baseline_summary['known']} 条存量）"
+            )
+        else:
+            print(f"   通过: 所有本地引用均存在")
 
     if warning_local:
         print(f"   警告: {len(warning_local)} 个链接指向目录（IDE无法直接打开，建议链接到README.md）")
@@ -1374,6 +1542,7 @@ def main(argv=None) -> int:
                 "broken_external": len(broken_external),
                 "broken_frontmatter": len(broken_frontmatter),
             },
+            "baseline": baseline_summary,
             "broken_local": [
                 {
                     "file": str(f),
