@@ -1,0 +1,5 @@
+id = "skill"
+title = "采集-解析分离与日志复用改造 Skill"
+category = "skills/collect-api-decouple-cmd"
+date = "2026-11-09"
+version = "1.0"

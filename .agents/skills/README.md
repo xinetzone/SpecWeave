@@ -20,7 +20,7 @@ title: ".agents/skills/ 目录索引"
 
 ## Skill 列表
 
-### 命令集门面（11个）
+### 命令集门面（12个）
 
 | Skill名称 | 类型 | 对应命令集 | 核心触发词 | SKILL.md路径 |
 |-----------|------|-----------|-----------|-------------|
@@ -35,8 +35,9 @@ title: ".agents/skills/ 目录索引"
 | token-optimize-cmd | 命令门面 | Token优化 | Token优化、降本、成本优化、缓存命中率、上下文压缩、Prompt优化、LLM成本 | [token-optimize-cmd/SKILL.md](token-optimize-cmd/SKILL.md) |
 | sovereign-rollout-cmd | 命令门面 | 主权区治理资产落盘 | 提案、批准落盘、主权区变更、治理资产落盘、先提案后批准 | [sovereign-rollout-cmd/SKILL.md](sovereign-rollout-cmd/SKILL.md) |
 | github-org-bootstrap-cmd | 命令门面 | GitHub 组织命名与初始化 | 创建GitHub组织、建个org、组织名怎么起、demo组织、huncheng-lab | [github-org-bootstrap-cmd/SKILL.md](github-org-bootstrap-cmd/SKILL.md) |
+| loop-engineering-cmd | 命令门面（v1.0.0） | 当用户提到'Loop Engineering'、'循环工程'、'自动迭代'、'验证器设计'、'自动优化循环'、'AI循环'、'Loop设计'、'三要素验证'、'适用性判定'、'循环设计检查'、'Loop风险评估'时… | Loop Engineering、循环工程、自动迭代、验证器设计、自动优化循环、AI循环 | [loop-engineering-cmd/SKILL.md](loop-engineering-cmd/SKILL.md) |
 
-### 完整Skill（50个）
+### 完整Skill（55个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -90,8 +91,13 @@ title: ".agents/skills/ 目录索引"
 | okf-bundle-to-pdf | 完整Skill（v1.0.0，L1） | OKF bundle（分层索引 + 正文）→ 单文件、带双层目录 PDF 导出：七步链路（递归枚举剔除嵌套 index → 相对链接降级 → h1/h2 锚点注入 → Pandoc --toc 合并 → Mermaid 运行时渲染 → CDP generateDocumentOutline 打印 → 程序化产物断言）；含 `--dry-run` 预览门、`--channel auto` 浏览器降级（chromium→系统 Edge）、6 条错误码与 7 条 Gotchas；萃取自老子文化生态圈 bundle（23 个 .md / 12 图）188 页 / 264 条大纲实测 | bundle 转 PDF、知识包导出 PDF、多文档合并成一个 pdf、PDF 没有目录/书签、md 合集导出 pdf、OKF PDF 导出、要书签大纲和目录页 | [okf-bundle-to-pdf/SKILL.md](okf-bundle-to-pdf/SKILL.md) |
 | generation-surplus-content-gate | 完整Skill | 生成型产物「多了什么」验收门（中文名「查多了什么」）：五步链 + 零依赖验收记录校验器，位图/文档/代码/数据通用；萃取自 2026-11-06 海报生成复盘 | 生成图片多了字、有水印、AI自己加了标题、交付前检查多余内容、负向约束怎么写、挂的技能跟任务不匹配 | [generation-surplus-content-gate/SKILL.md](generation-surplus-content-gate/SKILL.md) |
 | zero-intrusion-handoff | 完整Skill | 零侵入交付留痕：全新目录落点 → 只新建不改写 → 枚举规范应做的登记动作并写成包内待补文本（含决定人与时限）→ 结构不变式机械自查 → 假绿双判识别「0 对象 PASS」与跨目录路径告警 | 不要动我的文件、不要移动、不要重命名、别碰我的文件、零侵入、只新建、继续推进、把刚才的东西存下来 | [zero-intrusion-handoff/SKILL.md](zero-intrusion-handoff/SKILL.md) |
+| skill-registration-writer | 完整Skill（v1.0.0） | 把 Skill 四处登记面的写入动作封装为可复跑的执行器：复用只读判定器的漂移事实，按 --assign 为漏登记技能显式指定分类后插入 README 与 registry 表行并同步（N个）计数… | 写入登记面、补表行、同步分类计数、生成 SKILL.toml 镜像、--assign 指定分类、--note 写版本条目 | [skill-registration-writer/SKILL.md](skill-registration-writer/SKILL.md) |
+| alipay-aipay | 完整Skill | 支付宝 AI 付站点官方 Skill | AI支付、接支付宝、接个支付、开发支付、402收款、按量付费 | [alipay-aipay/SKILL.md](alipay-aipay/SKILL.md) |
+| docx-template-report | 完整Skill（v1.3.4） | 当用户提到'模板驱动报告'、'生成报告'、'批量报告'、'报告生成'、'模板填充'、'生成docx'、'导出Word报告'、'周报'、'月报'、'报告模板'、'docxtpl'时，必须使用此技能 | 模板驱动报告、生成报告、批量报告、报告生成、模板填充、生成docx | [docx-template-report/SKILL.md](docx-template-report/SKILL.md) |
+| vendor-snapshot-parity | 完整Skill（v1.0.0） | 把第三方单体（装饰器/单例构造的 CLI parser、配置结构等）迁出又要证明与上游逐字段对等时使用 | 证明和上游一致 | [vendor-snapshot-parity/SKILL.md](vendor-snapshot-parity/SKILL.md) |
+| zhihu | 完整Skill | 使用知乎开放平台搜索知乎和全网内容、获取热榜、调用知乎直答，读取当前用户自己的知乎创作、关注与收藏，列出、检索和上传知识库，或查询开放 API 剩余额度 | zhihu | [zhihu/SKILL.md](zhihu/SKILL.md) |
 
-### 工作流门面（8个）
+### 工作流门面（10个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -103,6 +109,8 @@ title: ".agents/skills/ 目录索引"
 | dao-san-triads | 工作流门面（v1.0.0） | 「三」之本体论与三元组诊断：六类「三」解释谱系（和气/天地人/一+天地/模式/三合生物/本体显现）+ **第五义「三=关系位」统一模型** + 奥古斯丁三分法与最强反驳 + 时态检验诊断法 + 两组行动三元组四元关联 + **七条可当场判定的生存指南**（≤1200字）+ 「三之位」可迁移模式（5反模式/3问检验/L1-draft）+ 《老子》版本纪律（甲乙本/今本/楚简本不得混称）；L2 知识底座 sc-20261003-dao-san-yuan（50事实/4洞察/1模式/9条审查） | 三生万物、道生一、二生三、三之位、三元组、过去现在未来、时间三分、奥古斯丁三分法、一分为三、真问题真需求真目标、品质技能身份、生存指南、行动准则、极简原则、二选一怎么办、自我诊断、古典哲学概念 | [dao-san-triads/SKILL.md](dao-san-triads/SKILL.md) |
 | persona-brand-positioning | 工作流门面（v1.0.0） | 人格化品牌定位诊断：画层级图（品牌→子模块→子频道，避免子模块被当成品类招牌）→ 理解命名哲学三层（哲学/美学/人格）→ 补桥不改名（靠简介与页面内容承接搜索权重）→ 三环闭环按人→学→钱顺序建；含 6 条反模式、9 项安全检查清单、6 条无报错码隐性陷阱（Gotchas）、预览确认与幂等复用机制；L2 知识底座 sc-20261026-daode-masterxiong（26事实/3洞察/1模式/9行动项） | 品牌定位诊断、优化小程序简介、品牌名怎么取、人格化IP、搜索权重、简介怎么写、品牌名要不要加品类词、子站命名 | [persona-brand-positioning/SKILL.md](persona-brand-positioning/SKILL.md) |
 | private-encrypted-pdf-to-okf-wiki | 工作流门面（v1.0.0，L1） | 加密私域 PDF→OKF 知识包（七工序：S0 凭据隔离→S1 解密与文本层可信度判定→S2 结构决策（少页材料按概念维度拆分）→S3 主张五类分层→S4 原创改写与数学反解→S5 口径先行计数与声明契约化→S6 V审查与机械对账）；含 G1-G4 质量门、8 条 Gotchas、9 项安全清单与与 scanned-book-to-okf-wiki 的分工边界；L2 底座为同主题里程碑复盘报告 | 加密PDF转Wiki、密码PDF转知识包、私域材料转教程、课程讲义转OKF、内部培训材料转Wiki、加密文档转知识包 | [private-encrypted-pdf-to-okf-wiki/SKILL.md](private-encrypted-pdf-to-okf-wiki/SKILL.md) |
+| life-dimensions | 工作流门面（v1.0.0） | 生命概念分析门面：当用户询问「什么是生命」「生命是什么」「生命维度」「生命定义」「生命到底算什么」「生命的意义」… | 什么是生命、生命是什么、生命维度、生命定义、生命到底算什么、生命的意义 | [life-dimensions/SKILL.md](life-dimensions/SKILL.md) |
+| wechat-public-okf | 工作流门面 | 将微信公众号、技术博客或公开资讯文章转化为可溯源的 OKF Wiki 教程 | wechat-public-okf | [wechat-public-okf/SKILL.md](wechat-public-okf/SKILL.md) |
 
 ### Trae 内置工作流 Skill（2个，来自 external/doutops）
 

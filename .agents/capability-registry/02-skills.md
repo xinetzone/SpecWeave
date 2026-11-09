@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（50个）
+### 完整Skill（55个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -61,8 +61,13 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | okf-bundle-to-pdf | "bundle 转 PDF"、"知识包导出 PDF"、"多文档合并成一个 pdf"、"PDF 没有目录/书签"、"md 合集导出 pdf"、"OKF PDF 导出"、"要书签大纲和目录页" | 2（方案A 七步主路径 build_bundle_pdf.py / 方案B 降级路径；含 --dry-run 预览门、--channel auto 浏览器降级、CDP generateDocumentOutline 书签大纲、程序化产物断言；萃取自老子文化生态圈 bundle 实战；L1） | v1.0.0 | [skills/okf-bundle-to-pdf/SKILL.md](../skills/okf-bundle-to-pdf/SKILL.md) |
 | generation-surplus-content-gate | "生成图片多了字"、"有水印"、"AI 自己加了标题"、"多了没要求的东西"、"交付前检查"、"负向约束怎么写"、"挂的技能跟任务不匹配" | 1（五步链：预期清单→生成前负向约束→挂载语义核验→双向验收→留痕；含只读校验器 check_acceptance_record.py；L1） | v1.0.0 | [skills/generation-surplus-content-gate/SKILL.md](../skills/generation-surplus-content-gate/SKILL.md) |
 | zero-intrusion-handoff | "不要动我的文件"、"不要移动"、"不要重命名"、"别碰我的文件"、"零侵入"、"只新建"、"继续推进" | 1（六步：内容级别与落点判定 → 只新建不改写 → 枚举规范应做的登记动作 → 写成待补文本含决定人与时限 → 结构不变式机械自查 → 假绿双判读校验器输出；L1） | v1.0.0 | [skills/zero-intrusion-handoff/SKILL.md](../skills/zero-intrusion-handoff/SKILL.md) |
+| skill-registration-writer | "写入登记面"、"补表行"、"同步分类计数"、"生成 SKILL.toml 镜像"、"--assign 指定分类"、"--note 写版本条目" | 1（把 Skill 四处登记面的写入动作封装为可复跑的执行器：复用只读判定器的漂移事实，按 --assign 为漏登记技能显式指定分类后插入 README 与 registry 表行并同步（N个）计数，按 --note 在 CHANGELOG 顶部插入版本条目，镜像缺失时新建 .meta/toml/SKILL.toml；默认 dry-run，--write 才落盘…） | v1.0.0 | [skills/skill-registration-writer/SKILL.md](../skills/skill-registration-writer/SKILL.md) |
+| alipay-aipay | "AI支付"、"接支付宝"、"接个支付"、"开发支付"、"402收款"、"按量付费" | 1（支付宝 AI 付站点官方 Skill） | - | [skills/alipay-aipay/SKILL.md](../skills/alipay-aipay/SKILL.md) |
+| docx-template-report | "模板驱动报告"、"生成报告"、"批量报告"、"报告生成"、"模板填充"、"生成docx" | 1（当用户提到'模板驱动报告'、'生成报告'、'批量报告'、'报告生成'、'模板填充'、'生成docx'、'导出Word报告'、'周报'、'月报'、'报告模板'、'docxtpl'时，必须使用此技能） | v1.3.4 | [skills/docx-template-report/SKILL.md](../skills/docx-template-report/SKILL.md) |
+| vendor-snapshot-parity | "证明和上游一致" | 1（把第三方单体（装饰器/单例构造的 CLI parser、配置结构等）迁出又要证明与上游逐字段对等时使用） | v1.0.0 | [skills/vendor-snapshot-parity/SKILL.md](../skills/vendor-snapshot-parity/SKILL.md) |
+| zhihu | "zhihu" | 1（使用知乎开放平台搜索知乎和全网内容、获取热榜、调用知乎直答，读取当前用户自己的知乎创作、关注与收藏，列出、检索和上传知识库，或查询开放 API 剩余额度） | - | [skills/zhihu/SKILL.md](../skills/zhihu/SKILL.md) |
 
-### 工作流门面（8个）
+### 工作流门面（10个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -74,6 +79,8 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | dao-san-triads | "三生万物"、"道生一"、"二生三"、"三之位"、"三元组"、"过去现在未来"、"时间三分"、"奥古斯丁三分法"、"记忆注意期待"、"一分为三"、"真问题真需求真目标"、"品质技能身份"、"生存指南"、"行动准则"、"极简原则"、"二选一怎么办"、"自我诊断"、"古典哲学概念" | 1（四场景决策树：概念探究/自我诊断/行动准则/知识包沉淀；六类「三」解释谱系+第五义「三=关系位」统一模型+奥古斯丁三分法与最强反驳+时态检验+两组三元组四元关联+七条生存指南（≤1200字）+「三之位」可迁移模式（5反模式/3问检验/L1-draft）+《老子》版本纪律；L1门面 + L2 知识底座 sc-20261003-dao-san-yuan：50事实/4洞察/1模式/9条审查） | v1.0.0 | [skills/dao-san-triads/SKILL.md](../skills/dao-san-triads/SKILL.md) |
 | persona-brand-positioning | "品牌定位诊断"、"优化小程序简介"、"品牌名怎么取"、"人格化IP"、"搜索权重"、"简介怎么写"、"品牌名要不要加品类词"、"子站命名"、"做品牌怎么找定位" | 1（六步诊断工作流：画层级图→理解命名哲学三层→补桥不改名→三环闭环按人→学→钱顺序建→四视角对抗审查；含 6 条反模式+9 项安全检查清单+6 条 Gotchas 隐性陷阱+预览确认与幂等复用机制；L1门面 + L2 知识底座 sc-20261026-daode-masterxiong：26事实/3洞察/1模式/9行动项） | v1.0.0 | [skills/persona-brand-positioning/SKILL.md](../skills/persona-brand-positioning/SKILL.md) |
 | private-encrypted-pdf-to-okf-wiki | "加密PDF转Wiki"、"密码PDF转知识包"、"私域材料转教程"、"课程讲义转OKF"、"内部培训材料转Wiki"、"加密文档转知识包" | 1（七工序：S0 凭据隔离 → S1 解密与文本层可信度判定 → S2 结构决策（少页材料按概念维度拆分）→ S3 主张五类分层 → S4 原创改写与数学反解 → S5 口径先行计数与声明契约化 → S6 V审查与机械对账；含 G1-G4 质量门、8 条 Gotchas、9 项安全清单、与 scanned-book-to-okf-wiki 的分工边界；L1 门面 + L2 里程碑复盘报告） | v1.0.0 | [skills/private-encrypted-pdf-to-okf-wiki/SKILL.md](../skills/private-encrypted-pdf-to-okf-wiki/SKILL.md) |
+| life-dimensions | "什么是生命"、"生命是什么"、"生命维度"、"生命定义"、"生命到底算什么"、"生命的意义" | 1（生命概念分析门面：当用户询问「什么是生命」「生命是什么」「生命维度」「生命定义」「生命到底算什么」「生命的意义」，或进行生命边界判定（「病毒算不算生命」「XX 是不是生命」「合成生命/人工生命算不算生命」「AI 有意识算不算生命」「地外生命是否存在」），或要求从多学科/多维度分析任何生命议题（「从几个维度讲讲生命」「多角度分析生命的本质」「生命的层次」）…） | v1.0.0 | [skills/life-dimensions/SKILL.md](../skills/life-dimensions/SKILL.md) |
+| wechat-public-okf | "wechat-public-okf" | 1（将微信公众号、技术博客或公开资讯文章转化为可溯源的 OKF Wiki 教程） | - | [skills/wechat-public-okf/SKILL.md](../skills/wechat-public-okf/SKILL.md) |
 
 ### Trae 内置工作流 Skill（2个，来自 external/doutops）
 
@@ -84,7 +91,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 
 > 两者互为选型路由：有界变更→plan，复杂/高影响/跨会话→spec。派生自 Trae 内置 doutops skill（external/ 非 git 目录），中文五要素适配版；Trae 同步覆盖后以本仓库版本为准（大写路径为权威位置）。
 
-### 命令集门面（11个）
+### 命令集门面（12个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -99,6 +106,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | mermaid-cmd | "mermaid"、"流程图"、"时序图"、"状态图"、"画个图"、"图表"、"架构图"、"思维导图"、"画流程图" | 3（快速生成/检查修复/复杂协作） | v1.1.0 | [skills/mermaid-cmd/SKILL.md](../skills/mermaid-cmd/SKILL.md) |
 | token-optimize-cmd | "token优化"、"省token"、"降低成本"、"Token使用优化"、"prompt优化"、"缓存策略"、"上下文压缩"、"模型路由"、"长文档处理"、"Token成本"、"降本"、"推理成本"、"Token浪费"、"优化LLM成本" | 1（P0 禁令预检 → 浪费点审计 → 方案设计 → 评审 → 效果评估；含 27 条禁令 P0-P3 分级与三维权衡框架、渐进式路线图；L1） | v1.0.0 | [skills/token-optimize-cmd/SKILL.md](../skills/token-optimize-cmd/SKILL.md) |
 | github-org-bootstrap-cmd | "创建GitHub组织"、"建个org"、"组织名怎么起"、"demo组织"、"huncheng-lab"、"GitHub Organization" | 1（命名收敛F→V→I + gh api 自动配置） | v1.0.0 | [skills/github-org-bootstrap-cmd/SKILL.md](../skills/github-org-bootstrap-cmd/SKILL.md) |
+| loop-engineering-cmd | "Loop Engineering"、"循环工程"、"自动迭代"、"验证器设计"、"自动优化循环"、"AI循环" | 1（当用户提到'Loop Engineering'、'循环工程'、'自动迭代'、'验证器设计'、'自动优化循环'、'AI循环'、'Loop设计'、'三要素验证'、'适用性判定'、'循环设计检查'、'Loop风险评估'时，必须使用此技能） | v1.0.0 | [skills/loop-engineering-cmd/SKILL.md](../skills/loop-engineering-cmd/SKILL.md) |
 
 ### 脚本命令门面（17个）
 
