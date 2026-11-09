@@ -1,0 +1,25 @@
+id = "retro-20261106-okf-bundle-atomic-extension"
+title = "OKF 知识包里程碑复盘：共享索引下的原子化增量拓展与门禁自洽"
+date = "2026-11-06"
+scope = "project"
+type = "milestone-retrospective"
+category = "retrospective/reports/knowledge-content"
+source = "事件：一次公开知乎专栏文章被系统学习并转化为 OKF 知识包，随后经历原子提交、主仓指针闭环与两份进阶算例的拓展接线。任务：以七概念方法论编排执行里程碑复盘、洞察、萃取可复用 Skill 并导出报告。"
+facts_count = 32
+insights_count = 4
+patterns_count = 1
+actions_count = 5
+gates = ["G1", "G2", "G3", "G4", "V"]
+v_executed = true
+c_executed = false
+version = "1.0"
+
+[bindings]
+related_patterns = [
+  "shared-index-atomic-extension",
+  "gate-baseline-write-invariants",
+  "snapshot-parity-migration",
+]
+rules = []
+references = []
+skills = ["seven-concepts-cmd", "session-to-skill"]

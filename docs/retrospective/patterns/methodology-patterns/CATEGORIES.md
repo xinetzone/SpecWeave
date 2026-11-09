@@ -2,18 +2,18 @@
 
 基于模式的核心主题思想进行分类，而非成熟度等级或来源。共划分为8个主题类别，便于按场景快速定位相关模式。
 
-> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md与子目录），由 `generate-categories.py` 自动重建，最后更新：2026-10-29。
+> **数据来源**：以下计数基于各目录实际 `.md` 文件数（排除README.md与子目录），由 `generate-categories.py` 自动重建，最后更新：2026-11-06。
 
 ## 分类索引
 
 | 主题目录 | 中文名称 | 模式数量 | 核心关注点 |
 |---------|---------|---------|-----------|
 | [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 38 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
-| [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 42 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor/跨领域知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、语义漂移防御、知识系统五维根基、B2B AI产品定位、外部产品学习模板 |
+| [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 43 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor/跨领域知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、语义漂移防御、知识系统五维根基、B2B AI产品定位、外部产品学习模板 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 53 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 58 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 179 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
-| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 83 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 181 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
+| [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 84 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 11 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 49 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化、垂直场景AI三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA转化 |
 
@@ -77,6 +77,7 @@
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
 | [adversarial-review-protocol.md](research-knowledge/adversarial-review-protocol.md) | 对抗性审查协议：六模块框架（来源三级分类+可信度四级评分+五维验证+九种偏差清单+异常标记+验证日志），质量内建而非事后质检，实现77.3%一级来源、0D级内容 | L2 |
+| [assumption-substitution-for-abstraction.md](research-knowledge/assumption-substitution-for-abstraction.md) | 抽象概念落地的假设替换链 | L1 |
 | [b2b-ai-last-mile-positioning-framework.md](research-knowledge/b2b-ai-last-mile-positioning-framework.md) | B2B AI产品最后一公里定位分析框架：区分"开发框架(0→1)"与"生产平台(1→100)"的本质差异，四大价值支柱（安全合规/可观测性/集成生态/成本治理）识别企业AI落地真正壁垒，避免功能列表对比陷阱 | - |
 | [b2b-product-page-ux-five-dimensions.md](research-knowledge/b2b-product-page-ux-five-dimensions.md) | ToB产品页UX分析五维框架（信息架构/价值传达/CTA策略/视觉呈现/信任背书），含AIDA模型对应关系、反模式识别、五维检查清单 | - |
 | [b2b-product-seven-segment-ia.md](research-knowledge/b2b-product-seven-segment-ia.md) | B端技术产品页面七段式认知递进信息架构（Hero→能力→优势→场景→架构→案例→CTA），严格遵循用户决策路径，含完整性检查清单和各段设计规范 | - |
@@ -357,6 +358,7 @@
 | [module-size-bug-correlation.md](governance-strategy/module-size-bug-correlation.md) | 模块大小-Bug密度非线性相关模式（Module Size-Bug Density Correlation） | - |
 | [mutual-exclusion-composability-precheck.md](governance-strategy/mutual-exclusion-composability-precheck.md) | 机制组合互斥预检模式（Mutual-Exclusion Composability Precheck） | L1-实验性 |
 | [mvp-unvalidated-code-debt.md](governance-strategy/mvp-unvalidated-code-debt.md) | MVP未验证代码债务模式（MVP Unvalidated Code Debt） | - |
+| [negative-boundary-paired-delivery.md](governance-strategy/negative-boundary-paired-delivery.md) | 边界成对交付 | L1 |
 | [net-value-four-questions.md](governance-strategy/net-value-four-questions.md) | 净时薪四问 | L1-draft |
 | [no-touch-list.md](governance-strategy/no-touch-list.md) | 不重构清单：明确划定不改动边界防止范围蔓延 | L2 |
 | [noise-free-container.md](governance-strategy/noise-free-container.md) | 去噪容器：固定周期高密度冲刺的双层组织设计 | L1 |
@@ -368,6 +370,7 @@
 | [P-DEMO-TO-PROD-003-demo-to-prod-checklist.md](governance-strategy/P-DEMO-TO-PROD-003-demo-to-prod-checklist.md) | 智能体从Demo到生产的12项检查清单 | L1 |
 | [P-LEGACY-AI-UPGRADE-002-legacy-ai-upgrade-sop.md](governance-strategy/P-LEGACY-AI-UPGRADE-002-legacy-ai-upgrade-sop.md) | 存量业务系统智能化改造5步SOP | L1 |
 | [P-SPEC-AC-DUAL-TRACK-004-spec-hard-soft-ac-dual-track-acceptance.md](governance-strategy/P-SPEC-AC-DUAL-TRACK-004-spec-hard-soft-ac-dual-track-acceptance.md) | 知识类项目Spec「硬软AC双轨验收」模式 | L1 |
+| [pattern-dedup-three-axis-ruling.md](governance-strategy/pattern-dedup-three-axis-ruling.md) | 模式入库三维去重裁决 | L1 |
 | [pattern-tooling-progressive-extraction.md](governance-strategy/pattern-tooling-progressive-extraction.md) | 模式渐进式工具提取：L1实验阶段即可提取轻量检查清单/模板，工具使用反哺模式验证，打破"等L2才工具化"的死循环 | L1 |
 | [performance-optimization-five-step-method.md](governance-strategy/performance-optimization-five-step-method.md) | 性能优化五步法：测量→诊断→优化→验证→萃取 | L1-实验性 |
 | [phased-incremental-optimization.md](governance-strategy/phased-incremental-optimization.md) | 分层渐进优化策略：安全场景先行+复杂场景后置的风险控制方法论 | L2-validated |
@@ -525,6 +528,7 @@
 | [style-creativity-separation-control.md](ai-collaboration/style-creativity-separation-control.md) | 风格-创意分离控制：正向约束控风格一致性 + 负向约束（禁止复刻清单）保创意多样性 | L2 |
 | [subagent-atomic-task-template.md](ai-collaboration/subagent-atomic-task-template.md) | 子代理原子任务描述模板：六要素精确委托法（路径+frontmatter+大纲+导航+硬约束+Mermaid规则）消除歧义 | L2 |
 | [subagent-git-three-prohibitions.md](ai-collaboration/subagent-git-three-prohibitions.md) | 子代理"三不准"执行规范（Subagent Git Three Prohibitions） | L1 |
+| [surplus-content-acceptance-gate.md](ai-collaboration/surplus-content-acceptance-gate.md) | 查多了什么 | L1-draft |
 | [symptom-prescription-qa.md](ai-collaboration/symptom-prescription-qa.md) | 症状-处方 QA 系统：故障诊断手册式 QA，每条症状对应可执行修改指令，Agent 可自主闭环 | L2 |
 | [task-type-precheck-bias-defense.md](ai-collaboration/task-type-precheck-bias-defense.md) | 任务类型预检防偏差：对抗就近直觉偏差的防御机制，文件搜索前先做任务类型匹配 | L2 |
 | [team-shared-ai-colleague.md](ai-collaboration/team-shared-ai-colleague.md) | 团队共享 AI 同事模式：从个人独占式聊天窗口到频道共享同一 AI，上下文共享+角色分工+知识沉淀三位一体 | - |

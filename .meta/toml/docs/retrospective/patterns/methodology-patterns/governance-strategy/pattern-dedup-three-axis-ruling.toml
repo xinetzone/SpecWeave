@@ -1,0 +1,25 @@
+id = "pattern-dedup-three-axis-ruling"
+title = "模式入库三维去重裁决"
+domain = "methodology"
+layer = "governance-strategy"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+maturity = "L1"
+maturity_level = "L1-draft"
+validation_count = 1
+reuse_count = 1
+documentation_level = "complete"
+abstract_level = "L3-process"
+source = "七概念知识沉淀(sc-20261106-pattern-sedimentation)——对上一轮里程碑复盘所申报新模式的跨模式去重再裁决"
+source_report = "../../../reports/knowledge-content/pattern-sedimentation-dedup-ruling-20261106.md"
+date = "2026-11-06"
+version = "1.0"
+maturity_note = "单案例，V 门为沉淀侧自审而非独立第三方验证；跨项目迁移示例为同构推演、未实测；待第二个非同谱系案例完整应用后升级 L1.5"
+
+[bindings]
+related_patterns = [
+  "pre-check-duplication-layered-sedimentation",
+  "verification-scope-bounding",
+  "bp-nav-co-registration",
+  "shared-index-count-coupling",
+  "context-recovery-protocol",
+]

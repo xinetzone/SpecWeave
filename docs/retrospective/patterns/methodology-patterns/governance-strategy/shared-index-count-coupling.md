@@ -7,11 +7,11 @@ title: "共享索引计数耦合与同批判决"
 maturity: "L2"
 maturity_level: "L2-validated"
 validation_count: 3
-reuse_count: 3
+reuse_count: 4
 documentation_level: "standard"
 version: "1.0.0"
 created_date: "2026-10-20"
-last_updated: "2026-10-20"
+last_updated: "2026-11-06"
 source: "sc-20261020-xerj-wiki（awesome-okf-xs 子模块三次提交）"
 tags: ["shared-index", "count-coupling", "atomic-commit", "concurrent-sessions", "submodule", "commit-scope", "ci-gate"]
 trigger_conditions:
@@ -204,6 +204,9 @@ python scripts/check-toctrees.py      # 导航完整性
 | 案例 A | awesome-okf-xs 子模块新增 XERJ 知识包 | 总索引五面 + `frameworks/index.md` + `ai/index.md` + `jishu/index.md` + `practice/index.md`；并行会话另有未提交的 `jishu/iac` 新分组与 `jishu/terminal/opentui` 新束，其注册也落在同一批文件 | 裁决为「并 + 留痕」：一次提交含 84 个文件，提交信息写明同批并入内容与原因；干净检出后 654 束 / 63 组五面一致、toctree 全可达 |
 | 案例 B | 同仓第二处：XERJ 束第二轮增量（**仅束内文件**，不触碰任何共享索引） | 零耦合面（束已注册，文档数变化不进入索引计数） | 可纯原子提交：14 个文件全部落在 `frameworks/xerj/` 内，暂存集零外部文件——**证明「零耦合面」时提交纯度可以完全保住** |
 | 案例 C | 同仓第三处：新增 XERJ × DeepSeek 对比束 | 同案例 A 的五面 + `practice/index.md`（束数 22→23、目录数 20→21） | 裁决为「并 + 留痕」：29 个文件（含并行会话的 `deepseek-v41-flash-1017` 束 11 文件），提交信息如实标注；干净检出 656 束 / 63 组五面一致 |
+| 案例 D | 2026-11-06 OKF 知识包增量拓展与提交复盘（**同谱系复用**） | 共享索引五面投影 + 主仓 gitlink；并行会话在途 bundle 的注册落在同一批共享文件 | 按本模式「并 + 留痕」裁决：子项目提交 `12efe455` 一次含 3 个 bundle / 52 个 `.md`，提交信息标注同批并入内容与原因；主仓 `94f848331` 追推 gitlink。现跑 `check-bundles-index.py` 9 域 / 64 组 / 718 束、`check-toctrees.py` 全可达，均退出码 0。**同仓同工具链同谱系，仅 `reuse_count` 3→4，`validation_count` 保持 3、L2 不变** |
+
+> **复用记录与计数口径（2026-11-06）**：frontmatter 的 `reuse_count` 已由 3 更新为 4、`last_updated` 更新为 2026-11-06；上文「成熟度」章节写「验证次数 3，复用次数 3」是 2026-10-20 的快照陈述，**保留不改**。本次只新增上表案例 D 行与本段，案例 A~C 及既有论述未改写；`validation_count` 保持 3，因案例 D 与前三例同仓同谱系，不构成独立案例。依据见 [模式沉淀复核裁定报告](../../../reports/knowledge-content/pattern-sedimentation-dedup-ruling-20261106.md) §3.1 / §3.4。
 
 ## 与现有模式的关系
 

@@ -1,0 +1,27 @@
+id = "negative-boundary-paired-delivery"
+title = "边界成对交付"
+date = "2026-11-06"
+scope = "project"
+type = "methodology-pattern"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+source = "七概念里程碑复盘(sc-20261106-okf-bundle-milestone)——单源课程材料转 OKF 知识包的负向边界成对交付"
+source_report = "docs/retrospective/reports/knowledge-content/retrospective-okf-content-creation-three-rules-20261106.md"
+maturity = "L1"
+maturity_level = "L1-draft"
+validation_count = 1
+reuse_count = 0
+abstract_level = "L3-process"
+version = "1.0"
+tags = ["negative-boundary", "paired-delivery", "single-source", "flagged", "mechanical-criteria", "knowledge-package", "dedup-ruling"]
+
+[bindings]
+related_patterns = [
+  "verification-scope-bounding",
+  "pattern-dedup-three-axis-ruling",
+  "bp-nav-co-registration",
+  "blog-article-to-okf-bundle",
+  "shared-index-atomic-extension",
+]
+rules = []
+references = []
+skills = ["seven-concepts-cmd", "extraction-cmd"]

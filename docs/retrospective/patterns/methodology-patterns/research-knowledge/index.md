@@ -5,6 +5,7 @@
 :hidden:
 
 adversarial-review-protocol
+assumption-substitution-for-abstraction
 b2b-ai-last-mile-positioning-framework
 b2b-product-page-ux-five-dimensions
 b2b-product-seven-segment-ia

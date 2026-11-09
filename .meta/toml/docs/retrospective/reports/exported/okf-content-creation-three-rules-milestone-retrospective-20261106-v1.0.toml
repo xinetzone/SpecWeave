@@ -1,0 +1,24 @@
+id = "retro-20261106-okf-content-creation-three-rules-export"
+title = "单源课程材料转 OKF 知识包里程碑复盘：负向边界成对交付与并发隔离提交（导出副本）"
+date = "2026-11-06"
+scope = "project"
+type = "milestone-retrospective"
+category = "retrospective/reports/exported"
+source = "导出副本，源报告为 docs/retrospective/reports/knowledge-content/retrospective-okf-content-creation-three-rules-20261106.md"
+source_report = "docs/retrospective/reports/knowledge-content/retrospective-okf-content-creation-three-rules-20261106.md"
+facts_count = 36
+insights_count = 3
+patterns_count = 1
+attacks_count = 6
+actions_count = 4
+gates = ["G1", "G2", "G3", "G4", "V"]
+v_executed = true
+c_executed = true
+version = "1.0"
+tags = ["export", "seven-concepts", "milestone", "okf", "negative-boundary"]
+
+[bindings]
+related_patterns = ["negative-boundary-paired-delivery"]
+rules = []
+references = []
+skills = ["export-report-cmd"]

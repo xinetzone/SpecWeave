@@ -1,0 +1,25 @@
+id = "assumption-substitution-for-abstraction"
+title = "抽象概念落地的假设替换链"
+domain = "methodology"
+layer = "research-knowledge"
+category = "retrospective/patterns/methodology-patterns/research-knowledge"
+maturity = "L1"
+maturity_level = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "L3-process"
+source = "七概念知识沉淀(sc-20261106-examples-pattern-sedimentation)——ai-comic-drama-opc-transition 知识包 examples/ 四篇算例的跨文档结构化复核"
+source_report = "../../../reports/knowledge-content/pattern-sedimentation-examples-assumption-substitution-20261106.md"
+date = "2026-11-06"
+version = "1.0"
+maturity_note = "单案例（20 条事实 / 4 洞察 / 5 候选裁决），V 门为沉淀侧自审而非独立第三方验证；三个跨领域迁移示例均为同构推演、未实测；待第二个非同谱系案例完整应用后升级 L1.5"
+
+[bindings]
+related_patterns = [
+  "symbol-vs-variable-decomposition",
+  "verification-scope-bounding",
+  "negative-boundary-paired-delivery",
+  "pattern-dedup-three-axis-ruling",
+  "capability-stack-progressive-building",
+]

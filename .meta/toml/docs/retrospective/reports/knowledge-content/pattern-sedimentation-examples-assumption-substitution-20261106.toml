@@ -1,0 +1,30 @@
+id = "pattern-20261106-examples-assumption-substitution-ruling"
+title = "examples 模式沉淀：假设替换链的三维去重裁决与「另案」结案"
+date = "2026-11-06"
+scope = "module"
+type = "pattern-sedimentation-ruling"
+category = "retrospective/reports/knowledge-content"
+source = "任务：/七概念 对 projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-comic-drama-opc-transition/examples 目录做模式沉淀。对象：该目录 5 个文件、同仓模式库既有资产、上一轮裁定报告挂起的「另案」、并行会话新建模式。"
+source_report = "../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-comic-drama-opc-transition/examples/index.md"
+facts_count = 20
+insights_count = 4
+patterns_count = 1
+actions_count = 5
+gates = ["G1", "G2", "G3", "G4", "V"]
+v_executed = true
+c_executed = false
+version = "1.0"
+ruling = "4 个候选判重复/已占用/近邻特化/标准做法；1 个独立候选按策略 A 新建 assumption-substitution-for-abstraction（L1-draft）；上一轮「另案」由并行会话 negative-boundary-paired-delivery 案例 B 结案，本轮不重复申报"
+
+[bindings]
+related_patterns = [
+  "assumption-substitution-for-abstraction",
+  "pattern-dedup-three-axis-ruling",
+  "negative-boundary-paired-delivery",
+  "symbol-vs-variable-decomposition",
+  "verification-scope-bounding",
+  "capability-stack-progressive-building",
+]
+rules = []
+references = []
+skills = ["seven-concepts-cmd"]
