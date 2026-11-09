@@ -21,6 +21,7 @@ from .constants import (
     MERMAID_PATTERN,
     CROSS_REFERENCE_PATTERN,
     INNOVATION_TYPE_KEYWORDS,
+    FALLBACK_INNOVATION_KEYWORDS,
     FAILURE_CASE_PATTERN,
     ANTI_TARGET_PATTERN,
     WARNING_SIGNAL_PATTERN,
@@ -186,7 +187,10 @@ def check_cross_references(content):
 def _is_innovation_pattern(content: str) -> bool:
     """判断模式是否为创新/跨领域迁移类模式。
 
-    通过模式类型章节中的关键词检测。
+    有「## 模式类型」章节时只看该章节（宽口径，含裸「迁移」）；
+    无该章节时回退扫描开头 1000 字符，但用短语级关键词
+    （FALLBACK_INNOVATION_KEYWORDS）——开头普遍出现「迁移」二字的
+    SOP/速查/操作手册不应被兜底判为创新类。
     """
     type_section_match = re.search(
         r"##\s*模式类型\s*\n(.+?)(?=\n##|\Z)", content, re.DOTALL
@@ -194,7 +198,7 @@ def _is_innovation_pattern(content: str) -> bool:
     if type_section_match:
         type_text = type_section_match.group(1)
         return bool(INNOVATION_TYPE_KEYWORDS.search(type_text))
-    return bool(INNOVATION_TYPE_KEYWORDS.search(content[:1000]))
+    return bool(FALLBACK_INNOVATION_KEYWORDS.search(content[:1000]))
 
 
 def check_innovation_pattern_v2(content: str) -> list[CheckResult]:

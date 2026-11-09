@@ -51,6 +51,16 @@ INNOVATION_TYPE_KEYWORDS = re.compile(
     re.MULTILINE,
 )
 
+# 无「## 模式类型」章节时的兜底分类关键词。
+# 与章节内口径的唯一差异：裸「迁移」不收（SOP/速查/操作手册的标题与开头
+# 普遍含「迁移」二字，如 WSL 发行版迁移步骤，语义上并非创新类模式），
+# 只认短语级的迁移语义。
+FALLBACK_INNOVATION_KEYWORDS = re.compile(
+    r"(创新|跨领域|跨域迁移|迁移类模式|迁移创新|迁移适配|模式迁移"
+    r"|逆向适配|方法论模式|创新设计|反向|反直觉|跨界)",
+    re.MULTILINE,
+)
+
 FAILURE_CASE_PATTERN = re.compile(
     r"(失败案例|反面案例|失败教训|失败警示|负面案例|反噬|事故|被罚款|失败根因)",
     re.MULTILINE,
