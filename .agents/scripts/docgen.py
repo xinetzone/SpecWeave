@@ -426,12 +426,12 @@ def cmd_update_spec_readme(args) -> int:
 
     if index_marker == -1:
         # 没有全量索引，直接写入轻版本
-        light_content = _build_light_spec_readme(themes, total_specs)
+        light_content = _build_light_spec_readme(themes, total_specs, specs_root)
     else:
         # 保留 overview 部分（包括标题、描述、总览表和图例），截断后续内容
         overview_end = overview_start + index_marker + hr_idx
         prefix = content[:overview_end]
-        light_content = prefix + "\n\n" + _build_light_spec_readme(themes, total_specs)
+        light_content = prefix + "\n\n" + _build_light_spec_readme(themes, total_specs, specs_root)
 
     atomic_write_text(target, light_content, encoding="utf-8")
 
@@ -440,8 +440,14 @@ def cmd_update_spec_readme(args) -> int:
     return 0
 
 
-def _build_light_spec_readme(themes: list[ThemeStatus], total_specs: int) -> str:
-    """生成轻索引版全局看板（仅总览表 + 主题摘要，不含全量 spec 列表）。"""
+def _build_light_spec_readme(
+    themes: list[ThemeStatus], total_specs: int, specs_root: Path
+) -> str:
+    """生成轻索引版全局看板（仅总览表 + 主题摘要，不含全量 spec 列表）。
+
+    只对真实存在 README.md 的主题生成链接；没有 README 的主题输出纯文本，
+    避免看板本身指向不存在的文件制造断链。
+    """
     today = date.today().isoformat()
     lines = [
         f"# Specs 全局执行看板",
@@ -460,9 +466,12 @@ def _build_light_spec_readme(themes: list[ThemeStatus], total_specs: int) -> str
         c = theme.completed_count
         ip = theme.in_progress_count
         p = theme.pending_count
-        tlink = f"./{theme.name}/README.md"
         icon = "✅" if theme.progress == 100 else ("🔧" if theme.progress > 0 else "📋")
-        lines.append(f"| [{theme.name}]({tlink}) | {theme.total} | {c} | {ip} | {p} | {icon} [查看]({tlink}) |")
+        if (specs_root / theme.name / "README.md").is_file():
+            tlink = f"./{theme.name}/README.md"
+            lines.append(f"| [{theme.name}]({tlink}) | {theme.total} | {c} | {ip} | {p} | {icon} [查看]({tlink}) |")
+        else:
+            lines.append(f"| {theme.name} | {theme.total} | {c} | {ip} | {p} | {icon} &mdash; |")
     lines += [
         f"| **合计** | **{total_specs}** | **{sum(t.completed_count for t in themes)}** | **{sum(t.in_progress_count for t in themes)}** | **{sum(t.pending_count for t in themes)}** | &mdash; |",
         "",
@@ -478,7 +487,10 @@ def _build_light_spec_readme(themes: list[ThemeStatus], total_specs: int) -> str
     for i, theme in enumerate(themes, 1):
         desc = THEME_DESCRIPTIONS.get(theme.name, "")
         short = desc.split("：", 1)[1] if "：" in desc else desc
-        lines.append(f"{i}. [{theme.name}](./{theme.name}/README.md) — {theme.total} spec：{short}")
+        if (specs_root / theme.name / "README.md").is_file():
+            lines.append(f"{i}. [{theme.name}](./{theme.name}/README.md) — {theme.total} spec：{short}")
+        else:
+            lines.append(f"{i}. {theme.name} — {theme.total} spec：{short}")
     lines += [
         "",
         "## \U0001f4c6 新增 Spec 指南",

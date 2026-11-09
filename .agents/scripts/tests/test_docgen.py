@@ -28,6 +28,7 @@ from pathlib import Path
 from argparse import Namespace
 
 from docgen import (
+    _build_light_spec_readme,
     _dash_parse_yaml_simple,
     _dash_scan_spec,
     _dash_generate_table,
@@ -515,4 +516,42 @@ class TestCompletedStatuses:
     def test_case_insensitive_matching(self):
         for s in ["Completed", "DONE", "Finished", "COMPLETE"]:
             assert s.lower() in COMPLETED_STATUSES
+
+
+class TestBuildLightSpecReadmeLinks:
+    """全局看板只对真实存在的主题 README 生成链接。
+
+    回归背景：53 个主题目录里只有 13 个有 README.md，旧实现无条件生成
+    `./<theme>/README.md` 链接，使 .trae/specs/README.md 自身贡献 114 条
+    断链（每个缺失主题在总览表和主题索引各一条）。
+    """
+
+    def test_missing_theme_readme_is_not_linked(self, tmp_path):
+        (tmp_path / "with-readme").mkdir()
+        (tmp_path / "with-readme" / "README.md").write_text("# x\n", encoding="utf-8")
+        (tmp_path / "no-readme").mkdir()
+        themes = [
+            ThemeStatus(name="with-readme", specs=[]),
+            ThemeStatus(name="no-readme", specs=[]),
+        ]
+
+        out = _build_light_spec_readme(themes, 0, tmp_path)
+
+        assert "./with-readme/README.md" in out
+        assert "./no-readme/README.md" not in out
+        # 缺 README 的主题仍出现在看板中，只是不带链接
+        assert "| no-readme |" in out
+
+    def test_all_themes_with_readme_are_linked(self, tmp_path):
+        for name in ("alpha", "beta"):
+            (tmp_path / name).mkdir()
+            (tmp_path / name / "README.md").write_text("# x\n", encoding="utf-8")
+        themes = [ThemeStatus(name=n, specs=[]) for n in ("alpha", "beta")]
+
+        out = _build_light_spec_readme(themes, 0, tmp_path)
+
+        # 每个主题在总览表(主题名 + 查看)与主题索引各出现一次，共 3 处链接
+        assert out.count("./alpha/README.md") == 3
+        assert out.count("./beta/README.md") == 3
+
 
