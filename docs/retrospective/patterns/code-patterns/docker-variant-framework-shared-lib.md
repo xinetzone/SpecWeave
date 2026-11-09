@@ -320,7 +320,7 @@ chmod +x variants/shared/scripts/*.sh
 
 | 参考 | 说明 |
 |------|------|
-| [variants/shared/](../../../../apps/docker-images/devcontainer-base/variants/shared) | 本项目框架参考实现 |
+| [variants/shared/](../../../../apps/docker-images/devcontainer-base/variants/shared/README.md) | 本项目框架参考实现 |
 | [docker-gpu-slimming-sop.md](docker-gpu-slimming-sop.md) | GPU/ML瘦身SOP（本框架的功能实现依据） |
 | [docker-image-variant-incremental-inheritance.md](docker-image-variant-incremental-inheritance.md) | Docker变体增量继承模式 |
 | [docker-cow-same-layer-modification.md](docker-cow-same-layer-modification.md) | CoW同层修改原则（COPY --chmod避免chmod层的依据） |

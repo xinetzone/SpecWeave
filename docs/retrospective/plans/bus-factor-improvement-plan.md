@@ -189,9 +189,9 @@ flowchart LR
 | 现有资产 | 对团队建设的价值 | 需要改进 |
 |---------|----------------|---------|
 | [CONTRIBUTING.md](../../../CONTRIBUTING.md) | 已有git操作流程 | 缺少架构理解/环境搭建/新人引导内容 |
-| [GOVERNANCE.md](../../../../GOVERNANCE.md) | 已有治理框架 | 需要补充决策流程细节和角色晋升路径 |
-| [CODEOWNERS](../../../../CODEOWNERS) | 已有所有权机制 | 目前核心目录只有xinetzone，需补充第二owner |
-| [.agents/teams/](../../../.agents/teams) | 已有AI角色团队体系 | 面向AI，不适用人类贡献者，但RBAC模型可参考 |
+| `GOVERNANCE.md`（尚未入库） | 已有治理框架 | 需要补充决策流程细节和角色晋升路径 |
+| `CODEOWNERS`（尚未入库） | 已有所有权机制 | 目前核心目录只有xinetzone，需补充第二owner |
+| [.agents/teams/](../../../.agents/teams/README.md) | 已有AI角色团队体系 | 面向AI，不适用人类贡献者，但RBAC模型可参考 |
 | [.agents/ONBOARDING.md](../../../.agents/ONBOARDING.md) | 有onboarding文档概念 | 面向AI智能体，需要新建人类版本 |
 | CI质量门禁（16步） | 自动化防护完善 | 权限下放后CI安全网已经足够 |
 | 周复盘机制（ACT-04刚完成） | 已有周度节奏 | 可以扩展为包含贡献者活跃度的周度审视 |

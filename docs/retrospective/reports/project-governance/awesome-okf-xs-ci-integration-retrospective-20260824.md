@@ -150,11 +150,11 @@ tags: ["里程碑复盘", "七概念", "GitHub Actions", "CI/CD", "UTF-8", "Sphi
 
 | 报告来源 | 模式 ID | 模式文档 | 成熟度 | 状态 |
 |---|---|---|---|---|
-| 洞察 1（CI 是放大器非源头） | `bp-preflight-integrity-gate` | [前置完整性门禁](../../../patterns/methodology-patterns/preflight-integrity-gate.md) | L1-draft | ✅ 已入库 |
-| 洞察 2 / 模式 E-1 | `bp-history-based-doc-repair` | [历史基线文档修复法](../../../patterns/methodology-patterns/history-based-doc-repair.md) | L1-draft | ✅ 已入库 |
-| 洞察 3 / 模式 E-2 | `bp-destructive-probe-gate` | [破坏性探针双向验证门禁](../../../patterns/methodology-patterns/destructive-probe-gate.md) | L1-draft | ✅ 已入库 |
+| 洞察 1（CI 是放大器非源头） | `bp-preflight-integrity-gate` | [前置完整性门禁](../../patterns/methodology-patterns/preflight-integrity-gate.md) | L1-draft | ✅ 已入库 |
+| 洞察 2 / 模式 E-1 | `bp-history-based-doc-repair` | [历史基线文档修复法](../../patterns/methodology-patterns/history-based-doc-repair.md) | L1-draft | ✅ 已入库 |
+| 洞察 3 / 模式 E-2 | `bp-destructive-probe-gate` | [破坏性探针双向验证门禁](../../patterns/methodology-patterns/destructive-probe-gate.md) | L1-draft | ✅ 已入库 |
 
-> 三模式经 4 视角对抗审查（V 门）后入库，索引已更新至 [methodology-patterns/README.md](../../../patterns/methodology-patterns/README.md)。洞察 1 在报告 E 阶段原未独立编号，现以其对应行动沉淀为独立模式 `bp-preflight-integrity-gate`。
+> 三模式经 4 视角对抗审查（V 门）后入库，索引已更新至 [methodology-patterns/README.md](../../patterns/methodology-patterns/README.md)。洞察 1 在报告 E 阶段原未独立编号，现以其对应行动沉淀为独立模式 `bp-preflight-integrity-gate`。
 
 ---
 
