@@ -57,6 +57,12 @@ BOLD_AUTOLINK_RE = re.compile(r"\*\*<([^>]+)>\*\*")
 
 
 CURLY_PLACEHOLDER_RE = re.compile(r"\{[^}]+\}")
+# 路径扩展名：用于区分「真实文件引用」与「正文短语/表格单元」
+PATH_EXTENSION_RE = re.compile(r"\.[A-Za-z0-9]{1,8}$")
+# 中文正文特征：含中日韩字符的裸词几乎不可能是仓内路径
+CJK_CHAR_RE = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
+# 正文标点：出现在裸词里说明是散文而不是路径
+PROSE_PUNCTUATION = set("，。；：、！？（）「」【】《》…—·")
 
 CACHE_DIR_NAME = ".agents/cache"
 CACHE_FILE_NAME = "external-links-cache.json"
@@ -149,12 +155,43 @@ def is_cache_valid(entry: dict, ttl_days: int = CACHE_TTL_DAYS) -> bool:
 
 
 def is_template_placeholder(url: str) -> bool:
-    """判断 URL 是否为模板占位符（如 <!-- ... --> 或 {变量名} 格式）。"""
+    """判断 URL 是否为模板占位符（如 <!-- ... -->、{变量名}、<占位符> 格式）。"""
     if url.startswith("<!--") and url.endswith("-->"):
         return True
     if CURLY_PLACEHOLDER_RE.search(url):
         return True
+    # 尖括号占位符：<占位符>、<url> 这类模板示例。带路径分隔符或扩展名的
+    # <path/to/file.md> 是合法的 Markdown 角括号目标，必须保留检查。
+    if url.startswith("<") and url.endswith(">") and len(url) > 2:
+        inner = url[1:-1].strip()
+        if inner and "/" not in inner and "\\" not in inner and not PATH_EXTENSION_RE.search(inner):
+            return True
     return False
+
+
+def is_non_path_reference(url: str) -> bool:
+    """判断本地引用是否根本不是路径（正文短语 / 表格单元 / 裸词占位）。
+
+    仅当引用「无路径分隔符、无扩展名、非锚点/绝对路径前缀」，且带正文特征
+    （中文、空白或中文标点）时才判为非路径；`docs/`、`../guide`、`a.md`
+    这类真实引用不受影响，避免把真断链一起过滤掉。
+    """
+    clean = url.split("#", 1)[0].split("?", 1)[0].strip()
+    if not clean or clean in (".", ".."):
+        return False
+    if clean.startswith(("#", "/", "\\", "~", "file:", "mailto:", "http:", "https:")):
+        return False
+    if "/" in clean or "\\" in clean:
+        return False
+    if PATH_EXTENSION_RE.search(clean):
+        return False
+    if clean.startswith("<") and clean.endswith(">"):
+        return True
+    return (
+        any(ch.isspace() for ch in clean)
+        or bool(CJK_CHAR_RE.search(clean))
+        or any(ch in PROSE_PUNCTUATION for ch in clean)
+    )
 
 
 def _strip_link_title(url: str) -> str:
@@ -194,7 +231,9 @@ def parse_links(file_path: Path) -> list[tuple[str, str, int]]:
         ref_id = ref_id.lower()
         ref_url = m.group(2).strip()
         if not is_template_placeholder(ref_url):
-            ref_defs[ref_id] = _strip_link_title(ref_url)
+            stripped = _strip_link_title(ref_url)
+            if not is_non_path_reference(stripped):
+                ref_defs[ref_id] = stripped
 
     # 解析内联链接
     for m in INLINE_LINK_RE.finditer(content):
@@ -204,7 +243,12 @@ def parse_links(file_path: Path) -> list[tuple[str, str, int]]:
             continue
         text = m.group(1)
         url = _strip_link_title(m.group(2).strip())
-        if url and not url.startswith("#") and not is_template_placeholder(url):
+        if (
+            url
+            and not url.startswith("#")
+            and not is_template_placeholder(url)
+            and not is_non_path_reference(url)
+        ):
             line_num = content[: m.start()].count("\n") + 1
             links.append((text, url, line_num))
 
@@ -230,7 +274,12 @@ def parse_links(file_path: Path) -> list[tuple[str, str, int]]:
         if is_code_fence_context(content, m.start()):
             continue
         url = m.group(1).strip()
-        if url and not url.startswith("#") and not is_template_placeholder(url):
+        if (
+            url
+            and not url.startswith("#")
+            and not is_template_placeholder(url)
+            and not is_non_path_reference(url)
+        ):
             line_num = content[: m.start()].count("\n") + 1
             links.append((url, url, line_num))
 

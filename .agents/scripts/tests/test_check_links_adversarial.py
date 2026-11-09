@@ -290,3 +290,46 @@ class TestBundleRelativeRootResolved:
         result = cl._check_single_path(sub_doc, "source", "/references/facts.md")
         assert result is None, f"frontmatter bundle 相对路径应通过，实际: {result}"
 
+
+class TestNonPathReferencesIgnored:
+    """提取器不应把非路径文本当成链接目标（假阳性）。
+
+    背景：模板里的 `<占位符>`、表格单元里的正文短语曾被当成相对路径，
+    报成 missing 后混入真实断链，抬高了存量噪音。
+    """
+
+    def test_angle_bracket_placeholder_not_parsed(self, tmp_path):
+        links, _ = _write_and_parse(
+            "见 [链接](<占位符>) 与 [示例](<url>)\n", tmp_path
+        )
+        urls = [u for _, u, _ in links]
+        assert "<占位符>" not in urls
+        assert "<url>" not in urls
+
+    def test_angle_bracket_real_destination_still_parsed(self, tmp_path):
+        """带路径分隔符与扩展名的角括号目标是合法 Markdown，必须保留。"""
+        links, _ = _write_and_parse(
+            "[示例](<docs/guide.md>)\n", tmp_path
+        )
+        assert [u for _, u, _ in links] == ["<docs/guide.md>"]
+
+    def test_prose_phrase_not_parsed(self, tmp_path):
+        links, _ = _write_and_parse(
+            "| [见说明](见下方) | [详见](见上文第 3 节) |\n", tmp_path
+        )
+        assert links == []
+
+    def test_real_relative_refs_still_parsed(self, tmp_path):
+        """真实相对引用（目录、上级目录、带扩展名文件）不得被过滤。"""
+        links, _ = _write_and_parse(
+            "[a](docs/) [b](../guide) [c](a.md) [d](notes#L1)\n", tmp_path
+        )
+        assert [u for _, u, _ in links] == ["docs/", "../guide", "a.md", "notes#L1"]
+
+    def test_external_urls_unaffected(self, tmp_path):
+        links, _ = _write_and_parse(
+            "[x](https://example.com/a) [y](mailto:a@b.com)\n", tmp_path
+        )
+        assert [u for _, u, _ in links] == ["https://example.com/a", "mailto:a@b.com"]
+
+
