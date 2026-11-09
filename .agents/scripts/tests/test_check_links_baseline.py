@@ -149,6 +149,37 @@ def test_baseline_reports_three_kinds_of_new_breakage(repo, capsys):
     assert "missing-old.md" not in out, "基线内存量不应打印"
 
 
+def test_reason_map_reclassifies_existing_entry():
+    """reason-map 应能改写既有条目的 reason（把 unclassified 归位）。"""
+    existing = {
+        ("docs/a.md", "missing.md"): link_baseline.BaselineEntry(
+            source="docs/a.md",
+            target="missing.md",
+            count=1,
+            since="2026-01-01",
+            reason="unclassified",
+            review_by="2026-04-01",
+        )
+    }
+
+    merged, stats = link_baseline.build_updated_entries(
+        {("docs/a.md", "missing.md"): 2},
+        existing,
+        reason=None,
+        reason_map={("docs/a.md", "missing.md"): "deleted"},
+        since="2026-11-09",
+        review_by=None,
+    )
+
+    entry = merged[("docs/a.md", "missing.md")]
+    assert entry.reason == "deleted"
+    assert entry.count == 2
+    assert entry.since == "2026-01-01", "重分类不应改写入账日期"
+    assert entry.review_by == "2026-04-01"
+    assert stats["reclassified"] == 1
+    assert stats["added"] == 0
+
+
 def test_baseline_self_check_rejects_corrupt_entries(tmp_path):
     tracked = {"docs/a.md"}
     base = {

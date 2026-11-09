@@ -256,8 +256,10 @@ def build_updated_entries(
 ) -> tuple[dict[tuple[str, str], BaselineEntry], dict[str, int]]:
     """合并当前断链与既有基线，返回 (新基线, 统计)。
 
-    既有指纹保留原 since/reason/review_by，仅刷新 count；新指纹必须有
-    reason（reason-map 优先于 --reason）。缺失时抛 BaselineError 拒绝写入。
+    既有指纹保留原 since/review_by，仅刷新 count；若 reason-map 显式指定了
+    该指纹的 reason，则同时改写既有条目的分类（用于把 unclassified 归位）。
+    新指纹必须有 reason（reason-map 优先于 --reason）。缺失时抛 BaselineError
+    拒绝写入。
     """
     if reason is not None and reason not in REASON_ENUM:
         raise BaselineError(f"reason={reason!r} 不在枚举 {REASON_ENUM} 中")
@@ -267,16 +269,19 @@ def build_updated_entries(
     mapping = reason_map or {}
     merged: dict[tuple[str, str], BaselineEntry] = {}
     missing: list[str] = []
-    added = kept = 0
+    added = kept = reclassified = 0
     for key, count in current.items():
         old = existing.get(key)
         if old is not None:
+            entry_reason = mapping.get(key, old.reason)
+            if entry_reason != old.reason:
+                reclassified += 1
             merged[key] = BaselineEntry(
                 source=old.source,
                 target=old.target,
                 count=count,
                 since=old.since,
-                reason=old.reason,
+                reason=entry_reason,
                 review_by=old.review_by,
             )
             kept += 1
@@ -303,7 +308,13 @@ def build_updated_entries(
             + more
         )
     stale = len(set(existing) - set(current))
-    return merged, {"added": added, "kept": kept, "stale": stale, "total": len(merged)}
+    return merged, {
+        "added": added,
+        "kept": kept,
+        "reclassified": reclassified,
+        "stale": stale,
+        "total": len(merged),
+    }
 
 
 def diff_baseline(

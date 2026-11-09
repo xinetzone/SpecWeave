@@ -146,17 +146,23 @@ def is_code_fence_context(content: str, pos: int) -> bool:
         return True
     line_start = before.rfind("\n") + 1
     line_before = before[line_start:]
-    tick_count = 0
+    # 行内代码段按 CommonMark 规则配对：长度为 N 的反引号串开启代码段，
+    # 由下一个长度恰好为 N 的串闭合，中间不同长度的串属于代码内容。
+    # 旧的「统计所有 ≤2 个反引号」的奇偶法在 `` `[x](y)` `` 这种嵌套写法
+    # 上会把 4 次 run 配平成「不在代码内」，从而把示例链接当成真链接。
+    open_run = 0
     i = 0
     while i < len(line_before):
         if line_before[i] == "`":
             run = 1
             while i + run < len(line_before) and line_before[i + run] == "`":
                 run += 1
-            if run <= 2:
-                tick_count += 1
+            if open_run == 0:
+                open_run = run
+            elif run == open_run:
+                open_run = 0
             i += run
         else:
             i += 1
-    return tick_count % 2 == 1
+    return open_run != 0
 

@@ -41,6 +41,39 @@ def _import_check_links():
 cl = _import_check_links()
 
 
+class TestPlaceholderPathSegment:
+    """模板占位符嵌在相对路径中间时，必须整体视为占位符而非断链。
+
+    背景（2026-11-09 基线复核）：`.trae/skills/pattern-to-methodology-library/
+    assets/pattern-template.md` 里的示例链接
+    `../../../../knowledge/<域>/<bundle-id>/index.md` 与
+    `../<other-area 或本目录>/<id>.md`，其占位段不是整串角括号目标，
+    旧判据只认「整串 <...>」而漏检，最终被记进链接基线。
+    """
+
+    def test_placeholder_segment_in_relative_path(self):
+        assert cl.is_template_placeholder(
+            "../../../../knowledge/<域>/<bundle-id>/index.md"
+        ) is True
+        assert cl.is_template_placeholder("../<other-area 或本目录>/<id>.md") is True
+        assert cl.is_template_placeholder("<相对路径>.md") is True
+
+    def test_plain_relative_path_not_placeholder(self):
+        assert cl.is_template_placeholder("../../docs/index.md") is False
+        assert cl.is_template_placeholder("<path/to/file.md>") is False
+
+    def test_placeholder_link_not_reported_as_broken(self, tmp_path):
+        f = tmp_path / "template.md"
+        f.write_text(
+            "# 模板\n\n"
+            "[bundle](../../../../knowledge/<域>/<bundle-id>/index.md)\n"
+            "[pattern](../<other-area 或本目录>/<id>.md)\n",
+            encoding="utf-8",
+        )
+        rc = cl.main(["--path", str(f)])
+        assert rc == 0
+
+
 class TestSingleFileInput:
     """--path 传入单个 .md 文件的回归：防止零文件空扫描的假通过。
 

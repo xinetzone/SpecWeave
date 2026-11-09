@@ -65,6 +65,10 @@ BOLD_AUTOLINK_RE = re.compile(r"\*\*<([^>]+)>\*\*")
 
 
 CURLY_PLACEHOLDER_RE = re.compile(r"\{[^}]+\}")
+# 角括号占位段：`<域>`、`<bundle-id>` 这类 token 可能嵌在相对路径的某个
+# 路径段里（如 `../../knowledge/<域>/<id>/index.md`），整串并非角括号目标。
+# 字符类排除路径分隔符，避免把合法的 `<path/to/file.md>` 误判为占位符。
+ANGLE_PLACEHOLDER_TOKEN_RE = re.compile(r"<[^<>/\\]+>")
 # 路径扩展名：用于区分「真实文件引用」与「正文短语/表格单元」
 PATH_EXTENSION_RE = re.compile(r"\.[A-Za-z0-9]{1,8}$")
 # 中文正文特征：含中日韩字符的裸词几乎不可能是仓内路径
@@ -174,6 +178,10 @@ def is_template_placeholder(url: str) -> bool:
         inner = url[1:-1].strip()
         if inner and "/" not in inner and "\\" not in inner and not PATH_EXTENSION_RE.search(inner):
             return True
+        return False
+    # 占位段嵌在相对路径中间（非整串角括号目标），同样不是可校验路径。
+    if ANGLE_PLACEHOLDER_TOKEN_RE.search(url):
+        return True
     return False
 
 
@@ -1398,6 +1406,7 @@ def main(argv=None) -> int:
             print(f"\n基线已更新: {baseline_path}")
             print(
                 f"  新增 {stats['added']}，保留 {stats['kept']}，"
+                f"重分类 {stats['reclassified']}，"
                 f"清理已消失 {stats['stale']}，总计 {stats['total']}"
             )
             if untracked_ignored:

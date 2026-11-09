@@ -205,6 +205,17 @@ class TestIsCodeFenceContext:
         pos = content.index("[a]")
         assert is_code_fence_context(content, pos) is True
 
+    def test_inside_inline_code_with_nested_backticks(self):
+        """双反引号代码段内嵌单反引号时，不能按反引号总数配平误判。"""
+        content = "规则是 `` `- [a](<相对路径>.md)` `` 的写法"
+        pos = content.index("[a]")
+        assert is_code_fence_context(content, pos) is True
+
+    def test_after_inline_code_with_nested_backticks(self):
+        content = "`` `x` `` 之后 [a](b.md)"
+        pos = content.index("[a]")
+        assert is_code_fence_context(content, pos) is False
+
 
 class TestApplyFilenameMapping:
     """apply_filename_mapping 测试。"""
