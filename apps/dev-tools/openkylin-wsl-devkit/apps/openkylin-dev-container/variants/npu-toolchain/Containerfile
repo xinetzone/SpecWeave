@@ -18,7 +18,11 @@
 # Comments stay in English (same convention as the baseline Containerfile).
 # No credentials are baked in, and no service/port is exposed by this image.
 
-FROM localhost/openkylin:3.0
+# The baseline is parameterised so the same recipe can be built on the desktop
+# baseline (:3.0) or on a minimal baseline (:3.0-minimal-gcc). The default stays
+# :3.0; pass --build-arg BASE_IMAGE=... to build on another baseline.
+ARG BASE_IMAGE=localhost/openkylin:3.0
+FROM ${BASE_IMAGE}
 
 # Miniforge installer served by the USTC github-release mirror (github.com
 # itself times out).
@@ -31,6 +35,19 @@ ARG CONDA_DIR=/opt/conda
 ARG CONDA_ENV=${CONDA_DIR}/envs/main
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+# ---------------------------------------------------------------------------
+# Layer 0: usr-merge path alignment for the recorded RUNPATH
+# The desktop baseline rootfs is usr-merged (/opt -> /var/opt), so a binary that
+# records /var/opt/build/llvm22/lib in its RUNPATH resolves against
+# /opt/build/llvm22. A minimal rootfs is NOT usr-merged: /opt is a real
+# directory and /var/opt is empty, so that RUNPATH segment misses and libtvm.so
+# silently falls back to the system libllvm22 instead of the conda-forge build
+# in /opt/build/llvm22. Restore the same path equivalence explicitly.
+# ---------------------------------------------------------------------------
+RUN mkdir -p /opt/build \
+ && ln -sfn /opt/build /var/opt/build \
+ && ls -ld /var/opt/build
 
 # ---------------------------------------------------------------------------
 # Layer 1: Miniforge distribution
@@ -120,7 +137,7 @@ RUN "${CONDA_DIR}/bin/conda" create -y -p "${CONDA_ENV}" \
         "python=${PYTHON_VERSION}" \
         cmake \
         ninja \
-        pip \
+        "pip=26.2.2=*_0" \
         make \
         zlib \
     && "${CONDA_ENV}/bin/pip" config set global.index-url https://mirrors.aliyun.com/pypi/simple/ \
@@ -139,7 +156,10 @@ ENV PATH=/opt/conda/envs/main/bin:/opt/conda/bin:${PATH} \
     CONDA_PREFIX_MAIN=/opt/conda/envs/main \
     LANG=C.UTF-8 \
     PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/ \
-    PIP_TRUSTED_HOST=mirrors.aliyun.com
+    PIP_TRUSTED_HOST=mirrors.aliyun.com \
+    TVM_LIBRARY_PATH=/opt/build/npu_tvm \
+    TEST_DATA_ROOT_PATH=/opt/build/tvm_test_data \
+    TVM_TEST_DATA_DIR=/opt/build/tvm_test_data
 
 RUN set -euo pipefail; \
     ge() { [ "$(printf '%s\n%s\n' "$2" "$1" | sort -V | head -n1)" = "$2" ]; }; \
@@ -154,6 +174,32 @@ RUN set -euo pipefail; \
         || { echo "FAIL: sys.prefix=$prefix, expected /opt/conda/envs/main"; exit 1; }; \
     gcc --version | head -n1; \
     echo "[npu-toolchain] gate OK: python $py / cmake $cm / ninja $nj / prefix $prefix"
+
+# ---------------------------------------------------------------------------
+# Layer 3b: Python path wiring for the source-built layer
+# The tvm / xmnn artefacts are produced by all-in-one.sh S6/S7 *after* the
+# image exists: libtvm.so lands in the npu-build volume, the xmnn editable
+# install lands in that volume's userbase, and the tvm python sources are
+# bind-mounted from the workspace. None of them can be baked into the image,
+# so the image only records where to look. Without this wiring `import tvm`
+# and `import xmnn` fail with ModuleNotFoundError.
+#   - userbase site-packages: carries the xmnn editable install + dist-info
+#   - npuusertools: source tree, fallback for xmnn
+#   - npu_tvm/python: tvm python sources (libtvm.so comes from
+#     TVM_LIBRARY_PATH, set above)
+# Entries that do not exist at build time are skipped by site.py and picked up
+# once the volume / bind mount is present at run time.
+# ---------------------------------------------------------------------------
+RUN set -euo pipefail; \
+    sp="/opt/conda/envs/main/lib/python${PYTHON_VERSION}/site-packages"; \
+    mkdir -p "$sp"; \
+    printf '%s\n' \
+        "/opt/build/npuusertools/userbase/lib/python${PYTHON_VERSION}/site-packages" \
+        "/workspace/ai/notebook/libs/npuusertools" \
+        "/workspace/ai/notebook/libs/npu_tvm/python" \
+        > "$sp/npu-toolchain.pth"; \
+    echo "[npu-toolchain] wrote $sp/npu-toolchain.pth:"; \
+    cat "$sp/npu-toolchain.pth"
 
 # The baseline rootfs has no service stack (no sshd) and this variant publishes
 # no port: the container is an idle build box entered through podman exec.

@@ -468,7 +468,7 @@ mountopt = "nodev,metacopy=on"
 | **Python 版本** | conda-forge CPython 3.14（标准 GIL） | conda-forge CPython 3.14t free-threading | conda-forge CPython 3.14t free-threading |
 | **服务栈** | 无（仅 `sleep infinity`） | supervisord（ssh + dockerd + podman + jupyter） | supervisord（ssh + jupyter + rootless podman） |
 | **运行契约** | rootless 三必需 + keep-id + **无 privileged** | DinD 需 `--privileged`（违反 G3） | rootless 三必需 + keep-id |
-| **APT 源可达性** | openKylin 官方源**不可达**（防火墙白名单） | Ubuntu 源**待确认**（同防火墙） | 同左 |
+| **APT 源可达性** | ~~openKylin 官方源**不可达**（防火墙白名单）~~ → **2026-11-04 实测修正**：`https://mirrors.aliyun.com/openkylin/dists/huanghe/Release` 返回 **200**（`Suite: huanghe`、`Version: 3.0`、`Codename: huanghe`），apt 层**有源**；仍不可达的仅官方站 `mirrors.openkylin.top`（无响应）与 `registry.openkylin.top`（`000`） | Ubuntu 源**待确认**（同防火墙） | 同左 |
 | **网络白名单** | 仅 `mirrors.ustc.edu.cn` + `mirrors.aliyun.com` | 未知 | 未知 |
 | **服务器侧已验证** | ✅ 全链路 OK（all-in-one.sh 已跑通） | ❌ 未在 ai 服务器验证 | ❌ 未在 ai 服务器验证 |
 | **迁移成本** | 低（继承经过验证的 Containerfile + S5/S6/S7） | 高（需重写 Containerfile 适配 openKylin 不可达场景） | 高（Python free-threading 对 npu_tvm/npuusertools 有兼容风险） |
@@ -482,6 +482,8 @@ mountopt = "nodev,metacopy=on"
 2. **服务器侧已端到端验证**：`all-in-one.sh` 已在 `ai@10.16.11.3` 上跑通 LLVM 21 供给 + npu_tvm 构建（libtvm.so + `import tvm` + `Target("llvm")`/`Target("ccompiler")`）+ npuusertools 构建（editable + `import xmnn`）+ onnx.yolov5s 端到端（6/6 模型编译完成）。
 3. **违反 G3 契约**：devcontainer-base 的 DinD 需要 `--privileged`，而 G3 组级契约严禁。
 4. **Python free-threading 对 npu_tvm/npuusertools 有风险**：方案 B/C 用 cp314t，npu_tvm 的 C 扩展编译链在 free-threading 下可能出现 ABI 不兼容（需要额外的 `-DPy_GIL_DISABLED` 编译标记和 `PYTHON_GIL=0` 环境变量）。没有必要为一个"暂时不用"的 free-threading 特性引入额外不确定性。
+
+> **原判断已被实测修正（2026-11-04）**：§5.1「APT 源可达性」行与本节理由 1 原载「openKylin 官方源不可达」，并据此外推「方案 B/C 的 Ubuntu 源大概率同样不可达」。实测 `https://mirrors.aliyun.com/openkylin/dists/huanghe/Release` 返回 **200**，`Suite: huanghe / Version: 3.0 / Codename: huanghe`——即 openKylin 3.0 的 **apt 仓库在既有白名单内的阿里云镜像站可得**。原判断仅对「官方站与官方 registry」成立，对「apt 源」不成立；缺的不是源，而是引导工具（`debootstrap` 未安装、`sudo` 需密码、rootless 下 `chroot`/`mknod` 受限）。上文原文一律保留、不静默改写：这条本身即「推断写入文档后被下游继承」的实例——「官方站不可达」→「发行版 apt 源不可达」→「方案 B/C 不可行」三步皆为推断。方案 A 的选型结论不变，但理由 1 的适用范围须按上述收窄。评估与不采纳决策的完整记录见[风险与待办 §9](09-6-risks-todos-changelog.md)。
 
 **需要新增/适配的层**（不是从零开始，是服务器侧容器的**宿主侧适配**）：
 - **CIFS 挂载脚本**：`scripts/mount-cifs.sh`（WSL 宿主侧执行）

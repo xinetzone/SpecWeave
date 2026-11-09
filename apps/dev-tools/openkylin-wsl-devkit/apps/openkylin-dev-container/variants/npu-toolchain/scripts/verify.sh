@@ -46,6 +46,16 @@ pass=0 fail=0 na=0
 pm() { "${PM[@]}" "$@"; }
 pexec() { "${PM[@]}" exec "$CTR" bash -lc "$1"; }
 
+# Contract: the tvm / xmnn artefacts never live in the image. They are reachable
+# only through the two required mounts (-v npu-build:/opt/build and
+# -v /media/pc/data/ai:/workspace/ai). A missing mount therefore has to surface
+# as a readable "卷/绑定挂载缺失" message instead of a Python traceback, and the
+# checks below gate on those mounts before touching the interpreter.
+has_mount() {  # has_mount <container-destination>
+    "${PM[@]}" container inspect --format '{{range .Mounts}}{{.Destination}}{{"\n"}}{{end}}' "$CTR" 2>/dev/null \
+        | grep -qx "$1"
+}
+
 record() {  # record <name> <PASS|FAIL|N/A> <note>
     names+=("$1"); results+=("$2"); notes+=("$3")
     printf '  [%-4s] %-26s %s\n' "$2" "$1" "$3"
@@ -135,8 +145,17 @@ a2_connection() {  # client -> server path works (mode recorded)
     echo "mode=$MODE client=$cli server=$srv"
 }
 
-a3_llvm() {  # LLVM 22.x inside the container
-    local v
+a3_llvm() {  # LLVM 22.x inside the container (supplied by the npu-build volume)
+    local v ok
+    ok="$(pexec 'test -x /opt/build/llvm22/bin/llvm-config && echo yes' 2>/dev/null || true)"
+    if [ -z "$ok" ]; then
+        if has_mount /opt/build; then
+            echo "npu-build 卷已挂载，但缺少 /opt/build/llvm22/bin/llvm-config（S5 LLVM 供给未执行）"
+        else
+            echo "npu-build 卷未挂载到 /opt/build（A3 依赖 /opt/build/llvm22）"
+        fi
+        return 1
+    fi
     if ! v="$(pexec '/opt/build/llvm22/bin/llvm-config --version')"; then
         echo "/opt/build/llvm22/bin/llvm-config not runnable"; return 1
     fi
@@ -147,7 +166,25 @@ a3_llvm() {  # LLVM 22.x inside the container
 }
 
 a4_tvm() {  # import tvm + llvm/ccompiler targets + linked libLLVM
-    local out ldd tgt
+    local out ldd tgt ok
+    ok="$(pexec 'test -f /opt/build/npu_tvm/libtvm.so && echo yes' 2>/dev/null || true)"
+    if [ -z "$ok" ]; then
+        if has_mount /opt/build; then
+            echo "npu-build 卷已挂载，但缺少 /opt/build/npu_tvm/libtvm.so（S6 编译未执行）"
+        else
+            echo "npu-build 卷未挂载到 /opt/build（A4 依赖 /opt/build/npu_tvm/libtvm.so）"
+        fi
+        return 1
+    fi
+    ok="$(pexec 'test -d /workspace/ai/notebook/libs/npu_tvm/python/tvm && echo yes' 2>/dev/null || true)"
+    if [ -z "$ok" ]; then
+        if has_mount /workspace/ai; then
+            echo "/workspace/ai 已挂载，但 /workspace/ai/notebook/libs/npu_tvm/python/tvm 不存在"
+        else
+            echo "/workspace/ai 绑定挂载缺失（A4 依赖 tvm python 源码，见 npu-toolchain.pth）"
+        fi
+        return 1
+    fi
     if ! out="$(pexec "python -c 'import tvm;print(\"tvm\",tvm.__version__);print(tvm.target.Target(\"llvm\"));print(tvm.target.Target(\"ccompiler\"))'")"; then
         echo "import tvm failed"; return 1
     fi
@@ -160,7 +197,15 @@ a4_tvm() {  # import tvm + llvm/ccompiler targets + linked libLLVM
 }
 
 a5_xmnn() {  # import xmnn and its distribution version
-    local out
+    local out ok
+    if ! has_mount /opt/build; then
+        echo "npu-build 卷未挂载到 /opt/build（A5 依赖 S7 安装的 xmnn）"; return 1
+    fi
+    ok="$(pexec '{ test -d /opt/build/npuusertools/userbase/lib/python3.14/site-packages/xmnn || test -d /workspace/ai/notebook/libs/npuusertools/xmnn; } && echo yes' 2>/dev/null || true)"
+    if [ -z "$ok" ]; then
+        echo "npu-build 卷已挂载，但 xmnn 源/安装目录不存在（S7 未执行）"
+        return 1
+    fi
     if ! out="$(pexec "python -c 'import xmnn,importlib.metadata as m;print(\"xmnn\",m.version(\"xmnn\"),xmnn.__file__)'")"; then
         echo "import xmnn failed"; return 1
     fi
@@ -190,6 +235,9 @@ a7_ports() {  # policy check: N/A by design (no published port)
 a8_mount() {  # bind mount writable, mode/owner 700 1006, read-back, cleanup
     local p="/workspace/ai/.temp/npu-toolchain/.verify.$$"
     local out mode
+    if ! has_mount /workspace/ai; then
+        echo "/workspace/ai 绑定挂载缺失（A8 需要可写的工作区）"; return 1
+    fi
     if ! out="$(pexec "mkdir -p /workspace/ai/.temp/npu-toolchain && printf 'probe-ok\\n' > $p && chmod 700 $p && stat -c '%a %u' $p && cat $p && rm -f $p")"; then
         echo "write/chmod/read-back failed"; return 1
     fi
@@ -206,6 +254,9 @@ a8_mount() {  # bind mount writable, mode/owner 700 1006, read-back, cleanup
 
 a9_capacity() {  # XFS free space >= 50 GiB, measured via df (system df is broken)
     local line avail
+    if ! has_mount /workspace/ai; then
+        echo "/workspace/ai 绑定挂载缺失（A9 需要在其上测量可用容量）"; return 1
+    fi
     if ! line="$(pexec 'df -B1 /workspace/ai | tail -n1')"; then
         echo "df failed"; return 1
     fi

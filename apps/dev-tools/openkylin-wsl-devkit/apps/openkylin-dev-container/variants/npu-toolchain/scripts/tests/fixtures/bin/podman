@@ -1,0 +1,120 @@
+#!/usr/bin/env bash
+# podman shim — 仅供 scripts/tests 下的单元测试使用，绝不接触真实 podman。
+#
+# 契约：
+#   - 一切应答来自 fixture 目录（环境变量 AUDIT_FIXTURE 指定）。
+#   - 每类调用按「容器脚本里的特征子串」或「--format 的字段名」分派到 fixture 键。
+#   - fixture 键缺失、参数无法识别、子命令未覆盖 → 打印到 stderr 并以 99 退出，
+#     绝不静默返回空输出（这样「桩没配好」会表现为被测脚本 FAIL，而非假 PASS）。
+set -euo pipefail
+
+F="${AUDIT_FIXTURE:-}"
+if [ -z "$F" ]; then
+    echo "stub: AUDIT_FIXTURE 未设置（拒绝静默返回空）" >&2
+    exit 99
+fi
+if [ ! -d "$F" ]; then
+    echo "stub: fixture 目录不存在: $F" >&2
+    exit 99
+fi
+
+die() {
+    echo "stub: 未覆盖的调用: $*" >&2
+    exit 99
+}
+
+rfx() {  # 读取 fixture 键；键缺失即显式失败（不返回空串）
+    local k="$1"
+    [ -f "$F/$k" ] || die "缺少 fixture 键: $k"
+    cat "$F/$k"
+}
+
+flag() {  # flag <fixture 键>；值为 1 视为真
+    [ "$(rfx "$1")" = "1" ]
+}
+
+emit() {  # emit <run 键>
+    local key="$1"
+    [ -n "$key" ] || die "run: 无法识别容器脚本"
+    [ -f "$F/run/$key.rc" ] || die "run: 缺少 fixture 键 run/$key.rc"
+    [ -f "$F/run/$key.out" ] || die "run: 缺少 fixture 键 run/$key.out"
+    local rc
+    rc="$(cat "$F/run/$key.rc")"
+    cat "$F/run/$key.out"
+    exit "$rc"
+}
+
+match_key() {  # 按容器脚本的特征子串分派，覆盖被测脚本实际用到的 16 种调用
+    local s="$1"
+    case "$s" in
+        *'sys.version_info'*) echo a5_ver ;;
+        *'wc -c <'*) echo a5_file ;;
+        *'/etc/os-release'*) echo a1 ;;
+        *'gcc --version'*) echo a2_gcc ;;
+        *'ldd --version'*) echo a2_ldd ;;
+        *'test -d /opt/conda/envs/main'*) echo a3_dir ;;
+        *'/opt/conda/envs/main/bin/python --version'*) echo a3_py ;;
+        *'/opt/conda/envs/main/bin/pip --version'*) echo a3_pip ;;
+        *'for t in cmake ninja make'*) echo a3_tools ;;
+        *'conda-site.pth npu-toolchain.pth'*) echo a4 ;;
+        *'readlink /var/opt/build'*) echo a6 ;;
+        *'find / -xdev'*) echo b1 ;;
+        *'find /opt/build -mindepth 1'*) echo b2 ;;
+        *'import tvm'*) echo b3 ;;
+        *'/proc/mounts'*) echo c2 ;;
+        *'ldd /opt/build/npu_tvm/libtvm.so'*) echo c1 ;;
+        *) die "run: 未识别的容器脚本" ;;
+    esac
+}
+
+[ "$#" -gt 0 ] || die "podman: 缺少子命令"
+cmd="$1"
+shift
+
+case "$cmd" in
+    image)
+        [ "$#" -gt 0 ] || die "podman image: 缺少子命令"
+        sub="$1"
+        shift
+        case "$sub" in
+            exists)
+                [ "$#" -gt 0 ] || die "podman image exists: 缺少 ref"
+                flag image_exists && exit 0 || exit 1
+                ;;
+            inspect)
+                fmt=""
+                while [ "$#" -gt 0 ]; do
+                    case "$1" in
+                        --format) fmt="${2:-}"; shift 2 ;;
+                        *) shift ;;
+                    esac
+                done
+                case "$fmt" in
+                    *WorkingDir*) rfx working_dir ;;
+                    *Config.Cmd*) rfx cmd ;;
+                    *Config.Env*) rfx env ;;
+                    *) die "image inspect: 未覆盖的 format: $fmt" ;;
+                esac
+                exit 0
+                ;;
+            *) die "image $sub" ;;
+        esac
+        ;;
+    volume)
+        [ "${1:-}" = "exists" ] || die "podman volume ${1:-}"
+        shift
+        [ "$#" -gt 0 ] || die "podman volume exists: 缺少 name"
+        flag vol_exists && exit 0 || exit 1
+        ;;
+    run)
+        last=""
+        while [ "$#" -gt 0 ]; do
+            last="$1"
+            shift
+        done
+        emit "$(match_key "$last")"
+        ;;
+    *)
+        die "podman $cmd"
+        ;;
+esac

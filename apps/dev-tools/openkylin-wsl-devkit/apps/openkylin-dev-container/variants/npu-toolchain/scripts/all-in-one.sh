@@ -12,6 +12,7 @@
 #   --full              额外执行 S8 端到端冒烟（onnx.yolov5s，约 21 分钟）
 #   --skip-build-image  跳过 S2 变体镜像构建
 #   --skip-tvm          跳过 S6 npu_tvm 构建与断言
+#   --only <STEP>       只执行指定步骤（S1..S9），用于隔离验证；其余步骤不运行
 #   -h, --help          显示本帮助
 #
 # 退出码:
@@ -34,8 +35,7 @@ AI_ROOT="/media/pc/data/ai"
 BASE_IMAGE="${BASE_IMAGE:-localhost/openkylin:3.0}"
 IMAGE="${IMAGE:-localhost/openkylin-npu-toolchain:3.0}"
 CTR="${CTR:-npu-toolchain}"
-IMAGE_TMP="${IMAGE_TMP:-$AI_ROOT/.temp/podman-image-tmp}"
-WSL_PACKAGE="$AI_ROOT/.agents/wsl-images/openKylin-3.0-desktop-wsl-amd64.wsl"
+# 基线 tag 由 scripts/build-minimal-base.sh 产出并断言（见 S1）。
 
 # 宿主机侧路径
 NPU_TVM_HOST="$AI_ROOT/notebook/libs/npu_tvm"
@@ -55,6 +55,7 @@ BUILD_ROOT="/opt/build"
 FULL=0
 SKIP_BUILD_IMAGE=0
 SKIP_TVM=0
+ONLY=""
 
 usage() {
     cat <<'EOF'
@@ -64,10 +65,11 @@ usage() {
   --full              额外执行 S8 端到端冒烟（onnx.yolov5s，约 21 分钟）
   --skip-build-image  跳过 S2 变体镜像构建（镜像已存在时省时）
   --skip-tvm          跳过 S6 npu_tvm 构建与断言
+  --only <STEP>       只执行指定步骤（S1..S9），用于隔离验证；其余步骤不运行
   -h, --help          显示本帮助
 
 步骤:
-  S1 基线镜像检查      podman image exists localhost/openkylin:3.0 + 中转目录
+  S1 基线镜像检查      scripts/build-minimal-base.sh（幂等）+ 断言 3.0-minimal / 3.0-minimal-gcc
   S2 变体镜像构建      scripts/build-image.sh
   S3 容器启动          scripts/run.sh up（已在运行则视为 PASS）
   S4 挂载门禁          scripts/verify.sh
@@ -86,6 +88,18 @@ while [ "$#" -gt 0 ]; do
         --full) FULL=1 ;;
         --skip-build-image) SKIP_BUILD_IMAGE=1 ;;
         --skip-tvm) SKIP_TVM=1 ;;
+        --only)
+            ONLY="${2:-}"
+            case "$ONLY" in
+                S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | S9) ;;
+                *)
+                    echo "[all-in-one] --only 需要有效步骤号（S1..S9）：$ONLY" >&2
+                    exit 2
+                    ;;
+            esac
+            shift 2
+            continue
+            ;;
         -h | --help)
             usage
             exit 0
@@ -171,27 +185,29 @@ require_container() {
 # S1 基线镜像检查
 # ---------------------------------------------------------------------------
 step_s1_base_image() {
-    if ! mkdir -p "$IMAGE_TMP" 2>/dev/null; then
-        STEP_NOTE="无法创建 $IMAGE_TMP"
-        echo "  FAIL: 无法创建 Podman 中转目录 $IMAGE_TMP" >&2
+    # 基线 tag 由 build-minimal-base.sh 产出：tag 已存在时脚本内部逐步 SKIP，
+    # 仍会复跑只读断言与三口径，退出码 0。
+    bash "$SCRIPT_DIR/build-minimal-base.sh"
+    local rc=$?
+    local tag missing=0
+    for tag in "localhost/openkylin:3.0-minimal" "localhost/openkylin:3.0-minimal-gcc"; do
+        if podman image exists "$tag" >/dev/null 2>&1; then
+            echo "  基线镜像 $tag 存在"
+        else
+            echo "  FAIL: 基线镜像 $tag 缺失" >&2
+            missing=1
+        fi
+    done
+    if [ "$rc" -ne 0 ]; then
+        STEP_NOTE="build-minimal-base.sh rc=$rc"
+        return "$rc"
+    fi
+    if [ "$missing" -ne 0 ]; then
+        STEP_NOTE="基线 tag 缺失"
         return 1
     fi
-    echo "  image_copy_tmp_dir: $IMAGE_TMP"
-
-    if podman image exists "$BASE_IMAGE" >/dev/null 2>&1; then
-        local id
-        id="$(podman image inspect --format '{{.Id}}' "$BASE_IMAGE" 2>/dev/null | cut -c1-12)"
-        echo "  基线镜像 $BASE_IMAGE 存在 (id ${id:-unknown})"
-        STEP_NOTE="$BASE_IMAGE ${id:-present}"
-        return 0
-    fi
-
-    echo "  FAIL: 基线镜像 $BASE_IMAGE 缺失" >&2
-    echo "  FIX : 从离线包导入一次（本脚本不会隐式拉取）：" >&2
-    echo "        gunzip -c $WSL_PACKAGE \\" >&2
-    echo "          | podman import - $BASE_IMAGE" >&2
-    STEP_NOTE="基线镜像缺失"
-    return 1
+    STEP_NOTE="3.0-minimal / 3.0-minimal-gcc 就绪"
+    return 0
 }
 
 # ---------------------------------------------------------------------------
@@ -584,6 +600,13 @@ step_s9_git_clean() {
 # ---------------------------------------------------------------------------
 # 主流程
 # ---------------------------------------------------------------------------
+# --only 时只执行指定步骤；未指定则全量。
+run_if() {
+    local id="$1" name="$2" fn="$3"
+    [ -z "$ONLY" ] || [ "$ONLY" = "$id" ] || return 0
+    run_step "$id" "$name" "$fn"
+}
+
 main() {
     if ! command -v podman >/dev/null 2>&1; then
         echo "[all-in-one] FAIL: 未找到 podman（本脚本须在服务器 ai@10.16.11.3 上运行）" >&2
@@ -607,18 +630,18 @@ main() {
     echo "  host uid  : $(id -u)"
     echo "  image     : $IMAGE"
     echo "  container : $CTR"
-    echo "  options   : full=$FULL skip-build-image=$SKIP_BUILD_IMAGE skip-tvm=$SKIP_TVM"
+    echo "  options   : full=$FULL skip-build-image=$SKIP_BUILD_IMAGE skip-tvm=$SKIP_TVM only=${ONLY:-all}"
     echo "  log       : $LOG"
 
-    run_step S1 "base-image" step_s1_base_image
-    run_step S2 "build-image" step_s2_build_image
-    run_step S3 "container-up" step_s3_container_up
-    run_step S4 "mount-gate" step_s4_verify
-    run_step S5 "llvm21" step_s5_llvm21
-    run_step S6 "npu_tvm" step_s6_npu_tvm
-    run_step S7 "npuusertools" step_s7_npuusertools
-    run_step S8 "e2e-smoke" step_s8_smoke
-    run_step S9 "git-clean" step_s9_git_clean
+    run_if S1 "base-image" step_s1_base_image
+    run_if S2 "build-image" step_s2_build_image
+    run_if S3 "container-up" step_s3_container_up
+    run_if S4 "mount-gate" step_s4_verify
+    run_if S5 "llvm21" step_s5_llvm21
+    run_if S6 "npu_tvm" step_s6_npu_tvm
+    run_if S7 "npuusertools" step_s7_npuusertools
+    run_if S8 "e2e-smoke" step_s8_smoke
+    run_if S9 "git-clean" step_s9_git_clean
 
     print_summary
     local failed=$?

@@ -12,6 +12,7 @@ variants/npu-toolchain/
 │   ├── run.sh              # 主入口：预检 → 镜像检查 → 命名卷 → 起容器 → 挂载探针 → 汇总
 │   ├── all-in-one.sh       # 一键可重放：镜像 → 容器 → 挂载门禁 → LLVM 21 → 两库构建与断言 → 洁净度
 │   ├── build-image.sh      # 构建变体镜像 + 构建后版本门禁
+│   ├── build-minimal-base.sh # 从官方 WSL rootfs 产出 3.0-minimal / 3.0-minimal-gcc 两个基线 tag
 │   └── verify.sh           # 宿主侧验收（容器 / 运行契约 / 版本 / 挂载）
 └── README.md
 ```
@@ -54,6 +55,66 @@ bash scripts/all-in-one.sh --full
 脚本可重复执行（幂等）：LLVM 21 已就位则跳过宿主复制，容器已在运行不重复启动，`ninja` 无改动即 `no work to do`。
 
 `run.sh` 其它子命令：`down`（删除容器，保留命名卷）、`shell`（进入容器）、`status`（容器/卷/镜像状态）。
+
+## 镜像内容契约审计（`scripts/audit-image-contract.sh`）
+
+`verify.sh` 验的是**运行态**（容器起着、卷挂着、`import` 通）；本脚本验的是**镜像静态内容**——该有的必须在，不该有的必须不在。全程只读：不 build / import / tag / rmi / prune，启动的容器一律 `--rm --network none`。
+
+```bash
+bash scripts/audit-image-contract.sh                                    # 默认审计 :3.0-minimal
+bash scripts/audit-image-contract.sh --image localhost/openkylin-npu-toolchain:3.0-minimal --with-volume
+bash scripts/audit-image-contract.sh --image <ref> --json               # 表格后追加 JSON
+```
+
+| 组 | 检查内容 |
+|---|---|
+| A 必须在（无挂载） | A1 os-release `openkylin/3.0/huanghe`；A2 `gcc 15.2.0` + `ldd`；A3 `/opt/conda/envs/main` + `python 3.14.x` + `pip 26.2.2` + cmake/ninja/make；A4 两条 `.pth`；A5 `npu-toolchain.pth` 三行**逐字**（含结尾换行，按字节数与 sha256 比对）；A6 `/var/opt/build -> /opt/build`；A7 `WorkingDir=/workspace`、`Cmd=["sleep","infinity"]`、三项 Env |
+| B 必须不在（无挂载） | B1 `find / -xdev` 对 `libtvm.so`/`tvm`/`xmnn`/`*xmnn*dist-info`/`tvm_src.pth`/`_editable_skbc_xmnn.pth` 零命中；B2 `/opt/build` 为空；B3 无挂载时 `import tvm` / `import xmnn` 必失败 |
+| C 可选 `--with-volume` | C2 卷与 bind 是否挂载（区分「卷不存在」与「已挂载但内容缺失」）；C1 `libtvm.so` 的 `libLLVM` 解析到 `/var/opt/build/llvm22/lib/`，`libLLVM.so.22.1` 约 195,933,536 B（落到系统 `libllvm22` 判 FAIL） |
+
+退出码：`0` 全 PASS；`1` 有 FAIL；`2` 仅 UNKNOWN（podman / 镜像 / 卷缺失）。末尾恒打印 `total/pass/fail/unknown` 与 `exit=<rc>` 汇总行。
+
+### 离线单元测试（`scripts/tests/`）
+
+审计脚本的判定逻辑由一组**离线**单测守护：不启动真实容器，不碰真实镜像与 `npu-build` 卷。
+
+```bash
+bash scripts/tests/run-tests.sh      # 在 variants/npu-toolchain 目录下，一条命令跑完全部
+```
+
+- **为什么用桩**：`audit-image-contract.sh` 的全部结论都来自 `podman` 的返回。把 `tests/fixtures/bin/podman` 前置到 `PATH`，就能用“预置应答”构造任意镜像内容（缺 gcc、pth 少一行、libLLVM 落到系统包……），毫秒级、可重复、无远端依赖。桩只覆盖脚本实际用到的 4 类调用：`image exists`、`image inspect --format`、`volume exists`、`run ... bash -lc <script>`；遇到未覆盖的调用或缺失的 fixture 键，桩打印原因并以 `99` 退出，**不静默返回空**。
+- **覆盖范围**：27 条用例分 5 组 —— A 组 1 条（全符合契约 → 10/10 PASS、`exit 0`）；B 组 13 条（逐项破坏单一条件，每例只应让对应的一项 FAIL，含 pth 少一行 / 行序颠倒 / 结尾无换行、libLLVM 落到系统包）；C 组 4 条（镜像不存在 → `exit 2`、非法参数 → `exit 2`、FAIL 与 UNKNOWN 并存 → `exit 1` 且 FAIL 优先、`--with-volume` 但卷不存在 → C2 与 C1 均 UNKNOWN 且 `exit 2`）；D 组 7 条（`--json` 可被 `python3 -m json.tool` 解析且字段与 `exit` 一致、汇总行 `total == pass+fail+unknown`、note 含 Tab 时 JSON 仍合法、pth 含非 ASCII 时仍按字节口径比对，另加 D25 控制字符保真、D26 反斜杠·双引号·Tab·SOH 四类混用、D27 NUL 边界锁定）；E 组 2 条变异测试（删掉 A5 / B1 的 `check` 行后，同一 FAIL 构造必须不再被检出，否则判“用例不敏感”）。
+- **隔离**：每条用例独立 fixture + `mktemp -d`，整体 `trap` 清理，跑完不留残留；不写 `S:`、不触达真实 `npu-build` 卷。每例打印 `[PASS]/[FAIL] <case-id> <说明>`，末尾汇总 `total/pass/fail` 与 `exit`。
+
+## 基线镜像重建（`scripts/build-minimal-base.sh`）
+
+`localhost/openkylin:3.0-minimal` 与 `localhost/openkylin:3.0-minimal-gcc` 是重基线用的两个最小基线 tag；它们与本变体的 `Containerfile` 无关，也不改变 `localhost/openkylin:3.0`。
+
+```bash
+bash scripts/build-minimal-base.sh              # 幂等：已存在的 tag 跳过，退出码 0
+bash scripts/build-minimal-base.sh --force      # 强制重建（旧镜像保留为 <none>）
+bash scripts/build-minimal-base.sh <SRC>.wsl    # 指定源文件（默认 .agents/wsl-images/openKylin-3.0-wsl-amd64.wsl）
+```
+
+| 步骤 | 产出 | 动作 | 断言 |
+|---|---|---|---|
+| S1 | `localhost/openkylin:3.0-minimal` | `podman import` 官方 rootfs | os-release `openkylin / 3.0 / huanghe`、`ldd` 可用、无 tvm/xmnn 实体、`gcc` 不存在 |
+| S2 | `localhost/openkylin:3.0-minimal-gcc` | `podman build` 补 gcc 15.2.0（apt 25 包） | 同上 + `gcc --version` 含 `15.2.0` + `dpkg-query` 25/25 |
+
+每步打印三口径：`df -B1` 差（**准**）、`podman images` SIZE、容器内 `du -sb --one-file-system /`。
+
+**前置条件**
+
+| 项 | 要求 |
+|---|---|
+| 宿主 | `ai@10.16.11.3`，rootless Podman 5.6.2；graphroot 软链到 `/media/pc/data/ai/.agents/podman-storage/storage`（XFS） |
+| 源文件 | `/media/pc/data/ai/.agents/wsl-images/openKylin-3.0-wsl-amd64.wsl`（352,431,812 B，sha256 已内置）；脚本先校验 sha256 再 import |
+| 网络 | `mirrors.aliyun.com/openkylin` 可达——S2 唯一的 apt 源；官方 `archive.build.openkylin.top` / `ppa.build.openkylin.top` 均不可达 |
+| 余量 | `df -B1 /media/pc/data/ai` ≥ 5 GiB |
+
+**幂等与 `--force`**：不带 `--force` 时，已存在的 tag 打印 `SKIP`，同时复跑只读断言与三口径，退出码 0。`--force` 重建并重打 tag，旧镜像保留为 `<none>`——脚本从不 `rmi`/`prune`；重建前检查目标 tag 是否被任一容器（含已停止）使用，命中即中止并返回非零。构建用的临时 Containerfile 由脚本写入 `.temp/npu-toolchain/build-minimal-base.*` 并在退出时删除，不依赖任何既有 `.temp` 产物。
+
+**默认值切换条件**：仓库 `Containerfile` 的 `ARG BASE_IMAGE` 默认值仍为 `localhost/openkylin:3.0`；当该镜像退役时，把 `ARG BASE_IMAGE` 默认值与 `all-in-one.sh` 的 `BASE_IMAGE` 一并切换为 `localhost/openkylin:3.0-minimal-gcc`。
 
 ## 与 compose.yaml 的关系
 
