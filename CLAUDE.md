@@ -72,7 +72,7 @@ Windows 平台所有 `.ps1` 脚本必须用 PowerShell 7.4+（pwsh7）执行，�
 - **提交规范**：Conventional Commits（`type(scope): subject`），主体用**中文**描述；修复类提交须标注预防措施类型。分支命名 `type/brief-description`。
 - **新增脚本**：写入 `.agents/scripts/` 前先查阅 `.agents/scripts/lib/README.md` 共享库，禁止重复实现已有功能。
 - **派生产物溯源**：YAML/TOML frontmatter 须携带 `source` 字段标注来源。
-- **Mermaid 优先**：流程/架构/关系/状态机优先用 Mermaid，遵循安全编码六规则（见 `.agents/docs/development-standards.md`）。
+- **Mermaid 优先**：流程/架构/关系/状态机优先用 Mermaid，遵循安全编码六规则（见 [development-standards.md](docs/tech/references/development-standards.md#mermaid-编码规范)）。
 - **修复即闭环**：Bug 修复遵循「修复→预防→闭环」三阶段 SOP，禁止纯点修复（平凡修复可豁免）；三阶段递进顺序不可颠倒。
 - **测试覆盖率**：单元测试不低于 80%，关键模块不低于 90%。
 - **禁止提交临时依赖**：`.temp/`、`__pycache__/`、`.venv/`、`node_modules/` 等不得入库。
