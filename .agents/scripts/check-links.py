@@ -42,7 +42,7 @@ from constants import (
 from lib.project import resolve_project_root
 from lib.link_fixer import is_code_fence_context, INLINE_LINK_RE
 from lib.cli import add_common_args, setup_safe_output
-from lib.markdown import find_markdown_files
+from lib.markdown import filter_untracked_paths, find_markdown_files, is_literal_path
 from lib.atomic_write import atomic_write_json
 from lib.cache import get_cache_path, load_cache, save_cache
 
@@ -79,6 +79,13 @@ LINK_CHECK_SKIP_SEGMENTS = (
     "/vendor/flexloop/",
     "/vendor/ark-cli/",
 )
+
+# 源码扫描跳过目录：这些目录装的不是本仓文档，而是本地语料/工具目录/缓存，
+# 其内部 Markdown 的相对链接无法按本仓结构解析（实测贡献 1.4 万条假断链）。
+# 与 LINK_CHECK_SKIP_SEGMENTS（按链接目标跳过）不同，这里按「源文件所在目录」
+# 跳过，且只跳过未被 git 跟踪的文件——目录里一旦出现受版本控制的内容，照常检查。
+# 免除资格由 lib.markdown.audit_skipped_paths 强制校验，违规直接抛错。
+LINK_CHECK_UNTRACKED_SKIP_DIRS = frozenset({".corpus", ".workbuddy", ".cache"})
 
 # 模板占位符：这些是文档模板中的示例链接，不是真实链接。
 LINK_CHECK_PLACEHOLDER_EXACT = {"链接", "URL", "url", "<url>"}
@@ -1070,6 +1077,7 @@ def main(argv=None) -> int:
     # 查找 Markdown 文件（支持多目录扫描）
     md_files = []
     file_root_map = {}  # 文件 -> 其所属扫描根目录（用于相对路径显示）
+    dedup_index = {}  # 解析后实体 -> 在 md_files 中的下标（用于别名去重择优）
     for root in roots:
         if root.is_file():
             # 单文件输入：直接纳入扫描。find_markdown_files 对文件路径
@@ -1080,6 +1088,7 @@ def main(argv=None) -> int:
                 resolved = root.resolve()
                 if resolved not in file_root_map:
                     file_root_map[resolved] = root.parent
+                    dedup_index[resolved] = len(md_files)
                     md_files.append(root)
                 print("找到 1 个 Markdown 文件")
             else:
@@ -1097,8 +1106,26 @@ def main(argv=None) -> int:
             resolved = md_file.resolve()
             if resolved not in file_root_map:
                 file_root_map[resolved] = root
+                dedup_index[resolved] = len(md_files)
                 md_files.append(md_file)
+            elif is_literal_path(md_file) and not is_literal_path(
+                md_files[dedup_index[resolved]]
+            ):
+                # 同一实体经联接/符号链接别名重复出现时，保留字面路径视图：
+                # 否则别名视图会挤掉真实路径，跳过集一开就把真断链一起吞掉
+                md_files[dedup_index[resolved]] = md_file
     print(f"\n合计: {len(md_files)} 个 Markdown 文件（已去重）")
+
+    # 跳过未跟踪的本地语料/工具/缓存目录（硬约束由 audit_skipped_paths 校验）
+    md_files, skip_stats = filter_untracked_paths(
+        md_files, project_root, LINK_CHECK_UNTRACKED_SKIP_DIRS
+    )
+    if skip_stats:
+        print(
+            f"跳过未跟踪内容: {skip_stats['total']} 个 Markdown 文件"
+            f"（未跟踪 {skip_stats.get('untracked', 0)}，"
+            f"联接别名 {skip_stats.get('junction-alias', 0)}）"
+        )
     if not md_files:
         # 零对象扫描必须显式告警：通过语义只属于「检查过且无断链」，
         # 不属于「什么都没检查」。

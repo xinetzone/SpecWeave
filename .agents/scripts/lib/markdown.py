@@ -11,7 +11,10 @@ from .python310_version_check import enforce_python310
 
 enforce_python310()
 
+import os
 import re
+import subprocess
+import sys
 from pathlib import Path
 
 from constants import EXCLUDED_DIRS
@@ -82,6 +85,173 @@ def find_markdown_files(
             continue
         md_files.append(md_path)
     return md_files
+
+
+# ============================================================================
+# 未跟踪目录跳过（check-links 专用）
+# ============================================================================
+# 背景：本地语料库（.corpus/）、AI 工具目录（.workbuddy/）、本地缓存（.cache/）
+# 不被 git 跟踪，其内部 Markdown 的链接无法按本仓相对路径解析，曾贡献 1.4 万条
+# 假断链淹没真实问题。本机制只跳过「未被 git 跟踪」的内容：这些目录中一旦出现
+# 受版本控制的文件，会被照常扫描，不会被前缀硬挡。
+#
+# 硬约束：被跳过的路径必须满足「未被 git 跟踪」或「是指向已跟踪目录的联接别名」。
+# audit_skipped_paths() 在每个扫描批次结束后强制校验，违规立即抛错；索引不可用
+# 时同样拒绝跳过（宁可不跳过，也不能误挡真断链）。
+
+UNTRACKED_REASON = "untracked"
+JUNCTION_ALIAS_REASON = "junction-alias"
+
+_TRACKED_INDEX_CACHE: dict[str, set[str] | None] = {}
+
+
+def _git_tracked_index(repo_root: Path) -> set[str] | None:
+    """返回仓库 git 索引中全部文件的 posix 相对路径集合。
+
+    Args:
+        repo_root: 仓库根目录。
+
+    Returns:
+        相对仓库根的 posix 路径集合；非 git 仓库或 git 调用失败时返回 None。
+    """
+    key = str(repo_root)
+    if key in _TRACKED_INDEX_CACHE:
+        return _TRACKED_INDEX_CACHE[key]
+    index: set[str] | None
+    try:
+        proc = subprocess.run(
+            ["git", "-C", str(repo_root), "ls-files", "-z"],
+            capture_output=True,
+            check=True,
+        )
+        index = {
+            rel.decode("utf-8", "surrogateescape").replace("\\", "/")
+            for rel in proc.stdout.split(b"\0")
+            if rel
+        }
+    except (OSError, subprocess.CalledProcessError):
+        index = None
+    _TRACKED_INDEX_CACHE[key] = index
+    return index
+
+
+def _literal_relative(path: Path, base: Path) -> str | None:
+    """按字面路径求相对 base 的 posix 路径，不解析联接/符号链接。"""
+    try:
+        literal = Path(os.path.abspath(path))
+        return literal.relative_to(Path(os.path.abspath(base))).as_posix()
+    except ValueError:
+        return None
+
+
+def is_literal_path(path: Path) -> bool:
+    """判断路径是否为字面路径（不穿透目录联接/符号链接）。
+
+    同一文件可能既能按真实路径、又能按目录联接别名访问。字面路径才是它在
+    仓库中的权威位置，别名视图只配当去重候选——否则「保留先到者」的去重
+    会让别名视图挤掉真实路径，跳过集一开就把真实内容的断链一起吞掉。
+    """
+    try:
+        literal = Path(os.path.abspath(path))
+        resolved = Path(path).resolve()
+    except OSError:
+        return True
+    return os.path.normcase(str(literal)) == os.path.normcase(str(resolved))
+
+
+def audit_skipped_paths(
+    skipped: dict[Path, str], tracked: set[str] | None, repo_root: Path
+) -> None:
+    """强制校验被跳过路径是否具备免除资格。
+
+    硬约束（不可放宽）：每个被跳过的路径必须满足下列之一——
+    ① 未被 git 跟踪；② 未被跟踪、且解析联接后的目标是被跟踪文件（别名重扫）。
+
+    Args:
+        skipped: 被跳过的文件 → 跳过原因（UNTRACKED_REASON / JUNCTION_ALIAS_REASON）。
+        tracked: git 索引路径集合；None 表示索引不可用。
+        repo_root: 仓库根目录。
+
+    Raises:
+        RuntimeError: 存在不具备免除资格的路径，或索引不可用却仍有跳过。
+    """
+    if not skipped:
+        return
+    if tracked is None:
+        raise RuntimeError(
+            f"跳过集缺少 git 索引，拒绝以未验证状态跳过 {len(skipped)} 个文件"
+        )
+    violations: list[str] = []
+    for path, reason in skipped.items():
+        literal = _literal_relative(path, repo_root)
+        if literal is None:
+            violations.append(f"{path}: 不在仓库范围内，无法验证跟踪状态")
+            continue
+        if literal in tracked:
+            violations.append(
+                f"{literal}: 已被 git 跟踪，不能跳过（它本身就是应该检查的内容）"
+            )
+            continue
+        if reason == JUNCTION_ALIAS_REASON:
+            real = _literal_relative(path.resolve(), repo_root)
+            if real is None or real == literal or real not in tracked:
+                violations.append(
+                    f"{literal}: 声明为联接别名，但目标不是被跟踪文件"
+                )
+    if violations:
+        raise RuntimeError(
+            "跳过集违反硬约束（被跳过的路径必须未被 git 跟踪，"
+            "或是指向已跟踪目录的联接别名）：\n  " + "\n  ".join(violations)
+        )
+
+
+def filter_untracked_paths(
+    md_files: list[Path],
+    repo_root: Path,
+    skip_dirs: set[str] | frozenset[str] | None,
+) -> tuple[list[Path], dict[str, int]]:
+    """剔除位于未跟踪目录中的 Markdown 文件，并返回按原因计的跳过统计。
+
+    Args:
+        md_files: 待过滤的 Markdown 文件列表。
+        repo_root: 仓库根目录（用于对齐 git 索引的相对路径）。
+        skip_dirs: 候选跳过目录名集合（按目录段匹配，如 {".corpus", ".workbuddy"}）。
+
+    Returns:
+        (保留的文件列表, 统计字典)。统计含 total 与各原因计数；索引不可用时
+        返回原列表与空统计。
+    """
+    if not skip_dirs:
+        return list(md_files), {}
+    tracked = _git_tracked_index(repo_root)
+    if tracked is None:
+        print(
+            "警告: 无法读取 git 跟踪清单，跳过集未生效"
+            "（避免把受版本控制的内容误挡在检查之外）",
+            file=sys.stderr,
+        )
+        return list(md_files), {}
+    kept: list[Path] = []
+    skipped: dict[Path, str] = {}
+    for md_path in md_files:
+        if not (set(md_path.parts[:-1]) & set(skip_dirs)):
+            kept.append(md_path)
+            continue
+        literal = _literal_relative(md_path, repo_root)
+        if literal is None or literal in tracked:
+            kept.append(md_path)
+            continue
+        real = _literal_relative(md_path.resolve(), repo_root)
+        skipped[md_path] = (
+            JUNCTION_ALIAS_REASON if real and real != literal else UNTRACKED_REASON
+        )
+    audit_skipped_paths(skipped, tracked, repo_root)
+    if not skipped:
+        return kept, {}
+    stats = {"total": len(skipped)}
+    for reason in skipped.values():
+        stats[reason] = stats.get(reason, 0) + 1
+    return kept, stats
 
 
 def extract_title(path: Path | str) -> str:
