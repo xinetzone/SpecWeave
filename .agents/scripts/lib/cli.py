@@ -195,7 +195,7 @@ def add_knowledge_filter_args(parser: argparse.ArgumentParser) -> None:
         parser = argparse.ArgumentParser(description="...")
         add_knowledge_filter_args(parser)
     """
-    from lib.knowledge import VALID_KNOWLEDGE_TYPES, VALID_VALIDATION_STATUSES
+    from lib.knowledge_classification import VALID_KNOWLEDGE_TYPES, VALID_VALIDATION_STATUSES
 
     parser.add_argument(
         "--type", dest="knowledge_type",

@@ -326,3 +326,55 @@ class TestAddCommonArgs:
         assert args.json is True
         assert args.fix is True
 
+
+class TestAddKnowledgeFilterArgs:
+    """add_knowledge_filter_args 参数注册测试。
+
+    该函数内部为惰性导入，`import lib.cli` 不会触发；一旦目标模块被拆分或改名，
+    只有真正调用时才抛 ModuleNotFoundError。本组用例保证调用路径始终可达。
+    """
+
+    def _build_parser(self):
+        parser = argparse.ArgumentParser()
+        cli.add_knowledge_filter_args(parser)
+        return parser
+
+    def _choice_action(self, parser, dest):
+        return next(a for a in parser._actions if a.dest == dest)
+
+    def test_registers_three_filters(self):
+        parser = self._build_parser()
+        dests = {a.dest for a in parser._actions}
+        assert {"knowledge_type", "validation_status", "security_level"} <= dests
+
+    def test_type_choices_match_knowledge_classification(self):
+        from lib.knowledge_classification import VALID_KNOWLEDGE_TYPES
+
+        action = self._choice_action(self._build_parser(), "knowledge_type")
+        assert action.choices == sorted(VALID_KNOWLEDGE_TYPES)
+
+    def test_status_choices_match_knowledge_classification(self):
+        from lib.knowledge_classification import VALID_VALIDATION_STATUSES
+
+        action = self._choice_action(self._build_parser(), "validation_status")
+        assert action.choices == sorted(VALID_VALIDATION_STATUSES)
+
+    def test_level_choices_are_security_levels(self):
+        action = self._choice_action(self._build_parser(), "security_level")
+        assert action.choices == ["public", "internal", "confidential"]
+
+    def test_parses_type_and_status_values(self):
+        from lib.knowledge_classification import (
+            VALID_KNOWLEDGE_TYPES,
+            VALID_VALIDATION_STATUSES,
+        )
+
+        knowledge_type = sorted(VALID_KNOWLEDGE_TYPES)[0]
+        validation_status = sorted(VALID_VALIDATION_STATUSES)[0]
+        args = self._build_parser().parse_args(
+            ["--type", knowledge_type, "--status", validation_status, "--level", "public"]
+        )
+        assert args.knowledge_type == knowledge_type
+        assert args.validation_status == validation_status
+        assert args.security_level == "public"
+
