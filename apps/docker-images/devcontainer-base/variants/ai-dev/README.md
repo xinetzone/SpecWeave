@@ -341,4 +341,4 @@ ai-dev 变体内核名为 **"Python 3 (AI Dev)"**，采用跨环境内核机制�
 - [onnx-dev](../onnx-dev/README.md) — 纯 ONNX 生态
 - [onnx-quantized](../onnx-quantized/README.md) — ONNX 量化工具链 + free-threading 环境
 - [torch-dev](../torch-dev/README.md) — PyTorch CUDA free-threading（ai-dev 直接基础）
-- [llm-agent](../llm-agent/README.md) — LLM Agent 开发（基于 ai-dev，加装 LangChain 生态）
+- llm-agent（`../llm-agent/README.md`）— LLM Agent 开发（基于 ai-dev，加装 LangChain 生态）

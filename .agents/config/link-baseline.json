@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-09T20:48:00",
+  "generated_at": "2026-11-10T09:46:11",
   "entries": [
     {
       "source": ".trae/specs/core-foundation/README.md",
@@ -923,22 +923,6 @@
       "review_by": "2027-02-07"
     },
     {
-      "source": "apps/docker-images/devcontainer-base/variants/ai-dev/AGENTS.md",
-      "target": "../llm-agent/AGENTS.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "deleted",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "apps/docker-images/devcontainer-base/variants/ai-dev/README.md",
-      "target": "../llm-agent/README.md",
-      "count": 1,
-      "since": "2026-11-09",
-      "reason": "deleted",
-      "review_by": "2027-02-07"
-    },
-    {
       "source": "apps/docker-images/devcontainer-base/variants/onnx-quantized/README.md",
       "target": "../../../../../docs/tech/release-onnx-quantized-v2.md",
       "count": 1,
@@ -960,14 +944,6 @@
       "count": 1,
       "since": "2026-11-09",
       "reason": "depth",
-      "review_by": "2027-02-07"
-    },
-    {
-      "source": "docs/knowledge/tech/tvm-ffi-wiki/00-overview.md",
-      "target": "01-core-concepts.md",
-      "count": 2,
-      "since": "2026-11-09",
-      "reason": "unclassified",
       "review_by": "2027-02-07"
     },
     {

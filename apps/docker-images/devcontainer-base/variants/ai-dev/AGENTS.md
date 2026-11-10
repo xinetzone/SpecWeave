@@ -118,7 +118,7 @@ SpecWeave 根 AGENTS.md（全局规则）
 | 变体共享约定（FROM/SHELL/缓存挂载/验证检查点） | [../.agents/rules/variant-conventions.md](../.agents/rules/variant-conventions.md) | 所有变体必须遵循的 Dockerfile 共享约定 |
 | 构建本变体 | [../build.sh](../build.sh) + [../.agents/rules/build-orchestration.md](../.agents/rules/build-orchestration.md) | `--variant ai-dev`（拓扑排序自动补齐 torch-dev/onnx-quantized/... 依赖链） |
 | 测试本变体 | [../scripts/test-ai-dev.sh](../scripts/test-ai-dev.sh) | 29 项单元测试（L1-L7分层，含双环境GIL守卫+torch隔离T28/T29） |
-| 下游 LLM Agent 变体 | [../llm-agent/AGENTS.md](../llm-agent/AGENTS.md) | llm-agent 直接基于 ai-dev，在 base 环境加装 LangChain 生态 |
+| 下游 LLM Agent 变体 | `../llm-agent/AGENTS.md` | llm-agent 直接基于 ai-dev，在 base 环境加装 LangChain 生态 |
 | 测试规范（分层策略） | [../.agents/rules/testing.md](../.agents/rules/testing.md) | 测试脚本编写规范 |
 | 父级回退（变体系列通用规则） | [../AGENTS.md](../AGENTS.md) | 本文件未覆盖时回退 |
 
