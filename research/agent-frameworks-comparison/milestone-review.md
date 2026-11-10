@@ -110,12 +110,12 @@ MAF 1.0 终结了 Semantic Kernel（企业）与 AutoGen（研究）的双线内
 
 ## 七、参考来源
 
-- JetBrains《LangGraph vs AutoGen vs CrewAI》[ref_1]
-- LangChain 官方《LangChain vs. AutoGen 2026》[ref_2]
-- Anthropic 官方 Agent SDK 文档《How the agent loop works》[ref_3]
-- Microsoft DevBlogs《MAF at BUILD 2026》《MAF 1.0》[ref_4]
-- Thoughtworks Technology Radar《Coding harness for general-purpose agents》(2026-11)[ref_5]
-- DEV Community / gamut.so / developersdigest 多篇 2026 框架对比 [ref_6]
+- JetBrains《LangGraph vs. AutoGen vs. CrewAI: An Agent Framework Comparison》— https://www.jetbrains.com/pages/ai-agents/building/agent-framework-comparison/
+- LangChain 官方《LangChain vs. AutoGen in 2026: What the Maintenance Announcement Changed》— https://www.langchain.com/resources/langchain-vs-autogen
+- Anthropic 官方 Agent SDK 文档《How the agent loop works》— https://platform.claude.com/docs/en/agent-sdk/agent-loop
+- Microsoft DevBlogs《Microsoft Agent Framework at BUILD 2026: Agent Harness, Hosted Agents, CodeAct》— https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-at-build-2026-announce/
+- Thoughtworks Technology Radar《Coding harness for general-purpose agents》(2026-11) — https://www.thoughtworks.com/radar/techniques/coding-harness-for-general-purpose-agents
+- 补充对比：DEV Community《2026 AI agent frameworks compared》— https://dev.to/mr_manushukla/2026-ai-agent-frameworks-compared-langgraph-vs-crewai-vs-microsoft-agent-framework-vs-pydantic-ai-4f8k ；gamut.so《Best AI Agent Frameworks in 2026》— https://www.gamut.so/blog/best-ai-agent-frameworks-2026
 
 ---
 

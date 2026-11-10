@@ -51,8 +51,8 @@
 ---
 
 ## 主要参考来源
-- JetBrains《LangGraph vs AutoGen vs CrewAI》[ref_1]
-- spinny.dev / menuagentic 四框架架构对比 [ref_2]
-- DEV Community（heu.ai）生产级架构对比 [ref_3]
-- Anthropic 官方 Agent SDK 文档《How the agent loop works》[ref_4]
-- Stackademic《Building Production AI Agents with Claude Agent SDK》[ref_5]
+- JetBrains《LangGraph vs. AutoGen vs. CrewAI: An Agent Framework Comparison》— https://www.jetbrains.com/pages/ai-agents/building/agent-framework-comparison/
+- Filippo Spinella《Agentic AI Frameworks Compared: LangGraph / CrewAI / OpenAI / Claude Agent SDK》— https://www.spinny.dev/en/blog/agentic-ai-frameworks-comparison
+- DEV Community（heu.ai）《LangGraph vs CrewAI vs AutoGen: Architectural Comparison for Production AI Agents》— https://dev.to/heuai/langgraph-vs-crewai-vs-autogen-architectural-comparison-for-production-ai-agents-151j
+- Anthropic 官方 Agent SDK 文档《How the agent loop works》— https://platform.claude.com/docs/en/agent-sdk/agent-loop
+- Stackademic《Building Production AI Agents with Anthropic's Claude Agent SDK》— https://stackademic.com/blog/building-production-ai-agents-with-anthropic-s-claude-agent-sdk
