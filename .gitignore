@@ -239,3 +239,6 @@ apps/dev-tools/openkylin-wsl-devkit/apps/openkylin-dev-container/variants/**/*.p
 #   克隆父仓的人拿到的是空目录，且 git submodule update 找不到来源。
 #   等远端仓库建立、URL 确定后，再走 `git submodule add` 正式接入。
 projects/zhenxuqiu-site/
+
+# Box-Agent 产物登记元数据（本地，不入库）
+.*.artifact.json
