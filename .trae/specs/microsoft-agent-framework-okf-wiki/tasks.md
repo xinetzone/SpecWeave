@@ -35,3 +35,22 @@
 ## [x] Task 8: 提交
 - 子模块 `projects/awesome-okf-xs` 先提交；主仓库提交 spec。
 - 验收：显式文件列表；不 push。
+
+## 第二轮：源码核验（commit 098214127）
+
+## [x] Task 9: 源码信源固定与模块地图
+- 记录 commit、版本、目录结构；产出 `references/source-code-map.md`。
+- 验收：路径为仓库相对路径，计数为脚本计数。
+
+## [x] Task 10: 源码事实采集
+- 新增 F-121 ~ F-170；双份登记一致。
+- 验收：类名/方法名/默认值均有文件依据。
+
+## [x] Task 11: 源码概念与示例
+- 新增 concepts 10–15、examples 05；续编号，不重写既有文档。
+- 验收：每篇有独立主题与 F 引用。
+
+## [x] Task 12: 源码轮验证
+- UTF-8、F 编号、toctree、链接、frontmatter、敏感路径、计数全部复核。
+- 验收：0 错误；差异写入 verification.md。
+

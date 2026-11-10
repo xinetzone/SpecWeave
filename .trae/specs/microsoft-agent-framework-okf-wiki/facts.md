@@ -171,3 +171,60 @@
 | F-118 | 社区维护的集成与微软官方指南分开列出。 | S2 |
 | F-119 | 官方为编码代理提供 `agent-framework-builder-python` 技能，可通过 `gh skill install microsoft/agent-framework agent-framework-builder-python@main` 或 `npx skills add ...` 安装。 | S2/S3 |
 | F-120 | 文档站中文版页面更新时间集中在 2026-10-23 至 2026-11-06，晚于 Build 2026 博文约五个月，因此文档包含博文未覆盖的 Go 预览与新页面。 | S2 |
+
+## 十、源码核验补充（F-121 ~ F-170）
+
+> 信源 S4：本地源码检出 `D:\spaces\SpecWeave\external\dao\action\agent-framework`，commit `098214127`，`git describe` = `dotnet-1.28.0-19-g098214127`（2026-11-10）。下列事实均由源码文件/脚本计数直接核验；路径均相对仓库根。
+
+| 编号 | 事实 | 信源 |
+|------|------|------|
+| F-121 | 本地源码检出 commit 为 `098214127`，`git describe --tags` 输出 `dotnet-1.28.0-19-g098214127`，提交时间 2026-11-10 00:31:58 +0000。 | S4 |
+| F-122 | 仓库顶层目录包含 `python/`、`dotnet/`、`go/`、`declarative-agents/`、`skills/`、`docs/`、`.github/`、`.devcontainer/`、`.vscode/`。 | S4 |
+| F-123 | `python/packages/` 下有 44 个包目录（脚本计数）。 | S4 |
+| F-124 | `python/packages/core/pyproject.toml` 的 `name = "agent-framework-core"`、`version = "1.25.0"`。 | S4 |
+| F-125 | `dotnet/nuget/nuget-package.props` 的 `<VersionPrefix>1.28.0</VersionPrefix>`。 | S4 |
+| F-126 | `dotnet/src/` 下有 38 个项目目录（脚本计数），含 `Microsoft.Agents.AI`、`.Harness`、`.Workflows`、`.Hyperlight`、`.LocalCodeAct`、`.Tools.Shell`、`.Hosting` 等。 | S4 |
+| F-127 | `go/` 目录仅含 `README.md`，正文指向 `https://github.com/microsoft/agent-framework-go/`。 | S4 |
+| F-128 | `python/packages/core/agent_framework/` 顶层有 24 个 `.py` 文件（脚本计数），含 `_agents.py`、`_clients.py`、`_middleware.py`、`_sessions.py`、`_compaction.py`、`_skills.py`、`security.py`、`observability.py`。 | S4 |
+| F-129 | `_agents.py` 定义 `SupportsAgentRun`（Protocol）、`BaseAgent`、`RawAgent`、`Agent`。 | S4 |
+| F-130 | `Agent` 继承 `AgentMiddlewareLayer`、`AgentTelemetryLayer`、`RawAgent[OptionsCoT]`；类文档称其为“推荐的代理类”，`RawAgent` 为最小实现。 | S4 |
+| F-131 | `Agent.run` 的签名包含 `messages`、`stream`、`session`、`middleware`、`tools`、`options`、`compaction_strategy`、`tokenizer`、`function_invocation_kwargs`、`client_kwargs`。 | S4 |
+| F-132 | `_middleware.py` 定义 `AgentMiddleware`、`FunctionMiddleware`、`ChatMiddleware`、`MiddlewareBundle`、`AgentMiddlewarePipeline`、`FunctionMiddlewarePipeline`、`ChatMiddlewarePipeline`、`ChatMiddlewareLayer`、`AgentMiddlewareLayer`。 | S4 |
+| F-133 | `_middleware.py` 定义 `MiddlewareTermination` 与 `MiddlewareFailure` 两个异常类型。 | S4 |
+| F-134 | `_sessions.py` 定义 `SessionContext`、`ContextProvider`、`HistoryProvider`、`MessageInjectionMiddleware`、`_RunPersistenceGate`。 | S4 |
+| F-135 | `SessionContext` 提供 `extend_messages`、`extend_instructions`、`extend_tools`、`extend_middleware`、`get_messages`；`ContextProvider` 提供 `before_run` 与 `after_run` 钩子。 | S4 |
+| F-136 | `_compaction.py` 定义 `CompactionStrategy` 协议与 `TokenizerProtocol`，并包含 `TruncationStrategy`、`SlidingWindowStrategy`、`SelectiveToolCallCompactionStrategy`、`ToolResultCompactionStrategy`、`SummarizationStrategy`、`TokenBudgetComposedStrategy`、`ContextWindowCompactionStrategy`、`AgentTriggeredCompactionStrategy`、`UnloadSkillsCompactionStrategy`。 | S4 |
+| F-137 | `_compaction.py` 定义 `CompactionProvider(ContextProvider)`，把压缩接入上下文提供程序管道。 | S4 |
+| F-138 | `_harness/_agent.py` 的 `create_harness_agent` 组装 `Agent`，文档列出其自动接线：函数调用、每次服务调用历史持久化、压缩、TodoProvider、AgentModeProvider、FileMemoryProvider、FileAccessProvider、SkillsProvider、BackgroundAgentsProvider、工具审批、循环。 | S4 |
+| F-139 | `create_harness_agent` 参数包含 `max_context_window_tokens`、`max_output_tokens`、`disable_compaction`、`before_compaction_strategy`、`after_compaction_strategy`、`disable_todo`、`disable_mode`、`disable_file_memory`、`skills_provider`、`skills_paths`、`background_agents`、`shell_executor`、`disable_web_search`。 | S4 |
+| F-140 | `create_harness_agent` 区分 `harness_instructions` 与 `agent_instructions`；`harness_instructions` 为 `None` 时使用 `DEFAULT_HARNESS_INSTRUCTIONS`。 | S4 |
+| F-141 | `_harness/_loop.py` 定义 `DEFAULT_MAX_ITERATIONS = 10`。 | S4 |
+| F-142 | `_harness/_background_agents.py` 定义 `DEFAULT_BACKGROUND_AGENTS_WAIT_TIMEOUT_SECONDS = 300`。 | S4 |
+| F-143 | `_harness/_loop.py` 定义 `AgentLoopMiddleware`、`JudgeVerdict`、`background_tasks_running`、`todos_remaining` 等循环控制构件。 | S4 |
+| F-144 | `_harness/` 下存在 `_file_memory.py`、`_file_access.py`、`_todo.py`、`_mode.py`、`_tool_approval.py`、`_background_agents.py`、`_memory.py`、`_loop.py`。 | S4 |
+| F-145 | `_harness/_agent.py` 从 `agent_framework_tools.shell` 导入 `ShellEnvironmentProviderOptions` 与 `ShellExecutor`，并在 `shell_executor` 非空时装配 `ShellEnvironmentProvider`。 | S4 |
+| F-146 | `python/packages/tools/pyproject.toml` 的 `name = "agent-framework-tools"`、`version = "1.0.0b261106"`。 | S4 |
+| F-147 | `_workflows/` 运行时文件包含 `_workflow.py`、`_workflow_builder.py`、`_runner.py`、`_runner_context.py`、`_edge_runner.py`、`_executor.py`、`_checkpoint.py`、`_functional.py`。 | S4 |
+| F-148 | `WorkflowBuilder` 提供 `add_edge`、`add_fan_out_edges`、`add_switch_case_edge_group`、`add_multi_selection_edge_group`、`add_fan_in_edges`、`add_chain`、`build`。 | S4 |
+| F-149 | `Workflow` 提供 `run`、`get_start_executor`、`get_output_executors`、`get_intermediate_executors`、`get_executors_list`；`WorkflowRunResult` 提供 `get_outputs`、`get_intermediate_outputs`、`get_request_info_events`、`status_timeline`。 | S4 |
+| F-150 | `_runner.py` 的 `RunnerImpl` 提供 `run_until_convergence`、`_run_iteration`、`create_checkpoint_if_enabled`、`restore_from_checkpoint`、`build_checkpoint`、`restore_checkpoint`。 | S4 |
+| F-151 | `_checkpoint.py` 定义 `WorkflowCheckpoint`、`CheckpointStorage`（协议：`save`/`load`/`list_checkpoints`）、`InMemoryCheckpointStorage`、`FileCheckpointStorage`。 | S4 |
+| F-152 | `_workflows/_functional.py` 定义 `FunctionalWorkflow`、`FunctionalWorkflowAgent`、`RunContext`、`StepWrapper`、`FunctionalWorkflowDefinition`。 | S4 |
+| F-153 | `security.py` 定义 `IntegrityLabel`、`ConfidentialityLabel`、`ContentLabel`、`ContentVariableStore`、`LabelTrackingFunctionMiddleware`、`PolicyEnforcementFunctionMiddleware`、`SecureAgentConfig`、`SecureMCPToolProxy`。 | S4 |
+| F-154 | `SecureAgentConfig` 是 `ContextProvider`；文档字符串说明它向代理注入安全工具、指令与中间件，安全状态存放在 `AgentSession`。 | S4 |
+| F-155 | `dotnet/src` 全目录 `.cs` 文件检索 `IntegrityLabel|Fides|FIDES` 零命中。 | S4 |
+| F-156 | `python/packages/hyperlight/agent_framework_hyperlight/` 定义 `HyperlightCodeActProvider(ContextProvider)` 与 `HyperlightExecuteCodeTool(FunctionTool)`。 | S4 |
+| F-157 | `HyperlightCodeActProvider` 参数包含 `tools`、`approval_mode`、`workspace_root`、`file_mounts`、`allowed_domains`、`max_output_files`、`max_output_file_bytes`、`max_output_total_bytes`、`backend`（默认 `"wasm"`）、`module`。 | S4 |
+| F-158 | `python/packages/hyperlight/tests/hyperlight/` 含 `test_hyperlight_codeact.py` 与 fake sandbox/runtime 测试替身。 | S4 |
+| F-159 | `dotnet/src/Microsoft.Agents.AI.Harness/` 含 `HarnessAgent.cs`、`HarnessAgentOptions.cs`、`ChatClientHarnessExtensions.cs`。 | S4 |
+| F-160 | `HarnessAgentOptions` 公开 `MaxContextWindowTokens`、`MaxOutputTokens`、`CompactionStrategy`、`DisableCompaction`、`HarnessInstructions`、`ChatHistoryProvider`、`AIContextProviders`、`LoopEvaluators`、`LoopAgentOptions`、`MaximumIterationsPerRequest`、`DisableToolAutoApproval`。 | S4 |
+| F-161 | `dotnet/src/Microsoft.Agents.AI.Workflows/` 含 `CheckpointManager.cs`、`CheckpointInfo.cs`、`Executor.cs`、`Edge.cs`、`AgentWorkflowBuilder.cs`、`ConcurrentWorkflowBuilder.cs`、`FanOutEdgeData.cs`、`FanInEdgeData.cs`。 | S4 |
+| F-162 | `dotnet/src` 项目清单含 `Microsoft.Agents.AI.Hyperlight`、`Microsoft.Agents.AI.LocalCodeAct`、`Microsoft.Agents.AI.Tools.Shell`、`Microsoft.Agents.AI.Workflows.Declarative`。 | S4 |
+| F-163 | 源码 1.25.0 的 Harness 在 Python 侧提供 `shell_executor` 参数，Shell 能力通过预发布包 `agent-framework-tools` 提供；文档（F-040）写“Shell 执行仅 .NET”。 | S4 |
+| F-164 | 源码 `agent-framework-core` 版本 1.25.0 高于 GitHub Releases 最新稳定 `python-1.21.0`（F-008），说明本次检出位于 1.21 之后的 main 分支。 | S4 |
+| F-165 | `RawAgent` 提供 `as_mcp_server` 方法；`BaseAgent` 提供 `as_tool` 方法。 | S4 |
+| F-166 | `SessionContext` 提供 `response` 属性，用于读取本次运行的 `AgentResponse`。 | S4 |
+| F-167 | `python/packages/core/agent_framework/_harness/__init__.py` 为 0 字节文件；`create_harness_agent` 定义在 `_harness/_agent.py`。 | S4 |
+| F-168 | `dotnet/src` 同时含 `Microsoft.Agents.AI.Abstractions`、`Microsoft.Agents.AI`、`Microsoft.Agents.AI.Harness`、`Microsoft.Agents.AI.Workflows`、`Microsoft.Agents.AI.Hosting` 与多家 provider 项目目录。 | S4 |
+| F-169 | `python/packages/` 同时包含 `declarative`、`devui`、`lab`、`orchestrations`、`hosting-*` 与多家模型 provider（`openai`、`anthropic`、`gemini`、`bedrock`、`ollama`、`mistral` 等）。 | S4 |
+| F-170 | 仓库顶层含 `skills/` 与 `declarative-agents/` 两个目录。 | S4 |
