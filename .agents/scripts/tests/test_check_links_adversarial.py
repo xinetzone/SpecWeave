@@ -366,3 +366,135 @@ class TestNonPathReferencesIgnored:
         assert [u for _, u, _ in links] == ["https://example.com/a", "mailto:a@b.com"]
 
 
+class TestSubmoduleUnknownStates:
+    """子模块三态判定：未检出算 unknown，已检出但缺文件仍是断链。
+
+    背景：CI 默认不 `git submodule update --init --recursive`，未检出的
+    子模块内目标必然不存在，若一律报断链就把环境缺失当成缺陷；但反过来
+    一刀切把子模块内缺失全部吞掉，又会静默掩盖已检出子模块里的真断链。
+    因此必须区分三种情形：
+      - 子模块目录不存在（未初始化）→ unknown
+      - 子模块目录存在但为空（未检出）→ unknown
+      - 子模块已检出（目录非空）→ 目标缺失照常报 missing
+    """
+
+    SUBMODULE_PATH = "submod/foo"
+
+    def _make_repo(self, tmp_path: Path) -> Path:
+        """构造带 .gitmodules 的临时仓库根（不含 git 索引）。"""
+        root = tmp_path / "repo"
+        root.mkdir()
+        (root / ".gitmodules").write_text(
+            '[submodule "foo"]\n'
+            f"\tpath = {self.SUBMODULE_PATH}\n"
+            "\turl = https://example.com/foo.git\n",
+            encoding="utf-8",
+        )
+        (root / "doc.md").write_text("# 文档\n", encoding="utf-8")
+        return root
+
+    def test_not_initialized_directory_is_unknown(self, tmp_path):
+        """子模块目录根本不存在 → unknown，不报断链。"""
+        root = self._make_repo(tmp_path)
+        target = root / self.SUBMODULE_PATH / "missing.md"
+
+        assert cl.submodule_check_state(target, root) == "not_initialized"
+
+        _, status, msg = cl.check_local_link(
+            root / "doc.md", f"{self.SUBMODULE_PATH}/missing.md", project_root=root
+        )
+        assert status == "unknown", f"目录不存在应为 unknown，实际 status='{status}', msg='{msg}'"
+        assert cl.SUBMODULE_UNKNOWN_NOT_INITIALIZED in msg
+        assert cl.SUBMODULE_SKIP_NOTE in msg
+
+    def test_empty_submodule_directory_is_unknown(self, tmp_path):
+        """子模块目录存在但为空（未检出）→ unknown，不报断链。"""
+        root = self._make_repo(tmp_path)
+        (root / self.SUBMODULE_PATH).mkdir(parents=True)
+        target = root / self.SUBMODULE_PATH / "missing.md"
+
+        assert cl.submodule_check_state(target, root) == "empty"
+
+        _, status, msg = cl.check_local_link(
+            root / "doc.md", f"{self.SUBMODULE_PATH}/missing.md", project_root=root
+        )
+        assert status == "unknown", f"空子模块应为 unknown，实际 status='{status}', msg='{msg}'"
+        assert cl.SUBMODULE_UNKNOWN_EMPTY in msg
+
+    def test_checked_out_submodule_missing_file_is_broken(self, tmp_path):
+        """子模块已检出但目标文件缺失 → 仍然是断链（不能被静默吞掉）。"""
+        root = self._make_repo(tmp_path)
+        sub = root / self.SUBMODULE_PATH
+        sub.mkdir(parents=True)
+        (sub / "README.md").write_text("# foo\n", encoding="utf-8")
+        target = sub / "missing.md"
+
+        assert cl.submodule_check_state(target, root) == "checked_out"
+
+        _, status, msg = cl.check_local_link(
+            root / "doc.md", f"{self.SUBMODULE_PATH}/missing.md", project_root=root
+        )
+        assert status == "missing", f"已检出子模块缺文件应报 missing，实际 status='{status}', msg='{msg}'"
+        assert "文件不存在" in msg
+
+    def test_checked_out_submodule_existing_file_is_ok(self, tmp_path):
+        """已检出子模块内的现存文件照常通过（正向对照）。"""
+        root = self._make_repo(tmp_path)
+        sub = root / self.SUBMODULE_PATH
+        sub.mkdir(parents=True)
+        (sub / "guide.md").write_text("# guide\n", encoding="utf-8")
+
+        _, status, msg = cl.check_local_link(
+            root / "doc.md", f"{self.SUBMODULE_PATH}/guide.md", project_root=root
+        )
+        assert status == "ok", f"现存文件应通过，实际 status='{status}', msg='{msg}'"
+
+    def test_outside_submodule_missing_file_is_broken(self, tmp_path):
+        """不在任何子模块内的缺失目标与子模块逻辑无关，照常报断链。"""
+        root = self._make_repo(tmp_path)
+        target = root / "ordinary" / "missing.md"
+
+        assert cl.submodule_check_state(target, root) == "outside"
+
+        _, status, _ = cl.check_local_link(root / "doc.md", "ordinary/missing.md")
+        assert status == "missing"
+
+    def test_frontmatter_path_in_empty_submodule_is_skipped(self, tmp_path):
+        """frontmatter 路径同样适用三态：未检出子模块内 → 跳过而非断链。"""
+        root = self._make_repo(tmp_path)
+        (root / self.SUBMODULE_PATH).mkdir(parents=True)
+        bundle = root / "docs" / "bundle"
+        bundle.mkdir(parents=True)
+        md = bundle / "index.md"
+        md.write_text(
+            "---\nsource: ../../submod/foo/facts.md\n---\n\n# 索引\n",
+            encoding="utf-8",
+        )
+
+        skipped: list[tuple[Path, str, str, str]] = []
+        broken = cl.check_frontmatter_paths(
+            [md], project_root=root, skipped=skipped
+        )
+        assert broken == [], f"未检出子模块内的 frontmatter 路径不应报断链: {broken}"
+        assert len(skipped) == 1
+        assert cl.SUBMODULE_UNKNOWN_EMPTY in skipped[0][3]
+
+    def test_main_reports_and_excludes_unknown_from_verdict(self, tmp_path, monkeypatch, capsys):
+        """main 输出必须明示跳过数量，且 unknown 不参与断链判定。"""
+        root = self._make_repo(tmp_path)
+        (root / self.SUBMODULE_PATH).mkdir(parents=True)
+        doc = root / "doc.md"
+        doc.write_text(
+            f"# 文档\n\n[子模块内文件]({self.SUBMODULE_PATH}/missing.md)\n",
+            encoding="utf-8",
+        )
+        monkeypatch.setattr(cl, "resolve_project_root", lambda _p: root)
+
+        rc = cl.main(["--path", str(doc)])
+        out = capsys.readouterr().out
+        assert rc == 0, f"仅未检出子模块链接时不应失败，rc={rc}"
+        assert "跳过 1 条子模块链接（未检出）" in out
+        assert "空目录 1" in out
+        assert "跳过 1 条未检出子模块链接，未参与校验" in out
+
+
