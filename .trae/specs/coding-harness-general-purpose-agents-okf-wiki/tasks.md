@@ -21,13 +21,13 @@ generated_at: "2026-11-10"
 ## I — 知识拆分
 
 - [x] 判定不设 `examples/`（操作可复现性两问均否）。
-- [x] 确定六篇概念文档与三层结构。
+- [x] 确定七篇概念文档与三层结构。
 - [x] 确定落点 `jishu/ai/practice/coding-harness-general-purpose-agents/`。
 
 ## E — Bundle 生成
 
 - [x] 先写 `references/article-source.md` 与 `references/verification.md`。
-- [x] 写六篇 concepts。
+- [x] 写七篇 concepts。
 - [x] 写 `concepts/index.md`、`references/index.md`。
 - [x] 写 bundle `index.md` 与 `log.md`。
 - [x] 在 `practice/index.md` 增加导航行与 toctree 条目。

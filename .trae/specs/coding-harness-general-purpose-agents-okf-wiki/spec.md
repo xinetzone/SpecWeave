@@ -100,7 +100,7 @@ generated_at: "2026-11-10"
 
 ## Acceptance
 
-- [x] 6 篇概念 + 2 篇 references + index + log。
+- [x] 7 篇概念 + 2 篇 references + index + log。
 - [x] F-001～F-047 双份一致、连续。
 - [x] P0 核验覆盖核心声明，4 条口径勘误。
 - [x] bundle index → practice index → ai index → bundles/index 三级接入。

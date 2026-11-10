@@ -24,7 +24,7 @@ generated_at: "2026-11-10"
 | 检查项 | 结果 |
 |---|---|
 | bundle 目录结构 | `index.md` + `log.md` + `concepts/` + `references/`；无 `examples/`（两问判定） |
-| frontmatter 必填字段 | 通过；6 篇概念与根 index 均含 okf_version/type/title/description/tags/generated/verified/status/stale_after/sources |
+| frontmatter 必填字段 | 通过；7 篇概念与根 index 均含 okf_version/type/title/description/tags/generated/verified/status/stale_after/sources |
 | 子目录 index | `concepts/index.md`、`references/index.md` 均含 toctree |
 | 根 index toctree | 收录 concepts/index、references/index、log |
 | 事实双份登记 | 通过；47/47，编号连续无跳号 |
