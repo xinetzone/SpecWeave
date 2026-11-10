@@ -89,17 +89,18 @@ generated_at: "2026-11-10"
 | `index.md` | bundle 根索引、核心结论、阅读路径、主题关联、核验摘要 |
 | `concepts/00-project-overview.md` | 身份、谱系、版本、硬指标与勘误 |
 | `concepts/01-design-philosophy.md` | 三条约简：bash-only / 线性历史 / 独立 subprocess |
-| `concepts/02-architecture-and-code.md` | 三协议与 172 行主循环的代码级解剖 |
+| `concepts/02-architecture-and-code.md` | 三协议与 190 行主循环的代码级解剖 |
 | `concepts/03-execution-environments.md` | local/docker/singularity/bubblewrap/contree/swerex 六类后端 |
 | `concepts/04-model-integration.md` | litellm/openrouter/portkey/requesty；toolcall vs textbased |
 | `concepts/05-configuration-and-extension.md` | YAML 三段配置、Jinja 模板、轨迹格式、子类化 |
 | `concepts/06-benchmarks-and-boundaries.md` | 74% 成绩、SWE-bench、Ramp/DeepSWE/ProgramBench、能力边界 |
 | `concepts/07-transferable-lessons.md` | 七条可迁移工程经验 |
+| `concepts/08-source-map.md` | 逐模块源码地图：符号/行号、调用链、数据契约、扩展点、测试地图 |
 | `examples/01-install-and-cli.md` | 安装与 `mini` CLI 三模式 |
 | `examples/02-python-bindings.md` | 20 行嵌入 Agent |
 | `examples/03-swebench-batch.md` | SWE-bench 批处理与单实例调试 |
 | `references/blog-source.md` | 博客事实 F-001～F-034 |
-| `references/repo-source.md` | 仓库事实 F-035～F-090 |
+| `references/repo-source.md` | 仓库事实 F-035～F-100 |
 | `references/verification.md` | P0 核验、E-1～E-4、单源边界 |
 | `log.md` | 变更日志与 CMD-LOG |
 
@@ -115,8 +116,8 @@ generated_at: "2026-11-10"
 
 ## Acceptance
 
-- [x] 8 篇概念 + 3 篇示例 + 3 篇 references + 3 个子目录索引 + index + log（共 19 个文件）。
-- [x] F-001～F-090 双份一致、连续。
+- [x] 9 篇概念 + 3 篇示例 + 3 篇 references + 3 个子目录索引 + index + log（共 20 个文件）。
+- [x] F-001～F-100 双份一致、连续。
 - [x] P0 核验覆盖核心声明，4 条硬勘误 + 1 条信源缺口。
 - [x] bundle index → ai-agent index → frameworks index → ai index → bundles index 三级接入。
 - [x] 本 bundle 相对链接 0 断链，UTF-8 通过，无敏感绝对路径。

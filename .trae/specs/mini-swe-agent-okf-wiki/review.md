@@ -27,7 +27,7 @@ generated_at: "2026-11-10"
 | frontmatter 必填字段 | 通过；根 index 含 okf_version/type/title/description/tags/generated/verified/status/stale_after/sources |
 | 子目录 index | `concepts/index.md`、`examples/index.md`、`references/index.md` 均含 toctree |
 | 根 index toctree | 收录 concepts/index、examples/index、references/index、log |
-| 事实双份登记 | 通过；spec facts.md 90 条，bundle 两份 source 合计 90 条，集合相等且连续 |
+| 事实双份登记 | 通过；spec facts.md 100 条，bundle 两份 source 合计 100 条，集合相等且连续 |
 
 ### 3. 读者可用性视角
 
@@ -56,9 +56,9 @@ generated_at: "2026-11-10"
 | 总索引对账 | `python scripts/check-bundles-index.py` | 通过：9 域 / 64 组 / 730 束，五面对账一致 |
 | toctree | `python scripts/check-toctrees.py` | 通过：全部 index.md 引用有效，所有内容文档可达 |
 | UTF-8 | `python scripts/check-utf8.py` | 通过：13,186 个文件均为有效 UTF-8 |
-| F 编号双份一致 | 正则 `^\|\s*F-(\d{3})\s*\|` | 通过：spec 90 / bundle 90 / 无差集 / 1~90 无跳号 |
+| F 编号双份一致 | 正则 `^\|\s*F-(\d{3})\s*\|` | 通过：spec 100 / bundle 100 / 无差集 / 1~100 无跳号 |
 | 相对链接 | 逐条 Test-Path | 通过：0 断链 |
-| 敏感路径 | 扫描 `C:\Users`、`D:\spaces`、`/Users/`、`file:///` | 通过：0 命中 |
+| 敏感路径 | 扫描家目录绝对路径与 file 协议 | 通过：0 命中 |
 
 ## 三、审查意见与修正（≥5 条）
 
@@ -74,7 +74,7 @@ generated_at: "2026-11-10"
 
 ## 四、结论
 
-- 事实层：90 条事实可溯源，4 条硬勘误已落实，1 个信源缺口已披露。
+- 事实层：100 条事实可溯源，4 条硬勘误已落实，1 个信源缺口已披露。
 - 结构层：三级 toctree 与计数全部通过机械门禁。
-- 读者层：8 篇概念 + 3 篇示例形成“理解 → 动手 → 评测 → 迁移”的闭环。
+- 读者层：9 篇概念 + 3 篇示例形成“理解 → 动手 → 评测 → 迁移 → 源码”的闭环。
 - 时效层：锁定 v2.4.6，`stale_after=2027-03-31`，到期复核 v3 或新默认配置。
