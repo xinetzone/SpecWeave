@@ -15,10 +15,11 @@ tags:
   - swe-bench
   - open-source-survey
 date: "2026-09-30"
-last_updated: "2026-09-30"
+last_updated: "2026-11-10"
+version: "1.1"
 status: "verified"
-author: "SpecWeave Agent（方法论编排 session sc-20260930-python-agent-harness）"
-summary: "以七概念方法论（R→I→E→V→C，standard）调研 2025-2026 年 AI harness/agent 方向的主流 Python 包：采集 45 条带来源客观事实，覆盖 15+ 个框架/SDK 与编码 agent 赛道，形成 4 条四元组洞察与 1 个可迁移模式（最小充分脚手架选型法，3 个外部独立案例支撑，入库定级 L1-draft）。知识包按问题域拆为生态格局、harness 解剖、框架目录、编码 agent 赛道、选型模式 5 个概念页，附信源台账与对抗审查记录。"
+author: "SpecWeave Agent（方法论编排 session sc-20260930-python-agent-harness；v1.1 增量洞察 session sc-20261110-python-agent-harness-refresh）"
+summary: "以七概念方法论（R→I→E→V→C，standard）调研 2025-2026 年 AI harness/agent 方向的主流 Python 包：v1.0 采集 45 条带来源客观事实，覆盖 15+ 个框架/SDK 与编码 agent 赛道，形成 4 条四元组洞察与 1 个可迁移模式（最小充分脚手架选型法，3 个外部独立案例支撑，入库定级 L1-draft）。v1.1（2026-11-10）按厂商一手信源做增量洞察，补入 23 条事实（F-046~F-068）、新增 4 条洞察（harness 折旧定律、上下文经济学、eval 作为演进许可、托管 harness 第三形态）与 1 个概念页（06 成本、折旧与度量），并把选型模式扩为七步（新增折旧复查）。知识包按问题域拆为生态格局、harness 解剖、框架目录、编码 agent 赛道、选型模式、成本与折旧 6 个概念页，附信源台账与两轮对抗审查记录。"
 security_level: "public"
 knowledge_type: "conditional"
 validation_status: "verified"
@@ -29,16 +30,30 @@ source: "公开网络信源：各框架官方文档与官方博客（langchain.c
 
 # AI Harness 与 Agent Python 包全景调研
 
-> 一句话摘要：2023 年 AutoGPT 式"全自主循环"退潮后，agent 工程在 2025-2026 年收敛为一个有明确能力清单的新品类——**harness（智能体挽具）**：模型负责决策，harness 负责工具、文件系统、子智能体、记忆、上下文压缩、审批与可观测。本调研回答三个问题：这个赛道怎么分层、各包现状如何、选型按什么模式做。所有版本号与数字均可回溯到信源台账，未取证项显式标注"未取证"。
+> 一句话摘要：2023 年 AutoGPT 式"全自主循环"退潮后，agent 工程在 2025-2026 年收敛为一个有明确能力清单的新品类——**harness（智能体挽具）**：模型负责决策，harness 负责工具、文件系统、子智能体、记忆、上下文压缩、审批与可观测。本调研回答四个问题：这个赛道怎么分层、各包现状如何、选型按什么模式做，以及**这些部件什么时候会过期**（v1.1 新增）。所有版本号与数字均可回溯到信源台账，未取证项显式标注"未取证"。
 
-- **编排 session**：`sc-20260930-python-agent-harness`
+- **编排 session**：`sc-20260930-python-agent-harness`（v1.0）；`sc-20261110-python-agent-harness-refresh`（v1.1 增量洞察）
 - **场景与链路**：场景 4 知识沉淀，`R→I→E→V→C（入库）`，depth=standard
-- **采集时点**：2026-09-29 至 2026-09-30（版本号与 star 数均为该时点快照，复核方法见[信源台账](references/source-inventory.md)）
+- **采集时点**：v1.0 为 2026-09-29 至 2026-09-30；v1.1 为 2026-11-10（版本号与 star 数均为对应时点快照，复核方法见[信源台账](references/source-inventory.md)）
 - **范围边界**：以 **Python 包形态**、可 `pip install` 的 agent 框架/SDK/harness 与编码 agent 为主；可视化平台（Dify/Flowise）与 RAG 框架（LlamaIndex/Haystack）仅在分类法中登记，不深入评测。
 
 ---
 
 ## 0. 快速导航：按你的问题出发
+
+```{toctree}
+:maxdepth: 2
+:hidden:
+
+concepts/01-landscape-and-taxonomy
+concepts/02-harness-anatomy
+concepts/03-framework-catalog
+concepts/04-coding-agent-track
+concepts/05-selection-pattern
+concepts/06-context-economics-and-harness-decay
+references/source-inventory
+references/adversarial-review
+```
 
 | 我想…… | 去读哪一篇 |
 |---|---|
@@ -47,12 +62,15 @@ source: "公开网络信源：各框架官方文档与官方博客（langchain.c
 | 对比 Deep Agents / MAF / OpenAI / Claude / Pydantic AI / ADK / Strands / smolagents / Agno / AgentScope / Qwen-Agent | [03 框架目录与对比表](concepts/03-framework-catalog.md) |
 | 了解编码 agent 与 SWE-bench 赛道（mini-swe-agent、OpenHands、Aider）及"131 行打赢 4161 行"的量化证据 | [04 编码 agent 赛道](concepts/04-coding-agent-track.md) |
 | 拿到可复用的选型决策流程、反模式清单与检验标准 | [05 模式：最小充分脚手架选型法](concepts/05-selection-pattern.md) |
+| 搞清 2026 年 harness 为什么在主动"变薄"、省的是什么、凭什么敢删 | [06 成本、折旧与度量](concepts/06-context-economics-and-harness-decay.md) |
 | 核查每条事实的出处、URL 与复核方法 | [信源台账](references/source-inventory.md) |
 | 了解本调研的结论经受了哪些攻击、哪些被修正 | [V 对抗审查记录](references/adversarial-review.md) |
 
+> **v1.1 更新说明（2026-11-10）**：本次是对同一知识包的**增量洞察**，不是重写。新增事实组 G（F-046~F-068）、洞察 I-5~I-8、概念页 06，并修正 02 的执行边界判据、03 的版本表与托管档、05 的步骤与反模式。原有 F-001~F-045 与 I-1~I-4 的口径与结论未被推翻，被推翻的只有"按代码是否可信来选执行边界"这一条判据（见 [02 §2.4.1](concepts/02-harness-anatomy.md)）。
+
 ---
 
-## 1. R 阶段：客观事实清单（F-001 ~ F-045）
+## 1. R 阶段：客观事实清单（F-001 ~ F-068）
 
 > G1 已通过：全部为可验证客观陈述，无"因为/导致/所以"等因果推断词；版本号、star 数、日期、金额均按信源原文记录并标注时点；单一信源或新闻报道类事实显式标注口径。来源键 [Sxx] 对应[信源台账](references/source-inventory.md)。
 
@@ -135,11 +153,45 @@ source: "公开网络信源：各框架官方文档与官方博客（langchain.c
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=R3 | event=GATE_PASSED | session=sc-20260930-python-agent-harness | msg=G1通过：45条事实分6组，无因果词，版本/数字/日期均带时点与来源键，未取证项显式标注 | ctx={"facts":45,"groups":["A术语格局","B框架SDK","C编码agent","D能力收敛","E治理风险","F范围边界"]}
 ```
 
+### 1.7 G 组：2026-10/11 增量与漏采补齐（v1.1 新增）
+
+> 采集方式：2026-11-10 对厂商一手页面（官方博客、官方文档、PyPI 项目页）逐项取数。凡"厂商自述""单一来源""预览期定价"均在事实内直接标注口径，不做去限定化叙述。
+
+| 编号 | 事实 | 来源 |
+|---|---|---|
+| F-046 | Deep Agents v0.7（2026-07-24 发布）主动减配：删除内置 system prompt、工具描述削减 43%、`TodoListMiddleware` 从默认栈移除（改为 `middleware=[TodoListMiddleware()]` 显式开启），使默认 agent 单轮基础输入 token 从约 6k 降至约 2k（-65%）；摘要中间件默认在上下文用到 85% 时触发，阈值与提示词均可覆盖。作者称 todo 仍在三类场景下值得开启：长多步任务、能力较弱的模型、需要向用户展示计划的 UI 场景 | [S24][S25] |
+| F-047 | v0.7 的验证方式为三类评测（自主任务 / 多轮对话 / 长上下文）× 四模型（`gpt-5.6-luna`、`gemini-3.6-flash`、`claude-sonnet-4-6`、`claude-opus-4-8`）对照 v0.6.12；作者明确声明各模型奖励的置信区间均跨零，可确证的是 token 下降而非效果提升 | [S25] |
+| F-048 | Deep Agents 在 2026 年以约 1–2 个月一个次版本的节奏推进：v0.5（2026-04-07，异步子智能体）、v0.6（2026-05-13，code interpreter、harness profiles、流式等）、v0.7（2026-07）；另有 Managed Deep Agents v0.10（browser use + 异步子智能体），发布日期本次未取证 | [S26] |
+| F-049 | Anthropic 2026-04-02 文章把 agent harness 定义为"围绕模型的软件脚手架：循环、工具、上下文管理与护栏"，并指出 harness 编码的是"模型当前做不到"的假设，这些假设会随模型能力提升而过期；harness 设计因此是"决定脚手架里放什么，以及可以拿掉什么" | [S27] |
+| F-050 | 同一文章给出计价结构：Claude API 中命中缓存的输入 token 按基础输入 token 价格的 10% 计费；并列出五条最大化缓存命中的 harness 原则——静态在前/动态在后、更新走 messages 而非改系统提示、会话中不换模型、谨慎管理工具集（工具定义位于缓存前缀内）、维护缓存断点（多用自动缓存） | [S27] |
+| F-051 | 同一文章称 Anthropic 对 Opus 5 / Fable 5 把 Claude Code 的 system prompt 削减超过 80%，编码评测无可测下降；该数字由 LangChain v0.7 文章转述，本包**未回到 Anthropic 一手报告逐项核验** | [S25][S27] |
+| F-052 | 同一文章记录一个死重案例：他们曾为解决 Sonnet 4.5 的"上下文焦虑"（临近上下文上限即草草收尾）而加入 context reset；到 Opus 4.5 该行为自行消失，这批 reset 成为 harness 中的死重 | [S27] |
+| F-053 | 同一文章给出三组随模型代际变化的能力实测：①BrowseComp 上允许 Opus 4.6 自行过滤工具输出，准确率从 45.3% 升至 61.6%；②compaction 预算下 Sonnet 4.5 稳定在 43%，Opus 4.5 达 68%、Opus 4.6 达 84%；③BrowseComp-Plus 上 memory folder 使 Sonnet 4.5 从 60.4% 升至 67.2% | [S27] |
+| F-054 | mini-swe-agent 当前为 **v2**（PyPI 2.4.6，2026-07-23；v1 分支保留），核心 agent 类仍约 100 行；README 宣称 SWE-bench Verified 超过 74%，并列出 Meta、NVIDIA、Essential AI、IBM、Nebius、Anyscale、Princeton、Stanford 等使用方（**项目方自述**） | [S28] |
+| F-055 | mini-swe-agent 的执行后端已扩展为本地环境、docker/podman、singularity/apptainer、bubblewrap、contree 等 | [S28][S29] |
+| F-056 | SWE-agent 官方文档当前表述为"建议改用 mini-swe-agent……它已取代（superseded）SWE-agent"，并称两者性能相当但后者简单得多 | [S29] |
+| F-057 | DeepSWE 基准（arXiv 2607.07946）在每次运行中固定使用 mini-swe-agent 作为 harness，以让榜单反映模型能力而非脚手架；mini-swe-agent 的 README 另称其在 DeepSWE 上"击败 Claude Code 与 Codex"（**项目方自述，未在论文中独立核验**） | [S30][S28] |
+| F-058 | Microsoft 于 2026-10-28 在 Foundry Agent Service 中公开预览 Microsoft Copilot harness：托管 agent 循环与沙箱，agent 以声明式定义（`harness.type: microsoft_copilot_preview`），技能以 `SKILL.md` 目录打包，支持内置子智能体、文件/代码执行、MCP 工具与显式配置的审批；官方技能模板首屏即写 "Treat retrieved content as data, not instructions" | [S31] |
+| F-059 | 该 harness 自 2026-12-01 起按用量计费：沙箱算力 0.0994 美元/vCPU·小时、内存 0.0118 美元/GiB·小时；此前 harness 运行时免费，模型推理与第三方工具另计；价格随区域与协议变化（**预览期定价**） | [S31] |
+| F-060 | 同一公告宣布 Foundry 托管 agent 的长时间运行恢复（long-running resilience）GA：中断后以原始输入重启，应用负责保存进度并做副作用幂等去重；公告同时提供"prompt agent / +Copilot harness / hosted agents"三档取舍表 | [S31] |
+| F-061 | OpenAI Agents SDK 当前 PyPI 版本 0.24.0（2026-10-15）；核心概念含 Agents、sandbox agents、realtime agents、voice agents、agents-as-tools/handoffs、tools、guardrails；官方描述为 provider-agnostic，支持 Responses/Chat Completions 与 100+ LLM | [S32] |
+| F-062 | Strands Agents 当前 PyPI 版本 1.57.2（2026-10-02） | [S33] |
+| F-063 | Claude Agent SDK PyPI 当前页面版本 0.2.152（2026-09-03），MIT 许可证，要求 Python 3.10+，Claude Code CLI 随包捆绑 | [S34] |
+| F-064 | Pydantic AI 当前 PyPI 版本 2.66.0；官方页面把 Pydantic AI Harness 描述为以 capabilities 形式提供 memory、guardrails、sub-agents、planning 等能力 | [S35] |
+| F-065 | Deep Agents 当前 PyPI 版本 0.7.32（2026-10-24），MIT 许可证；README 自述为"production-ready、可扩展的 agent harness，内置文件系统与上下文管理、子智能体委派、skills 与长期记忆" | [S36] |
+| F-066 | Google ADK Python 2.0 于 2026-05-19 GA，Go 2.0 于 2026-06-30 GA，Kotlin 1.0 于 2026-09 发布；v2.13.0（2026-10-22）把 12 项实验特性转为稳定；部署目标含 Cloud Run、GKE 与 Agent Runtime（原 Vertex AI Agent Engine） | [S37] |
+| F-067 | Microsoft Learn 设有独立 "Agent Harness" 概念页，定义 harness 为"把语言模型变成能完成工作的 agent 的运行时脚手架"，职责为驱动模型与工具调用、管理会话状态与上下文、施加审批策略，并保持 agent 在多步任务中推进 | [S38] |
+| F-068 | Anthropic 文章给出的边界处方：把需要安全边界的动作提升为**专用工具**（harness 由此获得带类型参数的动作钩子，可拦截、门控、渲染与审计），判据是**可逆性**；写入类工具应带陈旧性检查。另一路线是 Claude Code auto-mode 用第二个模型读命令串判断安全性，代价是把确定性换成模型判断，只适合用户信任大方向的场景 | [S27] |
+
+```
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=R4 | event=GATE_PASSED | session=sc-20261110-python-agent-harness-refresh | msg=G1通过：增量23条事实（F-046~F-068）全部带一手URL与采集时点，厂商自述/预览期定价/转述未核验三类口径逐条标注 | ctx={"facts":23,"groups":["G增量与补齐"],"sources_added":15}
+```
+
 ---
 
 ## 2. I 阶段：核心洞察（四元组）
 
-> G2 已通过：每条含 **陈述 / 证据（F 编号）/ 反常识 / 行动**，四个维度（杠杆迁移、品类收敛、供应链风险、编排代价）互不重叠。
+> G2 已通过：每条含 **陈述 / 证据（F 编号）/ 反常识 / 行动**。v1.0 四条维度为杠杆迁移、品类收敛、供应链风险、编排代价；v1.1 新增四条维度为部件折旧、成本结构、演进许可、交付形态，八条互不重叠。
 
 ### I-1　杠杆点从 scaffold 移向 model + environment：30 倍代码只换 2 个百分点
 
@@ -169,13 +221,41 @@ source: "公开网络信源：各框架官方文档与官方博客（langchain.c
 - **反常识**："多智能体 = 更强"在演示中成立，在账本上不成立：15 倍 token 对研究类高价值任务划算，对大多数日常任务是亏损；而新增的失败模式（交接丢上下文、子 agent 目标漂移）恰恰是 harness 之外最难观测的部分。
 - **行动**：默认架构从单 agent + 工具开始，仅当任务满足"可并行切分 + 子任务有独立验收标准 + 价值密度覆盖 15 倍成本"三条时才引入编排；引入编排的同时必须先具备 tracing/检查点能力（F-038），否则交接面故障不可定位。
 
+### I-5　折旧定律：harness 是"关于模型做不到什么"的假设集合，默认装配是有保质期的负债
+
+- **陈述**：Anthropic 把 harness 定义为"围绕模型的软件脚手架"，并指出它编码的是"模型当前做不到"的假设，这些假设会随模型能力提升而过期（F-049）。2026 年出现了可测量的减配实证：Deep Agents v0.7 删掉内置 system prompt、砍 43% 工具描述、把 todo 从默认栈移除，基础输入 token 从约 6k 降到约 2k（-65%）而对齐 v0.6.12 的评测奖励持平（F-046/F-047）；Anthropic 称对新一代模型把 Claude Code 的 system prompt 削减超过 80% 无可测下降（F-051，转述未一手核验）；曾为 Sonnet 4.5 的"上下文焦虑"加的 context reset 到 Opus 4.5 已成死重（F-052）。
+- **证据**：F-046/F-047（v0.7 三处删减与对照实验）、F-049（假设集合的定义）、F-051/F-052（系统提示与 reset 的死重化）、F-054（mini-swe-agent v2 仍约 100 行且宣称 >74%）、F-053（同一 harness 下能力随模型代际大幅提升）。
+- **反常识**：直觉是"默认配置越丰富越稳"，因为默认值看起来是厂商替你做的判断。但在快速换代的模型面前，默认值里沉淀的是**针对旧模型写的提示词**——它们既产生固定 token 开销，又可能与新模型自己学会的行为冲突。判断标准因此不是"厚还是薄"，而是"这个部件补偿的是模型缺陷还是人的风险"。
+- **行动**：给每个启用部件标类型——**能力补偿型**（会折旧，需季度重估）、**治理型**（权限/审批/沙箱/审计，不折旧且反向增强）、**界面型**（bash、文本编辑器等训练分布内接口，半衰期长）。只对第一类做删减；删减必须配 eval 对照。操作清单见 [06 §6.5 折旧审查表](concepts/06-context-economics-and-harness-decay.md)。
+
+### I-6　成本结构：账单由"上下文布局"决定，不由框架厚薄决定
+
+- **陈述**：Messages API 无状态，harness 每轮都要把历史、工具定义与指令重新打包送入（F-050）；而 Claude API 中命中缓存的输入 token 只按基础输入 token 的 10% 计费（F-050）。因此同一模型、同一任务下，前缀是否稳定可以让输入成本相差近一个数量级。v0.7 把 base input tokens 从 6k 压到 2k 即是直接作用于这一成本项的改动（F-046）。F-032 中 0.37 美元对 2.50 美元的差距（F-032），除 scaffold 厚度外还有一层解释：线性历史 + 固定前缀带来高缓存命中率。
+- **证据**：F-050（10% 计价与五条前缀纪律）、F-046（base input token -65%）、F-032（每任务成本差约 7 倍）、F-047（token 与 cost 的对照结论）。
+- **反常识**：成本通常被归因于"模型贵不贵""框架重不重"，两者都是静态标签。真正的杠杆是**缓存前缀是否被反复打破**：中途换模型、动态增删工具、把配置写进系统提示，每一个动作都在把 1/10 的价格重置成 1 倍。成本首先是架构纪律问题。
+- **行动**：把三个指标纳入 SLO：**base input tokens**（默认装配的固定开销）、**每任务输入 token**、**缓存命中率**。把"工具集变更""会话中换模型""改系统提示"列为成本事件，走变更评审。工程细则见 [06 §6.3](concepts/06-context-economics-and-harness-decay.md)。
+
+### I-7　度量是演进的前提：eval 从验收工具升格为 harness 的核心部件
+
+- **陈述**：折旧定律要求持续删减，而 v0.7 的每一次删减都配了对照实验——三类评测 × 四模型，并如实声明置信区间跨零（F-047）。与此同时，eval 正在从附属脚本变成产品层：Strands 把 evals 列为独立产品线（F-024），Pydantic 生态有 Pydantic Evals（F-021）。没有 eval 的团队无法证明删减安全，只能靠加部件或锁版本冻结旧假设。
+- **证据**：F-047（v0.7 的三分类 × 四模型对照）、F-024/F-021（evals 的产品化）、F-052（没有度量时，死重要等到模型换代才被发现）。
+- **反常识**：eval 常被理解为"上线前的质量门"，其实它更重要的功能是**给出删减的许可**。一个团队的 harness 越堆越厚，往往不是因为部件都有用，而是因为没有能力证明哪个没用。
+- **行动**：建立一个最小三分类评测集（自主任务 / 多轮对话 / 长上下文），先测基线再讨论删减；任何"为省成本而删部件"的改动，必须与改前基线同批提交对照结果。没有对照的删减按盲删处理。
+
+### I-8　交付形态三分：harness 从"库"变成"可计量的运行时"，计价单位从 token 扩展到 vCPU·小时
+
+- **陈述**：2026-10-28 Microsoft 在 Foundry Agent Service 公开预览 Microsoft Copilot harness：agent 以声明式定义（`harness.type: microsoft_copilot_preview`），循环与沙箱由平台运行，技能以 `SKILL.md` 打包（F-058）；自 2026-12-01 起按沙箱算力计价——0.0994 美元/vCPU·小时、0.0118 美元/GiB·小时（F-059），同日托管 agent 的长时运行恢复 GA（F-060）。LangChain 侧有 Managed Deep Agents v0.10（F-048），Claude 侧有仍处 beta 的 Managed Agents 与动态工作流。同期 Microsoft Learn 增设独立 "Agent Harness" 概念页（F-067），说明该品类已进入平台级文档体系。
+- **证据**：F-058/F-059/F-060（托管 harness 的形态、计价与恢复）、F-048（托管 Deep Agents）、F-067（概念页）、F-002/F-049（harness 的跨厂商定义已稳定）。
+- **反常识**：过去两年 harness 的竞争单位是"库的能力清单"；托管形态一出现，竞争单位变成**责任边界 + 计价单位**。当 harness 按 vCPU·小时计费时，优化目标从"少花 token"变成"少占算力"——两个目标并不总同向（例如更激进的缓存会让沙箱驻留更久）。
+- **行动**：选型时把"形态"当作第一维而非实现细节：**自建库**（要控制权与可审计）、**托管 harness**（差异化不在基础设施，换取最快上线）、**自带框架 + 托管运行**（保留循环与中间件，只买托管与恢复）。三种形态的成本模型不同，不可用同一张 TCO 表对比；托管价格需按预览条款与生效日期单独标注。见 [03 §3.6](concepts/03-framework-catalog.md)。
+
 ---
 
 ## 3. E 阶段：可迁移模式（G3 摘要）
 
 ### 模式：最小充分脚手架选型法（Minimal Sufficient Scaffold，L1-draft，3 个外部案例支撑）
 
-> 完整版（触发条件、六步流程、反模式清单、检验标准、跨域迁移）见 [05 模式：最小充分脚手架选型法](concepts/05-selection-pattern.md)。
+> 完整版（触发条件、七步流程、反模式清单、检验标准、跨域迁移）见 [05 模式：最小充分脚手架选型法](concepts/05-selection-pattern.md)。
 > 该模式已于 2026-09-30 沉淀入方法论模式库：[最小充分脚手架选型法](../../../retrospective/patterns/methodology-patterns/governance-strategy/minimal-sufficient-scaffold-selection.md)（含与企业采购选型框架、harness 分层模式的边界关系）。入库二次校验时按模式库等级标准由自报 L2 修正为 L1-draft——L2-validated 需"已在本项目验证"，当前仅有外部案例。
 
 **一句话**：为一个 agent 任务选框架时，不从功能清单或热度榜出发，而是先明确任务的失败成本与所需最小执行环，用"同一任务小赛"实测 TTFA 与治理缺口，再按缺口反向选择最薄的、生命体征健康的脚手架。
@@ -183,33 +263,42 @@ source: "公开网络信源：各框架官方文档与官方博客（langchain.c
 | 要素 | 摘要 |
 |---|---|
 | 支撑案例 | mini-swe-agent vs SWE-agent（131 行/65% vs 4161 行/67%，F-032）、七框架同任务实测（F-003）、AutoGPT/BabyAGI 全自主循环退潮（F-006/F-007）——三个相互独立的外部案例同向支撑；入库时按模式库标准定级 **L1-draft**（缺"本项目验证"要件，待实战升 L2），已沉淀至[方法论模式库](../../../retrospective/patterns/methodology-patterns/governance-strategy/minimal-sufficient-scaffold-selection.md) |
-| 核心步骤 | ① 任务分级（失败成本 × 时长 × 是否可并行）→ ② 定最小执行环（模型+工具+文件+隔离四件套）→ ③ 同任务小赛（≥2 个候选，同一个真实任务，记录 TTFA/LOC/治理缺口）→ ④ 生命体征检查（发版/继任公告/pin 纪律/CHANGELOG）→ ⑤ 按缺口选最薄栈，治理三件套（权限/检查点/执行边界）不可省 → ⑥ 锁版本 + 预留迁移预案 |
-| 反模式（详见 05） | 按 star 数选型、demo 同质即上线、跳过同任务小赛、把维护模式项目当活跃栈、一上来就多智能体编排 |
+| 核心步骤 | ① 任务分级（失败成本 × 时长 × 是否可并行）→ ② 定最小执行环（模型+工具+文件+隔离四件套）→ ③ 同任务小赛（≥2 个候选，同一个真实任务，记录 TTFA/LOC/治理缺口）→ ④ 生命体征检查（发版/继任公告/pin 纪律/CHANGELOG）→ ⑤ 按缺口选最薄栈，治理三件套（权限/检查点/执行边界）不可省 → ⑥ 锁版本 + 预留迁移预案 → ⑦ 折旧复查（季度：按补偿/治理/界面分类重估，删减必须配 eval 对照） |
+| 反模式（详见 05） | 按 star 数选型、demo 同质即上线、跳过同任务小赛、把维护模式项目当活跃栈、一上来就多智能体编排、把默认装配当永久资产 |
 
 ---
 
 ## 4. V 阶段：4 视角对抗审查（摘要）
 
-> V 门结论：4 视角全覆盖，意见 7 条（≥5），采纳修正 6 条（≥2），1 条登记为局限，**通过**。完整问题清单、裁定与回归确认见 [V 审查记录](references/adversarial-review.md)。
-
-主要修正：①TTFA/LOC 实测来自单一第三方博客，全文改为"单点实测"口径并禁止跨文章排名；②star 数补采集时点、不做横向排名；③补充 harness 概念的厂商话术辨析与去厂商化定义（见 01 概念页）；④GPT-6.1 Astra 安全新闻降级为未交叉证实的背景（F-008）；⑤SWE-bench 分数增加口径警告（模型/采样次数/版本不同，不可直接排座次）；⑥信源台账增加版本复核方法。
+> **第一轮（2026-09-30）**：4 视角全覆盖，意见 7 条（≥5），采纳修正 6 条（≥2），1 条登记为局限，**通过**。
+>
+> 主要修正：①TTFA/LOC 实测来自单一第三方博客，全文改为"单点实测"口径并禁止跨文章排名；②star 数补采集时点、不做横向排名；③补充 harness 概念的厂商话术辨析与去厂商化定义（见 01 概念页）；④GPT-6.1 Astra 安全新闻降级为未交叉证实的背景（F-008）；⑤SWE-bench 分数增加口径警告（模型/采样次数/版本不同，不可直接排座次）；⑥信源台账增加版本复核方法。
+>
+> **第二轮（2026-11-10，针对 v1.1 新增内容）**：4 视角，意见 7 条，采纳 7 条，其中 3 条导致正文实质性改写，**通过**。关键修正：①折旧定律的证据全部来自厂商自述，且这些厂商同时是 harness 卖家——正文因此把可机械验证的部分（token、代码行数）与自报部分（"效果不降"、基准分数）分开陈述；②原稿把"变薄"写成普适规律，修正为**只适用于能力补偿型部件**，治理型与界面型不适用；③缓存 10% 的计价只适用于 Claude API，全文加口径限定，禁止跨厂商外推。
+>
+> 完整问题清单、裁定与回归确认见 [V 审查记录](references/adversarial-review.md)（C.1–C.4 为第一轮，C.5–C.7 为第二轮）。
 
 ---
 
 ## 5. 质量门与编排记录
 
-| 门 | 标准 | 结果 |
-|---|---|---|
-| G1 | 事实 ≥20、无因果词、可溯源、数字/URL 完整 | PASS（45 条，分 6 组；未取证许可证显式登记 F-042；新闻信源显式降级 F-008） |
-| G2 | 洞察 ≥3 且四元组完整、维度独立、含反常识与行动 | PASS（I-1~I-4：杠杆迁移/品类收敛/供应链风险/编排代价） |
-| G3 | 模式含触发条件、步骤、≥3 反模式、检验标准、迁移验证 | PASS（最小充分脚手架选型法，5 反模式，3 个外部独立支撑案例；入库定级 L1-draft，见 2026-09-30 沉淀记录） |
-| V 门 | 4 视角、意见 ≥5 且具体、采纳 ≥2 并回归确认 | PASS（7 条意见，6 条采纳修正，1 条登记为局限） |
-| G4 | 产出原子化：单一职责文件、可独立验证、链接与命名规范 | PASS（8 个原子文件：index + 概念页 5 + references 2；toctree 经本 index 统一登记） |
+| 门 | 标准 | 结果（v1.0） | 结果（v1.1） |
+|---|---|---|---|
+| G1 | 事实 ≥20、无因果词、可溯源、数字/URL 完整 | PASS（45 条，分 6 组；未取证许可证显式登记 F-042；新闻信源显式降级 F-008） | PASS（+23 条，F-046~F-068；厂商自述/预览期定价/转述未核验三类口径逐条标注） |
+| G2 | 洞察 ≥3 且四元组完整、维度独立、含反常识与行动 | PASS（I-1~I-4：杠杆迁移/品类收敛/供应链风险/编排代价） | PASS（+I-5~I-8：部件折旧/成本结构/演进许可/交付形态；八条维度互不重叠） |
+| G3 | 模式含触发条件、步骤、≥3 反模式、检验标准、迁移验证 | PASS（最小充分脚手架选型法，5 反模式，3 个外部独立支撑案例；入库定级 L1-draft） | PASS（扩为七步，+折旧复查；反模式 6 条；新增检验标准一条；成熟度仍 L1-draft——本轮未产生"本项目实战验证"要件） |
+| V 门 | 4 视角、意见 ≥5 且具体、采纳 ≥2 并回归确认 | PASS（7 条意见，6 条采纳修正，1 条登记为局限） | PASS（7 条意见，7 条采纳，3 条导致正文实质改写） |
+| G4 | 产出原子化：单一职责文件、可独立验证、链接与命名规范 | PASS（8 个原子文件：index + 概念页 5 + references 2） | PASS（9 个原子文件：+概念页 06；toctree 于本 index 统一登记，修复 v1.0 无 toctree 导致的孤儿页问题） |
 
-**局限声明**：① 除官方文档外，TTFA/LOC 实测（F-003/F-004）、AutoGPT 复盘（F-006/F-007）、量化对比（F-032）均为单一第三方来源，已按 V 审查降级口径，结论方向需要读者自行用同任务小赛复验；② star 数与版本号为 2026-09-29/30 时点快照，agent 赛道迭代速度快于一般软件，引用前须按[信源台账](references/source-inventory.md)的复核方法刷新；③ 本调研为案头研究，未对任一框架执行安装与编码 POC，"生产就绪"评价仅在引用第三方实测时原样转述；④ CrewAI、LangGraph 独立能力、LlamaIndex/Haystack、Dify/Flowise 仅登记未深评（F-044/F-045）；⑤ F-008 安全新闻未交叉证实，不得作为事实之外的任何推断依据。
+**局限声明**：① 除官方文档外，TTFA/LOC 实测（F-003/F-004）、AutoGPT 复盘（F-006/F-007）、量化对比（F-032）均为单一第三方来源，已按 V 审查降级口径，结论方向需要读者自行用同任务小赛复验；② star 数与版本号为 2026-09-29/30 与 2026-11-10 两个时点快照，agent 赛道迭代速度快于一般软件，引用前须按[信源台账](references/source-inventory.md)的复核方法刷新；③ 本调研为案头研究，未对任一框架执行安装与编码 POC，"生产就绪"评价仅在引用第三方实测时原样转述；④ CrewAI、LangGraph 独立能力、LlamaIndex/Haystack、Dify/Flowise 仅登记未深评（F-044/F-045）；⑤ F-008 安全新闻未交叉证实，不得作为事实之外的任何推断依据；⑥ **v1.1 新增限制**：F-046/F-047/F-049~F-053/F-068 的一手信源均为厂商官方博客，其对自家 harness 的评价存在自利偏差，"效果不降"类结论属自报，本包未做独立复现；⑦ F-051 的 -80% 数字为转述，未回到 Anthropic 一手报告核验；⑧ F-059 为预览期定价且 12-01 才生效，不构成长期 TCO 依据。
 
 ```
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S2 | event=CHAIN_SELECTED | session=sc-20260930-python-agent-harness | msg=知识沉淀链路R→I→E→V→C | ctx={"chain":"R-I-E-V-C","depth":"standard"}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20260930-python-agent-harness | msg=45事实/4洞察/1模式/4视角7意见/8原子文件 | ctx={"gates":["G1","G2","G3","V","G4"],"deliverable":"docs/knowledge/tech/python-agent-harness/"}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=E2 | event=PATTERN_SEDIMENTED | session=sc-20260930-pattern-mss-sediment | msg=模式沉淀入方法论模式库 governance-strategy/，去重判定通过（与P-AGENT-SELECT-001/harness分层/选型三查边界互斥互补），入库二次校验将成熟度由自报L2降级为L1-draft并回改知识包，TOML+两处索引+两处反向链接同步 | ctx={"pattern":"minimal-sufficient-scaffold-selection","maturity":"L1-draft","new_files":2,"updated_files":6}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S0 | event=CMD_START | session=sc-20261110-python-agent-harness-refresh | msg=方法论编排开始：对既有知识包做全面洞察+增量更新 | ctx={"scenario":"knowledge","topic":"python-agent-harness-v1.1","depth":"standard"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S2 | event=SCENARIO_DETECTED | session=sc-20261110-python-agent-harness-refresh | msg=场景4知识沉淀（既有包增量洞察），链路R→I→E→V→C，不做全链路R→I→E→C→A→F→V | ctx={"chain":"R-I-E-V-C","reuse":"v1.0事实F-001~F-045与洞察I-1~I-4"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=I4 | event=GATE_PASSED | session=sc-20261110-python-agent-harness-refresh | msg=G2通过：新增4条洞察（折旧定律/成本结构/演进许可/交付形态），四元组完整且与v1.0四条维度互不重叠 | ctx={"insights_added":4,"total":8}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=V4 | event=GATE_PASSED | session=sc-20261110-python-agent-harness-refresh | msg=V门第二轮通过：4视角7意见，采纳7条，其中3条导致正文实质改写（折旧定律限定为补偿型部件、缓存计价限定为Claude API、自报数据与可验证数据分列） | ctx={"opinions":7,"adopted":7,"substantive":3}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20261110-python-agent-harness-refresh | msg=23事实/4洞察/1新概念页/7文件更新/9原子文件；选型模式扩为七步，反模式6条 | ctx={"gates":["G1","G2","G3","V","G4"],"deliverable":"docs/knowledge/tech/python-agent-harness/","files_changed":7,"files_new":1}
 ```

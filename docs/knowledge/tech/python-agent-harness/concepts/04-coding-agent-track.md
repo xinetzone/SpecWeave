@@ -15,14 +15,15 @@
 
 ### mini-swe-agent（Princeton / Stanford）
 
-- **体量与架构**：PyPI 1.4.2；核心 `agents/default.py` 约 100 行，env/model/script 各约 100 行；仅用 bash、不调用 tool-calling API、线性消息历史、`subprocess.run` 无状态执行（F-029）。
-- **成绩**：Claude Sonnet 4 在 SWE-bench Verified 上 65%，README 称强配置可超 74%（F-030）。
-- **隔离**：docker、podman、singularity、apptainer 四种容器（F-030）。
+- **体量与架构**：当前为 **v2**（PyPI 2.4.6，2026-07-23；v1 分支保留），核心 `agents/default.py` 仍约 100 行，env/model/script 各约 100 行；仅用 bash、不调用 tool-calling API、线性消息历史、`subprocess.run` 无状态执行（F-029/F-054）。
+- **成绩**：README 宣称 SWE-bench Verified **超过 74%**（初版记录的 65% 为 v1 时期数据，F-030/F-054）。
+- **隔离**：本地环境、docker/podman、singularity/apptainer、bubblewrap、contree 等（v1 时期为四种容器，F-030/F-055）。
+- **采用面**：README 列出 Meta、NVIDIA、Essential AI、IBM、Nebius、Anyscale、Princeton、Stanford 等使用方（F-054，**项目方自述**）。这条比分数更重要——它说明极简 harness 已从"研究玩具"变成"机构用来跑评测的基础设施"。
 - **定位**：研究者证明"模型够强时，scaffold 可以多薄"的参照实现；其文档将已转 maintenance-only 的 SWE-agent 列为被替代对象（F-031）。
 
 ### SWE-agent（Princeton NLP）
 
-- **现状**：maintenance-only（F-031）。
+- **现状**：maintenance-only；官方文档当前表述为"建议改用 mini-swe-agent……它已取代 SWE-agent"（F-031/F-056）。
 - **量化对照**：约 4161 行、67%、每任务约 2.50 美元；对照 mini-swe-agent 的约 131 行、65%、0.37 美元（F-032）。
 
 > 口径警告：F-032 的数字来自 Software Letters SL#68 单一来源（ICLR 2026 相关博客），"代码行数"的统计边界（是否含提示词模板、测试、配置）以该文口径为准；引用时须连同口径一起引用，不得只摘数字。
@@ -52,6 +53,8 @@
 | 成本口径不同 | 每任务成本含不含重试、人工审阅 | 0.37 / 1.43 / 2.50 美元三个数字分别来自不同文章口径（F-032/F-034），不可横比绝对值 |
 
 读图原则：**同文章、同模型、同采样次数下**的比较才有效。F-032 之所以有说服力，正是因为它在同一篇文章内对照 SWE-agent 与 mini-swe-agent；而把 65%（mini/Sonnet 4）、67%（SWE-agent/原文口径）、95.8（OpenHands/fable-5/2026-06）拉成一张排行榜是错误用法。
+
+补充一个 2026 年新出现的读法：**先看榜单是否固定了 harness**。DeepSWE 基准在每次运行中统一使用 mini-swe-agent 作为 harness，目的正是"让榜单反映模型能力而非脚手架"（F-057）。这类设计使分数可用于跨模型比较，但**不能反推 harness 优劣**——在固定 mini 的榜单上比较"mini 与 Claude Code 谁更强"，等于用比赛场地的选择证明场地的性能。mini-swe-agent 的 README 另有"在 DeepSWE 上击败 Claude Code 与 Codex"的自述（F-057），引用时须标注为**项目方自述、非独立核验**。
 
 ## 4.4 极简派胜在何处：三个机制而非"代码少"
 
