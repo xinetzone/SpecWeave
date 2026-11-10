@@ -8,11 +8,12 @@ validation_count = 3
 reuse_count = 0
 documentation_level = "complete"
 abstract_level = "domain-general"
-source = "七概念知识沉淀(sc-20260930-python-agent-harness)——AI Harness/Agent Python 包全景调研（45条事实）"
+source = "七概念知识沉淀(sc-20260930-python-agent-harness)——AI Harness/Agent Python 包全景调研（45条事实）；v1.1 增量(sc-20261110-python-agent-harness-refresh)——厂商一手信源23条事实/4条洞察"
 source_report = "docs/knowledge/tech/python-agent-harness/index.md"
 date = "2026-09-30"
-version = "1.0"
-maturity_note = "3个相互独立的外部案例同向支撑（mini-swe-agent vs SWE-agent 量化对照、七框架同任务TTFA实测、AutoGPT退潮复盘）；非同谱系双案例不适用L1.5，尚未在本项目验证不授L2；本团队一次真实选型实战后可升L2-validated"
+last_updated = "2026-11-10"
+version = "1.1"
+maturity_note = "3个相互独立的外部案例同向支撑（mini-swe-agent vs SWE-agent 量化对照、七框架同任务TTFA实测、AutoGPT退潮复盘）；v1.1新增折旧类证据仍属厂商自述的外部案例，未改变验证结构；同名核心模式扩为七步（新增季度折旧复查），非同谱系双案例不适用L1.5，尚未在本项目验证不授L2；本团队一次真实选型实战后可升L2-validated"
 
 [bindings]
 related_patterns = [

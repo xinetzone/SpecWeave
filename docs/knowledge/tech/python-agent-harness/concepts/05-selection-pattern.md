@@ -9,7 +9,7 @@
 | **一句话** | 为一个 agent 任务选框架时，不从功能清单或热度榜出发，而是先明确任务的失败成本与最小执行环，用同一任务的小规模实测记录"上手时间/代码量/治理缺口"，再按缺口反向选择生命体征健康的最薄脚手架 |
 | **适用于** | ① 要在 2 个以上 agent 框架/SDK 间做引入决策；② 新 agent 应用立项，团队对"用多重的框架"有分歧；③ 已有 agent 原型要走向生产，需要补齐治理部件 |
 | **不适用于** | ① 已被公司平台强制指定技术栈（合规/采购前提已定）；② 一次性脚本且无副作用（smolagents 直接用即可，选型成本高于框架成本，F-025）；③ 纯 RAG 检索类应用（RAG 型框架问题域不同，F-045） |
-| **成熟度** | **L1-draft（3 个外部独立案例支撑，待本项目实战验证）**：mini-swe-agent vs SWE-agent 的 131 行/65% 对 4161 行/67%（F-032）、七框架同任务 TTFA/LOC 实测（F-003）、AutoGPT/BabyAGI 全自主循环退潮与原语留存（F-006/F-007）三个外部案例同向支撑；按方法论模式库等级标准，L2-validated 另需"已在本项目验证"，故暂定级 L1-draft，本团队一次真实选库实战后可升 L2。模式已于 2026-09-30 入库：[最小充分脚手架选型法（方法论模式库）](../../../../retrospective/patterns/methodology-patterns/governance-strategy/minimal-sufficient-scaffold-selection.md) |
+| **成熟度** | **L1-draft（3 个外部独立案例支撑，待本项目实战验证）**：mini-swe-agent vs SWE-agent 的 131 行/65% 对 4161 行/67%（F-032）、七框架同任务 TTFA/LOC 实测（F-003）、AutoGPT/BabyAGI 全自主循环退潮与原语留存（F-006/F-007）三个外部案例同向支撑；按方法论模式库等级标准，L2-validated 另需"已在本项目验证"，故暂定级 L1-draft，本团队一次真实选库实战后可升 L2。模式已于 2026-09-30 入库：[最小充分脚手架选型法（方法论模式库）](../../../../retrospective/patterns/methodology-patterns/governance-strategy/minimal-sufficient-scaffold-selection.md)；v1.1 七步版已于 2026-11-10 增量同步入库（含第⑦步折旧复查与第 6 条反模式） |
 
 ## 5.2 核心步骤（七步）
 

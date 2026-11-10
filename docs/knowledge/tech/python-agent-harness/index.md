@@ -257,6 +257,7 @@ references/adversarial-review
 
 > 完整版（触发条件、七步流程、反模式清单、检验标准、跨域迁移）见 [05 模式：最小充分脚手架选型法](concepts/05-selection-pattern.md)。
 > 该模式已于 2026-09-30 沉淀入方法论模式库：[最小充分脚手架选型法](../../../retrospective/patterns/methodology-patterns/governance-strategy/minimal-sufficient-scaffold-selection.md)（含与企业采购选型框架、harness 分层模式的边界关系）。入库二次校验时按模式库等级标准由自报 L2 修正为 L1-draft——L2-validated 需"已在本项目验证"，当前仅有外部案例。
+> v1.1 增量（2026-11-10）已同步入库：库版同步扩为 **7 步**（+步骤 7 折旧复查）、**6 条反模式**（+"把默认装配当永久资产"）、**6 份检验产物**（+折旧复查记录），本节保留为案例版摘要，口径以库版为准。
 
 **一句话**：为一个 agent 任务选框架时，不从功能清单或热度榜出发，而是先明确任务的失败成本与所需最小执行环，用"同一任务小赛"实测 TTFA 与治理缺口，再按缺口反向选择最薄的、生命体征健康的脚手架。
 
@@ -286,7 +287,7 @@ references/adversarial-review
 |---|---|---|---|
 | G1 | 事实 ≥20、无因果词、可溯源、数字/URL 完整 | PASS（45 条，分 6 组；未取证许可证显式登记 F-042；新闻信源显式降级 F-008） | PASS（+23 条，F-046~F-068；厂商自述/预览期定价/转述未核验三类口径逐条标注） |
 | G2 | 洞察 ≥3 且四元组完整、维度独立、含反常识与行动 | PASS（I-1~I-4：杠杆迁移/品类收敛/供应链风险/编排代价） | PASS（+I-5~I-8：部件折旧/成本结构/演进许可/交付形态；八条维度互不重叠） |
-| G3 | 模式含触发条件、步骤、≥3 反模式、检验标准、迁移验证 | PASS（最小充分脚手架选型法，5 反模式，3 个外部独立支撑案例；入库定级 L1-draft） | PASS（扩为七步，+折旧复查；反模式 6 条；新增检验标准一条；成熟度仍 L1-draft——本轮未产生"本项目实战验证"要件） |
+| G3 | 模式含触发条件、步骤、≥3 反模式、检验标准、迁移验证 | PASS（最小充分脚手架选型法，5 反模式，3 个外部独立支撑案例；入库定级 L1-draft） | PASS（扩为七步，+折旧复查；反模式 6 条；新增检验标准一条；成熟度仍 L1-draft——本轮未产生"本项目实战验证"要件）。**2026-11-10 七步版已同步入方法论模式库**（六份检验产物、6 条反模式、库版与包内版口径一致） |
 | V 门 | 4 视角、意见 ≥5 且具体、采纳 ≥2 并回归确认 | PASS（7 条意见，6 条采纳修正，1 条登记为局限） | PASS（7 条意见，7 条采纳，3 条导致正文实质改写） |
 | G4 | 产出原子化：单一职责文件、可独立验证、链接与命名规范 | PASS（8 个原子文件：index + 概念页 5 + references 2） | PASS（9 个原子文件：+概念页 06；toctree 于本 index 统一登记，修复 v1.0 无 toctree 导致的孤儿页问题） |
 
@@ -301,4 +302,7 @@ references/adversarial-review
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=I4 | event=GATE_PASSED | session=sc-20261110-python-agent-harness-refresh | msg=G2通过：新增4条洞察（折旧定律/成本结构/演进许可/交付形态），四元组完整且与v1.0四条维度互不重叠 | ctx={"insights_added":4,"total":8}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=V4 | event=GATE_PASSED | session=sc-20261110-python-agent-harness-refresh | msg=V门第二轮通过：4视角7意见，采纳7条，其中3条导致正文实质改写（折旧定律限定为补偿型部件、缓存计价限定为Claude API、自报数据与可验证数据分列） | ctx={"opinions":7,"adopted":7,"substantive":3}
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20261110-python-agent-harness-refresh | msg=23事实/4洞察/1新概念页/7文件更新/9原子文件；选型模式扩为七步，反模式6条 | ctx={"gates":["G1","G2","G3","V","G4"],"deliverable":"docs/knowledge/tech/python-agent-harness/","files_changed":7,"files_new":1}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S0 | event=CMD_START | session=sc-20261110-pattern-mss-sediment | msg=模式沉淀开始：把本包 E 阶段七步版模式增量同步入方法论模式库 | ctx={"scenario":"knowledge","topic":"minimal-sufficient-scaffold-selection","depth":"standard"}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=E2 | event=PATTERN_SEDIMENTED | session=sc-20261110-pattern-mss-sediment | msg=增量同步完成：步骤6→7、反模式5→6、检验产物5→6；去重裁定不新增独立模式（折旧复查并入第⑦步，避免双权威） | ctx={"pattern":"minimal-sufficient-scaffold-selection","maturity":"L1-draft","new_files":0,"updated_files":5}
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S99 | event=CHAIN_COMPLETED | session=sc-20261110-pattern-mss-sediment | msg=模式库增量同步：模式文档+伴生TOML+总索引表行+知识包三处回写；沉淀V门4视角8意见全部采纳 | ctx={"gates":["G3","V"],"deliverable":"docs/retrospective/patterns/methodology-patterns/governance-strategy/minimal-sufficient-scaffold-selection.md","updated_files":5}
 ```
