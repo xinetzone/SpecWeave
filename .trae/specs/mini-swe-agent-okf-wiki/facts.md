@@ -111,8 +111,8 @@ generated_at: "2026-11-10"
 | F-088 | 74% 与官方 docs 一致，但官方未公开该成绩对应的完整评测配置（模型快照、成本上限、重试/步数、容器架构）。 | 核验 | ⚠️ 口径边界 |
 | F-089 | 博客表中的 Claude 3.7 Sonnet 65%、GPT-4o 42%、SWE-agent 1.0 54% 未在官方 docs 页面逐项复核。 | 核验 | 单源 |
 | F-090 | 知乎链接 `https://zhuanlan.zhihu.com/p/2011860096536314782` 在 2026-11-10 三次抓取均失败（zhuanlan 403、API 40362、www 404），未使用其内容。 | 核验 | 信源缺口 |
-| F-091 | `agents/__init__.py` 注册 `default`/`interactive` 两个 Agent 短名；`get_agent` 深拷贝配置、弹出 `agent_class` 后实例化。 | 源码 | 通过（L7-L27） |
-| F-092 | `environments/__init__.py` 注册 7 类环境：docker、singularity、local、swerex_docker、swerex_modal、bubblewrap、contree；`get_environment` 弹出 `environment_class` 后实例化。 | 源码 | 通过（L7-L31） |
+| F-091 | `agents/__init__.py` 注册 `default`/`interactive` 两个 Agent 短名；`get_agent` 深拷贝配置、弹出 `agent_class` 后实例化。 | 源码 | 通过（L8-L27） |
+| F-092 | `environments/__init__.py` 注册 7 类环境：docker、singularity、local、swerex_docker、swerex_modal、bubblewrap、contree；`get_environment` 弹出 `environment_class` 后实例化。 | 源码 | 通过（L8-L31） |
 | F-093 | `config/__init__.py` 的查找顺序为：给定路径 → `MSWEA_CONFIG_DIR` → 包内 config → 包内 extra → 包内 benchmarks；`key=value` 规范用 `json.loads` 尝试解析值。 | 源码 | 通过（L12-L63） |
 | F-094 | `run/mini.py` 把多个 `-c` 配置与 CLI 覆盖追加进列表后 `recursive_merge`；默认 `environment=local`、`agent=interactive`；默认轨迹写入 `last_mini_run.traj.json`。 | 源码 | 通过（L55-L109） |
 | F-095 | `LitellmModel.query` 用 tenacity 重试，默认最多 10 次、指数退避 4~60 秒；成本经 `litellm.cost_calculator.completion_cost` 计算并计入 `GLOBAL_MODEL_STATS`；`FormatError` 时把 cost 与原始 response 写入异常消息。 | 源码 | 通过（L81-L136） |
