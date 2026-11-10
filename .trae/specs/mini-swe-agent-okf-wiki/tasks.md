@@ -49,7 +49,7 @@ generated_at: "2026-11-10"
 
 ## C — 原子提交
 
-- [ ] 在 `projects/awesome-okf-xs` 子模块内显式列文件提交。
-- [ ] 在主仓库提交 spec。
-- [ ] 在主仓库更新子模块指针。
+- [x] 在 `projects/awesome-okf-xs` 子模块内显式列文件提交（25 个文件，`ca7bd277`）。
+- [x] 在主仓库提交 spec（4 个文件，`453ce90f`）。
+- [x] 在主仓库更新子模块指针（`e66efc7c`）。
 - [ ] 不 push（用户未要求）。
