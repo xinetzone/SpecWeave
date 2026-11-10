@@ -15,7 +15,7 @@ generated_at: "2026-11-10"
 - [x] 阅读 docs/ 的 quickstart、usage、advanced、FAQ、v2 migration、control flow。
 - [x] 抓取 GitHub API 元数据（stars/forks/license/language/created_at）。
 - [x] 抓取 arXiv 2310.06770 摘要页，核对 SWE-bench 提交日期。
-- [x] 登记 F-001～F-100 到 `facts.md`。
+- [x] 登记 F-001～F-114 到 `facts.md`。
 - [x] 记录 E-1～E-4 四条硬勘误与 F-088 口径边界。
 
 ## I — 知识拆分
@@ -26,9 +26,10 @@ generated_at: "2026-11-10"
 
 ## E — Bundle 生成
 
-- [x] 先写 `references/blog-source.md`、`references/repo-source.md`、`references/verification.md`。
+- [x] 先写 `references/blog-source.md`、`references/repo-source.md`、`references/tutorial-source.md`、`references/verification.md`。
 - [x] 写八篇 concepts。
 - [x] 写源码地图 `concepts/08-source-map.md`（模块/符号/行号/调用链/测试地图）。
+- [x] 写官方教程示例 `examples/04-minimal-agent-from-scratch.md`（50 行从零实现 + 教程→生产映射）。
 - [x] 写三篇 examples。
 - [x] 写 `concepts/index.md`、`examples/index.md`、`references/index.md`。
 - [x] 写 bundle `index.md` 与 `log.md`。
@@ -41,7 +42,7 @@ generated_at: "2026-11-10"
 - [x] 结构规范：frontmatter、toctree、相对链接。
 - [x] 读者可用性：阅读路径与主题关联可达。
 - [x] 时效边界：`stale_after=2027-03-31`，锁定 v2.4.6。
-- [x] 双份 F 编号一致（100/100，连续）。
+- [x] 双份 F 编号一致（114/114，连续）。
 - [x] UTF-8 检查通过。
 - [x] 本 bundle 相对链接 0 断链。
 - [x] 本 bundle toctree 检查通过。
@@ -54,4 +55,5 @@ generated_at: "2026-11-10"
 - [x] 第一轮：在主仓库提交 spec（4 个文件，`453ce90f`）。
 - [x] 第一轮：在主仓库更新子模块指针（`e66efc7c`）。
 - [x] 第二轮源码地图：子模块增量提交 20 个文件（含 `concepts/08-source-map.md`），主仓库更新 spec 与指针，哈希见 git log。
+- [x] 第三轮官方教程：子模块新增 `examples/04-minimal-agent-from-scratch.md` 与 `references/tutorial-source.md`，主仓库更新 spec 与指针，哈希见 git log。
 - [ ] 不 push（用户未要求）。

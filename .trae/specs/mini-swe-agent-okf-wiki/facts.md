@@ -121,3 +121,17 @@ generated_at: "2026-11-10"
 | F-098 | `swebench.process_instance` 为每个实例建独立目录，先删除旧的 preds 条目与轨迹，再建环境、跑 Agent，`finally` 中保存轨迹并在锁内更新 `preds.json`；Docker 镜像名为 `docker.io/swebench/sweb.eval.x86_64.<id>:latest`，实例 ID 中的 `__` 替换为 `_1776_`。 | 源码 | 通过（swebench.py L68-L179） |
 | F-099 | 测试地图：`tests/` 56 个文件、447 个 `def test_`；最大文件为 `test_interactive.py`（36 个）、`test_extra_config.py`（30 个）、`test_config.py`（29 个）、`test_swebench.py`（27 个）。 | 源码 | 通过（本机计数） |
 | F-100 | 行数口径：`src/` 总行 5,349 / 非空 4,531；`default.py` 190/172、`local.py` 92/80、`litellm_model.py` 164/147、`run/mini.py` 109/86。 | 源码 | 通过（`$lines.Count` 与去空行双计） |
+| F-101 | 官方教程站点为 `minimal-agent.com`，源码仓库为 `SWE-agent/minimal-agent-tutorial`，正文在 `docs/index.md`（24,083 字节，本地 commit `8ed09f1`，2026-02-03）。 | 官方教程 | 通过（本地目录） |
+| F-102 | 教程作者为 Kilian Lieret、Carlos Jimenez、John Yang、Ofir Press；贡献者 Cesar Garcia、piot。 | 官方教程 | 单源（教程署名） |
+| F-103 | 教程称初始最小 Agent “only some 60 lines long”，首个原型为 50 行。 | 官方教程 | 通过（正文与代码块） |
+| F-104 | 核心循环：`messages` → `query_lm` → 追加 assistant → `parse_action` → 若 `exit` 则退出 → `execute_action` → 追加 user output。 | 官方教程 | 通过（正文伪代码与完整代码） |
+| F-105 | 实现只需三件事：查询 LM API、解析动作、执行动作；tool calling 可选，教程为简化不展开。 | 官方教程 | 通过（正文） |
+| F-106 | 教程给出 OpenAI、Anthropic、OpenRouter、LiteLLM、GLM 五种查询示例，推荐 LiteLLM 作为默认。 | 官方教程 | 通过（正文 tab） |
+| F-107 | 动作编码支持三反引号 `bash-action` 块与 XML `<bash_action>` 两种格式，推荐三反引号。 | 官方教程 | 通过（正文） |
+| F-108 | 三反引号解析用 `re.findall(r"```bash-action\s*\n(.*?)\n```", lm_output, re.DOTALL)`，取第一个匹配，找不到返回空串。 | 官方教程 | 通过（正文代码） |
+| F-109 | 执行函数用 `subprocess.run(shell=True, text=True, env=os.environ, encoding="utf-8", errors="replace", stdout=PIPE, stderr=STDOUT, timeout=30)`。 | 官方教程 | 通过（正文代码） |
+| F-110 | 教程承认两个限制：不能持久 `cd`、不能持久 `export`；认为减少隐藏状态、强制绝对路径可能对模型有帮助，类比 Claude Code 的子 shell。 | 官方教程 | 作者观点（与 F-072/F-073 一致） |
+| F-111 | 健壮性建议：捕获异常并把错误消息追加到 `messages`；格式错误时追加纠正提示；设置 `PAGER`/`MANPAGER`/`LESS`/`PIP_PROGRESS_BAR`/`TQDM_DISABLE` 避免交互式工具卡住。 | 官方教程 | 通过（正文） |
+| F-112 | 教程把生产代码映射为 `Agent.run` / `Model.query` / `Environment.execute`；Docker 环境只是把 `subprocess.run` 换成 `docker exec`；并称按此教程可达到 74% SWE-bench verified。 | 官方教程 | 部分通过（结构与 F-049/F-062 一致；74% 同 F-070 口径） |
+| F-113 | 教程示例提到 `TerminatingException` / `NonterminatingException`，但 v2.4.6 源码中不存在这两个名字；实际异常体系为 `InterruptAgentFlow`/`Submitted`/`LimitsExceeded`/`TimeExceeded`/`UserInterruption`/`FormatError`。 | 官方教程 vs 源码 | ⚠️ 文档漂移（以源码为准） |
+| F-114 | 教程完成信号是 `exit` 命令；v2.4.6 是 `COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT` 魔法行（F-055、F-062）。 | 官方教程 vs 源码 | ⚠️ 版本差异（以源码为准） |

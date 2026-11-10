@@ -13,7 +13,7 @@ generated_at: "2026-11-10"
 
 ## Overview
 
-把三份信源（技术博客、知乎专栏、官方 GitHub 仓库）合并学习，转化为 `projects/awesome-okf-xs/doc/bundles/` 下的 OKF v0.2 知识包。按七概念方法论编排（`seven-concepts-cmd`）走**场景 4 知识沉淀链路 R→I→E→V→C**。
+把四份信源（技术博客、知乎专栏、官方 GitHub 仓库、官方 minimal-agent 教程）合并学习，转化为 `projects/awesome-okf-xs/doc/bundles/` 下的 OKF v0.2 知识包。按七概念方法论编排（`seven-concepts-cmd`）走**场景 4 知识沉淀链路 R→I→E→V→C**。
 
 | 项 | 值 |
 |---|---|
@@ -99,8 +99,10 @@ generated_at: "2026-11-10"
 | `examples/01-install-and-cli.md` | 安装与 `mini` CLI 三模式 |
 | `examples/02-python-bindings.md` | 20 行嵌入 Agent |
 | `examples/03-swebench-batch.md` | SWE-bench 批处理与单实例调试 |
+| `examples/04-minimal-agent-from-scratch.md` | 官方教程 50 行从零实现、三项加固、教程→生产映射 |
 | `references/blog-source.md` | 博客事实 F-001～F-034 |
 | `references/repo-source.md` | 仓库事实 F-035～F-100 |
+| `references/tutorial-source.md` | 官方教程事实 F-101～F-114 |
 | `references/verification.md` | P0 核验、E-1～E-4、单源边界 |
 | `log.md` | 变更日志与 CMD-LOG |
 
@@ -116,8 +118,8 @@ generated_at: "2026-11-10"
 
 ## Acceptance
 
-- [x] 9 篇概念 + 3 篇示例 + 3 篇 references + 3 个子目录索引 + index + log（共 20 个文件）。
-- [x] F-001～F-100 双份一致、连续。
+- [x] 9 篇概念 + 4 篇示例 + 4 篇 references + 3 个子目录索引 + index + log（共 22 个文件）。
+- [x] F-001～F-114 双份一致、连续。
 - [x] P0 核验覆盖核心声明，4 条硬勘误 + 1 条信源缺口。
 - [x] bundle index → ai-agent index → frameworks index → ai index → bundles index 三级接入。
 - [x] 本 bundle 相对链接 0 断链，UTF-8 通过，无敏感绝对路径。
