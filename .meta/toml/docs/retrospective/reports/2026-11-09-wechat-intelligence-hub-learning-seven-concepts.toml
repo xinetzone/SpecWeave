@@ -1,0 +1,38 @@
+id = "learning-20261109-wechat-intelligence-hub-seven-concepts"
+title = "wechat-intelligence-hub 全面学习 · 七概念知识沉淀报告"
+date = "2026-11-09"
+scope = "project"
+type = "Report"
+category = "retrospective/reports"
+source = "外部公开仓库 external/dao/wechat/wechat-intelligence-hub（AGPL-3.0-only，v0.9.2-preview.2）"
+methodology = "seven-concepts (R→I→E→V→C)"
+scenario = "知识沉淀（V 对抗审查强制）"
+content_sensitivity = "public"
+facts_count = 50
+insights_count = 4
+patterns_count = 2
+actions_count = 11
+review_perspectives = 4
+review_items = 8
+review_adopted = 7
+gates = ["G1", "G2", "G3", "G4", "V"]
+v_executed = true
+git_commit = false
+version = "1.0"
+
+[bindings]
+related_patterns = [
+  "read-only-intelligence-system-bca-contract",
+  "precedent-spec-freshness-check",
+]
+rules = [
+  "AGENTS.md:119 文档边界",
+  ".agents/rules/content-sensitivity-precheck.md",
+]
+references = [
+  "docs/retrospective/reports/2026-08-03-animejs-threejs-adapter-learning-seven-concepts.md",
+]
+skills = [
+  "seven-concepts-cmd",
+  "specweave-slash-alias-resolution",
+]

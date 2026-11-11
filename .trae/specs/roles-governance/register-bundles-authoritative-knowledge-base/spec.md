@@ -1,7 +1,7 @@
 ---
 status: "draft"
 id: "register-bundles-authoritative-knowledge-base-spec"
-source: "projects/awesome-okf-xs/doc/bundles/index.md"
+source: "../../../../projects/awesome-okf-xs/doc/bundles/index.md"
 ---
 
 # 注册 bundles 为最高可信度知识库 Spec

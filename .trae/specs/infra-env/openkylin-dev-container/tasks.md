@@ -1,7 +1,7 @@
 ---
 status: draft
 title: openkylin-dev-container 实施队列
-source: .trae/specs/infra-env/openkylin-dev-container/spec.md
+source: spec.md
 created: 2026-10-08
 ---
 

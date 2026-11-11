@@ -14,7 +14,7 @@ tags: ["onnx", "quantization", "benchmark", "ci", "devcontainer", "performance"]
 > **生成日期**：2026-08-08
 > **方法论**：七概念方法论（R-I-E链路：事实采集→洞察分析→模式萃取）
 > **关联文件**：
-> - 基准数据：[benchmark_quick.json](../../../../../apps/docker-images/devcontainer-base/benchmark-results-docker/benchmark_quick.json)
+> - 基准数据：[benchmark_quick.json](../../../../apps/docker-images/devcontainer-base/benchmark-results-docker/benchmark_quick.json)
 > - 基准脚本：[benchmark_quantization.py](../../../../apps/docker-images/devcontainer-base/scripts/benchmark_quantization.py)
 > - Docker运行脚本：[run-benchmark-docker.sh](../../../../apps/docker-images/devcontainer-base/scripts/run-benchmark-docker.sh)
 > - onnx-quantized变体：[Dockerfile](../../../../apps/docker-images/devcontainer-base/variants/onnx-quantized/Dockerfile)

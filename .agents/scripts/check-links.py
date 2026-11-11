@@ -29,6 +29,7 @@ import urllib.error
 import ssl
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+from functools import lru_cache
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -42,9 +43,17 @@ from constants import (
 from lib.project import resolve_project_root
 from lib.link_fixer import is_code_fence_context, INLINE_LINK_RE
 from lib.cli import add_common_args, setup_safe_output
-from lib.markdown import find_markdown_files
+from lib.markdown import (
+    clear_tracked_index_cache,
+    filter_test_fixture_paths,
+    filter_untracked_paths,
+    find_markdown_files,
+    git_tracked_files,
+    is_literal_path,
+)
 from lib.atomic_write import atomic_write_json
 from lib.cache import get_cache_path, load_cache, save_cache
+from lib import link_baseline
 
 # 匹配引用式链接定义: [ref]: url
 REF_LINK_RE = re.compile(r"^\s*\[([^\]]+)\]:\s*(.+)$", re.MULTILINE)
@@ -57,6 +66,16 @@ BOLD_AUTOLINK_RE = re.compile(r"\*\*<([^>]+)>\*\*")
 
 
 CURLY_PLACEHOLDER_RE = re.compile(r"\{[^}]+\}")
+# 角括号占位段：`<域>`、`<bundle-id>` 这类 token 可能嵌在相对路径的某个
+# 路径段里（如 `../../knowledge/<域>/<id>/index.md`），整串并非角括号目标。
+# 字符类排除路径分隔符，避免把合法的 `<path/to/file.md>` 误判为占位符。
+ANGLE_PLACEHOLDER_TOKEN_RE = re.compile(r"<[^<>/\\]+>")
+# 路径扩展名：用于区分「真实文件引用」与「正文短语/表格单元」
+PATH_EXTENSION_RE = re.compile(r"\.[A-Za-z0-9]{1,8}$")
+# 中文正文特征：含中日韩字符的裸词几乎不可能是仓内路径
+CJK_CHAR_RE = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
+# 正文标点：出现在裸词里说明是散文而不是路径
+PROSE_PUNCTUATION = set("，。；：、！？（）「」【】《》…—·")
 
 CACHE_DIR_NAME = ".agents/cache"
 CACHE_FILE_NAME = "external-links-cache.json"
@@ -79,6 +98,13 @@ LINK_CHECK_SKIP_SEGMENTS = (
     "/vendor/flexloop/",
     "/vendor/ark-cli/",
 )
+
+# 源码扫描跳过目录：这些目录装的不是本仓文档，而是本地语料/工具目录/缓存，
+# 其内部 Markdown 的相对链接无法按本仓结构解析（实测贡献 1.4 万条假断链）。
+# 与 LINK_CHECK_SKIP_SEGMENTS（按链接目标跳过）不同，这里按「源文件所在目录」
+# 跳过，且只跳过未被 git 跟踪的文件——目录里一旦出现受版本控制的内容，照常检查。
+# 免除资格由 lib.markdown.audit_skipped_paths 强制校验，违规直接抛错。
+LINK_CHECK_UNTRACKED_SKIP_DIRS = frozenset({".corpus", ".workbuddy", ".cache"})
 
 # 模板占位符：这些是文档模板中的示例链接，不是真实链接。
 LINK_CHECK_PLACEHOLDER_EXACT = {"链接", "URL", "url", "<url>"}
@@ -114,6 +140,62 @@ def _is_skipped_link_target(url: str) -> bool:
     return False
 
 
+# 子模块未检出时无法校验目标是否存在，单独归为「无法判定」而非断链。
+# 目录不存在（git clone 未 --recursive 时可能连目录都没有）与空目录（submodule
+# 已注册但未 checkout）都属此类；而目录非空说明子模块已检出，此时目标缺失
+# 就是真缺陷，必须照常报断链。
+SUBMODULE_UNKNOWN_NOT_INITIALIZED = "子模块未初始化（目录不存在）"
+SUBMODULE_UNKNOWN_EMPTY = "子模块未检出（空目录）"
+SUBMODULE_SKIP_NOTE = "跳过校验"
+
+
+@lru_cache(maxsize=8)
+def _load_submodule_paths(project_root: str) -> tuple[str, ...]:
+    """读取 .gitmodules 声明的子模块路径（仓库相对 posix，长路径优先）。"""
+    gitmodules = Path(project_root) / ".gitmodules"
+    try:
+        content = gitmodules.read_text(encoding="utf-8")
+    except OSError:
+        return ()
+    paths = set()
+    for raw in re.findall(r"^\s*path\s*=\s*(.+)$", content, flags=re.MULTILINE):
+        cleaned = raw.strip().strip('"').strip("'").strip("/").replace("\\", "/")
+        if cleaned:
+            paths.add(cleaned)
+    # 长路径优先，保证嵌套子模块按最深一级判定
+    return tuple(sorted(paths, key=len, reverse=True))
+
+
+def submodule_check_state(target: Path, project_root: Path) -> str:
+    """判断缺失目标是否落在「无法校验」的子模块内。
+
+    返回:
+      - "not_initialized": 子模块目录不存在
+      - "empty": 子模块目录存在但为空（未检出）
+      - "checked_out": 子模块已检出（目标缺失是真断链）
+      - "outside": 目标不在任何子模块内（按普通断链处理）
+    """
+    try:
+        root = project_root.resolve()
+        rel = target.resolve().relative_to(root).as_posix()
+    except (OSError, ValueError):
+        return "outside"
+    for sub in _load_submodule_paths(str(root)):
+        if rel != sub and not rel.startswith(sub + "/"):
+            continue
+        sub_root = root / sub
+        if not sub_root.exists():
+            return "not_initialized"
+        try:
+            if not any(sub_root.iterdir()):
+                return "empty"
+        except OSError:
+            # 无法列举时按已检出处理，宁可报断链也不要静默吞掉
+            return "checked_out"
+        return "checked_out"
+    return "outside"
+
+
 def _resolve_cache_path(project_root: Path) -> Path:
     """获取外部链接检查缓存文件路径。"""
     return get_cache_path(project_root, CACHE_FILE_NAME, CACHE_DIR_NAME)
@@ -142,12 +224,47 @@ def is_cache_valid(entry: dict, ttl_days: int = CACHE_TTL_DAYS) -> bool:
 
 
 def is_template_placeholder(url: str) -> bool:
-    """判断 URL 是否为模板占位符（如 <!-- ... --> 或 {变量名} 格式）。"""
+    """判断 URL 是否为模板占位符（如 <!-- ... -->、{变量名}、<占位符> 格式）。"""
     if url.startswith("<!--") and url.endswith("-->"):
         return True
     if CURLY_PLACEHOLDER_RE.search(url):
         return True
+    # 尖括号占位符：<占位符>、<url> 这类模板示例。带路径分隔符或扩展名的
+    # <path/to/file.md> 是合法的 Markdown 角括号目标，必须保留检查。
+    if url.startswith("<") and url.endswith(">") and len(url) > 2:
+        inner = url[1:-1].strip()
+        if inner and "/" not in inner and "\\" not in inner and not PATH_EXTENSION_RE.search(inner):
+            return True
+        return False
+    # 占位段嵌在相对路径中间（非整串角括号目标），同样不是可校验路径。
+    if ANGLE_PLACEHOLDER_TOKEN_RE.search(url):
+        return True
     return False
+
+
+def is_non_path_reference(url: str) -> bool:
+    """判断本地引用是否根本不是路径（正文短语 / 表格单元 / 裸词占位）。
+
+    仅当引用「无路径分隔符、无扩展名、非锚点/绝对路径前缀」，且带正文特征
+    （中文、空白或中文标点）时才判为非路径；`docs/`、`../guide`、`a.md`
+    这类真实引用不受影响，避免把真断链一起过滤掉。
+    """
+    clean = url.split("#", 1)[0].split("?", 1)[0].strip()
+    if not clean or clean in (".", ".."):
+        return False
+    if clean.startswith(("#", "/", "\\", "~", "file:", "mailto:", "http:", "https:")):
+        return False
+    if "/" in clean or "\\" in clean:
+        return False
+    if PATH_EXTENSION_RE.search(clean):
+        return False
+    if clean.startswith("<") and clean.endswith(">"):
+        return True
+    return (
+        any(ch.isspace() for ch in clean)
+        or bool(CJK_CHAR_RE.search(clean))
+        or any(ch in PROSE_PUNCTUATION for ch in clean)
+    )
 
 
 def _strip_link_title(url: str) -> str:
@@ -187,7 +304,9 @@ def parse_links(file_path: Path) -> list[tuple[str, str, int]]:
         ref_id = ref_id.lower()
         ref_url = m.group(2).strip()
         if not is_template_placeholder(ref_url):
-            ref_defs[ref_id] = _strip_link_title(ref_url)
+            stripped = _strip_link_title(ref_url)
+            if not is_non_path_reference(stripped):
+                ref_defs[ref_id] = stripped
 
     # 解析内联链接
     for m in INLINE_LINK_RE.finditer(content):
@@ -197,7 +316,12 @@ def parse_links(file_path: Path) -> list[tuple[str, str, int]]:
             continue
         text = m.group(1)
         url = _strip_link_title(m.group(2).strip())
-        if url and not url.startswith("#") and not is_template_placeholder(url):
+        if (
+            url
+            and not url.startswith("#")
+            and not is_template_placeholder(url)
+            and not is_non_path_reference(url)
+        ):
             line_num = content[: m.start()].count("\n") + 1
             links.append((text, url, line_num))
 
@@ -223,7 +347,12 @@ def parse_links(file_path: Path) -> list[tuple[str, str, int]]:
         if is_code_fence_context(content, m.start()):
             continue
         url = m.group(1).strip()
-        if url and not url.startswith("#") and not is_template_placeholder(url):
+        if (
+            url
+            and not url.startswith("#")
+            and not is_template_placeholder(url)
+            and not is_non_path_reference(url)
+        ):
             line_num = content[: m.start()].count("\n") + 1
             links.append((url, url, line_num))
 
@@ -335,7 +464,10 @@ def _resolve_local_target(
 
 
 def check_local_link(
-    file_path: Path, url: str, scan_root: Path | None = None
+    file_path: Path,
+    url: str,
+    scan_root: Path | None = None,
+    project_root: Path | None = None,
 ) -> tuple[str, str, str]:
     """检查本地文件引用是否有效。返回 (url, status, message)。
 
@@ -343,9 +475,12 @@ def check_local_link(
       - "ok": 目标是文件，链接可正常打开
       - "directory": 目标是目录（IDE/Markdown渲染器无法直接打开目录，应链接到README.md）
       - "missing": 目标不存在（断链）
+      - "unknown": 目标落在未检出的子模块内，无法判定；既不算断链也不入基线
 
     scan_root: 可选，--path 指定的扫描根目录；用于将 `/` 前缀的 bundle-relative
       链接解析到 bundle 根（无 bundle 根发现时的回退基准）。
+    project_root: 可选，仓库根；提供时区分「子模块未检出（unknown）」与
+      「子模块已检出但文件缺失（missing）」。
     """
     base_dir = file_path.parent
     clean_url = url.split("#")[0]
@@ -369,6 +504,12 @@ def check_local_link(
         # （这些在 CI 中不存在但本地存在，或本就是非真实链接，不应报告为断链）
         if _is_skipped_link_target(url):
             return (url, "ok", "")
+        if project_root is not None:
+            state = submodule_check_state(target, project_root)
+            if state == "not_initialized":
+                return (url, "unknown", f"{SUBMODULE_UNKNOWN_NOT_INITIALIZED}，{SUBMODULE_SKIP_NOTE}: {target}")
+            if state == "empty":
+                return (url, "unknown", f"{SUBMODULE_UNKNOWN_EMPTY}，{SUBMODULE_SKIP_NOTE}: {target}")
         return (url, "missing", f"文件不存在: {target}")
     if target.is_dir():
         readme_candidate = target / "README.md"
@@ -376,6 +517,44 @@ def check_local_link(
             return (url, "directory", f"链接到目录而非文件（应链接到 {target.name}/README.md）: {target}")
         return (url, "directory", f"链接到目录而非文件（目录内无README.md）: {target}")
     return (url, "ok", "")
+
+
+# 只按「路径形态」校验的 frontmatter 字段。`source` 与 `related_*` 允许承载
+# 散文式溯源描述（如「docs/xxx.md 第六章 ACT-5」「某文章 + 复盘洞察」
+# 「multiplatform-video-publish（~/.workbuddy/skills/）」），这类值不是路径，
+# 按路径校验只会制造噪声；但必须显式计数并在 --json 中单列，禁止静默丢弃。
+PATH_FORM_ONLY_FIELDS = ("source",)
+PATH_FORM_ONLY_PREFIXES = ("related_",)
+
+
+def is_path_form_only_field(field_name: str) -> bool:
+    """判断字段是否只按「路径形态」校验（路径形态仍严格照查，不做任何放宽）。"""
+    return field_name in PATH_FORM_ONLY_FIELDS or field_name.startswith(PATH_FORM_ONLY_PREFIXES)
+
+
+def is_path_form_value(value: str) -> bool:
+    """判断 frontmatter 值是否具备路径形态。
+
+    只审视锚点（`#`）之前的部分：`../x.md#中文锚点` 是路径引用，锚点里的中文
+    不代表整串是散文；若把锚点一并纳入判断，这类真实路径会被误判为散文化而
+    漏检。路径形态 = 无空白、无中日韩字符与全角标点、无多值分隔符（+ | , ;），
+    且带扩展名或以 ./ ../ 开头。不满足者视为散文化描述，不按路径校验。
+    """
+    v = value.strip().strip('"').strip("'")
+    if not v:
+        return False
+    head = v.split("#", 1)[0].strip()
+    if not head:
+        return False
+    if any(ch.isspace() for ch in head):
+        return False
+    if CJK_CHAR_RE.search(head) or any(ch in PROSE_PUNCTUATION for ch in head):
+        return False
+    if head[0] in "（(「【":
+        return False
+    if re.search(r"[+|,;]", head):
+        return False
+    return bool(PATH_EXTENSION_RE.search(head)) or v.startswith("./") or v.startswith("../")
 
 
 def _extract_paths_from_value(value: str) -> list[str]:
@@ -406,6 +585,9 @@ def _extract_paths_from_value(value: str) -> list[str]:
             continue
         if CURLY_PLACEHOLDER_RE.search(part):
             continue
+        # 模板占位符（如 <sub-area>/<kebab-id>.toml）不是真实路径，不参与校验
+        if ANGLE_PLACEHOLDER_TOKEN_RE.search(part):
+            continue
         if re.search(r'[\u4e00-\u9fff]', part) and not ('.md' in part or '.toml' in part or '.py' in part):
             continue
         if '/' in part or '\\' in part or part.startswith('../') or part.startswith('./'):
@@ -426,9 +608,17 @@ def _normalize_path_value(value: str) -> str:
 
 
 def _check_single_path(
-    md_path: Path, field_name: str, path_value: str, scan_root: Path | None = None
+    md_path: Path,
+    field_name: str,
+    path_value: str,
+    scan_root: Path | None = None,
+    project_root: Path | None = None,
 ) -> tuple[Path, str, str, str] | None:
-    """检查单个路径值是否有效。返回 (md_path, field_name, path_value, error_message) 或 None（通过）。"""
+    """检查单个路径值是否有效。返回 (md_path, field_name, path_value, error_message) 或 None（通过）。
+
+    project_root 提供时，落在未检出子模块内的缺失路径返回「跳过校验」标记，
+    由 check_frontmatter_paths 归入跳过清单而不是断链。
+    """
     v = _normalize_path_value(path_value)
     if not v:
         return None
@@ -442,6 +632,12 @@ def _check_single_path(
         # 跳过 .gitignore 排除路径、未初始化 submodule、模板占位符
         if _is_skipped_link_target(v):
             return None
+        if project_root is not None:
+            state = submodule_check_state(target, project_root)
+            if state == "not_initialized":
+                return (md_path, field_name, v, f"{SUBMODULE_UNKNOWN_NOT_INITIALIZED}，{SUBMODULE_SKIP_NOTE}: {target}")
+            if state == "empty":
+                return (md_path, field_name, v, f"{SUBMODULE_UNKNOWN_EMPTY}，{SUBMODULE_SKIP_NOTE}: {target}")
         return (md_path, field_name, v, f"文件不存在: {target}")
     if target.is_dir():
         readme_candidate = target / "README.md"
@@ -456,6 +652,9 @@ def check_frontmatter_paths(
     fields: list[str] | None = None,
     check_related_fields: bool = True,
     scan_root: Path | None = None,
+    project_root: Path | None = None,
+    skipped: list[tuple[Path, str, str, str]] | None = None,
+    prose_skipped: list[tuple[Path, str, str]] | None = None,
 ) -> list[tuple[Path, str, str, str]]:
     """校验 Markdown 文件 frontmatter 中包含路径的字段是否指向有效文件。
 
@@ -488,13 +687,26 @@ def check_frontmatter_paths(
                 continue
             values_to_check: list[str] = []
             if isinstance(value, str):
-                values_to_check.extend(_extract_paths_from_value(value))
+                raw_values = [value]
             elif isinstance(value, list):
-                for v in value:
-                    values_to_check.extend(_extract_paths_from_value(str(v)))
+                raw_values = [str(v) for v in value]
+            else:
+                raw_values = []
+            for raw in raw_values:
+                # source / related_* 允许散文化溯源描述，仅在路径形态时校验；
+                # 跳过项必须计数上报，不得静默丢弃。
+                if is_path_form_only_field(field_name) and not is_path_form_value(raw):
+                    if prose_skipped is not None:
+                        prose_skipped.append((md_path, field_name, raw.strip()))
+                    continue
+                values_to_check.extend(_extract_paths_from_value(raw))
             for v in values_to_check:
-                result = _check_single_path(md_path, field_name, v, scan_root)
+                result = _check_single_path(md_path, field_name, v, scan_root, project_root)
                 if result:
+                    if SUBMODULE_SKIP_NOTE in result[3]:
+                        if skipped is not None:
+                            skipped.append(result)
+                        continue
                     broken.append(result)
     return broken
 
@@ -950,6 +1162,9 @@ def print_bold_autolink_report(fixes: list[tuple[Path, int]], dry_run: bool = Fa
 
 def main(argv=None) -> int:
     setup_safe_output()
+    # 每次执行重新读取 git 索引：同一进程内多次调用（测试、更新基线后复扫）
+    # 必须看到最新跟踪状态，否则新增文件会被当成未跟踪而漏检。
+    clear_tracked_index_cache()
     parser = argparse.ArgumentParser(
         description="扫描 Markdown 文件中的链接，校验外部 URL 可达性与本地文件引用有效性。"
     )
@@ -1011,6 +1226,48 @@ def main(argv=None) -> int:
         help="与 --fix 配合使用，仅预览修复内容不写入文件",
     )
     parser.add_argument(
+        "--baseline",
+        action="store_true",
+        default=False,
+        help="基线模式：只报告基线之外的新增断链（存量不打印）",
+    )
+    parser.add_argument(
+        "--update-baseline",
+        action="store_true",
+        default=False,
+        help="按当前断链重写基线文件（新增条目必须提供 --reason 或 --reason-map）",
+    )
+    parser.add_argument(
+        "--reason",
+        choices=link_baseline.REASON_ENUM,
+        default=None,
+        help="新增基线条目的原因（批量默认值）",
+    )
+    parser.add_argument(
+        "--reason-map",
+        type=str,
+        default=None,
+        help="逐条原因映射 JSON（数组，元素含 source/target/reason），优先于 --reason",
+    )
+    parser.add_argument(
+        "--baseline-file",
+        type=str,
+        default=link_baseline.BASELINE_RELATIVE_PATH,
+        help=f"基线文件路径（默认 {link_baseline.BASELINE_RELATIVE_PATH}）",
+    )
+    parser.add_argument(
+        "--since",
+        type=str,
+        default=datetime.now().date().isoformat(),
+        help="新增基线条目的入账日期（默认今天）",
+    )
+    parser.add_argument(
+        "--review-by",
+        type=str,
+        default=None,
+        help="新增基线条目的复核期限（默认 since + 90 天）",
+    )
+    parser.add_argument(
         "--rename",
         type=str,
         nargs="*",
@@ -1070,6 +1327,8 @@ def main(argv=None) -> int:
     # 查找 Markdown 文件（支持多目录扫描）
     md_files = []
     file_root_map = {}  # 文件 -> 其所属扫描根目录（用于相对路径显示）
+    dedup_index = {}  # 解析后实体 -> 在 md_files 中的下标（用于别名去重择优）
+    explicit_files: set[Path] = set()  # --path 点名的单文件：不参与夹具跳过
     for root in roots:
         if root.is_file():
             # 单文件输入：直接纳入扫描。find_markdown_files 对文件路径
@@ -1080,7 +1339,9 @@ def main(argv=None) -> int:
                 resolved = root.resolve()
                 if resolved not in file_root_map:
                     file_root_map[resolved] = root.parent
+                    dedup_index[resolved] = len(md_files)
                     md_files.append(root)
+                explicit_files.add(resolved)
                 print("找到 1 个 Markdown 文件")
             else:
                 print(
@@ -1097,8 +1358,38 @@ def main(argv=None) -> int:
             resolved = md_file.resolve()
             if resolved not in file_root_map:
                 file_root_map[resolved] = root
+                dedup_index[resolved] = len(md_files)
                 md_files.append(md_file)
+            elif is_literal_path(md_file) and not is_literal_path(
+                md_files[dedup_index[resolved]]
+            ):
+                # 同一实体经联接/符号链接别名重复出现时，保留字面路径视图：
+                # 否则别名视图会挤掉真实路径，跳过集一开就把真断链一起吞掉
+                md_files[dedup_index[resolved]] = md_file
     print(f"\n合计: {len(md_files)} 个 Markdown 文件（已去重）")
+
+    # 跳过未跟踪的本地语料/工具/缓存目录（硬约束由 audit_skipped_paths 校验）
+    md_files, skip_stats = filter_untracked_paths(
+        md_files, project_root, LINK_CHECK_UNTRACKED_SKIP_DIRS
+    )
+    if skip_stats:
+        print(
+            f"跳过未跟踪内容: {skip_stats['total']} 个 Markdown 文件"
+            f"（未跟踪 {skip_stats.get('untracked', 0)}，"
+            f"联接别名 {skip_stats.get('junction-alias', 0)}）"
+        )
+    # 跳过测试夹具数据（判据见 lib.markdown.is_test_fixture_markdown）
+    md_files, fixture_skipped = filter_test_fixture_paths(
+        md_files, project_root, explicit_files
+    )
+    if fixture_skipped:
+        print(f"跳过测试夹具数据: {len(fixture_skipped)} 个 Markdown 文件")
+        for fixture in fixture_skipped:
+            try:
+                shown = fixture.relative_to(project_root).as_posix()
+            except ValueError:
+                shown = str(fixture)
+            print(f"  - {shown}")
     if not md_files:
         # 零对象扫描必须显式告警：通过语义只属于「检查过且无断链」，
         # 不属于「什么都没检查」。
@@ -1179,25 +1470,199 @@ def main(argv=None) -> int:
     # 检查本地文件引用
     broken_local = []
     warning_local = []
+    unknown_local: list[tuple[Path, int, str, str, str]] = []
+    baseline_hits: list[tuple[str, str]] = []  # (仓库相对源文件, 断链目标)
     print(f"\n1. 检查本地文件引用（共 {len(local_links)} 个）...")
     for file_path, text, url, line_num in local_links:
         file_root = file_root_map.get(file_path.resolve(), roots[0])
-        url_str, status, message = check_local_link(file_path, url, scan_root=file_root)
+        url_str, status, message = check_local_link(
+            file_path, url, scan_root=file_root, project_root=project_root
+        )
         if status == "missing":
             file_root = file_root_map.get(file_path.resolve(), roots[0])
             rel_path = file_path.relative_to(file_root) if file_root in file_path.parents else file_path
             broken_local.append((rel_path, line_num, text, url_str, message))
+            try:
+                source_rel = file_path.resolve().relative_to(project_root.resolve())
+            except ValueError:
+                source_rel = None
+            if source_rel is not None:
+                baseline_hits.append((source_rel.as_posix(), url_str, "link"))
         elif status == "directory":
             file_root = file_root_map.get(file_path.resolve(), roots[0])
             rel_path = file_path.relative_to(file_root) if file_root in file_path.parents else file_path
             warning_local.append((rel_path, line_num, text, url_str, message))
+        elif status == "unknown":
+            file_root = file_root_map.get(file_path.resolve(), roots[0])
+            rel_path = file_path.relative_to(file_root) if file_root in file_path.parents else file_path
+            unknown_local.append((rel_path, line_num, text, url_str, message))
+
+    if unknown_local:
+        not_initialized = sum(
+            1 for item in unknown_local if item[4].startswith(SUBMODULE_UNKNOWN_NOT_INITIALIZED)
+        )
+        empty = len(unknown_local) - not_initialized
+        print(
+            f"  跳过 {len(unknown_local)} 条子模块链接（未检出）:"
+            f" 目录不存在 {not_initialized}，空目录 {empty}"
+        )
+        print("    这些链接无法判定有效性，既不算断链也不入基线；"
+              "全量校验需 git submodule update --init --recursive")
+
+    # 检查 frontmatter 路径字段（在基线之前完成，使 frontmatter 断链也能入账）
+    broken_frontmatter = []
+    skipped_frontmatter: list[tuple[Path, str, str, str]] = []
+    prose_skipped_frontmatter: list[tuple[Path, str, str]] = []
+    check_fm = args.check_frontmatter_paths or args.check_x_toml_ref
+    if check_fm:
+        if args.check_x_toml_ref and not args.check_frontmatter_paths:
+            print("   注意: --check-x-toml-ref 已废弃，自动升级为 --check-frontmatter-paths（检查source/x-toml-ref/related_*等所有路径字段）")
+        broken_frontmatter = check_frontmatter_paths(
+            md_files,
+            scan_root=roots[0] if len(roots) == 1 else None,
+            project_root=project_root,
+            skipped=skipped_frontmatter,
+            prose_skipped=prose_skipped_frontmatter,
+        )
+        if prose_skipped_frontmatter:
+            fields_note = "/".join(
+                sorted({row[1] for row in prose_skipped_frontmatter})
+            )
+            print(
+                f"   跳过 {len(prose_skipped_frontmatter)} 条散文化 {fields_note}"
+                f"（非路径形态，未按路径校验）；明细见 --json 的 prose_skipped_frontmatter"
+            )
+        if skipped_frontmatter:
+            print(
+                f"   跳过 {len(skipped_frontmatter)} 条子模块路径（未检出）:"
+                " 无法判定有效性，不计入断链"
+            )
+
+    # ---- 基线模式 ----------------------------------------------------------
+    # 指纹只认（仓库相对源文件, 规范化目标），不含行号；只允许全仓扫描，
+    # 避免用子集算出错误的仓库相对路径或误清空基线。
+    baseline_summary = None
+    if args.baseline or args.update_baseline:
+        baseline_path = Path(args.baseline_file)
+        if not baseline_path.is_absolute():
+            baseline_path = Path(project_root) / baseline_path
+        tracked = git_tracked_files(project_root)
+        if tracked is None:
+            print("错误: 基线模式需要可用的 git 索引来验证源文件", file=sys.stderr)
+            return 1
+        scope_ok = (
+            len(roots) == 1
+            and Path(roots[0]).resolve() == Path(project_root).resolve()
+        )
+        if not scope_ok:
+            print(
+                "错误: 基线的 source 以仓库根为基准，只允许全仓扫描"
+                "（请去掉 --path/--paths）",
+                file=sys.stderr,
+            )
+            return 1
+        current_counts: dict[tuple[str, str, str], int] = {}
+        untracked_ignored = 0
+        for md_path, field_name, ref, _error in broken_frontmatter:
+            try:
+                source_rel = md_path.resolve().relative_to(Path(project_root).resolve()).as_posix()
+            except (OSError, ValueError):
+                continue
+            baseline_hits.append((source_rel, ref, "frontmatter"))
+        for source_rel, url, kind in baseline_hits:
+            # 基线只收 git 跟踪的源文件：未跟踪文件在 CI 中不存在，
+            # 既不能入账，也不能在 --baseline 下制造永久“新增”。
+            if source_rel not in tracked:
+                untracked_ignored += 1
+                continue
+            key = link_baseline.fingerprint(source_rel, url, kind)
+            current_counts[key] = current_counts.get(key, 0) + 1
+        if args.update_baseline:
+            try:
+                existing = link_baseline.load_baseline(baseline_path, tracked)
+                reason_map = (
+                    link_baseline.load_reason_map(Path(args.reason_map))
+                    if args.reason_map
+                    else None
+                )
+                merged, stats = link_baseline.build_updated_entries(
+                    current_counts,
+                    existing,
+                    reason=args.reason,
+                    reason_map=reason_map,
+                    since=args.since,
+                    review_by=args.review_by,
+                )
+                link_baseline.save_baseline(baseline_path, merged, tracked)
+            except link_baseline.BaselineError as exc:
+                print(f"错误: {exc}", file=sys.stderr)
+                return 1
+            print(f"\n基线已更新: {baseline_path}")
+            print(
+                f"  新增 {stats['added']}，保留 {stats['kept']}，"
+                f"重分类 {stats['reclassified']}，"
+                f"清理已消失 {stats['stale']}，总计 {stats['total']}"
+            )
+            if untracked_ignored:
+                print(f"  忽略未跟踪源文件的断链 {untracked_ignored} 条（不入基线）")
+            if unknown_local:
+                print(f"  跳过 {len(unknown_local)} 条子模块链接（未检出），不计入基线")
+            return 0
+        try:
+            baseline = link_baseline.load_baseline(baseline_path, tracked)
+        except link_baseline.BaselineError as exc:
+            print(f"错误: {exc}", file=sys.stderr)
+            return 1
+        fresh, stale = link_baseline.diff_baseline(current_counts, baseline)
+        fresh_keys = {(source, target, kind) for source, target, kind, _, _ in fresh}
+        broken_local = [
+            row
+            for row in broken_local
+            if link_baseline.normalize_source(str(row[0])) in tracked
+            and link_baseline.fingerprint(str(row[0]), row[3], "link") in fresh_keys
+        ]
+        kept_frontmatter = []
+        for row in broken_frontmatter:
+            md_path, field_name, ref, error = row
+            try:
+                source_rel = md_path.resolve().relative_to(Path(project_root).resolve()).as_posix()
+            except (OSError, ValueError):
+                kept_frontmatter.append(row)
+                continue
+            if (
+                source_rel in tracked
+                and link_baseline.fingerprint(source_rel, ref, "frontmatter") in fresh_keys
+            ):
+                kept_frontmatter.append(row)
+        broken_frontmatter = kept_frontmatter
+        baseline_summary = {
+            "current": len(current_counts),
+            "known": len(baseline),
+            "new": len(fresh),
+            "stale": stale,
+            "untracked_ignored": untracked_ignored,
+        }
+        print(
+            f"\n[基线] 当前断链指纹 {len(current_counts)} 条，基线内 {len(baseline)} 条；"
+            f"新增 {len(fresh)} 条，基线中已消失 {stale} 条"
+        )
+        if untracked_ignored:
+            print(f"  忽略未跟踪源文件的断链 {untracked_ignored} 条（不入基线）")
+        if unknown_local:
+            print(f"  跳过 {len(unknown_local)} 条子模块链接（未检出），不计入基线")
 
     if broken_local:
         print(f"   失败: {len(broken_local)} 个断链")
         for rel_path, line_num, text, url, error in broken_local:
             print(f"     [{rel_path}:{line_num}] {text} -> {url} ({error})")
     else:
-        print(f"   通过: 所有本地引用均存在")
+        if baseline_summary:
+            print(
+                f"   通过: 无基线外新增断链"
+                f"（基线内 {baseline_summary['known']} 条存量）"
+            )
+        else:
+            print(f"   通过: 所有本地引用均存在")
 
     if warning_local:
         print(f"   警告: {len(warning_local)} 个链接指向目录（IDE无法直接打开，建议链接到README.md）")
@@ -1262,16 +1727,9 @@ def main(argv=None) -> int:
         print(f"\n2. 跳过外部链接检查（使用 --check-external 启用）")
         print(f"   共 {len(external_links)} 个外部链接待检查")
 
-    # 检查 frontmatter 路径字段
-    broken_frontmatter = []
-    check_fm = args.check_frontmatter_paths or args.check_x_toml_ref
+    # frontmatter 结果已在基线之前计算，这里只负责报告
     if check_fm:
-        print(f"\n3. 检查 frontmatter 路径字段有效性（共 {len(md_files)} 个文件）...")
-        if args.check_x_toml_ref and not args.check_frontmatter_paths:
-            print("   注意: --check-x-toml-ref 已废弃，自动升级为 --check-frontmatter-paths（检查source/x-toml-ref/related_*等所有路径字段）")
-        broken_frontmatter = check_frontmatter_paths(
-            md_files, scan_root=roots[0] if len(roots) == 1 else None
-        )
+        print(f"\n3. frontmatter 路径字段: 共 {len(md_files)} 个文件")
         if broken_frontmatter:
             print(f"   失败: {len(broken_frontmatter)} 个 frontmatter 路径问题")
             for md_path, field_name, ref, error in broken_frontmatter:
@@ -1282,7 +1740,7 @@ def main(argv=None) -> int:
                     rel_path = md_path
                 print(f"     [{rel_path}] {field_name}: {ref} ({error})")
         else:
-            print(f"   通过: 所有 frontmatter 路径字段均有效")
+            print(f"\n   通过: 所有 frontmatter 路径字段均有效")
 
     # JSON 输出
     if args.json:
@@ -1294,10 +1752,14 @@ def main(argv=None) -> int:
                 "local_links": len(local_links),
                 "other_links": len(other_links),
                 "broken_local": len(broken_local),
+                "unknown_local": len(unknown_local),
                 "warning_local": len(warning_local),
                 "broken_external": len(broken_external),
                 "broken_frontmatter": len(broken_frontmatter),
+                "unknown_frontmatter": len(skipped_frontmatter),
+                "prose_skipped_frontmatter": len(prose_skipped_frontmatter),
             },
+            "baseline": baseline_summary,
             "broken_local": [
                 {
                     "file": str(f),
@@ -1338,6 +1800,14 @@ def main(argv=None) -> int:
                 }
                 for f, field, v, e in broken_frontmatter
             ],
+            "prose_skipped_frontmatter": [
+                {
+                    "file": str(f),
+                    "field": field,
+                    "value": v,
+                }
+                for f, field, v in prose_skipped_frontmatter
+            ],
         }
         print("\n" + json.dumps(result, ensure_ascii=False, indent=2))
 
@@ -1345,11 +1815,19 @@ def main(argv=None) -> int:
     print("\n" + "=" * 60)
     total_broken = len(broken_local) + len(broken_external) + len(broken_frontmatter)
     total_warnings = len(warning_local)
+    total_unknown = len(unknown_local) + len(skipped_frontmatter)
+    unknown_note = (
+        f"（跳过 {total_unknown} 条未检出子模块链接，未参与校验）" if total_unknown else ""
+    )
+    if prose_skipped_frontmatter:
+        unknown_note += (
+            f"（跳过 {len(prose_skipped_frontmatter)} 条散文化 frontmatter 溯源描述，未按路径校验）"
+        )
     if total_broken == 0:
         if total_warnings == 0:
-            print("校验通过: 所有链接均有效")
+            print(f"校验通过: 所有链接均有效{unknown_note}")
         else:
-            print(f"校验通过（有 {total_warnings} 个警告）: 无断链，但存在目录链接建议修复")
+            print(f"校验通过（有 {total_warnings} 个警告）: 无断链，但存在目录链接建议修复{unknown_note}")
         print("=" * 60)
         return 0
     else:

@@ -1,4 +1,12 @@
 # 变更日志
+## 2026-11-11
+
+- 模式入库（复盘萃取，私域来源脱敏）：按「模式合并边界」三维重叠度判定，两条候选模式与既有模式重叠 ≥70%，**不新建重复条目**，改为补充既有模式：
+  - `bp-nav-co-registration`（生成-登记同步法）：新增反模式 AP-5「兜底句替代逐项登记」、登记面扩到分类表/主题索引/成员清单、检验项「无兜底句」、案例 4（私域工作区 19 个顶层目录 / 11 个未登记）；`reuse_count` 0→1，成熟度 L1.5 与 `validation_count` 2 不变。
+  - `single-authority-declaration-alignment`（单一权威源与多载体声明面对齐）：新增适用场景「多形态交付包按内容类型定源」、3 条反模式（跨包不登记 / 快照不标版本 / 只列清单不裁决）、检验项「快照自曝落后」、案例证据三（脱敏）；`version` 1.1.0→1.2.0、`reuse_count` 1→2，TOML 镜像同步。
+  - 顺带校正：`methodology-patterns/index.md` 中 `single-authority-declaration-alignment` 行原记 L1/1/0，与文件 frontmatter 及 TOML 的 L2/2/1 不一致，按权威源口径更正为 L2/2/2（含本次复用）。
+- 校验：两个模式文件单独跑 `check-links.py --check-frontmatter-paths` 均通过；同目录全量扫描仍有 23 条预存 frontmatter 断链（非本次引入，未改动）。
+
 ## 2026-09-01
 
 - 文档中心统一迁移：`.agents/docs/` 全部内容迁入根 `docs/` 单文档中心（spec：`.trae/specs/docs-restructure/agents-docs-migration/`，session sc-20260901-agents-docs-migration-resume）

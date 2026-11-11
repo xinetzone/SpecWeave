@@ -43,7 +43,7 @@
 | p75    | 144.4ms |
 | p95    | 217.0ms |
 
-> 📊 **交互式性能仪表盘**：[performance-charts.html](performance-charts.html) — 包含延迟对比柱状图、优化贡献归因饼图、延迟分布箱线图等ECharts可视化，用浏览器打开即可交互。
+> 📊 **交互式性能仪表盘**：`performance-charts.html`（本地生成、未入库）— 包含延迟对比柱状图、优化贡献归因饼图、延迟分布箱线图等ECharts可视化，用浏览器打开即可交互。
 
 ### 1.4 正确性验证
 

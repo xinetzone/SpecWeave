@@ -8,7 +8,7 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
 date: "2026-08-01"
-source: "../../../docs/retrospective/reports/code-optimization/retrospective-caffe-ffi-viz-insert-splits-20260801/README.md"
+source: "../../reports/code-optimization/retrospective-caffe-ffi-viz-insert-splits-20260801/README.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/graph-transform-validator-architecture.toml"
 bindings:
   rules: []

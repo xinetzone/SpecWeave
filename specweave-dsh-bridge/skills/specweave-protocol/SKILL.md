@@ -1,7 +1,7 @@
 ---
 name: specweave-protocol
 description: "SpecWeave 启动协议、内容敏感度分流与产出物路径纪律参考。进入 SpecWeave 工作区执行任务前先加载，用于在读取规范文件、判定公开/私域、确定落盘位置与子区域路由时对齐仓库约定。"
-source: "AGENTS.md#启动协议 + .agents/global-core-rules.md + .agents/rules/content-sensitivity-precheck.md"
+source: "../../../AGENTS.md#启动协议 + ../../../.agents/global-core-rules.md + ../../../.agents/rules/content-sensitivity-precheck.md"
 user-invocable: true
 ---
 

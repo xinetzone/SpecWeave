@@ -71,7 +71,7 @@
   - 备注：`check-bundles-index.py` 不校验该子表单元格数量，故门禁未拦截（盲区）；该文件属 AC-3 Given 清单内文件，缺陷由本次改动引入。
 
 - **F-2 · 严重级别 P2 · 可行动**
-  - 现象：`concepts/04-general-capabilities-and-feedback.md` L32 称「**分享话题帖**（F-036）…与在[收集产品意见](02-feedback-collection.md)中出现的「分享话题帖」能力为同一能力」；但 `02-feedback-collection.md` 全文未出现「分享话题帖」（该能力登记于 P5/F-036）。
+  - 现象：`concepts/04-general-capabilities-and-feedback.md` L32 称「**分享话题帖**（F-036）…与在`[收集产品意见](02-feedback-collection.md)`中出现的「分享话题帖」能力为同一能力」；但 `02-feedback-collection.md` 全文未出现「分享话题帖」（该能力登记于 P5/F-036）。
   - 复现方式：`rg 分享话题帖 projects/.../wecom-topic-scenarios` —— 仅 `04`、`index.md`、`article-source.md`（F-036）命中，`02` 零命中。
   - 期望结果：删除或改正该跨篇指认（如改为指向同页 F-036 的「链接/二维码传播方式」自述，或删去「在收集产品意见中出现」这一归属）。
 

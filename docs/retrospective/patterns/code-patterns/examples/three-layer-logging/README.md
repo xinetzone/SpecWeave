@@ -291,5 +291,5 @@ objdump -d -M intel release_binary | grep -A5 "expensive_computation"
 
 本模式从 caffe-ffi 项目（深度学习推理框架 FFI 绑定）的生产实践中萃取，已在 20+ 计算模块（卷积、全连接、Softmax、池化、归一化、损失函数等）中验证通过。
 
-- 原始实现：[caffe-ffi/log.hpp](../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/include/caffe_ffi/log.hpp)
+- 原始实现：[caffe-ffi/log.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/log.hpp)
 - 模式文档：[cross-language-three-layer-logging.md](../../cross-language-three-layer-logging.md)

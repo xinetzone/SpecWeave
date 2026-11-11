@@ -159,9 +159,9 @@ session: "sc-20260723-alipay-aipay-install"
 
 | 文件 | 说明 |
 |------|------|
-| [SKILL.md](../../../../skills/alipay-aipay/SKILL.md) | Skill 主文件 |
-| [VERSION](../../../../skills/alipay-aipay/VERSION) | 版本文件（v1.3.8） |
-| [alipay-cli-env.md](../../../../skills/alipay-aipay/references/normal/alipay-cli-env.md) | CLI 环境准备文档 |
+| [SKILL.md](../../../../.agents/skills/alipay-aipay/SKILL.md) | Skill 主文件 |
+| [VERSION](../../../../.agents/skills/alipay-aipay/VERSION) | 版本文件（v1.3.8） |
+| [alipay-cli-env.md](../../../../.agents/skills/alipay-aipay/references/normal/alipay-cli-env.md) | CLI 环境准备文档 |
 
 <!-- changelog -->
 - 2026-07-23 | task | 支付宝 AI Pay Skill Windows 安装任务复盘完成，3条核心洞察+3个可复用模式（E1 Windows跨平台CLI安装处理/E2沙箱联网预授权/E3多组件分层验证），G1-G3质量门全部通过

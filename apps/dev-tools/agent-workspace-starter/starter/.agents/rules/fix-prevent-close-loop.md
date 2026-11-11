@@ -1,7 +1,7 @@
 ---
 id: "fix-prevent-close-loop"
 title: "修复即闭环：三阶段强制 SOP"
-source: ".agents/rules/fix-prevent-close-loop.md"
+source: "../../../../../../.agents/rules/fix-prevent-close-loop.md"
 version: "1.0"
 ---
 

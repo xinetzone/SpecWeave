@@ -34,7 +34,7 @@ tags: ["项目启动", "洞察驱动开发", "滚动复盘", "约束驱动设计
 
 #### Scenario: 洞察库初始化
 - **WHEN** 项目启动
-- **THEN** 创建 `{项目根}/.agents/docs/insights/` 目录，定义洞察编号规则（全局递增、分层分段）、标准洞察结构模板（来源 + 核心内容 + 分节展开），写入至少 1 条锚点洞察（定义项目的核心差异化定位）
+- **THEN** 创建 `{项目根}/docs/insights/` 目录，定义洞察编号规则（全局递增、分层分段）、标准洞察结构模板（来源 + 核心内容 + 分节展开），写入至少 1 条锚点洞察（定义项目的核心差异化定位）
 
 #### Scenario: 洞察库结构分层
 - **WHEN** 洞察数量超过 15 条
@@ -112,7 +112,7 @@ tags: ["项目启动", "洞察驱动开发", "滚动复盘", "约束驱动设计
 
 #### Scenario: 可迁移知识目录
 - **WHEN** 首次复盘完成且可识别 ≥3 条可迁移模式
-- **THEN** 创建 `{项目根}/.agents/docs/knowledge-transfer/` 目录，初始化 `transferable-patterns.md`（面向 Agent 的可执行模板）和 `transferable-methods.md`（面向人类的通用方法论）的骨架
+- **THEN** 创建 `{项目根}/docs/knowledge-transfer/` 目录，初始化 `transferable-patterns.md`（面向 Agent 的可执行模板）和 `transferable-methods.md`（面向人类的通用方法论）的骨架
 
 ---
 
@@ -124,7 +124,7 @@ tags: ["项目启动", "洞察驱动开发", "滚动复盘", "约束驱动设计
 
 ```
 第1天：内容锚定（洞察 → 概念）
-  ├── .agents/docs/insights/{日期}-insights-01.md  ← 锚点洞察（≥1条）
+  ├── docs/insights/{日期}-insights-01.md  ← 锚点洞察（≥1条）
   │    定义项目核心差异化定位，"为什么存在"
   └── .agents/project.md           ← 核心概念词典 v0.1
        ≥1个核心概念（从锚点洞察提取），标注为「生长型文档，随洞察积累扩充」
@@ -133,12 +133,12 @@ tags: ["项目启动", "洞察驱动开发", "滚动复盘", "约束驱动设计
   ├── .agents/constraints.md       ← 边界护栏（≥5条编号约束，标注洞察来源）
   ├── .agents/conventions.md       ← 工程契约（命名格式/文档规范/引用格式）
   ├── .agents/git.md               ← 版本契约（Conventional Commits + 粒度要求）
-  └── .agents/docs/insights/{日期}-insights-02.md  ← 第2条洞察（基于核心概念展开）
+  └── docs/insights/{日期}-insights-02.md  ← 第2条洞察（基于核心概念展开）
 
 第3天及以后：持续产出 + 首次复盘
   ├── 持续产出洞察至 ≥5 条        ← 按设计决策节奏自然增长，不强制绑定天数
   ├── .agents/workflows.md         ← 洞察≥3条 + 文件体系初具规模后创建
-  ├── .agents/docs/reviews/{日期}-project-review-01.md  ← 洞察≥5条后触发首次复盘
+  ├── docs/reviews/{日期}-project-review-01.md  ← 洞察≥5条后触发首次复盘
   └── .agents/project.md           ← 随洞察增长持续扩充概念词典至 ≥3 个概念
 ```
 
@@ -148,7 +148,7 @@ tags: ["项目启动", "洞察驱动开发", "滚动复盘", "约束驱动设计
 |--------|---------|------|
 | `.agents/roles/` | 洞察≥8条 + 发现需专人负责某领域质量 | 角色过早定义会预设不存在的需求 |
 | `.agents/skills/` | 同一类 AI 协作需求重复≥3次 | Skill 应来自实践归纳而非提前规划 |
-| `.agents/docs/knowledge-transfer/` | 首次复盘完成 + 可识别≥3条可迁移模式 | 没有足够实践经验时萃取的是空壳 |
+| `docs/knowledge-transfer/` | 首次复盘完成 + 可识别≥3条可迁移模式 | 没有足够实践经验时萃取的是空壳 |
 
 ### 最小可行骨架
 

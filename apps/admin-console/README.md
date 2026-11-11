@@ -130,6 +130,6 @@ python scripts/smoke.py                          # 8 组全链路自检，退出
 
 ## 规格
 
-方法论链路：七概念场景 5（创新突破）**F → V → I → C**；规格见 [`.trae/specs/admin-console/`](../../../.trae/specs/admin-console/spec.md)。
+方法论链路：七概念场景 5（创新突破）**F → V → I → C**；规格见 [`.trae/specs/admin-console/`](../../.trae/specs/admin-console/spec.md)。
 
 > AI生成

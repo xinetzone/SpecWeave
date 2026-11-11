@@ -3,7 +3,7 @@ id: "practical-recommendations"
 date: "2026-07-07"
 type: "recommendations"
 source: "learning-notes.md, core-insights.md, methodologies.md, success-factors.md"
-x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-md2card-wechat-article/practical-recommendations.toml"
+x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-md2card-wechat-article/practical-recommendations.toml"
 article_title: "独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万"
 recommendations_count: 7
 dimension_distribution:

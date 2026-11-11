@@ -34,7 +34,7 @@ option(CAFFE_USE_OPENMP "Use OpenMP to parallelize compute-heavy loops (pure-C++
 
 ### 1.1 现状与问题
 
-现有实现（[eltwise_layer.cpp](eltwise_layer.cpp) 的 `case SUM`）：
+现有实现（[eltwise_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp) 的 `case SUM`）：
 
 ```cpp
 case SUM: {
@@ -111,7 +111,7 @@ case SUM: {
 
 ### 2.1 现状与问题
 
-现有实现（[pooling_layer.cpp](pooling_layer.cpp) 的 `Forward_cpu` 主循环）：
+现有实现（[pooling_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/pooling_layer.cpp) 的 `Forward_cpu` 主循环）：
 
 ```cpp
 #ifdef CAFFE_USE_OPENMP

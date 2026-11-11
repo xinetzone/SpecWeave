@@ -320,10 +320,10 @@ Python 层维护 `_configured_handlers` 列表：
 
 ## 来源
 
-- [log.hpp](../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/include/caffe_ffi/log.hpp) — C++ 核心日志头文件
-- [_caffe_ffi.cc](../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/src/caffe_ffi/_caffe_ffi.cc#L91-L100) — FFI 桥接函数
-- [tools/debug.py](../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/python/caffe_ffi/tools/debug.py) — Python 统一配置层
-- [__init__.py](../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/python/caffe_ffi/__init__.py#L44-L60) — Python set_log_level/get_log_level
+- [log.hpp](../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/log.hpp) — C++ 核心日志头文件
+- [_caffe_ffi.cc](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/_caffe_ffi.cc#L91-L100) — FFI 桥接函数
+- [tools/debug.py](../../../../projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/tools/debug.py) — Python 统一配置层
+- [__init__.py](../../../../projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/__init__.py#L44-L60) — Python set_log_level/get_log_level
 - [examples/three-layer-logging/](examples/three-layer-logging/README.md) — 通用可复用示例包（log.hpp/ffi_bridge.cc/debug.py/demo_layer.cc + 集成五步指南）
 
 > **关联模式**：

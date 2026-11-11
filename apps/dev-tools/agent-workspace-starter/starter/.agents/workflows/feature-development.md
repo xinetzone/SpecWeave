@@ -1,7 +1,7 @@
 ---
 id: "workflows-feature-development"
 title: "功能开发流程"
-source: ".agents/workflows/feature-development.md"
+source: "../../../../../../.agents/workflows/feature-development.md"
 ---
 # 功能开发流程
 

@@ -1,6 +1,6 @@
 # jupyter-ssh-base 构建验证报告
 
-> **验证日期**: 2026-07-24 | **环境**: WSL Ubuntu + Docker 24.0 | **镜像**: jupyter-ssh-base:1.0
+> **验证日期**: 2026-07-24 | **环境**: WSL Ubuntu + Docker 24.0 | **镜像**: jupyter-ssh-base:1.1
 
 ---
 

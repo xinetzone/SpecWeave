@@ -1,7 +1,7 @@
 ---
 id: "jupyter-ssh-base-agents-readme"
 title: "jupyter-ssh-base AI资产容器"
-source: "AGENTS.md"
+source: "../../../../AGENTS.md"
 ---
 # jupyter-ssh-base - .agents 目录
 

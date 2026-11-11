@@ -167,8 +167,8 @@ stale_after: "2027-08-31"
 ### 已入库可复用模式（patterns/documentation-patterns/）
 | 模式 | 成熟度 | 一句话 |
 |------|--------|--------|
-| [溯源一致性三查](../../../../patterns/documentation-patterns/source-trace-consistency-check.md) | L1/draft | 交付后四查：临时残留指向→译名一致性→版本差异判别→计数算术自洽 |
-| [版本差异判别](../../../../patterns/documentation-patterns/version-discrepancy-arbitration.md) | L1/draft | 多值实体裁决流程：权威核验→分版或统一→依据回写 facts |
+| [溯源一致性三查](../../../patterns/documentation-patterns/source-trace-consistency-check.md) | L1/draft | 交付后四查：临时残留指向→译名一致性→版本差异判别→计数算术自洽 |
+| [版本差异判别](../../../patterns/documentation-patterns/version-discrepancy-arbitration.md) | L1/draft | 多值实体裁决流程：权威核验→分版或统一→依据回写 facts |
 
 ### 关键洞察（详见里程碑复盘报告）
 - I-1：文档类交付物的对抗审查价值不低于代码

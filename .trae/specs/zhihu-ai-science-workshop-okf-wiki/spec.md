@@ -1,7 +1,7 @@
 ---
 type: spec
 title: "知乎 AI 科学创新工坊第二弹 → OKF v0.2 Wiki 教程知识包"
-source: ".trae/specs/zhihu-ai-science-workshop-okf-wiki/raw/article-raw.md"
+source: "raw/article-raw.md"
 source_url: "https://zhuanlan.zhihu.com/p/2091930347550109878"
 status: active
 generated_at: "2026-10-22"

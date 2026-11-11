@@ -99,4 +99,4 @@ netmiko（多厂商 CLI 自动化）
 - **TextFSM/Genie 补完**：通过模板引擎将非结构化文本转为结构化数据
 - `NoEnable`/`NoConfig` mixin 处理不同设备的权限模型差异
 
-与 paramiko 的 `exec_command`（非交互式命令执行）不同，netmiko 始终使用 `invoke_shell`（交互式 shell），这是因为网络设备通常只支持 PTY 会话而不支持独立 exec 通道。跨束参考：[paramiko SSHClient](../../paramiko/concepts/02-ssh-client.md) 中 `invoke_shell` 与 `exec_command` 的区别。
+与 paramiko 的 `exec_command`（非交互式命令执行）不同，netmiko 始终使用 `invoke_shell`（交互式 shell），这是因为网络设备通常只支持 PTY 会话而不支持独立 exec 通道。跨束参考：[paramiko SSHClient](../../../../projects/awesome-okf-xs/doc/bundles/jishu/comm/networking/paramiko/concepts/02-ssh-client.md) 中 `invoke_shell` 与 `exec_command` 的区别。

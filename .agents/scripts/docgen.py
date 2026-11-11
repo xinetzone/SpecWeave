@@ -220,6 +220,8 @@ class SpecStatus:
     completed: bool
     total_tasks: int
     done_tasks: int
+    # 是否真的存在 spec.md；不存在时看板只渲染纯文本，不生成死链
+    has_spec: bool = True
 
 
 @dataclass
@@ -308,6 +310,7 @@ def _dash_scan_all_specs(specs_root: Path) -> list[ThemeStatus]:
                 completed=completed,
                 total_tasks=total_tasks,
                 done_tasks=done_tasks,
+                has_spec=spec_md.exists(),
             ))
         # 如果主题目录本身是 spec（无子目录但有 tasks.md）
         if not specs and (theme_dir / "tasks.md").exists():
@@ -331,7 +334,8 @@ def _build_theme_dashboard_table(specs: list[SpecStatus]) -> str:
         else:
             status = "? 待启动"
         trio = f"{ck}{'/' if has_tasks else cx}{'/' if has_review else cx}"
-        lines.append(f"| {j} | [{s.name}]({s.name}/spec.md) | {status} | {trio} |")
+        label = f"[{s.name}]({s.name}/spec.md)" if s.has_spec else s.name
+        lines.append(f"| {j} | {label} | {status} | {trio} |")
     return "\n".join(lines)
 
 
@@ -426,12 +430,12 @@ def cmd_update_spec_readme(args) -> int:
 
     if index_marker == -1:
         # 没有全量索引，直接写入轻版本
-        light_content = _build_light_spec_readme(themes, total_specs)
+        light_content = _build_light_spec_readme(themes, total_specs, specs_root)
     else:
         # 保留 overview 部分（包括标题、描述、总览表和图例），截断后续内容
         overview_end = overview_start + index_marker + hr_idx
         prefix = content[:overview_end]
-        light_content = prefix + "\n\n" + _build_light_spec_readme(themes, total_specs)
+        light_content = prefix + "\n\n" + _build_light_spec_readme(themes, total_specs, specs_root)
 
     atomic_write_text(target, light_content, encoding="utf-8")
 
@@ -440,8 +444,14 @@ def cmd_update_spec_readme(args) -> int:
     return 0
 
 
-def _build_light_spec_readme(themes: list[ThemeStatus], total_specs: int) -> str:
-    """生成轻索引版全局看板（仅总览表 + 主题摘要，不含全量 spec 列表）。"""
+def _build_light_spec_readme(
+    themes: list[ThemeStatus], total_specs: int, specs_root: Path
+) -> str:
+    """生成轻索引版全局看板（仅总览表 + 主题摘要，不含全量 spec 列表）。
+
+    只对真实存在 README.md 的主题生成链接；没有 README 的主题输出纯文本，
+    避免看板本身指向不存在的文件制造断链。
+    """
     today = date.today().isoformat()
     lines = [
         f"# Specs 全局执行看板",
@@ -460,9 +470,12 @@ def _build_light_spec_readme(themes: list[ThemeStatus], total_specs: int) -> str
         c = theme.completed_count
         ip = theme.in_progress_count
         p = theme.pending_count
-        tlink = f"./{theme.name}/README.md"
         icon = "✅" if theme.progress == 100 else ("🔧" if theme.progress > 0 else "📋")
-        lines.append(f"| [{theme.name}]({tlink}) | {theme.total} | {c} | {ip} | {p} | {icon} [查看]({tlink}) |")
+        if (specs_root / theme.name / "README.md").is_file():
+            tlink = f"./{theme.name}/README.md"
+            lines.append(f"| [{theme.name}]({tlink}) | {theme.total} | {c} | {ip} | {p} | {icon} [查看]({tlink}) |")
+        else:
+            lines.append(f"| {theme.name} | {theme.total} | {c} | {ip} | {p} | {icon} &mdash; |")
     lines += [
         f"| **合计** | **{total_specs}** | **{sum(t.completed_count for t in themes)}** | **{sum(t.in_progress_count for t in themes)}** | **{sum(t.pending_count for t in themes)}** | &mdash; |",
         "",
@@ -478,7 +491,10 @@ def _build_light_spec_readme(themes: list[ThemeStatus], total_specs: int) -> str
     for i, theme in enumerate(themes, 1):
         desc = THEME_DESCRIPTIONS.get(theme.name, "")
         short = desc.split("：", 1)[1] if "：" in desc else desc
-        lines.append(f"{i}. [{theme.name}](./{theme.name}/README.md) — {theme.total} spec：{short}")
+        if (specs_root / theme.name / "README.md").is_file():
+            lines.append(f"{i}. [{theme.name}](./{theme.name}/README.md) — {theme.total} spec：{short}")
+        else:
+            lines.append(f"{i}. {theme.name} — {theme.total} spec：{short}")
     lines += [
         "",
         "## \U0001f4c6 新增 Spec 指南",
@@ -518,9 +534,16 @@ def _dash_parse_yaml_simple(content: str) -> dict[str, str]:
 
 
 def _dash_scan_spec(spec_dir: Path) -> SpecStatus:
+    has_spec = (spec_dir / "spec.md").exists()
     tasks_file = spec_dir / "tasks.md"
     if not tasks_file.exists():
-        return SpecStatus(name=spec_dir.name, completed=False, total_tasks=0, done_tasks=0)
+        return SpecStatus(
+            name=spec_dir.name,
+            completed=False,
+            total_tasks=0,
+            done_tasks=0,
+            has_spec=has_spec,
+        )
 
     content = tasks_file.read_text(encoding="utf-8")
     status_from_fm = None
@@ -552,7 +575,13 @@ def _dash_scan_spec(spec_dir: Path) -> SpecStatus:
         completed = unchecked == 0 and total_tasks > 0
         done_tasks = checked
 
-    return SpecStatus(name=spec_dir.name, completed=completed, total_tasks=total_tasks, done_tasks=done_tasks)
+    return SpecStatus(
+        name=spec_dir.name,
+        completed=completed,
+        total_tasks=total_tasks,
+        done_tasks=done_tasks,
+        has_spec=has_spec,
+    )
 
 
 def _dash_scan_themes(specs_root: Path) -> list[ThemeStatus]:

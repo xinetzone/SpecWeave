@@ -1,7 +1,7 @@
 ---
 name: specweave-dsh-bridge-access
 description: "DeepSeek Harness 使用者接入指南：说明如何在工作区零配置生效、如何使用 /specweave 命令与四个模型侧工具，以及接入成功与失败的判别标准。"
-source: "specweave-dsh-bridge/README.md + AGENTS.md#启动协议"
+source: "README.md + ../AGENTS.md#启动协议"
 ---
 
 # DeepSeek Harness 使用者接入指南

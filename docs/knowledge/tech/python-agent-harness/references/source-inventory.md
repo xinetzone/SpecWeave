@@ -1,6 +1,6 @@
-# 附录 A：信源台账（S01–S23）
+# 附录 A：信源台账（S01–S38）
 
-> 全部信源采集日期：**2026-09-29 至 2026-09-30**，采集方式为 WebSearch 定位 + WebFetch 精读。下表 URL 为采集时实际访问的站点或页面；版本号与 star 数是时点快照，复核方法见 A.5。
+> 全部信源采集日期：**v1.0 为 2026-09-29 至 2026-09-30；v1.1 为 2026-11-10**。采集方式为 WebSearch 定位 + WebFetch 精读。下表 URL 为采集时实际访问的站点或页面；版本号与 star 数是时点快照，复核方法见 A.5。
 
 ## A.1 生态格局与术语
 
@@ -44,11 +44,11 @@
 
 | 级别 | 信源 | 使用纪律 |
 |---|---|---|
-| 一手 | S02、S07、S08、S10、S11、S12、S13、S14、S15、S16、S17、S18、S19、S22、S23（官方文档/博客/PyPI/官方 API） | 可直接支撑产品事实（API、版本、能力清单）；版本号仍须标注时点 |
+| 一手 | S02、S07、S08、S10、S11、S12、S13、S14、S15、S16、S17、S18、S19、S22、S23、S24、S25、S26、S27、S28、S29、S30、S31、S32、S33、S34、S35、S36、S37、S38（官方文档/博客/PyPI/官方 API/官方论文） | 可直接支撑产品事实（API、版本、能力清单）；版本号仍须标注时点。**厂商对自家产品的效果陈述仍属自报**，须保留限定语 |
 | 二手分析 | S03、S05、S09、S20、S21（第三方实测/复盘/百科条目） | 只在标注来源的前提下引用；量化数字按原文口径转述，不跨文章排名 |
 | 新闻 | S06 | 仅作背景登记（F-008），不进入任何结论链 |
 
-## A.5 复核方法（V 审查 O5 采纳后新增）
+## A.5 复核方法（V 审查 O5 采纳后新增；v1.1 补充第 6 条）
 
 本知识包中的版本号、star 数与发版日期保鲜期短，引用前按下列方法刷新（命令示例，PowerShell/bash 均可）：
 
@@ -57,6 +57,7 @@
 3. **破坏性变更**：先读官方 changelog（如 Pydantic AI 的 https://ai.pydantic.dev/changelog/ ），再决定是否跨小版本升级；0.x 包默认假设会破坏。
 4. **许可证**：以仓库根目录 LICENSE 文件全文与 PyPI `info.license` / `info.classifiers` 双核对，不以二手文章的标签为准（F-042 中六个未取证包按此法补证）。
 5. **SWE-bench 成绩**：只比较同一评测文章/榜单页内、同模型、同采样次数的条目；跨页数字不排座次（见 [04 编码 agent 赛道](../concepts/04-coding-agent-track.md) §4.3）。
+6. **版本号直读（v1.1 补充）**：PyPI 项目页顶部即当前最新版本号，`Released` 行为该版本发布时间；本包 v1.1 的 F-061~F-065 均按此方式取证。注意项目页可能因缓存显示与 `json` 接口不同的版本（如 Claude Agent SDK 页面显示 0.2.152，而 v1.0 曾记录 0.2.161），**引用时须同时记录版本号与取数页面**，不可只写"最新版"。
 
 ## A.6 采集过程中的无效路径
 
@@ -65,3 +66,27 @@
 | 仅凭框架名字面推断许可证（如默认 smolagents/Strands 为 MIT/Apache） | 无一手页面佐证 | 拒绝写入，F-042 统一登记"未取证" |
 | 将不同文章的 SWE-bench 数字合成一张排行榜 | 模型/采样/版本口径不一致 | 拒绝合成，改为 04 概念页 §4.3 口径警告 |
 | 引用 GPT-6.1 Astra 报道作为"安全问题严重"的论据 | 单一新闻簇、无官方证实 | 降级为 F-008 背景，仅一处使用并加注 |
+| 把 mini-swe-agent README 的 ">74%"、"击败 Claude Code 与 Codex" 当作独立结论 | 项目方自述；且 DeepSWE 固定 mini 为 harness，设计上不适合反推 harness 优劣（F-057） | 保留数字但全程标注"项目方自述"，并在 04 §4.3 增加"先看榜单是否固定 harness"的读法 |
+| 把"缓存 token 按 10% 计费"写成行业通例 | 该折扣出自 Claude API 价目（F-050），其他厂商规则不同 | 全文加口径限定，禁止跨厂商外推 |
+| 用 Copilot harness 的 vCPU 单价与自建方案做 TCO 对比 | 预览期定价、12-01 才生效、随区域与协议变化（F-059） | 仅作量级参考，并在 03 §3.6 加显式警告 |
+| 用厂商博客的"效果不降"支撑"变薄无害"的普遍结论 | 三个案例全部来自 harness 卖方，存在自利偏差 | 拆分陈述：token/代码行数为可机械验证，效果类为自报；并把结论限定为"补偿型部件"，治理型不适用 |
+
+## A.7 v1.1 增量信源（S24–S38，采集时点 2026-11-10）
+
+| 键 | 信源 | URL / 位置 | 支撑事实 |
+|---|---|---|---|
+| S24 | LangChain Deep Agents 官方 changelog | https://docs.langchain.com/oss/python/releases/changelog | F-046（v0.7 减配项与 breaking changes） |
+| S25 | LangChain 博客：Deep Agents v0.7（2026-07-29） | https://www.langchain.com/blog/deep-agents-v0-7 | F-046（-65% base tokens、43% 工具描述、todo opt-in）、F-047（三分类 × 四模型对照、置信区间跨零）、F-051（转述 Claude Code prompt -80%）。**厂商自述** |
+| S26 | LangChain 博客：Deep Agents v0.5（2026-04-07）/ v0.6（2026-05-13）/ Managed Deep Agents v0.10 | https://blog.langchain.dev/deep-agents-v0-5/ ；https://www.langchain.com/blog/deep-agents-0-6 ；https://www.langchain.com/blog/managed-deep-agents-browser-use-and-asynchronous-subagents | F-048（发版节奏与托管版） |
+| S27 | Anthropic / Claude 博客：Agent Harness Design — 3 Patterns（2026-04-02） | https://claude.com/blog/harnessing-claudes-intelligence | F-049（harness 定义与假设过期）、F-050（缓存 10% 与五条前缀纪律）、F-051（-80% 转述）、F-052（context reset 变死重）、F-053（三组能力实测）、F-068（专用工具作边界、auto-mode）。**厂商自述** |
+| S28 | mini-swe-agent PyPI 项目页（2.4.6） | https://pypi.org/project/mini-swe-agent/ | F-054（v2、>74%、使用方列表）、F-055（执行后端）、F-057（DeepSWE 自述）。**项目方自述** |
+| S29 | mini-swe-agent 文档 + SWE-agent 文档 | https://mini-swe-agent.com/latest/ ；https://swe-agent.com/latest/ | F-055（后端清单）、F-056（superseded 表述） |
+| S30 | DeepSWE 论文（arXiv 2607.07946） | https://arxiv.org/pdf/2607.07946 | F-057（固定 mini-swe-agent 作 harness 的方法论） |
+| S31 | Microsoft Foundry 博客 + Microsoft 官方博客（2026-10-28） | https://devblogs.microsoft.com/foundry/microsoft-copilot-harness-in-foundry/ ；https://blogs.microsoft.com/blog/2026/10/28/introducing-the-microsoft-copilot-harness-unlocking-the-potential-of-truly-multi-model-agentic-work/ | F-058（托管 harness 形态、SKILL.md 技能、注入防御模板）、F-059（vCPU·小时计价）、F-060（long-running resilience GA、三档取舍） |
+| S32 | openai-agents PyPI 项目页（0.24.0，2026-10-15） | https://pypi.org/project/openai-agents/ | F-061（版本、核心概念、provider-agnostic） |
+| S33 | strands-agents PyPI 项目页（1.57.2，2026-10-02） | https://pypi.org/project/strands-agents/ | F-062（版本时点） |
+| S34 | claude-agent-sdk PyPI 项目页（0.2.152，2026-09-03） | https://pypi.org/project/claude-agent-sdk/ | F-063（版本、MIT、Py3.10+、CLI 捆绑） |
+| S35 | pydantic-ai PyPI 项目页（2.66.0） | https://pypi.org/project/pydantic-ai/ | F-064（版本、Harness 的 capabilities 形态） |
+| S36 | deepagents PyPI 项目页（0.7.32，2026-10-24） | https://pypi.org/project/deepagents/ | F-065（版本、MIT、定位自述） |
+| S37 | adk.dev ADK 2.0 页 + 第三方发布记录 | https://adk.dev/2.0/ ；https://agentupdate.ai/releases/google-adk | F-066（2.0 GA 日期、2.13.0 于 2026-10-22、部署目标） |
+| S38 | Microsoft Learn：Agent Harness 概念页 | https://learn.microsoft.com/en-us/agent-framework/concepts/harness | F-067（去品牌化定义与职责） |

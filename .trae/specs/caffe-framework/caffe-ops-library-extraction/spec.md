@@ -3,7 +3,7 @@ status: "draft"
 id: caffe-ops-library-extraction
 version: "1.0.0"
 created: 2026-07-27
-source: external/chaos/npu_tvm/tests/python/frontend/caffe/test_forward.py
+source: ../../../../external/chaos/npu_tvm/tests/python/frontend/caffe/test_forward.py
 target: projects/xuanspace/vendor/caffe/tests/ops
 ---
 

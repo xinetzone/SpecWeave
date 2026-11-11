@@ -181,7 +181,7 @@
 ## Issue I-2: `concepts/04-general-capabilities-and-feedback.md` 跨篇指认错误
 - **Status**: `completed`（2026-10-16）
 - **Completion Evidence**:
-  - 修复（逐字）：原句「…与在[收集产品意见](02-feedback-collection.md)中出现的「分享话题帖」能力为同一能力（该场景页底部的「更多场景」交叉链接亦属链接传播形态，F-006）。」改为「…该能力在本束中仅见于源页场景 5（F-036），其余四个场景页未声明该能力，本束不作跨场景外推。」
+  - 修复（逐字）：原句「…与在`[收集产品意见](02-feedback-collection.md)`中出现的「分享话题帖」能力为同一能力（该场景页底部的「更多场景」交叉链接亦属链接传播形态，F-006）。」改为「…该能力在本束中仅见于源页场景 5（F-036），其余四个场景页未声明该能力，本束不作跨场景外推。」
   - TR-I-2.1（rule，通过）：全束 grep「分享话题帖」8 处命中，**已无**「在收集产品意见中出现该能力」类指认；`02-feedback-collection.md` 不再被指认。
   - 副作用如实披露：因删除指向 02 的 1 条 Markdown 链接，`check_doc_links.py` 由 `links=58` 变为 `links=57`，`broken=0` 不变；`check-utf8.py` 与 `check-bundles-index.py` 均 EXIT=0。
 - **Priority**: medium

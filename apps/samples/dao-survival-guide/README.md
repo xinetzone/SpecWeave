@@ -1,6 +1,6 @@
 ---
 name: dao-survival-guide
-source: projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/concepts/04-survival-guide.md
+source: ../../../projects/awesome-okf-xs/doc/bundles/guoxue/laozi/dao-san-triads/concepts/04-survival-guide.md
 type: sample
 ---
 

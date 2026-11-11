@@ -32,8 +32,8 @@ PyTorch GPU/CPU 基础镜像，基于 Ubuntu 26.04 + Miniforge3（conda-forge na
 
 AI 智能体处理 pytorch-base 镜像相关任务时必须遵守：
 
-1. **必读规范**：先阅读 [.agents/rules/dockerfile.md](.agents/rules/dockerfile.md) 了解Dockerfile多阶段构建规范
-2. **必读规范**：再阅读 [.agents/rules/build.md](.agents/rules/build.md) 了解构建流程规范
+1. **必读规范**：先阅读 [.agents/rules/dockerfile.md](rules/dockerfile.md) 了解Dockerfile多阶段构建规范
+2. **必读规范**：再阅读 [.agents/rules/build.md](rules/build-test.md) 了解构建流程规范
 3. **参考文档**：参考 [README.md](README.md) 了解使用方法
 4. **镜像层逻辑**：构建7阶段按Runtime Logical Layering v1.3组织（系统包→Miniforge→镜像源→PyTorch三件套+ORT→非root用户→entrypoint→验证清理）
 5. **默认GPU优先**：默认构建GPU版本，CPU版本需显式 `--cpu` 参数
@@ -113,10 +113,10 @@ docker run --gpus all -it --rm xinetzone/pytorch:2.13.0-cuda12.6-py3.14.6-gpu
 
 | 文档 | 路径 | 说明 |
 |------|------|------|
-| Dockerfile构建规范 | [.agents/rules/dockerfile.md](.agents/rules/dockerfile.md) | 7阶段构建规范、缓存优化、离线支持、安全规范 |
-| 构建流程规范 | [.agents/rules/build.md](.agents/rules/build.md) | build.sh参数、离线构建、多架构支持、验证流程 |
+| Dockerfile构建规范 | [.agents/rules/dockerfile.md](rules/dockerfile.md) | 7阶段构建规范、缓存优化、离线支持、安全规范 |
+| 构建流程规范 | [.agents/rules/build.md](rules/build-test.md) | build.sh参数、离线构建、多架构支持、验证流程 |
 | 使用说明 | [README.md](README.md) | 用户指南、常见问题、命令参考 |
-| 全局应用规范 | [../../AGENTS.md](../../AGENTS.md) | apps区域入口路由 |
+| 全局应用规范 | [../../AGENTS.md](../../../AGENTS.md) | apps区域入口路由 |
 | 全局开发规范 | [docs/tech/references/development-standards.md](../../../../docs/tech/references/development-standards.md) | 代码风格、提交规范、文档规范 |
 
 <a id="变更历史"></a>

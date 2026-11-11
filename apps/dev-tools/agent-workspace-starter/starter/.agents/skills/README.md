@@ -1,7 +1,7 @@
 ---
 id: "skills-index"
 title: ".agents/skills/ 目录索引"
-source: ".agents/skills/README.md"
+source: "../../../../../../.agents/skills/README.md"
 ---
 # .agents/skills/ 目录索引
 

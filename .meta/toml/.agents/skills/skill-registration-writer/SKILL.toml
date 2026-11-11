@@ -1,0 +1,5 @@
+id = "skill"
+title = "Skill 登记面写入器"
+category = "skills/skill-registration-writer"
+date = "2026-11-09"
+version = "1.0"

@@ -9,7 +9,7 @@ title: "分类索引：unknown"
 - [返回知识库首页](../README.md)
 - [按标签检索](../tags/README.md)
 
-> 本分片收录 **1** 个子分类，共 **218** 条条目。
+> 本分片收录 **1** 个子分类，共 **223** 条条目。
 
 ## unknown
 
@@ -121,6 +121,10 @@ title: "分类索引：unknown"
 | [2026 上海开源软件应用创新大赛 信源与事实清单](../opensource-contest/os2026-shanghai/references/article-source.md) |  |  | opensource、contest、shanghai、oschina、source、facts |
 | [index](../opensource-contest/os2026-shanghai/references/index.md) |  |  | - |
 | [2026 上海开源软件应用创新大赛 P0 核验报告](../opensource-contest/os2026-shanghai/references/verification.md) |  |  | opensource、contest、shanghai、verification、p0 |
+| [P0 核验报告](../opensource-contest/zhihu-ai-science-workshop-entry/index.md) |  |  | zhihu-ai-science-workshop、参赛方案、Vibe Coding、豆包、看山工作台、9天冲刺 |
+| [作品源码（v2）](../opensource-contest/zhihu-ai-science-workshop-entry/介绍文章.md) |  |  | zhihu-ai-science-workshop、介绍文章、理想气体定律实验室 |
+| [参赛作品源码（单文件自包含）](../opensource-contest/zhihu-ai-science-workshop-entry/参赛过程记录.md) |  |  | zhihu-ai-science-workshop、参赛过程、过程留痕、理想气体定律实验室、豆包 |
+| [介绍文章初稿（经发布前校对）](../opensource-contest/zhihu-ai-science-workshop-entry/发布稿-知乎.md) |  |  | zhihu-ai-science-workshop、发布稿、理想气体定律实验室 |
 | [Caffe Docker 容器构建与运行 SOP](../operations/caffe-docker-sop.md) |  | 2026-07-22 | caffe、docker、sop、build、runtime、verification |
 | [DevContainer 变体构建与 CI 流水线操作手册](../operations/devcontainer-ci-build-manual.md) |  | 2026-08-07 | devcontainer、docker、ci、github-actions、build、onnx-pytorch、operations |
 | [Discourse论坛自动化方案调研报告](../operations/discourse-api-research.md) |  |  | - |
@@ -150,14 +154,6 @@ title: "分类索引：unknown"
 | [index](../tech/edgeone-pages-deploy/examples/index.md) |  |  | - |
 | [本文件（信源自登记）](../tech/edgeone-pages-deploy/references/00-sources.md) |  |  | edgeone、pages、sources、reference |
 | [index](../tech/edgeone-pages-deploy/references/index.md) |  |  | - |
-| [00-overview](../tech/openkylin/openeuler-comparison/concepts/00-overview.md) |  |  | - |
-| [01-positioning-and-scenarios](../tech/openkylin/openeuler-comparison/concepts/01-positioning-and-scenarios.md) |  |  | - |
-| [02-governance-and-ecosystem](../tech/openkylin/openeuler-comparison/concepts/02-governance-and-ecosystem.md) |  |  | - |
-| [03-release-lifecycle](../tech/openkylin/openeuler-comparison/concepts/03-release-lifecycle.md) |  |  | - |
-| [04-technology-stack](../tech/openkylin/openeuler-comparison/concepts/04-technology-stack.md) |  |  | - |
-| [05-selection-guide](../tech/openkylin/openeuler-comparison/concepts/05-selection-guide.md) |  |  | - |
-| [adversarial-review](../tech/openkylin/openeuler-comparison/references/adversarial-review.md) |  |  | - |
-| [source-inventory](../tech/openkylin/openeuler-comparison/references/source-inventory.md) |  |  | - |
 | [01-platform-and-repository](../tech/openkylin/docs-wiki/concepts/01-platform-and-repository.md) |  |  | - |
 | [02-release-lifecycle](../tech/openkylin/docs-wiki/concepts/02-release-lifecycle.md) |  |  | - |
 | [03-install-paths](../tech/openkylin/docs-wiki/concepts/03-install-paths.md) |  |  | - |
@@ -169,6 +165,14 @@ title: "分类索引：unknown"
 | [adversarial-review](../tech/openkylin/docs-wiki/references/adversarial-review.md) |  |  | - |
 | [full-catalog](../tech/openkylin/docs-wiki/references/full-catalog.md) |  |  | - |
 | [source-inventory](../tech/openkylin/docs-wiki/references/source-inventory.md) |  |  | - |
+| [00-overview](../tech/openkylin/openeuler-comparison/concepts/00-overview.md) |  |  | - |
+| [01-positioning-and-scenarios](../tech/openkylin/openeuler-comparison/concepts/01-positioning-and-scenarios.md) |  |  | - |
+| [02-governance-and-ecosystem](../tech/openkylin/openeuler-comparison/concepts/02-governance-and-ecosystem.md) |  |  | - |
+| [03-release-lifecycle](../tech/openkylin/openeuler-comparison/concepts/03-release-lifecycle.md) |  |  | - |
+| [04-technology-stack](../tech/openkylin/openeuler-comparison/concepts/04-technology-stack.md) |  |  | - |
+| [05-selection-guide](../tech/openkylin/openeuler-comparison/concepts/05-selection-guide.md) |  |  | - |
+| [adversarial-review](../tech/openkylin/openeuler-comparison/references/adversarial-review.md) |  |  | - |
+| [source-inventory](../tech/openkylin/openeuler-comparison/references/source-inventory.md) |  |  | - |
 | [PineDrama 产品调研——字节 TikTok 海外免费短剧 App](../tech/pinedrama/index.md) |  |  | pinedrama、tiktok、bytedance、short-drama、iaa、emerging-markets、product-research |
 | [log](../tech/pinedrama/log.md) |  |  | - |
 | [第三方下载站三源互证](../tech/pinedrama/concepts/00-overview.md) |  |  | pinedrama、tiktok、bytedance、short-drama、overview |
@@ -201,6 +205,7 @@ title: "分类索引：unknown"
 | [03-framework-catalog](../tech/python-agent-harness/concepts/03-framework-catalog.md) |  |  | - |
 | [04-coding-agent-track](../tech/python-agent-harness/concepts/04-coding-agent-track.md) |  |  | - |
 | [05-selection-pattern](../tech/python-agent-harness/concepts/05-selection-pattern.md) |  |  | - |
+| [06-context-economics-and-harness-decay](../tech/python-agent-harness/concepts/06-context-economics-and-harness-decay.md) |  |  | - |
 | [adversarial-review](../tech/python-agent-harness/references/adversarial-review.md) |  |  | - |
 | [source-inventory](../tech/python-agent-harness/references/source-inventory.md) |  |  | - |
 | [index](../tech/python-rust-comparison/index.md) |  |  | - |
@@ -236,4 +241,4 @@ title: "分类索引：unknown"
 
 ---
 
-*索引自动生成于 2026-10-20 15:41:37*
+*索引自动生成于 2026-11-10 14:26:20*

@@ -1,0 +1,5 @@
+id = "skill"
+title = "远程 CI 失败取证与转绿闭环"
+category = "skills/ci-run-failure-triage"
+date = "2026-11-11"
+version = "1.0"

@@ -1,7 +1,7 @@
 ---
 id: "spec-creation-precheck"
 title: "Spec 创建前预检：位置与格式双重核查"
-source: ".agents/rules/spec-creation-precheck.md"
+source: "../../../../../../.agents/rules/spec-creation-precheck.md"
 version: "1.0"
 ---
 # Spec 创建前预检：位置与格式双重核查

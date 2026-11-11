@@ -285,7 +285,7 @@ R0: Initial commit: Containerfile+SDK+compose+ML模型+文档+构建系统
 
 ## 来源
 
-- 复盘报告：[retrospective-jupyter-podman-rootless-seven-rounds-20260827](../../reports/build-engineering/retrospective-jupyter-podman-rootless-seven-rounds-20260827/)
+- 复盘报告：[retrospective-jupyter-podman-rootless-seven-rounds-20260827](../../reports/build-engineering/retrospective-jupyter-podman-rootless-seven-rounds-20260827/README.md)
 - 项目源码：`apps/containers/jupyter-podman-rootless/`（tasks/client.py, tasks/compose_backend.py, pyproject.toml）
 - 相关洞察：I2「三层后端降级架构是容器工具集成的有效模式」
 

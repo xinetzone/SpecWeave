@@ -39,5 +39,5 @@ status: pending
 
 ## 参考先例
 
-- [domestic-model-token-export/](../../domestic-model-token-export/index.md)（同类bundle，作者不同，时间更早）
-- [agent-industry-research/](../../agent-industry-research/index.md)（OKF知识包结构参考）
+- [domestic-model-token-export/](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/domestic-model-token-export/index.md)（同类bundle，作者不同，时间更早）
+- [agent-industry-research/](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/agent-industry-research/index.md)（OKF知识包结构参考）

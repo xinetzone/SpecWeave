@@ -2,7 +2,7 @@
 id: "screenshot-tool-event-driven-guardian-retrospective-20260825"
 date: "2026-08-25"
 type: "milestone"
-source: ".agents/scripts/fix-screenshot-tool.ps1"
+source: "../../../../.agents/scripts/fix-screenshot-tool.ps1"
 ---
 
 # Windows 截图工具反复故障根治 — 里程碑复盘分析报告

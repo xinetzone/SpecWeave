@@ -179,8 +179,8 @@ def memory_info() -> dict: ...
 
 ## 来源
 
-- [common.hpp:CPUMemAlloc](../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/include/caffe_ffi/common.hpp#L38-L70) — AllocData/FreeData 原语中的原子计数器
-- [blob.cpp](../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/src/caffe_ffi/blob.cpp#L14-L19) — g_total_allocated_bytes 和 g_live_blob_count 双计数器实现
+- [common.hpp:CPUMemAlloc](../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/common.hpp#L38-L70) — AllocData/FreeData 原语中的原子计数器
+- [blob.cpp](../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp#L14-L19) — g_total_allocated_bytes 和 g_live_blob_count 双计数器实现
 - 复盘报告：[retrospective-caffe-ffi-memlog-20260728](../../reports/task-reports/retrospective-caffe-ffi-memlog-20260728/README.md) — 计数器顺序Bug 5-Whys根因分析与架构修复
 
 > **关联模式**：

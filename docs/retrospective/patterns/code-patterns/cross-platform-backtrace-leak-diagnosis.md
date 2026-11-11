@@ -364,7 +364,7 @@ flowchart TD
 
 ### 步骤 1：复制 backtrace.hpp（同标准模式）
 
-将 [caffe-ffi/include/caffe_ffi/backtrace.hpp](../../../../../../projects/xuanspace/vendor/caffe/caffe-ffi/include/caffe_ffi/backtrace.hpp) 复制到 `npu-ffi/include/npu_ffi/backtrace.hpp`，将命名空间改为 `npu_ffi::backtrace`，宏前缀改为 `NPU_FFI_ENABLE_BACKTRACE`，skip 常量设为 2。
+将 [caffe-ffi/include/caffe_ffi/backtrace.hpp](../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/backtrace.hpp) 复制到 `npu-ffi/include/npu_ffi/backtrace.hpp`，将命名空间改为 `npu_ffi::backtrace`，宏前缀改为 `NPU_FFI_ENABLE_BACKTRACE`，skip 常量设为 2。
 
 ### 步骤 2：在 runtime_common.cc 添加全局句柄表 + 原子计数器
 

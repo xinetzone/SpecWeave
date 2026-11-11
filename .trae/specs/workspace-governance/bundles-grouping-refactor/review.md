@@ -17,7 +17,7 @@
 
 ## 索引一致性
 - [x] 根 [bundles/index.md](../../../../projects/awesome-okf-xs/doc/bundles/index.md) 导航表覆盖全部域与组，`total_bundles`/`groups` 与实际一致（248/28/10）
-- [x] [doc/index.md](../../projects/awesome-okf-xs/doc/index.md) 的「组/束」计数与实际一致
+- [x] [doc/index.md](../../../../projects/awesome-okf-xs/doc/index.md) 的「组/束」计数与实际一致
 - [x] 生态关系概览、推荐入门路径中的组路径已更新
 
 ## 构建与等价性

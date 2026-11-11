@@ -69,7 +69,7 @@ jobs:
         run: python .agents/scripts/check-submodule-pointer.py --json
 
       - name: "[2/16] Check Markdown link validity"
-        run: python .agents/scripts/check-links.py
+        run: python .agents/scripts/check-links.py --baseline --check-frontmatter-paths
 
       - name: "[3/16] Check RACI compliance"
         run: |

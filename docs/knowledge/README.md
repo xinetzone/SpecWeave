@@ -7,9 +7,9 @@ title: "项目知识库"
 
 项目知识库的统一入口页。详细分类条目与标签检索已拆分到独立索引，避免根 README 持续膨胀。
 
-- **总条目数**：475
+- **总条目数**：480
 - **分类数**：25
-- **标签数**：829
+- **标签数**：851
 
 ## 快速导航
 
@@ -33,7 +33,7 @@ title: "项目知识库"
 | standards | 1 | [standards](categories/standards.md) |
 | tech | 88 | [tech](tech/README.md) |
 | troubleshooting | 4 | [troubleshooting](troubleshooting/README.md) |
-| unknown | 218 | [unknown](categories/unknown.md) |
+| unknown | 223 | [unknown](categories/unknown.md) |
 | what-is-life | 7 | [what-is-life](categories/what-is-life.md) |
 
 ## 辅助索引
@@ -55,7 +55,6 @@ title: "项目知识库"
 | [证据与成本基线](generative-media-pipeline/references/evidence-and-costs.md) | 2026-10-20 | generative-media-pipeline |
 | [做短视频的 Skill 全景调研：从零到发布的多智能体流水线教程](short-video-skills/index.md) | 2026-10-20 | short-video-skills |
 | [生态全景与 Agent Skills 规范](short-video-skills/concepts/01-landscape-and-spec.md) | 2026-10-20 | short-video-skills |
-| [生产管线与选型：工序五段·双范式选型法](short-video-skills/concepts/02-pipeline-and-selection.md) | 2026-10-20 | short-video-skills |
 
 ## 相关资源
 
@@ -92,4 +91,4 @@ title: "项目知识库"
 
 ---
 
-*索引自动生成于 2026-10-20 15:41:37*
+*索引自动生成于 2026-11-10 14:26:20*

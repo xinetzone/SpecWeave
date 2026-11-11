@@ -45,7 +45,7 @@ jupyter-ssh-base/
 
 ```bash
 # 方式1：直接 docker build
-docker build -t jupyter-ssh-base:1.0 .
+docker build -t jupyter-ssh-base:1.1 .
 
 # 方式2：使用构建脚本
 bash scripts/build.sh
@@ -54,7 +54,7 @@ bash scripts/build.sh
 bash scripts/build.sh --verify
 
 # 只验证已有镜像（跳过构建）
-bash scripts/build.sh --verify-only --tag 1.0
+bash scripts/build.sh --verify-only --tag 1.1
 ```
 
 ### 一键启动（推荐）
@@ -86,13 +86,13 @@ docker run -d \
   -v $(pwd)/workspace:/workspace \
   -e USER_PASSWORD=your_secure_password \
   -e JUPYTER_TOKEN=your_jupyter_token \
-  jupyter-ssh-base:1.0
+  jupyter-ssh-base:1.1
 
 # 查看日志（获取随机密码/token）
 docker logs -f jupyter-ssh
 
 # 调试模式（不启动服务，直接进入bash）
-docker run -it --rm jupyter-ssh-base:1.0 bash
+docker run -it --rm jupyter-ssh-base:1.1 bash
 ```
 
 ### 使用 Docker Compose
@@ -164,7 +164,7 @@ http://localhost:8888/
 本镜像设计为可复用基础层，在你的项目 Dockerfile 中：
 
 ```dockerfile
-FROM jupyter-ssh-base:1.0
+FROM jupyter-ssh-base:1.1
 
 # 切换到 root 安装系统依赖（如需）
 USER root
@@ -212,7 +212,7 @@ supervisorctl tail -f jupyter
 
 ## 📝 版本信息
 
-- **版本**：1.0
+- **版本**：1.1
 - **基础镜像**：ubuntu:26.04
 - **Python**：系统 Python 3 (Ubuntu 26.04 默认)
 - **Jupyter Notebook**：7.2.2
