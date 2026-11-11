@@ -5,7 +5,7 @@ type: code-pattern
 date: 2026-08-31
 maturity: L2 已验证
 maturity_note: "三个独立会话案例（yangsheng/fusheng/sexology）均以「提交→检测 detached→ff-only 落分支」闭环（复盘报告 F-022）；其中 sexology 案例全程留痕可查，另两例为二手记录，升级 L3 前建议回查 reflog 直证"
-source: ".agents/docs/retrospective/reports/concepts/milestone/retrospective-sexology-classics-wiki-20260830.md"
+source: "../../reports/concepts/milestone/retrospective-sexology-classics-wiki-20260830.md"
 related_patterns: ["force-push-submodule-commit-recovery.md", "../process-patterns/submodule-ssh-stall-recovery-sop.md"]
 tags: ["git", "submodule", "detached-head", "version-control", "ff-only", "workflow"]
 validation_count: 3

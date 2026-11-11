@@ -1,7 +1,7 @@
 ---
 id: "commands"
 title: "指令集目录"
-source: ".agents/commands/README.md"
+source: "../../../../../../.agents/commands/README.md"
 ---
 # 指令集目录
 

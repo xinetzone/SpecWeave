@@ -1,7 +1,7 @@
 ---
 id: "global-core-rules"
 title: "全局核心规则"
-source: ".agents/global-core-rules.md"
+source: "../../../../../.agents/global-core-rules.md"
 ---
 # 全局核心规则
 

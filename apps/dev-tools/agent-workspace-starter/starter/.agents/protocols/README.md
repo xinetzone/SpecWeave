@@ -1,7 +1,7 @@
 ---
 id: "protocols"
 title: "协议索引与使用流程"
-source: ".agents/protocols/README.md"
+source: "../../../../../../.agents/protocols/README.md"
 ---
 # 协议索引与使用流程
 

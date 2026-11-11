@@ -1,7 +1,7 @@
 ---
 id: "protocols-workspace-discovery"
 title: "工作区发现协议（Workspace Discovery Protocol）"
-source: ".agents/protocols/workspace-discovery.md"
+source: "../../../../../../.agents/protocols/workspace-discovery.md"
 ---
 # 工作区发现协议（Workspace Discovery Protocol）
 

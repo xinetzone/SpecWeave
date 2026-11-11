@@ -1,7 +1,7 @@
 ---
 id: "jupyter-podman-rootless-agents-readme"
 title: "jupyter-podman-rootless AI资产容器"
-source: "AGENTS.md"
+source: "../../../../AGENTS.md"
 ---
 # jupyter-podman-rootless - .agents 目录
 

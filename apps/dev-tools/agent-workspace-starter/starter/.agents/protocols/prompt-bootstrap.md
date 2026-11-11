@@ -1,7 +1,7 @@
 ---
 id: "protocols-prompt-bootstrap"
 title: "提示词自举协议（Prompt Bootstrap Protocol）"
-source: ".agents/protocols/prompt-bootstrap.md"
+source: "../../../../../../.agents/protocols/prompt-bootstrap.md"
 ---
 # 提示词自举协议（Prompt Bootstrap Protocol）
 

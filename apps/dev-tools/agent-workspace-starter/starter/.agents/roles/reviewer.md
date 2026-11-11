@@ -1,7 +1,7 @@
 ---
 id: "reviewer"
 title: "Reviewer（代码审查者）"
-source: ".agents/roles/reviewer.md"
+source: "../../../../../../.agents/roles/reviewer.md"
 ---
 # Reviewer（代码审查者）
 ## Description

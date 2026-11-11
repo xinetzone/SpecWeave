@@ -1,7 +1,7 @@
 ---
 id: "developer"
 title: "Developer（开发者）"
-source: ".agents/roles/developer.md"
+source: "../../../../../../.agents/roles/developer.md"
 ---
 # Developer（开发者）
 ## Description

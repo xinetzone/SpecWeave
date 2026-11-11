@@ -3,7 +3,7 @@ title: "为 okw 增加 openKylin 桌面（UKUI / xrdp）支持 - 实施计划"
 status: "implemented"
 methodology: "seven-concepts-cmd: F→V→I→C"
 content-sensitivity: "public"
-source: ".trae/specs/infra-env/extend-okw-openkylin-desktop/spec.md"
+source: "spec.md"
 ---
 
 # 为 okw 增加 openKylin 桌面（UKUI / xrdp）支持 - 实施计划

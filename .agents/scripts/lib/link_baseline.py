@@ -1,13 +1,17 @@
 """链接门禁基线：把已确认的历史断链固化为可审计条目，只报新增。
 
-指纹 =（源文件相对路径, 规范化链接目标），**不含行号**——行号会随文档编辑
-漂移，不能作为身份。一个指纹附带 count（出现次数）、since（入账日期）、
-reason（分类）与 review_by（复核期限）。
+指纹 =（源文件相对路径, 规范化链接目标, 种类），**不含行号**——行号会随文档
+编辑漂移，不能作为身份。种类用于区分正文链接（link）与 frontmatter 路径字段
+（frontmatter）：二者若指向同一字符串，语义不同，不能共用一条账。
+
+一个指纹附带 count（出现次数）、since（入账日期）、reason（分类）与
+review_by（复核期限）。
 
 写入与读取都执行同一套自检（违反即视为基线损坏）：
 - reason 必须属于 REASON_ENUM；
-- source 必须是 git 跟踪的文件；
-- source / target 不得以 projects/ 或 vendor/ 前缀开头（二者是扫描排除区）。
+- kind 必须属于 KIND_ENUM；
+- source 必须是 git 跟踪的文件，且不得以 projects/ 或 vendor/ 前缀开头
+  （二者是扫描排除区）；target 不受此前缀限制，链接指向子模块内文件是合法的。
 
 `--update-baseline` 只为「新增指纹」要求 reason：既可从 --reason 取批量默认值，
 也可用 --reason-map 逐条指定；两者都缺时拒绝执行，避免把未分类的断链写进基线。
@@ -22,6 +26,8 @@ from pathlib import Path
 from lib.atomic_write import atomic_write_json
 
 REASON_ENUM = ("moved", "deleted", "depth", "other", "unclassified")
+KIND_ENUM = ("link", "frontmatter")
+DEFAULT_KIND = "link"
 BASELINE_VERSION = 1
 DEFAULT_REVIEW_DAYS = 90
 EXCLUDED_PREFIXES = ("projects/", "vendor/")
@@ -42,15 +48,17 @@ class BaselineEntry:
     since: str
     reason: str
     review_by: str
+    kind: str = DEFAULT_KIND
 
     @property
-    def key(self) -> tuple[str, str]:
-        return (self.source, self.target)
+    def key(self) -> tuple[str, str, str]:
+        return (self.source, self.target, self.kind)
 
     def as_dict(self) -> dict:
         return {
             "source": self.source,
             "target": self.target,
+            "kind": self.kind,
             "count": self.count,
             "since": self.since,
             "reason": self.reason,
@@ -77,9 +85,9 @@ def normalize_source(source: str | Path) -> str:
     return text
 
 
-def fingerprint(source: str | Path, target: str) -> tuple[str, str]:
-    """返回基线指纹（源文件, 规范化目标）。"""
-    return (normalize_source(source), normalize_target(target))
+def fingerprint(source: str | Path, target: str, kind: str = DEFAULT_KIND) -> tuple[str, str, str]:
+    """返回基线指纹（源文件, 规范化目标, 种类）。"""
+    return (normalize_source(source), normalize_target(target), kind)
 
 
 def default_review_by(since: str, days: int = DEFAULT_REVIEW_DAYS) -> str:
@@ -118,6 +126,11 @@ def validate_entry(
             f"{where}条目 {entry.source} -> {entry.target} 的 reason={entry.reason!r} "
             f"不在枚举 {REASON_ENUM} 中"
         )
+    if entry.kind not in KIND_ENUM:
+        raise BaselineError(
+            f"{where}条目 {entry.source} -> {entry.target} 的 kind={entry.kind!r} "
+            f"不在枚举 {KIND_ENUM} 中"
+        )
     for field, value in (("since", entry.since), ("review_by", entry.review_by)):
         try:
             date.fromisoformat(value)
@@ -129,8 +142,11 @@ def validate_entry(
         raise BaselineError(
             f"{where}条目 {entry.source} -> {entry.target} 的 review_by 早于 since"
         )
+    # 排除前缀只约束「源文件」：projects/ 与 vendor/ 不参与扫描，不能作为基线
+    # 源文件；但链接**目标**指向子模块内的文件是合法引用（如
+    # projects/xuanspace/vendor/caffe/... 的实验产物），受限会导致这类断链
+    # 无法入账、只能永远红着。
     _check_excluded_prefix(entry.source, "source")
-    _check_excluded_prefix(entry.target, "target")
     if entry.source not in tracked:
         raise BaselineError(
             f"基线损坏：source={entry.source!r} 不是 git 跟踪的文件"
@@ -155,12 +171,13 @@ def _entry_from_dict(raw: dict) -> BaselineEntry:
         since=_require_text(raw["since"], "since"),
         reason=_require_text(raw["reason"], "reason"),
         review_by=_require_text(raw["review_by"], "review_by"),
+        kind=_require_text(raw.get("kind", DEFAULT_KIND), "kind"),
     )
 
 
 def load_baseline(
     path: Path, tracked: set[str]
-) -> dict[tuple[str, str], BaselineEntry]:
+) -> dict[tuple[str, str, str], BaselineEntry]:
     """加载并校验基线文件；文件不存在时返回空字典。"""
     if not path.exists():
         return {}
@@ -177,7 +194,7 @@ def load_baseline(
     raw_entries = payload.get("entries")
     if not isinstance(raw_entries, list):
         raise BaselineError("基线 entries 必须是数组")
-    entries: dict[tuple[str, str], BaselineEntry] = {}
+    entries: dict[tuple[str, str, str], BaselineEntry] = {}
     for raw in raw_entries:
         entry = _entry_from_dict(raw)
         entry = BaselineEntry(
@@ -187,11 +204,12 @@ def load_baseline(
             since=entry.since,
             reason=entry.reason,
             review_by=entry.review_by,
+            kind=entry.kind,
         )
         validate_entry(entry, tracked)
         if entry.key in entries:
             raise BaselineError(
-                f"基线存在重复指纹: {entry.source} -> {entry.target}"
+                f"基线存在重复指纹: {entry.source} -> {entry.target} [{entry.kind}]"
             )
         entries[entry.key] = entry
     return entries
@@ -199,16 +217,18 @@ def load_baseline(
 
 def save_baseline(
     path: Path,
-    entries: dict[tuple[str, str], BaselineEntry],
+    entries: dict[tuple[str, str, str], BaselineEntry],
     tracked: set[str],
 ) -> None:
-    """校验并原子写入基线文件（按 source、target 排序，保证可复现）。"""
-    ordered = sorted(entries.values(), key=lambda e: (e.source, e.target))
-    seen: set[tuple[str, str]] = set()
+    """校验并原子写入基线文件（按 kind、source、target 排序，保证可复现）。"""
+    ordered = sorted(entries.values(), key=lambda e: (e.kind, e.source, e.target))
+    seen: set[tuple[str, str, str]] = set()
     for entry in ordered:
         validate_entry(entry, tracked)
         if entry.key in seen:
-            raise BaselineError(f"基线存在重复指纹: {entry.source} -> {entry.target}")
+            raise BaselineError(
+                f"基线存在重复指纹: {entry.source} -> {entry.target} [{entry.kind}]"
+            )
         seen.add(entry.key)
     payload = {
         "version": BASELINE_VERSION,
@@ -228,7 +248,7 @@ def load_reason_map(path: Path) -> dict[tuple[str, str], str]:
         raw = raw.get("entries")
     if not isinstance(raw, list):
         raise BaselineError("reason-map 必须是数组（或含 entries 数组的对象）")
-    mapping: dict[tuple[str, str], str] = {}
+    mapping: dict[tuple[str, str, str], str] = {}
     for item in raw:
         if not isinstance(item, dict):
             raise BaselineError("reason-map 元素必须是对象")
@@ -240,20 +260,21 @@ def load_reason_map(path: Path) -> dict[tuple[str, str], str]:
         key = fingerprint(
             _require_text(item.get("source"), "source"),
             _require_text(item.get("target"), "target"),
+            _require_text(item.get("kind", DEFAULT_KIND), "kind"),
         )
         mapping[key] = reason
     return mapping
 
 
 def build_updated_entries(
-    current: dict[tuple[str, str], int],
-    existing: dict[tuple[str, str], BaselineEntry],
+    current: dict[tuple[str, str, str], int],
+    existing: dict[tuple[str, str, str], BaselineEntry],
     *,
     reason: str | None,
-    reason_map: dict[tuple[str, str], str] | None,
+    reason_map: dict[tuple[str, str, str], str] | None,
     since: str,
     review_by: str | None,
-) -> tuple[dict[tuple[str, str], BaselineEntry], dict[str, int]]:
+) -> tuple[dict[tuple[str, str, str], BaselineEntry], dict[str, int]]:
     """合并当前断链与既有基线，返回 (新基线, 统计)。
 
     既有指纹保留原 since/review_by，仅刷新 count；若 reason-map 显式指定了
@@ -267,7 +288,7 @@ def build_updated_entries(
     date.fromisoformat(since)
     date.fromisoformat(review)
     mapping = reason_map or {}
-    merged: dict[tuple[str, str], BaselineEntry] = {}
+    merged: dict[tuple[str, str, str], BaselineEntry] = {}
     missing: list[str] = []
     added = kept = reclassified = 0
     for key, count in current.items():
@@ -283,12 +304,13 @@ def build_updated_entries(
                 since=old.since,
                 reason=entry_reason,
                 review_by=old.review_by,
+                kind=old.kind,
             )
             kept += 1
             continue
         entry_reason = mapping.get(key, reason)
         if entry_reason is None:
-            missing.append(f"{key[0]} -> {key[1]}")
+            missing.append(f"{key[0]} -> {key[1]} [{key[2]}]")
             continue
         merged[key] = BaselineEntry(
             source=key[0],
@@ -297,6 +319,7 @@ def build_updated_entries(
             since=since,
             reason=entry_reason,
             review_by=review,
+            kind=key[2],
         )
         added += 1
     if missing:
@@ -318,19 +341,19 @@ def build_updated_entries(
 
 
 def diff_baseline(
-    current: dict[tuple[str, str], int],
-    baseline: dict[tuple[str, str], BaselineEntry],
-) -> tuple[list[tuple[str, str, int, int]], int]:
+    current: dict[tuple[str, str, str], int],
+    baseline: dict[tuple[str, str, str], BaselineEntry],
+) -> tuple[list[tuple[str, str, str, int, int]], int]:
     """返回 (新增/增多的条目, 已消失条目数)。
 
     新条目的 count 大于基线 count 时也算新增（同一目标多出了一处断链）。
     """
-    fresh: list[tuple[str, str, int, int]] = []
+    fresh: list[tuple[str, str, str, int, int]] = []
     for key, count in current.items():
         old = baseline.get(key)
         if old is None:
-            fresh.append((key[0], key[1], count, 0))
+            fresh.append((key[0], key[1], key[2], count, 0))
         elif count > old.count:
-            fresh.append((key[0], key[1], count, old.count))
+            fresh.append((key[0], key[1], key[2], count, old.count))
     stale = len(set(baseline) - set(current))
     return sorted(fresh), stale

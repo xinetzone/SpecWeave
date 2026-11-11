@@ -1,7 +1,7 @@
 ---
 title: "Claude Code Artifacts 功能文章深度洞察分析报告"
 source: "机器之心编辑部《Claude Code 的输出终于不只是终端里无聊的文字了！》"
-x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-claude-code-artifacts-article/analysis-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-claude-code-artifacts-article/analysis-report.toml"
 source_url: "https://www.anthropic.com/news"
 analyzed_at: "2026-07-06"
 tags:
