@@ -130,8 +130,6 @@ jobs:
         run: |
           bash scripts/test-ssh-noninteractive-path.sh --skip-build
         working-directory: apps/docker-images/jupyter-ssh-base
-        env:
-          IMAGE_TAG: 'test-ssh-path'
 
       - name: Cleanup test containers
         if: always()

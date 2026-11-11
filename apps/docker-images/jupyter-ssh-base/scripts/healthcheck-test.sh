@@ -2,7 +2,9 @@
 set -euo pipefail
 
 CONTAINER_NAME="jupyter-ssh-test"
-IMAGE="jupyter-ssh-base:1.0"
+IMAGE_NAME="${IMAGE_NAME:-jupyter-ssh-base}"
+IMAGE_TAG="${IMAGE_TAG:-1.1}"
+IMAGE="${IMAGE_NAME}:${IMAGE_TAG}"
 
 echo ""
 echo "============================================"
