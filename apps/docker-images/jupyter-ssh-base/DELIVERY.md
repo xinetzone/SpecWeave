@@ -616,7 +616,7 @@ docker compose up -d                          # 后台启动
 docker run -d --name js -p 2222:22 -p 8888:8888 \
   -v $(pwd)/workspace:/workspace \
   -e USER_PASSWORD=pass -e JUPYTER_TOKEN=token \
-  jupyter-ssh-base:1.0
+  jupyter-ssh-base:1.1
 
 # ===== 验证（根据实际端口调整）=====
 ssh -p 2222 jupyteruser@localhost             # SSH 登录

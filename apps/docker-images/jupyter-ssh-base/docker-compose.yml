@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: jupyter-ssh-base:1.0
+    image: jupyter-ssh-base:1.1
     container_name: jupyter-ssh-base
     ports:
       - "2223:22"      # SSH

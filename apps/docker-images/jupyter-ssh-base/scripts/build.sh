@@ -47,7 +47,7 @@ Examples:
   $0 --tag latest --cn                  # Build :latest with China mirrors
   $0 --no-cache -t dev                  # Build without cache, tag as dev
   $0 --verify                           # Build and verify
-  $0 --verify-only --tag 1.0            # Verify existing image only
+  $0 --verify-only --tag 1.1            # Verify existing image only
   $0 --log-format=json --log-json       # JSON output for monitoring
 EOF
 }

@@ -1,6 +1,6 @@
 # Jupyter SSH Base — Docker 构建与运行测试指南
 
-> 最后更新：2026-07-24 | 基于 jupyter-ssh-base v1.0
+> 最后更新：2026-07-24 | 基于 jupyter-ssh-base v1.1
 
 ## 目录
 
@@ -71,7 +71,7 @@ docker run -d \
   -v $(pwd)/workspace:/workspace \
   -e USER_PASSWORD=mypassword \
   -e JUPYTER_TOKEN=mysecrettoken \
-  jupyter-ssh-base:1.0
+  jupyter-ssh-base:1.1
 
 # 4. 访问服务
 ssh -p 2222 jupyteruser@localhost          # SSH 登录
@@ -101,7 +101,7 @@ bash scripts/build.sh --apt-mirror aliyun --pip-mirror tuna
 bash scripts/build.sh --tag latest --name my-jupyter-ssh
 
 # 推送到私有仓库
-bash scripts/build.sh --registry harbor.example.com --tag 1.0
+bash scripts/build.sh --registry harbor.example.com --tag 1.1
 ```
 
 **镜像源选项：**
@@ -116,16 +116,16 @@ bash scripts/build.sh --registry harbor.example.com --tag 1.0
 
 ```bash
 # 标准构建
-DOCKER_BUILDKIT=1 docker build -t jupyter-ssh-base:1.0 .
+DOCKER_BUILDKIT=1 docker build -t jupyter-ssh-base:1.1 .
 
 # 国内镜像
 DOCKER_BUILDKIT=1 docker build \
   --build-arg APT_MIRROR=aliyun \
   --build-arg PIP_MIRROR=aliyun \
-  -t jupyter-ssh-base:1.0 .
+  -t jupyter-ssh-base:1.1 .
 
 # 无缓存构建
-DOCKER_BUILDKIT=1 docker build --no-cache -t jupyter-ssh-base:1.0 .
+DOCKER_BUILDKIT=1 docker build --no-cache -t jupyter-ssh-base:1.1 .
 ```
 
 ### 3.3 构建验证
@@ -157,7 +157,7 @@ docker run -d \
   -v $(pwd)/workspace:/workspace \
   -e USER_PASSWORD=mypassword \
   -e JUPYTER_TOKEN=mysecrettoken \
-  jupyter-ssh-base:1.0
+  jupyter-ssh-base:1.1
 ```
 
 ### 4.2 高级配置
@@ -176,7 +176,7 @@ docker run -d \
   -e ALLOW_ROOT_SSH=no \
   -e TZ=Asia/Shanghai \
   -e DEBUG=0 \
-  jupyter-ssh-base:1.0
+  jupyter-ssh-base:1.1
 ```
 
 ### 4.3 调试模式（不启动服务）
@@ -185,7 +185,7 @@ docker run -d \
 # 直接进入 bash，不启动 SSH/Jupyter
 docker run -it --rm \
   -e USER_PASSWORD=test \
-  jupyter-ssh-base:1.0 \
+  jupyter-ssh-base:1.1 \
   bash
 ```
 
@@ -334,14 +334,14 @@ bash scripts/test-ssh-noninteractive-path.sh --keep
 
 ```bash
 # 镜像大小检查
-docker images jupyter-ssh-base:1.0 --format '{{.Size}}'
+docker images jupyter-ssh-base:1.1 --format '{{.Size}}'
 # 期望：< 800MB（实际约 713MB）
 
 # 构建信息
-docker run --rm jupyter-ssh-base:1.0 cat /etc/jupyter-ssh-build-info
+docker run --rm jupyter-ssh-base:1.1 cat /etc/jupyter-ssh-build-info
 
 # entrypoint 语法检查
-docker run --rm --entrypoint bash jupyter-ssh-base:1.0 -n /usr/local/bin/entrypoint.sh
+docker run --rm --entrypoint bash jupyter-ssh-base:1.1 -n /usr/local/bin/entrypoint.sh
 ```
 
 ### 6.3 一键健康检查脚本
@@ -600,7 +600,7 @@ docker compose up -d                           # 后台启动
 docker run -d --name js -p 2222:22 -p 8888:8888 \
   -v $(pwd)/workspace:/workspace \
   -e USER_PASSWORD=pass -e JUPYTER_TOKEN=token \
-  jupyter-ssh-base:1.0
+  jupyter-ssh-base:1.1
 
 # ===== 验证（根据实际端口调整）=====
 ssh -p 2222 jupyteruser@localhost             # SSH 登录
@@ -615,7 +615,7 @@ bash scripts/healthcheck-test.sh              # 一键健康检查
 
 # ===== 清理 =====
 docker rm -f js                               # 删除容器
-docker rmi jupyter-ssh-base:1.0              # 删除镜像
+docker rmi jupyter-ssh-base:1.1              # 删除镜像
 ```
 
 ---
