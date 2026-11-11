@@ -498,3 +498,84 @@ class TestSubmoduleUnknownStates:
         assert "跳过 1 条未检出子模块链接，未参与校验" in out
 
 
+class TestFrontmatterPathFormJudgement:
+    """按字段分治后的「防吞缺陷」验收。
+
+    背景（2026-11-11）：`source` 允许散文化溯源描述，判据只在「路径形态」时
+    校验；但判据一旦写宽，就会把真断链一起吞掉。三条断言分别锁住三个方向：
+      1. 路径形态但写错的值仍然报断链——即便它带中文锚点（锚点里的中文
+         不应让整串被误判为散文）；
+      2. 散文化值不报断链，但必须计入跳过数并在 --json 中单列；
+      3. `x-toml-ref` 指向不存在的文件仍然报断链。
+    """
+
+    @staticmethod
+    def _repo(tmp_path: Path) -> Path:
+        root = tmp_path / "repo"
+        (root / "docs" / "assets").mkdir(parents=True)
+        (root / "docs" / "reports").mkdir(parents=True)
+        (root / "docs" / "assets" / "real.md").write_text("# 真实文件\n", encoding="utf-8")
+        return root
+
+    @staticmethod
+    def _json_of(out: str) -> dict:
+        import json
+
+        start = out.find("\n{\n")
+        assert start >= 0, f"输出中没有 JSON 段: {out[-500:]}"
+        return json.JSONDecoder().raw_decode(out[start + 1:])[0]
+
+    def test_path_form_source_with_chinese_anchor_still_reports_broken(
+        self, tmp_path, monkeypatch, capsys
+    ):
+        """真实文件存在、但 source 写错目录——仍是断链，中文锚点不构成豁免。"""
+        root = self._repo(tmp_path)
+        doc = root / "docs" / "reports" / "a.md"
+        doc.write_text(
+            "---\nsource: ../asset/real.md#中文锚点\n---\n\n# 报告\n",
+            encoding="utf-8",
+        )
+        monkeypatch.setattr(cl, "resolve_project_root", lambda _p: root)
+
+        rc = cl.main(["--path", str(doc), "--check-frontmatter-paths"])
+        out = capsys.readouterr().out
+        assert rc == 1, f"写错的路径形态 source 必须报断链，rc={rc}"
+        assert "文件不存在" in out
+        assert "散文化" not in out
+
+    def test_prose_source_skipped_but_counted(self, tmp_path, monkeypatch, capsys):
+        """散文化 source 不按路径校验，但必须计数且写入 --json 的独立字段。"""
+        root = self._repo(tmp_path)
+        doc = root / "docs" / "reports" / "b.md"
+        doc.write_text(
+            "---\nsource: 微信公众号文章《深度复盘》+ 内部访谈记录\n---\n\n# 报告\n",
+            encoding="utf-8",
+        )
+        monkeypatch.setattr(cl, "resolve_project_root", lambda _p: root)
+
+        rc = cl.main(["--path", str(doc), "--check-frontmatter-paths", "--json"])
+        out = capsys.readouterr().out
+        assert rc == 0, f"散文化 source 不应报断链，rc={rc}"
+        assert "跳过 1 条散文化 source" in out
+        payload = self._json_of(out)
+        skipped = payload["prose_skipped_frontmatter"]
+        assert len(skipped) == 1
+        assert skipped[0]["field"] == "source"
+        assert payload["summary"]["prose_skipped_frontmatter"] == 1
+
+    def test_missing_x_toml_ref_reports_broken(self, tmp_path, monkeypatch, capsys):
+        """`x-toml-ref` 不受路径形态豁免：指向不存在的 TOML 必须报断链。"""
+        root = self._repo(tmp_path)
+        doc = root / "docs" / "reports" / "c.md"
+        doc.write_text(
+            "---\nx-toml-ref: ../../.meta/toml/docs/reports/c.toml\n---\n\n# 报告\n",
+            encoding="utf-8",
+        )
+        monkeypatch.setattr(cl, "resolve_project_root", lambda _p: root)
+
+        rc = cl.main(["--path", str(doc), "--check-frontmatter-paths"])
+        out = capsys.readouterr().out
+        assert rc == 1, f"缺失的 x-toml-ref 必须报断链，rc={rc}"
+        assert "c.toml" in out
+
+
