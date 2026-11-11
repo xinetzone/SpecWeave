@@ -188,6 +188,31 @@ PYTHONUSERBASE=/opt/build/npuusertools/userbase \
 - **`npu_tvm` 存在用户既存改动**：`vta/python/vta/export_xm.py` 在 `git status --porcelain` 中恒为 1 行（mtime 早于本流程），属用户既存改动，本流程只记录、不改不滚；`npuusertools` 必须为 0 行。
 - **rootless 不使用提权模式**：仅使用 `/dev/fuse` + `label=disable` + `cgroupns host` + `userns keep-id`。
 
+## L1 自包含镜像（`Containerfile.l1` / `scripts/build-l1.sh`）
+
+`:3.0` 属 **L0 指针级**交付：镜像只记录「去哪儿找」，`tvm`/`xmnn`/LLVM 实体全在 `npu-build` 卷与宿主 bind 内，离开卷即不可用。L1 派生镜像 `:3.0-l1` 把这些实体烘进镜像层，`podman run` 不挂任何卷即可用。
+
+```bash
+# 需要宿主上的 npu-build 卷实体与 tvm python 源码就位（脚本会先断言）
+bash scripts/build-l1.sh
+```
+
+| 项 | 内容 |
+|---|---|
+| 基底 | `localhost/openkylin-npu-toolchain:3.0`（`ARG BASE_IMAGE` 可覆盖） |
+| 烘入 | 卷内 `llvm21`/`llvm22`/`npu_tvm`/`npuusertools`/`tvm_test_data`/`t-test` → `/opt/build/`；`notebook/libs/npu_tvm/python` → `/opt/build/npu_tvm/python`（tar 管道，排除 `__pycache__`，规避源树 POSIX ACL 在 overlay+userns 下 `setxattr` 报 EINVAL） |
+| 不烘入 | `conda-pkgs`（包缓存）、`llvm20`（无 RUNPATH 指向）、`logs`（构建日志） |
+| 新增 ENV | `TVM_LIBRARY_PATH=/opt/build/npu_tvm`、`TEST_DATA_ROOT_PATH`、`TVM_TEST_DATA_DIR`：基础镜像构建于 2026-11-02，不含 11-05 配方新增的这三项，缺 `TVM_LIBRARY_PATH` 时 `import tvm` 会报 `Cannot find libraries` |
+| 体积 | `.Size` `14,044,799,709` → `18,193,507,414` B，增量 `4,148,707,705` B，与烘入源 `4,133,026,424` B（`du -sb`）偏差 0.38% |
+| 验收（`--network none`、无卷、无 bind） | `import tvm` 0.19.0（`/opt/build/npu_tvm/python/tvm/__init__.py`）、`Target("llvm")`/`Target("ccompiler")` 可解析；`import xmnn`（`/opt/build/npuusertools/userbase/lib/python3.14/site-packages/xmnn/__init__.py`）；`llvm-config --version` = 22.1.8；`libtvm.so` 的 `NEEDED libLLVM.so.22.1` 解析到 `/var/opt/build/llvm22/lib`，无 `not found` |
+| 三种挂载组合实测 | 不挂载 → `tvm`/`xmnn` 均从镜像层导入；`npu-build` 卷 + `/workspace/ai` bind（`run.sh` 旧用法）→ `tvm` 取自 bind、`xmnn` 取自镜像层；**仅挂卷 → `ModuleNotFoundError: No module named 'tvm'`** |
+
+边界：
+
+- **不要只挂 `npu-build` 卷**。卷挂到 `/opt/build` 会整体遮蔽烘入层，而卷内没有 `npu_tvm/python`（tvm 源码原由 `/workspace/ai` bind 提供），`import tvm` 反而失败。L1 的用法是**不挂卷**；要沿用旧的卷路径，同时挂 `/workspace/ai` 即可（`.pth` 保留了基底镜像的两条 bind 路径）。
+- `scripts/audit-image-contract.sh` 的 B 组（B1/B2/B3「镜像内必须不存在 tvm/xmnn 实体、`/opt/build` 为空」）是 **L0 契约**，对 `:3.0-l1` 必然判 FAIL，不要拿它审计 L1 镜像。
+- L1 只消除「卷依赖」，不解决「宿主 bind 依赖」以外的镜像外因素（如 `npu_tvm` 官方验证仍须在官方环境执行）。
+
 ## 回滚
 
 ```bash
@@ -195,5 +220,7 @@ bash scripts/run.sh down          # 等价于 podman rm -f npu-toolchain
 podman rmi localhost/openkylin-npu-toolchain:3.0
 podman volume rm npu-build        # 需要保留构建产物时跳过
 ```
+
+`:3.0-l1` 是独立 tag，`podman rmi localhost/openkylin-npu-toolchain:3.0-l1` 即可回退到 L0，原 `:3.0` 与 `npu-build` 卷不受影响。
 
 基线镜像 `localhost/openkylin:3.0` 不受本变体影响，无需回滚。

@@ -1,0 +1,99 @@
+# npu-toolchain L1 self-contained variant (derived layer).
+#
+# Base: localhost/openkylin-npu-toolchain:3.0 — the environment-only image
+#       produced by ./Containerfile (python 3.14 / cmake / ninja / gcc) plus
+#       the imported openKylin 3.0 desktop rootfs. That image contains no
+#       tvm / xmnn / llvm entity: everything used to arrive through the
+#       npu-build volume mounted at /opt/build at run time (delivery level L0).
+#
+# This recipe turns that into L1: the runtime entities are copied into a layer
+# of the image itself, so `podman run --rm` works with no volume and no bind
+# mount at all.
+#
+# Build (both sources are read-only build-time mounts, never image content):
+#   podman build --format docker \
+#     -v /media/pc/data/ai/.agents/podman-storage/storage/volumes/npu-build/_data:/src:ro \
+#     -v /media/pc/data/ai/notebook/libs/npu_tvm/python:/tvm-python:ro \
+#     -t localhost/openkylin-npu-toolchain:3.0-l1 \
+#     -f Containerfile.l1 .
+#
+# Baked in   : llvm21, llvm22, npu_tvm (libtvm.so + headers), npuusertools
+#              (build tree + python userbase), tvm_test_data, t-test,
+#              npu_tvm python sources.
+# Left out   : conda-pkgs (3.0 G package cache), llvm20 (no RUNPATH entry
+#              points at it), logs (build logs). They are build-host debris,
+#              not runtime dependencies.
+# Still not self-contained: xmnn. Its editable install resolves to
+#              /workspace/ai/notebook/libs/npuusertools (bind mount source
+#              tree), so `import xmnn` needs that bind mount. The .pth line
+#              is kept last so it is simply skipped when the bind is absent.
+
+ARG BASE_IMAGE=localhost/openkylin-npu-toolchain:3.0
+FROM ${BASE_IMAGE}
+
+ARG PYTHON_VERSION=3.14
+ARG CONDA_ENV=/opt/conda/envs/main
+
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+# In the desktop rootfs /opt is a symlink to var/opt, so /opt/build and
+# /var/opt/build are the same directory. libtvm.so records
+# "/opt/build/llvm21/lib:/var/opt/build/llvm22/lib" in its RUNPATH and both
+# segments resolve to the same tree without any extra symlink.
+RUN mkdir -p /opt/build && ls -ld /opt/build /var/opt/build
+
+RUN set -euo pipefail; \
+    [ -d /src/npu_tvm ] || { echo "FAIL: /src not mounted (pass -v <volume _data>:/src:ro)"; exit 1; }; \
+    for d in llvm21 llvm22 npu_tvm npuusertools tvm_test_data t-test; do \
+        [ -e "/src/$d" ] || { echo "FAIL: /src/$d missing"; exit 1; }; \
+        cp -a "/src/$d" /opt/build/; \
+    done; \
+    [ -d /tvm-python/tvm ] || { echo "FAIL: /tvm-python not mounted (pass -v <repo>/npu_tvm/python:/tvm-python:ro)"; exit 1; }; \
+    mkdir -p /opt/build/npu_tvm/python; \
+    tar -C /tvm-python -cf - --exclude='__pycache__' . \
+        | tar -C /opt/build/npu_tvm/python -xf -; \
+    du -sh /opt/build; \
+    du -sh /opt/build/*
+
+# Python wiring: the first two entries are what the image itself carries; the
+# last two are the base image's bind-mount entries, kept verbatim. Missing
+# entries are skipped by site.py, so they are inert without mounts and keep the
+# old (volume + /workspace/ai bind) invocation working: the volume masks
+# /opt/build/npu_tvm/python, and the bind entry then supplies the tvm sources.
+RUN set -euo pipefail; \
+    sp="${CONDA_ENV}/lib/python${PYTHON_VERSION}/site-packages"; \
+    mkdir -p "$sp"; \
+    printf '%s\n' \
+        "/opt/build/npuusertools/userbase/lib/python${PYTHON_VERSION}/site-packages" \
+        "/opt/build/npu_tvm/python" \
+        "/workspace/ai/notebook/libs/npuusertools" \
+        "/workspace/ai/notebook/libs/npu_tvm/python" \
+        > "$sp/npu-toolchain.pth"; \
+    cat "$sp/npu-toolchain.pth"
+
+# The 2026-11-02 base image predates the ENV block of ./Containerfile, so these
+# three values are not inherited. Without TVM_LIBRARY_PATH, tvm's libinfo only
+# looks in PATH-adjacent directories and /opt/build/libtvm.so, never in
+# /opt/build/npu_tvm/libtvm.so, and `import tvm` stops with
+# "Cannot find libraries: ['libtvm.so', 'libtvm_runtime.so']".
+ENV TVM_LIBRARY_PATH=/opt/build/npu_tvm \
+    TEST_DATA_ROOT_PATH=/opt/build/tvm_test_data \
+    TVM_TEST_DATA_DIR=/opt/build/tvm_test_data
+
+# Build-time L1 gate: whatever fails here would have failed at run time on the
+# receiving host, where the volume does not exist.
+RUN set -euo pipefail; \
+    python -c 'import tvm; print("[l1] import tvm OK:", tvm.__file__)'; \
+    v="$(/opt/build/llvm22/bin/llvm-config --version)"; \
+    [ "$v" = "22.1.8" ] || { echo "FAIL: llvm-config=$v, expected 22.1.8"; exit 1; }; \
+    echo "[l1] llvm-config: $v"; \
+    if ldd /opt/build/npu_tvm/libtvm.so | grep -q 'not found'; then \
+        echo "FAIL: libtvm.so has unresolved shared libraries"; \
+        ldd /opt/build/npu_tvm/libtvm.so; \
+        exit 1; \
+    fi; \
+    ldd /opt/build/npu_tvm/libtvm.so | grep 'libLLVM.so' ; \
+    echo "[l1] gate OK"
+
+WORKDIR /workspace
+CMD ["sleep", "infinity"]
