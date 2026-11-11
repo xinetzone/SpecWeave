@@ -37,7 +37,7 @@ title: ".agents/skills/ 目录索引"
 | github-org-bootstrap-cmd | 命令门面 | GitHub 组织命名与初始化 | 创建GitHub组织、建个org、组织名怎么起、demo组织、huncheng-lab | [github-org-bootstrap-cmd/SKILL.md](github-org-bootstrap-cmd/SKILL.md) |
 | loop-engineering-cmd | 命令门面（v1.0.0） | 当用户提到'Loop Engineering'、'循环工程'、'自动迭代'、'验证器设计'、'自动优化循环'、'AI循环'、'Loop设计'、'三要素验证'、'适用性判定'、'循环设计检查'、'Loop风险评估'时… | Loop Engineering、循环工程、自动迭代、验证器设计、自动优化循环、AI循环 | [loop-engineering-cmd/SKILL.md](loop-engineering-cmd/SKILL.md) |
 
-### 完整Skill（55个）
+### 完整Skill（56个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -96,6 +96,7 @@ title: ".agents/skills/ 目录索引"
 | docx-template-report | 完整Skill（v1.3.4） | 当用户提到'模板驱动报告'、'生成报告'、'批量报告'、'报告生成'、'模板填充'、'生成docx'、'导出Word报告'、'周报'、'月报'、'报告模板'、'docxtpl'时，必须使用此技能 | 模板驱动报告、生成报告、批量报告、报告生成、模板填充、生成docx | [docx-template-report/SKILL.md](docx-template-report/SKILL.md) |
 | vendor-snapshot-parity | 完整Skill（v1.0.0） | 把第三方单体（装饰器/单例构造的 CLI parser、配置结构等）迁出又要证明与上游逐字段对等时使用 | 证明和上游一致 | [vendor-snapshot-parity/SKILL.md](vendor-snapshot-parity/SKILL.md) |
 | zhihu | 完整Skill | 使用知乎开放平台搜索知乎和全网内容、获取热榜、调用知乎直答，读取当前用户自己的知乎创作、关注与收藏，列出、检索和上传知识库，或查询开放 API 剩余额度 | zhihu | [zhihu/SKILL.md](zhihu/SKILL.md) |
+| ci-run-failure-triage | 完整Skill（v1.0.0，L1） | 远程 CI 失败取证与转绿闭环：gh 取失败 job 与失败日志 → 落盘日志定点 grep 出红项原文 → 本地复现同一门禁 → 六类分诊（真失败·内容类 / 真失败·门禁缺陷 / 伪失败·环境差异 / 伪失败·测试选择器 / 存量红 / 抑制型门禁）→ 只修内容不削弱门禁 → 推送后按新 run 的 job conclusion 验收；含取证命令手册与 awesome-okf 规模数字漂移转绿案例 | CI 挂了、流水线红了、Actions 失败、帮我把 CI 跑绿、这个 job 为什么失败、提交后 CI 挂了、本地绿了远端还红 | [ci-run-failure-triage/SKILL.md](ci-run-failure-triage/SKILL.md) |
 
 ### 工作流门面（10个）
 

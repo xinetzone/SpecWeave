@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（55个）
+### 完整Skill（56个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -66,6 +66,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | docx-template-report | "模板驱动报告"、"生成报告"、"批量报告"、"报告生成"、"模板填充"、"生成docx" | 1（当用户提到'模板驱动报告'、'生成报告'、'批量报告'、'报告生成'、'模板填充'、'生成docx'、'导出Word报告'、'周报'、'月报'、'报告模板'、'docxtpl'时，必须使用此技能） | v1.3.4 | [skills/docx-template-report/SKILL.md](../skills/docx-template-report/SKILL.md) |
 | vendor-snapshot-parity | "证明和上游一致" | 1（把第三方单体（装饰器/单例构造的 CLI parser、配置结构等）迁出又要证明与上游逐字段对等时使用） | v1.0.0 | [skills/vendor-snapshot-parity/SKILL.md](../skills/vendor-snapshot-parity/SKILL.md) |
 | zhihu | "zhihu" | 1（使用知乎开放平台搜索知乎和全网内容、获取热榜、调用知乎直答，读取当前用户自己的知乎创作、关注与收藏，列出、检索和上传知识库，或查询开放 API 剩余额度） | - | [skills/zhihu/SKILL.md](../skills/zhihu/SKILL.md) |
+| ci-run-failure-triage | "CI 挂了"、"流水线红了"、"Actions 失败"、"帮我把 CI 跑绿"、"这个 job 为什么失败"、"提交后 CI 挂了"、"本地绿了远端还红" | 1（六步取证闭环：gh 取 job 结论 → `--log-failed` 落盘后定点 grep → 本地复现同一门禁 → 六类分诊 → 只修内容不改门禁 → 新 run conclusion 验收；含取证命令手册、10 条 Gotchas 与 awesome-okf 转绿案例；L1） | v1.0.0 | [skills/ci-run-failure-triage/SKILL.md](../skills/ci-run-failure-triage/SKILL.md) |
 
 ### 工作流门面（10个）
 
