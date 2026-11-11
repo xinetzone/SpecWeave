@@ -3,7 +3,7 @@ id: "docs-tech-release-onnx-pytorch-v1-1"
 title: "onnx-pytorch v1.1.0 发布说明"
 category: "tech"
 date: "2026-08-15"
-source: "apps/docker-images/devcontainer-base/variants/onnx-pytorch/RELEASE.md"
+source: "../../../apps/docker-images/devcontainer-base/variants/onnx-pytorch/RELEASE.md"
 type: "Reference"
 description: "devcontainer-base:onnx-pytorch 镜像 v1.1.0 发布清单，适配 conda-llvm jupyter 迁移至 main 环境，23/23 测试通过。"
 generated:

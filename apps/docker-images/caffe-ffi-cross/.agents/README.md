@@ -1,7 +1,7 @@
 ---
 id: "caffe-ffi-cross-agents-readme"
 title: "caffe-ffi-cross AI资产容器"
-source: "AGENTS.md"
+source: "../../../../AGENTS.md"
 ---
 # caffe-ffi-cross - .agents 目录
 

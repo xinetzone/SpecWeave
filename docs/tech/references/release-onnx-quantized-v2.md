@@ -3,7 +3,7 @@ id: "docs-tech-release-onnx-quantized-v2"
 title: "onnx-quantized v2.0.0 发布说明"
 category: "tech"
 date: "2026-08-14"
-source: "apps/docker-images/devcontainer-base/variants/onnx-quantized/RELEASE.md"
+source: "../../../apps/docker-images/devcontainer-base/variants/onnx-quantized/RELEASE.md"
 type: "Reference"
 description: "devcontainer-base:onnx-quantized 镜像 v2.0.0 发布清单，基础镜像迁移至 onnx-dev（free-threading 纯 ONNX 架构），24/24 测试通过。"
 generated:

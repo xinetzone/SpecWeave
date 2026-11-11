@@ -3,7 +3,7 @@ id: "docker-ssh-dind-decision-001"
 title: "决策 001：DinD vs DooD 模式选型"
 date: "2026-07-20"
 status: "accepted"
-source: ".trae/specs/standards-tools/create-docker-ssh-containerfile/spec.md#open-questions"
+source: "../../../../.trae/specs/standards-tools/create-docker-ssh-containerfile/spec.md"
 ---
 
 # 决策 001：DinD vs DooD 模式选型

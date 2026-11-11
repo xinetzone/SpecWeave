@@ -1,7 +1,7 @@
 ---
 id: "xuanspace-mono-repo-tasks"
 version: "1.5"
-x-toml-ref: "../../../.meta/toml/.trae/specs/workspace-governance/xuanspace-mono-repo/tasks.toml"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/xuanspace-mono-repo/tasks.toml"
 ---
 
 # Xuanspace（玄境）Monorepo - The Implementation Plan (Decomposed and Prioritized Task List)

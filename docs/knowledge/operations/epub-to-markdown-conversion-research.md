@@ -1,7 +1,7 @@
 ---
 id: "epub-to-markdown-conversion-research"
 title: "EPUB 转 Markdown 转换方案系统性调研报告"
-source: ".trae/specs/standards-tools/epub-to-markdown-conversion-research/spec.md"
+source: "../../../.trae/specs/standards-tools/epub-to-markdown-conversion-research/spec.md"
 category: "operations"
 type: "research-report"
 status: "reviewed"

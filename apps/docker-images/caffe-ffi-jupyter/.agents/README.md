@@ -1,7 +1,7 @@
 ---
 id: "caffe-ffi-jupyter-agents-readme"
 title: "caffe-ffi-jupyter AI资产容器"
-source: "AGENTS.md"
+source: "../../../../AGENTS.md"
 ---
 # caffe-ffi-jupyter - .agents 目录
 

@@ -2,7 +2,7 @@
 id: "analyze-wechat-article-wps-comate-report"
 title: "WPS Comate 企业级 AI Agent 系统性学习与深度洞察分析报告"
 source: ".trae/specs/retrospectives-insights/analyze-wechat-article-wps-comate/"
-x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-wps-comate/analysis-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-wps-comate/analysis-report.toml"
 version: "1.0"
 date: "2026-07-06"
 ---

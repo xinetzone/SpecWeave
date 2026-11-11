@@ -3,7 +3,7 @@ id: "extraction-xmnn-export-entrypoint-fix-20260718"
 title: "XMNN 镜像导出修复模式萃取"
 date: 2026-07-18
 type: "pattern-extraction"
-source: "retrospective-xmnn-export-entrypoint-fix-20260718/insight-extraction.md"
+source: "insight-extraction.md"
 scope: "task"
 status: "completed"
 maturity: "candidate"

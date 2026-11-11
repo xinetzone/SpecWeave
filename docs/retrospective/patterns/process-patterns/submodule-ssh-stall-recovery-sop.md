@@ -6,7 +6,7 @@ date: 2026-08-29
 maturity: L2 已验证
 maturity_note: "2 个独立故障子模块同法恢复成功（caffe 预置 HTTPS URL、veadk-python 环境变量 insteadOf），另含 1 个超级工程 pull 后 pin 漂移收敛案例；待跨项目/非 GitHub 主机场景验证后升级 L3"
 source: "2026-08-29 SpecWeave 七概念问题解决会话（sc-20260829-submodule-caffe）：git submodule update --init --recursive 因 caffe/veadk-python 双故障子模块失败，F→V→C→R→I→E 全链路闭环"
-related_patterns: ["force-push-submodule-commit-recovery.md", "git-bundle-offline-clone.md", "vhdx-two-phase-recovery-sop.md", "pre-kill-identity-verification.md"]
+related_patterns: ["../code-patterns/force-push-submodule-commit-recovery.md", "../code-patterns/git-bundle-offline-clone.md", "vhdx-two-phase-recovery-sop.md", "../code-patterns/pre-kill-identity-verification.md"]
 tags: ["git", "submodule", "ssh", "https", "insteadOf", "recovery", "windows", "network", "sop"]
 validation_count: 2
 reuse_count: 0

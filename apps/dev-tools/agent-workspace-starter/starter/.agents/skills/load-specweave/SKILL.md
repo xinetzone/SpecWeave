@@ -3,7 +3,7 @@ id: "load-specweave"
 name: "load-specweave"
 title: "装载工作区（Skill 示例）"
 description: "装载本工作区子体系并建立技能触发就绪状态。当用户说'请装载 SpecWeave'、'初始化工作区环境'或要求按 AGENTS.md 启动协议装载时调用。装载后可用触发词调用子体系技能（复盘/洞察/mermaid/导出报告等）。"
-source: ".agents/skills/load-specweave/SKILL.md"
+source: "../../../../../../../.agents/skills/load-specweave/SKILL.md"
 ---
 
 # 装载工作区（Skill 示例）
