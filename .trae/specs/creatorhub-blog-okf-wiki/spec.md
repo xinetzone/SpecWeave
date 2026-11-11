@@ -1,7 +1,7 @@
 ---
 type: spec
 title: "CreatorHub 微信博文 → OKF v0.2 Wiki 教程知识包"
-source: "raw/article-raw.md"
+source: ".trae/specs/creatorhub-blog-okf-wiki/raw/article-raw.md"
 source_url: "https://mp.weixin.qq.com/s/Y5AvYGtyj2t9xPJIXuSYBA"
 status: active
 generated_at: "2026-10-26"

@@ -1,7 +1,7 @@
 ---
 id: "code-review-checklist"
 title: "Code Review 检查清单"
-source: "../../../../../../.agents/checklists/code-review-checklist.md"
+source: ".agents/checklists/code-review-checklist.md"
 maturity: "L1"
 ---
 # Code Review 检查清单

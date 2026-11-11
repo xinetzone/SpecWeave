@@ -1,6 +1,6 @@
 ---
 source: "https://www.volcengine.com/product/AI-Search-Rec?_vtm_=a441938.b105878.0_0.0_0.0.76_7658588047705441842"
-x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.toml"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.toml"
 extracted_at: "2026-07-06"
 product_name: "Viking AI搜索"
 ---

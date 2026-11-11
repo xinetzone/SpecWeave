@@ -5,7 +5,7 @@ date: "2026-07-07"
 category: "retrospective-insight"
 tags: ["minitest", "ecosystem", "cli", "ci-cd", "ai-agent", "mobile-testing", "devops"]
 source:
-x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.toml"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/minitest-ecosystem-insight-report.toml"
   - "task1-output.md (官方文档分析)"
   - "task2-output.md (CLI架构)"
   - "task3-output.md (Trigger CI)"

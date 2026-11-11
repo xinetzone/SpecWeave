@@ -1,7 +1,7 @@
 ---
 id: "templates"
 title: "模板使用说明"
-source: "../../../../../../.agents/templates/README.md"
+source: ".agents/templates/README.md"
 ---
 # 模板使用说明
 

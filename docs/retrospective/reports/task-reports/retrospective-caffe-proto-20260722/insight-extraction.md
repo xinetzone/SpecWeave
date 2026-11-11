@@ -2,7 +2,7 @@
 type: Report
 id: "retrospective-caffe-proto-20260722-insight"
 title: "Caffe Protobuf 项目 — 洞察萃取"
-source: "README.md"
+source: "retrospective-caffe-proto-20260722/README.md"
 date: "2026-07-22"
 category: "insight-extraction"
 ---

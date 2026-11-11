@@ -3,7 +3,7 @@ id: "methodologies"
 date: "2026-07-07"
 type: "methodology-extraction"
 source: "learning-notes.md, core-insights.md, success-factors.md"
-x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-md2card-wechat-article/methodologies.toml"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-md2card-wechat-article/methodologies.toml"
 article_title: "独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万"
 product: "md2card (md2card.cn)"
 methodologies_count: 6

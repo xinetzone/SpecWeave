@@ -1,7 +1,7 @@
 ---
 id: "rules-spec-writing-guide"
 title: "Spec 文档编写指南"
-source: "../../../../../../.agents/rules/spec-writing-guide.md"
+source: ".agents/rules/spec-writing-guide.md"
 ---
 # Spec 文档编写指南
 

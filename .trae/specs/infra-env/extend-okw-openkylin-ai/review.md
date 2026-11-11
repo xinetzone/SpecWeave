@@ -3,7 +3,7 @@ title: "为 okw 增加 openKylin AI 栈支持（OCR 已验证路径） - Indepen
 status: "reviewed"
 methodology: "seven-concepts-cmd: F→V→I→C"
 content-sensitivity: "public"
-source: "spec.md"
+source: ".trae/specs/infra-env/extend-okw-openkylin-ai/spec.md"
 ---
 
 # 为 okw 增加 openKylin AI 栈支持（OCR 已验证路径） - Independent Review

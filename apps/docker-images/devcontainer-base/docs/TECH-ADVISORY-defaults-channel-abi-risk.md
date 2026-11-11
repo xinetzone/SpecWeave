@@ -8,8 +8,8 @@ applies_to:
   - "devcontainer-base:conda-libmamba-ft (v2.x)"
   - "all conda-forge free-threading (cp314t/cp313t) environments"
   - "variants/conda, variants/ai-dev"
-related_pattern: "../../../../docs/retrospective/patterns/code-patterns/conda-abi-variant-safe-switching.md"
-related_script: "../scripts/verify-cext.sh"
+related_pattern: "conda-abi-variant-safe-switching.md"
+related_script: "scripts/verify-cext.sh"
 ---
 
 # ⚠️ 技术警示：Anaconda defaults channel 导致 free-threading ABI 静默降级风险

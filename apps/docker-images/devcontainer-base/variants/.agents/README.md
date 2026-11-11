@@ -1,7 +1,7 @@
 ---
 id: "variants-agents-readme"
 title: "镜像变体系列 AI资产容器"
-source: "../../../../../AGENTS.md"
+source: "AGENTS.md"
 ---
 # devcontainer-base/variants - .agents 目录
 

@@ -1,7 +1,7 @@
 ---
 id: "devcontainer-base-agents-readme"
 title: "devcontainer-base AI资产容器"
-source: "../../../../AGENTS.md"
+source: "AGENTS.md"
 ---
 # devcontainer-base - .agents 目录
 

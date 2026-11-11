@@ -1,7 +1,7 @@
 ---
 id: "workflows-code-review"
 title: "代码审查流程"
-source: "../../../../../../.agents/workflows/code-review.md"
+source: ".agents/workflows/code-review.md"
 ---
 # 代码审查流程
 

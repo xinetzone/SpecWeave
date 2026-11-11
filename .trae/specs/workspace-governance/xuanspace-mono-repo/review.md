@@ -1,7 +1,7 @@
 ---
 id: "xuanspace-mono-repo-checklist"
 version: "1.4"
-x-toml-ref: "../../../../.meta/toml/.trae/specs/xuanspace-mono-repo/checklist.toml"
+x-toml-ref: "../../../.meta/toml/.trae/specs/workspace-governance/xuanspace-mono-repo/checklist.toml"
 ---
 # Xuanspace（玄境）Monorepo - Verification Checklist
 

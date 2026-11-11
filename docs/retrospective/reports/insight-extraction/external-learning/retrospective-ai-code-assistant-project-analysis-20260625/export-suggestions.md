@@ -2,7 +2,7 @@
 type: Report
 id: "retrospective-ai-code-assistant-project-analysis-20260625-export"
 title: "导出建议"
-source: "../../../../../../apps/ai-agents/ai-code-assistant/README.md"
+source: "../../../../../../../apps/ai-agents/ai-code-assistant/README.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-ai-code-assistant-project-analysis-20260625/export-suggestions.toml"
 ---
 # 导出建议

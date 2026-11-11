@@ -201,17 +201,13 @@ def test_baseline_self_check_rejects_corrupt_entries(tmp_path):
         path.write_text(json.dumps({"version": 1, "entries": entries}), encoding="utf-8")
         return link_baseline.load_baseline(path, tracked)
 
-    assert ("docs/a.md", "missing.md", "link") in load(base["entries"])
+    assert ("docs/a.md", "missing.md") in load(base["entries"])
 
     for broken in (
         {**base["entries"][0], "source": "projects/x/a.md"},
+        {**base["entries"][0], "target": "vendor/x.md"},
         {**base["entries"][0], "reason": "guess"},
         {**base["entries"][0], "source": "docs/untracked.md"},
     ):
         with pytest.raises(link_baseline.BaselineError):
             load([broken])
-
-    # 目标是子模块内的文件时允许入账：排除前缀只约束源文件
-    assert ("docs/a.md", "vendor/x.md", "link") in load(
-        [{**base["entries"][0], "target": "vendor/x.md"}]
-    )

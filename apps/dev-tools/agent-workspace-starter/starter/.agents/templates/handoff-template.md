@@ -1,7 +1,7 @@
 ---
 id: "templates-handoff-template"
 title: "任务交接模板"
-source: "../../../../../../.agents/templates/handoff-template.md"
+source: ".agents/templates/handoff-template.md"
 ---
 # 任务交接模板
 

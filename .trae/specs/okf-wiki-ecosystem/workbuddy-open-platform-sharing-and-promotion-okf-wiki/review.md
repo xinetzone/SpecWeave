@@ -5,7 +5,7 @@ status: pass
 reviewer: "fresh-context 只读子代理（独立上下文，未参与实施）"
 reviewed_at: "2026-10-15"
 covers: [AC-1, AC-2, AC-3, AC-4, AC-5, AC-6]
-source: "spec.md"
+source: ".trae/specs/okf-wiki-ecosystem/workbuddy-open-platform-sharing-and-promotion-okf-wiki/spec.md"
 ---
 
 # WorkBuddy 开放平台两篇平台公告 OKF 知识包 · 独立审查（review.md）

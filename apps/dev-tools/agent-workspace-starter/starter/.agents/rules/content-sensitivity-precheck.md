@@ -1,7 +1,7 @@
 ---
 id: "content-sensitivity-precheck"
 title: "内容敏感度预检规范"
-source: "../../../../../../.agents/rules/content-sensitivity-precheck.md"
+source: ".agents/rules/content-sensitivity-precheck.md"
 date: "2026-07-11"
 type: "rule"
 tags: ["启动协议", "内容敏感度", "私域保护", "工作流分流", "playground"]
