@@ -519,6 +519,44 @@ def check_local_link(
     return (url, "ok", "")
 
 
+# 只按「路径形态」校验的 frontmatter 字段。`source` 与 `related_*` 允许承载
+# 散文式溯源描述（如「docs/xxx.md 第六章 ACT-5」「某文章 + 复盘洞察」
+# 「multiplatform-video-publish（~/.workbuddy/skills/）」），这类值不是路径，
+# 按路径校验只会制造噪声；但必须显式计数并在 --json 中单列，禁止静默丢弃。
+PATH_FORM_ONLY_FIELDS = ("source",)
+PATH_FORM_ONLY_PREFIXES = ("related_",)
+
+
+def is_path_form_only_field(field_name: str) -> bool:
+    """判断字段是否只按「路径形态」校验（路径形态仍严格照查，不做任何放宽）。"""
+    return field_name in PATH_FORM_ONLY_FIELDS or field_name.startswith(PATH_FORM_ONLY_PREFIXES)
+
+
+def is_path_form_value(value: str) -> bool:
+    """判断 frontmatter 值是否具备路径形态。
+
+    只审视锚点（`#`）之前的部分：`../x.md#中文锚点` 是路径引用，锚点里的中文
+    不代表整串是散文；若把锚点一并纳入判断，这类真实路径会被误判为散文化而
+    漏检。路径形态 = 无空白、无中日韩字符与全角标点、无多值分隔符（+ | , ;），
+    且带扩展名或以 ./ ../ 开头。不满足者视为散文化描述，不按路径校验。
+    """
+    v = value.strip().strip('"').strip("'")
+    if not v:
+        return False
+    head = v.split("#", 1)[0].strip()
+    if not head:
+        return False
+    if any(ch.isspace() for ch in head):
+        return False
+    if CJK_CHAR_RE.search(head) or any(ch in PROSE_PUNCTUATION for ch in head):
+        return False
+    if head[0] in "（(「【":
+        return False
+    if re.search(r"[+|,;]", head):
+        return False
+    return bool(PATH_EXTENSION_RE.search(head)) or v.startswith("./") or v.startswith("../")
+
+
 def _extract_paths_from_value(value: str) -> list[str]:
     """从字符串值中提取潜在的文件路径。
 
@@ -546,6 +584,9 @@ def _extract_paths_from_value(value: str) -> list[str]:
         if '{{' in part or '}}' in part:
             continue
         if CURLY_PLACEHOLDER_RE.search(part):
+            continue
+        # 模板占位符（如 <sub-area>/<kebab-id>.toml）不是真实路径，不参与校验
+        if ANGLE_PLACEHOLDER_TOKEN_RE.search(part):
             continue
         if re.search(r'[\u4e00-\u9fff]', part) and not ('.md' in part or '.toml' in part or '.py' in part):
             continue
@@ -613,6 +654,7 @@ def check_frontmatter_paths(
     scan_root: Path | None = None,
     project_root: Path | None = None,
     skipped: list[tuple[Path, str, str, str]] | None = None,
+    prose_skipped: list[tuple[Path, str, str]] | None = None,
 ) -> list[tuple[Path, str, str, str]]:
     """校验 Markdown 文件 frontmatter 中包含路径的字段是否指向有效文件。
 
@@ -645,10 +687,19 @@ def check_frontmatter_paths(
                 continue
             values_to_check: list[str] = []
             if isinstance(value, str):
-                values_to_check.extend(_extract_paths_from_value(value))
+                raw_values = [value]
             elif isinstance(value, list):
-                for v in value:
-                    values_to_check.extend(_extract_paths_from_value(str(v)))
+                raw_values = [str(v) for v in value]
+            else:
+                raw_values = []
+            for raw in raw_values:
+                # source / related_* 允许散文化溯源描述，仅在路径形态时校验；
+                # 跳过项必须计数上报，不得静默丢弃。
+                if is_path_form_only_field(field_name) and not is_path_form_value(raw):
+                    if prose_skipped is not None:
+                        prose_skipped.append((md_path, field_name, raw.strip()))
+                    continue
+                values_to_check.extend(_extract_paths_from_value(raw))
             for v in values_to_check:
                 result = _check_single_path(md_path, field_name, v, scan_root, project_root)
                 if result:
@@ -1436,7 +1487,7 @@ def main(argv=None) -> int:
             except ValueError:
                 source_rel = None
             if source_rel is not None:
-                baseline_hits.append((source_rel.as_posix(), url_str))
+                baseline_hits.append((source_rel.as_posix(), url_str, "link"))
         elif status == "directory":
             file_root = file_root_map.get(file_path.resolve(), roots[0])
             rel_path = file_path.relative_to(file_root) if file_root in file_path.parents else file_path
@@ -1457,6 +1508,35 @@ def main(argv=None) -> int:
         )
         print("    这些链接无法判定有效性，既不算断链也不入基线；"
               "全量校验需 git submodule update --init --recursive")
+
+    # 检查 frontmatter 路径字段（在基线之前完成，使 frontmatter 断链也能入账）
+    broken_frontmatter = []
+    skipped_frontmatter: list[tuple[Path, str, str, str]] = []
+    prose_skipped_frontmatter: list[tuple[Path, str, str]] = []
+    check_fm = args.check_frontmatter_paths or args.check_x_toml_ref
+    if check_fm:
+        if args.check_x_toml_ref and not args.check_frontmatter_paths:
+            print("   注意: --check-x-toml-ref 已废弃，自动升级为 --check-frontmatter-paths（检查source/x-toml-ref/related_*等所有路径字段）")
+        broken_frontmatter = check_frontmatter_paths(
+            md_files,
+            scan_root=roots[0] if len(roots) == 1 else None,
+            project_root=project_root,
+            skipped=skipped_frontmatter,
+            prose_skipped=prose_skipped_frontmatter,
+        )
+        if prose_skipped_frontmatter:
+            fields_note = "/".join(
+                sorted({row[1] for row in prose_skipped_frontmatter})
+            )
+            print(
+                f"   跳过 {len(prose_skipped_frontmatter)} 条散文化 {fields_note}"
+                f"（非路径形态，未按路径校验）；明细见 --json 的 prose_skipped_frontmatter"
+            )
+        if skipped_frontmatter:
+            print(
+                f"   跳过 {len(skipped_frontmatter)} 条子模块路径（未检出）:"
+                " 无法判定有效性，不计入断链"
+            )
 
     # ---- 基线模式 ----------------------------------------------------------
     # 指纹只认（仓库相对源文件, 规范化目标），不含行号；只允许全仓扫描，
@@ -1481,15 +1561,21 @@ def main(argv=None) -> int:
                 file=sys.stderr,
             )
             return 1
-        current_counts: dict[tuple[str, str], int] = {}
+        current_counts: dict[tuple[str, str, str], int] = {}
         untracked_ignored = 0
-        for source_rel, url in baseline_hits:
+        for md_path, field_name, ref, _error in broken_frontmatter:
+            try:
+                source_rel = md_path.resolve().relative_to(Path(project_root).resolve()).as_posix()
+            except (OSError, ValueError):
+                continue
+            baseline_hits.append((source_rel, ref, "frontmatter"))
+        for source_rel, url, kind in baseline_hits:
             # 基线只收 git 跟踪的源文件：未跟踪文件在 CI 中不存在，
             # 既不能入账，也不能在 --baseline 下制造永久“新增”。
             if source_rel not in tracked:
                 untracked_ignored += 1
                 continue
-            key = link_baseline.fingerprint(source_rel, url)
+            key = link_baseline.fingerprint(source_rel, url, kind)
             current_counts[key] = current_counts.get(key, 0) + 1
         if args.update_baseline:
             try:
@@ -1528,13 +1614,27 @@ def main(argv=None) -> int:
             print(f"错误: {exc}", file=sys.stderr)
             return 1
         fresh, stale = link_baseline.diff_baseline(current_counts, baseline)
-        fresh_keys = {(source, target) for source, target, _, _ in fresh}
+        fresh_keys = {(source, target, kind) for source, target, kind, _, _ in fresh}
         broken_local = [
             row
             for row in broken_local
             if link_baseline.normalize_source(str(row[0])) in tracked
-            and link_baseline.fingerprint(str(row[0]), row[3]) in fresh_keys
+            and link_baseline.fingerprint(str(row[0]), row[3], "link") in fresh_keys
         ]
+        kept_frontmatter = []
+        for row in broken_frontmatter:
+            md_path, field_name, ref, error = row
+            try:
+                source_rel = md_path.resolve().relative_to(Path(project_root).resolve()).as_posix()
+            except (OSError, ValueError):
+                kept_frontmatter.append(row)
+                continue
+            if (
+                source_rel in tracked
+                and link_baseline.fingerprint(source_rel, ref, "frontmatter") in fresh_keys
+            ):
+                kept_frontmatter.append(row)
+        broken_frontmatter = kept_frontmatter
         baseline_summary = {
             "current": len(current_counts),
             "known": len(baseline),
@@ -1627,25 +1727,9 @@ def main(argv=None) -> int:
         print(f"\n2. 跳过外部链接检查（使用 --check-external 启用）")
         print(f"   共 {len(external_links)} 个外部链接待检查")
 
-    # 检查 frontmatter 路径字段
-    broken_frontmatter = []
-    skipped_frontmatter: list[tuple[Path, str, str, str]] = []
-    check_fm = args.check_frontmatter_paths or args.check_x_toml_ref
+    # frontmatter 结果已在基线之前计算，这里只负责报告
     if check_fm:
-        print(f"\n3. 检查 frontmatter 路径字段有效性（共 {len(md_files)} 个文件）...")
-        if args.check_x_toml_ref and not args.check_frontmatter_paths:
-            print("   注意: --check-x-toml-ref 已废弃，自动升级为 --check-frontmatter-paths（检查source/x-toml-ref/related_*等所有路径字段）")
-        broken_frontmatter = check_frontmatter_paths(
-            md_files,
-            scan_root=roots[0] if len(roots) == 1 else None,
-            project_root=project_root,
-            skipped=skipped_frontmatter,
-        )
-        if skipped_frontmatter:
-            print(
-                f"   跳过 {len(skipped_frontmatter)} 条子模块路径（未检出）:"
-                " 无法判定有效性，不计入断链"
-            )
+        print(f"\n3. frontmatter 路径字段: 共 {len(md_files)} 个文件")
         if broken_frontmatter:
             print(f"   失败: {len(broken_frontmatter)} 个 frontmatter 路径问题")
             for md_path, field_name, ref, error in broken_frontmatter:
@@ -1656,7 +1740,7 @@ def main(argv=None) -> int:
                     rel_path = md_path
                 print(f"     [{rel_path}] {field_name}: {ref} ({error})")
         else:
-            print(f"   通过: 所有 frontmatter 路径字段均有效")
+            print(f"\n   通过: 所有 frontmatter 路径字段均有效")
 
     # JSON 输出
     if args.json:
@@ -1673,6 +1757,7 @@ def main(argv=None) -> int:
                 "broken_external": len(broken_external),
                 "broken_frontmatter": len(broken_frontmatter),
                 "unknown_frontmatter": len(skipped_frontmatter),
+                "prose_skipped_frontmatter": len(prose_skipped_frontmatter),
             },
             "baseline": baseline_summary,
             "broken_local": [
@@ -1715,6 +1800,14 @@ def main(argv=None) -> int:
                 }
                 for f, field, v, e in broken_frontmatter
             ],
+            "prose_skipped_frontmatter": [
+                {
+                    "file": str(f),
+                    "field": field,
+                    "value": v,
+                }
+                for f, field, v in prose_skipped_frontmatter
+            ],
         }
         print("\n" + json.dumps(result, ensure_ascii=False, indent=2))
 
@@ -1726,6 +1819,10 @@ def main(argv=None) -> int:
     unknown_note = (
         f"（跳过 {total_unknown} 条未检出子模块链接，未参与校验）" if total_unknown else ""
     )
+    if prose_skipped_frontmatter:
+        unknown_note += (
+            f"（跳过 {len(prose_skipped_frontmatter)} 条散文化 frontmatter 溯源描述，未按路径校验）"
+        )
     if total_broken == 0:
         if total_warnings == 0:
             print(f"校验通过: 所有链接均有效{unknown_note}")
