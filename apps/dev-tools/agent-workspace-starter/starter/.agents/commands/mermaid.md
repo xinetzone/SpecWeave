@@ -1,7 +1,7 @@
 ---
 id: "mermaid"
 title: "Mermaid 图表管理指令集"
-source: "../../../../../../.agents/commands/mermaid.md"
+source: ".agents/commands/mermaid.md"
 ---
 # Mermaid 图表管理指令集
 

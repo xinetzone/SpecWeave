@@ -1,7 +1,7 @@
 ---
 id: "checklists"
 title: "标准化检查清单索引"
-source: "../../../../../../.agents/checklists/README.md"
+source: ".agents/checklists/README.md"
 ---
 # 标准化检查清单索引
 

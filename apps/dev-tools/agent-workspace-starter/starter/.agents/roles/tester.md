@@ -1,7 +1,7 @@
 ---
 id: "tester"
 title: "Tester（测试工程师）"
-source: "../../../../../../.agents/roles/tester.md"
+source: ".agents/roles/tester.md"
 ---
 # Tester（测试工程师）
 ## Description

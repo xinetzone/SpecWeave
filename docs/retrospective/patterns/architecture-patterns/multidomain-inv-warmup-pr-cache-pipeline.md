@@ -272,10 +272,10 @@ key: dinv-v1-${{ runner.os }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFile
 
 | 步骤 | 原文件路径 + 行号 | 验证 |
 |---|---|---|
-| 步骤 1 白名单同源 | [docs.py#L32-L34](../../../../projects/awesome-okf-xs/tasks/docs.py#L32-L34)、[conf.py#L132-L133](../../../../projects/awesome-okf-xs/doc/conf.py#L132-L133) | 均定义元组 9 域 |
+| 步骤 1 白名单同源 | [docs.py#L32-L34](../../../projects/awesome-okf-xs/tasks/docs.py#L32-L34)、[conf.py#L132-L133](../../../../projects/awesome-okf-xs/doc/conf.py#L132-L133) | 均定义元组 9 域 |
 | 步骤 2 注入开关 | [conf.py#L134-L165](../../../../projects/awesome-okf-xs/doc/conf.py#L134-L165) | 仅 OKF_BUILD_DOMAIN 非空才写 include_patterns |
 | 步骤 3 (url, None) 语义 | [conf.py#L176-L189](../../../../projects/awesome-okf-xs/doc/conf.py#L176-L189) | inv 不存在 → None |
-| 步骤 4 WARMUP build_invs | [docs.py#L199-L222](../../../../projects/awesome-okf-xs/tasks/docs.py#L199-L222) | -b inventory + move + size>8192 |
+| 步骤 4 WARMUP build_invs | [docs.py#L199-L222](../../../projects/awesome-okf-xs/tasks/docs.py#L199-L222) | -b inventory + move + size>8192 |
 | 步骤 5 cache key VC-14 | [pages.yml#L172-L180](../../../../projects/awesome-okf-xs/.github/workflows/pages.yml#L172-L180) | hashFiles('doc/bundles/**/*.md') + 'doc/conf.py' |
 | 步骤 6 SHARD 绝对路径 VC-19 | [pages.yml#L202-L204](../../../../projects/awesome-okf-xs/.github/workflows/pages.yml#L202-L204) | GITHUB_WORKSPACE/_build/domain-invs |
 | 步骤 7 两 job 分流 VC-20 | [pages.yml#L66-L66](../../../../projects/awesome-okf-xs/.github/workflows/pages.yml#L66-L66) + [pages.yml#L104-L104](../../../../projects/awesome-okf-xs/.github/workflows/pages.yml#L104-L104) + [pages.yml#L221-L221](../../../../projects/awesome-okf-xs/.github/workflows/pages.yml#L221-L221) | build-main if != PR / build-pr if = PR / deploy needs build-main + != PR |

@@ -1,7 +1,7 @@
 ---
 id: "templates-task-template"
 title: "任务模板"
-source: "../../../../../../.agents/templates/task-template.md"
+source: ".agents/templates/task-template.md"
 version: "1.3.0"
 patterns_applied: ["spec-driven-development", "three-tier-governance", "context-recovery-protocol"]
 ---

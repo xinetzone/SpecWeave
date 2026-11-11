@@ -1,7 +1,7 @@
 ---
 id: "workflows"
 title: "工作流索引"
-source: "../../../../../../.agents/workflows/README.md"
+source: ".agents/workflows/README.md"
 ---
 # 工作流索引
 

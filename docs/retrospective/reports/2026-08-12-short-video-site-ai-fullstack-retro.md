@@ -6,7 +6,7 @@ date: 2026-08-12
 scenario: innovation+knowledge
 chain: F→I→C→R→I→E
 tags: [短视频, AI开发, Agent Plan, Seedream, Seedance, 全栈]
-source: ../../../apps/samples/short-video-site/docs/retrospective.md
+source: apps/samples/short-video-site/docs/retrospective.md
 maturity: L2
 commits: [75ae13cc, 150fa24b, 73e40c43]
 ---

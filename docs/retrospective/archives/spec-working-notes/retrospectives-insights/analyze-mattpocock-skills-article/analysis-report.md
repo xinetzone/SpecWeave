@@ -1,7 +1,7 @@
 ---
 title: "mattpocock/skills 开源项目文章深度洞察分析报告"
 source: "微信公众号文章《开源日记（介绍 mattpocock/skills 项目）》"
-x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-mattpocock-skills-article/analysis-report.toml"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-mattpocock-skills-article/analysis-report.toml"
 source_url: "https://github.com/mattpocock/skills"
 analysis_date: "2026-07-06"
 analyzer: "SpecWeave Insight Agent"

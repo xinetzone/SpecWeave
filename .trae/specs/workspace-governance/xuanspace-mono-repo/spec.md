@@ -3,7 +3,7 @@ status: "draft"
 id: "xuanspace-mono-repo-spec"
 version: "1.4"
 source: "seven-concepts innovation scenario (F→V→I) + naming alignment with zhujian-wudao + AGENTS.md/Sphinx+MyST docs requirement + build system (cmake/ninja/scikit-build-core) + submodule placement analysis + frontmatter content-metadata dichotomy"
-x-toml-ref: "../../../../.meta/toml/.trae/specs/xuanspace-mono-repo/spec.toml"
+x-toml-ref: "../../../.meta/toml/.trae/specs/workspace-governance/xuanspace-mono-repo/spec.toml"
 ---
 
 # Xuanspace（玄境）Monorepo - Product Requirement Document

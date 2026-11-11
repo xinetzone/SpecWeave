@@ -1,7 +1,7 @@
 ---
 id: "rules"
 title: "治理规则体系"
-source: "../../../../../../.agents/rules/README.md"
+source: ".agents/rules/README.md"
 ---
 # 治理规则体系
 

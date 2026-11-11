@@ -1,7 +1,7 @@
 ---
 id: "onboarding"
 title: "Agent Onboarding（工作区入门指南）"
-source: "../../../../../.agents/ONBOARDING.md"
+source: ".agents/ONBOARDING.md"
 version: "2.5"
 layer: "L0"
 max_lines: 100

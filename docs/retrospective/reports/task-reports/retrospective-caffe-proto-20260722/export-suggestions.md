@@ -2,7 +2,7 @@
 type: Report
 id: "retrospective-caffe-proto-20260722-export"
 title: "Caffe Protobuf 项目 — 导出建议"
-source: "README.md"
+source: "retrospective-caffe-proto-20260722/README.md"
 date: "2026-07-22"
 category: "export-suggestions"
 ---

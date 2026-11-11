@@ -3,7 +3,7 @@ id: "insight-xmnn-export-entrypoint-fix-20260718"
 title: "XMNN 镜像导出修复洞察萃取"
 date: 2026-07-18
 type: "insight-extraction"
-source: "README.md"
+source: "retrospective-xmnn-export-entrypoint-fix-20260718/README.md"
 scope: "task"
 participants: ["orchestrator", "developer"]
 status: "completed"

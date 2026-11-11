@@ -3,7 +3,7 @@ id: "retrospective-invload-invalid-tar-20260909"
 title: "inv load 镜像缓存损坏复盘"
 date: "2026-09-09"
 source: "../../reports/incident-reports/retrospective-invload-invalid-tar-20260909/retrospective-report.md"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/incident-reports/retrospective-invload-invalid-tar-20260909/retrospective-report.toml"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/incident-reports/retrospective-invload-invalid-tar-20260909/retrospective-report.toml"
 type: incident-report
 scope: task
 status: completed

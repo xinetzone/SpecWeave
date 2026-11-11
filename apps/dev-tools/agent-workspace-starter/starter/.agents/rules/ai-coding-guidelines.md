@@ -1,7 +1,7 @@
 ---
 id: "ai-coding-guidelines"
 title: "AI 编码行为准则"
-source: "../../../../../../.agents/rules/ai-coding-guidelines.md"
+source: ".agents/rules/ai-coding-guidelines.md"
 ---
 # AI 编码行为准则
 

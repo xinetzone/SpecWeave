@@ -1,7 +1,7 @@
 ---
 id: "context-routing"
 title: "上下文路由表"
-source: "../../../../../.agents/context-routing.md"
+source: ".agents/context-routing.md"
 ---
 # 上下文路由表
 

@@ -10,7 +10,7 @@ tags:
   - technical-research
   - minitest
 source: /spec Minitest AI QA测试平台生态系统深度研究与洞察报告
-x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/retrospective-report.toml"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/retrospective-report.toml"
 ---
 ## 2. 执行摘要
 

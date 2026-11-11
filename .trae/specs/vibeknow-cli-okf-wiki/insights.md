@@ -7,7 +7,7 @@ generated: { by: "trae:seven-concepts-cmd", at: "2026-10-21T00:00:00+08:00" }
 verified: { by: "pending:V-phase", at: "2026-10-21T00:00:00+08:00" }
 status: draft
 stale_after: "2027-04-21"
-source: "facts.md"
+source: ".trae/specs/vibeknow-cli-okf-wiki/facts.md"
 ---
 
 # VibeKnow CLI 架构洞察与知识地图

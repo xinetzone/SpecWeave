@@ -1,5 +1,5 @@
 ---
-source: "../../../../../.trae/specs/standards-tools/config-file-placement-governance/spec.md"
+source: ".trae/specs/standards-tools/config-file-placement-governance/spec.md"
 generated_at: "2026-07-18"
 type: "iteration-retrospective"
 retro_scope: "iteration"

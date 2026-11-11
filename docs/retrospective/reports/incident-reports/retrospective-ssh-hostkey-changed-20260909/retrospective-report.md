@@ -3,7 +3,7 @@ id: "retrospective-ssh-hostkey-changed-20260909"
 title: "inv run 后 SSH host key changed 复盘"
 date: "2026-09-09"
 source: "apps/containers/client 消费端 ensure_known_hosts 失效诊断 (2026-09-09)"
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/incident-reports/retrospective-ssh-hostkey-changed-20260909/retrospective-report.toml"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/incident-reports/retrospective-ssh-hostkey-changed-20260909/retrospective-report.toml"
 type: incident-report
 scope: task
 status: completed

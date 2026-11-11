@@ -2,7 +2,7 @@
 title: "planning-with-files:像 Manus 一样工作 - 深度洞察分析报告"
 date: 2026-07-06
 source: "微信公众号《叽半斤》文章《planning-with-files:像 Manus 一样工作》"
-x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-planning-with-files-article/analysis-report.toml"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-planning-with-files-article/analysis-report.toml"
 type: "方法论分析报告"
 tags:
   - planning-with-files

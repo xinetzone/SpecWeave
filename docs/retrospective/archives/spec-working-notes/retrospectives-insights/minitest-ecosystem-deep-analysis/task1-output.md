@@ -2,7 +2,7 @@
 id: "minitest-ecosystem-deep-analysis-task1"
 title: "Minitest生态系统深度分析 - 官方文档系统梳理"
 source: "https://www.minitap.ai/docs/minitest"
-x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/task1-output.toml"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/task1-output.toml"
 generated_at: "2026-07-07"
 analysis_scope:
   - 产品首页

@@ -3,7 +3,7 @@ id: "critical-analysis"
 date: "2026-07-07"
 type: "critical-thinking"
 source: "learning-notes.md, core-insights.md, success-factors.md, methodologies.md"
-x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-md2card-wechat-article/critical-analysis.toml"
+x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-md2card-wechat-article/critical-analysis.toml"
 product: "md2card (md2card.cn)"
 tags: ["批判性思考", "边界分析", "幸存者偏差", "可复制性评估"]
 ---

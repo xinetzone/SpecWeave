@@ -7,7 +7,7 @@ chain: "R→I→E→V→C"
 depth: "standard"
 date: "2026-07-06"
 archived: "2026-08-05"
-source: "insight-extraction/external-learning/retrospective-speckit-sdd-analysis-20260706/analysis-report.md"
+source: "reports/insight-extraction/external-learning/retrospective-speckit-sdd-analysis-20260706/analysis-report.md"
 pattern: "patterns/methodology-patterns/concepts/layered-chained-spec.md"
 status: "archived"
 ---
