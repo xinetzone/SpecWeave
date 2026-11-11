@@ -23,6 +23,7 @@ IMAGE_NAME="${IMAGE_NAME:-jupyter-ssh-base}"
 IMAGE_TAG="${IMAGE_TAG:-test-ssh-path}"
 CONTAINER_NAME="test-ssh-path-$$"
 SSH_PORT="${SSH_PORT:-2222}"
+JUPYTER_PORT="${JUPYTER_PORT:-8888}"
 SKIP_BUILD=false
 KEEP_CONTAINER=false
 PASS=0
@@ -86,6 +87,7 @@ USER_PASSWORD="test-pass-$(date +%s)"
 docker run -d \
     --name "${CONTAINER_NAME}" \
     -p "${SSH_PORT}:22" \
+    -p "${JUPYTER_PORT}:8888" \
     -e USER_PASSWORD="${USER_PASSWORD}" \
     -e JUPYTER_TOKEN=test-token \
     -e GRANT_SUDO=no \
@@ -214,9 +216,8 @@ echo "============================================"
 
 # 等待 Jupyter 就绪
 info "Waiting for Jupyter to be ready..."
-MAX_WAIT=30
+MAX_WAIT=60
 WAITED=0
-JUPYTER_PORT=8888
 while [ $WAITED -lt $MAX_WAIT ]; do
     HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:${JUPYTER_PORT}/api" 2>/dev/null || echo "000")
     if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "302" ] || [ "$HTTP_CODE" = "401" ] || [ "$HTTP_CODE" = "403" ]; then
