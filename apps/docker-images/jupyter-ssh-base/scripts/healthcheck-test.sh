@@ -36,15 +36,26 @@ for i in $(seq 1 20); do
   sleep 1
 done
 
-# Wait for Jupyter
-echo "--- 等待 Jupyter 服务就绪 ---"
-for i in $(seq 1 20); do
-  if docker exec "$CONTAINER_NAME" pgrep -f "jupyter" >/dev/null 2>&1; then
-    echo "  Jupyter 服务已就绪 (等待 ${i}s)"
-    break
-  fi
+# Wait for Jupyter: 进程存在不等于 HTTP 就绪，须轮询 API 直到可响应
+echo "--- 等待 Jupyter HTTP 就绪 ---"
+JUPYTER_READY=false
+HTTP_CODE="000"
+for i in $(seq 1 60); do
+  HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:8889/api" 2>/dev/null || echo "000")
+  case "$HTTP_CODE" in
+    200|302|401|403)
+      echo "  Jupyter HTTP 已就绪 (HTTP ${HTTP_CODE}, 等待 ${i}s)"
+      JUPYTER_READY=true
+      break
+      ;;
+  esac
   sleep 1
 done
+if [ "$JUPYTER_READY" = false ]; then
+  echo "  [FAIL] Jupyter HTTP 60s 内未就绪 (最后 HTTP ${HTTP_CODE})"
+  docker logs "$CONTAINER_NAME" --tail 50 2>&1 || true
+  exit 1
+fi
 
 echo ""
 echo "============================================"
@@ -56,8 +67,15 @@ echo ""
 echo "============================================"
 echo " 2. 容器内 healthcheck.sh"
 echo "============================================"
+set +e
 docker exec "$CONTAINER_NAME" /usr/local/bin/healthcheck.sh
-echo "  Exit code: $?"
+HC_EXIT=$?
+set -e
+echo "  Exit code: $HC_EXIT"
+if [ "$HC_EXIT" -ne 0 ]; then
+  echo "  [FAIL] 容器内健康检查未通过"
+  exit 1
+fi
 
 echo ""
 echo "============================================"
