@@ -26,6 +26,7 @@ harness-engineering-wiki-retrospective-20260803
 karpathy-llm-wiki-analysis-retrospective-20260707
 libtv-wiki-retrospective-20260704
 link-gate-closed-loop-pilot-20261109
+link-gate-frontmatter-and-ci-hardening-20261111
 loop-engineering-milestone-acceptance-20260801
 loop-engineering-patterns-20260801
 npu-ffi-vta-completion-retrospective
