@@ -1,7 +1,7 @@
 ---
 title: "Agent Reach 开源项目文章深度洞察分析报告"
 source: "微信公众号文章《又一个神级上网 Agent 火了。》(作者:开源日记)"
-x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-agent-reach-wechat-article/analysis-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-agent-reach-wechat-article/analysis-report.toml"
 source_url: "https://mp.weixin.qq.com/s/nEV-PLMGVWGONoUa3-ZHnw"
 project_url: "https://github.com/Panniantong/Agent-Reach"
 analysis_date: "2026-07-06"

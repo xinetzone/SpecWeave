@@ -1,7 +1,7 @@
 ---
 id: "roles"
 title: "角色定义索引"
-source: ".agents/roles/README.md"
+source: "../../../../../../.agents/roles/README.md"
 ---
 # 角色定义索引
 

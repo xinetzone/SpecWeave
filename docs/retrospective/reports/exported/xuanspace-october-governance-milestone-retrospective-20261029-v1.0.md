@@ -12,7 +12,7 @@ status: archived
 topic: xuanspace-october-governance
 source: "任务：对第一方子项目 xuanspace（玄境）执行里程碑复盘，方法论编排 seven-concepts 场景1（R→I→E→C），含萃取与洞察，并导出报告。观察窗口：2026-10-01 ~ 2026-10-28，73 次提交 / 378 个文件。"
 pattern: "convergence-period-triple-track"
-x-toml-ref: "../../../.meta/toml/docs/retrospective/reports/2026-10-29-xuanspace-october-governance-retro.toml"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/2026-10-29-xuanspace-october-governance-retro.toml"
 tags: ["seven-concepts", "milestone", "governance", "single-source-of-truth", "quality-gate", "documentation", "monorepo"]
 ---
 

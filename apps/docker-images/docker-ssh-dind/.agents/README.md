@@ -1,7 +1,7 @@
 ---
 id: "docker-ssh-dind-agents-readme"
 title: "docker-ssh-dind AI资产容器"
-source: "AGENTS.md"
+source: "../../../../AGENTS.md"
 ---
 # docker-ssh-dind - .agents 目录
 

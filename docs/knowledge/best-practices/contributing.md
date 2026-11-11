@@ -2,7 +2,7 @@
 id: "contributing"
 title: "贡献指南"
 description: "SpecWeave 贡献流程，包括启动协议、Pull Request 提交、代码审查与开发规范。"
-source: "docs/tech/concepts/contributing.md"
+source: "../../tech/concepts/contributing.md"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/contributing.toml"
 type: "Reference"
 generated:

@@ -1,6 +1,6 @@
 ---
 source: "微信公众号「何三笔记」"
-x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-Vykbw/analysis-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-Vykbw/analysis-report.toml"
 github: "https://github.com/Hmbown/CodeWhale"
 author: "何三"
 publisher: "何三笔记"

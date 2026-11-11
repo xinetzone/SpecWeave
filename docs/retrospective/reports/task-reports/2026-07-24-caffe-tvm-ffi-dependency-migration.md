@@ -4,7 +4,7 @@ title: "Caffe tvm-ffi 依赖统一迁移复盘报告"
 date: 2026-07-24
 type: "retrospective+insight+extraction"
 scope: "task"
-source: ".trae/specs/caffe-framework/caffe-tvm-ffi-dependency-migration/spec.md"
+source: "../../../../.trae/specs/caffe-framework/caffe-tvm-ffi-dependency-migration/spec.md"
 methodology: "R→I→E (场景4：知识沉淀)"
 tags: [caffe, tvm-ffi, dependency-migration, cmake, submodule, vendor]
 ---

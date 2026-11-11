@@ -2,7 +2,7 @@
 type: Report
 id: "insight-xuanspace-mono-repo-20260724"
 version: "1.0.0"
-source: "retrospective-xuanspace-mono-repo-20260724/README.md"
+source: "README.md"
 ---
 
 # 洞察萃取：Xuanspace（玄境）Monorepo 项目

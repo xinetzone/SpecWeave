@@ -2,7 +2,7 @@
 id: "analyze-skillopt-article-task1"
 title: "SkillOpt 微信公众号文章结构化解析"
 source: "用户提供的微信公众号文章内容"
-x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-skillopt-article/task1-output.toml"
+x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-skillopt-article/task1-output.toml"
 analysis_date: "2026-07-07"
 tags: ["SkillOpt", "Agent技能优化", "微软开源", "深度学习类比", "文章解析"]
 ---

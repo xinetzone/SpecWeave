@@ -2,7 +2,7 @@
 id: "task5-output"
 title: "Minitest Ecosystem Deep Analysis - Task 5: DevOps Infrastructure & Development Standards"
 source: "task5"
-x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/task5-output.toml"
+x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/task5-output.toml"
 ---
 # Minitest 生态系统深度分析 - Task 5: DevOps 基础设施与开发规范
 

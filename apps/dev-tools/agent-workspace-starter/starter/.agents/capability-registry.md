@@ -1,7 +1,7 @@
 ---
 id: "capability-registry"
 title: "能力索引（L1）"
-source: ".agents/capability-registry.md"
+source: "../../../../../.agents/capability-registry.md"
 layer: "L1"
 ---
 # 能力索引（L1）
