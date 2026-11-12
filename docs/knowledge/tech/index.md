@@ -16,6 +16,7 @@ pinedrama/index
 article-to-video-wiki/index
 xuan-compose-sticker-wiki/index
 wsl-drvfs-mount-wiki/index
+phonepal-wiki/index
 medium-wiki/index
 caffe-ffi-conv-v4-optimization-summary
 free-llm-api-summary

@@ -24,6 +24,7 @@ title: "技术类文档（Tech）"
 | 教程 | 章节数 | 简介 | 入口 |
 |------|--------|------|------|
 | TVM FFI 中文 Wiki 教程 | 14章 | Apache TVM FFI 跨语言互操作库的完整中文教程，覆盖类型系统、对象系统、容器、反射、模块系统、C++/Python开发指南、实战案例、FAQ与源码解析 | [00-overview.md](tvm-ffi-wiki/00-overview.md) |
+| PhonePal（xiaoman）源码学习 Wiki | 11章 | 开源 Android 助手 PhonePal 的源码教程：双模型分工、模型外安全闸门、纯 JVM 内核、技能与记忆的可读文件契约、无障碍手眼；82 条编号事实 + 3 个示例 | [00-overview.md](phonepal-wiki/concepts/00-overview.md) |
 | Python 与 Rust 技术对比分析 Wiki | 5章 | 基于最新标准（Python 3.14 / Rust 1.97）从零创作的 Python 与 Rust 技术对比分析，覆盖语言运行时、性能工程化、生态应用场景、代码示例、决策矩阵与迁移路径 | [00-overview.md](python-rust-comparison/00-overview.md) |
 
 ## 文档分类
