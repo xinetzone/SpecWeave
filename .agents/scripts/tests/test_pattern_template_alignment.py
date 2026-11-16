@@ -270,3 +270,71 @@ def test_why_explanation_without_bold_still_counts():
     content = NEW_TEMPLATE_DOC + "\n> 为什么把停点单列？因为条件与停点失效方式不同。\n"
     results = check_why_explanations(content)
     assert results[0].passed is True
+
+
+# ---------------------------------------------------------------- 通用标签不当创新信号
+
+def test_generic_type_label_is_not_innovation():
+    """「方法论模式」是全库通用类型标签，不得据此判为创新类。
+
+    2026-11-16 实测：263 篇命中宽口径的文档中 249 篇仅因该标签命中，
+    真正的创新/迁移/反向信号只有 14 篇。
+    """
+    content = """# 工具故障三级降级策略
+
+## 模式类型
+
+方法论模式（工具自动化/故障处理）
+
+## 适用场景
+
+工具调用失败时按预案降级。
+"""
+    assert _is_innovation_pattern(content) is False
+
+
+def test_cross_domain_label_with_generic_word_is_innovation():
+    """「跨领域迁移型方法论模式」仍判创新类——去掉通用标签不削弱真实信号。"""
+    content = """# 证据链工程化
+
+## 模式类型
+
+跨领域迁移型方法论模式——把合规审计的过程可举证要求迁移到交付场景。
+"""
+    assert _is_innovation_pattern(content) is True
+
+
+# ---------------------------------------------------------------- 章节标题容忍修饰前缀
+
+def test_failure_section_with_modifier_prefix_is_recognized():
+    """「已记录的失败案例（V2补充）」等带修饰前缀的标题应被识别为失败案例章节。"""
+    from lib.check_pattern_quality.check_content import check_innovation_pattern_v2
+
+    content = """# 反向适配创新
+
+## 模式类型
+
+方法论模式 / 创新设计模式
+
+## 已记录的失败案例（V2补充）
+
+某次按五步法执行时跳过了步骤 3，导致方案与用户真实场景不符，返工两次。
+"""
+    results = {r.name: r.passed for r in check_innovation_pattern_v2(content)}
+    assert results["innovation.failure_cases"] is True
+
+
+def test_navigation_index_page_skips_v2(tmp_path):
+    """`*-index.md` 导航页不承载模式主张，应跳过创新类 V2 检查。"""
+    from lib.check_pattern_quality.checker import check_pattern
+
+    p = tmp_path / "demo-index.md"
+    p.write_text(
+        "---\ntype: Pattern\nid: \"demo-index\"\ndomain: methodology\nlayer: governance-strategy\n"
+        "maturity: \"L1-draft\"\nsource: \"x\"\n---\n\n"
+        "# 某方法论索引\n\n创新突破用 F→V→I→C，知识沉淀用 R→I→E。\n",
+        encoding="utf-8",
+    )
+    rep = check_pattern(p, tmp_path)
+    names = {r.name for r in rep.results}
+    assert "innovation.v2_gate" not in names

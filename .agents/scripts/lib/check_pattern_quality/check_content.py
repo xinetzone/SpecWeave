@@ -273,8 +273,10 @@ def check_innovation_pattern_v2(content: str) -> list[CheckResult]:
     results = []
 
     failure_count = len(FAILURE_CASE_PATTERN.findall(content))
+    # 标题匹配改为「标题行包含失败类词」，兼容带修饰前缀的写法
+    # （如「已记录的失败案例（V2补充）」「失败案例与边界」）。
     has_failure_section = bool(re.search(
-        r"##+\s*(失败案例|反面案例|失败教训|失败案例与边界|失败警示)",
+        r"^##+.*(失败案例|反面案例|失败教训|失败警示|负面案例).*$",
         content, re.MULTILINE,
     ))
     has_real_failure = failure_count >= 1 and has_failure_section
