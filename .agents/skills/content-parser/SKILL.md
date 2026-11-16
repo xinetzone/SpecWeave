@@ -4,7 +4,7 @@ name: content-parser
 description: "Extract and parse content from URLs. Triggers on: user provides a URL to extract content from, another skill needs to parse source material, \"parse this URL\", \"extract content\", \"解析链接\", \"提取内容\"."
 ---
 
-
+# Content Parser
 ## When to Use
 
 - User provides a URL and wants to extract/read its content

@@ -4,6 +4,7 @@ description: Create stunning, animation-rich HTML slide decks from scratch. Outp
 source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 html-deck）"
 ---
 
+# HTML Deck
 ## Workflow — 5 steps
 
 **Do not start writing slides until you complete steps 1-3.**

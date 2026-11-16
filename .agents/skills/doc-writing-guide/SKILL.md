@@ -11,6 +11,7 @@ description: >
 source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 doc-writing-guide）"
 ---
 
+# Document Writing Guide
 ## 1. Interpret Intent Before Writing
 
 Your primary goal is to understand the *spirit* of the user's request, not just the literal words.

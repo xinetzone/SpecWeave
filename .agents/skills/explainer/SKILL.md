@@ -4,7 +4,7 @@ name: explainer
 description: "Create explainer videos with narration and AI-generated visuals. Triggers on: \"解说视频\", \"explainer video\", \"explain this as a video\", \"tutorial video\", \"introduce X (video)\", \"解释一下XX（视频形式）\"."
 ---
 
-
+# Explainer
 ## When to Use
 
 - User wants to create an explainer or tutorial video

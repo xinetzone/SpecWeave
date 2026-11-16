@@ -4,6 +4,7 @@ description: Create any self-contained HTML deliverable except slides — resear
 source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 html-report）"
 ---
 
+# HTML Report
 ## Step 1: Plan
 
 **You MUST think through all the planning questions below before writing any HTML.** Writing a `plan.md` file is optional for short/simple reports — you may keep the plan in your reasoning instead of creating a file. For long, complex, multi-section reports (5+ chapters or involving multiple visuals), you SHOULD create a `plan.md` file in your temporary work directory to maintain consistency. Regardless of whether you write it down, every field below MUST be considered and decided upon. The plan drives all subsequent steps.

@@ -4,7 +4,7 @@ name: image-gen
 description: "Generate AI images from text prompts. Triggers on: \"生成图片\", \"画一张\", \"AI图\", \"generate image\", \"配图\", \"create picture\", \"draw\", \"visualize\", \"generate an image\"."
 ---
 
-
+# Image Generation
 ## When to Use
 
 - User wants to generate an AI image from a text description
