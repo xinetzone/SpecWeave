@@ -101,13 +101,13 @@ class TestLoadExternalToml:
         assert result["version"] == "1"
 
     def test_file_not_exist_warning(self, tmp_path, caplog):
-        caplog.set_level(logging.WARNING)
+        caplog.set_level(logging.WARNING, logger="lib.frontmatter")
         result = fm.load_external_toml("nonexistent.toml", tmp_path)
         assert result is None
         assert "不存在" in caplog.text
 
     def test_invalid_toml_warning(self, tmp_path, caplog):
-        caplog.set_level(logging.WARNING)
+        caplog.set_level(logging.WARNING, logger="lib.frontmatter")
         bad_toml = tmp_path / "bad.toml"
         bad_toml.write_text("this is not valid toml = = =\n", encoding="utf-8")
         result = fm.load_external_toml("bad.toml", tmp_path)
@@ -226,7 +226,7 @@ class TestParseFrontmatterUnified:
         assert result["category"] == "test"
 
     def test_ref_file_not_exist_returns_yaml(self, tmp_path, caplog):
-        caplog.set_level(logging.WARNING)
+        caplog.set_level(logging.WARNING, logger="lib.frontmatter")
         md = tmp_path / "test.md"
         md.write_text(
             '---\nx-toml-ref: "missing.toml"\ntitle: "仅YAML"\n---\n\n正文\n',
@@ -238,7 +238,7 @@ class TestParseFrontmatterUnified:
         assert "不存在" in caplog.text
 
     def test_ref_toml_invalid_returns_yaml(self, tmp_path, caplog):
-        caplog.set_level(logging.WARNING)
+        caplog.set_level(logging.WARNING, logger="lib.frontmatter")
         bad_toml = tmp_path / "bad.toml"
         bad_toml.write_text("= invalid toml =", encoding="utf-8")
         md = tmp_path / "test.md"
