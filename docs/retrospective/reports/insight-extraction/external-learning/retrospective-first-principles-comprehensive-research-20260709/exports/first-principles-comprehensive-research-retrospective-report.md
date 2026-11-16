@@ -106,7 +106,7 @@ report_type: retrospective
 | **Spec与复盘文件** | | |
 | [spec.md](../../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/spec.md) | 新增 | PRD文档 |
 | [tasks.md](../../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/tasks.md) | 新增 | 任务分解（10任务） |
-| [checklist.md](../../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/checklist.md) | 新增 | 验证清单（76项检查点） |
+| [checklist.md](../../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/review.md) | 新增 | 验证清单（76项检查点） |
 | [README.md](../README.md) | 新增 | 复盘目录索引与执行摘要 |
 | [execution-retrospective.md](../execution-retrospective.md) | 新增 | 执行复盘（时间线+事实+过程分析+后续迭代） |
 | [insight-extraction.md](../insight-extraction.md) | 新增 | 洞察提取（5条洞察+7个模式+元洞察+局限性） |

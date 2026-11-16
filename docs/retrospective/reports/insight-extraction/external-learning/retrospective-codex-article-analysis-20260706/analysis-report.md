@@ -802,7 +802,7 @@ E2E 测试验证了以下7类关键场景：
 
 - 本分析 spec: [spec.md](../../../../../../.trae/specs/retrospectives-insights/analyze-codex-product-philosophy-article/spec.md)
 - 本分析 tasks: [tasks.md](../../../../../../.trae/specs/retrospectives-insights/analyze-codex-product-philosophy-article/tasks.md)
-- 本分析 checklist: [checklist.md](../../../../../../.trae/specs/retrospectives-insights/analyze-codex-product-philosophy-article/checklist.md)
+- 本分析 checklist: [checklist.md](../../../../../../.trae/specs/retrospectives-insights/analyze-codex-product-philosophy-article/review.md)
 
 ### 任务复盘
 

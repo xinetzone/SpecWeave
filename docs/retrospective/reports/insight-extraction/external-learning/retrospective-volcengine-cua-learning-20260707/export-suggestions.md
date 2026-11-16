@@ -23,7 +23,7 @@ commit: 9231967f
 |--------|------|------|---------|
 | Spec PRD | [spec.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | ✅ 已完成 | 高 - Spec模式PRD范例 |
 | 任务计划 | [tasks.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | ✅ 已完成 | 高 - MECE任务拆分范例（11个子任务） |
-| 验收清单 | [checklist.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | ✅ 已完成 | 高 - checklist设计范例（46项） |
+| 验收清单 | [checklist.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/review.md) | ✅ 已完成 | 高 - checklist设计范例（46项） |
 | 学习笔记 | [volcengine-computer-use-agent-analysis.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/volcengine/concepts/volcengine-computer-use-agent-analysis.md) | ✅ 已完成 | 极高 - 1331行CUA深度分析，含2张图+15+表格 |
 | Spec看板更新 | [README.md](../../../../../../.trae/specs/retrospectives-insights/README.md) | ✅ 已更新 | 中 - 进度标记 |
 | 复盘报告四件套 | 本目录 | ✅ 已完成 | 高 - Spec模式复盘范例 |
@@ -82,7 +82,7 @@ commit: 9231967f
 3. **参考范例**：
    - PRD范例：[spec.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md)
    - 任务拆分范例：[tasks.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md)
-   - Checklist范例：[checklist.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md)
+   - Checklist范例：[checklist.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/review.md)
 
 **验收标准**：
 - [ ] 模式文件已创建

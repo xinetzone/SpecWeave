@@ -91,7 +91,7 @@ retrospective-volcengine-cua-learning-20260707/
 - 产出学习笔记：[volcengine-computer-use-agent-analysis.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/volcengine/concepts/volcengine-computer-use-agent-analysis.md)
 - Spec PRD：[spec.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md)
 - Spec任务计划：[tasks.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md)
-- Spec验收清单：[checklist.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md)
+- Spec验收清单：[checklist.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/review.md)
 - Spec看板：[README.md](../../../../../../.trae/specs/retrospectives-insights/README.md)（标记100%完成）
 - 关联复盘：[retrospective-volcengine-mobile-use-agent-learning-20260707](../retrospective-volcengine-mobile-use-agent-learning-20260707/README.md)（同类火山引擎产品学习复盘）
 

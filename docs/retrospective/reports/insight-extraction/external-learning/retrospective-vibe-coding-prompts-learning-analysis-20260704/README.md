@@ -62,7 +62,7 @@ retrospective-vibe-coding-prompts-learning-analysis-20260704/
 ### 交付物成果
 - 完整执行 [spec.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md) PRD(93 行)
 - 任务计划 [tasks.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/tasks.md)(33 行,4 个任务 + 12 个子任务,全部完成)
-- 验收清单 [checklist.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/checklist.md)(20 项检查点全部通过)
+- 验收清单 [checklist.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/review.md)(20 项检查点全部通过)
 - 生成 [vibe-coding-prompts-learning-analysis.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/practice/ai-engineering-methodology/concepts/prompt-coding/vibe-coding-prompts-learning-analysis.md) 学习分析文档(416 行,11 章节)
 - 通过 `generate_index.py` 自动更新 [知识库索引](../../../../../knowledge/README.md)
 
@@ -145,7 +145,7 @@ retrospective-vibe-coding-prompts-learning-analysis-20260704/
 - 践行反面案例复盘:[retrospective-first-principles-analogy-error-20260709/](../../../incident-reports/retrospective-first-principles-analogy-error-20260709/README.md)
 - Spec PRD:[spec.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md)
 - Spec 任务计划:[tasks.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/tasks.md)
-- Spec 验收清单:[checklist.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/checklist.md)
+- Spec 验收清单:[checklist.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/review.md)
 - Spec 看板:[README.md](../../../../../../.trae/specs/retrospectives-insights/README.md)
 - 知识库索引:[README.md](../../../../../knowledge/README.md)(已自动更新)
 - 洞察原子索引:[insights/README.md](insights/README.md)(11个洞察文件索引，分4类)

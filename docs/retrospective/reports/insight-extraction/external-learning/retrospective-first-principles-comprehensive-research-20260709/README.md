@@ -58,7 +58,7 @@ retrospective-first-principles-comprehensive-research-20260709/
 | A级可信度占比 | 78.5% | [10-source-validation-log.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/10-source-validation-log.md) |
 | 跨验证关键事实 | 12项 | 来源验证日志 |
 | 识别认知偏差 | 5类 | 对抗性审查协议 |
-| 检查点通过率 | 100% (76/76) | [checklist.md](../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/checklist.md) |
+| 检查点通过率 | 100% (76/76) | [checklist.md](../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/review.md) |
 | 沉淀可复用模式 | 7个 | 模式库归档（adversarial-review-protocol/spec-reference-validation等） |
 
 ### 核心创新点
@@ -110,7 +110,7 @@ retrospective-first-principles-comprehensive-research-20260709/
 - 第一性原理指令集: [first-principles.md](../../../../../../.agents/commands/first-principles.md)（6步执行流程+RACI矩阵+知识库关联）
 - 项目Spec文档: [spec.md](../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/spec.md)
 - 任务分解: [tasks.md](../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/tasks.md)
-- 验收检查清单: [checklist.md](../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/checklist.md)
+- 验收检查清单: [checklist.md](../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/review.md)
 - 沉淀模式索引: [research-knowledge/README.md](../../../../patterns/methodology-patterns/research-knowledge/README.md) + [governance-strategy/README.md](../../../../patterns/methodology-patterns/governance-strategy/README.md)（7个模式归档）
 
 ---
