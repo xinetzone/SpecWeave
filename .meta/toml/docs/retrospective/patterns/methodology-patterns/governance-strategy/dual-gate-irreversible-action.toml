@@ -1,0 +1,23 @@
+id = "dual-gate-irreversible-action"
+title = "双闸门不可逆动作防护"
+domain = "methodology"
+layer = "governance-strategy"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(trae-agent-camp-02 知识包)——手机 Agent 课程第二课 E 阶段 P6（118 条事实/5 洞察/10 条 V 意见）"
+source_report = "projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/trae-agent-camp-02/index.md"
+date = "2026-11-16"
+version = "1.0"
+maturity_note = "单案例（厂商课程单源知识包，模式侧证据集中在 F-054、F-060、F-062、F-078、F-081），V 门为沉淀侧自审；升级 L1.5：完成一次「移除规则层确认后能力层仍拒绝执行」的反证测试；升级 L2-validated：另需第二个不同平台复用"
+
+[bindings]
+related_patterns = [
+  "human-in-the-loop-augmentation",
+  "fail-loud-over-silent-fallback",
+  "gate-baseline-write-invariants",
+  "four-element-task-brief",
+]

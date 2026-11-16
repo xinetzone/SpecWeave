@@ -68,6 +68,10 @@
 | explain-only-reconnaissance | [只讲不改勘察法](ai-collaboration/explain-only-reconnaissance.md) | L1-draft | 1 | 0 | 首次把 AI/新人引入既有代码库且测试保护不足时：先定三问（模块在哪/请求经过哪几步/改某类行为动哪里），提示词末尾写死「先只讲解、不修改任何文件」，用非开发者复述核对理解，最后以版本控制变更列表（含工作目录外）证明零改动。案例：手机 Agent 课程知识包 P2（F-038、F-041、F-074），待三个不同代码库验证升 L1.5 |
 | four-element-task-brief | [四要素任务书法](ai-collaboration/four-element-task-brief.md) | L1-draft | 1 | 0 | 委托的任务有外部副作用（下单/支付/发送/删除/改配置）时：把「帮我做某事」改写成做什么、条件（数字或枚举）、停点（不可逆动作之前）、回报（3–5 项验收字段）四要素，再补一行越界红线，发出前四问自查。案例：手机 Agent 课程知识包 P3（F-052、F-054、F-055、F-067、F-072），待三类任务类型验证升 L1.5 |
 | split-chain-triage | [分链排障法](tools-automation/split-chain-triage.md) | L1-draft | 1 | 0 | 多组件系统部分可用（有回复但不动/能执行但不理解/执行中途停）且现象不指向明确错误码时：用两条最小指令把故障二分为理解链与执行链，落到四条固定分支，每分支只查三项固定项、一次只改一项，修完双向复跑做交叉回归。案例：手机 Agent 课程知识包 P4（F-049、F-050、F-066、F-074），待两类异构系统验证升 L1.5 |
+| four-question-skill-spec | [四问成技法](ai-collaboration/four-question-skill-spec.md) | L1-draft | 1 | 0 | 重复发生的流程要固化为可复用技能、而非每次复制长提示词时：写技能前先答四问（何时开始/怎么做/怎么检查/哪里要确认），补红线后用同一句触发语复测。案例：手机 Agent 课程知识包 P2（F-036、F-037、F-042、F-046），待三类任务验证升 L1.5 |
+| evidence-first-repair | [证据先行修复法](tools-automation/evidence-first-repair.md) | L1-draft | 1 | 0 | 多步自动化任务失败且原因不明确、重跑会覆盖现场时：冻结现场→取运行 ID/日志/界面三类证据→先解释失败在第几步→写最小复现→单点最小修改→如实登记状态。案例：手机 Agent 课程知识包 P4（F-063、F-076、F-086），待两类系统验证升 L1.5 |
+| single-output-work-slicing | [单产出拆分法](ai-collaboration/single-output-work-slicing.md) | L1-draft | 1 | 0 | 长流程需交给多个执行者且产出之间有依赖时：按「一段一个可验收产出」切段（单一产出/人工确认处切/触发时间不同分开/同产出合并），写六字段交接单，设人工关口，调度者按验收项自核、不过不传。案例：手机 Agent 课程知识包 P5（F-084~F-086、F-092~F-099），待真实多段任务验证升 L1.5 |
+| dual-gate-irreversible-action | [双闸门不可逆动作防护](governance-strategy/dual-gate-irreversible-action.md) | L1-draft | 1 | 0 | 自动化系统会执行付款/发送/删除/安装/授权等不可逆动作时：规则层写确认、能力层写「不确认就执行不了」，并以「移除规则层后仍被拦住」的反证测试验收。案例：手机 Agent 课程知识包 P6（F-054、F-060、F-062、F-078、F-081），待反证测试与第二平台验证升 L1.5 |
 | screenshot-step-cost-trimming | [截图成本裁剪法](ai-collaboration/screenshot-step-cost-trimming.md) | L1-draft | 1 | 0 | 以整屏截图为输入的多模态 GUI Agent 长任务需要降本时：按「一次搜索/筛选/详情页各一步」估算步数，切为侦察→选定→决策三段分别验收，条件数字化、停点前移，并登记步数与重试费用台账形成基线；裁剪不得以减少验收项为代价。案例：手机 Agent 课程知识包 P5（F-054、F-055、F-064、F-068，费用为讲师口径），待两类 GUI 环境同向数据升 L1.5 |
 
 ## 成熟度等级说明

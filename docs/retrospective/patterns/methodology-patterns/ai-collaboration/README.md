@@ -40,6 +40,7 @@ date: "2026-07-09"
 | [一等公民抽象模式](./first-citizen-abstraction.md) | 一等公民抽象模式 | - |  |
 | [第一性原理 Prompt 模式（First-Principles Prompt Pattern）](./first-principles-prompt-pattern.md) | 第一性原理 Prompt 模式（First-Principles Prompt Pattern） | L3 | `提示词工程` `第一性原理` `Prompt模式` |
 | [四要素任务书法](./four-element-task-brief.md) | 四要素任务书法 | L1-draft | `任务书` `停点` `回报项` |
+| [四问成技法](./four-question-skill-spec.md) | 四问成技法：把口头流程固化为技能前先答触发/步骤/检查/确认四问，并同句复测 | L1-draft | `技能固化` `四问` `检查点` `确认闸门` |
 | [生成-验证闭环模式（Generation-Validation Closed Loop）](./generation-validation-closed-loop.md) | 生成-验证闭环模式（Generation-Validation Closed Loop） | L2 | `生成-验证闭环` `first-principles` `adversarial-review` |
 | [Gotchas 领域特化：在通用模板框架上补充模块特有陷阱](./gotchas-domain-specialization.md) | Gotchas 领域特化：在通用模板框架上补充模块特有陷阱 | L1 |  |
 | [隔离验证法：大树里的局部变更如何只验自己](./hermetic-isolated-verification.md) | 隔离验证法：大树里的局部变更如何只验自己 | L2 | `hermetic-verification` `isolated-build` `concurrent-writes` |
@@ -72,6 +73,7 @@ date: "2026-07-09"
 | [references/ 渐进式披露：通过引用已有知识文档避免内容重复](./references-progressive-disclosure.md) | references/ 渐进式披露：通过引用已有知识文档避免内容重复 | L1 |  |
 | [截图成本裁剪法](./screenshot-step-cost-trimming.md) | 截图成本裁剪法 | L1-draft | `截图成本` `步数预算` `任务分段` |
 | [七概念驱动的技术Wiki创作方法论](./seven-concepts-wiki-creation-methodology.md) | 七概念驱动的技术Wiki创作方法论 | L1 |  |
+| [单产出拆分法](./single-output-work-slicing.md) | 单产出拆分法：按可验收产出切段、六字段交接单、人工关口与验收门 | L1-draft | `多Agent编排` `任务切分` `交接单` `验收门` |
 | [Skill 发现协议增强 SOP](./skill-discovery-protocol.md) | Skill 发现协议增强 SOP | L1 |  |
 | [Skill 五要素模型（Skill Five Elements Model）](./skill-five-elements-model.md) | Skill 五要素模型（Skill Five Elements Model） | L1 |  |
 | [技能意图路由（Skill Intent Routing）](./skill-intent-routing.md) | 技能意图路由（Skill Intent Routing） | L2 |  |

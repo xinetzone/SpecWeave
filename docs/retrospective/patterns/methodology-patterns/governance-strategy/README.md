@@ -65,6 +65,7 @@ date: "2026-07-09"
 | [Docker 作为规范构建环境——构建验证的黄金标准](./docker-canonical-build-environment.md) | Docker 作为规范构建环境——构建验证的黄金标准 | L2-validated | `docker` `build-environment` `reproducibility` |
 | [文档即产品经营法](./docs-as-product.md) | 文档即产品经营法 | L1-draft | `文档产品化` `Sphinx` `Diátaxis` |
 | [双版漂移对账：双实例环境漂移的三态对账法](./dual-env-drift-reconciliation.md) | 双版漂移对账：双实例环境漂移的三态对账法 | L2 | `drift-detection` `dual-instance` `reconciliation` |
+| [双闸门不可逆动作防护](./dual-gate-irreversible-action.md) | 双闸门不可逆动作防护：规则层写确认、能力层强制拦截，并以反证测试验收 | L1-draft | `不可逆动作` `能力闸门` `确认点` `安全边界` |
 | [双模式子模块治理框架：分类管理 Git Submodule](./dual-mode-submodule-governance.md) | 双模式子模块治理框架：分类管理 Git Submodule | L2 |  |
 | [子代理双重质量门模式（事前约束+事后校验）](./dual-quality-gate-subagent.md) | 子代理双重质量门模式（事前约束+事后校验） | L2 |  |
 | [双轨元数据一致性模式：Frontmatter-正文漂移与TOML双星同步](./dual-track-metadata-consistency.md) | 双轨元数据一致性模式：Frontmatter-正文漂移与TOML双星同步 | L1 | `metadata` `frontmatter` `toml` |

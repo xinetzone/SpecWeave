@@ -28,6 +28,7 @@ fine-grained-least-privilege
 first-citizen-abstraction
 first-principles-prompt-pattern
 four-element-task-brief
+four-question-skill-spec
 generation-validation-closed-loop
 gotchas-domain-specialization
 hermetic-isolated-verification
@@ -59,6 +60,7 @@ quality-cost-dynamic-balance
 references-progressive-disclosure
 screenshot-step-cost-trimming
 seven-concepts-wiki-creation-methodology
+single-output-work-slicing
 skill-discovery-protocol
 skill-five-elements-model
 skill-intent-routing

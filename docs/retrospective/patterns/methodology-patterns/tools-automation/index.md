@@ -18,6 +18,7 @@ diff-driven-refactoring
 dry-run-first
 encapsulation-contract-essence
 explicit-maturity-tracking
+evidence-first-repair
 feishu-doc-dom-extraction
 full-workflow-integration
 git-complex-config-file-first

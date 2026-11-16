@@ -30,6 +30,7 @@ date: "2026-07-09"
 | [dry-run 优先的安全修改模式（dry-run-first）](./dry-run-first.md) | dry-run 优先的安全修改模式（dry-run-first） | L3 |  |
 | [封装的契约本质：内部重构零风险安全模式](./encapsulation-contract-essence.md) | 封装的本质是隐藏实现细节只暴露稳定契约；只要外部API行为不变，内部以下划线开头的函数可以自由重构，配合充分测试可实现零回归。frontmatter重构验证：_extract_frontmatter_text()内部重构，159个测试全通过，零风险。 | L1 | `封装` `重构` `契约` |
 | [成熟度显式追踪实践（Explicit Maturity Tracking）](./explicit-maturity-tracking.md) | 成熟度显式追踪实践（Explicit Maturity Tracking） | L1 |  |
+| [证据先行修复法](./evidence-first-repair.md) | 证据先行修复法：失败先取运行证据、写最小复现、单点最修改并如实登记状态 | L1-draft | `失败处置` `运行证据` `最小复现` `诚实状态` |
 | [飞书云文档DOM提取模式（Feishu/Lark Cloud Document DOM Extraction Pattern）](./feishu-doc-dom-extraction.md) | 飞书云文档DOM提取模式（Feishu/Lark Cloud Document DOM Extraction Pattern） | L1 |  |
 | [全流程整合模式](./full-workflow-integration.md) | 全流程整合模式 | - |  |
 | [Git复杂配置文件优先原则：跨平台Shell转义陷阱规避](./git-complex-config-file-first.md) | git config --global alias.prevent "!f() { git log --grep='\\[prevent:' --oneline; }; f" | L1 |  |

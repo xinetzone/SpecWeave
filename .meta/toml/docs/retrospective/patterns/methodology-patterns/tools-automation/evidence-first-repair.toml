@@ -1,0 +1,23 @@
+id = "evidence-first-repair"
+title = "证据先行修复法"
+domain = "methodology"
+layer = "tools-automation"
+category = "retrospective/patterns/methodology-patterns/tools-automation"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(trae-agent-camp-02 知识包)——手机 Agent 课程第二课 E 阶段 P4（118 条事实/5 洞察/10 条 V 意见）"
+source_report = "projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/trae-agent-camp-02/index.md"
+date = "2026-11-16"
+version = "1.0"
+maturity_note = "单案例（厂商课程单源知识包，模式侧证据集中在 F-063、F-076、F-086），V 门为沉淀侧自审；升级 L1.5：在两个不同系统上各完成一次取证→定位→最小修复→复测并留证据包；升级 L2-validated：另需一次独立团队复盘"
+
+[bindings]
+related_patterns = [
+  "split-chain-triage",
+  "first-principles-debugging",
+  "behavior-characterization-freeze",
+  "edit-verify-separation",
+]

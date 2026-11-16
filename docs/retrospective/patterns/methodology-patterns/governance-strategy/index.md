@@ -45,6 +45,7 @@ dev-env-dockerfile-optimization
 docker-canonical-build-environment
 docs-as-product
 dual-env-drift-reconciliation
+dual-gate-irreversible-action
 dual-mode-submodule-governance
 dual-quality-gate-subagent
 dual-track-metadata-consistency

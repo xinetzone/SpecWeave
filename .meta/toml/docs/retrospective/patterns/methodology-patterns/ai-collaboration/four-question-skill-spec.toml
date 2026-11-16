@@ -1,0 +1,23 @@
+id = "four-question-skill-spec"
+title = "四问成技法"
+domain = "methodology"
+layer = "ai-collaboration"
+category = "retrospective/patterns/methodology-patterns/ai-collaboration"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(trae-agent-camp-02 知识包)——手机 Agent 课程第二课 E 阶段 P2（118 条事实/5 洞察/10 条 V 意见）"
+source_report = "projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/trae-agent-camp-02/index.md"
+date = "2026-11-16"
+version = "1.0"
+maturity_note = "单案例（厂商课程单源知识包，模式侧证据集中在 F-036、F-037、F-042、F-046），V 门为沉淀侧自审；升级 L1.5：在三个不同任务类型上各写一次并对比返工次数；升级 L2-validated：另需一次无关团队的实战复盘"
+
+[bindings]
+related_patterns = [
+  "skill-five-elements-model",
+  "skill-standardized-workflow-pattern",
+  "four-element-task-brief",
+  "output-behavior-specification",
+]
