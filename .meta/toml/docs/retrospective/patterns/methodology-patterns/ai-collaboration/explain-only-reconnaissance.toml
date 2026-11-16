@@ -1,0 +1,24 @@
+id = "explain-only-reconnaissance"
+title = "只讲不改勘察法"
+domain = "methodology"
+layer = "ai-collaboration"
+category = "retrospective/patterns/methodology-patterns/ai-collaboration"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20261115-trae-agent-camp-01)——手机Agent课程单源知识包E阶段P2（91条事实/5洞察/7条V意见）"
+source_report = "projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/trae-agent-camp-01/index.md"
+date = "2026-11-16"
+version = "1.0"
+maturity_note = "单案例（课程单源知识包，模式侧证据集中在F-038、F-041、F-074、F-091），V门为沉淀侧自审；上游知识包未测量「拦下误改」的实际效果。升级L1.5：在三个不同代码库上各执行一次且均留下可核对的零改动证据；升级L2-validated：另需一次跨团队实战复盘"
+
+[bindings]
+related_patterns = [
+  "no-touch-list",
+  "reverse-order-doc-learning",
+  "source-code-to-okf-wiki-workflow",
+  "base-first-minimal-customization",
+  "edit-verify-separation",
+]

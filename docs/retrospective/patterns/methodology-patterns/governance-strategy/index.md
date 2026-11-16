@@ -15,6 +15,7 @@ asset-reuse-last-mile-integration-guide
 automated-stats-three-defense-lines
 availability-heuristic-structural-guard
 axiom-system-consistency-principle
+base-first-minimal-customization
 behavior-characterization-freeze
 bootstrap-driven-self-evolution
 bottleneck-first-refactoring

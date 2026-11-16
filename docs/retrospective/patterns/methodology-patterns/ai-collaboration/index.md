@@ -20,12 +20,14 @@ dialog-agent-four-layer-evaluation
 dual-zone-development-model
 ecosystem-barrier-evaluation
 edit-verify-separation
+explain-only-reconnaissance
 external-content-fact-verification
 external-tech-article-learning-closed-loop
 file-existence-verification-gate
 fine-grained-least-privilege
 first-citizen-abstraction
 first-principles-prompt-pattern
+four-element-task-brief
 generation-validation-closed-loop
 gotchas-domain-specialization
 hermetic-isolated-verification
@@ -55,6 +57,7 @@ ps5-defensive-prompt
 public-domain-classics-okf-bundle-workflow
 quality-cost-dynamic-balance
 references-progressive-disclosure
+screenshot-step-cost-trimming
 seven-concepts-wiki-creation-methodology
 skill-discovery-protocol
 skill-five-elements-model

@@ -47,6 +47,7 @@ shared-lib-gravity
 signal-identification-four-step
 spec-as-code-automated-gates
 sphinx-build-acceleration-metering
+split-chain-triage
 tdd-static-analysis-five-test-suites
 three-layer-separation-progressive-migration
 three-tier-tool-fallback

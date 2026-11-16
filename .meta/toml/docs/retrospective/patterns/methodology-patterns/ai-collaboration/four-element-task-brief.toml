@@ -1,0 +1,24 @@
+id = "four-element-task-brief"
+title = "四要素任务书法"
+domain = "methodology"
+layer = "ai-collaboration"
+category = "retrospective/patterns/methodology-patterns/ai-collaboration"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20261115-trae-agent-camp-01)——手机Agent课程单源知识包E阶段P3（91条事实/5洞察/7条V意见）"
+source_report = "projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/trae-agent-camp-01/index.md"
+date = "2026-11-16"
+version = "1.0"
+maturity_note = "单案例（课程单源知识包，模式侧证据集中在F-052、F-054、F-055、F-067、F-072、F-074），V门为沉淀侧自审；「四要素减少返工」无对照测量。升级L1.5：在采购类、信息收集类、内容处理类三类任务上各执行一次并对比返工次数；升级L2-validated：另需一次无关团队的实战复盘"
+
+[bindings]
+related_patterns = [
+  "subagent-atomic-task-template",
+  "output-behavior-specification",
+  "progressive-requirement-clarification",
+  "human-in-the-loop-augmentation",
+  "screenshot-step-cost-trimming",
+]

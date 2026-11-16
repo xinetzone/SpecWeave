@@ -1,0 +1,24 @@
+id = "split-chain-triage"
+title = "分链排障法"
+domain = "methodology"
+layer = "tools-automation"
+category = "retrospective/patterns/methodology-patterns/tools-automation"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20261115-trae-agent-camp-01)——手机Agent课程单源知识包E阶段P4（91条事实/5洞察/7条V意见）"
+source_report = "projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/trae-agent-camp-01/index.md"
+date = "2026-11-16"
+version = "1.0"
+maturity_note = "单案例（课程单源知识包，模式侧证据集中在F-049、F-050、F-066、F-074）；四条分支与每分支三项检查来自单一课程口径，未在第二个异构系统验证。升级L1.5：在两类异构系统（手机Agent与浏览器自动化，或Agent与CI流水线）上各完成一次分链定位并留记录；升级L2-validated：另需一次独立团队复盘"
+
+[bindings]
+related_patterns = [
+  "root-cause-diagnosis",
+  "three-level-problem-solving",
+  "tool-failure-three-tier-degradation",
+  "signal-identification-four-step",
+  "symptom-prescription-qa",
+]

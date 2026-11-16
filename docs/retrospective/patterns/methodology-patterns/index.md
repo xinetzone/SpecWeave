@@ -64,6 +64,11 @@
 | evidence-timing-gate | [证据时序门](governance-strategy/evidence-timing-gate.md) | L1 | 1 | 0 | 存在发布/提交/上线/投稿等一旦发生便无法回撤的对外动作、且依赖外部审核与硬时间窗口时：三线并列倒排、按实际时刻算窗口、任一前提未知即暂停并保留退路；与 stop-loss-backward-scheduling 划界（时间闸 vs 次数预算）。案例：三入口参赛与写作指南知识包（83 条事实族），待非同谱系第二案例验证升 L1.5/L2 |
 | verification-scope-bounding | [核验范围限定](governance-strategy/verification-scope-bounding.md) | L1 | 1 | 0 | 需要把检查结果写进结论/报告/对外声明时：结论必写四项（谁检查·查哪份·截至何时·仍不覆盖什么），把「证据有没有」推进到「这份证据能支持多大的话」；含 6 条反模式与检验标准。案例：三入口参赛与写作指南知识包（83 条事实族），待非同谱系第二案例验证升 L1.5 |
 | surplus-content-acceptance-gate | [查多了什么](ai-collaboration/surplus-content-acceptance-gate.md) | L1-draft | 1 | 0 | 概率模型一次性产出位图/文档/代码/数据且提示词以正向描述为主时：冻结预期清单→生成前负向约束→双向验收（少了什么/多了什么）→留可校验记录。案例：AI 复古未来主义海报生成（2026-11-06） |
+| base-first-minimal-customization | [底座先行最小定制法](governance-strategy/base-first-minimal-customization.md) | L1-draft | 1 | 0 | 目标能力与成熟底座高度重合、需要个性化但不能承担重写成本时：先跑通最小闭环冻结基线，再按「可声明资产→规则/技能→界面→核心操作层」逐层最小改动，每改一处真机验证并登记「改动点—证据—回滚」三元组。案例：手机 Agent 课程知识包 P1（F-018~F-020、F-039、F-091），待第二个不同底座验证升 L1.5 |
+| explain-only-reconnaissance | [只讲不改勘察法](ai-collaboration/explain-only-reconnaissance.md) | L1-draft | 1 | 0 | 首次把 AI/新人引入既有代码库且测试保护不足时：先定三问（模块在哪/请求经过哪几步/改某类行为动哪里），提示词末尾写死「先只讲解、不修改任何文件」，用非开发者复述核对理解，最后以版本控制变更列表（含工作目录外）证明零改动。案例：手机 Agent 课程知识包 P2（F-038、F-041、F-074），待三个不同代码库验证升 L1.5 |
+| four-element-task-brief | [四要素任务书法](ai-collaboration/four-element-task-brief.md) | L1-draft | 1 | 0 | 委托的任务有外部副作用（下单/支付/发送/删除/改配置）时：把「帮我做某事」改写成做什么、条件（数字或枚举）、停点（不可逆动作之前）、回报（3–5 项验收字段）四要素，再补一行越界红线，发出前四问自查。案例：手机 Agent 课程知识包 P3（F-052、F-054、F-055、F-067、F-072），待三类任务类型验证升 L1.5 |
+| split-chain-triage | [分链排障法](tools-automation/split-chain-triage.md) | L1-draft | 1 | 0 | 多组件系统部分可用（有回复但不动/能执行但不理解/执行中途停）且现象不指向明确错误码时：用两条最小指令把故障二分为理解链与执行链，落到四条固定分支，每分支只查三项固定项、一次只改一项，修完双向复跑做交叉回归。案例：手机 Agent 课程知识包 P4（F-049、F-050、F-066、F-074），待两类异构系统验证升 L1.5 |
+| screenshot-step-cost-trimming | [截图成本裁剪法](ai-collaboration/screenshot-step-cost-trimming.md) | L1-draft | 1 | 0 | 以整屏截图为输入的多模态 GUI Agent 长任务需要降本时：按「一次搜索/筛选/详情页各一步」估算步数，切为侦察→选定→决策三段分别验收，条件数字化、停点前移，并登记步数与重试费用台账形成基线；裁剪不得以减少验收项为代价。案例：手机 Agent 课程知识包 P5（F-054、F-055、F-064、F-068，费用为讲师口径），待两类 GUI 环境同向数据升 L1.5 |
 
 ## 成熟度等级说明
 

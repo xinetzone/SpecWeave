@@ -1,0 +1,24 @@
+id = "screenshot-step-cost-trimming"
+title = "截图成本裁剪法"
+domain = "methodology"
+layer = "ai-collaboration"
+category = "retrospective/patterns/methodology-patterns/ai-collaboration"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20261115-trae-agent-camp-01)——手机Agent课程单源知识包E阶段P5（91条事实/5洞察/7条V意见）"
+source_report = "projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/trae-agent-camp-01/index.md"
+date = "2026-11-16"
+version = "1.0"
+maturity_note = "单案例（课程单源知识包，模式侧证据集中在F-054、F-055、F-064、F-068）；费用口径为讲师估计无账单佐证（上游缺口G-04），「减少步数即降本」为上游推断未做对照测量。升级L1.5：在两类图形界面环境（手机App、桌面网页）上各得到一次同向步数/费用数据；升级L2-validated：另需一次第三方环境复现"
+
+[bindings]
+related_patterns = [
+  "visual-operation-closed-loop",
+  "quality-cost-dynamic-balance",
+  "llm-token-optimization-anti-patterns",
+  "four-element-task-brief",
+  "progressive-optimization-pattern",
+]

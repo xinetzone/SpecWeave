@@ -1,0 +1,23 @@
+id = "base-first-minimal-customization"
+title = "底座先行最小定制法"
+domain = "methodology"
+layer = "governance-strategy"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念知识沉淀(sc-20261115-trae-agent-camp-01)——手机Agent课程单源知识包E阶段P1（91条事实/5洞察/7条V意见）"
+source_report = "projects/awesome-okf-xs/doc/bundles/jishu/ai/ecosystems/trae/trae-agent-camp-01/index.md"
+date = "2026-11-16"
+version = "1.0"
+maturity_note = "单案例（课程单源知识包，模式侧证据集中在F-018~F-020、F-039、F-091），V门为沉淀侧自审；跨域迁移为同构推演未实测。升级L1.5：在第二个不同底座上完整重跑一次六步并留改动台账；升级L2-validated：另需本团队一次真实定制任务实战回填"
+
+[bindings]
+related_patterns = [
+  "explain-only-reconnaissance",
+  "minimal-sufficient-scaffold-selection",
+  "no-touch-list",
+  "platform-gap-filling-base-reuse-model",
+]
