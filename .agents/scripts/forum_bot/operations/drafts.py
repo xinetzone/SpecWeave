@@ -1,6 +1,5 @@
 """forum-bot 草稿管理操作。"""
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库
@@ -29,7 +28,7 @@ if TYPE_CHECKING:
         Page = Any
 
 
-def clean_drafts(page: Page, username: str | None = None, verbose: bool = True) -> int:
+def clean_drafts(page: 'Page', username: str | None = None, verbose: bool = True) -> int:
     """清理所有草稿，返回删除的草稿数量。"""
     if username is None:
         username = _get_current_username(page)

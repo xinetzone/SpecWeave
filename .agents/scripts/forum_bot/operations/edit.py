@@ -1,6 +1,5 @@
 """forum-bot 编辑帖子操作。"""
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库
@@ -38,7 +37,7 @@ if TYPE_CHECKING:
         Page = Any
 
 
-def _find_edit_button(page: Page):
+def _find_edit_button(page: 'Page'):
     selectors = [
         (".post-action-menu__edit", "class=.post-action-menu__edit"),
         ("button[title*='编辑']", "title含'编辑'的button"),
@@ -56,7 +55,7 @@ def _find_edit_button(page: Page):
     return None
 
 
-def _find_save_button(page: Page):
+def _find_save_button(page: 'Page'):
     candidates = [
         (page.locator("button.btn-primary").filter(has_text="保存").first, "button.btn-primary:has-text('保存')"),
         (page.get_by_role("button", name="保存").first, "role=button name='保存'"),

@@ -4,7 +4,6 @@
 Playwright通过browser模块延迟导入。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库
@@ -33,7 +32,7 @@ if TYPE_CHECKING:
         Page = Any
 
 
-def _get_current_username(page: Page) -> str | None:
+def _get_current_username(page: 'Page') -> str | None:
     """从页面中获取当前登录用户名。多信号组合检测。"""
     logger.debug("  🔐 检测当前登录用户名...")
 
@@ -97,7 +96,7 @@ def _get_current_username(page: Page) -> str | None:
     return _extract_username()
 
 
-def check_login(page: Page) -> bool:
+def check_login(page: 'Page') -> bool:
     """检查是否已登录论坛（多信号组合判断）。"""
     step("检查登录状态")
     saved_url = page.url

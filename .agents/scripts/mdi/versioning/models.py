@@ -3,7 +3,6 @@
 包含所有变更相关的数据结构定义，纯数据容器，不含业务逻辑。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库
@@ -50,12 +49,12 @@ class ChangeSeverity(StrEnum):
     def _order(self) -> int:
         return {"major": 3, "minor": 2, "patch": 1, "none": 0}[self.value]
 
-    def __lt__(self, other: ChangeSeverity) -> bool:
+    def __lt__(self, other: 'ChangeSeverity') -> bool:
         if not isinstance(other, ChangeSeverity):
             return NotImplemented
         return self._order < other._order
 
-    def __gt__(self, other: ChangeSeverity) -> bool:
+    def __gt__(self, other: 'ChangeSeverity') -> bool:
         if not isinstance(other, ChangeSeverity):
             return NotImplemented
         return self._order > other._order

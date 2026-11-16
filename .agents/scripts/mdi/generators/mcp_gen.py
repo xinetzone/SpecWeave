@@ -3,7 +3,6 @@
 为每个可调用接口生成MCP (Model Context Protocol) Tool定义。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库
@@ -32,7 +31,7 @@ from mdi.generators.utils import map_json_schema_type, sanitize_identifier
 class MCPGenerator(BaseGenerator):
     """MCP Tool定义生成器。"""
 
-    def _generate(self, doc: MDIDocument, output_dir: Path) -> list[Path]:
+    def _generate(self, doc: MDIDocument, output_dir: 'Path') -> 'list[Path]':
         tools = self._build_tools(doc)
         content = json.dumps(tools, ensure_ascii=False, indent=2)
 

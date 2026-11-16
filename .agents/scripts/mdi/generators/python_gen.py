@@ -3,7 +3,6 @@
 为每个Interface生成TypedDict类型定义。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库
@@ -37,7 +36,7 @@ from mdi.generators.utils import (
 class PythonGenerator(BaseGenerator):
     """Python类型代码生成器。"""
 
-    def _generate(self, doc: MDIDocument, output_dir: Path) -> list[Path]:
+    def _generate(self, doc: MDIDocument, output_dir: 'Path') -> 'list[Path]':
         generated_files: list[Path] = []
         type_names: list[str] = []
         module_name = sanitize_identifier(

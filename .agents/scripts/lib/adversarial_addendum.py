@@ -10,7 +10,6 @@
 - 可审计：输出注入日志说明哪些补充项被加载及原因
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=0）
@@ -101,7 +100,7 @@ class ReviewContext:
     disabled_addenda: set[str] = field(default_factory=set)
 
     @classmethod
-    def from_path(cls, path: Path, scenario: str = "auto") -> ReviewContext:
+    def from_path(cls, path: Path, scenario: str = "auto") -> 'ReviewContext':
         preview = ""
         if path.is_file():
             try:

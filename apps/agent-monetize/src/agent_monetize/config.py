@@ -4,7 +4,6 @@
 配置项含轮数、阈值、通道开关、合规确认项。
 """
 
-from __future__ import annotations
 
 import os
 import sys

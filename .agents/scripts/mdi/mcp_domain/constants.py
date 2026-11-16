@@ -2,7 +2,6 @@
 STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库
@@ -58,6 +57,6 @@ _PY_TYPE_MAP: dict[str, type] = {
 }
 
 
-def _make_parser() -> MarkdownIt:
+def _make_parser() -> 'MarkdownIt':
     return MarkdownIt("commonmark").use(front_matter_plugin).use(colon_fence_plugin)
 

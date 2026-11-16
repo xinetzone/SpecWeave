@@ -1,6 +1,5 @@
 """forum-bot 共享浏览器操作辅助函数。"""
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库
@@ -46,7 +45,7 @@ def setup_browser_session(p, headless: bool = True):
 
 
 def navigate_and_check_login(
-    page: Page,
+    page: 'Page',
     topic_id: int,
     action_name: str = "操作",
 ) -> bool:

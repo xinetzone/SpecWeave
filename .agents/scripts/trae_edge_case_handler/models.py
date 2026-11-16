@@ -10,7 +10,6 @@
 - BoundaryDecision: 边界处理决策
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库
@@ -78,7 +77,7 @@ class BoundaryCondition:
     scene: BoundaryScene
     default_level: BoundaryLevel
     description: str = ""
-    check_fn: Callable[[BoundaryContext], list[Signal]] | None = None
+    check_fn: 'Callable[[BoundaryContext], list[Signal]] | None' = None
 
 
 @dataclass

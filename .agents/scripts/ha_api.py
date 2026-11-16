@@ -27,7 +27,6 @@
     python ha_api.py service light.turn_on --entity-id light.living_room
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库
@@ -74,7 +73,7 @@ class EntityState:
     attributes: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
-    def from_api_response(cls, data: dict[str, Any]) -> EntityState:
+    def from_api_response(cls, data: dict[str, Any]) -> 'EntityState':
         """从 API 响应创建实体状态。"""
         return cls(
             entity_id=data.get("entity_id", ""),

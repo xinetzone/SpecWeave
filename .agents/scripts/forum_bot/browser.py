@@ -4,7 +4,6 @@
 Playwright在实际使用时延迟导入，避免非浏览器操作（如--help）因依赖缺失而失败。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库
@@ -51,7 +50,7 @@ def _import_pw():
         sys.exit(1)
 
 
-def safe_navigate(page: Page, url: str, label: str = "页面") -> bool:
+def safe_navigate(page: 'Page', url: str, label: str = "页面") -> bool:
     """安全导航到URL，带超时和错误处理。"""
     _, PWTimeout = _import_pw()
     step(f"导航到{label}: {url}")
@@ -77,7 +76,7 @@ def safe_navigate(page: Page, url: str, label: str = "页面") -> bool:
         return False
 
 
-def wait_for_selector(page: Page, selector: str, label: str = "", timeout: int = ELEMENT_TIMEOUT) -> bool:
+def wait_for_selector(page: 'Page', selector: str, label: str = "", timeout: int = ELEMENT_TIMEOUT) -> bool:
     """等待元素出现，返回是否可见。门禁条件封装。"""
     _, PWTimeout = _import_pw()
     desc = label or selector
@@ -93,7 +92,7 @@ def wait_for_selector(page: Page, selector: str, label: str = "", timeout: int =
         return False
 
 
-def click_with_retry(page: Page, selector: str, label: str = "", retries: int = RETRY_MAX) -> bool:
+def click_with_retry(page: 'Page', selector: str, label: str = "", retries: int = RETRY_MAX) -> bool:
     """点击元素，失败时重试（含滚动到视图、JS click兜底）。"""
     _, PWTimeout = _import_pw()
     desc = label or selector
@@ -129,7 +128,7 @@ def click_with_retry(page: Page, selector: str, label: str = "", retries: int = 
     return False
 
 
-def fill_textarea(page: Page, selector: str, content: str, label: str = "编辑器") -> bool:
+def fill_textarea(page: 'Page', selector: str, content: str, label: str = "编辑器") -> bool:
     """填写textarea内容并触发input/change事件。"""
     step(f"填写{label}内容 ({len(content)} 字符)")
     try:
@@ -153,7 +152,7 @@ def fill_textarea(page: Page, selector: str, content: str, label: str = "编辑�
         return False
 
 
-def _attach_network_logging(context: BrowserContext) -> None:
+def _attach_network_logging(context: 'BrowserContext') -> None:
     """为浏览器上下文附加网络请求日志（过滤静态资源）。"""
     def _should_log(url: str) -> bool:
         skip_ext = (".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".woff", ".woff2", ".ico")
@@ -169,7 +168,7 @@ def _attach_network_logging(context: BrowserContext) -> None:
     ))
 
 
-def create_context(playwright, headless: bool = False) -> tuple[Browser, BrowserContext]:
+def create_context(playwright, headless: bool = False) -> 'tuple[Browser, BrowserContext]':
     """创建浏览器上下文，优先复用已保存的登录状态。"""
     step("创建浏览器上下文")
     ensure_state_dir()
