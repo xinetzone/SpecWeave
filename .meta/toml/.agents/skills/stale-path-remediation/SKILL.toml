@@ -1,0 +1,5 @@
+id = "skill"
+title = "迁移失效路径处置 Skill"
+category = "skills/stale-path-remediation"
+date = "2026-11-16"
+version = "1.0"

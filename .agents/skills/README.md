@@ -37,7 +37,7 @@ title: ".agents/skills/ 目录索引"
 | github-org-bootstrap-cmd | 命令门面 | GitHub 组织命名与初始化 | 创建GitHub组织、建个org、组织名怎么起、demo组织、huncheng-lab | [github-org-bootstrap-cmd/SKILL.md](github-org-bootstrap-cmd/SKILL.md) |
 | loop-engineering-cmd | 命令门面（v1.0.0） | 当用户提到'Loop Engineering'、'循环工程'、'自动迭代'、'验证器设计'、'自动优化循环'、'AI循环'、'Loop设计'、'三要素验证'、'适用性判定'、'循环设计检查'、'Loop风险评估'时… | Loop Engineering、循环工程、自动迭代、验证器设计、自动优化循环、AI循环 | [loop-engineering-cmd/SKILL.md](loop-engineering-cmd/SKILL.md) |
 
-### 完整Skill（58个）
+### 完整Skill（59个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -99,6 +99,7 @@ title: ".agents/skills/ 目录索引"
 | ci-run-failure-triage | 完整Skill（v1.0.0，L1） | 远程 CI 失败取证与转绿闭环：gh 取失败 job 与失败日志 → 落盘日志定点 grep 出红项原文 → 本地复现同一门禁 → 六类分诊（真失败·内容类 / 真失败·门禁缺陷 / 伪失败·环境差异 / 伪失败·测试选择器 / 存量红 / 抑制型门禁）→ 只修内容不削弱门禁 → 推送后按新 run 的 job conclusion 验收；含取证命令手册与 awesome-okf 规模数字漂移转绿案例 | CI 挂了、流水线红了、Actions 失败、帮我把 CI 跑绿、这个 job 为什么失败、提交后 CI 挂了、本地绿了远端还红 | [ci-run-failure-triage/SKILL.md](ci-run-failure-triage/SKILL.md) |
 | howto-course-writing | 完整Skill（v1.0.0，L1） | 零基础实操课与上手文档写作法：六组件（收获前置 / 一步一验收 / 一喻到底 / 三图配置 / 行动块 / 边界前置）+ 三类画板语法 + 九段骨架 + 交付前 12 问；含五组 Before/After 改写对照与六块画板可复用蓝图 | 写课程、课程讲稿、新手教程、上手文档、新人 SOP、培训材料、读者照着做跑不通、教程没人看完、把稿子改成课一样 | [howto-course-writing/SKILL.md](howto-course-writing/SKILL.md) |
 | lark-doc-to-okf-wiki | 完整Skill（v1.0.0，L1） | 飞书文档 + 画板 → OKF v0.2 知识包：敏感度分流 → docs +fetch 取正文与评论 → whiteboard raw/preview 双源判读 → F 编号事实台账 → 七件套结构 → 链接与计数双门；含命令手册、节点判读与结构模板 | 飞书文档转知识包、larkoffice 或 feishu docx、OKF wiki、拆解文档写作法、学习它的画板、no code blocks found | [lark-doc-to-okf-wiki/SKILL.md](lark-doc-to-okf-wiki/SKILL.md) |
+| stale-path-remediation | 完整Skill（v1.0.0，L1） | 迁移后失效路径处置五步闭环：S1 定位失效路径（grep 全部消费方）→ S2 证明目标消失（Test-Path/Glob 零命中+git log）→ S3 找权威继任者（守 submodule 只读边界）→ S4 自定位最小修复（Path(__file__) 回溯/委托 shim/退役守卫 exit 2 三处方）→ S5 实跑取证（真实执行+临时夹具+测试回归）；含 F1~F4 四形态判型、7 条反模式、8 条 Gotchas；萃取自 check_mermaid 委托化、count_wikis 退役守卫、frontmatter source 断链三案例 | 路径失效、硬编码目录不存在、No such file、计数为0、扫描0个文件、source 断链、迁移残留引用、机器绝对路径 | [stale-path-remediation/SKILL.md](stale-path-remediation/SKILL.md) |
 
 ### 工作流门面（11个）
 
