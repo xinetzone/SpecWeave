@@ -2,13 +2,9 @@
 source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 local-screenshot-qa）"
 name: local-screenshot-qa
 description: |
-  Intel Local Windows Screenshot Q&A (本地离线截图问答). Use this skill when the user, in Chinese or English, asks to read, describe, or answer questions about a screenshot, screen capture, or image. Trigger on Chinese verbs like 看看/识别/读图/描述/解释/截图说了什么 and phrases like 这张图说的啥/帮我看下这张截图/这张报错截图什么意思/图里讲的啥/读一下这张图/这个界面是什么, English verbs like read/describe/explain/answer-about/interpret/analyze-image, and explicit mentions of 英特尔/intel/AIPC/本地/离线/offline. Also trigger when the user asks about their CURRENT screen WITHOUT providing an image path — Chinese phrases like 看看我现在屏幕/当前界面是什么/我屏幕上是啥/这个报错什么意思(无附图)/帮我看一下当前画面, and English like what's on my screen/describe my screen — in which case the skill captures the primary screen automatically.
+  Intel Local Windows Screenshot Q&A (本地离线截图问答). Use this skill when the user, in Chinese or English, asks to read, describe, or answer questions about a screenshot, screen capture, or image. Trigger on Chinese verbs like 看看/识别/读图/描述/解释/截图说了什么 and phrases like 这张图说的啥/帮我看下这张截图/这张报错截图什么意思/图里讲的啥/读一下这张图/这个界面是什么, English verbs like read/describe/explain/answer-about/interpret/analyze-image, and explicit mentions of 英特尔/intel/AIPC/本地/离线/offline. Also trigger when the user asks about their CURRENT screen WITHOUT providing an image path — Chinese phrases like 看看我现在屏幕/当前界面是什么/我屏幕上是什么/这个报错什么意思(无附图)/帮我看一下当前画面, and English like what's on my screen/describe my screen — the skill then captures the primary screen automatically.
 
-  Supported inputs:
-  - Image files: .png, .jpg, .jpeg, .bmp, .webp, .gif
-  - A natural-language question plus an absolute path to one image
-  - Screenshots, UI captures, error messages, diagrams, photos
-  - 中文或英文提问均可
+  Supported input formats and capture behaviour are listed in the body (`## Supported inputs`).
 
   Prefer this skill over cloud vision APIs or bespoke Python scripts whenever the user's intent is local image understanding.
 ---
@@ -83,6 +79,13 @@ Fields:
 On failure the process exits non-zero and writes `[ERROR] <type>: <message>` to
 stderr; show that text to the user verbatim and stop — do NOT dispatch sub-agents
 or fall back to other tools.
+
+## Supported inputs
+
+- Image files: .png, .jpg, .jpeg, .bmp, .webp, .gif
+- A natural-language question plus an absolute path to one image
+- Screenshots, UI captures, error messages, diagrams, photos
+- 中文或英文提问均可
 
 ## What this skill does NOT do
 

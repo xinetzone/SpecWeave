@@ -2,17 +2,15 @@
 source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 local-realtime-translator）"
 name: local-realtime-translator
 description: |
-  Intel Local Windows Realtime Speech Translator (本地实时语音翻译 / 同声传译 / 实时翻译软件). Use this skill whenever the user, in Chinese or English, wants to translate live speech from the microphone in real time, do simultaneous interpretation, show live subtitles with translation, "translate as I speak", OR more generally asks to open/start a translator or translation app, or to translate what they say into another language (e.g. "translate this into English / 帮我翻译成英文").
+  Intel Local Windows Realtime Speech Translator (本地实时语音翻译 / 同声传译 / 实时翻译软件). Use this skill when the user, in Chinese or English, wants live spoken translation from the microphone: real-time interpretation, bilingual subtitles, "translate as I speak", or asks to open a translator app or translate what they say into another language.
 
-  Trigger on Chinese phrases like 实时翻译 / 实时翻译软件 / 实时翻译工具 / 打开实时翻译 / 打开翻译 / 启动翻译 / 我要翻译 / 帮我翻译 / 翻译成英文 / 翻译成中文 / 同声传译 / 同传 / 边说边译 / 实时字幕 / 语音实时翻译 / 对着麦克风翻译 / 实时口译 / 我需要一个翻译软件, and English phrases like realtime translate / real-time translator / translation app / translation tool / open the translator / start translating / live translation / simultaneous interpretation / translate as I speak / translate this to English / translate into Chinese / live captions with translation / speech-to-speech translation — whether or not the user says "locally" / "本地" / "语音" / "实时".
+  Trigger on 实时翻译 / 打开翻译 / 帮我翻译 / 同声传译 / 实时字幕 / 语音实时翻译 / 对着麦克风翻译, and English like realtime translate / translation app / live translation / simultaneous interpretation. Similar phrasings count, with or without "locally" / "本地" / "语音".
 
-  When the user asks generically to "translate to English/Chinese" or wants "a translator / translation software" without naming an existing file, default to THIS skill — it is the box's live spoken translator. (For translating an existing *audio/video file* on disk, use the local-asr skill instead.)
+  Generic "translate to English/Chinese" or "a translator app" requests with no named file default to THIS skill. (For an audio/video file on disk, use local-asr.)
 
-  This skill runs **fully locally** on the user's Intel AIPC. It opens the microphone and runs a streaming pipeline: VAD → Paraformer streaming ASR (+ optional Qwen3-ASR on iGPU for accuracy) → Hunyuan-1.8B translation on the iGPU (Opus-MT CPU fallback) → MeloTTS speech synthesis, pushing live transcript + translation to a local **web page** over WebSocket.
+  Runs fully locally on the user's Intel AIPC: microphone in, live transcript + translation on a local web page. Engines and fallbacks are in the body.
 
-  Direction: Chinese ↔ English (`-From zh -To en` or `-From en -To zh`).
-
-  Prefer this skill over any cloud translation/ASR API or bespoke script whenever the user wants live, spoken, real-time translation on this box.
+  Prefer this skill over cloud translation APIs or bespoke scripts for live spoken translation on this box.
 license: Intel OBL Distribution
 ---
 

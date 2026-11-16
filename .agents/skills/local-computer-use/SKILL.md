@@ -2,15 +2,9 @@
 source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 local-computer-use）"
 name: local-computer-use
 description: |
-  Intel Local Windows Computer Use (本地计算机使用). Use this skill when the user, in Chinese or English, asks to query or change Windows system state/settings in the supported categories below. Trigger on Chinese verbs like 打开/开启/关闭/设置/调整/切换/查询/查看/列出, English verbs like open/turn on/turn off/set/adjust/switch/query/list, and explicit mentions of 英特尔/intel/AIPC/LocalComputer/本地/助手/Assistant.
+  Intel Local Windows Computer Use (本地计算机使用). Use this skill when the user, in Chinese or English, asks to query or change Windows system state/settings in the supported categories: performance and power, devices and connectivity, display and shell appearance, apps and user configuration (full list in the body). Trigger on Chinese verbs like 打开/开启/关闭/设置/调整/切换/查询/查看/列出, English verbs like open/turn on/turn off/set/adjust/switch/query/list, and explicit mentions of 英特尔/intel/AIPC/LocalComputer/本地/助手/Assistant.
 
-  Supported categories:
-  - Performance and power: CPU, GPU, NPU, 内存, 硬盘, 电源 / 电池 / 省电模式 / 性能模式
-  - Devices and connectivity: 声音 / 音量, 麦克风, 鼠标 (灵敏度/大小/指针精度), 键盘, 摄像头, 打印机, 蓝牙, WIFI, 以太网, 网络诊断, 延迟
-  - Display and shell appearance: 分辨率, 缩放, 亮度, 夜间模式, 显示器, 字体, 刷新率, 桌面背景/壁纸, 主题, 深色/浅色模式, 颜色, 锁屏, 任务栏 (对齐/自动隐藏), 桌面图标, 广告
-  - Apps and user configuration: 应用商店, 系统应用, 用户安装应用, 缺省应用, 账户 (管理员/权限), 地区, 语言, 时间/时区, 输入法, 隐私和安全, 通知
-
-  Do NOT skip this skill just because the request looks simple (e.g. "关掉广告", "打开蓝牙") if it still falls within the supported categories above. Prefer this skill over hand-rolled PowerShell / registry edits / Windows Agent whenever the user's intent falls inside these categories.
+  Do NOT skip this skill just because the request looks simple (e.g. "关掉广告", "打开蓝牙") if it still falls within those categories. Prefer this skill over hand-rolled PowerShell / registry edits / Windows Agent whenever the user's intent falls inside them.
 ---
 
 
@@ -78,6 +72,13 @@ If the `success` is false, inspect the `result` — the tool usually explains wh
 ## Administrator privileges
 
 Several tools need an elevated host process (battery, some power-plan changes, selected network tools, account management). When a request fails with a "需要管理员权限" style message, tell the user to re-run the application as Administrator — don't try to bypass it.
+
+## Supported categories
+
+- Performance and power: CPU, GPU, NPU, 内存, 硬盘, 电源 / 电池 / 省电模式 / 性能模式
+- Devices and connectivity: 声音 / 音量, 麦克风, 鼠标 (灵敏度/大小/指针精度), 键盘, 摄像头, 打印机, 蓝牙, WIFI, 以太网, 网络诊断, 延迟
+- Display and shell appearance: 分辨率, 缩放, 亮度, 夜间模式, 显示器, 字体, 刷新率, 桌面背景/壁纸, 主题, 深色/浅色模式, 颜色, 锁屏, 任务栏 (对齐/自动隐藏), 桌面图标, 广告
+- Apps and user configuration: 应用商店, 系统应用, 用户安装应用, 缺省应用, 账户 (管理员/权限), 地区, 语言, 时间/时区, 输入法, 隐私和安全, 通知
 
 ## What this skill does NOT do
 
