@@ -31,6 +31,7 @@ retrospective-skills-article-learning-20260629/index
 retrospective-speckit-sdd-analysis-20260706/index
 retrospective-sphinx-graphql-okf-combination-insights-20260805/index
 retrospective-tencent-hunyuan-hy3-analysis-20260801/index
+retrospective-trae-agent-camp-02-patterns-insight-20261116/index
 retrospective-tutti-analysis-20260707/index
 retrospective-vibe-coding-prompts-learning-analysis-20260704/index
 retrospective-volcengine-cua-learning-20260707/index
