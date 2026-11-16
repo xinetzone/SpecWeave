@@ -3,7 +3,6 @@
 提供AI发布声明的幂等插入逻辑。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

@@ -3,7 +3,6 @@
 将LogEntry列表聚合为AggregateStats。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

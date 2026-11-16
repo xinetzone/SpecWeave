@@ -3,7 +3,6 @@
 4个预定义适配策略：沙箱限制、PowerShell编码、论坛登录过期、DOM结构变化。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

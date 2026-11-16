@@ -10,7 +10,6 @@ Git hooks 安装脚本（传统方式：复制到 .git/hooks/）
     python .agents/scripts/hooks/install-hooks.py --force  # 覆盖已存在的钩子
     python .agents/scripts/hooks/install-hooks.py --uninstall  # 卸载钩子
 """
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

@@ -43,7 +43,6 @@ Pre-commit 钩子入口：放置校验 + .temp 生命周期 + 敏感信息检测
 Git 原生方式：
   git commit --no-verify     跳过所有钩子（不推荐，会跳过其他检查）
 """
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

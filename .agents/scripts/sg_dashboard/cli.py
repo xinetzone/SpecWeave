@@ -3,7 +3,6 @@
 提供argparse解析和main()函数，串联解析→聚合→渲染流程。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

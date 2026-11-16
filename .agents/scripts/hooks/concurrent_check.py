@@ -12,7 +12,6 @@
   SKIP=concurrent-safety-check   同上（兼容 pre-commit 框架习惯）
   CONCURRENT_CHECK_DIM=TIMEOUT   仅检查指定维度
 """
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

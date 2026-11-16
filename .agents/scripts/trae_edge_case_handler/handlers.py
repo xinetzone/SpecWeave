@@ -3,7 +3,6 @@
 致命/警告/提示三级处理流程及统一分发入口。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

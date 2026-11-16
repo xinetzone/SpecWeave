@@ -3,7 +3,6 @@
 定义日志条目、会话统计、聚合统计三个核心dataclass。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

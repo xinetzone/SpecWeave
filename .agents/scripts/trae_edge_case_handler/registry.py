@@ -3,7 +3,6 @@
 边界条件注册、查询和检测入口。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

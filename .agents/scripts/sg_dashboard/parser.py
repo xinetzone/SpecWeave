@@ -3,7 +3,6 @@
 提供ctx JSON解析、日志文件解析、日志文件收集功能。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

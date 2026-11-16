@@ -3,7 +3,6 @@
 提供事件分布饼图和阶段拦截对比柱状图生成。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

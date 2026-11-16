@@ -3,7 +3,6 @@
 边界情况汇总报告数据结构和格式化输出。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

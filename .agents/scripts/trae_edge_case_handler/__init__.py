@@ -21,7 +21,6 @@
 向后兼容：所有公共API均可直接从 trae_edge_case_handler 导入，无需修改现有代码。
 """
 
-from __future__ import annotations
 
 # 版本校验：导入共享库
 import sys as _sys

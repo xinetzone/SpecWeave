@@ -26,7 +26,6 @@ stdin 输入（git 每行一条）:
     由 .githooks/pre-push 自动调用（git push 时触发）
     手动复现: echo "<local ref> <sha> <remote ref> <sha>" | python .agents/scripts/hooks/pre_push.py
 """
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

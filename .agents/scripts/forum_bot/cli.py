@@ -3,7 +3,6 @@
 提供argparse命令行解析和命令分发。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

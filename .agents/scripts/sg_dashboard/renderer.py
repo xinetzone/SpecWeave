@@ -3,7 +3,6 @@
 将AggregateStats渲染为自包含HTML仪表盘，包含Mermaid图表和CSS样式。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

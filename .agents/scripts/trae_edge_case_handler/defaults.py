@@ -3,7 +3,6 @@
 规范文档中定义的19个默认边界条件的注册初始化。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

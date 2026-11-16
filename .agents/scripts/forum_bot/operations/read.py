@@ -1,6 +1,5 @@
 """forum-bot 读帖操作。"""
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

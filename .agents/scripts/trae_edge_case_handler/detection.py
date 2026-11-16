@@ -3,7 +3,6 @@
 多信号组合检测（multi-signal-detection模式）和三级分级判断逻辑。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库
