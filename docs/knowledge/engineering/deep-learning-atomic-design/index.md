@@ -110,11 +110,11 @@
 
 ### 3.1 PyTorch nn.Module 组合模式
 
-#### 模式概述
+#### 模式概述（nn.Module 组合）
 
 PyTorch 通过 `nn.Module` 基类构建层次化的组件体系。每个组件都是独立的 `nn.Module` 子类，可以嵌套组合形成复杂模型。
 
-#### 核心特点
+#### 核心特点（nn.Module 组合）
 
 | 特点 | 说明 |
 |------|------|
@@ -211,7 +211,7 @@ class TransformerEncoder(nn.Module):
 
 ### 3.2 Hugging Face Config-Model-Pipeline 三层抽象
 
-#### 模式概述
+#### 模式概述（Config-Model-Pipeline 三层抽象）
 
 Hugging Face Transformers 采用**配置-模型-流水线**三层抽象架构，将模型定义、超参数管理和推理流程解耦。
 
@@ -358,11 +358,11 @@ class TextClassificationPipeline(Pipeline):
 
 ### 3.3 TensorFlow Keras Layer 封装模式
 
-#### 模式概述
+#### 模式概述（Keras Layer 封装）
 
 TensorFlow Keras 通过继承 `tf.keras.layers.Layer`，将一组相关层封装为可复用的组件，支持权重共享和动态形状。
 
-#### 核心特点
+#### 核心特点（Keras Layer 封装）
 
 | 特点 | 说明 |
 |------|------|
