@@ -152,7 +152,7 @@ def check_open_standards_compliance(skill_md: Path, content: str, frontmatter_te
         results.append(CheckResult(
             name="open_standard.description.trigger_hint",
             passed=has_trigger,
-            severity="info" if has_trigger else "info",
+            severity="info" if has_trigger else "warn",
             message="description包含触发时机说明" if has_trigger
             else "description建议包含触发时机说明（如 'Use when...'、'当用户提到...'）"
         ))
