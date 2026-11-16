@@ -16,7 +16,6 @@ DEFAULT_TEMPLATE = (
 )
 DEFAULT_SUMMARY_TEMPLATE = (
     PROJECT_ROOT
-    / ".agents"
     / "docs"
     / "retrospective"
     / "templates"
