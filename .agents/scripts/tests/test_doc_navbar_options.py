@@ -367,7 +367,10 @@ def test_t5b_pages_yml_domain_sharding_ci_logic():
     # VC-8 第 1 条：锁定 dorny/paths-filter@v3
     assert "dorny/paths-filter@v3" in text, "VC-8：应锁定 paths-filter@v3 稳定 API"
     # VC-8 第 2 条：构建前输出 $OKF_BUILD_DOMAIN 方便 debug
-    assert "OKF_BUILD_DOMAIN=" in text and ">> $GITHUB_ENV" in text, (
+    # 兼容 shellcheck 推荐的引号写法 `>> "$GITHUB_ENV"` 与裸写法
+    assert "OKF_BUILD_DOMAIN=" in text and (
+        ">> $GITHUB_ENV" in text or '>> "$GITHUB_ENV"' in text
+    ), (
         "VC-8：Resolve 步骤应写入 OKF_BUILD_DOMAIN 到 $GITHUB_ENV"
     )
 
