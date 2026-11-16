@@ -3,7 +3,6 @@
 完全在沙箱内运行：不真联网、不真收费，仅模拟价值交换闭环。
 """
 
-from __future__ import annotations
 
 import random
 from typing import Any

@@ -1,6 +1,5 @@
 """CLI 入口冒烟测试：--help / --version / 无子命令。"""
 
-from __future__ import annotations
 
 import pytest
 

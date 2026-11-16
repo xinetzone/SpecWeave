@@ -1,6 +1,5 @@
 """自进化学习器测试：指数加权 + 软最大归一化。"""
 
-from __future__ import annotations
 
 from agent_monetize.channels.content_pricing import ContentPricingChannel
 from agent_monetize.channels.registry import ChannelRegistry

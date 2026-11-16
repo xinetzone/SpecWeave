@@ -1,6 +1,5 @@
 """行动层：执行通道交付与计价（A1 交付价值 / A2 完成交换）。"""
 
-from __future__ import annotations
 
 import logging
 

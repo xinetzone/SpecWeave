@@ -1,6 +1,5 @@
 """数据模型不变量测试。"""
 
-from __future__ import annotations
 
 from agent_monetize.models import (
     ActionResult,

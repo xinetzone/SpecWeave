@@ -1,6 +1,5 @@
 """决策层：合规过滤 + 通道适配 + 道家门控 → 选择最优机会或待时（A2/A7）。"""
 
-from __future__ import annotations
 
 import logging
 

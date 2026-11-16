@@ -7,7 +7,6 @@
   3. 原生不可用 → `fallback_to_reference` 时走纯 Python 参考实现 + WARN。
 """
 
-from __future__ import annotations
 
 import ctypes
 import logging

@@ -1,6 +1,5 @@
 """自主循环编排：observe → decide → act → learn，支持定时/事件驱动与状态持久化。"""
 
-from __future__ import annotations
 
 import logging
 import time

@@ -1,6 +1,5 @@
 """通道注册表：注册 / 查找 / 枚举。"""
 
-from __future__ import annotations
 
 from typing import Any
 

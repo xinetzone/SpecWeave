@@ -1,6 +1,5 @@
 """配置加载与默认值测试。"""
 
-from __future__ import annotations
 
 import os
 

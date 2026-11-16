@@ -1,6 +1,5 @@
 """通道抽象基类：4 钩子（observe_signal / decide_eligibility / act / learn_feedback）。"""
 
-from __future__ import annotations
 
 import abc
 from typing import Any

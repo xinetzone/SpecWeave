@@ -1,6 +1,5 @@
 """红绿区合规策略测试。"""
 
-from __future__ import annotations
 
 from agent_monetize.compliance.policies import (
     RED_ZONE_BEHAVIORS,

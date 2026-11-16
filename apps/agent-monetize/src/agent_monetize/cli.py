@@ -1,6 +1,5 @@
 """CLI：`python -m agent_monetize demo` 跑通沙箱闭环；`--help` 查看用法。"""
 
-from __future__ import annotations
 
 import argparse
 import logging

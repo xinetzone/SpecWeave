@@ -4,7 +4,6 @@
 （agent 从反馈中自进化，自组织而非人肉调度）。
 """
 
-from __future__ import annotations
 
 import logging
 import math

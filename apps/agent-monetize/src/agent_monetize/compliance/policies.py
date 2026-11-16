@@ -6,7 +6,6 @@
   对应公理 A5（信誉积累降低信任成本）——真实模式必须有人工可审计的确认。
 """
 
-from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Any

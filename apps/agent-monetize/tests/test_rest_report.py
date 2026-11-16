@@ -1,6 +1,5 @@
 """真实 API 适配器通道（RestReportChannel）测试：合规启用守卫与沙箱对照。"""
 
-from __future__ import annotations
 
 from agent_monetize.channels.rest_report import RestReportChannel
 from agent_monetize.models import ActionResult, Opportunity

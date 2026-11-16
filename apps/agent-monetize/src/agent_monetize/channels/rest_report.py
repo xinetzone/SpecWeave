@@ -4,7 +4,6 @@
 加入 `compliance.confirmed_behaviors` 时才真正对外发送；否则以沙箱空适配器对照。
 """
 
-from __future__ import annotations
 
 import random
 from typing import Any

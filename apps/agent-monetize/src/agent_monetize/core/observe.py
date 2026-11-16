@@ -1,6 +1,5 @@
 """观察层：机会信号采集 + tvm-ffi 打分（A3 找稀缺 / A4 降搜索成本）。"""
 
-from __future__ import annotations
 
 import logging
 from typing import Any

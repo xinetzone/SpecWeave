@@ -1,6 +1,5 @@
 """真实适配器协议 / 守卫 / 沙箱对照测试。"""
 
-from __future__ import annotations
 
 from agent_monetize.adapters.base import (
     AdapterGuard,

@@ -6,7 +6,6 @@
 - 本协议仅描述「上报」等非资金流转操作；本平台不接入任何真实资金流转。
 """
 
-from __future__ import annotations
 
 import logging
 from dataclasses import dataclass

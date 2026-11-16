@@ -1,6 +1,5 @@
 """道家门控测试：无为门 / 知止门 / 门控编排器。"""
 
-from __future__ import annotations
 
 from agent_monetize.config import WuyouConfig, ZhizhiConfig
 from agent_monetize.models import ChannelState, LoopState, Opportunity

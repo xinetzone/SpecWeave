@@ -1,6 +1,5 @@
 """tvm-ffi 桥接测试：参考实现公式 + 原生模块加载（可用时，.dll/.so/.dylib）。"""
 
-from __future__ import annotations
 
 import math
 import os

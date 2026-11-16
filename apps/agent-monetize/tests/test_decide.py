@@ -1,6 +1,5 @@
 """决策层专项测试：覆盖合规过滤、通道适配过滤与「全部过滤后待时」分支。"""
 
-from __future__ import annotations
 
 from agent_monetize.channels.base import Channel
 from agent_monetize.channels.registry import ChannelRegistry

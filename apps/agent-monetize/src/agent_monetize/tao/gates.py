@@ -6,7 +6,6 @@
   对应公理 A6（再分配约束）+ 道家「知止不殆」（设红线止损，不无限加杠杆）。
 """
 
-from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field

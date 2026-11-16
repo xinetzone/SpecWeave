@@ -1,6 +1,5 @@
 """端到端自主循环测试：observe → decide → act → learn + 状态持久化。"""
 
-from __future__ import annotations
 
 import os
 

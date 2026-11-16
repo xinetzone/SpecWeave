@@ -1,6 +1,5 @@
 """沙箱通道测试：内容计价 + 数据服务。"""
 
-from __future__ import annotations
 
 from agent_monetize.channels.base import Channel
 from agent_monetize.channels.content_pricing import ContentPricingChannel, default_content_params

@@ -1,6 +1,5 @@
 """状态持久化：LoopState ↔ JSON 文件（余额、通道权重、历史记录）。"""
 
-from __future__ import annotations
 
 import json
 import logging

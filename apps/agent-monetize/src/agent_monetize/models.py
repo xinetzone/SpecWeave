@@ -1,6 +1,5 @@
 """数据模型（dataclasses）：信号 / 机会 / 决策 / 结果 / 反馈 / 通道状态。"""
 
-from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Any
