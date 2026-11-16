@@ -38,7 +38,7 @@ def check_pattern(pattern_md, root):
     )
 
     report.results.extend(check_frontmatter(pattern_md, content, fields))
-    report.results.extend(check_sections(content))
+    report.results.extend(check_sections(content, fields))
     report.results.extend(check_file_length(pattern_md, content))
     report.results.extend(check_why_explanations(content))
     report.results.extend(check_visualization(content))

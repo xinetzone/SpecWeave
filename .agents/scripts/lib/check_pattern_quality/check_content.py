@@ -8,8 +8,11 @@ from pathlib import Path
 
 from .constants import (
     REQUIRED_SECTIONS,
+    OPTIONAL_SECTIONS,
+    SECTION_ALIASES,
     RECOMMENDED_SECTIONS,
     IMPORTANT_SECTIONS,
+    IMPORTANT_SECTION_ALIASES,
     INNOVATION_PATTERN_SECTIONS,
     MIN_PATTERN_LINES,
     MAX_PATTERN_LINES,
@@ -29,19 +32,44 @@ from .constants import (
 from .models import CheckResult
 
 
-def check_sections(content):
+def check_sections(content, fields=None):
+    """章节检查：必要章节做别名归一，模式类型/成熟度改为可选（A1 模板口径统一）。
+
+    fields 为 frontmatter 解析结果；提供时「成熟度」章节可由 maturity 字段承担，
+    与 `pattern-to-methodology-library` 模板一致。
+    """
     results = []
+    fields = fields or {}
     section_headers = {m.group(1).strip(): m.start() for m in SECTION_HEADER_PATTERN.finditer(content)}
     section_names = set(section_headers.keys())
 
     for sec_name, sec_id in REQUIRED_SECTIONS.items():
-        found = any(sec_name in name for name in section_names)
+        candidates = (sec_name,) + SECTION_ALIASES.get(sec_name, ())
+        found = any(any(c in name for name in section_names) for c in candidates)
         results.append(CheckResult(
             name=f"sections.required.{sec_id}",
             passed=found,
             severity="error",
             message=f"包含必要章节「{sec_name}」" if found
-            else f"缺少必要章节「{sec_name}」"
+            else f"缺少必要章节「{sec_name}」（或其等价写法 {'/'.join(candidates[1:])}）"
+        ))
+
+    for sec_name, sec_id in OPTIONAL_SECTIONS.items():
+        found = any(sec_name in name for name in section_names)
+        if not found and sec_id == "maturity" and fields.get("maturity"):
+            results.append(CheckResult(
+                name=f"sections.required.{sec_id}",
+                passed=True,
+                severity="info",
+                message="成熟度由 frontmatter 的 maturity 字段承担，无需独立章节"
+            ))
+            continue
+        results.append(CheckResult(
+            name=f"sections.required.{sec_id}",
+            passed=True,
+            severity="info",
+            message=f"包含可选章节「{sec_name}」" if found
+            else f"可选章节「{sec_name}」缺省（新模板不强制）"
         ))
 
     core_found = False
@@ -53,12 +81,13 @@ def check_sections(content):
         name="sections.core_content",
         passed=core_found,
         severity="error",
-        message="包含核心内容章节（核心规则/核心要素/解决方案/操作流程等）" if core_found
-        else "缺少核心内容章节（应包含核心规则/核心要素/解决方案/操作流程之一）"
+        message="包含核心内容章节（核心规则/核心做法/操作流程等）" if core_found
+        else "缺少核心内容章节（应包含核心规则/核心做法/操作流程之一）"
     ))
 
     for sec_name, sec_id in IMPORTANT_SECTIONS.items():
-        found = any(sec_name in name for name in section_names)
+        candidates = (sec_name,) + IMPORTANT_SECTION_ALIASES.get(sec_name, ())
+        found = any(any(c in name for name in section_names) for c in candidates)
         results.append(CheckResult(
             name=f"sections.important.{sec_id}",
             passed=found,
@@ -184,14 +213,33 @@ def check_cross_references(content):
     return results
 
 
+def _mask_frontmatter(content: str) -> str:
+    """把 YAML frontmatter 抹成等长空白（保留换行与字符偏移），返回全文。
+
+    兜底分类只看正文，但**不能改变扫描窗口**：frontmatter 是元数据，其中的
+    maturity_note / source / tags 常出现「跨域迁移」「反向」等词，不代表模式主张
+    （2026-11-16 实测：执行类模式的 maturity_note 写「跨域迁移为同构推演」即被
+    误判为创新类）。若直接切除 frontmatter，后续正文会前移进入 1000 字符窗口，
+    反而把原本在窗口外的正文关键词纳入（实测全库 +15 篇误判），故改用等长掩码。
+    """
+    if not content.startswith("---"):
+        return content
+    end = content.find("\n---", 3)
+    if end == -1:
+        return content
+    mask_end = end + 4
+    masked_head = re.sub(r"[^\n]", " ", content[:mask_end])
+    return masked_head + content[mask_end:]
+
+
 def _is_innovation_pattern(content: str) -> bool:
     """判断模式是否为创新/跨领域迁移类模式。
 
     有「## 模式类型」章节时只看该章节（宽口径，含裸「迁移」「反向」）；
-    无该章节时回退扫描开头 1000 字符，但用短语级关键词
-    （FALLBACK_INNOVATION_KEYWORDS）——开头普遍出现「迁移」二字的
-    SOP/速查/操作手册，以及「反向」用于表示计算方向（前向/反向计算、
-    反向传播、反向依赖）的工程文档，不应被兜底判为创新类。
+    无该章节时回退扫描正文开头 1000 字符，但用短语级关键词
+    （FALLBACK_INNOVATION_KEYWORDS）并对 frontmatter 做等长掩码——开头普遍
+    出现「迁移」二字的 SOP/速查/操作手册，以及「反向」用于表示计算方向
+    （前向/反向计算、反向传播、反向依赖）的工程文档，不应被兜底判为创新类。
     """
     type_section_match = re.search(
         r"##\s*模式类型\s*\n(.+?)(?=\n##|\Z)", content, re.DOTALL
@@ -199,7 +247,7 @@ def _is_innovation_pattern(content: str) -> bool:
     if type_section_match:
         type_text = type_section_match.group(1)
         return bool(INNOVATION_TYPE_KEYWORDS.search(type_text))
-    return bool(FALLBACK_INNOVATION_KEYWORDS.search(content[:1000]))
+    return bool(FALLBACK_INNOVATION_KEYWORDS.search(_mask_frontmatter(content)[:1000]))
 
 
 def check_innovation_pattern_v2(content: str) -> list[CheckResult]:

@@ -14,11 +14,25 @@ RECOMMENDED_MAX_LINES = 300
 FRONTMATTER_REQUIRED_FIELDS = {"id", "domain", "layer", "maturity", "source"}
 FRONTMATTER_RECOMMENDED_FIELDS = {"validation_count", "reuse_count", "documentation_level"}
 
+# 模板口径统一（A1，2026-11-16）：以 `pattern-to-methodology-library` 模板为权威，
+# 检查器兼容旧写法。旧模板的四个「必要章节」因此拆为两组：
+#   - 适用场景 / 问题背景：仍是必要章节，但接受新模板别名；
+#   - 模式类型 / 成熟度：改为可选——新模板无此二章，成熟度由 frontmatter 的
+#     maturity 字段承担（缺失由 check_frontmatter 报 error）。
 REQUIRED_SECTIONS = {
-    "模式类型": "pattern_type",
-    "成熟度": "maturity",
     "适用场景": "applicable_scenarios",
     "问题背景": "problem_background",
+}
+
+OPTIONAL_SECTIONS = {
+    "模式类型": "pattern_type",
+    "成熟度": "maturity",
+}
+
+# 必要章节的等价写法（新模板 → 旧模板章节名）
+SECTION_ALIASES = {
+    "适用场景": ("触发场景",),
+    "问题背景": ("模式概述", "问题现象"),
 }
 
 RECOMMENDED_SECTIONS = {
@@ -28,6 +42,7 @@ RECOMMENDED_SECTIONS = {
     "核心内容": "core_content",
     "操作流程": "workflow",
     "决策速查": "decision_cheatsheet",
+    "核心做法": "core_steps",
 }
 
 IMPORTANT_SECTIONS = {
@@ -37,6 +52,12 @@ IMPORTANT_SECTIONS = {
     "与现有模式的关系": "related_patterns",
 }
 
+# 重要章节的等价写法（新模板 → 旧模板章节名）。
+# 「实施检查清单」与「正例」在新模板中无对应物，保持建议态（warn）不在此映射。
+IMPORTANT_SECTION_ALIASES = {
+    "反例警示": ("反模式", "反模式警示"),
+}
+
 INNOVATION_PATTERN_SECTIONS = {
     "失败案例": "failure_cases",
     "反目标": "anti_target",
@@ -44,7 +65,8 @@ INNOVATION_PATTERN_SECTIONS = {
     "边界": "boundaries",
 }
 
-VALID_MATURITY_LEVELS = {"L1", "L2", "L3", "L4"}
+# 成熟度取值不在此维护枚举：等级阶梯（L1-draft / L1.5 / L2-validated /
+# L3-mature / L4-optimized）与全部历史别名统一由 maturity.normalize_maturity 归一。
 
 INNOVATION_TYPE_KEYWORDS = re.compile(
     r"(创新|跨领域|迁移|逆向适配|方法论模式|创新设计|反向|反直觉|跨界)",
@@ -81,7 +103,8 @@ WARNING_SIGNAL_PATTERN = re.compile(
     re.IGNORECASE | re.MULTILINE,
 )
 
-WHY_EXPLANATION_PATTERN = re.compile(r">\s*\*\*为什么", re.MULTILINE)
+# 「为什么」设计意图解释：兼容加粗与不加粗两种写法（> **为什么…** / > 为什么…）
+WHY_EXPLANATION_PATTERN = re.compile(r">\s*(\*\*)?为什么", re.MULTILINE)
 CHECKLIST_ITEM_PATTERN = re.compile(r"^- \[ \]", re.MULTILINE)
 SECTION_HEADER_PATTERN = re.compile(r"^##\s+(.+)$", re.MULTILINE)
 MERMAID_PATTERN = re.compile(r"```mermaid", re.MULTILINE)
