@@ -15,7 +15,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-from lib.quality_report import ResultGroupMixin, issue_list, score_to_ansi
+from lib.quality_report import ResultGroupMixin, issue_list, score_to_ansi, print_result_lines
 from lib.quality_rules import count_file_urls
 
 
@@ -59,6 +59,50 @@ def test_score_to_ansi() -> None:
     assert score_to_ansi(80) == "\033[92m"
     assert score_to_ansi(60) == "\033[93m"
     assert score_to_ansi(59) == "\033[91m"
+
+
+def test_print_result_lines_surfaces_ungrouped_result() -> None:
+    """passed=False 且 severity=info 的结果历史上被静默丢弃，必须显式暴露。"""
+    out = {"pass": [], "warn": [], "error": []}
+    results = [
+        DummyResult(name="ok_info", passed=True, severity="info", message="p"),
+        DummyResult(name="orphan_info", passed=False, severity="info", message="m"),
+        DummyResult(name="weird", passed=False, severity="fatal", message="x"),
+    ]
+    print_result_lines(
+        results,
+        verbose=False,
+        print_pass=out["pass"].append,
+        print_warn=out["warn"].append,
+        print_error=out["error"].append,
+    )
+    assert out["pass"] == []
+    assert out["error"] == []
+    assert len(out["warn"]) == 2
+    assert "orphan_info" in out["warn"][0] and "'info'" in out["warn"][0]
+    assert "UNGROUPED" in out["warn"][0]
+    assert "weird" in out["warn"][1] and "'fatal'" in out["warn"][1]
+
+
+def test_print_result_lines_normal_severities_unchanged() -> None:
+    """兜底分支不得影响 error/warn/pass 的既有渲染。"""
+    out = {"pass": [], "warn": [], "error": []}
+    results = [
+        DummyResult(name="e", passed=False, severity="error", message="E"),
+        DummyResult(name="w", passed=False, severity="warn", message="W"),
+        DummyResult(name="p", passed=True, severity="warn", message="P"),
+    ]
+    print_result_lines(
+        results,
+        verbose=True,
+        print_pass=out["pass"].append,
+        print_warn=out["warn"].append,
+        print_error=out["error"].append,
+    )
+    assert len(out["error"]) == 1 and "[FAIL]" in out["error"][0]
+    assert len(out["warn"]) == 1 and "[WARN]" in out["warn"][0]
+    assert len(out["pass"]) == 1 and "[PASS]" in out["pass"][0]
+    assert all("UNGROUPED" not in line for line in out["pass"] + out["warn"] + out["error"])
 
 
 def test_lib_init_can_run_as_script() -> None:

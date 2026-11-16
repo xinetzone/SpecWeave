@@ -53,6 +53,14 @@ def print_result_lines(
             print_warn(f"    [WARN] {r.name}: {r.message}")
         elif verbose and r.passed:
             print_pass(f"    [PASS] {r.name}: {r.message}")
+        else:
+            # 兜底：passed=False 但 severity 不是 error/warn（如 info）时，
+            # 三条渲染分支均不匹配、也不进 ResultGroupMixin 的任何分组，
+            # 历史上会被静默丢弃（只扣分不给解释）。此处显式暴露。
+            print_warn(
+                f"    [UNGROUPED] {r.name}: severity={r.severity!r} 且 passed=False，"
+                "未归入 error/warn 分组、不计入统计；请改用 error/warn 或补分组"
+            )
 
 
 def issue_list(items: Iterable) -> list[dict]:
