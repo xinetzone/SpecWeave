@@ -16,7 +16,6 @@ Verified: 2026-07-22 — xmnn-runtime:test 8/8 全通
     R4: 非root用户可正常运行 — UID/GID映射后容器可正常工作
     R5: pip install无警告 — pip check无依赖冲突
 """
-from __future__ import annotations
 
 import argparse
 import os

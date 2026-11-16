@@ -13,7 +13,6 @@ Source: XMNN retrospective 2026-07-22
     3. patchelf设置RPATH=$ORIGIN
     4. 重新计算sha256更新RECORD文件
 """
-from __future__ import annotations
 
 import argparse
 import base64

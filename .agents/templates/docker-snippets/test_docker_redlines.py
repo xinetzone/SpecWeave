@@ -14,7 +14,6 @@ Source: XMNN retrospective 2026-07-22
     R4: 非root用户可正常运行 — UID/GID映射后容器可正常工作
     R5: pip install无警告 — wheel安装无hash mismatch/依赖冲突
 """
-from __future__ import annotations
 
 import json
 import os

@@ -15,7 +15,6 @@ SpecWeave 项目标准 Python 3.10+ 脚本模板
 ==============================================================================
 """
 
-from __future__ import annotations
 
 import argparse
 import sys
