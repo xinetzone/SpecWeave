@@ -7,7 +7,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 # Skill索引
 
 
-### 完整Skill（56个）
+### 完整Skill（58个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
@@ -67,6 +67,8 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | vendor-snapshot-parity | "证明和上游一致" | 1（把第三方单体（装饰器/单例构造的 CLI parser、配置结构等）迁出又要证明与上游逐字段对等时使用） | v1.0.0 | [skills/vendor-snapshot-parity/SKILL.md](../skills/vendor-snapshot-parity/SKILL.md) |
 | zhihu | "zhihu" | 1（使用知乎开放平台搜索知乎和全网内容、获取热榜、调用知乎直答，读取当前用户自己的知乎创作、关注与收藏，列出、检索和上传知识库，或查询开放 API 剩余额度） | - | [skills/zhihu/SKILL.md](../skills/zhihu/SKILL.md) |
 | ci-run-failure-triage | "CI 挂了"、"流水线红了"、"Actions 失败"、"帮我把 CI 跑绿"、"这个 job 为什么失败"、"提交后 CI 挂了"、"本地绿了远端还红" | 1（六步取证闭环：gh 取 job 结论 → `--log-failed` 落盘后定点 grep → 本地复现同一门禁 → 六类分诊 → 只修内容不改门禁 → 新 run conclusion 验收；含取证命令手册、10 条 Gotchas 与 awesome-okf 转绿案例；L1） | v1.0.0 | [skills/ci-run-failure-triage/SKILL.md](../skills/ci-run-failure-triage/SKILL.md) |
+| howto-course-writing | "写课程"、"课程讲稿"、"新手教程"、"上手文档"、"新人 SOP"、"培训材料"、"读者照着做跑不通"、"教程没人看完" | 1（六组件 + 三类画板 + 九段骨架 + 交付前 12 问；含五组 Before/After 改写对照与六块画板蓝图；L1） | v1.0.0 | [skills/howto-course-writing/SKILL.md](../skills/howto-course-writing/SKILL.md) |
+| lark-doc-to-okf-wiki | "飞书文档转知识包"、"larkoffice 或 feishu docx"、"OKF wiki"、"拆解文档写作法"、"学习它的画板"、"no code blocks found" | 1（七步流水线：敏感度分流 → 正文与评论 → 画板 raw/preview 双源 → F 编号台账 → 七件套结构 → 链接与计数双门；L1） | v1.0.0 | [skills/lark-doc-to-okf-wiki/SKILL.md](../skills/lark-doc-to-okf-wiki/SKILL.md) |
 
 ### 工作流门面（10个）
 

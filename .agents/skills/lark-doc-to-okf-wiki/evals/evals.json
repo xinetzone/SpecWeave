@@ -1,0 +1,23 @@
+{
+  "skill_name": "lark-doc-to-okf-wiki",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "这篇飞书文档里有 6 张画板，帮我把它做成一个 OKF 知识包，画板里的信息也要用上，别只读正文。",
+      "expected_output": "私域分流 → 正文与评论采集 → 6 块画板 raw + preview 双源导出 → 每块图归类与一句问句 → 七件套知识包 + F 编号事实台账 + 链接门通过。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "我想学习这份内部课程文档的写作技巧以及它的画板设计，产出成可复用的教程。",
+      "expected_output": "结构分析型知识包：章节与画板结构台账、写作组件萃取、画板语法归类、可复用蓝图与检查清单；私域落盘。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "把这份飞书文档转成知识包，但我的 whiteboard 导出时报 no code blocks found，是不是导不出来？",
+      "expected_output": "指出 source 类型仅适用代码块画板，改用 raw 导出节点、preview 导出图片；并说明预览扩展名必须为 jpg。",
+      "files": []
+    }
+  ]
+}
