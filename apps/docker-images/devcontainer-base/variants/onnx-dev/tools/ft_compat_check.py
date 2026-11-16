@@ -19,7 +19,6 @@ Free-Threading (no-GIL) 包兼容性检查工具
   # JSON输出（CI集成）
   python ft_compat_check.py --json
 """
-from __future__ import annotations
 
 import dataclasses
 import importlib

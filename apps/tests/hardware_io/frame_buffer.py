@@ -25,7 +25,6 @@
     consumer()
 """
 
-from __future__ import annotations
 
 import threading
 import time

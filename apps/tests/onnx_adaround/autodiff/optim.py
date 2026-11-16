@@ -1,6 +1,5 @@
 """Adam optimizer and temperature-decay utilities (numpy, torch-free)."""
 
-from __future__ import annotations
 
 import numpy as np
 

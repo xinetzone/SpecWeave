@@ -20,7 +20,6 @@ FP32 baseline and the reference formula.
 Stays torch-free (no ``import torch``).
 """
 
-from __future__ import annotations
 
 import os
 import sys

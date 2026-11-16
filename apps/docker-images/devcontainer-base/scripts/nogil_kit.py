@@ -25,7 +25,6 @@
     print(probe.format_report())               # 线程/进程启动延迟 + 序列化大小
 """
 
-from __future__ import annotations
 
 import json
 import os

@@ -5,7 +5,6 @@ numpy arrays. All quantization math is identical to the torch reference so
 that numerical cross-checks pass within the specified tolerance.
 """
 
-from __future__ import annotations
 
 import warnings
 

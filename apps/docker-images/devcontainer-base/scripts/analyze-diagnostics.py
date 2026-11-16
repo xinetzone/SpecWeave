@@ -33,7 +33,6 @@ Output: Single HTML file with:
     - Raw diagnostic data sections (collapsible)
 """
 
-from __future__ import annotations
 
 import argparse
 import html

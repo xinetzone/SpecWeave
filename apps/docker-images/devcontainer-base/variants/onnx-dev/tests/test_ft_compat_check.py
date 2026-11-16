@@ -3,7 +3,6 @@ Unit tests for tools/ft_compat_check.py
 Tests cover: dataclasses, FT detection logic, import checking, report generation.
 Uses unittest.mock to avoid requiring ONNX packages on the host machine.
 """
-from __future__ import annotations
 
 import dataclasses
 import importlib

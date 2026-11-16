@@ -26,7 +26,6 @@ ft-benchmark.sh 的等价 Python 实现：既提供可直接 import 的函数，
     python ft_benchmark.py --local --range 200000 --min-speedup 2.0 --json
 """
 
-from __future__ import annotations
 
 import argparse
 import json

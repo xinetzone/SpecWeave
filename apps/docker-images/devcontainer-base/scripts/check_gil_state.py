@@ -20,7 +20,6 @@ Py_mod_gil slot 里声明自己可安全无 GIL 运行。import 未声明的
 退出码：0 = GIL 禁用（健康）；1 = GIL 被迫启用；2 = 非 free-threading 构建
 """
 
-from __future__ import annotations
 
 import argparse
 import importlib

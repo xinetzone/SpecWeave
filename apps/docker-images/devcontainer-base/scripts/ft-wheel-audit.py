@@ -26,7 +26,6 @@
     3 = 严格模式下发现 sdist/abi3 包
 """
 
-from __future__ import annotations
 
 import argparse
 import importlib.machinery

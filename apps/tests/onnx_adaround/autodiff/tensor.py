@@ -1,6 +1,5 @@
 """A tiny reverse-mode autodiff Tensor with a tape-based graph."""
 
-from __future__ import annotations
 
 import numpy as np
 

@@ -4,7 +4,6 @@ Mirrors ``xmnn.adaround.adaround_onnx_export`` but operates purely on the ONNX
 graph + numpy, using onnxruntime for reference activations.
 """
 
-from __future__ import annotations
 
 import argparse
 import os

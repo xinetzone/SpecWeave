@@ -26,7 +26,6 @@ CHK = CMD XOR LEN XOR all(DATA)  (逐字节异或)
     cmd, data = parser.get_frame()  # → (0x01, b"hello")
 """
 
-from __future__ import annotations
 
 from collections import deque
 from dataclasses import dataclass

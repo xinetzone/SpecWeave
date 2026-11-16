@@ -4,7 +4,6 @@ Mirrors ``xmnn.adaround.quant.adaptive_rounding``. Learned rounding (hard
 sigmoid) with a learnable ``alpha`` parameter optimized during reconstruction.
 """
 
-from __future__ import annotations
 
 import numpy as np
 

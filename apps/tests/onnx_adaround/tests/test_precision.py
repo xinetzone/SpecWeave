@@ -15,7 +15,6 @@ Both checks stay torch-free and are fully deterministic (the conversion seeds
 its RNG internally via ``run_adaround``/``seed_all``).
 """
 
-from __future__ import annotations
 
 import numpy as np
 import onnx

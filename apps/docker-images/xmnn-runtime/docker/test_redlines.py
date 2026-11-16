@@ -2,7 +2,6 @@
 Docker镜像五条红线自动化验证脚本（XMNN runtime适配版）
 基于 test_docker_redlines.py，适配 conda 环境镜像（绕过entrypoint，使用conda python路径）
 """
-from __future__ import annotations
 
 import os
 import subprocess

@@ -8,7 +8,6 @@ torch-dev 容器 PyTorch + CUDA 综合验证脚本
   python examples/test_torch.py --quick   # 快速验证（跳过耗时算子测试）
   python examples/test_torch.py --cuda    # 强制 CUDA 测试（无 CUDA 时跳过）
 """
-from __future__ import annotations
 
 import sys
 import argparse

@@ -1,6 +1,5 @@
 """Loss functions for AdaRound reconstruction (numpy, torch-free)."""
 
-from __future__ import annotations
 
 from . import ops
 from .optim import LinearTempDecay

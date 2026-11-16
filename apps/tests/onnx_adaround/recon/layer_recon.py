@@ -5,7 +5,6 @@ Mirrors ``xmnn.adaround.quant.layer_recon``. Optimizes a per-layer learnable
 FP32 reference captured via onnxruntime.
 """
 
-from __future__ import annotations
 
 import numpy as np
 

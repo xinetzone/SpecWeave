@@ -5,7 +5,6 @@ image files from a directory, applies resize/center-crop/normalize, and returns
 an NCHW float32 numpy array. No torch dependency.
 """
 
-from __future__ import annotations
 
 import os
 
