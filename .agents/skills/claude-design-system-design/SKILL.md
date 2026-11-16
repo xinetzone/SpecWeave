@@ -1,6 +1,6 @@
 ---
 name: "claude-design-system-design"
-description: "Use this skill to generate well-branded interfaces for the Claude Design System (Anthropic-inspired aesthetic). Includes the full theme tokens, component specs, previews, and UIKit references for warm, editorial, conversation-first UI."
+description: "Use this skill to generate well-branded interfaces for the Claude Design System (Anthropic-inspired aesthetic). Includes the full theme tokens, component specs, previews, and UIKit references for warm, editorial, conversation-first UI. Use when the user needs Claude Design System-style UI, dashboards, or design assets, or asks to apply the Claude Design System tokens and components."
 user-invocable: true
 source: "镜像自 Trae IDE design_libraries（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_claude）"
 ---

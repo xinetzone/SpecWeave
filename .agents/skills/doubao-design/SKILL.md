@@ -1,6 +1,6 @@
 ---
 name: "doubao-design"
-description: "Use this skill to generate well-branded interfaces and assets for Doubao — a minimal, cool-toned AI dashboard design system. Contains tokens, component specs, previews, and UI kit references."
+description: "Use this skill to generate well-branded interfaces and assets for Doubao — a minimal, cool-toned AI dashboard design system. Contains tokens, component specs, previews, and UI kit references. Use when the user needs Doubao-style UI, dashboards, or design assets, or asks to apply the Doubao tokens and components."
 source: "镜像自 Trae IDE design_libraries（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_doubao）"
 user-invocable: true
 ---

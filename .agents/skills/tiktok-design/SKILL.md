@@ -1,6 +1,6 @@
 ---
 name: "tiktok-design"
-description: "Use this skill to generate well-branded interfaces and assets for TikTok — a social video platform. Invoke it by scene (mobile feed / web discovery / editorial) or by reusing the bundled UI kit and components. All UI kit and component output is built on the icons in `/icons` and the tokens in `colors_and_type.css`."
+description: "Use this skill to generate well-branded interfaces and assets for TikTok — a social video platform. Invoke it by scene (mobile feed / web discovery / editorial) or by reusing the bundled UI kit and components. All UI kit and component output is built on the icons in `/icons` and the tokens in `colors_and_type.css`. Use when the user needs TikTok-style UI, dashboards, or design assets, or asks to apply the TikTok tokens and components."
 source: "镜像自 Trae IDE design_libraries（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_tik_tok）"
 ---
 
