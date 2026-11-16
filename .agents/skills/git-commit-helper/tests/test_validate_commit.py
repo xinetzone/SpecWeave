@@ -12,7 +12,6 @@
   - suggest_type/suggest_scope 逻辑（基于文件路径推断）
 """
 
-from __future__ import annotations
 
 import sys
 from pathlib import Path

@@ -15,7 +15,6 @@ Git Commit Message Validator — 符合 Conventional Commits 规范的提交信�
 # dependencies = []
 # ///
 
-from __future__ import annotations
 
 import argparse
 import re

@@ -17,7 +17,6 @@
   - 空目录/不存在路径处理
 """
 
-from __future__ import annotations
 
 import json
 import sys

@@ -18,7 +18,6 @@ Token优化P0禁令预检工具 — 自动化检查S0阶段P0级前置条件
 # dependencies = []
 # ///
 
-from __future__ import annotations
 
 import argparse
 import json
