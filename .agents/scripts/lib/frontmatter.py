@@ -220,7 +220,7 @@ def extract_yaml_field(frontmatter: str, field_name: str) -> str | None:
         字段值字符串；块类型字段返回空字符串 ""；未找到时返回 None。
     """
     block_pattern = re.compile(
-        rf'^{re.escape(field_name)}[ \t]*:[ \t]*(?:[|>][ \t]*(?:#.*)?$|(?:#.*)?$)',
+        rf'^{re.escape(field_name)}[ \t]*:[ \t]*(?:[|>][-+]?[ \t]*(?:#.*)?$|(?:#.*)?$)',
         re.MULTILINE,
     )
     if block_pattern.search(frontmatter):

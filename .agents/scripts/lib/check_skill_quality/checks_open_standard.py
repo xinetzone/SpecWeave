@@ -31,6 +31,46 @@ def _get_dir_purpose(dirname: str) -> str:
     return purposes.get(dirname, "可选目录")
 
 
+TRIGGER_KEYWORDS = (
+    "when", "use when", "when to use", "triggers on", "trigger on",
+    "使用", "触发", "提到", "必须使用", "适用于", "当用户", "需要时",
+)
+
+
+def read_yaml_block_scalar(frontmatter: str, field_name: str) -> Optional[str]:
+    """读取 YAML 块标量（`|` / `>` 及其 chomping 标记）为单行文本。
+
+    `extract_yaml_field` 对块标量按契约返回 ""（仅表示字段存在），
+    但 description 这类字段需要真实文本才能判断长度与触发时机；
+    缺少本读取器时，`description: >-` 写法的技能会被整体跳过描述类检查。
+    """
+    if not frontmatter:
+        return None
+    pattern = re.compile(
+        rf"^{re.escape(field_name)}[ \t]*:[ \t]*([|>])([-+]?)[ \t]*(?:#.*)?$"
+    )
+    lines = frontmatter.splitlines()
+    for index, line in enumerate(lines):
+        match = pattern.match(line)
+        if not match:
+            continue
+        style = match.group(1)
+        body = []
+        for following in lines[index + 1:]:
+            if not following.strip():
+                body.append("")
+                continue
+            if not following.startswith((" ", "\t")):
+                break
+            body.append(following.strip())
+        while body and not body[0]:
+            body.pop(0)
+        while body and not body[-1]:
+            body.pop()
+        return ("\n" if style == "|" else " ").join(body)
+    return None
+
+
 def check_open_standards_compliance(skill_md: Path, content: str, frontmatter_text: str | None) -> list[CheckResult]:
     results = []
     skill_dir = skill_md.parent
@@ -41,6 +81,9 @@ def check_open_standards_compliance(skill_md: Path, content: str, frontmatter_te
 
     name = extract_yaml_field(frontmatter_text, "name")
     desc = extract_yaml_field(frontmatter_text, "description")
+    if not desc:
+        # 块标量（| / >）按契约为 ""，此处补读折叠文本，避免整段描述检查被跳过。
+        desc = read_yaml_block_scalar(frontmatter_text, "description") or desc
 
     if name:
         name_ok = True
@@ -147,8 +190,8 @@ def check_open_standards_compliance(skill_md: Path, content: str, frontmatter_te
                 message="description长度满足基本要求"
             ))
 
-        trigger_kws = ["when", "使用", "触发", "提到", "Use when", "必须使用"]
-        has_trigger = any(kw in desc for kw in trigger_kws)
+        lowered = desc.lower()
+        has_trigger = any(kw.lower() in lowered for kw in TRIGGER_KEYWORDS)
         results.append(CheckResult(
             name="open_standard.description.trigger_hint",
             passed=has_trigger,

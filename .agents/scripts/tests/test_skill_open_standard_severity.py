@@ -24,7 +24,11 @@ enforce_python310()
 
 from pathlib import Path
 
-from lib.check_skill_quality.checks_open_standard import check_open_standards_compliance
+from lib.frontmatter import extract_yaml_field
+from lib.check_skill_quality.checks_open_standard import (
+    check_open_standards_compliance,
+    read_yaml_block_scalar,
+)
 
 FILLER = "。" * 60
 
@@ -70,3 +74,73 @@ def test_no_failed_result_uses_unrendered_severity(tmp_path: Path) -> None:
     results = _run(tmp_path, "demo-skill", f"处理文档转换的辅助技能{FILLER}")
     bad = [r.name for r in results if not r.passed and r.severity not in ("error", "warn")]
     assert bad == [], f"以下失败项使用了不会被渲染的严重度：{bad}"
+
+
+# --- 触发式写法覆盖（外部镜像技能的真实书写惯例） -------------------------
+
+
+def _run_block(tmp_path: Path, name: str, indicator: str, body_lines: list[str]):
+    """构造使用块标量写法的 SKILL.md。"""
+    skill_dir = tmp_path / name
+    skill_dir.mkdir()
+    skill_md = skill_dir / "SKILL.md"
+    body = "\n".join(f"  {line}" for line in body_lines)
+    fmt = f"name: {name}\ndescription: {indicator}\n{body}\n"
+    content = f"---\n{fmt}---\n\n# {name}\n"
+    skill_md.write_text(content, encoding="utf-8")
+    return skill_md, content, fmt
+
+
+def test_extract_yaml_field_folded_scalar_returns_empty_not_marker() -> None:
+    """回归：`description: >-` 曾被解析成字符串 '>-'（正则回溯把空格当值）。"""
+    fm = "name: x\ndescription: >-\n  第一行\n  第二行\n"
+    assert extract_yaml_field(fm, "description") == ""
+
+
+def test_read_yaml_block_scalar_folds_lines() -> None:
+    fm = "name: x\ndescription: >-\n  第一行\n  第二行\n"
+    assert read_yaml_block_scalar(fm, "description") == "第一行 第二行"
+
+
+def test_folded_scalar_description_reaches_trigger_check(tmp_path: Path) -> None:
+    """块标量描述必须被真实解析，否则整段描述检查会被静默跳过。"""
+    md, content, fmt = _run_block(
+        tmp_path, "demo-skill", ">-", ["搜索全网内容并获取热榜。", f"用户提到该需求时使用。{FILLER}"]
+    )
+    r = _find(check_open_standards_compliance(md, content, fmt), "open_standard.description.trigger_hint")
+    assert r.passed is True
+
+
+def test_english_triggers_on_phrase_accepted(tmp_path: Path) -> None:
+    r = _find(
+        _run(tmp_path, "demo-skill", f"Transcribe audio files to text. Triggers on: 转录, transcribe. {FILLER}"),
+        "open_standard.description.trigger_hint",
+    )
+    assert r.passed is True
+
+
+def test_capitalized_when_accepted(tmp_path: Path) -> None:
+    """词表曾大小写敏感，`When you need...` 被漏检。"""
+    r = _find(
+        _run(tmp_path, "demo-skill", f"Comprehensive toolkit for documents. When you need to edit files, use it. {FILLER}"),
+        "open_standard.description.trigger_hint",
+    )
+    assert r.passed is True
+
+
+def test_chinese_applicable_phrase_accepted(tmp_path: Path) -> None:
+    r = _find(
+        _run(tmp_path, "demo-skill", f"企业数据查询工具，适用于主体核验与风险评估。{FILLER}"),
+        "open_standard.description.trigger_hint",
+    )
+    assert r.passed is True
+
+
+def test_capability_only_description_still_fails(tmp_path: Path) -> None:
+    """守卫：只讲“能做什么”、不讲“何时用”的描述不得被放宽放行。"""
+    r = _find(
+        _run(tmp_path, "demo-skill", f"Use this skill to generate well-branded interfaces and assets for X. {FILLER}"),
+        "open_standard.description.trigger_hint",
+    )
+    assert r.passed is False
+    assert r.severity == "warn"
