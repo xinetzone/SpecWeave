@@ -146,7 +146,13 @@ x-toml-ref: "../../.meta/toml/.agents/rules/ai-coding-guidelines.toml"
 
 | 红线 | 说明 | 检测与闭环 |
 |------|------|-----------|
-| **禁止 PEP 563 future import** | Python 项目不得出现 `from __future__ import annotations`：Python 3.14 起 PEP 649 已默认惰性注解，PEP 563 样板冗余且语义有别；3.10-3.13 项目仅当代码**确实依赖延迟求值**（递归类型别名、模块级前置引用且无法前移）且 `requires-python` 明确时方可使用，否则同样禁止 | 新建/修改 Python 项目时**必须**同步 AST 守护测试（参照 `apps/dev-tools/zhihu-checkin-hub/tests/test_no_future_annotations.py` 与 `apps/dev-tools/openkylin-wsl-devkit/tests/test_no_future_annotations.py`：AST 解析 `src`/`tests` 中所有 `.py`，命中真实 `ImportFrom(__future__, annotations)` 节点即红，注释与字符串不误报） |
+| **禁止 PEP 563 future import** | Python 项目不得出现 `from __future__ import annotations`：Python 3.14 起 PEP 649 已默认惰性注解，PEP 563 样板冗余且语义有别；3.10-3.13 项目仅当代码**确实依赖延迟求值**（递归类型别名、模块级前置引用且无法前移）且 `requires-python` 明确时方可使用，否则同样禁止 | ①**全仓兜底**：`.agents/scripts/tests/test_no_future_annotations.py` 扫描 `.agents/` 与 `apps/` 全部首方 `.py`，命中即红；②**提交阻断**：`hooks/pre_commit.py` 的「PEP 563 样板检查」对暂存 `.py` 做同口径 AST 校验，命中即拒绝提交（紧急跳过 `FUTURE_ANNOTATIONS_SKIP=1`）；③**新应用**：仍须在自身 `tests/` 内同步局部守护（参照 `apps/dev-tools/zhihu-checkin-hub/tests/test_no_future_annotations.py`），局部守护负责本应用 `src`/`tests` 的细粒度定位 |
+
+**豁免范围**（由 `lib/future_annotations.py` 统一判定，两类均按性质而非文件名单）：
+
+- **镜像技能**：`SKILL.md` frontmatter 的 `source` 含「镜像自」的技能目录——改动会破坏镜像保真，只能随上游更新；
+- **随附示例**：路径含 `references/` 的外部文档示例代码，非运行路径；
+- **非源码目录**：`.venv` / `build` / `site-packages` / `node_modules` / `dist` / `upstream`（vendored 上游）/ 缓存目录。
 
 **生成代码时的自检**：写完 Python 文件先 grep 自身产物是否出现 `from __future__ import annotations`；出现即删，不得靠守护测试兜底后才想起。
 

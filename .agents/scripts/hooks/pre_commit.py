@@ -436,6 +436,57 @@ def _run_pattern_quality_check(project_root: Path, scripts_dir: Path, staged_fil
     return 0
 
 
+def _skip_future_annotations_check() -> tuple[bool, str]:
+    """PEP 563 样板检查是否被环境变量跳过。"""
+    if _env_truthy("FUTURE_ANNOTATIONS_SKIP"):
+        return True, "FUTURE_ANNOTATIONS_SKIP=1"
+    skip_env = os.environ.get("SKIP", "").strip().lower()
+    if "future-annotations" in skip_env:
+        return True, f"SKIP={os.environ.get('SKIP', '')}"
+    return False, ""
+
+
+def _run_future_annotations_check(project_root: Path, staged_files: list[Path]) -> int:
+    """禁止 ``from __future__ import annotations``（PEP 563 样板）。
+
+    与 pytest 守护门禁共用 ``lib.future_annotations`` 的扫描与豁免口径。
+    """
+    skip, skip_reason = _skip_future_annotations_check()
+    print("=" * 60)
+    print("🐍 PEP 563 样板检查 (Pre-commit Hook)")
+    print("=" * 60)
+    if skip:
+        print(f"\n⚠️  检测到 {skip_reason}，已跳过 future annotations 检查。\n")
+        return 0
+
+    py_files = [f for f in staged_files if str(f).endswith(".py")]
+    if not py_files:
+        print("\n✅ 本次提交无 Python 文件变更，跳过检查。\n")
+        return 0
+
+    from lib.future_annotations import has_future_annotations, is_exempt
+
+    offenders: list[Path] = []
+    for rel in py_files:
+        abs_path = project_root / rel
+        if not abs_path.is_file() or is_exempt(abs_path, project_root):
+            continue
+        if has_future_annotations(abs_path):
+            offenders.append(rel)
+
+    if not offenders:
+        print("\n✅ 暂存 Python 文件均未含该样板。\n")
+        return 0
+
+    print("\n❌ 检测到 PEP 563 future import，提交已阻断！")
+    for rel in offenders:
+        print(f"   - {rel}")
+    print("\n💡 Python 3.14+ 已默认 PEP 649 惰性注解，直接删除该行；")
+    print("   若注解引用后置定义的名字，改写为字符串注解。")
+    print("🔓 临时跳过（仅限紧急情况）: FUTURE_ANNOTATIONS_SKIP=1 git commit\n")
+    return 1
+
+
 def _skip_ruff_check() -> tuple[bool, str]:
     """Ruff 检查是否被环境变量跳过。"""
     if _env_truthy("RUFF_CHECK_SKIP"):
@@ -591,6 +642,10 @@ def main() -> int:
     pat_result = _run_pattern_quality_check(project_root, scripts_dir, staged_files)
     if pat_result != 0:
         return pat_result
+
+    fa_result = _run_future_annotations_check(project_root, staged_files)
+    if fa_result != 0:
+        return fa_result
 
     ruff_result = _run_ruff_check(project_root, staged_files)
     if ruff_result != 0:
