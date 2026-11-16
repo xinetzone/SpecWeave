@@ -212,8 +212,8 @@ class TestCacheOperations:
                 "api_metadata": {"doi": "10.1234/test", "exists": True},
             }
         }
-        cas.save_cache(tmp_path, cache_data)
-        loaded = cas.load_cache(tmp_path)
+        cas.save_cache(cache_file := tmp_path / "cache.json", cache_data)
+        loaded = cas.load_cache(cache_file)
         assert "10.1234/test" in loaded
         assert loaded["10.1234/test"]["api_metadata"]["exists"] is True
         assert "_metadata" in loaded

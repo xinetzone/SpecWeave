@@ -18,6 +18,7 @@
 import json
 import subprocess
 import sys
+from datetime import date, timedelta
 from pathlib import Path
 
 SCRIPTS_DIR = Path(__file__).resolve().parent.parent
@@ -60,7 +61,9 @@ def test_governance_entries_exempt(tmp_path):
     """场景1：治理入口不参与命名校验，合规任务目录照常通过。"""
     temp = _make_temp(tmp_path)
     _write_governance_triplet(temp)
-    task = temp / "experiments" / "20261024-demo"
+    # 用相对今天的日期，避免夹具随真实时间推移超过 experiments 保留期
+    recent = (date.today() - timedelta(days=1)).strftime("%Y%m%d")
+    task = temp / "experiments" / f"{recent}-demo"
     task.mkdir(parents=True)
     (task / "a.py").write_text("x\n", encoding="utf-8")
 

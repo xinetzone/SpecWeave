@@ -40,7 +40,7 @@ def _setup_minimal_project(project_root):
     (project_root / ".agents" / "rules").mkdir(parents=True)
     (project_root / ".agents" / "commands").mkdir(parents=True)
     (project_root / ".agents" / "roles").mkdir(parents=True)
-    (project_root / ".agents" / "docs" / "retrospective" / "patterns").mkdir(parents=True)
+    (project_root / "docs" / "retrospective" / "patterns").mkdir(parents=True)
 
     import subprocess
     subprocess.run(["git", "init"], cwd=project_root, capture_output=True)
