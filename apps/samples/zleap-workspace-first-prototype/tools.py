@@ -6,7 +6,6 @@
 - 模型进入哪个工作区就只看当前工作区的工具
 """
 
-from __future__ import annotations
 
 from typing import Any, Callable, Dict
 
@@ -50,7 +49,7 @@ class ToolRegistry:
             raise KeyError(f"工具 {tool_name!r} 未注册")
         workspace.bind_tool(self._global_pool[tool_name])
 
-    def bind_many(self, workspace: Workspace, tool_names: List[str]) -> None:
+    def bind_many(self, workspace: Workspace, tool_names: 'List[str]') -> None:
         """批量绑定工具到工作区。"""
         for name in tool_names:
             self.bind_to_workspace(workspace, name)
@@ -61,7 +60,7 @@ class ToolRegistry:
             raise KeyError(f"工具 {tool_name!r} 未注册")
         return self._global_pool[tool_name]
 
-    def visible_to(self, workspace: Workspace) -> List[Tool]:
+    def visible_to(self, workspace: Workspace) -> 'List[Tool]':
         """获取指定工作区可见的全部工具。"""
         return workspace.get_visible_tools()
 
