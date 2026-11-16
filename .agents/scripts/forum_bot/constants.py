@@ -3,7 +3,6 @@
 包含URL、超时配置、CSS选择器、ANSI颜色码、AI发布声明文本等。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

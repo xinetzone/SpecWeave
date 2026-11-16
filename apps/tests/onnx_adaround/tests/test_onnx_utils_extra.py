@@ -1,5 +1,4 @@
 """Extra coverage for onnx_utils: QuantModel branches, attrs parsing, BN folding edge cases."""
-from __future__ import annotations
 
 import numpy as np
 from onnx import TensorProto, helper

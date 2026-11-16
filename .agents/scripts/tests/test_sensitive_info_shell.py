@@ -1,5 +1,4 @@
 """Shell命令语法脱敏误报修复验证测试。"""
-from __future__ import annotations
 
 import sys
 import tempfile

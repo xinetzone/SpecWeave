@@ -1,6 +1,5 @@
 """Autodiff ops for onnx-adaround (numpy reverse-mode)."""
 
-from __future__ import annotations
 
 import numpy as np
 

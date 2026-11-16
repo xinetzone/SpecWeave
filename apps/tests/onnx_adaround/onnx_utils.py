@@ -5,7 +5,6 @@ Operates directly on the ONNX graph (torch-free). Mirrors the role of
 step, but keeps everything as an ONNX model and numpy arrays.
 """
 
-from __future__ import annotations
 
 import numpy as np
 import onnx

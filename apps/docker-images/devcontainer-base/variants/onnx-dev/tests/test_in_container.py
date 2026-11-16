@@ -4,7 +4,6 @@ These tests are designed to run INSIDE the devcontainer (where onnx/onnxruntime 
 Run with: python -m pytest tests/test_in_container.py -v (inside container)
 or via: bash scripts/start-dev.sh -c "python -m pytest tests/ -v"
 """
-from __future__ import annotations
 
 import sys
 

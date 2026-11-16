@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """解析 .xlsx 测试报告并导出 Markdown 报告。"""
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

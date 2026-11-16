@@ -1,5 +1,4 @@
 """Extra coverage for quant_layer: StraightThrough, lp_loss, scale branches."""
-from __future__ import annotations
 
 import numpy as np
 import pytest

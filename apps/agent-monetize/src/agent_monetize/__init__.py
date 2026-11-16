@@ -4,7 +4,6 @@
 内嵌道家治理门控（无为门 / 知止门）与红绿区合规，技术栈含 tvm-ffi 高性能桥接。
 """
 
-from __future__ import annotations
 
 __version__ = "0.1.0"
 

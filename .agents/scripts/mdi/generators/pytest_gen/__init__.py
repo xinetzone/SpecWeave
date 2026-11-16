@@ -3,7 +3,6 @@
 为Web API Profile生成pytest测试文件，包含正常场景、边界值和错误场景三类测试用例。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

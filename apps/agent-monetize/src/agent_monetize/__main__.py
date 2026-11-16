@@ -4,7 +4,6 @@
 使 `python -m agent_monetize demo` 在仓库目录内可直接运行。
 """
 
-from __future__ import annotations
 
 import os
 import sys

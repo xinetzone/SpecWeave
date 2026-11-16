@@ -3,7 +3,6 @@
 正则表达式、模板链接集合、通用文件名常量等。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=1）

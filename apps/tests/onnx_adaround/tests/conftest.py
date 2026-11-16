@@ -1,6 +1,5 @@
 """Shared test fixtures: build small ONNX models and reference numpy ops."""
 
-from __future__ import annotations
 
 import numpy as np
 import pytest

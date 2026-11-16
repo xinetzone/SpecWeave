@@ -5,7 +5,6 @@ inputs and outputs registered as extra graph outputs, so we can cache the
 per-layer reference in/out needed by AdaRound reconstruction.
 """
 
-from __future__ import annotations
 
 import numpy as np
 import onnx
