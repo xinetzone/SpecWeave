@@ -34,6 +34,11 @@ PY314 = sys.version_info >= (3, 14)
 skipif_lt314 = pytest.mark.skipif(not PY314, reason="需要 Python 3.14+")
 
 
+def _noop_worker():
+    """模块级空操作：ProcessPoolExecutor 只能 pickle 模块级可调用对象。"""
+    return None
+
+
 # ════════════════════════════════════════════════════════════
 # 第一部分：类型提示系统（PEP 649/749 及相关）
 # ════════════════════════════════════════════════════════════
@@ -230,11 +235,11 @@ class TestAnnotationLib:
         assert ann["name"] == "str"
 
     def test_get_annotations_forward_ref_resolves(self):
-        """前向引用在 VALUE 格式下自然工作（PEP 649 延迟求值）"""
+        """无引号的前向引用在 VALUE 格式下解析为真实类型（PEP 649 延迟求值）"""
         from annotationlib import Format, get_annotations
 
         class Node:
-            next: "Node | None" = None
+            next: Node | None = None
 
         ann = get_annotations(Node)
         # next 的类型应解析为 Node | None（真实类型对象，非字符串）
@@ -277,8 +282,8 @@ class TestInspectEnhancements:
         assert sig.parameters["x"].annotation == "int"
         assert sig.return_annotation == "str"
 
-    def test_signature_format_unquote_annotations(self):
-        """Signature.format(unquote_annotations=True) 去掉字符串引号"""
+    def test_signature_format_quote_annotation_strings(self):
+        """Signature.format(quote_annotation_strings=False) 去掉字符串注解的引号"""
         import inspect
 
         def func(x: "int", y: "str") -> "bool":
@@ -290,20 +295,22 @@ class TestInspectEnhancements:
         default_str = sig.format()
         assert "'int'" in default_str
 
-        # unquote_annotations=True：去掉引号
-        unquoted_str = sig.format(unquote_annotations=True)
+        # quote_annotation_strings=False：去掉引号
+        unquoted_str = sig.format(quote_annotation_strings=False)
         assert "'int'" not in unquoted_str
 
     def test_ispackage_module(self):
-        """inspect.ispackage() 区分模块和包"""
+        """inspect.ispackage() 区分单文件模块与包"""
         import inspect
         import json
+        import math
         import os
         import concurrent
 
-        assert inspect.ispackage(concurrent) is True  # 命名空间包
-        assert inspect.ispackage(os) is False  # 普通模块
-        assert inspect.ispackage(json) is False  # 普通模块
+        assert inspect.ispackage(concurrent) is True  # concurrent/ 有 __init__.py，属包
+        assert inspect.ispackage(os) is False  # 普通模块（os.py）
+        assert inspect.ispackage(math) is False  # 普通扩展模块
+        assert inspect.ispackage(json) is True  # json/ 是包，非单文件模块
 
     def test_ispackage_returns_bool(self):
         """ispackage 返回布尔值"""
@@ -324,7 +331,8 @@ class TestTypingGetTypeHintsPEP649:
             name: str
 
         hints = typing.get_type_hints(Container)
-        assert hints["items"] is list[int]
+        # GenericAlias 每次构造都是新对象，按相等性比较而非身份
+        assert hints["items"] == list[int]
         assert hints["name"] is str
 
     def test_get_type_hints_resolves_forward_refs(self):
@@ -456,18 +464,17 @@ class TestAsyncioFreeThreadingSupport:
     def test_asyncio_thread_safe_apis(self):
         """关键线程安全 API 存在"""
         assert hasattr(asyncio, "run_coroutine_threadsafe")
-        assert hasattr(asyncio, "call_soon_threadsafe")
+        # call_soon_threadsafe 是 loop 方法，不在 asyncio 模块命名空间
         loop = asyncio.new_event_loop()
-        assert hasattr(loop, "call_soon_threadsafe")
-        loop.close()
+        try:
+            assert hasattr(loop, "call_soon_threadsafe")
+        finally:
+            loop.close()
 
     @pytest.mark.asyncio
     async def test_events_run_coroutine_threadsafe(self):
         """不同线程可以与事件循环交互"""
-        import threading
-
         loop = asyncio.get_running_loop()
-        result_container: dict = {}
 
         async def async_op():
             await asyncio.sleep(0.01)
@@ -475,13 +482,12 @@ class TestAsyncioFreeThreadingSupport:
 
         def from_other_thread():
             future = asyncio.run_coroutine_threadsafe(async_op(), loop)
-            result_container["value"] = future.result(timeout=5)
+            return future.result(timeout=5)
 
-        thread = threading.Thread(target=from_other_thread)
-        thread.start()
-        thread.join()
+        # 用 to_thread 把阻塞等待移出事件循环线程，避免 join 死锁
+        result = await asyncio.to_thread(from_other_thread)
 
-        assert result_container["value"] == "threadsafe-ok"
+        assert result == "threadsafe-ok"
 
 
 # ════════════════════════════════════════════════════════════
@@ -537,16 +543,9 @@ class TestProcessPoolExecutorNewMethods:
 
     def test_terminate_workers_callable(self):
         """terminate_workers 可在已启动的 pool 上调用"""
-        def noop():
-            return None
-
-        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
-            # ThreadPoolExecutor 共享 Executor 基类
-            # terminate_workers/kill_workers 是 ProcessPoolExecutor 特有
-            pass
-
         with concurrent.futures.ProcessPoolExecutor(max_workers=1) as pool:
-            pool.submit(noop).result(timeout=10)
+            # 进程池要求可 pickle 的可调用对象，故使用模块级函数
+            pool.submit(_noop_worker).result(timeout=10)
             # 调用 terminate_workers 不应抛异常
             pool.terminate_workers()
 
