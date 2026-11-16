@@ -100,7 +100,7 @@ title: ".agents/skills/ 目录索引"
 | howto-course-writing | 完整Skill（v1.0.0，L1） | 零基础实操课与上手文档写作法：六组件（收获前置 / 一步一验收 / 一喻到底 / 三图配置 / 行动块 / 边界前置）+ 三类画板语法 + 九段骨架 + 交付前 12 问；含五组 Before/After 改写对照与六块画板可复用蓝图 | 写课程、课程讲稿、新手教程、上手文档、新人 SOP、培训材料、读者照着做跑不通、教程没人看完、把稿子改成课一样 | [howto-course-writing/SKILL.md](howto-course-writing/SKILL.md) |
 | lark-doc-to-okf-wiki | 完整Skill（v1.0.0，L1） | 飞书文档 + 画板 → OKF v0.2 知识包：敏感度分流 → docs +fetch 取正文与评论 → whiteboard raw/preview 双源判读 → F 编号事实台账 → 七件套结构 → 链接与计数双门；含命令手册、节点判读与结构模板 | 飞书文档转知识包、larkoffice 或 feishu docx、OKF wiki、拆解文档写作法、学习它的画板、no code blocks found | [lark-doc-to-okf-wiki/SKILL.md](lark-doc-to-okf-wiki/SKILL.md) |
 
-### 工作流门面（10个）
+### 工作流门面（11个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
@@ -114,6 +114,7 @@ title: ".agents/skills/ 目录索引"
 | private-encrypted-pdf-to-okf-wiki | 工作流门面（v1.0.0，L1） | 加密私域 PDF→OKF 知识包（七工序：S0 凭据隔离→S1 解密与文本层可信度判定→S2 结构决策（少页材料按概念维度拆分）→S3 主张五类分层→S4 原创改写与数学反解→S5 口径先行计数与声明契约化→S6 V审查与机械对账）；含 G1-G4 质量门、8 条 Gotchas、9 项安全清单与与 scanned-book-to-okf-wiki 的分工边界；L2 底座为同主题里程碑复盘报告 | 加密PDF转Wiki、密码PDF转知识包、私域材料转教程、课程讲义转OKF、内部培训材料转Wiki、加密文档转知识包 | [private-encrypted-pdf-to-okf-wiki/SKILL.md](private-encrypted-pdf-to-okf-wiki/SKILL.md) |
 | life-dimensions | 工作流门面（v1.0.0） | 生命概念分析门面：当用户询问「什么是生命」「生命是什么」「生命维度」「生命定义」「生命到底算什么」「生命的意义」… | 什么是生命、生命是什么、生命维度、生命定义、生命到底算什么、生命的意义 | [life-dimensions/SKILL.md](life-dimensions/SKILL.md) |
 | wechat-public-okf | 工作流门面 | 将微信公众号、技术博客或公开资讯文章转化为可溯源的 OKF Wiki 教程 | wechat-public-okf | [wechat-public-okf/SKILL.md](wechat-public-okf/SKILL.md) |
+| agent-task-handoff | 工作流门面（v1.0.0） | AI 委托编排（五模式串链：P1 底座先行定路线 → P2 只讲不改建地图 → P3 四要素任务书 → P5 截图成本裁剪 → P4 分链排障；含洞察→判据映射、任务书模板、步数台账、排障工作表、8 条 Gotchas；L1 门面 + L2 五篇模式文档） | 交给 AI 做、写个任务书、有外部副作用的委托、Agent 说做了却没生效、越跑越贵、第一次让 AI 读陌生项目 | [agent-task-handoff/SKILL.md](agent-task-handoff/SKILL.md) |
 
 ### Trae 内置工作流 Skill（2个，来自 external/doutops）
 
