@@ -12,7 +12,6 @@
     - manual_review: 实战案例/历史记录，需人工保留历史准确性
     - skip:        不处理（生成产物.html/.toml等）
 """
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

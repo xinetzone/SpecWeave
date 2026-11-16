@@ -22,7 +22,6 @@ Spec Sanity Check - 规划文档主题健全性检查脚本
   2 = 参数错误
 """
 
-from __future__ import annotations
 
 import argparse
 import json

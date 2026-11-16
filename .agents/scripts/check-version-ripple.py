@@ -21,7 +21,6 @@
     1 - 发现error级涟漪（或自举验证失败）
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

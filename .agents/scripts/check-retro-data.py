@@ -14,7 +14,6 @@
 支持 text 和 json 两种输出格式。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

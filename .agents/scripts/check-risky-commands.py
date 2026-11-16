@@ -23,7 +23,6 @@
     # 调试模式：显示每个正则模式的命中/未命中详情（最详细）
     python check-risky-commands.py -vv --command "rm -rf /prod/db"
 """
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

@@ -10,7 +10,6 @@
   python spec-loader-stress-test.py --stale 50    # 预置50个stale tmp文件测试清理性能
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

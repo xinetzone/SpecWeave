@@ -23,7 +23,6 @@
   knowledge       P2: 知识加密/安全/完整性（708行）— 三文件内部依赖链，零外部引用
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

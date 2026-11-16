@@ -21,7 +21,6 @@
     2 - 参数/路径错误
 """
 
-from __future__ import annotations
 
 import argparse
 import re

@@ -4,7 +4,6 @@
 边样式、字体、领域颜色映射等。支持从 JSON 文件加载自定义配置。
 """
 
-from __future__ import annotations
 
 import json
 import logging

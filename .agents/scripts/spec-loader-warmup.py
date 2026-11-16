@@ -26,7 +26,6 @@
   # 步骤4：滚动下一批
   sleep 2 && python .agents/scripts/spec-loader-warmup.py --quiet
 """
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

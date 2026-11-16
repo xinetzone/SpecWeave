@@ -8,7 +8,6 @@
   python .agents/scripts/spec-loader-export-metrics.py --output metrics.json
   python .agents/scripts/spec-loader-export-metrics.py --benchmark  # 运行实时benchmark
 """
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

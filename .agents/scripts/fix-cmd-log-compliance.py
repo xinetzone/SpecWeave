@@ -11,7 +11,6 @@
   python fix-cmd-log-compliance.py --verify   # 修复后运行合规检查验证
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

@@ -45,7 +45,6 @@
   analysis-report.md —— 若该报告已在docs/knowledge/中存在归档副本，则归档原文件
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

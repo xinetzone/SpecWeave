@@ -17,7 +17,6 @@
     python submodule-commit.py projects/xuanspace -m "fix: 修复" -m "预防措施说明" file1.py file2.py
 """
 
-from __future__ import annotations
 
 import re
 import subprocess

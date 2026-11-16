@@ -13,7 +13,6 @@
   python feishu-doc-extract.py https://alidocs.dingtalk.com/xxx --platform dingtalk
 """
 
-from __future__ import annotations
 
 import argparse
 import json

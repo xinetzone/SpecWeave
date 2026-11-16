@@ -16,7 +16,6 @@
   python migrate-checklist-to-review.py               # 执行迁移
 """
 
-from __future__ import annotations
 
 import argparse
 import json

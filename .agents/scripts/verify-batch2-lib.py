@@ -17,7 +17,6 @@
   python .agents/scripts/verify-batch2-lib.py -v       # 详细输出
 """
 
-from __future__ import annotations
 
 # ==============================================================================
 # 版本校验（启动时立即执行，兼容 Python 3.8/3.9 语法）
