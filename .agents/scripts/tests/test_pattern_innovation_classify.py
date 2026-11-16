@@ -29,7 +29,7 @@
 
 from pathlib import Path
 
-from lib.check_pattern_quality.check_content import _is_innovation_pattern
+from lib.check_pattern_quality.check_content import _is_innovation_pattern, check_pending_evidence
 
 RUNBOOK_WITH_MIGRATION_TITLE = """# WSL 发行版安装与迁移速查手册
 
@@ -188,3 +188,21 @@ def test_real_reverse_leverage_pattern_still_innovation():
     assert REAL_REVERSE_LEVERAGE.is_file(), f"样本缺失: {REAL_REVERSE_LEVERAGE}"
     content = REAL_REVERSE_LEVERAGE.read_text(encoding="utf-8")
     assert _is_innovation_pattern(content) is True
+
+
+def test_pending_evidence_marker_is_reported():
+    """登记「暂无实测失败样本」的模式必须在质量门中被列出（info 级，不阻断）。"""
+    content = "# 某模式\n\n## 失败案例\n\n> **状态：暂无实测失败样本（显式登记，2026-11-16）**。\n"
+    results = check_pending_evidence(content)
+    assert len(results) == 1
+    r = results[0]
+    assert r.name == "evidence.pending_failure_sample"
+    assert r.passed is False
+    assert r.severity == "warn"
+    assert "暂无实测失败样本" in r.message
+
+
+def test_pending_evidence_absent_or_filled_passes():
+    """未登记待补、或已回填真实案例（删除了声明）都应通过。"""
+    assert check_pending_evidence("# 某模式\n\n## 失败案例\n\n| 失败 | 根因 |\n")[0].passed is True
+    assert check_pending_evidence("")[0].passed is True

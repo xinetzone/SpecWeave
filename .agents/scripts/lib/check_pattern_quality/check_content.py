@@ -330,3 +330,23 @@ def check_innovation_pattern_v2(content: str) -> list[CheckResult]:
 
     return results
 
+
+PENDING_EVIDENCE_MARKER = "暂无实测失败样本"
+
+
+def check_pending_evidence(content):
+    """待补失败样本清单：显式登记的「暂无实测失败样本」在每次质量门中被列出。
+
+    这是登记项而非缺陷项——登记本身是诚实的，因此不用 error（不阻断提交），
+    但必须持续可见：warn 级会出现在每次质量门输出里；一旦补入真实案例并删除声明，
+    该项自动从清单消失。
+    """
+    pending = PENDING_EVIDENCE_MARKER in content
+    return [CheckResult(
+        name="evidence.pending_failure_sample",
+        passed=not pending,
+        severity="warn",
+        message="本文显式登记「暂无实测失败样本」，补入真实失败案例后请删除该声明"
+        if pending else "本文已具备失败样本（或未登记待补）",
+    )]
+

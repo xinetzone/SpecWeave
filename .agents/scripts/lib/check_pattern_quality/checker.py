@@ -17,6 +17,7 @@ from .check_content import (
     check_visualization,
     check_cross_references,
     check_innovation_pattern_v2,
+    check_pending_evidence,
 )
 from .models import CheckResult, PatternReport
 from .scoring import calculate_score
@@ -44,6 +45,7 @@ def check_pattern(pattern_md, root):
     report.results.extend(check_visualization(content))
     report.results.extend(check_no_file_url(content, lambda **kw: CheckResult(**kw)))
     report.results.extend(check_cross_references(content))
+    report.results.extend(check_pending_evidence(content))
     # 导航索引页不承载模式主张，V2"防成功偏误"检查不适用；
     # 其正文关键词（如"方法论模式""创新突破"）会误触 _is_innovation_pattern 兜底分类。
     # 除 index.md 外，`*-index.md`（如 seven-concepts-methodology-index）同属导航页。
