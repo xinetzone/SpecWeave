@@ -10,6 +10,7 @@
 | [onnx-pytorch v1.1.0 发布说明](release-onnx-pytorch-v1-1.md) | Reference | devcontainer-base:onnx-pytorch 镜像发布清单 |
 | [onnx-quantized v2.0.0 发布说明](release-onnx-quantized-v2.md) | Reference | devcontainer-base:onnx-quantized 镜像发布清单 |
 | [Python Ruff 红线门禁团队接入指南](python-ruff-gate-onboarding.md) | Reference | TID251 红线、githooks 与 CI 四层防线接入 |
+| [SpecWeave 工作区勘察地图（P2 只讲不改）](workspace-reconnaissance-map.md) | Reference | 带证据路径的根仓全景地图、任务链路与零改动审计 |
 
 ```{toctree}
 :maxdepth: 2
@@ -33,4 +34,5 @@ python-ruff-gate-onboarding
 tech-stack
 trae-project-adaptation-guide
 verification-automation
+workspace-reconnaissance-map
 ```
