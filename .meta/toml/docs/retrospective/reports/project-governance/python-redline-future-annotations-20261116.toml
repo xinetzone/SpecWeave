@@ -1,0 +1,5 @@
+id = "python-redline-future-annotations-20261116"
+title = "Python 红线治理：252 个文件的 PEP 563 样板清零与三层守护闭环"
+category = "retrospective/reports/project-governance"
+date = "2026-11-16"
+version = "1.0"

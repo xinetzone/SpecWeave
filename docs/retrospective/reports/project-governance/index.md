@@ -34,6 +34,7 @@ octo-platform-wiki-retrospective-20260704
 okf-ecosystem-milestone-retrospective-20260819
 okf-python314-stdlib-optimization-retrospective-20260818
 okf-spec-bundle-review-fix-retrospective-20260821
+python-redline-future-annotations-20261116
 retrospective-hermes-specweave-integration-20260812
 session-atomic-commit-insight-extraction-20260706
 specweave-knowledge-scaling-milestone-20260801
