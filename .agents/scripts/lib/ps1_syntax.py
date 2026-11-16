@@ -11,7 +11,6 @@
 调试日志：设置环境变量 PS1_SYNTAX_DEBUG=1 启用详细调试输出。
 """
 
-from __future__ import annotations
 
 
 # 模块版本

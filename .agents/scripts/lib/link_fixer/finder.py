@@ -3,7 +3,6 @@
 在项目中查找文件/目录、路径解析、近源匹配等逻辑。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=1）

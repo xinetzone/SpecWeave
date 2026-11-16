@@ -24,7 +24,6 @@
     # 或只启用风险拦截器的DEBUG日志
     logging.getLogger("risk_interceptor").setLevel(logging.DEBUG)
 """
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=0）

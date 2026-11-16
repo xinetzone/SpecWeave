@@ -3,7 +3,6 @@
 定义链接修复记录的数据结构。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=1）

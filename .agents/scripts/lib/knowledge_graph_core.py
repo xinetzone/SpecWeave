@@ -8,7 +8,6 @@
 4. 输出层：HTML生成（vis-network）+JSON导出
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=0）

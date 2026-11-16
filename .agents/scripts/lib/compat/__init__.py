@@ -27,7 +27,6 @@ except DependencyMissingError as e:
     print(f"可选功能不可用: {e}")
 ```
 """
-from __future__ import annotations
 
 # 版本校验：相对导入共享库（depth=1）
 from ..python310_version_check import enforce_python310

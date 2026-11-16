@@ -3,7 +3,6 @@
 格式化并打印链接修复结果，包括按类型统计和按文件分组展示。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=1）

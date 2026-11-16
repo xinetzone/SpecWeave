@@ -9,7 +9,6 @@
 严格遵循[stage-guardrails.md]中定义的日志格式和拦截输出规范。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=1）

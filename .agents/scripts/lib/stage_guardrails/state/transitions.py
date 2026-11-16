@@ -1,6 +1,5 @@
 """阶段状态管理器阶段转换逻辑混入。"""
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=2）

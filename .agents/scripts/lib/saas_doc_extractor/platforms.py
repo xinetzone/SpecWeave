@@ -4,7 +4,6 @@
 飞书配置已通过实测验证，其他平台为候选配置（需实测确认）。
 """
 
-from __future__ import annotations
 
 from typing import Optional
 

@@ -3,7 +3,6 @@
 URL解析、路径转换、文件名/行号映射、模板链接检测、代码块上下文判断等。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=1）

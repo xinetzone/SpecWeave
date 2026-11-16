@@ -3,7 +3,6 @@
 定义平台配置、提取配置、提取结果、反模式报告等数据结构。
 """
 
-from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Any, Optional

@@ -3,7 +3,6 @@
 处理目录迁移/重构后，相对路径中 ../ 层级数不正确导致的断链。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=1）

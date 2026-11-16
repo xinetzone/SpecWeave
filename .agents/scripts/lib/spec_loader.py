@@ -19,7 +19,6 @@
   specs = loader.load_for_task("code review")
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=0）

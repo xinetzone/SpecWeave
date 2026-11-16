@@ -18,7 +18,6 @@ CLI 用法:
     python check-sensitive-info.py              # 顶层入口脚本
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=1）

@@ -4,7 +4,6 @@
 所有平台通用，不依赖浏览器抽象层。
 """
 
-from __future__ import annotations
 
 import re
 

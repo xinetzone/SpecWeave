@@ -5,7 +5,6 @@ sphinx_config 的 tippy / mermaid / ogp / suppress_warnings 增量通过
 ``deep_merge`` 叠加到基础值之上，不重定义整个字典。
 """
 
-from __future__ import annotations
 
 from typing import Any
 

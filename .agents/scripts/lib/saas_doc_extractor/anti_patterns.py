@@ -4,7 +4,6 @@
 所有检查返回(warnings, errors, updated_report)三元组。
 """
 
-from __future__ import annotations
 
 from typing import Optional
 

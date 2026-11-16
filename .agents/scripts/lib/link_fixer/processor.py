@@ -3,7 +3,6 @@
 单文件链接修复、目录递归修复等处理逻辑。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=1）

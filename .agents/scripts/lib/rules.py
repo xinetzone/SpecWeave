@@ -15,7 +15,6 @@
     if rules.is_excluded_line(normalized_line): ...
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=0）

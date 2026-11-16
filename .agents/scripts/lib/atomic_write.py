@@ -24,7 +24,6 @@
 如果需要多写入者并发修改同一文件的不同区域，需要额外的锁机制。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=0）

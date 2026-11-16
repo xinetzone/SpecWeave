@@ -3,7 +3,6 @@
 一站式断链修复便捷函数、项目根目录自动推断、CLI参数解析与主流程。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=1）

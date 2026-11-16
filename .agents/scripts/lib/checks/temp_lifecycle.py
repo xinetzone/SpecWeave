@@ -23,7 +23,6 @@
       >30 天返回 1（阻塞提交），其余返回 0。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=1）

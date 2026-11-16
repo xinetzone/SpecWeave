@@ -8,7 +8,6 @@
 - 选择器fallback：主选择器失效时自动尝试备选选择器
 """
 
-from __future__ import annotations
 
 import time
 from typing import Any, Optional, Protocol, runtime_checkable

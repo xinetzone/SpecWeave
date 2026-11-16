@@ -29,7 +29,6 @@
         os.replace(tmp, path)
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=0）

@@ -19,7 +19,6 @@
     然后在 PowerShell 中读取 JSON 执行测试
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=0）

@@ -3,7 +3,6 @@
 实现单链接URL修复的核心策略调度：绝对路径转换、深度校正、文件名映射、断链搜索等。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：相对导入共享库（depth=1）
