@@ -84,7 +84,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | private-encrypted-pdf-to-okf-wiki | "加密PDF转Wiki"、"密码PDF转知识包"、"私域材料转教程"、"课程讲义转OKF"、"内部培训材料转Wiki"、"加密文档转知识包" | 1（七工序：S0 凭据隔离 → S1 解密与文本层可信度判定 → S2 结构决策（少页材料按概念维度拆分）→ S3 主张五类分层 → S4 原创改写与数学反解 → S5 口径先行计数与声明契约化 → S6 V审查与机械对账；含 G1-G4 质量门、8 条 Gotchas、9 项安全清单、与 scanned-book-to-okf-wiki 的分工边界；L1 门面 + L2 里程碑复盘报告） | v1.0.0 | [skills/private-encrypted-pdf-to-okf-wiki/SKILL.md](../skills/private-encrypted-pdf-to-okf-wiki/SKILL.md) |
 | life-dimensions | "什么是生命"、"生命是什么"、"生命维度"、"生命定义"、"生命到底算什么"、"生命的意义" | 1（生命概念分析门面：当用户询问「什么是生命」「生命是什么」「生命维度」「生命定义」「生命到底算什么」「生命的意义」，或进行生命边界判定（「病毒算不算生命」「XX 是不是生命」「合成生命/人工生命算不算生命」「AI 有意识算不算生命」「地外生命是否存在」），或要求从多学科/多维度分析任何生命议题（「从几个维度讲讲生命」「多角度分析生命的本质」「生命的层次」）…） | v1.0.0 | [skills/life-dimensions/SKILL.md](../skills/life-dimensions/SKILL.md) |
 | wechat-public-okf | "wechat-public-okf" | 1（将微信公众号、技术博客或公开资讯文章转化为可溯源的 OKF Wiki 教程） | - | [skills/wechat-public-okf/SKILL.md](../skills/wechat-public-okf/SKILL.md) |
-| agent-task-handoff | "交给 AI 做"、"写个任务书"、"有外部副作用的委托"、"Agent 说做了却没生效"、"越跑越贵"、"第一次让 AI 读陌生项目"、"分链排障" | 1（五模式编排：P1 底座先行定路线 → P2 只讲不改建地图 → P3 四要素任务书 → P5 截图成本裁剪 → P4 分链排障；排障时反向回 P3；含洞察→判据映射、任务书模板、步数台账、排障工作表、8 条 Gotchas；L1 门面 + L2 五篇模式文档） | v1.0.0 | [skills/agent-task-handoff/SKILL.md](../skills/agent-task-handoff/SKILL.md) |
+| agent-task-handoff | "交给 AI 做"、"写个任务书"、"有外部副作用的委托"、"Agent 说做了却没生效"、"越跑越贵"、"第一次让 AI 读陌生项目"、"分链排障"、"多 Agent 拆分"、"不可逆动作确认" | 1（五模式编排：P1 底座先行定路线 → P2 只讲不改建地图 → P3 四要素任务书 → P5 截图成本裁剪 → P4 分链排障；排障时反向回 P3；另含 E1~E4 补充卡：四问成技/证据先行/单产出拆分/双闸门；含洞察→判据映射、任务书模板、步数台账、排障工作表、8 条 Gotchas；L1 门面 + L2 九篇模式文档） | v1.1.0 | [skills/agent-task-handoff/SKILL.md](../skills/agent-task-handoff/SKILL.md) |
 
 ### Trae 内置工作流 Skill（2个，来自 external/doutops）
 

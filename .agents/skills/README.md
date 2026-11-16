@@ -114,7 +114,7 @@ title: ".agents/skills/ 目录索引"
 | private-encrypted-pdf-to-okf-wiki | 工作流门面（v1.0.0，L1） | 加密私域 PDF→OKF 知识包（七工序：S0 凭据隔离→S1 解密与文本层可信度判定→S2 结构决策（少页材料按概念维度拆分）→S3 主张五类分层→S4 原创改写与数学反解→S5 口径先行计数与声明契约化→S6 V审查与机械对账）；含 G1-G4 质量门、8 条 Gotchas、9 项安全清单与与 scanned-book-to-okf-wiki 的分工边界；L2 底座为同主题里程碑复盘报告 | 加密PDF转Wiki、密码PDF转知识包、私域材料转教程、课程讲义转OKF、内部培训材料转Wiki、加密文档转知识包 | [private-encrypted-pdf-to-okf-wiki/SKILL.md](private-encrypted-pdf-to-okf-wiki/SKILL.md) |
 | life-dimensions | 工作流门面（v1.0.0） | 生命概念分析门面：当用户询问「什么是生命」「生命是什么」「生命维度」「生命定义」「生命到底算什么」「生命的意义」… | 什么是生命、生命是什么、生命维度、生命定义、生命到底算什么、生命的意义 | [life-dimensions/SKILL.md](life-dimensions/SKILL.md) |
 | wechat-public-okf | 工作流门面 | 将微信公众号、技术博客或公开资讯文章转化为可溯源的 OKF Wiki 教程 | wechat-public-okf | [wechat-public-okf/SKILL.md](wechat-public-okf/SKILL.md) |
-| agent-task-handoff | 工作流门面（v1.0.0） | AI 委托编排（五模式串链：P1 底座先行定路线 → P2 只讲不改建地图 → P3 四要素任务书 → P5 截图成本裁剪 → P4 分链排障；含洞察→判据映射、任务书模板、步数台账、排障工作表、8 条 Gotchas；L1 门面 + L2 五篇模式文档） | 交给 AI 做、写个任务书、有外部副作用的委托、Agent 说做了却没生效、越跑越贵、第一次让 AI 读陌生项目 | [agent-task-handoff/SKILL.md](agent-task-handoff/SKILL.md) |
+| agent-task-handoff | 工作流门面（v1.1.0） | AI 委托编排（五模式串链：P1 底座先行定路线 → P2 只讲不改建地图 → P3 四要素任务书 → P5 截图成本裁剪 → P4 分链排障；另含 E1~E4 补充卡：四问成技/证据先行/单产出拆分/双闸门；洞察→判据映射、任务书模板、步数台账、排障工作表、8 条 Gotchas；L1 门面 + L2 九篇模式文档） | 交给 AI 做、写个任务书、有外部副作用的委托、Agent 说做了却没生效、越跑越贵、第一次让 AI 读陌生项目、多 Agent 拆分、不可逆动作确认 | [agent-task-handoff/SKILL.md](agent-task-handoff/SKILL.md) |
 
 ### Trae 内置工作流 Skill（2个，来自 external/doutops）
 
