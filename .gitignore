@@ -12,6 +12,10 @@ _test_out/
 external/
 playground/
 
+# 本地工具脚手架与生成型交付物（仅本机工作产物，不入库）
+.tools/
+deliverables/
+
 # Python 缓存与编译文件
 __pycache__/
 *.pyc
