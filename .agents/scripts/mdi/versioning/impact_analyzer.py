@@ -3,7 +3,6 @@
 分析变更对下游产物的影响，提供字典序列化和文本格式化输出。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

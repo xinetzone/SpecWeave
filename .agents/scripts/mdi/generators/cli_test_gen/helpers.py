@@ -1,6 +1,5 @@
 """CLI测试生成辅助函数。"""
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

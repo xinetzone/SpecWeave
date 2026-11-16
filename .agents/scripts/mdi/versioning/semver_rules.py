@@ -3,7 +3,6 @@
 基于DiffResult计算变更严重性，生成版本号升级建议。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

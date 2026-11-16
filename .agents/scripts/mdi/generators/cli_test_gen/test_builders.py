@@ -1,6 +1,5 @@
 """CLI测试场景构建器。"""
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

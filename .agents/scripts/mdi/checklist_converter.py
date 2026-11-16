@@ -11,7 +11,6 @@
 
 中文关键词优先，其次英文。
 """
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

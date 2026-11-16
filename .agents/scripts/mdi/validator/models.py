@@ -3,7 +3,6 @@
 包含ValidationIssue和ValidationReport数据结构。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

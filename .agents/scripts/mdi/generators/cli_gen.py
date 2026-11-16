@@ -3,7 +3,6 @@
 为CLI Tool Profile生成Python Click命令行骨架代码。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

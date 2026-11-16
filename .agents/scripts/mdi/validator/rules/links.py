@@ -3,7 +3,6 @@
 检查file:///绝对路径和相对链接有效性。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

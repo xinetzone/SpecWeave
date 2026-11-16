@@ -10,7 +10,6 @@
 
 提取结果按接口组织，pytest/jest生成器优先使用example数据而非mock数据。
 """
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

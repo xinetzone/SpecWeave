@@ -4,7 +4,6 @@
 仅包含diff比较逻辑，不包含版本规则和影响分析。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

@@ -5,7 +5,6 @@ STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
 使用axios作为HTTP客户端，包含正常场景、边界值和错误场景三类测试用例。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

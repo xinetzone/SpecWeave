@@ -3,7 +3,6 @@
 生成标准OpenAPI 3.0规范JSON文件，适用于Web API场景。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

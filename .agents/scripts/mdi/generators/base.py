@@ -3,7 +3,6 @@
 定义所有生成器的统一接口。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

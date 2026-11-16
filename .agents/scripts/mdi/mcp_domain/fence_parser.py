@@ -2,7 +2,6 @@
 STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

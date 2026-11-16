@@ -1,6 +1,5 @@
 """CLI测试生成上下文。"""
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

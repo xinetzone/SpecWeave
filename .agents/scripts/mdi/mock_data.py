@@ -9,7 +9,6 @@
 - 类型安全：严格按照 type 字段生成对应类型的值
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

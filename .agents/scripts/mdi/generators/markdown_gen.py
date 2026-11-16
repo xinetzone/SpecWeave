@@ -3,7 +3,6 @@
 将MDIDocument重新生成为格式统一的人类友好Markdown文档。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

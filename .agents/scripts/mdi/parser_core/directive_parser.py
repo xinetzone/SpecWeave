@@ -1,6 +1,3 @@
-from __future__ import annotations
-
-
 # 版本校验：导入共享库
 import sys as _sys
 from pathlib import Path as _Path

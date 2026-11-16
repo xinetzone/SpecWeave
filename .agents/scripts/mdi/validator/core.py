@@ -3,7 +3,6 @@
 提供MDIValidator主类，负责文档解析、验证流程编排和批量验证。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

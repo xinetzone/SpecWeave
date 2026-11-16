@@ -3,7 +3,6 @@
 提供简单的API用于生成各种语言的代码和文档。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

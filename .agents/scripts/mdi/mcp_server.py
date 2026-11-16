@@ -19,7 +19,6 @@ STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
     mcp.run(transport="stdio")          # 或 "streamable-http" / "sse"
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

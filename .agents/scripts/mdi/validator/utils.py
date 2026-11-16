@@ -3,7 +3,6 @@
 提供代码块上下文检测、行号查找等通用工具。
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库
