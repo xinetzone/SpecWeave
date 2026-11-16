@@ -6,6 +6,10 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-p
 ---
 # 引用块代码块渲染修复模式：使用场景与最佳实践指南
 
+## 模式类型
+
+配套使用指南（文档渲染排障工具层）。承载 [blockquote-code-block-rendering-fix.md](blockquote-code-block-rendering-fix.md) 模式的应用细则、变体修复方案与正反例库，**本身不提出模式主张**；模式本体与适用边界见该模式文档。
+
 ## 模式概述
 
 引用块（Blockquote，`>`）是 Markdown 中创建视觉突出内容（警告、提示、注意事项、协议说明）的标准方式。代码块（Fenced Code Block，`` ``` ``）用于展示预格式化文本和代码。当两者嵌套使用（引用块内放置代码块）时，Markdown 渲染器会产生一个反直觉的行为：**代码块内的所有 Markdown 语法（链接、加粗、列表等）全部失效，一律按纯文本渲染**。
