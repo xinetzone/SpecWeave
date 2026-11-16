@@ -17,7 +17,6 @@
 输出：统计直通/正常模式的路由判定延迟分位，对比路由开销，并生成 Docs 报告。
 """
 
-from __future__ import annotations
 
 import argparse
 import concurrent.futures

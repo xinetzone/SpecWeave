@@ -7,7 +7,6 @@
 - 经验记忆准入规则：允许 4 类 / 禁止 6 类
 """
 
-from __future__ import annotations
 
 import logging
 from typing import Any, Dict, List

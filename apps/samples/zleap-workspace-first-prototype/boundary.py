@@ -6,7 +6,6 @@
   模型边界（按工作区绑定）、记忆边界（不跨用户/任务串）
 """
 
-from __future__ import annotations
 
 import logging
 from typing import Any, Dict, List

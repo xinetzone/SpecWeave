@@ -13,7 +13,6 @@
 - 极端边缘场景（fsync、二进制全字节、深层目录、stale跨文件清理等）
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

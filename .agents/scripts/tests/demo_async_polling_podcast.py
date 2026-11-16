@@ -22,7 +22,6 @@
 及 api-async-polling-pattern / api-error-handling-retry-strategy / api-long-text-file-parameter
 """
 
-from __future__ import annotations
 
 import json
 import os

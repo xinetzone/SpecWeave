@@ -17,7 +17,6 @@
 输出：延迟分布统计（mean/p50/p95/p99/stdev/min/max），写入 Docs 报告。
 """
 
-from __future__ import annotations
 
 import argparse
 import concurrent.futures

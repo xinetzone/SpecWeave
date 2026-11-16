@@ -10,7 +10,6 @@
 7. 四类边界检查
 """
 
-from __future__ import annotations
 
 from workspace import Workspace, WorkspaceRegistry
 from tools import ToolRegistry, build_default_registry

@@ -11,7 +11,6 @@
 3. 支持注入固定延迟（`latency_ms`）用于压测可控复现
 """
 
-from __future__ import annotations
 
 import logging
 import random

@@ -10,7 +10,6 @@ P0 阶段实现基础骨架：ModelRouter 类 + 策略接口 + 兜底默认模�
 P1 阶段将补充四种具体策略（数据边界/复杂度/成本/兜底）。
 """
 
-from __future__ import annotations
 
 import logging
 from typing import Any, Callable, Dict, List, Optional

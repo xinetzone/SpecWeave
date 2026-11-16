@@ -10,7 +10,6 @@
   - dry-run 不写入
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

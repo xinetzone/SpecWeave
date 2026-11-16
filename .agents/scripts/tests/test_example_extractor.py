@@ -9,7 +9,6 @@
 - 空输入/无效JSON处理
 - 便捷函数(get_request_example/get_response_example/get_python_assertions)
 """
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

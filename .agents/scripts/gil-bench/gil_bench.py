@@ -12,7 +12,6 @@
   # 两环境一键对照（主进程需 typer；scan 子进程无需 typer）
   python gil_bench.py compare --no-gil-py <py314t> --gil-py <py314> --out-dir results/
 """
-from __future__ import annotations
 
 import json
 import os

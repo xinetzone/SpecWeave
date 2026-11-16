@@ -8,7 +8,6 @@
 - 边界情况（空文本、非断言文本）
 - get_checklist_assertions/get_checklist_setup 便捷函数
 """
-from __future__ import annotations
 
 
 # 版本校验：导入共享库

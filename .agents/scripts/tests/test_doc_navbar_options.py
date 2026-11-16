@@ -12,7 +12,6 @@
   T6b — build_invs 内部路径正确：scratch/<domain>/html/objects.inv → domain-invs/<domain>.inv move + size>8192
   T6c — pages.yml PR 3 步流水线：WARMUP / SHARD / SAVE 三步存在 + 顺序 + WARMUP cache key 含 hashFiles doc/bundles/**/*.md
 """
-from __future__ import annotations
 
 import importlib.util
 import os

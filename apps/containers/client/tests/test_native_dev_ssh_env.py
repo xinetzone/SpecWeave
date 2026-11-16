@@ -16,7 +16,6 @@
 
 仅 POSIX（需 bash/sed/grep）；Windows 原生自动 skip。
 """
-from __future__ import annotations
 
 import os
 import re

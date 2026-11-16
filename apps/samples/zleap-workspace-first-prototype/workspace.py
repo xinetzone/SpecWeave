@@ -6,7 +6,6 @@
 - 先选工作区，再组装上下文
 """
 
-from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 

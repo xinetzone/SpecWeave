@@ -6,7 +6,6 @@
 - 两种加载方式：Prefetch（预取，短/准/可控）+ Agentic（按需读取）
 """
 
-from __future__ import annotations
 
 from typing import Any, Dict, List
 

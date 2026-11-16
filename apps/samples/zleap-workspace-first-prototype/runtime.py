@@ -6,7 +6,6 @@
 - 支持轨迹查询与审计（原型用内存存储模拟 PostgreSQL 持久化）
 """
 
-from __future__ import annotations
 
 import time
 from typing import Any, Dict, List

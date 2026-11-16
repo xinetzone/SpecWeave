@@ -16,7 +16,6 @@
     5. mock快速验证跨平台（mock层不依赖真实锁机制）
 """
 
-from __future__ import annotations
 
 
 # 版本校验：导入共享库
