@@ -9,11 +9,8 @@ enforce_python310()
 
 import logging
 import re
+from contextlib import contextmanager
 from pathlib import Path
-
-# 静默 frontmatter 库在批量扫描时对外部 TOML 缺失的逐条 warning，
-# 缺失不影响本工具的只读检查结论
-logging.getLogger("lib.frontmatter").setLevel(logging.ERROR)
 
 from lib.frontmatter import split_frontmatter_and_content
 
@@ -233,6 +230,23 @@ def _resolve_entry(entry: str, source: DocNode, tree: DocsTree) -> bool:
     return False
 
 
+@contextmanager
+def _quiet_frontmatter_warnings():
+    """扫描期压低 lib.frontmatter 的逐条 warning，退出时恢复原级别。
+
+    docs-as-product 只读检查不关心外部 TOML 缺失，但该告警对同进程的其它
+    消费者（如 Skill 质量门对同一 logger 的断言）仍有意义——因此只能在
+    扫描动作内临时抑制，不能在导入时改全局日志级。
+    """
+    logger = logging.getLogger("lib.frontmatter")
+    previous_level = logger.level
+    logger.setLevel(logging.ERROR)
+    try:
+        yield
+    finally:
+        logger.setLevel(previous_level)
+
+
 def scan_docs(root: str | Path, config=None) -> DocsTree:
     """扫描文档目录并构建 DocsTree。
 
@@ -249,12 +263,13 @@ def scan_docs(root: str | Path, config=None) -> DocsTree:
     if not root_path.exists():
         return tree
 
-    for path in sorted(root_path.rglob("*")):
-        if not path.is_file() or path.suffix not in DOC_SUFFIXES:
-            continue
-        if any(part in EXCLUDED_DIRS for part in path.relative_to(root_path).parts):
-            continue
-        tree.add(_parse_node(path, root_path))
+    with _quiet_frontmatter_warnings():
+        for path in sorted(root_path.rglob("*")):
+            if not path.is_file() or path.suffix not in DOC_SUFFIXES:
+                continue
+            if any(part in EXCLUDED_DIRS for part in path.relative_to(root_path).parts):
+                continue
+            tree.add(_parse_node(path, root_path))
 
     # 依据 toctree 条目标记挂载状态
     for node in tree.nodes:

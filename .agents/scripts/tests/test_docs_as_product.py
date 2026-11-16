@@ -18,10 +18,12 @@ from python310_version_check import enforce_python310
 enforce_python310()
 
 import json
+import logging
 import sys
 
 import pytest
 
+from lib.frontmatter import load_external_toml
 from lib.docs_as_product import (
     DocsProductConfig,
     check_metadata_drift,
@@ -540,3 +542,45 @@ class TestCli:
         with pytest.raises(SystemExit) as exc:
             cli_mod.main()
         assert exc.value.code in (0, 1)
+
+
+# ── 扫描期日志抑制的作用域 ──────────────────────────────────
+
+
+@pytest.fixture
+def frontmatter_logger():
+    """把 lib.frontmatter 归零到 NOTSET，测试后还原，避免受执行顺序影响。"""
+    logger = logging.getLogger("lib.frontmatter")
+    original = logger.level
+    logger.setLevel(logging.NOTSET)
+    yield logger
+    logger.setLevel(original)
+
+
+def _write_missing_ref_doc(tmp_path) -> None:
+    (tmp_path / "a.md").write_text(
+        '---\nx-toml-ref: "missing.toml"\ntitle: 测试\n---\n\n正文\n',
+        encoding="utf-8",
+    )
+
+
+class TestFrontmatterWarningScope:
+    """发现层的日志抑制只能作用于扫描动作，不得改进程级 logger 配置。"""
+
+    def test_scan_restores_logger_level(self, tmp_path, frontmatter_logger):
+        _write_missing_ref_doc(tmp_path)
+        scan_docs(tmp_path)
+        assert frontmatter_logger.level == logging.NOTSET
+
+    def test_scan_suppresses_missing_toml_warning(self, tmp_path, frontmatter_logger, caplog):
+        _write_missing_ref_doc(tmp_path)
+        with caplog.at_level(logging.WARNING):
+            scan_docs(tmp_path)
+        assert "不存在" not in caplog.text
+
+    def test_warning_visible_after_scan(self, tmp_path, frontmatter_logger, caplog):
+        _write_missing_ref_doc(tmp_path)
+        scan_docs(tmp_path)
+        caplog.set_level(logging.WARNING)
+        assert load_external_toml("missing.toml", tmp_path) is None
+        assert "不存在" in caplog.text
