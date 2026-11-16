@@ -1,5 +1,8 @@
 id = "thin-entry-shim"
+maturity = "L1-draft"
 title = "薄入口垫片模式（Thin Entry Shim）"
+domain = "architecture"
+layer = "architecture"
 category = "retrospective/patterns/architecture-patterns"
 date = "2026-07-02"
 version = "1.0"

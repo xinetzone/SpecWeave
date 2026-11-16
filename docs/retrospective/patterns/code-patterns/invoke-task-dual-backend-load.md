@@ -13,6 +13,8 @@ related_patterns:
 tags: ["invoke", "sdk-fallback", "cli", "container", "podman", "python", "dual-backend", "graceful-degradation", "context-manager"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Invoke Task 双后端（SDK 优先 + CLI Fallback）模式

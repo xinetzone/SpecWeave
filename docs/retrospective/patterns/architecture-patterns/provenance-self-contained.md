@@ -19,6 +19,8 @@ tags:
   - resource-reference
   - offline-distribution
   - self-contained
+domain: "architecture"
+layer: "architecture"
 ---
 # 溯源自包含：知识包脱离宿主仓库的可移植分发
 

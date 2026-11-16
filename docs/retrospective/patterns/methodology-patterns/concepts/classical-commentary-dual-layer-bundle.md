@@ -15,6 +15,8 @@ verified:
   at: "2026-09-08T19:30:00+08:00"
 status: "stable"
 stale_after: "2027-09-08"
+domain: "methodology"
+layer: "concepts"
 ---
 
 # 古典文本-现代阐释双层Bundle构建模式

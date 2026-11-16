@@ -17,6 +17,8 @@ related_patterns:
 tags: ["asset-reuse", "integration-guide", "last-mile", "documentation", "reuse-barrier", "quick-start", "reference-closed-loop"]
 validation_count: 1
 reuse_count: 0
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # 资产复用最后一公里：配套集成指南

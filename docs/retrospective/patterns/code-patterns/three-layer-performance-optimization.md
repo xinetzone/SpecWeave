@@ -7,6 +7,8 @@ maturity: "L1-draft"
 source: "retrospective-pycaffe-image-preprocessing-optimization-20260723"
 related_patterns: ["bottleneck-first-refactoring"]
 tags: ["performance", "optimization", "data-processing", "vectorization", "caching"]
+domain: "code"
+layer: "code"
 ---
 
 # 三层加速模式

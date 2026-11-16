@@ -12,6 +12,8 @@ related_patterns:
   - "cmake-public-target-config-function"
   - "preflight-checks-script"
 tags: ["cmake", "c++", "python", "ffi", "cow", "hybrid-project", "checklist", "build-system", "cross-language", "ci-gate"]
+domain: "checklists"
+layer: "checklists"
 ---
 
 # CMake/C++/Python 混合项目边界检查清单模板

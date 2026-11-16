@@ -3,6 +3,8 @@ type: Pattern
 id: "android-responsive-list-resource-qualifier"
 source: "chaos/tests/AndroidStudioProjects/MyApplication"
 maturity: "L1"
+domain: "code"
+layer: "code"
 ---
 
 # Android 资源限定符驱动的响应式列表切换模式

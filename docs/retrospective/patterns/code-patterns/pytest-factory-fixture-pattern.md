@@ -12,6 +12,8 @@ related_patterns:
 tags: ["testing", "pytest", "fixture", "factory", "resource-management", "async-testing", "cleanup", "closure"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # pytest工厂Fixture模式

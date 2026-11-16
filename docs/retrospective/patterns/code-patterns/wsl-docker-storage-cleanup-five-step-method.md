@@ -17,6 +17,8 @@ related_patterns:
 tags: ["wsl", "wsl2", "docker", "storage-cleanup", "disk-space", "resource-reclaim", "windows", "powershell", "devops", "maintenance", "zombie-container", "buildkit-cache", "orphan-volume"]
 validation_count: 3
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # WSL/Docker存储清理五步法

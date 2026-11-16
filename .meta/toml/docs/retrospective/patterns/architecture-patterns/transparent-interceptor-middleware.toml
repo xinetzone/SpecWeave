@@ -1,3 +1,5 @@
 id = "transparent-interceptor-middleware"
 title = "透明拦截器中间件模式（Transparent Interceptor Middleware Pattern）"
+domain = "architecture"
+layer = "architecture"
 maturity = "L2"

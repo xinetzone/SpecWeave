@@ -1,5 +1,7 @@
 id = "duplication-interest-model"
 title = "重复代码利息模型：复制一时爽，维护火葬场"
+domain = "methodology"
+layer = "governance-strategy"
 category = "governance-strategy"
 tags = ["重复代码", "DRY", "技术债务", "维护成本", "决策模型", "代码质量", "利息模型"]
 date = "2026-07-10"

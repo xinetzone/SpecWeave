@@ -5,6 +5,8 @@ source: "TVM Python 3.14 + LLVM 22 构建验证项目"
 date: "2026-07-17"
 type: "process"
 maturity: "L1-draft"
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # 本地镜像缓存与依赖代理配置方案

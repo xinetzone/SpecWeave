@@ -1,5 +1,8 @@
 id = "env-var-alias-backward-compat"
+maturity = "L2-validated"
 title = "环境变量别名向后兼容模式"
+domain = "code"
+layer = "code"
 category = "retrospective/patterns/code-patterns"
 date = "2026-07-02"
 version = "1.0"

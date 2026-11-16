@@ -9,6 +9,8 @@ related_patterns: ["verification-scope-bounding", "bp-destructive-probe-gate", "
 tags: ["生成型产物", "验收门", "负向约束", "位图生成", "留痕"]
 validation_count: 1
 reuse_count: 0
+domain: "methodology"
+layer: "ai-collaboration"
 ---
 
 # 查多了什么（生成型产物双向验收门）

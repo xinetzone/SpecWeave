@@ -15,6 +15,8 @@ related_patterns:
 tags: ["docker", "slimming", "elf", "readelf", "dt-needed", "shared-library", "dependency-analysis", "cuda", "cudnn", "safety"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # DT_NEEDED动态依赖分析法（共享库安全删除）

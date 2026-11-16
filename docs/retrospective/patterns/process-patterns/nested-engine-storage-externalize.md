@@ -13,6 +13,8 @@ related_patterns:
   - "docker-cross-os-internal-build.md"
 tags: ["nested-containers", "podman-in-podman", "docker-in-docker", "writable-layer", "storage-volume", "build-cache", "disk-space"]
 validation_count: 1
+domain: "process"
+layer: "process"
 ---
 
 # 嵌套引擎存储卷外置模式（Nested Engine Storage Externalize）

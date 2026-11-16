@@ -11,6 +11,8 @@ related_patterns:
 tags: ["sphinx", "conf.py", "fallback", "optional-dependency", "probe", "graceful-degradation", "config"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Sphinx 配置探测回退模式（Sphinx-Conf-Probe-Fallback）

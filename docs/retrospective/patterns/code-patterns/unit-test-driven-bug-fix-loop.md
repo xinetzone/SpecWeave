@@ -14,6 +14,8 @@ related_patterns:
 tags: ["testing", "unit-test", "mock-data", "bug-fix", "closed-loop", "parsing", "bash", "ci"]
 validation_count: 1
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # 单元测试驱动Bug发现与修复闭环模式（测试即修复）

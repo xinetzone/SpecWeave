@@ -1,5 +1,7 @@
 id = "implicit-contract-pitfalls"
 title = "隐式契约陷阱：语言隐藏行为导致的Bug"
+domain = "methodology"
+layer = "tools-automation"
 category = "tools-automation"
 tags = ["隐式契约", "类型系统", "Python", "bool", "继承", "隐藏坑点", "类型检查"]
 date = "2026-07-10"

@@ -19,6 +19,8 @@ related_patterns:
 tags: ["conda", "abi", "free-threading", "cp314t", "channel-management", "miniforge", "python", "environment-isolation", "silent-failure", "gcc", "libgcc", "rpath", "c-extensions"]
 validation_count: 2
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # Conda ABI 变体安全切换模式

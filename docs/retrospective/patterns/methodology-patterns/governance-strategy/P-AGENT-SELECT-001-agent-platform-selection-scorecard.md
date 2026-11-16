@@ -11,6 +11,8 @@ author: "seven-concepts E-stage + V-stage refinement"
 summary: "企业级 AI Agent 平台/框架选型的 9 维度加权评分卡（含权重、1-5分标准、加权公式、示例打分、决策建议）。复制本文件填写候选平台分数，计算加权总分直接排序。可用于 Dify/Coze/LangGraph/LlamaIndex/AutoGen/AgentKit 等任何 Agent 平台或 AI 基础设施选型。"
 pattern_id: "P-AGENT-SELECT-001-v2"
 related_patterns: ["P-LEGACY-AI-UPGRADE-002", "P-DEMO-TO-PROD-003"]
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # AI Agent 平台选型 9 维度评分卡

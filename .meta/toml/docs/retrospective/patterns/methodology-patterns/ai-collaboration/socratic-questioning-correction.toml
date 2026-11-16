@@ -1,3 +1,5 @@
 id = "socratic-questioning-correction"
 title = "苏格拉底提问纠错模式（Socratic Questioning Correction）"
+domain = "methodology"
+layer = "ai-collaboration"
 maturity = "L1"

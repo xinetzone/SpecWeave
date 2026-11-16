@@ -7,6 +7,8 @@ maturity: "L2-validated"
 source: "retrospective-caffe-ffi-wsl-tooling-20260729"
 related_patterns: ["wsl-docker-command-safety", "wsl-distro-install-migration-guide"]
 tags: ["powershell", "wsl", "wsl2", "cross-shell", "windows", "deployment", "automation", "path-conversion"]
+domain: "code"
+layer: "code"
 ---
 
 # PowerShell→WSL跨Shell包装器模式

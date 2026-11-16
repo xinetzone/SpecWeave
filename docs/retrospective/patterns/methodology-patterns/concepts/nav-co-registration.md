@@ -23,6 +23,8 @@ verified:
   at: "2026-08-31T00:00:00Z"
 status: "stable"
 stale_after: "2027-08-31"
+domain: "methodology"
+layer: "concepts"
 ---
 
 # 生成-登记同步法（Nav Co-Registration Pattern）

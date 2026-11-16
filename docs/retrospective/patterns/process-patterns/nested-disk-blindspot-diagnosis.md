@@ -14,6 +14,8 @@ related_patterns:
   - "monorepo-ci-blindspot-detection.md"
 tags: ["nested-containers", "disk-usage", "observability", "permission-shadowing", "overlay-upperdir", "diagnosis", "du", "podman"]
 validation_count: 1
+domain: "process"
+layer: "process"
 ---
 
 # 嵌套容器磁盘盲区诊断模式（Nested Disk Blindspot Diagnosis）

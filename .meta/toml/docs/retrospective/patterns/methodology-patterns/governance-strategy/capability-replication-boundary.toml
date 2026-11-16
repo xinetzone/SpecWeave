@@ -1,3 +1,5 @@
 id = "capability-replication-boundary"
 title = "能力复制边界判断法"
+domain = "methodology"
+layer = "governance-strategy"
 maturity = "L1"

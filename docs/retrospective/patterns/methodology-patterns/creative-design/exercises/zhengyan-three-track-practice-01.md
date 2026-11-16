@@ -11,6 +11,8 @@ estimated_time: "60-90分钟"
 maturity: "L1-draft"
 tags: ["写作练习", "正言若反", "约束审查", "文案创作", "实战演练"]
 description: "综合运用正言若反写作法和约束审查三轨制，为反效率知识IP创作3条朋友圈文案并完成自我审查"
+domain: "methodology"
+layer: "creative-design"
 ---
 
 # 实战演练：「反效率」知识IP的朋友圈文案创作与审查

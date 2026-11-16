@@ -7,6 +7,8 @@ maturity: "L2-validated"
 source: "retrospective-caffe-ffi-wsl-tooling-20260729"
 related_patterns: ["dual-channel-tiered-logging", "core-entry-structured-logging", "script-json-output-contract", "cli-json-pipeline"]
 tags: ["bash", "logging", "observability", "monitoring", "json-lines", "shell-scripting", "structured-output"]
+domain: "code"
+layer: "code"
 ---
 
 # Bash脚本统一结构化日志库模式

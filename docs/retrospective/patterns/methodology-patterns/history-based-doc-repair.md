@@ -13,6 +13,8 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "complete"
 abstract_level: "domain-general"
+domain: "methodology"
+layer: "methodology"
 ---
 
 # 历史基线文档修复法

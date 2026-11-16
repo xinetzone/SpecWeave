@@ -1,5 +1,7 @@
 id = "engineering-article-seven-techniques-template"
 title = "工程方法论文章七技法·实战填空模板"
+domain = "methodology"
+layer = "document-architecture"
 category = "retrospective/patterns/methodology-patterns/document-architecture"
 date = "2026-07-02"
 version = "1.0"

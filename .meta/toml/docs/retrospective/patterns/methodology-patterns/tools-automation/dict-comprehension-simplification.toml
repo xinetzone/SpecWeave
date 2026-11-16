@@ -1,5 +1,7 @@
 id = "dict-comprehension-simplification"
 title = "字典推导式简化转换循环：消除样板代码"
+domain = "methodology"
+layer = "tools-automation"
 category = "tools-automation"
 tags = ["字典推导式", "代码简洁", "Python", "样板代码", "重构技巧", "表达力"]
 date = "2026-07-10"

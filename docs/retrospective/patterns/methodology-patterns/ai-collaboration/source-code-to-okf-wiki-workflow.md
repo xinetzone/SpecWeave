@@ -4,6 +4,8 @@ id: "source-code-to-okf-wiki-workflow"
 source: "spec:pyinvoke-okf-wiki"
 maturity: "L1"
 validation_count: 6
+domain: "methodology"
+layer: "ai-collaboration"
 ---
 # 源码阅读→OKF Wiki生成工作流
 

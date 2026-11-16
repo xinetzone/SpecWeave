@@ -13,6 +13,8 @@ related_patterns:
 tags: ["podman", "container", "userns", "rootless", "socket", "pass-through", "wsl", "devtool"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 宿主通道透传模式

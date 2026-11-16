@@ -1,5 +1,9 @@
 id = "vendor-doc-info-compensation-search"
 title = "厂商技术文档信息补偿搜索策略"
+domain = "methodology"
+layer = "research-knowledge"
 category = "retrospective/patterns/methodology-patterns/research-knowledge"
 date = "2026-07-02"
 version = "1.0"
+
+maturity = "L1"

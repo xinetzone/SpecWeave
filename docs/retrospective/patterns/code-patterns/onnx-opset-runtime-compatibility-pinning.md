@@ -14,6 +14,8 @@ related_patterns:
 tags: ["onnx", "onnxruntime", "opset", "version-compatibility", "model-creation", "helper-api"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # ONNX opset运行时兼容锁定模式

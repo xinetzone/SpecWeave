@@ -13,6 +13,8 @@ validation_count: 1
 reuse_count: 0
 documentation_level: "complete"
 abstract_level: "domain-general"
+domain: "methodology"
+layer: "methodology"
 ---
 
 # 前置完整性门禁

@@ -11,6 +11,8 @@ related_patterns:
   - "five-stage-batch-pipeline"
   - "incremental-regression-verification"
   - "inference-shell-model-base-decoupling"
+domain: "architecture"
+layer: "architecture"
 ---
 > **提炼自**：Tongyi-MAI mai-ui 评估方法论复盘 —— 异构基准先统一格式再统一判分，多通道结果与技术报告分数交叉印证
 

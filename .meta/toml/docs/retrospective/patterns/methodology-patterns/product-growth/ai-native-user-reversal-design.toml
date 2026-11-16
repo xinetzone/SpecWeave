@@ -1,5 +1,9 @@
 id = "ai-native-user-reversal-design"
 title = "AI原生用户逆向定位模式"
+domain = "methodology"
+layer = "product-growth"
 category = "retrospective/patterns/methodology-patterns/product-growth"
 date = "2026-07-02"
 version = "1.0"
+
+maturity = "L1"

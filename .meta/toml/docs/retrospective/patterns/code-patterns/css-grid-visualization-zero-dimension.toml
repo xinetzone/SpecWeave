@@ -1,5 +1,7 @@
 id = "css-grid-visualization-zero-dimension"
 title = "CSS Grid/Flex可视化容器零尺寸陷阱"
+domain = "code"
+layer = "code"
 category = "retrospective/patterns/code-patterns"
 date = "2026-07-02"
 version = "1.0"

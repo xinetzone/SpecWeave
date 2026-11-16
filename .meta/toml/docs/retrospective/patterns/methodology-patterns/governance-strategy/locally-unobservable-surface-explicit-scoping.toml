@@ -1,4 +1,6 @@
 id = "locally-unobservable-surface-explicit-scoping"
+domain = "methodology"
+layer = "governance-strategy"
 type = "methodology"
 category = "governance-strategy"
 maturity = "L1"

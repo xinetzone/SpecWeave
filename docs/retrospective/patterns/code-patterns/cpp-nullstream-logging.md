@@ -6,6 +6,8 @@ status: "candidate"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 # C++ NullStream 零开销日志模式
 

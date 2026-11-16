@@ -17,6 +17,8 @@ tags:
   - sha256
   - version-control-friendly
   - metadata-unreliable
+domain: "architecture"
+layer: "architecture"
 ---
 
 # 内容指纹变更检测·增量同步：基于内容指纹而非元数据的变更识别模式

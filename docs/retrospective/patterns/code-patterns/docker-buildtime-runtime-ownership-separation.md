@@ -16,6 +16,8 @@ related_patterns:
 tags: ["docker", "dockerfile", "pip-user", "ownership", "multistage-build", "conda", "non-root-user", "image-size", "user-site"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Docker 构建时/运行时属主分离模式（PIP_USER 治理）

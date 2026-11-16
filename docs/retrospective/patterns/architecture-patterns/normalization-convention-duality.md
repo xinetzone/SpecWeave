@@ -10,6 +10,8 @@ related_patterns:
   - "normalized-coordinate-abstraction"
   - "inference-shell-model-base-decoupling"
   - "environment-diversity-design"
+domain: "architecture"
+layer: "architecture"
 ---
 > **提炼自**：Tongyi-MAI mai-ui 坐标归一化复盘 —— 同一语义量在子系统间存在两套并存归一化约定时的登记与分治
 

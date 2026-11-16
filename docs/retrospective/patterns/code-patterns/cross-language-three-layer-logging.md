@@ -9,6 +9,8 @@ related_patterns: ["cpp-nullstream-logging", "dual-channel-tiered-logging", "cor
 tags: ["logging", "cross-language", "ffi", "c++", "python", "observability", "debugging", "native-extension"]
 validation_count: 1
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # 跨语言三层协调日志架构

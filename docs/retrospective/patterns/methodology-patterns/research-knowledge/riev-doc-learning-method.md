@@ -15,6 +15,8 @@ related_patterns:
 tags: [七概念, R-I-E-V, 文档学习, 知识沉淀, 外部资料, 结构化笔记]
 validation_count: 2
 reuse_count: 0
+domain: "methodology"
+layer: "research-knowledge"
 ---
 
 # RIEV文档学习法

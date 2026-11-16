@@ -10,6 +10,8 @@ related_patterns:
 maturity: "L1-draft"
 tags: ["评分标准", "写作练习", "Rubric"]
 description: "练习01的详细评分Rubric，5大维度100分制，含扣分细则和常见问题清单"
+domain: "methodology"
+layer: "creative-design"
 ---
 
 # 评分标准：反效率知识IP朋友圈文案创作与审查

@@ -11,6 +11,8 @@ related_patterns:
 tags: ["conda", "environment", "base-env", "multi-env", "docker", "isolation"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Conda 环境管理双路径模式

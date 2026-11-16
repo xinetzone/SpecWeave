@@ -17,6 +17,8 @@ related_patterns:
 tags: ["python", "wheel", "docker", "rpath", "nuitka", "cmake", "conda", "runtime-image", "shared-library", "pytorch", "dependency-minimization", "ssot"]
 validation_count: 3
 reuse_count: 2
+domain: "code"
+layer: "code"
 ---
 
 # 编译型Python Wheel运行时镜像构建模式

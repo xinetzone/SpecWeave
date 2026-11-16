@@ -11,6 +11,8 @@ related_patterns:
   - "trust-first-metadata"
   - "provenance-self-contained"
   - "verification-policy-checker-spectrum"
+domain: "architecture"
+layer: "architecture"
 ---
 > **提炼自**：Tongyi-MAI mobilepa-bench 榜单设计复盘 —— 综合分是"权重声明"而非能力全景，可解读性 = 权重公式 + 任务分布 + 统计口径脚注
 

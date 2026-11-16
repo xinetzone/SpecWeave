@@ -1,5 +1,7 @@
 id = "seven-concepts-interaction-spec"
 title = "七概念交互机制与接口规范"
+domain = "methodology"
+layer = "governance-strategy"
 tags = ["方法论", "七概念", "治理策略", "交互规范", "接口契约"]
 maturity = "L2"
 source = "spec.md Task 5 + 前四个产出"

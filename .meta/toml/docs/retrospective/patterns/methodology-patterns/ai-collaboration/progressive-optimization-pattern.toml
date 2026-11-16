@@ -1,5 +1,7 @@
 id = "progressive-optimization-pattern"
 title = "渐进式优化模式（Progressive Optimization Pattern）"
+domain = "methodology"
+layer = "ai-collaboration"
 category = "retrospective/patterns/methodology-patterns/ai-collaboration"
 date = "2026-07-02"
 version = "1.0"

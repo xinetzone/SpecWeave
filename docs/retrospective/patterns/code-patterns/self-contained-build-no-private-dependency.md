@@ -13,6 +13,8 @@ related_patterns:
 tags: ["build-reproducibility", "self-containment", "private-dependency", "documentation-build", "governance", "open-source"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 自包含构建链路：公开项目不耦合个人私域依赖

@@ -12,6 +12,8 @@ related_patterns:
 tags: ["config", "persistence", "cmake", "build-config", "three-layer-coverage", "regex-replace", "governance"]
 validation_count: 1
 reuse_count: 0
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # 配置持久化全链路覆盖模式

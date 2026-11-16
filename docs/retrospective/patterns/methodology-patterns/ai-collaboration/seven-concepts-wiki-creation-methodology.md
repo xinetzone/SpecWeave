@@ -4,6 +4,8 @@ id: "seven-concepts-wiki-creation-methodology"
 source: "spec:agent-eval-methodology-wiki + ../../../task-reports/agent-eval-methodology-creation/creation-process-record.md"
 maturity: "L1"
 validation_count: 1
+domain: "methodology"
+layer: "ai-collaboration"
 ---
 # 七概念驱动的技术Wiki创作方法论
 

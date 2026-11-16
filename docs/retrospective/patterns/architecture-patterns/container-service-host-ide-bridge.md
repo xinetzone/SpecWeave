@@ -16,6 +16,8 @@ related_patterns:
 tags: ["docker", "container", "ide", "jupyter", "remote-development", "port-mapping", "cors", "dev-workflow", "network-bridge"]
 validation_count: 3
 reuse_count: 0
+domain: "architecture"
+layer: "architecture"
 ---
 
 # 容器开发服务宿主桥接模式

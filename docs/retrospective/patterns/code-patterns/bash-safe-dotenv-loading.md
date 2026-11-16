@@ -14,6 +14,8 @@ related_patterns:
 tags: ["bash", "dotenv", "env-file", "crlf", "windows-path", "wsl", "cross-platform", "security", "configuration"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Bash 安全 .env 加载模式：逐行词法解析，禁止 source

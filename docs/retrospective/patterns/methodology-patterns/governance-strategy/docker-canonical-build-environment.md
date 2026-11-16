@@ -9,6 +9,8 @@ last_updated: "2026-08-01"
 source: "retrospective-caffe-ffi-tests-enable-20260801"
 related_patterns: ["build-failure-layered-triage", "wsl2-docker-selection-decision", "docker-modular-build-orchestration", "compiled-wheel-runtime-image-build"]
 tags: ["docker", "build-environment", "reproducibility", "best-practice", "ci-cd", "cross-platform", "methodology", "triage", "verification"]
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # Docker 作为规范构建环境——构建验证的黄金标准

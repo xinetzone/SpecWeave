@@ -14,6 +14,8 @@ related_patterns:
 tags: [testing, performance, observability, instrumentation, pytest]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # perf_trace性能埋点集成

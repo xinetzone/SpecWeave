@@ -11,6 +11,8 @@ related_patterns:
 tags: ["docker", "dockerfile", "apt", "image-size", "slimming", "cache-cleanup"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Docker apt 层瘦身模式

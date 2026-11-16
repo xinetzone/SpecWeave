@@ -1,5 +1,8 @@
 id = "flat-nested-hybrid-scan"
+maturity = "L2-validated"
 title = "扁平+嵌套混合目录扫描模式"
+domain = "code"
+layer = "code"
 category = "retrospective/patterns/code-patterns"
 date = "2026-07-02"
 version = "1.0"

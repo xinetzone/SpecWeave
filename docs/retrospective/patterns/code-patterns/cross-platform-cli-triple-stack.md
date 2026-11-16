@@ -16,6 +16,8 @@ related_patterns:
 tags: ["cli", "cross-platform", "bash", "cmd", "powershell", "wsl", "crlf", "zero-dependency", "shell-wrapper"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 三栈跨平台 CLI 模式

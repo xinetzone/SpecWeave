@@ -13,6 +13,8 @@ related_patterns:
 tags: [wsl2, docker, nvidia, gpu, troubleshooting, infrastructure, layered-diagnosis]
 category: infrastructure/troubleshooting
 time_estimate: "~25分钟（5分钟诊断+15分钟安装+5分钟验证）"
+domain: "code"
+layer: "code"
 ---
 
 # WSL Docker GPU三层诊断修复模式

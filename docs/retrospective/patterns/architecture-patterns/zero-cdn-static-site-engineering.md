@@ -11,6 +11,8 @@ related_patterns:
   - "zero-update-client-design"
   - "zero-logic-client-desktop-app"
   - "content-hash-build-cache"
+domain: "architecture"
+layer: "architecture"
 ---
 > **提炼自**：Tongyi-MAI mobilepa-bench 项目页工程复盘 —— 展示图即构建产物，数据数组才是 single source of truth
 

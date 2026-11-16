@@ -16,6 +16,8 @@ related_patterns:
 tags: ["bash", "wsl", "cross-platform", "checklist", "crlf", "podman", "docker", "shell-script", "release-gate", "eol"]
 validation_count: 2
 reuse_count: 0
+domain: "checklists"
+layer: "checklists"
 ---
 
 # 跨平台 Bash 脚本发布前检查清单（WSL/Linux/macOS）

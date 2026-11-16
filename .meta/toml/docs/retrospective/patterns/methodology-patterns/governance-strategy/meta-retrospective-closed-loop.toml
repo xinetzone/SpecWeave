@@ -1,5 +1,7 @@
 id = "meta-retrospective-closed-loop"
 title = "元复盘闭环：交付后主动自我审查的完整改进循环"
+domain = "methodology"
+layer = "governance-strategy"
 type = "pattern"
 maturity = "L1"
 validation_count = 1

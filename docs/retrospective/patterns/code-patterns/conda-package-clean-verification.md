@@ -13,6 +13,8 @@ related_patterns:
 tags: ["conda", "conda-build", "verification", "clean-environment", "editable-install", "pep-660", "path-validation", "multi-dimensional", "testing"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Conda包干净环境多维验证模式

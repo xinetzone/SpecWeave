@@ -14,6 +14,8 @@ related_patterns:
   - "wsl-distro-install-migration-guide"
   - "large-archive-remote-preflight"
   - "build-failure-layered-triage"
+domain: "code"
+layer: "code"
 ---
 
 # xrdp 黑屏三层分诊法（连接 / 会话 / 窗口管理器）

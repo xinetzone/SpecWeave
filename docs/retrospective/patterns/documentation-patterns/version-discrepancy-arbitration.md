@@ -10,6 +10,8 @@ reuse_count: 0
 tags: [版本差异, 勘误, 书目知识包, 事实核验, 权威信源, 知识沉淀]
 pattern_type: methodology
 category: documentation
+domain: "documentation"
+layer: "documentation"
 ---
 
 # 版本差异判别（Version-Discrepancy Arbitration）

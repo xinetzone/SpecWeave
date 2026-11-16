@@ -15,6 +15,8 @@ related_patterns:
 tags: ["docker", "image-variant", "base-inheritance", "multi-stage", "template-driven", "devcontainer", "sphinx-theme", "theme", "incremental-customization"]
 validation_count: 2
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # 基座继承+增量定制模式

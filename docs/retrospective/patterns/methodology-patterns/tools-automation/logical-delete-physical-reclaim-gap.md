@@ -14,6 +14,8 @@ related_patterns:
   - "../governance-strategy/mutual-exclusion-composability-precheck.md"
 tags: ["logical-delete", "physical-reclaim", "gc", "vacuum", "trim", "capacity-planning", "observability", "storage"]
 validation_count: 1
+domain: "methodology"
+layer: "tools-automation"
 ---
 
 # 声明-回收鸿沟模式（Logical Delete ≠ Physical Reclaim）

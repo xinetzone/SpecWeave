@@ -1,5 +1,8 @@
 id = "full-workflow-integration"
+maturity = "L1-draft"
 title = "全流程整合模式"
+domain = "methodology"
+layer = "tools-automation"
 category = "retrospective/patterns/methodology-patterns/tools-automation"
 date = "2026-07-02"
 version = "1.0"

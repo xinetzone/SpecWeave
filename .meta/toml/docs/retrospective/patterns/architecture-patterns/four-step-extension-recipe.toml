@@ -1,5 +1,8 @@
 id = "four-step-extension-recipe"
+maturity = "L2-validated"
 title = "扩展四步法模式（Four-Step Extension Recipe）"
+domain = "architecture"
+layer = "architecture"
 category = "retrospective/patterns/architecture-patterns"
 date = "2026-07-02"
 version = "1.0"

@@ -1,3 +1,5 @@
 id = "quoting-scope-limits"
 title = "引号/包裹机制作用边界定律（Quoting Scope Limits）"
+domain = "methodology"
+layer = "tools-automation"
 maturity = "L2"

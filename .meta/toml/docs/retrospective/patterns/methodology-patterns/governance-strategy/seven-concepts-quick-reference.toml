@@ -1,5 +1,7 @@
 id = "seven-concepts-quick-reference"
 title = "七概念方法论统一速查手册"
+domain = "methodology"
+layer = "governance-strategy"
 source = "整合8个原子化模式文件精华内容"
 maturity = "L2"
 created_at = "2026-07-10"

@@ -17,6 +17,8 @@ related_patterns:
 tags: ["oci", "docker", "podman", "wsl2", "wsl-import", "rootfs", "image-conversion", "whiteout", "overlayfs", "container-runtime"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # OCI镜像→WSL2发行版运行时桥接转换模式

@@ -16,6 +16,8 @@ tags:
   - documentation
   - anti-patterns
   - checklist
+domain: "methodology"
+layer: "document-architecture"
 ---
 # 反模式优先最佳实践写作法
 

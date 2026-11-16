@@ -27,6 +27,8 @@ documentation_level: "comprehensive"
 bindings:
   test_script: "../../../../scripts/tests/test_mp_forkserver_validation.py"
   checklist: "../../reports/insight-extraction/standalone/python-multiprocessing-migration-checklist.md"
+domain: "code"
+layer: "code"
 ---
 
 # Python 3.14 Multiprocessing fork→forkserver 迁移兼容模式

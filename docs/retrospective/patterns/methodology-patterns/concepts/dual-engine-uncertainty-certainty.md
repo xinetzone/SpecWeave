@@ -20,6 +20,8 @@ verified:
   at: "2026-08-22T00:00:00Z"
 status: "stable"
 stale_after: "2027-08-22"
+domain: "methodology"
+layer: "concepts"
 ---
 
 # 不确定性探索+确定性校验双引擎架构模式（Dual-Engine Uncertainty-Certainty Pattern）

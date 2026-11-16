@@ -13,6 +13,8 @@ related_patterns:
 tags: ["container", "podman", "docker", "sdk", "fallback", "multi-backend", "devtool", "layered-architecture"]
 validation_count: 1
 reuse_count: 0
+domain: "architecture"
+layer: "architecture"
 ---
 
 # 容器开发工具七层栈+三层后端降级架构

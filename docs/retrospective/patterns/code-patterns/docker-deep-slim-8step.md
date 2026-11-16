@@ -18,6 +18,8 @@ related_patterns:
 tags: ["docker", "dockerfile", "image-optimization", "slim", "strip", "conda", "__pycache__", "image-size"]
 validation_count: 3
 reuse_count: 3
+domain: "code"
+layer: "code"
 ---
 
 # Docker镜像深度压缩8步法

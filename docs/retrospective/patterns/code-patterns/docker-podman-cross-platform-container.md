@@ -11,6 +11,8 @@ related_patterns:
 tags: ["docker", "podman", "cross-platform", "container", "windows", "wsl", "cli"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Docker↔Podman 跨平台容器命令统一模式

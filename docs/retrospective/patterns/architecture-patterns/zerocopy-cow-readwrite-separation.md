@@ -18,6 +18,8 @@ tags:
   - API设计
   - C++
   - 风险控制
+domain: "architecture"
+layer: "architecture"
 ---
 
 # 零拷贝COW读写分离模式

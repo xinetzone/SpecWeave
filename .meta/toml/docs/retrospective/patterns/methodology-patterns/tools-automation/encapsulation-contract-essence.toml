@@ -1,5 +1,7 @@
 id = "encapsulation-contract-essence"
 title = "封装的契约本质：内部重构零风险安全模式"
+domain = "methodology"
+layer = "tools-automation"
 category = "tools-automation"
 tags = ["封装", "重构", "契约", "内部函数", "安全重构", "测试驱动", "零回归"]
 date = "2026-07-10"

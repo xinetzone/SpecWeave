@@ -12,6 +12,8 @@ related_patterns:
 tags: ["cow", "copy-on-write", "refcount", "shared-state", "orthogonality", "owner-borrower", "c++", "ffi", "zero-copy", "aliasing"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # COW共享状态标志与引用计数双重语义模式（Shared-State-Refcount Dual Semantics）

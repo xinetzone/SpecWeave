@@ -14,6 +14,8 @@ tags: ["wsl2", "vhdx", "diskpart", "sparse-vhd", "fstrim", "podman-machine", "di
 validation_count: 2
 reuse_count: 0
 documentation_level: "standard"
+domain: "process"
+layer: "process"
 ---
 
 # VHDX 二相回收 SOP（sparse 在线相 ↔ compact 离线相）

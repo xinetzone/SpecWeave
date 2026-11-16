@@ -13,6 +13,8 @@ related_patterns:
 tags: ["docker", "image-testing", "layered-verification", "l1-l6", "testing", "ci", "container"]
 validation_count: 1
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # Docker 镜像分层验证模式

@@ -1,5 +1,8 @@
 id = "declarative-op-compiler-backend"
+maturity = "L3-mature"
 title = "声明式算子 + 编译器后端模式（Declarative Operator + Compiler Backend）"
+domain = "architecture"
+layer = "architecture"
 category = "retrospective/patterns/architecture-patterns"
 date = "2026-07-02"
 version = "1.0"

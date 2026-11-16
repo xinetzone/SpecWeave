@@ -1,5 +1,7 @@
 id = "multi-touchpoint-aida-conversion"
 title = "多触点AIDA转化设计（Multi-Touchpoint AIDA Conversion）"
+domain = "methodology"
+layer = "product-growth"
 category = "retrospective/patterns/methodology-patterns/product-growth"
 date = "2026-07-02"
 version = "1.0"

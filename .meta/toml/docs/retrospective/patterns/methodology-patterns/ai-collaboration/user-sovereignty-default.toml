@@ -1,5 +1,7 @@
 id = "user-sovereignty-default"
 title = "用户主权默认模式"
+domain = "methodology"
+layer = "ai-collaboration"
 type = "pattern"
 source = "docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/insight-extraction.md#洞察2用户主权默认把控制权还给被控制者建立信任基础"
 created_at = 2026-07-04

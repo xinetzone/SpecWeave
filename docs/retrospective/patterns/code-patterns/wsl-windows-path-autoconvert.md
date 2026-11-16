@@ -14,6 +14,8 @@ related_patterns:
 tags: ["wsl", "windows", "path-conversion", "bash", "cross-platform", "interop", "wslpath"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # WSL 环境 Windows 路径自动转换模式

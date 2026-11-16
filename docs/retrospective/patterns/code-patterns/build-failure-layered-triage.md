@@ -9,6 +9,8 @@ last_updated: "2026-08-01"
 source: "retrospective-caffe-ffi-tests-enable-20260801"
 related_patterns: ["fix-priority-chain", "preflight-checks-script", "msvc-vcvarsall-path-staging", "platform-aware-dependency-detect", "conda-windows-cmake-dual-path", "wsl2-docker-selection-decision"]
 tags: ["build-system", "debugging", "troubleshooting", "msvc", "gcc", "clang", "cross-platform", "compiler", "methodology", "triage"]
+domain: "code"
+layer: "code"
 ---
 
 # 构建失败分层排查法

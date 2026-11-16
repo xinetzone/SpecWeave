@@ -5,6 +5,8 @@ version: 1.0
 date: 2026-07-22
 tags: [WSL, Windows, 环境配置, Ubuntu, 迁移, 离线安装]
 source: "WSL Ubuntu 26.04 安装与迁移实践"
+domain: "code"
+layer: "code"
 ---
 
 # WSL 发行版安装、迁移与配置速查手册

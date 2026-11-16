@@ -14,6 +14,8 @@ related_patterns:
 tags: ["conda", "docker", "multi-stage-build", "channel-priority", "openblas", "dev-headers", "python"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Conda环境Docker多阶段构建最佳实践模式

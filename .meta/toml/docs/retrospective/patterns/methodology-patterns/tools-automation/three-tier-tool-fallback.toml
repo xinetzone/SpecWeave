@@ -1,3 +1,5 @@
 id = "three-tier-tool-fallback"
 title = "网页内容提取三级回退链（Three-Tier Web Content Extraction Fallback Chain）"
+domain = "methodology"
+layer = "tools-automation"
 maturity = "L1"

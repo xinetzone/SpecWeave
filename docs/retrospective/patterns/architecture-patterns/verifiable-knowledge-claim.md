@@ -19,6 +19,8 @@ tags:
   - trust-model
   - deterministic-verification
   - openapi-pattern
+domain: "architecture"
+layer: "architecture"
 ---
 # 可验证知识声明：从自然语言描述到可执行规范
 

@@ -1,5 +1,7 @@
 id = "pattern-tooling-progressive-extraction"
 title = "模式渐进式工具提取：L1实验阶段即可提取轻量工具"
+domain = "methodology"
+layer = "governance-strategy"
 type = "pattern"
 maturity = "L1"
 validation_count = 1

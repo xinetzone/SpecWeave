@@ -24,6 +24,8 @@ tags:
   - github-actions-cache
   - build-sharding
   - reference-index-warmup
+domain: "architecture"
+layer: "architecture"
 ---
 
 # N 域切片构建·索引预生成 + PR 三步缓存流水线：分片模式下跨域引用恢复架构模式

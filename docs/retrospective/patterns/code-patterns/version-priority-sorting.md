@@ -9,6 +9,8 @@ related_patterns: ["multi-strategy-auto-discovery"]
 tags: ["powershell", "versioning", "sorting", "visual-studio", "priority", "multi-version"]
 validation_count: 2
 reuse_count: 2
+domain: "code"
+layer: "code"
 ---
 
 # 版本优先级排序模式

@@ -13,6 +13,8 @@ related_patterns:
 tags: ["cow", "copy-on-write", "const-correctness", "c++", "zero-copy", "memory-sharing", "api-design", "mutable-semantics"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # const重载+显式可变方法驱动的写时复制触发模式（Const-COW-Trigger）

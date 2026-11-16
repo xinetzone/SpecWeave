@@ -1,5 +1,7 @@
 id = "pattern-ecosystem-barrier-evaluation"
 title = "生态壁垒评估框架（Ecosystem Barrier Evaluation）"
+domain = "methodology"
+layer = "ai-collaboration"
 category = "retrospective/patterns/methodology-patterns/ai-collaboration"
 date = "2026-07-02"
 version = "1.0"

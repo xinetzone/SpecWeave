@@ -13,6 +13,8 @@ related_patterns:
 tags: ["governance", "agents-md", "conventions", "routing", "modularity", "documentation", "onboarding"]
 validation_count: 1
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # 功能完成后立即建立治理层（AGENTS.md + .agents/）模式

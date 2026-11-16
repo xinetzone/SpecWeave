@@ -11,6 +11,8 @@ related_patterns:
 tags: ["docker", "dockerfile", "environment.yml", "conda", "conditional-injection", "configurable"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Docker 声明式依赖条件注入模式

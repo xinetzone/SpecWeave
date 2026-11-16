@@ -1,3 +1,5 @@
 id = "generation-validation-closed-loop"
 title = "生成-验证闭环模式（Generation-Validation Closed Loop）"
+domain = "methodology"
+layer = "ai-collaboration"
 maturity = "L2"

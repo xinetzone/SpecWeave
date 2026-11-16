@@ -12,6 +12,8 @@ related_patterns:
 tags: ["incremental", "capability-stack", "iterative-development", "dependency-ordering", "atomic-commit", "container", "tool-building"]
 validation_count: 1
 reuse_count: 0
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # 能力栈渐进构建（Capability-Stack-Progressive-Building）

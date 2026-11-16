@@ -20,6 +20,8 @@ verified:
   at: "2026-08-22T00:00:00Z"
 status: "stable"
 stale_after: "2027-08-22"
+domain: "methodology"
+layer: "concepts"
 ---
 
 # 技术文章Wiki化批量生成模式（Technical Article to Wiki Batch Generation）

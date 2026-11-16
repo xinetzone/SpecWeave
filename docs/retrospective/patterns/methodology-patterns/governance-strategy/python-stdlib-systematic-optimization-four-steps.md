@@ -16,6 +16,8 @@ related_patterns:
 tags: ["python", "stdlib", "code-coverage", "optimization", "four-step-method", "slots", "quantification", "baseline"]
 validation_count: 1
 reuse_count: 0
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # Python 标准库系统优化四步法

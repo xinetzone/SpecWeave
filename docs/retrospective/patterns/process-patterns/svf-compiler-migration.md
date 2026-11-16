@@ -18,6 +18,8 @@ related_patterns:
   - "runtime-version-enforcement.md"
 tags: ["compiler-migration", "nuitka", "python-abi", "cp314", "cp314t", "free-threading", "spike", "fallback", "abi", "build-strategy"]
 validation_count: 2
+domain: "process"
+layer: "process"
 ---
 
 # SVF 编译器迁移模式（Spike-Validate-Fallback）

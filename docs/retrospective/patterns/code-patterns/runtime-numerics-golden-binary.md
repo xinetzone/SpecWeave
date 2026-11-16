@@ -14,6 +14,8 @@ tags: ["runtime", "numerics", "golden-binary", "prebuilt-binary", "toolchain-par
 validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
+domain: "code"
+layer: "code"
 ---
 
 # 运行时数值金标准模式（Runtime-Numerics-Golden-Binary）

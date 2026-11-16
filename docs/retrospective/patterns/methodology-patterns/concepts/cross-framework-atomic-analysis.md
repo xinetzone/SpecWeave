@@ -20,6 +20,8 @@ verified:
   at: "2026-08-22T00:00:00Z"
 status: "stable"
 stale_after: "2027-08-22"
+domain: "methodology"
+layer: "concepts"
 ---
 
 # 跨框架原子化设计分析模式（Cross-Framework Atomic Design Analysis Pattern）

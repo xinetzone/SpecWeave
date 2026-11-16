@@ -14,6 +14,8 @@ related_patterns:
 tags: ["zero-copy", "ffi", "ctypes", "dlpack", "numpy", "tensor", "python", "memory-management", "lifetime", "reference-counting", "cow"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # FFI边界零拷贝Tensor交互双模式选择模式（FFI-ZeroCopy-Tensor-DualMode）

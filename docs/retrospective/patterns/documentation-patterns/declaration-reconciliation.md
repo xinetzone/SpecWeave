@@ -10,6 +10,8 @@ reuse_count: 0
 tags: [声明核验, 事实对账, 勘误, 质量门, 知识沉淀]
 pattern_type: methodology
 category: documentation
+domain: "documentation"
+layer: "documentation"
 ---
 
 # 声明对账（Declaration Reconciliation）

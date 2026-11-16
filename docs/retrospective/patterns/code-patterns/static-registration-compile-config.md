@@ -14,6 +14,8 @@ related_patterns:
 tags: ["cpp", "static-registration", "cmake", "lto", "linker", "tvm", "llvm", "opencv", "compile-config"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 静态注册依赖代码的编译配置模式

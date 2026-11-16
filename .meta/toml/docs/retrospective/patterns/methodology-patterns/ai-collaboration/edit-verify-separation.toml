@@ -1,5 +1,7 @@
 id = "edit-verify-separation"
 title = "编辑-验证分离模式"
+domain = "methodology"
+layer = "ai-collaboration"
 category = "retrospective/patterns/methodology-patterns/ai-collaboration"
 date = "2026-07-08"
 version = "1.2"

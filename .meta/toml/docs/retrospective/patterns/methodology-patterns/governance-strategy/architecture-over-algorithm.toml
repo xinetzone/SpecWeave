@@ -1,5 +1,7 @@
 id = "architecture-over-algorithm"
 title = "信息架构优先于算法补全：结构决定连接"
+domain = "methodology"
+layer = "governance-strategy"
 category = "governance-strategy"
 tags = ["信息架构", "推荐算法", "知识图谱", "系统思维", "结构决定行为", "反直觉", "第一性原理", "知识组织"]
 date = "2026-07-10"

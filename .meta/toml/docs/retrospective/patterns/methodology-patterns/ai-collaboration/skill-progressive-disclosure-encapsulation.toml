@@ -1,5 +1,7 @@
 id = "skill-progressive-disclosure-encapsulation"
 title = "Skill渐进式披露封装模式（SKILL.md Metadata + Python Executor）"
+domain = "methodology"
+layer = "ai-collaboration"
 category = "retrospective/patterns/methodology-patterns/ai-collaboration"
 date = "2026-07-02"
 version = "1.0"

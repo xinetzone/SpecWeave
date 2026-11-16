@@ -12,6 +12,8 @@ related_patterns:
   - "mvp-unvalidated-code-debt"
   - "learn-validate-adopt"
   - "simple-task-high-risk"
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # 去噪容器：固定周期高密度冲刺的双层组织设计

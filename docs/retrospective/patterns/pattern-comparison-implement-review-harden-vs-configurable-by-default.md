@@ -9,6 +9,8 @@ tags: ["comparison", "sop", "configurable", "governance", "code-pattern"]
 related_patterns:
   - "implement-review-harden-sop"
   - "configurable-by-default-principle"
+domain: "patterns"
+layer: "patterns"
 ---
 # 模式对比总结："实现→审查→加固"三段式SOP vs 可配置性默认原则
 

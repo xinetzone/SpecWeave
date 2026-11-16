@@ -9,6 +9,8 @@ related_patterns: ["msvc-vcvarsall-path-staging", "check-and-restore"]
 tags: ["powershell", "windows", "path", "msvc", "devshell", "error-recovery", "8191-limit"]
 validation_count: 1
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # PATH长度自动恢复模式

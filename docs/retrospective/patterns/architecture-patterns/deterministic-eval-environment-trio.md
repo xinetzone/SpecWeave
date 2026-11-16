@@ -11,6 +11,8 @@ related_patterns:
   - "incremental-regression-verification"
   - "lifecycle-protocol-three-phase"
   - "docker-podman-cross-platform-container"
+domain: "architecture"
+layer: "architecture"
 ---
 > **提炼自**：Tongyi-MAI mobile-world 复现性复盘 —— 确定性 = 快照回滚 + 冻结时钟（白名单同步）+ 后台清理的固定顺序初始化
 

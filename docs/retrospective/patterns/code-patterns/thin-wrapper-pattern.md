@@ -9,6 +9,8 @@ related_patterns: ["configurable-by-default-principle", "cmake-four-layer-modula
 tags: ["powershell", "code-reuse", "wrapper", "dry", "build-scripts", "parameterization"]
 validation_count: 2
 reuse_count: 4
+domain: "code"
+layer: "code"
 ---
 
 # 薄包装模式

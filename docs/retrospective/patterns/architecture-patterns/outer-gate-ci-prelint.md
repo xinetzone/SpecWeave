@@ -23,6 +23,8 @@ tags:
   - quality-gate-architecture
   - workflow-config
   - pytest-static-assertion
+domain: "architecture"
+layer: "architecture"
 ---
 
 # 门外守门：入口配置文件的独立 lint 三层防线架构模式

@@ -10,6 +10,8 @@ reuse_count: 0
 tags: [wiki, 技术文档, 教程模式, 开源翻译, 知识沉淀]
 pattern_type: methodology
 category: documentation
+domain: "documentation"
+layer: "documentation"
 ---
 
 # 技术Wiki教程创建模式

@@ -14,6 +14,8 @@ related_patterns:
 tags: [testing, numpy, deep-learning, numerical-correctness, test-driven]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Numpy参考实现先行

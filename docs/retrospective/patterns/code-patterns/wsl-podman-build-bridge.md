@@ -10,6 +10,8 @@ related_reports:
   - "sc-20260827-podman-machine-ssh-refused（session级诊断，见模式Troubleshooting章节）"
 related_patterns: ["powershell-wsl-cross-shell-wrapper", "docker-podman-cross-platform-container", "wsl2-docker-selection-decision", "conda-docker-multistage-best-practices", "wsl-docker-command-safety"]
 tags: ["podman", "wsl", "wsl2", "windows", "container-build", "buildah", "rootless", "cross-shell", "containerfile", "oci-format", "docker-format", "systemd", "dbus", "cgroup", "mount-propagation", "troubleshooting"]
+domain: "code"
+layer: "code"
 ---
 
 # Windows→WSL Podman构建桥接模式

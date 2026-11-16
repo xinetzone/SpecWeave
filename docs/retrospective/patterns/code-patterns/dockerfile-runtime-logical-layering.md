@@ -16,6 +16,8 @@ related_patterns:
 tags: ["docker", "dockerfile", "multi-stage-build", "layering", "cache-optimization", "build-verification", "cow"]
 validation_count: 3
 reuse_count: 3
+domain: "code"
+layer: "code"
 ---
 
 # Dockerfile Runtime 阶段六步逻辑分层模式

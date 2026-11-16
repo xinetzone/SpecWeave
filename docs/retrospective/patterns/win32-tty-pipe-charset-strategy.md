@@ -6,6 +6,8 @@ category: methodology-patterns
 tags: [windows, character-encoding, invoke, podman, jpman-client, TTY, PIPE]
 validation_count: 1
 reuse_count: 0
+domain: "patterns"
+layer: "patterns"
 ---
 
 # 模式：Windows Console 字符集双路径策略（TTY vs PIPE）

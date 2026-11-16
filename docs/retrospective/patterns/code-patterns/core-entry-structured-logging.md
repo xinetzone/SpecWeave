@@ -7,6 +7,8 @@ maturity: "L1-draft"
 source: "retrospective-pycaffe-image-preprocessing-optimization-20260723"
 related_patterns: ["structured-lightweight-logging", "dual-channel-tiered-logging"]
 tags: ["logging", "debugging", "observability", "python", "troubleshooting"]
+domain: "code"
+layer: "code"
 ---
 
 # 核心入口全量日志模式

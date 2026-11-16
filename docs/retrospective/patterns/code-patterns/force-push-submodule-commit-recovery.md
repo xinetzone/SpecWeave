@@ -10,6 +10,8 @@ related_patterns: ["git-bundle-offline-clone.md", "try-prepare-merge.md", "../pr
 tags: ["git", "submodule", "force-push", "version-control", "recovery", "gitlink"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Force-push 剪除子模块提交的 pull 恢复法

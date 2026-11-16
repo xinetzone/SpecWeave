@@ -12,6 +12,8 @@ related_patterns:
 tags: ["raii", "resource-tracking", "atomic-counter", "memory-management", "cpp", "ffi", "bug-prevention", "lifetime"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 资源计数器原语绑定模式（RAII资源追踪）

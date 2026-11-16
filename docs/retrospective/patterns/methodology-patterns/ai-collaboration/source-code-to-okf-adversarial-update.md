@@ -4,6 +4,8 @@ id: "source-code-to-okf-adversarial-update"
 source: "spec:update-invocations-bundle-optimize-okf"
 maturity: "L1"
 validation_count: 1
+domain: "methodology"
+layer: "ai-collaboration"
 ---
 # 源码→OKF 对抗性更新工作流
 

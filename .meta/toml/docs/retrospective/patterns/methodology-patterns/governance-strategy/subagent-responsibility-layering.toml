@@ -1,5 +1,7 @@
 id = "subagent-responsibility-layering"
 title = "子代理职责分层模式"
+domain = "methodology"
+layer = "governance-strategy"
 category = "governance-strategy"
 tags = ["Subagent", "职责分层", "上下文隔离", "注意力保护", "任务分工", "代理架构", "AI协作"]
 date = "2026-07-13"

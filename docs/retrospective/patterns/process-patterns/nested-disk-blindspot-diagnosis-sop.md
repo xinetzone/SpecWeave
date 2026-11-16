@@ -15,6 +15,8 @@ related_patterns:
   - "vhdx-two-phase-recovery-sop.md"
 tags: ["nested-containers", "disk-usage", "diagnosis", "du", "overlay-upperdir", "podman", "wsl2", "zombie-container"]
 validation_count: 1
+domain: "process"
+layer: "process"
 ---
 
 # 嵌套容器磁盘盲区诊断 SOP（四层下钻）

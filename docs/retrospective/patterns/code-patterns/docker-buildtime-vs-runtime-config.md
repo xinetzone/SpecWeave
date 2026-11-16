@@ -16,6 +16,8 @@ related_patterns:
 tags: ["docker", "dockerfile", "multi-stage-build", "entrypoint", "runtime-config", "buildtime-config", "ssh-keys", "container-lifecycle", "security-best-practice"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 多阶段Dockerfile构建时与运行时配置分离原则

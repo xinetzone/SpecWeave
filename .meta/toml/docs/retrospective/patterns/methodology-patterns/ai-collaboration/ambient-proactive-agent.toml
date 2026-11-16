@@ -1,5 +1,8 @@
 id = "pattern-ambient-proactive-agent"
+maturity = "L2-validated"
 title = "主动介入 Agent 模式（Ambient Proactive Agent）"
+domain = "methodology"
+layer = "ai-collaboration"
 category = "retrospective/patterns/methodology-patterns/ai-collaboration"
 date = "2026-07-02"
 version = "1.0"

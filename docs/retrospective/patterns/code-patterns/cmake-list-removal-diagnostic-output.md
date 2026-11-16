@@ -9,6 +9,8 @@ last_updated: "2026-08-01"
 source: "retrospective-caffe-ffi-tests-enable-20260801"
 related_patterns: ["cmake-public-target-config-function", "cmake-four-layer-modular-architecture", "cmake-platform-specific-operation-encapsulation", "core-entry-structured-logging", "bash-unified-structured-logging"]
 tags: ["cmake", "build-system", "diagnostic-logging", "observability", "testing", "list-manipulation", "developer-experience"]
+domain: "code"
+layer: "code"
 ---
 
 # CMake列表变更诊断输出模式

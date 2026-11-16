@@ -15,6 +15,8 @@ reuse_count: 11
 tags: [博文转化, OKF, 知识包, 模型选型, 知识沉淀, 信源溯源, 商业分析, 事实核验, P0核验, 勘误模式]
 pattern_type: methodology
 category: documentation
+domain: "documentation"
+layer: "documentation"
 ---
 
 # 博文类文章→OKF知识包转化模式

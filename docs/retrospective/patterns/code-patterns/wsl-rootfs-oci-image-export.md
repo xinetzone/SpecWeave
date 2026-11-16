@@ -24,6 +24,8 @@ tags: ["wsl", "wsl2", "podman", "image-import", "image-save", "docker-archive", 
 validation_count: 1
 
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # WSL 发行版镜像化导出模式

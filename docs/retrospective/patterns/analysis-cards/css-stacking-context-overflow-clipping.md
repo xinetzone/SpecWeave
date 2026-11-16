@@ -10,6 +10,8 @@ source: "../../reports/task-reports/retrospective-sidebar-collapse-occlusion-202
 tags: ["CSS", "层叠上下文", "overflow", "z-index", "定位", "前端"]
 validation_count: 2
 applicable_to: ["所有Web前端开发", "CSS布局", "组件设计"]
+domain: "analysis"
+layer: "analysis"
 ---
 > **来源**：竹简悟道侧边栏折叠Tooltip遮挡问题复盘（2026-07-14）——侧边栏折叠拉手和Tooltip被overflow:hidden裁剪，z-index无效，经两次修复（拉手+Tooltip）后提炼本知识卡片
 

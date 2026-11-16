@@ -13,6 +13,8 @@ related_patterns:
 tags: ["config", "priority", "merge-strategy", "deep-merge", "configuration", "governance", "explicitness"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 配置源优先级显式化：多源合并语义与深度规则

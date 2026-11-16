@@ -1,5 +1,7 @@
 id = "seven-concepts-adversarial-review"
 title = "七概念方法论自举对抗性审查报告"
+domain = "methodology"
+layer = "governance-strategy"
 tags = ["方法论", "七概念", "治理策略", "对抗性审查", "自举验证"]
 maturity = "L2"
 source = "spec.md Task 7 + 前六个产出"

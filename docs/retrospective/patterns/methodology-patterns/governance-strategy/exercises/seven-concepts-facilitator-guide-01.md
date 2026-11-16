@@ -11,6 +11,8 @@ tags: ["讲师指南", "培训材料", "七概念方法论", "Facilitator Guide"
 description: "七概念实战演练的讲师手册，包含环境准备、时间安排、分组策略、逐环节引导话术、常见问题处理、参考答案、点评要点"
 audience: "内部培训讲师、技术负责人、团队管理者"
 prerequisites: "讲师需提前完整阅读七概念方法论核心文档，亲自做过一遍本演练"
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # 讲师指南：七概念方法论里程碑复盘演练

@@ -20,6 +20,8 @@ tags:
   - infrastructure-as-code
   - docs-as-code
   - knowledge-system-design
+domain: "architecture"
+layer: "architecture"
 ---
 # 知识即代码：软件工程范式向知识管理迁移法
 

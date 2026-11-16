@@ -11,6 +11,8 @@ related_patterns:
 tags: ["docker", "volume", "mount", "dev-workflow", "container", "hot-reload"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Docker 卷挂载宿主动态开发模式

@@ -13,6 +13,8 @@ related_patterns:
 tags: ["conda", "conda-build", "scikit-build-core", "native-extension", "cmake", "rpath", "orign", "symbol-verification", "build-isolation", "pep-517"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # conda-build + scikit-build-core 原生扩展打包模式

@@ -22,6 +22,8 @@ verified:
   at: "2026-09-11T00:00:00Z"
 status: "stable"
 stale_after: "2027-09-11"
+domain: "methodology"
+layer: "concepts"
 ---
 
 # 文档自动化生成与验证流水线模式（Doc Automation Pipeline）

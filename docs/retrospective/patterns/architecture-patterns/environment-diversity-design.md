@@ -2,6 +2,9 @@
 type: Pattern
 id: "environment-diversity-design"
 source: "retrospective-xuanspace-mono-repo-20260724/insight-extraction.md#综合洞察"
+domain: "architecture"
+layer: "architecture"
+maturity: "L1-draft"
 ---
 
 # 环境多样性设计模式（Environment Diversity Design）

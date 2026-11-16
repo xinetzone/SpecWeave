@@ -12,6 +12,8 @@ related_patterns:
 tags: ["markdown", "myst", "sphinx", "fence", "code-block", "nested", "build-error", "documentation", "commonmark"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Markdown嵌套围栏升级法（Fence Escalation）

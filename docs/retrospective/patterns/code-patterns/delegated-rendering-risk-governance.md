@@ -13,6 +13,8 @@ related_patterns:
 tags: ["external-service", "delegation", "rendering", "badge", "lazy-loading", "degradation", "governance", "privacy"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 外部服务委托风险治理：看似本地实为远程的渲染/计算委托

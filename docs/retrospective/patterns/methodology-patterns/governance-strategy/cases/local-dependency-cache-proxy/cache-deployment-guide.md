@@ -8,6 +8,8 @@ source: "TVM Python 3.14 + LLVM 22 构建验证项目"
 related_files:
   - "local-cache-proxy-config.md"
   - "cache_diagram.md"
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # 本地依赖缓存代理体系部署指南

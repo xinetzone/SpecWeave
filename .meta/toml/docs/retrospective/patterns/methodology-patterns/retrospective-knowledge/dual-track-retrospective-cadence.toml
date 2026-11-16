@@ -1,5 +1,7 @@
 id = "dual-track-retrospective-cadence"
 title = "双轨复盘节奏：时间驱动与事件驱动互补"
+domain = "methodology"
+layer = "retrospective-knowledge"
 category = "retrospective/patterns/methodology-patterns/retrospective-knowledge"
 date = "2026-07-19"
 version = "1.0"

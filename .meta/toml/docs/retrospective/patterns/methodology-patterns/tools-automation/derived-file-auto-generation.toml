@@ -1,5 +1,7 @@
 id = "derived-file-auto-generation"
 title = "衍生文件全自动原则"
+domain = "methodology"
+layer = "tools-automation"
 category = "retrospective/patterns/methodology-patterns/tools-automation"
 date = "2026-07-09"
 version = "1.0"

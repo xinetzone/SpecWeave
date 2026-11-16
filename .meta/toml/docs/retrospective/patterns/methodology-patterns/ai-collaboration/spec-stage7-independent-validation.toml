@@ -1,5 +1,7 @@
 id = "spec-stage7-independent-validation"
 title = "Spec 模式第七阶段独立验证机制"
+domain = "methodology"
+layer = "ai-collaboration"
 category = "docs/retrospective/patterns/methodology-patterns/ai-collaboration"
 date = "2026-07-02"
 version = "1.0"

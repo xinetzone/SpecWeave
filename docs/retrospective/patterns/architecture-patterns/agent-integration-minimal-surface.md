@@ -11,6 +11,8 @@ related_patterns:
   - "three-layer-capability-openness"
   - "lifecycle-differentiated-inheritance"
   - "zero-config-core-enhancement"
+domain: "architecture"
+layer: "architecture"
 ---
 > **提炼自**：Tongyi-MAI mobile-world 评测环境复盘 —— 接入面收敛为一个抽象方法，扩展性靠"封闭枚举 + 文件路径后门"双通道而非开放插件目录
 

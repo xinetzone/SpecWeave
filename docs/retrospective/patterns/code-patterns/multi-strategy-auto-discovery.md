@@ -9,6 +9,8 @@ related_patterns: ["version-priority-sorting", "dynamic-path-derivation", "platf
 tags: ["powershell", "auto-discovery", "environment-detection", "cross-machine", "portability", "conda", "visual-studio"]
 validation_count: 2
 reuse_count: 2
+domain: "code"
+layer: "code"
 ---
 
 # 多策略自动发现模式

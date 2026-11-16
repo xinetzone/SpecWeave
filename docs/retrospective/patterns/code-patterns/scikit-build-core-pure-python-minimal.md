@@ -13,6 +13,8 @@ related_patterns:
 tags: ["scikit-build-core", "cmake", "ninja", "pure-python", "pyproject.toml", "build-system", "setuptools-migration", "pep-517"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # scikit-build-core 纯Python项目最小配置

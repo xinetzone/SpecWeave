@@ -2,6 +2,8 @@
 type: Pattern
 id: "android-fragment-viewmodel-viewbinding-template"
 source: "code: chaos/tests/AndroidStudioProjects/MyApplication (SettingsFragment / SettingsViewModel 模式)"
+domain: "code"
+layer: "code"
 ---
 # Fragment + ViewModel + ViewBinding 三件套骨架模板
 

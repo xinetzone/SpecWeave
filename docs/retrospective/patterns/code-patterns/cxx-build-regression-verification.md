@@ -15,6 +15,8 @@ tags: ["c-extension", "regression", "build-verification", "symbol-check", "macro
 validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
+domain: "code"
+layer: "code"
 ---
 
 # C++扩展构建回归验证模式（Cxx-Build-Regression-Verification）

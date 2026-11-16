@@ -18,6 +18,8 @@ related_patterns:
 tags: ["docker", "build-pipeline", "verification", "preflight", "smoke-test", "benchmark", "ci", "quality-gate", "jsonl-logging"]
 validation_count: 2
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # Docker 镜像构建四层验证流水线

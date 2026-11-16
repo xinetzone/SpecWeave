@@ -17,6 +17,8 @@ related_patterns:
 tags: ["container", "docker", "podman", "kaniko", "buildx", "oci", "containerfile", "dockerfile", ".containerignore", ".dockerignore", "build-context", "copy", "image-optimization", "cache"]
 validation_count: 1
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # 容器构建 COPY 上下文白名单（.containerignore / .dockerignore）

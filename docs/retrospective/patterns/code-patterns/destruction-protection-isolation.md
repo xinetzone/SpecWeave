@@ -16,6 +16,8 @@ related_patterns:
 tags: ["shell", "bash", "cleanup", "rm", "backup", "isolation", "scope", "invariant", "filesystem", "docker", "defensive-programming"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 清理-保护域隔离原则

@@ -14,6 +14,8 @@ related_patterns:
   - hardware-generic-interface-service-differentiation
   - compliance-pre-positioning
 source: "萃取自 openKylin 全面调研报告 §4 模式 P1（session sc-20260929-openkylin-research）；已核验案例：openKylin—银河麒麟（源报告多源）、Fedora—RHEL（官方材料 2026-09-29 补锚）；结构同构待独立核验：deepin—统信 UOS、openEuler—多家商业版"
+domain: "methodology"
+layer: "product-growth"
 ---
 
 # 根社区—商业发行版双轮（Root-Community / Commercial-Distro Flywheel）

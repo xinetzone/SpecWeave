@@ -4,6 +4,8 @@ id: "multi-repo-ecosystem-okf-bundle-generation"
 source: "spec:tongyi-mai-okf-wiki"
 maturity: "L1"
 validation_count: 1
+domain: "methodology"
+layer: "ai-collaboration"
 ---
 # 多子项目生态→OKF知识束归并生成模式
 

@@ -16,6 +16,8 @@ related_patterns:
 tags: ["docker", "image-export", "offline-distribution", "docker-save", "docker-load", "quality-gate", "md5", "wsl", "image-verification", "deployment"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Docker镜像离线构建-验证-导出-分发六步标准流程

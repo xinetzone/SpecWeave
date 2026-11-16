@@ -1,3 +1,5 @@
 id = "tool-skill-separation"
 title = "工具与 Skill 职责分离（Tool-Skill Separation: 能做什么 vs 知道什么）"
+domain = "architecture"
+layer = "architecture"
 maturity = "L1"

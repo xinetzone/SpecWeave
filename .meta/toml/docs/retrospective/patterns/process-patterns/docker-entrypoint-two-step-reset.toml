@@ -1,5 +1,7 @@
 id = "docker-entrypoint-two-step-reset"
 title = "Docker 镜像 ENTRYPOINT 两步安全重置模式"
+domain = "process"
+layer = "process"
 category = "docs/retrospective/patterns/process-patterns"
 date = "2026-07-02"
 version = "1.0"

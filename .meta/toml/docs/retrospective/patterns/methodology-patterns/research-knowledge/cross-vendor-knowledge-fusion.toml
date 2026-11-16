@@ -1,5 +1,9 @@
 id = "cross-vendor-knowledge-fusion"
 title = "跨Vendor知识融合三步法"
+domain = "methodology"
+layer = "research-knowledge"
 category = "retrospective/patterns/methodology-patterns/research-knowledge"
 date = "2026-07-02"
 version = "1.0"
+
+maturity = "L1"

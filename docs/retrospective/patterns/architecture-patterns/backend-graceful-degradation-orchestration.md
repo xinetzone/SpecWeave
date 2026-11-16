@@ -15,6 +15,8 @@ related_patterns:
 tags: ["graceful-degradation", "backend-orchestration", "compatibility", "podman", "invoke", "sdk", "cli", "fallback", "cross-platform"]
 validation_count: 2
 reuse_count: 0
+domain: "architecture"
+layer: "architecture"
 ---
 
 # 后端优雅降级编排模式

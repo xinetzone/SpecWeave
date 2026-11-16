@@ -12,6 +12,8 @@ related_patterns:
 tags: ["cpp", "shared-library", "symbol-visibility", "cmake", "gcc", "clang", "llvm", "elf", "linker", "visibility", "fvisibility-inlines-hidden", "exclude-libs"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 共享库符号双层控制模式

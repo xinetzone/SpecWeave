@@ -12,6 +12,8 @@ related_patterns:
 tags: ["zero-copy", "dlpack", "numpy", "ffi", "testing", "tensor", "memory-view", "native-extension"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 零拷贝张量访问验证模式

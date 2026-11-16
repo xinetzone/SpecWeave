@@ -14,6 +14,8 @@ related_patterns:
 tags: [deep-learning, caffe, graph-topology, zero-copy, memory-management, dataflow]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 多消费者显式Split

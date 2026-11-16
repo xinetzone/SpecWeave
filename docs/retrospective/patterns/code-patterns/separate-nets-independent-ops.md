@@ -12,6 +12,8 @@ related_patterns:
 tags: [testing, deep-learning, test-isolation, graph-topology, caffe]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 独立操作分离Net

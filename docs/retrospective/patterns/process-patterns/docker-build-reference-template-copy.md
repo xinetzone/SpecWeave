@@ -9,6 +9,8 @@ tags: ["docker", "build-system", "template", "reference-copy", "directory-struct
 validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
+domain: "process"
+layer: "process"
 ---
 # Docker 构建系统参考模板复制法
 

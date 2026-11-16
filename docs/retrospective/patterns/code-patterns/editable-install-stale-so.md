@@ -14,6 +14,8 @@ tags: ["editable-install", "pep-660", "c-extension", ".so", "stale-artifact", "s
 validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
+domain: "code"
+layer: "code"
 ---
 
 # Editable安装stale .so处理模式（Editable-Install-Stale-So）

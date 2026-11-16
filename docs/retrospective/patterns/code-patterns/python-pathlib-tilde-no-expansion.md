@@ -12,6 +12,8 @@ related_patterns:
 tags: ["python", "pathlib", "windows", "home-directory", "environment-variable", "known-hosts", "cross-platform"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 用户家目录路径必须用 Path.home()（pathlib 不展开波浪号）

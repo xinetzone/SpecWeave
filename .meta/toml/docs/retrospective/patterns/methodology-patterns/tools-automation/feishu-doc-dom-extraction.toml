@@ -1,5 +1,7 @@
 id = "feishu-doc-extraction"
 title = "飞书云文档DOM提取模式（Feishu/Lark Cloud Document DOM Extraction Pattern）"
+domain = "methodology"
+layer = "tools-automation"
 category = "retrospective/patterns/methodology-patterns/tools-automation"
 date = "2026-07-02"
 version = "1.0"

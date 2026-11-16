@@ -18,6 +18,8 @@ related_patterns:
 tags: ["container", "dockerfile", "containerfile", "podman", "user-switch", "permission-denied", "cleanup", "layer-size", "ownership", "non-root", "multi-user"]
 validation_count: 1
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # Containerfile USER 切换后清理命令的权限分区

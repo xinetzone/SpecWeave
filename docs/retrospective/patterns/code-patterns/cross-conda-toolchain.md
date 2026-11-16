@@ -15,6 +15,8 @@ related_patterns:
 tags: ["conda", "docker", "cross-compile", "toolchain", "dual-env", "path-layering", "clang", "nuitka", "ld-library-path"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 跨 Conda 环境工具链引用模式

@@ -1,5 +1,7 @@
 id = "seven-concepts-trigger-decision-tree"
 title = "七概念组合触发决策树"
+domain = "methodology"
+layer = "governance-strategy"
 tags = ["方法论", "七概念", "治理策略", "决策树", "触发机制"]
 maturity = "L2"
 source = "spec.md Task 3 + seven-concepts-positioning-model.md"

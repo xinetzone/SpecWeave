@@ -15,6 +15,8 @@ related_patterns:
 tags: ["conda", "powershell", "shell-hook", "activate", "silent-failure", "environment", "sandbox", "wrapper", "python", "py314"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Conda Shell Hook 静默失效激活检测模式

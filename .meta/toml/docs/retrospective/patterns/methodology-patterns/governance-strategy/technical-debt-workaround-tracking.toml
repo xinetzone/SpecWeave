@@ -1,3 +1,5 @@
 id = "technical-debt-workaround-tracking"
 title = "权宜之计技术债追踪（Technical Debt Workaround Tracking）"
+domain = "methodology"
+layer = "governance-strategy"
 maturity = "L1"

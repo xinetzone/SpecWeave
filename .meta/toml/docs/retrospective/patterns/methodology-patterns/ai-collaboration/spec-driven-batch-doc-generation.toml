@@ -1,5 +1,8 @@
 id = "spec-driven-batch-doc-generation"
+maturity = "L1-draft"
 title = "Spec 驱动 + 知识库驱动的文档批量产出模式"
+domain = "methodology"
+layer = "ai-collaboration"
 category = "retrospective/patterns/methodology-patterns/ai-collaboration"
 date = "2026-07-02"
 version = "1.0"

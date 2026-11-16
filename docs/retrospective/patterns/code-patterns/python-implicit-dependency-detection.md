@@ -12,6 +12,8 @@ related_patterns:
 tags: ["python", "dependency", "implicit-dependency", "import-chain", "wheel", "docker", "packaging"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Python包隐式依赖检测模式

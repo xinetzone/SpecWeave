@@ -16,6 +16,8 @@ related_patterns:
 tags: ["docker", "dockerfile", "variant", "framework", "shared-library", "bash", "verification", "multi-arch", "slim"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Docker多变体框架化模式（共享库/脚本/验证三层分离）

@@ -19,6 +19,8 @@ tags:
   - open-source
   - vendor-lock-in
   - ecosystem-strategy
+domain: "methodology"
+layer: "research-knowledge"
 ---
 # 厂商项目三层剥离学习法
 

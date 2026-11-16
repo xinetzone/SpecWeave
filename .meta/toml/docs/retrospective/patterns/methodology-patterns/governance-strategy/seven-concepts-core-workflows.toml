@@ -1,5 +1,7 @@
 id = "seven-concepts-core-workflows"
 title = "七概念五种核心组合应用流程"
+domain = "methodology"
+layer = "governance-strategy"
 tags = ["方法论", "七概念", "治理策略", "工作流", "应用流程"]
 maturity = "L2"
 source = "spec.md Task 4 + 前三个产出"

@@ -16,6 +16,8 @@ related_patterns:
 tags: ["config-assetization", "dual-form", "static-template", "dynamic-script", "reusable-asset", "extraction", "condarc", "dockerfile"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 配置资产化双形态模式：静态模板+动态脚本

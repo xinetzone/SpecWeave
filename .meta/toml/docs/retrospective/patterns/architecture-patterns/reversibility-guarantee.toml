@@ -1,3 +1,5 @@
 id = "reversibility-guarantee"
 title = "可逆性保障模式（Reversibility Guarantee / Preserve Rollback Capability）"
+domain = "architecture"
+layer = "architecture"
 maturity = "L2"

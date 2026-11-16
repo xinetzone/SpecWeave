@@ -1,5 +1,7 @@
 id = "skill-migration-position-governance"
 title = "Skill迁移位置治理：统一Skill存放位置的五步标准化流程"
+domain = "methodology"
+layer = "governance-strategy"
 category = "retrospective/patterns/methodology-patterns/governance-strategy"
 date = "2026-07-02"
 version = "1.0"

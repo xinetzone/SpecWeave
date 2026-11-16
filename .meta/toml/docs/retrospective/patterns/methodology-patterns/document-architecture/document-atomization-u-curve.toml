@@ -1,5 +1,8 @@
 id = "document-atomization-u-curve"
+maturity = "L2-validated"
 title = "文档原子化U型演进曲线（Document Atomization U-Curve）"
+domain = "methodology"
+layer = "document-architecture"
 category = "retrospective/patterns/methodology-patterns/document-architecture"
 date = "2026-07-02"
 version = "1.0"

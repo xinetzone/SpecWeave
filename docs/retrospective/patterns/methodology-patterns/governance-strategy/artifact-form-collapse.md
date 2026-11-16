@@ -18,6 +18,8 @@ related_patterns:
   - "provenance-self-contained"
   - "no-touch-list"
 tags: ["产物治理", "多形态冗余", "再生依赖图", "最小可复现集", "支配集", "可复现性", "离线重建", "形态坍缩", "供应链"]
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # 同源产物形态坍缩法

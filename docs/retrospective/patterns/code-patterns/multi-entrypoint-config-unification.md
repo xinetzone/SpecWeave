@@ -14,6 +14,8 @@ related_patterns:
 tags: ["configuration", "multi-entrypoint", "interface-alignment", "backward-compatibility", "naming", "cli", "env-var", "fallback-chain"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 多入口配置接口统一模式：命名权威+fallback链+优先级文档

@@ -13,6 +13,8 @@ tags: ["multi-platform", "copy-variant", "homologous-defect", "driver", "simulat
 validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
+domain: "code"
+layer: "code"
 ---
 
 # 多平台同构缺陷修复模式（Multi-Variant Isomorphic-Defect-Fix）

@@ -11,6 +11,8 @@ related_patterns:
 tags: ["parsing", "delimiter", "field-separator", "config-parsing", "shell", "data-format"]
 validation_count: 1
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # 字段分隔符选择原则

@@ -14,6 +14,8 @@ tags: ["platform", "capability-matrix", "quantization", "config-validation", "as
 validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
+domain: "code"
+layer: "code"
 ---
 
 # 平台×量化能力矩阵前置硬校验模式（Platform-Capability-Matrix-Upfront-Validation）

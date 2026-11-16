@@ -11,6 +11,8 @@ related_patterns:
   - "io-boundary-pure-function-core"
   - "multi-agent-closed-loop-execution"
   - "context-lifecycle-layering"
+domain: "architecture"
+layer: "architecture"
 ---
 > **提炼自**：Tongyi-MAI mai-ui navigation Agent 上下文工程复盘 —— 多模态对话历史的"文本全量回放、图像滑窗、回放再合成"三原则
 

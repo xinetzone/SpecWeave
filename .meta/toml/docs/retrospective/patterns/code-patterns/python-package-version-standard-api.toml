@@ -1,5 +1,8 @@
 id = "python-package-version-standard-api"
+maturity = "L2-validated"
 title = "Python包版本验证：importlib.metadata 标准API"
+domain = "code"
+layer = "code"
 category = "retrospective/patterns/code-patterns"
 date = "2026-07-02"
 version = "1.0"

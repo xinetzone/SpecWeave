@@ -10,6 +10,8 @@ related_patterns: ["force-push-submodule-commit-recovery.md", "../process-patter
 tags: ["git", "submodule", "detached-head", "version-control", "ff-only", "workflow"]
 validation_count: 3
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 子模块汇合仓库 detached HEAD 显式落分支法

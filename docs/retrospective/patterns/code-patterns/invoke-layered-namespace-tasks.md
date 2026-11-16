@@ -12,6 +12,8 @@ related_patterns:
 tags: ["invoke", "task-runner", "namespace", "cli", "python", "task-management", "collection", "command-aliases"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # invoke 任务分层命名空间模式

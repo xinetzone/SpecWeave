@@ -3,6 +3,8 @@ type: Pattern
 id: "android-listadapter-diffutil"
 source: "chaos/tests/AndroidStudioProjects/MyApplication"
 maturity: "L1"
+domain: "code"
+layer: "code"
 ---
 
 # Android ListAdapter + DiffUtil 高效列表刷新范式

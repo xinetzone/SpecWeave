@@ -10,6 +10,8 @@ related_patterns: ["../code-patterns/force-push-submodule-commit-recovery.md", "
 tags: ["git", "submodule", "ssh", "https", "insteadOf", "recovery", "windows", "network", "sop"]
 validation_count: 2
 reuse_count: 0
+domain: "process"
+layer: "process"
 ---
 
 # 子模块 SSH 停滞换源恢复 SOP

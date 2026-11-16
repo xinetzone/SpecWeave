@@ -11,6 +11,8 @@ related_patterns:
 tags: ["onnx", "quantization", "onnxsim", "shape-inference", "torch", "onnxruntime"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # ONNX 量化前简化模式

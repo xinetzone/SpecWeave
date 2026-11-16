@@ -1,5 +1,8 @@
 id = "isolation-over-sharing"
+maturity = "L1-draft"
 title = "隔离优于共享模式"
+domain = "methodology"
+layer = "ai-collaboration"
 category = "retrospective/patterns/methodology-patterns/ai-collaboration"
 date = "2026-07-02"
 version = "1.0"

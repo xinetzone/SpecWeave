@@ -15,6 +15,8 @@ related_patterns:
 tags: ["python", "wheel", "nuitka", "cmake", "scikit-build-core", "ninja", "rpath", "patchelf", "ldd", "shared-library", "self-contained", "native-extension", "docker", "quality-gate"]
 validation_count: 2
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # Python原生扩展Wheel自包含打包模式

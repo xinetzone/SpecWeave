@@ -1,5 +1,8 @@
 id = "five-stage-batch-pipeline"
+maturity = "L2-validated"
 title = "批量处理五步管道模式（Five-Stage Batch Pipeline）"
+domain = "architecture"
+layer = "architecture"
 category = "retrospective/patterns/architecture-patterns"
 date = "2026-07-02"
 version = "1.0"

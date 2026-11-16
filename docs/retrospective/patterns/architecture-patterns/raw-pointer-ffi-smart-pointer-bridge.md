@@ -10,6 +10,8 @@ related_patterns:
 tags: ["api-design", "ffi", "raw-pointer", "smart-pointer", "bridge-pattern", "c++", "cross-language"]
 validation_count: 1
 reuse_count: 0
+domain: "architecture"
+layer: "architecture"
 ---
 
 # 内部原始指针+FFI智能指针桥接模式（Raw-Pointer-FFI-Smart-Pointer-Bridge）

@@ -7,6 +7,8 @@ validation_count: 1
 created: "2026-07-27"
 last_updated: "2026-07-27"
 tags: ["docker", "timezone", "tzdata", "localtime", "system-configuration"]
+domain: "code"
+layer: "code"
 ---
 
 # Docker 容器时区配置模式

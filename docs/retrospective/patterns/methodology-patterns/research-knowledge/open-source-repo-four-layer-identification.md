@@ -16,6 +16,8 @@ tags:
   - architecture
   - vendor-learning
   - knowledge-precipitation
+domain: "methodology"
+layer: "research-knowledge"
 ---
 # 开源仓库四层架构识别法
 

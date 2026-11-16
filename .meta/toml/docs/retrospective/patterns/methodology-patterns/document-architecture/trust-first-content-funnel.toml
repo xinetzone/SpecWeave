@@ -1,5 +1,7 @@
 id = "trust-first-content-funnel"
 title = "信任前置内容漏斗（Trust-First Content Funnel）"
+domain = "methodology"
+layer = "document-architecture"
 category = "retrospective/patterns/methodology-patterns/document-architecture"
 date = "2026-07-02"
 version = "1.0"

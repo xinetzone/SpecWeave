@@ -10,6 +10,8 @@ source: "../../reports/environment-setup/retrospective-wsl-ubuntu2604-install-mi
 tags: ["PowerShell", "HTTPS", "TLS", "证书", "curl", "下载", "网络", "WSL"]
 validation_count: 2
 applicable_to: ["Windows PowerShell 7+", "Windows文件下载", "WSL发行版镜像下载", "Ubuntu镜像源", "CI/CD脚本下载"]
+domain: "analysis"
+layer: "analysis"
 ---
 > **来源**：WSL Ubuntu 26.04离线安装实践（2026-07-22）——从apt.releases.ubuntu.com下载WSL镜像时遇到TLS证书名称不匹配错误，经多方案对比后提炼本FAQ卡片
 

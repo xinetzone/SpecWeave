@@ -1,5 +1,8 @@
 id = "mvp-unvalidated-code-debt"
+maturity = "L1-draft"
 title = "MVP未验证代码债务模式（MVP Unvalidated Code Debt）"
+domain = "methodology"
+layer = "governance-strategy"
 category = "retrospective/patterns/methodology-patterns/governance-strategy"
 date = "2026-07-02"
 version = "1.0"

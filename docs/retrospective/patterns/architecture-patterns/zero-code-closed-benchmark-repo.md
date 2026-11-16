@@ -11,6 +11,8 @@ related_patterns:
   - "provenance-driven-trust"
   - "trust-first-metadata"
   - "scenario-based-security-matrix"
+domain: "architecture"
+layer: "architecture"
 ---
 > **提炼自**：Tongyi-MAI mobilepa-bench 仓库形态复盘 —— open repository ≠ open benchmark：仓库只是发布物展示面，评测能力作为托管服务交付
 

@@ -1,3 +1,5 @@
 id = "first-principles-debugging"
 title = "第一性原理调试法（First-Principles Debugging）"
+domain = "methodology"
+layer = "governance-strategy"
 maturity = "L2"

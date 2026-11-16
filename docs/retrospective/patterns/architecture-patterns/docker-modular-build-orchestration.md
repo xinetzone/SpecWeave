@@ -3,6 +3,8 @@ type: Pattern
 id: "docker-modular-build-orchestration"
 version: "1.0"
 source: "external/chaos/caffe/docker/modules/ 学习沉淀"
+domain: "architecture"
+layer: "architecture"
 ---
 # Docker 模块化构建编排架构
 

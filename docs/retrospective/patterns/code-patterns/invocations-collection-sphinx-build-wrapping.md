@@ -4,6 +4,8 @@ id: "invocations-collection-sphinx-build-wrapping"
 source: "spec:update-invocations-bundle-optimize-okf"
 maturity: "L1"
 validation_count: 1
+domain: "code"
+layer: "code"
 ---
 # invocations Collection 封装 Sphinx 构建
 

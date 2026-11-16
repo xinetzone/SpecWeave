@@ -8,6 +8,8 @@ validation_count: 1
 reuse_count: 0
 related:
   - "defensive-attribute-access"
+domain: "code"
+layer: "code"
 ---
 # C++ 对象包装延迟初始化防御模式
 

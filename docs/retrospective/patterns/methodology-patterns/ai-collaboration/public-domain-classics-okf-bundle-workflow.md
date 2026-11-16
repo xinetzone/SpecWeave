@@ -4,6 +4,8 @@ id: "public-domain-classics-okf-bundle-workflow"
 source: "spec:chemistry-classics-okf-wiki"
 maturity: "L1"
 validation_count: 1
+domain: "methodology"
+layer: "ai-collaboration"
 ---
 
 # 公版经典原文→OKF知识包生成工作流

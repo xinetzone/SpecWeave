@@ -14,6 +14,8 @@ related:
   - python-native-extension-self-contained-wheel
 validation_count: 2
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # Docker GPU变体快速创建模式

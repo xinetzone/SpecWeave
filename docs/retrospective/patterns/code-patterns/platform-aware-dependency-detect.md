@@ -12,6 +12,8 @@ related_patterns:
 tags: ["cmake", "cross-platform", "dependency-detection", "openblas", "conda", "windows", "build-system", "blas"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 平台感知的CMake第三方依赖检测模式（Platform-Aware-Dependency-Detect）

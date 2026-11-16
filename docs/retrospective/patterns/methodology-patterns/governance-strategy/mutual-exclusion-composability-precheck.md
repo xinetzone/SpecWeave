@@ -15,6 +15,8 @@ related_patterns:
   - "spec-level-defense-in-depth.md"
 tags: ["mutual-exclusion", "composability", "double-insurance", "decision-making", "precheck", "safety-mechanisms", "trap"]
 validation_count: 3
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # 机制组合互斥预检模式（Mutual-Exclusion Composability Precheck）

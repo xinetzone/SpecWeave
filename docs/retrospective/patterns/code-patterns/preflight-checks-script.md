@@ -13,6 +13,8 @@ related_patterns:
 tags: ["preflight", "build-check", "environment-validation", "cmake", "dll", "typetraits", "ci", "automation", "windows"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 构建预检脚本前置模式（Preflight-Checks-Script）

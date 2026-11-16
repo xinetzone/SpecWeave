@@ -28,6 +28,8 @@ tags: ["container", "containerfile", "dockerfile", "podman", "oci", "base-image"
 validation_count: 1
 
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 开发容器镜像构建纪律模式

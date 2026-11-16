@@ -15,6 +15,8 @@ related_patterns:
 tags: ["python", "free-threading", "cp314t", "gil", "package-compatibility", "onnx", "dependency-management", "docker"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Python free-threading不兼容包排除替代模式

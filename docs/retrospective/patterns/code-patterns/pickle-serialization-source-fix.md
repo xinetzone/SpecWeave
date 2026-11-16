@@ -20,6 +20,8 @@ tags:
 validation_count: 2
 reuse_count: 0
 documentation_level: "comprehensive"
+domain: "code"
+layer: "code"
 ---
 
 # Pickle 序列化源码层修复模式

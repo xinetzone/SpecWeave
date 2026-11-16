@@ -19,6 +19,8 @@ tags:
   - api-key-optional
   - cold-start
   - tool-design
+domain: "architecture"
+layer: "architecture"
 ---
 
 # 零配置核心·可选增强降级：工具功能前置依赖分层设计模式

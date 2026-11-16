@@ -13,6 +13,8 @@ related_patterns:
 tags: ["python", "wheel", "pyproject.toml", "dependency-management", "packaging", "import-scan", "docker", "static-analysis", "end-to-end-test"]
 validation_count: 2
 reuse_count: 0
+domain: "process"
+layer: "process"
 ---
 
 # Python Wheel依赖审计四步法（WDA-4）

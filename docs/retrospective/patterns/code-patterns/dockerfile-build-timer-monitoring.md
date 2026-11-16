@@ -12,6 +12,8 @@ related_patterns:
 tags: ["docker", "multi-stage-build", "build-timer", "logging", "performance", "buildkit", "stage-timing"]
 validation_count: 1
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # Dockerfile 多阶段构建计时器模式

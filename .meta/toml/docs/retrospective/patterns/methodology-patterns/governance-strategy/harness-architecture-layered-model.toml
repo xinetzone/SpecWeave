@@ -1,5 +1,7 @@
 id = "harness-architecture-layered-model"
 title = "Harness架构分层模式"
+domain = "methodology"
+layer = "governance-strategy"
 category = "governance-strategy"
 tags = ["Harness", "Agent架构", "运行时设计", "上下文治理", "工作流编排", "持久记忆", "权限控制", "AI工程"]
 date = "2026-07-13"

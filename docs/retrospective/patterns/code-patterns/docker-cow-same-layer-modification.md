@@ -16,6 +16,8 @@ related_patterns:
 tags: ["docker", "dockerfile", "copy-on-write", "overlayfs", "image-optimization", "strip", "layer-caching", "cow"]
 validation_count: 2
 reuse_count: 2
+domain: "code"
+layer: "code"
 ---
 
 # P7同层修改原则（COW膨胀防御）

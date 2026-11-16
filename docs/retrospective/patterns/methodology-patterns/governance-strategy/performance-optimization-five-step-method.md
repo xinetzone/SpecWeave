@@ -18,6 +18,8 @@ related_patterns:
 tags: ["performance-optimization", "five-step-method", "measure-diagnose-optimize-verify-extract", "measurement-first", "single-variable", "bottleneck"]
 validation_count: 1
 reuse_count: 0
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # 性能优化五步法：测量→诊断→优化→验证→萃取

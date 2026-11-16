@@ -9,6 +9,8 @@ maturity: "L1-draft"
 validation_count: 1
 source: "chaos/docker 萃取→归档→删除全流程复盘（2026-08-07）"
 tags: ["methodology", "knowledge-management", "lifecycle", "extraction", "archive", "deletion", "chaos", "governance"]
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # 知识资产「萃取→归档→删除」生命周期闭环模式

@@ -9,6 +9,8 @@ tags: ["c++", "compilation", "compatibility", "legacy-code", "docker", "checklis
 validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
+domain: "process"
+layer: "process"
 ---
 # 老旧 C++ 项目编译兼容性预检清单
 

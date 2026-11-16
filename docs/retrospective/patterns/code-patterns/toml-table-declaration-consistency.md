@@ -12,6 +12,8 @@ related_patterns:
 tags: ["toml", "pyproject.toml", "configuration", "trap", "silent-failure", "dotted-key", "table-declaration", "config-parsing"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # TOML 表声明一致性原则：dotted key 与显式 [table] 不可混用

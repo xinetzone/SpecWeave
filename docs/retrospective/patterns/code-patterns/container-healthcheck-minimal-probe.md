@@ -12,6 +12,8 @@ related_patterns:
 tags: ["docker", "healthcheck", "supervisord", "tcp-probe", "logging", "observability", "noisereduction"]
 validation_count: 1
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # 容器健康检查最小探针设计模式

@@ -1,3 +1,5 @@
 id = "risk-transfer-unintended-consequences"
 title = "风险转移非意图后果模型"
+domain = "methodology"
+layer = "governance-strategy"
 maturity = "L1"

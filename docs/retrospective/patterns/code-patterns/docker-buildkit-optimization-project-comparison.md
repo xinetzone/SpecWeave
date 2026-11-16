@@ -16,6 +16,8 @@ related_checklists:
   - "docker-build-optimization-checklist"
 tags: ["docker", "buildkit", "cache-mount", "comparison", "audit", "best-practices"]
 validation_count: 7
+domain: "code"
+layer: "code"
 ---
 
 # Docker BuildKit 构建优化跨项目对比报告

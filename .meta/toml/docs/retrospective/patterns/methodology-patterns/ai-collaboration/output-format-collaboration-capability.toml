@@ -1,5 +1,8 @@
 id = "pattern-output-format-collaboration-capability"
+maturity = "L2-validated"
 title = "输出格式-协作能力映射（Output Format – Collaboration Capability Mapping）"
+domain = "methodology"
+layer = "ai-collaboration"
 category = "retrospective/patterns/methodology-patterns/ai-collaboration"
 date = "2026-07-02"
 version = "1.0"

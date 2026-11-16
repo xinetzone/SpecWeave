@@ -1,3 +1,5 @@
 id = "relative-path-systematic-construction"
 title = "相对路径系统化构建法（Relative Path Systematic Construction Method）"
+domain = "code"
+layer = "code"
 maturity = "L2"

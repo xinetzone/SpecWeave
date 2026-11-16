@@ -1,5 +1,8 @@
 id = "conversion-point-debug-tracing"
+maturity = "L1-draft"
 title = "关键转换点DEBUG预埋模式（Conversion Point Debug Tracing）"
+domain = "code"
+layer = "code"
 category = "retrospective/patterns/code-patterns"
 date = "2026-07-02"
 version = "1.0"

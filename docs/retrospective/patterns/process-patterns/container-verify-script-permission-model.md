@@ -12,6 +12,8 @@ related_patterns:
 tags: ["docker", "verify", "permission", "entrypoint", "conda", "gosu", "tempfile"]
 validation_count: 2
 reuse_count: 0
+domain: "process"
+layer: "process"
 ---
 
 # 容器验证脚本的权限安全模型

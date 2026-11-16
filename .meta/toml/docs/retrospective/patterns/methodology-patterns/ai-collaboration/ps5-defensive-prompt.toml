@@ -1,5 +1,7 @@
 id = "ps5-defensive-prompt"
 title = "PS5防御性Prompt模板模式（PS5-Defensive-Prompt）"
+domain = "methodology"
+layer = "ai-collaboration"
 category = "retrospective/patterns/methodology-patterns/ai-collaboration"
 date = "2026-07-02"
 version = "1.0"

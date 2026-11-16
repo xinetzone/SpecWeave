@@ -13,6 +13,8 @@ related_patterns:
 tags: ["python", "editable-install", "import-isolation", "sys.path", "sys.meta_path", "sys.modules", "scikit-build-core", "testing", "subprocess", "finder"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Python Editable Install三层导入隔离模式（Python-Editable-Import-Isolation）

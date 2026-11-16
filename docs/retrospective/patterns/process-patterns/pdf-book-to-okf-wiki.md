@@ -12,6 +12,8 @@ related_patterns:
 tags: ["pdf-conversion", "okf", "sphinx", "myst", "knowledge-engineering", "books", "document-conversion"]
 validation_count: 1
 reuse_count: 0
+domain: "process"
+layer: "process"
 ---
 
 # PDF书籍→OKF-MyST Wiki 四阶段工作流

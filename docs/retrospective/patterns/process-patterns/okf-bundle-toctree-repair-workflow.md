@@ -13,6 +13,8 @@ related_patterns:
 tags: ["toctree", "sphinx", "myst", "okf", "knowledge-base", "navigation-tree", "content-completeness"]
 validation_count: 1
 reuse_count: 0
+domain: "process"
+layer: "process"
 ---
 
 # OKF bundle 目录树完整性修复工作流

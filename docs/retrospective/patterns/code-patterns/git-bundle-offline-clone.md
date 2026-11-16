@@ -10,6 +10,8 @@ related_patterns: ["bulk-replace-zero-omission-verify.md", "parallel-subprocess-
 tags: ["git", "bundle", "offline", "version-control", "code-delivery"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Git Bundle 离线克隆五步法

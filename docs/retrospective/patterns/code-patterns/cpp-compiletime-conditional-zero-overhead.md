@@ -11,6 +11,8 @@ related_patterns:
 tags: ["cpp", "performance", "conditional-compilation", "simd", "openmp", "zero-overhead", "cmake"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # C++编译期条件开关零开销模式

@@ -19,6 +19,8 @@ related_patterns:
 tags: ["docker", "slimming", "gpu", "cuda", "pytorch", "dt-needed", "cow", "sop", "ml", "image-optimization"]
 validation_count: 1
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # GPU/ML Docker镜像瘦身SOP

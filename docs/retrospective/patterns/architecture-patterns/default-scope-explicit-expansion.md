@@ -17,6 +17,8 @@ tags:
   - least-scope
   - crawler-design
   - defensive-default
+domain: "architecture"
+layer: "architecture"
 ---
 
 # 默认范围收敛·显式放开：边界可控的遍历与搜索设计模式

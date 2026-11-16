@@ -11,6 +11,8 @@ related_patterns:
   - "default-scope-explicit-expansion"
   - "multi-agent-closed-loop-execution"
   - "lifecycle-differentiated-inheritance"
+domain: "architecture"
+layer: "architecture"
 ---
 > **提炼自**：Tongyi-MAI mobile-world 评测环境复盘 —— 评测态"用户"由确定性 LLM 代理冒充（温度 0 + seed 42 + 独立历史），MCP 工具按任务元数据白名单过滤注入
 

@@ -1,4 +1,6 @@
 id = "declared-vs-executed-dual-surface-reconciliation"
+domain = "methodology"
+layer = "governance-strategy"
 type = "methodology"
 category = "governance-strategy"
 maturity = "L1"

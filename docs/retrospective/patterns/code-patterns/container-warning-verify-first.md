@@ -19,6 +19,8 @@ version_validated: "Podman 5.x + WSL 2.5.x"
 pattern_name: "警告先验法"
 anti_pattern_count: 4
 migration_examples: 4
+domain: "code"
+layer: "code"
 ---
 
 # 警告先验法

@@ -12,6 +12,8 @@ related_patterns:
 tags: ["testing", "pytest", "fixture", "memory-leak", "ffi", "native-extension", "garbage-collection", "autouse"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # FFI内存测试自动泄漏检测模式

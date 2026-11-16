@@ -11,6 +11,8 @@ related_patterns:
 tags: ["nuitka", "docker", "dockerfile", "build-arg", "compile-option", "dynamic-injection", "reusable"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Nuitka 编译参数构建期动态注入模式

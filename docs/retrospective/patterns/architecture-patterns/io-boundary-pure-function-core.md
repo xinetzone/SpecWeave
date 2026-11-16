@@ -17,6 +17,8 @@ tags:
   - port-adapter
   - pluggable-backend
   - side-effect-isolation
+domain: "architecture"
+layer: "architecture"
 ---
 
 # IO边界抽象隔离·纯函数核心：后端可插拔的依赖倒置架构模式

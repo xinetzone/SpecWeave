@@ -1,5 +1,7 @@
 id = "external-url-dead-bucket-fix-sop"
 title = "外部 URL 死链分桶治理 SOP（P-Link-ExtBucket-v1）"
+domain = "process"
+layer = "process"
 category = "retrospective/patterns/process-patterns"
 date = "2026-07-02"
 version = "1.0"

@@ -8,6 +8,8 @@ created_at: 2026-07-11
 tags: [行动计划, 元方法论, 自举验证, 七概念]
 related_insights: [insight-meta-bootstrap, insight-spec-subagent-pipeline]
 related_patterns: [seven-concepts-quick-reference, seven-concepts-trigger-decision-tree]
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # 元方法论自举行动计划

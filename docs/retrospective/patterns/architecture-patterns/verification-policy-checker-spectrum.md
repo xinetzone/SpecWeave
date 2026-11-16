@@ -11,6 +11,8 @@ related_patterns:
   - "full-process-defense-depth"
   - "verifiable-knowledge-claim"
   - "weighted-multidimensional-composite-score"
+domain: "architecture"
+layer: "architecture"
 ---
 > **提炼自**：Tongyi-MAI mobilepa-bench 判分设计复盘 —— 判分可信度来自任务级预分配的固定验证策略，checker 从精确参数比对到 LLM 行为评审构成谱系
 

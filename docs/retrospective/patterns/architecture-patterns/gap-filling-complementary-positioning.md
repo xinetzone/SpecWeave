@@ -11,6 +11,8 @@ related_patterns:
   - "dual-track-sdk-strategy-framework"
   - "legacy-integration-dual-track"
   - "three-layer-capability-openness"
+domain: "architecture"
+layer: "architecture"
 ---
 > **提炼自**：Tongyi-MAI mobilepa-bench 基准定位复盘 —— 评测体系的定位是填补两层之间的空档，而非替代任何一方
 

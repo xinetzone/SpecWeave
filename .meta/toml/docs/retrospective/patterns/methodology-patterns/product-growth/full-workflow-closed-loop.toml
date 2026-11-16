@@ -1,5 +1,7 @@
 id = "full-workflow-closed-loop"
 title = "全链路闭环设计原则（Full Workflow Closed-Loop）"
+domain = "methodology"
+layer = "product-growth"
 category = "retrospective/patterns/methodology-patterns/product-growth"
 date = "2026-07-02"
 version = "1.0"

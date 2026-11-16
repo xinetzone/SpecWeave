@@ -15,6 +15,8 @@ related_patterns:
 tags: ["wsl", "docker", "windows", "powershell", "shell-nesting", "variable-expansion", "path-conversion", "command-safety", "wsl2"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # WSL环境下Docker操作的安全命令模式

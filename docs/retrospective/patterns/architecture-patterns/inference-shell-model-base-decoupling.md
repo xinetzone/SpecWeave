@@ -11,6 +11,8 @@ related_patterns:
   - "thin-entry-shim"
   - "four-layer-ai-capability-architecture"
   - "environment-diversity-design"
+domain: "architecture"
+layer: "architecture"
 ---
 > **提炼自**：Tongyi-MAI mai-ui 源码学习复盘 —— LLM 应用仓库把模型推理彻底外置为独立服务，仓库内只保留 OpenAI 兼容 API 客户端外壳
 

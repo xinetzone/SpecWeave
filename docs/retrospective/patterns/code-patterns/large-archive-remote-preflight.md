@@ -14,6 +14,8 @@ related_patterns:
   - "wsl-import-memory-triage-sparse-vhd"
   - "wsl-distro-install-migration-guide"
   - "docker-image-layered-verification"
+domain: "code"
+layer: "code"
 ---
 
 # 大归档零下载远程预检法

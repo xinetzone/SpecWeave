@@ -22,6 +22,8 @@ tags:
   - provenance
   - lifecycle
   - agent-consumption
+domain: "architecture"
+layer: "architecture"
 ---
 # 信任优先元数据：AI原生知识体系的字段设计优先级倒置法
 

@@ -1,6 +1,6 @@
 id = "agent-physical-actuator-paradigm"
 domain = "architecture"
-layer = ""
+layer = "architecture"
 maturity = "L2"
 validation_count = 6
 reuse_count = 0

@@ -15,6 +15,8 @@ related_patterns:
 tags: ["docker", "cross-os", "wsl2", "windows", "macos", "crlf", "filesystem", "build", "bind-mount", "ntfs", "ext4"]
 validation_count: 3
 reuse_count: 0
+domain: "process"
+layer: "process"
 ---
 
 # 跨OS Docker构建"编辑在外、构建在内"模式

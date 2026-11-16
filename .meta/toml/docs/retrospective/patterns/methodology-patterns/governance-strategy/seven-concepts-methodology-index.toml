@@ -1,5 +1,7 @@
 id = "seven-concepts-methodology-index"
 title = "七概念方法论体系索引"
+domain = "methodology"
+layer = "governance-strategy"
 tags = ["方法论", "七概念", "治理策略", "索引导航"]
 maturity = "L2"
 source = "归档任务"

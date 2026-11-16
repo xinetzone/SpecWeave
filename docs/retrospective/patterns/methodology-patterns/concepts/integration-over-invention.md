@@ -19,6 +19,8 @@ verified:
   at: "2026-08-22T00:00:00Z"
 status: "stable"
 stale_after: "2027-08-22"
+domain: "methodology"
+layer: "concepts"
 ---
 
 # 整合优于发明模式（Integration over Invention）

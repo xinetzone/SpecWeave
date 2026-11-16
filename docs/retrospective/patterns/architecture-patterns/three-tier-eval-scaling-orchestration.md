@@ -11,6 +11,8 @@ related_patterns:
   - "multi-agent-parallel-execution"
   - "incremental-regression-verification"
   - "container-healthcheck-minimal-probe"
+domain: "architecture"
+layer: "architecture"
 ---
 > **提炼自**：Tongyi-MAI mobile-world 评测环境复盘 —— 规模扩张三层渐进：线程并行 → SQLite 队列 + tmux 单 worker → pass@k 报告，而非一步上重型调度器
 

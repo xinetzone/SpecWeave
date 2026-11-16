@@ -3,6 +3,8 @@ type: Pattern
 id: "android-mvvm-livedata-fragment"
 source: "chaos/tests/AndroidStudioProjects/MyApplication"
 maturity: "L1"
+domain: "architecture"
+layer: "architecture"
 ---
 
 > **来源**：从 chaos/tests/AndroidStudioProjects/MyApplication 项目的 ViewModel/LiveData/Fragment 实现中提炼（2026 年复盘）。

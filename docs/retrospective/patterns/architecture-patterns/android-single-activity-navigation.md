@@ -3,6 +3,8 @@ type: Pattern
 id: "android-single-activity-navigation"
 source: "chaos/tests/AndroidStudioProjects/MyApplication"
 maturity: "L1"
+domain: "architecture"
+layer: "architecture"
 ---
 
 > **来源**：从 chaos/tests/AndroidStudioProjects/MyApplication 项目的 Activity/Fragment/Navigation 实现中提炼（2026 年复盘）。

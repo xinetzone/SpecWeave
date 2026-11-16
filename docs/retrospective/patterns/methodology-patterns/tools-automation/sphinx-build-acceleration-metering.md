@@ -12,6 +12,8 @@ related_patterns:
 tags: ["sphinx", "myst", "build", "performance", "metering", "warning", "suppress", "pseudoxml", "highlighting"]
 validation_count: 1
 reuse_count: 0
+domain: "methodology"
+layer: "tools-automation"
 ---
 
 # Sphinx 大文档构建加速与计量（分相测速 + builder 同源性）

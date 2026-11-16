@@ -11,6 +11,8 @@ related_patterns:
 tags: ["openmp", "convolution", "gemm", "parallelism", "fusion", "hpc", "simd", "channel-parallel"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # OpenMP卷积通道维并行与算子融合模式

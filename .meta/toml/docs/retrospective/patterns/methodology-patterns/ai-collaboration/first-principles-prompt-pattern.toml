@@ -1,5 +1,7 @@
 id = "first-principles-prompt-pattern"
 title = "第一性原理 Prompt 模式（First-Principles Prompt Pattern）"
+domain = "methodology"
+layer = "ai-collaboration"
 category = "retrospective/patterns/methodology-patterns/ai-collaboration"
 date = "2026-07-02"
 version = "1.0"

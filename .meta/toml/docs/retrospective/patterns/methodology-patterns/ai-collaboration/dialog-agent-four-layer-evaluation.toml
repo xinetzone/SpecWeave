@@ -1,5 +1,7 @@
 id = "dialog-agent-four-layer-evaluation"
 title = "对话Agent四层评测模式（Dialog Agent Four-Layer Evaluation）"
+domain = "methodology"
+layer = "ai-collaboration"
 category = "retrospective/patterns/methodology-patterns/ai-collaboration"
 date = "2026-07-02"
 version = "1.0"

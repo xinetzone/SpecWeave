@@ -17,6 +17,8 @@ tags: ["modularization", "preset", "closure", "setup-hook", "factory", "sphinx",
 validation_count: 1
 reuse_count: 0
 x-origin-session: "sc-20260903-sphinx-config-retro-insight → sc-20260903-preset-setup-pattern-sink"
+domain: "code"
+layer: "code"
 ---
 
 # PRESET-SETUP · 多预设场景注册链闭包统一生成器

@@ -10,6 +10,8 @@ reuse_count: 0
 tags: [OKF, 知识包, 信源溯源, 一致性检查, 质量门, 知识沉淀]
 pattern_type: methodology
 category: documentation
+domain: "documentation"
+layer: "documentation"
 ---
 
 # 溯源一致性三查（Source-Trace Consistency Check）

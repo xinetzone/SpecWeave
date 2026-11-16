@@ -11,6 +11,8 @@ related_patterns:
 tags: ["blas", "openmp", "openblas", "threading", "hpc", "over-subscription", "performance", "conda"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # BLAS+OpenMP嵌套并行线程隔离模式

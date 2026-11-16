@@ -16,6 +16,8 @@ related_patterns:
 tags: ["docker", "entrypoint", "uid-mapping", "bind-mount", "permissions", "fixuid", "chown", "devcontainer", "rootless", "security"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # FixUID运行时UID映射模式（Docker bind mount权限治理）

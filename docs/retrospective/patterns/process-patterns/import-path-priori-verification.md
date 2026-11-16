@@ -7,6 +7,8 @@ maturity: "L1-draft"
 source: "retrospective-pycaffe-image-preprocessing-optimization-20260723"
 related_patterns: ["fail-loud-over-silent-fallback", "format-evidence-over-memory-pattern"]
 tags: ["import", "verification", "dependencies", "ci-cd", "debugging", "best-practice"]
+domain: "process"
+layer: "process"
 ---
 
 # 导入路径先验验证模式

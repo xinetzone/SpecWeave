@@ -1,5 +1,7 @@
 id = "risk-control-copilot-pre-positioned"
 title = "风控前置副驾驶模式（Risk Control Copilot: Pre-positioned）"
+domain = "methodology"
+layer = "product-growth"
 category = "retrospective/patterns/methodology-patterns/product-growth"
 date = "2026-07-02"
 version = "1.0"

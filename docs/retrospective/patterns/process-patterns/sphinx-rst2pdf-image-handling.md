@@ -12,6 +12,8 @@ related_patterns:
 tags: ["sphinx", "rst2pdf", "pdf", "image", "dpi", "figure", "docx2rst", "reportlab", "layout-error"]
 validation_count: 1
 reuse_count: 0
+domain: "process"
+layer: "process"
 ---
 
 # Sphinx RST→PDF 图片处理标准流程（DPI 元数据覆盖 + figure 指令控宽）

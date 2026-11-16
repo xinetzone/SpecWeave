@@ -1,5 +1,9 @@
 id = "ai-reliability-four-layer-defense"
 title = "AI可靠性四层纵深防御模型"
+domain = "methodology"
+layer = "product-growth"
 category = "retrospective/patterns/methodology-patterns/product-growth"
 date = "2026-07-02"
 version = "1.0"
+
+maturity = "L1"

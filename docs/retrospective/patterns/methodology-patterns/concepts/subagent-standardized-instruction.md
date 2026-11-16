@@ -19,6 +19,8 @@ verified:
   at: "2026-08-22T00:00:00Z"
 status: "stable"
 stale_after: "2027-08-22"
+domain: "methodology"
+layer: "concepts"
 ---
 
 # 子代理分析任务标准化指令（Standardized Subagent Analysis Instruction）

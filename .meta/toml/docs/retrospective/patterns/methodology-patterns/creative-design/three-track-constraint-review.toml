@@ -1,3 +1,5 @@
 id = "three-track-constraint-review"
 title = "约束审查三轨制"
+domain = "methodology"
+layer = "creative-design"
 maturity = "L2-validated"

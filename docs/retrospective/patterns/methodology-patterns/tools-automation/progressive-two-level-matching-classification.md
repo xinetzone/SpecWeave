@@ -14,6 +14,8 @@ related_patterns:
   - "precision-over-recall"
   - "dry-run-first"
   - "classification-disposition-decision-tree"
+domain: "methodology"
+layer: "tools-automation"
 ---
 
 # 先强后弱两级匹配分类

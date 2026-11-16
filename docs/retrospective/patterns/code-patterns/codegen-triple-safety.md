@@ -16,6 +16,8 @@ tags:
   - version-alignment
   - grpcio-tools
   - verification
+domain: "code"
+layer: "code"
 ---
 
 # 代码生成三保险

@@ -6,6 +6,8 @@ type: "extraction-summary"
 source: "sc-20260722-docker-template 方法论编排R→I→E→C全链路"
 tags: ["docker", "template", "verification", "pattern-extraction", "extraction", "方法论萃取"]
 maturity: "L2"
+domain: "patterns"
+layer: "patterns"
 ---
 
 # Docker模板升级方法论萃取

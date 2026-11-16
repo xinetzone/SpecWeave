@@ -7,6 +7,8 @@ maturity: "L2"
 validation_count: 1
 reuse_count: 0
 tags: ["cpp", "debugging", "memory-leak", "backtrace", "cross-platform", "ffi", "diagnostics"]
+domain: "code"
+layer: "code"
 ---
 
 # 跨平台堆栈回溯泄漏源定位模式

@@ -17,6 +17,8 @@ related_patterns:
 tags: ["docker", "buildkit", "cache-mount", "multi-stage-build", "performance", "best-practices", "syntax-declaration", "pipefail"]
 validation_count: 7
 reuse_count: 7
+domain: "code"
+layer: "code"
 ---
 
 # Docker BuildKit 构建优化最佳实践

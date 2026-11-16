@@ -1,3 +1,5 @@
 id = "source-pipeline-penetration-method"
 title = "源码学习管线穿透法"
+domain = "methodology"
+layer = "research-knowledge"
 maturity = "L1"

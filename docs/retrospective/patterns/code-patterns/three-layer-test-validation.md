@@ -13,6 +13,8 @@ related_patterns:
 tags: [testing, test-strategy, numerical-correctness, determinism, deep-learning]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 三层测试验证法

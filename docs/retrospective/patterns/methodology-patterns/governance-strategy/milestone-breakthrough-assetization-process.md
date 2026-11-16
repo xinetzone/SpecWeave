@@ -9,6 +9,8 @@ maturity: "L1-experimental"
 validation_count: 2
 source: "SpecWeave知识沉淀规模化里程碑复盘（已验证：LLM Token优化、AI Agent Harness分析）"
 tags: ["methodology", "process", "assetization", "knowledge-management", "milestone", "closed-loop"]
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # 专项突破资产化标准流程

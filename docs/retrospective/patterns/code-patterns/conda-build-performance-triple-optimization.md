@@ -20,6 +20,8 @@ related_patterns:
 tags: ["conda", "mamba", "libmamba", "build-performance", "docker-buildkit", "parallelism", "solver-optimization", "cache-mount", "build-timing"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # Conda构建层性能三联优化模式

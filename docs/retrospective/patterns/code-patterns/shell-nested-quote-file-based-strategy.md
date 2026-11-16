@@ -9,6 +9,8 @@ tags: ["shell", "quote-escaping", "file-based", "sandbox", "docker", "nested-com
 validation_count: 1
 reuse_count: 0
 documentation_level: "basic"
+domain: "code"
+layer: "code"
 ---
 # 多层命令嵌套的文件化规避策略
 

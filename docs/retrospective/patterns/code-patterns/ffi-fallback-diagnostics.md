@@ -13,6 +13,8 @@ related_patterns:
 tags: ["ffi", "fallback", "diagnostics", "silent-failure", "strict-mode", "python", "c++", "native-extension", "error-reporting", "graceful-degradation"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # FFI降级路径结构化诊断模式（FFI-Fallback-Diagnostics）

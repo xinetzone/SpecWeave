@@ -3,6 +3,8 @@ type: Pattern
 id: "android-viewbinding-fragment-scoped-lifecycle"
 source: "chaos/tests/AndroidStudioProjects/MyApplication"
 maturity: "L1"
+domain: "code"
+layer: "code"
 ---
 
 # Android Fragment 内 ViewBinding 作用域生命周期管理模式

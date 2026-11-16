@@ -11,6 +11,8 @@ related_patterns:
   - "io-boundary-pure-function-core"
   - "multi-agent-closed-loop-execution"
   - "graph-first-agent-architecture"
+domain: "architecture"
+layer: "architecture"
 ---
 > **提炼自**：Tongyi-MAI mai-ui 双 Agent 设计复盘 —— 继承只表达生命周期承诺，不表达能力域相似
 

@@ -22,6 +22,8 @@ tags:
   - graph-navigation
   - knowledge-bundle
   - okf
+domain: "architecture"
+layer: "architecture"
 ---
 # Agent知识图谱导航：面向LLM上下文约束的知识分层组织模式
 

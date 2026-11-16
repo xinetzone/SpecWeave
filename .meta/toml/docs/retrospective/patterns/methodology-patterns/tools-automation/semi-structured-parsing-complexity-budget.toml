@@ -1,5 +1,8 @@
 id = "semi-structured-parsing-complexity-budget"
+maturity = "L1-draft"
 title = "半结构化解析复杂度预算模式（Semi-structured Parsing Complexity Budget）"
+domain = "methodology"
+layer = "tools-automation"
 category = "retrospective/patterns/methodology-patterns/tools-automation"
 date = "2026-07-02"
 version = "1.0"

@@ -12,6 +12,8 @@ related_patterns:
 tags: ["python", "pytest", "import", "relative-import", "sys.path", "conftest", "module-conflict", "testing"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # pytest同名模块冲突：相对导入防御模式

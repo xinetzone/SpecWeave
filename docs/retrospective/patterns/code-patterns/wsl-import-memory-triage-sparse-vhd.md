@@ -7,6 +7,8 @@ date: 2026-09-29
 maturity: L1
 tags: [WSL, Windows, VHDX, sparse, memory, troubleshooting, openkylin]
 source: "openKylin 3.0 WSL 安装与稀疏 VHD 启用本机实测（session sc-20260929-openkylin-wsl-install-sparse）"
+domain: "code"
+layer: "code"
 ---
 
 # WSL 导入内存分诊与稀疏 VHD 决策模式

@@ -7,6 +7,8 @@ maturity: "L2-validated"
 source: "retrospective-caffe-ffi-wsl-tooling-20260729"
 related_patterns: ["wsl-docker-command-safety", "dev-env-dockerfile-optimization"]
 tags: ["wsl2", "docker", "docker-desktop", "performance", "decision-matrix", "devops", "benchmark", "i-o"]
+domain: "code"
+layer: "code"
 ---
 
 # WSL2 Docker方案决策模式

@@ -12,6 +12,8 @@ description: "七概念里程碑复盘演练的详细评分Rubric，6大维度10
 total_score: 100
 passing_score: 60
 excellent_score: 85
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # 评分标准：七概念方法论里程碑复盘演练

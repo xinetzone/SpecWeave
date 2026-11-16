@@ -16,6 +16,8 @@ related_patterns:
 tags: ["toctree", "sphinx", "myst", "verification", "ci-gate", "reachability", "consistency-check"]
 validation_count: 1
 reuse_count: 0
+domain: "methodology"
+layer: "tools-automation"
 ---
 
 # toctree 动态验证法

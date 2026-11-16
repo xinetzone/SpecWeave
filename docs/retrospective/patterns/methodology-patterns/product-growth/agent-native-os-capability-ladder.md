@@ -14,6 +14,8 @@ related_patterns:
   - vertical-scenario-ai-three-elements
   - ai-reliability-four-layer-defense
 source: "萃取自 openKylin 全面调研报告 §4 模式 P2（session sc-20260929-openkylin-research）；openKylin 1.0→2.0→2.0 SP2→3.0（自 1.0 起四个大版本约三年、自 2022 社区发起计约四年）为完整证据链，统信 UOS V25 同方向佐证（源调研 F-044~F-050/F-057）"
+domain: "methodology"
+layer: "product-growth"
 ---
 
 # 终端操作系统智能体原生化四级演进（Agent-Native OS Ladder）

@@ -9,6 +9,8 @@ related_patterns: [docker-container-session-raii.md, compiled-wheel-runtime-imag
 tags: [Docker, docker-commit, ENTRYPOINT, CMD, 镜像构建, 容器化, Dockerfile, declarative]
 validation_count: 2
 reuse_count: 1
+domain: "code"
+layer: "code"
 ---
 
 # docker commit 入口配置显式重置

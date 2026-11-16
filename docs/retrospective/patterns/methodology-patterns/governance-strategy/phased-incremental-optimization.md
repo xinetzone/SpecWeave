@@ -11,6 +11,8 @@ related_patterns:
 tags: ["optimization", "risk-control", "phased-delivery", "incremental", "zero-copy", "cow", "performance"]
 validation_count: 2
 reuse_count: 0
+domain: "methodology"
+layer: "governance-strategy"
 ---
 
 # 分层渐进优化策略（Phased-Incremental-Optimization）

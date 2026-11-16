@@ -12,6 +12,8 @@ related_patterns:
 tags: ["cli", "version-drift", "fallback", "capability-probe", "windows", "ssh-keyscan", "kex", "robustness"]
 validation_count: 1
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # 外部 CLI 版本漂移的候选回退与能力探测

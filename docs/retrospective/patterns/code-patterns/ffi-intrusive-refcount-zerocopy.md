@@ -17,6 +17,8 @@ related_patterns:
 tags: ["zero-copy", "ffi", "intrusive-refcount", "tvm-ffi", "tensor", "memory-sharing", "alias", "shared-memory", "c++", "cow"]
 validation_count: 2
 reuse_count: 0
+domain: "code"
+layer: "code"
 ---
 
 # FFI侵入式引用计数零拷贝别名模式（FFI-Intrusive-RefCount-ZeroCopy）

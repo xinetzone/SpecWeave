@@ -1,5 +1,7 @@
 id = "tool-adoption-funnel"
 title = "工具采纳漏斗（Tool Adoption Funnel）"
+domain = "methodology"
+layer = "ai-collaboration"
 category = "retrospective/patterns/methodology-patterns/ai-collaboration"
 date = "2026-07-02"
 version = "1.0"

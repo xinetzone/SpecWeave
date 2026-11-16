@@ -1,3 +1,5 @@
 id = "example-first-alignment"
 title = "示例优先对齐模式（Example-First Alignment / Reference Before Create）"
+domain = "methodology"
+layer = "research-knowledge"
 maturity = "L2"

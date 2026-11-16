@@ -1,5 +1,8 @@
 id = "two-phase-development"
+maturity = "L1-draft"
 title = "两阶段开发模式（Two-Phase Development: Validate First, Optimize Later）"
+domain = "methodology"
+layer = "governance-strategy"
 category = "retrospective/patterns/methodology-patterns/governance-strategy"
 date = "2026-07-02"
 version = "1.0"

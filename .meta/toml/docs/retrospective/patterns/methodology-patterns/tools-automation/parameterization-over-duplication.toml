@@ -1,5 +1,7 @@
 id = "parameterization-over-duplication"
 title = "参数化优于复制：提取公共函数时用参数抽象差异"
+domain = "methodology"
+layer = "tools-automation"
 category = "tools-automation"
 tags = ["参数化", "DRY", "公共函数", "抽象", "代码复用", "函数设计"]
 date = "2026-07-10"

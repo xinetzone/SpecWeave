@@ -14,6 +14,8 @@ tags: ["windows", "store-app", "appx", "reparse-point", "execution-alias", "wind
 validation_count: 1
 reuse_count: 0
 documentation_level: "standard"
+domain: "process"
+layer: "process"
 ---
 
 # App Execution Alias 文件找不到修复 SOP（以 wt.exe 为例）

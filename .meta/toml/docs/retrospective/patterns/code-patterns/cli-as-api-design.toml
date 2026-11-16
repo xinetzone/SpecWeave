@@ -1,5 +1,7 @@
 id = "cli-as-api-design"
 title = "CLI即API设计模式（CLI as API Design Pattern）"
+domain = "code"
+layer = "code"
 category = "retrospective/patterns/code-patterns"
 date = "2026-07-02"
 version = "1.0"

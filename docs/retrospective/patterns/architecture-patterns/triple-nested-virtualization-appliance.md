@@ -11,6 +11,8 @@ related_patterns:
   - "container-devtool-seven-layer-stack"
   - "environment-diversity-design"
   - "container-healthcheck-minimal-probe"
+domain: "architecture"
+layer: "architecture"
 ---
 > **提炼自**：Tongyi-MAI mobile-world 环境工程复盘 —— 把"OS+SDK+AVD+应用+控制服务"整体家电化为单镜像，三层虚拟化换一次拉起
 
