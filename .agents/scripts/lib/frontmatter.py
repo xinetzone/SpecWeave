@@ -242,6 +242,64 @@ def extract_yaml_field(frontmatter: str, field_name: str) -> str | None:
     return None
 
 
+def extract_yaml_text_field(frontmatter: str, field_name: str) -> str | None:
+    """提取 YAML 字段的文本值，覆盖块标量（`|` / `>`）与多行 plain 标量。
+
+    `extract_yaml_field` 对非标量按契约返回空字符串（仅表示字段存在），
+    但 description 这类字段需要真实文本才能判断长度与触发时机。缺少本读取器时：
+      - `description: >-` 会被当作无文本；
+      - `description:` 换行后接缩进续行（YAML 多行 plain 标量）同样被当作无文本。
+    两种写法都会让描述类检查整体静默跳过，并误报「必需字段 description 缺失」。
+
+    Args:
+        frontmatter: parse_yaml_frontmatter 的返回值。
+        field_name: 要提取的字段名。
+
+    Returns:
+        折叠后的文本；字段不存在返回 None；字段存在但无文本返回 ""。
+    """
+    if not frontmatter:
+        return None
+
+    value = extract_yaml_field(frontmatter, field_name)
+    if value:
+        return value
+    if value is None:
+        return None
+
+    block_pattern = re.compile(
+        rf"^{re.escape(field_name)}[ \t]*:[ \t]*([|>])([-+]?)[ \t]*(?:#.*)?$"
+    )
+    plain_pattern = re.compile(
+        rf"^{re.escape(field_name)}[ \t]*:[ \t]*(?:#.*)?$"
+    )
+    lines = frontmatter.splitlines()
+    for index, line in enumerate(lines):
+        block_match = block_pattern.match(line)
+        if block_match:
+            separator = "\n" if block_match.group(1) == "|" else " "
+        elif plain_pattern.match(line):
+            separator = " "
+        else:
+            continue
+
+        body = []
+        for following in lines[index + 1:]:
+            if not following.strip():
+                body.append("")
+                continue
+            if not following.startswith((" ", "\t")):
+                break
+            body.append(following.strip())
+        while body and not body[0]:
+            body.pop(0)
+        while body and not body[-1]:
+            body.pop()
+        return separator.join(body)
+
+    return ""
+
+
 def extract_frontmatter_field_from_file(
     file_path: str | Path, field_name: str
 ) -> str | None:

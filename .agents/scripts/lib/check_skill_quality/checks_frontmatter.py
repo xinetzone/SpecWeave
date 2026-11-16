@@ -6,7 +6,7 @@ enforce_python310()
 from pathlib import Path
 from typing import Optional
 
-from lib.frontmatter import extract_yaml_field
+from lib.frontmatter import extract_yaml_field, extract_yaml_text_field
 
 from .constants import FRONTMATTER_REQUIRED_FIELDS, FRONTMATTER_RECOMMENDED_FIELDS
 from .models import CheckResult
@@ -32,7 +32,9 @@ def check_frontmatter(skill_md: Path, content: str, frontmatter_text: str | None
     ))
 
     for fname in FRONTMATTER_REQUIRED_FIELDS:
-        value = extract_yaml_field(frontmatter_text, fname)
+        # 用文本读取器解析，避免块标量/多行 plain 标量的 description
+        # 被误判为「必需字段缺失」。
+        value = extract_yaml_text_field(frontmatter_text, fname)
         passed = value is not None and len(value.strip()) > 0
         results.append(CheckResult(
             name=f"frontmatter.{fname}",

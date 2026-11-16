@@ -5,9 +5,8 @@ enforce_python310()
 
 import re
 from pathlib import Path
-from typing import Optional
 
-from lib.frontmatter import extract_yaml_field
+from lib.frontmatter import extract_yaml_field, extract_yaml_text_field
 
 from .constants import (
     FRONTMATTER_REQUIRED_FIELDS,
@@ -33,42 +32,12 @@ def _get_dir_purpose(dirname: str) -> str:
 
 TRIGGER_KEYWORDS = (
     "when", "use when", "when to use", "triggers on", "trigger on",
+    # 外部镜像（Trae IDE builtin 等）的适用面写法：`Use for <场景>` /
+    # `Use this skill for <主题>` / `You MUST use this before ...`。
+    # 它们不含 when，但同样声明了「何时该用」，故纳入判定词表。
+    "use for", "use this skill for", "must use",
     "使用", "触发", "提到", "必须使用", "适用于", "当用户", "需要时",
 )
-
-
-def read_yaml_block_scalar(frontmatter: str, field_name: str) -> Optional[str]:
-    """读取 YAML 块标量（`|` / `>` 及其 chomping 标记）为单行文本。
-
-    `extract_yaml_field` 对块标量按契约返回 ""（仅表示字段存在），
-    但 description 这类字段需要真实文本才能判断长度与触发时机；
-    缺少本读取器时，`description: >-` 写法的技能会被整体跳过描述类检查。
-    """
-    if not frontmatter:
-        return None
-    pattern = re.compile(
-        rf"^{re.escape(field_name)}[ \t]*:[ \t]*([|>])([-+]?)[ \t]*(?:#.*)?$"
-    )
-    lines = frontmatter.splitlines()
-    for index, line in enumerate(lines):
-        match = pattern.match(line)
-        if not match:
-            continue
-        style = match.group(1)
-        body = []
-        for following in lines[index + 1:]:
-            if not following.strip():
-                body.append("")
-                continue
-            if not following.startswith((" ", "\t")):
-                break
-            body.append(following.strip())
-        while body and not body[0]:
-            body.pop(0)
-        while body and not body[-1]:
-            body.pop()
-        return ("\n" if style == "|" else " ").join(body)
-    return None
 
 
 def check_open_standards_compliance(skill_md: Path, content: str, frontmatter_text: str | None) -> list[CheckResult]:
@@ -80,10 +49,9 @@ def check_open_standards_compliance(skill_md: Path, content: str, frontmatter_te
         return results
 
     name = extract_yaml_field(frontmatter_text, "name")
-    desc = extract_yaml_field(frontmatter_text, "description")
-    if not desc:
-        # 块标量（| / >）按契约为 ""，此处补读折叠文本，避免整段描述检查被跳过。
-        desc = read_yaml_block_scalar(frontmatter_text, "description") or desc
+    # 块标量（| / >）与多行 plain 标量按契约为 ""，此处读折叠文本，
+    # 避免整段描述检查被静默跳过。
+    desc = extract_yaml_text_field(frontmatter_text, "description")
 
     if name:
         name_ok = True

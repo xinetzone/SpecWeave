@@ -24,11 +24,8 @@ enforce_python310()
 
 from pathlib import Path
 
-from lib.frontmatter import extract_yaml_field
-from lib.check_skill_quality.checks_open_standard import (
-    check_open_standards_compliance,
-    read_yaml_block_scalar,
-)
+from lib.frontmatter import extract_yaml_field, extract_yaml_text_field
+from lib.check_skill_quality.checks_open_standard import check_open_standards_compliance
 
 FILLER = "。" * 60
 
@@ -99,7 +96,7 @@ def test_extract_yaml_field_folded_scalar_returns_empty_not_marker() -> None:
 
 def test_read_yaml_block_scalar_folds_lines() -> None:
     fm = "name: x\ndescription: >-\n  第一行\n  第二行\n"
-    assert read_yaml_block_scalar(fm, "description") == "第一行 第二行"
+    assert extract_yaml_text_field(fm, "description") == "第一行 第二行"
 
 
 def test_folded_scalar_description_reaches_trigger_check(tmp_path: Path) -> None:
@@ -144,3 +141,85 @@ def test_capability_only_description_still_fails(tmp_path: Path) -> None:
     )
     assert r.passed is False
     assert r.severity == "warn"
+
+
+# --- 多行 plain 标量（无 |/> 指示符） ------------------------------------
+
+def _run_plain_multiline(tmp_path: Path, name: str, body_lines: list[str]):
+    """构造 description 为多行 plain 标量的 SKILL.md。
+
+    YAML 允许 `description:` 换行后接缩进续行（不带 |/> 指示符）。外部镜像
+    技能（如 vercel-composition-patterns）采用这种写法，而解析器曾把续行
+    整体丢弃：description 被当作「字段存在但无文本」，既误报必需字段缺失，
+    又让长度/触发时机等描述类检查全部静默跳过。
+    """
+    skill_dir = tmp_path / name
+    skill_dir.mkdir()
+    skill_md = skill_dir / "SKILL.md"
+    body = "\n".join(f"  {line}" for line in body_lines)
+    fmt = f"name: {name}\ndescription:\n{body}\n"
+    content = f"---\n{fmt}---\n\n# {name}\n"
+    skill_md.write_text(content, encoding="utf-8")
+    return skill_md, content, fmt
+
+
+def test_plain_multiline_description_reaches_trigger_check(tmp_path: Path) -> None:
+    md, content, fmt = _run_plain_multiline(
+        tmp_path,
+        "demo-skill",
+        [
+            "React composition patterns that scale. Use when refactoring components",
+            "with boolean prop proliferation, or building flexible component libraries.",
+        ],
+    )
+    r = _find(
+        check_open_standards_compliance(md, content, fmt),
+        "open_standard.description.trigger_hint",
+    )
+    assert r.passed is True
+
+
+def test_plain_multiline_description_counts_as_present(tmp_path: Path) -> None:
+    """守卫：多行 plain 标量不得再被误判为「必需字段 description 缺失」。"""
+    from lib.check_skill_quality.checks_frontmatter import check_frontmatter
+
+    md, content, fmt = _run_plain_multiline(
+        tmp_path, "demo-skill", ["Composition patterns for building React apps."]
+    )
+    r = _find(check_frontmatter(md, content, fmt), "frontmatter.description")
+    assert r.passed is True
+
+
+def test_frontmatter_module_reads_plain_multiline_scalar() -> None:
+    from lib.frontmatter import extract_yaml_text_field
+
+    fm = "name: x\ndescription:\n  第一行\n  第二行\n"
+    assert extract_yaml_text_field(fm, "description") == "第一行 第二行"
+
+
+# --- 外部镜像触发惯例（use for / use this skill for / MUST use） ---------
+
+
+def test_use_for_phrase_accepted(tmp_path: Path) -> None:
+    """`Use for <场景>` 是外部镜像的适用面写法，须识别为触发时机。"""
+    r = _find(
+        _run(tmp_path, "demo-skill", f"Generate static posters and banners. Use for campaign visuals. {FILLER}"),
+        "open_standard.description.trigger_hint",
+    )
+    assert r.passed is True
+
+
+def test_use_this_skill_for_phrase_accepted(tmp_path: Path) -> None:
+    r = _find(
+        _run(tmp_path, "demo-skill", f"Brand knowledge helper. Use this skill for identity questions. {FILLER}"),
+        "open_standard.description.trigger_hint",
+    )
+    assert r.passed is True
+
+
+def test_must_use_phrase_accepted(tmp_path: Path) -> None:
+    r = _find(
+        _run(tmp_path, "demo-skill", f"You MUST use this before any creative work. {FILLER}"),
+        "open_standard.description.trigger_hint",
+    )
+    assert r.passed is True

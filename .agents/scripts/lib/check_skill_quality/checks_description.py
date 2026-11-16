@@ -5,7 +5,7 @@ enforce_python310()
 
 from typing import Optional
 
-from lib.frontmatter import extract_yaml_field
+from lib.frontmatter import extract_yaml_text_field
 
 from .constants import (
     MIN_DESCRIPTION_LENGTH,
@@ -21,7 +21,7 @@ def check_description(frontmatter_text: str | None) -> list[CheckResult]:
     if not frontmatter_text:
         return results
 
-    desc = extract_yaml_field(frontmatter_text, "description")
+    desc = extract_yaml_text_field(frontmatter_text, "description")
     if not desc:
         return results
 

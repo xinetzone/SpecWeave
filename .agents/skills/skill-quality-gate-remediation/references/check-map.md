@@ -65,7 +65,7 @@
 | `open_standard.name.compliant` | info | 仅当上述 name 检查全过时输出 | 修复 name 问题后会重新出现 |
 | `open_standard.description.max_length` | warn | `description` ≤1024 字符 | 精简描述 |
 | `open_standard.description.min_length` | warn | `description` ≥20 字符 | 补足描述 |
-| `open_standard.description.trigger_hint` | info | 含 `when`、`使用`、`触发`、`提到`、`Use when`、`必须使用` 之一 | 建议补充，不影响分数 |
+| `open_standard.description.trigger_hint` | warn | 含触发时机措辞：`when`/`use when`/`triggers on`、`use for`/`use this skill for`/`must use`、`使用`/`触发`/`提到`/`必须使用`/`适用于`/`当用户`/`需要时` 之一 | 补一句「当用户…时使用」（失败扣 5 分） |
 | `open_standard.structure.scripts` | info | 存在 `scripts/` 则为包含，否则提示可选 | 按需创建 |
 | `open_standard.structure.references` | info | 存在 `references/` 则为包含，否则提示可选 | 按需创建 |
 | `open_standard.structure.assets` | info | 存在 `assets/` 则为包含，否则提示可选 | 按需创建 |
