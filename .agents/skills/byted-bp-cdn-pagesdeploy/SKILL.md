@@ -1,7 +1,7 @@
 ---
 source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 byted-bp-cdn-pagesdeploy）"
 name: byted-bp-cdn-pagesdeploy
-description: One-click deployment of static websites to BytePlus Edge Pages platform, supporting auto project creation, update deployment, custom domain binding, and CDN acceleration. Includes guided onboarding for new users without a BytePlus account.
+description: One-click deployment of static websites to BytePlus Edge Pages platform, supporting auto project creation, update deployment, custom domain binding, and CDN acceleration. Includes guided onboarding for new users without a BytePlus account. Use when the user asks to deploy a static site, bind a custom domain, or set up CDN acceleration on BytePlus Edge Pages.
 ---
 
 

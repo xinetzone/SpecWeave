@@ -1,7 +1,7 @@
 ---
 source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 spec-to-implementation）"
 name: notion-spec-to-implementation
-description: Turns product or tech specs into concrete Notion tasks that Claude code can implement. Breaks down spec pages into detailed implementation plans with clear tasks, acceptance criteria, and progress tracking to guide development from requirements to completion.
+description: Turns product or tech specs into concrete Notion tasks that Claude code can implement. Breaks down spec pages into detailed implementation plans with clear tasks, acceptance criteria, and progress tracking to guide development from requirements to completion. Use when the user hands over a product or tech spec and wants it turned into tracked Notion tasks.
 ---
 
 

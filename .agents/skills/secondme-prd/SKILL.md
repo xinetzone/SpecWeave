@@ -1,7 +1,7 @@
 ---
 source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 secondme-prd）"
 name: secondme-prd
-description: 通过对话定义产品需求，根据已选模块针对性提问，更新 state.json
+description: 通过对话定义产品需求，根据已选模块针对性提问，更新 state.json。当用户需要通过对话澄清并定义 SecondMe 产品需求时使用。
 user-invocable: true
 ---
 

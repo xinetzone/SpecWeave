@@ -1,7 +1,7 @@
 ---
 source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 elite-longterm-memory）"
 name: elite-longterm-memory
-description: Elite Longterm Memory skill for enhanced memory management and retrieval
+description: Elite Longterm Memory skill for enhanced memory management and retrieval. Use when the user needs to store, recall, or consolidate long-term context across sessions.
 user-invocable: true
 ---
 

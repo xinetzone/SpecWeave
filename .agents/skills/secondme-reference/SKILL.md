@@ -1,7 +1,7 @@
 ---
 source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 secondme-reference）"
 name: secondme-reference
-description: SecondMe API 技术参考文档，供开发时查阅
+description: SecondMe API 技术参考文档，供开发时查阅。当用户查询 SecondMe API、SDK 用法或接入细节时使用。
 user-invocable: true
 ---
 

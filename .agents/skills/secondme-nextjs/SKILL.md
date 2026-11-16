@@ -1,7 +1,7 @@
 ---
 source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 secondme-nextjs）"
 name: secondme-nextjs
-description: 基于配置和需求生成 Next.js 项目，支持 --quick 快速模式跳过 PRD 阶段
+description: 基于配置和需求生成 Next.js 项目，支持 --quick 快速模式跳过 PRD 阶段。当用户要按已定配置生成 Next.js 项目脚手架时使用。
 user-invocable: true
 argument-hint: [--quick]
 ---

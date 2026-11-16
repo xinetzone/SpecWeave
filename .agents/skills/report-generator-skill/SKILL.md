@@ -1,7 +1,7 @@
 ---
 source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 report-generator-skill）"
 name: report-generator
-description: 视频分析报告生成技能。整合分镜拆解数据和钩子分析结果，生成 Markdown 格式的专业视频分析报告。运行脚本 `python scripts/generate_report.py <breakdown_json> [hook_analysis_json]`，输出完整的 Markdown 报告，包含基本信息、前三秒钩子分析、分镜概览、BGM分析、场景分析等章节。
+description: 视频分析报告生成技能。整合分镜拆解数据和钩子分析结果，生成 Markdown 格式的专业视频分析报告。运行脚本 `python scripts/generate_report.py <breakdown_json> [hook_analysis_json]`，输出完整的 Markdown 报告，包含基本信息、前三秒钩子分析、分镜概览、BGM分析、场景分析等章节。当用户需要把分镜拆解与钩子分析结果整合为视频分析报告时使用。
 ---
 
 

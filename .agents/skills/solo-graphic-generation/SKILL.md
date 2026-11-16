@@ -1,6 +1,6 @@
 ---
 name: solo-graphic-generation
-description: Generate bitmap-first static visual assets such as posters, banners, KV/key visuals, covers, invitations, social cards, illustrations, product images, and image batches without HTML. Confirm the output size before generation; if an exact size is unsupported, expose the constraint and wait for the user to choose a replacement instead of substituting one.
+description: Generate bitmap-first static visual assets such as posters, banners, KV/key visuals, covers, invitations, social cards, illustrations, product images, and image batches without HTML. Confirm the output size before generation; if an exact size is unsupported, expose the constraint and wait for the user to choose a replacement instead of substituting one. Use when the requested deliverable is the generated bitmap image itself rather than an editable HTML page.
 source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 solo-graphic-generation）"
 ---
 

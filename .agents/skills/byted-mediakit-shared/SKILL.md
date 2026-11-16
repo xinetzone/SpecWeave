@@ -3,7 +3,7 @@ source: "镜像自 Trae IDE builtin（源镜像已清理，原镜像标识 byted
 name: byted-mediakit-shared
 version: '1.0.0'
 license: 'MIT'
-description: '1. mediakit-cli: supports a variety of operations such as audio/video processing, editing, and images, with some capabilities covering both cloud and local modes;2. mediakit-cli shared: environment checks, initialization config, command structure, authentication config, async task responses, and error handling.'
+description: '1. mediakit-cli: supports a variety of operations such as audio/video processing, editing, and images, with some capabilities covering both cloud and local modes;2. mediakit-cli shared: environment checks, initialization config, command structure, authentication config, async task responses, and error handling. Use when the task needs media processing or mediakit-cli environment and authentication setup.'
 permissions:
   - shell
 metadata:
