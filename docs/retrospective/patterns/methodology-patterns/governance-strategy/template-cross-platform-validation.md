@@ -2,6 +2,9 @@
 type: Pattern
 id: "template-cross-platform-validation"
 source: "../../../reports/project-reports/retrospective-xuanspace-mono-repo-20260724/insight-extraction.md#洞察1"
+domain: "methodology"
+layer: "governance-strategy"
+maturity: "L1-draft"
 ---
 
 # 模板跨平台验证模式（Template Cross-Platform Validation）

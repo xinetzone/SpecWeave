@@ -7,6 +7,8 @@ maturity: "L1-draft"
 source: "retro-20261009-caffe-pool-ceil-shape"
 related_patterns: ["import-path-priori-verification", "validation-semantic-gap"]
 tags: ["deep-learning", "shape-inference", "caffe", "pytorch", "onnx", "cross-framework", "verification", "falsification"]
+domain: "process"
+layer: "process"
 ---
 
 # 跨框架默认语义先验核实与下游自洽反证模式

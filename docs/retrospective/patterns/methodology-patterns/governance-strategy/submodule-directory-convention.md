@@ -2,6 +2,9 @@
 type: Pattern
 id: "submodule-directory-convention"
 source: "../../../reports/project-reports/retrospective-xuanspace-mono-repo-20260724/insight-extraction.md#洞察2"
+domain: "methodology"
+layer: "governance-strategy"
+maturity: "L1-draft"
 ---
 
 # 子模块目录约定模式（Submodule Directory Convention）

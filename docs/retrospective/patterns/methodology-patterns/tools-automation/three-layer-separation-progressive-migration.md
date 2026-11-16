@@ -13,6 +13,8 @@ related_patterns:
 tags: [refactoring, architecture, progressive-migration, three-layer-separation, backward-compatibility, zero-regression]
 validation_count: 2
 reuse_count: 0
+domain: "methodology"
+layer: "tools-automation"
 ---
 # 三层分离·渐进迁移
 

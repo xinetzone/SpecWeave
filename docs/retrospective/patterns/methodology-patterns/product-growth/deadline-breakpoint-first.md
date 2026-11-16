@@ -12,6 +12,8 @@ related_patterns:
 tags: ["落地页分析", "转化优化", "活动页面", "优先级判断", "时效敏感", "漏斗分析", "CTA优化"]
 validation_count: 1
 reuse_count: 0
+domain: "methodology"
+layer: "product-growth"
 ---
 > **提炼自**：秒悟（Meoo）产品启航赛活动落地页七维度分析（2026-07-14，投稿截止前2天）——在时间紧迫条件下识别4项P0级转化断点
 > **⚠️ 成熟度声明**：L1-draft，基于单案例提炼，尚未经第二案例验证。在新场景应用时需注意适用性验证，欢迎补充验证案例。

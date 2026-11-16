@@ -7,6 +7,8 @@ maturity: "L1-draft"
 source: "retrospective-caffe-docker-runtime-20260722#洞察6"
 related_patterns: []
 tags: [sop, documentation, knowledge-management, process]
+domain: "process"
+layer: "process"
 ---
 # 操作 SOP 标准化模板
 
